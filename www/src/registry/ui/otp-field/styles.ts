@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(otpFieldMeta, {
     slots: {
       root: [
         fieldStyles().field({ className: "group/otp-field" }),
-        "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
+        "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums **:data-input:invalid:[--invalid-icon:none]",
       ],
       group: "flex",
       separator: "",
@@ -16,20 +16,17 @@ const { useStyles, styles } = createStyles(otpFieldMeta, {
   },
   params: {
     cells: {
-      group: {
+      // shadcn: one row sharing edges; the cells keep the control edge even
+      // on edgeless shells.
+      attached: {
         slots: {
           group:
-            "w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
+            "w-fit items-stretch -space-x-(--studio-control-stroke) *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1 **:data-input:border-(length:--studio-control-stroke) **:data-input:not-invalid:not-focus:border-border-control",
         },
       },
-      boxes: {
+      // Ant, Mantine, Clerk: gapped cells, each the field shell itself.
+      separate: {
         slots: { group: "gap-2" },
-      },
-      underline: {
-        slots: {
-          group:
-            "gap-2 **:data-input:rounded-none **:data-input:border-x-0 **:data-input:border-t-0 **:data-input:border-b-2 **:data-input:bg-transparent **:data-input:shadow-none **:data-input:not-invalid:not-focus:not-disabled:border-b-border-control **:data-input:focus:ring-0 **:data-input:disabled:border-b-border",
-        },
       },
     },
   },

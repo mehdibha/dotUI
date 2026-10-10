@@ -85,7 +85,7 @@ export const buttonPublishable: Publishable = {
   stylesConfig: {
     base: {
       base: [
-        "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-btn-font-weight) whitespace-nowrap transition-[background-color,border-color,color,box-shadow] select-none",
+        "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow] select-none",
         "focus-reset focus-visible:focus-ring",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
         "pending:cursor-default pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
@@ -94,7 +94,7 @@ export const buttonPublishable: Publishable = {
       variants: {
         variant: {
           primary:
-            "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
+            "bg-primary text-fg-on-primary hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
           secondary:
             "border bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
           quiet:

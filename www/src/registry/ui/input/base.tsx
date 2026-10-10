@@ -15,12 +15,14 @@ import type { VariantProps } from "tailwind-variants"
 
 import { type InputStyles, useStyles } from "./styles"
 
+export { inputStyles } from "./styles"
+
 // MARK: Separator
 
+type InputSize = Pick<VariantProps<InputStyles>, "size">
+
 interface InputGroupProps
-  extends
-    React.ComponentProps<typeof GroupPrimitive.Group>,
-    VariantProps<InputStyles> {}
+  extends React.ComponentProps<typeof GroupPrimitive.Group>, InputSize {}
 
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']"
 
@@ -70,7 +72,7 @@ const InputGroup = ({
 interface InputProps
   extends
     Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
-    VariantProps<InputStyles> {}
+    InputSize {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
   const { input } = useStyles()()
@@ -148,14 +150,21 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 
 // MARK: Separator
 
-interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
+interface InputGroupAddonProps
+  extends
+    React.ComponentProps<"div">,
+    Pick<VariantProps<InputStyles>, "variant"> {}
 
-function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
+function InputGroupAddon({
+  className,
+  variant,
+  ...props
+}: InputGroupAddonProps) {
   const { inputGroupAddon } = useStyles()()
   return (
     <div
       data-input-group-addon=""
-      className={inputGroupAddon({ className })}
+      className={inputGroupAddon({ className, variant })}
       {...props}
     />
   )
@@ -164,9 +173,7 @@ function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
 // MARK: Separator
 
 interface DateInputProps
-  extends
-    Omit<DateFieldPrimitive.DateInputProps, "children">,
-    VariantProps<InputStyles> {
+  extends Omit<DateFieldPrimitive.DateInputProps, "children">, InputSize {
   children?: DateFieldPrimitive.DateInputProps["children"]
 }
 

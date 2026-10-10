@@ -13,11 +13,11 @@ const { useStyles, styles } = createStyles(treeMeta, {
       item: [
         "group/tree-item relative flex w-full items-center rounded-(--studio-tree-item-radius) outline-hidden select-ui",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        "focus-visible:outline-(length:--focus-ring-width) focus-visible:-outline-offset-(--focus-ring-width) focus-visible:outline-(--focus-ring-color) focus-visible:outline-solid",
-        "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",
-        "drop-target:bg-accent-muted drop-target:text-fg",
+        "focus-visible:focus-ring-inside",
+        "selected:bg-selected/50 selected:text-fg-on-selected selected:hover:bg-selected/70",
+        "drop-target:bg-selected/30 drop-target:text-fg",
         "dragging:opacity-60",
-        "disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
       ],
       itemContent: [
         "flex min-w-0 flex-1 items-center gap-1.5",
@@ -60,6 +60,18 @@ const { useStyles, styles } = createStyles(treeMeta, {
       slots: {
         root: "text-sm [--tree-indent:--spacing(5)]",
         item: "min-h-9 px-2 py-1.5 text-sm **:[svg]:not-with-[size]:size-4",
+      },
+    },
+    spacious: {
+      slots: {
+        root: "text-sm [--tree-indent:--spacing(6)]",
+        item: "min-h-10 px-2.5 py-2 text-sm **:[svg]:not-with-[size]:size-4",
+      },
+    },
+    touch: {
+      slots: {
+        root: "text-base [--tree-indent:--spacing(6)]",
+        item: "min-h-12 px-3 py-2 text-base **:[svg]:not-with-[size]:size-5",
       },
     },
   },

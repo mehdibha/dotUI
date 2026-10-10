@@ -12,14 +12,17 @@ import { tv } from "tailwind-variants";
 const dialogVariants = tv({
   slots: {
     content:
-      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
-    header: "flex flex-col gap-2 in-data-popover:gap-1",
+      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-drawer:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
+    header:
+      "flex flex-col gap-2 in-data-popover:gap-1 not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:border-b not-in-data-popover:px-(--dialog-padding) not-in-data-popover:pb-4",
     title:
-      "font-heading text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
+      "font-heading text-xl font-bold in-data-popover:text-base in-data-popover:font-medium",
     description: "text-fg-muted",
     body: "-mx-(--dialog-padding) flex min-h-0 flex-1 flex-col gap-2 px-(--dialog-padding) in-data-modal:[@container_(height<31.25rem)]:mx-0 in-data-modal:[@container_(height<31.25rem)]:shrink-0 in-data-modal:[@container_(height<31.25rem)]:overflow-y-visible in-data-modal:[@container_(height<31.25rem)]:px-0",
-    footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-    closeButton: "absolute top-4 right-4",
+    footer:
+      "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end -mx-(--dialog-padding) border-t px-(--dialog-padding) pt-4",
+    closeButton:
+      "absolute top-4 right-4 bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
   },
 });
 

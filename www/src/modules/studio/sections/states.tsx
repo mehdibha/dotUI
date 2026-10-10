@@ -1,345 +1,448 @@
 "use client"
 
-/* States — the treatments every control wears at once: focus, disabled,
-   invalid. Focus is one recipe in one popover: the ring controls wear, the
-   layer fields wear, each pick followed by only the knobs that style reads.
-   The ring's ink is a leaf of Color's Primary, so it is not repeated here.
-   Menu items highlight, no ring. */
+/* Interaction — focus, field focus, invalid and disabled on every control,
+   then the cursors and text selection. Specimens draw each recipe with the
+   panel's own inks at its real geometry. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { TREATMENT_OPTIONS } from "../axes/disabled"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import {
-  FOCUS_GAP_RANGE,
-  FOCUS_INPUT_BORDER_RANGE,
+  AUTO_STRENGTH,
+  AUTO_WIDTH,
+  INVALID_FILL,
+  NEUTRAL_FIELD_INK,
+} from "../axes/states"
+import {
+  CONTROL_TEXT_OPTIONS,
+  CURSOR_CONTROL_OPTIONS,
+  CURSOR_DISABLED_OPTIONS,
+  DISABLED_OPTIONS,
+  FIELD_INK_ROW,
   FOCUS_INPUT_STYLE_OPTIONS,
-  FOCUS_INPUT_WIDTH_RANGE,
-  FOCUS_OFFSET_OPTIONS,
-  FOCUS_STRENGTH_RANGE,
+  FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
-  FOCUS_WIDTH_RANGE,
-} from "../axes/focus"
-import { ERROR_OPTIONS } from "../axes/invalid"
-import {
-  DialGap,
-  DialGlyph,
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialSlider,
-  DialTrigger,
-} from "../dial"
-import { CardGrid } from "../patterns"
-import { GroupTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+  INVALID_OPTIONS,
+  STRENGTH_OPTIONS,
+  WIDTH_OPTIONS,
+} from "../axes/states.meta"
+import { DialSegmented, DialSelect } from "../dial"
+import { Row } from "../family-page"
+import type { RowMap } from "../family-page"
+import type { Effective } from "../state"
+import { useStudio } from "../use-studio"
+import { ArrowCursor, HandCursor, NotAllowedCursor } from "./cursors"
 
-const px = (n: number) => `${n}px`
+/* -------------------------------- Specimens -------------------------------- */
 
-/* Focus specimens: a control and a field wearing each style, drawn with the
-   panel's own focus ink at a legible fixed geometry. Small beside the row's
-   value, larger on the popover's cards. */
 const INK = "var(--color-border-focus)"
+const MUTED = "var(--color-border-focus-muted)"
 const BG = "var(--color-bg)"
-const halo = (pct: number) => `color-mix(in oklab, ${INK} ${pct}%, transparent)`
+const DANGER = "var(--color-fg-danger)"
+const DANGER_MUTED = "var(--color-danger-muted)"
+const PCT: Record<string, number> = { solid: 100, soft: 50, faint: 30 }
 
-const CONTROL_RINGS: Record<string, string> = {
-  ring: `0 0 0 1.5px ${BG}, 0 0 0 3px ${INK}`,
-  halo: `0 0 0 3px ${halo(45)}`,
-  duo: `inset 0 0 0 1px ${BG}, 0 0 0 1.5px ${INK}`,
+const ink = (strength: string) =>
+  `color-mix(in oklab, ${INK} ${PCT[strength] ?? 100}%, transparent)`
+
+interface Ring {
+  style: string
+  strength: string
+  width: number
 }
 
-const SPECIMEN = "mx-1 block h-3.5 w-6 shrink-0 rounded-[4px]"
-const CARD_SPECIMEN = "mx-auto my-1.5 block h-5 w-10 shrink-0 rounded-md"
+/** The ring each recipe draws, as a box-shadow. */
+function ringShadow({ style, strength, width }: Ring) {
+  const color = ink(strength)
+  if (style === "halo") return `0 0 0 ${width}px ${color}`
+  if (style === "inset")
+    return `inset 0 0 0 ${width}px ${color}, inset 0 0 0 ${width + 1}px ${BG}`
+  return `0 0 0 2px ${BG}, 0 0 0 ${2 + width}px ${color}`
+}
 
-function ControlSpecimen({ style, card }: { style: string; card?: boolean }) {
+const SIZE = {
+  row: "h-3.5 w-6 rounded-[4px]",
+  card: "h-5 w-10 rounded-md",
+}
+type Size = keyof typeof SIZE
+
+function ControlSpecimen({ ring, size }: { ring: Ring; size: Size }) {
   return (
     <span
-      className={cn(card ? CARD_SPECIMEN : SPECIMEN, "bg-fg/25")}
-      style={{ boxShadow: CONTROL_RINGS[style] }}
+      className={cn("mx-1 block shrink-0 bg-fg/25", SIZE[size])}
+      style={{ boxShadow: ringShadow(ring) }}
     />
   )
 }
 
-const FIELD_RINGS: Record<string, React.CSSProperties> = {
-  halo: { borderColor: INK, boxShadow: `0 0 0 2.5px ${halo(30)}` },
-  ring: { boxShadow: `0 0 0 1.5px ${BG}, 0 0 0 3px ${INK}` },
-  border: { borderColor: INK, borderWidth: 2 },
+/** The field's pair: the focus pair, or the neutral steps under Neutral. */
+const fieldInks = (neutral?: boolean) =>
+  neutral ? [NEUTRAL_FIELD_INK.edge, NEUTRAL_FIELD_INK.halo] : [INK, MUTED]
+
+function fieldFocus(
+  focus: string,
+  weight: string,
+  ring: Ring,
+  neutral?: boolean,
+) {
+  if (focus === "ring") return { boxShadow: ringShadow(ring) }
+  const [ink, muted] = fieldInks(neutral)
+  if (focus === "border")
+    return {
+      borderColor: ink,
+      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${ink}` : undefined,
+    }
+  return {
+    borderColor: ink,
+    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${muted}`,
+  }
 }
 
-function FieldSpecimen({ style, card }: { style: string; card?: boolean }) {
+function FieldSpecimen({
+  focus,
+  weight,
+  ring,
+  neutral,
+  size,
+}: {
+  focus: string
+  weight: string
+  ring: Ring
+  neutral?: boolean
+  size: Size
+}) {
   return (
     <span
       className={cn(
-        card ? CARD_SPECIMEN : SPECIMEN,
-        "border border-fg/30 bg-bg",
+        "mx-1 block shrink-0 border border-fg/30 bg-bg",
+        SIZE[size],
       )}
-      style={FIELD_RINGS[style]}
+      style={fieldFocus(focus, weight, ring, neutral)}
     />
   )
 }
 
-/* Disabled specimens: the same filled control under each treatment. */
-function DisabledSpecimen({ treatment }: { treatment: string }) {
+function DisabledSpecimen({
+  treatment,
+  size,
+}: {
+  treatment: string
+  size: Size
+}) {
+  // A filled button with its label: one grey for Solid, itself at 50% for Fade.
   return (
     <span
       className={cn(
-        "block h-3.5 w-6 shrink-0 rounded-[4px]",
-        treatment === "solid" && "bg-disabled",
-        treatment === "fade" && "bg-primary opacity-50",
-        treatment === "alpha" && "bg-fg/12",
+        "flex shrink-0 items-center justify-center",
+        SIZE[size],
+        treatment === "fade" ? "bg-primary opacity-50" : "bg-disabled",
       )}
+    >
+      <span
+        className={cn(
+          "h-[18%] w-1/2 rounded-full",
+          treatment === "fade" ? "bg-fg-on-primary" : "bg-fg-disabled",
+        )}
+      />
+    </span>
+  )
+}
+
+function InvalidSpecimen({ invalid, size }: { invalid: string; size: Size }) {
+  return (
+    <span
+      className={cn("mx-1 block shrink-0 border bg-bg", SIZE[size])}
+      style={{
+        borderColor: DANGER,
+        boxShadow: invalid === "halo" ? `0 0 0 3px ${DANGER_MUTED}` : undefined,
+        backgroundImage:
+          invalid === "tint"
+            ? `linear-gradient(${INVALID_FILL}, ${INVALID_FILL})`
+            : undefined,
+      }}
     />
   )
 }
 
-function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
+const ringOf = (state: Effective): Ring => ({
+  style: state.focusStyle,
+  strength: state.focusStrength,
+  width: state.focusWidth,
+})
+
+/* --------------------------------- Glyphs --------------------------------- */
+
+function Glyph({ children }: { children: React.ReactNode }) {
+  return <span className="size-4 shrink-0 *:size-full">{children}</span>
+}
+
+const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
+  pointer: <HandCursor />,
+  default: <ArrowCursor />,
+  "not-allowed": <NotAllowedCursor />,
+}
+
+const cursorOptions = (options: { value: string; label: string }[]) =>
+  options.map((option) => ({
+    ...option,
+    preview: <Glyph>{CURSOR_GLYPHS[option.value]}</Glyph>,
+  }))
+
+/* Painted words: the option is the highlight itself. The blue depicts the OS
+   default, literal like the cursor drawings. */
+const HIGHLIGHT_CHIPS: Record<string, string> = {
+  accent: "bg-text-selection text-fg-on-text-selection",
+  browser: "bg-[#B3D7FF] text-[#1B1B1F]",
+}
+
+function HighlightChip({ value }: { value: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {kind === "border" && (
-        <>
-          <rect
-            x="3.75"
-            y="8"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <path
-            d="M7 12h5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            opacity=".35"
-          />
-        </>
-      )}
-      {kind === "message" && (
-        <>
-          <rect
-            x="3.75"
-            y="4.5"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <circle
-            cx="5.5"
-            cy="17.25"
-            r="1.4"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 17.25h7.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-        </>
-      )}
-      {kind === "bar" && (
-        <>
-          <rect
-            x="4"
-            y="4.5"
-            width="2"
-            height="15"
-            rx="1"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 7h7"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-          <rect
-            x="9"
-            y="10.5"
-            width="11"
-            height="7"
-            rx="1.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            opacity=".45"
-          />
-        </>
-      )}
-    </svg>
+    <span className={cn("rounded-xs px-1 text-[11px]", HIGHLIGHT_CHIPS[value])}>
+      Aa
+    </span>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
+/* ---------------------------------- Rows ----------------------------------- */
 
-const label = (options: { value: string; label: string }[], value: string) =>
-  options.find((o) => o.value === value)?.label ?? value
-
-export function StatesPreview({ state }: { state: StudioState }) {
-  return <ControlSpecimen style={state.focusStyle} />
+export function InteractionPreview({ state }: { state: Effective }) {
+  return <ControlSpecimen ring={ringOf(state)} size="row" />
 }
 
-export function statesSummary(state: StudioState): string {
-  return `${label(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${label(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
-}
+const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
+  const ring = {
+    style: option.value,
+    strength: AUTO_STRENGTH[option.value]!,
+    width: AUTO_WIDTH[option.value]!,
+  }
+  return {
+    ...option,
+    preview: <ControlSpecimen ring={ring} size="card" />,
+    glyph: <ControlSpecimen ring={ring} size="row" />,
+  }
+})
 
-/** Mounted with the popover: each pick, then only the knobs its style reads,
- *  right under it. Labels drop the "Ring"/"Field" prefix — the group carries
- *  it. A field wearing the control ring has nothing of its own to set. */
-function FocusPanel({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const duo = state.focusStyle === "duo"
+const FocusStyleRow = () => (
+  <DialSelect
+    axis="focusStyle"
+    holds={["focusStrength", "focusWidth", "focusColor"]}
+    label="Focus ring"
+    options={FOCUS_STYLE_ROW_OPTIONS}
+  >
+    <Row axis="focusStrength" />
+    <Row axis="focusWidth" />
+    <Row axis="focusColor" />
+  </DialSelect>
+)
+
+function FocusStrengthRow() {
+  const ring = ringOf(useStudio().effective)
   return (
-    <>
-      <GroupTitle>Controls</GroupTitle>
-      <CardGrid
-        label="Control focus"
-        columns={3}
-        value={state.focusStyle}
-        onChange={set("focusStyle")}
-        options={FOCUS_STYLE_OPTIONS.map((option) => ({
-          id: option.value,
-          label: option.label,
-          children: <ControlSpecimen style={option.value} card />,
-        }))}
-      />
-      <DialSlider
-        label="Width"
-        value={state.focusWidth}
-        onChange={set("focusWidth")}
-        minValue={FOCUS_WIDTH_RANGE.min}
-        maxValue={FOCUS_WIDTH_RANGE.max}
-        step={FOCUS_WIDTH_RANGE.step}
-        format={px}
-      />
-      {state.focusStyle === "halo" && (
-        <DialSlider
-          label="Strength"
-          value={state.focusHaloStrength}
-          onChange={set("focusHaloStrength")}
-          minValue={FOCUS_STRENGTH_RANGE.min}
-          maxValue={FOCUS_STRENGTH_RANGE.max}
-          step={FOCUS_STRENGTH_RANGE.step}
-          format={(v) => `${v}%`}
-        />
-      )}
-      {!duo && (
-        <DialSegmented
-          label="Offset"
-          value={state.focusOffset}
-          onChange={set("focusOffset")}
-          options={FOCUS_OFFSET_OPTIONS}
-        />
-      )}
-      {!duo && state.focusOffset === "gap" && (
-        <DialSlider
-          label="Gap"
-          value={state.focusGap}
-          onChange={set("focusGap")}
-          minValue={FOCUS_GAP_RANGE.min}
-          maxValue={FOCUS_GAP_RANGE.max}
-          step={FOCUS_GAP_RANGE.step}
-          format={px}
-        />
-      )}
-      <DialGap />
-      <GroupTitle>Fields</GroupTitle>
-      <CardGrid
-        label="Field focus"
-        columns={3}
-        value={state.focusInputStyle}
-        onChange={set("focusInputStyle")}
-        options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
-          id: option.value,
-          label: option.label,
-          children: <FieldSpecimen style={option.value} card />,
-        }))}
-      />
-      {state.focusInputStyle === "halo" && (
-        <>
-          <DialSlider
-            label="Width"
-            value={state.focusInputWidth}
-            onChange={set("focusInputWidth")}
-            minValue={FOCUS_INPUT_WIDTH_RANGE.min}
-            maxValue={FOCUS_INPUT_WIDTH_RANGE.max}
-            step={FOCUS_INPUT_WIDTH_RANGE.step}
-            format={px}
-          />
-          <DialSlider
-            label="Strength"
-            value={state.focusInputStrength}
-            onChange={set("focusInputStrength")}
-            minValue={FOCUS_STRENGTH_RANGE.min}
-            maxValue={FOCUS_STRENGTH_RANGE.max}
-            step={FOCUS_STRENGTH_RANGE.step}
-            format={(v) => `${v}%`}
-          />
-        </>
-      )}
-      {state.focusInputStyle === "border" && (
-        <DialSlider
-          label="Width"
-          value={state.focusInputBorderWidth}
-          onChange={set("focusInputBorderWidth")}
-          minValue={FOCUS_INPUT_BORDER_RANGE.min}
-          maxValue={FOCUS_INPUT_BORDER_RANGE.max}
-          step={FOCUS_INPUT_BORDER_RANGE.step}
-          format={px}
-        />
-      )}
-    </>
-  )
-}
-
-export function StatesSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  return (
-    <>
-      <DialTrigger
-        label="Focus"
-        value={
-          <>
-            <span className="truncate">{statesSummary(state)}</span>
-            <ControlSpecimen style={state.focusStyle} />
-            <FieldSpecimen style={state.focusInputStyle} />
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <FocusPanel studio={studio} />
-        </DialPopover>
-      </DialTrigger>
-      <DialSelect
-        label="Disabled"
-        value={state.disabledTreatment}
-        onChange={set("disabledTreatment")}
-        options={TREATMENT_OPTIONS.map((option) => ({
-          ...option,
-          preview: <DisabledSpecimen treatment={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Invalid"
-        value={state.inputError}
-        onChange={set("inputError")}
-        options={ERROR_OPTIONS.map((option) => ({
+    <DialSelect
+      axis="focusStrength"
+      label="Strength"
+      rowPreview={false}
+      options={[
+        { value: "auto", label: "Auto" },
+        ...STRENGTH_OPTIONS.map((option) => ({
           ...option,
           preview: (
-            <DialGlyph>
-              <ErrorGlyph kind={option.value as "border" | "message" | "bar"} />
-            </DialGlyph>
+            <ControlSpecimen
+              ring={{ ...ring, strength: option.value }}
+              size="row"
+            />
           ),
-        }))}
-      />
-    </>
+        })),
+      ]}
+    />
   )
+}
+
+function FocusWidthRow() {
+  const { effective, set } = useStudio()
+  const ring = ringOf(effective)
+  return (
+    <DialSelect
+      axis="focusWidth"
+      label="Width"
+      rowPreview={false}
+      onChange={(value) =>
+        set("focusWidth")(value === "auto" ? "auto" : Number(value))
+      }
+      options={[
+        { value: "auto", label: "Auto" },
+        ...WIDTH_OPTIONS.map((option) => ({
+          ...option,
+          value: String(option.value),
+          preview: (
+            <ControlSpecimen
+              ring={{ ...ring, width: option.value }}
+              size="row"
+            />
+          ),
+        })),
+      ]}
+    />
+  )
+}
+
+function FieldFocusRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="focusInputStyle"
+      holds={["focusInputWeight", "focusInputColor"]}
+      label="Field focus"
+      options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <FieldSpecimen
+            focus={option.value}
+            weight={effective.focusInputWeight}
+            ring={ringOf(effective)}
+            neutral={effective.focusInputColor === "neutral"}
+            size="row"
+          />
+        ),
+      }))}
+    >
+      <Row axis="focusInputWeight" />
+      <Row axis="focusInputColor" />
+    </DialSelect>
+  )
+}
+
+const FieldFocusWeightRow = () => (
+  <DialSegmented
+    axis="focusInputWeight"
+    label="Weight"
+    options={FOCUS_INPUT_WEIGHT_OPTIONS}
+  />
+)
+
+function FieldInkRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="focusInputColor"
+      label="Ink"
+      options={FIELD_INK_ROW.map((option) => ({
+        ...option,
+        preview: (
+          <FieldSpecimen
+            focus={effective.focusInputStyle}
+            weight={effective.focusInputWeight}
+            ring={ringOf(effective)}
+            neutral={option.value === "neutral"}
+            size="row"
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
+  ...option,
+  preview: <DisabledSpecimen treatment={option.value} size="row" />,
+}))
+
+const DisabledRow = () => (
+  <DialSelect
+    axis="disabledTreatment"
+    label="Disabled"
+    options={DISABLED_ROW_OPTIONS}
+  />
+)
+
+const INVALID_ROW_OPTIONS = INVALID_OPTIONS.map((option) => ({
+  ...option,
+  preview: <InvalidSpecimen invalid={option.value} size="row" />,
+}))
+
+const InvalidRow = () => (
+  <DialSelect
+    axis="invalidStyle"
+    label="Invalid"
+    options={INVALID_ROW_OPTIONS}
+  />
+)
+
+const CursorControlsRow = () => (
+  <DialSelect
+    axis="cursorControls"
+    label="Control cursor"
+    rowPreview={false}
+    options={cursorOptions(CURSOR_CONTROL_OPTIONS)}
+  />
+)
+
+const CursorDisabledRow = () => (
+  <DialSelect
+    axis="cursorDisabled"
+    label="Disabled cursor"
+    rowPreview={false}
+    options={cursorOptions(CURSOR_DISABLED_OPTIONS)}
+  />
+)
+
+/** A button label; a selectable one wears the highlight. */
+function ControlTextChip({ value }: { value: string }) {
+  return (
+    <span className="rounded-xs border border-fg/20 px-1 text-[11px]">
+      <span
+        className={cn(
+          value === "selectable" &&
+            "bg-text-selection text-fg-on-text-selection",
+        )}
+      >
+        Save
+      </span>
+    </span>
+  )
+}
+
+const CONTROL_TEXT_ROW_OPTIONS = CONTROL_TEXT_OPTIONS.map((option) => ({
+  ...option,
+  preview: <ControlTextChip value={option.value} />,
+}))
+
+const ControlTextRow = () => (
+  <DialSelect
+    axis="selectionUiText"
+    label="Control text"
+    rowPreview={false}
+    options={CONTROL_TEXT_ROW_OPTIONS}
+  />
+)
+
+const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
+  ...option,
+  preview: <HighlightChip value={option.value} />,
+}))
+
+const HighlightRow = () => (
+  <DialSelect
+    axis="selectionHighlight"
+    holds={["selectionUiText"]}
+    label="Text selection"
+    options={HIGHLIGHT_ROW_OPTIONS}
+  >
+    <Row axis="selectionUiText" />
+  </DialSelect>
+)
+
+export const ROWS: RowMap = {
+  focusStyle: FocusStyleRow,
+  focusStrength: FocusStrengthRow,
+  focusWidth: FocusWidthRow,
+  focusInputStyle: FieldFocusRow,
+  focusInputWeight: FieldFocusWeightRow,
+  focusInputColor: FieldInkRow,
+  disabledTreatment: DisabledRow,
+  invalidStyle: InvalidRow,
+  cursorControls: CursorControlsRow,
+  cursorDisabled: CursorDisabledRow,
+  selectionUiText: ControlTextRow,
+  selectionHighlight: HighlightRow,
 }

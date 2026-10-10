@@ -7,14 +7,12 @@
 
 import { useEffect, useState } from "react"
 
-import {
-  canonicalJson,
-  parseSnapshot,
-  SNAPSHOT_ID,
-} from "@/lib/snapshots/snapshot"
+import { parseSnapshot } from "@/lib/snapshots/parse"
+import { canonicalJson, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import type { Snapshot } from "@/lib/snapshots/snapshot"
 
 import type { StudioState } from "./axes"
+import { stamp } from "./axes/version"
 import type { Current } from "./selection"
 
 export type Source = { kind: "preset" | "snapshot"; id: string }
@@ -35,7 +33,7 @@ async function postSnapshot({ name, state }: Content): Promise<string> {
   const response = await fetch("/api/snapshots", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, state }),
+    body: JSON.stringify({ name, state: stamp(state) }),
   })
   if (!response.ok) throw new Error(`POST /api/snapshots → ${response.status}`)
   const { id } = (await response.json()) as { id: unknown }

@@ -1,5 +1,6 @@
 import { createStyles } from "@/lib/styles"
 
+import { CONTAINER_SURFACE } from "../card/styles"
 import colorEditorMeta from "./meta"
 
 const { useStyles, styles } = createStyles(colorEditorMeta, {
@@ -36,13 +37,32 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
         fieldGroup: "gap-2.5",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-2.5",
+        area: "gap-2.5",
+        fields: "gap-2.5",
+        fieldGroup: "gap-2.5",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-2.5",
+        area: "gap-2.5",
+        fields: "gap-2.5",
+        fieldGroup: "gap-2.5",
+      },
+    },
   },
   params: {
     style: {
       default: {},
       hammamet: {
         slots: {
-          root: "rounded-(--studio-color-editor-radius) border border-(--card-border) bg-card p-3 shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]",
+          root: [
+            "rounded-(--studio-color-editor-radius) p-3",
+            CONTAINER_SURFACE,
+          ],
         },
       },
     },

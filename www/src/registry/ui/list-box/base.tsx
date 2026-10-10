@@ -6,13 +6,11 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ListBoxPrimitive from "react-aria-components/ListBox"
 import type * as TextPrimitive from "react-aria-components/Text"
 import * as VirtualizerPrimitive from "react-aria-components/Virtualizer"
-import type { VariantProps } from "tailwind-variants"
 
 import { CheckIcon } from "@/registry/icons"
 import { Loader } from "@/registry/ui/loader"
 
 import { useStyles } from "./styles"
-import type { ListBoxStyles } from "./styles"
 
 interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
   isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"]
@@ -54,8 +52,9 @@ const ListBox = <T extends object>({
 
 // MARK: Separator
 
-interface ListBoxItemProps<T>
-  extends ListBoxPrimitive.ListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
+interface ListBoxItemProps<T> extends ListBoxPrimitive.ListBoxItemProps<T> {
+  variant?: "default" | "danger"
+}
 const ListBoxItem = <T extends object>({
   className,
   variant,
@@ -70,25 +69,24 @@ const ListBoxItem = <T extends object>({
   return (
     <ListBoxPrimitive.ListBoxItem
       data-listbox-item=""
+      data-variant={variant}
       textValue={textValue}
-      className={composeRenderProps(className, (cn) =>
-        item({ className: cn, variant }),
-      )}
+      className={composeRenderProps(className, (cn) => item({ className: cn }))}
       {...props}
     >
       {composeRenderProps(
         props.children,
         (children, { selectionMode, isSelected }) => (
           <>
+            {selectionMode !== "none" && (
+              <span data-listbox-item-indicator="" className={indicator()}>
+                {isSelected && <CheckIcon aria-hidden />}
+              </span>
+            )}
             {typeof children === "string" ? (
               <ListBoxItemLabel>{children}</ListBoxItemLabel>
             ) : (
               children
-            )}
-            {selectionMode !== "none" && (
-              <span data-listbox-item-indicator="" className={indicator()}>
-                {isSelected && <CheckIcon />}
-              </span>
             )}
           </>
         ),
@@ -107,6 +105,7 @@ const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-label=""
+      slot="label"
       className={itemLabel({ className })}
       {...props}
     />
@@ -126,6 +125,7 @@ const ListBoxItemDescription = ({
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-description=""
+      slot="description"
       className={itemDescription({ className })}
       {...props}
     />

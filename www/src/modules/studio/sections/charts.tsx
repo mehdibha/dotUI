@@ -1,12 +1,16 @@
 "use client"
 
-/* Charts — the categorical series palette and the gridline treatment. */
+/* Charts: palette, grid and transition. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
-import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
-import type { Studio, StudioState } from "../state"
+import {
+  GRID_OPTIONS,
+  MOTION_OPTIONS,
+  PALETTE_OPTIONS,
+} from "../axes/charts.meta"
+import { DialGlyph, DialSelect } from "../dial"
+import type { RowMap } from "../family-page"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -60,39 +64,50 @@ function GridGlyph({ grid }: { grid: string }) {
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
+/* ---------------------------------- Rows ---------------------------------- */
 
-export function ChartsPreview({ state }: { state: StudioState }) {
-  return <SeriesGlyph palette={state.chartPalette} />
+function PaletteRow() {
+  return (
+    <DialSelect
+      axis="chartPalette"
+      label="Palette"
+      options={PALETTE_OPTIONS.map((option) => ({
+        ...option,
+        preview: <SeriesGlyph palette={option.value} />,
+      }))}
+    />
+  )
 }
 
-export function ChartsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+function GridRow() {
   return (
-    <>
-      <DialList
-        label="Palette"
-        value={state.chartPalette}
-        onChange={set("chartPalette")}
-        options={PALETTE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <SeriesGlyph palette={option.value} />,
-        }))}
-      />
-      <DialGap />
-      <DialSelect
-        label="Grid"
-        value={state.chartGrid}
-        onChange={set("chartGrid")}
-        options={GRID_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <GridGlyph grid={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-    </>
+    <DialSelect
+      axis="chartGrid"
+      label="Gridlines"
+      options={GRID_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <GridGlyph grid={option.value} />
+          </DialGlyph>
+        ),
+      }))}
+    />
   )
+}
+
+function ChartMotionRow() {
+  return (
+    <DialSelect
+      axis="chartMotion"
+      label="Chart transition"
+      options={MOTION_OPTIONS}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  chartPalette: PaletteRow,
+  chartGrid: GridRow,
+  chartMotion: ChartMotionRow,
 }

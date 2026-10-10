@@ -1,6 +1,11 @@
 import { useEffect } from "react"
 
-import { familyFromStack, FONT_SANS_VAR, googleFontsUrl } from "@/lib/fonts"
+import {
+  familyFromStack,
+  FONT_SANS_VAR,
+  googleFontsUrl,
+  isSystemFamily,
+} from "@/lib/fonts"
 import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
 /**
@@ -26,7 +31,8 @@ export function usePresetLabelFonts() {
       ...new Set(
         PRESET_CATALOG.map((p) => p.designSystem.tokens[FONT_SANS_VAR])
           .filter((stack): stack is string => stack !== undefined)
-          .map(familyFromStack),
+          .map(familyFromStack)
+          .filter((family) => !isSystemFamily(family)),
       ),
     ]
     if (families.length === 0) return

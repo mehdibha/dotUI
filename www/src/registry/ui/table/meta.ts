@@ -13,16 +13,17 @@ const tableMeta = {
   ],
   registryDependencies: ["checkbox", "focus-styles", "loader"],
   params: {
-    separation: {
-      kind: "enum",
-      default: "lines",
-      values: ["lines", "striped", "plain"] as const,
-      description: "How body rows are told apart.",
-    },
     header: {
       kind: "enum",
       default: "plain",
       values: ["plain", "filled"] as const,
+      description: "The header row: a rule under the labels, or a band.",
+    },
+    headerLabel: {
+      kind: "enum",
+      default: "muted",
+      values: ["strong", "muted"] as const,
+      description: "The header labels' ink.",
     },
   },
 } satisfies RegistryItem

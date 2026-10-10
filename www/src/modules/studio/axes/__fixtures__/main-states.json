@@ -1,0 +1,1653 @@
+{
+  "schema": {
+    "brand": {
+      "default": "#0070f1",
+      "type": "color"
+    },
+    "buttonColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "selectionColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "neutralHue": {
+      "default": null,
+      "min": 0,
+      "max": 360
+    },
+    "successSeed": {
+      "default": "",
+      "type": "color"
+    },
+    "warningSeed": {
+      "default": "",
+      "type": "color"
+    },
+    "dangerSeed": {
+      "default": "",
+      "type": "color"
+    },
+    "selectionSeed": {
+      "default": "",
+      "type": "color"
+    },
+    "vividness": {
+      "default": 1,
+      "min": 0,
+      "max": 2
+    },
+    "neutralTint": {
+      "default": 1,
+      "min": 0,
+      "max": 2
+    },
+    "preserveSeed": {
+      "default": false,
+      "type": "boolean"
+    },
+    "lightBg": {
+      "default": 99,
+      "min": 90,
+      "max": 100
+    },
+    "darkBg": {
+      "default": 2,
+      "min": 0,
+      "max": 20
+    },
+    "headingFont": {
+      "default": "",
+      "type": "font"
+    },
+    "bodyFont": {
+      "default": "Geist",
+      "type": "font"
+    },
+    "monoFont": {
+      "default": "Geist Mono",
+      "type": "font"
+    },
+    "iconLibrary": {
+      "default": "lucide",
+      "values": ["lucide", "phosphor", "tabler", "remix", "hugeicons"]
+    },
+    "iconStroke": {
+      "default": 2,
+      "min": 1,
+      "max": 3
+    },
+    "iconWeight": {
+      "default": "regular",
+      "values": ["thin", "light", "regular", "bold", "fill", "duotone"]
+    },
+    "radiusPx": {
+      "default": 10,
+      "min": 2,
+      "max": 20
+    },
+    "roleControl": {
+      "default": "md",
+      "values": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "full"]
+    },
+    "roleItem": {
+      "default": "auto",
+      "values": [
+        "auto",
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "full"
+      ]
+    },
+    "roleSurface": {
+      "default": "lg",
+      "values": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "full"]
+    },
+    "rolePanel": {
+      "default": "xl",
+      "values": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"]
+    },
+    "roleCard": {
+      "default": "auto",
+      "values": ["auto", "none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"]
+    },
+    "density": {
+      "default": "default",
+      "values": ["compact", "default", "comfortable"]
+    },
+    "spacingUnit": {
+      "default": 4,
+      "min": 3,
+      "max": 6
+    },
+    "surfaceLayers": {
+      "default": "same",
+      "values": ["same", "grouped", "tonal"]
+    },
+    "surfaceEdge": {
+      "default": "line",
+      "values": ["line", "none"]
+    },
+    "surfaceShadow": {
+      "default": "flat",
+      "values": ["flat", "low", "medium", "high"]
+    },
+    "surfaceGlass": {
+      "default": false,
+      "type": "boolean"
+    },
+    "focusColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "focusStyle": {
+      "default": "ring",
+      "values": ["ring", "halo", "duo"]
+    },
+    "focusWidth": {
+      "default": 2,
+      "min": 1,
+      "max": 6
+    },
+    "focusOffset": {
+      "default": "gap",
+      "values": ["inset", "flush", "gap"]
+    },
+    "focusGap": {
+      "default": 2,
+      "min": 1,
+      "max": 6
+    },
+    "focusHaloStrength": {
+      "default": 45,
+      "min": 10,
+      "max": 100
+    },
+    "focusInputStyle": {
+      "default": "halo",
+      "values": ["halo", "ring", "border"]
+    },
+    "focusInputWidth": {
+      "default": 2,
+      "min": 1,
+      "max": 8
+    },
+    "focusInputStrength": {
+      "default": 30,
+      "min": 10,
+      "max": 100
+    },
+    "focusInputBorderWidth": {
+      "default": 1,
+      "min": 1,
+      "max": 4
+    },
+    "cursorControls": {
+      "default": "pointer",
+      "values": ["default", "pointer"]
+    },
+    "cursorPending": {
+      "default": "default",
+      "values": ["default", "progress", "wait"]
+    },
+    "cursorDragging": {
+      "default": "inherit",
+      "values": ["inherit", "grab"]
+    },
+    "cursorDisabled": {
+      "default": "not-allowed",
+      "values": ["default", "not-allowed"]
+    },
+    "selectionUiText": {
+      "default": "none",
+      "values": ["none", "selectable"]
+    },
+    "selectionHighlight": {
+      "default": "accent",
+      "values": ["accent", "browser"]
+    },
+    "disabledTreatment": {
+      "default": "solid",
+      "values": ["solid", "fade", "alpha"]
+    },
+    "inputError": {
+      "default": "border",
+      "values": ["border", "message", "bar"]
+    },
+    "mobilePickers": {
+      "default": "drawer",
+      "values": ["drawer", "popover"]
+    },
+    "mobileDialogs": {
+      "default": "center",
+      "values": ["center", "sheet"]
+    },
+    "chartPalette": {
+      "default": "mono",
+      "values": ["mono", "vivid", "muted"]
+    },
+    "chartGrid": {
+      "default": "solid",
+      "values": ["solid", "dashed", "none"]
+    },
+    "chartMotion": {
+      "default": "spring",
+      "values": ["spring", "stiff", "wobbly", "slow", "ease", "none"]
+    },
+    "linkUnderline": {
+      "default": "never",
+      "values": ["always", "hover", "never"]
+    },
+    "linkColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "linkMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "toastMotion": {
+      "default": {
+        "pattern": "slide",
+        "enter": 400,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 400,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "motion": "entrance",
+      "patterns": ["slide", "fade", "none"]
+    },
+    "toastSwipeMotion": {
+      "default": {
+        "duration": 200,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "skeletonAnimation": {
+      "default": "shimmer",
+      "values": ["shimmer", "pulse", "none"]
+    },
+    "skeletonMotion": {
+      "default": {
+        "cycle": 2000,
+        "ease": [0.4, 0, 0.6, 1]
+      },
+      "motion": "loop"
+    },
+    "spinnerStyle": {
+      "default": "ring",
+      "values": ["ring", "blades", "dots"]
+    },
+    "loaderMotion": {
+      "default": {
+        "cycle": 1000,
+        "ease": [0, 0, 1, 1]
+      },
+      "motion": "loop"
+    },
+    "progressTrack": {
+      "default": "thin",
+      "values": ["thin", "thick"]
+    },
+    "progressIndeterminate": {
+      "default": "slide",
+      "values": ["slide", "pulse"]
+    },
+    "progressGap": {
+      "default": false,
+      "type": "boolean"
+    },
+    "progressMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "buttonStyle": {
+      "default": "flat",
+      "values": ["flat", "hairline", "rim-light", "gloss", "bevel", "ledge"]
+    },
+    "buttonRadius": {
+      "default": "auto",
+      "values": ["auto", "sharp", "round", "pill"]
+    },
+    "buttonMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "groupSeparator": {
+      "default": "auto",
+      "values": ["auto", "divider", "none"]
+    },
+    "toggleSelected": {
+      "default": "fill",
+      "values": ["fill", "chip", "inverse"]
+    },
+    "segmentedSelected": {
+      "default": "flat",
+      "values": ["raised", "flat", "inverse"]
+    },
+    "segmentedTrack": {
+      "default": "filled",
+      "values": ["filled", "outline"]
+    },
+    "segmentedControlMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "switchColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "switchMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "checkboxColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "checkCorner": {
+      "default": "rounded",
+      "values": ["rounded", "square", "circle"]
+    },
+    "checkboxMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "radioColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "cardSelected": {
+      "default": "tint",
+      "values": ["outline", "tint", "outline-tint"]
+    },
+    "cardControl": {
+      "default": "start",
+      "values": ["start", "end", "hidden"]
+    },
+    "inputStyle": {
+      "default": "outline",
+      "values": ["outline", "line", "filled-line-bottom", "filled"]
+    },
+    "inputHover": {
+      "default": "none",
+      "values": ["none", "border", "tint"]
+    },
+    "inputMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "addonLayout": {
+      "default": "inside",
+      "values": ["inside", "boxed"]
+    },
+    "addonDivider": {
+      "default": "hairline",
+      "values": ["hairline", "none"]
+    },
+    "numberLayout": {
+      "default": "right",
+      "values": ["right", "split", "stacked"]
+    },
+    "otpStyle": {
+      "default": "group",
+      "values": ["group", "boxes", "underline"]
+    },
+    "pickerCaret": {
+      "default": "chevron",
+      "values": ["chevron", "double"]
+    },
+    "timePickerMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "colorSwatchPickerMotion": {
+      "default": {
+        "duration": 100,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "calendarDayShape": {
+      "default": "rounded",
+      "values": ["rounded", "circle", "square"]
+    },
+    "calendarToday": {
+      "default": "none",
+      "values": ["none", "ring", "fill", "numeral"]
+    },
+    "calendarWeekdays": {
+      "default": "single",
+      "values": ["single", "double", "triple"]
+    },
+    "calendarMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "sliderThumb": {
+      "default": "circle",
+      "values": ["circle", "outline", "bar"]
+    },
+    "sliderTrack": {
+      "default": "thin",
+      "values": ["thin", "thick"]
+    },
+    "sliderColor": {
+      "default": "accent",
+      "values": ["neutral", "accent"]
+    },
+    "sliderMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "menuIndicator": {
+      "default": "check-end",
+      "values": ["check-start", "check-end"]
+    },
+    "menuHighlight": {
+      "default": "neutral",
+      "values": ["neutral", "accent"]
+    },
+    "menuInset": {
+      "default": "inset",
+      "values": ["inset", "full-bleed"]
+    },
+    "menuLabels": {
+      "default": "sentence",
+      "values": ["sentence", "caps"]
+    },
+    "menuSearch": {
+      "default": "field",
+      "values": ["field", "bar", "prompt"]
+    },
+    "menuScale": {
+      "default": "default",
+      "values": ["default", "large"]
+    },
+    "dialogBackdrop": {
+      "default": "dim",
+      "values": ["dim", "blur", "none"]
+    },
+    "dialogPosition": {
+      "default": "center",
+      "values": ["center", "top"]
+    },
+    "modalMotion": {
+      "default": {
+        "pattern": "scale",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "motion": "entrance",
+      "patterns": ["scale", "fade", "slide", "none"]
+    },
+    "drawerMotion": {
+      "default": {
+        "pattern": "slide",
+        "enter": 450,
+        "curve": {
+          "type": "easing",
+          "ease": [0.22, 1, 0.36, 1]
+        },
+        "exit": 400,
+        "exitEase": [0.22, 1, 0.36, 1]
+      },
+      "motion": "entrance",
+      "patterns": ["slide"]
+    },
+    "popoverTip": {
+      "default": "none",
+      "values": ["none", "tip"]
+    },
+    "popoverHeader": {
+      "default": "title",
+      "values": ["title", "band"]
+    },
+    "popoverMotion": {
+      "default": {
+        "pattern": "scale",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "motion": "entrance",
+      "patterns": ["scale", "fade", "slide", "none"]
+    },
+    "tooltipStyle": {
+      "default": "inverted",
+      "values": ["inverted", "surface"]
+    },
+    "tooltipMotion": {
+      "default": {
+        "pattern": "scale",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "motion": "entrance",
+      "patterns": ["scale", "fade", "slide", "none"]
+    },
+    "tabStyle": {
+      "default": "segmented",
+      "values": ["segmented", "line", "pill", "enclosed"]
+    },
+    "tabsColor": {
+      "default": "neutral",
+      "values": ["neutral", "accent"]
+    },
+    "tabsMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "accordionContainer": {
+      "default": "divided",
+      "values": ["divided", "boxed", "cards"]
+    },
+    "accordionMarker": {
+      "default": "chevron",
+      "values": ["chevron", "plus"]
+    },
+    "accordionMarkerPosition": {
+      "default": "trailing",
+      "values": ["leading", "trailing"]
+    },
+    "accordionMotion": {
+      "default": {
+        "pattern": "expand",
+        "enter": 200,
+        "curve": {
+          "type": "easing",
+          "ease": [0, 0, 0.58, 1]
+        }
+      },
+      "motion": "entrance",
+      "patterns": ["expand", "fade", "none"]
+    },
+    "sidebarMotion": {
+      "default": {
+        "duration": 200,
+        "ease": [0, 0, 1, 1]
+      },
+      "motion": "state-change"
+    },
+    "breadcrumbSeparator": {
+      "default": "chevron",
+      "values": ["slash", "chevron"]
+    },
+    "breadcrumbTone": {
+      "default": "muted",
+      "values": ["accent", "muted"]
+    },
+    "breadcrumbsMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "paginationCurrent": {
+      "default": "outline",
+      "values": ["filled", "outline"]
+    },
+    "badgeStyle": {
+      "default": "solid",
+      "values": ["solid", "soft", "outline", "soft-outline"]
+    },
+    "badgeShape": {
+      "default": "pill",
+      "values": ["pill", "rounded"]
+    },
+    "tagMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "kbdTreatment": {
+      "default": "chip",
+      "values": ["text", "chip", "keycap"]
+    },
+    "avatarShape": {
+      "default": "circle",
+      "values": ["circle", "rounded"]
+    },
+    "avatarFallback": {
+      "default": "neutral",
+      "values": ["neutral", "tinted"]
+    },
+    "tableSeparation": {
+      "default": "lines",
+      "values": ["lines", "striped", "plain"]
+    },
+    "tableHeader": {
+      "default": "plain",
+      "values": ["plain", "filled"]
+    },
+    "tableMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "questionnaireMotion": {
+      "default": {
+        "duration": 150,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "motion": "state-change"
+    },
+    "messageScrollerMotion": {
+      "default": {
+        "pattern": "slide",
+        "enter": 200,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 400,
+        "exitEase": [0.7, 0, 0.84, 0]
+      },
+      "motion": "entrance",
+      "patterns": ["slide"]
+    }
+  },
+  "presets": {
+    "origin": {},
+    "claude": {
+      "brand": "#d97757",
+      "buttonColor": "neutral",
+      "selectionColor": "neutral",
+      "neutralHue": 96,
+      "warningSeed": "#fab219",
+      "dangerSeed": "#d03b3b",
+      "selectionSeed": "#2a78d6",
+      "darkBg": 7,
+      "headingFont": "Source Serif 4",
+      "bodyFont": "Inter",
+      "iconLibrary": "phosphor",
+      "radiusPx": 10.67,
+      "roleCard": "xl",
+      "surfaceShadow": "low",
+      "focusStyle": "duo",
+      "focusWidth": 1,
+      "focusInputStyle": "ring",
+      "linkUnderline": "always",
+      "linkColor": "neutral",
+      "switchColor": "neutral",
+      "checkboxColor": "neutral",
+      "radioColor": "neutral",
+      "sliderColor": "neutral",
+      "tabStyle": "line",
+      "tabsColor": "accent",
+      "badgeStyle": "soft"
+    },
+    "supabase": {
+      "brand": "#3ecf8e",
+      "selectionColor": "neutral",
+      "neutralHue": 160,
+      "neutralTint": 0.3,
+      "preserveSeed": true,
+      "darkBg": 6,
+      "headingFont": "Manrope",
+      "bodyFont": "Inter",
+      "monoFont": "Source Code Pro",
+      "radiusPx": 10.5,
+      "roleItem": "xs",
+      "roleSurface": "md",
+      "rolePanel": "lg",
+      "roleCard": "lg",
+      "focusInputStyle": "ring",
+      "disabledTreatment": "fade",
+      "linkUnderline": "always",
+      "linkColor": "neutral",
+      "skeletonAnimation": "pulse",
+      "buttonStyle": "hairline",
+      "checkboxColor": "neutral",
+      "inputHover": "border",
+      "sliderColor": "neutral",
+      "menuIndicator": "check-start",
+      "menuLabels": "caps",
+      "menuSearch": "bar",
+      "menuScale": "large",
+      "dialogBackdrop": "blur",
+      "tooltipStyle": "surface",
+      "tabStyle": "line",
+      "badgeStyle": "soft-outline",
+      "tableHeader": "filled"
+    },
+    "stripe": {
+      "brand": "#533afd",
+      "neutralHue": 260,
+      "successSeed": "#228403",
+      "dangerSeed": "#df1b41",
+      "neutralTint": 2,
+      "lightBg": 100,
+      "bodyFont": "Inter",
+      "monoFont": "Source Code Pro",
+      "radiusPx": 8,
+      "roleControl": "lg",
+      "roleItem": "sm",
+      "roleCard": "xl",
+      "surfaceShadow": "low",
+      "focusStyle": "duo",
+      "focusInputWidth": 4,
+      "focusInputStrength": 35,
+      "pickerCaret": "double",
+      "tabStyle": "line",
+      "tabsColor": "accent",
+      "badgeStyle": "soft-outline",
+      "badgeShape": "rounded"
+    },
+    "linear": {
+      "brand": "#5e6ad2",
+      "neutralHue": 262,
+      "successSeed": "#27a644",
+      "dangerSeed": "#eb5757",
+      "bodyFont": "Inter",
+      "radiusPx": 8,
+      "roleCard": "xl",
+      "surfaceShadow": "low",
+      "focusWidth": 1,
+      "focusInputStyle": "border",
+      "cursorControls": "default",
+      "cursorDisabled": "default",
+      "disabledTreatment": "fade",
+      "buttonRadius": "pill",
+      "inputHover": "border",
+      "menuSearch": "prompt",
+      "dialogPosition": "top",
+      "tooltipStyle": "surface",
+      "tabStyle": "pill",
+      "badgeStyle": "outline"
+    },
+    "vercel": {
+      "brand": "#0072f5",
+      "buttonColor": "neutral",
+      "selectionColor": "neutral",
+      "successSeed": "#45a557",
+      "warningSeed": "#ffb224",
+      "dangerSeed": "#e5484d",
+      "neutralTint": 0,
+      "lightBg": 100,
+      "darkBg": 0,
+      "iconStroke": 2.25,
+      "radiusPx": 8,
+      "roleItem": "md",
+      "roleSurface": "xl",
+      "roleCard": "xl",
+      "density": "comfortable",
+      "focusInputWidth": 3,
+      "spinnerStyle": "blades",
+      "segmentedTrack": "outline",
+      "checkboxColor": "neutral",
+      "radioColor": "neutral",
+      "cardSelected": "outline-tint",
+      "cardControl": "end",
+      "inputHover": "border",
+      "sliderColor": "neutral",
+      "menuSearch": "prompt",
+      "tabStyle": "line"
+    },
+    "airbnb": {
+      "brand": "#ff385c",
+      "buttonColor": "neutral",
+      "selectionColor": "neutral",
+      "successSeed": "#038026",
+      "warningSeed": "#eb6100",
+      "dangerSeed": "#d7251c",
+      "neutralTint": 0,
+      "preserveSeed": true,
+      "lightBg": 100,
+      "darkBg": 5,
+      "bodyFont": "Plus Jakarta Sans",
+      "radiusPx": 16,
+      "roleSurface": "md",
+      "roleCard": "xl",
+      "density": "comfortable",
+      "spacingUnit": 4.5,
+      "surfaceEdge": "none",
+      "surfaceShadow": "low",
+      "focusColor": "neutral",
+      "focusInputStyle": "border",
+      "focusInputBorderWidth": 2,
+      "selectionHighlight": "browser",
+      "mobileDialogs": "sheet",
+      "linkUnderline": "always",
+      "linkColor": "neutral",
+      "spinnerStyle": "dots",
+      "segmentedSelected": "raised",
+      "segmentedTrack": "outline",
+      "switchColor": "neutral",
+      "checkboxColor": "neutral",
+      "checkCorner": "square",
+      "radioColor": "neutral",
+      "cardSelected": "outline-tint",
+      "cardControl": "hidden",
+      "inputHover": "border",
+      "numberLayout": "split",
+      "calendarDayShape": "circle",
+      "calendarWeekdays": "double",
+      "sliderThumb": "outline",
+      "sliderColor": "neutral",
+      "menuInset": "full-bleed",
+      "modalMotion": {
+        "pattern": "slide",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "popoverMotion": {
+        "pattern": "slide",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "slide",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tabStyle": "line",
+      "paginationCurrent": "filled",
+      "badgeStyle": "soft",
+      "badgeShape": "rounded"
+    },
+    "github": {
+      "brand": "#1f883d",
+      "neutralHue": 251,
+      "successSeed": "#1f883d",
+      "warningSeed": "#9a6700",
+      "dangerSeed": "#cf222e",
+      "selectionSeed": "#0969da",
+      "neutralTint": 1.4,
+      "preserveSeed": true,
+      "lightBg": 100,
+      "darkBg": 5,
+      "bodyFont": "Mona Sans",
+      "radiusPx": 8,
+      "roleItem": "md",
+      "roleSurface": "xl",
+      "roleCard": "xl",
+      "focusStyle": "duo",
+      "focusInputStyle": "border",
+      "focusInputBorderWidth": 2,
+      "selectionHighlight": "browser",
+      "linkUnderline": "always",
+      "linkColor": "neutral",
+      "progressTrack": "thick",
+      "buttonStyle": "hairline",
+      "segmentedSelected": "raised",
+      "pickerCaret": "double",
+      "menuIndicator": "check-start",
+      "modalMotion": {
+        "pattern": "fade",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "popoverMotion": {
+        "pattern": "fade",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "fade",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tabStyle": "line",
+      "breadcrumbSeparator": "slash",
+      "badgeStyle": "outline",
+      "kbdTreatment": "keycap",
+      "tableHeader": "filled"
+    },
+    "notion": {
+      "brand": "#2783de",
+      "neutralHue": 81,
+      "neutralTint": 0.5,
+      "lightBg": 100,
+      "darkBg": 8.8,
+      "bodyFont": "Inter",
+      "radiusPx": 8,
+      "roleCard": "xl",
+      "spacingUnit": 3.5,
+      "focusInputStyle": "border",
+      "focusInputBorderWidth": 2,
+      "cursorDragging": "grab",
+      "cursorDisabled": "default",
+      "disabledTreatment": "fade",
+      "linkUnderline": "always",
+      "linkColor": "neutral",
+      "menuSearch": "bar",
+      "tabStyle": "pill",
+      "accordionMarkerPosition": "leading",
+      "breadcrumbSeparator": "slash",
+      "badgeStyle": "soft",
+      "badgeShape": "rounded",
+      "kbdTreatment": "text"
+    },
+    "spotify": {
+      "brand": "#1ed760",
+      "successSeed": "#1ed760",
+      "warningSeed": "#ffa42b",
+      "dangerSeed": "#e91429",
+      "neutralTint": 0,
+      "preserveSeed": true,
+      "lightBg": 100,
+      "darkBg": 5.5,
+      "bodyFont": "Figtree",
+      "radiusPx": 8,
+      "roleControl": "full",
+      "rolePanel": "lg",
+      "roleCard": "lg",
+      "density": "comfortable",
+      "surfaceLayers": "tonal",
+      "surfaceEdge": "none",
+      "focusColor": "neutral",
+      "focusStyle": "duo",
+      "focusInputStyle": "ring",
+      "selectionHighlight": "browser",
+      "disabledTreatment": "fade",
+      "linkUnderline": "hover",
+      "linkColor": "neutral",
+      "buttonRadius": "pill",
+      "toggleSelected": "inverse",
+      "inputStyle": "filled",
+      "inputHover": "tint",
+      "sliderColor": "neutral",
+      "modalMotion": {
+        "pattern": "slide",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "popoverMotion": {
+        "pattern": "slide",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tooltipStyle": "surface",
+      "tooltipMotion": {
+        "pattern": "slide",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tabStyle": "line",
+      "badgeStyle": "soft",
+      "badgeShape": "rounded"
+    }
+  },
+  "motion": {
+    "off": {
+      "chartMotion": "none",
+      "linkMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "toastMotion": {
+        "pattern": "none",
+        "enter": 400,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 400,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "toastSwipeMotion": {
+        "duration": 0,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "progressMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "buttonMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "segmentedControlMotion": {
+        "duration": 0,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "switchMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "checkboxMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "inputMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "timePickerMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "colorSwatchPickerMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "calendarMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "sliderMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "modalMotion": {
+        "pattern": "none",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "drawerMotion": {
+        "pattern": "slide",
+        "enter": 0,
+        "curve": {
+          "type": "easing",
+          "ease": [0.22, 1, 0.36, 1]
+        },
+        "exit": 0,
+        "exitEase": [0.22, 1, 0.36, 1]
+      },
+      "popoverMotion": {
+        "pattern": "none",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "none",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.25, 0.1, 0.25, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.25, 0.1, 0.25, 1]
+      },
+      "tabsMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "accordionMotion": {
+        "pattern": "none",
+        "enter": 200,
+        "curve": {
+          "type": "easing",
+          "ease": [0, 0, 0.58, 1]
+        }
+      },
+      "sidebarMotion": {
+        "duration": 0,
+        "ease": [0, 0, 1, 1]
+      },
+      "breadcrumbsMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "tagMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "tableMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "questionnaireMotion": {
+        "duration": 0,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "messageScrollerMotion": {
+        "pattern": "slide",
+        "enter": 0,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 0,
+        "exitEase": [0.7, 0, 0.84, 0]
+      }
+    },
+    "snappy": {
+      "chartMotion": "ease",
+      "linkMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "toastMotion": {
+        "pattern": "slide",
+        "enter": 250,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.23, 1, 0.32, 1]
+      },
+      "toastSwipeMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "progressMotion": {
+        "duration": 300,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "buttonMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "segmentedControlMotion": {
+        "duration": 150,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "switchMotion": {
+        "duration": 150,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "checkboxMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "inputMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "timePickerMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "colorSwatchPickerMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "calendarMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "sliderMotion": {
+        "duration": 150,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "modalMotion": {
+        "pattern": "scale",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 100,
+        "exitEase": [0.23, 1, 0.32, 1]
+      },
+      "drawerMotion": {
+        "pattern": "slide",
+        "enter": 300,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 200,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "popoverMotion": {
+        "pattern": "scale",
+        "enter": 120,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 80,
+        "exitEase": [0.23, 1, 0.32, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "scale",
+        "enter": 100,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 60,
+        "exitEase": [0.23, 1, 0.32, 1]
+      },
+      "tabsMotion": {
+        "duration": 150,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "accordionMotion": {
+        "pattern": "expand",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        }
+      },
+      "sidebarMotion": {
+        "duration": 150,
+        "ease": [0.23, 1, 0.32, 1]
+      },
+      "breadcrumbsMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "tagMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "tableMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "questionnaireMotion": {
+        "duration": 100,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "messageScrollerMotion": {
+        "pattern": "slide",
+        "enter": 150,
+        "curve": {
+          "type": "easing",
+          "ease": [0.23, 1, 0.32, 1]
+        },
+        "exit": 200,
+        "exitEase": [0.4, 0, 1, 1]
+      }
+    },
+    "smooth": {
+      "linkMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "toastMotion": {
+        "pattern": "slide",
+        "enter": 400,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 300,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "toastSwipeMotion": {
+        "duration": 250,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "progressMotion": {
+        "duration": 500,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "buttonMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "segmentedControlMotion": {
+        "duration": 300,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "switchMotion": {
+        "duration": 300,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "checkboxMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "inputMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "timePickerMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "colorSwatchPickerMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "calendarMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "sliderMotion": {
+        "duration": 300,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "modalMotion": {
+        "pattern": "scale",
+        "enter": 300,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 200,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "drawerMotion": {
+        "pattern": "slide",
+        "enter": 500,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 400,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "popoverMotion": {
+        "pattern": "scale",
+        "enter": 200,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "scale",
+        "enter": 200,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 150,
+        "exitEase": [0.32, 0.72, 0, 1]
+      },
+      "tabsMotion": {
+        "duration": 300,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "accordionMotion": {
+        "pattern": "expand",
+        "enter": 300,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        }
+      },
+      "sidebarMotion": {
+        "duration": 300,
+        "ease": [0.32, 0.72, 0, 1]
+      },
+      "breadcrumbsMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "tagMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "tableMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "questionnaireMotion": {
+        "duration": 200,
+        "ease": [0.4, 0, 0.2, 1]
+      },
+      "messageScrollerMotion": {
+        "pattern": "slide",
+        "enter": 300,
+        "curve": {
+          "type": "easing",
+          "ease": [0.32, 0.72, 0, 1]
+        },
+        "exit": 300,
+        "exitEase": [0.32, 0.72, 0, 1]
+      }
+    },
+    "expressive": {
+      "chartMotion": "wobbly",
+      "linkMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "toastMotion": {
+        "pattern": "slide",
+        "enter": 250,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.35
+        },
+        "exit": 200,
+        "exitEase": [0.4, 0, 1, 1]
+      },
+      "toastSwipeMotion": {
+        "duration": 200,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "progressMotion": {
+        "duration": 400,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "buttonMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "segmentedControlMotion": {
+        "duration": 250,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "switchMotion": {
+        "duration": 250,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "checkboxMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "inputMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "timePickerMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "colorSwatchPickerMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "calendarMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "sliderMotion": {
+        "duration": 250,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "modalMotion": {
+        "pattern": "scale",
+        "enter": 250,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.15
+        },
+        "exit": 200,
+        "exitEase": [0.4, 0, 1, 1]
+      },
+      "drawerMotion": {
+        "pattern": "slide",
+        "enter": 300,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.15
+        },
+        "exit": 250,
+        "exitEase": [0.4, 0, 1, 1]
+      },
+      "popoverMotion": {
+        "pattern": "scale",
+        "enter": 200,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.35
+        },
+        "exit": 150,
+        "exitEase": [0.4, 0, 1, 1]
+      },
+      "tooltipMotion": {
+        "pattern": "scale",
+        "enter": 150,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.35
+        },
+        "exit": 100,
+        "exitEase": [0.4, 0, 1, 1]
+      },
+      "tabsMotion": {
+        "duration": 250,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "accordionMotion": {
+        "pattern": "expand",
+        "enter": 200,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.15
+        }
+      },
+      "sidebarMotion": {
+        "duration": 250,
+        "ease": [0.05, 0.7, 0.1, 1]
+      },
+      "breadcrumbsMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "tagMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "tableMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "questionnaireMotion": {
+        "duration": 150,
+        "ease": [0, 0, 0.2, 1]
+      },
+      "messageScrollerMotion": {
+        "pattern": "slide",
+        "enter": 200,
+        "curve": {
+          "type": "spring",
+          "bounce": 0.35
+        },
+        "exit": 200,
+        "exitEase": [0.4, 0, 1, 1]
+      }
+    }
+  }
+}

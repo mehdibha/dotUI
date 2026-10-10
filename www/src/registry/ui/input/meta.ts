@@ -13,26 +13,47 @@ const inputMeta = {
   ],
   registryDependencies: ["focus-styles"],
   dependencies: ["react-aria", "react-stately"],
-  // Shared by every field: TextArea, SearchField, Combobox, DateField and
-  // NumberField all render through Input / InputGroup.
+  // Shared by every field: TextArea, SearchField, Combobox, DateField,
+  // NumberField, OTP cells and the field-style select trigger render through
+  // these slots.
   params: {
     style: {
       kind: "enum",
       default: "outline",
-      values: ["outline", "line", "filled-line-bottom", "filled"] as const,
+      values: [
+        "outline",
+        "raised",
+        "inset",
+        "well",
+        "filled",
+        "indicator",
+        "underline",
+      ] as const,
       description: "The field shell every input wears.",
     },
     hover: {
       kind: "enum",
       default: "none",
-      values: ["none", "border", "tint"] as const,
+      values: ["none", "edge", "tint", "edge-tint"] as const,
     },
-    addon: {
+    height: {
       kind: "enum",
-      default: "inside",
-      values: ["inside", "boxed", "boxed-flush"] as const,
+      default: "controls",
+      values: ["controls", "step", "tall"] as const,
       description:
-        "How an InputGroupAddon sits: floating inside the shell, or a tinted cell at the edge (divided by a hairline, or flush).",
+        "Field height against the control ladder: equal, one rung taller, or four.",
+    },
+    text: {
+      kind: "enum",
+      default: "same",
+      values: ["same", "large"] as const,
+      description: "Field value text: the control text, or one rung above it.",
+    },
+    errorIcon: {
+      kind: "enum",
+      default: "none",
+      values: ["none", "inside"] as const,
+      description: "A danger icon inside an invalid field.",
     },
   },
 } satisfies RegistryItem

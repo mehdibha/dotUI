@@ -4,8 +4,21 @@ import { cleanName } from "@/lib/snapshots/snapshot"
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
+import main from "@/modules/studio/axes/__fixtures__/main-states.json"
+import { STATE_VERSION } from "@/modules/studio/axes/version"
 
 const KEY = "dotui:design-systems"
+const CURRENT = "dotui:current"
+
+const MAIN_DEFAULTS = Object.fromEntries(
+  Object.entries(main.schema).map(([key, { default: value }]) => [key, value]),
+)
+
+/** A state as main stored it: every one of main's keys. */
+const mainState = (diff: Record<string, unknown>) => ({
+  ...MAIN_DEFAULTS,
+  ...diff,
+})
 
 let win: ReturnType<typeof installFakeWindow>
 
@@ -203,6 +216,168 @@ describe("workspace", () => {
       win.seed(KEY, slot(from))
       expect(ws.getWorkspace().unsaved).toBeUndefined()
     }
+  })
+
+  it("migrates main's states and writes them back stamped", async () => {
+    win.seed(
+      KEY,
+      JSON.stringify({
+        schema: 2,
+        systems: [
+          {
+            id: "a",
+            name: "Acme",
+            state: mainState({ inputStyle: "line" }),
+            updatedAt: 1,
+          },
+        ],
+        unsaved: {
+          from: {
+            kind: "link",
+            id: "0123456789",
+            name: "Shared",
+            state: mainState({ inputHover: "border" }),
+          },
+          state: mainState({ buttonStyle: "bevel" }),
+        },
+      }),
+    )
+    const link = {
+      kind: "link",
+      id: "9876543210",
+      name: "Link",
+      state: mainState({ segmentedSelected: "inverse" }),
+    }
+    win.seed(CURRENT, JSON.stringify(link))
+    const ws = await load()
+    const { getCurrent } = await import("./selection")
+    ws.getWorkspace()
+    getCurrent()
+    await ws.upgradeStored()
+    const { systems, unsaved } = ws.getWorkspace()
+    expect(systems[0]!.state).toEqual(
+      parseState({ inputStyle: "underline", inputHover: "none" }),
+    )
+    expect(unsaved!.from).toMatchObject({
+      state: parseState({ inputHover: "edge" }),
+    })
+    expect(unsaved!.state.style).toBe("tactile")
+    expect(getCurrent().state).toEqual(
+      parseState({ segmentedSelected: "inverse" }),
+    )
+    const raw = stored()
+    expect(raw.systems[0].state.version).toBe(STATE_VERSION)
+    expect(raw.unsaved.state.version).toBe(STATE_VERSION)
+    expect(raw.unsaved.from.state.version).toBe(STATE_VERSION)
+    expect(JSON.parse(win.read(CURRENT)!).state.version).toBe(STATE_VERSION)
+    vi.resetModules()
+    expect((await load()).getWorkspace()).toEqual(ws.getWorkspace())
+  })
+
+  it("writes a state back as stored until it is migrated", async () => {
+    const state = mainState({ inputStyle: "line" })
+    win.seed(
+      KEY,
+      JSON.stringify({
+        schema: 2,
+        systems: [{ id: "a", name: "Acme", state, updatedAt: 1 }],
+      }),
+    )
+    const ws = await load()
+    ws.rename("a", "Acme 2")
+    expect(stored().systems[0]).toMatchObject({ name: "Acme 2", state })
+    await ws.upgradeStored()
+    expect(stored().systems[0].state).toEqual({
+      version: STATE_VERSION,
+      ...ws.findSystem("a")!.state,
+    })
+  })
+
+  describe("an edit before migrate lands", () => {
+    const seedMain = () => {
+      win.seed(
+        KEY,
+        JSON.stringify({
+          schema: 2,
+          systems: [
+            {
+              id: "a",
+              name: "Acme",
+              state: mainState({ inputStyle: "line" }),
+              updatedAt: 1,
+            },
+          ],
+        }),
+      )
+      win.seed(CURRENT, JSON.stringify({ kind: "system", id: "a" }))
+    }
+    const radius = async (px: number) => {
+      const selection = await import("./selection")
+      selection.edit(
+        parseState({ ...selection.getCurrent().state, radiusPx: px }),
+      )
+    }
+    const migratedLine = parseState({
+      inputStyle: "underline",
+      inputHover: "none",
+    })
+
+    afterEach(() => {
+      vi.doUnmock("@/modules/studio/axes/migrate")
+    })
+
+    it("lands on the migrated state", async () => {
+      seedMain()
+      const ws = await load()
+      await radius(7)
+      expect(ws.findSystem("a")!.state.radiusPx).not.toBe(7)
+      await ws.upgradeStored()
+      ws.flush()
+      expect(ws.findSystem("a")!.state).toEqual({
+        ...migratedLine,
+        radiusPx: 7,
+      })
+      expect(stored().systems[0].state).toEqual({
+        version: STATE_VERSION,
+        ...migratedLine,
+        radiusPx: 7,
+      })
+    })
+
+    it("is dropped if migrate can't load, and the next one retries", async () => {
+      seedMain()
+      vi.doMock("@/modules/studio/axes/migrate", () => {
+        throw new Error("offline")
+      })
+      const ws = await load()
+      await radius(7)
+      await ws.upgradeStored()
+      ws.flush()
+      expect(stored().systems[0].state).toEqual(
+        mainState({ inputStyle: "line" }),
+      )
+      vi.doUnmock("@/modules/studio/axes/migrate")
+      await radius(8)
+      await ws.upgradeStored()
+      ws.flush()
+      expect(stored().systems[0].state).toEqual({
+        version: STATE_VERSION,
+        ...migratedLine,
+        radiusPx: 8,
+      })
+    })
+
+    it("saves a copy that migrates like its source", async () => {
+      seedMain()
+      const ws = await load()
+      const { createFrom } = await import("./selection")
+      const copy = createFrom("Copy", { kind: "system", id: "a" })!
+      expect(stored().systems[1].state).toEqual(
+        mainState({ inputStyle: "line" }),
+      )
+      await ws.upgradeStored()
+      expect(ws.findSystem(copy.id)!.state).toEqual(migratedLine)
+    })
   })
 
   it("reads an unknown format as empty and never writes over it", async () => {

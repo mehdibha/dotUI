@@ -1,8 +1,7 @@
-import { DEFAULTS, parseState } from "@/modules/studio/axes"
+import { parseState } from "@/modules/studio/axes"
 import type { StudioState, StudioStateInput } from "@/modules/studio/axes"
-import type { MotionValues } from "@/modules/studio/axes/motion-presets"
 
-/** A built-in, read-only starting point. */
+/** A built-in, read-only starting point: a diff over Origin (the defaults). */
 export interface Preset {
   id: string
   name: string
@@ -11,20 +10,17 @@ export interface Preset {
   swatch: string
   /** The brand a preset recreates; absent for dotUI's own. */
   inspiredBy?: string
+  /** Only the keys that differ from Origin. */
+  diff: Partial<StudioStateInput>
+  /** The diff over the defaults, validated. */
   state: StudioState
 }
 
-export type PresetMeta = Omit<Preset, "state">
+export type PresetMeta = Omit<Preset, "state" | "diff">
 
-/** Every axis is written out: a missing or unknown key is a type error. */
 export function definePreset({
-  state,
+  diff,
   ...meta
-}: PresetMeta & { state: StudioStateInput }): Preset {
-  return { ...meta, state: parseState(state) }
+}: PresetMeta & { diff: Partial<StudioStateInput> }): Preset {
+  return { ...meta, diff, state: parseState(diff) }
 }
-
-/** Every component's default motion, for a preset to spread. */
-export const DEFAULT_MOTION = Object.fromEntries(
-  Object.entries(DEFAULTS).filter(([key]) => key.endsWith("Motion")),
-) as MotionValues

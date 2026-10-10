@@ -682,13 +682,10 @@ const useChartMotion = createParamValue<Exclude<ChartAnimate, true>>({
   componentName: "chart",
   paramName: "motion",
   defaultValue: "spring",
-  // react-spring's named physics (`spring` is its default config), recharts'
-  // tween on CSS `ease` (what shadcn's charts ride), or none.
+  // react-spring's default config, recharts' tween on CSS `ease` (what
+  // shadcn's charts ride), or none.
   values: {
     spring: { type: "spring", stiffness: 170, damping: 26 },
-    stiff: { type: "spring", stiffness: 210, damping: 20 },
-    wobbly: { type: "spring", stiffness: 180, damping: 12 },
-    slow: { type: "spring", stiffness: 280, damping: 60 },
     ease: { type: "tween", duration: 400, easing: "ease" },
     none: false,
   },

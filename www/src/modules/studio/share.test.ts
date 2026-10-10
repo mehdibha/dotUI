@@ -2,6 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
+import { parseState } from "@/modules/studio/axes"
+import main from "@/modules/studio/axes/__fixtures__/main-states.json"
+import { STATE_VERSION } from "@/modules/studio/axes/version"
 
 const linear = getPreset("linear")!
 
@@ -44,5 +47,35 @@ describe("snapshotOf", () => {
     const content = { name: "Acme", state: linear.state }
     await expect(snapshotOf(content)).rejects.toThrow("500")
     expect(await snapshotOf(content)).toBe("abcdefghij")
+  })
+
+  it("posts the state stamped with its version", async () => {
+    const fetch = vi.fn(async (_url: string, _init: RequestInit) =>
+      Response.json({ id: "abcdefghij" }),
+    )
+    vi.stubGlobal("fetch", fetch)
+    const { snapshotOf } = await import("./share")
+    await snapshotOf({ name: "Acme", state: linear.state })
+    const body = JSON.parse(String(fetch.mock.calls[0]![1].body))
+    expect(body.state).toEqual({ version: STATE_VERSION, ...linear.state })
+  })
+})
+
+describe("fetchSnapshot", () => {
+  it("migrates a snapshot main stored", async () => {
+    const state = {
+      ...Object.fromEntries(
+        Object.entries(main.schema).map(([key, { default: v }]) => [key, v]),
+      ),
+      sliderThumb: "bar",
+    }
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => Response.json({ schema: 1, name: "Acme", state })),
+    )
+    const { fetchSnapshot } = await import("./share")
+    expect((await fetchSnapshot("abcdefghij"))?.state).toEqual(
+      parseState({ sliderThumb: "handle", sliderTrack: "thin" }),
+    )
   })
 })

@@ -1,0 +1,36 @@
+import type { ComponentType } from "react"
+
+import { BOARD_SLUG_PREFIX } from "@/modules/studio/preset/iframe-sync"
+
+import type { BoardId } from "./titles"
+
+type Load = () => Promise<{ default: ComponentType }>
+
+// Iframe-only: each loader carries its chunk's whole dependency map.
+export const BoardsIndex: Record<BoardId, Load> = {
+  color: () => import("./color"),
+  typography: () => import("./typography"),
+  icons: () => import("./icons"),
+  shape: () => import("./shape"),
+  space: () => import("./space"),
+  states: () => import("./states"),
+  motion: () => import("./motion"),
+  buttons: () => import("./buttons"),
+  inputs: () => import("./inputs"),
+  selection: () => import("./selection"),
+  menus: () => import("./menus"),
+  dialogs: () => import("./dialogs"),
+  nav: () => import("./nav"),
+  dates: () => import("./dates"),
+  display: () => import("./display"),
+  feedback: () => import("./feedback"),
+  charts: () => import("./charts"),
+}
+
+/** The board a preview slug names, if any. */
+export const boardOf = (slug: string) =>
+  slug.startsWith(BOARD_SLUG_PREFIX)
+    ? (BoardsIndex as Record<string, Load | undefined>)[
+        slug.slice(BOARD_SLUG_PREFIX.length)
+      ]
+    : undefined

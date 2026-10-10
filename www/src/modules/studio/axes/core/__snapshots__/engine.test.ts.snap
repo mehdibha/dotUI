@@ -1,0 +1,829 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "selection": "accent",
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > color/grouped-page: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+      "light": 96,
+    },
+    "primary": "accent",
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-card": "light-dark(oklch(1 0 0), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--color-popover": "light-dark(oklch(1 0 0), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+    "--overlay-border": "light-dark(transparent, var(--color-border))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > color/white-ink-needs-exact: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > dialogs/bleed-needs-open-footer: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "dialog": {
+      "close": "quiet",
+      "footer": "end-rule",
+      "sections": "divided",
+      "titles": "quiet",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > dialogs/frost-only-frosted: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--studio-scrim-blur": "0",
+  },
+}
+`;
+
+exports[`rules > dialogs/none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "modal": {
+      "mobile": "center",
+      "motion": "none",
+      "position": "center",
+    },
+  },
+  "tokens": {
+    "--studio-modal-enter-duration": "0ms",
+    "--studio-modal-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > icons/stroke-only-line-sets: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": "phosphor",
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+  },
+  "tokens": {
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+  },
+}
+`;
+
+exports[`rules > motion/popover-none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+  },
+  "tokens": {
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > motion/tooltip-none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+      "tip": "tip",
+    },
+  },
+  "tokens": {
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > navigation/surface-needs-shell: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "underline",
+      "text": "same",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "slider": {
+      "thumb": "handle",
+      "track": "thin",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > states/neutral-ring-owns-field-ink: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "overrides": {
+      "color-border-focus": {
+        "job": "solid",
+        "palette": "neutral",
+      },
+      "color-border-focus-muted": {
+        "job": "ui-active",
+        "palette": "neutral",
+      },
+    },
+    "primary": "accent",
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > states/ring-hides-field-ink: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
+}
+`;
+
+exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/buttonStyle-soft: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "raised",
+      "style": "flat",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "raised",
+      "selected": "tone",
+      "style": "flat",
+    },
+  },
+  "tokens": {
+    "--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "style": "flat",
+    },
+    "command": {
+      "inset": "full-bleed",
+      "scale": "default",
+      "search": "field",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "tint",
+      "style": "indicator",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "full-bleed",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "full-bleed",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "inverse",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "inverse",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "solid",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toast": {
+      "motion": "slide",
+      "status": "solid-icon",
+      "surface": "inverse",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "selected": "solid",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-border-control": "var(--neutral-700)",
+    "--color-border-control-hover": "var(--neutral-800)",
+    "--color-card": "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--color-popover": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+    "--overlay-border": "transparent",
+    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+  },
+}
+`;
+
+exports[`rules > style/inputStyle-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceEdge-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceLayers-flat-soft-tactile: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-card": "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--overlay-border": "light-dark(transparent, var(--color-border))",
+    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "tone",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "inverse",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "selected": "inverse",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > type/14-is-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > type/field-text-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;

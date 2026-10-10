@@ -1,5 +1,6 @@
 :root {
   --studio-checkbox-radius: var(--studio-radius-detail);
+  --studio-check-edge: var(--color-border-control);
   --studio-checkbox-card-radius: var(--studio-radius-field);
   --studio-checkbox-state-duration: 150ms;
   --studio-checkbox-state-ease: cubic-bezier(0.4, 0, 0.2, 1);

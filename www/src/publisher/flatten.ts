@@ -14,6 +14,8 @@
  * component file.
  */
 
+import { cn } from "tailwind-variants"
+
 import type { Density, EnumParamDef, RegistryItem } from "@/registry/types"
 
 import type {
@@ -42,6 +44,86 @@ function mergeClass(
   if (combined.length === 0) return undefined
   if (combined.length === 1) return combined[0]
   return combined
+}
+
+/** Drops each class a later one overrides, as tv's merge would at runtime,
+ *  keeping the value's array groups. */
+function dropOverriddenClasses(value: ClassValue): ClassValue {
+  const groups = toClassArray(value)
+  const tokens = groups.flatMap((group, at) =>
+    group
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((token) => ({ at, token })),
+  )
+  const kept = (cn(tokens.map((t) => t.token).join(" ")) ?? "")
+    .split(" ")
+    .filter(Boolean)
+  if (kept.length === tokens.length) return value
+  // The survivors keep their order, so match them from the end.
+  const survives = new Set<number>()
+  for (let i = tokens.length - 1, j = kept.length - 1; i >= 0 && j >= 0; i--)
+    if (tokens[i]!.token === kept[j]) {
+      survives.add(i)
+      j--
+    }
+  const out = groups
+    .map((_, at) =>
+      tokens
+        .filter((t, i) => t.at === at && survives.has(i))
+        .map((t) => t.token)
+        .join(" "),
+    )
+    .filter(Boolean)
+  return Array.isArray(value) ? out : out.join(" ")
+}
+
+const dropOverriddenSlice = (value: VariantSliceValue): VariantSliceValue =>
+  isSlotMap(value)
+    ? Object.fromEntries(
+        Object.entries(value).map(([k, v]) => [k, dropOverriddenClasses(v)]),
+      )
+    : dropOverriddenClasses(value)
+
+/** Exported code never carries two conflicting classes in one value: the
+ *  density and param layers concatenate onto the base. */
+export function dropOverridden(layer: TvLayer): TvLayer {
+  return {
+    ...layer,
+    ...(layer.base !== undefined && {
+      base: dropOverriddenClasses(layer.base),
+    }),
+    ...(layer.slots && {
+      slots: Object.fromEntries(
+        Object.entries(layer.slots).map(([k, v]) => [
+          k,
+          dropOverriddenClasses(v),
+        ]),
+      ),
+    }),
+    ...(layer.variants && {
+      variants: Object.fromEntries(
+        Object.entries(layer.variants).map(([name, values]) => [
+          name,
+          Object.fromEntries(
+            Object.entries(values).map(([k, v]) => [k, dropOverriddenSlice(v)]),
+          ),
+        ]),
+      ),
+    }),
+    ...(layer.compoundVariants && {
+      compoundVariants: layer.compoundVariants.map((cv) =>
+        Object.fromEntries(
+          Object.entries(cv).map(([k, v]) => [
+            k,
+            k === "class" || k === "className"
+              ? dropOverriddenClasses(v as ClassValue)
+              : v,
+          ]),
+        ),
+      ),
+    }),
+  }
 }
 
 function isSlotMap(

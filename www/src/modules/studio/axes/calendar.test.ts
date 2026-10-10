@@ -1,106 +1,157 @@
 import { describe, expect, test } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
-import { publish, selectPublishable } from "@/publisher/publish"
-import type { PublishPreset } from "@/publisher/types"
+import calendarMeta from "@/registry/ui/calendar/meta"
+import { calendarStyles, DATE_CELLS } from "@/registry/ui/calendar/styles"
+import { timePickerStyles } from "@/registry/ui/time-picker/styles"
+import { flatten } from "@/publisher/flatten"
+import type { ClassValue } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
+import {
+  TODAY_COLOR_OPTIONS,
+  TODAY_OPTIONS,
+  WEEKDAY_OPTIONS,
+} from "./calendar.meta"
 import { DEFAULT_STATE, parseState } from "./index"
 
-describe("calendar + pickers axes", () => {
-  test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+const classes = (value: string) => new Set(value.split(/\s+/))
+const tokens = (value: ClassValue | undefined): string[] =>
+  Array.isArray(value)
+    ? value.flatMap(tokens)
+    : typeof value === "string"
+      ? value.split(/\s+/).filter(Boolean)
+      : []
+
+async function published(name: string) {
+  const { publishable } = await publishables[name]!()
+  return flatten({
+    stylesConfig: publishable.stylesConfig,
+    meta: publishable.meta,
+    density: "default",
+    paramSelections: {},
+  })
+}
+const dateCells = DATE_CELLS.split(/\s+/)
+
+/** Range-end fills with no outside-month guard: RAC flags an outside-month
+ *  range end selection-start/end but never selected, and it draws no band. */
+const unguardedRangeEnds = (classList: string[]) =>
+  classList.filter((token) => {
+    const parts = token.split(":")
+    const utility = parts.at(-1) ?? ""
+    return (
+      /^(in-)?selection-(start|end)$/.test(
+        parts.find((p) => /selection-(start|end)$/.test(p)) ?? "",
+      ) &&
+      /^(bg|text)-/.test(utility) &&
+      !parts.some((p) => /^not-(in-)?outside-month$/.test(p))
+    )
+  })
+
+describe("date & time axes", () => {
+  test("Origin resolves to the registry defaults and no tokens", () => {
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.calendar).toEqual({
-      dayShape: "rounded",
-      today: "none",
+      dayShape: "same",
+      today: "fill",
       weekdays: "single",
     })
-    expect(ds.componentParams.select).toEqual({ caret: "chevron" })
     expect(ds.tokens).toEqual({})
+    expect(ds.color?.scopes).toBeUndefined()
   })
 
-  test("selections land on the calendar and select params", () => {
-    const ds = resolveDesignSystem(
-      parseState({
-        calendarDayShape: "circle",
-        calendarToday: "ring",
-        calendarWeekdays: "double",
-        pickerCaret: "double",
-      }),
-    )
-    expect(ds.componentParams.calendar).toEqual({
-      dayShape: "circle",
-      today: "ring",
-      weekdays: "double",
+  test("today's marker and color fold into one registry param", () => {
+    const values = calendarMeta.params.today.values as readonly string[]
+    for (const { value: marker } of TODAY_OPTIONS)
+      for (const { value: color } of TODAY_COLOR_OPTIONS) {
+        const ds = designSystemOf(
+          parseState({ calendarToday: marker, calendarTodayColor: color }),
+        )
+        const today = ds.componentParams.calendar!.today!
+        expect(today).toBe(
+          color === "selection" ? `${marker}-selection` : marker,
+        )
+        expect(values).toContain(today)
+      }
+  })
+
+  test("weekday labels land on the param the source swap reads", () => {
+    for (const { value } of WEEKDAY_OPTIONS)
+      expect(
+        designSystemOf(parseState({ calendarWeekdays: value })).componentParams
+          .calendar!.weekdays,
+      ).toBe(value)
+  })
+
+  test("a Checked color off the selection leaf scopes onto every date-cell host", () => {
+    const { color } = designSystemOf(parseState({ checkboxColor: "neutral" }))
+    expect(color?.scopes).toEqual({
+      checkbox: "neutral",
+      calendar: "neutral",
+      "range-calendar": "neutral",
+      "time-picker-columns": "neutral",
+      "choice-card": "neutral",
     })
-    expect(ds.componentParams.select).toEqual({ caret: "double" })
-  })
-})
-
-const shipped = async (name: string, tokens: Record<string, string> = {}) => {
-  const preset: PublishPreset = { density: "default", componentParams: {} }
-  const mod = await publishables[name]?.()
-  if (!mod) throw new Error(`${name} is not publishable`)
-  const { item } = publish({
-    publishable: selectPublishable(mod, preset),
-    preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
-  })
-  return item.files?.[0]?.content ?? ""
-}
-
-describe("calendar motion", () => {
-  test("ships shadcn's default timing: no duration or ease class", async () => {
-    const content = await shipped("calendar")
-    expect(content).toContain(
-      "transition-shadow in-data-calendar:hover:bg-accent-muted",
-    )
-    expect(content).not.toMatch(/ (duration|ease)-/)
-    expect(content).not.toContain("--studio-")
   })
 
-  test("a tweak times the day's focus ring", async () => {
-    const { tokens } = resolveDesignSystem(
-      parseState({ calendarMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
-    )
-    expect(await shipped("calendar", tokens)).toContain(
-      "transition-shadow duration-200 ease-out in-data-calendar:hover:bg-accent-muted",
-    )
-  })
-})
-
-describe("picker motion", () => {
-  test("ships today's timing: no class for the time column, 100ms for the swatch ring", async () => {
-    const time = await shipped("time-picker")
-    expect(time).toContain(
-      "outline-hidden transition-colors hover:bg-accent-muted",
-    )
-    expect(time).not.toContain("--studio-")
-    const swatch = await shipped("color-swatch-picker")
-    expect(swatch).toContain(
-      "before:transition-[opacity,scale] before:duration-100 before:content-['']",
-    )
-    expect(swatch).not.toMatch(/ease-/)
-    expect(swatch).not.toContain("--studio-")
+  test("the day cell and the time-picker cell paint one date-cell recipe", () => {
+    const day = classes(calendarStyles({ range: false }).cell())
+    const time = classes(timePickerStyles().item())
+    for (const token of dateCells) {
+      expect(day, token).toContain(token)
+      expect(time, token).toContain(token)
+    }
   })
 
-  test("a tweak times each picker on its own", async () => {
-    const { tokens } = resolveDesignSystem(
-      parseState({
-        timePickerMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
-        colorSwatchPickerMotion: { duration: 150, ease: [0, 0, 0.2, 1] },
-      }),
+  test("range cells draw the band, never the single day's chip", () => {
+    const band = classes(calendarStyles({ range: true }).cell())
+    for (const token of dateCells) expect(band, token).not.toContain(token)
+    expect(band).toContain("selected:bg-selection-muted")
+  })
+
+  test("range ends paint only inside the month", async () => {
+    expect(unguardedRangeEnds(["in-selection-end:bg-selection"])).toHaveLength(
+      1,
     )
-    expect(tokens).toEqual({
-      "--studio-time-picker-state-duration": "200ms",
-      "--studio-time-picker-state-ease": "cubic-bezier(0, 0, 0.2, 1)",
-      "--studio-color-swatch-picker-state-duration": "150ms",
-      "--studio-color-swatch-picker-state-ease": "cubic-bezier(0, 0, 0.2, 1)",
-    })
-    expect(await shipped("time-picker", tokens)).toContain(
-      "transition-colors duration-200 ease-out hover:bg-accent-muted",
-    )
-    expect(await shipped("color-swatch-picker", tokens)).toContain(
-      "before:transition-[opacity,scale] before:ease-out before:content-['']",
-    )
+    expect(
+      unguardedRangeEnds([
+        "in-selection-end:not-in-outside-month:bg-selection",
+      ]),
+    ).toHaveLength(0)
+    const { publishable } = await publishables.calendar!()
+    for (const today of calendarMeta.params.today.values)
+      for (const dayShape of calendarMeta.params.dayShape.values) {
+        const shipped = flatten({
+          stylesConfig: publishable.stylesConfig,
+          meta: publishable.meta,
+          density: "default",
+          paramSelections: { today, dayShape },
+        })
+        const range = shipped.variants?.range as
+          | Record<string, Record<string, ClassValue>>
+          | undefined
+        const classList = [
+          ...Object.values(shipped.slots ?? {}).flatMap(tokens),
+          ...Object.values(range?.true ?? {}).flatMap(tokens),
+        ]
+        expect(unguardedRangeEnds(classList), `${today} ${dayShape}`).toEqual(
+          [],
+        )
+      }
+  })
+
+  test("the shipped day and time cells carry the date-cell recipe", async () => {
+    const calendar = await published("calendar")
+    const time = await published("time-picker")
+    const range = calendar.variants?.range as
+      | Record<string, Record<string, ClassValue>>
+      | undefined
+    const day = new Set(tokens(range?.false?.cell))
+    const item = new Set(tokens(time.slots?.item))
+    for (const token of dateCells) {
+      expect(day, token).toContain(token)
+      expect(item, token).toContain(token)
+    }
   })
 })

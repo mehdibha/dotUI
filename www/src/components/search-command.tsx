@@ -136,7 +136,7 @@ export function SearchCommand({
           <ModalOverlay>
             <ModalBackdrop className="duration-0!" />
             <ModalViewport>
-              <ModalPanel className="mt-[15vh] self-start duration-0! [--studio-modal-background:var(--neutral-100)] [--studio-modal-radius:var(--radius-2xl)] sm:max-w-lg">
+              <ModalPanel className="mt-[15vh] self-start bg-(--neutral-100) duration-0! [--studio-modal-radius:var(--radius-2xl)] [--surface-bg:var(--neutral-100)] sm:max-w-lg">
                 {content}
               </ModalPanel>
             </ModalViewport>

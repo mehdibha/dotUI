@@ -4,14 +4,14 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { DEFAULT_STATE, parseState } from "."
+import { parseState } from "."
 import type { StudioState } from "."
-import { resolveDesignSystem } from "../resolve"
-import { ease } from "./motion"
+import { designSystemOf } from "../resolve"
+import { COMPONENT_MOTION_KEYS } from "./motion"
 
 /* One item as users install it from a studio state. */
 async function ship(name: string, state: Partial<StudioState> = {}) {
-  const ds = resolveDesignSystem(parseState({ ...state }))
+  const ds = designSystemOf(parseState({ ...state }))
   const preset: PublishPreset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -31,82 +31,41 @@ async function ship(name: string, state: Partial<StudioState> = {}) {
   return { code, css }
 }
 
-describe("spinner motion", () => {
-  test("the defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
-  })
-
-  test("the ring ships shadcn's animate-spin", async () => {
-    const { code } = await ship("loader")
-    expect(code).toContain('className="size-full animate-spin"')
-  })
-
-  test("a tweak times the ring's turn with an arbitrary animation", async () => {
-    const { code } = await ship("loader", {
-      loaderMotion: { cycle: 600, ease: ease("ease-in-out") },
-    })
-    expect(code).toContain(
-      "animate-[spin_600ms_cubic-bezier(0.4,0,0.2,1)_infinite]",
+/* Loops carry status: each recipe owns its cycle, nothing retimes it. */
+describe("loops", () => {
+  test("the spinners keep shadcn's 1s turn and their own mechanism", async () => {
+    expect((await ship("loader")).code).toContain(
+      'className="size-full animate-spin"',
     )
-  })
-
-  test("blades and dots keep their mechanism, on the loop's cycle", async () => {
-    const blades = await ship("loader", {
-      spinnerStyle: "blades",
-      loaderMotion: { cycle: 700, ease: ease("ease-in-out") },
-    })
+    const blades = await ship("loader", { spinnerStyle: "blades" })
     expect(blades.code).toContain("animate-loader-blades")
-    expect(blades.css).toContain("loader-blades 700ms steps(8, end) infinite")
-    expect(blades.css).toContain("loader-dots 700ms ease-in-out infinite")
+    expect(blades.css).toContain("loader-blades 1s steps(8, end) infinite")
     expect((await ship("loader", { spinnerStyle: "dots" })).css).toContain(
-      "loader-dots 1000ms ease-in-out infinite",
+      "loader-dots 1s ease-in-out infinite",
     )
   })
-})
 
-describe("skeleton motion", () => {
-  test("the defaults loop on shadcn's animate-pulse timing", async () => {
+  test("the skeleton loops on shadcn's animate-pulse timing", async () => {
     const { css } = await ship("skeleton")
-    // Theme animations: Tailwind drops a theme keyframe nothing names, and
-    // the painter only reaches its loop through a var.
     expect(css).toContain(
-      '"--animate-skeleton-shimmer":"skeleton-shimmer 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite"',
+      '"--animate-skeleton-shimmer":"skeleton-shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"',
     )
     expect(css).toContain(
-      '"--animate-skeleton-pulse":"skeleton-pulse 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite"',
-    )
-    expect(css).toContain(
-      '"--skeleton-animation":"var(--animate-skeleton-shimmer)"',
+      '"--animate-skeleton-pulse":"skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"',
     )
   })
 
-  test("a tweak retimes the skeleton's loop", async () => {
-    const { tokens } = resolveDesignSystem(
-      parseState({
-        skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
-      }),
-    )
-    expect(tokens).toEqual({
-      "--studio-skeleton-loop-duration": "1200ms",
-      "--studio-skeleton-loop-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
-    })
-    const { css } = await ship("skeleton", {
-      skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
-    })
-    expect(css).toContain(
-      "skeleton-pulse 1200ms cubic-bezier(0.4, 0, 0.2, 1) infinite",
-    )
-  })
-
-  test("an attachment in flight pulses on the skeleton's loop", async () => {
+  test("an attachment in flight pulses like the skeleton", async () => {
     expect((await ship("attachment")).code).toContain(
       "group-data-[state=processing]/attachment:animate-pulse group-data-[state=uploading]/attachment:animate-pulse",
     )
-    const { code } = await ship("attachment", {
-      skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
-    })
-    expect(code).toContain(
-      "group-data-[state=uploading]/attachment:animate-[pulse_1200ms_cubic-bezier(0.4,0,0.2,1)_infinite]",
+  })
+
+  test("every component Motion at None leaves the loops running", async () => {
+    const off = Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((k) => [k, "none"]),
     )
+    const { css } = await ship("skeleton", off)
+    expect(css).toContain("skeleton-shimmer 2s")
   })
 })

@@ -1,6 +1,6 @@
 "use client"
 
-/* The `error: message` build of field: identical to base.tsx except that
+/* The `error: icon-message` build of field: identical to base.tsx except that
    FieldError leads with an icon. Keep the two files in step. */
 
 import type React from "react"

@@ -1,5 +1,4 @@
 :root {
-  --studio-modal-background: var(--color-popover);
   --studio-modal-radius: var(--studio-radius-panel);
   --studio-modal-enter-duration: 100ms;
   --studio-modal-exit-duration: 100ms;

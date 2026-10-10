@@ -7,7 +7,7 @@ import * as DisclosureGroupPrimitives from "react-aria-components/DisclosureGrou
 import * as HeadingPrimitives from "react-aria-components/Heading"
 
 import { createParamValue } from "@/lib/styles"
-import { ChevronDownIcon, MinusIcon, PlusIcon } from "@/registry/icons"
+import { ChevronDownIcon, ChevronRightIcon } from "@/registry/icons"
 
 import { useStyles } from "./styles"
 
@@ -16,15 +16,10 @@ import { useStyles } from "./styles"
 const useMarker = createParamValue({
   componentName: "accordion",
   paramName: "marker",
-  defaultValue: "chevron",
+  defaultValue: "trailing-chevron",
   values: {
-    chevron: <ChevronDownIcon />,
-    plus: (
-      <>
-        <PlusIcon className="group-expanded/accordion-item:hidden" />
-        <MinusIcon className="hidden group-expanded/accordion-item:block" />
-      </>
-    ),
+    "trailing-chevron": <ChevronDownIcon />,
+    "leading-caret": <ChevronRightIcon />,
   },
 })
 

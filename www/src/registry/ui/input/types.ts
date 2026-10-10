@@ -40,7 +40,14 @@ export interface TextAreaProps extends React.ComponentProps<
 /**
  * An addon rendered inside an `InputGroup` alongside the input.
  */
-export interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
+export interface InputGroupAddonProps extends React.ComponentProps<"div"> {
+  /**
+   * Inline inside the field, or a tinted cell divided by the field's edge.
+   * Shells without a side edge (underline, filled) keep cells inline.
+   * @default "inline"
+   */
+  variant?: "inline" | "cell"
+}
 
 /**
  * A date input groups the editable date segments within a date field.

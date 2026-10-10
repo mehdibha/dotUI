@@ -51,7 +51,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("", className)} {...props}>
       <CardContent className="@container space-y-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button variant="primary">
             Button
             <ArrowRightIcon />

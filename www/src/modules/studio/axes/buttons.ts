@@ -1,73 +1,119 @@
-/* Buttons — the synced family's look: Button sets it, and the toggles,
-   groups and segmented control on the same page stay coherent with it. Each
-   style is a real system's recipe, copied whole (fills, edges, hover and
-   press); the variant enum stays API.
+/* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
+   here writes both). Style picks a real system's recipe, copied whole; an
+   open style (Flat, Hairline) lets Secondary and Press swap in, a closed one
+   draws its own. Under Ledge, groups always sit apart. */
 
-   Engine: `style` is an enum param on both `button` and `toggle-button` (a
-   synced group — one axis writes both); radius rides on the shared
-   `--studio-btn-radius` var, state timing on the `--studio-button-state-*`
-   vars both read. */
-
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's button and toggle: `transition-all` on Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
-  buttonRadius: "auto",
-  buttonMotion: MOTION,
+  buttonSecondary: "as-style",
+  buttonRadius: "same",
+  buttonPress: "as-style",
+  buttonCase: "sentence",
 }
 
-/* Source-verified in Oct 2026: flat to deep, then Duolingo's slab. */
-export const STYLE_OPTIONS = [
-  { value: "flat", label: "Flat" },
-  { value: "hairline", label: "Hairline", description: "Primer" },
-  { value: "rim-light", label: "Rim light", description: "Untitled UI" },
-  { value: "gloss", label: "Gloss", description: "Clerk" },
-  { value: "bevel", label: "Bevel", description: "Polaris" },
-  { value: "ledge", label: "Ledge", description: "Duolingo" },
-]
+export const STYLE_VALUES = [
+  "flat",
+  "hairline",
+  "rim-light",
+  "gloss",
+  "bevel",
+  "ledge",
+] as const
 
-export const RADIUS_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "sharp", label: "Sharp" },
-  { value: "round", label: "Round" },
-  { value: "pill", label: "Pill" },
-]
+/** Styles that draw their own secondary and press. */
+export const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
 
-const RADIUS_TOKENS: Record<string, string> = {
-  sharp: "0",
-  round: "var(--radius-lg)",
-  pill: "var(--radius-full)",
-}
+export const SECONDARY_VALUES = [
+  "as-style",
+  "outline",
+  "raised",
+  "soft",
+  "tonal",
+  "solid",
+] as const
 
-/* xs buttons under a picked radius: round steps down a rung, as nova's do. */
-const XS_RADIUS_TOKENS: Record<string, string> = {
-  sharp: "0",
-  round: "var(--radius-md)",
-  pill: "var(--radius-full)",
-}
+export const RADIUS_VALUES = ["same", "pill"] as const
+
+export const PRESS_VALUES = ["as-style", "nudge", "scale"] as const
+
+export const CASE_VALUES = ["sentence", "uppercase"] as const
 
 export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
-  buttonStyle: oneOf(STYLE_OPTIONS),
-  buttonRadius: oneOf(RADIUS_OPTIONS),
-  buttonMotion: STATE_CHANGE,
+  buttonStyle: oneOf(STYLE_VALUES),
+  buttonSecondary: oneOf(SECONDARY_VALUES),
+  buttonRadius: oneOf(RADIUS_VALUES),
+  buttonPress: oneOf(PRESS_VALUES),
+  buttonCase: oneOf(CASE_VALUES),
 }
 
-export function resolveButtons(state: StudioState): Resolved {
-  const selection = { style: state.buttonStyle }
-  const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
-  const radius = RADIUS_TOKENS[state.buttonRadius]
-  if (radius) {
-    tokens["--studio-btn-radius"] = radius
-    tokens["--studio-btn-xs-radius"] = XS_RADIUS_TOKENS[state.buttonRadius]!
+export function resolveButtons(state: Effective): Resolved {
+  const style = state.buttonStyle
+  const selection = {
+    style,
+    secondary:
+      state.buttonSecondary === "as-style" ? style : state.buttonSecondary,
+    press: state.buttonPress,
+    case: state.buttonCase,
   }
+  const segments = { segments: style === "ledge" ? "gapped" : "attached" }
   return {
-    tokens,
-    params: { button: selection, "toggle-button": selection },
+    tokens:
+      state.buttonRadius === "pill"
+        ? {
+            "--studio-btn-radius": "var(--radius-full)",
+            "--studio-btn-xs-radius": "var(--radius-full)",
+          }
+        : {},
+    params: {
+      button: selection,
+      "toggle-button": selection,
+      group: segments,
+      "toggle-button-group": segments,
+    },
   }
 }
+
+const closed = { key: "buttonStyle", in: CLOSED_STYLES }
+
+export const chapter = defineChapter({
+  id: "buttons",
+  defaults: BUTTON_DEFAULTS,
+  schema: BUTTON_SCHEMA,
+  resolve: resolveButtons,
+  rules: [
+    {
+      // Under a neutral primary the two read as one button.
+      id: "buttons/solid-needs-brand-primary",
+      target: "buttonSecondary",
+      when: {
+        all: [
+          { key: "buttonColor", in: ["neutral"] },
+          { key: "buttonStyle", notIn: CLOSED_STYLES },
+        ],
+      },
+      effect: { kind: "exclude", options: ["solid"], fallback: "as-style" },
+      cause: "buttonColor",
+    },
+    {
+      // Two background recipes would ship.
+      id: "buttons/closed-style-owns-secondary",
+      target: "buttonSecondary",
+      when: closed,
+      effect: { kind: "hide", value: "as-style" },
+      cause: "buttonStyle",
+    },
+    {
+      // Ledge and Nudge would both write translate.
+      id: "buttons/closed-style-owns-press",
+      target: "buttonPress",
+      when: closed,
+      effect: { kind: "hide", value: "as-style" },
+      cause: "buttonStyle",
+    },
+  ],
+})

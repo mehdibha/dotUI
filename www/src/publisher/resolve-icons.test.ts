@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 
+import { iconLibraries, registryIcons } from "../registry/icons/icon-map"
 import { resolveIconImports } from "./resolve-icons"
 
 const SINGLE = `import { ChevronDownIcon } from "@/components/icons";\nexport {};`
@@ -121,4 +122,41 @@ describe("resolveIconImports", () => {
       expect(out).not.toContain("function ChevronDownIcon")
     }
   })
+
+  it("imports Material Symbols from the outlined set", () => {
+    const out = resolveIconImports(MULTILINE, "material-symbols")
+    expect(out).toContain(
+      'import { Error as CircleAlertIcon, CheckCircle as CircleCheckIcon, Close as XIcon } from "@nine-thirty-five/material-symbols-react/outlined";',
+    )
+  })
+
+  it("imports Octicons, skipping the alias when names match", () => {
+    const out = resolveIconImports(MULTILINE, "octicons")
+    expect(out).toContain(
+      'import { AlertIcon as CircleAlertIcon, CheckCircleIcon as CircleCheckIcon, XIcon } from "@primer/octicons-react";',
+    )
+  })
+})
+
+describe("registryIcons", () => {
+  it("names a real export of every library's package", async () => {
+    const modules = {
+      lucide: await import("lucide-react"),
+      remix: await import("@remixicon/react"),
+      tabler: await import("@tabler/icons-react"),
+      hugeicons: await import("@hugeicons/core-free-icons"),
+      phosphor: await import("@phosphor-icons/react"),
+      "material-symbols":
+        await import("@nine-thirty-five/material-symbols-react/outlined"),
+      octicons: await import("@primer/octicons-react"),
+    } satisfies Record<(typeof iconLibraries)[number]["name"], object>
+    const missing: string[] = []
+    for (const [key, names] of Object.entries(registryIcons))
+      for (const { name: library } of iconLibraries) {
+        const name = names[library]
+        if (!name || !(name in modules[library]))
+          missing.push(`${key} → ${library}: ${name}`)
+      }
+    expect(missing).toEqual([])
+  }, 30_000)
 })

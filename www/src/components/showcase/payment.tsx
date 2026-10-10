@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
   Radio,
   RadioControl,
@@ -30,7 +31,7 @@ const inputClassName =
 // Each segment of the joined card field: lifts above the dividers and shows its
 // own focus ring on focus, instead of ringing the whole group.
 const segmentClassName =
-  "relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--studio-input-multiline-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus"
+  "relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--studio-input-multiline-radius) focus-within:border-transparent focus-within:ring-2 focus-within:ring-border-focus"
 
 // The whole row (radio dot + icon + label) is one click target: nesting them
 // inside RadioControl (rather than as siblings) makes its native label wrap
@@ -44,6 +45,10 @@ const methodControlClassName =
 export function Payment({ className, ...props }: React.ComponentProps<"div">) {
   const [method, setMethod] = useState("card")
   const [announcement, setAnnouncement] = useState("")
+  // The joined fields wear Inputs › Style through the multiline shell.
+  const joinedFieldClassName = useInputStyles()().textArea({
+    className: "relative min-h-0 cursor-auto p-0 text-fg",
+  })
 
   // py-1.5 matches CardContent's px-1.5 so the radio rows sit in a uniform 6px
   // frame — same gap on all four sides and between rows/separators.
@@ -95,7 +100,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     border with gap-0 dividers — the Stripe-style combined card input.
                     Each segment rings on its own focus (z-10 lifts it above the
                     dividers) rather than ringing the whole group. */}
-                <div className="relative rounded-(--studio-input-multiline-radius) border border-border-control bg-field text-fg">
+                <div className={joinedFieldClassName}>
                   <label
                     className={cn(
                       segmentClassName,
@@ -118,7 +123,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-bl-(--studio-input-multiline-radius) border-t border-border-control",
+                        "rounded-bl-(--studio-input-multiline-radius) border-t-(length:--studio-control-stroke) border-border-control",
                       )}
                     >
                       <input
@@ -132,7 +137,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "gap-2 rounded-br-(--studio-input-multiline-radius) border-t border-l border-border-control",
+                        "gap-2 rounded-br-(--studio-input-multiline-radius) border-t-(length:--studio-control-stroke) border-l-(length:--studio-control-stroke) border-border-control",
                       )}
                     >
                       <input
@@ -232,7 +237,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                 <Label>Billing address</Label>
                 {/* Same joined-field pattern as the card information group:
                     country select on top, address rows below, one shared border. */}
-                <div className="relative rounded-(--studio-input-multiline-radius) border border-border-control bg-field text-fg">
+                <div className={joinedFieldClassName}>
                   <Select
                     defaultValue="fr"
                     aria-label="Country or region"
@@ -253,7 +258,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                   <label
                     className={cn(
                       segmentClassName,
-                      "border-t border-border-control",
+                      "border-t-(length:--studio-control-stroke) border-border-control",
                     )}
                   >
                     <input
@@ -265,7 +270,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                   <label
                     className={cn(
                       segmentClassName,
-                      "border-t border-border-control",
+                      "border-t-(length:--studio-control-stroke) border-border-control",
                     )}
                   >
                     <input
@@ -278,7 +283,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-bl-(--studio-input-multiline-radius) border-t border-border-control",
+                        "rounded-bl-(--studio-input-multiline-radius) border-t-(length:--studio-control-stroke) border-border-control",
                       )}
                     >
                       <input
@@ -290,7 +295,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-br-(--studio-input-multiline-radius) border-t border-l border-border-control",
+                        "rounded-br-(--studio-input-multiline-radius) border-t-(length:--studio-control-stroke) border-l-(length:--studio-control-stroke) border-border-control",
                       )}
                     >
                       <input

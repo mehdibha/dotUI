@@ -48,9 +48,10 @@ const store = createPersistedStore<Selection>("dotui:current", ORIGIN_VIEW, {
       return ORIGIN_VIEW
     }
   },
-  encode: (sel) => JSON.stringify(sel),
+  encode: (sel) => JSON.stringify(sel, workspace.stampStates),
   onWriteError: workspace.storageFailed,
 })
+workspace.holdsStates(store)
 
 const getSelection = store.get
 
@@ -173,6 +174,20 @@ export function useCurrent(): Current {
 export function edit(next: StudioState): void {
   const current = getCurrent()
   if (sameState(current.state, next)) return
+  // Read before `migrate` landed: the change lands on the upgrade, or is
+  // dropped if it can't load (the next edit tries again).
+  if (workspace.isUnmigrated(current.state)) {
+    const changes = Object.entries(next).filter(
+      ([key, value]) =>
+        !Object.is(current.state[key as keyof StudioState], value),
+    )
+    void workspace.upgradeStored().then(() => {
+      const { key, state } = getCurrent()
+      if (key === current.key && !workspace.isUnmigrated(state))
+        edit({ ...state, ...Object.fromEntries(changes) })
+    })
+    return
+  }
   if (current.doc) {
     workspace.setState(current.doc.id, next)
     return

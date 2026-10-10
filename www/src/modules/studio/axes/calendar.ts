@@ -1,65 +1,62 @@
-/* Calendar — the month grid's three decisions. Day shape: radius-following
-   rounded square (shadcn/react-day-picker, Geist — dotUI today) vs circle
-   (Material 3, iOS, Spectrum) vs hard square (Carbon, flatpickr); the range
-   band derives from it. Today marker: none (dotUI today) vs outline ring
-   (Material 3, Ant) vs muted fill (shadcn) vs accent numeral (iOS). Weekday
-   header: S M T (Material, iOS) vs Su Mo (react-day-picker) vs Sun Mon
-   (Carbon).
+/* Date & time — the month grid: a day cell's shape, how today is marked and
+   in which color, and the weekday labels. The selected day, range ends and
+   band, and the time picker's selected cell paint the checks fill (O5): a
+   Checked color off the selection leaf scopes onto every date-cell host.
 
-   Engine: three enum params on `calendar`; `weekdays` rewrites the shipped
-   grid's `weekdayStyle` and header label (calendar/meta.ts `source`). The
-   day's focus ring eases on the `--studio-calendar-state-*` vars. */
+   Engine: `dayShape`, `today` (marker × color, one composite enum) and
+   `weekdays` are enum params on `calendar`; `weekdays` rewrites the shipped
+   grid's `weekdayStyle` and header label (calendar/meta.ts `source`). */
 
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { fillScope } from "./color"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
-/* shadcn's day is a ghost Button: Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
-
 export const CALENDAR_DEFAULTS = {
-  calendarDayShape: "rounded",
-  calendarToday: "none",
+  calendarDayShape: "same",
+  calendarToday: "fill",
+  calendarTodayColor: "neutral",
   calendarWeekdays: "single",
-  calendarMotion: MOTION,
 }
 
-export const DAY_SHAPE_OPTIONS = [
-  { value: "rounded", label: "Rounded" },
-  { value: "circle", label: "Circle" },
-  { value: "square", label: "Square" },
-]
+export const DAY_SHAPE_VALUES = ["same", "circle"] as const
 
-export const TODAY_OPTIONS = [
-  { value: "none", label: "None" },
-  { value: "ring", label: "Ring" },
-  { value: "fill", label: "Fill" },
-  { value: "numeral", label: "Numeral" },
-]
+export const TODAY_VALUES = ["fill", "ring", "numeral", "dot"] as const
 
-export const WEEKDAY_OPTIONS = [
-  { value: "single", label: "S" },
-  { value: "double", label: "Su" },
-  { value: "triple", label: "Sun" },
-]
+export const TODAY_COLOR_VALUES = ["neutral", "selection"] as const
+
+export const WEEKDAY_VALUES = ["single", "double", "triple"] as const
 
 export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
-  calendarDayShape: oneOf(DAY_SHAPE_OPTIONS),
-  calendarToday: oneOf(TODAY_OPTIONS),
-  calendarWeekdays: oneOf(WEEKDAY_OPTIONS),
-  calendarMotion: STATE_CHANGE,
+  calendarDayShape: oneOf(DAY_SHAPE_VALUES),
+  calendarToday: oneOf(TODAY_VALUES),
+  calendarTodayColor: oneOf(TODAY_COLOR_VALUES),
+  calendarWeekdays: oneOf(WEEKDAY_VALUES),
 }
 
-export function resolveCalendar(state: StudioState): Resolved {
+/** The checks fill's scopes: every element that hosts date cells. */
+const DATE_CELL_HOSTS = ["calendar", "range-calendar", "time-picker-columns"]
+
+export function resolveCalendar(state: Effective): Resolved {
   return {
-    tokens: resolveStateChange("calendar", state.calendarMotion, MOTION),
     params: {
       calendar: {
         dayShape: state.calendarDayShape,
-        today: state.calendarToday,
+        today:
+          state.calendarTodayColor === "selection"
+            ? `${state.calendarToday}-selection`
+            : state.calendarToday,
         weekdays: state.calendarWeekdays,
       },
     },
+    color: fillScope(state, DATE_CELL_HOSTS, state.checkboxColor),
   }
 }
+
+export const chapter = defineChapter({
+  id: "calendar",
+  defaults: CALENDAR_DEFAULTS,
+  schema: CALENDAR_SCHEMA,
+  resolve: resolveCalendar,
+})

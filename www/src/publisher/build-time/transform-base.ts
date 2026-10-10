@@ -483,7 +483,25 @@ function rewriteImports(sourceFile: SourceFile): Set<string> {
       names.add(local)
     }
   }
+  mergeValueImports(sourceFile)
   return names
+}
+
+/** Two value imports of one module (`ui/input` and `ui/input/styles` both land
+ *  on `@/components/ui/input`) become one. */
+function mergeValueImports(sourceFile: SourceFile): void {
+  const first = new Map<string, ImportDeclaration>()
+  for (const imp of sourceFile.getImportDeclarations()) {
+    if (imp.isTypeOnly() || imp.getDefaultImport() || imp.getNamespaceImport())
+      continue
+    const kept = first.get(imp.getModuleSpecifierValue())
+    if (!kept) {
+      first.set(imp.getModuleSpecifierValue(), imp)
+      continue
+    }
+    kept.addNamedImports(imp.getNamedImports().map((n) => n.getStructure()))
+    imp.remove()
+  }
 }
 
 /* ----------------------- main transform ----------------------- */

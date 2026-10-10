@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { ButtonProps } from "@/components/ui/button";
 import { fieldStyles } from "@/components/ui/field";
+import { inputStyles } from "@/components/ui/input";
 import {
   ListBox,
   ListBoxItem,
@@ -47,9 +48,16 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 /* -------------------------------------------------------------------------- */
 
-const SelectTrigger = (props: ButtonProps) => {
+const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
+  const { buttonTrigger } = inputStyles();
   return (
-    <Button {...props}>
+    <Button
+      size={size}
+      className={composeRenderProps(className, (className) =>
+        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+      )}
+      {...props}
+    >
       {composeRenderProps(props.children, (children) => {
         return (
           <>
@@ -77,7 +85,7 @@ const SelectValue = <T extends object>({
       data-slot="select-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex-1 truncate text-left placeholder-shown:text-fg-muted",
+          "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
           className,
         ),
       )}

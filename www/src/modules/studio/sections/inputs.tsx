@@ -1,75 +1,76 @@
 "use client"
 
-/* Inputs — the field family's page: every field renders through Input /
-   InputGroup, so Style (the shell) and Hover reach them all. Addons fold the
-   group's layout and divider into one pick; steppers and OTP cells are the
-   two fields with a layout of their own. Focus and invalid live in States. */
+/* Inputs — the field shell every text field, picker trigger and OTP cell
+   wears; members decide structure. Focus and invalid live in States. */
 
+import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import { useStyles } from "@/registry/ui/input/styles"
 
-import { HOVER_OPTIONS, STYLE_OPTIONS } from "../axes/inputs"
-import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
-import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
+import { STYLE_OPTIONS as BUTTON_STYLE_OPTIONS } from "../axes/buttons.meta"
+import { ERROR_OPTIONS, LABEL_OPTIONS } from "../axes/field.meta"
+import { AUTO_STYLE } from "../axes/inputs"
 import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
-import type { Studio, StudioState } from "../state"
+  HEIGHT_OPTIONS,
+  HOVER_OPTIONS,
+  STYLE_OPTIONS,
+} from "../axes/inputs.meta"
+import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
+import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
+import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
+import { DialGlyph, DialSelect } from "../dial"
+import type { RowMap } from "../family-page"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-const SHELL: Record<string, string> = {
-  outline: "rounded-md border border-border-control bg-field",
-  line: "border-b border-border-control",
-  "filled-line-bottom": "rounded-t-md border-b border-border-control bg-field",
-  filled: "rounded-md bg-field",
+const labelOf = (options: { value: string; label: string }[], value: string) =>
+  options.find((option) => option.value === value)?.label ?? value
+
+/* One stable context per shell, so the registry's style cache hits. */
+const contexts = new Map<
+  string,
+  { params: { input: { style: string } }; density: "default" }
+>()
+function shellContext(style: string) {
+  let context = contexts.get(style)
+  if (!context)
+    contexts.set(
+      style,
+      (context = { params: { input: { style } }, density: "default" }),
+    )
+  return context
 }
 
-/** A field wearing one shell, with a line of placeholder. */
-function FieldGlyph({ style, large }: { style: string; large?: boolean }) {
+/** A field drawn by the registry's own recipe for one shell. */
+function ShellSpecimen({
+  style,
+  className = "h-4.5 w-7",
+}: {
+  style: string
+  className?: string
+}) {
   return (
-    <span
-      className={cn(
-        "flex shrink-0 items-center",
-        large ? "h-6 w-20 px-2" : "h-4 w-7 px-1",
-        SHELL[style],
-      )}
-    >
-      <span
-        className={cn("rounded-full bg-fg/25", large ? "h-1.5 w-8" : "h-1 w-3")}
-      />
+    <DesignSystemContext.Provider value={shellContext(style)}>
+      <Shell className={cn("pointer-events-none", className)} />
+    </DesignSystemContext.Provider>
+  )
+}
+
+function Shell({ className }: { className?: string }) {
+  const { input } = useStyles()()
+  return (
+    <span className={input({ size: "sm", className })}>
+      <span className="h-1 w-3 rounded-full bg-fg/25" />
     </span>
   )
 }
 
-/* The group's two keys read as one pick; the divider only exists on a cell. */
-const ADDON_OPTIONS = [
-  { value: "inside", label: "Inside" },
-  { value: "boxed", label: "Boxed" },
-  { value: "boxed-flush", label: "Boxed, flush" },
-]
-
-function addonValue(state: StudioState) {
-  if (state.addonLayout !== "boxed") return "inside"
-  return state.addonDivider === "none" ? "boxed-flush" : "boxed"
-}
-
-/** A field with its prefix: floating inside, or a cell on the edge. */
-function AddonGlyph({ addon }: { addon: string }) {
+/** The value an Auto row resolves from, as a plain tag. */
+function SourceTag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex h-4 w-8 shrink-0 overflow-hidden rounded-[4px] border border-fg/30">
-      <span
-        className={cn(
-          "flex w-3 items-center justify-center",
-          addon !== "inside" && "bg-fg/10",
-          addon === "boxed" && "border-r border-fg/30",
-        )}
-      >
-        <span className="size-1 rounded-full bg-fg/50" />
-      </span>
+    <span className="rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/60">
+      {children}
     </span>
   )
 }
@@ -87,29 +88,35 @@ function SteppersGlyph({ layout }: { layout: string }) {
       aria-hidden
     >
       <rect x="2.5" y="7" width="19" height="10" rx="2" />
-      {layout === "right" && (
+      {layout === "right-cells" && (
         <>
-          <path d="M11.5 7v10M16.5 7v10" opacity=".5" />
-          <path d="M13 12h2M18 12h2M19 11v2" />
+          <path d="M17 10.75v2.5" opacity=".5" />
+          <path d="M14 12h1.5M18.25 12h1.5M19 11.25v1.5" />
         </>
       )}
       {layout === "split" && (
         <>
-          <path d="M7.5 7v10M16.5 7v10" opacity=".5" />
-          <path d="M4 12h2M18 12h2M19 11v2" />
+          <path d="M7 7v10M17 7v10" opacity=".5" />
+          <path d="M4 12h1.5M18.5 12h1.5M19.25 11.25v1.5" />
         </>
       )}
-      {layout === "stacked" && (
+      {layout === "stacked-cells" && (
         <>
-          <path d="M15.5 7v10" opacity=".5" />
-          <path d="m16.75 10.75 1.75-1.5 1.75 1.5M16.75 13.25l1.75 1.5 1.75-1.5" />
+          <path d="M16 7v10M16 12h5.5" opacity=".5" />
+          <path d="m17.5 10.25 1.25-1 1.25 1M17.5 13.75l1.25 1 1.25-1" />
+        </>
+      )}
+      {layout === "stacked-inset" && (
+        <>
+          <rect x="16" y="8.5" width="4" height="3" rx="1" opacity=".5" />
+          <rect x="16" y="12.5" width="4" height="3" rx="1" opacity=".5" />
         </>
       )}
     </svg>
   )
 }
 
-/** Three digit cells: one group, separate boxes, or a dash each. */
+/** Three digit cells: one attached row, or separate cells. */
 function CellsGlyph({ cells }: { cells: string }) {
   return (
     <svg
@@ -120,98 +127,249 @@ function CellsGlyph({ cells }: { cells: string }) {
       strokeLinecap="round"
       aria-hidden
     >
-      {cells === "group" && (
+      {cells === "attached" ? (
         <>
           <rect x="2.5" y="7" width="19" height="10" rx="2" />
           <path d="M8.75 7v10M15.25 7v10" opacity=".5" />
         </>
-      )}
-      {cells === "boxes" && (
+      ) : (
         <>
           <rect x="2.5" y="7" width="5.5" height="10" rx="1.5" />
           <rect x="9.25" y="7" width="5.5" height="10" rx="1.5" />
           <rect x="16" y="7" width="5.5" height="10" rx="1.5" />
         </>
       )}
-      {cells === "underline" && (
-        <path d="M3 16h5M9.5 16h5M16 16h5" strokeWidth="2" />
+    </svg>
+  )
+}
+
+/** A select trigger: the field's outline or a button's fill, with its caret. */
+function TriggerGlyph({ trigger, caret }: { trigger: string; caret: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {trigger === "field" ? (
+        <rect x="2.5" y="7" width="19" height="10" rx="2" />
+      ) : (
+        <rect
+          x="2.5"
+          y="7"
+          width="19"
+          height="10"
+          rx="2"
+          fill="currentColor"
+          fillOpacity=".15"
+          stroke="none"
+        />
+      )}
+      <path d="M5.5 12h6" opacity=".5" />
+      {caret === "double" ? (
+        <path d="m15.5 13.25 2 1.5 2-1.5M15.5 10.75l2-1.5 2 1.5" />
+      ) : (
+        <path d="m15.5 11 2 2 2-2" />
       )}
     </svg>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
-
-export function InputsPreview({ state }: { state: StudioState }) {
-  return <FieldGlyph style={state.inputStyle} />
+const WEIGHT: Record<string, string> = {
+  regular: "font-normal",
+  medium: "font-medium",
+  semibold: "font-semibold",
 }
 
-export function InputsSection({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
-  const setAddon = (addon: string) =>
-    setState({
-      ...state,
-      addonLayout: addon === "inside" ? "inside" : "boxed",
-      addonDivider:
-        addon === "inside"
-          ? state.addonDivider
-          : addon === "boxed-flush"
-            ? "none"
-            : "hairline",
-    })
+/** A field label at one weight. */
+function LabelGlyph({ weight }: { weight: string }) {
   return (
-    <>
-      <DialList
-        label="Style"
-        value={state.inputStyle}
-        onChange={set("inputStyle")}
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <FieldGlyph style={option.value} large />,
-        }))}
-      />
-      <DialGap />
-      <DialSegmented
-        label="Hover"
-        value={state.inputHover}
-        onChange={set("inputHover")}
-        options={HOVER_OPTIONS}
-      />
-      <DialSelect
-        label="Addons"
-        value={addonValue(state)}
-        onChange={setAddon}
-        options={ADDON_OPTIONS.map((option) => ({
-          ...option,
-          preview: <AddonGlyph addon={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Number field"
-        value={state.numberLayout}
-        onChange={set("numberLayout")}
-        options={NUMBER_LAYOUT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <SteppersGlyph layout={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="OTP field"
-        value={state.otpStyle}
-        onChange={set("otpStyle")}
-        options={OTP_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CellsGlyph cells={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-    </>
+    <span className={cn("shrink-0 text-xs text-fg/80", WEIGHT[weight])}>
+      Label
+    </span>
   )
+}
+
+/** A field with its error: plain, an icon on the message, or in the field. */
+function ErrorGlyph({ kind }: { kind: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="text-fg-danger">
+      <rect
+        x="3.75"
+        y="4.5"
+        width="16.5"
+        height="8"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      {kind === "icon-field" && (
+        <circle cx="16.5" cy="8.5" r="1.75" fill="currentColor" />
+      )}
+      {kind === "icon-message" && (
+        <circle cx="5.5" cy="17.25" r="1.4" fill="currentColor" />
+      )}
+      <path
+        d={kind === "icon-message" ? "M9 17.25h7.5" : "M4.5 17.25h9"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+/* ---------------------------------- Rows ---------------------------------- */
+
+function InputStyleRow() {
+  const { effective } = useStudio()
+  const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
+  return (
+    <DialSelect
+      axis="inputStyle"
+      label="Fields"
+      options={[
+        {
+          value: "auto",
+          label: "Auto",
+          aside: (
+            <SourceTag>
+              {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
+            </SourceTag>
+          ),
+          preview: <ShellSpecimen style={autoStyle} />,
+        },
+        ...STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <ShellSpecimen style={option.value} />,
+        })),
+      ]}
+    />
+  )
+}
+
+const HOVER_ROW = [{ value: "auto", label: "As style" }, ...HOVER_OPTIONS]
+
+function InputHoverRow() {
+  return <DialSelect axis="inputHover" label="Hover" options={HOVER_ROW} />
+}
+
+function InputHeightRow() {
+  return (
+    <DialSelect
+      axis="inputHeight"
+      label="Field height"
+      options={HEIGHT_OPTIONS}
+    />
+  )
+}
+
+const STEPPERS_ROW = NUMBER_LAYOUT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <SteppersGlyph layout={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function NumberLayoutRow() {
+  return (
+    <DialSelect axis="numberLayout" label="Steppers" options={STEPPERS_ROW} />
+  )
+}
+
+const CELLS_ROW = OTP_STYLE_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <CellsGlyph cells={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function OtpStyleRow() {
+  return <DialSelect axis="otpStyle" label="Cells" options={CELLS_ROW} />
+}
+
+function SelectTriggerRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="selectTrigger"
+      label="Trigger"
+      options={TRIGGER_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <TriggerGlyph
+              trigger={option.value}
+              caret={effective.pickerCaret}
+            />
+          </DialGlyph>
+        ),
+      }))}
+    />
+  )
+}
+
+function PickerCaretRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="pickerCaret"
+      label="Caret"
+      options={CARET_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <TriggerGlyph
+              trigger={effective.selectTrigger}
+              caret={option.value}
+            />
+          </DialGlyph>
+        ),
+      }))}
+    />
+  )
+}
+
+const LABEL_ROW = LABEL_OPTIONS.map((option) => ({
+  ...option,
+  preview: <LabelGlyph weight={option.value} />,
+}))
+
+function FieldLabelRow() {
+  return <DialSelect axis="fieldLabel" label="Label" options={LABEL_ROW} />
+}
+
+const ERROR_ROW = ERROR_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <ErrorGlyph kind={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function InputErrorRow() {
+  return (
+    <DialSelect axis="inputError" label="Error message" options={ERROR_ROW} />
+  )
+}
+
+export const ROWS: RowMap = {
+  inputStyle: InputStyleRow,
+  inputHover: InputHoverRow,
+  inputHeight: InputHeightRow,
+  numberLayout: NumberLayoutRow,
+  otpStyle: OtpStyleRow,
+  selectTrigger: SelectTriggerRow,
+  pickerCaret: PickerCaretRow,
+  fieldLabel: FieldLabelRow,
+  inputError: InputErrorRow,
 }

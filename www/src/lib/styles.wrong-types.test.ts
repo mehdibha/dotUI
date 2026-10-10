@@ -73,6 +73,8 @@ createStyles(fixtureMeta, {
     comfortable: {
       slots: { root: "text-sm" },
     },
+    spacious: {},
+    touch: {},
   },
   params: {
     style: {
@@ -102,6 +104,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -115,6 +119,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -130,6 +136,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -143,6 +151,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -158,16 +168,20 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
-/* 6) Density: missing one of the three densities */
+/* 6) Density: missing one of the tiers */
 createStyles(fixtureMeta, {
   base: baseConfig.base,
-  // @ts-expect-error — "comfortable" key missing
+  // @ts-expect-error — "touch" key missing
   density: {
     compact: {},
     default: {},
+    comfortable: {},
+    spacious: {},
   },
 })
 

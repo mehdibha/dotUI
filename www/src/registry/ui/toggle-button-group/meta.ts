@@ -12,12 +12,17 @@ const toggleButtonGroupMeta = {
     },
   ],
   registryDependencies: ["toggle-button"],
-  // Synced with group: the studio's Button groups axis writes both.
+  // Synced with group: the studio's Buttons page writes both.
   params: {
+    segments: {
+      kind: "enum",
+      default: "attached",
+      values: ["attached", "gapped"] as const,
+    },
     separator: {
       kind: "enum",
-      default: "auto",
-      values: ["auto", "divider", "none"] as const,
+      default: "shared-edge",
+      values: ["shared-edge", "divider"] as const,
     },
   },
 } satisfies RegistryItem

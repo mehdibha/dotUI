@@ -1,0 +1,670 @@
+"use client"
+
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
+import type { Key } from "react-aria-components"
+
+import { useComponentParams } from "@/lib/styles"
+import {
+  ArrowRightIcon,
+  BoldIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  DownloadIcon,
+  ExternalLinkIcon,
+  FlipHorizontalIcon,
+  FlipVerticalIcon,
+  ItalicIcon,
+  LayoutGridIcon,
+  ListIcon,
+  MoreHorizontalIcon,
+  PinIcon,
+  PlusIcon,
+  RotateCwIcon,
+  SettingsIcon,
+  StarIcon,
+  TableIcon,
+  TrashIcon,
+  UnderlineIcon,
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { Group } from "@/registry/ui/group"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
+
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  stateProps,
+  useBoardFocus,
+  useLoop,
+} from "./board"
+import type { StateName } from "./board"
+
+type Frozen = ReturnType<typeof stateProps>
+
+interface Column {
+  id: string
+  label: string
+  states: StateName[]
+}
+
+const MATRIX_GAP = 12
+const WRAP_GAP = 16
+
+/** Full matrix when it fits, else balanced wrapped rows of `perRow` cells. */
+function useGridLayout(columns: number) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [layout, setLayout] = useState({ matrix: false, perRow: columns })
+  useLayoutEffect(() => {
+    const container = ref.current
+    if (!container) return
+    const measure = () => {
+      const widths = Array.from({ length: columns + 1 }, () => 0)
+      for (const el of container.querySelectorAll<HTMLElement>(
+        "[data-column]",
+      )) {
+        const i = Number(el.dataset.column)
+        widths[i] = Math.max(widths[i] ?? 0, el.offsetWidth)
+      }
+      const available = container.clientWidth
+      const matrix =
+        widths.reduce((a, b) => a + b, 0) + MATRIX_GAP * columns <= available
+      const cell = Math.max(88, ...widths.slice(1))
+      const fit = Math.max(
+        1,
+        Math.floor((available + WRAP_GAP) / (cell + WRAP_GAP)),
+      )
+      const perRow = Math.ceil(columns / Math.ceil(columns / fit))
+      setLayout((prev) =>
+        prev.matrix === matrix && prev.perRow === perRow
+          ? prev
+          : { matrix, perRow },
+      )
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    for (const el of container.querySelectorAll("[data-column]"))
+      observer.observe(el)
+    return () => observer.disconnect()
+  }, [columns])
+  return [ref, layout] as const
+}
+
+/** Frozen specimens under shared state columns, wrapped when they don't fit. */
+function StateGrid({
+  columns,
+  rows,
+  emphasis,
+}: {
+  columns: readonly Column[]
+  rows: readonly {
+    id: string
+    label: string
+    render: (props: Frozen, column: string) => React.ReactNode
+  }[]
+  /** A row or column id the panel is editing. */
+  emphasis?: string
+}) {
+  const [ref, { matrix, perRow }] = useGridLayout(columns.length)
+  const label = (id: string) =>
+    cn(CAPTION, "transition-colors", emphasis === id && "font-medium text-fg")
+  return (
+    <div ref={ref} className="w-full">
+      <div
+        inert
+        className={cn(
+          "flex flex-col gap-y-5",
+          matrix && "grid items-center gap-x-3",
+        )}
+        style={{
+          gridTemplateColumns: matrix
+            ? `auto repeat(${columns.length}, minmax(max-content, 1fr))`
+            : undefined,
+        }}
+      >
+        {matrix && <span />}
+        {columns.map((column, i) => (
+          <span
+            key={column.id}
+            data-column={i + 1}
+            className={cn(
+              label(column.id),
+              "justify-self-center",
+              !matrix && "hidden",
+            )}
+          >
+            {column.label}
+          </span>
+        ))}
+        {rows.map((row) => (
+          <Fragment key={row.id}>
+            <span
+              data-column={0}
+              className={cn(
+                label(row.id),
+                matrix ? "justify-self-start" : "self-center",
+              )}
+            >
+              {row.label}
+            </span>
+            <div
+              className={matrix ? "contents" : "grid gap-x-4 gap-y-4"}
+              style={{
+                gridTemplateColumns: matrix
+                  ? undefined
+                  : `repeat(${perRow}, minmax(0, 1fr))`,
+              }}
+            >
+              {columns.map((column, i) => (
+                <div
+                  key={column.id}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div data-column={i + 1} className="flex">
+                    {row.render(stateProps(...column.states), column.id)}
+                  </div>
+                  <span
+                    data-column={i + 1}
+                    className={cn(label(column.id), matrix && "hidden")}
+                  >
+                    {column.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/** Re-centres the focused section once the popover inset reflows the grids above. */
+function KeepFocusedInView() {
+  const ref = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const content = ref.current?.parentElement
+    if (!content) return
+    let height = content.offsetHeight
+    const observer = new ResizeObserver(() => {
+      if (content.offsetHeight === height) return
+      height = content.offsetHeight
+      content
+        .querySelector("section[data-focused]")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" })
+    })
+    observer.observe(content)
+    return () => observer.disconnect()
+  }, [])
+  return <span ref={ref} hidden />
+}
+
+/** A labelled line of live specimens. */
+function Line({
+  label,
+  className,
+  children,
+}: {
+  label: string
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-center gap-x-3 gap-y-4",
+          className,
+        )}
+      >
+        {children}
+      </div>
+      <span className={CAPTION}>{label}</span>
+    </div>
+  )
+}
+
+/* --------------------------------- Button --------------------------------- */
+
+const BUTTON_COLUMNS: Column[] = [
+  { id: "rest", label: "Rest", states: [] },
+  { id: "hover", label: "Hover", states: ["hover"] },
+  { id: "pressed", label: "Pressed", states: ["pressed"] },
+  { id: "focus", label: "Focus", states: ["focus"] },
+  { id: "disabled", label: "Disabled", states: ["disabled"] },
+  { id: "pending", label: "Pending", states: [] },
+]
+
+const VARIANTS = [
+  { id: "primary", label: "Primary", text: "Save" },
+  { id: "secondary", label: "Secondary", text: "Cancel" },
+  { id: "quiet", label: "Quiet", text: "Edit" },
+  { id: "link", label: "Link", text: "Docs" },
+  { id: "danger", label: "Danger", text: "Delete" },
+] as const
+
+/** The row the focused key styles most. */
+const BUTTON_EMPHASIS: Record<string, string> = {
+  buttonColor: "primary",
+  buttonSecondary: "secondary",
+}
+
+/** True for `ms` after `value` changes. */
+function useChanged(value: unknown, ms: number) {
+  const [changed, setChanged] = useState(false)
+  const first = useRef(value)
+  useEffect(() => {
+    if (Object.is(value, first.current)) return
+    first.current = value
+    setChanged(true)
+    const timer = setTimeout(() => setChanged(false), ms)
+    return () => clearTimeout(timer)
+  }, [value, ms])
+  return changed
+}
+
+function ButtonStates() {
+  const styles = useButtonStyles()
+  const { axis } = useBoardFocus()
+  // A frozen press barely reads; after Press changes, press and release.
+  const pressing = useChanged(useComponentParams("button").press, 3000)
+  const released = useLoop(pressing, 600)
+  return (
+    <StateGrid
+      columns={BUTTON_COLUMNS.map((column) =>
+        column.id === "pressed" && released
+          ? { ...column, states: ["hover"] }
+          : column,
+      )}
+      emphasis={pressing ? "pressed" : axis && BUTTON_EMPHASIS[axis]}
+      rows={VARIANTS.map(({ id, label, text }) => ({
+        id,
+        label,
+        render: (props, column) =>
+          column === "pending" ? (
+            <Button variant={id} isPending>
+              {text}
+            </Button>
+          ) : (
+            <span {...props} data-button="" className={styles({ variant: id })}>
+              <span className="truncate">{text}</span>
+            </span>
+          ),
+      }))}
+    />
+  )
+}
+
+const SIZES = ["xs", "sm", "md", "lg"] as const
+
+function ButtonAnatomy() {
+  return (
+    <div className="flex w-full flex-col items-center gap-10">
+      <div className="@container w-full">
+        <div className="mx-auto grid w-fit grid-cols-2 items-center justify-items-center gap-x-6 gap-y-3 @xl:grid-cols-4">
+          {SIZES.map((size) => (
+            <div
+              key={size}
+              className="row-span-4 grid grid-rows-subgrid items-center justify-items-center"
+            >
+              <Button size={size} variant="primary">
+                Publish
+              </Button>
+              <Button size={size}>Cancel</Button>
+              <Button size={size} isIconOnly aria-label="Copy">
+                <CopyIcon />
+              </Button>
+              <span className={cn(CAPTION, "pb-4 @xl:pb-0")}>{size}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Line label="Icon only">
+        <Button variant="primary" isIconOnly aria-label="New">
+          <PlusIcon />
+        </Button>
+        <Button isIconOnly aria-label="Settings">
+          <SettingsIcon />
+        </Button>
+        <Button variant="quiet" isIconOnly aria-label="More">
+          <MoreHorizontalIcon />
+        </Button>
+        <Button variant="danger" isIconOnly aria-label="Delete">
+          <TrashIcon />
+        </Button>
+      </Line>
+      <Line label="With icons">
+        <Button variant="primary">
+          <PlusIcon data-icon="inline-start" />
+          New project
+        </Button>
+        <Button>
+          <DownloadIcon data-icon="inline-start" />
+          Export
+        </Button>
+        <Button variant="quiet">
+          Continue
+          <ArrowRightIcon data-icon="inline-end" />
+        </Button>
+        <Button variant="link">
+          Changelog
+          <ExternalLinkIcon data-icon="inline-end" />
+        </Button>
+      </Line>
+    </div>
+  )
+}
+
+/* --------------------------------- Motion --------------------------------- */
+
+const LOOP: StateName[][] = [[], ["hover"], ["pressed"], ["hover"]]
+
+/** True while `active`, and for `ms` after. */
+function useLinger(active: boolean, ms = 6000) {
+  const [lingering, setLingering] = useState(false)
+  useEffect(() => {
+    if (active) {
+      setLingering(true)
+      return
+    }
+    const timer = setTimeout(() => setLingering(false), ms)
+    return () => clearTimeout(timer)
+  }, [active, ms])
+  return active || lingering
+}
+
+/** Steps hover, press and selection while motion is edited or hovered. */
+function MotionLoop() {
+  const button = useButtonStyles()
+  const toggle = useToggleStyles()
+  const { axis } = useBoardFocus()
+  const [hovered, setHovered] = useState(false)
+  const playing = useLinger(hovered || axis === "buttonMotion")
+  const [step, setStep] = useState(0)
+
+  useEffect(() => {
+    if (!playing) return
+    const timer = setInterval(() => setStep((step) => step + 1), 700)
+    return () => {
+      clearInterval(timer)
+      setStep(0)
+    }
+  }, [playing])
+
+  const frozen = stateProps(...(LOOP[step % LOOP.length] ?? []))
+  const on = Math.floor(step / LOOP.length) % 2 === 1
+  return (
+    <div
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      className="flex flex-wrap items-center justify-center gap-x-6 gap-y-5"
+    >
+      <div inert className="flex items-center gap-3">
+        <span
+          {...frozen}
+          data-button=""
+          className={button({ variant: "primary" })}
+        >
+          <span className="truncate">Publish</span>
+        </span>
+        <span {...frozen} data-button="" className={button()}>
+          <span className="truncate">Cancel</span>
+        </span>
+        <span
+          {...stateProps(...(on ? (["selected"] as const) : []))}
+          data-button=""
+          data-icon-only=""
+          className={toggle({ isIconOnly: true })}
+        >
+          <StarIcon />
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/* -------------------------------- Segmented ------------------------------- */
+
+const RANGES = ["day", "week", "month", "year"]
+
+/** Walks the selection while the panel edits the segmented control's motion. */
+function RangeControl() {
+  const { axis } = useBoardFocus()
+  const playing = axis === "segmentedMotion"
+  const [selected, setSelected] = useState<Key>("week")
+  useEffect(() => {
+    if (!playing) return
+    const timer = setInterval(
+      () =>
+        setSelected(
+          (key) =>
+            RANGES[(RANGES.indexOf(String(key)) + 1) % RANGES.length] ?? "day",
+        ),
+      900,
+    )
+    return () => clearInterval(timer)
+  }, [playing])
+  return (
+    <SegmentedControl
+      aria-label="Range"
+      selectedKeys={[selected]}
+      onSelectionChange={(keys) => {
+        const [key] = keys
+        if (key !== undefined) setSelected(key)
+      }}
+    >
+      <SegmentedControlItem id="day">Day</SegmentedControlItem>
+      <SegmentedControlItem id="week">Week</SegmentedControlItem>
+      <SegmentedControlItem id="month">Month</SegmentedControlItem>
+      <SegmentedControlItem id="year">Year</SegmentedControlItem>
+    </SegmentedControl>
+  )
+}
+
+/* --------------------------------- Toggles -------------------------------- */
+
+const TOGGLE_COLUMNS: Column[] = [
+  { id: "off", label: "Off", states: [] },
+  { id: "hover", label: "Hover", states: ["hover"] },
+  { id: "on", label: "On", states: ["selected"] },
+  { id: "on-hover", label: "On, hover", states: ["selected", "hover"] },
+  {
+    id: "on-disabled",
+    label: "On, disabled",
+    states: ["selected", "disabled"],
+  },
+]
+
+function ToggleStates() {
+  const styles = useToggleStyles()
+  const icon = { "data-button": "", "data-icon-only": "" }
+  return (
+    <StateGrid
+      columns={TOGGLE_COLUMNS}
+      rows={[
+        {
+          id: "secondary",
+          label: "Secondary",
+          render: (props) => (
+            <span {...props} data-button="" className={styles()}>
+              <PinIcon data-icon="inline-start" className="rotate-45" />
+              Pin
+            </span>
+          ),
+        },
+        {
+          id: "icon",
+          label: "Icon",
+          render: (props) => (
+            <span {...props} {...icon} className={styles({ isIconOnly: true })}>
+              <BoldIcon />
+            </span>
+          ),
+        },
+        {
+          id: "quiet",
+          label: "Quiet",
+          render: (props) => (
+            <span
+              {...props}
+              {...icon}
+              className={styles({ variant: "quiet", isIconOnly: true })}
+            >
+              <StarIcon />
+            </span>
+          ),
+        },
+      ]}
+    />
+  )
+}
+
+function FormatGroup({ variant }: { variant?: "quiet" }) {
+  return (
+    <ToggleButtonGroup
+      aria-label="Text formatting"
+      selectionMode="multiple"
+      variant={variant}
+      defaultSelectedKeys={["bold", "underline"]}
+    >
+      <ToggleButton id="bold" isIconOnly aria-label="Bold">
+        <BoldIcon />
+      </ToggleButton>
+      <ToggleButton id="italic" isIconOnly aria-label="Italic">
+        <ItalicIcon />
+      </ToggleButton>
+      <ToggleButton id="underline" isIconOnly aria-label="Underline">
+        <UnderlineIcon />
+      </ToggleButton>
+    </ToggleButtonGroup>
+  )
+}
+
+/* ---------------------------------- Board --------------------------------- */
+
+export default function ButtonsBoard() {
+  return (
+    <Board id="buttons">
+      <KeepFocusedInView />
+      <BoardSection
+        member="button"
+        title="Button"
+        axes={[
+          "style",
+          "buttonStyle",
+          "buttonSecondary",
+          "buttonColor",
+          "buttonPress",
+        ]}
+      >
+        <ButtonStates />
+      </BoardSection>
+      <BoardSection
+        member="button"
+        title="Sizes and icons"
+        axes={["buttonRadius", "buttonCase", "labelWeight"]}
+      >
+        <ButtonAnatomy />
+      </BoardSection>
+      <BoardSection member="button" title="Motion" axes={["buttonMotion"]}>
+        <MotionLoop />
+      </BoardSection>
+      <BoardSection
+        member="toggle"
+        title="Toggles"
+        axes={["toggleSelected"]}
+        className="flex-col gap-10"
+      >
+        <ToggleStates />
+        <Line label="Toggle group" className="gap-x-6">
+          <FormatGroup />
+          <FormatGroup variant="quiet" />
+        </Line>
+      </BoardSection>
+      <BoardSection
+        member="group"
+        title="Groups"
+        axes={["groupSeparator"]}
+        className="gap-x-10 gap-y-8"
+      >
+        <Line label="Attached">
+          <Group aria-label="Clipboard">
+            <Button>Cut</Button>
+            <Button>Copy</Button>
+            <Button>Paste</Button>
+          </Group>
+        </Line>
+        <Line label="Split">
+          <Group aria-label="Merge">
+            <Button variant="primary">Merge</Button>
+            <Button variant="primary" isIconOnly aria-label="Merge options">
+              <ChevronDownIcon />
+            </Button>
+          </Group>
+        </Line>
+        <Line label="Icons">
+          <Group aria-label="Transform">
+            <Button isIconOnly aria-label="Flip horizontal">
+              <FlipHorizontalIcon />
+            </Button>
+            <Button isIconOnly aria-label="Flip vertical">
+              <FlipVerticalIcon />
+            </Button>
+            <Button isIconOnly aria-label="Rotate">
+              <RotateCwIcon />
+            </Button>
+          </Group>
+        </Line>
+        <Line label="Toolbar">
+          <ToggleButtonGroup
+            aria-label="View"
+            selectionMode="single"
+            disallowEmptySelection
+            defaultSelectedKeys={["grid"]}
+          >
+            <ToggleButton id="grid" isIconOnly aria-label="Grid">
+              <LayoutGridIcon />
+            </ToggleButton>
+            <ToggleButton id="list" isIconOnly aria-label="List">
+              <ListIcon />
+            </ToggleButton>
+            <ToggleButton id="table" isIconOnly aria-label="Table">
+              <TableIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Line>
+      </BoardSection>
+      <BoardSection
+        member="segmented-control"
+        title="Segmented control"
+        axes={["segmentedSelected", "segmentedTrack", "segmentedMotion"]}
+        className="gap-x-10 gap-y-8"
+      >
+        <RangeControl />
+        <SegmentedControl defaultSelectedKeys={["grid"]} aria-label="Layout">
+          <SegmentedControlItem id="grid">
+            <LayoutGridIcon />
+            Grid
+          </SegmentedControlItem>
+          <SegmentedControlItem id="list">
+            <ListIcon />
+            List
+          </SegmentedControlItem>
+          <SegmentedControlItem id="table">
+            <TableIcon />
+            Table
+          </SegmentedControlItem>
+        </SegmentedControl>
+      </BoardSection>
+    </Board>
+  )
+}

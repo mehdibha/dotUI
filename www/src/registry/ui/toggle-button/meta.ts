@@ -12,7 +12,7 @@ const toggleButtonMeta = {
     },
   ],
   registryDependencies: ["context", "focus-styles"],
-  // Synced with button: the studio's Buttons style writes both.
+  // Synced with button: the studio's Buttons page writes both.
   params: {
     style: {
       kind: "enum",
@@ -26,10 +26,49 @@ const toggleButtonMeta = {
         "ledge",
       ] as const,
     },
+    secondary: {
+      kind: "enum",
+      default: "flat",
+      values: [
+        "flat",
+        "hairline",
+        "rim-light",
+        "gloss",
+        "bevel",
+        "ledge",
+        "outline",
+        "raised",
+        "soft",
+        "tonal",
+        "solid",
+      ] as const,
+    },
+    press: {
+      kind: "enum",
+      default: "as-style",
+      values: ["as-style", "nudge", "scale"] as const,
+    },
+    case: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+    },
     selected: {
       kind: "enum",
-      default: "fill",
-      values: ["fill", "chip", "inverse"] as const,
+      default: "tone",
+      values: ["tone", "solid", "tint", "inverse"] as const,
+    },
+    linkUnderline: {
+      kind: "enum",
+      default: "never",
+      values: ["always", "hover", "never"] as const,
+      description: "The link variant's underline, from the link recipe.",
+    },
+    linkColor: {
+      kind: "enum",
+      default: "accent",
+      values: ["accent", "neutral"] as const,
+      description: "The link variant's color, from the link recipe.",
     },
   },
 } satisfies RegistryItem

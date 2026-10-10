@@ -35,6 +35,14 @@ const { useStyles, styles } = createStyles(commandMeta, {
       // A picker's search matches its rows, not a form field (shadcn vega).
       base: "in-data-popover:**:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(8)]",
     },
+    spacious: {
+      // A picker's search matches its rows, not a form field (shadcn vega).
+      base: "in-data-popover:**:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(9)]",
+    },
+    touch: {
+      // A picker's search matches its rows, not a form field (shadcn vega).
+      base: "in-data-popover:**:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(10)]",
+    },
   },
   params: {
     search: {

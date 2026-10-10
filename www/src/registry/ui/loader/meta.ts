@@ -15,12 +15,19 @@ const loaderMeta = {
     style: {
       kind: "enum",
       default: "ring",
-      values: ["ring", "blades", "dots"] as const,
+      values: ["ring", "ring-track", "blades", "dots"] as const,
       files: {
         ring: [
           {
             type: "registry:ui",
             path: "ui/loader/base.ring.tsx",
+            target: "ui/loader.tsx",
+          },
+        ],
+        "ring-track": [
+          {
+            type: "registry:ui",
+            path: "ui/loader/base.ring-track.tsx",
             target: "ui/loader.tsx",
           },
         ],
