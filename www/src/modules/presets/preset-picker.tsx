@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode, Ref } from "react"
 import {
   CheckIcon,
+  FileUpIcon,
   MoreHorizontalIcon,
   PlusIcon,
   SearchIcon,
@@ -77,6 +78,8 @@ interface PresetPickerProps {
   renderItemMenu?: (item: PresetPickerItem) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
+  /** Adds an "Import DESIGN.md" button beside New. */
+  onImport?: () => void
 }
 
 /**
@@ -161,6 +164,7 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
+  onImport,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
@@ -330,6 +334,21 @@ function PresetPickerContent({
             <PlusIcon />
             New
           </Button>
+        )}
+        {onImport && (
+          <Tooltip>
+            <Button
+              variant="secondary"
+              size="md"
+              isIconOnly
+              aria-label="Import DESIGN.md"
+              className="mt-2 shrink-0"
+              onPress={onImport}
+            >
+              <FileUpIcon />
+            </Button>
+            <TooltipContent>Import DESIGN.md…</TooltipContent>
+          </Tooltip>
         )}
       </div>
       <CommandContent

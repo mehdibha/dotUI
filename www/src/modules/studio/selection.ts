@@ -221,6 +221,13 @@ export function createFrom(
   return doc
 }
 
+/** Creates a system from imported state, and opens it. */
+export function createImported(name: string, state: StudioState) {
+  const doc = workspace.create({ name, state })
+  if (doc) select({ kind: "system", id: doc.id })
+  return doc
+}
+
 /** Deletes the system. Deleting the current one opens the next in the
  *  list, else Origin. */
 export function remove(id: string): void {
