@@ -26,7 +26,8 @@ import {
   TRACK_OPTIONS,
 } from "../axes/segmented-control.meta"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import { useStudio } from "../use-studio"
@@ -238,7 +239,14 @@ function ButtonStyleRow() {
     <ButtonSpecimen variant="primary" label="Save" />,
   )
   return (
-    <DialSelect axis="buttonStyle" label="Button style" options={options} />
+    <DialSelect
+      axis="buttonStyle"
+      holds={["groupSeparator"]}
+      label="Button style"
+      options={options}
+    >
+      <Row axis="groupSeparator" />
+    </DialSelect>
   )
 }
 
@@ -275,13 +283,11 @@ function ButtonRadiusRow() {
 }
 
 function ButtonPressRow() {
-  return (
-    <DialSegmented axis="buttonPress" label="Press" options={PRESS_OPTIONS} />
-  )
+  return <DialSelect axis="buttonPress" label="Press" options={PRESS_OPTIONS} />
 }
 
 function ButtonCaseRow() {
-  return <DialSegmented axis="buttonCase" label="Case" options={CASE_OPTIONS} />
+  return <DialSelect axis="buttonCase" label="Case" options={CASE_OPTIONS} />
 }
 
 function ToggleSelectedRow() {
@@ -335,11 +341,7 @@ function SegmentedSelectedRow() {
 
 function SegmentedTrackRow() {
   return (
-    <DialSegmented
-      axis="segmentedTrack"
-      label="Track"
-      options={TRACK_OPTIONS}
-    />
+    <DialSelect axis="segmentedTrack" label="Track" options={TRACK_OPTIONS} />
   )
 }
 

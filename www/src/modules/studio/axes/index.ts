@@ -159,15 +159,12 @@ export const RULES: readonly Rule[] = [
   ...style.RULES,
 ]
 
-/* A source key → [follower, follow id] for every follow reading it. */
-const FOLLOWERS = new Map<string, [Key, unknown][]>()
+/* A source key → the keys with a follow reading it. */
+const FOLLOWERS = new Map<string, Set<Key>>()
 for (const [key, list] of Object.entries(FOLLOWS))
   for (const follow of list)
     for (const from of followSources(follow))
-      FOLLOWERS.set(from, [
-        ...(FOLLOWERS.get(from) ?? []),
-        [key as Key, follow.id],
-      ])
+      FOLLOWERS.set(from, (FOLLOWERS.get(from) ?? new Set()).add(key as Key))
 
 /** Which chapter owns each key. */
 export const KEY_OWNER: Readonly<Record<string, string>> = Object.fromEntries(
@@ -258,14 +255,12 @@ export function parseState(raw: unknown): StudioState {
 
 export const DEFAULT_STATE = parseState({})
 
-/** Keys that can follow `key` but are saved off that follow: a Motion
+/** Keys that can follow `key` but are saved off every follow: a Motion
  *  row's custom components, a Style's explicit picks. */
 export const followersOf = (state: StudioState, key: string): Key[] =>
-  (FOLLOWERS.get(key) ?? []).flatMap(([k, id]) => (state[k] === id ? [] : [k]))
-
-/** `state` with `key` set. */
-export const setKey = (state: StudioState, key: Key, value: unknown) =>
-  ({ ...state, [key]: value }) as StudioState
+  [...(FOLLOWERS.get(key) ?? [])].filter(
+    (k) => !FOLLOW_IDS.get(k)?.has(state[k]),
+  )
 
 /** Key-by-key equality. */
 export const sameState = (a: StudioState, b: StudioState) =>

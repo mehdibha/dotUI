@@ -34,6 +34,7 @@ import { Separator } from "@/registry/ui/separator"
 
 import { effective } from "./axes"
 import type { StudioState } from "./axes"
+import { COLUMNS } from "./axes/style"
 import { FOLLOW_STYLE } from "./axes/style.meta"
 import { RowLabel, useRowLabel } from "./family-page"
 import { holdEditFocus } from "./focus"
@@ -47,6 +48,8 @@ import {
 import { useCurrent } from "./selection"
 import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
 import type { Axis, AxisKey } from "./use-axis"
+
+const STYLE_COLUMNS: Partial<Record<string, Record<string, string>>> = COLUMNS
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
@@ -270,12 +273,23 @@ export function DialSelect({
 }) {
   const label = useRowLabel(labelProp)
   const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
+  const { state } = useCurrent()
   if (hidden) return null
-  // A Style key's first option is the Style itself ("Style · Line").
+  // A Style key's first option is the Style itself ("Style · Line"); a
+  // follow its column reads ("auto") would list the same pick twice.
+  const column = key && STYLE_COLUMNS[key]?.[state.style]
   const options: DialSelectOption[] =
     axis?.follows.includes(FOLLOW_STYLE.value) &&
     !listed.some((option) => option.value === FOLLOW_STYLE.value)
-      ? [FOLLOW_STYLE, ...listed]
+      ? [
+          FOLLOW_STYLE,
+          ...listed.filter(
+            (option) =>
+              option.value !== column ||
+              !axis.follows.includes(column) ||
+              option.value === axis.saved,
+          ),
+        ]
       : listed
   // A key read through a follow keeps its follow option picked ("Auto · Tone").
   const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
@@ -335,7 +349,7 @@ export function DialSelect({
   )
 }
 
-/** The list; a follow option names and draws its target ("Same as Motion · Standard"). */
+/** The list; a follow option names and draws its target ("Same as motion · Standard"). */
 function SelectOptions({
   axis,
   label,
@@ -419,26 +433,14 @@ export interface DialPickOption {
   label: string
   description?: string
   credits?: readonly string[]
-  disabled?: boolean
-  /** A muted aside on the label's line. */
-  note?: string
   /** A specimen beside the label. */
   visual?: React.ReactNode
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-disabled disabled:opacity-40"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10"
 
-function PickItem({
-  option,
-  modified,
-  aside,
-}: {
-  option: DialPickOption
-  modified?: boolean
-  /** Beside the label: an excluded option's cause chip. */
-  aside?: React.ReactNode
-}) {
+function PickItem({ option }: { option: DialPickOption }) {
   return (
     <RacListBoxItem
       id={option.value}
@@ -450,15 +452,8 @@ function PickItem({
           <span className="flex min-w-0 items-center gap-3">
             {option.visual}
             <span className="flex min-w-0 flex-col gap-0.5">
-              <span className="flex items-center gap-1.5 text-[13px] font-medium text-fg/90">
+              <span className="text-[13px] font-medium text-fg/90">
                 {option.label}
-                {modified && <ModifiedDot />}
-                {option.note && (
-                  <span className="truncate text-xs font-normal text-fg/45">
-                    {option.note}
-                  </span>
-                )}
-                {aside}
               </span>
               {subline(option) && (
                 <span className="text-xs leading-snug text-fg/55">
@@ -476,26 +471,23 @@ function PickItem({
   )
 }
 
-/** Options laid out in place, each with what it means. `value` undefined
- *  selects nothing; `modified` marks the option the state was edited from. */
+/** Options laid out in place, each with what it means. */
 export function DialPickList({
   label,
   value,
   onChange,
   options,
-  modified,
 }: {
   label: string
-  value: string | undefined
+  value: string
   onChange: (value: string) => void
   options: DialPickOption[]
-  modified?: string
 }) {
   return (
     <RacListBox
       aria-label={label}
       selectionMode="single"
-      selectedKeys={value ? [value] : []}
+      selectedKeys={[value]}
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const next = keys.values().next().value
@@ -504,13 +496,27 @@ export function DialPickList({
       className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
-        <PickItem
-          key={option.value}
-          option={option}
-          modified={option.value === modified}
-        />
+        <PickItem key={option.value} option={option} />
       ))}
     </RacListBox>
+  )
+}
+
+/** A full-width action at a popover's foot ("Reset all"). */
+export function DialAction({
+  onPress,
+  children,
+}: {
+  onPress: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <RacButton
+      onPress={onPress}
+      className={cn(DIAL_ROW, DIAL_PRESS, "justify-center")}
+    >
+      <span className={DIAL_LABEL}>{children}</span>
+    </RacButton>
   )
 }
 

@@ -35,7 +35,7 @@ export function getExamplesPromise(slug: string) {
     // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
-      boardOf(slug)?.load ??
+      boardOf(slug) ??
       BlocksIndex[slug] ??
       GroupExamplesIndex[slug] ??
       ExamplesIndex[slug]

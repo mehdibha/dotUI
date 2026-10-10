@@ -12,7 +12,7 @@ import {
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
 import { STROKE_OPTIONS, TRACK_OPTIONS } from "../axes/shape.meta"
-import { DialSegmented, DialSelect, DialSlider } from "../dial"
+import { DialSelect, DialSlider } from "../dial"
 import type { RowMap } from "../family-page"
 import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
@@ -84,7 +84,7 @@ const RadiusRow = () => (
 )
 
 const ControlStrokeRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="controlStroke"
     label="Control stroke"
     options={STROKE_OPTIONS}
@@ -92,7 +92,7 @@ const ControlStrokeRow = () => (
 )
 
 const TracksRow = () => (
-  <DialSegmented axis="tracks" label="Tracks" options={TRACK_OPTIONS} />
+  <DialSelect axis="tracks" label="Tracks" options={TRACK_OPTIONS} />
 )
 
 export const ROWS: RowMap = {

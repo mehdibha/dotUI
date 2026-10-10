@@ -47,11 +47,11 @@ import { DEFAULT_EFFECTIVE } from "@/modules/studio/axes"
 import {
   resolveShape,
   ROLE_VARS,
-  SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
   shapeVars,
 } from "@/modules/studio/axes/shape"
+import { SHAPE_CHARACTERS } from "@/modules/studio/axes/shape.meta"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
 

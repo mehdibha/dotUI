@@ -18,7 +18,6 @@ import {
   parseState,
   RULES,
   SCHEMA,
-  setKey,
 } from "../index"
 import type { StudioState } from "../index"
 import { RULES as STYLE_RULES } from "../style"
@@ -358,12 +357,11 @@ describe("followers", () => {
     expect(followersOf(state, "buttonMotion")).toEqual([])
   })
 
-  it("setting a source keeps its followers' picks", () => {
-    const state = parseState({ buttonMotion: "expressive" })
-    expect(setKey(state, "motion", "smooth")).toMatchObject({
-      motion: "smooth",
-      buttonMotion: "expressive",
-    })
+  it("counts a key on any of its follows as following", () => {
+    expect(followersOf(DEFAULT_STATE, "buttonStyle")).toEqual([])
+    expect(
+      followersOf(parseState({ inputStyle: "inset" }), "buttonStyle"),
+    ).toEqual(["inputStyle"])
   })
 })
 

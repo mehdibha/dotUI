@@ -22,13 +22,7 @@ import {
   TITLE_OPTIONS,
   UI_TEXT_OPTIONS,
 } from "../axes/type.meta"
-import {
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
+import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DialSelect } from "../dial"
 import { useRowLabel } from "../family-page"
 import type { RowMap } from "../family-page"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
@@ -205,7 +199,7 @@ function TitlesRow() {
 }
 
 const UiTextRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="uiTextSize"
     label="UI text size"
     options={UI_TEXT_OPTIONS}
@@ -213,7 +207,7 @@ const UiTextRow = () => (
 )
 
 const FieldTextRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="fieldTextSize"
     label="Field text"
     options={FIELD_TEXT_OPTIONS}

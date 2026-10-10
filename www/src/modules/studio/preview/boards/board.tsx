@@ -68,6 +68,15 @@ function focusedSection(root: Element, member?: string, keys: string[] = []) {
   }
 }
 
+interface Shown {
+  member?: string
+  keys: string
+}
+
+/** A closing popover leaves the board where it is; a new member, or a remount's rerun (StrictMode), reveals. */
+export const staysPut = (prev: Shown | undefined, next: Shown) =>
+  !next.keys && !!prev?.keys && prev.member === next.member
+
 export function Board({
   id,
   className,
@@ -81,12 +90,12 @@ export function Board({
   const ref = useRef<HTMLDivElement>(null)
   const keys = [axis, ...(holds ?? [])].join(" ")
   const onRendered = useContext(RenderedContext)
-  const revealed = useRef<string>(undefined)
+  const last = useRef<Shown>(undefined)
 
   useEffect(() => {
-    // A closing popover leaves the board where it is; a new member moves it.
-    if (!keys && member === revealed.current) return
-    revealed.current = member
+    const prev = last.current
+    last.current = { member, keys }
+    if (staysPut(prev, last.current)) return
     const section =
       ref.current &&
       focusedSection(ref.current, member, keys.split(" ").filter(Boolean))

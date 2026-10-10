@@ -7,7 +7,7 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 import { PRESETS } from "@/modules/presets"
 
-import { DEFAULT_STATE, effective, followersOf, parseState, setKey } from "."
+import { DEFAULT_STATE, effective, followersOf, parseState } from "."
 import type { StudioState } from "."
 import { designSystemOf } from "../resolve"
 import {
@@ -215,10 +215,8 @@ describe("per-component motion", () => {
     }
   })
 
-  test("picking the global keeps every override", () => {
-    const state = parseState({ buttonMotion: "none", popoverMotion: "smooth" })
-    const next = setKey(state, "motion", "expressive")
-    expect(next).toMatchObject({
+  test("a component's own Motion wins over the global", () => {
+    const next = parseState({
       motion: "expressive",
       buttonMotion: "none",
       popoverMotion: "smooth",
@@ -338,10 +336,14 @@ describe("shipped motion", () => {
   test("every option ships plain classes, no studio vars", async () => {
     const survivors: string[] = []
     for (const { value } of COMPONENT_MOTION_OPTIONS) {
+      // The global covers the members no component Motion times.
       const shipped = await shipAll(
-        parseState(
-          Object.fromEntries(COMPONENT_MOTION_KEYS.map((key) => [key, value])),
-        ),
+        parseState({
+          ...(value === "none" ? {} : { motion: value }),
+          ...Object.fromEntries(
+            COMPONENT_MOTION_KEYS.map((key) => [key, value]),
+          ),
+        }),
       )
       for (const [name, content] of Object.entries(shipped))
         if (content.includes("--studio-")) survivors.push(`${value}: ${name}`)

@@ -9,7 +9,7 @@ import {
   MOTION_OPTIONS,
   PALETTE_OPTIONS,
 } from "../axes/charts.meta"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -98,7 +98,7 @@ function GridRow() {
 
 function ChartMotionRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="chartMotion"
       label="Chart transition"
       options={MOTION_OPTIONS}

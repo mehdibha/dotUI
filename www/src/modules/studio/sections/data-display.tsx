@@ -9,7 +9,7 @@ import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars.meta"
 import { CARD_HEADER_OPTIONS, FOOTER_OPTIONS } from "../axes/card.meta"
 import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
 import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { useStudio } from "../use-studio"
 
@@ -369,7 +369,7 @@ function TableHeaderRow() {
 
 function TableHeaderLabelRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="tableHeaderLabel"
       label="Header label"
       options={HEADER_LABEL_OPTIONS}
@@ -438,7 +438,7 @@ function AvatarShapeRow() {
 
 function AvatarFallbackRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="avatarFallback"
       label="Fallback"
       options={FALLBACK_OPTIONS}

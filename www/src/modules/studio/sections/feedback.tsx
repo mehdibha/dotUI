@@ -88,15 +88,9 @@ function useSystems(
   )
 }
 
-function Badge({ danger }: { danger?: boolean }) {
+function Badge() {
   const styles = useBadgeStyles()
-  return (
-    <span
-      className={styles({ variant: danger ? "danger" : "neutral", size: "sm" })}
-    >
-      {danger ? "Error" : "New"}
-    </span>
-  )
+  return <span className={styles({ variant: "accent", size: "sm" })}>New</span>
 }
 
 /** A danger alert shrunk to its fill, edge and inks. */
@@ -234,7 +228,7 @@ function BadgeStyleRow() {
         ...option,
         preview: (
           <System ds={styles[option.value]!}>
-            <Badge danger />
+            <Badge />
           </System>
         ),
       }))}
@@ -253,7 +247,7 @@ function BadgeShapeRow() {
         ...option,
         preview: (
           <System ds={shapes[option.value]!}>
-            <Badge danger />
+            <Badge />
           </System>
         ),
       }))}
@@ -272,7 +266,7 @@ function BadgeCaseRow() {
         ...option,
         preview: (
           <System ds={cases[option.value]!}>
-            <Badge danger />
+            <Badge />
           </System>
         ),
       }))}

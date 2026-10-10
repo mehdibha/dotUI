@@ -14,7 +14,7 @@ import {
   SELECTED_ROW_OPTIONS,
 } from "../axes/menus.meta"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
@@ -391,7 +391,7 @@ function MenuSearchRow() {
 
 function MenuScaleRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="menuScale"
       label="Palette scale"
       options={SCALE_OPTIONS}

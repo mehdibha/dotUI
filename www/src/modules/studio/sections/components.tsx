@@ -27,6 +27,9 @@ export interface Component {
   holds?: AxisKey[]
   /** Other names search answers to. */
   aliases?: string[]
+  /** The main page's value, by the lead's value, where its option label
+   *  alone wouldn't name the component's look. */
+  says?: Record<string, string>
 }
 
 export const COMPONENTS: Component[] = [
@@ -41,10 +44,10 @@ export const COMPONENTS: Component[] = [
       ["buttonRadius", "Corners"],
       ["buttonCase", "Case"],
       ["toggleSelected", "Toggled"],
-      ["groupSeparator", "Group seam"],
       ["buttonColor", "Color"],
       ["buttonMotion", "Motion"],
     ],
+    holds: ["groupSeparator"],
     aliases: [
       "Buttons",
       "Toggle button",
@@ -67,6 +70,11 @@ export const COMPONENTS: Component[] = [
     id: "link",
     label: "Link",
     chapter: "actions",
+    says: {
+      always: "Underlined",
+      hover: "Underline on hover",
+      never: "No underline",
+    },
     rows: [
       ["linkUnderline", "Underline"],
       ["linkColor", "Color"],
@@ -101,6 +109,7 @@ export const COMPONENTS: Component[] = [
     id: "select",
     label: "Select",
     chapter: "forms",
+    says: { field: "Field trigger", button: "Button trigger" },
     rows: [
       ["selectTrigger", "Trigger"],
       ["pickerCaret", "Caret"],
@@ -124,6 +133,7 @@ export const COMPONENTS: Component[] = [
     id: "checkbox",
     label: "Checkbox",
     chapter: "forms",
+    says: { auto: "Rounded corners", sharp: "Sharp corners" },
     rows: [
       ["checkCorner", "Corner"],
       ["checkEdge", "Edge"],
@@ -139,7 +149,9 @@ export const COMPONENTS: Component[] = [
     rows: [
       ["radioMark", "Mark"],
       ["radioColor", "Color"],
+      ["checkboxMotion", "Motion"],
     ],
+    hosts: ["checkboxMotion"],
     aliases: ["Radio group"],
   },
   {
@@ -176,6 +188,7 @@ export const COMPONENTS: Component[] = [
     id: "calendar",
     label: "Calendar",
     chapter: "forms",
+    says: { same: "Days like buttons", circle: "Circle days" },
     rows: [
       ["calendarDayShape", "Day shape"],
       ["calendarToday", "Today"],
@@ -211,6 +224,12 @@ export const COMPONENTS: Component[] = [
     id: "popover",
     label: "Popover",
     chapter: "overlays",
+    says: {
+      tooltips: "Arrows on tooltips",
+      none: "No arrows",
+      popovers: "Arrows on popovers",
+      both: "Arrows everywhere",
+    },
     rows: [
       ["menuArrows", "Arrows"],
       ["popoverEntrance", "Entrance"],
@@ -231,6 +250,7 @@ export const COMPONENTS: Component[] = [
     id: "command",
     label: "Command",
     chapter: "overlays",
+    says: { field: "Search field", bar: "Search bar", prompt: "Prompt" },
     rows: [
       ["menuSearch", "Search"],
       ["menuScale", "Scale"],
@@ -318,6 +338,7 @@ export const COMPONENTS: Component[] = [
     id: "card",
     label: "Card",
     chapter: "data",
+    says: { none: "Plain header", rule: "Ruled header", band: "Banded header" },
     rows: [
       ["cardHeader", "Header"],
       ["cardFooter", "Footer"],
@@ -327,6 +348,7 @@ export const COMPONENTS: Component[] = [
     id: "table",
     label: "Table",
     chapter: "data",
+    says: { plain: "Plain header", filled: "Filled header" },
     rows: [
       ["tableHeader", "Header"],
       ["tableHeaderLabel", "Header label"],
@@ -364,6 +386,11 @@ export const COMPONENTS: Component[] = [
     id: "chart",
     label: "Chart",
     chapter: "data",
+    says: {
+      mono: "Mono palette",
+      vivid: "Vivid palette",
+      muted: "Muted palette",
+    },
     rows: [
       ["chartPalette", "Palette"],
       ["chartGrid", "Gridlines"],
@@ -456,7 +483,8 @@ function ComponentRow({
         <>
           {modified && <ModifiedDot />}
           <span className="truncate">
-            {valueLabel(lead, studio.effective[lead])}
+            {component.says?.[String(studio.effective[lead])] ??
+              valueLabel(lead, studio.effective[lead])}
           </span>
         </>
       }
@@ -469,7 +497,7 @@ const pageOf = (component: Component): ChapterPage => ({
   label: component.label,
   owners: homeKeys(component),
   aliases: component.aliases,
-  rows: component.rows.map(([, name]) => name),
+  rows: component.rows.map(([key, name]) => ({ name, key })),
   Body: function ComponentPage() {
     return component.rows.map(([key, label]) => (
       <Row key={key} axis={key} label={label} />
@@ -495,6 +523,7 @@ export const COMPONENT_CHAPTERS: Chapter[] = GROUPS.map(({ id, label }) => {
     // A one-row component is its row: search knows it by the row's name too.
     rows: members.filter(isSingle).map(({ label, aliases = [], rows }) => ({
       name: label,
+      key: rows[0]?.[0],
       aliases: [...aliases, ...rows.map(([, name]) => name)],
     })),
     Body: function ComponentRows({ studio }: { studio: Studio }) {

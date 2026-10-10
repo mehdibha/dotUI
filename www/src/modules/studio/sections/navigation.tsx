@@ -36,7 +36,7 @@ import {
   TAB_STYLE_OPTIONS,
   WEIGHT_OPTIONS,
 } from "../axes/navigation.meta"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import { useStudio } from "../use-studio"
@@ -337,6 +337,7 @@ function NavWeightRow() {
   return (
     <DialSelect
       axis="navWeight"
+      rowPreview={false}
       label="Weight"
       options={weightOptions(WEIGHT_OPTIONS)}
     />
@@ -347,6 +348,7 @@ function NavItemWeightRow() {
   return (
     <DialSelect
       axis="navItemWeight"
+      rowPreview={false}
       label="Sidebar weight"
       options={weightOptions(ITEM_WEIGHT_OPTIONS)}
     />
@@ -358,6 +360,7 @@ function NavCaseRow() {
   return (
     <DialSelect
       axis="navCase"
+      rowPreview={false}
       label="Case"
       options={CASE_OPTIONS.map((option) => ({
         ...option,
@@ -405,6 +408,7 @@ function LinkUnderlineRow() {
   return (
     <DialSelect
       axis="linkUnderline"
+      rowPreview={false}
       label="Underline"
       options={UNDERLINE_OPTIONS.map((option) => ({
         ...option,
@@ -420,7 +424,7 @@ function LinkUnderlineRow() {
 
 function BreadcrumbSeparatorRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="breadcrumbSeparator"
       label="Separator"
       options={SEPARATOR_OPTIONS}

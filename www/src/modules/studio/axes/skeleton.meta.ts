@@ -10,7 +10,7 @@ export const ANIMATION_OPTIONS = options(ANIMATION_VALUES, {
     label: "Pulse",
     credits: ["shadcn", "Radix Themes", "Mantine", "Chakra"],
   },
-  none: { label: "None", credits: ["Polaris", "Ant Design"] },
+  none: { label: "Static", credits: ["Polaris", "Ant Design"] },
 })
 
 export const OPTIONS = {

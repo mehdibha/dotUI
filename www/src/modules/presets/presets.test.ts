@@ -9,7 +9,6 @@ import {
 import { COLUMNS } from "@/modules/studio/axes/style"
 import { designSystemOf } from "@/modules/studio/resolve"
 
-import pinned from "./__fixtures__/baseline-889.json"
 import { ORIGIN, PRESETS } from "./index"
 
 describe("built-in presets", () => {
@@ -53,15 +52,12 @@ describe("built-in presets", () => {
     }
   })
 
-  // A preset's output is pinned: a change that moves one updates the fixture on purpose.
+  // Serialized, so token order (which reaches the emitted CSS) is pinned too; `vitest -u` re-pins.
   it("resolve to their pinned design systems", () => {
-    expect(Object.keys(pinned).sort()).toEqual(
-      PRESETS.map((preset) => preset.id).sort(),
-    )
     for (const preset of PRESETS)
-      expect(designSystemOf(preset.state), preset.id).toEqual(
-        pinned[preset.id as keyof typeof pinned],
-      )
+      expect(
+        JSON.stringify(designSystemOf(preset.state), null, 2),
+      ).toMatchSnapshot(preset.id)
   })
 
   it("credit the brand they recreate", () => {

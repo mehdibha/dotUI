@@ -3,10 +3,6 @@
 /* Motion: the global tempo, each component's own Motion and the popover and
    tooltip entrances. Component pages host their rows. */
 
-import { Button as RacButton } from "react-aria-components"
-
-import { cn } from "@/registry/lib/utils"
-
 import { followersOf } from "../axes"
 import {
   COMPONENT_MOTION_KEYS,
@@ -18,24 +14,22 @@ import type { ComponentMotionKey } from "../axes/motion"
 import {
   COMPONENT_MOTION_OPTIONS,
   ENTRANCE_OPTIONS,
-  MOTION_COMPONENTS,
   MOTION_OPTIONS,
   SAME_AS_MOTION,
 } from "../axes/motion.meta"
 import {
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
+  DialAction,
   DialGlyph,
   DialPickList,
   DialPopover,
-  DialSegmented,
   DialSelect,
   DialSeparator,
   DialTrigger,
 } from "../dial"
 import type { RowMap } from "../family-page"
+import type { AxisKey } from "../use-axis"
 import { useStudio } from "../use-studio"
+import { COMPONENTS } from "./components"
 
 /** The anchored layers' entrance curve under a table; None is a step. */
 function MotionGlyph({ motion }: { motion: string }) {
@@ -90,6 +84,13 @@ const tempoLabel = (value: string) =>
   COMPONENT_MOTION_OPTIONS.find((option) => option.value === value)?.label ??
   value
 
+/** The component whose page a Motion key's row sits on. */
+const componentOf = (key: string) =>
+  COMPONENTS.find(
+    ({ rows, hosts }) =>
+      rows.some(([row]) => row === key) && !hosts?.includes(key as AxisKey),
+  )?.label
+
 /** The global tempo; its popover names the components on their own. */
 function MotionRow() {
   const { state, set, setState } = useStudio()
@@ -125,9 +126,7 @@ function MotionRow() {
                   key={key}
                   className="flex h-7 items-center justify-between gap-3 px-1 text-[13px] font-medium"
                 >
-                  <span className="text-fg/85">
-                    {MOTION_COMPONENTS[key as ComponentMotionKey]}
-                  </span>
+                  <span className="text-fg/85">{componentOf(key)}</span>
                   <span className="flex items-center gap-2 text-fg/60">
                     {tempoLabel(tempo)}
                     {glyph(tempo)}
@@ -135,7 +134,7 @@ function MotionRow() {
                 </div>
               )
             })}
-            <RacButton
+            <DialAction
               onPress={() =>
                 setState({
                   ...state,
@@ -144,10 +143,9 @@ function MotionRow() {
                   ),
                 })
               }
-              className={cn(DIAL_ROW, DIAL_PRESS, "mt-1 justify-center")}
             >
-              <span className={DIAL_LABEL}>Reset all</span>
-            </RacButton>
+              Reset all
+            </DialAction>
           </>
         )}
       </DialPopover>
@@ -164,9 +162,7 @@ const componentRow = (key: ComponentMotionKey) =>
 
 const entranceRow = (key: "popoverEntrance" | "tooltipEntrance") =>
   function EntranceRow() {
-    return (
-      <DialSegmented axis={key} label="Entrance" options={ENTRANCE_OPTIONS} />
-    )
+    return <DialSelect axis={key} label="Entrance" options={ENTRANCE_OPTIONS} />
   }
 
 export const ROWS: RowMap = {

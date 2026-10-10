@@ -4,30 +4,36 @@
    it allows; the popover ends with a reset for the rest. */
 
 import { useMemo } from "react"
-import { Button as RacButton } from "react-aria-components"
 
 import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { CONTAINER_SURFACE } from "@/registry/ui/card/styles"
 
 import { effective, followersOf } from "../axes"
 import { resolveButtons } from "../axes/buttons"
 import { pickStyle, resetToStyle } from "../axes/style"
 import type { Style } from "../axes/style"
 import { STYLE_OPTIONS } from "../axes/style.meta"
-import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DialSelect } from "../dial"
+import { resolveSurfaces } from "../axes/surfaces"
+import { DialAction, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { useStudio } from "../use-studio"
 
-/** A secondary button, the control the four styles all draw apart. */
-function Specimen() {
+/** A card holding a secondary button: the surface and the control the
+ *  four styles draw apart. */
+function Specimen({ tokens }: { tokens: Record<string, string> }) {
   const styles = useButtonStyles()
   return (
     <span
-      data-button=""
-      className={styles({ variant: "secondary", size: "xs" })}
+      aria-hidden
+      className={cn(CONTAINER_SURFACE, "flex rounded-lg p-1.5")}
+      style={tokens as React.CSSProperties}
     >
-      Cancel
+      <span
+        data-button=""
+        className={cn(styles({ variant: "secondary", size: "xs" }), "w-9")}
+      />
     </span>
   )
 }
@@ -46,7 +52,7 @@ function StyleRow() {
           ...option,
           preview: (
             <DesignSystemContext.Provider value={system}>
-              <Specimen />
+              <Specimen tokens={resolveSurfaces(values).tokens ?? {}} />
             </DesignSystemContext.Provider>
           ),
         }
@@ -64,14 +70,9 @@ function StyleRow() {
       onChange={(style) => setState(pickStyle(state, style as Style))}
     >
       {explicit > 0 && (
-        <RacButton
-          onPress={() => setState(resetToStyle(state))}
-          className={cn(DIAL_ROW, DIAL_PRESS, "justify-center")}
-        >
-          <span className={DIAL_LABEL}>
-            Reset {explicit} to {label}
-          </span>
-        </RacButton>
+        <DialAction onPress={() => setState(resetToStyle(state))}>
+          Reset {explicit} to {label}
+        </DialAction>
       )}
     </DialSelect>
   )

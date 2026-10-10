@@ -248,7 +248,7 @@ export function PanelPage({
 
   const reveal = (id: string, axis?: string) => {
     // "Checkbox › Corner" names a page and its row; a row a popover holds
-    // ("Surfaces › Layers") lands on the row that opens it.
+    // ("Dialog › Backdrop › Frost") lands on the row that opens it.
     const [first, row] = axis?.split(" › ") ?? []
     const target = pages.find((p) => p.chapter.id === id && p.label === first)
     if (target) {

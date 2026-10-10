@@ -369,7 +369,7 @@ function DialogCloseRow() {
 
 function DialogEntranceRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="dialogEntrance"
       label="Dialog entrance"
       options={ENTRANCE_OPTIONS}
@@ -379,7 +379,7 @@ function DialogEntranceRow() {
 
 function DialogPositionRow() {
   return (
-    <DialSegmented
+    <DialSelect
       axis="dialogPosition"
       label="Position"
       options={POSITION_OPTIONS}

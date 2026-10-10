@@ -27,7 +27,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { PanelPopover, PanelPopoverTitle, useDocked, useMedia } from "./rows"
-import type { Chapter } from "./state"
+import type { Chapter, SearchRow } from "./state"
 
 interface Entry {
   id: string
@@ -49,15 +49,42 @@ function categories(chapters: Chapter[]): Entry[] {
   }))
 }
 
+/** The rows a row's popover holds, by the row's key: a name, then any
+ *  others it answers to. */
+const HELD: Partial<Record<string, string[][]>> = {
+  brand: [["Keep exact"], ["Ink"], ["Vividness"]],
+  neutralHue: [["Hue"], ["Tint"]],
+  iconLibrary: [["Stroke"], ["Weight"]],
+  successSeed: [["Success"], ["Warning"], ["Danger"], ["Selection"]],
+  surfaceLayers: [
+    ["Layers"],
+    ["Edge"],
+    ["Shadow"],
+    ["Overlays", "Glass"],
+    ["App shell"],
+    ["Light page"],
+    ["Dark page"],
+  ],
+  focusStyle: [["Strength"], ["Width"], ["Color"]],
+  focusInputStyle: [["Weight"], ["Ink"]],
+  selectionHighlight: [["Control text"]],
+  buttonStyle: [["Seam", "Group seam", "Button group"]],
+  dialogBackdrop: [["Strength"], ["Frost"]],
+}
+
 /** A chapter's rows and pages, each with the names it answers to; a
- *  page's rows read "Page › Row". */
+ *  page's rows read "Page › Row", a popover's "Row › Sub-row". */
 function rowsOf(chapter: Chapter) {
   const rows = new Map<string, string[] | undefined>()
-  for (const row of chapter.rows ?? []) rows.set(row.name, row.aliases)
+  const add = (path: string, row: SearchRow) => {
+    rows.set(path, row.aliases)
+    for (const [name, ...aliases] of HELD[row.key ?? ""] ?? [])
+      rows.set(`${path} › ${name}`, aliases)
+  }
+  for (const row of chapter.rows ?? []) add(row.name, row)
   for (const page of chapter.pages ?? []) {
     rows.set(page.label, page.aliases)
-    for (const row of page.rows ?? [])
-      rows.set(`${page.label} › ${row}`, undefined)
+    for (const row of page.rows ?? []) add(`${page.label} › ${row.name}`, row)
   }
   return rows
 }

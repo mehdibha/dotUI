@@ -64,12 +64,13 @@ describe("homes", () => {
     }
   })
 
-  it("hosts only the popover's Motion, on Menu", () => {
+  it("hosts the popover's Motion on Menu, the checkbox's on Radio", () => {
     const hosted = COMPONENTS.flatMap((c) =>
       (c.hosts ?? []).map((key) => `${c.id}:${key}`),
     )
-    expect(hosted).toEqual(["menu:popoverMotion"])
+    expect(hosted).toEqual(["radio:checkboxMotion", "menu:popoverMotion"])
     expect(where("popoverMotion")).toBe("popover")
+    expect(where("checkboxMotion")).toBe("checkbox")
   })
 
   it("keeps a page to eight rows; Button holds nine", () => {
@@ -126,7 +127,7 @@ describe("deep links", () => {
       dates: { page: "calendar" },
       display: { page: "table" },
       "display/kbd": { key: "kbdTreatment" },
-      feedback: { page: "badge" },
+      feedback: { page: "toast" },
       "feedback/loading": { page: "progress" },
       charts: { page: "chart" },
       states: { page: "interaction" },

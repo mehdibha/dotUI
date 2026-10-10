@@ -8,7 +8,7 @@ import { Fragment, useContext } from "react"
 import { DialGap, DialLink } from "../dial"
 import { Row, RowLabel } from "../family-page"
 import { PanelNav } from "../rows"
-import type { ChapterPage, Studio } from "../state"
+import type { ChapterPage, SearchRow, Studio } from "../state"
 import type { AxisKey } from "../use-axis"
 import { SemanticsPreview } from "./color"
 import { PrimaryRow } from "./primary"
@@ -102,6 +102,11 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
   ],
 }
 
+const searchRow = ([row, name]: FoundationRow): SearchRow => ({
+  name,
+  key: typeof row === "string" ? row : undefined,
+})
+
 function Rows({ rows }: { rows: FoundationRow[] }) {
   return rows.map(([row, label]) => {
     if (typeof row === "string")
@@ -119,7 +124,7 @@ const page = (page: Omit<ChapterPage, "Body" | "rows">): ChapterPage => {
   const groups = PAGE_ROWS[page.id] ?? []
   return {
     ...page,
-    rows: groups.flat().map(([, label]) => label),
+    rows: groups.flat().map(searchRow),
     Body: function FoundationPage() {
       return groups.map((rows, i) => (
         <Fragment key={i}>
@@ -174,8 +179,8 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   }),
 ]
 
-/** The main page's row names, for search. */
-export const FOUNDATION_ROWS = MAIN_ROWS.map(([, label]) => ({ name: label }))
+/** The main page's rows, for search. */
+export const FOUNDATION_ROWS = MAIN_ROWS.map(searchRow)
 
 export function FoundationsSection({ studio }: { studio: Studio }) {
   const open = useContext(PanelNav)

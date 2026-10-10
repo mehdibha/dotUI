@@ -25,6 +25,12 @@ The module's `chapter` is already in the list in `../index.ts`; DEFAULTS,
 SCHEMA, FOLLOWS, RULES and the resolvers are built from it. A new module adds
 one line there.
 
+- A key the four Styles draw apart joins `COLUMNS` in `../style.ts` (Flat =
+  its default), and any option only some Styles allow joins `ALLOWED`.
+- Renaming or removing a key or a value breaks saved states and share links:
+  bump `STATE_VERSION` in `../migrate.ts` and add the `STEPS` entry that
+  rewrites the old shape.
+
 ## Add a follow (Same as / Auto)
 
 On the follower's chapter, `follows: { key: [follow] }`, and default the key
@@ -36,8 +42,8 @@ to the follow id (`"auto"`, `"same"`), typed `number | "auto"` etc.
 
 A follow landing on another follow id of its key resolves once more, never
 twice. Validation accepts the follow ids; resolvers only ever see the resolved
-value. `followersOf(state, key)` lists the keys saved off their follow of
-`key` (a Motion row's custom components). Setting a key never resets them.
+value. `followersOf(state, key)` lists the keys that can follow `key` but are
+saved off every follow (a Motion row's custom components). Setting a key never resets them.
 
 ## Style
 

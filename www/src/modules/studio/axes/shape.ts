@@ -86,49 +86,6 @@ export const SHAPE_ROLES = [
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
 export type ShapeVector = Record<ShapeRoleKey, string>
 
-/* Three looks that stay distinct at a glance; the base slider and Custom
-   cover the rest. Checked against shadcn/create: Square ≈ lyra/sera,
-   Standard ≈ mira (vega and nova within a rung), Round ≈ luma/rhea. */
-export const SHAPE_CHARACTERS: Array<{
-  id: string
-  label: string
-  vector: ShapeVector
-}> = [
-  {
-    id: "square",
-    label: "Square",
-    vector: {
-      roleControl: "none",
-      roleItem: "none",
-      roleSurface: "none",
-      rolePanel: "none",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "standard",
-    label: "Standard",
-    vector: {
-      roleControl: "md",
-      roleItem: "auto",
-      roleSurface: "lg",
-      rolePanel: "xl",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "round",
-    label: "Round",
-    vector: {
-      roleControl: "3xl",
-      roleItem: "auto",
-      roleSurface: "2xl",
-      rolePanel: "3xl",
-      roleCard: "auto",
-    },
-  },
-]
-
 export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
 

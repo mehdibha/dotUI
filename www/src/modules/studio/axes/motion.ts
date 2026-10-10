@@ -297,7 +297,7 @@ const ENTRANCE_PARAM: Record<string, string> = {
 }
 
 /** Each component's own Motion and the members it times; the rest ride
- *  `motion`. Radio rides checkbox's vars, so Checkbox times it. */
+ *  `motion`. Radio rides checkbox's vars; its page hosts Checkbox's row. */
 const COMPONENTS = {
   buttonMotion: ["button", "toggle-button"],
   segmentedMotion: ["segmented-control"],

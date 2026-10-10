@@ -7,13 +7,8 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_EFFECTIVE, DEFAULT_STATE, DEFAULTS, parseState } from "./index"
-import {
-  SHAPE_CHARACTERS,
-  SHAPE_ROLES,
-  SHAPE_RUNGS,
-  SHAPE_SCHEMA,
-  shapeVars,
-} from "./shape"
+import { SHAPE_ROLES, SHAPE_RUNGS, SHAPE_SCHEMA, shapeVars } from "./shape"
+import { SHAPE_CHARACTERS } from "./shape.meta"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
   designSystemOf(parseState({ ...overrides }))

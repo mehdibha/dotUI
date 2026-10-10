@@ -68,6 +68,13 @@ export const ALL_ROWS: RowMap = Object.assign(
   ...Object.values(SECTION_ROWS),
 )
 
+/** A row, for search: its name, the key it edits, other names it answers to. */
+export interface SearchRow {
+  name: string
+  key?: string
+  aliases?: string[]
+}
+
 export interface Chapter {
   id: string
   label: string
@@ -75,8 +82,8 @@ export interface Chapter {
   owners?: string[]
   /** Other names search answers to. */
   aliases?: string[]
-  /** Its rows' names, and others each answers to, for search. */
-  rows?: { name: string; aliases?: string[] }[]
+  /** Its rows, for search. */
+  rows?: SearchRow[]
   Body: React.ComponentType<{ studio: Studio }>
   /** Pages the body's rows open in place of the panel page. */
   pages?: ChapterPage[]
@@ -90,8 +97,8 @@ export interface ChapterPage {
   owners?: string[]
   /** Other names search answers to. */
   aliases?: string[]
-  /** Its rows' names, for search. */
-  rows?: string[]
+  /** Its rows, for search. */
+  rows?: SearchRow[]
   Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
@@ -139,7 +146,7 @@ const MOVED: Record<string, string> = {
   nav: "tabs",
   dates: "calendar",
   display: "table",
-  feedback: "badge",
+  feedback: "toast",
   "feedback/loading": "progress",
   charts: "chart",
   states: "interaction",

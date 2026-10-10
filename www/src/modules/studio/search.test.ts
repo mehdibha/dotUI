@@ -72,6 +72,19 @@ describe("panel search", () => {
         expect(search(row), row).toContain(`Foundations › ${label} › ${row}`)
   })
 
+  it("reaches rows a popover holds, through the row that opens it", () => {
+    expect(search("Vividness")).toContain("Foundations › Brand › Vividness")
+    expect(search("Keep exact")).toContain("Foundations › Brand › Keep exact")
+    expect(search("stroke")).toContain("Foundations › Icons › Stroke")
+    expect(search("glass")).toContain(
+      "Foundations › Color & surfaces › Surfaces › Overlays",
+    )
+    expect(search("Frost")).toContain("Overlays › Dialog › Backdrop › Frost")
+    expect(search("Strength")).toContain(
+      "Foundations › Interaction › Focus ring › Strength",
+    )
+  })
+
   it("finds a one-row component by its row's name", () => {
     expect(search("Steppers")).toContain("Forms › Number field")
   })

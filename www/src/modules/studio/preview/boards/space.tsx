@@ -315,7 +315,7 @@ function Rows() {
               <ListBoxItem id="backlog">Backlog</ListBoxItem>
               <ListBoxItem id="progress">In progress</ListBoxItem>
               <ListBoxItem id="review">In review</ListBoxItem>
-              <ListBoxItem id="done">
+              <ListBoxItem id="done" textValue="Done">
                 <StarIcon />
                 Done
               </ListBoxItem>
@@ -396,7 +396,7 @@ function Text() {
         </TextField>
       </TextSpec>
       <TextSpec target="[slot=description]">
-        <TextField>
+        <TextField aria-label="Workspace name">
           <Description>Visible to everyone on your team.</Description>
         </TextField>
       </TextSpec>
