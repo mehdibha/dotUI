@@ -8,7 +8,7 @@
    Selecting scrolls to the chapter. ⌘P, not ⌘K — the site header's docs
    search owns ⌘K everywhere, /studio included. */
 
-import { useEffect, useMemo, useState } from "react"
+import { memo, useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import { useFilter } from "react-aria-components/Autocomplete"
 
@@ -75,7 +75,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   )
 }
 
-export function PanelSearch({
+export const PanelSearch = memo(function PanelSearch({
   chapters,
   onOpenChapter,
 }: {
@@ -225,4 +225,4 @@ export function PanelSearch({
       </PanelPopoverTitle.Provider>
     </Dialog>
   )
-}
+})

@@ -4,7 +4,7 @@
    copied whole, and the toggles, groups and segmented control below stay
    coherent with it. Color is a leaf of Color's Primary. */
 
-import { DesignSystemContext } from "@/lib/styles"
+import { ComponentParamsProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/button/styles"
 
@@ -30,12 +30,9 @@ import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* One stable context per style, so the registry's style cache hits. */
-const STYLE_CONTEXT = Object.fromEntries(
-  STYLE_OPTIONS.map(({ value }) => [
-    value,
-    { params: { button: { style: value } }, density: "default" as const },
-  ]),
+/* One stable selection per style, so the registry's style cache hits. */
+const STYLE_PARAMS = Object.fromEntries(
+  STYLE_OPTIONS.map(({ value }) => [value, { button: { style: value } }]),
 )
 
 function Specimen({ tiny }: { tiny?: boolean }) {
@@ -65,11 +62,9 @@ function Specimen({ tiny }: { tiny?: boolean }) {
 /** Buttons drawn by the registry's own recipe for one style. */
 function StyleSpecimen({ style, tiny }: { style: string; tiny?: boolean }) {
   return (
-    <DesignSystemContext.Provider
-      value={STYLE_CONTEXT[style] ?? STYLE_CONTEXT.flat!}
-    >
+    <ComponentParamsProvider params={STYLE_PARAMS[style] ?? STYLE_PARAMS.flat}>
       <Specimen tiny={tiny} />
-    </DesignSystemContext.Provider>
+    </ComponentParamsProvider>
   )
 }
 

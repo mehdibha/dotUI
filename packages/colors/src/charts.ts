@@ -78,7 +78,7 @@ export function tonalCategoricalPalette(
 }
 
 /** Gate for tonal palettes: strictly descending with readable L* steps. */
-export function tonalGateReport(palette: Oklch[]) {
+export function tonalGateReport(palette: readonly Oklch[]) {
   const lstars = palette.map(lstarOf)
   let minAdjacent = Infinity
   let monotonic = true
@@ -326,6 +326,20 @@ export function sequentialPalette(
   return out
 }
 
+/** Diverging arms `[opposite, accent]`, deepening away from the midpoint. */
+export function divergingArms(
+  accentHue: number,
+  armLength = 3,
+  mode: Mode = "light",
+): [Oklch[], Oklch[]] {
+  const opposite = (accentHue + 180) % 360
+  const arm = (hue: number) =>
+    sequentialPalette(hue, armLength + 1, mode)
+      .slice(1) // drop the near-surface stop; the midpoint takes its place
+      .reverse()
+  return [arm(opposite), arm(accentHue).reverse()]
+}
+
 /** Diverging: two sequential arms around the surface neutral midpoint. */
 export function divergingPalette(
   accentHue: number,
@@ -333,14 +347,7 @@ export function divergingPalette(
   armLength = 3,
   mode: Mode = "light",
 ): Oklch[] {
-  const opposite = (accentHue + 180) % 360
-  const arm = (hue: number) =>
-    sequentialPalette(hue, armLength + 1, mode)
-      .slice(1) // drop the near-surface stop; the midpoint takes its place
-      .reverse()
-  // Each arm connects to the midpoint at its light end and deepens outward.
-  const left = arm(opposite)
-  const right = arm(accentHue).reverse()
+  const [left, right] = divergingArms(accentHue, armLength, mode)
   return [...left, fitSrgb(neutralMidpoint), ...right]
 }
 

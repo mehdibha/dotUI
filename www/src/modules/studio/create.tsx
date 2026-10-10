@@ -25,6 +25,7 @@ import { pickerSections } from "./picker-sections"
 import {
   createFrom,
   keySelection,
+  previewSelection,
   remove,
   reset,
   select,
@@ -213,6 +214,7 @@ export function StudioPanel({ className }: { className?: string }) {
         onPick={(item) => select(keySelection(item.id))}
         onCreate={canSave ? () => askNew("current", "") : undefined}
         withPreview
+        onPreview={previewSelection}
         renderItemMenu={(item) => renderItemMenu(item.id)}
       >
         {trigger}

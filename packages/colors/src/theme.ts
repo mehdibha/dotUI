@@ -6,7 +6,7 @@
 import {
   CATEGORICAL_CHROMA,
   categoricalPalettes,
-  divergingPalette,
+  divergingArms,
   sequentialPalette,
   tonalCategoricalPalette,
   tonalGateReport,
@@ -28,15 +28,17 @@ import {
   type StepName,
   WHISPER_LINE,
 } from "./data"
+import { type DeepReadonly, memoize } from "./memo"
 import { deltaEok, minPairwiseDeltaEok } from "./meters"
 import {
   buildScale,
   type Mode,
   type ScaleColors,
+  type ScaleOptions,
   transposeSkeleton,
 } from "./scale"
 import type { ThemeOptions } from "./schema"
-import { lstarOf, type Oklch, oklchCss, toOklch } from "./space"
+import { fitSrgb, lstarOf, type Oklch, oklchCss, toOklch } from "./space"
 import { type GuaranteeResult, verifyLadder, verifyScale } from "./verify"
 
 export interface ModeOutput {
@@ -70,6 +72,58 @@ export interface Theme {
 }
 
 const CORE_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"]
+
+/**
+ * Both modes of one scale. Step 700 is mode-invariant (verified on Radix) —
+ * the dark pass shares the light solve.
+ */
+const buildScales = memoize(
+  64,
+  (
+    shared: Omit<ScaleOptions, "mode" | "skeleton" | "sharedSolid">,
+    skeleton: Record<Mode, number[]>,
+  ): Record<Mode, ScaleColors> => {
+    const light = buildScale({
+      ...shared,
+      mode: "light",
+      skeleton: skeleton.light,
+    })
+    const dark = buildScale({
+      ...shared,
+      mode: "dark",
+      skeleton: skeleton.dark,
+      sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
+    })
+    return { light, dark }
+  },
+)
+
+interface AccentCharts {
+  categorical: Oklch[]
+  sequential: Oklch[]
+  arms: [Oklch[], Oklch[]]
+}
+
+/** D11 — accent-only chart work; the neutral diverging midpoint joins later. */
+const accentCharts = memoize(
+  16,
+  (
+    accent: Oklch,
+    palette: NonNullable<ThemeOptions["chartPalette"]>,
+  ): Record<Mode, AccentCharts> => {
+    const hueSpread =
+      palette === "tonal"
+        ? undefined
+        : categoricalPalettes(accent, 8, CATEGORICAL_CHROMA[palette])
+    const forMode = (mode: Mode): AccentCharts => ({
+      categorical:
+        hueSpread?.[mode] ?? tonalCategoricalPalette(accent, 8, mode),
+      sequential: sequentialPalette(accent.h, 7, mode),
+      arms: divergingArms(accent.h, 3, mode),
+    })
+    return { light: forMode("light"), dark: forMode("dark") }
+  },
+)
 
 export function createTheme(input: string | ThemeOptions): Theme {
   const options: ThemeOptions =
@@ -124,26 +178,17 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const lightBg = options.background?.light ?? LIGHT_BG_LSTAR
   const darkBgOption = options.background?.dark
   const darkBg = darkBgOption === "oled" ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
+  const lightSkeleton = (skeleton: number[]) =>
+    lightBg === LIGHT_BG_LSTAR ? skeleton : transposeSkeleton(skeleton, lightBg)
+  const darkSkeleton =
+    darkBg === DARK_BG_LSTAR
+      ? DARK_SKELETON
+      : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION)
   const skeletons = {
-    light: {
-      chromatic:
-        lightBg === LIGHT_BG_LSTAR
-          ? LIGHT_SKELETON
-          : transposeSkeleton(LIGHT_SKELETON, lightBg),
-      neutral:
-        lightBg === LIGHT_BG_LSTAR
-          ? LIGHT_SKELETON_NEUTRAL
-          : transposeSkeleton(LIGHT_SKELETON_NEUTRAL, lightBg),
-    },
-    dark: {
-      chromatic:
-        darkBg === DARK_BG_LSTAR
-          ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
-      neutral:
-        darkBg === DARK_BG_LSTAR
-          ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
+    chromatic: { light: lightSkeleton(LIGHT_SKELETON), dark: darkSkeleton },
+    neutral: {
+      light: lightSkeleton(LIGHT_SKELETON_NEUTRAL),
+      dark: darkSkeleton,
     },
   }
 
@@ -151,36 +196,27 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const guarantees: GuaranteeResult[] = []
   const seedDelta: Record<string, number> = {}
 
-  const built: Record<Mode, Record<string, ScaleColors>> = {
+  const built: Record<Mode, Record<string, DeepReadonly<ScaleColors>>> = {
     light: {},
     dark: {},
   }
 
   for (const [name, { seed, neutral }] of Object.entries(seeds)) {
-    const shared = {
-      seed,
-      neutral,
-      vividness,
-      hueShift,
-      // Seed-classified neutrals tint from their own chroma (D8 explicit rule).
-      tintPeak:
-        name === "neutral"
-          ? tintPeak
-          : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
-      preserveSeed: preserveSeed && name === "accent",
-    }
-    const light = buildScale({
-      ...shared,
-      mode: "light",
-      skeleton: neutral ? skeletons.light.neutral : skeletons.light.chromatic,
-    })
-    // Step 700 is mode-invariant (verified on Radix) — share the light solve.
-    const dark = buildScale({
-      ...shared,
-      mode: "dark",
-      skeleton: neutral ? skeletons.dark.neutral : skeletons.dark.chromatic,
-      sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
-    })
+    const { light, dark } = buildScales(
+      {
+        seed,
+        neutral,
+        vividness,
+        hueShift,
+        // Seed-classified neutrals tint from their own chroma (D8 explicit rule).
+        tintPeak:
+          name === "neutral"
+            ? tintPeak
+            : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
+        preserveSeed: preserveSeed && name === "accent",
+      },
+      neutral ? skeletons.neutral : skeletons.chromatic,
+    )
     built.light[name] = light
     built.dark[name] = dark
 
@@ -245,34 +281,24 @@ export function createTheme(input: string | ThemeOptions): Theme {
 
   // D11 — chart palettes from the brand accent, one set per mode. The
   // categorical default is tonal (shadcn parity: shades of one brand hue,
-  // lightness-encoded); the hue-spread strategies pick one hue sequence for
-  // both modes and maximize their CVD gates by construction, so only the
-  // tonal ladder is priced here.
+  // lightness-encoded); the hue-spread strategies maximize their CVD gates
+  // by construction, so only the tonal ladder is priced here.
   const chartPalette = options.chartPalette ?? "tonal"
-  const hueSpread =
-    chartPalette === "tonal"
-      ? undefined
-      : categoricalPalettes(accentSeed, 8, CATEGORICAL_CHROMA[chartPalette])
-  const chartSet = (mode: Mode) => {
-    let categorical: Oklch[]
-    if (hueSpread) categorical = hueSpread[mode]
-    else {
-      categorical = tonalCategoricalPalette(accentSeed, 8, mode)
+  const accentChartSets = accentCharts(accentSeed, chartPalette)
+  const chartSet = (mode: Mode): ChartSet => {
+    const { categorical, sequential, arms } = accentChartSets[mode]
+    if (chartPalette === "tonal") {
       const gate = tonalGateReport(categorical)
       if (!gate.passes)
         warnings.push(
           `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
         )
     }
+    const midpoint = fitSrgb(built[mode].neutral!.steps["100"])
     return {
       categorical: categorical.map(oklchCss),
-      sequential: sequentialPalette(accentSeed.h, 7, mode).map(oklchCss),
-      diverging: divergingPalette(
-        accentSeed.h,
-        built[mode].neutral!.steps["100"],
-        3,
-        mode,
-      ).map(oklchCss),
+      sequential: sequential.map(oklchCss),
+      diverging: [...arms[0], midpoint, ...arms[1]].map(oklchCss),
     }
   }
   const charts = { light: chartSet("light"), dark: chartSet("dark") }

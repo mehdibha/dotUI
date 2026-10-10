@@ -41,6 +41,8 @@ import {
 } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"
 
+import { clearLive, previewNow } from "./live"
+import { useOptionPreview } from "./option-preview"
 import {
   ColorPickerPopover,
   PanelPopover,
@@ -232,23 +234,11 @@ export function DialSelect({
             }}
           >
             {options.map((option) => (
-              <ListBoxItem
+              <SelectOption
                 key={option.value}
-                id={option.value}
-                textValue={option.label}
-              >
-                <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
-                {option.description && (
-                  <ListBoxItemDescription>
-                    {option.description}
-                  </ListBoxItemDescription>
-                )}
-                {option.preview && (
-                  <span className="ml-auto flex items-center gap-2">
-                    {option.preview}
-                  </span>
-                )}
-              </ListBoxItem>
+                option={option}
+                run={() => onChange(option.value)}
+              />
             ))}
           </ListBox>
           {children && (
@@ -260,6 +250,34 @@ export function DialSelect({
         </DialogContent>
       </PanelPopover>
     </DialTrigger>
+  )
+}
+
+/** One of DialSelect's options; its own component, inside the popover. */
+function SelectOption({
+  option,
+  run,
+}: {
+  option: DialSelectOption
+  run: () => void
+}) {
+  const previewProps = useOptionPreview()
+  return (
+    <ListBoxItem
+      id={option.value}
+      textValue={option.label}
+      {...previewProps(run)}
+    >
+      <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
+      {option.description && (
+        <ListBoxItemDescription>{option.description}</ListBoxItemDescription>
+      )}
+      {option.preview && (
+        <span className="ml-auto flex items-center gap-2">
+          {option.preview}
+        </span>
+      )}
+    </ListBoxItem>
   )
 }
 
@@ -282,15 +300,19 @@ const PICK_ITEM =
 function PickItem({
   option,
   modified,
+  run,
 }: {
   option: DialPickOption
   modified?: boolean
+  run: () => void
 }) {
+  const previewProps = useOptionPreview()
   return (
     <RacListBoxItem
       id={option.value}
       textValue={option.label}
       className={PICK_ITEM}
+      {...previewProps(run)}
     >
       {({ isSelected }) => (
         <>
@@ -328,12 +350,15 @@ export function DialPickList({
   label,
   value,
   onChange,
+  preview,
   options,
   modified,
 }: {
   label: string
   value: string | undefined
   onChange: (value: string) => void
+  /** What hovering an option previews, when it isn't onChange. */
+  preview?: (value: string) => void
   options: DialPickOption[]
   modified?: string
 }) {
@@ -341,6 +366,7 @@ export function DialPickList({
     <RacListBox
       aria-label={label}
       selectionMode="single"
+      disallowEmptySelection
       selectedKeys={value ? [value] : []}
       onSelectionChange={(keys) => {
         if (keys === "all") return
@@ -354,6 +380,7 @@ export function DialPickList({
           key={option.value}
           option={option}
           modified={option.value === modified}
+          run={() => (preview ?? onChange)(option.value)}
         />
       ))}
     </RacListBox>
@@ -366,11 +393,14 @@ export function DialPicker({
   label,
   value,
   onChange,
+  preview,
   options,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
+  /** What hovering an option previews, when it isn't onChange. */
+  preview?: (value: string) => void
   options: DialPickOption[]
 }) {
   const selected = options.find((option) => option.value === value)
@@ -396,7 +426,11 @@ export function DialPicker({
           >
             <RacListBox className="flex flex-col gap-0.5 outline-hidden">
               {options.map((option) => (
-                <PickItem key={option.value} option={option} />
+                <PickItem
+                  key={option.value}
+                  option={option}
+                  run={() => (preview ?? onChange)(option.value)}
+                />
               ))}
             </RacListBox>
           </PanelPopover>
@@ -501,7 +535,7 @@ function snapToDecile(raw: number, min: number, max: number) {
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
 }
 
-/** Drags through a draft and commits on release. */
+/** Drags through a draft the preview follows, and commits on release. */
 export function DialSlider({
   label,
   value,
@@ -663,16 +697,12 @@ export function DialSlider({
       isClick.current = false
       setDragging(true)
     }
-    if (down.touch) {
-      const raw = touchValueAt(e.clientX)
-      paint(toPct(raw))
-      setDraft(round(raw))
-      return
-    }
-    stretchTo(stretchAt(e.clientX))
-    const raw = valueAt(e.clientX)
+    if (!down.touch) stretchTo(stretchAt(e.clientX))
+    const raw = down.touch ? touchValueAt(e.clientX) : valueAt(e.clientX)
     paint(toPct(raw))
-    setDraft(round(raw))
+    const next = round(raw)
+    setDraft(next)
+    previewNow(() => onChange(next))
   }
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -705,6 +735,7 @@ export function DialSlider({
 
   const onPointerCancel = () => {
     if (!interacting) return
+    clearLive()
     stretchTo(0)
     paint(toPct(value))
     setDraft(value)

@@ -1,6 +1,8 @@
 export { DEFAULTS } from "./defaults"
 export {
+  type DesignSystemMessage,
   pingIframe,
+  type PreviewAssets,
   type PreviewMode,
   sendInspect,
   sendInspectorExit,
@@ -8,13 +10,14 @@ export {
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
+  sendPreviewWarm,
   sendToIframe,
   useAnnouncePreviewReady,
-  useIframeMessageListener,
   useInspectMessages,
   useInspectorExitMessages,
   useInspectorModeMessages,
   useIsEmbeddedPreview,
   usePreviewForcedTheme,
+  usePreviewWarmMessages,
 } from "./iframe-sync"
 export type { Density, DesignSystem, IconLibraryName } from "./types"

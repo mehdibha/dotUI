@@ -90,12 +90,9 @@ export function PreviewInspector() {
   React.useLayoutEffect(() => {
     const el = cardRef.current
     if (!el) return
-    const rect = el.getBoundingClientRect()
-    setCardSize((prev) =>
-      prev.w === rect.width && prev.h === rect.height
-        ? prev
-        : { w: rect.width, h: rect.height },
-    )
+    // Not the rect: Firefox's rect width jitters with the left it feeds, so it never settles.
+    const { offsetWidth: w, offsetHeight: h } = el
+    setCardSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }))
   })
 
   useInspectorModeMessages(

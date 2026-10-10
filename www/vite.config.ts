@@ -54,6 +54,10 @@ export default defineConfig({
   ssr: {
     noExternal: ["@tabler/icons-react"],
   },
+  // Only the lazy studio chunk imports it: discovered late, it reloads the page.
+  optimizeDeps: {
+    include: ["react-aria/private/interactions/useFocusVisible"],
+  },
   plugins: [
     rootClosure(),
     mdx(await import("./source.config")),

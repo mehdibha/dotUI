@@ -3,6 +3,7 @@
 /* Typography — the three font roles, each row set in its own face so the row
    is the specimen. Heading matches Font until pinned. */
 
+import { memo, useMemo } from "react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
@@ -17,9 +18,18 @@ import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW } from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
+const HEADING_CATEGORIES: FontCategory[] = [
+  "sans-serif",
+  "serif",
+  "display",
+  "handwriting",
+]
+const BODY_CATEGORIES: FontCategory[] = ["sans-serif", "serif"]
+const MONO_CATEGORIES: FontCategory[] = ["mono"]
+
 /** A font role as a dial row: label, the family in its own typeface, the
  *  searchable list under it. `children` sit above the list. */
-function FontRow({
+const FontRow = memo(function FontRow({
   label,
   value,
   derived,
@@ -37,6 +47,18 @@ function FontRow({
 }) {
   const resolved = value || derived || ""
   useLoadedFamilies([resolved])
+  // The Select's collection: one element, so a new value doesn't rebuild
+  // its hundreds of hidden items.
+  const list = useMemo(
+    () => (
+      <PanelPopoverTitle.Provider value={label}>
+        <FontListPopover categories={categories} onPreview={onChange}>
+          {children}
+        </FontListPopover>
+      </PanelPopoverTitle.Provider>
+    ),
+    [label, categories, onChange, children],
+  )
   return (
     <Select
       className="w-full"
@@ -62,12 +84,10 @@ function FontRow({
           </span>
         </span>
       </div>
-      <PanelPopoverTitle.Provider value={label}>
-        <FontListPopover categories={categories}>{children}</FontListPopover>
-      </PanelPopoverTitle.Provider>
+      {list}
     </Select>
   )
-}
+})
 
 /** Beside the title: Aa in the heading face. */
 export function TypePreview({ state }: { state: StudioState }) {
@@ -85,34 +105,43 @@ export function TypePreview({ state }: { state: StudioState }) {
 
 export function TypeSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const { bodyFont } = state
+  const matching = state.headingFont === ""
+  // Stable, so the Heading row's memo holds across other edits.
+  const match = useMemo(
+    () => (
+      <Switch
+        size="sm"
+        isSelected={matching}
+        onChange={(on) => set("headingFont")(on ? "" : bodyFont)}
+      >
+        <Label className="flex-1">Match font</Label>
+        <SwitchControl />
+      </Switch>
+    ),
+    [matching, bodyFont, set],
+  )
   return (
     <>
       <FontRow
         label="Heading"
         value={state.headingFont}
         derived={state.bodyFont}
-        categories={["sans-serif", "serif", "display", "handwriting"]}
+        categories={HEADING_CATEGORIES}
         onChange={set("headingFont")}
       >
-        <Switch
-          size="sm"
-          isSelected={state.headingFont === ""}
-          onChange={(match) => set("headingFont")(match ? "" : state.bodyFont)}
-        >
-          <Label className="flex-1">Match font</Label>
-          <SwitchControl />
-        </Switch>
+        {match}
       </FontRow>
       <FontRow
         label="Font"
         value={state.bodyFont}
-        categories={["sans-serif", "serif"]}
+        categories={BODY_CATEGORIES}
         onChange={set("bodyFont")}
       />
       <FontRow
         label="Mono"
         value={state.monoFont}
-        categories={["mono"]}
+        categories={MONO_CATEGORIES}
         onChange={set("monoFont")}
       />
     </>

@@ -31,6 +31,7 @@ import {
   DialSlider,
 } from "./dial"
 import type { DialOption } from "./dial"
+import { previewNow } from "./live"
 import { useDraft } from "./rows"
 
 /* -------------------------------- Geometry -------------------------------- */
@@ -171,7 +172,7 @@ function BezierHandle({
 }
 
 /** DialKit's easing graph: the curve, its tangents to both handles, and the
- *  linear reference. */
+ *  linear reference. Drags preview; release commits. */
 function BezierEditor({
   ease,
   onChange,
@@ -231,7 +232,10 @@ function BezierEditor({
           key={handle}
           ease={draft}
           handle={handle}
-          onDraft={setDraft}
+          onDraft={(next) => {
+            setDraft(next)
+            previewNow(() => onChange(next))
+          }}
           onChange={onChange}
           graphRef={ref}
           helpId={helpId}

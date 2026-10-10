@@ -1,20 +1,39 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 
+import { shareDesignSystem } from "./share-design-system"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
 
 export type PreviewMode = "light" | "dark"
 
+/** Fonts and icon libraries a preview is about to show. */
+export interface PreviewAssets {
+  fonts?: string[]
+  icons?: string[]
+}
+
+/** The design system the preview shows. */
+export interface DesignSystemMessage {
+  data: DesignSystem
+  /** A drag or hover preview, not the committed design. */
+  live: boolean
+  /** A drag's tick, or the commit or drop that ends it: painted at once.
+   *  Anything else renders interruptibly. */
+  drag: boolean
+}
+
 type ParentToIframeMessage =
-  | { type: "design-system"; data: DesignSystem }
+  | ({ type: "design-system" } & DesignSystemMessage)
   | { type: "preview-mode"; mode: PreviewMode }
   | { type: "preview-ping" }
   | { type: "preview-navigate"; slug: string }
   | { type: "preview-prefetch"; slug: string }
   | { type: "inspector-mode"; enabled: boolean }
+  | ({ type: "preview-warm" } & PreviewAssets)
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
@@ -25,12 +44,24 @@ type IframeToParentMessage =
 
 export function sendToIframe(
   iframe: HTMLIFrameElement | null,
-  data: DesignSystem,
+  message: DesignSystemMessage,
 ) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: "design-system", data } satisfies ParentToIframeMessage,
-    "*",
+    { type: "design-system", ...message } satisfies ParentToIframeMessage,
+    window.location.origin,
+  )
+}
+
+/** Fonts and icon libraries the preview should start loading now. */
+export function sendPreviewWarm(
+  iframe: HTMLIFrameElement | null,
+  assets: PreviewAssets,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "preview-warm", ...assets } satisfies ParentToIframeMessage,
+    window.location.origin,
   )
 }
 
@@ -108,24 +139,241 @@ function isInIframe(): boolean {
   }
 }
 
-export function useIframeMessageListener(
-  onMessage: (data: DesignSystem) => void,
+const FRAME_FALLBACK_MS = 100
+// An apply over budget waits as long as it took: at most half the thread.
+const APPLY_BUDGET_MS = 8
+// A render still uncommitted by then (suspended on a chunk, say) stops
+// holding newer messages.
+const STALL_MS = 200
+const LIVE_ATTR = "data-studio-live"
+
+/** The next frame, or a timeout where rAF never fires (hidden tabs). */
+function onNextFrame(fn: () => void) {
+  let frame = 0
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const cancel = () => {
+    cancelAnimationFrame(frame)
+    clearTimeout(timer)
+  }
+  const run = () => {
+    cancel()
+    fn()
+  }
+  frame = requestAnimationFrame(run)
+  timer = setTimeout(run, FRAME_FALLBACK_MS)
+  return cancel
+}
+
+/** Hands `ready` what applying `message` needs, now or later. */
+export type PrepareDesignSystem<T> = (
+  message: DesignSystemMessage,
+  ready: (prepared: T) => void,
+) => void
+
+/** Renders `data`, then calls `committed` from the commit (at once if
+ *  the screen already shows it). */
+export type ApplyDesignSystem<T> = (
+  data: DesignSystem,
+  prepared: T,
+  committed: () => void,
+) => void
+
+/** Applies only the newest prepared design system, one at a time, from the
+ *  next frame. Returns the cleanup. */
+export function listenDesignSystemMessages<T>(
+  prepare: PrepareDesignSystem<T>,
+  apply: ApplyDesignSystem<T>,
 ) {
-  const onMessageRef = React.useRef(onMessage)
+  const root = document.documentElement
+  let pending: { message: DesignSystemMessage; prepared: T } | null = null
+  let received = 0
+  // The newest message prepared: a slower, older one never replaces it.
+  let accepted = 0
+  let flushed = 0
+  // Until the apply in flight commits or stalls, newer messages wait in
+  // `pending`.
+  let applying = false
+  let readyAt = 0
+  let cancelApply: (() => void) | undefined
+  let cancelUnlive: (() => void) | undefined
+  let stall: ReturnType<typeof setTimeout> | undefined
+
+  const flush = () => {
+    cancelApply = undefined
+    const next = pending
+    pending = null
+    if (!next) return
+    const { message, prepared } = next
+    const id = ++flushed
+    cancelUnlive?.()
+    if (message.live) root.setAttribute(LIVE_ATTR, "")
+    applying = true
+    stall = setTimeout(() => {
+      applying = false
+      schedule()
+    }, STALL_MS)
+    const start = performance.now()
+    const committed = () => {
+      // A newer apply took over.
+      if (id !== flushed) return
+      clearTimeout(stall)
+      // A transition yields while it renders: only its commit holds the thread.
+      const from = message.drag ? start : performance.now()
+      // Restyles now, so the measure includes it.
+      void root.offsetHeight
+      const end = performance.now()
+      readyAt = end - from > APPLY_BUDGET_MS ? end + (end - from) : 0
+      applying = false
+      // A frame later, so the commit itself doesn't animate.
+      if (!message.live && root.hasAttribute(LIVE_ATTR))
+        cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
+      schedule()
+    }
+    const run = () => apply(message.data, prepared, committed)
+    // A transition yields to the panel; under a drag's stream it would starve.
+    if (message.drag) flushSync(run)
+    else React.startTransition(run)
+  }
+
+  const schedule = () => {
+    if (!pending || cancelApply || applying) return
+    const wait = readyAt - performance.now()
+    if (wait <= 0) {
+      cancelApply = onNextFrame(flush)
+      return
+    }
+    const timer = setTimeout(() => {
+      cancelApply = onNextFrame(flush)
+    }, wait)
+    cancelApply = () => clearTimeout(timer)
+  }
+
+  const handleMessage = (event: MessageEvent) => {
+    if (
+      event.origin !== window.location.origin ||
+      event.data?.type !== "design-system"
+    )
+      return
+    const message = {
+      data: event.data.data,
+      live: event.data.live === true,
+      drag: event.data.drag === true,
+    }
+    const id = ++received
+    // A commit is final: older previews still on their way aren't worth a paint.
+    if (!message.live) {
+      accepted = id - 1
+      pending = null
+    }
+    prepare(message, (prepared) => {
+      if (id <= accepted) return
+      accepted = id
+      pending = { message, prepared }
+      schedule()
+    })
+  }
+
+  window.addEventListener("message", handleMessage)
+  return () => {
+    window.removeEventListener("message", handleMessage)
+    accepted = Infinity
+    cancelApply?.()
+    cancelUnlive?.()
+    clearTimeout(stall)
+    root.removeAttribute(LIVE_ATTR)
+  }
+}
+
+/** Inside the preview iframe: see `listenDesignSystemMessages`. */
+function useDesignSystemMessages<T>(
+  prepare: PrepareDesignSystem<T>,
+  apply: ApplyDesignSystem<T>,
+) {
+  const handlers = React.useRef({ prepare, apply })
 
   React.useEffect(() => {
-    onMessageRef.current = onMessage
-  }, [onMessage])
+    handlers.current = { prepare, apply }
+  }, [prepare, apply])
 
   React.useEffect(() => {
     if (!isInIframe()) return
+    return listenDesignSystemMessages<T>(
+      (message, ready) => handlers.current.prepare(message, ready),
+      (data, prepared, committed) =>
+        handlers.current.apply(data, prepared, committed),
+    )
+  }, [])
+}
 
+export interface AppliedDesignSystem<T> {
+  designSystem: DesignSystem
+  prepared: T
+  committed?: () => void
+}
+
+/** `apply` hands `render` the newest design system, reusing what it
+ *  shares with the last; `rendered` reports each commit. */
+export function createApplier<T>(
+  initial: AppliedDesignSystem<T>,
+  render: (next: AppliedDesignSystem<T>) => void,
+) {
+  let target = initial
+  let onScreen = initial
+  const apply: ApplyDesignSystem<T> = (data, prepared, committed) => {
+    const designSystem = shareDesignSystem(target.designSystem, data)
+    // Nothing to render, unless a stalled render is still on its way.
+    if (
+      target === onScreen &&
+      designSystem === target.designSystem &&
+      prepared === target.prepared
+    )
+      return committed()
+    target = { designSystem, prepared, committed }
+    render(target)
+  }
+  const rendered = (applied: AppliedDesignSystem<T>) => {
+    onScreen = applied
+    applied.committed?.()
+  }
+  return { apply, rendered }
+}
+
+/** Inside the preview iframe: the design system to render, following the
+ *  studio's messages. */
+export function useAppliedDesignSystem<T>(
+  prepare: PrepareDesignSystem<T>,
+  initial: () => AppliedDesignSystem<T>,
+) {
+  const [applied, setApplied] = React.useState(initial)
+  const [{ apply, rendered }] = React.useState(() =>
+    createApplier(applied, setApplied),
+  )
+  React.useLayoutEffect(() => rendered(applied), [rendered, applied])
+  useDesignSystemMessages(prepare, apply)
+  return applied
+}
+
+/** Inside the preview iframe: start loading what the parent is about to
+ *  preview. */
+export function usePreviewWarmMessages(
+  onWarm: (assets: PreviewAssets) => void,
+) {
+  const onWarmRef = React.useRef(onWarm)
+  React.useEffect(() => {
+    onWarmRef.current = onWarm
+  }, [onWarm])
+
+  React.useEffect(() => {
+    if (!isInIframe()) return
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === "design-system") {
-        onMessageRef.current(event.data.data)
-      }
+      if (
+        event.origin !== window.location.origin ||
+        event.data?.type !== "preview-warm"
+      )
+        return
+      const { fonts, icons } = event.data as PreviewAssets
+      onWarmRef.current({ fonts, icons })
     }
-
     window.addEventListener("message", handleMessage)
     return () => window.removeEventListener("message", handleMessage)
   }, [])

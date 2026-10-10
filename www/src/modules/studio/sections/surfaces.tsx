@@ -40,7 +40,7 @@ import {
   DialTrigger,
   ModifiedDot,
 } from "../dial"
-import { selectionKey, useCurrent } from "../selection"
+import { useSystemKey } from "../selection"
 import type { Studio, StudioState } from "../state"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
@@ -113,6 +113,8 @@ const PAGE_NAMES: Record<Mode, Record<number, string>> = {
 const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
+type Patch = Parameters<typeof withSurface>[1]
+
 export function SurfacesRow({
   studio,
   theme,
@@ -123,8 +125,7 @@ export function SurfacesRow({
   const { state, set, setState } = studio
   // The light page Grouped took, given back when Layers leaves it — kept per
   // design system; editing a view keeps its key.
-  const { doc, view } = useCurrent()
-  const key = doc ? `system:${doc.id}` : selectionKey(view)
+  const key = useSystemKey()
   const [memory, setMemory] = useState<{ key: string; page?: number }>()
   const before = memory?.key === key ? memory.page : undefined
   const { style, exact } = surfaceStyle(state)
@@ -132,8 +133,14 @@ export function SurfacesRow({
     setMemory({ key, page: next.before })
     setState(next.state)
   }
-  const edit = (patch: Parameters<typeof withSurface>[1]) =>
-    commit(withSurface(state, patch, before))
+  const edit = (patch: Patch) => commit(withSurface(state, patch, before))
+  // Hovers skip the page memory; only a pick moves it.
+  const preview = (patch: Patch) =>
+    setState(withSurface(state, patch, before).state)
+  const pick = (key: keyof Patch) => ({
+    onChange: (value: string) => edit({ [key]: value }),
+    preview: (value: string) => preview({ [key]: value }),
+  })
   return (
     <DialTrigger
       label="Surfaces"
@@ -152,24 +159,25 @@ export function SurfacesRow({
           theme={theme}
           before={before}
           onChange={edit}
+          onPreview={preview}
         />
         <DialSeparator />
         <DialPicker
           label="Layers"
           value={state.surfaceLayers}
-          onChange={(surfaceLayers) => edit({ surfaceLayers })}
+          {...pick("surfaceLayers")}
           options={LAYERS_OPTIONS}
         />
         <DialPicker
           label="Edge"
           value={state.surfaceEdge}
-          onChange={(surfaceEdge) => edit({ surfaceEdge })}
+          {...pick("surfaceEdge")}
           options={EDGE_OPTIONS}
         />
         <DialPicker
           label="Shadow"
           value={state.surfaceShadow}
-          onChange={(surfaceShadow) => edit({ surfaceShadow })}
+          {...pick("surfaceShadow")}
           options={SHADOW_OPTIONS.map((o) =>
             o.value === "flat" && !flatAllowed(state)
               ? {
@@ -189,8 +197,9 @@ export function SurfacesRow({
         <DialSlider
           label="Light page"
           value={state.lightBg}
+          // A page tick never moves `before`: no memory write per preview.
           onChange={(lightBg) =>
-            commit(withSurface({ ...state, lightBg }, {}, before))
+            setState(withSurface({ ...state, lightBg }, {}, before).state)
           }
           minValue={LIGHT_BG_RANGE.min}
           maxValue={LIGHT_BG_RANGE.max}
@@ -218,21 +227,28 @@ function StyleList({
   theme,
   before,
   onChange,
+  onPreview,
 }: {
   state: StudioState
   theme: Theme
   before: number | undefined
   onChange: (values: SurfaceStyle["values"]) => void
+  onPreview: (values: SurfaceStyle["values"]) => void
 }) {
   const { style, exact } = surfaceStyle(state)
+  const values = (id: string) => SURFACE_STYLES.find((s) => s.id === id)?.values
   return (
     <DialPickList
       label="Style"
       value={exact ? style.id : undefined}
       modified={exact ? undefined : style.id}
       onChange={(id) => {
-        const next = SURFACE_STYLES.find((s) => s.id === id)
-        if (next) onChange(next.values)
+        const next = values(id)
+        if (next) onChange(next)
+      }}
+      preview={(id) => {
+        const next = values(id)
+        if (next) onPreview(next)
       }}
       options={SURFACE_STYLES.map((s) => {
         const preview = withSurface(state, s.values, before).state
