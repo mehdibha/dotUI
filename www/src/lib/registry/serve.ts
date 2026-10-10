@@ -61,11 +61,11 @@ export const serveRegistry = (request: Request, store: SnapshotStore) =>
     const url = new URL(request.url)
     const parsed = parseRegistryRequest(url)
     if (!parsed.ok) return parsed.response
-    const { name, source, codeOptions, itemUrl } = parsed.value
+    const { name, source, codeOptions, itemUrl, studioUrl } = parsed.value
 
-    const designSystem = await resolveSource(source, store)
-    if (!designSystem) return notFound("No design system by this id.")
-    const preset: PublishPreset = { ...designSystem, codeOptions }
+    const resolved = await resolveSource(source, store)
+    if (!resolved) return notFound("No design system by this id.")
+    const preset: PublishPreset = { ...resolved.designSystem, codeOptions }
 
     if (name === "registry")
       return registryJson(registryIndex(url.origin, preset))
@@ -85,6 +85,7 @@ export const serveRegistry = (request: Request, store: SnapshotStore) =>
           preset,
           itemUrl,
           shadcnBase: url.searchParams.get("base"),
+          about: { name: resolved.name, studioUrl },
         }),
       )
     if (name === "v0") {

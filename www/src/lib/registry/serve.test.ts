@@ -60,6 +60,10 @@ describe("/r/<name>.json (Origin)", () => {
   it("serves init, pointing components.json back at /r", async () => {
     const item = await ok(await get("/r/init.json"))
     expect(registryUrl(item)).toBe("https://dotui.org/r/{name}.json")
+    expect(item.title).toBe("Origin")
+    expect(item.docs).toBe(
+      "Origin — a dotUI design system.\nOpen it in the studio: https://dotui.org/studio?preset=origin",
+    )
   })
 
   it("serves the index and fonts", async () => {
@@ -95,6 +99,8 @@ describe("/r/p/<preset>/<name>.json", () => {
   it("serves the built-in, keeping the prefix on every URL", async () => {
     const init = await ok(await get("/r/p/linear/init.json"))
     expect(registryUrl(init)).toBe("https://dotui.org/r/p/linear/{name}.json")
+    expect(init.title).toBe("Linear")
+    expect(init.docs).toContain("https://dotui.org/studio?preset=linear")
     expect(init.cssVars).not.toEqual(
       (await ok(await get("/r/init.json"))).cssVars,
     )
@@ -123,6 +129,8 @@ describe("/r/s/<id>/<name>.json", () => {
     const id = await save(store, getPreset("linear")!.state)
     const init = await ok(await get(`/r/s/${id}/init.json`, store))
     expect(registryUrl(init)).toBe(`https://dotui.org/r/s/${id}/{name}.json`)
+    expect(init.title).toBe("Acme")
+    expect(init.docs).toContain(`https://dotui.org/studio?s=${id}`)
     expect(init.cssVars).toEqual(
       (await ok(await get("/r/p/linear/init.json"))).cssVars,
     )
@@ -180,6 +188,7 @@ describe("?code=", () => {
     expect(registryUrl(init)).toBe(
       "https://dotui.org/r/{name}.json?code=arrays",
     )
+    expect(init.docs).not.toContain("code=")
   })
 
   it.each(["tabs", "", "arrays,arrays", "arrays&code=arrays", "arrays;x"])(

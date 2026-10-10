@@ -19,7 +19,7 @@ const switchVariants = tv({
     indicator:
       "inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] selected:bg-selection read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
     thumb:
-      "pointer-events-none block rounded-full bg-thumb shadow-sm transition-[background-color,margin,width] disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
+      "pointer-events-none block rounded-full bg-thumb shadow-sm transition-[background-color,margin,width] selected:bg-fg-on-selection disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
   },
   variants: {
     size: {

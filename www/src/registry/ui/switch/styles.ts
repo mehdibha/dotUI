@@ -16,8 +16,8 @@ const { useStyles, styles } = createStyles(switchMeta, {
         "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
       ],
       thumb: [
-        "pointer-events-none block rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
-        "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
+        "pointer-events-none block rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) selected:bg-fg-on-selection",
+        "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
       ],
     },
     variants: {

@@ -56,10 +56,9 @@ export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
-export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/70"
+export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 export const DIAL_VALUE =
-  "truncate font-mono text-[13px] font-medium text-fg/70"
-export const DIAL_CHEVRON = "size-4 shrink-0 text-fg/60"
+  "truncate font-mono text-[13px] font-medium text-fg/60"
 
 /** The option's label, or the raw value when it is off the list. */
 export const optionLabel = (
@@ -112,30 +111,26 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
-/** A row that opens something: label, its value, a chevron. Wraps the
- *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
- *  values that end in a swatch: the swatch is the affordance, inset like
- *  DialColor's. */
+/** A row that opens something: label, its value. Wraps the popover passed
+ *  as `children` in a Dialog trigger. `swatch` for values that end in one:
+ *  inset like DialColor's. */
 export function DialTrigger({
   label,
   value,
-  chevron = true,
+  swatch,
   children,
 }: {
   label: string
   value: React.ReactNode
-  chevron?: boolean
+  swatch?: boolean
   children: React.ReactNode
 }) {
   return (
     <Dialog>
-      <RacButton className={cn(DIAL_ROW, DIAL_PRESS, !chevron && "pr-2.5")}>
+      <RacButton className={cn(DIAL_ROW, DIAL_PRESS, swatch && "pr-2.5")}>
         <span className={DIAL_LABEL}>{label}</span>
-        <span className="flex min-w-0 items-center gap-2">
-          <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
-            {value}
-          </span>
-          {chevron && <ChevronDownIcon className={DIAL_CHEVRON} />}
+        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+          {value}
         </span>
       </RacButton>
       <PanelPopoverTitle.Provider value={label}>
@@ -173,13 +168,11 @@ export function DialLink({
   onPress: () => void
 }) {
   return (
-    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS)}>
+    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
       <span className={DIAL_LABEL}>{label}</span>
-      <span className="flex min-w-0 items-center gap-2">
-        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
-          {value}
-        </span>
-        <ChevronRightIcon className={DIAL_CHEVRON} />
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+        {value}
+        <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
       </span>
     </RacButton>
   )
@@ -888,7 +881,7 @@ export function DialSlider({
           ref={valueRef}
           className={cn(
             DIAL_VALUE,
-            "pointer-events-none absolute inset-y-0 right-3 flex items-center tabular-nums transition-colors duration-150 group-focus-visible:text-fg group-data-active:text-fg",
+            "pointer-events-none absolute inset-y-0 right-3 flex items-center tabular-nums",
           )}
         >
           {format(draft)}
@@ -1164,8 +1157,7 @@ export function DialFolder({
               )}
               <ChevronDownIcon
                 className={cn(
-                  DIAL_CHEVRON,
-                  "transition-transform duration-200",
+                  "size-4 shrink-0 text-fg/60 transition-transform duration-200",
                   isExpanded && "rotate-180",
                 )}
               />

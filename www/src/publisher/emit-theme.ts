@@ -64,6 +64,8 @@ export interface EmitThemeInput {
   itemUrl: (name: string) => string
   /** The `?base=` shadcn appends to the init URL, read from the project's style. */
   shadcnBase?: string | null
+  /** The design system's name and studio link, which shadcn prints after init. */
+  about?: { name: string; studioUrl: string }
 }
 
 /**
@@ -190,7 +192,7 @@ function splitPresetTokens(
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
-  const { baseRegistryCss, preset, itemUrl, shadcnBase } = input
+  const { baseRegistryCss, preset, itemUrl, shadcnBase, about } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
   // One `registry:font` item per font role, defaults included: nothing else
   // loads the face. shadcn installs it per framework (next/font on Next.js,
@@ -232,6 +234,7 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
 
   const item = {
     name: "dotui",
+    ...(about ? { title: about.name } : {}),
     // `registry:base` is the init payload type shadcn uses for project
     // config updates such as `components.json.registries`.
     type: "registry:base",
@@ -252,6 +255,12 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
       },
     ],
     config,
+    // On two lines: a bidi mark in a user's name can't reorder the link.
+    ...(about
+      ? {
+          docs: `${about.name} — a dotUI design system.\nOpen it in the studio: ${about.studioUrl}`,
+        }
+      : {}),
   }
 
   return item as unknown as RegistryItem

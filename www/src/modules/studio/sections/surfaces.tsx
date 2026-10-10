@@ -144,7 +144,7 @@ export function SurfacesRow({
   return (
     <DialTrigger
       label="Surfaces"
-      chevron={false}
+      swatch
       value={
         <>
           {!exact && <ModifiedDot />}

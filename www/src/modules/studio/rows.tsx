@@ -35,6 +35,7 @@ import {
 } from "@/registry/ui/color-swatch-picker"
 import { Command } from "@/registry/ui/command"
 import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
@@ -44,12 +45,14 @@ import {
 } from "@/registry/ui/list-box"
 import { Popover } from "@/registry/ui/popover/base.popover"
 import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
 import {
   Slider,
   SliderControl,
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 import {
   NEUTRAL_HUE_RANGE,
   NEUTRAL_TINT_RANGE,
@@ -425,7 +428,6 @@ function NeutralSlider({
 /** What the row reads back: the family the committed value lands on. */
 export function neutralFamily(value: NeutralValue, brandHue: number) {
   if (value.tint === 0) return PURE_GRAY.label
-  if (value.hue === null) return "Auto"
   return nearestFamilyName(value.hue ?? brandHue)
 }
 
@@ -459,8 +461,8 @@ export function NeutralStrip({
   )
 }
 
-/** The neutral's popover: family seeds, then the hue and tint sliders. Must
- *  render inside a Dialog trigger. */
+/** The neutral's popover: Match brand, family seeds, then the hue and tint
+ *  sliders. Must render inside a Dialog trigger. */
 export function NeutralPickerPopover({
   value,
   onChange,
@@ -472,26 +474,31 @@ export function NeutralPickerPopover({
   brandHue: number
   ramp: string[]
 }) {
-  // Seven dots can't carry their names at 20px, so the Hue readout speaks for
+  // The dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
   const [hue, setHue] = useDraft(value.hue ?? brandHue)
   const [tint, setTint] = useDraft(value.tint)
-  const family =
-    tint === 0
-      ? PURE_GRAY.label
-      : value.hue === null && hue === brandHue
-        ? "Auto"
-        : nearestFamilyName(hue)
+  const family = tint === 0 ? PURE_GRAY.label : nearestFamilyName(hue)
   const preset =
     value.tint === 0
       ? PURE_GRAY.id
-      : value.hue === null
-        ? "brand"
-        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
+      : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
+        <Switch
+          size="sm"
+          isSelected={value.hue === null}
+          onChange={(match) =>
+            onChange({ ...value, hue: match ? null : brandHue })
+          }
+          className="px-1 pt-1"
+        >
+          <Label className="flex-1">Match brand</Label>
+          <SwitchControl />
+        </Switch>
+        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}
@@ -507,22 +514,8 @@ export function NeutralPickerPopover({
             const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
             onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
           }}
-          className="flex justify-between"
+          className="flex gap-2"
         >
-          {/* Auto is named, not a dot: following the brand is the default
-              and a gray that quietly tracks another color has to say so. */}
-          <RacToggleButton
-            id="brand"
-            onHoverStart={() => setHovered("Auto")}
-            onHoverEnd={() => setHovered(null)}
-            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-          >
-            <span
-              className="size-4 rounded-full"
-              style={{ background: sample(brandHue) }}
-            />
-            Auto
-          </RacToggleButton>
           {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
             <RacToggleButton
               key={option.id}
@@ -541,7 +534,7 @@ export function NeutralPickerPopover({
 
         <NeutralSlider
           label="Hue"
-          note={hovered ?? family}
+          note={hovered ?? `${Math.round(hue)}°`}
           value={hue}
           range={NEUTRAL_HUE_RANGE}
           track={HUE_TRACK}
@@ -560,10 +553,25 @@ export function NeutralPickerPopover({
           onChangeEnd={(next) => onChange({ ...value, tint: next })}
         />
 
-        <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
-          {ramp.map((step) => (
-            <span key={step} className="flex-1" style={{ background: step }} />
-          ))}
+        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
+        <div className="flex flex-col gap-1">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className={GROUP_LABEL}>Preview</span>
+            <span className="text-[11px] text-fg-muted">{family}</span>
+          </div>
+          <div
+            role="img"
+            aria-label={`${family} scale`}
+            className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60"
+          >
+            {ramp.map((step) => (
+              <span
+                key={step}
+                className="flex-1"
+                style={{ background: step }}
+              />
+            ))}
+          </div>
         </div>
       </DialogContent>
     </PanelPopover>
@@ -574,19 +582,28 @@ export function NeutralPickerPopover({
 
 /** The searchable font list shared by every font trigger: search on top, the
  *  catalog grouped by category, each family previewed in its own lazily-loaded
- *  face. Must render inside a Select. */
+ *  face. `children` sit above it, past a separator. Must render inside a
+ *  Select. */
 export function FontListPopover({
   categories,
   onPreview,
+  children,
 }: {
   categories: FontCategory[]
   onPreview: (family: string) => void
+  children?: React.ReactNode
 }) {
   const listRef = useLazyFontPreviews()
   // On touch, a focused field would raise the keyboard over the list.
   const finePointer = useMedia("(pointer: fine)")
   return (
     <PanelPopover className="w-(--trigger-width) outline-hidden">
+      {children && (
+        <>
+          <div className="p-3">{children}</div>
+          <Separator />
+        </>
+      )}
       {/* Docked, the list fills the sheet over the field, which sits on the
           keyboard. */}
       <Command className="max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">

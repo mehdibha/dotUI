@@ -6,7 +6,7 @@
    the leaves disagree. Each preview is the role at glyph scale in the
    engine's own colors, so a choice reads before it lands. */
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
+import { CheckIcon } from "lucide-react"
 import {
   Button as RacButton,
   ToggleButton as RacToggleButton,
@@ -27,7 +27,6 @@ import {
 } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
 import {
-  DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
@@ -356,14 +355,11 @@ function PrimaryPanel({
           className={cn(DIAL_ROW, DIAL_PRESS, primary === "mixed" && "tint-10")}
         >
           <span className={DIAL_LABEL}>Custom</span>
-          <span className="flex min-w-0 items-center gap-2">
-            {primary === "mixed" && (
-              <span className="truncate text-[13px] font-medium text-fg/50">
-                {leavesSummary(state)}
-              </span>
-            )}
-            <ChevronRightIcon className={DIAL_CHEVRON} />
-          </span>
+          {primary === "mixed" && (
+            <span className="truncate text-[13px] font-medium text-fg/60">
+              {leavesSummary(state)}
+            </span>
+          )}
         </RacButton>
         <PanelPopoverTitle.Provider value="Custom">
           <CustomPanel studio={studio} ink={ink} />
@@ -381,7 +377,7 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   return (
     <DialTrigger
       label="Primary"
-      chevron={false}
+      swatch
       value={
         <>
           {label}
