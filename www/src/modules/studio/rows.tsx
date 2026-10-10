@@ -630,6 +630,8 @@ export function FontListPopover({
   )
 }
 
+let warmedFont = ""
+
 function FontItem({
   family,
   onPreview,
@@ -640,7 +642,7 @@ function FontItem({
   const previewProps = useOptionPreview()
   // The face starts loading in the preview at once; the preview settles.
   const run = () => {
-    warmPreview({ fonts: [family] })
+    if (warmedFont !== family) warmPreview({ fonts: [(warmedFont = family)] })
     onPreview(family)
   }
   return (

@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect } from "react"
 import type { PointerEvent } from "react"
 import { getInteractionModality } from "react-aria/private/interactions/useFocusVisible"
 
-import { clearLive, clearSettled, previewSettled } from "./live"
+import { clearLive, clearSettled, previewSettled, showLive } from "./live"
 
 /** Provided by PanelPopover: the options inside it preview. */
 export const OptionPreviewScope = createContext(false)
@@ -22,9 +22,14 @@ export const popoverPreviewProps = {
 export function optionPreviewProps(enabled: boolean, run: () => void) {
   if (!enabled) return {}
   return {
-    onPointerMove: (e: PointerEvent) => {
+    onPointerMove: (e: PointerEvent<Element>) => {
       if (e.pointerType !== "mouse" && e.pointerType !== "pen") return
-      if (e.buttons === 0) previewSettled(run)
+      if (e.buttons || e.currentTarget.hasAttribute("data-disabled")) return
+      previewSettled(run)
+    },
+    // The next option's preview replaces the withdrawal.
+    onPointerLeave: (e: PointerEvent) => {
+      if (!e.buttons) showLive(null, { settle: true })
     },
     onFocus: () => {
       if (getInteractionModality() === "keyboard") previewSettled(run)
@@ -41,7 +46,9 @@ export function useOptionPreview() {
 export function useHighlightPreview(highlighted: boolean, run: () => void) {
   const enabled = useContext(OptionPreviewScope)
   useEffect(() => {
-    if (enabled && highlighted) previewSettled(run)
+    if (!enabled || !highlighted) return
+    previewSettled(run)
+    return () => showLive(null, { settle: true })
     // Only the highlight arriving previews; `run` is new every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled, highlighted])

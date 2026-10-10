@@ -29,13 +29,19 @@ async function load() {
   /** A pointer moving over the option for `px`. */
   const move = (
     px: number,
-    init: { pointerType?: string; buttons?: number } = {},
+    init: { pointerType?: string; buttons?: number; disabled?: boolean } = {},
   ) =>
     props(px).onPointerMove?.({
       pointerType: "mouse",
       buttons: 0,
       ...init,
+      currentTarget: {
+        hasAttribute: (name: string) =>
+          name === "data-disabled" && !!init.disabled,
+      },
     } as never)
+  const leave = (px: number, buttons = 0) =>
+    props(px).onPointerLeave?.({ buttons } as never)
   const focus = (px: number) => props(px).onFocus?.()
   return {
     modality,
@@ -46,6 +52,7 @@ async function load() {
     run,
     shown,
     move,
+    leave,
     focus,
   }
 }
@@ -74,6 +81,37 @@ describe("hover", () => {
     move(6, { pointerType: "pen" })
     vi.runAllTimers()
     expect(shown()).toBe(6)
+  })
+
+  it("ignores a disabled option", async () => {
+    const { shown, move } = await load()
+    move(7, { disabled: true })
+    vi.runAllTimers()
+    expect(shown()).toBeNull()
+  })
+
+  it("withdraws on leaving the option, unless the next one takes over", async () => {
+    const { shown, move, leave } = await load()
+    move(7)
+    vi.runAllTimers()
+    leave(7)
+    move(6)
+    vi.advanceTimersByTime(50)
+    expect(shown()).toBe(6)
+    leave(6)
+    vi.advanceTimersByTime(49)
+    expect(shown()).toBe(6)
+    vi.advanceTimersByTime(1)
+    expect(shown()).toBeNull()
+  })
+
+  it("keeps the preview when a pressed pointer leaves", async () => {
+    const { shown, move, leave } = await load()
+    move(7)
+    vi.runAllTimers()
+    leave(7, 1)
+    vi.runAllTimers()
+    expect(shown()).toBe(7)
   })
 
   it("ignores touch, and a pressed pointer dragging over it", async () => {

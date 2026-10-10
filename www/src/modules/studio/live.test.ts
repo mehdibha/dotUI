@@ -171,9 +171,16 @@ describe("slider", () => {
     return { ...loaded, props }
   }
 
+  const press = {
+    button: 0,
+    ctrlKey: false,
+    metaKey: false,
+    altKey: false,
+  } as never
+
   it("previews a pointer's drag and commits as it ends", async () => {
     const { selection, committed, shown, props } = await slider()
-    props.onPointerDownCapture()
+    props.onPointerDownCapture(press)
     props.onChange(7)
     props.onChange(9)
     expect(shown()).toBe(9)
@@ -183,12 +190,20 @@ describe("slider", () => {
     expect(selection.getCurrent().state.radiusPx).toBe(9)
   })
 
+  it("doesn't hold a press RAC ignores: a later step still commits", async () => {
+    const { selection, shown, props } = await slider()
+    props.onPointerDownCapture({ ...(press as object), ctrlKey: true } as never)
+    props.onChange(5)
+    expect(shown()).toBeNull()
+    expect(selection.getCurrent().state.radiusPx).toBe(5)
+  })
+
   it("commits a step made without a pointer: keys, assistive tech", async () => {
     const { selection, shown, props } = await slider()
     props.onChange(5)
     expect(shown()).toBeNull()
     expect(selection.getCurrent().state.radiusPx).toBe(5)
-    props.onPointerDownCapture()
+    props.onPointerDownCapture(press)
     props.onChangeEnd(6)
     props.onChange(4)
     expect(shown()).toBeNull()

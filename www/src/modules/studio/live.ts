@@ -3,6 +3,7 @@
 // What a drag or hover would commit, shown in the preview; never persisted.
 
 import { useRef, useSyncExternalStore } from "react"
+import type { PointerEvent } from "react"
 
 import { sameState } from "./axes"
 import type { StudioState } from "./axes"
@@ -95,8 +96,9 @@ export function previewNow(run: () => void) {
 export function useSliderPreview<T>(commit: (value: T) => void) {
   const held = useRef(false)
   return {
-    onPointerDownCapture: () => {
-      held.current = true
+    // RAC drags only on an unmodified primary press.
+    onPointerDownCapture: (e: PointerEvent) => {
+      held.current = e.button === 0 && !e.ctrlKey && !e.metaKey && !e.altKey
     },
     onChange: (value: T) =>
       held.current ? previewNow(() => commit(value)) : commit(value),
