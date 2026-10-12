@@ -4,6 +4,8 @@ import {
   ChevronDownIcon,
   ChevronsUpDownIcon,
   ExternalLinkIcon,
+  LocateFixedIcon,
+  LocateOffIcon,
   MaximizeIcon,
   MinimizeIcon,
   MonitorIcon,
@@ -36,6 +38,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 import { usePreviewFocus } from "@/modules/studio/focus"
 import {
@@ -86,8 +89,19 @@ const previewName = (slug: string) =>
   [...PREVIEW_ITEMS, ...ALL_COMPONENTS].find((item) => item.slug === slug)
     ?.name ?? slug
 
-/** The picker's first item: the preview shows what the panel is editing. */
-const FOLLOW = "follow-panel"
+/** Whether the preview shows what the panel is editing. */
+const followStore = createPersistedStore(
+  "dotui:preview-follow",
+  "on",
+  enumCodec(["on", "off"], "on"),
+)
+// The toggle names itself on the first takeovers, until it's been used once.
+const cueStore = createPersistedStore("dotui:preview-follow-cues", 0, {
+  decode: (raw) => Number(raw) || 0,
+  encode: String,
+})
+const CUE_LIMIT = 3
+const CUE_MS = 2400
 // A board outlives its focus so hopping between popovers never flashes the user's preview.
 const FOCUS_RELEASE_MS = 200
 // Panel popovers are modal: a click dismisses one, a second opens the next.
@@ -180,9 +194,22 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // While following, the panel's focus takes the preview over with its board.
   const focus = usePreviewFocus()
-  const [following, setFollowing] = useState(true)
+  const following = followStore.useValue() === "on"
+  const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
+  const takenOver = board !== null
+  const [cueing, setCueing] = useState(false)
+  useEffect(() => {
+    if (!takenOver || cueStore.get() >= CUE_LIMIT) return
+    cueStore.update((n) => n + 1)
+    setCueing(true)
+    const timer = setTimeout(() => setCueing(false), CUE_MS)
+    return () => {
+      clearTimeout(timer)
+      setCueing(false)
+    }
+  }, [takenOver])
   const lastPress = useRef(-Infinity)
   useEffect(() => {
     // A press that dismisses a popover; by rect, as the underlay covers the preview.
@@ -403,11 +430,6 @@ export function PreviewPanel({ className }: { className?: string }) {
         <Input placeholder="Search previews…" />
       </SearchField>
       <ListBox className={listClassName}>
-        <ListBoxSection>
-          <ListBoxItem id={FOLLOW} textValue="Follow the panel">
-            <span className="truncate">Follow the panel</span>
-          </ListBoxItem>
-        </ListBoxSection>
         {/* Real-world previews — the whole system composed into full screens. */}
         <ListBoxSection>
           <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
@@ -446,10 +468,10 @@ export function PreviewPanel({ className }: { className?: string }) {
      controlled so the drawer can be driven by the same Select. */
   const previewPicker = (
     <Select
-      value={following ? FOLLOW : preview}
+      value={preview}
       onChange={(v) => {
-        setFollowing(v === FOLLOW)
-        if (v === FOLLOW) return
+        // Picking another preview during a takeover stops following.
+        if (takenOver) setFollowing(false)
         navigate({
           search: (prev) => ({ ...prev, preview: v as string }),
         })
@@ -498,6 +520,43 @@ export function PreviewPanel({ className }: { className?: string }) {
         </Popover>
       )}
     </Select>
+  )
+
+  // On by default; the first takeovers spell out its name beside the icon.
+  const followToggle = (
+    <Tooltip delay={0} isDisabled={cueing}>
+      <Button
+        size="sm"
+        variant="quiet"
+        aria-label="Follow the panel"
+        aria-pressed={following}
+        onPress={() => {
+          cueStore.set(CUE_LIMIT)
+          setFollowing(!following)
+        }}
+        className={cn(
+          "min-w-8 shrink-0 gap-0 rounded-full px-2 transition-colors pointer-coarse:h-9",
+          cueing && "bg-accent-muted text-fg-accent",
+        )}
+      >
+        {following ? <LocateFixedIcon /> : <LocateOffIcon />}
+        <span
+          aria-hidden
+          className={cn(
+            "overflow-hidden whitespace-nowrap transition-[max-width,opacity,padding] duration-300 ease-out motion-reduce:transition-none",
+            cueing ? "max-w-40 pl-1.5 opacity-100" : "max-w-0 opacity-0",
+          )}
+        >
+          Following the panel
+        </span>
+      </Button>
+      <PillTooltipContent>
+        Follow the panel{" "}
+        <span className="text-fg-on-tooltip/60">
+          {following ? "On" : "Off"}
+        </span>
+      </PillTooltipContent>
+    </Tooltip>
   )
   const zoomMenu = (
     <Menu>
@@ -644,6 +703,7 @@ export function PreviewPanel({ className }: { className?: string }) {
         <HeaderActions>
           <div className="order-first mr-1 flex items-center gap-0.5">
             {previewPicker}
+            {followToggle}
             {zoomMenu}
             {modeToggle}
             {openInTab}
@@ -686,6 +746,7 @@ export function PreviewPanel({ className }: { className?: string }) {
               )}
             >
               {previewPicker}
+              {followToggle}
 
               <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
 
