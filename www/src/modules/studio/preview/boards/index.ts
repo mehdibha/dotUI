@@ -2,30 +2,24 @@ import type { ComponentType } from "react"
 
 import { BOARD_SLUG_PREFIX } from "@/modules/studio/preset/iframe-sync"
 
+import { BOARD_TITLES } from "./titles"
 import type { BoardId } from "./titles"
 
 type Load = () => Promise<{ default: ComponentType }>
 
-// Iframe-only: each loader carries its chunk's whole dependency map.
-export const BoardsIndex: Record<BoardId, Load> = {
-  color: () => import("./color"),
-  typography: () => import("./typography"),
-  icons: () => import("./icons"),
-  shape: () => import("./shape"),
-  space: () => import("./space"),
-  states: () => import("./states"),
-  motion: () => import("./motion"),
-  buttons: () => import("./buttons"),
-  inputs: () => import("./inputs"),
-  selection: () => import("./selection"),
-  menus: () => import("./menus"),
-  dialogs: () => import("./dialogs"),
-  nav: () => import("./nav"),
-  dates: () => import("./dates"),
-  display: () => import("./display"),
-  feedback: () => import("./feedback"),
-  charts: () => import("./charts"),
-}
+// Iframe-only: one lazy chunk per board, `./<id>.tsx`.
+const FILES = import.meta.glob<{ default: ComponentType }>([
+  "./*.tsx",
+  "!./board.tsx",
+  "!./*-parts.tsx",
+])
+
+export const BoardsIndex = Object.fromEntries(
+  Object.keys(BOARD_TITLES).flatMap((id) => {
+    const load = FILES[`./${id}.tsx`]
+    return load ? [[id, load]] : []
+  }),
+) as Partial<Record<BoardId, Load>>
 
 /** The board a preview slug names, if any. */
 export const boardOf = (slug: string) =>

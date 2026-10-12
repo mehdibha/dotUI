@@ -6,19 +6,14 @@ import * as React from "react"
 
 import { isInIframe } from "@/modules/studio/preset/iframe-sync"
 
-/** What the panel is editing, for the board on screen. */
+/** The row the panel is editing, for the board on screen. */
 export interface PreviewFocusMessage {
-  member?: string
   axis?: string
   /** Every key the row edits, when it edits several. */
   holds?: string[]
   /** A panel popover is open. */
   popover: boolean
-  /** Preview px the open popovers cover, from the left (beside the panel) or the bottom (docked). */
-  inset: { left: number; bottom: number }
 }
-
-export const NO_INSET = { left: 0, bottom: 0 }
 
 export function sendPreviewFocus(
   iframe: HTMLIFrameElement | null,
@@ -31,7 +26,6 @@ export function sendPreviewFocus(
 export function usePreviewFocusMessages(): PreviewFocusMessage {
   const [focus, setFocus] = React.useState<PreviewFocusMessage>({
     popover: false,
-    inset: NO_INSET,
   })
   React.useEffect(() => {
     if (!isInIframe()) return
@@ -39,11 +33,9 @@ export function usePreviewFocusMessages(): PreviewFocusMessage {
       const data = event.data
       if (data?.type !== "preview-focus") return
       const next: PreviewFocusMessage = {
-        member: data.member,
         axis: data.axis,
         holds: data.holds,
         popover: !!data.popover,
-        inset: data.inset ?? NO_INSET,
       }
       setFocus((prev) =>
         JSON.stringify(prev) === JSON.stringify(next) ? prev : next,

@@ -1,21 +1,18 @@
 "use client"
 
-// What the preview shows while the panel edits a chapter or family: one section per member.
-
 import {
   createContext,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   useSyncExternalStore,
 } from "react"
 
+import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import {
-  NO_INSET,
-  usePreviewFocusMessages,
-} from "@/modules/studio/preview/focus-message"
+import { usePreviewFocusMessages } from "@/modules/studio/preview/focus-message"
 import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
 
 import { BOARD_TITLES } from "./titles"
@@ -23,59 +20,23 @@ import type { BoardId } from "./titles"
 
 const BoardFocusContext = createContext<PreviewFocusMessage>({
   popover: false,
-  inset: NO_INSET,
 })
-
-type OnRendered = (listener: () => void) => () => void
-
-/** The preview route's render events; boards never import the router (entry chunking). */
-const RenderedContext = createContext<OnRendered>(() => () => {})
 
 // Its own component, so a focus message re-renders only the boards reading it.
 export function BoardFocusProvider({
-  onRendered,
   children,
 }: {
-  onRendered: OnRendered
   children: React.ReactNode
 }) {
   return (
-    <RenderedContext.Provider value={onRendered}>
-      <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
-        {children}
-      </BoardFocusContext.Provider>
-    </RenderedContext.Provider>
+    <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
+      {children}
+    </BoardFocusContext.Provider>
   )
 }
 
-/** The panel's focus: which member and key it is editing. */
+/** The row the panel is editing, for emphasis and replays. */
 export const useBoardFocus = () => useContext(BoardFocusContext)
-
-const RING_MS = 1200
-
-// A row that edits several keys lands on the first section showing any of them.
-function focusedSection(root: Element, member?: string, keys: string[] = []) {
-  const of = member && `[data-board-member="${CSS.escape(member)}"]`
-  const shows = keys.map((key) => `[data-board-axes~="${CSS.escape(key)}"]`)
-  const selectors = [
-    ...(of ? shows.map((key) => of + key) : []),
-    ...shows,
-    of,
-  ].filter(Boolean)
-  for (const selector of selectors as string[]) {
-    const section = root.querySelector<HTMLElement>(selector)
-    if (section) return section
-  }
-}
-
-interface Shown {
-  member?: string
-  keys: string
-}
-
-/** A closing popover leaves the board where it is; a new member, or a remount's rerun (StrictMode), reveals. */
-export const staysPut = (prev: Shown | undefined, next: Shown) =>
-  !next.keys && !!prev?.keys && prev.member === next.member
 
 export function Board({
   id,
@@ -86,89 +47,39 @@ export function Board({
   className?: string
   children: React.ReactNode
 }) {
-  const { member, axis, holds, inset } = useBoardFocus()
-  const ref = useRef<HTMLDivElement>(null)
-  const keys = [axis, ...(holds ?? [])].join(" ")
-  const onRendered = useContext(RenderedContext)
-  const last = useRef<Shown>(undefined)
-
-  useEffect(() => {
-    const prev = last.current
-    last.current = { member, keys }
-    if (staysPut(prev, last.current)) return
-    const section =
-      ref.current &&
-      focusedSection(ref.current, member, keys.split(" ").filter(Boolean))
-    if (!section) return
-    const reveal = () =>
-      section.scrollIntoView({ behavior: "smooth", block: "center" })
-    reveal()
-    // A first visit commits before the router's scroll reset, which would undo the reveal.
-    const unsubscribe = onRendered(reveal)
-    section.dataset.focused = ""
-    const timer = setTimeout(() => {
-      unsubscribe()
-      delete section.dataset.focused
-    }, RING_MS)
-    return () => {
-      clearTimeout(timer)
-      unsubscribe()
-      delete section.dataset.focused
-    }
-  }, [member, keys, onRendered])
-
   return (
     <div
-      ref={ref}
-      data-board=""
-      style={
-        {
-          paddingLeft: inset.left,
-          paddingBottom: inset.bottom,
-          "--board-inset-bottom": `${inset.bottom}px`,
-        } as React.CSSProperties
-      }
+      data-board={id}
+      className={cn(
+        // The bottom clears the preview's floating toolbar.
+        "mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-8 px-4 pt-8 pb-16 sm:px-10",
+        className,
+      )}
     >
-      <div
-        className={cn(
-          // The bottom clears the preview's floating toolbar.
-          "mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-10 px-4 pt-10 pb-24 sm:px-10",
-          className,
-        )}
-      >
-        <h1 className="text-lg font-semibold">{BOARD_TITLES[id]}</h1>
-        {children}
-      </div>
+      <h1 className="text-lg font-semibold">{BOARD_TITLES[id]}</h1>
+      {children}
     </div>
   )
 }
 
-/** `member`: the panel's member id or row group; `axes`: the keys whose rows land here. */
 export function BoardSection({
-  member,
-  axes = [],
   title,
   className,
   children,
 }: {
-  member: string
-  axes?: readonly string[]
   title: string
   className?: string
   children: React.ReactNode
 }) {
   return (
     <section
-      data-board-member={member}
-      data-board-axes={axes.join(" ")}
       aria-label={title}
-      // Centred in what the docked popover leaves visible; a container so grids follow the inset.
-      className="group/section @container/section flex min-w-0 scroll-mt-6 scroll-mb-[calc(--spacing(6)+var(--board-inset-bottom,0px))] flex-col gap-3"
+      className="@container/section flex min-w-0 flex-col gap-3"
     >
       <h2 className="text-xs font-medium text-fg-muted">{title}</h2>
       <div
         className={cn(
-          "flex min-w-0 flex-wrap items-center justify-center gap-4 rounded-(--studio-radius-panel) border bg-bg p-8 ring-accent/40 transition-shadow duration-500 group-data-focused/section:ring-4 max-sm:p-4",
+          "flex min-w-0 flex-wrap items-center justify-center gap-4 rounded-(--studio-radius-panel) border bg-bg p-8 max-sm:p-4",
           className,
         )}
       >
@@ -280,6 +191,134 @@ export function useLoop(active: boolean, ms: number, rest = false) {
   return on
 }
 
+const LINGER_MS = 3000
+
+/** The panel edits one of `keys` or the global Motion. */
+function useEdited(keys: string[]) {
+  const { axis, holds } = useBoardFocus()
+  return [axis, ...(holds ?? [])].some(
+    (key) => !!key && (key === "motion" || keys.includes(key)),
+  )
+}
+
+/** A page's motion demo: it runs while the panel edits one of `keys` or the global Motion, and a moment after. */
+export interface Replay {
+  running: boolean
+  /** Bumps when editing starts and on each design change while it lasts. */
+  replay: number
+}
+
+export function useReplay(...keys: string[]): Replay {
+  const edited = useEdited(keys)
+  const { axis } = useBoardFocus()
+  const { params } = useContext(DesignSystemContext)
+  const [lingering, setLingering] = useState(false)
+  const [replay, setReplay] = useState(0)
+  useEffect(() => {
+    if (edited) return setLingering(true)
+    const timer = setTimeout(() => setLingering(false), LINGER_MS)
+    return () => clearTimeout(timer)
+  }, [edited])
+  useEffect(() => {
+    if (edited) setReplay((count) => count + 1)
+  }, [edited, axis, params])
+  return { running: edited || lingering, replay }
+}
+
+/** Counts a step every `period` while running; a replay steps at once. */
+export function useSteps({ running, replay }: Replay, period: number) {
+  const [step, setStep] = useState(0)
+  const replayed = useRef(replay)
+  useEffect(() => {
+    if (!running) return
+    const next = () => setStep((count) => count + 1)
+    if (replayed.current !== replay) next()
+    replayed.current = replay
+    const timer = setInterval(next, period)
+    return () => clearInterval(timer)
+  }, [replay, period, running])
+  return step
+}
+
+/** `driven` while running; at rest, a value the viewer controls. */
+export function useDriven<T>(running: boolean, driven: T, initial: T) {
+  const [own, setOwn] = useState(initial)
+  return [running ? driven : own, setOwn] as const
+}
+
+export type Phase = "closed" | "entering" | "open" | "exiting"
+
+/** react-aria's overlay states. */
+export const RAC_STATE: Partial<Record<Phase, Record<string, string>>> = {
+  entering: { "data-entering": "" },
+  exiting: { "data-exiting": "" },
+}
+
+/** Base UI's overlay states. */
+export const BASE_STATE: Partial<Record<Phase, Record<string, string>>> = {
+  entering: { "data-starting-style": "" },
+  exiting: { "data-ending-style": "" },
+}
+
+/** An overlay opening and closing on a loop while running, open at rest; a replay reopens it at once. */
+export function usePresence(
+  ref: React.RefObject<HTMLElement | null>,
+  { running, replay }: Replay,
+  { open = 2200, closed = 900 } = {},
+) {
+  const [phase, setPhase] = useState<Phase>("open")
+  const quick = useRef(false)
+
+  useEffect(() => {
+    if (!replay) return
+    quick.current = true
+    setPhase("closed")
+  }, [replay])
+
+  useEffect(() => {
+    if (!running) setPhase("open")
+  }, [running])
+
+  useLayoutEffect(() => {
+    if (phase !== "entering") return
+    // Commit the entering styles, so leaving them transitions.
+    ref.current?.getBoundingClientRect()
+    setPhase("open")
+  }, [phase, ref])
+
+  useEffect(() => {
+    if (!running) return
+    if (phase === "exiting") {
+      const transitions =
+        ref.current
+          ?.getAnimations({ subtree: true })
+          .filter((animation) => animation instanceof CSSTransition)
+          .map((animation) => animation.finished) ?? []
+      let live = true
+      void Promise.allSettled(transitions).then(() => {
+        if (live) setPhase("closed")
+      })
+      return () => {
+        live = false
+      }
+    }
+    const [next, wait]: [Phase, number] | [] =
+      phase === "closed"
+        ? ["entering", quick.current ? 0 : closed]
+        : phase === "open"
+          ? ["exiting", open]
+          : []
+    if (!next) return
+    const timer = setTimeout(() => {
+      quick.current = false
+      setPhase(next)
+    }, wait)
+    return () => clearTimeout(timer)
+  }, [phase, running, open, closed, ref])
+
+  return phase
+}
+
 // The provider writes tokens onto <html>'s style.
 function subscribeRoot(onChange: () => void) {
   const observer = new MutationObserver(onChange)
@@ -298,10 +337,3 @@ export const useRootToken = (name: string) =>
       getComputedStyle(document.documentElement).getPropertyValue(name).trim(),
     () => "",
   )
-
-/** Bumps when the provider rewrites the root's tokens. */
-export function useRootTokens() {
-  const [version, setVersion] = useState(0)
-  useEffect(() => subscribeRoot(() => setVersion((v) => v + 1)), [])
-  return version
-}

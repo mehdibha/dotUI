@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectPrimitives from "react-aria-components/Select";
 
@@ -50,9 +51,13 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
   const { buttonTrigger } = inputStyles();
+  // React Aria marks the Select invalid, not its button.
+  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
+    .isInvalid;
   return (
     <Button
       size={size}
+      data-invalid={isInvalid || undefined}
       className={composeRenderProps(className, (className) =>
         buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
       )}

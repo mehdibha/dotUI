@@ -9,15 +9,11 @@ import {
   useSlottedContext,
 } from "react-aria-components"
 
+import { BOARD_TITLES } from "./preview/boards/titles"
 import type { BoardId } from "./preview/boards/titles"
 
-/** A board, at a member's section. */
-export interface Place {
+interface PreviewFocus {
   board: BoardId
-  member?: string
-}
-
-interface PreviewFocus extends Place {
   /** The key the row edits. */
   axis?: string
   /** Every key the row edits, when it edits several. */
@@ -33,58 +29,13 @@ interface Trigger {
   } | null
 }
 
-// A component page's section on its board carries the page's id.
-const on = (board: BoardId, ...pages: string[]) =>
-  Object.fromEntries(pages.map((page) => [page, { board, member: page }]))
-
-/** Each panel page's place in the preview. */
-export const PAGE_PLACES: Record<string, Place> = {
-  color: { board: "color" },
-  typography: { board: "typography" },
-  shape: { board: "shape" },
-  interaction: { board: "states" },
-  ...on("buttons", "button", "segmented-control"),
-  ...on("inputs", "field", "select", "number-field", "otp-field"),
-  ...on("selection", "checkbox", "radio", "switch", "slider", "choice-card"),
-  ...on("dates", "calendar"),
-  ...on("menus", "menu", "popover", "tooltip", "command"),
-  ...on("dialogs", "dialog", "sheet"),
-  ...on("nav", "link", "tabs", "sidebar", "breadcrumbs", "pagination"),
-  ...on("display", "accordion", "card", "table", "avatar", "kbd"),
-  ...on("charts", "chart"),
-  ...on(
-    "feedback",
-    "badge",
-    "alert",
-    "toast",
-    "progress",
-    "spinner",
-    "skeleton",
-  ),
-}
-
-/** Main-page chapters: where their one-key component rows show. */
-export const CHAPTER_PLACES: Record<string, Place> = {
-  actions: { board: "buttons" },
-  forms: { board: "inputs" },
-  overlays: { board: "menus" },
-  navigation: { board: "nav" },
-  data: { board: "display" },
-  feedback: { board: "feedback" },
-}
+/** Component pages and Interaction show their own board; other pages keep the user's preview. */
+export const pageBoard = (page: string | null | undefined) =>
+  page && Object.hasOwn(BOARD_TITLES, page) ? (page as BoardId) : undefined
 
 /** Keys shown on a board of their own, wherever their row sits. */
 export const KEY_BOARDS: Record<string, BoardId> = {
-  style: "buttons",
-  brand: "color",
-  neutralTint: "color",
-  neutralHue: "color",
-  bodyFont: "typography",
-  radiusPx: "shape",
-  density: "space",
-  iconLibrary: "icons",
   motion: "motion",
-  mobilePickers: "menus",
 }
 
 let page: string | null = null
@@ -93,9 +44,8 @@ let current: PreviewFocus | null = null
 const listeners = new Set<() => void>()
 
 function update() {
-  const place = page ? PAGE_PLACES[page] : undefined
-  current =
-    popovers.at(-1)?.focus ?? (place ? { ...place, popover: false } : null)
+  const board = pageBoard(page)
+  current = popovers.at(-1)?.focus ?? (board ? { board, popover: false } : null)
   for (const listener of listeners) listener()
 }
 
@@ -105,19 +55,7 @@ export function setPageFocus(id: string | null) {
   update()
 }
 
-/** A panel row's place: its key's own board, else its page's or chapter's. */
-function placeOf(
-  axis: string | undefined,
-  page: string | null | undefined,
-  chapter: string | null | undefined,
-): Place | undefined {
-  const board = axis ? KEY_BOARDS[axis] : undefined
-  if (board) return { board }
-  if (page) return PAGE_PLACES[page]
-  if (chapter) return CHAPTER_PLACES[chapter]
-}
-
-/** A trigger outside any page or chapter sits in another popover: it keeps that one's place. */
+/** A trigger outside any page or chapter sits in another popover: it keeps that one's board. */
 export function focusOf(
   trigger: Trigger,
   outer: PreviewFocus | null,
@@ -131,8 +69,8 @@ export function focusOf(
   const axis = row?.getAttribute("data-axis") || holds?.[0]
   const keys = { axis, ...(holds && holds.length > 1 && { holds }) }
   if (page || chapter) {
-    const place = placeOf(axis, page, chapter)
-    return place ? { ...place, ...keys, popover: true } : null
+    const board = (axis && KEY_BOARDS[axis]) || pageBoard(page)
+    return board ? { board, ...keys, popover: true } : null
   }
   if (!outer?.popover) return null
   return axis ? { ...outer, holds: undefined, ...keys } : outer

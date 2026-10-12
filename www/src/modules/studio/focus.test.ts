@@ -1,16 +1,14 @@
 import { afterEach, describe, expect, it } from "vitest"
 
 import {
-  CHAPTER_PLACES,
   focusOf,
-  KEY_BOARDS,
-  PAGE_PLACES,
+  pageBoard,
   previewFocus,
   pushPopoverFocus,
   setPageFocus,
 } from "./focus"
-import { COMPONENTS, isSingle } from "./sections/components"
-import { FOUNDATION_PAGES } from "./sections/foundations"
+import { COMPONENTS, isSingle, keysOf } from "./sections/components"
+import { FOUNDATION_KEYS, FOUNDATION_PAGES } from "./sections/foundations"
 
 /** A trigger whose ancestors carry `attributes`, innermost first. */
 function trigger(...ancestors: Record<string, string>[]) {
@@ -27,119 +25,101 @@ function trigger(...ancestors: Record<string, string>[]) {
   }
 }
 
-describe("places", () => {
-  it("puts every component page on its own section", () => {
+const row = (axis: string, ...outer: Record<string, string>[]) =>
+  focusOf(trigger({ "data-axis": axis }, ...outer), null)
+
+describe("pages", () => {
+  it("shows every component page on its own board", () => {
     expect(
-      COMPONENTS.filter(({ id }) => PAGE_PLACES[id]?.member !== id).map(
-        ({ id }) => id,
-      ),
+      COMPONENTS.filter(({ id }) => pageBoard(id) !== id).map(({ id }) => id),
     ).toEqual([])
   })
 
-  it("shows a one-key component's row on its board from the main page", () => {
-    expect(
-      COMPONENTS.filter(isSingle)
-        .filter(
-          ({ id, chapter }) =>
-            CHAPTER_PLACES[chapter]?.board !== PAGE_PLACES[id]?.board,
-        )
-        .map(({ id }) => id),
-    ).toEqual([])
-  })
-
-  it("puts every foundation page and row on its board", () => {
-    expect(FOUNDATION_PAGES.map(({ id }) => PAGE_PLACES[id]?.board)).toEqual([
-      "color",
-      "typography",
-      "shape",
-      "states",
+  it("takes over only for Interaction among the foundation pages", () => {
+    expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
+      null,
+      null,
+      null,
+      "interaction",
     ])
-    const rows = [
-      "style",
-      "brand",
-      "neutralTint",
-      "neutralHue",
-      "bodyFont",
-      "radiusPx",
-      "density",
-      "iconLibrary",
-      "motion",
-    ]
-    expect(rows.filter((key) => !KEY_BOARDS[key])).toEqual([])
-    expect(Object.keys(PAGE_PLACES)).toHaveLength(
-      COMPONENTS.length + FOUNDATION_PAGES.length,
-    )
   })
 })
 
 describe("focusOf", () => {
-  it("reads a foundation row by its key", () => {
-    expect(
-      focusOf(
-        trigger({ "data-axis": "radiusPx" }, { "data-chapter": "foundations" }),
-        null,
-      ),
-    ).toEqual({ board: "shape", axis: "radiusPx", popover: true })
-    expect(
-      focusOf(
-        trigger({ "data-axis": "style" }, { "data-chapter": "foundations" }),
-        null,
-      ),
-    ).toMatchObject({ board: "buttons", axis: "style" })
+  it("sends every component row to its component's page", () => {
+    const wrong = COMPONENTS.flatMap((component) =>
+      keysOf(component)
+        .filter(
+          (key) =>
+            row(
+              key,
+              { "data-page": component.id },
+              { "data-chapter": component.chapter },
+            )?.board !== component.id,
+        )
+        .map((key) => `${component.id}.${key}`),
+    )
+    expect(wrong).toEqual([])
   })
 
-  it("reads a one-key component row by its chapter", () => {
-    expect(
-      focusOf(
-        trigger({ "data-axis": "otpStyle" }, { "data-chapter": "forms" }),
-        null,
-      ),
-    ).toEqual({ board: "inputs", axis: "otpStyle", popover: true })
+  it("sends a one-key component row on the main page to its page", () => {
+    const singles = COMPONENTS.filter(isSingle)
+    expect(singles.length).toBeGreaterThan(0)
+    for (const component of singles) {
+      const [axis = ""] = keysOf(component)
+      const page = { "data-page": component.id }
+      const chapter = { "data-chapter": component.chapter }
+      expect(row(axis, page, chapter)).toEqual({
+        board: component.id,
+        axis,
+        popover: true,
+      })
+    }
   })
 
-  it("prefers the page over the chapter, at its member", () => {
-    expect(
-      focusOf(
-        trigger(
-          { "data-axis": "toggleSelected" },
-          { "data-page": "button" },
-          { "data-chapter": "actions" },
-        ),
-        null,
-      ),
-    ).toEqual({
-      board: "buttons",
-      member: "button",
-      axis: "toggleSelected",
+  it("leaves the user's preview for the foundation rows but Motion", () => {
+    const takeovers = FOUNDATION_KEYS.filter(
+      (key) => row(key, { "data-chapter": "foundations" }) !== null,
+    )
+    expect(takeovers).toEqual(["motion"])
+    expect(row("motion", { "data-chapter": "foundations" })).toEqual({
+      board: "motion",
+      axis: "motion",
       popover: true,
     })
   })
 
-  it("sends a key shown elsewhere to its board", () => {
-    expect(
-      focusOf(
-        trigger({ "data-axis": "mobilePickers" }, { "data-page": "select" }),
-        null,
-      ),
-    ).toEqual({ board: "menus", axis: "mobilePickers", popover: true })
+  it("leaves the user's preview on the color, typography and shape pages", () => {
+    expect(row("successSeed", { "data-page": "color" })).toBeNull()
+    expect(row("headingFont", { "data-page": "typography" })).toBeNull()
+    expect(row("roleCard", { "data-page": "shape" })).toBeNull()
+    expect(row("focusStyle", { "data-page": "interaction" })).toEqual({
+      board: "interaction",
+      axis: "focusStyle",
+      popover: true,
+    })
   })
 
   it("names every held key when the row edits several", () => {
     expect(
       focusOf(
         trigger(
-          { "data-holds": "rolePanel roleCard" },
-          { "data-page": "shape" },
+          { "data-holds": "checkCorner checkEdge" },
+          { "data-page": "checkbox" },
         ),
         null,
       ),
-    ).toMatchObject({ axis: "rolePanel", holds: ["rolePanel", "roleCard"] })
+    ).toEqual({
+      board: "checkbox",
+      axis: "checkCorner",
+      holds: ["checkCorner", "checkEdge"],
+      popover: true,
+    })
   })
 
-  it("keeps the outer popover's place inside a popover", () => {
+  it("keeps the outer popover's board inside a popover", () => {
     const outer = {
-      board: "dialogs" as const,
-      member: "dialog",
+      board: "dialog" as const,
       axis: "dialogBackdrop",
       popover: true,
     }
@@ -148,14 +128,12 @@ describe("focusOf", () => {
       axis: "dialogFrost",
     })
     expect(focusOf(trigger(), outer)).toEqual(outer)
+    expect(focusOf(trigger({ "data-axis": "x" }), null)).toBeNull()
   })
 
   it("ignores triggers outside the panel's pages and chapters", () => {
-    expect(focusOf(trigger({ "data-axis": "x" }), null)).toBeNull()
-    expect(focusOf(trigger(), { board: "buttons", popover: false })).toBeNull()
-    expect(
-      focusOf(trigger({ "data-axis": "x" }, { "data-page": "nope" }), null),
-    ).toBeNull()
+    expect(focusOf(trigger(), { board: "button", popover: false })).toBeNull()
+    expect(row("x", { "data-page": "nope" })).toBeNull()
   })
 })
 
@@ -164,46 +142,39 @@ describe("focus store", () => {
 
   it("stacks popovers over the page", () => {
     setPageFocus("checkbox")
-    expect(previewFocus()).toEqual({
-      board: "selection",
-      member: "checkbox",
-      popover: false,
-    })
+    expect(previewFocus()).toEqual({ board: "checkbox", popover: false })
     const close = pushPopoverFocus(
       trigger({ "data-axis": "checkboxMotion" }, { "data-page": "checkbox" }),
     )
-    expect(previewFocus()).toMatchObject({
-      board: "selection",
-      member: "checkbox",
+    expect(previewFocus()).toEqual({
+      board: "checkbox",
       axis: "checkboxMotion",
       popover: true,
     })
     const closeInner = pushPopoverFocus(trigger({ "data-axis": "checkEdge" }))
     expect(previewFocus()).toMatchObject({
-      board: "selection",
+      board: "checkbox",
       axis: "checkEdge",
     })
     closeInner()
     close()
-    expect(previewFocus()).toEqual({
-      board: "selection",
-      member: "checkbox",
-      popover: false,
-    })
+    expect(previewFocus()).toEqual({ board: "checkbox", popover: false })
     setPageFocus(null)
     expect(previewFocus()).toBeNull()
   })
 
-  it("leaves the preview alone on an unknown page", () => {
+  it("leaves the preview alone on unknown and foundation pages", () => {
     setPageFocus("nope")
+    expect(previewFocus()).toBeNull()
+    setPageFocus("color")
     expect(previewFocus()).toBeNull()
   })
 
-  it("clears on the main page when the popover closes", () => {
+  it("clears on the main page when the Motion popover closes", () => {
     const close = pushPopoverFocus(
-      trigger({ "data-axis": "density" }, { "data-chapter": "foundations" }),
+      trigger({ "data-axis": "motion" }, { "data-chapter": "foundations" }),
     )
-    expect(previewFocus()?.board).toBe("space")
+    expect(previewFocus()?.board).toBe("motion")
     close()
     expect(previewFocus()).toBeNull()
   })

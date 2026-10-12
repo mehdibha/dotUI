@@ -49,9 +49,11 @@ const FieldDoubleTrigger = ({
 
 const ButtonDoubleTrigger = ({ className, size, ...props }: ButtonProps) => {
   const { buttonTrigger } = useInputStyles()()
+  const isInvalid = use(SelectStateContext)?.displayValidation.isInvalid
   return (
     <Button
       size={size}
+      data-invalid={isInvalid || undefined}
       className={composeRenderProps(className, (className) =>
         buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
       )}

@@ -52,11 +52,7 @@ import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
 import type { BoardId } from "@/modules/studio/preview/boards/titles"
-import {
-  NO_INSET,
-  sendPreviewFocus,
-} from "@/modules/studio/preview/focus-message"
-import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
+import { sendPreviewFocus } from "@/modules/studio/preview/focus-message"
 import { useDocked } from "@/modules/studio/rows"
 import { useStudio } from "@/modules/studio/use-studio"
 
@@ -96,31 +92,6 @@ const FOLLOW = "follow-panel"
 const FOCUS_RELEASE_MS = 200
 // Panel popovers are modal: a click dismisses one, a second opens the next.
 const CLICK_RELEASE_MS = 800
-
-/** Preview px the open panel popovers cover; null before one mounts. */
-function insetOf(iframe: HTMLIFrameElement, docked: boolean) {
-  const popovers = document.querySelectorAll("[data-panel-popover]")
-  if (!popovers.length) return null
-  const frame = iframe.getBoundingClientRect()
-  // Screen px to preview px, whatever the zoom.
-  const scale = (iframe.contentWindow?.innerWidth ?? frame.width) / frame.width
-  const inset = { left: 0, bottom: 0 }
-  for (const popover of popovers) {
-    const rect = popover.getBoundingClientRect()
-    const overlaps =
-      rect.right > frame.left &&
-      rect.left < frame.right &&
-      rect.bottom > frame.top &&
-      rect.top < frame.bottom
-    if (!overlaps) continue
-    if (docked) inset.bottom = Math.max(inset.bottom, frame.bottom - rect.top)
-    else inset.left = Math.max(inset.left, rect.right - frame.left)
-  }
-  return {
-    left: Math.round(Math.min(inset.left, frame.width) * scale),
-    bottom: Math.round(Math.min(inset.bottom, frame.height) * scale),
-  }
-}
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -356,44 +327,29 @@ export function PreviewPanel({ className }: { className?: string }) {
   }, [previewMode])
 
   const sentFocus = following ? focus : null
+  const focusAxis = sentFocus?.axis
+  const focusHolds = sentFocus?.holds?.join(" ")
+  const focusPopover = !!sentFocus?.popover
   useEffect(() => {
     const iframe = iframeRef.current
     if (!iframe) return
-    let message: PreviewFocusMessage = {
-      member: sentFocus?.member,
-      axis: sentFocus?.axis,
-      holds: sentFocus?.holds,
-      popover: !!sentFocus?.popover,
-      inset: NO_INSET,
-    }
-    const send = () => sendPreviewFocus(iframe, message)
-    // A popover can mount late (lazy content) and react-aria re-places it: send once it settles.
-    let frame = 0
-    let tries = 0
-    let last = ""
-    const measure = () => {
-      const inset = sentFocus?.popover ? insetOf(iframe, docked) : NO_INSET
-      const key = JSON.stringify(inset)
-      const settled = inset !== null && key === last
-      last = key
-      if (settled || ++tries > 60) {
-        message = { ...message, inset: inset ?? NO_INSET }
-        return send()
-      }
-      frame = requestAnimationFrame(measure)
-    }
-    frame = requestAnimationFrame(measure)
+    const send = () =>
+      sendPreviewFocus(iframe, {
+        axis: focusAxis,
+        holds: focusHolds ? focusHolds.split(" ") : undefined,
+        popover: focusPopover,
+      })
+    if (iframe.contentWindow) send()
     iframe.addEventListener("load", send)
     const onReady = (event: MessageEvent) => {
       if (event.data?.type === "preview-ready") send()
     }
     window.addEventListener("message", onReady)
     return () => {
-      cancelAnimationFrame(frame)
       iframe.removeEventListener("load", send)
       window.removeEventListener("message", onReady)
     }
-  }, [sentFocus, docked, zoom, size])
+  }, [focusAxis, focusHolds, focusPopover])
 
   // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
   // display mode, so it survives preview switches (the iframe remounts per preview).
