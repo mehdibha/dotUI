@@ -18,6 +18,7 @@ import {
 } from "lucide-react"
 import { useTheme } from "starter-themes"
 
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -38,7 +39,6 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
-import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 import { usePreviewFocus } from "@/modules/studio/focus"
 import {
