@@ -18,6 +18,7 @@ type ParentToIframeMessage =
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
+  | { type: "preview-background"; color: string }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
 
@@ -224,6 +225,33 @@ export function useAnnouncePreviewReady() {
   }, [])
 }
 
+/**
+ * Inside the preview iframe: report the page background, which the parent
+ * paints on the iframe element — elastic overscroll pulls this document away
+ * and reveals that element. Re-reports on every design system the parent
+ * sends (including its resend on `preview-ready`) and on display-mode flips.
+ */
+export function useReportPreviewBackground(designSystem: DesignSystem) {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+
+    const report = () =>
+      window.parent.postMessage(
+        {
+          type: "preview-background",
+          color: getComputedStyle(document.body).backgroundColor,
+        } satisfies IframeToParentMessage,
+        "*",
+      )
+
+    report()
+    // The mode lands as a class on <html>, from the root ThemeProvider's effect.
+    const observer = new MutationObserver(report)
+    observer.observe(document.documentElement, { attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [designSystem])
+}
+
 /** Inside the preview iframe: whether this document is embedded in /create. */
 export function useIsEmbeddedPreview(): boolean {
   const [embedded] = React.useState(() => isInIframe())
@@ -308,4 +336,25 @@ export function useInspectMessages(onInspect: (panel: string) => void) {
     window.addEventListener("message", handleMessage)
     return () => window.removeEventListener("message", handleMessage)
   }, [])
+}
+
+/** In the /create parent: paint the iframe element with the preview's background. */
+export function usePreviewBackground(
+  iframeRef: React.RefObject<HTMLIFrameElement | null>,
+) {
+  React.useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      const iframe = iframeRef.current
+      if (
+        iframe &&
+        event.source === iframe.contentWindow &&
+        event.data?.type === "preview-background" &&
+        typeof event.data.color === "string"
+      ) {
+        iframe.style.backgroundColor = event.data.color
+      }
+    }
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
+  }, [iframeRef])
 }

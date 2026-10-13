@@ -11,6 +11,7 @@ import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
   usePreviewNavigationMessages,
+  useReportPreviewBackground,
 } from "@/modules/studio/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
@@ -44,8 +45,9 @@ export function getExamplesPromise(slug: string) {
 // Embedded, the preview sits inside the /create panel's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
-const EMBEDDED_SCROLLBAR_CSS = `
-html { scrollbar-width: none; }
+// Overscroll bounces the preview itself, not the whole studio.
+const EMBEDDED_CSS = `
+html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 `
 
@@ -91,6 +93,7 @@ export function PreviewPage() {
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
+  useReportPreviewBackground(designSystem)
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
@@ -119,7 +122,7 @@ export function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
-      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && <style>{EMBEDDED_CSS}</style>}
       {embedded && <PreviewInspector />}
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}
