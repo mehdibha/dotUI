@@ -1,8 +1,11 @@
-/* Style — the material every surface and control is cut from. Twelve keys
-   default to the "style" follow and read their column below; Flat's column
-   is each key's own default, so Origin is untouched. An option another style
-   owns (Bevel buttons outside Tactile) is excluded, falling back to the
-   column. Radius, density and type stay their own rows. */
+/* Style — the material, named by its light: how every surface and control
+   draws depth. Flat has no light (lines), Soft a diffuse one, Tonal stands
+   tone in for light, Tactile lights controls from above, Chunky casts hard
+   light onto solid ledges. Seven keys default to the "style" follow and read
+   their column below; Flat's column is each key's own default, so Origin is
+   untouched. An option that needs another light (Bevel buttons outside
+   Tactile) is excluded, falling back to the column. Color, type, radius,
+   density and motion never change with it. */
 
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
@@ -10,7 +13,13 @@ import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
-export const STYLE_VALUES = ["flat", "soft", "tonal", "tactile"] as const
+export const STYLE_VALUES = [
+  "flat",
+  "soft",
+  "tonal",
+  "tactile",
+  "chunky",
+] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -30,52 +39,50 @@ export const COLUMNS = {
     soft: "same",
     tonal: "tonal",
     tactile: "same",
+    chunky: "same",
   },
-  surfaceEdge: { flat: "line", soft: "line", tonal: "none", tactile: "bevel" },
-  surfaceShadow: { flat: "flat", soft: "low", tonal: "low", tactile: "flat" },
-  controlEdge: { flat: "firm", soft: "firm", tonal: "strong", tactile: "firm" },
-  buttonStyle: { flat: "flat", soft: "flat", tonal: "flat", tactile: "bevel" },
+  // Tactile and Chunky draw the edge their button finish implies.
+  surfaceEdge: {
+    flat: "line",
+    soft: "line",
+    tonal: "none",
+    tactile: "auto",
+    chunky: "auto",
+  },
+  surfaceShadow: {
+    flat: "flat",
+    soft: "low",
+    tonal: "low",
+    tactile: "low",
+    chunky: "flat",
+  },
+  buttonStyle: {
+    flat: "flat",
+    soft: "flat",
+    tonal: "flat",
+    tactile: "bevel",
+    chunky: "ledge",
+  },
   buttonSecondary: {
     flat: "as-style",
     soft: "raised",
     tonal: "tonal",
     tactile: "as-style",
+    chunky: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
     soft: "raised",
     tonal: "inverse",
     tactile: "auto",
-  },
-  toggleSelected: {
-    flat: "tone",
-    soft: "tone",
-    tonal: "solid",
-    tactile: "tone",
+    chunky: "auto",
   },
   inputStyle: {
     flat: "auto",
     soft: "auto",
     tonal: "indicator",
     tactile: "auto",
-  },
-  menuSelectedRow: {
-    flat: "none",
-    soft: "none",
-    tonal: "tint",
-    tactile: "tint",
-  },
-  menuInset: {
-    flat: "inset",
-    soft: "inset",
-    tonal: "full-bleed",
-    tactile: "inset",
-  },
-  toastStyle: {
-    flat: "surface",
-    soft: "surface",
-    tonal: "inverse",
-    tactile: "surface",
+    chunky: "auto",
   },
 } satisfies Record<string, Record<Style, string>>
 
@@ -84,19 +91,27 @@ export type StyleKey = keyof typeof COLUMNS
 export const STYLE_KEYS = Object.keys(COLUMNS) as StyleKey[]
 
 /** The styles an option belongs to; outside them it is excluded. */
+/** The styles whose light an option needs; outside them it is excluded. */
 export const ALLOWED: Partial<
   Record<StyleKey, Readonly<Record<string, readonly Style[]>>>
 > = {
   buttonStyle: {
     hairline: ["flat", "soft"],
-    "rim-light": ["soft", "tactile"],
-    gloss: ["soft", "tactile"],
+    "rim-light": ["tactile"],
+    gloss: ["tactile"],
     bevel: ["tactile"],
-    ledge: ["tactile"],
+    ledge: ["chunky"],
   },
-  surfaceEdge: { bevel: ["tactile"], ledge: ["tactile"] },
+  surfaceEdge: { bevel: ["tactile"], ledge: ["chunky"] },
   surfaceLayers: { tonal: ["tonal"] },
-  inputStyle: { well: ["tactile"] },
+  inputStyle: { well: ["tactile", "chunky"] },
+}
+
+/** The key each Style's finish lives in: a variation of its own light. */
+export const FINISH_KEYS: Partial<Record<Style, StyleKey>> = {
+  soft: "surfaceEdge",
+  tactile: "buttonStyle",
+  chunky: "buttonStyle",
 }
 
 /** The options of `key` that `style` excludes. */
@@ -136,12 +151,14 @@ export const RULES: Rule[] = Object.keys(ALLOWED).flatMap((key) => {
   )
 })
 
-/** `style` picked: a saved key the new style excludes goes back to it;
- *  every other explicit pick is kept. */
+/** `style` picked: the old Style's finish and any saved key the new style
+ *  excludes go back to it; every other explicit pick is kept. */
 export function pickStyle(state: StudioState, style: Style): StudioState {
   const next: Record<string, unknown> = { ...state, style }
+  const finish = style === state.style ? undefined : FINISH_KEYS[state.style]
   for (const key of STYLE_KEYS)
-    if (excludedUnder(key, style).includes(state[key])) next[key] = "style"
+    if (key === finish || excludedUnder(key, style).includes(state[key]))
+      next[key] = "style"
   return next as StudioState
 }
 

@@ -18,8 +18,8 @@ import {
 import type { Mode, PerMode, SurfaceColor } from "../axes/surfaces"
 import {
   EDGE_OPTIONS,
-  GLASS_OPTIONS,
   LAYERS_OPTIONS,
+  OVERLAY_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
 } from "../axes/surfaces.meta"
@@ -113,11 +113,14 @@ const PAGE_NAMES: Record<Mode, Record<number, string>> = {
 const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
+/* Auto: the edge the button finish implies (Bevel, Ledge, else Line). */
+const EDGE_ROW = [{ value: "auto", label: "Auto" }, ...EDGE_OPTIONS]
+
 const SURFACE_KEYS = [
   "surfaceLayers",
   "surfaceEdge",
   "surfaceShadow",
-  "surfaceGlass",
+  "translucentOverlays",
   "shellTone",
   "lightBg",
   "darkBg",
@@ -150,7 +153,7 @@ export function SurfacesRow() {
         <DialSelect
           axis="surfaceEdge"
           label="Edge"
-          options={EDGE_OPTIONS.map((option) => {
+          options={EDGE_ROW.map((option) => {
             const values = effective({
               ...state,
               surfaceEdge: option.value,
@@ -167,7 +170,7 @@ export function SurfacesRow() {
           label="Shadow"
           options={SHADOW_OPTIONS}
         />
-        <Row axis="surfaceGlass" />
+        <Row axis="translucentOverlays" />
         <Row axis="shellTone" />
         <DialSlider
           axis="lightBg"
@@ -191,15 +194,15 @@ export function SurfacesRow() {
   )
 }
 
-function GlassRow() {
+function OverlaysRow() {
   const { state, set } = useStudio()
   return (
     <DialSelect
-      axis="surfaceGlass"
+      axis="translucentOverlays"
       label="Overlays"
-      value={state.surfaceGlass ? "glass" : "solid"}
-      onChange={(value) => set("surfaceGlass")(value === "glass")}
-      options={GLASS_OPTIONS}
+      value={state.translucentOverlays ? "translucent" : "solid"}
+      onChange={(value) => set("translucentOverlays")(value === "translucent")}
+      options={OVERLAY_OPTIONS}
     />
   )
 }
@@ -216,6 +219,6 @@ export const ROWS: RowMap = {
   surfaceShadow: SurfacesRow,
   lightBg: SurfacesRow,
   darkBg: SurfacesRow,
-  surfaceGlass: GlassRow,
+  translucentOverlays: OverlaysRow,
   shellTone: ShellRow,
 }

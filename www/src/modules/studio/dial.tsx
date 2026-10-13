@@ -1141,8 +1141,12 @@ export function DialSegmented({
   options: DialOption[]
 }) {
   const label = useRowLabel(labelProp)
-  const { axis, hidden, pinned, exclude } = useAxisGate(key)
+  const { axis, hidden, pinned, exclude: gate } = useAxisGate(key)
   if (hidden) return null
+  // A row listing a subset (a Style's finishes) names a cause only for its own options.
+  const exclude = gate?.options?.some((o) => options.some((x) => x.value === o))
+    ? gate
+    : undefined
   const value = valueProp !== undefined ? valueProp : String(axis?.effective)
   const set = onChangeProp ?? ((v: string) => axis?.set(v))
   if (pinned)

@@ -8,7 +8,7 @@ export const duolingo = definePreset({
   inspiredBy: "Duolingo",
   diff: {
     // Style
-    style: "tactile",
+    style: "chunky",
 
     // Color
     // owl #58cc02 for CTAs and progress; macaw #1cb0f6 for selection and focus.
@@ -50,7 +50,6 @@ export const duolingo = definePreset({
     density: "touch",
 
     // Surfaces: cards and choice tiles stand on a 2px lip.
-    surfaceEdge: "ledge",
     shellTone: "page",
 
     // States
@@ -62,7 +61,6 @@ export const duolingo = definePreset({
     selectionHighlight: "browser",
 
     // Buttons
-    buttonStyle: "ledge",
     buttonCase: "uppercase",
     toggleSelected: "tint",
 
@@ -77,6 +75,7 @@ export const duolingo = definePreset({
     switchStyle: "slab",
 
     // Menus & popovers
+    menuSelectedRow: "tint",
     menuArrows: "both",
     // No check on the current item; the row tint marks it.
     menuIndicator: "none",

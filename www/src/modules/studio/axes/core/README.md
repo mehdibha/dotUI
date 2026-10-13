@@ -25,8 +25,10 @@ The module's `chapter` is already in the list in `../index.ts`; DEFAULTS,
 SCHEMA, FOLLOWS, RULES and the resolvers are built from it. A new module adds
 one line there.
 
-- A key the four Styles draw apart joins `COLUMNS` in `../style.ts` (Flat =
-  its default), and any option only some Styles allow joins `ALLOWED`.
+- A key that changes with the material joins `COLUMNS` in `../style.ts`
+  (Flat = its default), and an option that needs one light joins `ALLOWED`.
+  The swap test decides: rebuild the screen in another Style with the same
+  colors, fonts, corners and spacing; whatever has to change is Style.
 - Renaming or removing a key or a value breaks saved states and share links:
   bump `STATE_VERSION` in `../version.ts` and add the `STEPS` entry in
   `../migrate.ts` that rewrites the old shape.
@@ -47,12 +49,15 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 
 ## Style
 
-`../style.ts` owns `style` and, from `../index.ts`, twelve keys of other
+`../style.ts` owns `style` (the material, named by its light: Flat, Soft,
+Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
 chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
 its column, whose Flat entry is the key's chapter default (Origin). An
-option another style owns is an exclude rule with `cause: "style"` and
+option that needs another light is an exclude rule with `cause: "style"` and
 `fallback: "style"`, so it lands on the column. `pickStyle` drops only the
-picks the new style excludes; `resetToStyle` drops them all.
+picks the new style excludes; `resetToStyle` drops them all. A Style's
+finish (`FINISHES` in `style.meta.ts`) is one of those keys, offered in the
+Style popover.
 
 ## Add a rule
 

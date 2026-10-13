@@ -63,9 +63,31 @@ describe("columns", () => {
     expect(valuesOf({ style: "tonal" })).toMatchObject({
       surfaceLayers: "tonal",
       surfaceEdge: "none",
-      controlEdge: "strong",
       inputStyle: "indicator",
-      toastStyle: "inverse",
+    })
+  })
+
+  it("never writes what survives a change of material", () => {
+    for (const style of STYLE_VALUES)
+      expect(valuesOf({ style }), style).toMatchObject({
+        controlEdge: "firm",
+        toggleSelected: "tone",
+        toastStyle: "surface",
+        menuInset: "inset",
+        menuSelectedRow: "none",
+      })
+  })
+
+  it("Tactile and Chunky draw the edge their finish implies", () => {
+    expect(valuesOf({ style: "tactile" }).surfaceEdge).toBe("bevel")
+    for (const buttonStyle of ["rim-light", "gloss"])
+      expect(valuesOf({ style: "tactile", buttonStyle }).surfaceEdge).toBe(
+        "line",
+      )
+    expect(valuesOf({ style: "chunky" })).toMatchObject({
+      buttonStyle: "ledge",
+      surfaceEdge: "ledge",
+      inputStyle: "well",
     })
   })
 
@@ -151,16 +173,26 @@ describe("picking a style", () => {
       buttonStyle: "hairline",
       inputStyle: "style",
     })
-    // Well is Tactile's own: picking Tactile keeps it, Hairline goes.
-    expect(pickStyle(state, "tactile")).toMatchObject({
-      buttonStyle: "style",
-      inputStyle: "well",
-    })
+    // Well needs Tactile or Chunky's light: both keep it, Hairline goes.
+    for (const style of ["tactile", "chunky"] as const)
+      expect(pickStyle(state, style)).toMatchObject({
+        buttonStyle: "style",
+        inputStyle: "well",
+      })
+  })
+
+  it("drops the old Style's finish, not the new one's", () => {
+    const shadowOnly = parseState({ style: "soft", surfaceEdge: "none" })
+    expect(pickStyle(shadowOnly, "tactile").surfaceEdge).toBe("style")
+    expect(pickStyle(shadowOnly, "soft").surfaceEdge).toBe("none")
+    const rim = parseState({ style: "tactile", buttonStyle: "rim-light" })
+    expect(pickStyle(rim, "flat").buttonStyle).toBe("style")
+    expect(pickStyle(state, "flat")).toMatchObject({ buttonStyle: "hairline" })
   })
 
   it("resets every explicit key to the style", () => {
     expect(followersOf(state, "style").sort()).toEqual(
-      ["buttonStyle", "inputStyle", "menuInset", "surfaceShadow"].sort(),
+      ["buttonStyle", "inputStyle", "surfaceShadow"].sort(),
     )
     const reset = resetToStyle(pickStyle(state, "soft"))
     expect(reset.style).toBe("soft")

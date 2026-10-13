@@ -10,6 +10,7 @@ export const material3 = definePreset({
     // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
     // outline #79747e on fields and buttons, #49454f on checks.
     style: "tonal",
+    controlEdge: "strong",
 
     // Color
     brand: "#6750a4",
@@ -64,6 +65,7 @@ export const material3 = definePreset({
     tooltipEntrance: "slide",
 
     // Buttons
+    toggleSelected: "solid",
     buttonRadius: "pill",
     // The chip follows the button style, not Tonal's inverse one.
     segmentedSelected: "auto",
@@ -83,6 +85,8 @@ export const material3 = definePreset({
     sliderThumb: "handle",
 
     // Menus & popovers: full-bleed rows, no check, a tinted selected row.
+    menuInset: "full-bleed",
+    menuSelectedRow: "tint",
     menuArrows: "none",
     menuIndicator: "none",
     menuRows: "step",
@@ -102,6 +106,7 @@ export const material3 = definePreset({
     navMarker: "pill",
 
     // Feedback
+    toastStyle: "inverse",
     // Chips: 1px #79747e outline, 8px corners.
     badgeStyle: "outline",
     badgeShape: "rounded",

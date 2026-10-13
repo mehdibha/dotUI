@@ -229,7 +229,7 @@ describe("surfaces", () => {
   })
 
   test("glass turns the floating tier translucent; solid is the default", () => {
-    const tokens = tokensFor({ surfaceGlass: true })
+    const tokens = tokensFor({ translucentOverlays: true })
     expect(tokens["--popover-alpha"]).toBe("70%")
     expect(tokens["--popover-backdrop-filter"]).toBe(
       "blur(40px) saturate(150%)",
@@ -421,7 +421,7 @@ describe("drawn edges", () => {
   }
 
   test("Bevel trades the border for Polaris's inset rim, light and dark", () => {
-    const tokens = tokensFor({ surfaceEdge: "bevel" })
+    const tokens = tokensFor({ surfaceEdge: "bevel", surfaceShadow: "flat" })
     const rim =
       "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))"
     expect(tokens).toMatchObject({

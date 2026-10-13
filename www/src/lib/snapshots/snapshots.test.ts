@@ -112,7 +112,7 @@ describe("POST /api/snapshots", () => {
       parseState({
         style: "tactile",
         surfaceEdge: "line",
-        menuSelectedRow: "none",
+        surfaceShadow: "flat",
         segmentedSelected: "tone",
         inputStyle: "underline",
         inputHover: "none",

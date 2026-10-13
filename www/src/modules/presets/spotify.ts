@@ -12,6 +12,7 @@ export const spotify = definePreset({
     // Field, checkbox and radio edges are #7c7c7c, far above the #292929 dividers.
     // Toasts are a white box on the dark app.
     style: "tonal",
+    controlEdge: "strong",
 
     // Color
     // Bright-accent #1ed760 under black ink, verbatim in both themes.
@@ -101,8 +102,6 @@ export const spotify = definePreset({
     // Menus, selects and tooltips never point (Popovers would tip menus too).
     menuArrows: "none",
     // Inset rows; the current one is not tinted.
-    menuInset: "inset",
-    menuSelectedRow: "none",
     tooltipStyle: "surface",
 
     // Dialogs
@@ -125,6 +124,7 @@ export const spotify = definePreset({
     navWeight: "bold",
 
     // Feedback
+    toastStyle: "inverse",
     alertStyle: "soft",
     spinnerStyle: "ring-track",
     // ProgressBar is 6px in essential-bright-accent, the check color.
