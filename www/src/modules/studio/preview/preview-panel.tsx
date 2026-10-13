@@ -45,7 +45,6 @@ import {
   sendPreviewPrefetch,
   sendToIframe,
   useInspectorExitMessages,
-  usePreviewBackground,
 } from "@/modules/studio/preset"
 import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
@@ -299,8 +298,6 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // The preview exits inspect mode itself on Escape — keep the toggle in sync.
   useInspectorExitMessages(() => setInspecting(false))
-
-  usePreviewBackground(iframeRef)
 
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.

@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
@@ -11,7 +11,6 @@ import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
   usePreviewNavigationMessages,
-  useReportPreviewBackground,
 } from "@/modules/studio/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
@@ -93,7 +92,23 @@ export function PreviewPage() {
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
-  useReportPreviewBackground(designSystem)
+
+  // Elastic overscroll pulls this page away and reveals the <iframe> element,
+  // which the studio paints in its own theme — repaint it with ours.
+  useEffect(() => {
+    const frame = window.frameElement as HTMLElement | null
+    if (!frame) return
+    const paint = () => {
+      frame.style.backgroundColor = getComputedStyle(
+        document.body,
+      ).backgroundColor
+    }
+    paint()
+    // Mode flips land on <html> from the root ThemeProvider's effect, after this one.
+    const observer = new MutationObserver(paint)
+    observer.observe(document.documentElement, { attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [designSystem])
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's

@@ -15,7 +15,6 @@ export {
   useInspectorExitMessages,
   useInspectorModeMessages,
   useIsEmbeddedPreview,
-  usePreviewBackground,
   usePreviewForcedTheme,
 } from "./iframe-sync"
 export type { Density, DesignSystem, IconLibraryName } from "./types"
