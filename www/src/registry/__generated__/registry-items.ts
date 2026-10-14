@@ -2,9 +2,7 @@
 // Run "tsx scripts/registry-build.ts" to regenerate
 
 import LibContext from "@/registry/lib/context/meta";
-import LibFocusStyles from "@/registry/lib/focus-styles/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
-import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
@@ -172,4 +170,4 @@ export const registryUi: RegistryItem[] = [
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [LibContext, LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];
+export const registryLib: RegistryItem[] = [LibContext, LibResponsive, LibUtils];

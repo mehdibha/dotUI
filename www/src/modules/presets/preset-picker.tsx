@@ -80,7 +80,7 @@ interface PresetPickerProps {
 }
 
 /**
- * The one preset picker, used by both the docs preview toolbar and the /create
+ * The one preset picker, used by both the docs preview toolbar and the /studio
  * panel: a searchable list of plain rows — a swatch dot and the preset's name.
  * Popover on desktop, drawer on mobile.
  *

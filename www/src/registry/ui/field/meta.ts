@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const fieldMeta = {
   name: "field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const fieldMeta = {
   registryDependencies: ["text"],
   params: {
     error: {
-      kind: "enum",
       default: "plain",
       values: ["plain", "icon-message"] as const,
       files: {
@@ -29,7 +27,6 @@ const fieldMeta = {
       description: "How the error message reads.",
     },
     label: {
-      kind: "enum",
       default: "regular",
       values: ["regular", "medium", "semibold"] as const,
       description: "The weight of form-field labels.",

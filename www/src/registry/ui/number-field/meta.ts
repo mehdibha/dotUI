@@ -12,12 +12,10 @@ const file = (layout: string) =>
 const numberFieldMeta = {
   name: "number-field",
   type: "registry:ui",
-  group: "inputs",
   files: [...file("right-cells")],
   registryDependencies: ["input", "field"],
   params: {
     steppers: {
-      kind: "enum",
       default: "right-cells",
       values: [
         "right-cells",

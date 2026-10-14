@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const alertMeta = {
   name: "alert",
   type: "registry:ui",
-  group: "feedback",
   files: [
     {
       type: "registry:ui",
@@ -13,7 +12,6 @@ const alertMeta = {
   ],
   params: {
     style: {
-      kind: "enum",
       default: "neutral",
       values: [
         "neutral",
