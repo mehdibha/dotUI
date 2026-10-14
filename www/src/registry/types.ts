@@ -4,10 +4,19 @@ import type {
 } from "shadcn/schema"
 
 /**
- * Density tiers a design system can be rendered at. Lives at the registry layer
- * because both the runtime provider and the publish pipeline need it.
+ * Density tiers a design system can be rendered at, smallest first. Lives at
+ * the registry layer because both the runtime provider and the publish
+ * pipeline need it.
  */
-export type Density = "compact" | "default" | "comfortable"
+export const DENSITIES = [
+  "compact",
+  "default",
+  "comfortable",
+  "spacious",
+  "touch",
+] as const
+
+export type Density = (typeof DENSITIES)[number]
 
 /**
  * Component groups for style editor UI organization.

@@ -131,53 +131,24 @@ export const DemosIndex: Record<
   console.log("  ✓ __generated__/demos.tsx")
 }
 
-// Get the package import for each library
-function getLibraryPackage(library: string): string {
-  switch (library) {
-    case "tabler":
-      return "@tabler/icons-react"
-    case "hugeicons":
-      return "@hugeicons/core-free-icons"
-    case "remix":
-      return "@remixicon/react"
-    case "phosphor":
-      return "@phosphor-icons/react"
-    default:
-      return ""
-  }
-}
-
-// Generate __libraryName__.ts files with only the icons we use
+// Generate __libraryName__.ts files exporting each library's glyph under the
+// registry name, so the runtime loader looks icons up by registry name alone.
 async function buildIconLibraryExports() {
-  const iconsDir = GENERATED_DIR
-
-  // Collect unique icon names per library
-  const libraryIcons: Record<string, Set<string>> = {
-    tabler: new Set(),
-    hugeicons: new Set(),
-    remix: new Set(),
-    phosphor: new Set(),
-  }
-
-  for (const iconMapping of Object.values(registryIcons)) {
-    if (iconMapping.tabler) libraryIcons.tabler?.add(iconMapping.tabler)
-    if (iconMapping.hugeicons)
-      libraryIcons.hugeicons?.add(iconMapping.hugeicons)
-    if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix)
-    if (iconMapping.phosphor) libraryIcons.phosphor?.add(iconMapping.phosphor)
-  }
-
-  // Generate a file for each library. Remix/tabler export plain components;
-  // hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
-  // wraps each one into a component — the runtime loader stays uniform.
-  for (const [library, icons] of Object.entries(libraryIcons)) {
-    const packageName = getLibraryPackage(library)
-    const sortedIcons = [...icons].sort((a, b) => a.localeCompare(b))
-
-    const isHugeicons = library === "hugeicons"
+  const keys = Object.keys(registryIcons).sort((a, b) => a.localeCompare(b))
+  for (const { name: library, import: packageName } of iconLibraries) {
+    if (library === "lucide") continue
+    const pairs = keys.map((key) => {
+      const name = registryIcons[key]?.[library]
+      if (!name)
+        throw new Error(`Icon "${key}" not found for library "${library}"`)
+      return [key, name] as const
+    })
     const header = `// AUTO-GENERATED - DO NOT EDIT
-// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)`
+// Only exports the ${pairs.length} icons the registry uses (not the entire library)`
 
+    // Hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
+    // wraps each one into a component — the runtime loader stays uniform.
+    const isHugeicons = library === "hugeicons"
     const content = isHugeicons
       ? `${header}
 "use client";
@@ -185,8 +156,8 @@ async function buildIconLibraryExports() {
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import {
-${sortedIcons.map((name) => `\t${name} as ${name}Data,`).join("\n")}
-} from "${packageName}";
+${[...new Set(pairs.map(([, name]) => name))].map((name) => `\t${name} as ${name}Data,`).join("\n")}
+} from "@hugeicons/core-free-icons";
 
 // The \`hugeicon\` marker class lets the stroke-width axis target the paths
 // (see base.css) — hugeicons paths carry their own stroke-width attribute.
@@ -196,65 +167,44 @@ function wrap(icon: HugeiconsIconProps["icon"]) {
 \t};
 }
 
-${sortedIcons.map((name) => `export const ${name} = wrap(${name}Data);`).join("\n")}
+${pairs.map(([key, name]) => `export const ${key} = wrap(${name}Data);`).join("\n")}
 `
       : `${header}
-${sortedIcons.length > 0 ? `export { ${sortedIcons.join(", ")} } from "${packageName}";` : ""}
+export { ${pairs.map(([key, name]) => (key === name ? key : `${name} as ${key}`)).join(", ")} } from "${packageName}";
 `
 
     const ext = isHugeicons ? "tsx" : "ts"
-    const targetPath = path.join(iconsDir, `__${library}__.${ext}`)
+    const targetPath = path.join(GENERATED_DIR, `__${library}__.${ext}`)
     await writeGeneratedFile(targetPath, content)
     console.log(
-      `  ✓ __generated__/__${library}__.${ext} (${sortedIcons.length} icons)`,
+      `  ✓ __generated__/__${library}__.${ext} (${pairs.length} icons)`,
     )
   }
 }
 
 async function buildInternalIcons() {
   const targetPath = path.join(GENERATED_DIR, "icons.tsx")
-
   const iconKeys = Object.keys(registryIcons)
 
-  // Collect all unique lucide icon names for individual imports
-  const lucideIconNames = new Set<string>()
-  for (const iconKey of iconKeys) {
-    const iconMapping = registryIcons[iconKey]
-    if (iconMapping?.lucide) {
-      lucideIconNames.add(iconMapping.lucide)
-    }
-  }
-
-  // Generate individual imports with aliases to avoid naming collisions (tree-shakeable)
+  // Individual lucide imports, aliased to avoid collisions (tree-shakeable)
+  const lucideIconNames = new Set(
+    iconKeys.map((key) => {
+      const name = registryIcons[key]?.lucide
+      if (!name) throw new Error(`Icon "${key}" not found for library "lucide"`)
+      return name
+    }),
+  )
   const lucideImports = Array.from(lucideIconNames)
     .sort((a, b) => a.localeCompare(b))
     .map((name) => `  ${name} as Lucide${name},`)
     .join("\n")
 
   const iconExports = iconKeys
-    .map((iconKey) => {
-      const iconMapping = registryIcons[iconKey]
-      if (!iconMapping) {
-        throw new Error(`Icon mapping not found for: ${iconKey}`)
-      }
-
-      const names = iconLibraries
-        .map((library) => {
-          const iconName = iconMapping[library.name]
-          if (!iconName) {
-            throw new Error(
-              `Icon "${iconKey}" not found for library "${library.name}"`,
-            )
-          }
-          return `  ${library.name}: "${iconName}",`
-        })
-        .join("\n")
-
-      return `export const ${iconKey} = createIcon(Lucide${iconMapping.lucide}, {
-${names}
-});`
-    })
-    .join("\n\n")
+    .map(
+      (key) =>
+        `export const ${key} = createIcon(Lucide${registryIcons[key]?.lucide}, "${key}");`,
+    )
+    .join("\n")
 
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
@@ -333,96 +283,6 @@ ${groupEntries.join("\n")}
   await writeGeneratedFile(targetPath, content)
   console.log(
     `  ✓ create/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
-  )
-}
-
-/** Studio panel search index: every settings row label and group title in
- *  each chapter's section, keyed by chapter id — so search reaches nested
- *  axes, not just chapter names. Read off the section JSX, plus the motion
- *  registry's entries and presets (their rows are data-driven); other data-driven
- *  labels (color roles, shape roles) are out of scope. */
-async function buildStudioSearchIndex() {
-  const studioDir = path.join(process.cwd(), "src/modules/studio")
-  const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
-  const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
-  const motion = await fs.readFile(
-    path.join(studioDir, "motion-controls.tsx"),
-    "utf8",
-  )
-  const presets = await fs.readFile(
-    path.join(studioDir, "axes", "motion-presets.ts"),
-    "utf8",
-  )
-
-  const sectionOf = new Map<string, string>()
-  for (const [, names = "", file = ""] of state.matchAll(
-    /import \{([^}]+)\} from "\.\/sections\/([\w-]+)"/g,
-  )) {
-    for (const name of names.split(",")) sectionOf.set(name.trim(), file)
-  }
-
-  const lines: string[] = []
-  for (const [, id = "", body = ""] of state.matchAll(
-    /id: "([\w-]+)",[\s\S]*?Body: (\w+),/g,
-  )) {
-    const file = sectionOf.get(body)
-    if (!file) continue
-    const read = (name: string) =>
-      fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
-    const rowLabels = (source: string) => {
-      const found: string[] = []
-      // A row's own label (a folded row's title) — the tag must not contain
-      // another "<" before it.
-      for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|\w+Motion|CardGrid)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
-      ))
-        found.push(label)
-      for (const [, title = ""] of source.matchAll(
-        /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
-      ))
-        found.push(title.trim())
-      return found
-    }
-    const source = await read(file)
-    const labels = new Set<string>(rowLabels(source))
-    // A section that composes sibling sections (Components) indexes their
-    // rows too, under the sibling's name.
-    for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g)) {
-      const title = sibling.replace(/-/g, " ")
-      const prefix = title[0]!.toUpperCase() + title.slice(1)
-      labels.add(prefix)
-      for (const label of rowLabels(await read(sibling)))
-        labels.add(`${prefix} › ${label}`)
-    }
-    if (id === "motion") {
-      for (const [, label = ""] of presets.matchAll(
-        /preset\("[^"]+", "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, label = ""] of motion.matchAll(
-        /id: "[^"]+",\s*label: "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, list = ""] of motion.matchAll(/followers: \[([^\]]+)\]/g))
-        for (const [, label = ""] of list.matchAll(/"([^"]+)"/g))
-          labels.add(label)
-    }
-    lines.push(
-      `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
-    )
-  }
-
-  const content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "tsx scripts/registry-build.ts" to regenerate
-
-/** Settings row labels per chapter id, for the panel search. */
-export const SEARCH_INDEX: Record<string, string[]> = {
-${lines.join("\n")}
-}
-`
-  await writeGeneratedFile(targetPath, content)
-  console.log(
-    `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
   )
 }
 
@@ -1071,7 +931,6 @@ async function main() {
     await buildInternalDemos()
     await buildInternalIcons()
     await buildInternalExamples()
-    await buildStudioSearchIndex()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies

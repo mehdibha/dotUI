@@ -13,11 +13,12 @@ const drawerMeta = {
     },
   ],
   params: {
-    backdrop: {
+    edge: {
       kind: "enum",
-      default: "dim",
-      values: ["dim", "blur", "none"] as const,
-      description: "How the page reads under the open drawer.",
+      default: "docked",
+      values: ["docked", "detached"] as const,
+      description:
+        "How the sheet meets the screen: flush to its edge, or a card inset from it.",
     },
   },
 } satisfies RegistryItem

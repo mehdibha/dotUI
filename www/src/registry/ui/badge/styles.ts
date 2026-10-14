@@ -2,35 +2,63 @@ import { createStyles } from "@/lib/styles"
 
 import badgeMeta from "./meta"
 
-/* Each intent sets the chip's palette as vars; `appearance` picks which of
-   them paint. The `style` param only moves the appearance default, so a
-   product that mixes chips keeps the prop. The neutral tint is a half-strength
-   wash: its fill is already the wash tone, so `muted` alone would equal solid.
-   Synced with tag-group. */
+/* The chips recipe, shared with tag-group: a palette sets the --chip-* vars,
+   an appearance paints with them, and the `style` param only moves the
+   appearance default, so the prop stays API for products that mix chips. */
+
+export const CHIP_SOLID = "bg-(--chip-fill) text-(--chip-fg)"
+export const CHIP_SOFT = "bg-(--chip-tint) text-(--chip-fg-tint)"
+export const CHIP_OUTLINE =
+  "border border-(--chip-border) text-(--chip-fg-tint)"
+export const CHIP_SOFT_OUTLINE =
+  "border border-(--chip-border) bg-(--chip-tint) text-(--chip-fg-tint)"
+// Neutral hairline pill; the status rides a leading dot (Linear labels).
+export const CHIP_DOT =
+  "border border-border text-fg before:size-2 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']"
+
+// Half-strength wash: the neutral fill is already the wash tone; its dot
+// takes the muted ink, the fill being too light to read.
+export const CHIP_NEUTRAL =
+  "[--chip-border:var(--color-border)] [--chip-dot:var(--color-fg-muted)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]"
+
+export const CHIPS = {
+  // shadcn, Geist, Spectrum 2 (bold), Mantine (filled), Fluent 2.
+  solid: {},
+  // Radix Themes, Polaris, Chakra (subtle), Carbon, Atlassian, HeroUI.
+  soft: { defaultVariants: { appearance: "soft" } },
+  // Primer (Label).
+  outline: { defaultVariants: { appearance: "outline" } },
+  // Ant Design (Tag), Untitled UI, Supabase.
+  "soft-outline": { defaultVariants: { appearance: "soft-outline" } },
+  // Linear (labels).
+  dot: { defaultVariants: { appearance: "dot" } },
+} as const
+
+/* Caps, one size down, tracked: Supabase, Mantine, Atlassian (v15). */
+export const CAPS = "text-[0.6875rem] tracking-wider uppercase"
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {
-    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--studio-badge-radius) text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--studio-badge-radius) font-medium whitespace-nowrap [&>svg]:pointer-events-none",
     variants: {
       appearance: {
-        solid: "bg-(--badge-fill) text-(--badge-fg)",
-        soft: "bg-(--badge-tint) text-(--badge-fg-tint)",
-        outline: "border border-(--badge-border) text-(--badge-fg-tint)",
-        "soft-outline":
-          "border border-(--badge-border) bg-(--badge-tint) text-(--badge-fg-tint)",
+        solid: CHIP_SOLID,
+        soft: CHIP_SOFT,
+        outline: CHIP_OUTLINE,
+        "soft-outline": CHIP_SOFT_OUTLINE,
+        dot: CHIP_DOT,
       },
       variant: {
-        neutral:
-          "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+        neutral: CHIP_NEUTRAL,
         accent:
-          "[--badge-border:var(--color-border-accent)] [--badge-fg-tint:var(--color-fg-accent)] [--badge-fg:var(--color-fg-on-accent)] [--badge-fill:var(--color-accent)] [--badge-tint:var(--color-accent-muted)]",
+          "[--chip-border:var(--color-border-accent)] [--chip-fg-tint:var(--color-fg-accent)] [--chip-fg:var(--color-fg-on-accent)] [--chip-fill:var(--color-accent)] [--chip-tint:var(--color-accent-muted)]",
         danger:
-          "[--badge-border:var(--color-border-danger)] [--badge-fg-tint:var(--color-fg-danger)] [--badge-fg:var(--color-fg-on-danger)] [--badge-fill:var(--color-danger)] [--badge-tint:var(--color-danger-muted)]",
+          "[--chip-border:var(--color-border-danger)] [--chip-fg-tint:var(--color-fg-danger)] [--chip-fg:var(--color-fg-on-danger)] [--chip-fill:var(--color-danger)] [--chip-tint:var(--color-danger-muted)]",
         success:
-          "[--badge-border:var(--color-border-success)] [--badge-fg-tint:var(--color-fg-success)] [--badge-fg:var(--color-fg-on-success)] [--badge-fill:var(--color-success)] [--badge-tint:var(--color-success-muted)]",
+          "[--chip-border:var(--color-border-success)] [--chip-fg-tint:var(--color-fg-success)] [--chip-fg:var(--color-fg-on-success)] [--chip-fill:var(--color-success)] [--chip-tint:var(--color-success-muted)]",
         warning:
-          "[--badge-border:var(--color-border-warning)] [--badge-fg-tint:var(--color-fg-warning)] [--badge-fg:var(--color-fg-on-warning)] [--badge-fill:var(--color-warning)] [--badge-tint:var(--color-warning-muted)]",
-        info: "[--badge-border:var(--color-border-info)] [--badge-fg-tint:var(--color-fg-info)] [--badge-fg:var(--color-fg-on-info)] [--badge-fill:var(--color-info)] [--badge-tint:var(--color-info-muted)]",
+          "[--chip-border:var(--color-border-warning)] [--chip-fg-tint:var(--color-fg-warning)] [--chip-fg:var(--color-fg-on-warning)] [--chip-fill:var(--color-warning)] [--chip-tint:var(--color-warning-muted)]",
+        info: "[--chip-border:var(--color-border-info)] [--chip-fg-tint:var(--color-fg-info)] [--chip-fg:var(--color-fg-on-info)] [--chip-fill:var(--color-info)] [--chip-tint:var(--color-info-muted)]",
       },
       size: {
         sm: "h-4.5 min-w-4.5 px-1.5 **:data-loader:*:[svg]:size-2.5 [&>svg]:size-2.5",
@@ -48,13 +76,14 @@ const { useStyles, styles } = createStyles(badgeMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
-    style: {
-      solid: {},
-      soft: { defaultVariants: { appearance: "soft" } },
-      outline: { defaultVariants: { appearance: "outline" } },
-      "soft-outline": { defaultVariants: { appearance: "soft-outline" } },
+    style: CHIPS,
+    case: {
+      sentence: { base: "text-xs" },
+      uppercase: { base: CAPS },
     },
   },
 })

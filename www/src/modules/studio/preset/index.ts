@@ -1,5 +1,6 @@
 export { DEFAULTS } from "./defaults"
 export {
+  BOARD_SLUG_PREFIX,
   type DesignSystemMessage,
   pingIframe,
   type PreviewAssets,

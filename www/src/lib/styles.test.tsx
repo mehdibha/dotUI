@@ -29,6 +29,8 @@ const { useStyles } = createStyles(meta, {
     compact: { base: "compact" },
     default: {},
     comfortable: { base: "comfortable" },
+    spacious: {},
+    touch: {},
   },
   params: { tone: { plain: { base: "plain" }, loud: { base: "loud" } } },
 })

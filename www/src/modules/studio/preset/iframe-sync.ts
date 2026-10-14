@@ -26,6 +26,9 @@ export interface DesignSystemMessage {
   drag: boolean
 }
 
+/** A board's preview slug is this prefix and its panel page or chapter id. */
+export const BOARD_SLUG_PREFIX = "board-"
+
 type ParentToIframeMessage =
   | ({ type: "design-system" } & DesignSystemMessage)
   | { type: "preview-mode"; mode: PreviewMode }
@@ -131,7 +134,7 @@ export function pingIframe(iframe: HTMLIFrameElement | null) {
 
 /* ----------------------------- Listen (iframe) ----------------------------- */
 
-function isInIframe(): boolean {
+export function isInIframe(): boolean {
   try {
     return window.self !== window.top
   } catch {
@@ -316,11 +319,12 @@ export interface AppliedDesignSystem<T> {
 export function createApplier<T>(
   initial: AppliedDesignSystem<T>,
   render: (next: AppliedDesignSystem<T>) => void,
+  normalize: (data: DesignSystem) => DesignSystem = (data) => data,
 ) {
   let target = initial
   let onScreen = initial
   const apply: ApplyDesignSystem<T> = (data, prepared, committed) => {
-    const designSystem = shareDesignSystem(target.designSystem, data)
+    const designSystem = shareDesignSystem(target.designSystem, normalize(data))
     // Nothing to render, unless a stalled render is still on its way.
     if (
       target === onScreen &&
@@ -343,10 +347,12 @@ export function createApplier<T>(
 export function useAppliedDesignSystem<T>(
   prepare: PrepareDesignSystem<T>,
   initial: () => AppliedDesignSystem<T>,
+  /** Applied to each message's design system before it's shared. */
+  normalize?: (data: DesignSystem) => DesignSystem,
 ) {
   const [applied, setApplied] = React.useState(initial)
   const [{ apply, rendered }] = React.useState(() =>
-    createApplier(applied, setApplied),
+    createApplier(applied, setApplied, normalize),
   )
   React.useLayoutEffect(() => rendered(applied), [rendered, applied])
   useDesignSystemMessages(prepare, apply)

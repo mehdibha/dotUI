@@ -1,28 +1,46 @@
-/* Toggles — Toggle Button ⇄ Toggle Group, synced on one selected look: fill
-   (tone-on-tone, dotUI today), chip (page-colored chip lifted on shadow),
-   inverse (snaps to full contrast). The family look, hover and press come
-   from the Buttons axis; the attached shell from Button groups.
+/* Toggles — a selected toggle's look, on Toggle Button and every Toggle
+   Group segment. The face, hover and press come from Buttons. Tone steps the
+   neutral down, Solid and Tint read the selection color, Inverse snaps to
+   full contrast.
 
    Engine: `selected` enum param on `toggle-button`. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const TOGGLE_DEFAULTS = {
-  toggleSelected: "fill",
+  toggleSelected: "tone",
 }
 
-export const SELECTED_OPTIONS = [
-  { value: "fill", label: "Fill" },
-  { value: "chip", label: "Chip" },
-  { value: "inverse", label: "Inverse" },
-]
+export const SELECTED_VALUES = ["tone", "solid", "tint", "inverse"] as const
 
 export const TOGGLE_SCHEMA: ChapterSchema<typeof TOGGLE_DEFAULTS> = {
-  toggleSelected: oneOf(SELECTED_OPTIONS),
+  toggleSelected: oneOf(SELECTED_VALUES),
 }
 
-export function resolveToggles(state: StudioState): Resolved {
+export function resolveToggles(state: Effective): Resolved {
   return { params: { "toggle-button": { selected: state.toggleSelected } } }
 }
+
+export const chapter = defineChapter({
+  id: "toggles",
+  defaults: TOGGLE_DEFAULTS,
+  schema: TOGGLE_SCHEMA,
+  resolve: resolveToggles,
+  rules: [
+    {
+      // Tone and Tint are lighter than a Solid rest fill: selection reads off.
+      id: "toggles/solid-secondary-needs-strong-selected",
+      target: "toggleSelected",
+      when: { key: "buttonSecondary", in: ["solid"] },
+      effect: {
+        kind: "exclude",
+        options: ["tone", "tint"],
+        fallback: "inverse",
+      },
+      cause: "buttonSecondary",
+    },
+  ],
+})

@@ -23,13 +23,15 @@ import type {
   PreviewAssets,
 } from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { boardOf } from "@/modules/studio/preview/boards"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import {
   requestThemeCss,
   themeCssNow,
 } from "@/modules/studio/preview/theme-css-worker"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
@@ -46,7 +48,10 @@ export function getExamplesPromise(slug: string) {
     // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
-      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+      boardOf(slug) ??
+      BlocksIndex[slug] ??
+      GroupExamplesIndex[slug] ??
+      ExamplesIndex[slug]
     if (!load) return null
     promise = load()
     promiseCache.set(slug, promise)
@@ -111,12 +116,14 @@ export function PreviewPage() {
   const { designSystem, prepared: themeCss } = useAppliedDesignSystem(
     prepareThemeCss,
     () => {
-      const initial = resolveDesignSystem(getCurrent().state)
+      const initial = designSystemOf(getCurrent().state)
       return {
         designSystem: initial,
         prepared: initial.color && themeCssNow(initial.color),
       }
     },
+    // A message's clone, its selections one object again for the style caches.
+    internDesignSystem,
   )
 
   const navigate = route.useNavigate()
@@ -205,7 +212,7 @@ export function PreviewPage() {
       icons={designSystem.icons}
     >
       {chrome}
-      {content}
+      <BoardFocusProvider>{content}</BoardFocusProvider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
     </DesignSystemProvider>
   )

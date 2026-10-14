@@ -43,15 +43,15 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
-import { DEFAULT_STATE } from "@/modules/studio/axes"
+import { DEFAULT_EFFECTIVE } from "@/modules/studio/axes"
 import {
   resolveShape,
   ROLE_VARS,
-  SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
   shapeVars,
 } from "@/modules/studio/axes/shape"
+import { SHAPE_CHARACTERS } from "@/modules/studio/axes/shape.meta"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
 
@@ -69,6 +69,8 @@ const DENSITY_LABEL: Record<string, string> = {
   compact: "Compact",
   default: "Default",
   comfortable: "Comfortable",
+  spacious: "Spacious",
+  touch: "Touch",
 }
 
 const DENSITY_DESCRIPTION: Record<string, string> = {
@@ -76,6 +78,8 @@ const DENSITY_DESCRIPTION: Record<string, string> = {
   default: "Balanced spacing — the everyday baseline.",
   comfortable:
     "Generous padding and breathing room for a relaxed, spacious feel.",
+  spacious: "40px controls, 48px large.",
+  touch: "48px controls, 16px text.",
 }
 
 /** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */
@@ -547,7 +551,7 @@ function shapeCharacter(tokens: Record<string, string>): string {
   const actual = radiusVars(tokens)
   const match = SHAPE_CHARACTERS.find((character) => {
     const expected = radiusVars(
-      resolveShape({ ...DEFAULT_STATE, ...character.vector }).tokens ?? {},
+      resolveShape({ ...DEFAULT_EFFECTIVE, ...character.vector }).tokens ?? {},
     )
     const names = new Set([...Object.keys(expected), ...Object.keys(actual)])
     return [...names].every((name) => expected[name] === actual[name])
@@ -562,7 +566,7 @@ function ShapeSection({
   radiusPx: number
   tokens: Record<string, string>
 }) {
-  const defaults = shapeVars(DEFAULT_STATE)
+  const defaults = shapeVars(DEFAULT_EFFECTIVE)
   const roles = SHAPE_ROLES.map(({ key, label }) => {
     const name = ROLE_VARS[key]
     const rung = SHAPE_RUNGS.find(
@@ -690,17 +694,17 @@ const SURFACE_LAYERS: { token: string; label: string }[] = [
 const SHADOWS: { className: string; label: string }[] = [
   {
     className:
-      "rounded-(--studio-radius-card) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
+      "rounded-(--studio-radius-card) border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
     label: "Card",
   },
   {
     className:
-      "rounded-(--studio-radius-surface) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
+      "rounded-(--studio-radius-surface) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
     label: "Popover",
   },
   {
     className:
-      "rounded-(--studio-radius-panel) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
+      "rounded-(--studio-radius-panel) border border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
     label: "Dialog",
   },
 ]
@@ -738,7 +742,7 @@ function ElevationSection() {
           {SHADOWS.map((s) => (
             <div
               key={s.label}
-              className={cn("flex h-24 items-end border p-3", s.className)}
+              className={cn("flex h-24 items-end p-3", s.className)}
             >
               <span className="text-xs font-medium text-fg-muted">
                 {s.label}

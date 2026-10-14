@@ -2,44 +2,64 @@ import { createStyles } from "@/lib/styles"
 
 import calendarMeta from "./meta"
 
-/* The single calendar paints the cell; the range calendar paints the inner
-   chip and uses the cell as the band. Day shape owns every radius: the band
-   ends match the chip (the cell radius, or full for circle), and both share
-   the row-edge rounding (spelled out twice — the publisher's extractor reads
-   literals only); square runs edge to edge. Today markers land on both elements, each scoped to its
-   calendar. */
+/** Date cells: a day or time cell that is itself selected paints the checks
+ *  fill and hovers its tint. The time picker's selected cell reads it too. */
+export const DATE_CELLS =
+  "not-selected:hover:bg-selection-muted selected:bg-selection selected:text-fg-on-selection"
+
+/* A single calendar paints the cell; a range calendar paints the inner chip
+   and uses the cell as the band (the checks tint). Day shape owns every
+   radius: the band ends match the chip and share the row-edge rounding
+   (spelled out twice — the publisher's extractor reads literals only).
+   Today markers land on the element that draws the chip in each calendar. */
 
 const { useStyles, styles } = createStyles(calendarMeta, {
   base: {
     slots: {
-      root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--studio-calendar-cell-radius)] [--cell-size:--spacing(8)]",
+      root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--studio-btn-radius)] [--cell-size:--spacing(8)]",
       header: "flex items-center gap-2",
-      heading: "flex-1 text-center text-sm font-medium",
+      heading:
+        "flex-1 text-center font-sans text-sm font-medium tracking-normal",
       grid: "grid grid-cols-7 gap-y-2",
       gridHeader: "contents *:[tr]:contents",
       gridHeaderCell: "text-xs font-normal text-fg-muted",
       gridBody: "contents *:[tr]:contents",
       cell: [
-        "relative flex aspect-square size-full items-center justify-center text-center text-sm font-medium no-highlight",
-        "min-w-(--cell-size) cursor-interactive",
-        "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
-        "in-data-range-calendar:not-outside-month:selected:bg-accent-muted",
-        "focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) in-data-calendar:hover:bg-accent-muted in-data-calendar:focus-visible:focus-ring in-data-calendar:selected:not-outside-month:bg-accent in-data-calendar:selected:not-outside-month:text-fg-on-accent",
-        "outside-month:pointer-events-none",
-        "in-data-calendar:not-outside-month:invalid:selected:bg-danger in-data-calendar:not-outside-month:invalid:selected:text-fg-on-danger",
+        "relative flex aspect-square size-full min-w-(--cell-size) items-center justify-center text-center text-sm font-medium no-highlight",
+        "cursor-interactive focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease)",
+        "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:pointer-events-none outside-month:text-fg-disabled",
       ],
-      cellInner:
-        "flex size-full items-center justify-center focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent",
+      cellInner: "",
     },
+    variants: {
+      range: {
+        false: {
+          cell: [
+            DATE_CELLS,
+            "focus-visible:focus-ring",
+            "invalid:selected:bg-danger invalid:selected:text-fg-on-danger",
+          ],
+          cellInner: "contents",
+        },
+        true: {
+          cell: "selected:bg-selection-muted",
+          cellInner:
+            "relative flex size-full items-center justify-center focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-focus-visible:focus-ring in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
+        },
+      },
+    },
+    defaultVariants: { range: false },
   },
   density: {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     dayShape: {
-      rounded: {
+      same: {
         slots: {
           cell: [
             "in-data-calendar:rounded-(--cell-radius)",
@@ -59,25 +79,17 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cell: [
             "in-data-calendar:rounded-full",
             "selection-start:rounded-l-full selection-end:rounded-r-full",
-            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
-            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
-            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
-            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
+            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-full",
+            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-full",
+            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-full",
+            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-full",
           ],
           cellInner: "rounded-full",
         },
       },
-      square: {},
     },
+    // Neutral markers, then the `-selection` ones in the checks fill.
     today: {
-      none: {},
-      ring: {
-        slots: {
-          cell: "in-data-calendar:data-today:inset-ring in-data-calendar:data-today:inset-ring-accent",
-          cellInner:
-            "in-data-range-calendar:in-data-today:inset-ring in-data-range-calendar:in-data-today:inset-ring-accent",
-        },
-      },
       fill: {
         slots: {
           cell: "in-data-calendar:data-today:not-selected:not-hover:bg-muted",
@@ -85,11 +97,52 @@ const { useStyles, styles } = createStyles(calendarMeta, {
             "in-data-range-calendar:in-data-today:not-in-selected:not-hover:bg-muted",
         },
       },
-      numeral: {
+      "fill-selection": {
         slots: {
-          cell: "in-data-calendar:data-today:not-selected:text-fg-accent",
+          cell: "in-data-calendar:data-today:not-selected:not-hover:bg-selection in-data-calendar:data-today:not-selected:not-hover:text-fg-on-selection",
           cellInner:
-            "in-data-range-calendar:in-data-today:not-in-selected:text-fg-accent",
+            "in-data-range-calendar:in-data-today:not-in-selected:not-hover:bg-selection in-data-range-calendar:in-data-today:not-in-selected:not-hover:text-fg-on-selection",
+        },
+      },
+      ring: {
+        slots: {
+          cell: "in-data-calendar:data-today:not-selected:inset-ring in-data-calendar:data-today:not-selected:inset-ring-border-control",
+          cellInner:
+            "in-data-range-calendar:in-data-today:not-in-selection-start:not-in-selection-end:inset-ring in-data-range-calendar:in-data-today:not-in-selection-start:not-in-selection-end:inset-ring-border-control in-data-range-calendar:in-data-today:in-outside-month:inset-ring in-data-range-calendar:in-data-today:in-outside-month:inset-ring-border-control",
+        },
+      },
+      "ring-selection": {
+        slots: {
+          cell: "in-data-calendar:data-today:not-selected:text-selection in-data-calendar:data-today:not-selected:inset-ring in-data-calendar:data-today:not-selected:inset-ring-selection in-data-range-calendar:data-today:text-selection",
+          cellInner:
+            "in-data-range-calendar:in-data-today:not-in-selection-start:not-in-selection-end:inset-ring in-data-range-calendar:in-data-today:not-in-selection-start:not-in-selection-end:inset-ring-selection in-data-range-calendar:in-data-today:in-outside-month:inset-ring in-data-range-calendar:in-data-today:in-outside-month:inset-ring-selection",
+        },
+      },
+      numeral: {
+        slots: { cell: "data-today:font-bold" },
+      },
+      "numeral-selection": {
+        slots: {
+          cell: "data-today:font-semibold in-data-calendar:data-today:not-selected:text-selection in-data-range-calendar:data-today:text-selection",
+        },
+      },
+      dot: {
+        slots: {
+          cell: [
+            "data-today:after:absolute data-today:after:bottom-1 data-today:after:left-1/2 data-today:after:size-1 data-today:after:-translate-x-1/2 data-today:after:rounded-(--cell-radius)",
+            "in-data-calendar:data-today:not-selected:after:bg-fg in-data-calendar:data-today:selected:after:bg-fg-on-selection",
+            "in-data-range-calendar:data-today:not-selection-start:not-selection-end:after:bg-fg in-data-range-calendar:data-today:outside-month:after:bg-fg data-today:selection-start:not-outside-month:after:bg-fg-on-selection data-today:selection-end:not-outside-month:after:bg-fg-on-selection",
+          ],
+        },
+      },
+      "dot-selection": {
+        slots: {
+          cell: [
+            "data-today:font-semibold in-data-calendar:data-today:not-selected:text-selection in-data-range-calendar:data-today:text-selection",
+            "data-today:after:absolute data-today:after:bottom-1 data-today:after:left-1/2 data-today:after:size-1 data-today:after:-translate-x-1/2 data-today:after:rounded-(--cell-radius)",
+            "in-data-calendar:data-today:not-selected:after:bg-selection in-data-calendar:data-today:selected:after:bg-fg-on-selection",
+            "in-data-range-calendar:data-today:not-selection-start:not-selection-end:after:bg-selection in-data-range-calendar:data-today:outside-month:after:bg-selection data-today:selection-start:not-outside-month:after:bg-fg-on-selection data-today:selection-end:not-outside-month:after:bg-fg-on-selection",
+          ],
         },
       },
     },

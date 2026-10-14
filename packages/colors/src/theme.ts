@@ -35,6 +35,7 @@ import {
   type Mode,
   type ScaleColors,
   type ScaleOptions,
+  solveOnColor,
   transposeSkeleton,
 } from "./scale"
 import type { ThemeOptions } from "./schema"
@@ -83,16 +84,22 @@ const buildScales = memoize(
     shared: Omit<ScaleOptions, "mode" | "skeleton" | "sharedSolid">,
     skeleton: Record<Mode, number[]>,
   ): Record<Mode, ScaleColors> => {
+    const { whiteInk, ...rest } = shared
     const light = buildScale({
       ...shared,
       mode: "light",
       skeleton: skeleton.light,
     })
+    // A white light label leaves dark its solved one.
+    const solid = light.steps["700"]
     const dark = buildScale({
-      ...shared,
+      ...rest,
       mode: "dark",
       skeleton: skeleton.dark,
-      sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
+      sharedSolid: {
+        solid,
+        on: whiteInk ? solveOnColor(solid) : light.on["700"],
+      },
     })
     return { light, dark }
   },
@@ -133,6 +140,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const hueShift = options.hueShift ?? 1
   const neutralTint = options.neutralTint ?? 1
   const preserveSeed = options.preserveSeed ?? false
+  const whiteInk = preserveSeed && options.solidInk === "white"
 
   const accentSeed = toOklch(options.seeds.accent)
 
@@ -202,6 +210,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   }
 
   for (const [name, { seed, neutral }] of Object.entries(seeds)) {
+    const white = whiteInk && name === "accent"
     const { light, dark } = buildScales(
       {
         seed,
@@ -214,6 +223,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
             ? tintPeak
             : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
         preserveSeed: preserveSeed && name === "accent",
+        whiteInk: white,
       },
       neutral ? skeletons.neutral : skeletons.chromatic,
     )
@@ -248,7 +258,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
           (r) => !r.passes && r.name === "on-solid",
         ))
           warnings.push(
-            `accent/${mode}: preserveSeed pins the solid; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
+            `accent/${mode}: ${white && mode === "light" ? "solidInk keeps white labels on the pinned solid" : "preserveSeed pins the solid"}; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
           )
       }
     }

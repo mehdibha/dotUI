@@ -12,6 +12,8 @@ const { useStyles, styles } = createStyles(mentionMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

@@ -1,24 +1,31 @@
 "use client"
 
 /* The studio's state hook: the current design system (a view or one of the
-   user's systems) and its edits. Editing a view fills the unsaved slot. */
+   user's systems), what it resolves to, and its edits. Editing a view fills
+   the unsaved slot. */
 
 import { useMemo } from "react"
 
-import type { StudioState } from "./axes"
+import { effective } from "./axes"
+import type { Effective, StudioState } from "./axes"
 import { edit, getCurrent, useCurrent } from "./selection"
 
 export interface Studio {
+  /** What the user picked; follow ids ("auto", "same") included. */
   state: StudioState
+  /** What the picks resolve to; specimens and recipes read this. */
+  effective: Effective
   /** One setter per key, the same one every render. */
-  set: <K extends keyof StudioState>(key: K) => (value: StudioState[K]) => void
+  set: <K extends keyof StudioState & string>(
+    key: K,
+  ) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
 }
 
-const setters = new Map<keyof StudioState, (value: never) => void>()
+const setters = new Map<string, (value: never) => void>()
 
 // Edits the state current at the call, never the one a render closed over.
-function set<K extends keyof StudioState>(key: K) {
+function set<K extends keyof StudioState & string>(key: K) {
   let setter = setters.get(key)
   if (!setter) {
     setter = (value) => edit({ ...getCurrent().state, [key]: value })
@@ -29,5 +36,8 @@ function set<K extends keyof StudioState>(key: K) {
 
 export function useStudio(): Studio {
   const { state } = useCurrent()
-  return useMemo(() => ({ state, set, setState: edit }), [state])
+  return useMemo(
+    () => ({ state, effective: effective(state).values, set, setState: edit }),
+    [state],
+  )
 }

@@ -1,14 +1,17 @@
 /* Shape — one base length scales the whole radius ladder; a character picks
-   which rung each role of component wears.
+   which rung each role of component wears. Stroke is the width every control
+   edge draws at; tracks, whether switch, slider and progress stay round.
 
    Engine: `--radius` is the base every `--radius-*` rung derives from
    (base/theme.css). The role vars (roles.css) point each role at a rung —
    five picked, the rest derived — and every component's `--studio-<c>-radius`
    points at a role. On publish the chain resolves to a plain utility per
    component — `rounded-md`, `rounded-xl` — and a role at None ships no
-   rounded class at all. */
+   rounded class at all. `--studio-control-stroke` resolves the same way, to
+   `border` · `border-2`. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -20,7 +23,24 @@ export const SHAPE_DEFAULTS = {
   roleSurface: "lg",
   rolePanel: "xl",
   roleCard: "auto",
+  controlStroke: "regular",
+  tracks: "round",
 }
+
+/* Control edges; surfaces keep a 1px hairline unless their edge is Ledge
+   (Duolingo's 2px cards). No sub-pixel option: Chromium
+   draws a 0.5px border at 1px, so seams and insets would subtract the wrong
+   width. */
+const STROKE_PX = { regular: 1, bold: 2 }
+
+export const STROKE_VALUES = Object.keys(STROKE_PX) as Array<
+  keyof typeof STROKE_PX
+>
+
+export const strokePx = (id: string) =>
+  STROKE_PX[id as keyof typeof STROKE_PX] ?? 1
+
+export const TRACK_VALUES = ["round", "follow"] as const
 
 /** Where the base slider runs. Square is a character, not a base of 0: at 0
  *  the exported code would still carry rounded classes reading a dead token. */
@@ -40,17 +60,19 @@ export const SHAPE_RUNGS = [
   { id: "full", label: "Pill", ratio: Infinity, token: "var(--radius-full)" },
 ]
 
-const RUNG_OPTIONS = SHAPE_RUNGS.map((rung) => ({ value: rung.id }))
+const RUNGS = SHAPE_RUNGS.map((rung) => rung.id)
 /* Panels and cards hold multi-line content, which is never a pill. */
-const BLOCK_RUNG_OPTIONS = RUNG_OPTIONS.filter((rung) => rung.value !== "full")
+const BLOCK_RUNGS = RUNGS.filter((rung) => rung !== "full")
 
 export const SHAPE_SCHEMA: ChapterSchema<typeof SHAPE_DEFAULTS> = {
   radiusPx: range(RADIUS_RANGE),
-  roleControl: oneOf(RUNG_OPTIONS),
-  roleItem: oneOf([{ value: "auto" }, ...RUNG_OPTIONS]),
-  roleSurface: oneOf(RUNG_OPTIONS),
-  rolePanel: oneOf(BLOCK_RUNG_OPTIONS),
-  roleCard: oneOf([{ value: "auto" }, ...BLOCK_RUNG_OPTIONS]),
+  roleControl: oneOf(RUNGS),
+  roleItem: oneOf(["auto", ...RUNGS]),
+  roleSurface: oneOf(RUNGS),
+  rolePanel: oneOf(BLOCK_RUNGS),
+  roleCard: oneOf(["auto", ...BLOCK_RUNGS]),
+  controlStroke: oneOf(STROKE_VALUES),
+  tracks: oneOf(TRACK_VALUES),
 }
 
 export const SHAPE_ROLES = [
@@ -64,58 +86,8 @@ export const SHAPE_ROLES = [
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
 export type ShapeVector = Record<ShapeRoleKey, string>
 
-/* Three looks that stay distinct at a glance; the base slider and Custom
-   cover the rest. Checked against shadcn/create: Square ≈ lyra/sera,
-   Standard ≈ mira (vega and nova within a rung), Round ≈ luma/rhea. */
-export const SHAPE_CHARACTERS: Array<{
-  id: string
-  label: string
-  vector: ShapeVector
-}> = [
-  {
-    id: "square",
-    label: "Square",
-    vector: {
-      roleControl: "none",
-      roleItem: "none",
-      roleSurface: "none",
-      rolePanel: "none",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "standard",
-    label: "Standard",
-    vector: {
-      roleControl: "md",
-      roleItem: "auto",
-      roleSurface: "lg",
-      rolePanel: "xl",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "round",
-    label: "Round",
-    vector: {
-      roleControl: "3xl",
-      roleItem: "auto",
-      roleSurface: "2xl",
-      rolePanel: "3xl",
-      roleCard: "auto",
-    },
-  },
-]
-
 export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
-
-/** The character whose vector matches the roles, or undefined when custom. */
-export function activeCharacter(state: StudioState): string | undefined {
-  return SHAPE_CHARACTERS.find((character) =>
-    SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
-  )?.id
-}
 
 const rungAt = (index: number) =>
   SHAPE_RUNGS[Math.min(Math.max(index, 0), SHAPE_RUNGS.length - 1)]!.id
@@ -126,7 +98,7 @@ const atLeast = (id: string, floor: string) => rungIndex(id) >= rungIndex(floor)
 
 /** A role's rung id with 'auto' resolved: items sit one rung below the
  *  surface they nest in, cards one rung below panels. */
-export function roleRung(state: StudioState, key: ShapeRoleKey): string {
+export function roleRung(state: Effective, key: ShapeRoleKey): string {
   const id = state[key]
   if (id !== "auto") return id
   return rungBelow(key === "roleItem" ? state.roleSurface : state.rolePanel)
@@ -136,8 +108,9 @@ export function roleRung(state: StudioState, key: ShapeRoleKey): string {
    - control-sm: one rung below controls, never square while they're rounded.
    - detail: capped at sm and at control-sm.
    - pill: square with square controls.
+   - track: full, or the detail rung when tracks follow corners.
    - field / container / inline-item: multi-line, so never a pill. */
-function derivedRungs(state: StudioState): Record<string, string> {
+function derivedRungs(state: Effective): Record<string, string> {
   const control = roleRung(state, "roleControl")
   const item = roleRung(state, "roleItem")
   const surface = roleRung(state, "roleSurface")
@@ -148,10 +121,12 @@ function derivedRungs(state: StudioState): Record<string, string> {
   const upTo = (id: string, cap: string) =>
     id === "none" || atLeast(id, cap) ? id : minRung(rungAbove(id), cap)
   const block = (id: string) => minRung(id, "3xl")
+  const detail = minRung(minRung(control, "sm"), controlSm)
   return {
     "--studio-radius-control-sm": controlSm,
-    "--studio-radius-detail": minRung(minRung(control, "sm"), controlSm),
+    "--studio-radius-detail": detail,
     "--studio-radius-pill": control === "none" ? "none" : "full",
+    "--studio-radius-track": state.tracks === "follow" ? detail : "full",
     "--studio-radius-field": block(minRung(control, surface)),
     "--studio-radius-container": block(upTo(surface, "lg")),
     "--studio-radius-inline-item": block(upTo(item, "md")),
@@ -159,13 +134,13 @@ function derivedRungs(state: StudioState): Record<string, string> {
 }
 
 /** A role's ratio of the base. */
-export function roleRatio(state: StudioState, key: ShapeRoleKey): number {
+export function roleRatio(state: Effective, key: ShapeRoleKey): number {
   return SHAPE_RUNGS[rungIndex(roleRung(state, key))]?.ratio ?? 1
 }
 
 /** A role's resolved radius in px. Pill clamps to a value large enough to
  *  round any control we specimen. */
-export function roleRadiusPx(state: StudioState, key: ShapeRoleKey): number {
+export function roleRadiusPx(state: Effective, key: ShapeRoleKey): number {
   const ratio = roleRatio(state, key)
   return ratio === Infinity ? 999 : state.radiusPx * ratio
 }
@@ -179,7 +154,7 @@ export const ROLE_VARS: Record<ShapeRoleKey, string> = {
 }
 
 /** Every role var's token: the five picked roles, then the derived rungs. */
-export function shapeVars(state: StudioState): Record<string, string> {
+export function shapeVars(state: Effective): Record<string, string> {
   const rungs: Record<string, string> = {}
   for (const role of SHAPE_ROLES)
     rungs[ROLE_VARS[role.key]] = roleRung(state, role.key)
@@ -192,12 +167,21 @@ export function shapeVars(state: StudioState): Record<string, string> {
   )
 }
 
-export function resolveShape(state: StudioState): Resolved {
+export function resolveShape(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.radiusPx !== SHAPE_DEFAULTS.radiusPx)
     tokens["--radius"] = `${state.radiusPx / 16}rem`
-  const defaults = shapeVars(SHAPE_DEFAULTS as StudioState)
+  const defaults = shapeVars(SHAPE_DEFAULTS as Effective)
   for (const [name, token] of Object.entries(shapeVars(state)))
     if (token !== defaults[name]) tokens[name] = token
+  if (state.controlStroke !== SHAPE_DEFAULTS.controlStroke)
+    tokens["--studio-control-stroke"] = `${strokePx(state.controlStroke)}px`
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "shape",
+  defaults: SHAPE_DEFAULTS,
+  schema: SHAPE_SCHEMA,
+  resolve: resolveShape,
+})

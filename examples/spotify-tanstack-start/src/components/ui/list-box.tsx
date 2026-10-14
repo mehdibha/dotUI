@@ -6,31 +6,23 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ListBoxPrimitive from "react-aria-components/ListBox";
 import type * as TextPrimitive from "react-aria-components/Text";
 import * as VirtualizerPrimitive from "react-aria-components/Virtualizer";
-import { type VariantProps, tv } from "tailwind-variants";
 
 import { CheckIcon } from "lucide-react";
 import { Loader } from "@/components/ui/loader";
+import { tv } from "tailwind-variants";
 
 const listBoxVariants = tv({
   slots: {
-    root: "max-h-[inherit] scroll-my-1 overflow-y-auto outline-hidden layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row layout-grid:grid layout-grid:gap-1 layout-grid:orientation-vertical:grid-cols-2 layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2 **:data-separator:my-1 **:data-separator:w-auto text-sm p-1 **:data-separator:-mx-1",
-    item: "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0 hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight focus-visible:bg-highlight focus-visible:text-fg-on-highlight disabled:text-(--disabled-fg,currentColor) disabled:**:text-current has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2 *:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted gap-2 py-1.5 text-sm **:[svg]:not-with-[size]:size-4 data-selection-mode:pr-8 rounded-md px-2",
+    root: "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] outline-hidden layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row layout-grid:grid layout-grid:gap-1 layout-grid:orientation-vertical:grid-cols-2 layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2 **:data-separator:my-1 **:data-separator:w-auto in-data-trigger:min-w-[calc(max(var(--trigger-width,0px),--spacing(32))-2*1px)] in-data-trigger:max-w-[calc(100vw-2rem)] text-base p-1 **:data-separator:-mx-1",
+    item: "group/list-item relative flex w-full cursor-interactive items-center outline-hidden select-ui in-data-trigger:whitespace-nowrap disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:text-(--disabled-fg,currentColor) disabled:**:text-current data-[variant=danger]:text-fg-danger has-[[slot=description]]:flex-col has-[[slot=description]]:items-start has-[[slot=description]]:gap-0 has-[[slot=description]]:has-[>svg]:pl-8 has-[[slot=description]]:*:[svg]:absolute has-[[slot=description]]:*:[svg]:top-2 has-[[slot=description]]:*:[svg]:left-2 has-submenu:pr-8 *:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted gap-3 py-2 text-base **:[svg]:not-with-[size]:size-5 data-selection-mode:pr-8 focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight focus-visible:bg-highlight focus-visible:text-fg-on-highlight hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-highlight hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-highlight data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-danger-muted data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-danger data-[variant=danger]:focus-visible:bg-danger-muted data-[variant=danger]:focus-visible:text-fg-danger data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-danger-muted data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-danger rounded-md px-3",
     indicator:
-      "pointer-events-none absolute flex items-center justify-center right-2",
-    itemLabel: "",
-    itemDescription: "text-fg-muted",
+      "pointer-events-none group-has-[[slot=description]]/list-item:absolute group-has-[[slot=description]]/list-item:top-2 absolute right-2 flex items-center justify-center",
+    itemLabel:
+      "in-data-trigger:max-w-full in-data-trigger:min-w-0 in-data-trigger:overflow-x-clip in-data-trigger:text-ellipsis",
+    itemDescription: "whitespace-normal text-fg-muted",
     loadMore: "flex w-full items-center justify-center py-1 text-fg-muted",
     section: "scroll-my-1",
-    sectionTitle: "text-fg-muted py-1.5 px-2 text-xs",
-  },
-  variants: {
-    variant: {
-      default: {},
-      danger: {},
-    },
-  },
-  defaultVariants: {
-    variant: "default",
+    sectionTitle: "font-medium text-fg-muted py-2 px-3 text-xs",
   },
 });
 
@@ -84,10 +76,9 @@ const ListBox = <T extends object>({
 
 /* -------------------------------------------------------------------------- */
 
-interface ListBoxItemProps<T>
-  extends
-    ListBoxPrimitive.ListBoxItemProps<T>,
-    VariantProps<typeof listBoxVariants> {}
+interface ListBoxItemProps<T> extends ListBoxPrimitive.ListBoxItemProps<T> {
+  variant?: "default" | "danger";
+}
 const ListBoxItem = <T extends object>({
   className,
   variant,
@@ -101,25 +92,24 @@ const ListBoxItem = <T extends object>({
   return (
     <ListBoxPrimitive.ListBoxItem
       data-listbox-item=""
+      data-variant={variant}
       textValue={textValue}
-      className={composeRenderProps(className, (cn) =>
-        item({ className: cn, variant }),
-      )}
+      className={composeRenderProps(className, (cn) => item({ className: cn }))}
       {...props}
     >
       {composeRenderProps(
         props.children,
         (children, { selectionMode, isSelected }) => (
           <>
+            {selectionMode !== "none" && (
+              <span data-listbox-item-indicator="" className={indicator()}>
+                {isSelected && <CheckIcon aria-hidden />}
+              </span>
+            )}
             {typeof children === "string" ? (
               <ListBoxItemLabel>{children}</ListBoxItemLabel>
             ) : (
               children
-            )}
-            {selectionMode !== "none" && (
-              <span data-listbox-item-indicator="" className={indicator()}>
-                {isSelected && <CheckIcon />}
-              </span>
             )}
           </>
         ),
@@ -137,6 +127,7 @@ const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-label=""
+      slot="label"
       className={itemLabel({ className })}
       {...props}
     />
@@ -155,6 +146,7 @@ const ListBoxItemDescription = ({
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-description=""
+      slot="description"
       className={itemDescription({ className })}
       {...props}
     />

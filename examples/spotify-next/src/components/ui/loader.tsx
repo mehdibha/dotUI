@@ -2,7 +2,6 @@
 
 import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 
-import { Loader2Icon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
@@ -19,11 +18,18 @@ function Loader({ className, ...props }: LoaderProps) {
       {...props}
       isIndeterminate
     >
-      <Loader2Icon
+      <svg
         role="status"
         aria-label="Loading"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
         className="size-full animate-spin"
-      />
+      >
+        <circle cx="8" cy="8" r="7" strokeOpacity="0.25" />
+        <path d="M15 8a7 7 0 0 0-7-7" strokeLinecap="round" />
+      </svg>
     </ProgressBarPrimitives.ProgressBar>
   );
 }

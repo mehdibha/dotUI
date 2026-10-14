@@ -1,149 +1,175 @@
 "use client"
 
-/* Motion — one row opening one panel: a preset sets every component at
-   once; below it, each animated component drills into its own controls in
-   place, marked where it leaves the preset. */
+/* Motion: the global tempo, each component's own Motion and the popover and
+   tooltip entrances. Component pages host their rows. */
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react"
-
-import { motionBase, MOTION_PRESETS } from "../axes/motion-presets"
-import { DialGlyph, DialPopover, DialTrigger, ModifiedDot } from "../dial"
-import { CurveGlyph } from "../dial-motion"
+import { followersOf } from "../axes"
 import {
-  differs,
-  MOTION,
-  MotionDetail,
-  MotionRow,
-  tempo,
-} from "../motion-controls"
-import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+  COMPONENT_MOTION_KEYS,
+  springProgress,
+  springSettleMs,
+  tableOf,
+} from "../axes/motion"
+import type { ComponentMotionKey } from "../axes/motion"
+import {
+  COMPONENT_MOTION_OPTIONS,
+  ENTRANCE_OPTIONS,
+  MOTION_OPTIONS,
+  SAME_AS_MOTION,
+} from "../axes/motion.meta"
+import {
+  DialAction,
+  DialGlyph,
+  DialPickList,
+  DialPopover,
+  DialSelect,
+  DialSeparator,
+  DialTrigger,
+} from "../dial"
+import type { RowMap } from "../family-page"
+import type { AxisKey } from "../use-axis"
+import { useStudio } from "../use-studio"
+import { COMPONENTS } from "./components"
 
-/* The UI's tempo: loops cycle for seconds, and charts animate data. */
-const TIMED = MOTION.filter(
-  (entry) => entry.kind === "entrance" || entry.kind === "state",
-)
-const ROWS = [...MOTION].sort((a, b) => a.label.localeCompare(b.label))
-
-const useBase = (state: StudioState) =>
-  useMemo(() => motionBase(state), [state])
-
-function MotionPresets({ studio }: { studio: Studio }) {
-  const { state, setState } = studio
-  const { preset: base, exact } = useBase(state)
-  const changed = MOTION.filter((entry) => differs(entry, state, base)).length
-  return (
-    <CardGrid
-      label="Preset"
-      value={exact ? base.id : undefined}
-      onChange={(id) => {
-        const next = MOTION_PRESETS.find((p) => p.id === id)
-        if (next) setState({ ...state, ...next.values })
-      }}
-      options={MOTION_PRESETS.map((p) => ({
-        id: p.id,
-        label: p.label,
-        children: (
-          <span className="flex items-center justify-between gap-2 font-mono text-xs text-fg/50">
-            {p === base && !exact ? (
-              <span className="flex items-center gap-1.5 whitespace-nowrap">
-                <ModifiedDot />
-                {changed} changed
-              </span>
-            ) : (
-              <span className="truncate">
-                {tempo(TIMED, { ...state, ...p.values })}
-              </span>
-            )}
-            {p.values.popoverMotion.pattern !== "none" && (
-              <DialGlyph>
-                <CurveGlyph curve={p.values.popoverMotion.curve} />
-              </DialGlyph>
-            )}
-          </span>
-        ),
-      }))}
-    />
-  )
-}
-
-function scrollParent(el: HTMLElement | null) {
-  for (let p = el?.parentElement; p; p = p.parentElement) {
-    const { overflowY } = getComputedStyle(p)
-    if (overflowY === "auto" || overflowY === "scroll") return p
+/** The anchored layers' entrance curve under a table; None is a step. */
+function MotionGlyph({ motion }: { motion: string }) {
+  const { curve } = tableOf(motion).anchored.enter
+  const p = (x: number, y: number) => `${2 + x * 12} ${14 - y * 12}`
+  let d: string
+  if (motion === "none") d = `M${p(0, 0)} L${p(0, 1)} L${p(1, 1)}`
+  else if (curve.type === "easing") {
+    const [x1, y1, x2, y2] = curve.ease
+    d = `M${p(0, 0)} C${p(x1, y1)} ${p(x2, y2)} ${p(1, 1)}`
+  } else {
+    const ms = springSettleMs(curve)
+    d = Array.from({ length: 25 }, (_, i) => {
+      const v = springProgress(((i / 24) * ms) / 1000, curve)
+      return `${i ? "L" : "M"}${p(i / 24, v)}`
+    }).join(" ")
   }
-  return null
-}
-
-/** The panel: presets and every component, or one component's controls. */
-function MotionPanel({ studio }: { studio: Studio }) {
-  const { state } = studio
-  const { preset: base } = useBase(state)
-  const [openId, setOpenId] = useState<string | null>(null)
-  const [focusId, setFocusId] = useState<string | null>(null)
-  const anchor = useRef<HTMLSpanElement>(null)
-  // A swap keeps the scroller's offset: open at the top, come back to the row.
-  useLayoutEffect(() => {
-    const scroller = scrollParent(anchor.current)
-    if (!scroller) return
-    if (openId) scroller.scrollTop = 0
-    else
-      scroller
-        .querySelector(`[data-motion-row="${focusId}"]`)
-        ?.scrollIntoView({ block: "nearest" })
-  }, [openId, focusId])
-  const open = MOTION.find((entry) => entry.id === openId)
-  if (open)
-    return (
-      <>
-        <span ref={anchor} hidden />
-        <MotionDetail
-          entry={open}
-          studio={studio}
-          base={base}
-          onBack={() => {
-            setFocusId(open.id)
-            setOpenId(null)
-          }}
-        />
-      </>
-    )
   return (
-    <>
-      <span ref={anchor} hidden />
-      <MotionPresets studio={studio} />
-      <div className="h-1" />
-      {ROWS.map((entry) => (
-        <MotionRow
-          key={entry.id}
-          entry={entry}
-          state={state}
-          base={base}
-          autoFocus={entry.id === focusId}
-          onOpen={() => setOpenId(entry.id)}
-        />
-      ))}
-    </>
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d={d}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 
-export function MotionSection({ studio }: { studio: Studio }) {
-  const { preset, exact } = useBase(studio.state)
+const glyph = (motion: string) => (
+  <DialGlyph>
+    <MotionGlyph motion={motion} />
+  </DialGlyph>
+)
+
+const TEMPO_OPTIONS = MOTION_OPTIONS.map((option) => ({
+  ...option,
+  visual: glyph(option.value),
+}))
+
+// "Same as motion" wears the glyph of the tempo it resolves to.
+const COMPONENT_ROW_OPTIONS = [
+  SAME_AS_MOTION,
+  ...COMPONENT_MOTION_OPTIONS.map((option) => ({
+    ...option,
+    preview: glyph(option.value),
+  })),
+]
+
+const tempoLabel = (value: string) =>
+  COMPONENT_MOTION_OPTIONS.find((option) => option.value === value)?.label ??
+  value
+
+/** The component whose page a Motion key's row sits on. */
+const componentOf = (key: string) =>
+  COMPONENTS.find(
+    ({ rows, hosts }) =>
+      rows.some(([row]) => row === key) && !hosts?.includes(key as AxisKey),
+  )?.label
+
+/** The global tempo; its popover names the components on their own. */
+function MotionRow() {
+  const { state, set, setState } = useStudio()
+  const custom = followersOf(state, "motion")
   return (
     <DialTrigger
-      label="Preset"
+      axis="motion"
+      label="Motion"
       value={
         <>
-          {!exact && <ModifiedDot />}
           <span className="truncate">
-            {exact ? preset.label : `${preset.label}, edited`}
+            {tempoLabel(state.motion)}
+            {custom.length > 0 && ` · ${custom.length} custom`}
           </span>
+          {glyph(state.motion)}
         </>
       }
     >
-      <DialPopover className="w-80">
-        <MotionPanel studio={studio} />
+      <DialPopover>
+        <DialPickList
+          label="Motion"
+          value={state.motion}
+          onChange={set("motion")}
+          options={TEMPO_OPTIONS}
+        />
+        {custom.length > 0 && (
+          <>
+            <DialSeparator />
+            {custom.map((key) => {
+              const tempo = String(state[key])
+              return (
+                <div
+                  key={key}
+                  className="flex h-7 items-center justify-between gap-3 px-1 text-[13px] font-medium"
+                >
+                  <span className="text-fg/85">{componentOf(key)}</span>
+                  <span className="flex items-center gap-2 text-fg/60">
+                    {tempoLabel(tempo)}
+                    {glyph(tempo)}
+                  </span>
+                </div>
+              )
+            })}
+            <DialAction
+              onPress={() =>
+                setState({
+                  ...state,
+                  ...Object.fromEntries(
+                    custom.map((key) => [key, SAME_AS_MOTION.value]),
+                  ),
+                })
+              }
+            >
+              Reset all
+            </DialAction>
+          </>
+        )}
       </DialPopover>
     </DialTrigger>
   )
+}
+
+const componentRow = (key: ComponentMotionKey) =>
+  function ComponentMotionRow() {
+    return (
+      <DialSelect axis={key} label="Motion" options={COMPONENT_ROW_OPTIONS} />
+    )
+  }
+
+const entranceRow = (key: "popoverEntrance" | "tooltipEntrance") =>
+  function EntranceRow() {
+    return <DialSelect axis={key} label="Entrance" options={ENTRANCE_OPTIONS} />
+  }
+
+export const ROWS: RowMap = {
+  motion: MotionRow,
+  popoverEntrance: entranceRow("popoverEntrance"),
+  tooltipEntrance: entranceRow("tooltipEntrance"),
+  ...Object.fromEntries(
+    COMPONENT_MOTION_KEYS.map((key) => [key, componentRow(key)]),
+  ),
 }

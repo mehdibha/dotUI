@@ -15,15 +15,14 @@ const behind =
 const { useStyles, styles } = createStyles(drawerMeta, {
   base: {
     slots: {
-      overlay:
-        "fixed inset-0 isolate z-50 [--drawer-bleed:--spacing(40)] [--drawer-inset:0px] [--drawer-peek:24px]",
+      overlay: "fixed inset-0 isolate z-50 [--drawer-peek:24px]",
       backdrop: [
-        "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0",
+        "absolute inset-0 bg-scrim opacity-[calc(1-var(--drawer-swipe-progress,0))] backdrop-blur-(--studio-scrim-blur) transition-opacity ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0",
         duration,
       ],
       viewport: "@container-size fixed inset-0 z-10 touch-none",
       popup: [
-        "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [transition-property:transform,box-shadow,height,background-color,margin,padding] will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [--surface-bg:var(--color-popover)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
+        "relative flex max-h-full min-h-0 w-full min-w-0 flex-col text-fg [transition-property:transform,box-shadow,height,background-color,margin,padding] will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [--surface-bg:var(--color-popover)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
         duration,
         ease,
       ],
@@ -50,7 +49,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         bottom: {
           viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
           popup:
-            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0px))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0px)+var(--drawer-inset,0px))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
           swipeArea: "inset-x-0 bottom-0 h-8",
         },
         left: {
@@ -75,12 +74,31 @@ const { useStyles, styles } = createStyles(drawerMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
-    backdrop: {
-      dim: { slots: { backdrop: "bg-overlay/70" } },
-      blur: { slots: { backdrop: "bg-overlay/50 backdrop-blur-sm" } },
-      none: {},
+    edge: {
+      // Flush to the screen edge, bleeding past it for the overscroll. The
+      // clip keeps a dialog's header band inside the rounded corners.
+      docked: {
+        slots: {
+          overlay: "[--drawer-bleed:--spacing(40)]",
+          popup:
+            "overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
+        },
+      },
+      // shadcn mira, luma: a card inset 8px inside a bare sheet, so the
+      // sheet's own slide still clears the screen. Content sits inside the
+      // card's border.
+      detached: {
+        slots: {
+          overlay:
+            "[--drawer-bleed:0px] [--drawer-inset:calc(--spacing(2)+1px)]",
+          popup:
+            "p-(--drawer-inset) [--surface-radius:var(--studio-drawer-radius)] before:absolute before:inset-2 before:-z-10 before:rounded-(--studio-drawer-radius) before:border before:border-(--overlay-border) before:bg-popover before:shadow-(--shadow-modal,var(--shadow-lg))",
+        },
+      },
     },
   },
 })

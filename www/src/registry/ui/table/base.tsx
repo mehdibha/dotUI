@@ -150,14 +150,17 @@ TableContainer.displayName = "TableContainer"
 
 interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
-> {}
+> {
+  striped?: boolean
+}
 
-const Table = ({ className, ...props }: TableProps) => {
+const Table = ({ className, striped, ...props }: TableProps) => {
   const { table } = useStyles()()
 
   return (
     <TablePrimitives.Table
       data-slot="table"
+      data-striped={striped || undefined}
       className={composeRenderProps(className, (cn) =>
         table({ className: cn }),
       )}
@@ -394,7 +397,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                "bg-accent-muted/70 hover:bg-accent-muted/70 selected:bg-accent-muted",
+                "bg-selected/30 hover:bg-selected/30 selected:bg-selected/70",
             ),
           }),
       )}
@@ -453,14 +456,12 @@ const TableCell = ({
     >
       {composeRenderProps(
         children,
-        (children, { hasChildItems, isDisabled, isExpanded, isTreeColumn }) => (
+        (children, { hasChildItems, isExpanded, isTreeColumn }) => (
           <>
             {hasChildItems && isTreeColumn && (
               <ButtonPrimitives.Button
                 slot="chevron"
-                className={expandButton({
-                  className: isDisabled ? "opacity-50" : undefined,
-                })}
+                className={expandButton()}
               >
                 <ChevronRightIcon
                   aria-hidden
