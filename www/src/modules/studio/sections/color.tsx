@@ -21,7 +21,6 @@ import {
   DialSlider,
   DialToggle,
   DialTrigger,
-  ModifiedDot,
 } from "../dial"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
@@ -168,18 +167,12 @@ export function SemanticsPreview({ state }: { state: Effective }) {
 function SemanticsRow() {
   const { state, effective, set } = useStudio()
   const semantics = useSemantics(effective)
-  const custom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
   return (
     <DialTrigger
       label="Semantics"
       holds={SEMANTIC_SEEDS.map(({ key }) => key)}
       swatch
-      value={
-        <>
-          {custom && <ModifiedDot />}
-          <SemanticsPreview state={effective} />
-        </>
-      }
+      value={<SemanticsPreview state={effective} />}
     >
       <DialPopover>
         {semantics.map(({ key, label, color }) => (

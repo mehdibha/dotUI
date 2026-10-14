@@ -81,17 +81,6 @@ export function DialGlyph({ children }: { children: React.ReactNode }) {
   )
 }
 
-/** The accent dot beside anything that leaves its defaults. */
-export function ModifiedDot() {
-  return (
-    <span
-      role="img"
-      aria-label="Modified"
-      className="size-1 shrink-0 rounded-full bg-accent"
-    />
-  )
-}
-
 /** A row a rule holds: dimmed, its value set elsewhere, the cause beside it. */
 export function PinnedRow({
   axis,
