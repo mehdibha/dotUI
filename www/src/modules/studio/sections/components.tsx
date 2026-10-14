@@ -3,11 +3,8 @@
 /* Components — one row per component, grouped in chapters. A component with
    one key is that key's row; the others open a page of their rows. */
 
-import { useContext } from "react"
-
 import { DialLink } from "../dial"
 import { Row } from "../family-page"
-import { PanelNav } from "../rows"
 import type { Chapter, ChapterPage, Studio } from "../state"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
@@ -461,7 +458,6 @@ function ComponentRow({
   component: Component
   studio: Studio
 }) {
-  const open = useContext(PanelNav)
   const [lead] = component.rows[0] ?? []
   if (!lead) return null
   // Its id stands in for a page, so the preview focuses it like one.
@@ -473,8 +469,8 @@ function ComponentRow({
     )
   return (
     <DialLink
+      page={component.id}
       label={component.label}
-      onPress={() => open(component.id)}
       value={
         <span className="truncate">
           {component.says?.[String(studio.effective[lead])] ??
