@@ -86,6 +86,8 @@ let migrated = false
 const holders: Store[] = []
 // Read before `migrate` landed: each one's stored state, written back as is.
 const unmigrated = new WeakMap<StudioState, unknown>()
+// Stamped by a newer build: read as best we can, written back untouched.
+const newer = new WeakMap<StudioState, unknown>()
 
 /** Loads `migrate`, then reads every held state again through it and writes
  *  the upgrade back. */
@@ -118,6 +120,16 @@ function load(raw: unknown): StudioState {
   if (isRecord(raw) && raw.version === STATE_VERSION) {
     const { version: _, ...state } = raw
     return salvageState(state)
+  }
+  if (
+    isRecord(raw) &&
+    Number.isInteger(raw.version) &&
+    Number(raw.version) > STATE_VERSION
+  ) {
+    const { version: _, ...rest } = raw
+    const state = salvageState(rest)
+    newer.set(state, raw)
+    return state
   }
   migrated = true
   if (migrate) return salvageState(migrate(raw))
@@ -200,7 +212,9 @@ export function storageFailed(unreadable = false) {
  *  a later build can migrate it; one not migrated yet is written as read. */
 export const stampStates = (key: string, value: unknown) =>
   key === "state"
-    ? (unmigrated.get(value as StudioState) ?? stamp(value as StudioState))
+    ? (newer.get(value as StudioState) ??
+      unmigrated.get(value as StudioState) ??
+      stamp(value as StudioState))
     : value
 
 const store = createPersistedStore<Workspace>(KEY, EMPTY, {

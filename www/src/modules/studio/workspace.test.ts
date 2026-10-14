@@ -293,6 +293,26 @@ describe("workspace", () => {
     })
   })
 
+  it("writes a state from a newer build back untouched", async () => {
+    const state = {
+      version: STATE_VERSION + 1,
+      ...parseState({ radiusPx: 3 }),
+      futureKey: "kept",
+    }
+    win.seed(
+      KEY,
+      JSON.stringify({
+        schema: 2,
+        systems: [{ id: "a", name: "Acme", state, updatedAt: 1 }],
+      }),
+    )
+    const ws = await load()
+    expect(ws.findSystem("a")!.state.radiusPx).toBe(3)
+    ws.rename("a", "Acme 2")
+    await ws.upgradeStored()
+    expect(stored().systems[0]).toMatchObject({ name: "Acme 2", state })
+  })
+
   describe("an edit before migrate lands", () => {
     const seedMain = () => {
       win.seed(
