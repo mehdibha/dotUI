@@ -63,7 +63,7 @@ export function resolveStudioVars(
   return out
 }
 
-/** The vars the selected enum-param values carry (`field.error = bar`). */
+/** The vars the selected param values carry (`field.error = bar`). */
 export function paramVars(
   meta: RegistryItem,
   selections: Record<string, string>,

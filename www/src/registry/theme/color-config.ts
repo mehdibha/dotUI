@@ -1,5 +1,5 @@
 /**
- * `ColorConfig` v2 — the recipe for a design system's colors.
+ * `ColorConfig` v2 — the persisted recipe for a design system's colors.
  *
  * Stores seeds + engine axes, never expanded ramps: `resolveColorConfig`
  * (in `primitives.ts`) feeds these to the `@dotui/colors` engine.
@@ -176,7 +176,7 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
 }
 
 /**
- * Salvage a color config field by field: a corrupt or out-of-range
+ * Salvage a decoded color config field by field: a corrupt or out-of-range
  * axis is clamped or dropped, never taking valid siblings with it. Anything
  * else falls back to the default, and every kept seed is verified parseable —
  * never a render explosion. The validator in front of the engine

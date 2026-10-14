@@ -59,7 +59,7 @@ describe("extractStylesConfig", () => {
     expect(cfg.params).toBeUndefined()
   })
 
-  test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {
+  test("skeleton: extracts the animation param (shimmer, pulse, none)", () => {
     const cfg = extractStylesConfig(
       path.join(REGISTRY_UI, "skeleton/styles.ts"),
     )

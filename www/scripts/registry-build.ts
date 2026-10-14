@@ -441,9 +441,9 @@ function toItemIdent(scope: "ui" | "lib", slug: string): string {
 
 // Emits __generated__/registry-items.ts — the single source of truth for
 // registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts. Committed
-// and load-bearing for the app: ui/registry.ts + lib/registry.ts re-export it. This script derives its own fresh item lists
-// (loadRegisteredItems) rather than importing the manifest, so a stale manifest
-// never blocks regenerating it.
+// and load-bearing for the app: ui/registry.ts + lib/registry.ts re-export it.
+// This script derives its own fresh item lists (loadRegisteredItems) rather
+// than importing the manifest, so a stale manifest never blocks regenerating it.
 async function buildRegistryItemsManifest() {
   const targetPath = path.join(GENERATED_DIR, "registry-items.ts")
   const ui = await listRegistryFolders("ui")
@@ -550,7 +550,7 @@ async function checkRegistryDepsDrift(
   const errors: string[] = []
 
   for (const meta of registryUi) {
-    // A base file an enum value swaps in is checked against that value's deps.
+    // A base file a param value swaps in is checked against that value's deps.
     for (const baseFile of collectBaseFiles(meta)) {
       const derived = deriveRegistryDeps({
         registryDir: REGISTRY_DIR,
@@ -715,8 +715,9 @@ const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 /**
  * Guard 3: every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
- * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES). This is what would have caught `@dotui/text-field`
- * advertising a component that 404'd.
+ * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES).
+ * This is what would have caught `@dotui/text-field` advertising a component
+ * that 404'd.
  */
 async function checkDocsRegistryConsistency(
   build: PublishablesBuild,

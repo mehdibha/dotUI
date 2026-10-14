@@ -105,7 +105,7 @@ export function depsFromFileImports(
 
 /**
  * The registry deps an item ships: its own plus those of the selected value
- * of every enum param that declares some (`selections` omitted → every value,
+ * of every param that declares some (`selections` omitted → every value,
  * for build-time guards).
  */
 export function registryDepsFor(
@@ -133,7 +133,7 @@ export interface PublishableModule {
 
 /**
  * Pick the publishable variant the preset selects. Components with an
- * enum-with-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
+ * per-value-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
  * generate one publishable per file; those with `createParamValue` hooks one
  * per param selection. The user's choice points at one of them.
  */

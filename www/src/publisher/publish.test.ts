@@ -4,8 +4,8 @@
  *
  * Coverage:
  *   - button   : no slots, no params, multiple variants × densities
- *   - alert    : slots, enum param ("style") that merges variants per-slot,
- *                scalar param ("radius") whose var ref must be rewritten
+ *   - alert    : slots, param ("style") that merges variants per-slot, and a
+ *                `--studio-*` var class that preset tokens rewrite
  */
 
 import { describe, expect, test } from "vitest"
@@ -123,7 +123,7 @@ describe("flatten", () => {
     expect(comfortable.slots?.item).toBe("flex")
   })
 
-  test("alert: enum param 'style' merges slot maps inside variants", () => {
+  test("alert: param 'style' merges slot maps inside variants", () => {
     const layer = flatten({
       stylesConfig: alertPublishable.stylesConfig,
       meta: alertPublishable.meta,
@@ -642,7 +642,7 @@ describe("publish", () => {
     expect(file?.content).toBe(rawContent)
   })
 
-  test("enum param `source`: the selected value rewrites the shipped source", () => {
+  test("param `source`: the selected value rewrites the shipped source", () => {
     const publishable: Publishable = {
       template: `import { ChevronDownIcon } from "@/components/icons";\n\nconst caretVariants = tv(%%TV_CONFIG%%);\n\nconst Caret = () => <ChevronDownIcon className="ml-auto" />;\n`,
       stylesConfig: { base: { base: "flex" } },
@@ -683,7 +683,7 @@ describe("publish", () => {
     expect(swapped).not.toContain("ChevronDownIcon")
   })
 
-  test("enum param `source`: every substitution key occurs in its template", async () => {
+  test("param `source`: every substitution key occurs in its template", async () => {
     // A renamed identifier or reformatted prop default would otherwise turn
     // the swap into a silent no-op.
     for (const name of PUBLISHABLE_NAMES) {

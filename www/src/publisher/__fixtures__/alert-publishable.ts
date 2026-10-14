@@ -2,6 +2,8 @@
  * Synthetic alert fixture (not the real alert, which has no params). Exercises:
  *   - slots ({ root, title, description, action })
  *   - a param `style` with merge-into-base semantics (default/sousse)
+ *   - a `--studio-*` var class (`rounded-(--studio-alert-radius)`) that preset
+ *     tokens rewrite to a utility
  */
 
 import type { Publishable } from "../types"

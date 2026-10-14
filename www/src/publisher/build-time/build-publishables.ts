@@ -242,7 +242,7 @@ async function buildOne({
     return buildStylelessPublishable({ meta, registryDir, outDir })
   }
 
-  // Extract the styles config once per component (it's shared across enum-file variants).
+  // Extract the styles config once per component (it's shared across per-value files).
   const componentDir = path.join(registryDir, "ui", meta.name)
   const stylesTsPath = path.join(componentDir, "styles.ts")
   const hasStyles = existsSync(stylesTsPath)
@@ -431,7 +431,7 @@ function mergeCssVars(
  * Determine which base file(s) get transformed for a component.
  *
  * - Default: the file in `meta.files` whose target ends in `<name>.tsx`.
- * - Enum-with-files: every distinct base path across `params[...].files[...]`.
+ * - Per-value files: every distinct base path across `params[...].files[...]`.
  */
 export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
   const byKey = new Map<string, RegistryItemFile>()
@@ -525,11 +525,11 @@ async function renderPublishableSource({
 }: RenderInput): Promise<string> {
   // We emit up to three top-level exports:
   //   - `publishable`: the default (single-template) Publishable
-  //   - `publishableByPath`: a map keyed by source file path, for enum-with-files components
+  //   - `publishableByPath`: a map keyed by source file path, for per-value-files components
   //   - `publishableBySelection`: a map keyed by param selection, for createParamValue folds
   //
   // The runtime route picks the right entry based on the preset's selection of
-  // the enum params that drive the swap.
+  // the params that drive the swap.
 
   const defaultFile =
     (meta.files ?? []).find((f) => isBaseFile(f, meta.name)) ??
