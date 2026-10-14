@@ -1,6 +1,6 @@
 /* From effective studio state to the design system the engine consumes. The registry's
    param defaults are the floor; every chapter's resolution lands on top, and
-   the CSS vars an enum param value carries fold into the global tokens — one
+   the CSS vars a param value carries fold into the global tokens — one
    path for the provider, the exported theme and the class rewriter alike.
    Pure and React-free — shared by the panel, the preview iframe, the docs
    demos and the /r/* registry routes. */
@@ -13,16 +13,16 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { effective, resolveAll } from "./axes"
 import type { Effective, StudioState } from "./axes"
 
-const enumVars = new Map<
+const varsByComponent = new Map<
   string,
   Record<string, Record<string, Record<string, string>>>
 >()
 for (const item of registryUi) {
   for (const [paramName, def] of Object.entries(item.params ?? {})) {
-    if (def.kind !== "enum" || !def.vars) continue
-    const byParam = enumVars.get(item.name) ?? {}
+    if (!def.vars) continue
+    const byParam = varsByComponent.get(item.name) ?? {}
     byParam[paramName] = def.vars
-    enumVars.set(item.name, byParam)
+    varsByComponent.set(item.name, byParam)
   }
 }
 
@@ -72,7 +72,7 @@ export function resolveDesignSystem(state: Effective): DesignSystem {
   // scoped providers (docs demos) skip the closure clone entirely.
   const tokens = { ...resolved.tokens }
   for (const [component, selections] of Object.entries(componentParams)) {
-    const byParam = enumVars.get(component)
+    const byParam = varsByComponent.get(component)
     if (!byParam) continue
     for (const [paramName, value] of Object.entries(selections)) {
       if (value === REGISTRY_DEFAULTS.componentParams[component]?.[paramName])

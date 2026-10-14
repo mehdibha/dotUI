@@ -8,7 +8,7 @@
  *
  * Used as a DRIFT GUARD in scripts/registry-build.ts: the shipped import graph is a
  * subset of the intended dependency closure (hand-written deps additionally cover
- * demo/composition usage and CSS-only deps like focus-styles), so this is the
+ * demo/composition usage), so this is the
  * oracle for "a base file imports something meta forgot to declare", not a
  * wholesale replacement.
  */

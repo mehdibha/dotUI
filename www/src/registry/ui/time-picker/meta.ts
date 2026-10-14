@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const timePickerMeta = {
   name: "time-picker",
   type: "registry:ui",
-  group: "pickers",
   files: [
     {
       type: "registry:ui",

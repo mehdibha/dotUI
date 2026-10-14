@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const datePickerMeta = {
   name: "date-picker",
   type: "registry:ui",
-  group: "pickers",
   files: [
     {
       type: "registry:ui",

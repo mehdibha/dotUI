@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const questionnaireMeta = {
   name: "questionnaire",
   type: "registry:ui",
-  group: "containers",
   files: [
     {
       type: "registry:ui",
@@ -15,7 +14,6 @@ const questionnaireMeta = {
   registryDependencies: ["button", "input"],
   params: {
     titles: {
-      kind: "enum",
       default: "quiet",
       values: ["quiet", "compact", "tight", "bold", "display", "caps"] as const,
       description: "The title recipe: size, weight, tracking and case.",

@@ -39,12 +39,7 @@ import {
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
 import { DENSITIES } from "@/registry/types"
-import type {
-  Density,
-  EnumParamDef,
-  ParamDef,
-  RegistryItem,
-} from "@/registry/types"
+import type { Density, ParamDef, RegistryItem } from "@/registry/types"
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -571,7 +566,7 @@ function useComponentParams(componentName: string): Record<string, string> {
 }
 
 type DynamicComponents<M, P extends PropertyKey> = Record<
-  EnumParamValuesOf<M, P>,
+  ParamValuesOf<M, P>,
   // oxlint-disable-next-line typescript/no-explicit-any
   React.ComponentType<any>
 >
@@ -579,7 +574,7 @@ type DynamicComponents<M, P extends PropertyKey> = Record<
 /** One component per value of an enum param: the keys are exactly the meta's values. */
 function createDynamicComponent<
   const M extends RegistryItem,
-  const P extends EnumParamNamesOf<M> & string,
+  const P extends ParamNamesOf<M> & string,
   const C extends DynamicComponents<M, P>,
 >({
   meta,
@@ -589,22 +584,18 @@ function createDynamicComponent<
 }: {
   meta: M
   paramName: P
-  components: C & Record<Exclude<keyof C, EnumParamValuesOf<M, P>>, never>
+  components: C & Record<Exclude<keyof C, ParamValuesOf<M, P>>, never>
   displayName?: string
 }) {
-  type Props = React.ComponentProps<C[EnumParamValuesOf<M, P>]>
+  type Props = React.ComponentProps<C[ParamValuesOf<M, P>]>
   const componentName = meta.name
-  const defaultValue = (meta.params as Record<P, EnumParamDef>)[paramName]
-    .default
+  const defaultValue = (meta.params as Record<P, ParamDef>)[paramName].default
 
   function DynamicComponent(props: Props) {
     const selected = useComponentParams(componentName)[paramName]
     const key =
       selected && Object.hasOwn(components, selected) ? selected : defaultValue
-    return React.createElement(
-      components[key as EnumParamValuesOf<M, P>],
-      props,
-    )
+    return React.createElement(components[key as ParamValuesOf<M, P>], props)
   }
 
   DynamicComponent.displayName =
@@ -722,16 +713,16 @@ export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
 
 /* ----- Meta-driven param shape inference ----- */
 
-type EnumParamNamesOf<M> = M extends { params: infer P }
+type ParamNamesOf<M> = M extends { params: infer P }
   ? P extends Record<string, ParamDef>
-    ? { [K in keyof P]: P[K] extends EnumParamDef ? K : never }[keyof P]
+    ? keyof P
     : never
   : never
 
-type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
+type ParamValuesOf<M, K extends PropertyKey> = M extends {
   params: { [P in K]: infer Def }
 }
-  ? Def extends EnumParamDef
+  ? Def extends ParamDef
     ? Def["values"][number]
     : never
   : never
@@ -741,12 +732,12 @@ type ParamValueTv<Base> = ExtendingTv<Base> & {
   density?: Partial<Record<Density, ExtendingTv<Base>>>
 }
 
-type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
+type ParamsConfig<M, Base> = [ParamNamesOf<M>] extends [never]
   ? { params?: never }
   : {
       params?: {
-        [K in EnumParamNamesOf<M>]?: {
-          [V in EnumParamValuesOf<M, K> & string]?: ParamValueTv<Base>
+        [K in ParamNamesOf<M>]?: {
+          [V in ParamValuesOf<M, K> & string]?: ParamValueTv<Base>
         }
       }
     }
@@ -775,7 +766,7 @@ type InferTv<Base> = TVReturnType<
 type CreateStylesConfig<M, Base> = {
   base: Base
   density?: Record<Density, ExtendingTv<Base>>
-} & EnumParamsConfig<M, Base>
+} & ParamsConfig<M, Base>
 
 function createStyles<const M extends RegistryItem, const Base>(
   meta: M,
@@ -791,11 +782,10 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 
   const metaParams = (meta.params ?? {}) as Record<string, ParamDef>
-  const enumParamNames: string[] = []
+  const paramNames = Object.keys(metaParams)
   const paramDefaults: Record<string, string> = {}
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
-    if (def.kind === "enum") enumParamNames.push(paramName)
   }
 
   /* ----- Build per-density tv functions ----- */
@@ -820,7 +810,7 @@ function createStyles<const M extends RegistryItem, const Base>(
   ): ReturnType<typeof tv> {
     const defaultTv = densityTvs.default ?? baseTv
     let current: ReturnType<typeof tv> = densityTvs[d] ?? defaultTv
-    for (const paramName of enumParamNames) {
+    for (const paramName of paramNames) {
       const selectedValue =
         paramSelection[paramName] ?? paramDefaults[paramName]
       if (!selectedValue) continue
@@ -862,8 +852,8 @@ function createStyles<const M extends RegistryItem, const Base>(
     return composed
   }
 
-  // A component without enum params never reads (or re-renders on) params.
-  const useSelection = enumParamNames.length
+  // A component without params never reads (or re-renders on) params.
+  const useSelection = paramNames.length
     ? () => useComponentParams(meta.name)
     : () => emptyParamSelections
 

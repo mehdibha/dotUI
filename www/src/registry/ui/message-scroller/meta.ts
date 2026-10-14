@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const messageScrollerMeta = {
   name: "message-scroller",
   type: "registry:ui",
-  group: "containers",
   files: [
     {
       type: "registry:ui",

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const chartAreaMeta = {
   name: "chart-area",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",

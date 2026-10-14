@@ -4,8 +4,8 @@
  *
  * Coverage:
  *   - button   : no slots, no params, multiple variants × densities
- *   - alert    : slots, enum param ("style") that merges variants per-slot,
- *                scalar param ("radius") whose var ref must be rewritten
+ *   - alert    : slots, param ("style") that merges variants per-slot, and a
+ *                `--studio-*` var class that preset tokens rewrite
  */
 
 import { describe, expect, test } from "vitest"
@@ -84,7 +84,6 @@ describe("flatten", () => {
       files: [],
       params: {
         inset: {
-          kind: "enum",
           default: "inset",
           values: ["inset", "full-bleed"],
         },
@@ -124,7 +123,7 @@ describe("flatten", () => {
     expect(comfortable.slots?.item).toBe("flex")
   })
 
-  test("alert: enum param 'style' merges slot maps inside variants", () => {
+  test("alert: param 'style' merges slot maps inside variants", () => {
     const layer = flatten({
       stylesConfig: alertPublishable.stylesConfig,
       meta: alertPublishable.meta,
@@ -543,7 +542,6 @@ describe("resolve-classes", () => {
       type: "registry:ui",
       params: {
         error: {
-          kind: "enum",
           default: "border",
           values: ["border", "bar"],
           vars: { bar: { "--studio-field-error-bar": "3px" } },
@@ -682,7 +680,7 @@ describe("publish", () => {
     // Shadcn item is shaped correctly.
     expect(item.name).toBe("button")
     expect(item.type).toBe("registry:ui")
-    // `focus-styles` is bundled into the registry:base init item so it gets
+    // `utils` is bundled into the registry:base init item so it gets
     // dropped from per-component registryDependencies. `loader` stays as a
     // bare name — without a `deps` resolver there's no URL rewrite.
     expect(item.registryDependencies).toEqual(["loader"])
@@ -694,7 +692,7 @@ describe("publish", () => {
     expect(file?.content).toBe(rawContent)
   })
 
-  test("enum param `source`: the selected value rewrites the shipped source", () => {
+  test("param `source`: the selected value rewrites the shipped source", () => {
     const publishable: Publishable = {
       template: `import { ChevronDownIcon } from "@/components/icons";\n\nconst caretVariants = tv(%%TV_CONFIG%%);\n\nconst Caret = () => <ChevronDownIcon className="ml-auto" />;\n`,
       stylesConfig: { base: { base: "flex" } },
@@ -704,7 +702,6 @@ describe("publish", () => {
         files: [{ type: "registry:ui", path: "ui/caret/base.tsx" }],
         params: {
           caret: {
-            kind: "enum",
             default: "chevron",
             values: ["chevron", "double"],
             source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },
@@ -736,13 +733,13 @@ describe("publish", () => {
     expect(swapped).not.toContain("ChevronDownIcon")
   })
 
-  test("enum param `source`: every substitution key occurs in its template", async () => {
+  test("param `source`: every substitution key occurs in its template", async () => {
     // A renamed identifier or reformatted prop default would otherwise turn
     // the swap into a silent no-op.
     for (const name of PUBLISHABLE_NAMES) {
       const { publishable } = await publishables[name]!()
       for (const def of Object.values(publishable.meta.params ?? {})) {
-        if (def.kind !== "enum" || !def.source) continue
+        if (!def.source) continue
         for (const swaps of Object.values(def.source)) {
           for (const from of Object.keys(swaps)) {
             expect(publishable.template, `${name}: "${from}"`).toContain(from)
@@ -821,7 +818,6 @@ describe("publish", () => {
         ],
         params: {
           mobile: {
-            kind: "enum",
             default: "drawer",
             values: ["drawer", "popover"],
             registryDependencies: { drawer: ["drawer", "use-mobile"] },
@@ -989,7 +985,6 @@ describe("publish", () => {
         },
         params: {
           error: {
-            kind: "enum",
             default: "border",
             values: ["border", "bar"],
             vars: { bar: { "--studio-field-error-bar": "3px" } },
@@ -1025,14 +1020,12 @@ describe("publish", () => {
     expect(plain.item.css).toBeUndefined()
   })
 
-  test("alert: published item drops dotui-only fields (params, group)", () => {
+  test("alert: published item drops dotui-only fields (params)", () => {
     const { item } = publish({
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // `params` and `group` are dev-time concerns only.
     expect((item as Record<string, unknown>).params).toBeUndefined()
-    expect((item as Record<string, unknown>).group).toBeUndefined()
   })
 
   test("includes component-level registry css fields", () => {
@@ -1156,7 +1149,6 @@ describe("selectPublishable: createParamValue selections", () => {
     files: [],
     params: {
       marker: {
-        kind: "enum",
         default: "chevron",
         values: ["chevron", "plus"],
       },

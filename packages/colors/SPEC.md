@@ -229,7 +229,7 @@ hover-bg anchor (L\* 35–92); a clamp is a reported warning. **Snap by
 default; `preserveSeed: true` as an explicit switch that prints its ΔEok
 price.**
 
-Params: `preserveSeed`, explicit `slot` override.
+Params: `preserveSeed`.
 CI check: round-trip — with `preserveSeed` the seed appears verbatim at its
 slot; without it, reported ΔEok(seed, emitted solid) is under the snap bound
 🟡 0.03 (a user-supplied seed exceeding it is a reported warning).
@@ -271,7 +271,7 @@ Not a transform of light. Measured from all 31 Radix dark scales:
   from their pole than light surfaces (steps 1–2 at L\* 5.9/8.6 vs light
   0.8/2.1 from white) — the "reversed light ramp" model is off by that much.
 - Background floor is **not pure black**: default step-25 at L\* 6.0
-  (≈ #111113; measured range 5.04–6.56). `darkBackground: 'oled'` opts into
+  (≈ #111113; measured range 5.04–6.56). `background.dark: 'oled'` opts into
   L\* 0. Assert Δ(25→50) ≥ 2.5 L\* (measured median 2.69).
 - A chosen background L\* (either mode; light 90–100, dark 0–20) re-anchors
   the skeleton by **compression**: surface jobs scale proportionally between
@@ -296,7 +296,7 @@ Not a transform of light. Measured from all 31 Radix dark scales:
   ladder (app-bg → subtle-bg → ui-rest), no overlay-lightening pass. Radix
   has no elevation ramp to measure; overlay elevation can be a later axis.
 
-Params: `darkBackground` (lightness / `'oled'`), everything else defaulted.
+Params: `background.dark` (lightness / `'oled'`), everything else defaulted.
 CI check: same D2 guarantees re-run per mode (dark step-950 solved to
 Lc ≥ 90 — Radix itself misses this in 19/31 scales, min 84.23; the fix costs
 ~+3 L\* on the worst reds); dark-specific floor asserts (no two adjacent
@@ -367,14 +367,14 @@ reference-palette calibration test (Okabe-Ito passes, tab10 fails protan).
 else optional with research-backed defaults.
 
 ```ts
-createTheme({ seed: "#635bff" })
+createTheme("#635bff") // or { seeds: { accent: "#635bff" } }
 // → { light, dark } × { accent, neutral, success, danger, warning, info }
 //   × 12 steps + on-* + chart palettes, all guarantees enforced
 ```
 
 - Options are flat and few: `seeds` (per palette), `preserveSeed`,
-  `vividness`, `hueShift`, `neutralTint`/`neutralHue`, `darkBackground`,
-  status seed overrides. The brand palette is named `accent` (dotUI's term;
+  `vividness`, `hueShift`, `neutralTint`/`neutralHue`, `background`,
+  `chartPalette`, status seed overrides. The brand palette is named `accent` (dotUI's term;
   no `primary` rename seam).
 - Emission: `oklch()` literals, no hex fallbacks; static values only (no
   runtime color-mix/contrast-color); P3 as a guarded `@media (color-gamut:
@@ -389,9 +389,8 @@ zero out-of-gamut values.
 
 ## Non-goals (v1)
 
-- No algorithm registry. One engine. (`fixed` ramps remain as an _input_
-  format for hand-authored presets, not an algorithm.)
-- No HCT, no Leonardo runtime dependency (both are test oracles only).
+- No algorithm registry. One engine.
+- No HCT, no Leonardo runtime dependency.
 - No adaptive/runtime contrast; adaptivity lives in the generator.
 - No high-contrast mode yet (name-table-ready, values later).
 
@@ -401,6 +400,5 @@ zero out-of-gamut values.
   locked D2/D4/D5/D6/D8/D9/D10/D11 (deterministic, re-runnable).
 - `@radix-ui/colors` (devDep): per-family regression bar (ΔEok per step).
 - `apca-w3` (devDep): APCA parity.
-- `@adobe/leonardo-contrast-colors` (devDep): contrast-solver parity.
-- `/internal/colors` playground: side-by-side old/new/Radix, real component
-  compositions (the warning-banner test for yellow).
+- `/internal/color-lab` playground: generated ramps beside reference systems,
+  real component compositions (the warning-banner test for yellow).

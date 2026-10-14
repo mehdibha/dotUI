@@ -205,13 +205,6 @@ export function setValue(id: string, raw: unknown): void {
   notify()
 }
 
-/** Reset one control to its config default. */
-export function resetControl(id: string): void {
-  const control = controls.get(id)
-  if (!control) return
-  setValue(id, control.config.default)
-}
-
 /** Reset every currently-mounted control to its default. */
 export function resetAll(): void {
   for (const control of controls.values()) {

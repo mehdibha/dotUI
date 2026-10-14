@@ -20,7 +20,7 @@
  * in the component's styles.css.
  */
 
-import type { EnumParamDef, RegistryItem } from "@/registry/types"
+import type { RegistryItem } from "@/registry/types"
 
 import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 
@@ -63,16 +63,14 @@ export function resolveStudioVars(
   return out
 }
 
-/** The vars the selected enum-param values carry (`field.error = bar`). */
+/** The vars the selected param values carry (`field.error = bar`). */
 export function paramVars(
   meta: RegistryItem,
   selections: Record<string, string>,
 ): Record<string, string> {
   const out: Record<string, string> = {}
   for (const [name, def] of Object.entries(meta.params ?? {})) {
-    const enumDef = def as EnumParamDef
-    if (enumDef.kind !== "enum") continue
-    Object.assign(out, enumDef.vars?.[selections[name] ?? enumDef.default])
+    Object.assign(out, def.vars?.[selections[name] ?? def.default])
   }
   return out
 }

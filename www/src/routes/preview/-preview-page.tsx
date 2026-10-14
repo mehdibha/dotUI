@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
@@ -59,12 +59,13 @@ export function getExamplesPromise(slug: string) {
   return promise
 }
 
-// Embedded, the preview sits inside the /create panel's rounded card; a native
+// Embedded, the preview sits inside the /studio panel's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
+// Overscroll bounces the preview itself, not the whole studio.
 // Live previews (drags, hovers) skip transitions, or the preview trails them.
 const EMBEDDED_CSS = `
-html { scrollbar-width: none; }
+html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 [data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
 `
@@ -183,6 +184,24 @@ export function PreviewPage() {
     ),
     [embedded],
   )
+
+  // Elastic overscroll pulls this page away and reveals the <iframe> element,
+  // which the studio paints in its own theme — repaint it with ours.
+  useEffect(() => {
+    const frame = window.frameElement as HTMLElement | null
+    if (!frame) return
+    const paint = () => {
+      frame.style.backgroundColor = getComputedStyle(
+        document.body,
+      ).backgroundColor
+    }
+    paint()
+    // Mode flips land on <html> from the root ThemeProvider's effect, after this one.
+    const observer = new MutationObserver(paint)
+    observer.observe(document.documentElement, { attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [designSystem.color, themeCss])
+
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.

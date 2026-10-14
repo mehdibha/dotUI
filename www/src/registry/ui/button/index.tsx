@@ -6,7 +6,7 @@ import type { LinkButtonProps as BaseLinkButtonProps } from "./base"
 
 export { Button } from "./base"
 export type { ButtonProps } from "./base"
-export { buttonStyles, useStyles as useButtonStyles } from "./styles"
+export { buttonStyles } from "./styles"
 
 type LinkButtonProps = Omit<BaseLinkButtonProps, "href"> & {
   href?: string | ToOptions

@@ -478,7 +478,7 @@ export function useAnnouncePreviewReady() {
   }, [])
 }
 
-/** Inside the preview iframe: whether this document is embedded in /create. */
+/** Inside the preview iframe: whether this document is embedded in /studio. */
 export function useIsEmbeddedPreview(): boolean {
   const [embedded] = React.useState(() => isInIframe())
   return embedded
@@ -527,7 +527,7 @@ export function sendInspectorExit() {
   )
 }
 
-/** In the /create parent: react to the preview leaving inspect mode. */
+/** In the /studio parent: react to the preview leaving inspect mode. */
 export function useInspectorExitMessages(onExit: () => void) {
   const onExitRef = React.useRef(onExit)
   React.useEffect(() => {
@@ -543,7 +543,7 @@ export function useInspectorExitMessages(onExit: () => void) {
   }, [])
 }
 
-/** In the /create parent: react to the preview's inspect requests. */
+/** In the /studio parent: react to the preview's inspect requests. */
 export function useInspectMessages(onInspect: (panel: string) => void) {
   const onInspectRef = React.useRef(onInspect)
   React.useEffect(() => {

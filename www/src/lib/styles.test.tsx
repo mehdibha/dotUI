@@ -16,7 +16,6 @@ const meta = {
   files: [{ type: "registry:ui", path: "fake.tsx", target: "fake.tsx" }],
   params: {
     tone: {
-      kind: "enum",
       default: "plain",
       values: ["plain", "loud"] as const,
     },
