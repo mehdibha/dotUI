@@ -3,11 +3,10 @@
 /* Foundations — the eight decisions every component reads, then the pages
    that refine them. */
 
-import { Fragment, useContext } from "react"
+import { Fragment } from "react"
 
 import { DialGap, DialLink } from "../dial"
 import { Row, RowLabel } from "../family-page"
-import { PanelNav } from "../rows"
 import type { ChapterPage, SearchRow, Studio } from "../state"
 import type { AxisKey } from "../use-axis"
 import { SemanticsPreview } from "./color"
@@ -183,7 +182,6 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
 export const FOUNDATION_ROWS = MAIN_ROWS.map(searchRow)
 
 export function FoundationsSection({ studio }: { studio: Studio }) {
-  const open = useContext(PanelNav)
   return (
     <>
       <Rows rows={MAIN_ROWS} />
@@ -191,8 +189,8 @@ export function FoundationsSection({ studio }: { studio: Studio }) {
       {FOUNDATION_PAGES.map(({ id, label, Preview }) => (
         <DialLink
           key={id}
+          page={id}
           label={label}
-          onPress={() => open(id)}
           value={Preview && <Preview state={studio.effective} />}
         />
       ))}

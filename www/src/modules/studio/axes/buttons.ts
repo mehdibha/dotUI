@@ -96,7 +96,7 @@ export const chapter = defineChapter({
           { key: "buttonStyle", notIn: CLOSED_STYLES },
         ],
       },
-      effect: { kind: "exclude", options: ["solid"], fallback: "as-style" },
+      effect: { kind: "exclude", options: ["solid"], fallback: "style" },
       cause: "buttonColor",
     },
     {

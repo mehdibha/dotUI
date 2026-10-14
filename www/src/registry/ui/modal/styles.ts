@@ -24,7 +24,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       viewport:
         "@container-size sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--studio-modal-radius) border border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-modal-radius)]",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--studio-modal-radius) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-modal-radius)]",
       ],
     },
   },

@@ -71,7 +71,7 @@ const { useStyles, styles } = createStyles(groupMeta, {
               ],
             },
             vertical: {
-              root: "not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
+              root: "-space-y-(--studio-control-stroke) not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
             },
           },
         },

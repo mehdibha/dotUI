@@ -224,7 +224,7 @@ describe("migrate", () => {
     }
   })
 
-  it("reads an unversioned state without main's keys as current", () => {
+  it("reads an unversioned state without main's keys as v3", () => {
     for (const state of [
       DEFAULT_STATE,
       ...PRESETS.map((preset) => preset.state),
