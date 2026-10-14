@@ -83,7 +83,13 @@ export const linear = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
+    chartAxes: "labeled",
+    chartGrid: "dashed",
+    chartLines: "smooth",
+    chartArea: "tint",
+    chartBars: "slim",
+    chartLegend: "bottom",
+    chartMotion: "spring",
     linkUnderline: "never",
     linkColor: "accent",
     skeletonAnimation: "shimmer",

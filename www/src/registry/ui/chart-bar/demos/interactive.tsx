@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import type { ChartValue } from "@tanstack/charts"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -22,8 +24,11 @@ const data = Array.from({ length: DAYS }, (_, index) => {
   }
 })
 
-const day = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" })
-const formatDay = (value: ChartValue) => day.format(new Date(String(value)))
+const day = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+})
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 type Series = keyof typeof labels
@@ -35,6 +40,34 @@ const totals = {
 
 export default function ChartBarInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
+  const chart = useMemo(
+    () =>
+      defineChart({
+        scales: {
+          x: {
+            scale: chartBand,
+            axis: {
+              ticks: { format: (value) => day.format(new Date(String(value))) },
+            },
+          },
+          y: {
+            scale: scaleLinear,
+            nice: true,
+            grid: true,
+            axis: chartLook.valueAxis,
+          },
+        },
+        marks: [
+          barY(data, {
+            x: "date",
+            y: series,
+            z: () => labels[series],
+            radius: 2,
+          }),
+        ],
+      }),
+    [series],
+  )
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -56,13 +89,8 @@ export default function ChartBarInteractive() {
           </SegmentedControlItem>
         ))}
       </SegmentedControl>
-      <BarChart
-        data={data}
-        x="date"
-        y={series}
-        labels={labels}
-        radius={2}
-        formatX={formatDay}
+      <Chart
+        definition={chart}
         ariaLabel={`${labels[series]} visitors per day`}
       />
     </div>

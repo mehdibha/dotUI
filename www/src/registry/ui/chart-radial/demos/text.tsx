@@ -1,31 +1,58 @@
 "use client"
 
-import { RadialBarChart } from "@/registry/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-const data = [{ browser: "safari", visitors: 1260 }]
+import { Chart, chartSliceTooltip, polarDecorative } from "@/registry/ui/chart"
 
-const deg = (value: number) => (value * Math.PI) / 180
+const data = [{ browser: "Safari", visitors: 1260 }]
+
+const max = 1600
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, max]) },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.78, ({ radius }) => radius * 0.95],
+        },
+      },
+      endAngle: (250 * Math.PI) / 180,
+      radiusRatio: 0.9,
+      marks: [
+        polarDecorative(
+          radialBarAngle(data, {
+            angle: () => max,
+            radius: "browser",
+            fill: "var(--color-muted)",
+            motion: false,
+          }),
+        ),
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: "full",
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export default function ChartRadialText() {
   return (
-    <RadialBarChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={{ safari: "Safari" }}
-      endAngle={deg(250)}
-      innerRadius={0.78}
-      outerRadius={0.95}
-      radiusRatio={0.9}
-      cornerRadius={999}
-      track
-      max={1600}
-      ariaLabel="Safari visitors as a progress ring"
-    >
+    <Chart definition={chart} ariaLabel="Safari visitors as a progress ring">
       <div className="flex h-full flex-col items-center justify-center">
         <span className="text-2xl font-bold">1,260</span>
         <span className="text-sm text-fg-muted">Visitors</span>
       </div>
-    </RadialBarChart>
+    </Chart>
   )
 }

@@ -1,33 +1,56 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+
+import { Chart, chartSliceTooltip, polarDecorative } from "@/registry/ui/chart"
 
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const slices = pie(data, { value: "visitors" })
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
+        radius: { scale: scaleLinear().domain([0, 1]) },
+      },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(slices, {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+        polarDecorative(
+          radialText(slices, {
+            angle: "angle",
+            radius: 0.68,
+            text: "browser",
+            fill: "var(--color-fg)",
+            fontSize: 11,
+          }),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export default function ChartPieLabelList() {
   return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      sliceLabel="name"
-      sliceLabelRadius={0.68}
-      sliceLabelFontSize={11}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with names on the slices"
     />
   )

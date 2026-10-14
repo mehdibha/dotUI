@@ -104,7 +104,6 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Buttons › Toggles & groups",
 		"Charts",
 		"Charts › Palette",
-		"Charts › Grid",
 		"Dialogs",
 		"Dialogs › Backdrop",
 		"Dialogs › Position",

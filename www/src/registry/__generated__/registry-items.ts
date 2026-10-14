@@ -16,13 +16,6 @@ import UiBubble from "@/registry/ui/bubble/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
-import UiChartArea from "@/registry/ui/chart-area/meta";
-import UiChartBar from "@/registry/ui/chart-bar/meta";
-import UiChartHeatmap from "@/registry/ui/chart-heatmap/meta";
-import UiChartLine from "@/registry/ui/chart-line/meta";
-import UiChartPie from "@/registry/ui/chart-pie/meta";
-import UiChartRadar from "@/registry/ui/chart-radar/meta";
-import UiChartRadial from "@/registry/ui/chart-radial/meta";
 import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
@@ -101,13 +94,6 @@ export const registryUi: RegistryItem[] = [
 	UiCalendar,
 	UiCard,
 	UiChart,
-	UiChartArea,
-	UiChartBar,
-	UiChartHeatmap,
-	UiChartLine,
-	UiChartPie,
-	UiChartRadar,
-	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
 	UiCollapsible,

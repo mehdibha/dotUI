@@ -83,7 +83,13 @@ export const supabase = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
+    chartAxes: "minimal",
+    chartGrid: "lines",
+    chartLines: "smooth",
+    chartArea: "tint",
+    chartBars: "rounded",
+    chartLegend: "bottom",
+    chartMotion: "spring",
     linkUnderline: "always",
     linkColor: "neutral",
     skeletonAnimation: "pulse",

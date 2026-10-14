@@ -337,6 +337,10 @@ export const DemosIndex: Record<
 		files: ["ui/card/demos/with-image.tsx"],
 		component: React.lazy(() => import("@/registry/ui/card/demos/with-image")),
 	},
+	"chart/demos/composed": {
+		files: ["ui/chart/demos/composed.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart/demos/composed")),
+	},
 	"chart-area/demos/axes": {
 		files: ["ui/chart-area/demos/axes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/axes")),
@@ -468,6 +472,10 @@ export const DemosIndex: Record<
 	"chart-line/demos/label": {
 		files: ["ui/chart-line/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label")),
+	},
+	"chart-line/demos/legend": {
+		files: ["ui/chart-line/demos/legend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/legend")),
 	},
 	"chart-line/demos/linear": {
 		files: ["ui/chart-line/demos/linear.tsx"],

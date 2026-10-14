@@ -84,7 +84,13 @@ export const vercel = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
+    chartAxes: "labeled",
+    chartGrid: "lines",
+    chartLines: "straight",
+    chartArea: "tint",
+    chartBars: "rounded",
+    chartLegend: "top",
+    chartMotion: "spring",
     linkUnderline: "never",
     linkColor: "accent",
     skeletonAnimation: "shimmer",

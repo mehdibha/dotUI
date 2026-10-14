@@ -1,4 +1,13 @@
 import * as React from "react"
+import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { fold } from "@tanstack/charts/transform/fold"
 
 import {
   BellIcon,
@@ -43,7 +52,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { AreaChart } from "@/registry/ui/chart-area"
+import {
+  Chart,
+  chartFades,
+  chartLegend,
+  useChartLook,
+} from "@/registry/ui/chart"
 import { Input } from "@/registry/ui/input"
 import {
   Menu,
@@ -126,6 +140,11 @@ const RANGES = [
 type RangeId = (typeof RANGES)[number]["id"]
 
 const chartLabels = { revenue: "Revenue", target: "Target" }
+
+const monthlyRows = fold(MONTHLY, {
+  fields: ["revenue", "target"],
+  as: { key: "series", value: "amount" },
+})
 
 // `trend` drives the arrow, `intent` the colour — a falling refund rate is a
 // down arrow but good news.
@@ -397,6 +416,12 @@ const currency = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 })
 
+const compactCurrency = new Intl.NumberFormat("en-US", {
+  currency: "USD",
+  style: "currency",
+  notation: "compact",
+})
+
 /* -------------------------------- Sections -------------------------------- */
 
 function AppSidebar() {
@@ -624,11 +649,56 @@ function RevenueChart() {
   const [range, setRange] = React.useState<RangeId>("12m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
-  // Charts compare data by identity, so the slice must be stable per range.
   const data = React.useMemo(
     () => MONTHLY.slice(MONTHLY.length - months),
     [months],
   )
+  const look = useChartLook()
+  const chart = React.useMemo(() => {
+    const shown = new Set(data.map((row) => row.month))
+    const rows = monthlyRows.filter((row) => shown.has(row.month))
+    const usd = (value: ChartValue) => compactCurrency.format(Number(value))
+    const series = {
+      x: "month",
+      y: "amount",
+      color: (row: (typeof rows)[number]) => chartLabels[row.series],
+      curve: look.curve,
+    } as const
+    return defineChart({
+      scales: {
+        x: {
+          scale: scalePoint,
+          axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+        },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: look.valueAxis && { ...look.valueAxis, ticks: { format: usd } },
+        },
+      },
+      color: { legend: chartLegend },
+      gradients: chartFades,
+      marks: [
+        // The fade is a decorative copy: the tooltip swatch reads the
+        // interactive area's fill, which must stay the series color.
+        decorative(
+          areaY(rows, {
+            ...series,
+            y1: 0,
+            fill: (row) =>
+              `url(#chart-fade-${Object.keys(chartLabels).indexOf(row.series)})`,
+          }),
+        ),
+        areaY(rows, { ...series, y1: 0, fillOpacity: 0 }),
+        decorative(lineY(rows, { ...series, strokeWidth: look.strokeWidth })),
+      ],
+      tooltip: {
+        use: tooltip,
+        items: [{ channel: "y", text: (point) => usd(point.yValue) }],
+      },
+    })
+  }, [data, look])
   const total = data.reduce((sum, d) => sum + d.revenue, 0)
   const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
   const overTarget = ((total - targetTotal) / targetTotal) * 100
@@ -668,13 +738,8 @@ function RevenueChart() {
             {overTarget.toFixed(1)}% vs. plan
           </Badge>
         </div>
-        <AreaChart
-          data={data}
-          x="month"
-          y={["revenue", "target"]}
-          labels={chartLabels}
-          fill="gradient"
-          formatX={(value) => String(value).slice(0, 3)}
+        <Chart
+          definition={chart}
           height={224}
           ariaLabel="Monthly revenue against plan"
         />

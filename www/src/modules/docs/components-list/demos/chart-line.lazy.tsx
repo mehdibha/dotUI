@@ -1,6 +1,11 @@
 "use client"
 
-import { LineChart } from "@/registry/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 210 },
@@ -13,15 +18,27 @@ const data = [
   { month: "Aug", desktop: 330 },
 ]
 
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, nice: true, axis: false },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
+
 export default function ChartLineVisitors() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
+    <Chart
+      definition={chart}
       height={92}
-      grid={false}
       ariaLabel="Desktop visitors, January through August"
     />
   )

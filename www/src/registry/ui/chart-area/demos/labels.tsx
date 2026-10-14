@@ -1,6 +1,13 @@
 "use client"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 /* Long format: one row per series per x value, with the series key in a field. */
 const data = [
@@ -18,15 +25,40 @@ const data = [
   { month: "Jun", channel: "paid_social", visitors: 140 },
 ]
 
+const channels: Record<string, string> = {
+  organic_search: "Organic search",
+  paid_social: "Paid social",
+}
+
+const series = {
+  x: "month",
+  y: "visitors",
+  color: (row: (typeof data)[number]) => channels[row.channel],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  // The domain orders the colors: paid social takes the first.
+  color: { domain: ["Paid social", "Organic search"] },
+  marks: [
+    areaY(data, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
+
 export default function ChartAreaLabels() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="visitors"
-      series="channel"
-      seriesOrder={["paid_social", "organic_search"]}
-      labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by acquisition channel, January through June"
     />
   )

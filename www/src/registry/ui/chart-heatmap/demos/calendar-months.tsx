@@ -1,8 +1,13 @@
 "use client"
 
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 /* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
 const months = [
@@ -27,12 +32,6 @@ const years = [
   { year: "2025", weight: 1.05 },
 ]
 
-const millimeters = new Intl.NumberFormat("en-US", {
-  style: "unit",
-  unit: "millimeter",
-})
-const formatRainfall = (value: ChartValue) => millimeters.format(Number(value))
-
 const data = years.flatMap(({ year, weight }) =>
   months.map(({ month, normal }) => ({
     year,
@@ -41,17 +40,64 @@ const data = years.flatMap(({ year, weight }) =>
   })),
 )
 
+const millimeters = new Intl.NumberFormat("en-US", {
+  style: "unit",
+  unit: "millimeter",
+})
+
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({
+      label: "Rainfall",
+      format: (value) => millimeters.format(value),
+    }),
+  },
+  marks: [
+    cell(data, {
+      x: "month",
+      y: "year",
+      color: "rainfall",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.month} · ${points[0].datum.year}`,
+      rows: points.map((point) => ({
+        label: "Rainfall",
+        value: millimeters.format(point.datum.rainfall),
+        color: point.color,
+      })),
+    }),
+  },
+})
+
 export default function ChartHeatmapCalendarMonths() {
   return (
-    <HeatmapChart
-      data={data}
-      x="month"
-      y="year"
-      value="rainfall"
-      formatValue={formatRainfall}
-      label="Rainfall"
-      ariaLabel="Monthly rainfall by year"
+    <Chart
+      definition={chart}
       height={200}
+      ariaLabel="Monthly rainfall by year"
     />
   )
 }

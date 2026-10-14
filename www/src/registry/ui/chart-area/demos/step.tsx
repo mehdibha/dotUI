@@ -1,6 +1,13 @@
 "use client"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+
+import { Chart, chartCurves, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,14 +18,33 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
+
 export default function ChartAreaStep() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      curve="step"
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )
