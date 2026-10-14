@@ -2,7 +2,7 @@
 
 // What a drag or hover would commit, shown in the preview; never persisted.
 
-import { useRef, useSyncExternalStore } from "react"
+import { useEffect, useRef, useSyncExternalStore } from "react"
 import type { PointerEvent } from "react"
 
 import { sameState } from "./axes"
@@ -95,6 +95,13 @@ export function previewNow(run: () => void) {
  *  release; a key or assistive-tech step commits at once. */
 export function useSliderPreview<T>(commit: (value: T) => void) {
   const held = useRef(false)
+  // Unmounted mid-drag, nothing would commit or drop the drag's preview.
+  useEffect(
+    () => () => {
+      if (held.current) clearLive()
+    },
+    [],
+  )
   return {
     // RAC drags only on an unmodified primary press.
     onPointerDownCapture: (e: PointerEvent) => {

@@ -702,6 +702,13 @@ function SliderRow({
   const isClick = useRef(true)
   const rect = useRef<DOMRect | null>(null)
   const committed = useRef(value)
+  // Unmounted mid-drag, nothing would commit or drop the drag's preview.
+  useEffect(
+    () => () => {
+      if (pointerDown.current) clearLive()
+    },
+    [],
+  )
 
   /* The fill and the handle move together, off React: written straight to
      style, with the snap transition only on release. */
@@ -955,6 +962,9 @@ function SliderRow({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}
+        onLostPointerCapture={() => {
+          if (pointerDown.current) onPointerCancel()
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onKeyDown={onKeyDown}

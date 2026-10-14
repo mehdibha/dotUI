@@ -137,6 +137,17 @@ describe("requestThemeCss", () => {
     expect(themeCss).not.toHaveBeenCalled()
   })
 
+  it("lands a waiting commit when a newer request replaces its job", async () => {
+    const { requestThemeCss } = await load()
+    const [replaced, commit] = [done(), done()]
+    requestThemeCss(color("#aaaaaa"), true, done())
+    requestThemeCss(color("#bbbbbb"), true, replaced)
+    requestThemeCss(color("#bbbbbb"), false, commit)
+    requestThemeCss(color("#cccccc"), true, done())
+    expect(commit).toHaveBeenCalledWith("css:#bbbbbb")
+    expect(replaced).not.toHaveBeenCalled()
+  })
+
   it("computes a commit at once when no job has its color", async () => {
     const { requestThemeCss } = await load()
     const [busy, commit] = [done(), done()]

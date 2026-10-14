@@ -11,6 +11,8 @@ interface Job {
   key: string
   color: ColorConfig
   done: Array<(css: string) => void>
+  /** Commits waiting on it: they still land if a newer request replaces it. */
+  commits: Array<(css: string) => void>
 }
 
 const cache = new Map<string, string>()
@@ -48,7 +50,7 @@ export function themeCssNow(color: ColorConfig): string {
 
 function finish(job: Job, css: string) {
   remember(job.key, css)
-  for (const done of job.done) done(css)
+  for (const done of [...job.done, ...job.commits]) done(css)
 }
 
 function startWorker() {
@@ -89,8 +91,8 @@ function runNext() {
 
 /** `themeCss(color)` for `done`: cached, or shared with the worker job
  *  computing it. Otherwise a live request goes to the worker, one computing
- *  at a time and the newest waiting next (a replaced `done` never runs), and
- *  a commit computes now. */
+ *  at a time and the newest waiting next (a replaced live `done` never runs,
+ *  a replaced commit computes now), and a commit computes now. */
 export function requestThemeCss(
   color: ColorConfig,
   live: boolean,
@@ -100,8 +102,12 @@ export function requestThemeCss(
   const css = cached(key)
   if (css !== undefined) return done(css)
   const pending = [running, queued].find((job) => job?.key === key)
-  if (pending) return void pending.done.push(done)
+  if (pending) return void (live ? pending.done : pending.commits).push(done)
   if (!live) return done(compute(key, color))
-  queued = { key, color, done: [done] }
+  if (queued?.commits.length) {
+    const css = compute(queued.key, queued.color)
+    for (const commit of queued.commits) commit(css)
+  }
+  queued = { key, color, done: [done], commits: [] }
   if (!running) runNext()
 }
