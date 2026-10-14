@@ -13,8 +13,8 @@ const entrance =
 const { useStyles, styles } = createStyles(modalMeta, {
   base: {
     slots: {
-      // The drawers' layer, so the last opened sits on top: a select's
-      // drawer opens over its modal.
+      // The sheets' layer, so the last opened sits on top: a select's
+      // sheet opens over its modal.
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-50 h-(--page-height) w-full",
       ],

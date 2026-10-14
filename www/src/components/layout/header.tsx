@@ -159,7 +159,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <HeaderActionsSlot />
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
-            to logo + menu — Studio stays reachable from the menu drawer. */}
+            to logo + menu — Studio stays reachable from the menu sheet. */}
         {pathname !== "/studio" && (
           <LinkButton
             href="/studio"

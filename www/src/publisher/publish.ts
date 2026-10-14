@@ -301,8 +301,15 @@ export function publish({
     registryDepsFor(meta, paramSelections),
     deps,
   )
+  // A declared range (`pkg@^1.2`) wins over the bare name an import implies.
+  const declared = meta.dependencies ?? []
   const dependencies = [
-    ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
+    ...new Set([
+      ...declared,
+      ...depsFromFileImports(files).filter(
+        (dep) => !declared.some((spec) => spec.startsWith(`${dep}@`)),
+      ),
+    ]),
   ]
 
   const itemShape = {

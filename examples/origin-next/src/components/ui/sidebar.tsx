@@ -15,8 +15,8 @@ import { PanelLeftIcon } from "lucide-react";
 import { createContext } from "@/lib/context";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Drawer } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
+import { Sheet } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import type { TooltipContentProps } from "@/components/ui/tooltip";
@@ -284,10 +284,10 @@ function Sidebar({
 
   if (isMobile) {
     return (
-      <Drawer
+      <Sheet
         isOpen={openMobile}
         onOpenChange={setOpenMobile}
-        placement={side}
+        position={side}
         className="w-(--sidebar-width) max-w-(--sidebar-width) border-0"
         style={
           { "--sidebar-width": SIDEBAR_WIDTH_MOBILE } as React.CSSProperties
@@ -305,7 +305,7 @@ function Sidebar({
             {children}
           </SidebarNav>
         </nav>
-      </Drawer>
+      </Sheet>
     );
   }
 

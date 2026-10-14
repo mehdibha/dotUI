@@ -15,7 +15,7 @@
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg); Low is shadcn New York, Medium shadcn Luma.
    - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
-     dialogs and drawers sit on a scrim and stay solid.
+     dialogs and sheets sit on a scrim and stay solid.
 
    Only what differs from the registry's defaults is emitted. */
 

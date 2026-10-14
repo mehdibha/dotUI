@@ -15,3 +15,8 @@ minimumReleaseAgeExclude:
   - '@tanstack/start-plugin-core@1.171.49'
   - '@tanstack/start-server-core@1.169.39'
   - '@tanstack/start-storage-context@1.167.36'
+  - '@internationalized/number@3.6.9'
+  - '@react-types/shared@3.37.0'
+  - react-aria-components@1.22.0
+  - react-aria@3.53.0
+  - react-stately@3.51.0

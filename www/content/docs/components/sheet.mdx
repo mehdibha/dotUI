@@ -1,0 +1,131 @@
+---
+title: Sheet
+description: A sheet is a swipeable overlay that slides in from an edge of the screen.
+links:
+  - label: Docs
+    href: https://react-aria.adobe.com/Sheet
+wip: true
+---
+
+<InteractiveDemo
+  name="sheet"
+  controls={[
+    {
+      type: "enum",
+      name: "position",
+      options: ["bottom", "top", "start", "end"],
+      defaultValue: "bottom",
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/sheet
+```
+
+## Usage
+
+Use sheets for touch-friendly trays: mobile sheets, navigation menus, notification banners.
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Sheet } from "@/components/ui/sheet"
+```
+
+```tsx
+<Dialog>
+  <Button>Open Sheet</Button>
+  <Sheet>
+    <DialogContent>Sheet content</DialogContent>
+  </Sheet>
+</Dialog>
+```
+
+## Anatomy
+
+A `Sheet` has no built-in trigger. Wrap it in a `Dialog` with a `Button` child as the trigger, and put your content inside `DialogContent`. A sheet can also hold a menu or a listbox directly — that's how pickers render on mobile.
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
+```
+
+```tsx
+<Dialog>
+  <Button />
+  <Sheet>
+    <DialogContent>
+      <SheetHandle />
+    </DialogContent>
+  </Sheet>
+</Dialog>
+```
+
+`SheetHandle` is a visible swipe affordance. The whole sheet swipes: it rides the browser's native scrolling, so it follows the finger with momentum and rubber-banding for free.
+
+## Position
+
+`position` anchors the sheet to an edge: `bottom` (the default), `top`, `start`, `end`, or physical `left` and `right`. `start` and `end` mirror in right-to-left locales. `swipeDirection` defaults to the same edge.
+
+```tsx
+<Sheet position="end">
+  <DialogContent>...</DialogContent>
+</Sheet>
+```
+
+## Snap points
+
+`snapPoints` stops the sheet partway open. Each value is how much of the sheet shows, in pixels or as a CSS length — percentages are of the sheet's size. It opens at the first one and drags up to its full height.
+
+```tsx
+<Sheet snapPoints={[240]}>
+  <DialogContent>...</DialogContent>
+</Sheet>
+```
+
+## Open state
+
+Rendered under a `Dialog`, the sheet shares the dialog's open state, so the trigger `Button` opens it with no wiring. To drive it yourself, pass `isOpen` with `onOpenChange` (or `defaultOpen` for uncontrolled).
+
+```tsx
+const [isOpen, setIsOpen] = React.useState(false)
+
+<Sheet isOpen={isOpen} onOpenChange={setIsOpen}>
+  <DialogContent>...</DialogContent>
+</Sheet>
+```
+
+## Dismissal
+
+The sheet dismisses on swipe, outside interaction, and Escape. `preventDismissal` blocks all three; with snap points, the sheet still swipes between them.
+
+```tsx
+<Sheet preventDismissal>
+  <DialogContent>...</DialogContent>
+</Sheet>
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="sheet/demos/basic" title="Basic Sheet" />
+  <Example name="sheet/demos/dialog-parts" title="Settings Panel" />
+  <Example name="sheet/demos/snap-points" title="Place Details" />
+  <Example name="sheet/demos/nested" title="Nested Sheets" />
+  <Example name="sheet/demos/scrollable" title="Scrollable Content" />
+  <Example name="sheet/demos/with-form" title="Form Sheet" />
+</Examples>
+
+## API Reference
+
+### Sheet
+
+<Reference name="sheet" />
+
+### SheetHandle
+
+<Reference name="sheet-handle" />

@@ -11,7 +11,7 @@ import { cn } from "@/registry/lib/utils"
 import type { StudioStateInput } from "./axes"
 import { MOTION_PATTERNS as ACCORDION_PATTERNS } from "./axes/accordion"
 import { MOTION_OPTIONS as CHART_MOTION } from "./axes/charts"
-import { DRAWER_PATTERNS, MODAL_PATTERNS } from "./axes/dialogs"
+import { MODAL_PATTERNS } from "./axes/dialogs"
 import { MOTION_PATTERNS as MESSAGE_SCROLLER_PATTERNS } from "./axes/message-scroller"
 import { bezierCss, curveTiming, formatMs } from "./axes/motion"
 import type { Curve, Entrance, Loop, StateChange } from "./axes/motion"
@@ -176,11 +176,6 @@ export const MOTION: MotionEntry[] = [
     id: "modal",
     label: "Dialog",
     ...entrance("modalMotion", MODAL_PATTERNS),
-  },
-  {
-    id: "drawer",
-    label: "Drawer",
-    ...entrance("drawerMotion", DRAWER_PATTERNS),
   },
   {
     id: "popover",

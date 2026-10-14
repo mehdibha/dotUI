@@ -40,7 +40,6 @@ import UiCommand from "@/registry/ui/command/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
-import UiDrawer from "@/registry/ui/drawer/meta";
 import UiDropZone from "@/registry/ui/drop-zone/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
 import UiField from "@/registry/ui/field/meta";
@@ -69,6 +68,7 @@ import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSegmentedControl from "@/registry/ui/segmented-control/meta";
 import UiSelect from "@/registry/ui/select/meta";
 import UiSeparator from "@/registry/ui/separator/meta";
+import UiSheet from "@/registry/ui/sheet/meta";
 import UiSidebar from "@/registry/ui/sidebar/meta";
 import UiSkeleton from "@/registry/ui/skeleton/meta";
 import UiSlider from "@/registry/ui/slider/meta";
@@ -124,7 +124,6 @@ export const registryUi: RegistryItem[] = [
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
-	UiDrawer,
 	UiDropZone,
 	UiEmpty,
 	UiField,
@@ -153,6 +152,7 @@ export const registryUi: RegistryItem[] = [
 	UiSegmentedControl,
 	UiSelect,
 	UiSeparator,
+	UiSheet,
 	UiSidebar,
 	UiSkeleton,
 	UiSlider,

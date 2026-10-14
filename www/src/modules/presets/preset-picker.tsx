@@ -28,11 +28,11 @@ import {
   CommandSectionHeader,
 } from "@/registry/ui/command"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
+import { Sheet } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
 import type { DesignSystem } from "@/modules/studio/preset"
@@ -82,7 +82,7 @@ interface PresetPickerProps {
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
  * panel: a searchable list of plain rows — a swatch dot and the preset's name.
- * Popover on desktop, drawer on mobile.
+ * Popover on desktop, sheet on mobile.
  *
  * `withPreview` adds a detached flyout card — a big tooltip in the previewed
  * preset's own surface — that opens beside the popover after a short hover
@@ -101,7 +101,7 @@ export function PresetPicker({
   withPreview = false,
   ...rest
 }: PresetPickerProps) {
-  const content = (surface: "popover" | "drawer") => (
+  const content = (surface: "popover" | "sheet") => (
     <DialogContent
       aria-label="Design systems"
       // `max-h-[inherit]` chains the popover's computed max-height (set inline
@@ -131,9 +131,7 @@ export function PresetPicker({
       <Responsive
         render={(isMobile) =>
           isMobile ? (
-            // Instant too: an exiting drawer would cover the page and eat
-            // the next tap.
-            <Drawer className="transition-none!">{content("drawer")}</Drawer>
+            <Sheet>{content("sheet")}</Sheet>
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
@@ -163,7 +161,7 @@ function PresetPickerContent({
   onCreate,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
-  surface: "popover" | "drawer"
+  surface: "popover" | "sheet"
   withPreview: boolean
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
@@ -188,7 +186,7 @@ function PresetPickerContent({
     setMenu(null)
     // Two frames: after the popover's own focus restore. Focus must never be
     // lost to the body, or the picker closes: back to the search, or to the
-    // drawer itself.
+    // sheet itself.
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         const active = document.activeElement
@@ -411,7 +409,7 @@ function PresetPickerContent({
     </PopoverContext.Provider>
   )
 
-  if (surface === "drawer")
+  if (surface === "sheet")
     return (
       <>
         <Command>{list}</Command>

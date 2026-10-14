@@ -2,6 +2,22 @@
   "name": "ModalContentProps",
   "description": "The modal panel that contains the dialog content.",
   "props": {
+    "UNSTABLE_deferUntilEntered": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to wait until the entry animation completes before hiding content outside the modal\nand moving focus into it."
+    },
+    "UNSTABLE_overrideFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to override the `focus()` method so it does not scroll the page.\nThis is temporary and will be removed after fully testing all overlays."
+    },
     "UNSTABLE_portalContainer": {
       "type": "Element",
       "detailedType": "Element | undefined",
@@ -128,6 +144,104 @@
         "type": "boolean"
       },
       "description": "Whether the overlay is open by default (controlled)."
+    },
+    "onEnter": {
+      "type": "((element: HTMLElement) => void | Promise<void>)",
+      "detailedType": "| ((element: HTMLElement) => void | Promise<void>)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "element",
+                "value": {
+                  "type": "identifier",
+                  "name": "HTMLElement"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "void"
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "void"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Callback when the modal starts entering. Return a promise to indicate when the entry animation\nhas completed."
+    },
+    "onExit": {
+      "type": "((element: HTMLElement) => void | Promise<void>)",
+      "detailedType": "| ((element: HTMLElement) => void | Promise<void>)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "element",
+                "value": {
+                  "type": "identifier",
+                  "name": "HTMLElement"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "void"
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "void"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Callback when the modal starts exiting. Return a promise to indicate when the exit animation\nhas completed."
     },
     "onOpenChange": {
       "type": "((isOpen: boolean) => void)",
@@ -263,6 +377,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     }
   },
   "typeLinks": {

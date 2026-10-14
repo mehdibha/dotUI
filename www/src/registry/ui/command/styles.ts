@@ -17,11 +17,11 @@ const { useStyles, styles } = createStyles(commandMeta, {
       "max-h-[inherit]",
       "**:data-search-field:shrink-0",
       "**:data-listbox:min-h-0 **:data-listbox:overflow-y-auto",
-      // Modal and drawer commands are spotlight/touch surfaces — taller rows
+      // Modal and sheet commands are spotlight/touch surfaces — taller rows
       // than a dropdown. Their inline padding follows the inset param.
       "in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2",
       "in-data-modal:**:data-listbox-item:rounded-(--studio-radius-inline-item) in-data-modal:**:data-menu-item:rounded-(--studio-radius-inline-item)",
-      "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
+      "in-data-sheet:**:data-listbox-item:py-2 in-data-sheet:**:data-menu-item:py-2",
       // Command rows and headings sit taller than a menu's (shadcn: py-1.5 in
       // every style), and headings carry weight so they read as group labels.
       // In a popover, rows keep the list's density, like shadcn's combobox.
@@ -64,7 +64,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // Text only: the leading magnifier goes, and the prompt takes the
           // items' text inset (list gutter + item padding) so they line up.
           "**:[[data-search-field]_[data-input-group-addon]:first-child]:hidden",
-          "**:[[data-search-field]_[data-input]]:pl-3 in-data-drawer:**:[[data-search-field]_[data-input]]:pl-3.5 in-data-modal:**:[[data-search-field]_[data-input]]:pl-4",
+          "**:[[data-search-field]_[data-input]]:pl-3 in-data-modal:**:[[data-search-field]_[data-input]]:pl-4 in-data-sheet:**:[[data-search-field]_[data-input]]:pl-3.5",
         ],
       },
     },
@@ -74,13 +74,13 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // The list gutter matches the field inset.
           "**:data-listbox:px-(--command-inset) **:data-listbox:**:data-separator:-mx-(--command-inset)",
           "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2",
-          "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",
+          "in-data-sheet:**:data-listbox-item:px-2 in-data-sheet:**:data-menu-item:px-2",
         ],
       },
       "full-bleed": {
         base: [
           "in-data-modal:**:data-listbox-item:px-4 in-data-modal:**:data-menu-item:px-4",
-          "in-data-drawer:**:data-listbox-item:px-3.5 in-data-drawer:**:data-menu-item:px-3.5",
+          "in-data-sheet:**:data-listbox-item:px-3.5 in-data-sheet:**:data-menu-item:px-3.5",
         ],
       },
     },

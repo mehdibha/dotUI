@@ -41,7 +41,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   Empty,
   EmptyContent,
@@ -76,6 +75,7 @@ import {
   SelectTrigger,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
@@ -982,9 +982,9 @@ export default function SearchResultsBlock() {
                             </Badge>
                           )}
                         </Button>
-                        <Drawer>
+                        <Sheet>
                           <DialogContent>
-                            <DrawerHandle />
+                            <SheetHandle />
                             <DialogHeader className="sr-only">
                               <DialogTitle>Filters</DialogTitle>
                             </DialogHeader>
@@ -996,7 +996,7 @@ export default function SearchResultsBlock() {
                               />
                             </DialogBody>
                           </DialogContent>
-                        </Drawer>
+                        </Sheet>
                       </Dialog>
 
                       <Select

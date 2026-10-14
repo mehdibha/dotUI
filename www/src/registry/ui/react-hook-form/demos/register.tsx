@@ -13,7 +13,6 @@ import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { Combobox } from "@/registry/ui/combobox"
 import { DatePicker } from "@/registry/ui/date-picker"
 import { DialogContent } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { FieldGroup, Label } from "@/registry/ui/field"
 import {
   DateInput,
@@ -31,6 +30,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
+import { Sheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
 const FormSchema = z.object({
@@ -134,7 +134,7 @@ export default function Demo() {
                     </DialogContent>
                   )
                   return isMobile ? (
-                    <Drawer>{content}</Drawer>
+                    <Sheet>{content}</Sheet>
                   ) : (
                     <Popover>{content}</Popover>
                   )

@@ -7,7 +7,7 @@ const popoverMeta = {
   files: [
     {
       type: "registry:ui",
-      path: "ui/popover/base.drawer.tsx",
+      path: "ui/popover/base.sheet.tsx",
       target: "ui/popover.tsx",
     },
   ],
@@ -21,14 +21,14 @@ const popoverMeta = {
     },
     mobile: {
       kind: "enum",
-      default: "drawer",
-      values: ["drawer", "popover"] as const,
-      registryDependencies: { drawer: ["drawer", "use-mobile"] },
+      default: "sheet",
+      values: ["sheet", "popover"] as const,
+      registryDependencies: { sheet: ["sheet", "use-mobile"] },
       files: {
-        drawer: [
+        sheet: [
           {
             type: "registry:ui",
-            path: "ui/popover/base.drawer.tsx",
+            path: "ui/popover/base.sheet.tsx",
             target: "ui/popover.tsx",
           },
         ],
@@ -41,7 +41,7 @@ const popoverMeta = {
         ],
       },
       description:
-        "What pickers and menus become below the mobile line: a bottom drawer, or the popover kept anchored.",
+        "What pickers and menus become below the mobile line: a bottom sheet, or the popover kept anchored.",
     },
     tip: {
       kind: "enum",

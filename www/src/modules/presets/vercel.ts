@@ -79,7 +79,7 @@ export const vercel = definePreset({
     ...DEFAULT_MOTION,
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components

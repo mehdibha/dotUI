@@ -180,6 +180,17 @@
     opacity: 1;
         }
     }
+  @keyframes sheet-backdrop {
+  from {
+    opacity: 0;
+        }
+    }
+  @keyframes sheet-stack {
+  to {
+    scale: 0.95;
+    translate: var(--sheet-stack-offset);
+        }
+    }
   @keyframes skeleton-shimmer {
   to {
     background-position: 0%;

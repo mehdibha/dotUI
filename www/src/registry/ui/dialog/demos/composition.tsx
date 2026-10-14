@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
@@ -49,11 +49,7 @@ export default function Demo() {
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

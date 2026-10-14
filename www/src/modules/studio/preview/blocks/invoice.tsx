@@ -37,13 +37,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -538,7 +538,7 @@ function SendInvoiceDialog({
       </Button>
       <Responsive
         render={(isMobile) =>
-          isMobile ? <Drawer>{content}</Drawer> : <Modal>{content}</Modal>
+          isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }
       />
     </Dialog>

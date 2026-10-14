@@ -31,7 +31,6 @@ import { Command } from "@/registry/ui/command"
 import { DateField } from "@/registry/ui/date-field"
 import { DatePicker, DateRangePicker } from "@/registry/ui/date-picker"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import {
   DateInput,
@@ -53,6 +52,7 @@ import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
+import { Sheet } from "@/registry/ui/sheet"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { tokenizeTsx } from "@/modules/docs/highlight"
@@ -548,7 +548,7 @@ const steps: Step[] = [
     ),
   },
   {
-    title: "Drawer",
+    title: "Sheet",
     durationMs: 2800,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
@@ -562,11 +562,11 @@ const steps: Step[] = [
       </Button>
     </InputGroupAddon>
   </InputGroup>
-  <Drawer>
+  <Sheet>
     <DialogContent>
       <RangeCalendar />
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </DateRangePicker>`,
     preview: (
       <DateRangePicker
@@ -591,11 +591,11 @@ const steps: Step[] = [
             </Button>
           </InputGroupAddon>
         </InputGroup>
-        <Drawer>
+        <Sheet>
           <DialogContent>
             <RangeCalendar />
           </DialogContent>
-        </Drawer>
+        </Sheet>
       </DateRangePicker>
     ),
   },

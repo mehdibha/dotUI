@@ -2,3 +2,9 @@
 # `pnpm add` the shadcn CLI spawns — resolve here instead of folding the app
 # into the monorepo workspace and writing its dependencies into the root lockfile.
 packages: []
+minimumReleaseAgeExclude:
+  - '@internationalized/number@3.6.9'
+  - '@react-types/shared@3.37.0'
+  - react-aria-components@1.22.0
+  - react-aria@3.53.0
+  - react-stately@3.51.0

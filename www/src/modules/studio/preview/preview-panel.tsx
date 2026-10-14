@@ -21,7 +21,6 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { DialogContent } from "@/registry/ui/dialog"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { Input } from "@/registry/ui/input"
 import {
   ListBox,
@@ -34,6 +33,7 @@ import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
@@ -321,7 +321,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   const prefetchPreview = (slug: string) =>
     sendPreviewPrefetch(iframeRef.current, slug)
 
-  // Picker body shared by the desktop popover and the mobile drawer — only the
+  // Picker body shared by the desktop popover and the mobile sheet — only the
   // list's sizing differs between the two containers. Selection state comes
   // from the wrapping Select, so the ListBox carries no props of its own.
   const renderPicker = (listClassName: string) => (
@@ -364,8 +364,8 @@ export function PreviewPanel({ className }: { className?: string }) {
   /* The tools, shared by the pill and — stacked under the dock on phones —
      the site header. Preview switcher: a real Select (trigger a11y,
      typeahead, focus restoration for free). Its overlay is the anchored
-     popover on desktop and the bottom drawer on mobile; open state is
-     controlled so the drawer can be driven by the same Select. */
+     popover on desktop and the bottom sheet on mobile; open state is
+     controlled so the sheet can be driven by the same Select. */
   const previewPicker = (
     <Select
       value={effectivePreview}
@@ -395,7 +395,7 @@ export function PreviewPanel({ className }: { className?: string }) {
         <PanelsTopLeftIcon className="sm:hidden" />
       </Button>
       {isMobile ? (
-        <Drawer
+        <Sheet
           isOpen={pickerOpen}
           onOpenChange={setPickerOpen}
           className="h-[80svh]"
@@ -404,12 +404,12 @@ export function PreviewPanel({ className }: { className?: string }) {
             aria-label="Select preview"
             className="flex h-full min-h-0 flex-col gap-0 p-0"
           >
-            <DrawerHandle />
+            <SheetHandle />
             {/* relative: the options' offsetTop then reads against the
                 scroller for the scroll-to-selection effect. */}
             {renderPicker("relative min-h-0 flex-1 overflow-y-auto")}
           </DialogContent>
-        </Drawer>
+        </Sheet>
       ) : (
         <Popover placement="top" className="w-64">
           {renderPicker("relative max-h-72 overflow-y-auto")}

@@ -42,7 +42,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
@@ -64,6 +63,7 @@ import {
   SelectTrigger,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -1234,7 +1234,7 @@ export default function CustomersBlock() {
                     </DialogContent>
                   )
                   return isMobile ? (
-                    <Drawer>{content}</Drawer>
+                    <Sheet>{content}</Sheet>
                   ) : (
                     <Modal>{content}</Modal>
                   )

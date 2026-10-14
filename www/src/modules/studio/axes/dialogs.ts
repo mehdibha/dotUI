@@ -4,17 +4,17 @@
    classic centered modal, or docked in the upper third (Linear, Raycast) so the
    top edge stays put as content grows.
 
-   Modal motion: how the panel and its backdrop enter and leave. Drawer
-   motion: how the sheet slides in and out.
+   Modal motion: how the panel and its backdrop enter and leave. The sheet
+   has none: it slides on the browser's native scroll, which sets its own
+   timing.
 
-   Engine: `backdrop` is an enum param on both `modal` and `drawer` (a synced
+   Engine: `backdrop` is an enum param on both `modal` and `sheet` (a synced
    group — one axis writes both); `position` and `motion` are `modal` params,
-   the motion timed by its `--studio-modal-*` vars; drawer motion is its
-   `--studio-drawer-*` timing vars (the slide itself is the drawer). */
+   the motion timed by its `--studio-modal-*` vars. */
 
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveEntrance } from "./motion"
-import type { Bezier, Entrance } from "./motion"
+import type { Entrance } from "./motion"
 import { entrance, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -28,22 +28,10 @@ const MODAL_MOTION: Entrance = {
   exitEase: ease("ease"),
 }
 
-/* shadcn's Base UI drawer: 450ms in, 400ms out (scaled by the fling's
-   strength), both on an ease-out-quint. */
-const DRAWER_EASE: Bezier = [0.22, 1, 0.36, 1]
-const DRAWER_MOTION: Entrance = {
-  pattern: "slide",
-  enter: 450,
-  curve: { type: "easing", ease: DRAWER_EASE },
-  exit: 400,
-  exitEase: DRAWER_EASE,
-}
-
 export const DIALOG_DEFAULTS = {
   dialogBackdrop: "dim",
   dialogPosition: "center",
   modalMotion: MODAL_MOTION,
-  drawerMotion: DRAWER_MOTION,
 }
 
 export const BACKDROP_OPTIONS = [
@@ -64,31 +52,24 @@ export const MODAL_PATTERNS = [
   { value: "none", label: "None" },
 ]
 
-/** The drawer always slides; there's no pattern to pick. */
-export const DRAWER_PATTERNS = [{ value: "slide", label: "Slide" }]
-
 export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
   dialogBackdrop: oneOf(BACKDROP_OPTIONS),
   dialogPosition: oneOf(POSITION_OPTIONS),
   modalMotion: entrance(MODAL_PATTERNS),
-  drawerMotion: entrance(DRAWER_PATTERNS),
 }
 
 export function resolveDialogs(state: StudioState): Resolved {
   const backdrop = state.dialogBackdrop
   const modal = resolveEntrance("modal", state.modalMotion, MODAL_MOTION)
   return {
-    tokens: {
-      ...modal.tokens,
-      ...resolveEntrance("drawer", state.drawerMotion, DRAWER_MOTION).tokens,
-    },
+    tokens: modal.tokens,
     params: {
       modal: {
         backdrop,
         position: state.dialogPosition,
         motion: modal.pattern,
       },
-      drawer: { backdrop },
+      sheet: { backdrop },
     },
   }
 }

@@ -184,7 +184,7 @@ export default function SearchDialog({
       <div
         data-command=""
         className={commandStyles({
-          // On mobile the dialog fills a near-full-height drawer, so the
+          // On mobile the dialog fills a near-full-height sheet, so the
           // command column flexes instead of sizing to its content.
           className: "gap-0 overflow-y-hidden p-0 max-lg:min-h-0 max-lg:grow",
         })}

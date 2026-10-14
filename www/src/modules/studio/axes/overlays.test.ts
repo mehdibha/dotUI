@@ -14,13 +14,13 @@ describe("overlays chapters", () => {
       backdrop: "dim",
       position: "center",
     })
-    expect(ds.componentParams.drawer).toMatchObject({ backdrop: "dim" })
+    expect(ds.componentParams.sheet).toMatchObject({ backdrop: "dim" })
     expect(ds.componentParams.popover).toMatchObject({ tip: "none" })
     expect(ds.componentParams.dialog).toMatchObject({ header: "title" })
     expect(ds.componentParams.tooltip).toMatchObject({ style: "inverted" })
   })
 
-  test("dialogs: backdrop writes modal and drawer together, position the modal", () => {
+  test("dialogs: backdrop writes modal and sheet together, position the modal", () => {
     const ds = resolveDesignSystem(
       parseState({ dialogBackdrop: "blur", dialogPosition: "top" }),
     )
@@ -28,7 +28,7 @@ describe("overlays chapters", () => {
       backdrop: "blur",
       position: "top",
     })
-    expect(ds.componentParams.drawer).toMatchObject({ backdrop: "blur" })
+    expect(ds.componentParams.sheet).toMatchObject({ backdrop: "blur" })
   })
 
   test("popovers: tip on popover, header on dialog", () => {
@@ -44,50 +44,6 @@ describe("overlays chapters", () => {
       resolveDesignSystem(parseState({ tooltipStyle: "surface" }))
         .componentParams.tooltip,
     ).toMatchObject({ style: "surface" })
-  })
-})
-
-describe("drawer motion", () => {
-  const shipped = async (tokens: Record<string, string> = {}) => {
-    const preset: PublishPreset = { density: "default", componentParams: {} }
-    const mod = await publishables["drawer"]?.()
-    if (!mod) throw new Error("drawer is not publishable")
-    const { item } = publish({
-      publishable: selectPublishable(mod, preset),
-      preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
-    })
-    return item.files?.[0]?.content ?? ""
-  }
-
-  test("ships shadcn's timing as plain classes; the fling still scales the exit", async () => {
-    const content = await shipped()
-    expect(content).not.toContain("--studio-drawer-e")
-    expect(content).toContain("duration-450 ease-[cubic-bezier(0.22,1,0.36,1)]")
-    expect(content).toContain(
-      "data-ending-style:duration-[calc(400ms*var(--drawer-swipe-strength,1))]",
-    )
-    expect(content).toContain("data-inactive:duration-400")
-    expect(content).not.toMatch(/data-(ending-style|inactive):ease-/)
-  })
-
-  test("a spring slide ships linear(); the exit keeps its bezier", async () => {
-    const { tokens } = resolveDesignSystem(
-      parseState({
-        drawerMotion: {
-          ...DEFAULTS.drawerMotion,
-          curve: { type: "spring", bounce: 0.2 },
-          exitEase: [0, 0, 0.2, 1],
-        },
-      }),
-    )
-    expect(Object.keys(tokens).sort()).toEqual([
-      "--studio-drawer-ease",
-      "--studio-drawer-enter-duration",
-      "--studio-drawer-exit-ease",
-    ])
-    const content = await shipped(tokens)
-    expect(content).toMatch(/ duration-\d+ ease-\[linear\(0,[^\s\]]+,1\)\]/)
-    expect(content).toContain("data-ending-style:ease-out")
   })
 })
 

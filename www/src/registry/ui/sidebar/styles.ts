@@ -46,7 +46,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)]",
         "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
-      // Mobile panel content (rendered inside a Drawer at < md).
+      // Mobile panel content (rendered inside a Sheet at < md).
       mobile:
         "flex h-full w-full flex-col bg-sidebar text-fg [--surface-bg:var(--color-sidebar)]",
       // The main content area beside the sidebar.

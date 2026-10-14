@@ -11,9 +11,9 @@ import Sides from "./demos/sides"
 import SingleSelection from "./demos/single-selection"
 import WithAvatar from "./demos/with-avatar"
 import WithDestructive from "./demos/with-destructive"
-import WithDrawer from "./demos/with-drawer"
 import WithIcons from "./demos/with-icons"
 import WithModal from "./demos/with-modal"
+import WithSheet from "./demos/with-sheet"
 import WithShortcuts from "./demos/with-shortcuts"
 import WithSubmenu from "./demos/with-submenu"
 
@@ -56,8 +56,8 @@ export default function MenuExamples() {
       <Example title="With Avatar">
         <WithAvatar />
       </Example>
-      <Example title="With Drawer">
-        <WithDrawer />
+      <Example title="With Sheet">
+        <WithSheet />
       </Example>
       <Example title="With Modal">
         <WithModal />

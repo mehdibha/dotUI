@@ -189,8 +189,8 @@ function StudioPage() {
   )
 }
 
-// Live and on top of modal overlays, the picker's drawer included. On phones
-// they sit at the top, clear of the drawers and below the header's Share and
+// Live and on top of modal overlays, the picker's sheet included. On phones
+// they sit at the top, clear of the sheets and below the header's Share and
 // Export.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
