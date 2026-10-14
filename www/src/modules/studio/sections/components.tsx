@@ -5,8 +5,7 @@
 
 import { useContext } from "react"
 
-import { DEFAULTS } from "../axes"
-import { DialLink, ModifiedDot } from "../dial"
+import { DialLink } from "../dial"
 import { Row } from "../family-page"
 import { PanelNav } from "../rows"
 import type { Chapter, ChapterPage, Studio } from "../state"
@@ -472,21 +471,15 @@ function ComponentRow({
         <Row axis={lead} label={component.label} />
       </div>
     )
-  const modified = keysOf(component).some(
-    (key) => studio.state[key] !== DEFAULTS[key],
-  )
   return (
     <DialLink
       label={component.label}
       onPress={() => open(component.id)}
       value={
-        <>
-          {modified && <ModifiedDot />}
-          <span className="truncate">
-            {component.says?.[String(studio.effective[lead])] ??
-              valueLabel(lead, studio.effective[lead])}
-          </span>
-        </>
+        <span className="truncate">
+          {component.says?.[String(studio.effective[lead])] ??
+            valueLabel(lead, studio.effective[lead])}
+        </span>
       }
     />
   )
