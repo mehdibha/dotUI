@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 182 icons the registry uses (not the entire library)
+// Only exports the 166 icons the registry uses (not the entire library)
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -11,9 +11,7 @@ import {
 	CursorInWindowIcon as CursorInWindowIconData,
 	Archive02Icon as Archive02IconData,
 	ArrowDown01Icon as ArrowDown01IconData,
-	CircleArrowLeft02Icon as CircleArrowLeft02IconData,
 	ArrowLeft01Icon as ArrowLeft01IconData,
-	CircleArrowRight02Icon as CircleArrowRight02IconData,
 	ArrowRight02Icon as ArrowRight02IconData,
 	ArrowUp01Icon as ArrowUp01IconData,
 	ArrowUpRight01Icon as ArrowUpRight01IconData,
@@ -23,7 +21,6 @@ import {
 	Notification01Icon as Notification01IconData,
 	Bitcoin01Icon as Bitcoin01IconData,
 	DashboardSquare01Icon as DashboardSquare01IconData,
-	BluetoothIcon as BluetoothIconData,
 	TextBoldIcon as TextBoldIconData,
 	Book02Icon as Book02IconData,
 	Bookmark01Icon as Bookmark01IconData,
@@ -35,12 +32,9 @@ import {
 	BankIcon as BankIconData,
 	CalculatorIcon as CalculatorIconData,
 	Calendar01Icon as Calendar01IconData,
-	CalendarAdd01Icon as CalendarAdd01IconData,
 	Camera01Icon as Camera01IconData,
 	ClosedCaptionIcon as ClosedCaptionIconData,
-	ChartColumnIcon as ChartColumnIconData,
 	ChartLineData01Icon as ChartLineData01IconData,
-	PieChartIcon as PieChartIconData,
 	CheckmarkCircle02Icon as CheckmarkCircle02IconData,
 	Tick02Icon as Tick02IconData,
 	ArrowRight01Icon as ArrowRight01IconData,
@@ -50,9 +44,7 @@ import {
 	RecordIcon as RecordIconData,
 	CircleIcon as CircleIconData,
 	ClipboardIcon as ClipboardIconData,
-	Clock03Icon as Clock03IconData,
 	Clock01Icon as Clock01IconData,
-	AiCloud01Icon as AiCloud01IconData,
 	CodeIcon as CodeIconData,
 	BlendIcon as BlendIconData,
 	Copy01Icon as Copy01IconData,
@@ -84,14 +76,11 @@ import {
 	LanguageCircleIcon as LanguageCircleIconData,
 	Layers01Icon as Layers01IconData,
 	GridIcon as GridIconData,
-	Layout01Icon as Layout01IconData,
 	ChartRingIcon as ChartRingIconData,
-	BulbIcon as BulbIconData,
 	Link01Icon as Link01IconData,
 	FilterIcon as FilterIconData,
 	Menu05Icon as Menu05IconData,
 	Loading03Icon as Loading03IconData,
-	Login01Icon as Login01IconData,
 	Logout01Icon as Logout01IconData,
 	MailValidation01Icon as MailValidation01IconData,
 	Mail01Icon as Mail01IconData,
@@ -143,7 +132,6 @@ import {
 	Tag01Icon as Tag01IconData,
 	Telescope01Icon as Telescope01IconData,
 	SourceCodeIcon as SourceCodeIconData,
-	SourceCodeSquareIcon as SourceCodeSquareIconData,
 	Time01Icon as Time01IconData,
 	Delete02Icon as Delete02IconData,
 	Delete01Icon as Delete01IconData,
@@ -159,7 +147,6 @@ import {
 	VolumeHighIcon as VolumeHighIconData,
 	VolumeOffIcon as VolumeOffIconData,
 	Wallet01Icon as Wallet01IconData,
-	MagicWand01Icon as MagicWand01IconData,
 	Cancel01Icon as Cancel01IconData,
 	ZapIcon as ZapIconData,
 	ZoomInAreaIcon as ZoomInAreaIconData,
@@ -180,9 +167,7 @@ export const AlertTriangleIcon = wrap(Alert02IconData);
 export const AppWindowIcon = wrap(CursorInWindowIconData);
 export const ArchiveIcon = wrap(Archive02IconData);
 export const ArrowDownIcon = wrap(ArrowDown01IconData);
-export const ArrowLeftCircleIcon = wrap(CircleArrowLeft02IconData);
 export const ArrowLeftIcon = wrap(ArrowLeft01IconData);
-export const ArrowRightCircleIcon = wrap(CircleArrowRight02IconData);
 export const ArrowRightIcon = wrap(ArrowRight02IconData);
 export const ArrowUpIcon = wrap(ArrowUp01IconData);
 export const ArrowUpRightIcon = wrap(ArrowUpRight01IconData);
@@ -192,7 +177,6 @@ export const BadgeCheckIcon = wrap(CheckmarkBadge01IconData);
 export const BellIcon = wrap(Notification01IconData);
 export const BitcoinIcon = wrap(Bitcoin01IconData);
 export const BlocksIcon = wrap(DashboardSquare01IconData);
-export const BluetoothIcon = wrap(BluetoothIconData);
 export const BoldIcon = wrap(TextBoldIconData);
 export const BookIcon = wrap(Book02IconData);
 export const BookmarkIcon = wrap(Bookmark01IconData);
@@ -204,12 +188,9 @@ export const BoxIcon = wrap(CubeIconData);
 export const Building2Icon = wrap(BankIconData);
 export const CalculatorIcon = wrap(CalculatorIconData);
 export const CalendarIcon = wrap(Calendar01IconData);
-export const CalendarPlusIcon = wrap(CalendarAdd01IconData);
 export const CameraIcon = wrap(Camera01IconData);
 export const CaptionsIcon = wrap(ClosedCaptionIconData);
-export const ChartBarIcon = wrap(ChartColumnIconData);
 export const ChartLineIcon = wrap(ChartLineData01IconData);
-export const ChartPieIcon = wrap(PieChartIconData);
 export const CheckCircle2Icon = wrap(CheckmarkCircle02IconData);
 export const CheckIcon = wrap(Tick02IconData);
 export const ChevronDownIcon = wrap(ArrowDown01IconData);
@@ -224,11 +205,8 @@ export const CircleDollarSignIcon = wrap(DollarCircleIconData);
 export const CircleDotIcon = wrap(RecordIconData);
 export const CircleIcon = wrap(CircleIconData);
 export const ClipboardPasteIcon = wrap(ClipboardIconData);
-export const Clock2Icon = wrap(Clock03IconData);
 export const ClockIcon = wrap(Clock01IconData);
-export const CloudCogIcon = wrap(AiCloud01IconData);
 export const CodeIcon = wrap(CodeIconData);
-export const ContainerIcon = wrap(CubeIconData);
 export const ContrastIcon = wrap(BlendIconData);
 export const CopyIcon = wrap(Copy01IconData);
 export const CreditCardIcon = wrap(CreditCardIconData);
@@ -262,15 +240,12 @@ export const KeyboardIcon = wrap(KeyboardIconData);
 export const LanguagesIcon = wrap(LanguageCircleIconData);
 export const LayersIcon = wrap(Layers01IconData);
 export const LayoutGridIcon = wrap(GridIconData);
-export const LayoutIcon = wrap(Layout01IconData);
 export const LifeBuoy = wrap(ChartRingIconData);
-export const LightbulbIcon = wrap(BulbIconData);
 export const LinkIcon = wrap(Link01IconData);
 export const ListFilterIcon = wrap(FilterIconData);
 export const ListIcon = wrap(Menu05IconData);
 export const Loader2Icon = wrap(Loading03IconData);
 export const LoaderCircleIcon = wrap(Loading03IconData);
-export const LogInIcon = wrap(Login01IconData);
 export const LogOutIcon = wrap(Logout01IconData);
 export const MailCheckIcon = wrap(MailValidation01IconData);
 export const MailIcon = wrap(Mail01IconData);
@@ -287,7 +262,6 @@ export const MoonStarIcon = wrap(Moon02IconData);
 export const MoreHorizontalIcon = wrap(MoreHorizontalCircle01IconData);
 export const MoreVerticalIcon = wrap(MoreVerticalCircle01IconData);
 export const MousePointer2Icon = wrap(Cursor01IconData);
-export const MousePointerIcon = wrap(Cursor01IconData);
 export const OctagonXIcon = wrap(MultiplicationSignCircleIconData);
 export const PaletteIcon = wrap(PaintBoardIconData);
 export const PanelLeftIcon = wrap(LayoutLeftIconData);
@@ -295,7 +269,6 @@ export const PaperclipIcon = wrap(AttachmentIconData);
 export const PencilIcon = wrap(Edit01IconData);
 export const PenSquareIcon = wrap(Edit02IconData);
 export const PenToolIcon = wrap(QuillWrite01IconData);
-export const PieChartIcon = wrap(PieChartIconData);
 export const PinIcon = wrap(PinIconData);
 export const PlugIcon = wrap(Plug01IconData);
 export const PlusCircleIcon = wrap(PlusSignCircleIconData);
@@ -331,7 +304,6 @@ export const TableIcon = wrap(Table01IconData);
 export const TagIcon = wrap(Tag01IconData);
 export const TelescopeIcon = wrap(Telescope01IconData);
 export const TerminalIcon = wrap(SourceCodeIconData);
-export const TerminalSquareIcon = wrap(SourceCodeSquareIconData);
 export const TimerIcon = wrap(Time01IconData);
 export const Trash2Icon = wrap(Delete02IconData);
 export const TrashIcon = wrap(Delete01IconData);
@@ -350,7 +322,6 @@ export const Volume2Icon = wrap(VolumeHighIconData);
 export const VolumeOffIcon = wrap(VolumeOffIconData);
 export const VolumeX = wrap(VolumeOffIconData);
 export const WalletIcon = wrap(Wallet01IconData);
-export const WandIcon = wrap(MagicWand01IconData);
 export const XCircleIcon = wrap(Cancel01IconData);
 export const XIcon = wrap(Cancel01IconData);
 export const ZapIcon = wrap(ZapIconData);

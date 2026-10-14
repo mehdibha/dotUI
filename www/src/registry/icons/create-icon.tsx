@@ -26,7 +26,7 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
 type IconComponent = React.ComponentType<CommonIconProps>
 
 /**
- * The active icon library. Icons render lucide by default; the /create builder
+ * The active icon library. Icons render lucide by default; the /studio builder
  * provides the user's choice (through `DesignSystemProvider`) so every registry
  * icon swaps at runtime.
  */

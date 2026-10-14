@@ -6,7 +6,7 @@ import {
   PUBLISHABLE_NAMES,
 } from "@/registry/__generated__/publishables"
 import { DENSITIES } from "@/registry/types"
-import type { EnumParamDef } from "@/registry/types"
+import type { ParamDef } from "@/registry/types"
 import { PRESETS, resolvePreset } from "@/modules/presets"
 
 import { flatten } from "./flatten"
@@ -83,8 +83,8 @@ test("no published selection ships two display utilities for one state", async (
     const load = publishables[name]
     if (!load) continue
     const { publishable } = await load()
-    const params = Object.entries(publishable.meta.params ?? {}).filter(
-      (entry): entry is [string, EnumParamDef] => entry[1].kind === "enum",
+    const params: [string, ParamDef][] = Object.entries(
+      publishable.meta.params ?? {},
     )
     const selections: Record<string, string>[] = [{}]
     for (const [param, def] of params)

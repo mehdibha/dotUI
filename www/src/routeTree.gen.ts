@@ -20,7 +20,6 @@ import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-kno
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppChartsRouteImport } from './routes/_app/charts'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
-import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppStudioRouteImport } from './routes/_app/studio'
@@ -92,11 +91,6 @@ const AppChartsRoute = AppChartsRouteImport.update({
 const AppComponentsRoute = AppComponentsRouteImport.update({
   id: '/components',
   path: '/components',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppCreateRoute = AppCreateRouteImport.update({
-  id: '/create',
-  path: '/create',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
@@ -205,7 +199,6 @@ export interface FileRoutesByFullPath {
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
-  '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
@@ -234,7 +227,6 @@ export interface FileRoutesByTo {
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
-  '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
@@ -267,7 +259,6 @@ export interface FileRoutesById {
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/_app/charts': typeof AppChartsRoute
   '/_app/components': typeof AppComponentsRoute
-  '/_app/create': typeof AppCreateRoute
   '/_app/presets': typeof AppPresetsRoute
   '/_app/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
@@ -301,7 +292,6 @@ export interface FileRouteTypes {
     | '/.well-known/api-catalog'
     | '/charts'
     | '/components'
-    | '/create'
     | '/presets'
     | '/studio'
     | '/api/search'
@@ -330,7 +320,6 @@ export interface FileRouteTypes {
     | '/.well-known/api-catalog'
     | '/charts'
     | '/components'
-    | '/create'
     | '/presets'
     | '/studio'
     | '/api/search'
@@ -362,7 +351,6 @@ export interface FileRouteTypes {
     | '/.well-known/api-catalog'
     | '/_app/charts'
     | '/_app/components'
-    | '/_app/create'
     | '/_app/presets'
     | '/_app/studio'
     | '/api/search'
@@ -476,13 +464,6 @@ declare module '@tanstack/react-router' {
       path: '/components'
       fullPath: '/components'
       preLoaderRoute: typeof AppComponentsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/create': {
-      id: '/_app/create'
-      path: '/create'
-      fullPath: '/create'
-      preLoaderRoute: typeof AppCreateRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/docs': {
@@ -632,7 +613,6 @@ interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
   AppChartsRoute: typeof AppChartsRoute
   AppComponentsRoute: typeof AppComponentsRoute
-  AppCreateRoute: typeof AppCreateRoute
   AppPresetsRoute: typeof AppPresetsRoute
   AppStudioRoute: typeof AppStudioRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -642,7 +622,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
   AppChartsRoute: AppChartsRoute,
   AppComponentsRoute: AppComponentsRoute,
-  AppCreateRoute: AppCreateRoute,
   AppPresetsRoute: AppPresetsRoute,
   AppStudioRoute: AppStudioRoute,
   AppIndexRoute: AppIndexRoute,

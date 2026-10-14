@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const colorEditorMeta = {
   name: "color-editor",
   type: "registry:ui",
-  group: "color-swatches",
   files: [
     {
       type: "registry:ui",
@@ -20,7 +19,6 @@ const colorEditorMeta = {
   ],
   params: {
     style: {
-      kind: "enum",
       default: "default",
       values: ["default", "hammamet"] as const,
     },

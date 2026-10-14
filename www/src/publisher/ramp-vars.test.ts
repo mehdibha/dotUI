@@ -57,7 +57,7 @@ describe("palette ramps never ship", () => {
       for (const [param, def] of Object.entries(
         mod.publishable.meta.params ?? {},
       ))
-        for (const value of def.kind === "enum" ? def.values : []) {
+        for (const value of def.values) {
           const preset = {
             ...origin,
             componentParams: {

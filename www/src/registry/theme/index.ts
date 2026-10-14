@@ -10,7 +10,6 @@ export type {
   JobName,
   ModeName,
   PrimaryColorSource,
-  SemanticCategory,
   SemanticTarget,
   SemanticToken,
   SemanticVocabulary,
@@ -27,7 +26,6 @@ export {
   semanticsFor,
   semanticVocabulary,
 } from "./semantics"
-export { colorTokenNames } from "./params"
 export {
   emitCss,
   type EmitCssOptions,
@@ -38,8 +36,6 @@ export {
 export {
   type ColorConfig,
   DEFAULT_COLOR_CONFIG,
-  DEFAULT_STATUS_SEEDS,
-  type PaletteSeeds,
   SITE_COLOR_CONFIG,
 } from "./color-config"
 export {
@@ -50,4 +46,4 @@ export {
   resolveColorConfig,
   themeOptionsFromConfig,
 } from "./primitives"
-export { PALETTE_ORDER, type PaletteName, STATUS_PALETTES } from "./palettes"
+export { PALETTE_ORDER } from "./palettes"

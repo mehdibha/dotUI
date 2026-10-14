@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const selectMeta = {
   name: "select",
   type: "registry:ui",
-  group: "pickers",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const selectMeta = {
   registryDependencies: ["field", "input", "list-box", "popover"],
   params: {
     trigger: {
-      kind: "enum",
       default: "button",
       values: ["button", "field"] as const,
       registryDependencies: { button: ["button"] },
@@ -30,7 +28,6 @@ const selectMeta = {
       description: "What draws the trigger: a button, or the field shell.",
     },
     caret: {
-      kind: "enum",
       default: "chevron",
       values: ["chevron", "double"] as const,
       source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },

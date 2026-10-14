@@ -1,14 +1,9 @@
 /**
- * Hand-written fixture for the alert component. Exercises:
+ * Synthetic alert fixture (not the real alert, which has no params). Exercises:
  *   - slots ({ root, title, description, action })
- *   - enum param `style` with merge-into-base semantics (default/sousse)
- *   - scalar param `radius` (cssVar `--studio-alert-radius`, type radius) — the
- *     publisher should rewrite `rounded-(--studio-alert-radius)` → `rounded-<suffix>`
- *
- * Kept in sync with:
- *   - www/src/registry/ui/alert/meta.ts
- *   - www/src/registry/ui/alert/styles.ts
- *   - www/src/registry/ui/alert/base.tsx
+ *   - a param `style` with merge-into-base semantics (default/sousse)
+ *   - a `--studio-*` var class (`rounded-(--studio-alert-radius)`) that preset
+ *     tokens rewrite to a utility
  */
 
 import type { Publishable } from "../types"
@@ -141,7 +136,6 @@ export const alertPublishable: Publishable = {
   meta: {
     name: "alert",
     type: "registry:ui",
-    group: "feedback",
     files: [
       {
         type: "registry:ui",
@@ -151,7 +145,6 @@ export const alertPublishable: Publishable = {
     ],
     params: {
       style: {
-        kind: "enum",
         default: "default",
         values: ["default", "sousse"] as const,
       },

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const drawerMeta = {
   name: "drawer",
   type: "registry:ui",
-  group: "overlays",
   dependencies: ["@base-ui/react"],
   files: [
     {
@@ -14,7 +13,6 @@ const drawerMeta = {
   ],
   params: {
     edge: {
-      kind: "enum",
       default: "docked",
       values: ["docked", "detached"] as const,
       description:

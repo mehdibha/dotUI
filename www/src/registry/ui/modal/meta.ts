@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const modalMeta = {
   name: "modal",
   type: "registry:ui",
-  group: "overlays",
   files: [
     {
       type: "registry:ui",
@@ -13,19 +12,16 @@ const modalMeta = {
   ],
   params: {
     position: {
-      kind: "enum",
       default: "center",
       values: ["center", "top"] as const,
       description: "Where the modal rests in the viewport.",
     },
     motion: {
-      kind: "enum",
       default: "scale",
       values: ["scale", "rise", "drop", "none"] as const,
       description: "How the dialog enters and leaves.",
     },
     mobile: {
-      kind: "enum",
       default: "center",
       values: ["center", "sheet", "fullscreen"] as const,
       registryDependencies: {

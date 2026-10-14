@@ -2141,10 +2141,6 @@ export const DemosIndex: Record<
 		files: ["ui/radio-group/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/uncontrolled")),
 	},
-	"react-hook-form/demos/register": {
-		files: ["ui/react-hook-form/demos/register.tsx"],
-		component: React.lazy(() => import("@/registry/ui/react-hook-form/demos/register")),
-	},
 	"search-field/demos/controlled": {
 		files: ["ui/search-field/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/controlled")),

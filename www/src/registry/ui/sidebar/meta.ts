@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const sidebarMeta = {
   name: "sidebar",
   type: "registry:ui",
-  group: "navigation",
   files: [
     {
       type: "registry:ui",
@@ -22,19 +21,16 @@ const sidebarMeta = {
   ],
   params: {
     labels: {
-      kind: "enum",
       default: "sentence",
       values: ["sentence", "caps", "mono-caps"] as const,
       description: "Group label casing and face.",
     },
     shell: {
-      kind: "enum",
       default: "subtle",
       values: ["subtle", "page", "recessed"] as const,
       description: "The sidebar and frame tone around an inset panel.",
     },
     marker: {
-      kind: "enum",
       default: "fill",
       values: [
         "fill",
@@ -60,7 +56,6 @@ const sidebarMeta = {
       },
     },
     weight: {
-      kind: "enum",
       default: "regular-medium",
       values: [
         "regular",
@@ -74,7 +69,6 @@ const sidebarMeta = {
       description: "Item weight at rest, then current.",
     },
     case: {
-      kind: "enum",
       default: "sentence",
       values: ["sentence", "uppercase"] as const,
       description: "Item label case.",

@@ -234,17 +234,3 @@ function shouldSkipProp(
 
   return false
 }
-
-/**
- * Get all group names in their defined order
- */
-export function getGroupOrder(): string[] {
-  return Object.keys(GROUPS)
-}
-
-/**
- * Check if a group should be expanded by default
- */
-export function isGroupExpandedByDefault(groupName: string): boolean {
-  return DEFAULT_EXPANDED.has(groupName)
-}

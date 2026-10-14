@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
@@ -46,11 +46,12 @@ export function getExamplesPromise(slug: string) {
   return promise
 }
 
-// Embedded, the preview sits inside the /create panel's rounded card; a native
+// Embedded, the preview sits inside the /studio panel's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
-const EMBEDDED_SCROLLBAR_CSS = `
-html { scrollbar-width: none; }
+// Overscroll bounces the preview itself, not the whole studio.
+const EMBEDDED_CSS = `
+html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 `
 
@@ -100,6 +101,23 @@ export function PreviewPage() {
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
 
+  // Elastic overscroll pulls this page away and reveals the <iframe> element,
+  // which the studio paints in its own theme — repaint it with ours.
+  useEffect(() => {
+    const frame = window.frameElement as HTMLElement | null
+    if (!frame) return
+    const paint = () => {
+      frame.style.backgroundColor = getComputedStyle(
+        document.body,
+      ).backgroundColor
+    }
+    paint()
+    // Mode flips land on <html> from the root ThemeProvider's effect, after this one.
+    const observer = new MutationObserver(paint)
+    observer.observe(document.documentElement, { attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [designSystem])
+
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.
@@ -127,7 +145,7 @@ export function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
-      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && <style>{EMBEDDED_CSS}</style>}
       {embedded && <PreviewInspector />}
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}

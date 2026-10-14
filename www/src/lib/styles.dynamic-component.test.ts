@@ -11,7 +11,6 @@ const meta = {
   files: [{ type: "registry:ui", path: "fake.tsx", target: "fake.tsx" }],
   params: {
     mobile: {
-      kind: "enum",
       default: "drawer",
       values: ["drawer", "anchored"] as const,
     },
