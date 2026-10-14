@@ -1,6 +1,7 @@
 /* Saved states from older builds, brought to today's keys before they are
    validated. A stored state carries its `version`; an unversioned one is
-   main's (version 2) when it holds what only main had, else current. */
+   main's (version 2) when it holds what only main had, else the first
+   stamped version (3). */
 
 import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
@@ -23,7 +24,7 @@ export function migrate(raw: unknown): unknown {
     Number.isInteger(version) &&
     Number(version) >= 2 &&
     Number(version) <= STATE_VERSION
-  let v = known ? Number(version) : isMain(rest) ? 2 : STATE_VERSION
+  let v = known ? Number(version) : isMain(rest) ? 2 : 3
   for (; v < STATE_VERSION; v++) state = STEPS[v]?.(state) ?? state
   return state
 }

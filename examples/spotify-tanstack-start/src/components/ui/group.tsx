@@ -17,7 +17,7 @@ const groupVariants = tv({
         root: "-space-x-px not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none not-has-data-group:*:not-last:data-select:*:data-button:rounded-r-none not-has-data-group:*:not-[:nth-child(2)]:data-select:*:data-button:rounded-l-none",
       },
       vertical: {
-        root: "flex-col not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
+        root: "flex-col -space-y-px not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
       },
     },
   },

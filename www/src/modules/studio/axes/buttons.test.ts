@@ -198,7 +198,7 @@ describe("buttons axes", () => {
     expect(effective(state).explain.groupSeparator?.lock?.kind).toBe("hide")
   })
 
-  test("Solid needs a brand primary: under a neutral one it falls back to As style", () => {
+  test("Solid needs a brand primary: under a neutral one it falls back to the Style", () => {
     const state = parseState({
       buttonColor: "neutral",
       buttonSecondary: "solid",
@@ -209,6 +209,10 @@ describe("buttons axes", () => {
       options: ["solid"],
     })
     expect(state.buttonSecondary).toBe("solid")
+    expect(
+      designSystemOf({ ...state, style: "soft" }).componentParams.button
+        ?.secondary,
+    ).toBe("raised")
     expect(
       designSystemOf(parseState({ buttonSecondary: "solid" })).componentParams[
         "toggle-button"

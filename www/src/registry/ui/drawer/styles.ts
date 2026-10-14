@@ -85,7 +85,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         slots: {
           overlay: "[--drawer-bleed:--spacing(40)]",
           popup:
-            "overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
+            "overflow-clip border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
         },
       },
       // shadcn mira, luma: a card inset 8px inside a bare sheet, so the
@@ -94,9 +94,9 @@ const { useStyles, styles } = createStyles(drawerMeta, {
       detached: {
         slots: {
           overlay:
-            "[--drawer-bleed:0px] [--drawer-inset:calc(--spacing(2)+1px)]",
+            "[--drawer-bleed:0px] [--drawer-inset:calc(--spacing(2)+var(--studio-overlay-stroke))]",
           popup:
-            "p-(--drawer-inset) [--surface-radius:var(--studio-drawer-radius)] before:absolute before:inset-2 before:-z-10 before:rounded-(--studio-drawer-radius) before:border before:border-(--overlay-border) before:bg-popover before:shadow-(--shadow-modal,var(--shadow-lg))",
+            "p-(--drawer-inset) [--surface-radius:var(--studio-drawer-radius)] before:absolute before:inset-2 before:-z-10 before:rounded-(--studio-drawer-radius) before:border-(length:--studio-overlay-stroke) before:border-(--overlay-border) before:bg-popover before:shadow-(--shadow-modal,var(--shadow-lg))",
         },
       },
     },

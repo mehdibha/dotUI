@@ -6,6 +6,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useEffectEvent,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -33,6 +34,13 @@ import { PanelSearch } from "./search"
 import { linkTarget, placeOf } from "./state"
 import type { Chapter, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
+
+/** The open page is the URL's hash, so a reload or a shared link reopens it. */
+function setHash(page: string | null) {
+  const url = location.pathname + location.search + (page ? `#${page}` : "")
+  if (url !== location.pathname + location.search + location.hash)
+    history.replaceState(history.state, "", url)
+}
 
 /** Retries each frame: a page's rows mount a frame or more after it opens. */
 function untilMounted(attempt: () => boolean, frames = 30) {
@@ -187,6 +195,10 @@ export function PanelPage({
   const [pageId, setPageId] = useState<string | null>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const scrolled = useRef(0)
+  const back = useRef<HTMLButtonElement>(null)
+  // Set by a press that swaps pages: focus moves with it.
+  const moveFocus = useRef(false)
+  const lastPage = useRef<string | null>(null)
   const pages = useMemo(
     () =>
       chapters.flatMap((chapter) =>
@@ -215,6 +227,24 @@ export function PanelPage({
     return () => setPageFocus(null)
   }, [page?.id])
 
+  // The pressed row unmounts with the swap: focus lands on Back, and going
+  // back lands on the row that opened the page.
+  useEffect(() => {
+    const left = lastPage.current
+    lastPage.current = pageId
+    if (!moveFocus.current) return
+    moveFocus.current = false
+    if (pageId) back.current?.focus()
+    else
+      untilMounted(() => {
+        const row = layer?.querySelector<HTMLElement>(
+          `[data-page-link="${left}"]`,
+        )
+        row?.focus()
+        return !!row
+      })
+  }, [pageId, layer])
+
   // Going back lands where the page was left; a new page opens at its top.
   useLayoutEffect(() => {
     if (scroller.current)
@@ -228,8 +258,18 @@ export function PanelPage({
       if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
       setActive(target.chapter.id)
       setPageId(id)
+      setHash(id)
     },
     [pages, pageId],
+  )
+
+  // A row press moves focus with the swap; search and deep links don't.
+  const navigate = useCallback(
+    (id: string) => {
+      moveFocus.current = true
+      openPage(id)
+    },
+    [openPage],
   )
 
   const dock = useCallback(
@@ -237,13 +277,14 @@ export function PanelPage({
       setActive(id)
       setTucked(false)
       setPageId(null)
+      if (pageId) setHash(null)
       requestAnimationFrame(() => {
         const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
         chapter?.scrollIntoView({ block: "start" })
         if (axis) flash(chapter, axis.split(" › ")[0]!)
       })
     },
-    [layer],
+    [layer, pageId],
   )
 
   // An open docked picker leaves the chrome in view but inert: a tap there
@@ -300,23 +341,22 @@ export function PanelPage({
   )
 
   // `/studio#<page>` opens a page; a one-row component's id lands on its row.
+  const follow = useEffectEvent(() => {
+    const target = linkTarget(decodeURIComponent(location.hash.slice(1)))
+    if (!target) return
+    setTucked(false)
+    if ("page" in target) openPage(target.page)
+    else revealAxis(target.key)
+  })
   useEffect(() => {
-    const follow = () => {
-      const target = linkTarget(decodeURIComponent(location.hash.slice(1)))
-      if (!target) return
-      setTucked(false)
-      if ("page" in target) openPage(target.page)
-      else revealAxis(target.key)
-    }
     follow()
     window.addEventListener("hashchange", follow)
     return () => window.removeEventListener("hashchange", follow)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <RevealAxis.Provider value={revealAxis}>
-      <PanelNav.Provider value={openPage}>
+      <PanelNav.Provider value={navigate}>
         <DockLayer.Provider value={layer}>
           {/* Docked, the positioned box row popovers portal into. */}
           <div
@@ -355,19 +395,15 @@ export function PanelPage({
                 page && (
                   <>
                     <Button
+                      ref={back}
                       size="sm"
                       variant="quiet"
                       isIconOnly
                       aria-label={`Back to ${page.chapter.label}`}
                       onPress={() => {
-                        // A deep link's hash would reopen the page on reload.
-                        if (location.hash)
-                          history.replaceState(
-                            history.state,
-                            "",
-                            location.pathname + location.search,
-                          )
+                        moveFocus.current = true
                         setPageId(null)
+                        setHash(null)
                       }}
                       className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
                     >

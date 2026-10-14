@@ -6,7 +6,7 @@
    that open a popover carry no chevron, rows that open a page do. Alpha
    surfaces keep both themes in one set of classes. */
 
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -42,6 +42,7 @@ import { clearLive, previewNow } from "./live"
 import { useOptionPreview } from "./option-preview"
 import {
   ColorPickerPopover,
+  PanelNav,
   PanelPopover,
   PanelPopoverTitle,
   useDraft,
@@ -201,16 +202,21 @@ export function DialPopover({
 
 /** A row that opens a page in place of the panel: label, value, a chevron. */
 export function DialLink({
+  page,
   label,
   value,
-  onPress,
 }: {
+  page: string
   label: string
   value: React.ReactNode
-  onPress: () => void
 }) {
+  const open = useContext(PanelNav)
   return (
-    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
+    <RacButton
+      data-page-link={page}
+      onPress={() => open(page)}
+      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}
+    >
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}

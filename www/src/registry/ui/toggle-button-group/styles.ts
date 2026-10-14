@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
       root: [
         "flex w-fit items-stretch",
         "*:data-button:min-w-0 *:data-button:shrink-0",
-        "*:data-button:hover:z-10 *:data-button:focus-visible:z-20 *:data-button:selected:z-10 *:data-button:selected:focus-visible:z-20",
+        "*:data-button:hover:z-1 *:data-button:focus-visible:z-3 *:data-button:selected:z-1 *:data-button:selected:focus-visible:z-3",
       ],
     },
     variants: {
