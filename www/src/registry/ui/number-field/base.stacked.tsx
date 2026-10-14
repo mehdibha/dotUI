@@ -44,9 +44,6 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   typeof GroupPrimitive.Group
 > {}
 
-// A stacked chevron column on the right: the input spans both grid rows and
-// each stepper takes one. Parts are placed by slot, so the authored order
-// never matters.
 const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
   return (
     <GroupPrimitive.Group

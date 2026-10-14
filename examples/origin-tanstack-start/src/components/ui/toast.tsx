@@ -101,9 +101,6 @@ type ToastPosition =
   | "bottom-right";
 
 interface ToastData {
-  /**
-   * Props forwarded to the root toast element.
-   */
   rootProps?: Omit<
     ToastPrimitive.Root.Props,
     "children" | "className" | "swipeDirection" | "toast"

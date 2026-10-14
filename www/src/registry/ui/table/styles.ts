@@ -8,10 +8,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       container:
         "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-(--studio-table-radius) border bg-(--surface-bg,var(--color-bg))",
       table: "min-w-full text-sm text-fg outline-hidden select-ui",
-      // The blur lives on the cells, not the thead: a backdrop-filter is
-      // clipped by its own border-radius but escapes the scroll container's
-      // rounded clip (Chromium), so the corner cells round themselves to the
-      // container's inner radius and the thead must stay filter-free.
+      // Blur lives on the cells, not the thead: a backdrop-filter escapes the scroll container's rounded clip in Chromium.
       header: "sticky top-0 z-10",
       column: [
         "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden",
@@ -127,8 +124,6 @@ const { useStyles, styles } = createStyles(tableMeta, {
       },
       plain: {},
     },
-    /* The plain header blurs the rows scrolling under it; filled is opaque,
-       so it needs no blur. */
     header: {
       plain: {
         slots: {

@@ -1,7 +1,6 @@
 "use client"
 
-/* The `error: message` build of field: identical to base.tsx except that
-   FieldError leads with an icon. Keep the two files in step. */
+/* The `error: message` build of field: identical to base.tsx except FieldError leads with an icon — keep the two in step. */
 
 import type React from "react"
 import * as CheckboxPrimitives from "react-aria-components/Checkbox"

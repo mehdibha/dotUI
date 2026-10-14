@@ -2,10 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import linkMeta from "./meta"
 
-/* `underline` and `color` shape the default variant only. Quiet is the
-   understated link that reads without color, so its underline is its
-   definition, not a policy. */
-
 const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
@@ -45,8 +41,6 @@ const { useStyles, styles } = createStyles(linkMeta, {
       accent: {
         variants: { variant: { default: "text-fg-accent" } },
       },
-      /* Weight is the only resting cue a neutral link gets — the
-         Vercel/Linear pattern against a muted paragraph. */
       neutral: {
         variants: { variant: { default: "font-medium text-fg" } },
       },

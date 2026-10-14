@@ -2,13 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import drawerMeta from "./meta"
 
-/* The timing is the studio's (styles.css); a flung drawer leaves faster. The
-   backdrop fades on the sheet's durations but its own curve, as shadcn's. */
 const duration =
   "duration-(--studio-drawer-enter-duration) data-ending-style:duration-[calc(var(--studio-drawer-exit-duration)*var(--drawer-swipe-strength,1))]"
 const ease =
   "ease-(--studio-drawer-ease) data-ending-style:ease-(--studio-drawer-exit-ease)"
-/* The page behind follows, settling back on the exit's timing. */
 const behind =
   "duration-(--studio-drawer-enter-duration) ease-(--studio-drawer-ease) data-inactive:duration-(--studio-drawer-exit-duration) data-inactive:ease-(--studio-drawer-exit-ease)"
 

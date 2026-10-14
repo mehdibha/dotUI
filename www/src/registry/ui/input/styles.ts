@@ -4,9 +4,6 @@ import { createStyles } from "@/lib/styles"
 
 import inputMeta from "./meta"
 
-/* -------------------------------- Tokens -------------------------------- */
-
-// Per-height token sets (tuned from shadcn mira/nova/vega + extrapolation for h-6/h-10).
 const tokens = tv({
   variants: {
     h: {
@@ -22,11 +19,7 @@ const tokens = tv({
 const compactText = "text-base sm:text-xs/relaxed"
 const defaultText = "text-base sm:text-sm"
 
-/* ----------------------------- Field shells ----------------------------- */
-
-// Each field tv exposes `focus: self | group` because input/textarea react to
-// their own `:focus` while inputGroup must react to `[data-focused]` on the
-// nested input-control.
+// `focus: group` exists because inputGroup must react to `[data-focused]` on its nested input, not its own `:focus`.
 
 const outlineField = tv({
   base: "border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
@@ -57,7 +50,6 @@ const lineField = tv({
   },
 })
 
-// An underline field ends in a straight rule, so its tops stay small.
 const filledLineBottomField = tv({
   base: "rounded-t-(--studio-radius-detail) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
@@ -87,33 +79,20 @@ const filledField = tv({
   defaultVariants: { radius: "single" },
 })
 
-/* ----------------------------- Addon helpers ----------------------------- */
-// Per-style addon helpers (style-specific). Cross-style addon rules live in
-// `base.inputGroupAddon` / `base.inputGroup` below.
-
-// Paradigm B (outline / filled / filled-line-bottom) — addon owns asymmetric inline padding.
 const addonInputModeParadigmB =
   "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]"
 
-// Line style — symmetric inline padding (no bg/border to "yield to").
 const addonInputModeLine =
   "group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)"
 
-/* Hover is the field's own pointer state: focus and invalid keep their border,
-   so it yields to both. */
 const hoverBorder =
   "hover:not-focus-within:not-invalid:not-disabled:border-border-control-hover"
 const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
 
-/* Boxed addons: a tinted cell hugging the shell edge (Bootstrap input-group,
-   Ant addonBefore), the control keeping its own inset beside it. Inline
-   padding stays the style's — a cell wears the same inset an inline addon does. */
 const addonBoxed =
   "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)"
 const addonDivider =
   "border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t"
-
-/* -------------------------------------------------------------------------- */
 
 const { useStyles, styles } = createStyles(inputMeta, {
   base: {
@@ -121,9 +100,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
       inputGroup: [
         "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
         "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
-        // Range compositions (start input, separator, end input): only the last
-        // control keeps flex-1, so the slack sits before the trailing addon
-        // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
+        // Only the last range control keeps flex-1, so slack sits before the trailing addon, not the separator.
         "**:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none",
         "**:data-date-input:px-0 **:data-input:px-0",
         "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",

@@ -60,10 +60,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
       },
     },
   },
-  /* The card treatment — synced with checkbox and radio-group, change all three
-     together. Every value paints with the selection tokens, so the card
-     follows the family fill. The switch card always trails its control, so
-     the family's `card-control` stops at the box and the dot. */
+  /* Card treatment: synced with checkbox and radio-group — change all three together. The switch card always trails its control, so `card-control` stops at the box and the dot. */
   params: {
     "card-selected": {
       outline: {

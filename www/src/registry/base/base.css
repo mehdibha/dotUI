@@ -11,14 +11,9 @@
   @apply ring-0 ring-transparent outline-none;
 }
 
-/* The keyboard ring and the field focus layer, drawn from the focus tokens
-   (see the @theme block) so one design system edit restyles every control.
-   Three strokes ride in `--tw-ring-shadow` so `ring-0` still silences them:
-   a bg hairline inside the edge (the duo family), the bg offset, the ring.
-   `--focus-*-inset` is unset (outside) or `inset`. Fields keep their own
-   width and color (a halo by default) and honor `ring-*` color overrides
-   (`invalid:ring-danger-muted`). A consumer's own shadow var must default to
-   `0 0 #0000`, never `none` — `none` invalidates the whole composite. */
+/* The strokes ride in `--tw-ring-shadow` so `ring-0` still silences them;
+   `--focus-*-inset` is unset (outside) or `inset`. Every shadow var must
+   default to `0 0 #0000`, never `none`, which invalidates the composite. */
 @utility focus-ring {
   --tw-ring-shadow:
     inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)),
@@ -51,9 +46,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Selection axis: whether text on controls and their labels can be selected.
-   Content stays selectable; `cursor: auto` is the arrow over unselectable
-   text on its own. */
 @utility select-ui {
   -webkit-user-select: var(--user-select-ui, none);
   user-select: var(--user-select-ui, none);
@@ -63,7 +55,6 @@
   * {
     @apply border-border;
   }
-  /* The heading voice: face, weight and tracking are design-system axes. */
   h1,
   h2,
   h3,
@@ -77,21 +68,13 @@
   body {
     @apply bg-bg font-sans text-fg;
   }
-  /* Disabled treatment axis: fade dims the whole control (the recolor
-     treatments come through the --disabled-* tokens below). Only the
-     outermost disabled element dims, so a disabled field's input doesn't
+  /* Only the outermost disabled element dims, so nested opacity doesn't
      compound. */
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
   }
 }
 
-/* Surfaces: the edge cards and floating layers (popover, menu, tooltip,
-   toast, dialog) draw. Shadows ride `--shadow-card` / `--shadow-popover` /
-   `--shadow-modal`, falling back to the registry's own (none · md · lg);
-   glass is the floating surface at 70% over a blurred, saturated backdrop.
-   Each surface sets `--surface-bg`, so rings, chips and focus gaps inside it
-   match it instead of the page. */
 :root {
   --card-border: var(--color-border);
   --overlay-border: var(--color-border);
@@ -103,23 +86,17 @@
   @apply bg-text-selection text-fg-on-text-selection;
 }
 
-/* Icon stroke width axis. Applies to stroke-based icon libraries only; the
-   fallback is each library's own default, so an unset var changes nothing.
-   Hugeicons paths carry their own stroke-width attribute, so the rule must
-   target the paths (via the wrapper's `hugeicon` marker class), not the root. */
 .lucide,
 .tabler-icon {
   stroke-width: var(--icon-stroke-width, 2);
 }
+/* Hugeicons paths carry their own stroke-width attribute, so the rule must
+   target the paths, not the root. */
 .hugeicon,
 .hugeicon * {
   stroke-width: var(--icon-stroke-width, 1.5);
 }
 
-/* Cursor axes: what the pointer becomes over enabled, pending, disabled and
-   draggable controls. Dragging follows the interactive cursor unless the
-   design system opts into the grab hands. Motion has no tokens: each
-   component ships plain duration and ease classes. */
 @theme {
   --cursor-interactive: pointer;
   --cursor-pending: default;
@@ -128,8 +105,6 @@
   --cursor-dragging: var(--cursor-interactive);
 }
 
-/* Focus axes: the ring controls wear (color, width, offset in bg, duo inner
-   stroke) and the layer fields wear (a muted halo by default). */
 @theme {
   --focus-ring-color: var(--color-border-focus);
   --focus-ring-width: 2px;
@@ -141,10 +116,6 @@
   --focus-input-inner: 0px;
 }
 
-/* Disabled treatment axis: what a disabled control recolors to. Every site
-   reads one of these with its own color as the fallback
-   (`disabled:bg-(--disabled-bg,var(--color-danger))`), so a design system that
-   only dims (shadcn) unsets them; Material re-points them to ink alphas. */
 @theme {
   --disabled-bg: var(--color-disabled);
   --disabled-fg: var(--color-fg-disabled);

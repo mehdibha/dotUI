@@ -57,9 +57,7 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
         },
       },
     },
-    /* Material 3's cut track: the fill draws the inactive track on both sides
-       of itself (4px gaps, clipped by the track) so the sliding indeterminate
-       segment keeps its gaps too, plus a stop dot at the track's end. */
+    /* The cut fill draws the inactive track on both sides of itself so the sliding indeterminate segment keeps its gaps. */
     gap: {
       none: {
         slots: {

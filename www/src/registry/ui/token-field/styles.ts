@@ -11,7 +11,6 @@ const { useStyles, styles } = createStyles(tokenFieldMeta, {
         "transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease)",
         "focus:border-border-focus focus:focus-input",
         "data-disabled:cursor-disabled data-disabled:border-(--disabled-border,var(--color-border-control)) data-disabled:bg-(--disabled-bg,var(--color-field)) data-disabled:text-(--disabled-fg,currentColor)",
-        // Placeholder for the empty contenteditable, driven by data-placeholder.
         "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
       ],
       token: [

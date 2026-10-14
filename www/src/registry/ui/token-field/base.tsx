@@ -26,12 +26,7 @@ interface TokenFieldProps extends Omit<
   className?: string
 }
 
-/**
- * A token field lets users enter text with inline tokens — mentions, tags, or
- * object references. The field root provides the label and description slots;
- * compose a `TokenInput` for the editable area, and a `Label` before it when
- * you want a visible label.
- */
+/** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
 function TokenField({ className, ...props }: TokenFieldProps) {
   const { root } = useStyles()()
   return <TokenFieldPrimitive className={root({ className })} {...props} />
@@ -46,17 +41,11 @@ interface TokenInputProps extends Omit<
   /** Text shown while the field is empty. */
   placeholder?: string
   className?: string
-  /**
-   * Renders each inline token. @default a `Token` with the segment's text
-   */
+  /** Renders each inline token. @default a `Token` with the segment's text */
   children?: TokenInputPrimitiveProps["children"]
 }
 
-/**
- * The editable area of a `TokenField`: a content-editable surface that renders
- * the value's text and inline tokens. Tokens render as `Token`s unless a
- * render function is provided.
- */
+/** The content-editable area of a `TokenField`. */
 function TokenInput({
   placeholder,
   className,

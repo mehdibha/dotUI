@@ -11,8 +11,7 @@ const inputMeta = {
     },
   ],
   dependencies: ["react-aria", "react-stately"],
-  // Shared by every field: TextArea, SearchField, Combobox, DateField and
-  // NumberField all render through Input / InputGroup.
+  // Shared by every field: TextArea, SearchField, Combobox, DateField and NumberField render through Input / InputGroup.
   params: {
     style: {
       default: "outline",

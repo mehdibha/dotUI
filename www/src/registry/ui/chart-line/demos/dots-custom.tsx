@@ -15,8 +15,6 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-/* Ring markers instead of the built-in `points` dots. Reusing the line's `z`
-   keeps the pair in one focus group. */
 const rings = dot(data, {
   x: "month",
   y: "desktop",

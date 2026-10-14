@@ -22,9 +22,7 @@ import type {
   RangeCalendarProps,
 } from "./base"
 
-// The `weekdays` param is source the shipped file carries (meta.ts `source`);
-// here it rides the design-system context, so every default composition
-// below has to reach these wrappers, not base's.
+// `weekdays` rides the design-system context here, so every default composition below must use these wrappers, not base's.
 const CalendarGridHeader = ({
   children,
   ...props

@@ -2,11 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import tabsMeta from "./meta"
 
-/* The `variant` prop is per-instance API; the `style` param sets its default
-   for the design system. Every look ships, so each value only retargets
-   `defaultVariants`. The variants carry geometry; `color` paints the selected
-   tab's ink per look — the neutral text (and its washes) or the accent. */
-
 const { useStyles, styles } = createStyles(tabsMeta, {
   base: {
     slots: {
@@ -53,8 +48,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         },
         enclosed: {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
-          // The selected tab steps one pixel onto the list's edge and paints
-          // over it, so tab and content read as one surface.
+          // The selected tab overlaps the list's edge by a pixel so tab and content read as one surface.
           tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
           selectionIndicator: "hidden",
         },
@@ -102,8 +96,6 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           },
         },
       },
-      // The tinted signature (Material 3's segmented buttons, Radix Themes'
-      // soft tabs): accent text over an accent wash, a solid accent line.
       accent: {
         variants: {
           variant: {

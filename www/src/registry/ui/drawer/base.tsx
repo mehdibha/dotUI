@@ -41,8 +41,7 @@ function resolveClassName<TState>(
   return typeof className === "function" ? className(state) : className
 }
 
-// The popup is a presentation container: the dialog semantics belong to the
-// <Dialog> rendered inside it.
+// Dialog semantics belong to the <Dialog> rendered inside, so the popup drops its own.
 function DrawerPopupElement({
   "aria-describedby": _ariaDescribedBy,
   "aria-labelledby": _ariaLabelledBy,
@@ -50,12 +49,7 @@ function DrawerPopupElement({
   swiping,
   ...props
 }: DrawerPopupRenderProps & { swiping: boolean }) {
-  // A swipe that starts on a pressable (menu item, button) never cancels the
-  // react-aria press: the content moves with the finger, so the pointer stays
-  // over the target, and the drawer claims the gesture before the browser
-  // would fire pointercancel. Releasing then fires onPress. Base UI arms a
-  // swipe on every touchstart, so cancel in-flight presses only once the
-  // finger actually drags, the way the platform does when a gesture takes over.
+  // Base UI arms a swipe on every touchstart, so cancel in-flight react-aria presses only once the finger actually drags.
   React.useEffect(() => {
     if (!swiping) return
     let origin: { x: number; y: number } | undefined
@@ -128,15 +122,13 @@ function Drawer({
       ? localState
       : contextState
 
-  // Joins react-aria's overlay stack, so a tap outside dismisses only the
-  // topmost layer (a nested drawer, a popover opened inside).
+  // Joins react-aria's overlay stack so an outside tap dismisses only the topmost layer.
   useOverlay(
     { isOpen: state.isOpen, isDismissable, onClose: state.close },
     popupRef,
   )
 
-  // And its hiding, as its popovers do: opened from a modal, the drawer isn't
-  // made inert by it, and makes what's under it inert instead.
+  // Like its popovers: opened from a modal, the drawer isn't made inert by it, and makes what's under it inert instead.
   React.useEffect(() => {
     if (state.isOpen && layer)
       return ariaHideOutside([layer], { shouldUseInert: true })
@@ -169,8 +161,6 @@ function Drawer({
         }}
         swipeDirection={swipeDirectionMap[placement]}
       >
-        {/* Keyboard-aware focus/scroll handling: publishes --drawer-keyboard-inset
-            on the viewport while the software keyboard is open. */}
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>

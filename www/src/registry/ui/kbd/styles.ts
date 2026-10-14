@@ -2,9 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import kbdMeta from "./meta"
 
-/* The base is the key's layout only; each treatment ships its own chrome
-   and type, so no value fights another's classes. */
-
 const { useStyles, styles } = createStyles(kbdMeta, {
   base: {
     slots: {

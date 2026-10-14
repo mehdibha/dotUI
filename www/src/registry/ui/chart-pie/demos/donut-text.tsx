@@ -30,8 +30,6 @@ export default function ChartPieDonutText() {
       innerRadius={0.6}
       ariaLabel="Visitors by browser, with the total in the centre"
     >
-      {/* The hole is an HTML overlay, so the total is real text, not a label
-          mark competing for focus. */}
       <div className="flex h-full flex-col items-center justify-center">
         <span className="text-3xl font-bold">{total}</span>
         <span className="text-sm text-fg-muted">Visitors</span>

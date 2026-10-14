@@ -2,9 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import toggleButtonGroupMeta from "./meta"
 
-/* Synced with group: same `separator` param — change both together. Divider
-   and none act between two adjacent buttons; the divider hides next to the
-   selected segment, the way iOS drops the hairlines around the raised chip. */
+/* Synced with group: same `separator` param — change both together. */
 
 const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
   base: {

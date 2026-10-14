@@ -66,7 +66,6 @@ const { useStyles, styles } = createStyles(sliderMeta, {
             "size-(--slider-thumb-size) border-2 border-border-control bg-(--surface-bg,var(--color-bg)) shadow-(--studio-slider-thumb-shadow)",
         },
       },
-      // M3's handle: the fill color, with the track cut away around it.
       bar: {
         slots: {
           thumb:

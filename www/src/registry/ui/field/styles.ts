@@ -66,10 +66,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
       },
     },
   },
-  /* Invalid treatment: the danger border alone (shadcn), an icon on the
-     message line (Material, Spectrum, Polaris), or GOV.UK's bar with the
-     message above the field. The bar itself is a styles.css rule on every
-     `data-field` root, driven by the value's vars. */
+  /* The bar itself is a styles.css rule on every `data-field` root, driven by these vars. */
   params: {
     error: {
       border: {},

@@ -1,5 +1,3 @@
-/* -------------- Radius -------------- */
-/* Every rung is a ratio of the base length `--radius` (= --radius-lg). */
 @theme inline {
   --radius-xs: calc(var(--radius) * 0.25);
   --radius-sm: calc(var(--radius) * 0.5);

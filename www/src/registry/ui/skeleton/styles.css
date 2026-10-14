@@ -5,8 +5,7 @@
   --studio-skeleton-loop-ease: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-/* Theme animations, because the painter reaches its loop through a var:
-   Tailwind drops a theme keyframe that no used `--animate-*` names. */
+/* Declared here because the painter reaches its loop through a var, and Tailwind drops a theme keyframe no used `--animate-*` names. */
 @theme inline {
   --animate-skeleton-shimmer: skeleton-shimmer
     var(--studio-skeleton-loop-duration) var(--studio-skeleton-loop-ease)
@@ -15,11 +14,7 @@
     var(--studio-skeleton-loop-ease) infinite;
 }
 
-/* One painter for every placeholder (the root applies it to descendants via
-   its variants). The modifier sets the inherited image and loop the painter
-   runs — pulse and none clear the image, and none the loop, so a nested
-   skeleton never inherits an outer one; base.tsx only keeps every
-   placeholder's loop in phase. */
+/* Modifiers always set the image and loop vars so a nested skeleton never inherits an outer one's. */
 @utility skeleton {
   position: relative;
   overflow: hidden;

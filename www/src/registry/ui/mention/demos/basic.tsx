@@ -18,8 +18,6 @@ const usernames = [
   "nataliasmith",
 ].map((id) => ({ id }))
 
-// A bare TokenInput — no visible label. Use `aria-label` for the accessible
-// name, or add a <Label> when you want a visible one.
 export default function Demo() {
   return (
     <Mention allowsNewlines className="w-[320px]">

@@ -35,8 +35,6 @@ const { useStyles, styles } = createStyles(avatarMeta, {
     },
   },
   params: {
-    /* Tinted paints by the `data-tint` index the fallback hashes from its
-       text, so neighbours in a stack land on different washes. */
     fallback: {
       neutral: {},
       tinted: {

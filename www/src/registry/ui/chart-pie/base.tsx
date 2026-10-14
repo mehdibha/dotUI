@@ -27,7 +27,6 @@ import {
 
 const TAU = Math.PI * 2
 
-// Radii are ratios of the resolved layout radius, never pixels.
 const pieDefaults = {
   radiusRatio: 0.9,
   innerRadius: 0,

@@ -5,8 +5,6 @@
     var(--studio-loader-loop-ease) infinite;
 }
 
-/* One cycle times every style: the ring's turn (on the loop's curve), the
-   blades' stepped turn, the dots' breath. */
 @theme inline {
   --animate-loader-blades: loader-blades var(--studio-loader-loop-duration)
     steps(8, end) infinite;
@@ -14,8 +12,6 @@
     ease-in-out infinite;
 }
 
-/* Blades step the whole dial round (the Apple/Geist mechanic); the opacity
-   ramp is static on the spokes. */
 @keyframes loader-blades {
   to {
     transform: rotate(1turn);

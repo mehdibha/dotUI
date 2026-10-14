@@ -2,11 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import badgeMeta from "./meta"
 
-/* Each intent sets the chip's palette as vars; `appearance` picks which of
-   them paint. The `style` param only moves the appearance default, so a
-   product that mixes chips keeps the prop. The neutral tint is a half-strength
-   wash: its fill is already the wash tone, so `muted` alone would equal solid.
-   Synced with tag-group. */
+/* Synced with tag-group. Neutral's tint is a 50% wash because its fill is already the wash tone, so plain `muted` would match solid. */
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {

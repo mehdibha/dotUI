@@ -17,8 +17,7 @@ const isSkeletonLoop = (animation: Animation) =>
   animation instanceof CSSAnimation &&
   animation.animationName.startsWith("skeleton-")
 
-/* CSS runs the loop; this pins every placeholder's to one phase, so ones
-   that mount later don't pulse out of step. */
+/* Pins every placeholder's CSS loop to one phase so later mounts don't pulse out of step. */
 function useSyncedSkeletonAnimation(
   ref: React.RefObject<HTMLElement | null>,
   isLoading: boolean,

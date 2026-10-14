@@ -2,10 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import tagGroupMeta from "./meta"
 
-/* The fill and its disabled recolor live in the `style` param so each value
-   ships only its own classes. Soft is a half-strength wash: the neutral fill
-   is already the wash tone, so a full `bg-muted` would equal solid.
-   Synced with badge — change both together. */
+/* Synced with badge — change both together. Soft is a 50% wash because the neutral fill is already the wash tone. */
 
 const { useStyles, styles } = createStyles(tagGroupMeta, {
   base: {
@@ -18,17 +15,12 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
       ],
       tag: [
         "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--studio-tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors duration-(--studio-tag-state-duration) ease-(--studio-tag-state-ease) select-ui data-react-aria-pressable:cursor-interactive",
-        // svg
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        // focus
         "focus-visible:focus-ring",
-        // link variant (when href)
         "data-href:cursor-interactive",
-        // disabled
         "data-selection-mode:disabled:cursor-disabled",
 
         "text-xs/relaxed **:[svg]:not-with-[size]:size-3",
-        // remove button
         "has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
       ],
     },

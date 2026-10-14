@@ -7,8 +7,6 @@ import type { CommonIconProps } from "./create-icon"
 
 type IconModule = Record<string, unknown>
 
-// Each generated module exports plain icon components for the icons the
-// registry uses (hugeicons data is wrapped into components at generation).
 const libraryImporters = {
   hugeicons: () => import("../__generated__/__hugeicons__"),
   tabler: () => import("../__generated__/__tabler__"),
@@ -30,7 +28,6 @@ export function createIconLoader(libraryName: LoadableLibrary) {
   }: {
     name: string
     fallback: React.ComponentType<CommonIconProps>
-    /** Forwarded to weight-capable libraries (phosphor); dropped by the lucide fallback path. */
     weight?: string
   } & CommonIconProps) {
     modulePromise ??= libraryImporters[libraryName]()

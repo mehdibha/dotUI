@@ -2,8 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import accordionMeta from "./meta"
 
-/* The expand's timing is the studio's (styles.css); the collapsible rides on
-   it, and the marker turns in step with the panel. */
 const expand =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
@@ -31,7 +29,6 @@ const { useStyles, styles } = createStyles(accordionMeta, {
   },
   params: {
     motion: {
-      // shadcn's: the height alone.
       expand: {
         slots: {
           marker: [expand, "transition-transform"],

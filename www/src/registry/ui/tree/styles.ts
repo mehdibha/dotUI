@@ -29,9 +29,6 @@ const { useStyles, styles } = createStyles(treeMeta, {
       label: "flex min-w-0 flex-1 items-center gap-1.5",
     },
     variants: {
-      // A row is interactive when pressing it does something — it can be
-      // selected, or it has children to expand. Inert rows (e.g. a leaf in a
-      // non-selectable tree) keep the default cursor and no hover highlight.
       interactive: {
         true: {
           item: "cursor-interactive hover:bg-muted",

@@ -87,7 +87,6 @@ function SidebarProvider({
     }
   }, [isMobile, isOpen, setOpen])
 
-  // Toggle with ⌘B / Ctrl+B.
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (
@@ -141,18 +140,11 @@ function SidebarProvider({
 
 type SidebarCollapsible = "offcanvas" | "icon" | "none"
 
-// Exposes the owning Sidebar's `collapsible` mode to descendants (e.g. so menu
-// buttons only show their collapsed tooltip when the sidebar actually shrinks to
-// icons, not for offcanvas/none).
 const SidebarItemContext = React.createContext<{
   collapsible: SidebarCollapsible
 }>({ collapsible: "offcanvas" })
 
-/**
- * Wraps the sidebar's children so a `<Heading>` (e.g. in `SidebarHeader`) labels
- * the nav landmark, while content/footer headings are reset (`null`) so they don't
- * claim that label — each `SidebarGroup` re-establishes its own labelling id.
- */
+// Lets a header `<Heading>` label the nav landmark; content/footer reset the id so their headings don't claim it.
 function SidebarNav({
   headingId,
   collapsible,
@@ -175,10 +167,7 @@ function SidebarNav({
 
 interface SidebarProps extends React.ComponentProps<"nav"> {
   side?: "left" | "right"
-  /**
-   * The visual style of the sidebar. `inset` is designed for `side="left"`.
-   * @default 'sidebar'
-   */
+  /** `inset` is designed for `side="left"`. @default 'sidebar' */
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: SidebarCollapsible
 }
@@ -565,8 +554,6 @@ function SidebarMenuButton({
       ? (tooltip as TooltipContentProps)
       : { children: tooltip as React.ReactNode }
 
-  // Only surface the tooltip when the sidebar is actually shrunk to icons —
-  // not for `offcanvas` (whole panel hidden) or `none` (labels still visible).
   const showTooltip =
     state === "collapsed" && collapsible === "icon" && !isMobile
 
@@ -634,8 +621,7 @@ function SidebarMenuSkeleton({
 }: SidebarMenuSkeletonProps) {
   const { menuSkeleton, menuSkeletonIcon, menuSkeletonText } = useStyles()()
 
-  // Deterministic per-instance width (50%–90%) derived from the React id so SSR
-  // and client render identically — Math.random() here would hydrate-mismatch.
+  // Derived from the React id, not Math.random(), so SSR and client widths match.
   const id = React.useId()
   const width = React.useMemo(() => {
     let hash = 0

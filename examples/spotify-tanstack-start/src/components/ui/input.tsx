@@ -236,11 +236,7 @@ interface DateSegmentProps extends React.ComponentProps<
   typeof DateFieldPrimitive.DateSegment
 > {}
 
-// Date/time segments are formatted with `Intl`, whose separator whitespace differs between the
-// Node SSR runtime and the browser: e.g. the AM/PM separator is a narrow no-break space (U+202F)
-// on Node but a regular space in the browser, and date ranges use a thin space (U+2009). Folding
-// these exotic spaces to a regular space makes server and client render identical text, which
-// avoids a hydration mismatch on the literal segments.
+// Intl's separator whitespace (U+202F, U+2009) differs between Node and the browser; folding it to a plain space avoids hydration mismatches.
 const normalizeSegmentWhitespace = (text: string) =>
   text.replace(/[\u00A0\u2007\u2009\u202F]/g, " ");
 

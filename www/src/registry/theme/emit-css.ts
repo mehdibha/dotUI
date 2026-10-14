@@ -1,17 +1,3 @@
-/**
- * Render the semantic vocabulary to CSS.
- *
- * Two renderings of the same vocabulary:
- * - **Referenced** (`resolveTarget`, `emitCss`, `emitDarkOverridesCss`) —
- *   tokens point at the primitive ramps (`var(--neutral-25)`). This is what
- *   the site and the studio run on: the ramps stay live so scoped previews
- *   and per-token remaps recompute from them. Generated into
- *   `base/colors.css` by `pnpm build:registry`.
- * - **Literal** (`resolveTargetLiteral`, `semanticLiterals`) — every token is
- *   flattened to its `oklch()` value per mode, mixes computed. This is what
- *   users receive: the exported theme ships semantic tokens only, no ramps.
- */
-
 import {
   fitSrgb,
   mixOklab,
@@ -28,7 +14,6 @@ import type {
   SemanticVocabulary,
 } from "./types"
 
-/** Resolve a single {@link SemanticTarget} to its CSS value string. */
 function resolveTarget(target: SemanticTarget): string {
   if ("ref" in target) return `var(--${target.ref.palette}-${target.ref.step})`
   if ("on" in target) return `var(--on-${target.on.palette}-${target.on.step})`
@@ -72,7 +57,6 @@ export function resolveTargetLiteral(
   return oklchCss(fitSrgb(mixed))
 }
 
-/** Pick a token's target for one mode. */
 function targetFor(token: SemanticToken, mode: ModeName): SemanticTarget {
   return isPerMode(token.target) ? token.target[mode] : token.target
 }
@@ -101,23 +85,20 @@ function isPerMode(
   return "light" in target && "dark" in target
 }
 
-/** Pick the base (light) target of a token. */
 function baseTarget(target: SemanticToken["target"]): SemanticTarget {
   return isPerMode(target) ? target.light : target
 }
 
-/** Resolve a token's base (light) target to its CSS value. */
 function resolveTokenValue(token: SemanticToken): string {
   return resolveTarget(baseTarget(token.target))
 }
 
 export interface EmitCssOptions {
-  /** Indentation unit (default one tab, matching the repo). */
+  /** Indentation unit (default one tab). */
   indent?: string
   /**
-   * Wrapping selector for the block (default Tailwind's `@theme`). Pass a
-   * concrete selector (e.g. `[data-dotui-scope="x"]`) to re-declare the
-   * semantic layer on a subtree — see `DesignSystemProvider`'s scoped mode.
+   * Wrapping selector (default `@theme`); a concrete selector such as
+   * `[data-dotui-scope="x"]` re-declares the semantic layer on that subtree.
    */
   selector?: string
 }
@@ -138,9 +119,8 @@ export function emitCss(
 }
 
 /**
- * Emit the `.dark` re-points for tokens whose target differs per mode.
- * Returns an empty string when the vocabulary has none (the common case —
- * primitives flip per mode, so most semantic tokens are mode-agnostic).
+ * Emit the `.dark` re-points for tokens whose target differs per mode, or an
+ * empty string when there are none.
  */
 export function emitDarkOverridesCss(
   vocab: SemanticVocabulary,

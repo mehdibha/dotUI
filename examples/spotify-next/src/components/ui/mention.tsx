@@ -38,36 +38,20 @@ interface MentionProps extends Omit<
   TokenFieldProps,
   "children" | "role" | "slot"
 > {
-  /**
-   * The character(s) that open the suggestions list: a string for a single
-   * trigger, or a regular expression matching several (e.g. `/[@/]/` for
-   * `@`-mentions and `/`-commands). @default "@"
-   */
+  /** Opens the suggestions: a string, or a RegExp matching several triggers (e.g. `/[@/]/`). @default "@" */
   trigger?: string | RegExp;
-  /**
-   * Maps the key of a selected item to the text inserted after the trigger
-   * character. @default String(key)
-   */
+  /** Maps a selected item's key to the text inserted after the trigger. @default String(key) */
   getItemText?: (key: Key) => string;
   /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
   placement?: PopoverProps["placement"];
-  /**
-   * The composed input and suggestions. A function receives the active trigger
-   * and query, so the suggestions can depend on which trigger the user typed.
-   */
+  /** The input and suggestions; a function receives the active trigger and query. */
   children?: React.ReactNode | ((state: MentionState) => React.ReactNode);
 }
 
 const escapeRegExp = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-/**
- * Wires a mention experience onto the `TokenField` component: typing a trigger
- * character opens a `Menu` of suggestions (filtered via React Aria's
- * `Autocomplete`) in a caret-anchored `Popover`, and selecting an item inserts
- * it as an inline token. Consumers compose a `TokenInput` plus a `Popover` +
- * `Menu`/`MenuItem`; the value is a `TokenFieldValue` of text and tokens.
- */
+/** Typing a trigger opens a caret-anchored `Menu` of suggestions; selecting one inserts it as an inline token. */
 function Mention({
   trigger = "@",
   getItemText = (key) => String(key),
@@ -82,8 +66,6 @@ function Mention({
   const { startsWith } = AutocompletePrimitive.useFilter({
     sensitivity: "base",
   });
-  // Mention always controls the TokenField: it needs the value (and its caret
-  // position) locally to find the active trigger.
   const [value, setValue] = useControlledState(
     valueProp,
     defaultValue ?? emptyValue,
@@ -91,9 +73,7 @@ function Mention({
   );
   const rootRef = React.useRef<HTMLDivElement>(null);
 
-  // A trigger preceded by start-of-text or whitespace; string triggers get the
-  // guard built in, regex triggers bring their own. The `g` flag is dropped so
-  // `exec` below stays stateless.
+  // The `g` flag is dropped so `exec` stays stateless.
   const triggerPattern = React.useMemo(
     () =>
       typeof trigger === "string"
@@ -102,10 +82,6 @@ function Mention({
     [trigger],
   );
 
-  // The active mention: the nearest trigger before the caret with no
-  // whitespace (or token) between it and the caret. Caret moves surface as
-  // value changes (TokenField stores the caret in the value), so this stays
-  // current while typing, clicking, and arrowing.
   const active = React.useMemo(() => {
     const anchor = value.findText(
       value.caretPosition,
@@ -114,7 +90,6 @@ function Mention({
     );
     if (!anchor) return null;
     const slice = value.slice(anchor, value.caretPosition);
-    // A token between the trigger and the caret ends the mention.
     if (slice.segments.some((segment) => segment.type === "token")) return null;
     const raw = slice.toString();
     const match = triggerPattern.exec(raw);
@@ -129,8 +104,6 @@ function Mention({
     };
   }, [value, triggerPattern]);
 
-  // The mention the user explicitly dismissed (Escape / outside press), so a
-  // caret move alone doesn't immediately reopen the same query.
   const [dismissedKey, setDismissedKey] = React.useState<string | null>(null);
   const isOpen = active != null && dismissedKey !== active.key;
 
@@ -148,13 +121,10 @@ function Mention({
     [],
   );
 
-  // Replace the active query (trigger included) with an inline token plus a
-  // trailing space, and drop the caret after it.
   const insert = React.useCallback(
     (key: Key) => {
       if (!active) return;
-      // TokenField only applies the stored caret position while focused, so
-      // refocus first if the menu interaction moved focus.
+      // TokenField only applies the stored caret position while focused, so refocus first.
       const input = getInput();
       if (input && document.activeElement !== input) input.focus();
       setValue((value) =>
@@ -176,7 +146,6 @@ function Mention({
     [active, getItemText, setValue, getInput],
   );
 
-  // Anchor the popover to the trigger character rather than the field.
   const getTargetRect = React.useCallback(
     (target: Element) => {
       const input = getInput();
@@ -206,8 +175,7 @@ function Mention({
               placement,
               trigger: "MenuTrigger",
               getTargetRect,
-              // Anchored to the caret, not the field: drop the field's width
-              // as the popover's minimum so it sizes to its suggestions.
+              // Anchored to the caret, so drop the field's width as the popover's minimum.
               style: { "--trigger-width": "0px" } as React.CSSProperties,
             },
           ],

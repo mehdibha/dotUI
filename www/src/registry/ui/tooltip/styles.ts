@@ -2,11 +2,9 @@ import { createStyles } from "@/lib/styles"
 
 import tooltipMeta from "./meta"
 
-/* The entrance's timing is the studio's (styles.css). */
 const entrance =
   "transition-[transform,opacity,scale] duration-(--studio-tooltip-enter-duration) ease-(--studio-tooltip-ease) will-change-[transform,opacity,scale] exiting:duration-(--studio-tooltip-exit-duration) exiting:ease-(--studio-tooltip-exit-ease) motion-reduce:transition-none"
 
-/* `--offset` shifts the tooltip toward its trigger, whichever side it lands. */
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
@@ -45,7 +43,6 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       },
     },
     motion: {
-      // shadcn's: in from 8px off, toward the trigger; out in place.
       scale: {
         slots: {
           content: [

@@ -13,11 +13,6 @@ export type CreateContextReturn<T> = [
   (consumerName: string) => T,
 ];
 
-/**
- * Creates a named context, provider, and hook.
- *
- * @param options create context options
- */
 export function createContext<ContextType>(options: CreateContextOptions = {}) {
   const { name, strict = true } = options;
 
@@ -43,71 +38,27 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
   return [Context, useContext] as CreateContextReturn<ContextType>;
 }
 
-/**
- * Creates a variant context system for react-aria components.
- *
- * @param ariaContext - The react-aria context to wrap (e.g., ToggleButtonContext)
- * @returns A tuple of [Provider, useContextProps] hook
- *
- * @example
- * ```tsx
- * const [ToggleButtonProvider, useContextProps] =
- *   createVariantsContext<ToggleButtonVariants, ToggleButtonProps>(AriaToggleButtonContext);
- * ```
- */
 export function createVariantsContext<
   TVariants extends object,
   TAriaProps extends SlotProps,
   TAriaElement extends Element = Element,
 >(ariaContext: React.Context<ContextValue<TAriaProps, TAriaElement>>) {
-  // Create a context for our custom variant props
   const VariantsContext = React.createContext<Partial<TVariants>>({});
 
-  // Provider component that wraps both contexts
-  type ProviderProps = Partial<TVariants> &
-    Partial<TAriaProps> & {
-      children: React.ReactNode;
-    };
+  const Provider = ({
+    children,
+    ...variants
+  }: Partial<TVariants> & { children: React.ReactNode }) => (
+    <VariantsContext.Provider value={variants as Partial<TVariants>}>
+      {children}
+    </VariantsContext.Provider>
+  );
 
-  const Provider = ({ children, ...props }: ProviderProps) => {
-    // Separate variant props from react-aria props
-    const variantKeys = Object.keys(props).filter((key) => {
-      // This is a simple heuristic - you might want to pass variant keys explicitly
-      // For now, we assume all props that aren't standard HTML/React props are variants
-      return !["children", "value"].includes(key);
-    });
-
-    const variantProps: Partial<TVariants> = {};
-    const ariaProps: Record<string, unknown> = {};
-
-    Object.entries(props).forEach(([key, value]) => {
-      if (variantKeys.includes(key)) {
-        variantProps[key as keyof TVariants] =
-          value as TVariants[keyof TVariants];
-      } else {
-        ariaProps[key] = value;
-      }
-    });
-
-    return (
-      <VariantsContext.Provider value={variantProps}>
-        <ariaContext.Provider
-          value={ariaProps as ContextValue<TAriaProps, TAriaElement>}
-        >
-          {children}
-        </ariaContext.Provider>
-      </VariantsContext.Provider>
-    );
-  };
-
-  // Hook to merge context variants with local props
   function useContextProps<TProps extends Partial<TVariants> & SlotProps>(
     localProps: TProps,
   ): TProps {
     const contextVariants = React.useContext(VariantsContext);
     const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {};
-
-    // Merge context with local props (local props win)
     return mergeProps(contextVariants, ariaProps, localProps) as TProps;
   }
 

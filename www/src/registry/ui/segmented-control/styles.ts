@@ -12,9 +12,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
         "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
-      // The sliding pill. SelectionIndicator positions/sizes it over the selected
-      // item; the transition makes it glide. `inset-0` + `isolate` on the item sit
-      // it behind the content (which is `z-10`).
+      // `isolate` on the item keeps the pill behind the `z-10` content.
       indicator:
         "pointer-events-none absolute inset-0 rounded-(--studio-segmented-control-item-radius) transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
       itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
@@ -38,9 +36,6 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     },
   },
   params: {
-    // How the chip reads against the track: raised lifts a page-colored chip
-    // on shadow (the hairline ring keeps it on dark wells), flat fills
-    // tone-on-tone, inverse snaps to full contrast.
     selected: {
       raised: {
         slots: {

@@ -2,11 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import groupMeta from "./meta"
 
-/* Synced with toggle-button-group: same `separator` param — change both
-   together. Auto lets the segments' own edges divide (bordered buttons share
-   a hairline, fills abut); divider and none strip the borders between two
-   adjacent buttons, divider drawing an inset hairline in their place. Seams
-   next to a text, input or select child always stay auto. */
+/* Synced with toggle-button-group: same `separator` param — change both together. */
 
 const { useStyles, styles } = createStyles(groupMeta, {
   base: {

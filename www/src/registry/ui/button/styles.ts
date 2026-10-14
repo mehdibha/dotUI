@@ -2,10 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import buttonMeta from "./meta"
 
-/* Each `style` is a real system's recipe, copied whole: its fills, edges,
-   hover and press. The base variants carry only what every style shares;
-   quiet and link look the same in all of them. Synced with toggle-button —
-   change both together. */
+/* Synced with toggle-button — change both together. */
 
 const { useStyles, styles } = createStyles(buttonMeta, {
   base: {
@@ -82,7 +79,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
   },
   params: {
     style: {
-      // dotUI's own: solid fills, a bordered neutral.
       flat: {
         variants: {
           variant: {
@@ -96,8 +92,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
-      // an inset top line on press. The rim lightens in dark.
       hairline: {
         variants: {
           variant: {
@@ -112,8 +106,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // Untitled UI: an inner dark ring, a white top rim fading downward, an
-      // xs drop. No press.
       "rim-light": {
         variants: {
           variant: {
@@ -128,8 +120,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // Clerk: a same-color ring, two tight drops, a top sheen that fades on
-      // hover (the fill lightens) and returns on press.
       gloss: {
         variants: {
           variant: {
@@ -144,8 +134,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // Shopify Polaris: a deep inset rim and a bottom sheen; press inverts
-      // the bevel and drops the label 1px.
       bevel: {
         variants: {
           variant: {
@@ -160,8 +148,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // Duolingo: a slab under the button in a darker shade of its fill;
-      // press sinks the face by the whole slab.
       ledge: {
         variants: {
           variant: {

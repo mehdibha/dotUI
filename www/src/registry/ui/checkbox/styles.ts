@@ -36,10 +36,7 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
       },
     },
   },
-  /* The card treatment — synced with radio-group and switch, change all three
-     together. Every value paints with the selection tokens, so the card
-     follows the family fill. Start keeps the control where the markup puts
-     it. */
+  /* Card treatment: synced with radio-group and switch — change all three together. */
   params: {
     "card-selected": {
       outline: {

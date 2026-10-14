@@ -6,8 +6,6 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { cn } from "@/registry/lib/utils"
 import { fieldStyles } from "@/registry/ui/field"
 
-/* -----------------------------------------------------------------------------------------------*/
-
 interface ComboboxProps<
   T extends object,
   M extends "single" | "multiple" = "single",
@@ -33,8 +31,6 @@ const Combobox = <
     />
   )
 }
-
-/* -----------------------------------------------------------------------------------------------*/
 
 interface ComboboxValueProps<
   T extends object,

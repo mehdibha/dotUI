@@ -48,7 +48,6 @@ const [AvatarContext, useAvatarContext] = createContext<{
   strict: true,
 });
 
-/** A stable 0–3 index from the fallback text, so tinted fallbacks differ per entity. */
 function tintOf(children: React.ReactNode): number {
   const text =
     typeof children === "string" || typeof children === "number"

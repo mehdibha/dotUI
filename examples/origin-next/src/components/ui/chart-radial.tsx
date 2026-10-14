@@ -123,7 +123,6 @@ export function radialBarChartSpec<TDatum>(
   const marks: PolarMarkLayer[] = [];
 
   if (Array.isArray(options.value)) {
-    // One ring, cumulative angles — segments stack around the sweep.
     const row = options.data[0];
     let cursor = 0;
     const segments: RadialSegment[] = options.value.map((field) => {

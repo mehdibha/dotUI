@@ -7,8 +7,7 @@ import type { ButtonProps } from "@/registry/ui/button"
 
 import { SelectTrigger as ChevronTrigger, SelectValue } from "./base"
 
-// Base's SelectTrigger with the up-down caret — the shipped file gets the
-// swap from `caret.source` (meta.ts).
+// The shipped file gets this caret swap from `caret.source` (meta.ts).
 const DoubleTrigger = (props: ButtonProps) => {
   return (
     <Button {...props}>

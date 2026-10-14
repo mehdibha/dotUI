@@ -28,8 +28,6 @@ const commands: Suggestion[] = [
   { id: "commit", description: "Commit staged changes" },
 ]
 
-// A regex trigger matches several characters; the render-function children
-// receive the active trigger, so the suggestions depend on which one was typed.
 export default function Demo() {
   return (
     <Mention

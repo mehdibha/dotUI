@@ -15,8 +15,6 @@ const { root, logo } = qrCodeStyles()
 
 const R = 0.5
 
-// A corner is rounded when both of its orthogonal neighbors are light, so
-// horizontal/vertical runs of modules merge into capsules.
 function modulePath(
   x: number,
   y: number,
@@ -63,7 +61,6 @@ function QRCode({
       ecc: errorCorrection ?? (hasLogo ? "H" : "M"),
       border: 0,
     })
-    // Center modules are skipped so the logo sits in clean whitespace.
     const reserved = hasLogo ? Math.ceil(qr.size * 0.3) : 0
     const start = Math.floor((qr.size - reserved) / 2)
     const end = start + reserved

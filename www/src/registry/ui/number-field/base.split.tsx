@@ -44,8 +44,6 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   typeof GroupPrimitive.Group
 > {}
 
-// One stepper at each end. Parts are placed by slot, so the authored order
-// never matters.
 const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
   return (
     <GroupPrimitive.Group

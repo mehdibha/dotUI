@@ -145,9 +145,7 @@ interface CalendarHeadingProps extends React.ComponentProps<
   typeof CalendarPrimitive.Heading
 > {}
 const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
-  // The heading text (e.g. a "June – July 2026" range) is formatted with `Intl`, whose separator
-  // whitespace differs between the Node SSR runtime and the browser, causing a hydration mismatch.
-  // The difference is an invisible space-variant, so suppress the otherwise-harmless warning.
+  // Intl's separator whitespace differs between Node and the browser, so the heading text can hydrate-mismatch.
   return (
     <CalendarPrimitive.Heading
       data-calendar-heading=""

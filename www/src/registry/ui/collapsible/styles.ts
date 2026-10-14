@@ -2,7 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import collapsibleMeta from "./meta"
 
-/* The accordion's expand timing (accordion/styles.css). */
 const expand =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 

@@ -2,9 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import toggleButtonMeta from "./meta"
 
-/* Synced with button: same base shape, same `style` recipes — change both
-   together. `selected` is the toggle's own look, with its own hover/press
-   feedback. */
+/* Synced with button: same base shape and `style` recipes — change both together. */
 
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
@@ -75,7 +73,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
   },
   params: {
     style: {
-      // dotUI's own: solid fills, a bordered neutral.
       flat: {
         variants: {
           variant: {
@@ -86,8 +83,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
-      // an inset top line on press. The rim lightens in dark.
       hairline: {
         variants: {
           variant: {
@@ -98,8 +93,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // Untitled UI: an inner dark ring, a white top rim fading downward, an
-      // xs drop. No press.
       "rim-light": {
         variants: {
           variant: {
@@ -110,8 +103,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // Clerk: a same-color ring, two tight drops, a top sheen that fades on
-      // hover (the fill lightens) and returns on press.
       gloss: {
         variants: {
           variant: {
@@ -122,8 +113,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // Shopify Polaris: a deep inset rim and a bottom sheen; press inverts
-      // the bevel and drops the label 1px.
       bevel: {
         variants: {
           variant: {
@@ -134,8 +123,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // Duolingo: a slab under the button in a darker shade of its fill;
-      // press sinks the face by the whole slab.
       ledge: {
         variants: {
           variant: {
@@ -151,8 +138,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       fill: {
         base: "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
       },
-      // Chip: a page-colored chip lifted on shadow; borderless variants gain a
-      // hairline ring so it survives dark wells (secondary keeps its border).
       chip: {
         base: "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-sm selected:hover:bg-muted selected:pressed:bg-highlight",
         variants: {
@@ -162,9 +147,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
-      // Inverse: snaps to full contrast. Primary already wears the inverse
-      // color, so it flips the other way: a page chip inside an inverse
-      // hairline (shadow-none keeps the ring composite valid on flat styles).
+      // shadow-none keeps the inset-ring composite valid on flat styles.
       inverse: {
         variants: {
           variant: {

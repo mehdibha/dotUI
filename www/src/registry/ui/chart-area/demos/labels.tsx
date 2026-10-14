@@ -2,7 +2,6 @@
 
 import { AreaChart } from "@/registry/ui/chart-area"
 
-/* Long format: one row per series per x value, with the series key in a field. */
 const data = [
   { month: "Jan", channel: "organic_search", visitors: 186 },
   { month: "Jan", channel: "paid_social", visitors: 80 },

@@ -4,7 +4,6 @@ import type { ChartValue } from "@tanstack/charts"
 
 import { HeatmapChart } from "@/registry/ui/chart-heatmap"
 
-/* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
 const months = [
   { month: "Jan", normal: 82 },
   { month: "Feb", normal: 64 },
