@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const popoverMeta = {
   name: "popover",
   type: "registry:ui",
-  group: "overlays",
   files: [
     {
       type: "registry:ui",
@@ -14,13 +13,11 @@ const popoverMeta = {
   // Menus, selects and pickers ride on the popover's motion.
   params: {
     motion: {
-      kind: "enum",
       default: "scale",
       values: ["scale", "fade", "slide", "none"] as const,
       description: "How the surface enters and leaves.",
     },
     mobile: {
-      kind: "enum",
       default: "drawer",
       values: ["drawer", "popover"] as const,
       registryDependencies: { drawer: ["drawer", "use-mobile"] },
@@ -44,7 +41,6 @@ const popoverMeta = {
         "What pickers and menus become below the mobile line: a bottom drawer, or the popover kept anchored.",
     },
     tip: {
-      kind: "enum",
       default: "none",
       values: ["none", "tip"] as const,
       description: "Whether the panel points at its trigger.",

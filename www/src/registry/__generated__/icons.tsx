@@ -9,9 +9,7 @@ import {
 	AppWindowIcon as LucideAppWindowIcon,
 	ArchiveIcon as LucideArchiveIcon,
 	ArrowDownIcon as LucideArrowDownIcon,
-	ArrowLeftCircleIcon as LucideArrowLeftCircleIcon,
 	ArrowLeftIcon as LucideArrowLeftIcon,
-	ArrowRightCircleIcon as LucideArrowRightCircleIcon,
 	ArrowRightIcon as LucideArrowRightIcon,
 	ArrowUpIcon as LucideArrowUpIcon,
 	ArrowUpRightIcon as LucideArrowUpRightIcon,
@@ -21,7 +19,6 @@ import {
 	BellIcon as LucideBellIcon,
 	BitcoinIcon as LucideBitcoinIcon,
 	BlocksIcon as LucideBlocksIcon,
-	BluetoothIcon as LucideBluetoothIcon,
 	BoldIcon as LucideBoldIcon,
 	BookIcon as LucideBookIcon,
 	BookmarkIcon as LucideBookmarkIcon,
@@ -33,12 +30,9 @@ import {
 	Building2Icon as LucideBuilding2Icon,
 	CalculatorIcon as LucideCalculatorIcon,
 	CalendarIcon as LucideCalendarIcon,
-	CalendarPlusIcon as LucideCalendarPlusIcon,
 	CameraIcon as LucideCameraIcon,
 	CaptionsIcon as LucideCaptionsIcon,
-	ChartBarIcon as LucideChartBarIcon,
 	ChartLineIcon as LucideChartLineIcon,
-	ChartPieIcon as LucideChartPieIcon,
 	CheckCircle2Icon as LucideCheckCircle2Icon,
 	CheckIcon as LucideCheckIcon,
 	ChevronDownIcon as LucideChevronDownIcon,
@@ -53,11 +47,8 @@ import {
 	CircleDotIcon as LucideCircleDotIcon,
 	CircleIcon as LucideCircleIcon,
 	ClipboardPasteIcon as LucideClipboardPasteIcon,
-	Clock2Icon as LucideClock2Icon,
 	ClockIcon as LucideClockIcon,
-	CloudCogIcon as LucideCloudCogIcon,
 	CodeIcon as LucideCodeIcon,
-	ContainerIcon as LucideContainerIcon,
 	ContrastIcon as LucideContrastIcon,
 	CopyIcon as LucideCopyIcon,
 	CreditCardIcon as LucideCreditCardIcon,
@@ -91,15 +82,11 @@ import {
 	LanguagesIcon as LucideLanguagesIcon,
 	LayersIcon as LucideLayersIcon,
 	LayoutGridIcon as LucideLayoutGridIcon,
-	LayoutIcon as LucideLayoutIcon,
-	LifeBuoy as LucideLifeBuoy,
-	LightbulbIcon as LucideLightbulbIcon,
 	LinkIcon as LucideLinkIcon,
 	ListFilterIcon as LucideListFilterIcon,
 	ListIcon as LucideListIcon,
 	Loader2Icon as LucideLoader2Icon,
 	LoaderCircleIcon as LucideLoaderCircleIcon,
-	LogInIcon as LucideLogInIcon,
 	LogOutIcon as LucideLogOutIcon,
 	MailCheckIcon as LucideMailCheckIcon,
 	MailIcon as LucideMailIcon,
@@ -116,7 +103,6 @@ import {
 	MoreHorizontalIcon as LucideMoreHorizontalIcon,
 	MoreVerticalIcon as LucideMoreVerticalIcon,
 	MousePointer2Icon as LucideMousePointer2Icon,
-	MousePointerIcon as LucideMousePointerIcon,
 	OctagonXIcon as LucideOctagonXIcon,
 	PaletteIcon as LucidePaletteIcon,
 	PanelLeftIcon as LucidePanelLeftIcon,
@@ -124,7 +110,6 @@ import {
 	PencilIcon as LucidePencilIcon,
 	PenSquareIcon as LucidePenSquareIcon,
 	PenToolIcon as LucidePenToolIcon,
-	PieChartIcon as LucidePieChartIcon,
 	PinIcon as LucidePinIcon,
 	PlugIcon as LucidePlugIcon,
 	PlusCircleIcon as LucidePlusCircleIcon,
@@ -160,7 +145,6 @@ import {
 	TagIcon as LucideTagIcon,
 	TelescopeIcon as LucideTelescopeIcon,
 	TerminalIcon as LucideTerminalIcon,
-	TerminalSquareIcon as LucideTerminalSquareIcon,
 	TimerIcon as LucideTimerIcon,
 	Trash2Icon as LucideTrash2Icon,
 	TrashIcon as LucideTrashIcon,
@@ -177,14 +161,10 @@ import {
 	Volume1Icon as LucideVolume1Icon,
 	Volume2Icon as LucideVolume2Icon,
 	VolumeOffIcon as LucideVolumeOffIcon,
-	VolumeX as LucideVolumeX,
 	WalletIcon as LucideWalletIcon,
-	WandIcon as LucideWandIcon,
 	XCircleIcon as LucideXCircleIcon,
 	XIcon as LucideXIcon,
 	ZapIcon as LucideZapIcon,
-	ZoomInIcon as LucideZoomInIcon,
-	ZoomOutIcon as LucideZoomOutIcon,
 } from "lucide-react";
 
 import { createIcon } from "@/registry/icons/create-icon";
@@ -219,22 +199,6 @@ export const ShoppingBagIcon = createIcon(LucideShoppingBagIcon, {
 	tabler: "IconShoppingBag",
 	hugeicons: "ShoppingBag01Icon",
 	phosphor: "ShoppingBagIcon",
-});
-
-export const WandIcon = createIcon(LucideWandIcon, {
-	lucide: "WandIcon",
-	remix: "RiMagicLine",
-	tabler: "IconWand",
-	hugeicons: "MagicWand01Icon",
-	phosphor: "MagicWandIcon",
-});
-
-export const MousePointerIcon = createIcon(LucideMousePointerIcon, {
-	lucide: "MousePointerIcon",
-	remix: "RiCursorLine",
-	tabler: "IconPointer",
-	hugeicons: "Cursor01Icon",
-	phosphor: "CursorIcon",
 });
 
 export const MoreHorizontalIcon = createIcon(LucideMoreHorizontalIcon, {
@@ -325,22 +289,6 @@ export const CircleCheckIcon = createIcon(LucideCircleCheckIcon, {
 	phosphor: "CheckCircleIcon",
 });
 
-export const LightbulbIcon = createIcon(LucideLightbulbIcon, {
-	lucide: "LightbulbIcon",
-	remix: "RiLightbulbLine",
-	tabler: "IconBulb",
-	hugeicons: "BulbIcon",
-	phosphor: "LightbulbIcon",
-});
-
-export const ContainerIcon = createIcon(LucideContainerIcon, {
-	lucide: "ContainerIcon",
-	remix: "RiBox3Line",
-	tabler: "IconBox",
-	hugeicons: "CubeIcon",
-	phosphor: "CubeIcon",
-});
-
 export const ZapIcon = createIcon(LucideZapIcon, {
 	lucide: "ZapIcon",
 	remix: "RiFlashlightLine",
@@ -411,14 +359,6 @@ export const UploadIcon = createIcon(LucideUploadIcon, {
 	tabler: "IconUpload",
 	hugeicons: "Upload01Icon",
 	phosphor: "UploadSimpleIcon",
-});
-
-export const CloudCogIcon = createIcon(LucideCloudCogIcon, {
-	lucide: "CloudCogIcon",
-	remix: "RiCloudLine",
-	tabler: "IconCloudCog",
-	hugeicons: "AiCloud01Icon",
-	phosphor: "CloudIcon",
 });
 
 export const GitBranchIcon = createIcon(LucideGitBranchIcon, {
@@ -597,14 +537,6 @@ export const ClockIcon = createIcon(LucideClockIcon, {
 	phosphor: "ClockIcon",
 });
 
-export const CalendarPlusIcon = createIcon(LucideCalendarPlusIcon, {
-	lucide: "CalendarPlusIcon",
-	remix: "RiCalendarEventLine",
-	tabler: "IconCalendarPlus",
-	hugeicons: "CalendarAdd01Icon",
-	phosphor: "CalendarPlusIcon",
-});
-
 export const ListFilterIcon = createIcon(LucideListFilterIcon, {
 	lucide: "ListFilterIcon",
 	remix: "RiFilterLine",
@@ -637,14 +569,6 @@ export const ArrowRightIcon = createIcon(LucideArrowRightIcon, {
 	phosphor: "ArrowRightIcon",
 });
 
-export const VolumeX = createIcon(LucideVolumeX, {
-	lucide: "VolumeX",
-	remix: "RiVolumeMuteLine",
-	tabler: "IconVolume",
-	hugeicons: "VolumeOffIcon",
-	phosphor: "SpeakerXIcon",
-});
-
 export const CheckIcon = createIcon(LucideCheckIcon, {
 	lucide: "CheckIcon",
 	remix: "RiCheckLine",
@@ -675,14 +599,6 @@ export const TrashIcon = createIcon(LucideTrashIcon, {
 	tabler: "IconTrash",
 	hugeicons: "Delete01Icon",
 	phosphor: "TrashIcon",
-});
-
-export const BluetoothIcon = createIcon(LucideBluetoothIcon, {
-	lucide: "BluetoothIcon",
-	remix: "RiBluetoothLine",
-	tabler: "IconBluetooth",
-	hugeicons: "BluetoothIcon",
-	phosphor: "BluetoothIcon",
 });
 
 export const MoreVerticalIcon = createIcon(LucideMoreVerticalIcon, {
@@ -739,14 +655,6 @@ export const EyeIcon = createIcon(LucideEyeIcon, {
 	tabler: "IconEye",
 	hugeicons: "EyeIcon",
 	phosphor: "EyeIcon",
-});
-
-export const LayoutIcon = createIcon(LucideLayoutIcon, {
-	lucide: "LayoutIcon",
-	remix: "RiLayoutLine",
-	tabler: "IconLayout",
-	hugeicons: "Layout01Icon",
-	phosphor: "LayoutIcon",
 });
 
 export const PaletteIcon = createIcon(LucidePaletteIcon, {
@@ -837,14 +745,6 @@ export const BadgeCheck = createIcon(LucideBadgeCheck, {
 	phosphor: "SealCheckIcon",
 });
 
-export const ArrowLeftCircleIcon = createIcon(LucideArrowLeftCircleIcon, {
-	lucide: "ArrowLeftCircleIcon",
-	remix: "RiArrowLeftCircleLine",
-	tabler: "IconCircleArrowLeft",
-	hugeicons: "CircleArrowLeft02Icon",
-	phosphor: "ArrowCircleLeftIcon",
-});
-
 export const FlipHorizontalIcon = createIcon(LucideFlipHorizontalIcon, {
 	lucide: "FlipHorizontalIcon",
 	remix: "RiFlipHorizontalLine",
@@ -867,14 +767,6 @@ export const RotateCwIcon = createIcon(LucideRotateCwIcon, {
 	tabler: "IconRotateClockwise2",
 	hugeicons: "Rotate01Icon",
 	phosphor: "ArrowClockwiseIcon",
-});
-
-export const Clock2Icon = createIcon(LucideClock2Icon, {
-	lucide: "Clock2Icon",
-	remix: "RiTimeLine",
-	tabler: "IconClockHour2",
-	hugeicons: "Clock03Icon",
-	phosphor: "ClockIcon",
 });
 
 export const CaptionsIcon = createIcon(LucideCaptionsIcon, {
@@ -971,22 +863,6 @@ export const ListIcon = createIcon(LucideListIcon, {
 	tabler: "IconList",
 	hugeicons: "Menu05Icon",
 	phosphor: "ListIcon",
-});
-
-export const ZoomInIcon = createIcon(LucideZoomInIcon, {
-	lucide: "ZoomInIcon",
-	remix: "RiZoomInLine",
-	tabler: "IconZoomIn",
-	hugeicons: "ZoomInAreaIcon",
-	phosphor: "MagnifyingGlassPlusIcon",
-});
-
-export const ZoomOutIcon = createIcon(LucideZoomOutIcon, {
-	lucide: "ZoomOutIcon",
-	remix: "RiZoomOutLine",
-	tabler: "IconZoomOut",
-	hugeicons: "ZoomOutAreaIcon",
-	phosphor: "MagnifyingGlassMinusIcon",
 });
 
 export const BellIcon = createIcon(LucideBellIcon, {
@@ -1189,30 +1065,6 @@ export const ChartLineIcon = createIcon(LucideChartLineIcon, {
 	phosphor: "ChartLineIcon",
 });
 
-export const ChartBarIcon = createIcon(LucideChartBarIcon, {
-	lucide: "ChartBarIcon",
-	remix: "RiBarChartLine",
-	tabler: "IconChartBar",
-	hugeicons: "ChartColumnIcon",
-	phosphor: "ChartBarIcon",
-});
-
-export const ChartPieIcon = createIcon(LucideChartPieIcon, {
-	lucide: "ChartPieIcon",
-	remix: "RiPieChartLine",
-	tabler: "IconChartPie",
-	hugeicons: "PieChartIcon",
-	phosphor: "ChartPieIcon",
-});
-
-export const TerminalSquareIcon = createIcon(LucideTerminalSquareIcon, {
-	lucide: "TerminalSquareIcon",
-	remix: "RiTerminalLine",
-	tabler: "IconTerminal2",
-	hugeicons: "SourceCodeSquareIcon",
-	phosphor: "TerminalWindowIcon",
-});
-
 export const BookOpen = createIcon(LucideBookOpen, {
 	lucide: "BookOpen",
 	remix: "RiBookOpenLine",
@@ -1237,14 +1089,6 @@ export const FrameIcon = createIcon(LucideFrameIcon, {
 	phosphor: "FrameCornersIcon",
 });
 
-export const PieChartIcon = createIcon(LucidePieChartIcon, {
-	lucide: "PieChartIcon",
-	remix: "RiPieChartLine",
-	tabler: "IconChartPie",
-	hugeicons: "PieChartIcon",
-	phosphor: "ChartPieSliceIcon",
-});
-
 export const MapIcon = createIcon(LucideMapIcon, {
 	lucide: "MapIcon",
 	remix: "RiMapLine",
@@ -1259,14 +1103,6 @@ export const ShoppingCartIcon = createIcon(LucideShoppingCartIcon, {
 	tabler: "IconShoppingCart",
 	hugeicons: "ShoppingCart01Icon",
 	phosphor: "ShoppingCartIcon",
-});
-
-export const LifeBuoy = createIcon(LucideLifeBuoy, {
-	lucide: "LifeBuoy",
-	remix: "RiLifebuoyLine",
-	tabler: "IconLifebuoy",
-	hugeicons: "ChartRingIcon",
-	phosphor: "LifebuoyIcon",
 });
 
 export const Send = createIcon(LucideSend, {
@@ -1355,22 +1191,6 @@ export const User2Icon = createIcon(LucideUser2Icon, {
 	tabler: "IconUser",
 	hugeicons: "UserIcon",
 	phosphor: "UserIcon",
-});
-
-export const ArrowRightCircleIcon = createIcon(LucideArrowRightCircleIcon, {
-	lucide: "ArrowRightCircleIcon",
-	remix: "RiArrowRightCircleLine",
-	tabler: "IconCircleArrowRight",
-	hugeicons: "CircleArrowRight02Icon",
-	phosphor: "ArrowCircleRightIcon",
-});
-
-export const LogInIcon = createIcon(LucideLogInIcon, {
-	lucide: "LogInIcon",
-	remix: "RiLoginBoxLine",
-	tabler: "IconLogin",
-	hugeicons: "Login01Icon",
-	phosphor: "SignInIcon",
 });
 
 export const PenSquareIcon = createIcon(LucidePenSquareIcon, {

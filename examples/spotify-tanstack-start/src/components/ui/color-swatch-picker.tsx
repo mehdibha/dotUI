@@ -59,12 +59,5 @@ const ColorSwatchPickerItem = ({
   );
 };
 
-const CompoundColorSwatchPicker = Object.assign(ColorSwatchPicker, {
-  Item: ColorSwatchPickerItem,
-});
-
 export type { ColorSwatchPickerItemProps, ColorSwatchPickerProps };
-export {
-  ColorSwatchPickerItem,
-  CompoundColorSwatchPicker as ColorSwatchPicker,
-};
+export { ColorSwatchPicker, ColorSwatchPickerItem };

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const comboboxMeta = {
   name: "combobox",
   type: "registry:ui",
-  group: "pickers",
   files: [
     {
       type: "registry:ui",

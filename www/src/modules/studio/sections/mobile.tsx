@@ -92,13 +92,6 @@ export function MobilePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function mobileSummary(state: StudioState): string {
-  return (
-    PICKER_OPTIONS.find((o) => o.value === state.mobilePickers)?.label ??
-    state.mobilePickers
-  )
-}
-
 export function MobileSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (

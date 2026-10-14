@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const tooltipMeta = {
   name: "tooltip",
   type: "registry:ui",
-  group: "overlays",
   files: [
     {
       type: "registry:ui",
@@ -13,14 +12,12 @@ const tooltipMeta = {
   ],
   params: {
     style: {
-      kind: "enum",
       default: "inverted",
       values: ["inverted", "surface"] as const,
       description:
         "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
     motion: {
-      kind: "enum",
       default: "scale",
       values: ["scale", "fade", "slide", "none"] as const,
       description: "How the tooltip enters and leaves.",

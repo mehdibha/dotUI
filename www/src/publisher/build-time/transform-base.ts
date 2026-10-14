@@ -554,8 +554,7 @@ export function transformBase({
   paramSelection,
 }: TransformBaseInput): TransformBaseOutput {
   const variantIdent = `${toCamelCase(componentName)}Variants`
-  const oldStylesIdent = `${toCamelCase(componentName)}Styles` // e.g. "buttonStyles"
-  const oldStylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles` // e.g. "ButtonStyles"
+  const stylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles` // e.g. "ButtonStyles"
 
   const project = getProject()
   const sourceFile = project.addSourceFileAtPath(baseTsxPath)
@@ -563,8 +562,7 @@ export function transformBase({
   try {
     applyTransform(sourceFile, {
       variantIdent,
-      oldStylesIdent,
-      oldStylesTypeIdent,
+      stylesTypeIdent,
       hasStylesConfig,
     })
     if (paramSelection) {
@@ -592,14 +590,12 @@ function capitalize(s: string): string {
 
 interface ApplyContext {
   variantIdent: string
-  oldStylesIdent: string
-  oldStylesTypeIdent: string
+  stylesTypeIdent: string
   hasStylesConfig: boolean
 }
 
 function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
-  const { variantIdent, oldStylesIdent, oldStylesTypeIdent, hasStylesConfig } =
-    ctx
+  const { variantIdent, stylesTypeIdent, hasStylesConfig } = ctx
 
   if (!hasStylesConfig) {
     // No `styles.ts` → just rewrite registry-internal import paths and bail.
@@ -616,7 +612,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   //    Re-snapshot between replacements: each `replaceWithText` invalidates
   //    sibling nodes in the original snapshot.
   while (true) {
-    const next = findNextVariantProps(sourceFile, oldStylesTypeIdent)
+    const next = findNextVariantProps(sourceFile, stylesTypeIdent)
     if (!next) break
     next.replaceWithText(`typeof ${variantIdent}`)
   }
@@ -657,29 +653,12 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     exp.replaceWithText(`export { ${specs.join(", ")} };`)
   }
 
-  // 3. Replace value-position references to `<oldStylesIdent>` (e.g. `buttonStyles`)
-  //    in re-exports or local usages with the new variant ident. Skip identifiers
-  //    inside import declarations (those imports get removed below anyway) and
-  //    export aliases (the public name step 2b just pinned).
-  for (const id of sourceFile.getDescendantsOfKind(SyntaxKind.Identifier)) {
-    if (id.wasForgotten()) continue
-    if (id.getText() !== oldStylesIdent) continue
-    if (id.getFirstAncestorByKind(SyntaxKind.ImportDeclaration)) continue
-    const parent = id.getParent()
-    if (
-      parent?.isKind(SyntaxKind.ExportSpecifier) &&
-      parent.getAliasNode() === id
-    )
-      continue
-    id.replaceWithText(variantIdent)
-  }
-
-  // 4. Remove imports from "./styles" (both value and type).
+  // 3. Remove imports from "./styles" (both value and type).
   for (const imp of [...sourceFile.getImportDeclarations()]) {
     if (imp.getModuleSpecifierValue() === "./styles") imp.remove()
   }
 
-  // 5. Rewrite registry-internal import paths to consumer aliases, resolve
+  // 4. Rewrite registry-internal import paths to consumer aliases, resolve
   //    cross-component styles-hook calls to the imported function, then drop
   //    the local `const styles = …` aliases the hooks leave behind.
   const stylesLocals = rewriteImports(sourceFile)
@@ -688,10 +667,10 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     hoist,
   })
 
-  // 6. Ensure `tailwind-variants` import provides `tv`.
+  // 5. Ensure `tailwind-variants` import provides `tv`.
   ensureTailwindVariantsImport(sourceFile)
 
-  // 7. Insert the variant declaration after the last import. ts-morph drops a
+  // 6. Insert the variant declaration after the last import. ts-morph drops a
   //    leading empty statement, so write the blank line explicitly.
   const lastImport = sourceFile.getImportDeclarations().at(-1)
   const insertIndex = lastImport ? lastImport.getChildIndex() + 1 : 0
@@ -708,17 +687,14 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   })
 }
 
-function findNextVariantProps(
-  sourceFile: SourceFile,
-  oldStylesTypeIdent: string,
-) {
+function findNextVariantProps(sourceFile: SourceFile, stylesTypeIdent: string) {
   // `type X = VariantProps<...>` → TypeReference.
   for (const ref of sourceFile.getDescendantsOfKind(SyntaxKind.TypeReference)) {
     if (ref.wasForgotten()) continue
     if (ref.getTypeName().getText() !== "VariantProps") continue
     const first = ref.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
-    if (first.getText() === oldStylesTypeIdent) return first
+    if (first.getText() === stylesTypeIdent) return first
   }
   // `interface X extends VariantProps<...>` → ExpressionWithTypeArguments.
   for (const ewta of sourceFile.getDescendantsOfKind(
@@ -728,7 +704,7 @@ function findNextVariantProps(
     if (ewta.getExpression().getText() !== "VariantProps") continue
     const first = ewta.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
-    if (first.getText() === oldStylesTypeIdent) return first
+    if (first.getText() === stylesTypeIdent) return first
   }
   return undefined
 }
@@ -775,11 +751,3 @@ function ensureNamedImport(
   }
   imp.addNamedImport({ name, isTypeOnly })
 }
-
-// Re-export for callers that want to know what placeholder shows up in the template.
-export { TS_PLACEHOLDER_IDENT }
-// Re-export the runtime placeholder string for convenience.
-export { TV_CONFIG_PLACEHOLDER }
-
-// Used by ts-morph's Node typeguards in some paths (kept for completeness).
-export { Node }

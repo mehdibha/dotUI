@@ -5,7 +5,6 @@ import type { ContextValue, SlotProps } from "react-aria-components/slots";
 
 export interface CreateContextOptions {
   strict?: boolean;
-  errorMessage?: string;
   name?: string;
 }
 
@@ -42,41 +41,6 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
   }
 
   return [Context, useContext] as CreateContextReturn<ContextType>;
-}
-
-export function createScopedContext<ContextValueType extends object | null>(
-  rootComponentName: string,
-  defaultContext?: ContextValueType,
-) {
-  const Context = React.createContext<ContextValueType | undefined>(
-    defaultContext,
-  );
-
-  const Provider: React.FC<ContextValueType & { children: React.ReactNode }> = (
-    props,
-  ) => {
-    const { children, ...context } = props;
-    const value = React.useMemo(
-      () => context,
-      // oxlint-disable-next-line react/exhaustive-deps -- TODO: fix later
-      Object.values(context),
-    ) as ContextValueType;
-    return <Context.Provider value={value}>{children}</Context.Provider>;
-  };
-
-  Provider.displayName = `${rootComponentName}Provider`;
-
-  function useContext(consumerName: string) {
-    const context = React.useContext(Context);
-    if (context) return context;
-    if (defaultContext !== undefined) return defaultContext;
-    // if a defaultContext wasn't specified, it's a required context.
-    throw new Error(
-      `\`${consumerName}\` must be used within \`${rootComponentName}\``,
-    );
-  }
-
-  return [Provider, useContext] as const;
 }
 
 /**

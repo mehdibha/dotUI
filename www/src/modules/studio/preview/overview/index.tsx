@@ -60,7 +60,7 @@ import type { DesignSystem } from "@/modules/studio/preset"
  * brand system: an editorial spec sheet walking through every axis of the live
  * design system (color, type, icons, shape, density, elevation, components).
  *
- * Rendered inside the /create preview iframe under `DesignSystemProvider`, so
+ * Rendered inside the /studio preview iframe under `DesignSystemProvider`, so
  * every swatch, ramp and component below is the live, edited system — themed by
  * CSS variables that flip with light / dark and update on every edit.
  * ------------------------------------------------------------------------- */
@@ -145,7 +145,7 @@ function SectionHeader({
         <span className="font-mono text-xs tracking-widest uppercase">
           {index} — {title}
         </span>
-        {/* Embedded only: hop to this chapter's controls in the /create panel. */}
+        {/* Embedded only: hop to this chapter's controls in the /studio panel. */}
         {embedded && panelId && (
           <button
             type="button"
@@ -875,7 +875,7 @@ function Section({
   icon: typeof PaletteIcon
   title: string
   description: string
-  /** The /create panel chapter these values are edited in (embedded inspect). */
+  /** The /studio panel chapter these values are edited in (embedded inspect). */
   panelId?: string
   children: ReactNode
 }) {

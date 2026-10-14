@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const qrCodeMeta = {
   name: "qr-code",
   type: "registry:ui",
-  group: "containers",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const qrCodeMeta = {
   dependencies: ["uqr"],
   params: {
     style: {
-      kind: "enum",
       default: "squares",
       values: ["squares", "rounded", "dots"] as const,
       files: {

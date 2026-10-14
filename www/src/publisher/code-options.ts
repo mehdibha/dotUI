@@ -161,8 +161,8 @@ export function flattenClassArrays(layer: TvLayer): TvLayer {
 const SEPARATOR =
   "/* -------------------------------------------------------------------------- */"
 
-// `// MARK: <name>Styles` only tells the publisher where to inject the resolved
-// `tv()` config — purely internal, never shown to the user.
+// `// MARK: <name>Styles` labels the spot the resolved `tv()` config lands in
+// registry source; it's never shown to the user.
 const STYLES_MARK_RE =
   /^[ \t]*\/\/ MARK:[ \t]*[A-Za-z0-9_$]*Styles[ \t]*\r?\n?/gm
 // Every other `// MARK:` marks where a section separator belongs.

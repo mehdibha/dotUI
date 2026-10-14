@@ -47,7 +47,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 /* -------------------------------------------------------------------------- *
  * Messaging — a two-pane chat client: conversation list + thread. Renders in
- * the /create preview iframe, so every surface, bubble and control below is the
+ * the /studio preview iframe, so every surface, bubble and control below is the
  * live design system.
  * -------------------------------------------------------------------------- */
 
@@ -841,7 +841,7 @@ export default function MessagingBlock() {
             {active.typing && !sent && <TypingIndicator contact={active} />}
           </div>
 
-          {/* pb-16: the /create preview floats its toolbar over the page bottom. */}
+          {/* pb-16: the /studio preview floats its toolbar over the page bottom. */}
           <div className="border-t p-3 pb-16 md:px-4">
             <form
               onSubmit={(e) => {

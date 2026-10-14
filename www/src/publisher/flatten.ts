@@ -8,17 +8,12 @@
  *
  * Merge order matches `createStyles` runtime composition:
  *   base ← density[selectedDensity] ← params[name][selectedValue]  (in meta order)
- *
- * `vars` keys on override layers are dropped — they're a runtime concern
- * (applied to `:root` by the dotui provider) and have no place in a published
- * component file.
  */
 
-import type { Density, EnumParamDef, RegistryItem } from "@/registry/types"
+import type { Density, RegistryItem } from "@/registry/types"
 
 import type {
   ClassValue,
-  OverrideLayer,
   StylesConfig,
   TvLayer,
   VariantSliceValue,
@@ -167,11 +162,6 @@ function mergeLayer(a: TvLayer, b: TvLayer): TvLayer {
 
 /* --------------------------------- entry --------------------------------- */
 
-function stripVars(layer: OverrideLayer): TvLayer {
-  const { vars: _vars, ...rest } = layer
-  return rest
-}
-
 export interface FlattenInput {
   stylesConfig: StylesConfig
   meta: RegistryItem
@@ -195,20 +185,15 @@ export function flatten({
 
   const densityLayer = stylesConfig.density?.[density]
   if (densityLayer) {
-    current = mergeLayer(current, stripVars(densityLayer))
+    current = mergeLayer(current, densityLayer)
   }
 
-  // Apply enum params in meta declaration order.
-  const params = (meta.params ?? {}) as Record<
-    string,
-    EnumParamDef | { kind: string; default: string }
-  >
-  for (const [paramName, def] of Object.entries(params)) {
-    if (def.kind !== "enum") continue
+  // Apply params in meta declaration order.
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
     const selectedValue = paramSelections[paramName] ?? def.default
     const overrideLayer = stylesConfig.params?.[paramName]?.[selectedValue]
     if (!overrideLayer) continue
-    const { vars: _vars, density: byDensity, ...layer } = overrideLayer
+    const { density: byDensity, ...layer } = overrideLayer
     for (const l of [layer, byDensity?.[density]]) {
       if (!l || Object.keys(l).length === 0) continue
       current = mergeLayer(current, l)

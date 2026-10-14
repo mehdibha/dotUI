@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const buttonMeta = {
   name: "button",
   type: "registry:ui",
-  group: "buttons",
   files: [
     {
       type: "registry:ui",
@@ -11,11 +10,10 @@ const buttonMeta = {
       target: "ui/button.tsx",
     },
   ],
-  registryDependencies: ["loader", "focus-styles"],
+  registryDependencies: ["loader"],
   // Synced with toggle-button: the studio's Buttons style writes both.
   params: {
     style: {
-      kind: "enum",
       default: "flat",
       values: [
         "flat",

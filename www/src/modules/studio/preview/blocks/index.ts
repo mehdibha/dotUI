@@ -5,7 +5,7 @@ export interface BlockMeta {
   name: string
 }
 
-// Every planned real-world block. A block appears in the /create preview picker
+// Every planned real-world block. A block appears in the /studio preview picker
 // once its `./<slug>.tsx` file lands — entries without a file are simply not
 // offered yet, so this list can stay ahead of the implementations.
 // Slugs share a namespace with component and group-example slugs and are looked

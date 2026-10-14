@@ -159,7 +159,6 @@ export const buttonPublishable: Publishable = {
   meta: {
     name: "button",
     type: "registry:ui",
-    group: "buttons",
     files: [
       {
         type: "registry:ui",
@@ -167,6 +166,6 @@ export const buttonPublishable: Publishable = {
         target: "ui/button.tsx",
       },
     ],
-    registryDependencies: ["loader", "focus-styles"],
+    registryDependencies: ["loader", "utils"],
   },
 }
