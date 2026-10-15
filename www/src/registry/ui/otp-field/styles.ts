@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(otpFieldMeta, {
   base: {
     slots: {
       root: [
-        fieldStyles().field({ className: "group/otp-field" }),
+        fieldStyles().field(),
         "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums **:data-input:invalid:[--invalid-icon:none]",
       ],
       group: "flex",

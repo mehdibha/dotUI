@@ -11,12 +11,12 @@ const { useStyles, styles } = createStyles(toastMeta, {
   base: {
     slots: {
       viewport: [
-        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset outline-none [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
+        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
         "data-[position*=bottom]:bottom-(--toast-inset) data-[position*=top]:top-(--toast-inset)",
         "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
       ],
       toast: [
-        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset outline-none select-none focus-visible:focus-ring",
+        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
         "after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full",
         "data-ending-style:opacity-0 data-limited:opacity-0",

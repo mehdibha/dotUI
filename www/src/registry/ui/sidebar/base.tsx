@@ -547,7 +547,6 @@ function SidebarMenuButton({
   }
 
   const tooltipContentProps: TooltipContentProps =
-    tooltip != null &&
     typeof tooltip === "object" &&
     !React.isValidElement(tooltip) &&
     !Array.isArray(tooltip)
