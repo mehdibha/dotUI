@@ -167,6 +167,9 @@ export function DialTrigger({
   )
 }
 
+/** A pick list's popover: as wide as its longest option, not the row. */
+export const PICK_POPOVER = "w-max min-w-48 max-w-64"
+
 /** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
 export function DialPopover({
   className,
@@ -296,7 +299,7 @@ export function DialSelect({
         </>
       }
     >
-      <DialPopover>
+      <DialPopover className={PICK_POPOVER}>
         <SelectOptions
           axis={axis}
           label={label}

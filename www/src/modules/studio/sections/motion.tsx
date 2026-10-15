@@ -22,6 +22,7 @@ import {
   DialGlyph,
   DialPickList,
   DialPopover,
+  PICK_POPOVER,
   DialSelect,
   DialSeparator,
   DialTrigger,
@@ -104,7 +105,7 @@ function MotionRow() {
         </>
       }
     >
-      <DialPopover>
+      <DialPopover className={PICK_POPOVER}>
         <DialPickList
           label="Motion"
           value={state.motion}
