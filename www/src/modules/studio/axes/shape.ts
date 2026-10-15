@@ -202,11 +202,7 @@ export const SHAPES = {
     { roleControl: "lg", roleSurface: "xl", rolePanel: "2xl" },
     { radiusPx: 12 },
   ),
-  round: shape(
-    { roleControl: "3xl", roleSurface: "2xl", rolePanel: "3xl" },
-    { buttonRadius: "pill" },
-  ),
-  pill: shape({ roleControl: "full" }),
+  round: shape({ roleControl: "full", roleSurface: "2xl", rolePanel: "3xl" }),
 }
 
 export type ShapeId = keyof typeof SHAPES

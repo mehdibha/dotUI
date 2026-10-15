@@ -59,19 +59,17 @@ describe("shape axis", () => {
     expect(resolve({ radiusPx: 12 }).tokens).toEqual({ "--radius": "0.75rem" })
   })
 
-  test("round retargets the roles and makes buttons pills", () => {
+  test("round makes controls pills and surfaces large", () => {
     expect(resolve(SHAPES.round).tokens).toEqual({
-      "--studio-radius-control": "var(--radius-3xl)",
+      "--studio-radius-control": "var(--radius-full)",
       "--studio-radius-item": "var(--radius-xl)",
       "--studio-radius-surface": "var(--radius-2xl)",
       "--studio-radius-panel": "var(--radius-3xl)",
       "--studio-radius-card": "var(--radius-2xl)",
-      "--studio-radius-control-sm": "var(--radius-2xl)",
+      "--studio-radius-control-sm": "var(--radius-full)",
       "--studio-radius-field": "var(--radius-2xl)",
       "--studio-radius-container": "var(--radius-2xl)",
       "--studio-radius-inline-item": "var(--radius-xl)",
-      "--studio-btn-radius": "var(--radius-full)",
-      "--studio-btn-xs-radius": "var(--radius-full)",
     })
   })
 
@@ -177,7 +175,13 @@ describe("shape axis", () => {
           rolePanel: "3xl",
         }),
       ),
-    ).toEqual(rolesOf(SHAPES.round))
+    ).toEqual({
+      roleControl: "3xl",
+      roleItem: "auto",
+      roleSurface: "2xl",
+      rolePanel: "3xl",
+      roleCard: "auto",
+    })
     const pill = parseState({ roleControl: "full", roleSurface: "lg" })
     expect(pill.roleControl).toBe("full")
   })

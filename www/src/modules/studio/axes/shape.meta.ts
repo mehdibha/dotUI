@@ -22,5 +22,4 @@ export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
   standard: { label: "Standard" },
   soft: { label: "Soft" },
   round: { label: "Round" },
-  pill: { label: "Pill" },
 })
