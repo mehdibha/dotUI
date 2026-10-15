@@ -147,6 +147,8 @@ export interface InteractiveDemoNodeInfo {
   controls: ControlInput[]
   /** Demo file slug under demos/ (default "playground"). */
   file?: string
+  /** API reference name, when it differs from the registry item (e.g. "radar-chart"). */
+  reference?: string
 }
 
 /**

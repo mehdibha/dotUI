@@ -3,7 +3,16 @@ title: Radar Chart
 description: Plots a handful of categories around a circle, so a series reads as one recognisable shape.
 ---
 
-<Demo name="chart-radar/demos/multiple" />
+<InteractiveDemo
+  name="chart-radar"
+  reference="radar-chart"
+  controls={[
+    "gridShape",
+    "points",
+    { type: "number", name: "fill", min: 0, max: 1, step: 0.1 },
+    "legend",
+  ]}
+/>
 
 A radar chart wraps a category axis into a circle and draws each series as a closed shape. Reach for it when the reader should judge a _profile_ — the balance across five to eight categories — and compare two of them at a glance. It is a poor tool for reading exact values or for ranking: the eye compares areas, and area grows with the square of the value. When precision matters, use the [bar chart](/docs/components/chart-bar).
 

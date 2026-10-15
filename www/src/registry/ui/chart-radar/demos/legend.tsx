@@ -18,6 +18,7 @@ export default function ChartRadarLegend() {
       x="month"
       y={["desktop", "mobile"]}
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
+      legend
       ariaLabel="Desktop and mobile visitors, January through June"
     />
   )
