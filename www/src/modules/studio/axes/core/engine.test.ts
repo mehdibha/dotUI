@@ -438,11 +438,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonStyle: "hairline", buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
-    { style: "tactile", buttonStyle: "ledge", buttonPress: "nudge" },
+    { style: "chunky", buttonPress: "nudge" },
     { buttonPress: "nudge" },
   ],
   "button-groups/ledge-gaps-groups": [
-    { style: "tactile", buttonStyle: "ledge", groupSeparator: "divider" },
+    { style: "chunky", groupSeparator: "divider" },
     { groupSeparator: "divider" },
   ],
   "menus/check-or-fill": [
@@ -473,13 +473,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { inputStyle: "underline" },
     { inputStyle: "filled" },
   ],
-  "style/buttonStyle-flat": [
+  "style/buttonStyle-flat-soft": [
     { buttonStyle: "gloss" },
-    { style: "soft", buttonStyle: "gloss" },
-  ],
-  "style/buttonStyle-soft": [
-    { style: "soft", buttonStyle: "bevel" },
-    { style: "tactile", buttonStyle: "bevel" },
+    { style: "tactile", buttonStyle: "gloss" },
   ],
   "style/buttonStyle-tonal": [
     { style: "tonal", buttonStyle: "hairline" },
@@ -487,13 +483,25 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "style/buttonStyle-tactile": [
     { style: "tactile", buttonStyle: "hairline" },
-    { style: "tactile", buttonStyle: "ledge" },
+    { style: "tactile", buttonStyle: "rim-light" },
+  ],
+  "style/buttonStyle-chunky": [
+    { style: "chunky", buttonStyle: "bevel" },
+    { style: "chunky", buttonStyle: "ledge" },
   ],
   "style/surfaceEdge-flat-soft-tonal": [
     { surfaceEdge: "ledge" },
-    { style: "tactile", surfaceEdge: "ledge" },
+    { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceLayers-flat-soft-tactile": [
+  "style/surfaceEdge-tactile": [
+    { style: "tactile", surfaceEdge: "ledge" },
+    { style: "tactile", surfaceEdge: "bevel" },
+  ],
+  "style/surfaceEdge-chunky": [
+    { style: "chunky", surfaceEdge: "bevel" },
+    { style: "chunky", surfaceEdge: "ledge" },
+  ],
+  "style/surfaceLayers-flat-soft-tactile-chunky": [
     { surfaceLayers: "tonal" },
     { style: "tonal", surfaceLayers: "tonal" },
   ],

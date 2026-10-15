@@ -54,7 +54,6 @@ export const polaris = definePreset({
     // Surfaces
     // White cards on the gray page, rimmed by ShadowBevel instead of a border.
     surfaceLayers: "grouped",
-    surfaceShadow: "low",
     // The #ebebeb sidebar around the admin's page.
     shellTone: "recessed",
 
@@ -89,6 +88,7 @@ export const polaris = definePreset({
     switchStyle: "outlined",
 
     // Menus & popovers
+    menuSelectedRow: "tint",
     tooltipStyle: "surface",
     menuRows: "step",
     mobilePickers: "anchored",

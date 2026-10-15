@@ -117,7 +117,7 @@ describe("menus axis", () => {
     expect(tip({})).toBeUndefined()
     expect(tip({ controlStroke: "bold" })).toBeUndefined()
     expect(
-      tip({ style: "tactile", surfaceEdge: "ledge", controlStroke: "bold" }),
+      tip({ style: "chunky", surfaceEdge: "ledge", controlStroke: "bold" }),
     ).toBe("calc(var(--spacing) * 3.5)")
   })
 
@@ -271,7 +271,7 @@ describe("triggers and keys", () => {
     expect(await shipped("popover")).toContain("[&>svg]:size-2.5")
     expect(
       await shipped("popover", {
-        style: "tactile",
+        style: "chunky",
         surfaceEdge: "ledge",
         controlStroke: "bold",
         menuArrows: "both",

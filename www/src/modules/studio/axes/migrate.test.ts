@@ -406,7 +406,7 @@ describe("main → v3", () => {
     expect(bevel.surfaceEdge).toBe("line")
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
-    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("soft")
+    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("tactile")
     const { spotify: _, ...flat } = main.presets
     for (const diff of Object.values(flat))
       expect(load(mainState(diff)).style).toBe("flat")

@@ -55,16 +55,17 @@ export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
   high: { label: "High", description: "Deep, soft shadows" },
 })
 
-export const GLASS_OPTIONS = [
+export const OVERLAY_OPTIONS = [
   {
     value: "solid",
     label: "Solid",
     description: "Opaque menus, popovers and toasts",
   },
   {
-    value: "glass",
-    label: "Glass",
-    description: "Translucent over a blur; dialogs stay solid",
+    value: "translucent",
+    label: "Translucent",
+    description: "Over a blur; dialogs stay solid",
+    credits: ["Catalyst", "Notion", "Radix Themes", "shadcn"],
   },
 ]
 

@@ -7,8 +7,8 @@ export const untitled = definePreset({
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
-    // Style
-    style: "soft",
+    // Style: Tactile with the Rim finish.
+    style: "tactile",
 
     // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
@@ -56,8 +56,6 @@ export const untitled = definePreset({
 
     // Buttons: Rim light's Auto field is the raised field.
     buttonStyle: "rim-light",
-    // The secondary is rim-lit too.
-    buttonSecondary: "as-style",
     // A #fafafa track read by its hairline: nearer Outline than Filled.
     segmentedTrack: "outline",
     paginationCurrent: "selected",

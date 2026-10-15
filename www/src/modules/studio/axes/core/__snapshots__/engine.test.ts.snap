@@ -14,6 +14,10 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "secondary": "ledge",
       "style": "ledge",
     },
+    "checkbox": {
+      "card-press": "sink",
+      "card-selected": "tint",
+    },
     "group": {
       "segments": "gapped",
       "separator": "shared-edge",
@@ -25,21 +29,15 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "style": "well",
       "text": "same",
     },
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "radio-group": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "mark": "dot",
     },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "switch": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "style": "inset",
     },
     "toggle-button": {
       "case": "sentence",
@@ -56,14 +54,11 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     },
   },
   "tokens": {
-    "--card-border": "transparent",
-    "--overlay-border": "transparent",
-    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
-    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-    "--studio-card-stroke": "0px",
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
-    "--studio-overlay-stroke": "0px",
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
   },
 }
 `;
@@ -82,6 +77,10 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "secondary": "ledge",
       "style": "ledge",
     },
+    "checkbox": {
+      "card-press": "sink",
+      "card-selected": "tint",
+    },
     "group": {
       "segments": "gapped",
       "separator": "shared-edge",
@@ -93,21 +92,15 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "style": "well",
       "text": "same",
     },
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "radio-group": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "mark": "dot",
     },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "switch": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "style": "inset",
     },
     "toggle-button": {
       "case": "sentence",
@@ -124,14 +117,11 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     },
   },
   "tokens": {
-    "--card-border": "transparent",
-    "--overlay-border": "transparent",
-    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
-    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-    "--studio-card-stroke": "0px",
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
-    "--studio-overlay-stroke": "0px",
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
   },
 }
 `;
@@ -156,22 +146,6 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "hover": "none",
       "style": "inset",
       "text": "same",
-    },
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
-    },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
     },
     "segmented-control": {
       "case": "sentence",
@@ -202,11 +176,9 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
   "tokens": {
     "--card-border": "transparent",
     "--overlay-border": "transparent",
-    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
     "--studio-card-stroke": "0px",
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
     "--studio-overlay-stroke": "0px",
   },
 }
@@ -490,16 +462,7 @@ exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > style/buttonStyle-soft: fires, then holds back 1`] = `
+exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -510,38 +473,64 @@ exports[`rules > style/buttonStyle-soft: fires, then holds back 1`] = `
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
-      "secondary": "raised",
-      "style": "flat",
+      "secondary": "ledge",
+      "style": "ledge",
     },
-    "segmented-control": {
-      "case": "sentence",
-      "selected": "raised",
-      "track": "filled",
-      "weight": "medium",
+    "checkbox": {
+      "card-press": "sink",
+      "card-selected": "tint",
     },
-    "tabs": {
-      "case": "sentence",
-      "chip": "raised",
-      "color": "neutral",
-      "indicator": "full",
-      "pill": "tone",
-      "style": "segmented",
-      "track": "filled",
-      "weight": "medium",
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "radio-group": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "mark": "dot",
+    },
+    "switch": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "style": "inset",
     },
     "toggle-button": {
       "case": "sentence",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
-      "secondary": "raised",
+      "secondary": "ledge",
       "selected": "tone",
-      "style": "flat",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
     },
   },
   "tokens": {
-    "--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
   },
+}
+`;
+
+exports[`rules > style/buttonStyle-flat-soft: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
 }
 `;
 
@@ -566,21 +555,216 @@ exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
       "style": "inset",
       "text": "same",
     },
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
     },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "tint",
+      "style": "indicator",
+      "text": "same",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "inverse",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "inverse",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "selected": "tone",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-card": "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--color-popover": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+    "--indicator-edge": "var(--neutral-700)",
+    "--overlay-border": "transparent",
+    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--studio-indicator-edge": "var(--indicator-edge)",
+  },
+}
+`;
+
+exports[`rules > style/inputStyle-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "checkbox": {
+      "card-press": "sink",
+      "card-selected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "radio-group": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "mark": "dot",
+    },
+    "switch": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "style": "inset",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
+  },
+}
+`;
+
+exports[`rules > style/surfaceEdge-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
     },
     "segmented-control": {
       "case": "sentence",
@@ -611,135 +795,15 @@ exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
   "tokens": {
     "--card-border": "transparent",
     "--overlay-border": "transparent",
-    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
     "--studio-card-stroke": "0px",
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
     "--studio-overlay-stroke": "0px",
   },
 }
 `;
 
-exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "button": {
-      "case": "sentence",
-      "current": "none",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "tonal",
-      "style": "flat",
-    },
-    "command": {
-      "inset": "full-bleed",
-      "scale": "default",
-      "search": "field",
-    },
-    "group": {
-      "segments": "attached",
-      "separator": "divider",
-    },
-    "input": {
-      "errorIcon": "none",
-      "height": "controls",
-      "hover": "tint",
-      "style": "indicator",
-      "text": "same",
-    },
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "full-bleed",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
-    },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "check-end",
-      "inset": "full-bleed",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
-    },
-    "otp-field": {
-      "cells": "separate",
-    },
-    "segmented-control": {
-      "case": "sentence",
-      "selected": "inverse",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "tabs": {
-      "case": "sentence",
-      "chip": "inverse",
-      "color": "neutral",
-      "indicator": "full",
-      "pill": "solid",
-      "style": "segmented",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "toast": {
-      "motion": "slide",
-      "status": "solid-icon",
-      "surface": "inverse",
-    },
-    "toggle-button": {
-      "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "tonal",
-      "selected": "solid",
-      "style": "flat",
-    },
-    "toggle-button-group": {
-      "segments": "attached",
-      "separator": "divider",
-    },
-  },
-  "tokens": {
-    "--card-border": "transparent",
-    "--color-border-control": "var(--neutral-700)",
-    "--color-border-control-hover": "var(--neutral-800)",
-    "--color-card": "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
-    "--color-popover": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
-    "--overlay-border": "transparent",
-    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
-  },
-}
-`;
-
-exports[`rules > style/inputStyle-flat-soft-tonal: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > style/surfaceEdge-flat-soft-tonal: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > style/surfaceLayers-flat-soft-tactile: fires, then holds back 1`] = `
+exports[`rules > style/surfaceLayers-flat-soft-tactile-chunky: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,

@@ -100,6 +100,7 @@ const GONE = new Set([
   "segmentedControlMotion",
   "skeletonMotion",
   "spacingUnit",
+  "surfaceGlass",
   "tableSeparation",
   "tagMotion",
   "timePickerMotion",
@@ -268,6 +269,7 @@ function fromMain(main: Raw): Raw {
   if (main.menuLabels === "caps") state.sectionLabels = "caps"
   if (main.popoverTip === "tip") state.menuArrows = "both"
   if (main.progressGap === true) state.progressTrackStyle = "gap"
+  if (main.surfaceGlass === true) state.translucentOverlays = true
   // Main's Blur: a 20% scrim under a heavier blur than Dim's 40%.
   if (main.dialogBackdrop === "blur") state.dialogBackdropStrength = "light"
 

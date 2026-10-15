@@ -18,12 +18,15 @@
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg).
-   - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
-     dialogs and drawers sit on a scrim and stay solid.
+   - Translucent overlays: popovers, tooltips and toasts at 70% over a
+     blurred backdrop; dialogs and drawers sit on a scrim and stay solid.
+     Every material ships it (Catalyst, Notion, Radix, shadcn), so it is
+     its own row, not a Style.
    - App shell: the sidebar and the frame around an inset content panel.
 
    Only what differs from the registry's defaults is emitted. */
 
+import { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
@@ -34,13 +37,21 @@ export const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
   surfaceShadow: "flat",
-  surfaceGlass: false,
+  translucentOverlays: false,
   shellTone: "subtle",
 }
 
 export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
 export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
+
+/* Auto draws the card edge the button finish implies: Polaris bevels its
+   cards, Duolingo puts them on a lip; every other finish keeps the line. */
+export const EDGE_AUTO: Record<string, string> = {
+  ...Object.fromEntries(BUTTON_STYLES.map((value) => [value, "line"])),
+  bevel: "bevel",
+  ledge: "ledge",
+}
 
 export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
@@ -62,7 +73,7 @@ export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
   surfaceLayers: oneOf(LAYERS_VALUES),
   surfaceEdge: oneOf(EDGE_VALUES),
   surfaceShadow: oneOf(SHADOW_VALUES),
-  surfaceGlass: BOOLEAN,
+  translucentOverlays: BOOLEAN,
   shellTone: oneOf(SHELL_VALUES),
 }
 
@@ -233,7 +244,7 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
       shadow: rimmed(shadowLayers(popover, edgeless)),
     },
     modalShadow: shadowLayers(modal, edgeless),
-    glass: state.surfaceGlass,
+    glass: state.translucentOverlays,
     stroke: surfaceStroke(state),
   }
 }
@@ -354,6 +365,11 @@ export const chapter = defineChapter({
   defaults: SURFACE_DEFAULTS,
   schema: SURFACE_SCHEMA,
   resolve: resolveSurfaces,
+  follows: {
+    surfaceEdge: [
+      { kind: "auto", id: "auto", from: "buttonStyle", table: EDGE_AUTO },
+    ],
+  },
   rules: [
     {
       // Flat cards need an edge or a tone apart from the page; Grouped's

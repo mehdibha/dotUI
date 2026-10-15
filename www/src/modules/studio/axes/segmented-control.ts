@@ -28,6 +28,9 @@ export const SEGMENTED_SCHEMA: ChapterSchema<typeof SEGMENTED_DEFAULTS> = {
 const CHIP_AUTO: Record<string, string> = {
   ...Object.fromEntries(STYLE_VALUES.map((value) => [value, "tone"])),
   hairline: "ring",
+  // A lit finish lifts its chip (Untitled UI, Clerk, Polaris).
+  "rim-light": "raised",
+  gloss: "raised",
   bevel: "raised",
 }
 

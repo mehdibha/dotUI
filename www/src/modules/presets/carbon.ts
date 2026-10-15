@@ -11,6 +11,7 @@ export const carbon = definePreset({
     // #f4f4f4 layers on white, no edges; field bottom lines are #8d8d8d.
     // Toggles select solid: Inverse #1f1f1f barely parts from the #393939 secondary.
     style: "tonal",
+    controlEdge: "strong",
 
     // Color
     brand: "#0f62fe",
@@ -61,6 +62,7 @@ export const carbon = definePreset({
     tooltipEntrance: "fade",
 
     // Buttons: #393939 secondary.
+    toggleSelected: "solid",
     buttonSecondary: "solid",
     segmentedTrack: "outline",
 
@@ -77,6 +79,8 @@ export const carbon = definePreset({
     cardSelected: "outline",
 
     // Menus & popovers: a tip on tooltips only; Menu and Dropdown draw none.
+    menuInset: "full-bleed",
+    menuSelectedRow: "tint",
     menuIndicator: "check-start",
     // Dropdown options are 40px, the field height.
     menuRows: "match",
@@ -99,6 +103,7 @@ export const carbon = definePreset({
     breadcrumbTone: "link",
 
     // Feedback: inverse notifications and toasts.
+    toastStyle: "inverse",
     alertStyle: "inverse",
     badgeStyle: "soft",
     progressTrack: "thick",
