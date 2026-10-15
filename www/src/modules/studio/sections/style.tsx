@@ -1,6 +1,6 @@
 "use client"
 
-/* Style — the first Foundations row: the material, named by its light.
+/* Style — the first Foundations row: the overall material.
    Picking one keeps every explicit pick it allows; under the list, the
    Style's finish, then a reset for the rest. */
 

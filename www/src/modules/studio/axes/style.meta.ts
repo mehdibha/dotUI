@@ -6,7 +6,7 @@ import type { Style } from "./style"
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
   flat: {
     label: "Flat",
-    description: "No light: lines draw every edge",
+    description: "Borders on every edge, no shadows",
     credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
   },
   soft: {
@@ -16,22 +16,22 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
   },
   tonal: {
     label: "Tonal",
-    description: "Tone stands in for light: shaded, edgeless",
+    description: "Tinted surfaces instead of borders",
     credits: ["Material 3", "Carbon", "Spotify"],
   },
   tactile: {
     label: "Tactile",
-    description: "A key light from above, on controls",
+    description: "Raised, beveled controls with soft shadows",
     credits: ["Polaris", "Untitled UI", "Clerk"],
   },
   chunky: {
     label: "Chunky",
-    description: "Hard light on solid ledges",
+    description: "Thick solid ledges under controls",
     credits: ["Duolingo", "PostHog", "Kahoot"],
   },
 })
 
-/** Each Style's finish row: the options its light allows, for the key
+/** Each Style's finish row: the options it allows, for the key
  *  FINISH_KEYS names. A Style with one finish has no row. */
 export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
   soft: [
@@ -50,7 +50,7 @@ export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
     {
       value: "rim-light",
       label: "Rim",
-      description: "A light top rim inside a dark edge",
+      description: "A bright top rim inside a dark edge",
     },
     {
       value: "gloss",
