@@ -147,6 +147,8 @@ export interface InteractiveDemoNodeInfo {
   controls: ControlInput[]
   /** Demo file slug under demos/ (default "playground"). */
   file?: string
+  /** API reference name, when it differs from `name` (default `name`). */
+  reference?: string
 }
 
 /**

@@ -75,11 +75,18 @@ export function InteractiveDemo({
     setValues((prev: ControlValues) => ({ ...prev, [name]: value }))
   }, [])
 
-  // Convert icon names to actual icon elements for preview
+  // Convert icon names to icon elements, and the "true"/"false" options of a
+  // `boolean | "literal"` enum to booleans, for the preview
   const propsWithIcons = useMemo(() => {
     const props: Record<string, unknown> = { ...values }
 
     for (const control of controls) {
+      if (control.type === "enum") {
+        const value = values[control.name]
+        if (value === "true" || value === "false") {
+          props[control.name] = value === "true"
+        }
+      }
       if (control.type === "icon") {
         const iconName = values[control.name] as string | null
         if (iconName && availableIcons[iconName]) {

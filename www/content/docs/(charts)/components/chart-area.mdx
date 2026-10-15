@@ -3,7 +3,11 @@ title: Area Chart
 description: A filled line chart for values that accumulate, compose, or are read against a baseline.
 ---
 
-<Demo name="chart-area/demos/gradient" />
+<InteractiveDemo
+  name="chart-area"
+  reference="area-chart"
+  controls={["curve", "stacked", "points", "grid", "legend", "axes"]}
+/>
 
 An area chart is a line chart whose fill carries meaning: distance from a baseline, or the span between two boundaries. Reach for it when the reader should compare magnitude or composition — not just because a filled chart looks stronger. When only the trend matters, use the [line chart](/docs/components/chart-line).
 

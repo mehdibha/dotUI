@@ -136,6 +136,7 @@ function parseParamDefault(src: string, type: Control["type"]): unknown {
   }
   if (type === "number") return typeof v === "number" ? v : undefined
   if (type === "boolean") return typeof v === "boolean" ? v : undefined
+  if (type === "enum" && typeof v === "boolean") return String(v)
   return typeof v === "string" ? v : undefined
 }
 
@@ -214,6 +215,24 @@ function inferFromTypeAst(
       (el) => el.type === "booleanLiteral",
     )
     const hasBoolean = nonUndefinedElements.some((el) => el.type === "boolean")
+
+    // `boolean | "x" | "y"` → enum whose "false"/"true" options render as
+    // boolean JSX (see code-template) and reach the preview as booleans.
+    if (
+      hasBoolean &&
+      stringLiterals.length > 0 &&
+      nonUndefinedElements.every(
+        (el) => el.type === "boolean" || el.type === "stringLiteral",
+      )
+    ) {
+      return {
+        type: "enum",
+        name,
+        options: ["false", "true", ...stringLiterals],
+        defaultValue:
+          (parseDefaultValue(prop.default, "enum") as string) ?? "false",
+      } as EnumControl
+    }
 
     if (
       (hasBooleanLiteral || hasBoolean) &&

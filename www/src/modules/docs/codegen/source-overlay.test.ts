@@ -419,3 +419,30 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// BOOLEAN | LITERAL — enum options "true"/"false" render as boolean JSX
+// ---------------------------------------------------------------------------
+
+const MIXED_SRC = `import { AreaChart } from "@/registry/ui/chart-area";
+
+export default function Demo({ axes = "x" } = {}) {
+	return <AreaChart axes={axes} />;
+}
+`
+
+const MIXED_CONTROLS: ControlSelection[] = [
+  { name: "axes", kind: "enum", default: "x" },
+]
+
+describe("boolean | literal enum", () => {
+  it.each([
+    ["true", "<AreaChart axes />"],
+    ["false", "<AreaChart axes={false} />"],
+    ["y", '<AreaChart axes="y" />'],
+    ["x", "<AreaChart />"],
+  ])("axes=%s", async (axes, code) => {
+    const { collapsed } = await gen(MIXED_SRC, MIXED_CONTROLS, { axes })
+    expect(collapsed).toBe(code)
+  })
+})

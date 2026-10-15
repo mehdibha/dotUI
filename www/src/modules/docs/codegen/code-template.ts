@@ -273,6 +273,10 @@ function renderAttrHole(
     }
     default: {
       const s = String(value)
+      // An enum over `boolean | "literal"` carries its booleans as strings.
+      if (hole.kind === "enum" && s === "true") return hole.attrName
+      if (hole.kind === "enum" && s === "false")
+        return `${hole.attrName}={false}`
       // clean → plain quoted form; dirty → brace form (both oxfmt-stable)
       return /["\\\n\r]/.test(s)
         ? `${hole.attrName}={${quoteString(s)}}`
