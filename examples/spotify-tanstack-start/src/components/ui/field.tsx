@@ -12,7 +12,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { Text } from "@/components/ui/text";
 
-const fieldVariants = tv({
+const fieldStyles = tv({
   slots: {
     fieldset: "",
     legend: "",
@@ -52,9 +52,7 @@ const {
   label,
   description,
   fieldError,
-} = fieldVariants();
-
-export { fieldVariants as fieldStyles };
+} = fieldStyles();
 
 /* -------------------------------------------------------------------------- */
 
@@ -97,7 +95,7 @@ function FieldGroup({ className, ...props }: FieldGroupProps) {
 /* -------------------------------------------------------------------------- */
 
 interface FieldProps
-  extends React.ComponentProps<"div">, VariantProps<typeof fieldVariants> {}
+  extends React.ComponentProps<"div">, VariantProps<typeof fieldStyles> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId();
@@ -150,16 +148,14 @@ interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
 > {}
 
-const Label = ({ children, className, ...props }: LabelProps) => {
+const Label = ({ className, ...props }: LabelProps) => {
   return (
     <LabelPrimitives.Label
       data-slot="label"
       data-label=""
       className={label({ className })}
       {...props}
-    >
-      {children}
-    </LabelPrimitives.Label>
+    />
   );
 };
 
@@ -221,4 +217,5 @@ export {
   Fieldset,
   Label,
   Legend,
+  fieldStyles,
 };

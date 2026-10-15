@@ -128,7 +128,6 @@ const MessageScrollerButton = ({
       data-message-scroller-button=""
       data-button=""
       data-icon-only=""
-      data-direction={direction}
       direction={direction}
       className={buttonStyles({
         variant: "secondary",

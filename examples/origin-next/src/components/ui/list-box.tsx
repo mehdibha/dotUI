@@ -55,7 +55,7 @@ const ListBox = <T extends object>({
     <ListBoxPrimitive.ListBox
       data-listbox=""
       className={composeRenderProps(className, (cn) => root({ className: cn }))}
-      data-standalone={standalone ?? undefined}
+      data-standalone={standalone}
       {...props}
     >
       <ListBoxPrimitive.Collection items={items}>

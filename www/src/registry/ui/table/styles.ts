@@ -68,10 +68,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       ],
       expandIcon:
         "size-3.5 transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
-      loadMore: [
-        "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
-        "[&_[data-slot=loader]_svg]:size-4",
-      ],
+      loadMore: "relative h-7",
     },
   },
   density: {

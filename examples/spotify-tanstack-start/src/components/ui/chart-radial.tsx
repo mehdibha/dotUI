@@ -255,7 +255,6 @@ export function radialBarChartSpec<TDatum>(
   };
 }
 
-// oxlint-disable-next-line no-explicit-any
 const radialTooltip: ChartTooltipContentOf<RadialBarChartSpecOptions<any>> = (
   points,
   _context,

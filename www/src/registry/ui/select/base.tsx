@@ -101,9 +101,8 @@ const SelectValue = <T extends object>({
     >
       {composeRenderProps(
         props.children,
-        (children, { selectedText, defaultChildren }) => {
-          return <>{children || selectedText || defaultChildren}</>
-        },
+        (children, { selectedText, defaultChildren }) =>
+          children || selectedText || defaultChildren,
       )}
     </SelectPrimitives.SelectValue>
   )
@@ -129,25 +128,14 @@ const SelectContent = <T extends object>({
   onOpenChange,
   ...props
 }: SelectContentProps<T>) => {
-  const listBoxClassName = composeRenderProps(props.className, (className) =>
-    cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+  const listBox = (
+    <ListBox
+      {...props}
+      className={composeRenderProps(props.className, (className) =>
+        cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+      )}
+    />
   )
-
-  if (virtulized) {
-    return (
-      <Popover
-        className="overflow-hidden"
-        placement={placement}
-        defaultOpen={defaultOpen}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-      >
-        <ListBoxVirtualizer>
-          <ListBox {...props} className={listBoxClassName} />
-        </ListBoxVirtualizer>
-      </Popover>
-    )
-  }
 
   return (
     <Popover
@@ -157,7 +145,11 @@ const SelectContent = <T extends object>({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
     >
-      <ListBox {...props} className={listBoxClassName} />
+      {virtulized ? (
+        <ListBoxVirtualizer>{listBox}</ListBoxVirtualizer>
+      ) : (
+        listBox
+      )}
     </Popover>
   )
 }

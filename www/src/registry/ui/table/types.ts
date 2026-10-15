@@ -5,7 +5,7 @@ import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
 /**
  * The scrollable container for a Table. Set `resizable` to opt into React Aria's resizable table layout.
  */
-export interface TableContainerProps extends React.ComponentPropsWithoutRef<
+export interface TableContainerProps extends React.ComponentProps<
   typeof TablePrimitives.ResizableTableContainer
 > {
   /**

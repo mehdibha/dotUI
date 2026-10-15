@@ -4,19 +4,25 @@
  *
  * Concretely, given input:
  *
- *   import { buttonStyles, useStyles } from "./styles";
+ *   import { useStyles } from "./styles";
  *   import type { ButtonStyles } from "./styles";
+ *   export { buttonStyles } from "./styles";
  *   type ButtonVariants = VariantProps<ButtonStyles>;
  *   ...
  *   const styles = useStyles();
+ *   ...
+ *   export { Button };
  *
  * produces:
  *
  *   import { tv, type VariantProps } from "tailwind-variants"; // tv added
- *   const buttonVariants = tv(__TV_CONFIG__);
- *   type ButtonVariants = VariantProps<typeof buttonVariants>;
- *   ...
- *   const styles = buttonVariants;
+ *   const buttonStyles = tv(__TV_CONFIG__);
+ *   type ButtonVariants = VariantProps<typeof buttonStyles>;
+ *   ...                                // `styles` reads become `buttonStyles`
+ *   export { Button, buttonStyles };
+ *
+ * The `tv()` const takes the name the file exports its styles under, else
+ * `<name>Variants`.
  *
  * Then swaps the `__TV_CONFIG__` identifier for `%%TV_CONFIG%%` (matching
  * `publish.TV_CONFIG_PLACEHOLDER`) so the resulting string is the request-time
@@ -528,7 +534,8 @@ export interface TransformBaseInput {
 export interface TransformBaseOutput {
   /** Source with `%%TV_CONFIG%%` placeholder where the resolved tv literal goes. */
   template: string
-  /** The injected variant identifier, e.g. `"buttonVariants"`. */
+  /** The injected `tv()` const: the exported styles name (`"buttonStyles"`),
+   *  else `"<name>Variants"`. */
   variantIdent: string
 }
 
@@ -571,13 +578,14 @@ export function transformBase({
   hasStylesConfig = true,
   paramSelection,
 }: TransformBaseInput): TransformBaseOutput {
-  const variantIdent = `${toCamelCase(componentName)}Variants`
   const stylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles` // e.g. "ButtonStyles"
 
   const project = getProject()
   const sourceFile = project.addSourceFileAtPath(baseTsxPath)
 
   try {
+    const variantIdent =
+      exportedStylesName(sourceFile) ?? `${toCamelCase(componentName)}Variants`
     applyTransform(sourceFile, {
       variantIdent,
       stylesTypeIdent,
@@ -595,10 +603,28 @@ export function transformBase({
     const transformed = sourceFile
       .getFullText()
       .replace(TS_PLACEHOLDER_IDENT, TV_CONFIG_PLACEHOLDER)
+      .replace(LINT_DIRECTIVE_LINE_RE, "")
     return { template: transformed, variantIdent }
   } finally {
     project.removeSourceFile(sourceFile)
   }
+}
+
+/** The repo's own lint directives (`// oxlint-disable-next-line …`,
+ *  `/* oxlint-disable … *\/`) stay in registry source, not in shipped files. */
+const LINT_DIRECTIVE_LINE_RE =
+  /^[ \t]*(?:\/\/[ \t]*oxlint-disable.*|\/\*[ \t]*oxlint-disable.*?\*\/[ \t]*)\r?\n/gm
+
+/** `export { buttonStyles } from "./styles"` names the styles function the
+ *  published file exports: the injected `tv()` const takes that name. */
+function exportedStylesName(sourceFile: SourceFile): string | undefined {
+  const specs = sourceFile
+    .getExportDeclarations()
+    .filter((exp) => exp.getModuleSpecifierValue() === "./styles")
+    .flatMap((exp) => exp.getNamedExports())
+  const [spec] = specs
+  if (!spec || specs.length !== 1) return undefined
+  return spec.getAliasNode()?.getText() ?? spec.getName()
 }
 
 function capitalize(s: string): string {
@@ -658,17 +684,28 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   }
 
   // 2b. Resolve `export { fieldStyles } from './styles'`: the styles module
-  //     doesn't ship, so re-export the injected variant const under the same
-  //     public name — cross-component imports rely on it staying stable.
+  //     doesn't ship, so export the injected variant const under the same
+  //     public name — cross-component imports rely on it staying stable. It
+  //     carries that name already (`exportedStylesName`), so it joins the
+  //     file's closing export list.
   for (const exp of [...sourceFile.getExportDeclarations()]) {
     if (exp.getModuleSpecifierValue() !== "./styles") continue
-    const specs = exp
+    const names = exp
       .getNamedExports()
-      .map(
-        (s) =>
-          `${variantIdent} as ${s.getAliasNode()?.getText() ?? s.getName()}`,
+      .map((s) => s.getAliasNode()?.getText() ?? s.getName())
+    const list = sourceFile
+      .getExportDeclarations()
+      .filter((e) => !e.getModuleSpecifier() && !e.isTypeOnly())
+      .at(-1)
+    if (names.length === 1 && names[0] === variantIdent && list) {
+      list.addNamedExport(variantIdent)
+      exp.remove()
+    } else {
+      const specs = names.map((name) =>
+        name === variantIdent ? name : `${variantIdent} as ${name}`,
       )
-    exp.replaceWithText(`export { ${specs.join(", ")} };`)
+      exp.replaceWithText(`export { ${specs.join(", ")} };`)
+    }
   }
 
   // 3. Remove imports from "./styles" (both value and type).

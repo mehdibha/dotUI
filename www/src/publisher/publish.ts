@@ -207,7 +207,8 @@ export interface PublishInput {
 }
 
 /** The slots the shipped file reads, when only its `const { … } =
- *  xVariants()` reads them; a shared recipe's other slots ship dead. */
+ *  xVariants()` reads them; a shared recipe's other slots ship dead. Exported
+ *  styles (`xStyles`) never match: other components read their slots. */
 function destructuredSlots(template: string): Set<string> | undefined {
   const hoisted = [
     ...template.matchAll(/const \{([^}]*)\} = (\w+Variants)\(\);/g),

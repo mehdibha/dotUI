@@ -4,9 +4,9 @@ import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
 import * as TabsPrimitives from "react-aria-components/Tabs";
+import { type VariantProps, tv } from "tailwind-variants";
 
 import { createContext } from "@/lib/context";
-import { tv } from "tailwind-variants";
 
 const tabsVariants = tv({
   slots: {
@@ -61,7 +61,7 @@ const tabsVariants = tv({
 
 const { root, list, item, indicator, panel } = tabsVariants();
 
-type TabsVariant = "segmented" | "line" | "pill" | "enclosed";
+type TabsVariant = VariantProps<typeof tabsVariants>["variant"];
 
 /* -------------------------------------------------------------------------- */
 
