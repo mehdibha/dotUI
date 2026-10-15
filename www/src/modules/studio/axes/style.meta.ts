@@ -9,11 +9,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "Borders on every edge, no shadows",
     credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
   },
-  soft: {
-    label: "Soft",
-    description: "Diffuse light: soft, low shadows",
-    credits: ["Linear", "Notion", "Airbnb", "Fluent 2"],
-  },
   tonal: {
     label: "Tonal",
     description: "Tinted surfaces instead of borders",
@@ -34,18 +29,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
 /** Each Style's finish row: the options it allows, for the key
  *  FINISH_KEYS names. A Style with one finish has no row. */
 export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
-  soft: [
-    {
-      value: "line",
-      label: "Hairline",
-      description: "Cards keep a hairline edge",
-    },
-    {
-      value: "none",
-      label: "Shadow only",
-      description: "No edge; soft shadows alone",
-    },
-  ],
   tactile: [
     {
       value: "rim-light",

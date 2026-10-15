@@ -1,6 +1,5 @@
 import { options } from "./core/meta"
-import { STROKE_VALUES, TRACK_VALUES } from "./shape"
-import type { ShapeVector } from "./shape"
+import { SHAPE_VALUES, STROKE_VALUES, TRACK_VALUES } from "./shape"
 
 export const STROKE_OPTIONS = options(STROKE_VALUES, {
   regular: {
@@ -33,45 +32,13 @@ export const OPTIONS = {
   tracks: TRACK_OPTIONS,
 }
 
-/* Three looks that stay distinct at a glance; the base slider and Custom
-   cover the rest. Checked against shadcn/create: Square ≈ lyra/sera,
-   Standard ≈ mira (vega and nova within a rung), Round ≈ luma/rhea. */
-export const SHAPE_CHARACTERS: Array<{
-  id: string
-  label: string
-  vector: ShapeVector
-}> = [
-  {
-    id: "square",
-    label: "Square",
-    vector: {
-      roleControl: "none",
-      roleItem: "none",
-      roleSurface: "none",
-      rolePanel: "none",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "standard",
-    label: "Standard",
-    vector: {
-      roleControl: "md",
-      roleItem: "auto",
-      roleSurface: "lg",
-      rolePanel: "xl",
-      roleCard: "auto",
-    },
-  },
-  {
-    id: "round",
+export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
+  square: { label: "Square", description: "No rounding on any corner" },
+  sharp: { label: "Sharp", description: "Small, tight corners" },
+  standard: { label: "Standard", description: "Moderate corners everywhere" },
+  soft: { label: "Soft", description: "Larger, gentler corners" },
+  round: {
     label: "Round",
-    vector: {
-      roleControl: "3xl",
-      roleItem: "auto",
-      roleSurface: "2xl",
-      rolePanel: "3xl",
-      roleCard: "auto",
-    },
+    description: "Pill controls, generous card corners",
   },
-]
+})

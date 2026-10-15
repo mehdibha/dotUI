@@ -254,6 +254,16 @@ describe("migrate", () => {
     })
   })
 
+  it("reads Soft as Flat with Soft's columns, keeping explicit picks", () => {
+    const soft = { ...DEFAULT_STATE, style: "soft", buttonSecondary: "outline" }
+    expect(migrate({ version: 3, ...soft })).toEqual({
+      ...DEFAULT_STATE,
+      surfaceShadow: "low",
+      buttonSecondary: "outline",
+      segmentedSelected: "raised",
+    })
+  })
+
   it("returns anything but an object as is", () => {
     for (const raw of [null, 3, "state", [1]]) expect(migrate(raw)).toBe(raw)
   })

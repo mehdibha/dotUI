@@ -8,7 +8,8 @@ export const notion = definePreset({
   inspiredBy: "Notion",
   diff: {
     // Style: low drops; settings switches are a white chip on a gray track.
-    style: "soft",
+    surfaceShadow: "low",
+    segmentedSelected: "raised",
 
     // Color
     // The app's --c-bluBacAccPri; #0075de is the marketing blue.

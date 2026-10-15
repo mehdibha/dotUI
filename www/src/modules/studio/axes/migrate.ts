@@ -290,5 +290,22 @@ function fromMain(main: Raw): Raw {
   return settle(state)
 }
 
+/* ------------------------------- v3 → v4 ------------------------------- */
+
+/* Soft was Flat with these three columns; its finishes were Edge values. */
+const SOFT: Raw = {
+  surfaceShadow: "low",
+  buttonSecondary: "raised",
+  segmentedSelected: "raised",
+}
+
+function fromSoft(state: Raw): Raw {
+  if (state.style !== "soft") return state
+  const next: Raw = { ...state, style: "flat" }
+  for (const [key, value] of Object.entries(SOFT))
+    if ((next[key] ?? "style") === "style") next[key] = value
+  return next
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
-const STEPS: Record<number, (state: Raw) => Raw> = { 2: fromMain }
+const STEPS: Record<number, (state: Raw) => Raw> = { 2: fromMain, 3: fromSoft }
