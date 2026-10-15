@@ -11,7 +11,8 @@
  *     contract.
  *  2. COLLAPSED code is the expanded body verbatim, dedented to column 0,
  *     prefixed with placeholders for the consts the expanded view includes.
- *  3. Icons referenced by the rendered code are actually imported.
+ *  3. Consts referenced by the rendered code are actually declared.
+ *  4. Icons referenced by the rendered code are actually imported.
  *
  * Failures print the demo name and the control values that produced the
  * mismatching render.
@@ -48,6 +49,8 @@ interface DiscoveredDemo {
   name: string
   /** Demo file slug under demos/ (default "playground"). */
   file: string
+  /** API reference the controls read from (default `name`). */
+  reference: string
   controls: ControlInput[]
   mdxPath: string
 }
@@ -66,7 +69,14 @@ async function discoverInteractiveDemos(): Promise<DiscoveredDemo[]> {
       const name = /\bname="([^"]+)"/.exec(tag)?.[1]
       if (!name) continue
       const file = /\bfile="([^"]+)"/.exec(tag)?.[1] ?? "playground"
-      demos.push({ name, file, controls: parseControlsAttr(tag), mdxPath })
+      const reference = /\breference="([^"]+)"/.exec(tag)?.[1] ?? name
+      demos.push({
+        name,
+        file,
+        reference,
+        controls: parseControlsAttr(tag),
+        mdxPath,
+      })
     }
   }
   return demos
@@ -249,7 +259,16 @@ async function assertFidelity(
     expectedCollapsed,
   )
 
-  // 3. Every icon the values inject is imported in the expanded code.
+  // 3. Every const the expanded code mentions is declared in it.
+  for (const c of template.consts) {
+    if (!new RegExp(`\\b${c.name}\\b`).test(expanded)) continue
+    expect(
+      expanded,
+      `${label}\n→ const ${c.name} is referenced but never declared`,
+    ).toContain(c.real)
+  }
+
+  // 4. Every icon the values inject is imported in the expanded code.
   for (const hole of collectTemplateHoles(template.root)) {
     if (hole.kind !== "icon") continue
     const icon = values[hole.control]
@@ -282,7 +301,7 @@ describe("playground code generation matches oxfmt", () => {
         "utf-8",
       )
       const controls = await buildControlsFromReference(
-        demo.name,
+        demo.reference,
         demo.controls,
         source,
       )

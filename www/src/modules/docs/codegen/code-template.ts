@@ -368,16 +368,21 @@ function collectUsedSymbols(
   template: CodeTemplate,
   body: string,
 ): { symbols: Set<string>; consts: Set<string> } {
+  // A const survives when the body or another surviving const references it
+  // (`data` derived from `days`), so repeat until nothing new is pulled in.
   const consts = new Set<string>()
-  for (const c of template.consts)
-    if (wordPresent(body, c.name)) consts.add(c.name)
+  let haystack = body
+  for (let grew = true; grew; ) {
+    grew = false
+    for (const c of template.consts) {
+      if (consts.has(c.name) || !wordPresent(haystack, c.name)) continue
+      consts.add(c.name)
+      haystack += `\n${c.real}`
+      grew = true
+    }
+  }
 
   // Imports may be referenced from the body OR from a surviving const.
-  const survivingConstText = template.consts
-    .filter((c) => consts.has(c.name))
-    .map((c) => c.real)
-    .join("\n")
-  const haystack = `${body}\n${survivingConstText}`
   const symbols = new Set<string>()
   for (const imp of template.imports) {
     for (const sym of imp.symbols) {
