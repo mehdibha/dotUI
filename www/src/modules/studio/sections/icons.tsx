@@ -1,75 +1,22 @@
 "use client"
 
 /* Icons — the library, and under its picker the one axis that library
-   exposes: stroke width on line sets, weight on Phosphor. The picker shows a
-   wall of glyphs drawn by the library under the pointer, so the pick is made
-   by look. */
+   exposes: stroke width on line sets, weight on Phosphor. */
 
-import { useRef, useState } from "react"
-import type { ListBoxItemProps } from "react-aria-components"
-import {
-  Button as RacButton,
-  Select as RacSelect,
-  SelectValue,
-} from "react-aria-components"
-
-import {
-  BellIcon,
-  CalendarIcon,
-  CameraIcon,
-  FolderIcon,
-  HeartIcon,
-  HomeIcon,
-  MailIcon,
-  SearchIcon,
-  SettingsIcon,
-  SunIcon,
-  TrashIcon,
-  UserIcon,
-} from "@/registry/icons"
+import { HeartIcon, SearchIcon, SettingsIcon } from "@/registry/icons"
 import {
   IconLibraryContext,
   IconWeightContext,
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
-import { cn } from "@/registry/lib/utils"
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxItemDescription,
-  ListBoxItemLabel,
-} from "@/registry/ui/list-box"
 
 import { ICON_STROKE_WIDTH_VAR, STROKE_RANGE } from "../axes/icons"
 import { LIBRARY_OPTIONS, WEIGHT_OPTIONS } from "../axes/icons.meta"
-import {
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
-  DialSelect,
-  DialSlider,
-} from "../dial"
-import { Row, useRowLabel } from "../family-page"
+import { DialSelect, DialSlider } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import { warmPreview } from "../live"
-import { useOptionPreview } from "../option-preview"
-import { PanelPopover, PanelPopoverTitle } from "../rows"
-import { useStudio } from "../use-studio"
 
-const SPECIMEN_ICONS = [
-  SearchIcon,
-  SettingsIcon,
-  HeartIcon,
-  BellIcon,
-  HomeIcon,
-  UserIcon,
-  MailIcon,
-  CalendarIcon,
-  CameraIcon,
-  FolderIcon,
-  SunIcon,
-  TrashIcon,
-]
+const SPECIMEN_ICONS = [SearchIcon, SettingsIcon, HeartIcon]
 
 /** Draws the registry icons inside it with `library`, at `weight` on
  *  Phosphor and `stroke` on line sets. */
@@ -111,131 +58,30 @@ function Glyphs(props: {
       {...props}
       className="flex shrink-0 items-center gap-1.5 **:[svg]:size-4"
     >
-      {SPECIMEN_ICONS.slice(0, 3).map((Icon, i) => (
+      {SPECIMEN_ICONS.map((Icon, i) => (
         <Icon key={i} />
       ))}
     </IconScope>
   )
 }
 
-/** A select that stays open on pick: the libraries by name beside a wall of
- *  every specimen drawn by the one under the pointer or keyboard focus — the
- *  selected one at rest. The preview follows too, its chunks warmed on open. */
-function LibraryRow() {
-  const { effective, set } = useStudio()
-  const label = useRowLabel("Icons")
-  const value = effective.iconLibrary as IconLibraryName
-  const onChange = set("iconLibrary")
-  const weight = effective.iconWeight as PhosphorWeight
-  const stroke = effective.iconStroke
-  const [peek, setPeek] = useState<IconLibraryName | null>(null)
-  const focused = useRef<IconLibraryName | null>(null)
-  const shown = peek ?? value
-  return (
-    <RacSelect
-      aria-label={label}
-      value={value}
-      onChange={(key) => key && onChange(key as IconLibraryName)}
-      shouldCloseOnSelect={false}
-      onOpenChange={(isOpen) => {
-        if (isOpen)
-          warmPreview({ icons: LIBRARY_OPTIONS.map((option) => option.value) })
-        else setPeek(null)
-      }}
-    >
-      <RacButton
-        data-axis="iconLibrary"
-        data-holds="iconStroke iconWeight"
-        className={cn(DIAL_ROW, DIAL_PRESS)}
-      >
-        <span className={DIAL_LABEL}>{label}</span>
-        <SelectValue className="truncate text-[13px] font-medium text-fg/60">
-          {({ selectedText }) => selectedText}
-        </SelectValue>
-      </RacButton>
-      <PanelPopoverTitle.Provider value={label}>
-        <PanelPopover className="w-md min-w-0">
-          {/* Crossing to the wall keeps the peek; leaving falls back to the focused row. */}
-          <div
-            className="flex min-h-0 gap-1.5 overflow-y-auto overscroll-contain p-2"
-            onPointerLeave={() => setPeek(focused.current)}
-          >
-            <ListBox className="w-44 shrink-0 p-0">
-              {LIBRARY_OPTIONS.map((option) => {
-                const library = option.value as IconLibraryName
-                return (
-                  <LibraryItem
-                    key={library}
-                    id={library}
-                    label={option.label}
-                    credits={option.credits}
-                    run={() => onChange(library)}
-                    onHoverStart={() => setPeek(library)}
-                    onFocusChange={(isFocused) => {
-                      focused.current = isFocused ? library : null
-                      setPeek(focused.current)
-                    }}
-                  />
-                )
-              })}
-            </ListBox>
-            {/* All walls stay mounted: chunks load on open, swaps never flash lucide. */}
-            <div
-              aria-hidden
-              className="grid min-w-0 flex-1 rounded-lg tint-5 text-fg/80"
-            >
-              {LIBRARY_OPTIONS.map((option) => {
-                const library = option.value as IconLibraryName
-                return (
-                  <IconScope
-                    key={library}
-                    library={library}
-                    weight={library === "phosphor" ? weight : undefined}
-                    stroke={library === value ? stroke : undefined}
-                    className={cn(
-                      "col-start-1 row-start-1 grid grid-cols-[repeat(4,auto)] grid-rows-[repeat(3,auto)] content-evenly justify-evenly **:[svg]:size-6",
-                      library !== shown && "invisible",
-                    )}
-                  >
-                    {SPECIMEN_ICONS.map((Icon, i) => (
-                      <Icon key={i} />
-                    ))}
-                  </IconScope>
-                )
-              })}
-            </div>
-          </div>
-          {/* Gone with both rows, on a library that exposes neither. */}
-          <div className="flex shrink-0 flex-col gap-1.5 border-t border-fg/8 p-2 [&:not(:has([data-axis]))]:hidden">
-            <Row axis="iconStroke" />
-            <Row axis="iconWeight" />
-          </div>
-        </PanelPopover>
-      </PanelPopoverTitle.Provider>
-    </RacSelect>
-  )
-}
-
-function LibraryItem({
-  id,
+// Names only: the preview takes over with the Icons board while it's open.
+const LIBRARY_ROW_OPTIONS = LIBRARY_OPTIONS.map(({ value, label }) => ({
+  value,
   label,
-  credits,
-  run,
-  ...props
-}: {
-  id: string
-  label: string
-  credits?: readonly string[]
-  run: () => void
-} & Pick<ListBoxItemProps, "onHoverStart" | "onFocusChange">) {
-  const previewProps = useOptionPreview()
-  return (
-    <ListBoxItem id={id} textValue={label} {...previewProps(run)} {...props}>
-      <ListBoxItemLabel>{label}</ListBoxItemLabel>
-      <ListBoxItemDescription>{credits?.join(", ")}</ListBoxItemDescription>
-    </ListBoxItem>
-  )
-}
+}))
+
+const LibraryRow = () => (
+  <DialSelect
+    axis="iconLibrary"
+    holds={["iconStroke", "iconWeight"]}
+    label="Icons"
+    options={LIBRARY_ROW_OPTIONS}
+  >
+    <Row axis="iconStroke" />
+    <Row axis="iconWeight" />
+  </DialSelect>
+)
 
 const StrokeRow = () => (
   <DialSlider
@@ -250,9 +96,7 @@ const StrokeRow = () => (
 
 const WEIGHT_ROW_OPTIONS = WEIGHT_OPTIONS.map((option) => ({
   ...option,
-  preview: (
-    <Glyphs library="phosphor" weight={option.value as PhosphorWeight} />
-  ),
+  glyph: <Glyphs library="phosphor" weight={option.value as PhosphorWeight} />,
 }))
 
 const WeightRow = () => (

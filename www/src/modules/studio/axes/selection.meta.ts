@@ -4,12 +4,12 @@ import { HIGHLIGHT_VALUES } from "./selection"
 export const HIGHLIGHT_OPTIONS = options(HIGHLIGHT_VALUES, {
   accent: {
     label: "Accent",
-    description: "A tint of the accent",
+    description: "Highlighted text gets a brand tint",
     credits: ["Radix Themes", "Linear", "Raycast"],
   },
   browser: {
     label: "Browser",
-    description: "The system highlight",
+    description: "The browser's default highlight color",
     credits: ["Material 3", "Primer", "Carbon"],
   },
 })

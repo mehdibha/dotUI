@@ -42,27 +42,14 @@ const solid = (look: Look) =>
   look.neutral ? "bg-fg text-bg" : "bg-accent text-fg-on-accent"
 
 /** A day numeral in its cell; `today` draws the marker. */
-function Day({
-  n,
-  look,
-  selected,
-  today,
-  className,
-}: {
-  n: number
-  look: Look
-  selected?: boolean
-  today?: boolean
-  className?: string
-}) {
+function Day({ n, look, today }: { n: number; look: Look; today?: boolean }) {
   const accent = look.todayColor === "selection"
-  const mark = today && !selected ? look.today : undefined
+  const mark = today ? look.today : undefined
   return (
     <span
       className={cn(
         "relative flex size-4 items-center justify-center text-[8px] font-medium tabular-nums",
         chipRadius(look),
-        selected && solid(look),
         mark === "fill" && (accent ? solid(look) : "bg-fg/10"),
         mark === "ring" &&
           cn(
@@ -79,7 +66,6 @@ function Day({
         accent &&
           (mark === "numeral" || mark === "dot") &&
           (look.neutral ? "text-fg" : "text-fg-accent"),
-        className,
       )}
     >
       {n}
@@ -87,11 +73,7 @@ function Day({
         <span
           className={cn(
             "absolute bottom-px left-1/2 size-0.5 -translate-x-1/2 rounded-full",
-            selected
-              ? "bg-current"
-              : accent && !look.neutral
-                ? "bg-accent"
-                : "bg-fg",
+            accent && !look.neutral ? "bg-accent" : "bg-fg",
           )}
         />
       )}
@@ -99,25 +81,14 @@ function Day({
   )
 }
 
-const WEEKDAYS: Record<string, string[]> = {
-  single: ["S", "M", "T"],
-  double: ["Su", "Mo", "Tu"],
-  triple: ["Sun", "Mon", "Tue"],
-}
-
 /* ---------------------------------- Rows ---------------------------------- */
 
 function DayShapeRow() {
-  const look = lookOf(useStudio().effective)
   return (
     <DialSelect
       axis="calendarDayShape"
       label="Day shape"
-      rowPreview={false}
-      options={DAY_SHAPE_OPTIONS.map((option) => ({
-        ...option,
-        preview: <Day n={7} look={{ ...look, shape: option.value }} selected />,
-      }))}
+      options={DAY_SHAPE_OPTIONS}
     />
   )
 }
@@ -130,7 +101,7 @@ function TodayRow() {
       label="Today"
       options={TODAY_OPTIONS.map((option) => ({
         ...option,
-        preview: <Day n={5} look={{ ...look, today: option.value }} today />,
+        glyph: <Day n={5} look={{ ...look, today: option.value }} today />,
       }))}
     />
   )
@@ -144,9 +115,7 @@ function TodayColorRow() {
       label="Today color"
       options={TODAY_COLOR_OPTIONS.map((option) => ({
         ...option,
-        preview: (
-          <Day n={5} look={{ ...look, todayColor: option.value }} today />
-        ),
+        glyph: <Day n={5} look={{ ...look, todayColor: option.value }} today />,
       }))}
     />
   )
@@ -157,17 +126,7 @@ function WeekdaysRow() {
     <DialSelect
       axis="calendarWeekdays"
       label="Weekday labels"
-      rowPreview={false}
-      options={WEEKDAY_OPTIONS.map((option) => ({
-        ...option,
-        preview: (
-          <span className="flex w-12 shrink-0 justify-between text-[8px] font-medium text-fg/60">
-            {WEEKDAYS[option.value]?.map((day, i) => (
-              <span key={i}>{day}</span>
-            ))}
-          </span>
-        ),
-      }))}
+      options={WEEKDAY_OPTIONS}
     />
   )
 }

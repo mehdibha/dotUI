@@ -12,7 +12,6 @@ import { Loader as BladesLoader } from "@/registry/ui/loader/base.blades"
 import { Loader as DotsLoader } from "@/registry/ui/loader/base.dots"
 import { Loader as RingLoader } from "@/registry/ui/loader/base.ring"
 import { Loader as RingTrackLoader } from "@/registry/ui/loader/base.ring-track"
-import { useStyles as useProgressStyles } from "@/registry/ui/progress-bar/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "../axes"
@@ -34,15 +33,14 @@ import {
   STYLE_OPTIONS as TOAST_OPTIONS,
 } from "../axes/toast.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { DialSelectOption } from "../dial"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* The vars a pick writes (Rounded badges, the progress fill). */
-const LOCAL_VARS = ["--studio-badge-radius", "--studio-progress-fill-color"]
+/* The vars a pick writes (Rounded badges). */
+const LOCAL_VARS = ["--studio-badge-radius"]
 
 /** Specimens drawn by the registry's own recipes in one design system. */
 function System({
@@ -202,15 +200,6 @@ const LOADERS: Record<string, typeof RingLoader> = {
   dots: DotsLoader,
 }
 
-function ProgressSpecimen() {
-  const { track, fill } = useProgressStyles()()
-  return (
-    <span className={track({ className: "w-16" })}>
-      <span className={fill()} style={{ width: "60%" }} />
-    </span>
-  )
-}
-
 /* ---------------------------------- Rows ---------------------------------- */
 
 function BadgeStyleRow() {
@@ -222,7 +211,7 @@ function BadgeStyleRow() {
       label="Badge style"
       options={BADGE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <System ds={styles[option.value]!}>
             <Badge />
           </System>
@@ -241,7 +230,7 @@ function BadgeShapeRow() {
       label="Badge shape"
       options={SHAPE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <System ds={shapes[option.value]!}>
             <Badge />
           </System>
@@ -260,7 +249,7 @@ function BadgeCaseRow() {
       label="Badge case"
       options={CASE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <System ds={cases[option.value]!}>
             <Badge />
           </System>
@@ -279,7 +268,7 @@ function AlertStyleRow() {
       label="Alert style"
       options={ALERT_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <System ds={alerts[option.value]!}>
             <AlertSpecimen />
           </System>
@@ -297,7 +286,7 @@ function ToastStyleRow() {
       label="Toast style"
       options={TOAST_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <ToastGlyph surface={option.value} status={effective.toastStatus} />
         ),
       }))}
@@ -313,7 +302,7 @@ function ToastStatusRow() {
       label="Status toasts"
       options={STATUS_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <ToastGlyph surface={effective.toastStyle} status={option.value} />
         ),
       }))}
@@ -328,7 +317,7 @@ function SpinnerStyleRow() {
       label="Spinner"
       options={SPINNER_OPTIONS.map((option) => {
         const Loader = LOADERS[option.value] ?? RingLoader
-        return { ...option, preview: <Loader className="size-4" /> }
+        return { ...option, glyph: <Loader className="size-4" /> }
       })}
     />
   )
@@ -341,7 +330,7 @@ function SkeletonAnimationRow() {
       label="Skeleton"
       options={ANIMATION_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <DialGlyph>
             <SkeletonGlyph animation={option.value} />
           </DialGlyph>
@@ -351,38 +340,9 @@ function SkeletonAnimationRow() {
   )
 }
 
-/** A progress key's row: each option's bar in its own system. */
-function ProgressRow({
-  axis,
-  label,
-  options,
-}: {
-  axis: "progressTrack" | "progressTrackStyle" | "progressColor"
-  label: string
-  options: readonly DialSelectOption[]
-}) {
-  const { state } = useStudio()
-  const systems = useSystems(state, axis, options)
-  return (
-    <DialSelect
-      axis={axis}
-      label={label}
-      rowPreview={false}
-      options={options.map((option) => ({
-        ...option,
-        preview: (
-          <System ds={systems[option.value]!}>
-            <ProgressSpecimen />
-          </System>
-        ),
-      }))}
-    />
-  )
-}
-
 function ProgressTrackRow() {
   return (
-    <ProgressRow
+    <DialSelect
       axis="progressTrack"
       label="Progress thickness"
       options={TRACK_OPTIONS}
@@ -392,7 +352,7 @@ function ProgressTrackRow() {
 
 function ProgressTrackStyleRow() {
   return (
-    <ProgressRow
+    <DialSelect
       axis="progressTrackStyle"
       label="Progress track"
       options={TRACK_STYLE_OPTIONS}
@@ -402,7 +362,7 @@ function ProgressTrackStyleRow() {
 
 function ProgressColorRow() {
   return (
-    <ProgressRow
+    <DialSelect
       axis="progressColor"
       label="Progress fill"
       options={COLOR_OPTIONS}

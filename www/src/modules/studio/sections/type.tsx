@@ -147,24 +147,6 @@ function titleSpecimen(value: string): React.CSSProperties {
   }
 }
 
-/** A section label as list-box and sidebar draw it. */
-function SectionLabel({ labels, mono }: { labels: string; mono: string }) {
-  const sentence = labels === "sentence"
-  return (
-    <span
-      className={cn(
-        "font-medium text-fg/50",
-        sentence ? "text-xs" : "tracking-wider uppercase",
-        labels === "caps" && "text-[11px]",
-        labels === "mono-caps" && "text-xs",
-      )}
-      style={labels === "mono-caps" ? { fontFamily: fontStack(mono) } : {}}
-    >
-      {sentence ? "Section" : "Label"}
-    </span>
-  )
-}
-
 /* ---------------------------------- Rows ----------------------------------- */
 
 const HeadingRow = () => (
@@ -201,7 +183,7 @@ function TitlesRow() {
       label="Titles"
       options={TITLE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <span
             className="text-[13px] text-fg/80"
             style={{
@@ -235,7 +217,7 @@ const FieldTextRow = () => (
 
 const LABEL_WEIGHT_ROW_OPTIONS = LABEL_WEIGHT_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <span
       className="text-[13px] text-fg/80"
       style={{ fontWeight: WEIGHTS[option.value] }}
@@ -253,22 +235,13 @@ const LabelWeightRow = () => (
   />
 )
 
-function SectionLabelsRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="sectionLabels"
-      label="Section labels"
-      rowPreview={false}
-      options={SECTION_LABEL_OPTIONS.map((option) => ({
-        ...option,
-        preview: (
-          <SectionLabel labels={option.value} mono={effective.monoFont} />
-        ),
-      }))}
-    />
-  )
-}
+const SectionLabelsRow = () => (
+  <DialSelect
+    axis="sectionLabels"
+    label="Section labels"
+    options={SECTION_LABEL_OPTIONS}
+  />
+)
 
 export const ROWS: RowMap = {
   headingFont: HeadingRow,

@@ -189,7 +189,7 @@ const card = (value: string, accent: boolean) => (
 
 const CORNER_ROW = CORNER_OPTIONS.map((option) => ({
   ...option,
-  preview: corner(option.value),
+  glyph: corner(option.value),
 }))
 
 function CheckCornerRow() {
@@ -210,7 +210,7 @@ function CheckEdgeRow() {
       label="Check edge"
       options={EDGE_OPTIONS.map((option) => ({
         ...option,
-        preview: edge(option.value, effective.controlEdge),
+        glyph: edge(option.value, effective.controlEdge),
       }))}
     />
   )
@@ -218,7 +218,7 @@ function CheckEdgeRow() {
 
 const MARK_ROW = MARK_OPTIONS.map((option) => ({
   ...option,
-  preview: mark(option.value),
+  glyph: mark(option.value),
 }))
 
 function RadioMarkRow() {
@@ -227,7 +227,7 @@ function RadioMarkRow() {
 
 const SWITCH_ROW = STYLE_OPTIONS.map((option) => ({
   ...option,
-  preview: switchStyle(option.value),
+  glyph: switchStyle(option.value),
 }))
 
 function SwitchStyleRow() {
@@ -243,7 +243,7 @@ function SliderThumbRow() {
       options={THUMB_OPTIONS.map((option) => ({
         ...option,
         // A thumb's specimen rides the track it would resolve to.
-        preview: slider(
+        glyph: slider(
           option.value,
           resolve({ ...state, sliderThumb: option.value }).values.sliderTrack,
         ),
@@ -260,7 +260,7 @@ function SliderTrackRow() {
       label="Track"
       options={TRACK_OPTIONS.map((option) => ({
         ...option,
-        preview:
+        glyph:
           option.value === "auto"
             ? undefined
             : slider(effective.sliderThumb, option.value),
@@ -277,25 +277,14 @@ function CardSelectedRow() {
       label="Selected"
       options={SELECTED_OPTIONS.map((option) => ({
         ...option,
-        preview: card(option.value, effective.cardColor === "accent"),
+        glyph: card(option.value, effective.cardColor === "accent"),
       }))}
     />
   )
 }
 
 function CardColorRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="cardColor"
-      label="Color"
-      rowPreview={false}
-      options={CARD_COLOR_ROW.map((option) => ({
-        ...option,
-        preview: card(effective.cardSelected, option.value === "accent"),
-      }))}
-    />
-  )
+  return <DialSelect axis="cardColor" label="Color" options={CARD_COLOR_ROW} />
 }
 
 export const ROWS: RowMap = {

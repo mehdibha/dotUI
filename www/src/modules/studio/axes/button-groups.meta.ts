@@ -4,13 +4,23 @@ import { options } from "./core/meta"
 const SEPARATORS = options(SEPARATOR_VALUES, {
   "shared-edge": {
     label: "Shared edge",
+    description: "Neighbors share one border",
     credits: ["Primer", "Polaris", "Untitled UI"],
   },
-  divider: { label: "Divider", credits: ["Carbon", "Supabase"] },
+  divider: {
+    label: "Divider",
+    description: "A short line between borderless segments",
+    credits: ["Carbon", "Supabase"],
+  },
 })
 
 export const SEPARATOR_OPTIONS = [
-  { value: "auto", label: "Auto", credits: ["Spectrum 2"] },
+  {
+    value: "auto",
+    label: "Auto",
+    description: "Shared edge on outlined buttons, else divider",
+    credits: ["Spectrum 2"],
+  },
   ...SEPARATORS,
 ]
 

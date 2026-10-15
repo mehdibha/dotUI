@@ -6,21 +6,29 @@ import { DENSITY_VALUES } from "./space"
 export const DENSITY_OPTIONS = options(DENSITY_VALUES, {
   compact: {
     label: "Compact",
+    description: "28px controls, 12px text",
     credits: ["shadcn mira", "Ant Design (compact)"],
   },
   default: {
     label: "Default",
+    description: "32px controls, 14px text",
     credits: ["shadcn nova", "Primer", "Radix Themes", "Fluent 2"],
   },
   comfortable: {
     label: "Comfortable",
+    description: "36px controls, 14px text",
     credits: ["shadcn vega", "Geist", "Mantine", "Catalyst"],
   },
   spacious: {
     label: "Spacious",
+    description: "40px controls, 14px text",
     credits: ["Carbon", "Material 3", "Airbnb"],
   },
-  touch: { label: "Touch", credits: ["Duolingo", "Spotify"] },
+  touch: {
+    label: "Touch",
+    description: "48px controls, 16px text",
+    credits: ["Duolingo", "Spotify"],
+  },
 })
 
 /** Each tier as the registry ships it, in px: the button ladder (xs, sm,

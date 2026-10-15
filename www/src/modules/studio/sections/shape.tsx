@@ -60,7 +60,6 @@ export function ShapeRow() {
   return (
     <DialSelect
       label="Radius"
-      rowPreview={false}
       value={shapeOf(state) ?? "Custom"}
       options={SHAPE_OPTIONS}
       onChange={(id) => setState(pickShape(state, id as ShapeId))}

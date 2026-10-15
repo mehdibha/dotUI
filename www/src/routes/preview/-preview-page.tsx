@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { getRouteApi } from "@tanstack/react-router"
+import { getRouteApi, useRouterState } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
@@ -7,6 +7,8 @@ import { SearchIcon } from "@/registry/icons"
 import { IconLibraryContext } from "@/registry/icons/create-icon"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
+import { cn } from "@/registry/lib/utils"
+import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
 import {
   ExamplesIndex,
@@ -106,6 +108,23 @@ function WarmIcons({ libraries }: { libraries: IconLibraryName[] }) {
           <SearchIcon />
         </IconLibraryContext.Provider>
       ))}
+    </div>
+  )
+}
+
+// While the next preview's loader runs, the router keeps the current one on
+// screen: dim it under a spinner so the switch shows at once.
+function PendingOverlay() {
+  const pending = useRouterState({ select: (s) => s.status === "pending" })
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-bg/60 opacity-0 transition-opacity duration-150",
+        pending && "opacity-100",
+      )}
+    >
+      {pending && <Loader className="size-5 text-fg-muted" />}
     </div>
   )
 }
@@ -233,6 +252,7 @@ export function PreviewPage() {
       {chrome}
       <BoardFocusProvider>{content}</BoardFocusProvider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
+      <PendingOverlay />
     </DesignSystemProvider>
   )
 }

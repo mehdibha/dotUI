@@ -8,7 +8,11 @@ import {
 } from "./motion"
 
 const TEMPOS: Record<(typeof COMPONENT_MOTION_VALUES)[number], OptionMeta> = {
-  none: { label: "None", description: "Instant", credits: ["Ant Design"] },
+  none: {
+    label: "None",
+    description: "No animation, changes are instant",
+    credits: ["Ant Design"],
+  },
   standard: {
     label: "Standard",
     description: "Quick eased fades",
@@ -16,7 +20,7 @@ const TEMPOS: Record<(typeof COMPONENT_MOTION_VALUES)[number], OptionMeta> = {
   },
   smooth: {
     label: "Smooth",
-    description: "Longer expo-out glides",
+    description: "Longer glides that ease to a stop",
     credits: ["Radix Themes"],
   },
   expressive: {
@@ -31,12 +35,28 @@ export const MOTION_OPTIONS = options(MOTION_VALUES, TEMPOS)
 export const COMPONENT_MOTION_OPTIONS = options(COMPONENT_MOTION_VALUES, TEMPOS)
 
 /** What a component's own Motion row offers first: following the global. */
-export const SAME_AS_MOTION = { value: "same", label: "Same as motion" }
+export const SAME_AS_MOTION = {
+  value: "same",
+  label: "Same as motion",
+  description: "Follows the global Motion",
+}
 
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
-  zoom: { label: "Zoom", credits: ["shadcn"] },
-  slide: { label: "Slide", credits: ["Polaris"] },
-  fade: { label: "Fade", credits: ["Primer"] },
+  zoom: {
+    label: "Zoom",
+    description: "Grows from 95% while fading in",
+    credits: ["shadcn"],
+  },
+  slide: {
+    label: "Slide",
+    description: "Slides in from the trigger while fading",
+    credits: ["Polaris"],
+  },
+  fade: {
+    label: "Fade",
+    description: "Fades in place, no movement",
+    credits: ["Primer"],
+  },
 })
 
 export const OPTIONS = {

@@ -27,20 +27,30 @@ export const LAYERS_OPTIONS = options(LAYERS_VALUES, {
 export const EDGE_OPTIONS = options(EDGE_VALUES, {
   line: {
     label: "Line",
+    description: "A hairline border around cards",
     credits: ["Geist", "shadcn Nova", "Primer", "Radix Themes"],
   },
   none: {
     label: "None",
+    description: "No border; shadows set cards apart",
     credits: ["Atlassian", "Fluent 2", "HeroUI v3", "Spectrum 2"],
   },
-  bevel: { label: "Bevel", credits: ["Polaris"] },
-  ledge: { label: "Ledge", credits: ["Duolingo"] },
+  bevel: {
+    label: "Bevel",
+    description: "An inset rim, lit on top, darker below",
+    credits: ["Polaris"],
+  },
+  ledge: {
+    label: "Ledge",
+    description: "A solid border with a thick bottom lip",
+    credits: ["Duolingo"],
+  },
 })
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
   flat: {
     label: "Flat",
-    description: "No card shadows; menus and dialogs cast",
+    description: "No card shadow; menus and dialogs keep theirs",
   },
   low: {
     label: "Low",
@@ -64,7 +74,7 @@ export const OVERLAY_OPTIONS = [
   {
     value: "translucent",
     label: "Translucent",
-    description: "Over a blur; dialogs stay solid",
+    description: "See-through over a blur; dialogs stay solid",
     credits: ["Catalyst", "Notion", "Radix Themes", "shadcn"],
   },
 ]
@@ -72,17 +82,17 @@ export const OVERLAY_OPTIONS = [
 export const SHELL_OPTIONS = options(SHELL_VALUES, {
   subtle: {
     label: "Subtle",
-    description: "One step off the page",
+    description: "Sidebar a shade off the page",
     credits: ["shadcn"],
   },
   page: {
     label: "Page",
-    description: "The page's own tone",
+    description: "Sidebar in the page's own tone",
     credits: ["Supabase", "Carbon"],
   },
   recessed: {
     label: "Recessed",
-    description: "Below the page; panels wear the card edge",
+    description: "Darker sidebar; content sits on a card",
     credits: ["Linear", "Polaris"],
   },
 })

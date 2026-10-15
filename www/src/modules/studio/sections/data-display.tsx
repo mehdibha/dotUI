@@ -17,24 +17,10 @@ import { useStudio } from "../use-studio"
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
 
-/** 16px on the row; 32px in the popover, where the options differ by a hairline. */
-const sized = (draw: (className?: string) => React.ReactNode) => ({
-  preview: draw("size-8"),
-  glyph: glyph(draw()),
-})
-
 /** The grid: a header rule or band over its labels, then ruled rows. */
-function TableGlyph({
-  header,
-  label,
-  className,
-}: {
-  header: string
-  label: string
-  className?: string
-}) {
+function TableGlyph({ header, label }: { header: string; label: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden className={className}>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       {header === "filled" && (
         <path
           d="M3.75 9V6.25a1.5 1.5 0 0 1 1.5-1.5h13.5a1.5 1.5 0 0 1 1.5 1.5V9z"
@@ -80,11 +66,9 @@ function TableGlyph({
 function AccordionGlyph({
   layout,
   marker,
-  className,
 }: {
   layout: string
   marker: string
-  className?: string
 }) {
   const leading = marker === "leading-caret"
   const rows = layout === "separated" ? [4, 11.5, 16.5] : [5.25, 12.4, 17.25]
@@ -126,7 +110,7 @@ function AccordionGlyph({
     )
   const boxed = layout === "contained" || layout === "separated"
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden className={className}>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       {layout === "separated" ? (
         <>
           <rect
@@ -280,17 +264,9 @@ function KbdGlyph({ treatment }: { treatment: string }) {
 }
 
 /** A card: title, body, then the footer, each part set apart or not. */
-function CardGlyph({
-  header,
-  footer,
-  className,
-}: {
-  header: string
-  footer: string
-  className?: string
-}) {
+function CardGlyph({ header, footer }: { header: string; footer: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden className={className}>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       {header === "band" && (
         <path
           d="M3.75 9.75V6.25a1.5 1.5 0 0 1 1.5-1.5h13.5a1.5 1.5 0 0 1 1.5 1.5v3.5z"
@@ -355,13 +331,12 @@ function TableHeaderRow() {
       label="Table header"
       options={HEADER_OPTIONS.map((option) => ({
         ...option,
-        ...sized((className) => (
+        glyph: glyph(
           <TableGlyph
-            className={className}
             header={option.value}
             label={effective.tableHeaderLabel}
-          />
-        )),
+          />,
+        ),
       }))}
     />
   )
@@ -385,13 +360,12 @@ function AccordionContainerRow() {
       label="Layout"
       options={CONTAINER_OPTIONS.map((option) => ({
         ...option,
-        ...sized((className) => (
+        glyph: glyph(
           <AccordionGlyph
-            className={className}
             layout={option.value}
             marker={effective.accordionMarker}
-          />
-        )),
+          />,
+        ),
       }))}
     />
   )
@@ -405,13 +379,12 @@ function AccordionMarkerRow() {
       label="Marker"
       options={MARKER_OPTIONS.map((option) => ({
         ...option,
-        ...sized((className) => (
+        glyph: glyph(
           <AccordionGlyph
-            className={className}
             layout={effective.accordionContainer}
             marker={option.value}
-          />
-        )),
+          />,
+        ),
       }))}
     />
   )
@@ -425,7 +398,7 @@ function AvatarShapeRow() {
       label="Shape"
       options={SHAPE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <AvatarGlyph
             shape={option.value}
             fallback={effective.avatarFallback}
@@ -453,7 +426,7 @@ function KbdTreatmentRow() {
       label="Style"
       options={TREATMENT_OPTIONS.map((option) => ({
         ...option,
-        preview: glyph(<KbdGlyph treatment={option.value} />),
+        glyph: glyph(<KbdGlyph treatment={option.value} />),
       }))}
     />
   )
@@ -467,13 +440,9 @@ function CardHeaderRow() {
       label="Header"
       options={CARD_HEADER_OPTIONS.map((option) => ({
         ...option,
-        ...sized((className) => (
-          <CardGlyph
-            className={className}
-            header={option.value}
-            footer={effective.cardFooter}
-          />
-        )),
+        glyph: glyph(
+          <CardGlyph header={option.value} footer={effective.cardFooter} />,
+        ),
       }))}
     />
   )
@@ -487,13 +456,9 @@ function CardFooterRow() {
       label="Footer"
       options={FOOTER_OPTIONS.map((option) => ({
         ...option,
-        ...sized((className) => (
-          <CardGlyph
-            className={className}
-            header={effective.cardHeader}
-            footer={option.value}
-          />
-        )),
+        glyph: glyph(
+          <CardGlyph header={effective.cardHeader} footer={option.value} />,
+        ),
       }))}
     />
   )
