@@ -258,13 +258,13 @@ function renderAttrHole(
 ): string | null {
   if (hole.dropWhen && isTruthy(values[hole.dropWhen])) return null
   const value = values[hole.control]
-  if (serializeForCompare(value, hole.kind) === hole.default) return null
+  if (isDefault(value, hole)) return null
 
   switch (hole.kind) {
     case "boolean":
       return value === true ? hole.attrName : `${hole.attrName}={false}`
     case "number":
-      return `${hole.attrName}={${Number(value)}}`
+      return `${hole.attrName}={${formatNumber(Number(value))}}`
     case "icon": {
       if (!value) return null
       const icon = String(value)
@@ -323,6 +323,23 @@ function renderChild(
   }
 }
 
+/**
+ * Numbers print as written by hand; multiples of π/4 (angles, in radians)
+ * print as `Math.PI` expressions, in the shape oxfmt gives them.
+ */
+function formatNumber(n: number): string {
+  const quarters = (n * 4) / Math.PI
+  const q = Math.round(quarters)
+  if (Math.abs(quarters - q) > 1e-9) return String(n)
+  if (q === 0) return "0"
+  const den = q % 4 === 0 ? 1 : q % 2 === 0 ? 2 : 4
+  const num = (q * den) / 4
+  const pi = num < 0 ? "-Math.PI" : "Math.PI"
+  const times = Math.abs(num) === 1 ? pi : `${pi} * ${Math.abs(num)}`
+  if (den === 1) return times
+  return Math.abs(num) === 1 ? `${times} / ${den}` : `(${times}) / ${den}`
+}
+
 /** Prettier's quote choice: single quotes iff they need fewer escapes. */
 function quoteString(s: string): string {
   const doubles = (s.match(/"/g) ?? []).length
@@ -351,6 +368,14 @@ function serializeForCompare(
     default:
       return String(value)
   }
+}
+
+/** Numbers compare as printed, so float noise from a stepper still matches. */
+function isDefault(value: unknown, hole: AttrHole): boolean {
+  if (hole.kind === "number" && typeof hole.default === "number") {
+    return formatNumber(Number(value)) === formatNumber(hole.default)
+  }
+  return serializeForCompare(value, hole.kind) === hole.default
 }
 
 function isFalsy(v: unknown): boolean {

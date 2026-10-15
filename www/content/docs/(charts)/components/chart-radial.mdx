@@ -3,7 +3,27 @@ title: Radial Chart
 description: Bars bent around a circle — progress against a target, or a few categories compared at a glance.
 ---
 
-<Demo name="chart-radial/demos/text" />
+<InteractiveDemo
+  name="chart-radial"
+  reference="radial-bar-chart"
+  controls={[
+    "track",
+    "barLabels",
+    "legend",
+    {
+      name: "startAngle",
+      min: -Math.PI * 2,
+      max: Math.PI * 2,
+      step: Math.PI / 4,
+    },
+    {
+      name: "endAngle",
+      min: -Math.PI * 2,
+      max: Math.PI * 2,
+      step: Math.PI / 4,
+    },
+  ]}
+/>
 
 A radial bar chart trades the precision of a straight axis for a compact, recognizable shape. It reads well for a single value against a target — a gauge — and for a handful of categories where the ranking matters more than the exact gap. Past five or six rings, or when the values must be compared closely, use the [bar chart](/docs/components/chart-bar).
 

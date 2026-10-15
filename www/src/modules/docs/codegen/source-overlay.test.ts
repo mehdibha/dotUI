@@ -419,3 +419,53 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// RADIAL CHART — angles in radians print as Math.PI expressions
+// ---------------------------------------------------------------------------
+
+const RADIAL_SRC = `"use client";
+
+import { RadialBarChart } from "@/registry/ui/chart-radial";
+
+export default function Demo({ startAngle = 0, endAngle = Math.PI * 2 } = {}) {
+	return <RadialBarChart startAngle={startAngle} endAngle={endAngle} ariaLabel="Visitors" />;
+}
+`
+
+const RADIAL_CONTROLS: ControlSelection[] = [
+  { name: "startAngle", kind: "number", default: 0 },
+  { name: "endAngle", kind: "number", default: Math.PI * 2 },
+]
+
+describe("chart-radial", () => {
+  it("multiples of π/4 print as Math.PI expressions", async () => {
+    const { collapsed } = await gen(RADIAL_SRC, RADIAL_CONTROLS, {
+      startAngle: -Math.PI / 2,
+      endAngle: (Math.PI * 3) / 2,
+    })
+    expect(collapsed).toBe(
+      `<RadialBarChart startAngle={-Math.PI / 2} endAngle={(Math.PI * 3) / 2} ariaLabel="Visitors" />`,
+    )
+  })
+
+  it("stepper float noise still matches the default", async () => {
+    const { collapsed } = await gen(RADIAL_SRC, RADIAL_CONTROLS, {
+      startAngle: Math.PI,
+      endAngle: (Math.PI / 4) * 3 + (Math.PI / 4) * 5,
+    })
+    expect(collapsed).toBe(
+      `<RadialBarChart startAngle={Math.PI} ariaLabel="Visitors" />`,
+    )
+  })
+
+  it("other numbers print as is", async () => {
+    const { collapsed } = await gen(RADIAL_SRC, RADIAL_CONTROLS, {
+      startAngle: 0.5,
+      endAngle: Math.PI * 2,
+    })
+    expect(collapsed).toBe(
+      `<RadialBarChart startAngle={0.5} ariaLabel="Visitors" />`,
+    )
+  })
+})
