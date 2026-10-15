@@ -419,3 +419,82 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// TOAST — members of an object literal inside an attribute
+// ---------------------------------------------------------------------------
+
+const TOAST_SRC = `import { Button } from "@/registry/ui/button";
+import { toastManager } from "@/registry/ui/toast";
+
+export default function Demo({ title = "Saved", type = "success", action = false } = {}) {
+	return (
+		<Button
+			onPress={() =>
+				toastManager.add({
+					title,
+					type,
+					...(action && { actionProps: { children: "Undo" } }),
+				})
+			}
+		>
+			Show toast
+		</Button>
+	);
+}
+`
+
+const TOAST_CONTROLS: ControlSelection[] = [
+  { name: "title", kind: "string", default: "Saved" },
+  { name: "type", kind: "enum", default: "success" },
+  { name: "action", kind: "boolean", default: false },
+]
+
+describe("toast", () => {
+  it("shorthand members render as key: value, spread when truthy", async () => {
+    const { collapsed } = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "Saved",
+      type: "success",
+      action: true,
+    })
+    expect(collapsed).toBe(`<Button
+  onPress={() =>
+    toastManager.add({
+      title: "Saved",
+      type: "success",
+      actionProps: { children: "Undo" },
+    })
+  }
+>
+  Show toast
+</Button>`)
+  })
+
+  it("empty string drops its member; an overflowing one breaks after the colon", async () => {
+    const empty = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "",
+      type: "info",
+      action: false,
+    })
+    expect(empty.collapsed).toContain(`toastManager.add({
+      type: "info",
+    })`)
+
+    const long = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "x".repeat(110),
+      type: "info",
+      action: false,
+    })
+    expect(long.collapsed).toContain(`      title:
+        "${"x".repeat(110)}",`)
+  })
+
+  it("rejects an object with no member that always renders", async () => {
+    await expect(
+      buildSourceOverlay({
+        source: TOAST_SRC.replace("\t\t\t\t\ttype,\n", ""),
+        controls: TOAST_CONTROLS.filter((c) => c.name !== "type"),
+      }),
+    ).rejects.toThrow(/always renders/)
+  })
+})
