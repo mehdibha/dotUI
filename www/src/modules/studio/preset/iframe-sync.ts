@@ -39,7 +39,8 @@ type ParentToIframeMessage =
   | ({ type: "preview-warm" } & PreviewAssets)
 
 type IframeToParentMessage =
-  | { type: "preview-ready" }
+  | { type: "preview-ready"; slug: string }
+  | { type: "preview-shown"; slug: string }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
 
@@ -446,7 +447,9 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
 
 /**
  * Inside the preview iframe: announce that the previewed content has rendered,
- * and keep answering the parent's pings.
+ * keep answering the parent's pings, and report each preview switch once it
+ * has committed (`preview-shown`), so the parent can hold its pending state
+ * until the new preview is on screen.
  *
  * Call this from the previewed page itself, never from the root shell: the shell
  * commits while the example chunk is still suspended, so announcing there clears
@@ -458,13 +461,27 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
  * because that one message is lost whenever the iframe mounts before the
  * server-rendered parent hydrates.
  */
-export function useAnnouncePreviewReady() {
+export function useAnnouncePreviewReady(slug: string) {
+  const slugRef = React.useRef(slug)
+
+  React.useEffect(() => {
+    slugRef.current = slug
+    if (!isInIframe()) return
+    window.parent.postMessage(
+      { type: "preview-shown", slug } satisfies IframeToParentMessage,
+      "*",
+    )
+  }, [slug])
+
   React.useEffect(() => {
     if (!isInIframe()) return
 
     const announce = () =>
       window.parent.postMessage(
-        { type: "preview-ready" } satisfies IframeToParentMessage,
+        {
+          type: "preview-ready",
+          slug: slugRef.current,
+        } satisfies IframeToParentMessage,
         "*",
       )
 

@@ -375,6 +375,32 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [effectivePreview])
 
+  // The slug the iframe last committed. Until it catches up, the switch shows
+  // at once: the old preview dims under a spinner (a first-visit board can
+  // take a moment to load and render).
+  const [shown, setShown] = useState(effectivePreview)
+  useEffect(() => {
+    const onShown = (event: MessageEvent) => {
+      const { type, slug } = event.data ?? {}
+      if (
+        (type === "preview-shown" || type === "preview-ready") &&
+        typeof slug === "string"
+      )
+        setShown(slug)
+    }
+    window.addEventListener("message", onShown)
+    return () => window.removeEventListener("message", onShown)
+  }, [])
+  // A switch the iframe never confirms doesn't spin forever.
+  useEffect(() => {
+    const timer = setTimeout(
+      () => setShown(effectivePreview),
+      PREVIEW_READY_TIMEOUT,
+    )
+    return () => clearTimeout(timer)
+  }, [effectivePreview])
+  const switching = isLoaded && shown !== effectivePreview
+
   // Forward the previewed display mode (light / dark) to the iframe — on change,
   // on load, and when the iframe signals it's ready (its listener can mount after load).
   useEffect(() => {
@@ -733,6 +759,18 @@ export function PreviewPanel({ className }: { className?: string }) {
         )}
       >
         <Loader className="size-5 text-fg-muted" />
+      </div>
+
+      {/* Switching — the outgoing preview dims under a spinner the moment the
+          switch is asked for, and the incoming one fades in from under it. */}
+      <div
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-bg/60 opacity-0 transition-opacity duration-150",
+          switching && "opacity-100",
+        )}
+      >
+        {switching && <Loader className="size-5 text-fg-muted" />}
       </div>
 
       {/* Floating toolbar — the panel's only chrome. It overlays the user's page,

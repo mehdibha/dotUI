@@ -166,9 +166,9 @@ export function PreviewPage() {
     }, []),
   })
 
-  // The route loader resolved the example chunk before this render, so this
-  // effect runs with the previewed content committed.
-  useAnnouncePreviewReady()
+  // The route loader resolved the example chunk before this render, so these
+  // effects run with the previewed content committed.
+  useAnnouncePreviewReady(slug)
 
   const embedded = typeof window !== "undefined" && window.self !== window.top
   // Stable elements: a design-system change re-renders only what reads it.
