@@ -210,9 +210,9 @@ describe("buttons axes", () => {
     })
     expect(state.buttonSecondary).toBe("solid")
     expect(
-      designSystemOf({ ...state, style: "soft" }).componentParams.button
+      designSystemOf({ ...state, style: "tonal" }).componentParams.button
         ?.secondary,
-    ).toBe("raised")
+    ).toBe("tonal")
     expect(
       designSystemOf(parseState({ buttonSecondary: "solid" })).componentParams[
         "toggle-button"
