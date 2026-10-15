@@ -150,8 +150,9 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
         const name = extractNameAttribute(node)
         const controls = extractControlsAttribute(node)
         const file = extractStringAttribute(node, "file") ?? undefined
+        const reference = extractStringAttribute(node, "reference") ?? undefined
         if (name && controls) {
-          interactiveDemoNodes.push({ node, name, controls, file })
+          interactiveDemoNodes.push({ node, name, controls, file, reference })
         }
       }
     })
@@ -682,15 +683,16 @@ async function processInteractiveDemoNode(
     const rawSource = await fs.readFile(demoPath, "utf-8")
 
     // 1. Build controls from API reference + param defaults
+    const referenceName = info.reference ?? info.name
     const controls = await buildControlsFromReference(
-      info.name,
+      referenceName,
       info.controls,
       rawSource,
     )
 
     // 2. Enrich with highlighted types (HTML strings)
     const enrichedControls = await enrichControlsForSerialization(
-      info.name,
+      referenceName,
       controls,
       highlighter,
     )
@@ -728,7 +730,14 @@ function transformInteractiveDemoNode(
     (attr) =>
       !(
         attr.type === "mdxJsxAttribute" &&
-        ["name", "controls", "engine", "file", "fallback"].includes(attr.name)
+        [
+          "name",
+          "controls",
+          "engine",
+          "file",
+          "fallback",
+          "reference",
+        ].includes(attr.name)
       ),
   )
 

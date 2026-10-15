@@ -3,7 +3,17 @@ title: Line Chart
 description: Draws one line per series across an ordered domain, themed by your design system.
 ---
 
-<Demo name="chart-line/demos/multiple" />
+<InteractiveDemo
+  name="chart-line"
+  reference="line-chart"
+  controls={[
+    "curve",
+    "points",
+    { name: "strokeWidth", min: 1, max: 8, step: 0.5 },
+    "grid",
+    "legend",
+  ]}
+/>
 
 `LineChart` answers how a value changes across an ordered domain. Give it rows and the fields to read — it builds the scales, the axes, the legend, the tooltip, and the keyboard navigation for you, all colored from your palette.
 
