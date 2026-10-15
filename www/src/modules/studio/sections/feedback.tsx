@@ -4,7 +4,7 @@
 
 import { useMemo } from "react"
 
-import { DesignSystemContext } from "@/lib/styles"
+import { ComponentParamsProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useAlertStyles } from "@/registry/ui/alert/styles"
 import { useStyles as useBadgeStyles } from "@/registry/ui/badge/styles"
@@ -52,21 +52,17 @@ function System({
   ds: DesignSystem
   children: React.ReactNode
 }) {
-  const value = useMemo(
-    () => ({ params: ds.componentParams, density: "default" as const }),
-    [ds],
-  )
   const style = Object.fromEntries(
     LOCAL_VARS.flatMap((name) =>
       ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
     ),
   ) as React.CSSProperties
   return (
-    <DesignSystemContext.Provider value={value}>
+    <ComponentParamsProvider params={ds.componentParams} density="default">
       <span className="flex items-center gap-1.5" style={style}>
         {children}
       </span>
-    </DesignSystemContext.Provider>
+    </ComponentParamsProvider>
   )
 }
 

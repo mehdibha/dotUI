@@ -5,7 +5,7 @@
 
 import { CheckIcon } from "lucide-react"
 
-import { DesignSystemContext } from "@/lib/styles"
+import { ComponentParamsProvider } from "@/lib/styles"
 import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
 import { useStyles as useRadioStyles } from "@/registry/ui/radio-group/styles"
 import { useStyles as useSliderStyles } from "@/registry/ui/slider/styles"
@@ -24,18 +24,13 @@ import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-type Context = React.ContextType<typeof DesignSystemContext>
-
-/* One stable context per selection, so the registry's style cache hits. */
-const CONTEXTS = new Map<string, Context>()
-function paramContext(name: string, params: Record<string, string>) {
+/* One stable selection per recipe, so the registry's style cache hits. */
+const SELECTIONS = new Map<string, Record<string, Record<string, string>>>()
+function paramsOf(name: string, params: Record<string, string>) {
   const key = `${name}:${JSON.stringify(params)}`
-  let context = CONTEXTS.get(key)
-  if (!context) {
-    context = { params: { [name]: params }, density: "default" }
-    CONTEXTS.set(key, context)
-  }
-  return context
+  let selection = SELECTIONS.get(key)
+  if (!selection) SELECTIONS.set(key, (selection = { [name]: params }))
+  return selection
 }
 
 function Recipe({
@@ -48,9 +43,9 @@ function Recipe({
   children: React.ReactNode
 }) {
   return (
-    <DesignSystemContext.Provider value={paramContext(name, params)}>
+    <ComponentParamsProvider params={paramsOf(name, params)}>
       {children}
-    </DesignSystemContext.Provider>
+    </ComponentParamsProvider>
   )
 }
 

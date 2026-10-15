@@ -3,9 +3,12 @@
 /* Every chapter on one page, docked under the preview below `lg`. */
 
 import {
+  memo,
+  useCallback,
   useEffect,
   useEffectEvent,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -29,7 +32,7 @@ import type { PanelSystem } from "./panel"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import { linkTarget, placeOf } from "./state"
-import type { Chapter, ChapterPage, Studio } from "./state"
+import type { Chapter, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 
 /** The open page is the URL's hash, so a reload or a shared link reopens it. */
@@ -46,7 +49,8 @@ function untilMounted(attempt: () => boolean, frames = 30) {
   })
 }
 
-function ChapterBlock({
+// Re-renders with the state or its dock, never with the panel's own updates.
+const ChapterBlock = memo(function ChapterBlock({
   chapter,
   studio,
   docked,
@@ -76,12 +80,12 @@ function ChapterBlock({
       </div>
     </section>
   )
-}
+})
 
 /* Room kept past the selected chip, so the next one always peeks. */
 const STRIP_MARGIN = 32
 
-function ChapterStrip({
+const ChapterStrip = memo(function ChapterStrip({
   chapters,
   active,
   open,
@@ -163,6 +167,17 @@ function ChapterStrip({
       )}
     </div>
   )
+})
+
+// A search hit lands on its row (a sub-axis on the row that holds it).
+function flash(container: Element | null | undefined, label: string) {
+  const row = [...(container?.querySelectorAll("span") ?? [])].find(
+    (span) => span.textContent === label,
+  )
+  const target = row?.closest(".rounded-lg") ?? row
+  if (!target) return false
+  revealRow(target)
+  return true
 }
 
 export function PanelPage({
@@ -184,8 +199,12 @@ export function PanelPage({
   // Set by a press that swaps pages: focus moves with it.
   const moveFocus = useRef(false)
   const lastPage = useRef<string | null>(null)
-  const pages: (ChapterPage & { chapter: Chapter })[] = chapters.flatMap(
-    (chapter) => (chapter.pages ?? []).map((page) => ({ ...page, chapter })),
+  const pages = useMemo(
+    () =>
+      chapters.flatMap((chapter) =>
+        (chapter.pages ?? []).map((page) => ({ ...page, chapter })),
+      ),
+    [chapters],
   )
   const page = pages.find((p) => p.id === pageId)
   // Beside the preview, tucking would only empty the column.
@@ -232,41 +251,41 @@ export function PanelPage({
       scroller.current.scrollTop = pageId ? 0 : scrolled.current
   }, [pageId])
 
-  const openPage = (id: string) => {
-    const target = pages.find((p) => p.id === id)
-    if (!target) return
-    if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
-    setActive(target.chapter.id)
-    setPageId(id)
-    setHash(id)
-  }
+  const openPage = useCallback(
+    (id: string) => {
+      const target = pages.find((p) => p.id === id)
+      if (!target) return
+      if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
+      setActive(target.chapter.id)
+      setPageId(id)
+      setHash(id)
+    },
+    [pages, pageId],
+  )
 
-  const closePage = () => {
-    setPageId(null)
-    setHash(null)
-  }
+  // A row press moves focus with the swap; search and deep links don't.
+  const navigate = useCallback(
+    (id: string) => {
+      moveFocus.current = true
+      openPage(id)
+    },
+    [openPage],
+  )
 
-  // A search hit lands on its row (a sub-axis on the row that holds it).
-  const flash = (container: Element | null | undefined, label: string) => {
-    const row = [...(container?.querySelectorAll("span") ?? [])].find(
-      (span) => span.textContent === label,
-    )
-    const target = row?.closest(".rounded-lg") ?? row
-    if (!target) return false
-    revealRow(target)
-    return true
-  }
-
-  const dock = (id: string, axis?: string) => {
-    setActive(id)
-    setTucked(false)
-    if (pageId) closePage()
-    requestAnimationFrame(() => {
-      const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
-      chapter?.scrollIntoView({ block: "start" })
-      if (axis) flash(chapter, axis.split(" › ")[0]!)
-    })
-  }
+  const dock = useCallback(
+    (id: string, axis?: string) => {
+      setActive(id)
+      setTucked(false)
+      setPageId(null)
+      if (pageId) setHash(null)
+      requestAnimationFrame(() => {
+        const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
+        chapter?.scrollIntoView({ block: "start" })
+        if (axis) flash(chapter, axis.split(" › ")[0]!)
+      })
+    },
+    [layer, pageId],
+  )
 
   // An open docked picker leaves the chrome in view but inert: a tap there
   // lands on this layer and only closes the picker. Once it has closed (not
@@ -287,33 +306,39 @@ export function PanelPage({
     })
   }
 
-  const reveal = (id: string, axis?: string) => {
-    // "Checkbox › Corner" names a page and its row; a row a popover holds
-    // ("Dialog › Backdrop › Frost") lands on the row that opens it.
-    const [first, row] = axis?.split(" › ") ?? []
-    const target = pages.find((p) => p.chapter.id === id && p.label === first)
-    if (target) {
-      setTucked(false)
-      openPage(target.id)
-      if (row)
-        untilMounted(() =>
-          flash(layer?.querySelector(`[data-page="${target.id}"]`), row),
-        )
-      return
-    }
-    dock(id, axis)
-  }
+  const reveal = useCallback(
+    (id: string, axis?: string) => {
+      // "Checkbox › Corner" names a page and its row; a row a popover holds
+      // ("Dialog › Backdrop › Frost") lands on the row that opens it.
+      const [first, row] = axis?.split(" › ") ?? []
+      const target = pages.find((p) => p.chapter.id === id && p.label === first)
+      if (target) {
+        setTucked(false)
+        openPage(target.id)
+        if (row)
+          untilMounted(() =>
+            flash(layer?.querySelector(`[data-page="${target.id}"]`), row),
+          )
+        return
+      }
+      dock(id, axis)
+    },
+    [pages, openPage, layer, dock],
+  )
 
   // A cause chip lands on its row: in view already, else on its
   // page or chapter first.
-  const revealAxis = (key: string) => {
-    if (flashAxis(key)) return
-    const place = placeOf(key)
-    if (!place) return
-    if (place.page) openPage(place.page.id)
-    else dock(place.chapter.id)
-    untilMounted(() => flashAxis(key))
-  }
+  const revealAxis = useCallback(
+    (key: string) => {
+      if (flashAxis(key)) return
+      const place = placeOf(key)
+      if (!place) return
+      if (place.page) openPage(place.page.id)
+      else dock(place.chapter.id)
+      untilMounted(() => flashAxis(key))
+    },
+    [openPage, dock],
+  )
 
   // `/studio#<page>` opens a page; a one-row component's id lands on its row.
   const follow = useEffectEvent(() => {
@@ -331,12 +356,7 @@ export function PanelPage({
 
   return (
     <RevealAxis.Provider value={revealAxis}>
-      <PanelNav.Provider
-        value={(id) => {
-          moveFocus.current = true
-          openPage(id)
-        }}
-      >
+      <PanelNav.Provider value={navigate}>
         <DockLayer.Provider value={layer}>
           {/* Docked, the positioned box row popovers portal into. */}
           <div
@@ -382,7 +402,8 @@ export function PanelPage({
                       aria-label={`Back to ${page.chapter.label}`}
                       onPress={() => {
                         moveFocus.current = true
-                        closePage()
+                        setPageId(null)
+                        setHash(null)
                       }}
                       className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
                     >

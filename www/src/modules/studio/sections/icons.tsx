@@ -6,6 +6,7 @@
    by look. */
 
 import { useRef, useState } from "react"
+import type { ListBoxItemProps } from "react-aria-components"
 import {
   Button as RacButton,
   Select as RacSelect,
@@ -50,6 +51,8 @@ import {
 } from "../dial"
 import { Row, useRowLabel } from "../family-page"
 import type { RowMap } from "../family-page"
+import { warmPreview } from "../live"
+import { useOptionPreview } from "../option-preview"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import { useStudio } from "../use-studio"
 
@@ -117,7 +120,7 @@ function Glyphs(props: {
 
 /** A select that stays open on pick: the libraries by name beside a wall of
  *  every specimen drawn by the one under the pointer or keyboard focus — the
- *  selected one at rest. */
+ *  selected one at rest. The preview follows too, its chunks warmed on open. */
 function LibraryRow() {
   const { effective, set } = useStudio()
   const label = useRowLabel("Icons")
@@ -134,7 +137,11 @@ function LibraryRow() {
       value={value}
       onChange={(key) => key && onChange(key as IconLibraryName)}
       shouldCloseOnSelect={false}
-      onOpenChange={(isOpen) => !isOpen && setPeek(null)}
+      onOpenChange={(isOpen) => {
+        if (isOpen)
+          warmPreview({ icons: LIBRARY_OPTIONS.map((option) => option.value) })
+        else setPeek(null)
+      }}
     >
       <RacButton
         data-axis="iconLibrary"
@@ -157,21 +164,18 @@ function LibraryRow() {
               {LIBRARY_OPTIONS.map((option) => {
                 const library = option.value as IconLibraryName
                 return (
-                  <ListBoxItem
+                  <LibraryItem
                     key={library}
                     id={library}
-                    textValue={option.label}
+                    label={option.label}
+                    credits={option.credits}
+                    run={() => onChange(library)}
                     onHoverStart={() => setPeek(library)}
                     onFocusChange={(isFocused) => {
                       focused.current = isFocused ? library : null
                       setPeek(focused.current)
                     }}
-                  >
-                    <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
-                    <ListBoxItemDescription>
-                      {option.credits?.join(", ")}
-                    </ListBoxItemDescription>
-                  </ListBoxItem>
+                  />
                 )
               })}
             </ListBox>
@@ -209,6 +213,27 @@ function LibraryRow() {
         </PanelPopover>
       </PanelPopoverTitle.Provider>
     </RacSelect>
+  )
+}
+
+function LibraryItem({
+  id,
+  label,
+  credits,
+  run,
+  ...props
+}: {
+  id: string
+  label: string
+  credits?: readonly string[]
+  run: () => void
+} & Pick<ListBoxItemProps, "onHoverStart" | "onFocusChange">) {
+  const previewProps = useOptionPreview()
+  return (
+    <ListBoxItem id={id} textValue={label} {...previewProps(run)} {...props}>
+      <ListBoxItemLabel>{label}</ListBoxItemLabel>
+      <ListBoxItemDescription>{credits?.join(", ")}</ListBoxItemDescription>
+    </ListBoxItem>
   )
 }
 

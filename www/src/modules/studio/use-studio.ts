@@ -1,54 +1,43 @@
 "use client"
 
 /* The studio's state hook: the current design system (a view or one of the
-   user's systems), what it resolves to and the design system the preview
-   renders and export ships. Editing a view fills the unsaved slot. */
+   user's systems), what it resolves to, and its edits. Editing a view fills
+   the unsaved slot. */
 
 import { useMemo } from "react"
 
-import type { DesignSystem } from "@/modules/studio/preset/types"
-
 import { effective } from "./axes"
 import type { Effective, StudioState } from "./axes"
-import { resolveDesignSystem } from "./resolve"
-import { edit, useCurrent } from "./selection"
+import { edit, getCurrent, useCurrent } from "./selection"
 
 export interface Studio {
   /** What the user picked; follow ids ("auto", "same") included. */
   state: StudioState
   /** What the picks resolve to; specimens and recipes read this. */
   effective: Effective
-  /** The engine's view: what the preview renders and the export ships. */
-  designSystem: DesignSystem
+  /** One setter per key, the same one every render. */
   set: <K extends keyof StudioState & string>(
     key: K,
   ) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
 }
 
-// Every row reads the studio: resolve each state's system once.
-const SYSTEMS = new WeakMap<Effective, DesignSystem>()
+const setters = new Map<string, (value: never) => void>()
 
-function systemOf(values: Effective): DesignSystem {
-  let system = SYSTEMS.get(values)
-  if (!system) SYSTEMS.set(values, (system = resolveDesignSystem(values)))
-  return system
+// Edits the state current at the call, never the one a render closed over.
+function set<K extends keyof StudioState & string>(key: K) {
+  let setter = setters.get(key)
+  if (!setter) {
+    setter = (value) => edit({ ...getCurrent().state, [key]: value })
+    setters.set(key, setter)
+  }
+  return setter as (value: StudioState[K]) => void
 }
 
 export function useStudio(): Studio {
   const { state } = useCurrent()
-  return useMemo(() => {
-    const values = effective(state).values
-    const set =
-      <K extends keyof StudioState & string>(key: K) =>
-      (value: StudioState[K]) =>
-        edit({ ...state, [key]: value })
-    return {
-      state,
-      effective: values,
-      designSystem: systemOf(values),
-      set,
-      setState: edit,
-    }
-  }, [state])
+  return useMemo(
+    () => ({ state, effective: effective(state).values, set, setState: edit }),
+    [state],
+  )
 }

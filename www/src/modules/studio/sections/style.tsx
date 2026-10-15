@@ -6,7 +6,7 @@
 
 import { useMemo } from "react"
 
-import { DesignSystemContext } from "@/lib/styles"
+import { ComponentParamsProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { CONTAINER_SURFACE } from "@/registry/ui/card/styles"
@@ -45,16 +45,13 @@ function StyleRow() {
     () =>
       STYLE_OPTIONS.map((option) => {
         const values = effective(pickStyle(state, option.value)).values
-        const system = {
-          params: { button: resolveButtons(values).params?.button ?? {} },
-          density: "default" as const,
-        }
+        const params = { button: resolveButtons(values).params?.button ?? {} }
         return {
           ...option,
           preview: (
-            <DesignSystemContext.Provider value={system}>
+            <ComponentParamsProvider params={params}>
               <Specimen tokens={resolveSurfaces(values).tokens ?? {}} />
-            </DesignSystemContext.Provider>
+            </ComponentParamsProvider>
           ),
         }
       }),

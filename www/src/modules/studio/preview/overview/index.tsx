@@ -900,7 +900,7 @@ function Section({
 export function PresetOverview({
   designSystem,
 }: {
-  designSystem: DesignSystem
+  designSystem: Pick<DesignSystem, "color" | "tokens" | "density">
 }) {
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const seeds = config.seeds

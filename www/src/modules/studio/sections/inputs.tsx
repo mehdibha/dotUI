@@ -3,7 +3,7 @@
 /* Inputs — the field shell every text field, picker trigger and OTP cell
    wears; members decide structure. Focus and invalid live in States. */
 
-import { DesignSystemContext } from "@/lib/styles"
+import { ComponentParamsProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/input/styles"
 
@@ -27,19 +27,12 @@ import { useStudio } from "../use-studio"
 const labelOf = (options: { value: string; label: string }[], value: string) =>
   options.find((option) => option.value === value)?.label ?? value
 
-/* One stable context per shell, so the registry's style cache hits. */
-const contexts = new Map<
-  string,
-  { params: { input: { style: string } }; density: "default" }
->()
-function shellContext(style: string) {
-  let context = contexts.get(style)
-  if (!context)
-    contexts.set(
-      style,
-      (context = { params: { input: { style } }, density: "default" }),
-    )
-  return context
+/* One stable selection per shell, so the registry's style cache hits. */
+const selections = new Map<string, { input: { style: string } }>()
+function shellParams(style: string) {
+  let params = selections.get(style)
+  if (!params) selections.set(style, (params = { input: { style } }))
+  return params
 }
 
 /** A field drawn by the registry's own recipe for one shell. */
@@ -51,9 +44,9 @@ function ShellSpecimen({
   className?: string
 }) {
   return (
-    <DesignSystemContext.Provider value={shellContext(style)}>
+    <ComponentParamsProvider params={shellParams(style)}>
       <Shell className={cn("pointer-events-none", className)} />
-    </DesignSystemContext.Provider>
+    </ComponentParamsProvider>
   )
 }
 

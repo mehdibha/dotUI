@@ -1,7 +1,12 @@
-import { type ReactNode, useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
+import { loadFontFaces } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
+import { SearchIcon } from "@/registry/icons"
+import { IconLibraryContext } from "@/registry/icons/create-icon"
+import { iconLibraries } from "@/registry/icons/icon-map"
+import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { ToastProvider } from "@/registry/ui/toast"
 import {
   ExamplesIndex,
@@ -9,15 +14,23 @@ import {
 } from "@/modules/studio/__generated__/examples"
 import {
   useAnnouncePreviewReady,
-  useIframeMessageListener,
+  useAppliedDesignSystem,
   usePreviewNavigationMessages,
+  usePreviewWarmMessages,
 } from "@/modules/studio/preset/iframe-sync"
-import type { DesignSystem } from "@/modules/studio/preset/types"
+import type {
+  PrepareDesignSystem,
+  PreviewAssets,
+} from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
 import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
+import {
+  requestThemeCss,
+  themeCssNow,
+} from "@/modules/studio/preview/theme-css-worker"
 import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
@@ -50,28 +63,84 @@ export function getExamplesPromise(slug: string) {
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 // Overscroll bounces the preview itself, not the whole studio.
+// Live previews (drags, hovers) skip transitions, or the preview trails them.
 const EMBEDDED_CSS = `
 html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
+[data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
 `
 
 const route = getRouteApi("/preview/$slug")
+
+const LOADED_LIBRARIES = new Set<string>(
+  iconLibraries
+    .map((library) => library.name)
+    .filter((name) => name !== "lucide"),
+)
+
+// Faces load once the pointer rests on a font, so sweeping the list fetches
+// nothing; the preview itself settles later.
+const FONT_DWELL_MS = 30
+let fontTimer: ReturnType<typeof setTimeout> | undefined
+function warmFonts(families: string[]) {
+  clearTimeout(fontTimer)
+  fontTimer = setTimeout(() => loadFontFaces(document, families), FONT_DWELL_MS)
+}
+
+// Live color changes compute their CSS off the main thread; the release
+// waits for the job already computing its color.
+const prepareThemeCss: PrepareDesignSystem<string | undefined> = (
+  { data: { color }, live },
+  ready,
+) => {
+  if (color) requestThemeCss(color, live, ready)
+  else ready(undefined)
+}
+
+// One hidden icon per library loads its chunk before a preview needs it.
+function WarmIcons({ libraries }: { libraries: IconLibraryName[] }) {
+  return (
+    <div hidden>
+      {libraries.map((library) => (
+        <IconLibraryContext.Provider key={library} value={library}>
+          <SearchIcon />
+        </IconLibraryContext.Provider>
+      ))}
+    </div>
+  )
+}
 
 export function PreviewPage() {
   const { slug } = route.useParams()
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
-  const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    designSystemOf(getCurrent().state),
+  const { designSystem, prepared: themeCss } = useAppliedDesignSystem(
+    prepareThemeCss,
+    () => {
+      const initial = designSystemOf(getCurrent().state)
+      return {
+        designSystem: initial,
+        prepared: initial.color && themeCssNow(initial.color),
+      }
+    },
+    // A message's clone, its selections one object again for the style caches.
+    internDesignSystem,
   )
 
   const navigate = route.useNavigate()
 
-  useIframeMessageListener(
-    useCallback(
-      (ds: DesignSystem) => setDesignSystem(internDesignSystem(ds)),
-      [],
-    ),
+  // What the studio is about to preview starts loading now.
+  const [warmIcons, setWarmIcons] = useState<IconLibraryName[]>([])
+  usePreviewWarmMessages(
+    useCallback(({ fonts, icons }: PreviewAssets) => {
+      if (fonts) warmFonts(fonts)
+      const added = (icons ?? []).filter((name) => LOADED_LIBRARIES.has(name))
+      if (added.length)
+        setWarmIcons((prev) => {
+          const next = [...new Set([...prev, ...added])] as IconLibraryName[]
+          return next.length === prev.length ? prev : next
+        })
+    }, []),
   )
 
   // The parent switches previews by navigating this document's own router — the
@@ -101,6 +170,21 @@ export function PreviewPage() {
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
 
+  const embedded = typeof window !== "undefined" && window.self !== window.top
+  // Stable elements: a design-system change re-renders only what reads it.
+  const chrome = useMemo(
+    () => (
+      <>
+        {embedded && <style>{EMBEDDED_CSS}</style>}
+        {embedded && <PreviewInspector />}
+        {/* Inside the provider so toasts wear the previewed params; the app
+            itself fires none. */}
+        <ToastProvider />
+      </>
+    ),
+    [embedded],
+  )
+
   // Elastic overscroll pulls this page away and reveals the <iframe> element,
   // which the studio paints in its own theme — repaint it with ours.
   useEffect(() => {
@@ -116,18 +200,20 @@ export function PreviewPage() {
     const observer = new MutationObserver(paint)
     observer.observe(document.documentElement, { attributeFilter: ["class"] })
     return () => observer.disconnect()
-  }, [designSystem])
+  }, [designSystem.color, themeCss])
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.
   const { Examples } = route.useLoaderData()
-  let content: ReactNode
-  if (slug === "overview") {
-    content = <PresetOverview designSystem={designSystem} />
-  } else if (Examples) {
-    content = <Examples />
-  } else {
+  const { color, tokens, density } = designSystem
+  const overview = useMemo(
+    () => <PresetOverview designSystem={{ color, tokens, density }} />,
+    [color, tokens, density],
+  )
+  const examples = useMemo(() => Examples && <Examples />, [Examples])
+  const content = slug === "overview" ? overview : examples
+  if (!content) {
     return (
       <div className="flex h-screen items-center justify-center">
         <span className="text-fg-muted">Preview not found</span>
@@ -135,22 +221,18 @@ export function PreviewPage() {
     )
   }
 
-  const embedded = typeof window !== "undefined" && window.self !== window.top
-
   return (
     <DesignSystemProvider
       params={designSystem.componentParams}
-      tokens={designSystem.tokens}
-      density={designSystem.density}
-      color={designSystem.color}
+      tokens={tokens}
+      density={density}
+      color={color}
+      themeCss={themeCss}
       icons={designSystem.icons}
     >
-      {embedded && <style>{EMBEDDED_CSS}</style>}
-      {embedded && <PreviewInspector />}
-      {/* Inside the provider so toasts wear the previewed params; the app
-          itself fires none. */}
-      <ToastProvider />
+      {chrome}
       <BoardFocusProvider>{content}</BoardFocusProvider>
+      {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
     </DesignSystemProvider>
   )
 }

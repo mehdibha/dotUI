@@ -22,6 +22,7 @@ import {
   toOklch,
   wcag2,
 } from "./index"
+import { setMemoEnabled } from "./memo"
 
 const CORE_SCALES = [
   "neutral",
@@ -42,7 +43,12 @@ describe("default theme", () => {
   })
 
   test("is deterministic", () => {
-    expect(createTheme("#438cd6")).toEqual(createTheme("#438cd6"))
+    setMemoEnabled(false)
+    try {
+      expect(createTheme("#438cd6")).toEqual(createTheme("#438cd6"))
+    } finally {
+      setMemoEnabled(true)
+    }
   })
 
   test("every scale has exactly the 12 job steps", () => {

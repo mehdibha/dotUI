@@ -10,7 +10,7 @@ import {
   useSyncExternalStore,
 } from "react"
 
-import { DesignSystemContext } from "@/lib/styles"
+import { useParamSelections } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { usePreviewFocusMessages } from "@/modules/studio/preview/focus-message"
 import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
@@ -211,7 +211,7 @@ export interface Replay {
 export function useReplay(...keys: string[]): Replay {
   const edited = useEdited(keys)
   const { axis } = useBoardFocus()
-  const { params } = useContext(DesignSystemContext)
+  const params = useParamSelections()
   const [lingering, setLingering] = useState(false)
   const [replay, setReplay] = useState(0)
   useEffect(() => {

@@ -38,6 +38,8 @@ import { COLUMNS } from "./axes/style"
 import { FOLLOW_STYLE } from "./axes/style.meta"
 import { RowLabel, useRowLabel } from "./family-page"
 import { holdEditFocus } from "./focus"
+import { clearLive, previewNow } from "./live"
+import { useOptionPreview } from "./option-preview"
 import {
   ColorPickerPopover,
   PanelNav,
@@ -378,39 +380,61 @@ function SelectOptions({
         if (next) onChange(next as string)
       }}
     >
-      {options.map((option) => {
-        const to = target(option)
-        const preview = option.preview ?? to?.preview
-        const excluded = exclude?.options?.includes(option.value)
-        return (
-          <ListBoxItem
-            key={option.value}
-            id={option.value}
-            textValue={option.label}
-            // The specimen sits beside the text, not under the description.
-            className="has-[[slot=description]]:flex-row has-[[slot=description]]:items-center has-[[slot=description]]:gap-3"
-          >
-            <span className="flex min-w-0 flex-col">
-              <ListBoxItemLabel>
-                {to ? `${option.label} · ${to.label}` : option.label}
-                {option.aside}
-              </ListBoxItemLabel>
-              {subline(option) && (
-                <ListBoxItemDescription>
-                  {subline(option)}
-                </ListBoxItemDescription>
-              )}
-            </span>
-            {(preview || excluded) && (
-              <span className="ml-auto flex shrink-0 items-center gap-2">
-                {excluded && exclude && <CauseChip cause={exclude.cause} />}
-                {preview}
-              </span>
-            )}
-          </ListBoxItem>
-        )
-      })}
+      {options.map((option) => (
+        <SelectOption
+          key={option.value}
+          option={option}
+          to={target(option)}
+          cause={
+            exclude?.options?.includes(option.value) ? exclude.cause : undefined
+          }
+          run={() => onChange(option.value)}
+        />
+      ))}
     </ListBox>
+  )
+}
+
+/** One of SelectOptions' items: hovering it previews `run`. */
+function SelectOption({
+  option,
+  to,
+  cause,
+  run,
+}: {
+  option: DialSelectOption
+  /** A follow option's target. */
+  to: DialSelectOption | undefined
+  /** Why the option is excluded. */
+  cause: string | undefined
+  run: () => void
+}) {
+  const previewProps = useOptionPreview()
+  const preview = option.preview ?? to?.preview
+  return (
+    <ListBoxItem
+      id={option.value}
+      textValue={option.label}
+      // The specimen sits beside the text, not under the description.
+      className="has-[[slot=description]]:flex-row has-[[slot=description]]:items-center has-[[slot=description]]:gap-3"
+      {...previewProps(run)}
+    >
+      <span className="flex min-w-0 flex-col">
+        <ListBoxItemLabel>
+          {to ? `${option.label} · ${to.label}` : option.label}
+          {option.aside}
+        </ListBoxItemLabel>
+        {subline(option) && (
+          <ListBoxItemDescription>{subline(option)}</ListBoxItemDescription>
+        )}
+      </span>
+      {(preview || cause) && (
+        <span className="ml-auto flex shrink-0 items-center gap-2">
+          {cause && <CauseChip cause={cause} />}
+          {preview}
+        </span>
+      )}
+    </ListBoxItem>
   )
 }
 
@@ -428,12 +452,20 @@ export interface DialPickOption {
 const PICK_ITEM =
   "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10"
 
-function PickItem({ option }: { option: DialPickOption }) {
+function PickItem({
+  option,
+  run,
+}: {
+  option: DialPickOption
+  run: () => void
+}) {
+  const previewProps = useOptionPreview()
   return (
     <RacListBoxItem
       id={option.value}
       textValue={option.label}
       className={PICK_ITEM}
+      {...previewProps(run)}
     >
       {({ isSelected }) => (
         <>
@@ -475,6 +507,7 @@ export function DialPickList({
     <RacListBox
       aria-label={label}
       selectionMode="single"
+      disallowEmptySelection
       selectedKeys={[value]}
       onSelectionChange={(keys) => {
         if (keys === "all") return
@@ -484,7 +517,11 @@ export function DialPickList({
       className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
-        <PickItem key={option.value} option={option} />
+        <PickItem
+          key={option.value}
+          option={option}
+          run={() => onChange(option.value)}
+        />
       ))}
     </RacListBox>
   )
@@ -665,6 +702,13 @@ function SliderRow({
   const isClick = useRef(true)
   const rect = useRef<DOMRect | null>(null)
   const committed = useRef(value)
+  // Unmounted mid-drag, nothing would commit or drop the drag's preview.
+  useEffect(
+    () => () => {
+      if (pointerDown.current) clearLive()
+    },
+    [],
+  )
 
   /* The fill and the handle move together, off React: written straight to
      style, with the snap transition only on release. */
@@ -767,16 +811,12 @@ function SliderRow({
       isClick.current = false
       setDragging(true)
     }
-    if (down.touch) {
-      const raw = touchValueAt(e.clientX)
-      paint(toPct(raw))
-      setDraft(round(raw))
-      return
-    }
-    stretchTo(stretchAt(e.clientX))
-    const raw = valueAt(e.clientX)
+    if (!down.touch) stretchTo(stretchAt(e.clientX))
+    const raw = down.touch ? touchValueAt(e.clientX) : valueAt(e.clientX)
     paint(toPct(raw))
-    setDraft(round(raw))
+    const next = round(raw)
+    setDraft(next)
+    previewNow(() => onChange(next))
   }
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -809,6 +849,7 @@ function SliderRow({
 
   const onPointerCancel = () => {
     if (!interacting) return
+    clearLive()
     stretchTo(0)
     paint(toPct(value))
     setDraft(value)
@@ -921,6 +962,9 @@ function SliderRow({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}
+        onLostPointerCapture={() => {
+          if (pointerDown.current) onPointerCancel()
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onKeyDown={onKeyDown}

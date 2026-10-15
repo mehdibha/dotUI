@@ -4,6 +4,7 @@
    control text. Font sits on the main page; Heading and Reading match it
    until pinned. */
 
+import { useMemo } from "react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
@@ -34,6 +35,16 @@ type FontKey = "headingFont" | "bodyFont" | "monoFont" | "readingFont"
 /** The follow id of a role that matches Font until pinned. */
 const MATCH = "same"
 
+const HEADING_CATEGORIES: FontCategory[] = [
+  "sans-serif",
+  "serif",
+  "display",
+  "handwriting",
+]
+const BODY_CATEGORIES: FontCategory[] = ["sans-serif", "serif"]
+const MONO_CATEGORIES: FontCategory[] = ["mono"]
+const READING_CATEGORIES: FontCategory[] = ["serif", "sans-serif"]
+
 /** A font role as a dial row, its family set in its own face. With `match`,
  *  a switch over the list follows Font or pins the family it shows. */
 function FontRow({
@@ -54,6 +65,27 @@ function FontRow({
   const onChange = set(axis)
   const matching = match && value === MATCH
   useLoadedFamilies([resolved])
+  // The Select's collection: one element, so a new value doesn't rebuild
+  // its hundreds of hidden items.
+  const list = useMemo(
+    () => (
+      <PanelPopoverTitle.Provider value={label}>
+        <FontListPopover categories={categories} onPreview={onChange}>
+          {match && (
+            <Switch
+              size="sm"
+              isSelected={matching}
+              onChange={(on) => onChange(on ? MATCH : resolved)}
+            >
+              <Label className="flex-1">Match font</Label>
+              <SwitchControl />
+            </Switch>
+          )}
+        </FontListPopover>
+      </PanelPopoverTitle.Provider>
+    ),
+    [label, categories, onChange, match, matching, resolved],
+  )
   return (
     <Select
       className="w-full"
@@ -77,20 +109,7 @@ function FontRow({
           {resolved}
         </span>
       </div>
-      <PanelPopoverTitle.Provider value={label}>
-        <FontListPopover categories={categories}>
-          {match && (
-            <Switch
-              size="sm"
-              isSelected={matching}
-              onChange={(on) => onChange(on ? MATCH : resolved)}
-            >
-              <Label className="flex-1">Match font</Label>
-              <SwitchControl />
-            </Switch>
-          )}
-        </FontListPopover>
-      </PanelPopoverTitle.Provider>
+      {list}
     </Select>
   )
 }
@@ -153,16 +172,16 @@ const HeadingRow = () => (
     axis="headingFont"
     label="Heading"
     match
-    categories={["sans-serif", "serif", "display", "handwriting"]}
+    categories={HEADING_CATEGORIES}
   />
 )
 
 const BodyRow = () => (
-  <FontRow axis="bodyFont" label="Font" categories={["sans-serif", "serif"]} />
+  <FontRow axis="bodyFont" label="Font" categories={BODY_CATEGORIES} />
 )
 
 const MonoRow = () => (
-  <FontRow axis="monoFont" label="Mono" categories={["mono"]} />
+  <FontRow axis="monoFont" label="Mono" categories={MONO_CATEGORIES} />
 )
 
 const ReadingRow = () => (
@@ -170,7 +189,7 @@ const ReadingRow = () => (
     axis="readingFont"
     label="Reading"
     match
-    categories={["serif", "sans-serif"]}
+    categories={READING_CATEGORIES}
   />
 )
 
