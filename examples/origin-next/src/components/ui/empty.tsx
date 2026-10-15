@@ -5,9 +5,9 @@ const emptyVariants = tv({
   slots: {
     base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-lg p-6",
     header: "flex max-w-sm flex-col items-center gap-2",
-    title: "font-heading text-lg font-medium tracking-tight text-base",
+    title: "font-heading text-base font-medium tracking-tight",
     description:
-      "text-sm/relaxed text-fg-muted [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary text-sm/relaxed",
+      "text-fg-muted [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary text-sm/relaxed",
     content:
       "flex w-full max-w-sm min-w-0 flex-col items-center text-balance gap-2.5 text-sm",
     media:

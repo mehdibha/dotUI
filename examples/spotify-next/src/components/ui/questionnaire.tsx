@@ -6,6 +6,7 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonStyles } from "@/components/ui/button";
+import { inputStyles } from "@/components/ui/input";
 import { tv } from "tailwind-variants";
 
 const questionnaireVariants = tv({
@@ -15,28 +16,29 @@ const questionnaireVariants = tv({
       "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums text-xs",
     item: "flex min-w-0 flex-col border-0 p-0 focus-reset gap-5",
     title:
-      "font-medium text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap) text-base leading-snug",
+      "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap) text-xl font-bold",
     description: "text-pretty text-fg-muted text-sm",
     choices: "group/questionnaire-choices grid min-w-0 gap-3",
     choice:
-      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-lg border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-primary/40 data-checked:bg-muted data-invalid:border-border-danger has-[>input:focus-visible]:focus-ring data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50 gap-3 px-4 py-3.5 text-sm",
-    choiceInput: "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
+      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-sm border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-selection/40 data-checked:bg-muted data-invalid:border-fg-danger has-[>input:focus-visible]:focus-ring data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent gap-3 px-4 py-3.5 text-sm",
+    choiceInput:
+      "absolute inset-0 z-10 size-full cursor-interactive opacity-0 disabled:cursor-disabled",
     choiceIndicator:
-      "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
+      "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-border-control group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-selection group-data-checked/questionnaire-choice:bg-selection group-data-checked/questionnaire-choice:text-fg-on-selection",
     choiceIndicatorDot:
-      "hidden size-2 rounded-full bg-fg-on-primary group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
+      "hidden size-2 rounded-full bg-fg-on-selection group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
     choiceIndicatorCheck:
       "hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
     choiceContent: "flex min-w-0 flex-1 flex-col leading-snug gap-1",
     choiceDescription: "text-fg-muted",
     shortcut:
-      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
+      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
-      "w-full min-w-0 rounded-full border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none placeholder:text-fg-muted focus:focus-input focus:not-aria-invalid:border-border-focus aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted disabled:pointer-events-none disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) disabled:text-(--disabled-fg,currentColor) h-9 px-2.5 py-1 text-base md:text-sm",
+      "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
     error: "mt-2 text-fg-danger text-sm",
     actions:
-      "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:min-h-9",
+      "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:min-h-12",
   },
 });
 
@@ -245,11 +247,12 @@ const QuestionnaireInput = ({
   className,
   ...props
 }: QuestionnaireInputProps) => {
+  const { input: shell } = inputStyles();
   return (
     <div data-questionnaire-input-wrapper="" className={inputWrapper()}>
       <QuestionnairePrimitive.Input
         data-questionnaire-input=""
-        className={input({ className })}
+        className={shell({ className: input({ className }) })}
         {...props}
       />
     </div>

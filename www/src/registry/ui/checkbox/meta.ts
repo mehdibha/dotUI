@@ -14,13 +14,13 @@ const checkboxMeta = {
   params: {
     "card-selected": {
       default: "tint",
-      values: ["outline", "tint", "outline-tint"] as const,
+      values: ["tint", "outline-tint", "outline"] as const,
       description: "What marks the selected card.",
     },
-    "card-control": {
-      default: "start",
-      values: ["start", "end", "hidden"] as const,
-      description: "Where the control sits in a card.",
+    "card-press": {
+      default: "none",
+      values: ["none", "sink"] as const,
+      description: "Whether a pressed or disabled card sinks into its lip.",
     },
   },
 } satisfies RegistryItem

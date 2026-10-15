@@ -41,6 +41,9 @@ export interface ColorConfig {
   neutralHue?: number
   /** Pin the accent verbatim at the solid step; the report prices it. */
   preserveSeed?: boolean
+  /** With `preserveSeed`: white labels on the light solid whatever their
+   *  contrast (absent = solved). */
+  solidInk?: "white"
   /**
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
    * (brand-colored primary, the default's); absent means neutral
@@ -194,6 +197,7 @@ export function salvageColorConfig(input: unknown): ColorConfig {
     neutralTint?: unknown
     neutralHue?: unknown
     preserveSeed?: unknown
+    solidInk?: unknown
     overrides?: unknown
     chartPalette?: unknown
     primary?: unknown
@@ -218,6 +222,7 @@ export function salvageColorConfig(input: unknown): ColorConfig {
   if (finite(raw.neutralHue)) config.neutralHue = clamp(raw.neutralHue, 0, 360)
   if (typeof raw.preserveSeed === "boolean")
     config.preserveSeed = raw.preserveSeed
+  if (raw.solidInk === "white") config.solidInk = "white"
   if (raw.primary === "accent") config.primary = "accent"
   if (isSource(raw.selection)) config.selection = raw.selection
   const scopes = salvageScopes(raw.scopes)

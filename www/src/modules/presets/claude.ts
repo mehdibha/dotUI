@@ -1,148 +1,116 @@
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const claude = definePreset({
   id: "claude",
   name: "Claude",
-  description: "Ink actions, clay highlights.",
+  description: "Ink actions on warm paper, blue checks, a serif voice.",
   swatch: "#d97757",
   inspiredBy: "Claude",
-  state: {
+  diff: {
     // Color
-    brand: "#d97757",
-    // The live primary is ink; clay is never the default fill.
+    // CDS role-accent #2a78d6 paints checks, links, focus and accent badges;
+    // clay lives only in the logo, so in the swatch. Actions are #0b0b0b ink.
+    brand: "#2a78d6",
     buttonColor: "neutral",
-    selectionColor: "neutral",
-    neutralHue: 96,
-    // Auto: Claude's #009300 sits at the danger red's L and trips the CVD gate.
-    successSeed: "",
+    successSeed: "#009300",
     warningSeed: "#fab219",
     dangerSeed: "#d03b3b",
-    selectionSeed: "#2a78d6",
-    vividness: 1,
-    neutralTint: 1,
-    preserveSeed: false,
-    lightBg: 99,
+    // Grays sit at OKLCH hue 91-106, chroma at most .015.
+    neutralHue: 100,
+    neutralTint: 0.7,
+    // #151515 page in dark.
     darkBg: 7,
+    // The docs sidebar shares the #fcfcfb page behind a hairline.
+    shellTone: "page",
+    // Fields and secondary buttons ring at 10% ink, 20% on hover.
+    controlEdge: "soft",
 
     // Typography
-    // Free stand-ins for Anthropic Serif and Sans.
+    // Instrument Sans, Source Serif 4 and JetBrains Mono stand in for the
+    // proprietary Anthropic Sans, Serif and Mono.
+    bodyFont: "Instrument Sans",
     headingFont: "Source Serif 4",
-    bodyFont: "Inter",
-    monoFont: "Geist Mono",
+    monoFont: "JetBrains Mono",
+    // Claude's replies read in the serif.
+    readingFont: "Source Serif 4",
+    // Secondary, ghost and segmented labels are 400; only primary is 500.
+    labelWeight: "normal",
 
     // Icons
-    // platform.claude.com draws on Phosphor's 256 grid.
+    // Anthropicons are Phosphor-shaped.
     iconLibrary: "phosphor",
-    iconStroke: 2,
-    iconWeight: "regular",
 
     // Shape
-    radiusPx: 10.67,
-    roleControl: "md",
-    roleItem: "auto",
-    roleSurface: "lg",
-    rolePanel: "xl",
+    // 8px controls and rows inside 12px menus, dialogs and cards.
+    radiusPx: 8,
+    roleControl: "lg",
+    roleSurface: "xl",
     roleCard: "xl",
 
-    // Space
-    density: "default",
-    spacingUnit: 4,
-
-    // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "low",
-    surfaceGlass: false,
-
-    // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
-    selectionHighlight: "accent",
-
     // States
-    focusColor: "accent",
-    focusStyle: "duo",
+    // A 1px #2a78d6 ring hugging the edge, a page-colored line inside fills.
+    focusStyle: "inset",
     focusWidth: 1,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
-    focusInputStyle: "ring",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
-    focusInputBorderWidth: 1,
-    disabledTreatment: "solid",
-    inputError: "border",
+    // Fields: the 10% ring turns blue.
+    focusInputStyle: "border",
+    disabledTreatment: "fade",
+    cursorDisabled: "default",
+    // No ::selection rule.
+    selectionHighlight: "browser",
 
     // Motion
-    ...DEFAULT_MOTION,
+    // easeOutQuart over 120-200ms.
+    motion: "smooth",
 
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
+    // Buttons
+    // A page plate, 10% ring and a 1px 5% drop; paint scales to .975.
+    buttonSecondary: "raised",
+    buttonPress: "scale",
+    // Pressed toggles turn #cde2fb with #184f95 ink.
+    toggleSelected: "tint",
+    segmentedSelected: "raised",
 
-    // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
-    linkUnderline: "always",
-    linkColor: "neutral",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "ring",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "flat",
-    segmentedTrack: "filled",
-    switchColor: "neutral",
-    checkboxColor: "neutral",
-    checkCorner: "rounded",
-    radioColor: "neutral",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "none",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
-    pickerCaret: "chevron",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
+    // Inputs
+    inputHover: "edge",
+    fieldLabel: "medium",
+    inputError: "icon-message",
+    otpStyle: "separate",
+
+    // Selection
     sliderColor: "neutral",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "sentence",
-    menuSearch: "field",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
-    tabStyle: "line",
-    tabsColor: "accent",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
-    breadcrumbSeparator: "chevron",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
+    cardSelected: "outline-tint",
+
+    // Menus & popovers
+    menuRows: "match",
+    menuArrows: "none",
+    // The 672px palette: a borderless 56px search bar over 36px rows.
+    menuSearch: "bar",
+
+    // Dialogs
+    dialogBackdrop: "scrim",
+    mobileDialogs: "sheet",
+
+    // Navigation
+    // Ghost pills with a 5% ink wash on the current tab.
+    tabStyle: "pill",
+    tabsPill: "tone",
+    navItemWeight: "regular",
+    linkUnderline: "always",
+
+    // Feedback
     badgeStyle: "soft",
-    badgeShape: "pill",
-    kbdTreatment: "chip",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
+    badgeShape: "rounded",
+    alertStyle: "soft-outline",
+    toastStatus: "soft",
+    spinnerStyle: "ring-track",
+    progressTrack: "medium",
+    progressTrackStyle: "bordered",
+    // A 6px #2a78d6 fill.
+    progressColor: "same-checks",
+
+    // Data display
+    tableHeaderLabel: "strong",
+    kbdTreatment: "outline",
+    chartPalette: "vivid",
   },
 })

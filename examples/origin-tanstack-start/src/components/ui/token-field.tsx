@@ -11,15 +11,17 @@ import type {
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
 } from "react-aria-components/TokenField";
+
+import { inputStyles } from "@/components/ui/input";
 import { tv } from "tailwind-variants";
 
 const tokenFieldVariants = tv({
   slots: {
     root: "group/token-field flex w-full flex-col gap-1.5",
     input:
-      "min-h-16 w-full rounded-md border border-border-control bg-field px-2.5 py-2 text-base outline-none sm:text-sm transition-[box-shadow,border-color,color] focus:border-border-focus focus:focus-input data-disabled:cursor-disabled data-disabled:border-(--disabled-border,var(--color-border-control)) data-disabled:bg-(--disabled-bg,var(--color-field)) data-disabled:text-(--disabled-fg,currentColor) empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
+      "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
     token:
-      "rounded-sm bg-accent-muted px-0.5 text-fg-accent data-selected:bg-accent data-selected:text-fg-on-accent",
+      "rounded-sm bg-selected px-0.5 text-fg-on-selected data-selected:bg-selection data-selected:text-fg-on-selection",
   },
 });
 
@@ -71,11 +73,12 @@ function TokenInput({
   children,
   ...props
 }: TokenInputProps) {
+  const { textArea } = inputStyles();
   return (
     <TokenInputPrimitive
       data-token-input=""
       data-placeholder={placeholder}
-      className={input({ className })}
+      className={textArea({ className: input({ className }) })}
       {...props}
     >
       {children ?? ((segment) => <Token>{segment.text}</Token>)}

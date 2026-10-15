@@ -4,4 +4,5 @@
   --studio-popover-exit-duration: 100ms;
   --studio-popover-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --studio-popover-exit-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-popover-tip-size: calc(var(--spacing) * 2.5);
 }

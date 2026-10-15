@@ -1,6 +1,5 @@
 :root {
   --studio-toast-radius: var(--studio-radius-field);
-  --studio-toast-action-radius: var(--studio-radius-control);
   --studio-toast-enter-duration: 400ms;
   --studio-toast-exit-duration: 400ms;
   --studio-toast-ease: cubic-bezier(0.25, 0.1, 0.25, 1);

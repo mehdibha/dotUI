@@ -10,7 +10,7 @@ const tokenFieldMeta = {
       target: "ui/token-field.tsx",
     },
   ],
-  registryDependencies: ["field"],
+  registryDependencies: ["field", "input"],
 } satisfies RegistryItem
 
 export default tokenFieldMeta

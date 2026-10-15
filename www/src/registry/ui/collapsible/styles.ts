@@ -18,19 +18,13 @@ const { useStyles, styles } = createStyles(collapsibleMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     motion: {
       expand: {
         slots: { panel: [expand, "motion-safe:transition-[height]"] },
-      },
-      fade: {
-        slots: {
-          panel: [
-            expand,
-            "opacity-0 group-expanded/collapsible:opacity-100 motion-safe:transition-[height,opacity]",
-          ],
-        },
       },
       none: {},
     },

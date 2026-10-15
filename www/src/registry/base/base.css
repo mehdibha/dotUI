@@ -13,19 +13,31 @@
 
 /* The keyboard ring and the field focus layer, drawn from the focus tokens
    (see the @theme block) so one design system edit restyles every control.
-   Three strokes ride in `--tw-ring-shadow` so `ring-0` still silences them:
-   a bg hairline inside the edge (the duo family), the bg offset, the ring.
-   `--focus-*-inset` is unset (outside) or `inset`. Fields keep their own
-   width and color (a halo by default) and honor `ring-*` color overrides
-   (`invalid:ring-danger-muted`). A consumer's own shadow var must default to
-   `0 0 #0000`, never `none` — `none` invalidates the whole composite. */
+   The strokes ride in `--tw-ring-shadow` so `ring-0` still silences them; the
+   first listed paints on top. `--focus-*-inset` is unset (outside) or
+   `inset`. A consumer's own shadow var must default to `0 0 #0000`, never
+   `none` — `none` invalidates the whole composite. */
 @utility focus-ring {
   --tw-ring-shadow:
-    inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)),
     var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset)
       var(--surface-bg, var(--color-bg)),
     var(--focus-ring-inset,) 0 0 0
       calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color),
+    inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg));
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+/* The ring outside a control whose own part covers its box (a checkbox's
+   box, a thumb, a tab's selected pill, a link's text), whatever the recipe
+   draws elsewhere. */
+@utility focus-ring-outside {
+  --tw-ring-shadow:
+    0 0 0 var(--focus-ring-outside-offset) var(--surface-bg, var(--color-bg)),
+    0 0 0 calc(var(--focus-ring-outside-offset) + var(--focus-ring-width))
       var(--focus-ring-color);
   box-shadow:
     var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
@@ -33,9 +45,23 @@
     var(--tw-shadow, 0 0 #0000);
 }
 
+/* The ring inside a row or cell, where an outside ring would clip. */
+@utility focus-ring-inside {
+  --tw-ring-shadow: inset 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+/* Field focus, one per shell shape. A box draws the layer around itself and
+   thickens its border (`--focus-input-edge`) on every side; an indicator
+   thickens only its bottom rule; an underline draws it all under its rule.
+   A `ring-*` color wins over the focus color (`invalid:ring-(color:…)`). */
 @utility focus-input {
   --tw-ring-shadow:
-    inset 0 0 0 var(--focus-input-inner) var(--surface-bg, var(--color-bg)),
+    inset 0 0 0 var(--focus-input-edge)
+      var(--tw-ring-color, var(--focus-input-color)),
     var(--focus-input-inset,) 0 0 0 var(--focus-input-offset)
       var(--surface-bg, var(--color-bg)),
     var(--focus-input-inset,) 0 0 0
@@ -45,6 +71,61 @@
     var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
     var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
     var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-input-indicator {
+  --tw-ring-shadow:
+    inset 0 calc(var(--focus-input-edge) * -1) 0 0
+      var(--tw-ring-color, var(--focus-input-color)),
+    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset)
+      var(--surface-bg, var(--color-bg)),
+    var(--focus-input-inset,) 0 0 0
+      calc(var(--focus-input-offset) + var(--focus-input-width))
+      var(--tw-ring-color, var(--focus-input-color));
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-input-underline {
+  --tw-ring-shadow:
+    inset 0 calc(var(--focus-input-edge) * -1) 0 0
+      var(--tw-ring-color, var(--focus-input-color)),
+    0 var(--focus-input-offset) 0 0 var(--surface-bg, var(--color-bg)),
+    0 calc(var(--focus-input-offset) + var(--focus-input-width)) 0 0
+      var(--tw-ring-color, var(--focus-input-color));
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+/* Invalid at rest: a danger halo, 0 wide unless the system draws one.
+   Consumers scope it to the unfocused state, so focus replaces it. */
+@utility invalid-ring {
+  --tw-ring-shadow: 0 0 0 var(--invalid-ring-width) var(--color-danger-muted);
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+@utility invalid-ring-underline {
+  --tw-ring-shadow: 0 var(--invalid-ring-width) 0 0 var(--color-danger-muted);
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+/* Invalid fill: a danger wash laid over whatever the field paints,
+   transparent unless the system tints invalid fields. An in-field error
+   icon rides `--invalid-icon` on top of it. */
+@utility invalid-fill {
+  background-image:
+    var(--invalid-icon, none),
+    linear-gradient(var(--invalid-fill), var(--invalid-fill));
 }
 
 @utility no-highlight {
@@ -77,11 +158,16 @@
   body {
     @apply bg-bg font-sans text-fg;
   }
-  /* Disabled treatment axis: fade dims the whole control (the recolor
-     treatments come through the --disabled-* tokens below). Only the
-     outermost disabled element dims, so a disabled field's input doesn't
-     compound. */
-  :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
+  /* Disabled axis: Fade dims the whole control (Solid recolors through the
+     --disabled-* tokens below). Only the outermost disabled element dims, so
+     a disabled field's input doesn't compound. A pending button keeps its
+     face; a current crumb is disabled only to stop navigation, so it stays
+     full strength. */
+  :is([data-disabled], :disabled, [aria-disabled="true"]):not(
+    [data-pending],
+    [data-current],
+    :is([data-disabled], :disabled, [aria-disabled="true"]) *
+  ) {
     opacity: var(--disabled-opacity, 1);
   }
 }
@@ -97,6 +183,10 @@
   --overlay-border: var(--color-border);
   --popover-alpha: 100%;
   --popover-backdrop-filter: none;
+  /* The field focus inks and invalid fill: per-mode, so on :root. */
+  --focus-input-border: var(--color-border-focus);
+  --focus-input-color: var(--color-border-focus-muted);
+  --invalid-fill: transparent;
 }
 
 ::selection {
@@ -116,10 +206,9 @@
   stroke-width: var(--icon-stroke-width, 1.5);
 }
 
-/* Cursor axes: what the pointer becomes over enabled, pending, disabled and
-   draggable controls. Dragging follows the interactive cursor unless the
-   design system opts into the grab hands. Motion has no tokens: each
-   component ships plain duration and ease classes. */
+/* Cursor axes: what the pointer becomes over enabled and disabled controls.
+   Pending keeps the arrow; dragging follows the interactive cursor. Motion
+   has no tokens: each component ships plain duration and ease classes. */
 @theme {
   --cursor-interactive: pointer;
   --cursor-pending: default;
@@ -128,23 +217,33 @@
   --cursor-dragging: var(--cursor-interactive);
 }
 
-/* Focus axes: the ring controls wear (color, width, offset in bg, duo inner
-   stroke) and the layer fields wear (a muted halo by default). */
+/* Scrim axis: what every modal layer (modal, drawer, sheets) lays over the
+   page — the overlay or the page tone at the backdrop's strength. */
+@theme {
+  --color-scrim: color-mix(in oklab, var(--color-overlay) 40%, transparent);
+}
+
+/* Focus axes: the ring controls wear (color, width, the gap in bg, an inner
+   bg stroke under an inset ring), the layer fields wear (a muted halo by
+   default; its inks sit on :root above) and the invalid halo (none by
+   default). */
 @theme {
   --focus-ring-color: var(--color-border-focus);
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
+  --focus-ring-outside-offset: 2px;
   --focus-ring-inner: 0px;
-  --focus-input-color: var(--color-border-focus-muted);
   --focus-input-width: 2px;
   --focus-input-offset: 0px;
-  --focus-input-inner: 0px;
+  --focus-input-edge: 0px;
+  --focus-invalid-color: var(--color-danger-muted);
+  --invalid-ring-width: 0px;
 }
 
-/* Disabled treatment axis: what a disabled control recolors to. Every site
-   reads one of these with its own color as the fallback
+/* Disabled axis: what a disabled control recolors to. Every site reads one
+   of these with its own color as the fallback
    (`disabled:bg-(--disabled-bg,var(--color-danger))`), so a design system that
-   only dims (shadcn) unsets them; Material re-points them to ink alphas. */
+   only dims (shadcn) unsets them. */
 @theme {
   --disabled-bg: var(--color-disabled);
   --disabled-fg: var(--color-fg-disabled);

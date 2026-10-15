@@ -13,10 +13,10 @@ const fieldMeta = {
   registryDependencies: ["text"],
   params: {
     error: {
-      default: "border",
-      values: ["border", "message", "bar"] as const,
+      default: "plain",
+      values: ["plain", "icon-message"] as const,
       files: {
-        message: [
+        "icon-message": [
           {
             type: "registry:ui",
             path: "ui/field/base.message.tsx",
@@ -24,13 +24,12 @@ const fieldMeta = {
           },
         ],
       },
-      vars: {
-        bar: {
-          "--studio-field-error-bar": "3px",
-          "--studio-field-error-inset": "0.625rem",
-        },
-      },
-      description: "How a field shows a failed value.",
+      description: "How the error message reads.",
+    },
+    label: {
+      default: "regular",
+      values: ["regular", "medium", "semibold"] as const,
+      description: "The weight of form-field labels.",
     },
   },
 } satisfies RegistryItem

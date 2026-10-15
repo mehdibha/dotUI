@@ -10,9 +10,9 @@ import { getPreset, PRESETS } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
 import type { StudioState, StudioStateInput } from "@/modules/studio/axes"
 import type { DesignSystem } from "@/modules/studio/preset/types"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
-/* The real engine, not a lookalike: studio state → resolveDesignSystem →
+/* The real engine, not a lookalike: studio state → designSystemOf →
    DesignSystemProvider, exactly the path /studio's preview takes. */
 
 export type State = Partial<StudioStateInput>
@@ -30,7 +30,7 @@ export function designSystem(state: State = {}): DesignSystem {
   const key = JSON.stringify(state)
   let ds = cache.get(key)
   if (!ds) {
-    ds = resolveDesignSystem(parseState(state))
+    ds = designSystemOf(parseState(state))
     cache.set(key, ds)
   }
   return ds

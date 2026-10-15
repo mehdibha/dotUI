@@ -2,27 +2,28 @@ import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const badgeVariants = tv({
-  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full font-medium whitespace-nowrap [&>svg]:pointer-events-none text-xs",
   variants: {
     appearance: {
-      solid: "bg-(--badge-fill) text-(--badge-fg)",
-      soft: "bg-(--badge-tint) text-(--badge-fg-tint)",
-      outline: "border border-(--badge-border) text-(--badge-fg-tint)",
+      solid: "bg-(--chip-fill) text-(--chip-fg)",
+      soft: "bg-(--chip-tint) text-(--chip-fg-tint)",
+      outline: "border border-(--chip-border) text-(--chip-fg-tint)",
       "soft-outline":
-        "border border-(--badge-border) bg-(--badge-tint) text-(--badge-fg-tint)",
+        "border border-(--chip-border) bg-(--chip-tint) text-(--chip-fg-tint)",
+      dot: "border border-border text-fg before:size-2 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']",
     },
     variant: {
       neutral:
-        "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+        "[--chip-border:var(--color-border)] [--chip-dot:var(--color-fg-muted)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
       accent:
-        "[--badge-border:var(--color-border-accent)] [--badge-fg-tint:var(--color-fg-accent)] [--badge-fg:var(--color-fg-on-accent)] [--badge-fill:var(--color-accent)] [--badge-tint:var(--color-accent-muted)]",
+        "[--chip-border:var(--color-border-accent)] [--chip-fg-tint:var(--color-fg-accent)] [--chip-fg:var(--color-fg-on-accent)] [--chip-fill:var(--color-accent)] [--chip-tint:var(--color-accent-muted)]",
       danger:
-        "[--badge-border:var(--color-border-danger)] [--badge-fg-tint:var(--color-fg-danger)] [--badge-fg:var(--color-fg-on-danger)] [--badge-fill:var(--color-danger)] [--badge-tint:var(--color-danger-muted)]",
+        "[--chip-border:var(--color-border-danger)] [--chip-fg-tint:var(--color-fg-danger)] [--chip-fg:var(--color-fg-on-danger)] [--chip-fill:var(--color-danger)] [--chip-tint:var(--color-danger-muted)]",
       success:
-        "[--badge-border:var(--color-border-success)] [--badge-fg-tint:var(--color-fg-success)] [--badge-fg:var(--color-fg-on-success)] [--badge-fill:var(--color-success)] [--badge-tint:var(--color-success-muted)]",
+        "[--chip-border:var(--color-border-success)] [--chip-fg-tint:var(--color-fg-success)] [--chip-fg:var(--color-fg-on-success)] [--chip-fill:var(--color-success)] [--chip-tint:var(--color-success-muted)]",
       warning:
-        "[--badge-border:var(--color-border-warning)] [--badge-fg-tint:var(--color-fg-warning)] [--badge-fg:var(--color-fg-on-warning)] [--badge-fill:var(--color-warning)] [--badge-tint:var(--color-warning-muted)]",
-      info: "[--badge-border:var(--color-border-info)] [--badge-fg-tint:var(--color-fg-info)] [--badge-fg:var(--color-fg-on-info)] [--badge-fill:var(--color-info)] [--badge-tint:var(--color-info-muted)]",
+        "[--chip-border:var(--color-border-warning)] [--chip-fg-tint:var(--color-fg-warning)] [--chip-fg:var(--color-fg-on-warning)] [--chip-fill:var(--color-warning)] [--chip-tint:var(--color-warning-muted)]",
+      info: "[--chip-border:var(--color-border-info)] [--chip-fg-tint:var(--color-fg-info)] [--chip-fg:var(--color-fg-on-info)] [--chip-fill:var(--color-info)] [--chip-tint:var(--color-info-muted)]",
     },
     size: {
       sm: "h-4.5 min-w-4.5 px-1.5 **:data-loader:*:[svg]:size-2.5 [&>svg]:size-2.5",

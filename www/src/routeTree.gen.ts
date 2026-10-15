@@ -31,8 +31,8 @@ import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-r
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalCompositionAnimationRouteImport } from './routes/internal.composition-animation'
 import { Route as InternalHighlightCompareRouteImport } from './routes/internal.highlight-compare'
-import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
+import { Route as InternalSpecimensRouteImport } from './routes/internal.specimens'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as RSplatRouteImport } from './routes/r/$'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
@@ -150,14 +150,14 @@ const InternalHighlightCompareRoute =
     path: '/highlight-compare',
     getParentRoute: () => InternalRoute,
   } as any)
-const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
-  id: '/preset-lab',
-  path: '/preset-lab',
-  getParentRoute: () => InternalRoute,
-} as any)
 const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
   id: '/registries',
   path: '/registries',
+  getParentRoute: () => InternalRoute,
+} as any)
+const InternalSpecimensRoute = InternalSpecimensRouteImport.update({
+  id: '/specimens',
+  path: '/specimens',
   getParentRoute: () => InternalRoute,
 } as any)
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
@@ -208,8 +208,8 @@ export interface FileRoutesByFullPath {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
-  '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
+  '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/internal/': typeof InternalIndexRoute
@@ -236,8 +236,8 @@ export interface FileRoutesByTo {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
-  '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
+  '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/': typeof AppIndexRoute
@@ -268,8 +268,8 @@ export interface FileRoutesById {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
-  '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
+  '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/_app/': typeof AppIndexRoute
@@ -301,8 +301,8 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/highlight-compare'
-    | '/internal/preset-lab'
     | '/internal/registries'
+    | '/internal/specimens'
     | '/preview/$slug'
     | '/r/$'
     | '/internal/'
@@ -329,8 +329,8 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/highlight-compare'
-    | '/internal/preset-lab'
     | '/internal/registries'
+    | '/internal/specimens'
     | '/preview/$slug'
     | '/r/$'
     | '/'
@@ -360,8 +360,8 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/highlight-compare'
-    | '/internal/preset-lab'
     | '/internal/registries'
+    | '/internal/specimens'
     | '/preview/$slug'
     | '/r/$'
     | '/_app/'
@@ -543,18 +543,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InternalHighlightCompareRouteImport
       parentRoute: typeof InternalRoute
     }
-    '/internal/preset-lab': {
-      id: '/internal/preset-lab'
-      path: '/preset-lab'
-      fullPath: '/internal/preset-lab'
-      preLoaderRoute: typeof InternalPresetLabRouteImport
-      parentRoute: typeof InternalRoute
-    }
     '/internal/registries': {
       id: '/internal/registries'
       path: '/registries'
       fullPath: '/internal/registries'
       preLoaderRoute: typeof InternalRegistriesRouteImport
+      parentRoute: typeof InternalRoute
+    }
+    '/internal/specimens': {
+      id: '/internal/specimens'
+      path: '/specimens'
+      fullPath: '/internal/specimens'
+      preLoaderRoute: typeof InternalSpecimensRouteImport
       parentRoute: typeof InternalRoute
     }
     '/preview/$slug': {
@@ -636,8 +636,8 @@ interface InternalRouteChildren {
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
   InternalHighlightCompareRoute: typeof InternalHighlightCompareRoute
-  InternalPresetLabRoute: typeof InternalPresetLabRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
+  InternalSpecimensRoute: typeof InternalSpecimensRoute
   InternalIndexRoute: typeof InternalIndexRoute
 }
 
@@ -646,8 +646,8 @@ const InternalRouteChildren: InternalRouteChildren = {
   InternalColorLabRoute: InternalColorLabRoute,
   InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
   InternalHighlightCompareRoute: InternalHighlightCompareRoute,
-  InternalPresetLabRoute: InternalPresetLabRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,
+  InternalSpecimensRoute: InternalSpecimensRoute,
   InternalIndexRoute: InternalIndexRoute,
 }
 

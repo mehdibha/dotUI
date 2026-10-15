@@ -30,6 +30,8 @@ const { useStyles, styles } = createStyles(colorSliderMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

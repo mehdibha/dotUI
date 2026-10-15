@@ -36,6 +36,18 @@ export const iconLibraries = [
     package: "@phosphor-icons/react",
     import: "@phosphor-icons/react",
   },
+  {
+    name: "material-symbols",
+    label: "Material Symbols",
+    package: "@nine-thirty-five/material-symbols-react",
+    import: "@nine-thirty-five/material-symbols-react/outlined",
+  },
+  {
+    name: "octicons",
+    label: "Octicons",
+    package: "@primer/octicons-react",
+    import: "@primer/octicons-react",
+  },
 ] as const satisfies IconLibrary[]
 
 /** Phosphor's `weight` prop values — the icon weight axis (phosphor-only). */
@@ -62,6 +74,8 @@ export const registryIcons: Record<
     tabler: "IconPlus",
     hugeicons: "PlusSignIcon",
     phosphor: "PlusIcon",
+    "material-symbols": "Add",
+    octicons: "PlusIcon",
   },
   PaperclipIcon: {
     lucide: "PaperclipIcon",
@@ -69,6 +83,8 @@ export const registryIcons: Record<
     tabler: "IconPaperclip",
     hugeicons: "AttachmentIcon",
     phosphor: "PaperclipIcon",
+    "material-symbols": "AttachFile",
+    octicons: "PaperclipIcon",
   },
   SparklesIcon: {
     lucide: "SparklesIcon",
@@ -76,6 +92,8 @@ export const registryIcons: Record<
     tabler: "IconSparkles",
     hugeicons: "SparklesIcon",
     phosphor: "SparkleIcon",
+    "material-symbols": "StarShine",
+    octicons: "SparkleIcon",
   },
   ShoppingBagIcon: {
     lucide: "ShoppingBagIcon",
@@ -83,6 +101,8 @@ export const registryIcons: Record<
     tabler: "IconShoppingBag",
     hugeicons: "ShoppingBag01Icon",
     phosphor: "ShoppingBagIcon",
+    "material-symbols": "ShoppingBag",
+    octicons: "PackageIcon",
   },
   MoreHorizontalIcon: {
     lucide: "MoreHorizontalIcon",
@@ -90,6 +110,8 @@ export const registryIcons: Record<
     tabler: "IconDots",
     hugeicons: "MoreHorizontalCircle01Icon",
     phosphor: "DotsThreeIcon",
+    "material-symbols": "MoreHoriz",
+    octicons: "KebabHorizontalIcon",
   },
   ShareIcon: {
     lucide: "ShareIcon",
@@ -97,6 +119,8 @@ export const registryIcons: Record<
     tabler: "IconShare",
     hugeicons: "Share03Icon",
     phosphor: "ShareIcon",
+    "material-symbols": "Share",
+    octicons: "ShareIcon",
   },
   BookOpenIcon: {
     lucide: "BookOpenIcon",
@@ -104,6 +128,8 @@ export const registryIcons: Record<
     tabler: "IconBook",
     hugeicons: "BookOpen01Icon",
     phosphor: "BookOpenIcon",
+    "material-symbols": "MenuBook",
+    octicons: "BookIcon",
   },
   GlobeIcon: {
     lucide: "GlobeIcon",
@@ -111,6 +137,8 @@ export const registryIcons: Record<
     tabler: "IconWorld",
     hugeicons: "GlobalIcon",
     phosphor: "GlobeIcon",
+    "material-symbols": "Language",
+    octicons: "GlobeIcon",
   },
   PenToolIcon: {
     lucide: "PenToolIcon",
@@ -118,6 +146,8 @@ export const registryIcons: Record<
     tabler: "IconPencil",
     hugeicons: "QuillWrite01Icon",
     phosphor: "PenNibIcon",
+    "material-symbols": "InkPen",
+    octicons: "PencilIcon",
   },
   AudioLinesIcon: {
     lucide: "AudioLinesIcon",
@@ -125,6 +155,8 @@ export const registryIcons: Record<
     tabler: "IconMicrophone",
     hugeicons: "Mic01Icon",
     phosphor: "WaveformIcon",
+    "material-symbols": "GraphicEq",
+    octicons: "UnmuteIcon",
   },
   ArrowUpIcon: {
     lucide: "ArrowUpIcon",
@@ -132,6 +164,8 @@ export const registryIcons: Record<
     tabler: "IconArrowUp",
     hugeicons: "ArrowUp01Icon",
     phosphor: "ArrowUpIcon",
+    "material-symbols": "ArrowUpward",
+    octicons: "ArrowUpIcon",
   },
   ChevronDownIcon: {
     lucide: "ChevronDownIcon",
@@ -139,6 +173,8 @@ export const registryIcons: Record<
     tabler: "IconChevronDown",
     hugeicons: "ArrowDown01Icon",
     phosphor: "CaretDownIcon",
+    "material-symbols": "KeyboardArrowDown",
+    octicons: "ChevronDownIcon",
   },
   SettingsIcon: {
     lucide: "SettingsIcon",
@@ -146,6 +182,8 @@ export const registryIcons: Record<
     tabler: "IconSettings",
     hugeicons: "Settings01Icon",
     phosphor: "GearIcon",
+    "material-symbols": "Settings",
+    octicons: "GearIcon",
   },
   FolderIcon: {
     lucide: "FolderIcon",
@@ -153,6 +191,8 @@ export const registryIcons: Record<
     tabler: "IconFolder",
     hugeicons: "Folder01Icon",
     phosphor: "FolderIcon",
+    "material-symbols": "Folder",
+    octicons: "FileDirectoryIcon",
   },
   CircleCheckIcon: {
     lucide: "CircleCheckIcon",
@@ -160,6 +200,8 @@ export const registryIcons: Record<
     tabler: "IconCircleCheck",
     hugeicons: "CheckmarkCircle02Icon",
     phosphor: "CheckCircleIcon",
+    "material-symbols": "CheckCircle",
+    octicons: "CheckCircleIcon",
   },
   ZapIcon: {
     lucide: "ZapIcon",
@@ -167,6 +209,8 @@ export const registryIcons: Record<
     tabler: "IconBolt",
     hugeicons: "ZapIcon",
     phosphor: "LightningIcon",
+    "material-symbols": "Bolt",
+    octicons: "ZapIcon",
   },
   ServerIcon: {
     lucide: "ServerIcon",
@@ -174,6 +218,8 @@ export const registryIcons: Record<
     tabler: "IconServer",
     hugeicons: "DatabaseIcon",
     phosphor: "HardDrivesIcon",
+    "material-symbols": "Dns",
+    octicons: "ServerIcon",
   },
   InfoIcon: {
     lucide: "InfoIcon",
@@ -181,6 +227,8 @@ export const registryIcons: Record<
     tabler: "IconInfoCircle",
     hugeicons: "InformationCircleIcon",
     phosphor: "InfoIcon",
+    "material-symbols": "Info",
+    octicons: "InfoIcon",
   },
   TerminalIcon: {
     lucide: "TerminalIcon",
@@ -188,6 +236,8 @@ export const registryIcons: Record<
     tabler: "IconTerminal",
     hugeicons: "SourceCodeIcon",
     phosphor: "TerminalIcon",
+    "material-symbols": "Terminal",
+    octicons: "TerminalIcon",
   },
   CopyIcon: {
     lucide: "CopyIcon",
@@ -195,6 +245,8 @@ export const registryIcons: Record<
     tabler: "IconCopy",
     hugeicons: "Copy01Icon",
     phosphor: "CopyIcon",
+    "material-symbols": "ContentCopy",
+    octicons: "CopyIcon",
   },
   MonitorIcon: {
     lucide: "MonitorIcon",
@@ -202,6 +254,8 @@ export const registryIcons: Record<
     tabler: "IconDeviceDesktop",
     hugeicons: "ComputerIcon",
     phosphor: "MonitorIcon",
+    "material-symbols": "DesktopWindows",
+    octicons: "DeviceDesktopIcon",
   },
   DownloadIcon: {
     lucide: "DownloadIcon",
@@ -209,6 +263,8 @@ export const registryIcons: Record<
     tabler: "IconDownload",
     hugeicons: "Download01Icon",
     phosphor: "DownloadSimpleIcon",
+    "material-symbols": "Download",
+    octicons: "DownloadIcon",
   },
   SearchIcon: {
     lucide: "SearchIcon",
@@ -216,6 +272,8 @@ export const registryIcons: Record<
     tabler: "IconSearch",
     hugeicons: "Search01Icon",
     phosphor: "MagnifyingGlassIcon",
+    "material-symbols": "Search",
+    octicons: "SearchIcon",
   },
   UploadIcon: {
     lucide: "UploadIcon",
@@ -223,6 +281,8 @@ export const registryIcons: Record<
     tabler: "IconUpload",
     hugeicons: "Upload01Icon",
     phosphor: "UploadSimpleIcon",
+    "material-symbols": "Upload",
+    octicons: "UploadIcon",
   },
   GitBranchIcon: {
     lucide: "GitBranchIcon",
@@ -230,6 +290,8 @@ export const registryIcons: Record<
     tabler: "IconGitBranch",
     hugeicons: "GitBranchIcon",
     phosphor: "GitBranchIcon",
+    "material-symbols": "ForkRight",
+    octicons: "GitBranchIcon",
   },
   BotIcon: {
     lucide: "BotIcon",
@@ -237,6 +299,8 @@ export const registryIcons: Record<
     tabler: "IconRobot",
     hugeicons: "RoboticIcon",
     phosphor: "RobotIcon",
+    "material-symbols": "SmartToy",
+    octicons: "HubotIcon",
   },
   SendIcon: {
     lucide: "SendIcon",
@@ -244,6 +308,8 @@ export const registryIcons: Record<
     tabler: "IconSend",
     hugeicons: "SentIcon",
     phosphor: "PaperPlaneRightIcon",
+    "material-symbols": "Send",
+    octicons: "PaperAirplaneIcon",
   },
   MenuIcon: {
     lucide: "MenuIcon",
@@ -251,6 +317,8 @@ export const registryIcons: Record<
     tabler: "IconMenu",
     hugeicons: "Menu09Icon",
     phosphor: "ListIcon",
+    "material-symbols": "Menu",
+    octicons: "ThreeBarsIcon",
   },
   XIcon: {
     lucide: "XIcon",
@@ -258,6 +326,8 @@ export const registryIcons: Record<
     tabler: "IconX",
     hugeicons: "Cancel01Icon",
     phosphor: "XIcon",
+    "material-symbols": "Close",
+    octicons: "XIcon",
   },
   HomeIcon: {
     lucide: "HomeIcon",
@@ -265,6 +335,8 @@ export const registryIcons: Record<
     tabler: "IconHome",
     hugeicons: "Home01Icon",
     phosphor: "HouseIcon",
+    "material-symbols": "Home",
+    octicons: "HomeIcon",
   },
   CircleIcon: {
     lucide: "CircleIcon",
@@ -272,6 +344,8 @@ export const registryIcons: Record<
     tabler: "IconCircle",
     hugeicons: "CircleIcon",
     phosphor: "CircleIcon",
+    "material-symbols": "Circle",
+    octicons: "CircleIcon",
   },
   LayoutGridIcon: {
     lucide: "LayoutGridIcon",
@@ -279,6 +353,8 @@ export const registryIcons: Record<
     tabler: "IconLayoutGrid",
     hugeicons: "GridIcon",
     phosphor: "SquaresFourIcon",
+    "material-symbols": "GridView",
+    octicons: "AppsIcon",
   },
   MailIcon: {
     lucide: "MailIcon",
@@ -286,6 +362,8 @@ export const registryIcons: Record<
     tabler: "IconMail",
     hugeicons: "Mail01Icon",
     phosphor: "EnvelopeIcon",
+    "material-symbols": "Mail",
+    octicons: "MailIcon",
   },
   LinkIcon: {
     lucide: "LinkIcon",
@@ -293,6 +371,8 @@ export const registryIcons: Record<
     tabler: "IconLink",
     hugeicons: "Link01Icon",
     phosphor: "LinkIcon",
+    "material-symbols": "Link",
+    octicons: "LinkIcon",
   },
   SmileIcon: {
     lucide: "SmileIcon",
@@ -300,6 +380,8 @@ export const registryIcons: Record<
     tabler: "IconMoodSmile",
     hugeicons: "SmileIcon",
     phosphor: "SmileyIcon",
+    "material-symbols": "SentimentSatisfied",
+    octicons: "SmileyIcon",
   },
   CircleAlertIcon: {
     lucide: "CircleAlertIcon",
@@ -307,6 +389,8 @@ export const registryIcons: Record<
     tabler: "IconExclamationCircle",
     hugeicons: "Alert01Icon",
     phosphor: "WarningCircleIcon",
+    "material-symbols": "Error",
+    octicons: "AlertIcon",
   },
   UserIcon: {
     lucide: "UserIcon",
@@ -314,6 +398,8 @@ export const registryIcons: Record<
     tabler: "IconUser",
     hugeicons: "UserIcon",
     phosphor: "UserIcon",
+    "material-symbols": "Person",
+    octicons: "PersonIcon",
   },
   StarIcon: {
     lucide: "StarIcon",
@@ -321,6 +407,8 @@ export const registryIcons: Record<
     tabler: "IconStar",
     hugeicons: "StarIcon",
     phosphor: "StarIcon",
+    "material-symbols": "Star",
+    octicons: "StarIcon",
   },
   CodeIcon: {
     lucide: "CodeIcon",
@@ -328,6 +416,8 @@ export const registryIcons: Record<
     tabler: "IconCode",
     hugeicons: "CodeIcon",
     phosphor: "CodeIcon",
+    "material-symbols": "Code",
+    octicons: "CodeIcon",
   },
   HeartIcon: {
     lucide: "HeartIcon",
@@ -335,6 +425,8 @@ export const registryIcons: Record<
     tabler: "IconHeart",
     hugeicons: "FavouriteIcon",
     phosphor: "HeartIcon",
+    "material-symbols": "Favorite",
+    octicons: "HeartIcon",
   },
   LogOutIcon: {
     lucide: "LogOutIcon",
@@ -342,6 +434,8 @@ export const registryIcons: Record<
     tabler: "IconLogout",
     hugeicons: "Logout01Icon",
     phosphor: "SignOutIcon",
+    "material-symbols": "Logout",
+    octicons: "SignOutIcon",
   },
   MinusIcon: {
     lucide: "MinusIcon",
@@ -349,6 +443,8 @@ export const registryIcons: Record<
     tabler: "IconMinus",
     hugeicons: "MinusSignIcon",
     phosphor: "MinusIcon",
+    "material-symbols": "Remove",
+    octicons: "DashIcon",
   },
   ArrowLeftIcon: {
     lucide: "ArrowLeftIcon",
@@ -356,6 +452,8 @@ export const registryIcons: Record<
     tabler: "IconArrowLeft",
     hugeicons: "ArrowLeft01Icon",
     phosphor: "ArrowLeftIcon",
+    "material-symbols": "ArrowBack",
+    octicons: "ArrowLeftIcon",
   },
   MailCheckIcon: {
     lucide: "MailCheckIcon",
@@ -363,6 +461,8 @@ export const registryIcons: Record<
     tabler: "IconMailCheck",
     hugeicons: "MailValidation01Icon",
     phosphor: "EnvelopeOpenIcon",
+    "material-symbols": "MarkEmailRead",
+    octicons: "ReadIcon",
   },
   ArchiveIcon: {
     lucide: "ArchiveIcon",
@@ -370,6 +470,8 @@ export const registryIcons: Record<
     tabler: "IconArchive",
     hugeicons: "Archive02Icon",
     phosphor: "ArchiveIcon",
+    "material-symbols": "Archive",
+    octicons: "ArchiveIcon",
   },
   ClockIcon: {
     lucide: "ClockIcon",
@@ -377,6 +479,8 @@ export const registryIcons: Record<
     tabler: "IconClock",
     hugeicons: "Clock01Icon",
     phosphor: "ClockIcon",
+    "material-symbols": "Schedule",
+    octicons: "ClockIcon",
   },
   ListFilterIcon: {
     lucide: "ListFilterIcon",
@@ -384,6 +488,8 @@ export const registryIcons: Record<
     tabler: "IconFilterPlus",
     hugeicons: "FilterIcon",
     phosphor: "FunnelIcon",
+    "material-symbols": "FilterList",
+    octicons: "FilterIcon",
   },
   TagIcon: {
     lucide: "TagIcon",
@@ -391,6 +497,8 @@ export const registryIcons: Record<
     tabler: "IconTag",
     hugeicons: "Tag01Icon",
     phosphor: "TagIcon",
+    "material-symbols": "Sell",
+    octicons: "TagIcon",
   },
   Trash2Icon: {
     lucide: "Trash2Icon",
@@ -398,6 +506,8 @@ export const registryIcons: Record<
     tabler: "IconTrash",
     hugeicons: "Delete02Icon",
     phosphor: "TrashSimpleIcon",
+    "material-symbols": "Delete",
+    octicons: "TrashIcon",
   },
   ArrowRightIcon: {
     lucide: "ArrowRightIcon",
@@ -405,6 +515,17 @@ export const registryIcons: Record<
     tabler: "IconArrowRight",
     hugeicons: "ArrowRight02Icon",
     phosphor: "ArrowRightIcon",
+    "material-symbols": "ArrowForward",
+    octicons: "ArrowRightIcon",
+  },
+  VolumeX: {
+    lucide: "VolumeX",
+    remix: "RiVolumeMuteLine",
+    tabler: "IconVolume",
+    hugeicons: "VolumeOffIcon",
+    phosphor: "SpeakerXIcon",
+    "material-symbols": "VolumeOff",
+    octicons: "MuteIcon",
   },
   CheckIcon: {
     lucide: "CheckIcon",
@@ -412,6 +533,8 @@ export const registryIcons: Record<
     tabler: "IconCheck",
     hugeicons: "Tick02Icon",
     phosphor: "CheckIcon",
+    "material-symbols": "Check",
+    octicons: "CheckIcon",
   },
   UserRoundXIcon: {
     lucide: "UserRoundXIcon",
@@ -419,6 +542,8 @@ export const registryIcons: Record<
     tabler: "IconUserX",
     hugeicons: "UserRemove01Icon",
     phosphor: "UserMinusIcon",
+    "material-symbols": "PersonRemove",
+    octicons: "PersonIcon",
   },
   AlertTriangleIcon: {
     lucide: "AlertTriangleIcon",
@@ -426,6 +551,8 @@ export const registryIcons: Record<
     tabler: "IconAlertTriangle",
     hugeicons: "Alert02Icon",
     phosphor: "WarningIcon",
+    "material-symbols": "Warning",
+    octicons: "AlertIcon",
   },
   TrashIcon: {
     lucide: "TrashIcon",
@@ -433,6 +560,8 @@ export const registryIcons: Record<
     tabler: "IconTrash",
     hugeicons: "Delete01Icon",
     phosphor: "TrashIcon",
+    "material-symbols": "Delete",
+    octicons: "TrashIcon",
   },
   MoreVerticalIcon: {
     lucide: "MoreVerticalIcon",
@@ -440,6 +569,8 @@ export const registryIcons: Record<
     tabler: "IconDotsVertical",
     hugeicons: "MoreVerticalCircle01Icon",
     phosphor: "DotsThreeVerticalIcon",
+    "material-symbols": "MoreVert",
+    octicons: "KebabHorizontalIcon",
   },
   FileIcon: {
     lucide: "FileIcon",
@@ -447,6 +578,8 @@ export const registryIcons: Record<
     tabler: "IconFile",
     hugeicons: "File01Icon",
     phosphor: "FileIcon",
+    "material-symbols": "Draft",
+    octicons: "FileIcon",
   },
   FolderOpenIcon: {
     lucide: "FolderOpenIcon",
@@ -454,6 +587,8 @@ export const registryIcons: Record<
     tabler: "IconFolderOpen",
     hugeicons: "FolderOpenIcon",
     phosphor: "FolderOpenIcon",
+    "material-symbols": "FolderOpen",
+    octicons: "FileDirectoryIcon",
   },
   FileCodeIcon: {
     lucide: "FileCodeIcon",
@@ -461,6 +596,8 @@ export const registryIcons: Record<
     tabler: "IconFileCode",
     hugeicons: "CodeIcon",
     phosphor: "FileCodeIcon",
+    "material-symbols": "CodeBlocks",
+    octicons: "FileCodeIcon",
   },
   FolderSearchIcon: {
     lucide: "FolderSearchIcon",
@@ -468,6 +605,8 @@ export const registryIcons: Record<
     tabler: "IconFolderSearch",
     hugeicons: "Search01Icon",
     phosphor: "FolderOpenIcon",
+    "material-symbols": "FolderOpen",
+    octicons: "FileDirectoryIcon",
   },
   SaveIcon: {
     lucide: "SaveIcon",
@@ -475,6 +614,8 @@ export const registryIcons: Record<
     tabler: "IconDeviceFloppy",
     hugeicons: "FloppyDiskIcon",
     phosphor: "FloppyDiskIcon",
+    "material-symbols": "Save",
+    octicons: "DownloadIcon",
   },
   EyeIcon: {
     lucide: "EyeIcon",
@@ -482,6 +623,8 @@ export const registryIcons: Record<
     tabler: "IconEye",
     hugeicons: "EyeIcon",
     phosphor: "EyeIcon",
+    "material-symbols": "Visibility",
+    octicons: "EyeIcon",
   },
   PaletteIcon: {
     lucide: "PaletteIcon",
@@ -489,6 +632,8 @@ export const registryIcons: Record<
     tabler: "IconPalette",
     hugeicons: "PaintBoardIcon",
     phosphor: "PaletteIcon",
+    "material-symbols": "Palette",
+    octicons: "PaintbrushIcon",
   },
   SunIcon: {
     lucide: "SunIcon",
@@ -496,6 +641,8 @@ export const registryIcons: Record<
     tabler: "IconSun",
     hugeicons: "Sun01Icon",
     phosphor: "SunIcon",
+    "material-symbols": "LightMode",
+    octicons: "SunIcon",
   },
   MoonIcon: {
     lucide: "MoonIcon",
@@ -503,6 +650,8 @@ export const registryIcons: Record<
     tabler: "IconMoon",
     hugeicons: "MoonIcon",
     phosphor: "MoonIcon",
+    "material-symbols": "DarkMode",
+    octicons: "MoonIcon",
   },
   HelpCircleIcon: {
     lucide: "HelpCircleIcon",
@@ -510,6 +659,8 @@ export const registryIcons: Record<
     tabler: "IconHelpCircle",
     hugeicons: "HelpCircleIcon",
     phosphor: "QuestionIcon",
+    "material-symbols": "Help",
+    octicons: "QuestionIcon",
   },
   FileTextIcon: {
     lucide: "FileTextIcon",
@@ -517,6 +668,8 @@ export const registryIcons: Record<
     tabler: "IconFileText",
     hugeicons: "File01Icon",
     phosphor: "FileTextIcon",
+    "material-symbols": "Description",
+    octicons: "FileIcon",
   },
   CalendarIcon: {
     lucide: "CalendarIcon",
@@ -524,6 +677,8 @@ export const registryIcons: Record<
     tabler: "IconCalendar",
     hugeicons: "Calendar01Icon",
     phosphor: "CalendarIcon",
+    "material-symbols": "CalendarToday",
+    octicons: "CalendarIcon",
   },
   Search: {
     lucide: "Search",
@@ -531,6 +686,8 @@ export const registryIcons: Record<
     tabler: "IconSearch",
     hugeicons: "Search01Icon",
     phosphor: "MagnifyingGlassIcon",
+    "material-symbols": "Search",
+    octicons: "SearchIcon",
   },
   CheckCircle2Icon: {
     lucide: "CheckCircle2Icon",
@@ -538,6 +695,8 @@ export const registryIcons: Record<
     tabler: "IconCircleCheckFilled",
     hugeicons: "CheckmarkCircle02Icon",
     phosphor: "CheckCircleIcon",
+    "material-symbols": "CheckCircle",
+    octicons: "CheckCircleIcon",
   },
   CircleDollarSignIcon: {
     lucide: "CircleDollarSignIcon",
@@ -545,6 +704,8 @@ export const registryIcons: Record<
     tabler: "IconCoin",
     hugeicons: "DollarCircleIcon",
     phosphor: "CurrencyCircleDollarIcon",
+    "material-symbols": "Paid",
+    octicons: "CreditCardIcon",
   },
   ArrowUpRightIcon: {
     lucide: "ArrowUpRightIcon",
@@ -552,6 +713,8 @@ export const registryIcons: Record<
     tabler: "IconArrowUpRight",
     hugeicons: "ArrowUpRight01Icon",
     phosphor: "ArrowUpRightIcon",
+    "material-symbols": "ArrowOutward",
+    octicons: "ArrowUpRightIcon",
   },
   BadgeCheck: {
     lucide: "BadgeCheck",
@@ -559,6 +722,8 @@ export const registryIcons: Record<
     tabler: "IconRosetteDiscountCheck",
     hugeicons: "CheckmarkBadge02Icon",
     phosphor: "SealCheckIcon",
+    "material-symbols": "Verified",
+    octicons: "VerifiedIcon",
   },
   FlipHorizontalIcon: {
     lucide: "FlipHorizontalIcon",
@@ -566,6 +731,8 @@ export const registryIcons: Record<
     tabler: "IconFlipHorizontal",
     hugeicons: "FlipHorizontalIcon",
     phosphor: "FlipHorizontalIcon",
+    "material-symbols": "Flip",
+    octicons: "MirrorIcon",
   },
   FlipVerticalIcon: {
     lucide: "FlipVerticalIcon",
@@ -573,6 +740,8 @@ export const registryIcons: Record<
     tabler: "IconFlipVertical",
     hugeicons: "FlipVerticalIcon",
     phosphor: "FlipVerticalIcon",
+    "material-symbols": "Flip",
+    octicons: "MirrorIcon",
   },
   RotateCwIcon: {
     lucide: "RotateCwIcon",
@@ -580,6 +749,8 @@ export const registryIcons: Record<
     tabler: "IconRotateClockwise2",
     hugeicons: "Rotate01Icon",
     phosphor: "ArrowClockwiseIcon",
+    "material-symbols": "RotateRight",
+    octicons: "RedoIcon",
   },
   CaptionsIcon: {
     lucide: "CaptionsIcon",
@@ -587,6 +758,8 @@ export const registryIcons: Record<
     tabler: "IconTextCaption",
     hugeicons: "ClosedCaptionIcon",
     phosphor: "ClosedCaptioningIcon",
+    "material-symbols": "ClosedCaption",
+    octicons: "TypographyIcon",
   },
   TrendingUpIcon: {
     lucide: "TrendingUpIcon",
@@ -594,6 +767,8 @@ export const registryIcons: Record<
     tabler: "IconTrendingUp",
     hugeicons: "Analytics01Icon",
     phosphor: "TrendUpIcon",
+    "material-symbols": "TrendingUp",
+    octicons: "GraphIcon",
   },
   ChevronRightIcon: {
     lucide: "ChevronRightIcon",
@@ -601,6 +776,8 @@ export const registryIcons: Record<
     tabler: "IconChevronRight",
     hugeicons: "ArrowRight01Icon",
     phosphor: "CaretRightIcon",
+    "material-symbols": "ChevronRight",
+    octicons: "ChevronRightIcon",
   },
   MinimizeIcon: {
     lucide: "MinimizeIcon",
@@ -608,6 +785,8 @@ export const registryIcons: Record<
     tabler: "IconMinimize",
     hugeicons: "MinusSignIcon",
     phosphor: "ArrowsInSimpleIcon",
+    "material-symbols": "CloseFullscreen",
+    octicons: "ScreenNormalIcon",
   },
   MaximizeIcon: {
     lucide: "MaximizeIcon",
@@ -615,6 +794,8 @@ export const registryIcons: Record<
     tabler: "IconMaximize",
     hugeicons: "PlusSignIcon",
     phosphor: "ArrowsOutSimpleIcon",
+    "material-symbols": "OpenInFull",
+    octicons: "ScreenFullIcon",
   },
   CreditCardIcon: {
     lucide: "CreditCardIcon",
@@ -622,6 +803,8 @@ export const registryIcons: Record<
     tabler: "IconCreditCard",
     hugeicons: "CreditCardIcon",
     phosphor: "CreditCardIcon",
+    "material-symbols": "CreditCard",
+    octicons: "CreditCardIcon",
   },
   CalculatorIcon: {
     lucide: "CalculatorIcon",
@@ -629,6 +812,8 @@ export const registryIcons: Record<
     tabler: "IconCalculator",
     hugeicons: "CalculatorIcon",
     phosphor: "CalculatorIcon",
+    "material-symbols": "Calculate",
+    octicons: "NumberIcon",
   },
   InboxIcon: {
     lucide: "InboxIcon",
@@ -636,6 +821,8 @@ export const registryIcons: Record<
     tabler: "IconArchive",
     hugeicons: "Archive02Icon",
     phosphor: "TrayIcon",
+    "material-symbols": "Inbox",
+    octicons: "InboxIcon",
   },
   FolderPlusIcon: {
     lucide: "FolderPlusIcon",
@@ -643,6 +830,8 @@ export const registryIcons: Record<
     tabler: "IconFolderPlus",
     hugeicons: "FolderAddIcon",
     phosphor: "FolderPlusIcon",
+    "material-symbols": "CreateNewFolder",
+    octicons: "FileDirectoryIcon",
   },
   ScissorsIcon: {
     lucide: "ScissorsIcon",
@@ -650,6 +839,8 @@ export const registryIcons: Record<
     tabler: "IconCut",
     hugeicons: "ScissorIcon",
     phosphor: "ScissorsIcon",
+    "material-symbols": "ContentCut",
+    octicons: "UnlinkIcon",
   },
   ClipboardPasteIcon: {
     lucide: "ClipboardPasteIcon",
@@ -657,6 +848,8 @@ export const registryIcons: Record<
     tabler: "IconClipboard",
     hugeicons: "ClipboardIcon",
     phosphor: "ClipboardIcon",
+    "material-symbols": "ContentPaste",
+    octicons: "PasteIcon",
   },
   ListIcon: {
     lucide: "ListIcon",
@@ -664,6 +857,26 @@ export const registryIcons: Record<
     tabler: "IconList",
     hugeicons: "Menu05Icon",
     phosphor: "ListIcon",
+    "material-symbols": "List",
+    octicons: "ListUnorderedIcon",
+  },
+  ZoomInIcon: {
+    lucide: "ZoomInIcon",
+    remix: "RiZoomInLine",
+    tabler: "IconZoomIn",
+    hugeicons: "ZoomInAreaIcon",
+    phosphor: "MagnifyingGlassPlusIcon",
+    "material-symbols": "ZoomIn",
+    octicons: "ZoomInIcon",
+  },
+  ZoomOutIcon: {
+    lucide: "ZoomOutIcon",
+    remix: "RiZoomOutLine",
+    tabler: "IconZoomOut",
+    hugeicons: "ZoomOutAreaIcon",
+    phosphor: "MagnifyingGlassMinusIcon",
+    "material-symbols": "ZoomOut",
+    octicons: "ZoomOutIcon",
   },
   BellIcon: {
     lucide: "BellIcon",
@@ -671,6 +884,8 @@ export const registryIcons: Record<
     tabler: "IconBell",
     hugeicons: "Notification01Icon",
     phosphor: "BellIcon",
+    "material-symbols": "Notifications",
+    octicons: "BellIcon",
   },
   ImageIcon: {
     lucide: "ImageIcon",
@@ -678,6 +893,8 @@ export const registryIcons: Record<
     tabler: "IconPhoto",
     hugeicons: "Image01Icon",
     phosphor: "ImageIcon",
+    "material-symbols": "Image",
+    octicons: "ImageIcon",
   },
   KeyboardIcon: {
     lucide: "KeyboardIcon",
@@ -685,6 +902,8 @@ export const registryIcons: Record<
     tabler: "IconKeyboard",
     hugeicons: "KeyboardIcon",
     phosphor: "KeyboardIcon",
+    "material-symbols": "Keyboard",
+    octicons: "CommandPaletteIcon",
   },
   LanguagesIcon: {
     lucide: "LanguagesIcon",
@@ -692,6 +911,8 @@ export const registryIcons: Record<
     tabler: "IconLanguage",
     hugeicons: "LanguageCircleIcon",
     phosphor: "TranslateIcon",
+    "material-symbols": "Translate",
+    octicons: "GlobeIcon",
   },
   ShieldIcon: {
     lucide: "ShieldIcon",
@@ -699,6 +920,8 @@ export const registryIcons: Record<
     tabler: "IconShield",
     hugeicons: "SecurityIcon",
     phosphor: "ShieldIcon",
+    "material-symbols": "Shield",
+    octicons: "ShieldIcon",
   },
   PencilIcon: {
     lucide: "PencilIcon",
@@ -706,6 +929,8 @@ export const registryIcons: Record<
     tabler: "IconPencil",
     hugeicons: "Edit01Icon",
     phosphor: "PencilSimpleIcon",
+    "material-symbols": "Edit",
+    octicons: "PencilIcon",
   },
   ActivityIcon: {
     lucide: "ActivityIcon",
@@ -713,6 +938,8 @@ export const registryIcons: Record<
     tabler: "IconActivity",
     hugeicons: "Cardiogram01Icon",
     phosphor: "PulseIcon",
+    "material-symbols": "VitalSigns",
+    octicons: "PulseIcon",
   },
   PanelLeftIcon: {
     lucide: "PanelLeftIcon",
@@ -720,6 +947,8 @@ export const registryIcons: Record<
     tabler: "IconLayoutSidebar",
     hugeicons: "LayoutLeftIcon",
     phosphor: "SidebarSimpleIcon",
+    "material-symbols": "SideNavigation",
+    octicons: "SidebarExpandIcon",
   },
   ArrowDownIcon: {
     lucide: "ArrowDownIcon",
@@ -727,6 +956,8 @@ export const registryIcons: Record<
     tabler: "IconArrowDown",
     hugeicons: "ArrowDown01Icon",
     phosphor: "ArrowDownIcon",
+    "material-symbols": "ArrowDownward",
+    octicons: "ArrowDownIcon",
   },
   MessageSquareIcon: {
     lucide: "MessageSquareIcon",
@@ -734,6 +965,8 @@ export const registryIcons: Record<
     tabler: "IconMessage",
     hugeicons: "Message01Icon",
     phosphor: "ChatIcon",
+    "material-symbols": "ChatBubble",
+    octicons: "CommentIcon",
   },
   WalletIcon: {
     lucide: "WalletIcon",
@@ -741,6 +974,8 @@ export const registryIcons: Record<
     tabler: "IconWallet",
     hugeicons: "Wallet01Icon",
     phosphor: "WalletIcon",
+    "material-symbols": "Wallet",
+    octicons: "CreditCardIcon",
   },
   Building2Icon: {
     lucide: "Building2Icon",
@@ -748,6 +983,8 @@ export const registryIcons: Record<
     tabler: "IconBuildingBank",
     hugeicons: "BankIcon",
     phosphor: "BuildingsIcon",
+    "material-symbols": "Apartment",
+    octicons: "OrganizationIcon",
   },
   BadgeCheckIcon: {
     lucide: "BadgeCheckIcon",
@@ -755,6 +992,8 @@ export const registryIcons: Record<
     tabler: "IconRosetteDiscountCheck",
     hugeicons: "CheckmarkBadge01Icon",
     phosphor: "SealCheckIcon",
+    "material-symbols": "Verified",
+    octicons: "VerifiedIcon",
   },
   ChevronsUpDownIcon: {
     lucide: "ChevronsUpDownIcon",
@@ -762,6 +1001,8 @@ export const registryIcons: Record<
     tabler: "IconSelector",
     hugeicons: "UnfoldMoreIcon",
     phosphor: "CaretUpDownIcon",
+    "material-symbols": "UnfoldMore",
+    octicons: "UnfoldIcon",
   },
   CircleDashedIcon: {
     lucide: "CircleDashedIcon",
@@ -769,6 +1010,8 @@ export const registryIcons: Record<
     tabler: "IconCircleDashed",
     hugeicons: "Loading01Icon",
     phosphor: "CircleDashedIcon",
+    "material-symbols": "RadioButtonUnchecked",
+    octicons: "IssueDraftIcon",
   },
   EyeOffIcon: {
     lucide: "EyeOffIcon",
@@ -776,6 +1019,8 @@ export const registryIcons: Record<
     tabler: "IconEyeClosed",
     hugeicons: "ViewOffIcon",
     phosphor: "EyeSlashIcon",
+    "material-symbols": "VisibilityOff",
+    octicons: "EyeClosedIcon",
   },
   MicIcon: {
     lucide: "MicIcon",
@@ -783,6 +1028,8 @@ export const registryIcons: Record<
     tabler: "IconMicrophone",
     hugeicons: "VoiceIcon",
     phosphor: "MicrophoneIcon",
+    "material-symbols": "Mic",
+    octicons: "UnmuteIcon",
   },
   RadioIcon: {
     lucide: "RadioIcon",
@@ -790,6 +1037,8 @@ export const registryIcons: Record<
     tabler: "IconPlayerRecordFilled",
     hugeicons: "RecordIcon",
     phosphor: "RadioIcon",
+    "material-symbols": "Sensors",
+    octicons: "BroadcastIcon",
   },
   ExternalLinkIcon: {
     lucide: "ExternalLinkIcon",
@@ -797,6 +1046,8 @@ export const registryIcons: Record<
     tabler: "IconExternalLink",
     hugeicons: "LinkSquare02Icon",
     phosphor: "ArrowSquareOutIcon",
+    "material-symbols": "OpenInNew",
+    octicons: "LinkExternalIcon",
   },
   RefreshCwIcon: {
     lucide: "RefreshCwIcon",
@@ -804,6 +1055,8 @@ export const registryIcons: Record<
     tabler: "IconRefresh",
     hugeicons: "RefreshIcon",
     phosphor: "ArrowsClockwiseIcon",
+    "material-symbols": "Refresh",
+    octicons: "SyncIcon",
   },
   BoldIcon: {
     lucide: "BoldIcon",
@@ -811,6 +1064,8 @@ export const registryIcons: Record<
     tabler: "IconBold",
     hugeicons: "TextBoldIcon",
     phosphor: "TextBIcon",
+    "material-symbols": "FormatBold",
+    octicons: "BoldIcon",
   },
   ItalicIcon: {
     lucide: "ItalicIcon",
@@ -818,6 +1073,8 @@ export const registryIcons: Record<
     tabler: "IconItalic",
     hugeicons: "TextItalicIcon",
     phosphor: "TextItalicIcon",
+    "material-symbols": "FormatItalic",
+    octicons: "ItalicIcon",
   },
   UnderlineIcon: {
     lucide: "UnderlineIcon",
@@ -825,6 +1082,8 @@ export const registryIcons: Record<
     tabler: "IconUnderline",
     hugeicons: "TextUnderlineIcon",
     phosphor: "TextUnderlineIcon",
+    "material-symbols": "FormatUnderlined",
+    octicons: "TypographyIcon",
   },
   TableIcon: {
     lucide: "TableIcon",
@@ -832,6 +1091,8 @@ export const registryIcons: Record<
     tabler: "IconTable",
     hugeicons: "Table01Icon",
     phosphor: "TableIcon",
+    "material-symbols": "Table",
+    octicons: "TableIcon",
   },
   ChartLineIcon: {
     lucide: "ChartLineIcon",
@@ -839,6 +1100,8 @@ export const registryIcons: Record<
     tabler: "IconChartLine",
     hugeicons: "ChartLineData01Icon",
     phosphor: "ChartLineIcon",
+    "material-symbols": "ShowChart",
+    octicons: "GraphIcon",
   },
   BookOpen: {
     lucide: "BookOpen",
@@ -846,6 +1109,8 @@ export const registryIcons: Record<
     tabler: "IconBook",
     hugeicons: "BookOpen02Icon",
     phosphor: "BookOpenIcon",
+    "material-symbols": "MenuBook",
+    octicons: "BookIcon",
   },
   Settings2Icon: {
     lucide: "Settings2Icon",
@@ -853,6 +1118,8 @@ export const registryIcons: Record<
     tabler: "IconSettings",
     hugeicons: "Settings05Icon",
     phosphor: "SlidersHorizontalIcon",
+    "material-symbols": "Tune",
+    octicons: "SlidersIcon",
   },
   FrameIcon: {
     lucide: "FrameIcon",
@@ -860,6 +1127,8 @@ export const registryIcons: Record<
     tabler: "IconFrame",
     hugeicons: "CropIcon",
     phosphor: "FrameCornersIcon",
+    "material-symbols": "CropFree",
+    octicons: "HashIcon",
   },
   MapIcon: {
     lucide: "MapIcon",
@@ -867,6 +1136,8 @@ export const registryIcons: Record<
     tabler: "IconMap",
     hugeicons: "MapsIcon",
     phosphor: "MapTrifoldIcon",
+    "material-symbols": "Map",
+    octicons: "LocationIcon",
   },
   ShoppingCartIcon: {
     lucide: "ShoppingCartIcon",
@@ -874,6 +1145,17 @@ export const registryIcons: Record<
     tabler: "IconShoppingCart",
     hugeicons: "ShoppingCart01Icon",
     phosphor: "ShoppingCartIcon",
+    "material-symbols": "ShoppingCart",
+    octicons: "PackageIcon",
+  },
+  LifeBuoy: {
+    lucide: "LifeBuoy",
+    remix: "RiLifebuoyLine",
+    tabler: "IconLifebuoy",
+    hugeicons: "ChartRingIcon",
+    phosphor: "LifebuoyIcon",
+    "material-symbols": "Support",
+    octicons: "QuestionIcon",
   },
   Send: {
     lucide: "Send",
@@ -881,6 +1163,8 @@ export const registryIcons: Record<
     tabler: "IconSend",
     hugeicons: "SentIcon",
     phosphor: "PaperPlaneTiltIcon",
+    "material-symbols": "Send",
+    octicons: "PaperAirplaneIcon",
   },
   AppWindowIcon: {
     lucide: "AppWindowIcon",
@@ -888,6 +1172,8 @@ export const registryIcons: Record<
     tabler: "IconAppWindow",
     hugeicons: "CursorInWindowIcon",
     phosphor: "AppWindowIcon",
+    "material-symbols": "WebAsset",
+    octicons: "BrowserIcon",
   },
   BookmarkIcon: {
     lucide: "BookmarkIcon",
@@ -895,6 +1181,8 @@ export const registryIcons: Record<
     tabler: "IconBookmark",
     hugeicons: "Bookmark01Icon",
     phosphor: "BookmarkIcon",
+    "material-symbols": "Bookmark",
+    octicons: "BookmarkIcon",
   },
   ChevronUpIcon: {
     lucide: "ChevronUpIcon",
@@ -902,6 +1190,8 @@ export const registryIcons: Record<
     tabler: "IconChevronUp",
     hugeicons: "ArrowUp01Icon",
     phosphor: "CaretUpIcon",
+    "material-symbols": "KeyboardArrowUp",
+    octicons: "ChevronUpIcon",
   },
   ChevronLeftIcon: {
     lucide: "ChevronLeftIcon",
@@ -909,6 +1199,8 @@ export const registryIcons: Record<
     tabler: "IconChevronLeft",
     hugeicons: "ArrowLeft01Icon",
     phosphor: "CaretLeftIcon",
+    "material-symbols": "ChevronLeft",
+    octicons: "ChevronLeftIcon",
   },
   TriangleAlertIcon: {
     lucide: "TriangleAlertIcon",
@@ -916,6 +1208,8 @@ export const registryIcons: Record<
     tabler: "IconAlertTriangle",
     hugeicons: "Alert02Icon",
     phosphor: "WarningIcon",
+    "material-symbols": "Warning",
+    octicons: "AlertIcon",
   },
   OctagonXIcon: {
     lucide: "OctagonXIcon",
@@ -923,6 +1217,8 @@ export const registryIcons: Record<
     tabler: "IconAlertOctagon",
     hugeicons: "MultiplicationSignCircleIcon",
     phosphor: "WarningOctagonIcon",
+    "material-symbols": "Dangerous",
+    octicons: "StopIcon",
   },
   Loader2Icon: {
     lucide: "Loader2Icon",
@@ -930,6 +1226,8 @@ export const registryIcons: Record<
     tabler: "IconLoader",
     hugeicons: "Loading03Icon",
     phosphor: "CircleNotchIcon",
+    "material-symbols": "ProgressActivity",
+    octicons: "SyncIcon",
   },
   VolumeOffIcon: {
     lucide: "VolumeOffIcon",
@@ -937,6 +1235,8 @@ export const registryIcons: Record<
     tabler: "IconVolume",
     hugeicons: "VolumeOffIcon",
     phosphor: "SpeakerXIcon",
+    "material-symbols": "VolumeOff",
+    octicons: "MuteIcon",
   },
   AlertCircleIcon: {
     lucide: "AlertCircleIcon",
@@ -944,6 +1244,8 @@ export const registryIcons: Record<
     tabler: "IconAlertCircle",
     hugeicons: "Alert01Icon",
     phosphor: "WarningCircleIcon",
+    "material-symbols": "Error",
+    octicons: "AlertIcon",
   },
   User2Icon: {
     lucide: "User2Icon",
@@ -951,6 +1253,8 @@ export const registryIcons: Record<
     tabler: "IconUser",
     hugeicons: "UserIcon",
     phosphor: "UserIcon",
+    "material-symbols": "Person",
+    octicons: "PersonIcon",
   },
   PenSquareIcon: {
     lucide: "PenSquareIcon",
@@ -958,6 +1262,8 @@ export const registryIcons: Record<
     tabler: "IconEdit",
     hugeicons: "Edit02Icon",
     phosphor: "NotePencilIcon",
+    "material-symbols": "EditSquare",
+    octicons: "PencilIcon",
   },
   CameraIcon: {
     lucide: "CameraIcon",
@@ -965,6 +1271,8 @@ export const registryIcons: Record<
     tabler: "IconCamera",
     hugeicons: "Camera01Icon",
     phosphor: "CameraIcon",
+    "material-symbols": "PhotoCamera",
+    octicons: "DeviceCameraIcon",
   },
   PlusSquareIcon: {
     lucide: "PlusSquareIcon",
@@ -972,6 +1280,8 @@ export const registryIcons: Record<
     tabler: "IconSquarePlus",
     hugeicons: "PlusSignSquareIcon",
     phosphor: "PlusSquareIcon",
+    "material-symbols": "AddBox",
+    octicons: "DiffAddedIcon",
   },
   SquarePenIcon: {
     lucide: "SquarePenIcon",
@@ -979,6 +1289,8 @@ export const registryIcons: Record<
     tabler: "IconEdit",
     hugeicons: "Edit02Icon",
     phosphor: "NotePencilIcon",
+    "material-symbols": "EditSquare",
+    octicons: "PencilIcon",
   },
   Volume1Icon: {
     lucide: "Volume1Icon",
@@ -986,6 +1298,8 @@ export const registryIcons: Record<
     tabler: "IconVolume2",
     hugeicons: "VolumeLowIcon",
     phosphor: "SpeakerLowIcon",
+    "material-symbols": "VolumeDown",
+    octicons: "UnmuteIcon",
   },
   Volume2Icon: {
     lucide: "Volume2Icon",
@@ -993,6 +1307,8 @@ export const registryIcons: Record<
     tabler: "IconVolume",
     hugeicons: "VolumeHighIcon",
     phosphor: "SpeakerHighIcon",
+    "material-symbols": "VolumeUp",
+    octicons: "UnmuteIcon",
   },
   XCircleIcon: {
     lucide: "XCircleIcon",
@@ -1000,6 +1316,8 @@ export const registryIcons: Record<
     tabler: "IconCircleX",
     hugeicons: "Cancel01Icon",
     phosphor: "XCircleIcon",
+    "material-symbols": "Cancel",
+    octicons: "XCircleIcon",
   },
   TimerIcon: {
     lucide: "TimerIcon",
@@ -1007,6 +1325,8 @@ export const registryIcons: Record<
     tabler: "IconAlarm",
     hugeicons: "Time01Icon",
     phosphor: "TimerIcon",
+    "material-symbols": "Timer",
+    octicons: "StopwatchIcon",
   },
   PinIcon: {
     lucide: "PinIcon",
@@ -1014,6 +1334,8 @@ export const registryIcons: Record<
     tabler: "IconPinned",
     hugeicons: "PinIcon",
     phosphor: "PushPinIcon",
+    "material-symbols": "Keep",
+    octicons: "PinIcon",
   },
   GripVerticalIcon: {
     lucide: "GripVerticalIcon",
@@ -1021,6 +1343,8 @@ export const registryIcons: Record<
     tabler: "IconGripVertical",
     hugeicons: "DragDropVerticalIcon",
     phosphor: "DotsSixVerticalIcon",
+    "material-symbols": "DragIndicator",
+    octicons: "GrabberIcon",
   },
   LoaderCircleIcon: {
     lucide: "LoaderCircleIcon",
@@ -1028,6 +1352,8 @@ export const registryIcons: Record<
     tabler: "IconLoader2",
     hugeicons: "Loading03Icon",
     phosphor: "CircleNotchIcon",
+    "material-symbols": "ProgressActivity",
+    octicons: "SyncIcon",
   },
   ShieldCheckIcon: {
     lucide: "ShieldCheckIcon",
@@ -1035,6 +1361,8 @@ export const registryIcons: Record<
     tabler: "IconShieldCheck",
     hugeicons: "SecurityCheckIcon",
     phosphor: "ShieldCheckIcon",
+    "material-symbols": "VerifiedUser",
+    octicons: "ShieldCheckIcon",
   },
   BlocksIcon: {
     lucide: "BlocksIcon",
@@ -1042,6 +1370,8 @@ export const registryIcons: Record<
     tabler: "IconBlocks",
     hugeicons: "DashboardSquare01Icon",
     phosphor: "SquaresFourIcon",
+    "material-symbols": "Widgets",
+    octicons: "AppsIcon",
   },
   BoxesIcon: {
     lucide: "BoxesIcon",
@@ -1049,6 +1379,8 @@ export const registryIcons: Record<
     tabler: "IconBoxMultiple",
     hugeicons: "DeliveryBox01Icon",
     phosphor: "PackageIcon",
+    "material-symbols": "InventoryTwo",
+    octicons: "PackageIcon",
   },
   HandIcon: {
     lucide: "HandIcon",
@@ -1056,6 +1388,8 @@ export const registryIcons: Record<
     tabler: "IconHandStop",
     hugeicons: "WavingHand01Icon",
     phosphor: "HandIcon",
+    "material-symbols": "PanTool",
+    octicons: "BlockedIcon",
   },
   PlugIcon: {
     lucide: "PlugIcon",
@@ -1063,6 +1397,8 @@ export const registryIcons: Record<
     tabler: "IconPlug",
     hugeicons: "Plug01Icon",
     phosphor: "PlugIcon",
+    "material-symbols": "Power",
+    octicons: "PlugIcon",
   },
   SlashSquareIcon: {
     lucide: "SlashSquareIcon",
@@ -1070,6 +1406,8 @@ export const registryIcons: Record<
     tabler: "IconSlashes",
     hugeicons: "CommandIcon",
     phosphor: "CommandIcon",
+    "material-symbols": "KeyboardCommandKey",
+    octicons: "CommandPaletteIcon",
   },
   TelescopeIcon: {
     lucide: "TelescopeIcon",
@@ -1077,6 +1415,8 @@ export const registryIcons: Record<
     tabler: "IconTelescope",
     hugeicons: "Telescope01Icon",
     phosphor: "BinocularsIcon",
+    "material-symbols": "Explore",
+    octicons: "TelescopeIcon",
   },
   ImageUpIcon: {
     lucide: "ImageUpIcon",
@@ -1084,6 +1424,8 @@ export const registryIcons: Record<
     tabler: "IconPhotoUp",
     hugeicons: "ImageUpload01Icon",
     phosphor: "ImageIcon",
+    "material-symbols": "AddPhotoAlternate",
+    octicons: "ImageIcon",
   },
   BitcoinIcon: {
     lucide: "BitcoinIcon",
@@ -1091,6 +1433,8 @@ export const registryIcons: Record<
     tabler: "IconCurrencyBitcoin",
     hugeicons: "Bitcoin01Icon",
     phosphor: "CurrencyBtcIcon",
+    "material-symbols": "CurrencyBitcoin",
+    octicons: "CreditCardIcon",
   },
   MoonStarIcon: {
     lucide: "MoonStarIcon",
@@ -1098,6 +1442,8 @@ export const registryIcons: Record<
     tabler: "IconMoonStars",
     hugeicons: "Moon02Icon",
     phosphor: "MoonStarsIcon",
+    "material-symbols": "Bedtime",
+    octicons: "MoonIcon",
   },
   TrendingDownIcon: {
     lucide: "TrendingDownIcon",
@@ -1105,6 +1451,8 @@ export const registryIcons: Record<
     tabler: "IconTrendingDown",
     hugeicons: "TradeDownIcon",
     phosphor: "TrendDownIcon",
+    "material-symbols": "TrendingDown",
+    octicons: "GraphIcon",
   },
   PlusCircleIcon: {
     lucide: "PlusCircleIcon",
@@ -1112,6 +1460,8 @@ export const registryIcons: Record<
     tabler: "IconCirclePlus",
     hugeicons: "PlusSignCircleIcon",
     phosphor: "PlusCircleIcon",
+    "material-symbols": "AddCircle",
+    octicons: "PlusCircleIcon",
   },
   BoxIcon: {
     lucide: "BoxIcon",
@@ -1119,6 +1469,8 @@ export const registryIcons: Record<
     tabler: "IconBox",
     hugeicons: "CubeIcon",
     phosphor: "CubeIcon",
+    "material-symbols": "DeployedCode",
+    octicons: "PackageIcon",
   },
   CircleDotIcon: {
     lucide: "CircleDotIcon",
@@ -1126,6 +1478,8 @@ export const registryIcons: Record<
     tabler: "IconCircleDot",
     hugeicons: "RecordIcon",
     phosphor: "RadioButtonIcon",
+    "material-symbols": "RadioButtonChecked",
+    octicons: "IssueOpenedIcon",
   },
   SignalHighIcon: {
     lucide: "SignalHighIcon",
@@ -1133,6 +1487,8 @@ export const registryIcons: Record<
     tabler: "IconAntennaBars4",
     hugeicons: "SignalFull01Icon",
     phosphor: "CellSignalHighIcon",
+    "material-symbols": "SignalCellularAlt",
+    octicons: "GraphBarVerticalIcon",
   },
   BookIcon: {
     lucide: "BookIcon",
@@ -1140,6 +1496,8 @@ export const registryIcons: Record<
     tabler: "IconBook2",
     hugeicons: "Book02Icon",
     phosphor: "BookIcon",
+    "material-symbols": "Book",
+    octicons: "BookIcon",
   },
   ContrastIcon: {
     lucide: "ContrastIcon",
@@ -1147,6 +1505,8 @@ export const registryIcons: Record<
     tabler: "IconContrast",
     hugeicons: "BlendIcon",
     phosphor: "CircleHalfIcon",
+    "material-symbols": "Contrast",
+    octicons: "MoonIcon",
   },
   Users2Icon: {
     lucide: "Users2Icon",
@@ -1154,6 +1514,8 @@ export const registryIcons: Record<
     tabler: "IconUsers",
     hugeicons: "UserGroupIcon",
     phosphor: "UsersIcon",
+    "material-symbols": "Group",
+    octicons: "PeopleIcon",
   },
   LayersIcon: {
     lucide: "LayersIcon",
@@ -1161,6 +1523,8 @@ export const registryIcons: Record<
     tabler: "IconStack2",
     hugeicons: "Layers01Icon",
     phosphor: "StackIcon",
+    "material-symbols": "Layers",
+    octicons: "StackIcon",
   },
   MousePointer2Icon: {
     lucide: "MousePointer2Icon",
@@ -1168,6 +1532,8 @@ export const registryIcons: Record<
     tabler: "IconPointer",
     hugeicons: "Cursor01Icon",
     phosphor: "CursorIcon",
+    "material-symbols": "ArrowSelectorTool",
+    octicons: "CursorIcon",
   },
   RulerIcon: {
     lucide: "RulerIcon",
@@ -1175,6 +1541,8 @@ export const registryIcons: Record<
     tabler: "IconRuler",
     hugeicons: "RulerIcon",
     phosphor: "RulerIcon",
+    "material-symbols": "Straighten",
+    octicons: "SpacingMediumIcon",
   },
   ShapesIcon: {
     lucide: "ShapesIcon",
@@ -1182,6 +1550,8 @@ export const registryIcons: Record<
     tabler: "IconTriangleSquareCircle",
     hugeicons: "ShapesIcon",
     phosphor: "ShapesIcon",
+    "material-symbols": "Category",
+    octicons: "SquareCircleIcon",
   },
   TypeIcon: {
     lucide: "TypeIcon",
@@ -1189,5 +1559,7 @@ export const registryIcons: Record<
     tabler: "IconTypography",
     hugeicons: "TextIcon",
     phosphor: "TextTIcon",
+    "material-symbols": "Title",
+    octicons: "TypographyIcon",
   },
 }
