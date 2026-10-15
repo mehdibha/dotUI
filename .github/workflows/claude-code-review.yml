@@ -2,21 +2,16 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review, reopened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+    # Review once, when the PR is ready. The code-review plugin skips drafts and
+    # PRs it already commented on, so running on every push did nothing.
+    # Add the `re-review` label to review the current diff again.
+    types: [opened, ready_for_review, reopened, labeled]
 
 jobs:
   claude-review:
-    # Optional: Filter by PR author
-    # if: |
-    #   github.event.pull_request.user.login == 'external-contributor' ||
-    #   github.event.pull_request.user.login == 'new-developer' ||
-    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+    if: |
+      (github.event.action != 'labeled' && !github.event.pull_request.draft) ||
+      github.event.label.name == 're-review'
 
     runs-on: ubuntu-latest
     permissions:
@@ -40,7 +35,15 @@ jobs:
           plugins: "code-review@claude-code-plugins"
           # --comment is required: without it the plugin prints the review to the
           # terminal and posts nothing. See plugins/code-review in anthropics/claude-code.
-          prompt: "/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment"
+          prompt: |
+            /code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment
+            ${{ github.event.label.name == 're-review' && 'This is an explicit re-review request: review the current diff even if Claude has already commented on this PR.' || '' }}
           claude_args: "--effort high"
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://code.claude.com/docs/en/cli-reference for available options
+
+      - name: Remove re-review label
+        if: github.event.label.name == 're-review'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr edit ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --remove-label re-review
