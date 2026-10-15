@@ -15,15 +15,6 @@ import { useControlledState } from "react-stately/useControlledState";
 import type { PopoverProps } from "@/components/ui/popover";
 import { TokenField } from "@/components/ui/token-field";
 import type { TokenFieldProps } from "@/components/ui/token-field";
-import { tv } from "tailwind-variants";
-
-const mentionVariants = tv({
-  slots: {
-    root: "group/mention",
-  },
-});
-
-const { root } = mentionVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -56,7 +47,6 @@ function Mention({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
-  className,
   children,
   value: valueProp,
   defaultValue,
@@ -182,13 +172,7 @@ function Mention({
           [MenuContext, { onAction: insert }],
         ]}
       >
-        <TokenField
-          {...props}
-          ref={rootRef}
-          value={value}
-          onChange={setValue}
-          className={root({ className })}
-        >
+        <TokenField {...props} ref={rootRef} value={value} onChange={setValue}>
           {typeof children === "function"
             ? children({
                 trigger: active?.trigger ?? null,

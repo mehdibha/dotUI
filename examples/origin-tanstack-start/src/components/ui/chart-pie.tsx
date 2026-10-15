@@ -199,7 +199,6 @@ export function pieChartSpec<TDatum extends object>(
   };
 }
 
-// oxlint-disable-next-line no-explicit-any
 const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
   points,
   _context,

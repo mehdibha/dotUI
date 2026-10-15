@@ -92,59 +92,43 @@ const TableContainerContext = React.createContext({ resizable: false })
 
 // MARK: Separator
 
-interface TableContainerProps extends React.ComponentPropsWithoutRef<
+interface TableContainerProps extends React.ComponentProps<
   typeof TablePrimitives.ResizableTableContainer
 > {
   resizable?: boolean
 }
 
-const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
-  (
-    {
-      className,
-      onResize,
-      onResizeEnd,
-      onResizeStart,
-      render,
-      resizable = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const { container } = useStyles()()
-    const classNames = container({ className })
-    const context = React.useMemo(() => ({ resizable }), [resizable])
+const TableContainer = ({
+  className,
+  onResize,
+  onResizeEnd,
+  onResizeStart,
+  render,
+  resizable = false,
+  ...props
+}: TableContainerProps) => {
+  const { container } = useStyles()()
+  const classNames = container({ className })
+  const context = React.useMemo(() => ({ resizable }), [resizable])
 
-    if (resizable) {
-      return (
-        <TableContainerContext.Provider value={context}>
-          <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
-            className={classNames}
-            ref={ref}
-            onResize={onResize}
-            onResizeEnd={onResizeEnd}
-            onResizeStart={onResizeStart}
-            render={render}
-            {...props}
-          />
-        </TableContainerContext.Provider>
-      )
-    }
-
-    return (
-      <TableContainerContext.Provider value={context}>
-        <div
+  return (
+    <TableContainerContext value={context}>
+      {resizable ? (
+        <TablePrimitives.ResizableTableContainer
           data-slot="table-container"
           className={classNames}
-          ref={ref}
+          onResize={onResize}
+          onResizeEnd={onResizeEnd}
+          onResizeStart={onResizeStart}
+          render={render}
           {...props}
         />
-      </TableContainerContext.Provider>
-    )
-  },
-)
-TableContainer.displayName = "TableContainer"
+      ) : (
+        <div data-slot="table-container" className={classNames} {...props} />
+      )}
+    </TableContainerContext>
+  )
+}
 
 // MARK: Separator
 

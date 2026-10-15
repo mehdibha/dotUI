@@ -4,10 +4,8 @@ import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as PopoverPrimitives from "react-aria-components/Popover"
 import * as TooltipPrimitives from "react-aria-components/Tooltip"
-import type { VariantProps } from "tailwind-variants"
 
 import { useStyles } from "./styles"
-import type { TooltipStyles } from "./styles"
 
 // MARK: tooltipStyles
 
@@ -26,10 +24,9 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 
 // MARK: Separator
 
-interface TooltipContentProps
-  extends
-    React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
-    VariantProps<TooltipStyles> {
+interface TooltipContentProps extends React.ComponentProps<
+  typeof TooltipPrimitives.Tooltip
+> {
   hideArrow?: boolean
 }
 
@@ -61,12 +58,10 @@ function TooltipContent({
 
 // MARK: Separator
 
-interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
-
-function TooltipArrow({ className }: TooltipArrowProps) {
+function TooltipArrow() {
   const { arrow } = useStyles()()
   return (
-    <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
+    <PopoverPrimitives.OverlayArrow className={arrow()}>
       <svg
         aria-hidden="true"
         data-slot="tooltip-arrow"

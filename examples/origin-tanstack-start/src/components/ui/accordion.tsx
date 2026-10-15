@@ -65,7 +65,6 @@ interface AccordionTriggerProps extends React.ComponentProps<
 > {}
 
 function AccordionTrigger({ className, ...props }: AccordionTriggerProps) {
-  const glyph = <ChevronDownIcon />;
   return (
     <HeadingPrimitives.Heading className={heading()}>
       <ButtonPrimitives.Button
@@ -80,7 +79,7 @@ function AccordionTrigger({ className, ...props }: AccordionTriggerProps) {
           <>
             {children}
             <span data-accordion-marker="" className={marker()}>
-              {glyph}
+              <ChevronDownIcon />
             </span>
           </>
         ))}

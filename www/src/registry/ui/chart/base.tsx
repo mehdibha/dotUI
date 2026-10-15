@@ -123,18 +123,10 @@ export function finiteOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null
 }
 
-export interface ChartSpec<TDatum> {
+export interface ChartSpec<TDatum> extends ChartFrame {
   marks: readonly ChartMarkLayer[]
-  scales: {
-    x: ChartAxisOptions | null
-    y: ChartAxisOptions | null
-  }
-  color?: ChartColorOptions
   gradients?: readonly ChartLinearGradient[]
-  theme?: Partial<ChartTheme>
   readonly __datum?: TDatum
-  readonly __xValue?: ChartValue
-  readonly __yValue?: number
 }
 
 export interface ChartFrameOptions {
