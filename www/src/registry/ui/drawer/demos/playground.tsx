@@ -12,11 +12,20 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, type DrawerProps } from "@/registry/ui/drawer"
 
-export default function Demo({ placement = "bottom" }: DrawerProps = {}) {
+export default function Demo({
+  placement = "bottom",
+  isDismissable = true,
+  swipeToDismiss = true,
+}: DrawerProps = {}) {
   return (
     <Dialog>
       <Button>Open Drawer</Button>
-      <Drawer data-control-target placement={placement}>
+      <Drawer
+        data-control-target
+        placement={placement}
+        isDismissable={isDismissable}
+        swipeToDismiss={swipeToDismiss}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Drawer Title</DialogTitle>
