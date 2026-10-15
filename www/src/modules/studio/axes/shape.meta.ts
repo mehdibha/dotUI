@@ -17,29 +17,10 @@ export const OPTIONS = {
 }
 
 export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
-  square: {
-    label: "Square",
-    description: "No rounded corners; switch and slider tracks stay round.",
-  },
-  sharp: {
-    label: "Sharp",
-    description: "Small corners on every component.",
-  },
-  standard: {
-    label: "Standard",
-    description: "Controls a step tighter than menus, a step under dialogs.",
-  },
-  soft: {
-    label: "Soft",
-    description: "Larger corners, closer in size from controls to dialogs.",
-  },
-  round: {
-    label: "Round",
-    description: "Generous corners on every surface, pill buttons.",
-  },
-  pill: {
-    label: "Pill",
-    description:
-      "Pill buttons, fields and controls; cards and dialogs moderate.",
-  },
+  square: { label: "Square" },
+  sharp: { label: "Sharp" },
+  standard: { label: "Standard" },
+  soft: { label: "Soft" },
+  round: { label: "Round" },
+  pill: { label: "Pill" },
 })
