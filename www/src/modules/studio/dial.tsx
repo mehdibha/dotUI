@@ -6,7 +6,7 @@
    that open a popover carry no chevron, rows that open a page do. Alpha
    surfaces keep both themes in one set of classes. */
 
-import { useContext, useEffect, useRef, useState } from "react"
+import { Children, useContext, useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -24,13 +24,6 @@ import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxItemDescription,
-  ListBoxItemLabel,
-} from "@/registry/ui/list-box"
-import { Separator } from "@/registry/ui/separator"
 
 import { effective } from "./axes"
 import type { StudioState } from "./axes"
@@ -244,7 +237,7 @@ export interface DialSelectOption {
 
 /** A pick from a short list: the row shows the choice (and its specimen,
  *  unless the chapter title already carries it), the popover lists every
- *  option in the registry's own ListBox. Picking keeps the popover up — the
+ *  option in the dial's pick list. Picking keeps the popover up — the
  *  choice is a comparison against the preview behind it. `children` are dial
  *  rows under the list, past a separator. */
 export function DialSelect({
@@ -317,24 +310,22 @@ export function DialSelect({
         </>
       }
     >
-      <PanelPopover className="w-64 min-w-0">
-        <DialogContent className="flex min-h-0 flex-col gap-0 overflow-y-auto overscroll-contain p-0">
-          <SelectOptions
-            axis={axis}
-            label={label}
-            value={value}
-            onChange={onChange}
-            options={options}
-            exclude={exclude}
-          />
-          {children && (
-            <>
-              <Separator />
-              <div className="flex flex-col gap-1.5 p-2">{children}</div>
-            </>
-          )}
-        </DialogContent>
-      </PanelPopover>
+      <DialPopover>
+        <SelectOptions
+          axis={axis}
+          label={label}
+          value={value}
+          onChange={onChange}
+          options={options}
+          exclude={exclude}
+        />
+        {Children.toArray(children).length > 0 && (
+          <>
+            <DialSeparator />
+            {children}
+          </>
+        )}
+      </DialPopover>
     </DialTrigger>
   )
 }
@@ -366,75 +357,29 @@ function SelectOptions({
     return options.find((o) => o.value === String(resolved))
   }
   return (
-    <ListBox
-      aria-label={label}
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[value]}
+    <DialPickList
+      label={label}
+      value={value}
+      onChange={onChange}
       disabledKeys={exclude?.options}
-      // The popover scrolls as one column; a nested list would collapse when docked.
-      className="max-h-none shrink-0 overflow-visible"
-      onSelectionChange={(keys) => {
-        if (keys === "all") return
-        const next = keys.values().next().value
-        if (next) onChange(next as string)
-      }}
-    >
-      {options.map((option) => (
-        <SelectOption
-          key={option.value}
-          option={option}
-          to={target(option)}
-          cause={
-            exclude?.options?.includes(option.value) ? exclude.cause : undefined
-          }
-          run={() => onChange(option.value)}
-        />
-      ))}
-    </ListBox>
-  )
-}
-
-/** One of SelectOptions' items: hovering it previews `run`. */
-function SelectOption({
-  option,
-  to,
-  cause,
-  run,
-}: {
-  option: DialSelectOption
-  /** A follow option's target. */
-  to: DialSelectOption | undefined
-  /** Why the option is excluded. */
-  cause: string | undefined
-  run: () => void
-}) {
-  const previewProps = useOptionPreview()
-  const preview = option.preview ?? to?.preview
-  return (
-    <ListBoxItem
-      id={option.value}
-      textValue={option.label}
-      // The specimen sits beside the text, not under the description.
-      className="has-[[slot=description]]:flex-row has-[[slot=description]]:items-center has-[[slot=description]]:gap-3"
-      {...previewProps(run)}
-    >
-      <span className="flex min-w-0 flex-col">
-        <ListBoxItemLabel>
-          {to ? `${option.label} · ${to.label}` : option.label}
-          {option.aside}
-        </ListBoxItemLabel>
-        {subline(option) && (
-          <ListBoxItemDescription>{subline(option)}</ListBoxItemDescription>
-        )}
-      </span>
-      {(preview || cause) && (
-        <span className="ml-auto flex shrink-0 items-center gap-2">
-          {cause && <CauseChip cause={cause} />}
-          {preview}
-        </span>
-      )}
-    </ListBoxItem>
+      options={options.map((option) => {
+        const to = target(option)
+        const cause = exclude?.options?.includes(option.value)
+          ? exclude.cause
+          : undefined
+        return {
+          ...option,
+          label: to ? `${option.label} · ${to.label}` : option.label,
+          specimen: option.preview ?? to?.preview,
+          aside: (option.aside || cause) && (
+            <>
+              {option.aside}
+              {cause && <CauseChip cause={cause} />}
+            </>
+          ),
+        }
+      })}
+    />
   )
 }
 
@@ -445,12 +390,16 @@ export interface DialPickOption {
   label: string
   description?: string
   credits?: readonly string[]
-  /** A specimen beside the label. */
+  /** A glyph before the label. */
   visual?: React.ReactNode
+  /** A specimen at the row's end, before the check. */
+  specimen?: React.ReactNode
+  /** After the label: a follow's source chip, an exclusion's cause. */
+  aside?: React.ReactNode
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
 function PickItem({
   option,
@@ -472,8 +421,9 @@ function PickItem({
           <span className="flex min-w-0 items-center gap-3">
             {option.visual}
             <span className="flex min-w-0 flex-col gap-0.5">
-              <span className="text-[13px] font-medium text-fg/90">
+              <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
                 {option.label}
+                {option.aside}
               </span>
               {subline(option) && (
                 <span className="text-xs leading-snug text-fg/55">
@@ -482,9 +432,12 @@ function PickItem({
               )}
             </span>
           </span>
-          <CheckIcon
-            className={cn("mt-px size-4 shrink-0", !isSelected && "invisible")}
-          />
+          <span className="flex shrink-0 items-center gap-2 self-center">
+            {option.specimen}
+            <CheckIcon
+              className={cn("size-4 shrink-0", !isSelected && "invisible")}
+            />
+          </span>
         </>
       )}
     </RacListBoxItem>
@@ -497,11 +450,13 @@ export function DialPickList({
   value,
   onChange,
   options,
+  disabledKeys,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialPickOption[]
+  disabledKeys?: readonly string[]
 }) {
   return (
     <RacListBox
@@ -509,6 +464,7 @@ export function DialPickList({
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={[value]}
+      disabledKeys={disabledKeys}
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const next = keys.values().next().value
