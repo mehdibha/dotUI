@@ -17,8 +17,20 @@ wip: true
     },
     {
       type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "string",
       name: "placeholder",
       defaultValue: "Search...",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
     },
     {
       type: "boolean",
@@ -28,6 +40,11 @@ wip: true
     {
       type: "boolean",
       name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
