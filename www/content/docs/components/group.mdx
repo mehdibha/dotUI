@@ -4,7 +4,10 @@ description: A group visually groups related UI elements together.
 wip: true
 ---
 
-<Demo name="group/demos/basic" />
+<InteractiveDemo
+  name="group"
+  controls={["orientation", "isDisabled", "isInvalid", "isReadOnly"]}
+/>
 
 ## Installation
 
@@ -43,6 +46,8 @@ import { Group, GroupText } from "@/components/ui/group"
 ```
 
 Set `orientation` to `"vertical"` to stack children instead of the default `"horizontal"` row.
+
+`isDisabled`, `isInvalid` and `isReadOnly` set data attributes on the group for styling; they don't reach the controls inside, so pass them to those controls too.
 
 ## Examples
 
