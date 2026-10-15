@@ -5,7 +5,7 @@
  * with oxfmt, then the formatted root JSX is lifted into a tree that keeps
  * verbatim formatted text for everything static and structured nodes for every
  * position a control can change (attr holes, `{param}` text slots,
- * `{cond && <El>…</El>}` conditionals). The runtime renderer in
+ * `{cond && <El>…</El>}` conditionals, `attr={cond ? value : undefined}`). The runtime renderer in
  * `code-template.ts` owns the layout of the dynamic parts, so no per-value
  * formatting ever happens — and the output stays byte-identical to oxfmt.
  *
@@ -254,13 +254,19 @@ class TreeBuilder {
         })
         continue
       }
-      const text = attr.getText()
+      const gated = this.readGatedAttr(attr)
+      if (gated) this.resolved.add(gated.control)
+      const text = gated?.text ?? attr.getText()
       if (text.includes("\n")) {
         throw new OverlayError(
           `Multiline attribute "${attrName}" on dynamic <${tag}> is unsupported${named(this.input)}`,
         )
       }
-      attrs.push({ part: "static", text })
+      attrs.push({
+        part: "static",
+        text,
+        ...(gated ? { showWhen: gated.control } : {}),
+      })
     }
 
     const children: ChildPart[] = []
@@ -332,13 +338,32 @@ class TreeBuilder {
     )
   }
 
+  /** `attr={control ? value : undefined}` → `attr={value}`, shown while the control is truthy. */
+  private readGatedAttr(
+    attr: JsxAttribute,
+  ): { control: string; text: string } | null {
+    const init = attr.getInitializer()
+    const expr = Node.isJsxExpression(init) ? init.getExpression() : undefined
+    if (!Node.isConditionalExpression(expr)) return null
+    const control = expr.getCondition().getText()
+    if (
+      !this.byName.has(control) ||
+      expr.getWhenFalse().getText() !== "undefined"
+    )
+      return null
+    return {
+      control,
+      text: `${attr.getNameNode().getText()}={${expr.getWhenTrue().getText()}}`,
+    }
+  }
+
   /** Does this subtree contain anything a control can change? */
   private containsDynamic(node: JsxLike): boolean {
     const openings: Node[] = [node, ...node.getDescendants()]
     for (const n of openings) {
       if (Node.isJsxAttribute(n)) {
         if (n.getNameNode().getText() === "data-control-target") return true
-        if (readDerivedMarker(n)) return true
+        if (readDerivedMarker(n) || this.readGatedAttr(n)) return true
       }
       if (Node.isJsxExpression(n)) {
         const expr = n.getExpression()
