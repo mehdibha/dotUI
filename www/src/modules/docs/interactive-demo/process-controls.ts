@@ -56,6 +56,7 @@ export async function buildControlsFromReference(
     }
 
     const inferredControl = inferControlFromProp(propName, prop, overrides)
+    if (prop.required) inferredControl.required = true
     controls.push(inferredControl)
   }
 
@@ -74,8 +75,9 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
   return controls.map((c) => ({
     name: c.name,
     kind: c.type,
+    // A null default never matches a value, so the attr is never dropped.
     default:
-      c.type === "icon"
+      c.type === "icon" || c.required
         ? null
         : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
   }))

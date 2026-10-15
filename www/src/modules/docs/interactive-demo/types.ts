@@ -22,6 +22,8 @@ export interface PropReference {
 export interface BaseControl {
   name: string
   alwaysShow?: boolean
+  /** Required by the component: the code panel always shows it. */
+  required?: boolean
   reference?: PropReference
 }
 
