@@ -525,7 +525,7 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/buttonStyle-flat-soft: fires, then holds back 1`] = `
+exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -664,7 +664,7 @@ exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/inputStyle-flat-soft-tonal: fires, then holds back 1`] = `
+exports[`rules > style/inputStyle-flat-tonal: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -736,7 +736,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-flat-soft-tonal: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-flat-tonal: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -803,7 +803,7 @@ exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceLayers-flat-soft-tactile-chunky: fires, then holds back 1`] = `
+exports[`rules > style/surfaceLayers-flat-tactile-chunky: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,

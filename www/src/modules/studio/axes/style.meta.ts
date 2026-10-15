@@ -9,11 +9,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "No light: lines draw every edge",
     credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
   },
-  soft: {
-    label: "Soft",
-    description: "Diffuse light: soft, low shadows",
-    credits: ["Linear", "Notion", "Airbnb", "Fluent 2"],
-  },
   tonal: {
     label: "Tonal",
     description: "Tone stands in for light",
@@ -34,10 +29,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
 /** Each Style's finish row: the options its light allows, for the key
  *  FINISH_KEYS names. A Style with one finish has no row. */
 export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
-  soft: [
-    { value: "line", label: "Hairline" },
-    { value: "none", label: "Shadow only" },
-  ],
   tactile: [
     { value: "rim-light", label: "Rim" },
     { value: "gloss", label: "Gloss" },
