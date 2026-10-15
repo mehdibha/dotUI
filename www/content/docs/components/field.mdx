@@ -4,6 +4,35 @@ description: A field wraps form inputs with labels, descriptions, and error mess
 wip: true
 ---
 
+<InteractiveDemo
+  name="field"
+  controls={[
+    "orientation",
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Username",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "Choose a unique username.",
+      placeholder: "Helper text",
+    },
+    {
+      type: "string",
+      name: "errorMessage",
+      defaultValue: "This username is already taken.",
+      placeholder: "Error text",
+    },
+    {
+      type: "boolean",
+      name: "isInvalid",
+      defaultValue: false,
+    },
+  ]}
+/>
+
 ## Installation
 
 ```npm
