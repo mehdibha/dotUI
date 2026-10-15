@@ -11,7 +11,7 @@ import type { ChapterPage, SearchRow, Studio } from "../state"
 import type { AxisKey } from "../use-axis"
 import { SemanticsPreview } from "./color"
 import { PrimaryRow } from "./primary"
-import { ShapePreview } from "./shape"
+import { ComponentCornersRow, ShapePreview, ShapeRow } from "./shape"
 import { InteractionPreview } from "./states"
 import { TypePreview } from "./type"
 
@@ -23,7 +23,7 @@ export const MAIN_ROWS: FoundationRow[] = [
   ["brand", "Brand"],
   ["neutralHue", "Neutral"],
   ["bodyFont", "Font"],
-  ["radiusPx", "Radius"],
+  [ShapeRow, "Radius"],
   ["density", "Density"],
   ["iconLibrary", "Icons"],
   ["motion", "Motion"],
@@ -39,7 +39,6 @@ export const FOUNDATION_KEYS = [
   "neutralHue",
   "neutralTint",
   "bodyFont",
-  "radiusPx",
   "density",
   "iconLibrary",
   "iconStroke",
@@ -77,6 +76,7 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
     ],
   ],
   shape: [
+    [["radiusPx", "Base radius"]],
     [
       ["roleControl", "Controls"],
       ["roleItem", "Items"],
@@ -85,6 +85,7 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
       ["roleCard", "Cards"],
       ["tracks", "Tracks"],
     ],
+    [[ComponentCornersRow, "Components"]],
   ],
   interaction: [
     [

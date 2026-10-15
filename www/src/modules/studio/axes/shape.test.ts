@@ -7,22 +7,43 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_EFFECTIVE, DEFAULT_STATE, DEFAULTS, parseState } from "./index"
-import { SHAPE_ROLES, SHAPE_RUNGS, SHAPE_SCHEMA, shapeVars } from "./shape"
-import { SHAPE_CHARACTERS } from "./shape.meta"
+import {
+  pickShape,
+  SHAPE_ROLES,
+  SHAPE_RUNGS,
+  SHAPE_SCHEMA,
+  SHAPE_VALUES,
+  shapeOf,
+  SHAPES,
+  shapeVars,
+} from "./shape"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
   designSystemOf(parseState({ ...overrides }))
 
-const vector = (id: string) =>
-  SHAPE_CHARACTERS.find((character) => character.id === id)!.vector
-
-const rolesOf = (state: typeof DEFAULT_STATE) =>
+const rolesOf = (state: Record<string, unknown>) =>
   Object.fromEntries(SHAPE_ROLES.map(({ key }) => [key, state[key]]))
 
 describe("shape axis", () => {
   test("defaults emit nothing", () => {
     expect(resolve({}).tokens).toEqual({})
-    expect(rolesOf(DEFAULT_STATE)).toEqual(vector("standard"))
+    expect(shapeOf(DEFAULT_STATE)).toBe("standard")
+  })
+
+  test("every shape is valid, reads back, and a pick clears any edit", () => {
+    const edited = parseState({ roleSurface: "3xl", buttonRadius: "pill" })
+    expect(shapeOf(edited)).toBeUndefined()
+    for (const id of SHAPE_VALUES) {
+      expect(parseState(SHAPES[id])).toMatchObject(SHAPES[id])
+      expect(shapeOf(pickShape(edited, id))).toBe(id)
+    }
+  })
+
+  test("shapes stay apart in what they ship", () => {
+    const shipped = SHAPE_VALUES.map((id) =>
+      JSON.stringify(resolve(SHAPES[id]).tokens),
+    )
+    expect(new Set(shipped).size).toBe(SHAPE_VALUES.length)
   })
 
   test("roles.css declares the default rungs", () => {
@@ -38,14 +59,14 @@ describe("shape axis", () => {
     expect(resolve({ radiusPx: 12 }).tokens).toEqual({ "--radius": "0.75rem" })
   })
 
-  test("a character retargets only the roles it moves", () => {
-    expect(resolve(vector("round")).tokens).toEqual({
-      "--studio-radius-control": "var(--radius-3xl)",
+  test("round makes controls pills and surfaces large", () => {
+    expect(resolve(SHAPES.round).tokens).toEqual({
+      "--studio-radius-control": "var(--radius-full)",
       "--studio-radius-item": "var(--radius-xl)",
       "--studio-radius-surface": "var(--radius-2xl)",
       "--studio-radius-panel": "var(--radius-3xl)",
       "--studio-radius-card": "var(--radius-2xl)",
-      "--studio-radius-control-sm": "var(--radius-2xl)",
+      "--studio-radius-control-sm": "var(--radius-full)",
       "--studio-radius-field": "var(--radius-2xl)",
       "--studio-radius-container": "var(--radius-2xl)",
       "--studio-radius-inline-item": "var(--radius-xl)",
@@ -53,9 +74,10 @@ describe("shape axis", () => {
   })
 
   test("square points every role at 0 — the publisher drops the class", () => {
-    expect(Object.values(resolve(vector("square")).tokens)).toEqual(
-      Array(11).fill("0"),
-    )
+    const { tokens } = resolve(SHAPES.square)
+    expect(tokens["--studio-badge-radius"]).toBe("var(--studio-radius-detail)")
+    delete tokens["--studio-badge-radius"]
+    expect(Object.values(tokens)).toEqual(Array(11).fill("0"))
   })
 
   test("auto cards sit one rung below panels", () => {
@@ -135,15 +157,15 @@ describe("shape axis", () => {
     expect(resolve({ tracks: "follow" }).tokens).toEqual({
       "--studio-radius-track": "var(--radius-sm)",
     })
-    expect(resolve({ ...vector("square"), tracks: "follow" }).tokens).toEqual(
+    expect(resolve({ ...SHAPES.square, tracks: "follow" }).tokens).toEqual(
       expect.objectContaining({ "--studio-radius-track": "0" }),
     )
-    expect(resolve(vector("square")).tokens).not.toHaveProperty(
+    expect(resolve(SHAPES.square).tokens).not.toHaveProperty(
       "--studio-radius-track",
     )
   })
 
-  test("states saved before cards were a role keep their character", () => {
+  test("states saved before cards were a role keep their roles", () => {
     expect(
       rolesOf(
         parseState({
@@ -153,14 +175,19 @@ describe("shape axis", () => {
           rolePanel: "3xl",
         }),
       ),
-    ).toEqual(vector("round"))
-    // Retired characters (Crisp, Soft, Pill) keep their roles.
+    ).toEqual({
+      roleControl: "3xl",
+      roleItem: "auto",
+      roleSurface: "2xl",
+      rolePanel: "3xl",
+      roleCard: "auto",
+    })
     const pill = parseState({ roleControl: "full", roleSurface: "lg" })
     expect(pill.roleControl).toBe("full")
   })
 })
 
-/* Every item shipped under every character: the radius classes the publisher
+/* Every item shipped under every shape: the radius classes the publisher
    rewrites (and drops at 0) must come out whole. */
 describe("shipped shape", () => {
   const balanced = (token: string) => {
@@ -191,7 +218,7 @@ describe("shipped shape", () => {
   }
 
   test.each([
-    ...SHAPE_CHARACTERS.map((c) => [c.id, vector(c.id)] as const),
+    ...SHAPE_VALUES.map((id) => [id, SHAPES[id]] as const),
     ["bold stroke", { controlStroke: "bold" }] as const,
   ])("%s ships whole classes and no studio vars", async (_, state) => {
     const preset = presetOf(state)
