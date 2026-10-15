@@ -73,7 +73,7 @@ function PaletteRow() {
       label="Palette"
       options={PALETTE_OPTIONS.map((option) => ({
         ...option,
-        preview: <SeriesGlyph palette={option.value} />,
+        glyph: <SeriesGlyph palette={option.value} />,
       }))}
     />
   )
@@ -86,7 +86,7 @@ function GridRow() {
       label="Gridlines"
       options={GRID_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <DialGlyph>
             <GridGlyph grid={option.value} />
           </DialGlyph>

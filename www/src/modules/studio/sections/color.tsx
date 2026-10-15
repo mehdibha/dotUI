@@ -199,7 +199,7 @@ function ControlEdgeRow() {
         const [a, b] = EDGE_STEPS[option.value]?.[mode] ?? ["400", "400"]
         return {
           ...option,
-          preview: (
+          glyph: (
             <span
               className="h-3.5 w-6 shrink-0 rounded-[4px] border"
               style={{
@@ -224,7 +224,7 @@ function SelectedWashRow() {
         const [palette, name] = WASH[option.value] ?? ["neutral", "300"]
         return {
           ...option,
-          preview: (
+          glyph: (
             <span
               className="h-3.5 w-6 shrink-0 rounded-[4px]"
               style={{ backgroundColor: step(palette, name) }}

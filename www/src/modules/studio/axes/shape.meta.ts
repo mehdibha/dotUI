@@ -3,13 +3,29 @@ import { STROKE_VALUES, TRACK_VALUES } from "./shape"
 import type { ShapeVector } from "./shape"
 
 export const STROKE_OPTIONS = options(STROKE_VALUES, {
-  regular: { label: "Regular", credits: ["shadcn", "Geist", "Primer"] },
-  bold: { label: "Bold", credits: ["Spectrum 2", "Duolingo"] },
+  regular: {
+    label: "Regular",
+    description: "1px control edges",
+    credits: ["shadcn", "Geist", "Primer"],
+  },
+  bold: {
+    label: "Bold",
+    description: "2px control edges",
+    credits: ["Spectrum 2", "Duolingo"],
+  },
 })
 
 export const TRACK_OPTIONS = options(TRACK_VALUES, {
-  round: { label: "Round", credits: ["Carbon"] },
-  follow: { label: "Follow", credits: ["Radix Themes", "shadcn sera"] },
+  round: {
+    label: "Round",
+    description: "Switch, slider and progress stay fully round",
+    credits: ["Carbon"],
+  },
+  follow: {
+    label: "Follow",
+    description: "Track corners follow the control radius",
+    credits: ["Radix Themes", "shadcn sera"],
+  },
 })
 
 export const OPTIONS = {

@@ -3,8 +3,8 @@
 /* Primary — a view over every role that paints with a source (axes/color.ts
    PRIMARY_LEAVES). Accent and Neutral write all of them; while they disagree
    it reads Custom and lists each. Each leaf has its own row on its
-   component's page. Previews draw the role at glyph scale in the engine's
-   own colors. */
+   component's page. Swatches and specimens draw in the engine's own
+   colors. */
 
 import { CheckIcon } from "lucide-react"
 import {
@@ -29,7 +29,6 @@ import {
   DialSelect,
   DialSeparator,
   DialTrigger,
-  subline,
 } from "../dial"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
@@ -110,15 +109,6 @@ function CheckboxGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function RadioGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="size-4 rounded-full border-[5px]"
-      style={{ borderColor: ink.fill, background: ink.on }}
-    />
-  )
-}
-
 function SwitchGlyph({ ink }: { ink: Ink }) {
   return (
     <span
@@ -128,82 +118,6 @@ function SwitchGlyph({ ink }: { ink: Ink }) {
       <span className="size-3 rounded-full" style={{ background: ink.on }} />
     </span>
   )
-}
-
-function SelectionGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="flex h-5 items-center gap-1 rounded-md px-1.5 text-[10.5px] font-medium"
-      style={{ background: ink.fill, color: ink.on }}
-    >
-      <Check color={ink.on} />
-      Item
-    </span>
-  )
-}
-
-function SliderGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex h-1 w-14 items-center rounded-full bg-fg/15">
-      <span
-        className="flex h-1 w-8 items-center justify-end rounded-full"
-        style={{ background: ink.fill }}
-      >
-        <span
-          className="-mr-1.5 size-3 rounded-full ring-2 ring-bg"
-          style={{ background: ink.fill }}
-        />
-      </span>
-    </span>
-  )
-}
-
-function TabsGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex gap-2.5 text-[10.5px] font-medium">
-      <span
-        className="border-b-2 pb-px"
-        style={{ color: ink.text, borderColor: ink.fill }}
-      >
-        Tab
-      </span>
-      <span className="border-b-2 border-transparent pb-px text-fg/50">
-        Tab
-      </span>
-    </span>
-  )
-}
-
-function LinkGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="text-[11px] font-medium underline underline-offset-2"
-      style={{ color: ink.text }}
-    >
-      Learn more
-    </span>
-  )
-}
-
-function FocusGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="h-4 w-8 rounded-[5px] bg-fg/10 ring-2 ring-offset-1 ring-offset-bg"
-      style={{ ["--tw-ring-color" as string]: ink.ring }}
-    />
-  )
-}
-
-const GLYPHS: Record<PrimaryLeaf, (props: { ink: Ink }) => React.ReactNode> = {
-  buttonColor: ButtonGlyph,
-  checkboxColor: CheckboxGlyph,
-  radioColor: RadioGlyph,
-  switchColor: SwitchGlyph,
-  selectionColor: SelectionGlyph,
-  sliderColor: SliderGlyph,
-  tabsColor: TabsGlyph,
-  linkColor: LinkGlyph,
-  focusColor: FocusGlyph,
 }
 
 /** The trigger's swatch: one source, or both halves when they disagree. */
@@ -326,7 +240,7 @@ function PrimaryPanel({
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span className={DIAL_LABEL}>{choice.label}</span>
                   <span className="text-xs leading-snug text-fg/55">
-                    {subline(choice)}
+                    {choice.description}
                   </span>
                 </span>
                 <span className="flex shrink-0 items-center gap-2">
@@ -381,19 +295,19 @@ export function PrimaryRow() {
 const leafRow = (leaf: PrimaryLeaf) =>
   function LeafRow() {
     const ink = inks(usePanelMode().m)
-    const Glyph = GLYPHS[leaf]
     return (
       <DialSelect
         axis={leaf}
         label="Color"
-        options={inOrder(OPTIONS[leaf] ?? SOURCE_OPTIONS).map((option) => {
-          const id = option.value as PrimaryColorSource
-          return {
-            ...option,
-            preview: <Glyph ink={ink[id]} />,
-            glyph: <SourceSwatch value={id} ink={ink} />,
-          }
-        })}
+        options={inOrder(OPTIONS[leaf] ?? SOURCE_OPTIONS).map((option) => ({
+          ...option,
+          glyph: (
+            <SourceSwatch
+              value={option.value as PrimaryColorSource}
+              ink={ink}
+            />
+          ),
+        }))}
       />
     )
   }

@@ -5,8 +5,6 @@
 
 import type { StepName, Theme } from "@dotui/colors"
 
-import { cn } from "@/registry/lib/utils"
-
 import { effective } from "../axes"
 import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
@@ -49,23 +47,10 @@ const GLYPH_STROKE: Record<string, string> = {
 }
 
 /** A card on the page, light beside dark, in the system's own neutral. */
-function SurfaceGlyph({
-  state,
-  theme,
-  large,
-}: {
-  state: Effective
-  theme: Theme
-  large?: boolean
-}) {
+function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
   const recipe = surfaceRecipe(state)
   return (
-    <span
-      className={cn(
-        "grid shrink-0 grid-cols-2 overflow-hidden border border-fg/15",
-        large ? "w-16 rounded-md" : "w-10 rounded",
-      )}
-    >
+    <span className="grid w-10 shrink-0 grid-cols-2 overflow-hidden rounded border border-fg/15">
       {(["light", "dark"] as const).map((mode) => {
         const m = theme[mode]
         const step = (s: string) =>
@@ -79,16 +64,11 @@ function SurfaceGlyph({
         return (
           <span
             key={mode}
-            className={cn("relative block", large ? "h-10" : "h-5")}
+            className="relative block h-5"
             style={{ background: step("25") }}
           >
             <span
-              className={cn(
-                "absolute border",
-                large
-                  ? "inset-x-1.5 inset-y-2 rounded-[4px]"
-                  : "inset-x-1 inset-y-1 rounded-[3px]",
-              )}
+              className="absolute inset-1 rounded-[3px] border"
               style={{
                 background: color(recipe.card.bg),
                 borderColor: color(recipe.card.edge),
@@ -160,7 +140,6 @@ export function SurfacesRow() {
             }).values
             return {
               ...option,
-              preview: <SurfaceGlyph large state={values} theme={theme} />,
               glyph: <SurfaceGlyph state={values} theme={theme} />,
             }
           })}

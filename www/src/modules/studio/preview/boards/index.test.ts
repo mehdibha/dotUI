@@ -15,11 +15,12 @@ const SOURCES = import.meta.glob<string>("./*.tsx", {
 })
 
 describe("boards", () => {
-  it("titles every component page, Interaction and Motion", () => {
+  it("titles every component page, Interaction, Motion and Icons", () => {
     expect(Object.keys(BOARD_TITLES)).toEqual([
       ...COMPONENTS.map(({ id }) => id),
       "interaction",
       "motion",
+      "icons",
     ])
     expect(
       COMPONENTS.filter(

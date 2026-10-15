@@ -36,6 +36,7 @@ export const pageBoard = (page: string | null | undefined) =>
 /** Keys shown on a board of their own, wherever their row sits. */
 export const KEY_BOARDS: Record<string, BoardId> = {
   motion: "motion",
+  iconLibrary: "icons",
 }
 
 let page: string | null = null

@@ -16,7 +16,7 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
   },
   tonal: {
     label: "Tonal",
-    description: "Tone stands in for light",
+    description: "Tone stands in for light: shaded, edgeless",
     credits: ["Material 3", "Carbon", "Spotify"],
   },
   tactile: {
@@ -35,18 +35,42 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
  *  FINISH_KEYS names. A Style with one finish has no row. */
 export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
   soft: [
-    { value: "line", label: "Hairline" },
-    { value: "none", label: "Shadow only" },
+    {
+      value: "line",
+      label: "Hairline",
+      description: "Cards keep a hairline edge",
+    },
+    {
+      value: "none",
+      label: "Shadow only",
+      description: "No edge; soft shadows alone",
+    },
   ],
   tactile: [
-    { value: "rim-light", label: "Rim" },
-    { value: "gloss", label: "Gloss" },
-    { value: "bevel", label: "Bevel" },
+    {
+      value: "rim-light",
+      label: "Rim",
+      description: "A light top rim inside a dark edge",
+    },
+    {
+      value: "gloss",
+      label: "Gloss",
+      description: "A top sheen that fades on hover",
+    },
+    {
+      value: "bevel",
+      label: "Bevel",
+      description: "A raised bevel that sinks when pressed",
+    },
   ],
 }
 
 /** A Style key's follow option, first in its picker ("Style · Line"). */
-export const FOLLOW_STYLE: Option = { value: "style", label: "Style" }
+export const FOLLOW_STYLE: Option = {
+  value: "style",
+  label: "Style",
+  description: "Follows the global Style",
+}
 
 export const OPTIONS = {
   style: STYLE_OPTIONS,

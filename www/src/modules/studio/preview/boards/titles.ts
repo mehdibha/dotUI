@@ -37,6 +37,7 @@ export const BOARD_TITLES = {
   skeleton: "Skeleton",
   interaction: "Interaction",
   motion: "Motion",
+  icons: "Icons",
 }
 
 export type BoardId = keyof typeof BOARD_TITLES

@@ -3,9 +3,14 @@ import { options } from "./core/meta"
 import { MARK_VALUES } from "./radio"
 
 export const MARK_OPTIONS = options(MARK_VALUES, {
-  dot: { label: "Dot", credits: ["shadcn", "Primer", "Polaris", "Linear"] },
+  dot: {
+    label: "Dot",
+    description: "A filled circle with a small center dot",
+    credits: ["shadcn", "Primer", "Polaris", "Linear"],
+  },
   ring: {
     label: "Ring",
+    description: "A colored ring around a colored dot",
     credits: ["Material 3", "Carbon", "Geist", "Supabase"],
   },
 })

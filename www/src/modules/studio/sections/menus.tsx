@@ -293,7 +293,7 @@ const glyphs = <T extends { value: string }>(
 ) =>
   options.map((option) => ({
     ...option,
-    preview: <DialGlyph>{draw(option.value)}</DialGlyph>,
+    glyph: <DialGlyph>{draw(option.value)}</DialGlyph>,
   }))
 
 /* ---------------------------------- Rows ---------------------------------- */

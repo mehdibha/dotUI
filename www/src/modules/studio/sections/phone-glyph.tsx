@@ -68,7 +68,7 @@ export const withPhoneGlyphs = (
 ): DialSelectOption[] =>
   options.map((o) => ({
     ...o,
-    preview: (
+    glyph: (
       <DialGlyph>
         <PhoneGlyph layer={o.value} />
       </DialGlyph>

@@ -4,6 +4,7 @@ import { HEADER_LABEL_VALUES, HEADER_VALUES } from "./tables"
 export const HEADER_OPTIONS = options(HEADER_VALUES, {
   plain: {
     label: "Plain",
+    description: "Header on the table's background",
     credits: [
       "shadcn",
       "Geist",
@@ -17,6 +18,7 @@ export const HEADER_OPTIONS = options(HEADER_VALUES, {
   },
   filled: {
     label: "Filled",
+    description: "Header on a gray band",
     credits: [
       "Polaris",
       "Primer",
@@ -31,10 +33,12 @@ export const HEADER_OPTIONS = options(HEADER_VALUES, {
 export const HEADER_LABEL_OPTIONS = options(HEADER_LABEL_VALUES, {
   strong: {
     label: "Strong",
+    description: "Header labels in full-strength text",
     credits: ["shadcn", "Carbon", "Ant Design", "Radix Themes", "Stripe"],
   },
   muted: {
     label: "Muted",
+    description: "Header labels in softer gray",
     credits: ["Primer", "Polaris", "shadcn sera", "Material 3", "Notion"],
   },
 })

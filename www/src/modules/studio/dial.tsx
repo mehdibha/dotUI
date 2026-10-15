@@ -55,15 +55,6 @@ export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 export const DIAL_VALUE =
   "truncate font-mono text-[13px] font-medium text-fg/60"
 
-/** The line under an option's label: its description, then its credits. */
-export const subline = (option: {
-  description?: string
-  credits?: readonly string[]
-}) =>
-  [option.description, option.credits?.join(", ")]
-    .filter(Boolean)
-    .join(" — ") || undefined
-
 /* ---------------------------------- Rows ---------------------------------- */
 
 /** A 16px SVG specimen beside a row's value or an option's label. */
@@ -224,20 +215,17 @@ export function DialLink({
 export interface DialSelectOption {
   value: string
   label: string
-  /** A line under the label, in the popover, before the credits. */
+  /** What the option does: a line under the label, in the popover. */
   description?: string
   credits?: readonly string[]
-  /** A specimen beside the label — glyphs, a swatch. */
-  preview?: React.ReactNode
-  /** The row's specimen, in place of `preview`. */
+  /** A specimen beside the row's value. */
   glyph?: React.ReactNode
   /** Beside the label: a follow option's source chip. */
   aside?: React.ReactNode
 }
 
-/** A pick from a short list: the row shows the choice (and its specimen,
- *  unless the chapter title already carries it), the popover lists every
- *  option in the dial's pick list. Picking keeps the popover up — the
+/** A pick from a short list: the row shows the choice (and its glyph), the
+ *  popover lists every option in the dial's pick list. Picking keeps the popover up — the
  *  choice is a comparison against the preview behind it. `children` are dial
  *  rows under the list, past a separator. */
 export function DialSelect({
@@ -247,7 +235,6 @@ export function DialSelect({
   value: valueProp,
   onChange: onChangeProp,
   options: listed,
-  rowPreview = true,
   children,
 }: {
   /** The key the row edits: value, change, hide and exclusions follow it. */
@@ -258,7 +245,6 @@ export function DialSelect({
   value?: string
   onChange?: (value: string) => void
   options: DialSelectOption[]
-  rowPreview?: boolean
   children?: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -306,7 +292,7 @@ export function DialSelect({
           <span className="truncate">
             {(resolved ?? selected)?.label ?? value}
           </span>
-          {rowPreview && (shown?.glyph ?? shown?.preview)}
+          {shown?.glyph}
         </>
       }
     >
@@ -370,7 +356,6 @@ function SelectOptions({
         return {
           ...option,
           label: to ? `${option.label} · ${to.label}` : option.label,
-          specimen: option.preview ?? to?.preview,
           aside: (option.aside || cause) && (
             <>
               {option.aside}
@@ -390,10 +375,6 @@ export interface DialPickOption {
   label: string
   description?: string
   credits?: readonly string[]
-  /** A glyph before the label. */
-  visual?: React.ReactNode
-  /** A specimen at the row's end, before the check. */
-  specimen?: React.ReactNode
   /** After the label: a follow's source chip, an exclusion's cause. */
   aside?: React.ReactNode
 }
@@ -418,26 +399,20 @@ function PickItem({
     >
       {({ isSelected }) => (
         <>
-          <span className="flex min-w-0 items-center gap-3">
-            {option.visual}
-            <span className="flex min-w-0 flex-col gap-0.5">
-              <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
-                {option.label}
-                {option.aside}
-              </span>
-              {subline(option) && (
-                <span className="text-xs leading-snug text-fg/55">
-                  {subline(option)}
-                </span>
-              )}
+          <span className="flex min-w-0 flex-col gap-0.5">
+            <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
+              {option.label}
+              {option.aside}
             </span>
+            {option.description && (
+              <span className="text-xs leading-snug text-fg/55">
+                {option.description}
+              </span>
+            )}
           </span>
-          <span className="flex shrink-0 items-center gap-2 self-center">
-            {option.specimen}
-            <CheckIcon
-              className={cn("size-4 shrink-0", !isSelected && "invisible")}
-            />
-          </span>
+          <CheckIcon
+            className={cn("mt-px size-4 shrink-0", !isSelected && "invisible")}
+          />
         </>
       )}
     </RacListBoxItem>
