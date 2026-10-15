@@ -287,7 +287,15 @@ function NumberControlRenderer({
   return (
     <TextField
       value={String(value)}
-      onChange={(val) => onChange(control.name, Number(val) || 0)}
+      onChange={(val) =>
+        onChange(
+          control.name,
+          Math.min(
+            Math.max(Number(val) || 0, control.min ?? -Infinity),
+            control.max ?? Infinity,
+          ),
+        )
+      }
       className="w-full"
     >
       <ControlLabel name={control.name} reference={control.reference} />

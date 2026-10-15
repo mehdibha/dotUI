@@ -419,3 +419,47 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// OTP-FIELD — repeated slots via Array.from, required length never dropped
+// ---------------------------------------------------------------------------
+
+const OTP_SRC = `"use client";
+
+import { Input } from "@/registry/ui/input";
+import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field";
+
+export default function Demo({ length = 6, mask = false } = {}) {
+	return (
+		<OTPField length={length} mask={mask}>
+			<OTPFieldGroup>
+				{Array.from({ length }, (_, index) => (
+					<Input key={index} />
+				))}
+			</OTPFieldGroup>
+		</OTPField>
+	);
+}
+`
+
+const OTP_CONTROLS: ControlSelection[] = [
+  { name: "length", kind: "number", default: null },
+  { name: "mask", kind: "boolean", default: false },
+]
+
+describe("otp-field", () => {
+  it("renders one slot per length, without keys", async () => {
+    const { collapsed } = await gen(OTP_SRC, OTP_CONTROLS, {
+      length: 4,
+      mask: true,
+    })
+    expect(collapsed).toBe(`<OTPField length={4} mask>
+  <OTPFieldGroup>
+    <Input />
+    <Input />
+    <Input />
+    <Input />
+  </OTPFieldGroup>
+</OTPField>`)
+  })
+})
