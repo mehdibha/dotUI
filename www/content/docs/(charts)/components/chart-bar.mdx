@@ -3,7 +3,18 @@ title: Bar Chart
 description: Compares categories with bars — grouped, stacked, horizontal, or labelled.
 ---
 
-<Demo name="chart-bar/demos/multiple" />
+<InteractiveDemo
+  name="chart-bar"
+  reference="bar-chart"
+  controls={[
+    "horizontal",
+    "grouped",
+    { name: "stacked", type: "boolean" },
+    { name: "radius", min: 0, max: 16, step: 1 },
+    "grid",
+    "legend",
+  ]}
+/>
 
 `BarChart` plots one bar per category, or one bar per series inside each category band. It builds its own scales, axes, grid, legend, and tooltip from the fields you name, and paints series from your design system's chart palette.
 

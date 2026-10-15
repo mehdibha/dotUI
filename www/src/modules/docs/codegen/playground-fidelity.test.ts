@@ -48,6 +48,8 @@ interface DiscoveredDemo {
   name: string
   /** Demo file slug under demos/ (default "playground"). */
   file: string
+  /** API reference name (default `name`). */
+  reference: string
   controls: ControlInput[]
   mdxPath: string
 }
@@ -66,7 +68,14 @@ async function discoverInteractiveDemos(): Promise<DiscoveredDemo[]> {
       const name = /\bname="([^"]+)"/.exec(tag)?.[1]
       if (!name) continue
       const file = /\bfile="([^"]+)"/.exec(tag)?.[1] ?? "playground"
-      demos.push({ name, file, controls: parseControlsAttr(tag), mdxPath })
+      const reference = /\breference="([^"]+)"/.exec(tag)?.[1] ?? name
+      demos.push({
+        name,
+        file,
+        reference,
+        controls: parseControlsAttr(tag),
+        mdxPath,
+      })
     }
   }
   return demos
@@ -282,7 +291,7 @@ describe("playground code generation matches oxfmt", () => {
         "utf-8",
       )
       const controls = await buildControlsFromReference(
-        demo.name,
+        demo.reference,
         demo.controls,
         source,
       )
