@@ -4,7 +4,15 @@ description: One turn in a conversation — avatar, header, content, and footer,
 wip: true
 ---
 
-<Demo name="message/demos/message" />
+<InteractiveDemo
+  name="message"
+  controls={[
+    { name: "align", options: ["start", "end"] },
+    { name: "avatar", type: "boolean", defaultValue: true },
+    { name: "header", type: "boolean", defaultValue: true },
+    { name: "footer", type: "boolean", defaultValue: true },
+  ]}
+/>
 
 ## Installation
 
