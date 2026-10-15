@@ -7,7 +7,31 @@ links:
 wip: true
 ---
 
-<Demo name="tag-group/demos/basic" />
+<InteractiveDemo
+  name="tag-group"
+  controls={[
+    { type: "string", name: "label", defaultValue: "Categories" },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "appearance",
+      options: ["solid", "soft", "outline", "soft-outline", "dot"],
+      defaultValue: "solid",
+    },
+    {
+      type: "enum",
+      name: "selectionMode",
+      options: ["none", "single", "multiple"],
+      defaultValue: "none",
+    },
+    { type: "boolean", name: "removable", defaultValue: false },
+  ]}
+/>
 
 ## Installation
 

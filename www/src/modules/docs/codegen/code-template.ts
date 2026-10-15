@@ -41,7 +41,9 @@ export interface AttrHole {
   dropWhen?: string
 }
 
-export type AttrPart = { part: "static"; text: string } | AttrHole
+export type AttrPart =
+  /** With `showWhen` it came from `attr={cond ? value : undefined}`. */
+  { part: "static"; text: string; showWhen?: string } | AttrHole
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
@@ -181,6 +183,12 @@ function renderElement(
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
+    if (
+      attr.part === "static" &&
+      attr.showWhen &&
+      !isTruthy(values[attr.showWhen])
+    )
+      continue
     const text =
       attr.part === "static" ? attr.text : renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
