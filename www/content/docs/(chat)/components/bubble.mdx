@@ -4,7 +4,24 @@ description: A chat bubble — contained message content with variants, alignmen
 wip: true
 ---
 
-<Demo name="bubble/demos/bubble" />
+<InteractiveDemo
+  name="bubble"
+  controls={[
+    {
+      name: "text",
+      type: "string",
+      defaultValue: "Shipping it this week 🚀",
+      alwaysShow: true,
+    },
+    "variant",
+    "align",
+    {
+      name: "reactions",
+      type: "boolean",
+      defaultValue: false,
+    },
+  ]}
+/>
 
 ## Installation
 
