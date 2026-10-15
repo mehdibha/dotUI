@@ -28,6 +28,12 @@ import { Button } from "@/registry/ui/button"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { Field, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+} from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
 import {
   Select,
@@ -285,20 +291,21 @@ function NumberControlRenderer({
   onChange,
 }: NumberControlRendererProps) {
   return (
-    <TextField
-      value={String(value)}
-      onChange={(val) => onChange(control.name, Number(val) || 0)}
+    <NumberField
+      value={value}
+      onChange={(val) => onChange(control.name, Number.isNaN(val) ? 0 : val)}
+      minValue={control.min}
+      maxValue={control.max}
+      step={control.step}
       className="w-full"
     >
       <ControlLabel name={control.name} reference={control.reference} />
-      <Input
-        type="number"
-        min={control.min}
-        max={control.max}
-        step={control.step}
-        size="sm"
-      />
-    </TextField>
+      <NumberFieldGroup size="sm">
+        <NumberFieldDecrement />
+        <Input />
+        <NumberFieldIncrement />
+      </NumberFieldGroup>
+    </NumberField>
   )
 }
 

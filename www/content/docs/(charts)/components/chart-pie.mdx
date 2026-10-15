@@ -3,7 +3,47 @@ title: Pie Chart
 description: A circle divided into slices, for parts of a single whole.
 ---
 
-<Demo name="chart-pie/demos/donut" />
+<InteractiveDemo
+  name="chart-pie"
+  reference="pie-chart"
+  controls={[
+    {
+      type: "number",
+      name: "innerRadius",
+      defaultValue: 0,
+      min: 0,
+      max: 0.9,
+      step: 0.05,
+    },
+    {
+      type: "number",
+      name: "padAngle",
+      defaultValue: 0,
+      min: 0,
+      max: 0.1,
+      step: 0.01,
+    },
+    {
+      type: "number",
+      name: "cornerRadius",
+      defaultValue: 0,
+      min: 0,
+      max: 16,
+      step: 1,
+    },
+    {
+      type: "enum",
+      name: "sliceLabel",
+      options: ["none", "name", "value"],
+      defaultValue: "none",
+    },
+    {
+      type: "boolean",
+      name: "legend",
+      defaultValue: false,
+    },
+  ]}
+/>
 
 A pie chart answers one question: how does this total break down? It reads well with a handful of slices and a clear leader, and badly with a dozen near-equal ones — comparing angles is harder than comparing lengths. When the ranking matters more than the share, use a [bar chart](/docs/components/chart-bar).
 
