@@ -1,4 +1,4 @@
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const stripe = definePreset({
   id: "stripe",
@@ -6,141 +6,102 @@ export const stripe = definePreset({
   description: "Blurple fills, cool slate hairlines.",
   swatch: "#675dff",
   inspiredBy: "Stripe",
-  state: {
+  diff: {
     // Color
     brand: "#533afd",
-    buttonColor: "accent",
-    selectionColor: "accent",
-    neutralHue: 260,
-    successSeed: "#228403",
-    warningSeed: "",
-    dangerSeed: "#df1b41",
-    selectionSeed: "",
-    vividness: 1,
+    // Checks, radios and switches fill one step lighter (form accent).
+    selectionSeed: "#675dff",
+    preserveSeed: true,
+    // Slate text #1A2C44, border #D4DEE9.
+    neutralHue: 256,
     neutralTint: 2,
-    preserveSeed: false,
+    successSeed: "#2b8700",
+    warningSeed: "#cc4b00",
+    dangerSeed: "#e61947",
     lightBg: 100,
-    darkBg: 2,
-
-    // Typography
-    headingFont: "",
-    // Söhne is proprietary; Inter is the closest free grotesque.
-    bodyFont: "Inter",
-    monoFont: "Source Code Pro",
-
-    // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
-
-    // Shape
-    radiusPx: 8,
-    roleControl: "lg",
-    roleItem: "sm",
-    roleSurface: "lg",
-    rolePanel: "xl",
-    roleCard: "xl",
-
-    // Space
-    density: "default",
-    spacingUnit: 4,
+    // Dark page #14171d.
+    darkBg: 7.5,
 
     // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "low",
-    surfaceGlass: false,
+    // The sidebar sits on the white page; only hover paints primary-25.
+    shellTone: "page",
+
+    // Typography
+    // Sail's base stack is the OS face.
+    bodyFont: "System",
+    monoFont: "Source Code Pro",
+    // Visual Refresh 13px; 14 would also lift the 12px badge/caption tier.
+    uiTextSize: "13",
+    labelWeight: "semibold",
+    titleStyle: "bold",
+
+    // Icons
+    // Sail's 1.5/16 line on Lucide's 24 grid.
+    iconStroke: 2.25,
+
+    // Shape
+    // Ladder at 8: badges 4, controls 6, popovers and dialogs 8.
+    radiusPx: 8,
+    roleItem: "sm",
+    rolePanel: "lg",
+    roleCard: "lg",
+
+    // Space
+    // 28px controls.
+    density: "compact",
 
     // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
-    selectionHighlight: "accent",
+    selectionHighlight: "browser",
+    cursorDisabled: "default",
 
     // States
-    focusColor: "accent",
-    // Stripe's flush halo fails on blurple fills; duo keeps the ring readable.
-    focusStyle: "duo",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
-    focusInputStyle: "halo",
-    focusInputWidth: 4,
-    focusInputStrength: 35,
-    focusInputBorderWidth: 1,
-    disabledTreatment: "solid",
-    inputError: "border",
+    // 0 0 0 4px at 36%.
+    focusStyle: "halo",
+    focusStrength: "faint",
+    focusWidth: 4,
+    focusInputStyle: "ring",
+    disabledTreatment: "fade",
 
     // Motion
-    ...DEFAULT_MOTION,
-
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
+    motion: "smooth",
 
     // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
-    linkUnderline: "never",
-    linkColor: "accent",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "ring",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "flat",
-    segmentedTrack: "filled",
-    switchColor: "accent",
-    checkboxColor: "accent",
-    checkCorner: "rounded",
-    radioColor: "accent",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "none",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
+    buttonSecondary: "outline",
+    toggleSelected: "tint",
+    segmentedSelected: "ring",
+    cardSelected: "outline",
+    inputHover: "edge",
+    fieldLabel: "semibold",
+    inputError: "icon-message",
     pickerCaret: "double",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
-    sliderColor: "accent",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "sentence",
-    menuSearch: "field",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
+    calendarDayShape: "circle",
+    calendarToday: "numeral",
+    calendarWeekdays: "double",
+    menuArrows: "none",
+    // 32px rows under 28px controls.
+    menuRows: "step",
+    dialogBackdrop: "wash",
+    // rgba(186,200,218,.7).
+    dialogBackdropStrength: "heavy",
+    dialogSections: "on-scroll",
+    mobileDialogs: "sheet",
+    tooltipStyle: "surface",
+    // Slate-800 toasts; only errors go solid red (Bold would paint every status).
+    toastStyle: "inverse",
     tabStyle: "line",
     tabsColor: "accent",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
-    breadcrumbSeparator: "chevron",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
+    // The current sidebar item is blurple ink, no fill.
+    navMarker: "ink",
+    navWeight: "semibold",
+    navItemWeight: "regular-semibold",
+    accordionMarker: "leading-caret",
+    breadcrumbTone: "link",
     badgeStyle: "soft-outline",
     badgeShape: "rounded",
-    kbdTreatment: "chip",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
+    kbdTreatment: "outline",
+    avatarShape: "rounded",
+    tableHeaderLabel: "strong",
+    // Sail's categorical series: #9966FF, #0055BC, #00A1C2, #ED6804…
+    chartPalette: "vivid",
   },
 })

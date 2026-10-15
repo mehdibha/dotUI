@@ -96,6 +96,7 @@ interface ColorConfig {
   neutralTint?: number // whisper-tint amount (engine D8)
   neutralHue?: number // hue the neutral tint leans toward; absent = the accent's
   preserveSeed?: boolean // exact-seed pin, prints its ΔEok price (engine D7)
+  solidInk?: "white" // with preserveSeed: white labels on the light solid, priced
   primary?: "accent" // role mapping; absent = neutral
   selection?: "neutral" | "accent" // the selection cluster's source; absent = the primary's
   scopes?: Record<string, "neutral" | "accent"> // per-control forks, re-declared under `[data-<scope>]`

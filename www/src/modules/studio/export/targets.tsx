@@ -1,5 +1,5 @@
 import type { ComponentType, SVGProps } from "react"
-import { compressToEncodedURIComponent } from "lz-string"
+import LZString from "lz-string"
 
 import { BoltIcon } from "@/components/icons/bolt"
 import { FigmaIcon } from "@/components/icons/figma"
@@ -29,7 +29,7 @@ export interface OpenInTarget {
 }
 
 const uri = (prompt: string) => encodeURIComponent(prompt)
-const lz = (prompt: string) => compressToEncodedURIComponent(prompt)
+const lz = (prompt: string) => LZString.compressToEncodedURIComponent(prompt)
 
 /** ChatGPT Work builds and hosts the app through its Sites plugin. */
 const sites = (mention: string, url: ExportUrl) =>

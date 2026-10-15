@@ -3,8 +3,16 @@ import type {
   RegistryItem as ShadcnRegistryItem,
 } from "shadcn/schema"
 
-/** Density tiers a design system can be rendered at. */
-export type Density = "compact" | "default" | "comfortable"
+/** Density tiers a design system can be rendered at, smallest first. */
+export const DENSITIES = [
+  "compact",
+  "default",
+  "comfortable",
+  "spacious",
+  "touch",
+] as const
+
+export type Density = (typeof DENSITIES)[number]
 
 export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
 

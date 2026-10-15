@@ -17,6 +17,11 @@ const tooltipMeta = {
       description:
         "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
+    tip: {
+      default: "tip",
+      values: ["tip", "none"] as const,
+      description: "Whether the tooltip points at its trigger.",
+    },
     motion: {
       default: "scale",
       values: ["scale", "fade", "slide", "none"] as const,

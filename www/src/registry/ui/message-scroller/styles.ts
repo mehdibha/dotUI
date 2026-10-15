@@ -36,6 +36,16 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
         content: "gap-8",
       },
     },
+    spacious: {
+      slots: {
+        content: "gap-8",
+      },
+    },
+    touch: {
+      slots: {
+        content: "gap-8",
+      },
+    },
   },
 })
 

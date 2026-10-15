@@ -10,16 +10,12 @@ import Label from "./demos/label"
 import ReadOnly from "./demos/read-only"
 import Required from "./demos/required"
 import Sizes from "./demos/sizes"
-import WithInputGroup from "./demos/with-input-group"
 
 export default function NumberFieldExamples() {
   return (
     <Examples className="md:grid-cols-2">
       <Example title="basic">
         <Basic />
-      </Example>
-      <Example title="With input group">
-        <WithInputGroup />
       </Example>
       <Example title="disabled">
         <Disabled />

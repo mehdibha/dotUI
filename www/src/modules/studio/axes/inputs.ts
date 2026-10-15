@@ -1,55 +1,100 @@
-/* Inputs — the field family's look. Every field renders through Input /
-   InputGroup (TextArea, SearchField, Combobox, DateField, NumberField, OTP),
-   so both axes are enum params on `input` and reach them all.
+/* Inputs — the field shell every text field, picker trigger and OTP cell
+   wears, its pointer state and its height. Engine: `input.style`,
+   `input.hover`, `input.height`. */
 
-   Engine: `input.style` (the shell) and `input.hover` (the pointer state;
-   focus and invalid keep their own border); the focus transition rides the
-   `--studio-input-state-*` vars, which the token field reads too. */
-
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { STRONG_EDGE } from "./color"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
-/* shadcn's input, textarea and input group: `transition-colors` on
-   Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
-
 export const INPUT_DEFAULTS = {
-  inputStyle: "outline",
-  inputHover: "none",
-  inputMotion: MOTION,
+  inputStyle: "auto",
+  inputHover: "auto",
+  inputHeight: "controls",
 }
 
-export const STYLE_OPTIONS = [
-  { value: "outline", label: "Outline" },
-  { value: "line", label: "Line" },
-  { value: "filled-line-bottom", label: "Filled line" },
-  { value: "filled", label: "Filled" },
-]
+/* Each shell is one system's field, copied whole (input/styles.ts). */
+export const STYLE_VALUES = [
+  "outline",
+  "raised",
+  "inset",
+  "well",
+  "filled",
+  "indicator",
+  "underline",
+] as const
 
-/* Hover: shadcn and Geist ship none (the default here, matching the
-   registry), Spectrum and Ant darken the border, Linear tints the fill. */
-export const HOVER_OPTIONS = [
-  { value: "none", label: "None" },
-  { value: "border", label: "Border" },
-  { value: "tint", label: "Tint" },
-]
+/* Auto pairs the shell with the button style's source system: Hairline →
+   Inset is Primer's alone (Linear draws Outline, Supabase a Well). */
+export const AUTO_STYLE: Record<string, string> = {
+  flat: "outline",
+  hairline: "inset",
+  "rim-light": "raised",
+  gloss: "outline",
+  // Spec pairing, uncredited: Polaris (Bevel's source) measured Outline.
+  bevel: "inset",
+  ledge: "well",
+}
+
+export const HOVER_VALUES = ["none", "edge", "tint", "edge-tint"] as const
+
+/** As style (the follow): each shell's own hover, from the system it is
+ *  copied from. */
+export const STYLE_HOVER: Record<string, string> = {
+  outline: "none", // shadcn
+  raised: "none", // Untitled UI
+  inset: "none", // Primer
+  well: "edge", // Supabase
+  filled: "tint", // Ant filled
+  indicator: "tint", // Material 3 state layer (Carbon draws none)
+  underline: "edge", // Fluent
+}
+
+export const HEIGHT_VALUES = ["controls", "step", "tall"] as const
 
 export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
-  inputStyle: oneOf(STYLE_OPTIONS),
-  inputHover: oneOf(HOVER_OPTIONS),
-  inputMotion: STATE_CHANGE,
+  inputStyle: oneOf(STYLE_VALUES),
+  inputHover: oneOf(HOVER_VALUES),
+  inputHeight: oneOf(HEIGHT_VALUES),
 }
 
-export function resolveInputs(state: StudioState): Resolved {
+/* The indicator's rule is the field's only edge: on a Soft or Firm control
+   edge it takes Color's Strong edge (Material 3 on-surface-variant, Carbon
+   border-strong), which clears 3:1 on the well. */
+export function indicatorTokens(inputStyle: string, controlEdge: string) {
+  return inputStyle === "indicator" && controlEdge !== "strong"
+    ? {
+        "--indicator-edge": STRONG_EDGE,
+        "--studio-indicator-edge": "var(--indicator-edge)",
+      }
+    : undefined
+}
+
+export function resolveInputs(state: Effective): Resolved {
   return {
-    tokens: resolveStateChange("input", state.inputMotion, MOTION),
+    tokens: indicatorTokens(state.inputStyle, state.controlEdge),
     params: {
       input: {
         style: state.inputStyle,
         hover: state.inputHover,
+        height: state.inputHeight,
       },
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "inputs",
+  defaults: INPUT_DEFAULTS,
+  schema: INPUT_SCHEMA,
+  resolve: resolveInputs,
+  follows: {
+    inputStyle: [
+      { kind: "auto", id: "auto", from: "buttonStyle", table: AUTO_STYLE },
+    ],
+    inputHover: [
+      { kind: "auto", id: "auto", from: "inputStyle", table: STYLE_HOVER },
+    ],
+  },
+})

@@ -1,18 +1,9 @@
-/* Charts — the data-viz look: the categorical series strategy and the
-   gridline treatment.
-
-   Engine: the color engine generates `--chart-1..8` per mode from the brand
-   accent, so the palette rides on the color recipe as `chartPalette` (absent
-   = tonal shades, the shadcn-parity default); the grid is an enum param on
-   the `chart` container every chart renders through. Motion is the `motion`
-   enum param on `chart`: a JS transition (the marks animate their geometry,
-   not CSS), folded to its literal on publish. */
+/* Charts: series palette (a color-recipe slice), grid and motion (`chart` params). */
 
 import type { ColorConfig } from "@/registry/theme"
 
-import type { Resolved, StudioState } from "./index"
-import { ease } from "./motion"
-import type { Curve } from "./motion"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -22,45 +13,14 @@ export const CHART_DEFAULTS = {
   chartMotion: "spring",
 }
 
-/* Mono = tonal shades of the brand (shadcn, Vercel); vivid / muted = hues
-   spread around the brand at high (Material, Carbon) or low (Linear, Stripe
-   dashboards) chroma. */
-export const PALETTE_OPTIONS = [
-  { value: "mono", label: "Mono" },
-  { value: "vivid", label: "Vivid" },
-  { value: "muted", label: "Muted" },
-]
+/* Mono = tonal shades of the brand; vivid / muted = hues spread around the
+   brand at high or low chroma. */
+export const PALETTE_VALUES = ["mono", "vivid", "muted"] as const
 
-export const GRID_OPTIONS = [
-  { value: "solid", label: "Solid" },
-  { value: "dashed", label: "Dashed" },
-  { value: "none", label: "None" },
-]
+export const GRID_VALUES = ["solid", "dashed", "none"] as const
 
-const physics = (stiffness: number, damping: number): Curve => ({
-  type: "physics",
-  stiffness,
-  damping,
-  mass: 1,
-})
-
-/* shadcn's charts ride recharts' tween (CSS `ease`, 400ms on bars); dotUI's
-   default is react-spring's default config, and the other springs are its
-   named ones. `curve` is each value's specimen, mirroring the transitions in
-   `ui/chart/base.tsx`; none has nothing to draw. */
-export const MOTION_OPTIONS: { value: string; label: string; curve?: Curve }[] =
-  [
-    { value: "spring", label: "Spring", curve: physics(170, 26) },
-    { value: "stiff", label: "Stiff", curve: physics(210, 20) },
-    { value: "wobbly", label: "Wobbly", curve: physics(180, 12) },
-    { value: "slow", label: "Slow", curve: physics(280, 60) },
-    {
-      value: "ease",
-      label: "Ease",
-      curve: { type: "easing", ease: ease("ease") },
-    },
-    { value: "none", label: "None" },
-  ]
+// Spring is dotUI's own (react-spring's default config); Ease is recharts' 400ms tween.
+export const MOTION_VALUES = ["spring", "ease", "none"] as const
 
 /** The recipe's series strategy for a palette option; `undefined` is the
  *  engine's tonal default. */
@@ -69,12 +29,12 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
 }
 
 export const CHART_SCHEMA: ChapterSchema<typeof CHART_DEFAULTS> = {
-  chartPalette: oneOf(PALETTE_OPTIONS),
-  chartGrid: oneOf(GRID_OPTIONS),
-  chartMotion: oneOf(MOTION_OPTIONS),
+  chartPalette: oneOf(PALETTE_VALUES),
+  chartGrid: oneOf(GRID_VALUES),
+  chartMotion: oneOf(MOTION_VALUES),
 }
 
-export function resolveCharts(state: StudioState): Resolved {
+export function resolveCharts(state: Effective): Resolved {
   const chartPalette = chartPaletteOf(state.chartPalette)
   return {
     // A recipe slice, not a recipe: resolve.ts completes it against the default.
@@ -82,3 +42,10 @@ export function resolveCharts(state: StudioState): Resolved {
     params: { chart: { grid: state.chartGrid, motion: state.chartMotion } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "charts",
+  defaults: CHART_DEFAULTS,
+  schema: CHART_SCHEMA,
+  resolve: resolveCharts,
+})

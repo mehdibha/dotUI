@@ -3,16 +3,15 @@ import { tv } from "tailwind-variants";
 
 const cardVariants = tv({
   slots: {
-    root: "group/card flex flex-col rounded-lg border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] [--surface-radius:var(--radius-lg)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-lg *:[img]:last:rounded-b-lg gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
+    root: "group/card flex flex-col rounded-md border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] [--surface-radius:var(--radius-md)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-md *:[img]:last:rounded-b-md gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
     header:
-      "group/card-header @container/card-header grid auto-rows-min items-start rounded-t-lg has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto] gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-    title:
-      "font-heading text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+      "group/card-header @container/card-header grid auto-rows-min items-start rounded-t-md has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto] gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+    title: "font-heading text-xl font-bold",
     description: "text-fg-muted text-sm",
     action: "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
     content: "px-6 group-data-[size=sm]/card:px-4",
     footer:
-      "flex items-center rounded-b-lg px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
+      "flex items-center rounded-b-md px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
   },
 });
 

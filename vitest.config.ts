@@ -21,6 +21,8 @@ export default defineConfig({
       "**/fixtures/**",
       "**/templates/**",
       "**/.claude/worktrees/**",
+      "**/.scratch-*/**",
+      "**/.scratch-*",
     ],
   },
 })

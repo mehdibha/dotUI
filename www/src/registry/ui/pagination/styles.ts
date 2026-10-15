@@ -26,6 +26,16 @@ const { useStyles, styles } = createStyles(paginationMeta, {
         ellipsis: "size-9",
       },
     },
+    spacious: {
+      slots: {
+        ellipsis: "size-10",
+      },
+    },
+    touch: {
+      slots: {
+        ellipsis: "size-12",
+      },
+    },
   },
 })
 

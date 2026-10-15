@@ -174,13 +174,11 @@ export function semanticVocabulary(
     "color-fg-inverse": fg(ref("neutral", "25"), NEUTRAL),
     "color-fg-disabled": fg(ref("neutral", "600"), NEUTRAL),
     "color-fg-on-neutral": fg(ref("neutral", "950")),
+    // ---- borders ----
     // Solid, not alpha: an alpha hairline composites over each surface, so it
     // reads brighter on elevated ones.
     "color-border": bd(
-      {
-        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
-        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
-      },
+      mix(ref("neutral", "200"), 50, ref("neutral", "300")),
       NEUTRAL,
     ),
     "color-border-control": bd(ref("neutral", "400"), NEUTRAL),
@@ -278,6 +276,11 @@ export function semanticsFor(color: ColorSlice): SemanticVocabulary {
 /** The vocabulary `base/colors.css` declares. */
 export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 
+/** `choice-card`: a checkbox, radio or switch control in card mode (it holds
+ *  the label). */
+const CHOICE_CARD_SELECTOR =
+  ":is([data-checkbox-control],[data-radio-control],[data-switch-control]):has([data-label])"
+
 /**
  * The selection cluster per component scope, keyed by selector: `checkbox` →
  * `[data-checkbox]`.
@@ -287,7 +290,7 @@ export function scopedSemantics(
 ): Record<string, SemanticVocabulary> {
   return Object.fromEntries(
     Object.entries(color?.scopes ?? {}).map(([scope, source]) => [
-      `[data-${scope}]`,
+      scope === "choice-card" ? CHOICE_CARD_SELECTOR : `[data-${scope}]`,
       selectionCluster(source),
     ]),
   )

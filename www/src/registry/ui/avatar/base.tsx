@@ -20,17 +20,6 @@ const [AvatarContext, useAvatarContext] = createContext<{
   strict: true,
 })
 
-function tintOf(children: React.ReactNode): number {
-  const text =
-    typeof children === "string" || typeof children === "number"
-      ? String(children)
-      : ""
-  let hash = 0
-  for (let i = 0; i < text.length; i++)
-    hash = (hash * 31 + text.charCodeAt(i)) | 0
-  return Math.abs(hash) % 4
-}
-
 // MARK: Separator
 
 interface AvatarProps
@@ -92,23 +81,16 @@ function AvatarImage({
 
 interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
-const AvatarFallback = ({
-  className,
-  children,
-  ...props
-}: AvatarFallbackProps) => {
+const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
   const { status } = useAvatarContext("AvatarFallback")
   const { fallback } = useStyles()()
   if (status !== "loaded")
     return (
       <span
         data-avatar-fallback=""
-        data-tint={tintOf(children)}
         className={fallback({ className })}
         {...props}
-      >
-        {children}
-      </span>
+      />
     )
   return null
 }

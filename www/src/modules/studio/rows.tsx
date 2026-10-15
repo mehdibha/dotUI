@@ -16,6 +16,7 @@ import {
   ColorFieldStateContext,
   composeRenderProps,
   OverlayTriggerStateContext,
+  parseColor,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -56,7 +57,15 @@ import {
   NEUTRAL_HUE_RANGE,
   NEUTRAL_TINT_RANGE,
 } from "@/modules/studio/axes/color"
+import { usePopoverFocus } from "@/modules/studio/focus"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
+import { useSliderPreview, warmPreview } from "@/modules/studio/live"
+import {
+  OptionPreviewScope,
+  popoverPreviewProps,
+  useHighlightPreview,
+  useOptionPreview,
+} from "@/modules/studio/option-preview"
 
 /** Where row-attached overlays open. */
 const ROW_OVERLAY_PLACEMENT = "right top" as const
@@ -80,7 +89,7 @@ export function useMedia(query: string) {
 }
 /* Below `lg` the panel docks under the preview (or beside it, on short
    screens) and its popovers open over the dock, never the preview. */
-export const DOCKED_QUERY = "(max-width: 1023px)"
+const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
 /** Docked beside the preview (a phone on its side): the `dock-side` variant. */
 export const useDockSide = () =>
@@ -140,8 +149,10 @@ export function PanelPopover({
   const layer = useContext(DockLayer)
   const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
+  usePopoverFocus()
   return (
     <Popover
+      data-panel-popover=""
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
@@ -158,33 +169,15 @@ export function PanelPopover({
           "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
       )}
       {...props}
+      {...popoverPreviewProps}
     >
-      {docked && title
-        ? composeRenderProps(children, (children) => (
-            <>
-              <DockedTitle title={title} />
-              {children}
-            </>
-          ))
-        : children}
+      {composeRenderProps(children, (children) => (
+        <OptionPreviewScope.Provider value>
+          {docked && title && <DockedTitle title={title} />}
+          {children}
+        </OptionPreviewScope.Provider>
+      ))}
     </Popover>
-  )
-}
-
-/** The left column of a row: the label, and the line under it that says what
- *  the axis actually changes. Rows stay one line until a description arrives.
- *  `text-left` is explicit — stacked, the label stretches to the column width
- *  and would otherwise inherit a `<button>`'s centered text. */
-/* ------------------------------- Group title ------------------------------ */
-
-/** The line that opens a group: what the rows under it configure. Quieter than
- *  the chapter heading above it, and bound to its group — the margin sits on
- *  top, never between. */
-export function GroupTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
-      {children}
-    </span>
   )
 }
 
@@ -192,7 +185,7 @@ export function GroupTitle({ children }: { children: React.ReactNode }) {
 
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
- *  controls commit once on release instead of on every frame. */
+ *  controls preview every frame and commit once, on release. */
 export function useDraft<T>(committed: T) {
   const [draft, setDraft] = useState(committed)
   const [seed, setSeed] = useState(committed)
@@ -218,7 +211,7 @@ const COLOR_PRESETS = [
   "#F43F5E",
 ]
 /** The seed picker's popover: presets, area, hue, hex. Discrete controls
- *  commit at once; the area and hue slider commit on release. */
+ *  commit at once; the area and hue slider preview and commit on release. */
 export function ColorPickerPopover({
   commit,
   placement = ROW_OVERLAY_PLACEMENT,
@@ -229,31 +222,25 @@ export function ColorPickerPopover({
   /** Rows under the hex field — settings that belong to this one color. */
   children?: React.ReactNode
 }) {
+  const area = useSliderPreview(commit)
+  const hue = useSliderPreview(commit)
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
-        <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
-          {COLOR_PRESETS.map((preset) => (
-            <ColorSwatchPickerItem
-              key={preset}
-              color={preset}
-              className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden pointer-coarse:size-7 selected:ring-2 selected:ring-(--color)"
-            />
-          ))}
-        </ColorSwatchPicker>
+        <ColorPresets commit={commit} />
         <ColorArea
           aria-label="Saturation and brightness"
           colorSpace="hsb"
           xChannel="saturation"
           yChannel="brightness"
-          onChangeEnd={commit}
+          {...area}
           className="w-full rounded-xl max-lg:aspect-auto max-lg:h-28 max-lg:shrink-0"
         />
         <ColorSlider
           aria-label="Hue"
           colorSpace="hsb"
           channel="hue"
-          onChangeEnd={commit}
+          {...hue}
           className="w-full"
         >
           <ColorSliderControl className="h-5 rounded-full" />
@@ -269,6 +256,22 @@ export function ColorPickerPopover({
         {children}
       </DialogContent>
     </PanelPopover>
+  )
+}
+
+function ColorPresets({ commit }: { commit: (color: Color) => void }) {
+  const previewProps = useOptionPreview()
+  return (
+    <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
+      {COLOR_PRESETS.map((preset) => (
+        <ColorSwatchPickerItem
+          key={preset}
+          color={preset}
+          {...previewProps(() => commit(parseColor(preset)))}
+          className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden pointer-coarse:size-7 selected:ring-2 selected:ring-(--color)"
+        />
+      ))}
+    </ColorSwatchPicker>
   )
 }
 
@@ -365,9 +368,11 @@ function NeutralSlider({
   track: string
   /** The sample the thumb carries — the color at the current value. */
   thumb: string
+  /** The draft, every step. */
   onChange: (value: number) => void
   onChangeEnd: (value: number) => void
 }) {
+  const drag = useSliderPreview(onChangeEnd)
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between gap-2">
@@ -380,8 +385,12 @@ function NeutralSlider({
         minValue={range.min}
         maxValue={range.max}
         step={range.step}
-        onChange={(v) => onChange(v as number)}
-        onChangeEnd={(v) => onChangeEnd(v as number)}
+        onPointerDownCapture={drag.onPointerDownCapture}
+        onChange={(v) => {
+          onChange(v as number)
+          drag.onChange(v as number)
+        }}
+        onChangeEnd={(v) => drag.onChangeEnd(v as number)}
         className="w-full"
       >
         <SliderControl>
@@ -393,7 +402,7 @@ function NeutralSlider({
             // Named on the thumb too: the group's label doesn't reach the
             // range input, which is what a screen reader lands on.
             aria-label={label}
-            className="z-10 size-5 rounded-full border-2 border-thumb ring-1 ring-overlay/40"
+            className="z-10 size-5 rounded-full border-2 border-thumb ring-1 ring-scrim"
             style={{ background: thumb }}
           />
         </SliderControl>
@@ -454,8 +463,6 @@ export function NeutralPickerPopover({
   // The dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
-  // Sliders drag through drafts and commit on release: the neutral scale is
-  // a full engine run, too slow to resolve per frame.
   const [hue, setHue] = useDraft(value.hue ?? brandHue)
   const [tint, setTint] = useDraft(value.tint)
   const family = tint === 0 ? PURE_GRAY.label : nearestFamilyName(hue)
@@ -565,9 +572,11 @@ export function NeutralPickerPopover({
  *  Select. */
 export function FontListPopover({
   categories,
+  onPreview,
   children,
 }: {
   categories: FontCategory[]
+  onPreview: (family: string) => void
   children?: React.ReactNode
 }) {
   const listRef = useLazyFontPreviews()
@@ -608,19 +617,11 @@ export function FontListPopover({
                 </ListBoxSectionHeader>
                 {FONT_CATALOG.filter((font) => font.category === category).map(
                   (font) => (
-                    <ListBoxItem
+                    <FontItem
                       key={font.family}
-                      id={font.family}
-                      textValue={font.family}
-                      className="pointer-coarse:min-h-11"
-                    >
-                      <span
-                        data-preview-family={font.family}
-                        style={{ fontFamily: fontStack(font.family) }}
-                      >
-                        {font.family}
-                      </span>
-                    </ListBoxItem>
+                      family={font.family}
+                      onPreview={onPreview}
+                    />
                   ),
                 )}
               </ListBoxSection>
@@ -629,5 +630,55 @@ export function FontListPopover({
         </div>
       </Command>
     </PanelPopover>
+  )
+}
+
+let warmedFont = ""
+
+function FontItem({
+  family,
+  onPreview,
+}: {
+  family: string
+  onPreview: (family: string) => void
+}) {
+  const previewProps = useOptionPreview()
+  // The face starts loading in the preview at once; the preview settles.
+  const run = () => {
+    if (warmedFont !== family) warmPreview({ fonts: [(warmedFont = family)] })
+    onPreview(family)
+  }
+  return (
+    <ListBoxItem
+      id={family}
+      textValue={family}
+      className="pointer-coarse:min-h-11"
+      {...previewProps(run)}
+    >
+      {({ isFocusVisible }) => (
+        <FontLabel family={family} highlighted={isFocusVisible} run={run} />
+      )}
+    </ListBoxItem>
+  )
+}
+
+// The list's focus is virtual, so the keyboard highlight previews from here.
+function FontLabel({
+  family,
+  highlighted,
+  run,
+}: {
+  family: string
+  highlighted: boolean
+  run: () => void
+}) {
+  useHighlightPreview(highlighted, run)
+  return (
+    <span
+      data-preview-family={family}
+      style={{ fontFamily: fontStack(family) }}
+    >
+      {family}
+    </span>
   )
 }

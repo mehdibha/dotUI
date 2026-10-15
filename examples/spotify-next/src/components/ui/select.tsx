@@ -1,13 +1,14 @@
 "use client";
 
+import { use } from "react";
+import * as ButtonPrimitive from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectPrimitives from "react-aria-components/Select";
 
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import type { ButtonProps } from "@/components/ui/button";
 import { fieldStyles } from "@/components/ui/field";
+import { inputStyles } from "@/components/ui/input";
 import {
   ListBox,
   ListBoxItem,
@@ -47,9 +48,25 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 /* -------------------------------------------------------------------------- */
 
-const SelectTrigger = (props: ButtonProps) => {
+interface SelectTriggerProps extends ButtonPrimitive.ButtonProps {
+  size?: "sm" | "md" | "lg";
+}
+
+const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
+  const { trigger } = inputStyles();
+  // React Aria marks the Select invalid, not its button.
+  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
+    .isInvalid;
   return (
-    <Button {...props}>
+    <ButtonPrimitive.Button
+      data-select-trigger=""
+      data-size={size}
+      data-invalid={isInvalid || undefined}
+      className={composeRenderProps(className, (className) =>
+        trigger({ className, size }),
+      )}
+      {...props}
+    >
       {composeRenderProps(props.children, (children) => {
         return (
           <>
@@ -58,7 +75,7 @@ const SelectTrigger = (props: ButtonProps) => {
           </>
         );
       })}
-    </Button>
+    </ButtonPrimitive.Button>
   );
 };
 
@@ -147,7 +164,12 @@ const SelectContent = <T extends object>({
   );
 };
 
-export type { SelectContentProps, SelectProps, SelectValueProps };
+export type {
+  SelectContentProps,
+  SelectProps,
+  SelectTriggerProps,
+  SelectValueProps,
+};
 export {
   ListBoxItem as SelectItem,
   ListBoxSection as SelectSection,

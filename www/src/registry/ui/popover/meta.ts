@@ -19,7 +19,7 @@ const popoverMeta = {
     },
     mobile: {
       default: "drawer",
-      values: ["drawer", "popover"] as const,
+      values: ["drawer", "anchored"] as const,
       registryDependencies: { drawer: ["drawer", "use-mobile"] },
       files: {
         drawer: [
@@ -29,7 +29,7 @@ const popoverMeta = {
             target: "ui/popover.tsx",
           },
         ],
-        popover: [
+        anchored: [
           {
             type: "registry:ui",
             path: "ui/popover/base.popover.tsx",

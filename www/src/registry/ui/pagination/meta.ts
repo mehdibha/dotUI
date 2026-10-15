@@ -13,10 +13,10 @@ const paginationMeta = {
   registryDependencies: ["button"],
   params: {
     current: {
-      default: "outline",
-      values: ["filled", "outline"] as const,
+      default: "secondary",
+      values: ["secondary", "primary", "selected"] as const,
       description:
-        "The current page's button variant: primary fill or the secondary outline.",
+        "The current page's button: secondary, primary, or a quiet button in the selected look.",
     },
   },
 } satisfies RegistryItem

@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import {
   ChevronDownIcon,
   ChevronsUpDownIcon,
   ExternalLinkIcon,
+  LocateFixedIcon,
+  LocateOffIcon,
   MaximizeIcon,
   MinimizeIcon,
   MonitorIcon,
@@ -16,6 +18,7 @@ import {
 } from "lucide-react"
 import { useTheme } from "starter-themes"
 
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -37,19 +40,32 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { usePreviewFocus } from "@/modules/studio/focus"
 import {
+  clearSettled,
+  isDragPreview,
+  onWarmPreview,
+  useLive,
+} from "@/modules/studio/live"
+import {
+  BOARD_SLUG_PREFIX,
   pingIframe,
   sendInspectorMode,
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
+  sendPreviewWarm,
   sendToIframe,
   useInspectorExitMessages,
 } from "@/modules/studio/preset"
-import type { PreviewMode } from "@/modules/studio/preset"
+import type { DesignSystemMessage, PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
+import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
+import type { BoardId } from "@/modules/studio/preview/boards/titles"
+import { sendPreviewFocus } from "@/modules/studio/preview/focus-message"
+import { designSystemOf } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
-import { useStudio } from "@/modules/studio/use-studio"
+import { useCurrent } from "@/modules/studio/selection"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
 
@@ -77,6 +93,28 @@ const ALL_COMPONENTS = componentsData
 // Composed, real-world previews: the landing cards grid plus the page blocks.
 const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
 
+const previewName = (slug: string) =>
+  [...PREVIEW_ITEMS, ...ALL_COMPONENTS].find((item) => item.slug === slug)
+    ?.name ?? slug
+
+/** Whether the preview shows what the panel is editing. */
+const followStore = createPersistedStore(
+  "dotui:preview-follow",
+  "on",
+  enumCodec(["on", "off"], "on"),
+)
+// The toggle names itself on the first takeovers, until it's been used once.
+const cueStore = createPersistedStore("dotui:preview-follow-cues", 0, {
+  decode: (raw) => Number(raw) || 0,
+  encode: String,
+})
+const CUE_LIMIT = 3
+const CUE_MS = 2400
+// A board outlives its focus so hopping between popovers never flashes the user's preview.
+const FOCUS_RELEASE_MS = 200
+// Panel popovers are modal: a click dismisses one, a second opens the next.
+const CLICK_RELEASE_MS = 800
+
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
@@ -96,10 +134,63 @@ function PillTooltipContent({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** Posts the live preview, else the committed design, to the iframe. */
+function DesignSystemSync({
+  iframeRef,
+}: {
+  iframeRef: React.RefObject<HTMLIFrameElement | null>
+}) {
+  const { state } = useCurrent()
+  const live = useLive()
+  const committed = useMemo(() => designSystemOf(state), [state])
+  const message = useMemo((): DesignSystemMessage => {
+    const data = live && designSystemOf(live)
+    // A preview that resolves to the committed design isn't one.
+    return data && JSON.stringify(data) !== JSON.stringify(committed)
+      ? { data, live: true, drag: isDragPreview() }
+      : { data: committed, live: false, drag: isDragPreview() }
+  }, [live, committed])
+  const latest = useRef(message)
+  const sent = useRef("")
+
+  // Another tab's change drops a hover's preview; a drag keeps its own.
+  useEffect(() => clearSettled(), [state])
+
+  useEffect(() => {
+    latest.current = message
+    const json = JSON.stringify(message)
+    if (json === sent.current) return
+    sent.current = json
+    sendToIframe(iframeRef.current, message)
+  }, [message, iframeRef])
+
+  // Its message listener can mount after the load event, so ready resends too.
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () => sendToIframe(iframe, latest.current)
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [iframeRef])
+
+  useEffect(
+    () => onWarmPreview((assets) => sendPreviewWarm(iframeRef.current, assets)),
+    [iframeRef],
+  )
+
+  return null
+}
+
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem } = useStudio()
   const { resolvedTheme } = useTheme()
 
   const panelRef = useRef<HTMLDivElement>(null)
@@ -162,7 +253,52 @@ export function PreviewPanel({ className }: { className?: string }) {
   }, [docked])
   const isMobile = useIsMobile()
 
-  const effectivePreview = preview
+  // While following, the panel's focus takes the preview over with its board.
+  const focus = usePreviewFocus()
+  const following = followStore.useValue() === "on"
+  const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
+  const target = following ? (focus?.board ?? null) : null
+  const [board, setBoard] = useState<BoardId | null>(null)
+  const takenOver = board !== null
+  const [cueing, setCueing] = useState(false)
+  useEffect(() => {
+    if (!takenOver || cueStore.get() >= CUE_LIMIT) return
+    cueStore.update((n) => n + 1)
+    setCueing(true)
+    const timer = setTimeout(() => setCueing(false), CUE_MS)
+    return () => {
+      clearTimeout(timer)
+      setCueing(false)
+    }
+  }, [takenOver])
+  const lastPress = useRef(-Infinity)
+  useEffect(() => {
+    // A press that dismisses a popover; by rect, as the underlay covers the preview.
+    const onPress = ({ clientX: x, clientY: y }: PointerEvent) => {
+      if (!document.querySelector("[data-panel-popover]")) return
+      const rect = panelRef.current?.getBoundingClientRect()
+      const inPreview =
+        rect &&
+        x >= rect.left &&
+        x <= rect.right &&
+        y >= rect.top &&
+        y <= rect.bottom
+      if (!inPreview) lastPress.current = performance.now()
+    }
+    document.addEventListener("pointerdown", onPress, true)
+    return () => document.removeEventListener("pointerdown", onPress, true)
+  }, [])
+  useEffect(() => {
+    if (target || !following) return setBoard(target)
+    const clicked = performance.now() - lastPress.current < CLICK_RELEASE_MS
+    const timer = setTimeout(
+      () => setBoard(null),
+      clicked ? CLICK_RELEASE_MS : FOCUS_RELEASE_MS,
+    )
+    return () => clearTimeout(timer)
+  }, [target, following])
+
+  const effectivePreview = board ? BOARD_SLUG_PREFIX + board : preview
   const constrained = size !== "desktop"
   // Always found: `size` is a DeviceSize and SIZE_OPTIONS covers all three.
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
@@ -239,27 +375,6 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [effectivePreview])
 
-  // Send the design system to the iframe on change, on load, and when the iframe signals it's
-  // ready — its message listener can mount after the load event, racing the load-fired send.
-  useEffect(() => {
-    const iframe = iframeRef.current
-    if (!iframe) return
-
-    const send = () => sendToIframe(iframe, designSystem)
-
-    if (iframe.contentWindow) send()
-
-    iframe.addEventListener("load", send)
-    const onReady = (event: MessageEvent) => {
-      if (event.data?.type === "preview-ready") send()
-    }
-    window.addEventListener("message", onReady)
-    return () => {
-      iframe.removeEventListener("load", send)
-      window.removeEventListener("message", onReady)
-    }
-  }, [designSystem])
-
   // Forward the previewed display mode (light / dark) to the iframe — on change,
   // on load, and when the iframe signals it's ready (its listener can mount after load).
   useEffect(() => {
@@ -277,6 +392,31 @@ export function PreviewPanel({ className }: { className?: string }) {
       window.removeEventListener("message", onReady)
     }
   }, [previewMode])
+
+  const sentFocus = following ? focus : null
+  const focusAxis = sentFocus?.axis
+  const focusHolds = sentFocus?.holds?.join(" ")
+  const focusPopover = !!sentFocus?.popover
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () =>
+      sendPreviewFocus(iframe, {
+        axis: focusAxis,
+        holds: focusHolds ? focusHolds.split(" ") : undefined,
+        popover: focusPopover,
+      })
+    if (iframe.contentWindow) send()
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [focusAxis, focusHolds, focusPopover])
 
   // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
   // display mode, so it survives preview switches (the iframe remounts per preview).
@@ -368,8 +508,10 @@ export function PreviewPanel({ className }: { className?: string }) {
      controlled so the drawer can be driven by the same Select. */
   const previewPicker = (
     <Select
-      value={effectivePreview}
+      value={preview}
       onChange={(v) => {
+        // Picking another preview during a takeover stops following.
+        if (takenOver) setFollowing(false)
         navigate({
           search: (prev) => ({ ...prev, preview: v as string }),
         })
@@ -390,7 +532,9 @@ export function PreviewPanel({ className }: { className?: string }) {
         {/* flex-initial overrides the base flex-1 (basis-0), which has no
             space to grow into inside the pill's shrink-to-fit box and
             collapses the value to a sliver. */}
-        <SelectValue className="min-w-0 flex-initial max-sm:sr-only" />
+        <SelectValue className="min-w-0 flex-initial max-sm:sr-only">
+          {board ? BOARD_TITLES[board] : previewName(preview)}
+        </SelectValue>
         <ChevronsUpDownIcon data-icon="inline-end" className="max-sm:hidden" />
         <PanelsTopLeftIcon className="sm:hidden" />
       </Button>
@@ -416,6 +560,43 @@ export function PreviewPanel({ className }: { className?: string }) {
         </Popover>
       )}
     </Select>
+  )
+
+  // On by default; the first takeovers spell out its name beside the icon.
+  const followToggle = (
+    <Tooltip delay={0} isDisabled={cueing}>
+      <Button
+        size="sm"
+        variant="quiet"
+        aria-label="Follow the panel"
+        aria-pressed={following}
+        onPress={() => {
+          cueStore.set(CUE_LIMIT)
+          setFollowing(!following)
+        }}
+        className={cn(
+          "min-w-8 shrink-0 gap-0 rounded-full px-2 transition-colors pointer-coarse:h-9",
+          cueing && "bg-accent-muted text-fg-accent",
+        )}
+      >
+        {following ? <LocateFixedIcon /> : <LocateOffIcon />}
+        <span
+          aria-hidden
+          className={cn(
+            "overflow-hidden whitespace-nowrap transition-[max-width,opacity,padding] duration-300 ease-out motion-reduce:transition-none",
+            cueing ? "max-w-40 pl-1.5 opacity-100" : "max-w-0 opacity-0",
+          )}
+        >
+          Following the panel
+        </span>
+      </Button>
+      <PillTooltipContent>
+        Follow the panel{" "}
+        <span className="text-fg-on-tooltip/60">
+          {following ? "On" : "Off"}
+        </span>
+      </PillTooltipContent>
+    </Tooltip>
   )
   const zoomMenu = (
     <Menu>
@@ -524,6 +705,7 @@ export function PreviewPanel({ className }: { className?: string }) {
             from its left edge. `shrink-0` keeps the set device width — as a flex
             item the iframe would otherwise shrink to fit and preview a lie. */}
         <div className="flex h-full w-full">
+          <DesignSystemSync iframeRef={iframeRef} />
           <iframe
             ref={iframeRef}
             src={iframeSrc}
@@ -562,6 +744,7 @@ export function PreviewPanel({ className }: { className?: string }) {
         <HeaderActions>
           <div className="order-first mr-1 flex items-center gap-0.5">
             {previewPicker}
+            {followToggle}
             {zoomMenu}
             {modeToggle}
             {openInTab}
@@ -604,6 +787,7 @@ export function PreviewPanel({ className }: { className?: string }) {
               )}
             >
               {previewPicker}
+              {followToggle}
 
               <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
 

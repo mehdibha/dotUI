@@ -73,7 +73,7 @@ const TabList = ({ className, variant, ...props }: TabListProps) => {
 interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
-  const { tab } = useStyles()()
+  const { item } = useStyles()()
   const orientation = useTabsContext("Tab")
   const variant = useTabListContext("Tab")
   return (
@@ -81,7 +81,7 @@ const Tab = ({ className, ...props }: TabProps) => {
       data-tab=""
       data-orientation={orientation}
       className={composeRenderProps(className, (cn) =>
-        tab({ orientation, variant, className: cn }),
+        item({ orientation, variant, className: cn }),
       )}
       {...props}
     >
@@ -107,7 +107,7 @@ interface TabIndicatorProps extends React.ComponentProps<
 > {}
 
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
-  const { selectionIndicator } = useStyles()()
+  const { indicator } = useStyles()()
   const orientation = useTabsContext("TabIndicator")
   const variant = useTabListContext("TabIndicator")
   return (
@@ -115,7 +115,7 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
       data-tab-indicator=""
       data-orientation={orientation}
       className={composeRenderProps(className, (cn) =>
-        selectionIndicator({ orientation, variant, className: cn }),
+        indicator({ orientation, variant, className: cn }),
       )}
       {...props}
     />

@@ -25,14 +25,6 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
 
 type IconComponent = React.ComponentType<CommonIconProps>
 
-type IconNames = {
-  lucide: string
-  hugeicons: string
-  tabler: string
-  remix: string
-  phosphor: string
-}
-
 /**
  * The active icon library (default lucide); every registry icon swaps to it at
  * runtime.
@@ -50,14 +42,17 @@ const loaders = {
   tabler: createIconLoader("tabler"),
   hugeicons: createIconLoader("hugeicons"),
   phosphor: createIconLoader("phosphor"),
-} as const
+  "material-symbols": createIconLoader("material-symbols"),
+  octicons: createIconLoader("octicons"),
+} satisfies Record<Exclude<IconLibraryName, "lucide">, unknown>
 
 export type { CommonIconProps }
 export { IconLibraryContext, IconWeightContext }
 
+/** `name` is the registry name; each library module exports its glyph under it. */
 export function createIcon(
   LucideIcon: IconComponent,
-  names: IconNames,
+  name: string,
 ): IconComponent {
   function Icon(props: CommonIconProps) {
     const library = use(IconLibraryContext)
@@ -70,7 +65,7 @@ export function createIcon(
     return (
       <Suspense fallback={<LucideIcon {...props} />}>
         <IconLoader
-          name={names[library]}
+          name={name}
           fallback={LucideIcon}
           {...weightProps}
           {...props}
@@ -78,6 +73,6 @@ export function createIcon(
       </Suspense>
     )
   }
-  Icon.displayName = names.lucide
+  Icon.displayName = name
   return Icon
 }

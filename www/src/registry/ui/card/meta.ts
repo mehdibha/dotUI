@@ -11,9 +11,20 @@ const cardMeta = {
     },
   ],
   params: {
-    style: {
-      default: "default",
-      values: ["default", "tasnim"] as const,
+    header: {
+      default: "none",
+      values: ["none", "rule", "band"] as const,
+      description: "What sets the header apart: nothing, a rule, or a band.",
+    },
+    footer: {
+      default: "none",
+      values: ["none", "rule", "band"] as const,
+      description: "What sets the footer apart: nothing, a rule, or a band.",
+    },
+    titles: {
+      default: "quiet",
+      values: ["quiet", "compact", "tight", "bold", "display", "caps"] as const,
+      description: "The title recipe: size, weight, tracking and case.",
     },
   },
 } satisfies RegistryItem
