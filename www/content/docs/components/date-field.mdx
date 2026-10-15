@@ -16,6 +16,24 @@ wip: true
       defaultValue: "Date",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "granularity",
+      options: ["day", "hour", "minute", "second"],
+      defaultValue: "day",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
@@ -28,6 +46,11 @@ wip: true
     {
       type: "boolean",
       name: "isInvalid",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
   ]}
