@@ -60,7 +60,7 @@ export default function NumberFieldBoard() {
   return (
     <Board id="number-field">
       <BoardSection title="Steppers">
-        <Stepper className="[zoom:1.5] lg:[zoom:2]" />
+        <Stepper className="zoom-[1.5] lg:zoom-[2]" />
       </BoardSection>
       <BoardSection title="Sizes">
         <div className={GRID}>

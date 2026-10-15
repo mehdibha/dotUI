@@ -41,8 +41,6 @@ const chartVariants = tv({
 
 const { container } = chartVariants();
 
-/* Every design decision the chart families share. Read from here, never
-   scatter a literal into a `??` fallback. */
 export const chartDefaults = {
   aspectRatio: 16 / 9,
   curve: "natural",
@@ -67,8 +65,6 @@ export const chartDefaults = {
   narrowTickCount: 4,
 } as const;
 
-// Eight slots: the color engine generates --chart-1..8, the library's own
-// theme carries only six.
 export const CHART_PALETTE = [
   "var(--chart-1)",
   "var(--chart-2)",
@@ -132,10 +128,6 @@ export function finiteOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-/* ------------------------------------------------------------------ */
-/* Spec options                                                        */
-/* ------------------------------------------------------------------ */
-
 export interface ChartSpec<TDatum> {
   marks: readonly ChartMarkLayer[];
   scales: {
@@ -184,10 +176,6 @@ export interface XYChartSpecOptions<
   labels?: Readonly<Record<string, string>>;
 }
 
-/* ------------------------------------------------------------------ */
-/* Series plan                                                         */
-/* ------------------------------------------------------------------ */
-
 export interface ChartPlan<TDatum> {
   /** Series labels, in color-slot and legend order. */
   order: readonly string[];
@@ -202,8 +190,6 @@ export interface ChartPlan<TDatum> {
   wide: boolean;
 }
 
-/* `seriesOrder` leads, then any series only the data carries, so the color
-   domain covers every row and the legend never hides one. */
 export function orderSeries(
   leading: readonly string[],
   found: readonly string[],
@@ -212,9 +198,6 @@ export function orderSeries(
   return [...leading, ...new Set(found.filter((label) => !listed.has(label)))];
 }
 
-/* Long rows read `series` directly. Wide rows with several `y` fields fold
-   into one row per field, so every family is a single mark split by `z` and
-   the library's stack and group layouts apply. */
 export function planChart<TDatum>(
   options: XYChartSpecOptions<TDatum>,
 ): ChartPlan<TDatum> {
@@ -283,10 +266,6 @@ export function planChart<TDatum>(
   };
 }
 
-/* ------------------------------------------------------------------ */
-/* Frame                                                               */
-/* ------------------------------------------------------------------ */
-
 export type ChartScaleKind = "band" | "point" | "linear";
 
 const SCALES: Record<ChartScaleKind, () => ChartAxisOptions["scale"]> = {
@@ -342,8 +321,8 @@ function frameAxis(
   return {
     scale: SCALES[kind],
     nice: kind === "linear",
-    // The library paints the cartesian grid at 11% — the border token is
-    // already a hairline.
+    // The library paints the grid at 11% opacity; the border token is already
+    // a hairline.
     grid: grid && { strokeOpacity: 1 },
     axis: ticks && {
       line: false,
@@ -365,8 +344,6 @@ export function chartLegend() {
   });
 }
 
-/* The axes, color scale and theme every cartesian family shares. `ctx` is
-   the library's responsiveness lever: the builder re-runs on resize. */
 export function chartFrame(
   options: ChartFrameOptions,
   ctx: ChartBuildContext,
@@ -410,20 +387,14 @@ export function chartFrame(
   };
 }
 
-/* ------------------------------------------------------------------ */
-/* Decorative marks                                                    */
-/* ------------------------------------------------------------------ */
-
 interface DecorativeMark {
   initialize: (context: never) => {
     render: (context: never) => { nodes: readonly unknown[] };
   };
 }
 
-/* Strips a mark's focus points: it still paints, but never becomes a keyboard
-   stop or tooltip target. The library's own `decorative` works through
-   `postDomain`, which the polar container never calls — this one accepts
-   cartesian and polar marks alike. */
+/* The library's own `decorative` works through `postDomain`, which the polar
+   container never calls. */
 export function decorative<TMark extends DecorativeMark>(mark: TMark): TMark {
   const initialize = (context: never) => {
     const initialized = mark.initialize(context);
@@ -473,9 +444,7 @@ function stripInteraction(node: unknown): unknown {
   return rest;
 }
 
-/* A configured polar scale no mark binds is rejected at runtime, so families
-   only configure identity scales when a layer needs them. `initialize` is
-   pure data preparation and exposes the bindings. */
+/* A configured polar scale that no mark binds is rejected at runtime. */
 export function polarMarksBindScales(
   marks: readonly PolarMarkLayer[] | undefined,
 ): boolean {
@@ -489,12 +458,8 @@ export function polarMarksBindScales(
   });
 }
 
-/* ------------------------------------------------------------------ */
-/* Host                                                                */
-/* ------------------------------------------------------------------ */
-
-/* Function easing is excluded: the named easings cover the design space and
-   an inline easing would defeat the memo. */
+/* Function easing is excluded: an inline easing would defeat the definition
+   memo. */
 export type ChartAnimate =
   | boolean
   | (Omit<ChartMotionTweenTransition, "easing"> & {
@@ -511,8 +476,6 @@ export interface ChartBehaviorProps {
   animate?: ChartAnimate;
 }
 
-/* `renderer` and `measureText` are the host's: a renderer identity change
-   remounts the whole surface. */
 export type ChartHostProps<TDatum> = Omit<
   RendererChartCommonProps<TDatum, ChartValue, number>,
   "renderer" | "measureText"
@@ -528,9 +491,8 @@ export type ChartComponentProps<TOptions, TDatum> = TOptions &
   ChartBehaviorProps &
   ChartHostProps<TDatum> & { children?: ReactNode };
 
-/* The library tooltip surface defaults to UA `Canvas` colors and `system-ui`.
-   The vars sit on the tooltip element itself, so the portal cannot detach
-   them from the chart container. */
+/* The vars sit on the tooltip element itself because the portal detaches it
+   from the chart container. */
 const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-background:color-mix(in_oklab,var(--color-popover)_var(--popover-alpha),transparent)]",
   "[backdrop-filter:var(--popover-backdrop-filter)]",
@@ -541,14 +503,11 @@ const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ");
 
-/* Module scope: a renderer identity change remounts the surface. `initial:
-   "always"` because the React adapter adopts its own prerendered markup on
-   every mount, which would otherwise suppress the entrance everywhere. */
+/* A renderer identity change remounts the surface. `initial: "always"`
+   because the React adapter adopts its prerendered markup on every mount,
+   which would otherwise suppress the entrance. */
 const MOTION_RENDERER = motion({ initial: "always" });
 
-/* The tooltip-capable host driving the motion renderer, with `children` as an
-   HTML overlay above the surface. The tooltip is portaled, so it paints above
-   the overlay. */
 export function Chart<TDatum>({
   children,
   className,
@@ -569,10 +528,6 @@ export function Chart<TDatum>({
     </div>
   );
 }
-
-/* ------------------------------------------------------------------ */
-/* Definition                                                          */
-/* ------------------------------------------------------------------ */
 
 /* Tracks `RendererChartCommonProps` minus `renderer`/`measureText`. */
 const HOST_PROP_NAMES = new Set([
@@ -623,9 +578,6 @@ export function splitChartProps(props: object): {
 const isFlat = (value: unknown) =>
   typeof value !== "object" && typeof value !== "function";
 
-/* Identity, except for the option shapes JSX tends to write inline: arrays of
-   scalars (`y`, `seriesOrder`) and flat records (`labels`). `data` and mark
-   layers stay identity-compared, the list contract React already has. */
 export function sameOption(left: unknown, right: unknown): boolean {
   if (Object.is(left, right)) return true;
   if (Array.isArray(left) && Array.isArray(right)) {
@@ -679,8 +631,6 @@ function useOptionsMemo<T>(
   return value;
 }
 
-/* Bars and arcs enter in sequence; lines and areas are single paths, and
-   dots or cells can number in the hundreds. */
 const ENTER_STAGGER = stagger({
   each: chartDefaults.enterStagger,
   roles: ["arc", "bar"],
@@ -700,10 +650,8 @@ export interface ChartFamilyConfig<TOptions> {
 }
 
 /**
- * The one hook every family component calls: it routes props to the host,
- * the behavior or the spec, and rebuilds the definition only when a spec or
- * behavior option changes. `build` is compared by identity — declare it at
- * module scope.
+ * Rebuilds the definition only when a spec or behavior option changes.
+ * `build` is compared by identity — declare it at module scope.
  */
 export function useChartDefinition<TDatum, TOptions>(
   props: object,
@@ -719,8 +667,6 @@ export function useChartDefinition<TDatum, TOptions>(
   const rows = Array.isArray(spec.data) ? spec.data.length : 0;
   const series = Array.isArray(spec.y) ? spec.y.length : 1;
   const degrade = rows * series > chartDefaults.animateMaxPoints;
-  // Every chart's motion unless its `animate` prop says otherwise; the
-  // annotation types the transition literal.
   const systemMotion: Exclude<ChartAnimate, true> = {
     type: "spring",
     stiffness: 170,

@@ -13,7 +13,6 @@ const data = [
   { month: "Jun", change: 214, trend: "gain" },
 ]
 
-// A baseline under the bars, so the sign flip reads as a crossing.
 const baseline = [ruleY([0], { stroke: "var(--color-border)" })]
 
 export default function ChartBarNegative() {

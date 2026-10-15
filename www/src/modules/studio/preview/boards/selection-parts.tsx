@@ -16,7 +16,7 @@ export const SPLIT =
   "grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_23rem] [&>section>div]:flex-1"
 
 /** Magnifies a 16px control so its corner and edge read. */
-export const MAGNIFY = "[zoom:1.5] lg:[zoom:2]"
+export const MAGNIFY = "zoom-[1.5] lg:zoom-[2]"
 
 const LABEL: Record<StateName, string> = {
   rest: "Rest",

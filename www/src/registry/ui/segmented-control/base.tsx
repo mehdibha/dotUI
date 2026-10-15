@@ -54,8 +54,6 @@ const SegmentedControlItem = ({
     >
       {composeRenderProps(children, (children) => (
         <>
-          {/* React Aria's SelectionIndicator: it tracks the selected item and
-              animates its translate/width/height, so the pill slides smoothly. */}
           <SelectionIndicatorPrimitives.SelectionIndicator
             data-segmented-control-indicator=""
             className={indicator()}

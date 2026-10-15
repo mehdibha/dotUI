@@ -30,8 +30,7 @@ function roundedSquare(x: number, y: number, w: number, r: number) {
   )
 }
 
-// Scanners require solid finder patterns, so the three corner markers are
-// drawn as rounded squares instead of dots.
+// Scanners require solid finder patterns, so the corner markers are rounded squares, not dots.
 function finder(x: number, y: number) {
   return (
     roundedSquare(x, y, 7, 2.5) +
@@ -60,7 +59,6 @@ function QRCode({
       ecc: errorCorrection ?? (hasLogo ? "H" : "M"),
       border: 0,
     })
-    // Center modules are skipped so the logo sits in clean whitespace.
     const reserved = hasLogo ? Math.ceil(qr.size * 0.3) : 0
     const start = Math.floor((qr.size - reserved) / 2)
     const end = start + reserved

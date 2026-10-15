@@ -13,7 +13,6 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-// Module scope: a formatter defined in render would rebuild the scene.
 const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 const formatCompact = (value: ChartValue) => compact.format(Number(value))

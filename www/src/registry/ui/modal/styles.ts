@@ -2,8 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import modalMeta from "./meta"
 
-/* The entrance's timing is the studio's (styles.css); the backdrop fades on
-   the panel's. */
 const backdropFade =
   "transition-opacity duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) group-exiting/modal:duration-(--studio-modal-exit-duration) group-exiting/modal:ease-(--studio-modal-exit-ease) motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0"
 
@@ -13,8 +11,7 @@ const entrance =
 const { useStyles, styles } = createStyles(modalMeta, {
   base: {
     slots: {
-      // The drawers' layer, so the last opened sits on top: a select's
-      // drawer opens over its modal.
+      // Shares the drawers' layer so the last opened sits on top (a select's drawer over its modal).
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-50 h-(--page-height) w-full",
       ],
@@ -52,7 +49,6 @@ const { useStyles, styles } = createStyles(modalMeta, {
       },
     },
     motion: {
-      // shadcn's: fade and zoom from 95%, both ways.
       scale: {
         slots: {
           backdrop: backdropFade,

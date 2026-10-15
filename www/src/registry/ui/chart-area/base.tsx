@@ -64,9 +64,8 @@ interface StackedRow {
   z: string
 }
 
-/* The fill is one mark and the edge another: an area's stroke would outline
-   the whole polygon. The edge is decorative, so the area's points — which
-   report a stacked segment's own value — are the only stops. */
+/* An area's stroke would outline the whole polygon, so the edge is a separate
+   decorative line. */
 export function areaChartSpec<TDatum>(
   options: AreaChartSpecOptions<TDatum>,
   ctx: ChartBuildContext,

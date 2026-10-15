@@ -8,7 +8,6 @@ export default function ChartRadialStacked() {
   return (
     <RadialBarChart
       data={data}
-      // An array of fields stacks one ring, cumulative from `startAngle`.
       value={["desktop", "mobile"]}
       name="month"
       labels={{ desktop: "Desktop", mobile: "Mobile" }}

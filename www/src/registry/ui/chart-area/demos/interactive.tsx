@@ -12,7 +12,6 @@ import {
 const DAYS = 90
 const start = Date.UTC(2024, 3, 1)
 
-// Deterministic, so the server and the client render the same rows.
 const data = Array.from({ length: DAYS }, (_, index) => {
   const wave = Math.sin(index / 6) * 0.5 + 0.5
   return {
@@ -30,7 +29,6 @@ type Range = keyof typeof RANGES
 
 export default function ChartAreaInteractive() {
   const [range, setRange] = useState<Range>("90d")
-  // `data` is compared by identity: slice once per range, not per render.
   const rows = useMemo(() => data.slice(-RANGES[range]), [range])
 
   return (

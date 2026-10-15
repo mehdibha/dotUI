@@ -26,9 +26,6 @@ const labels = {
   may: "May",
 }
 
-/* A second series is a second ring, built at module scope so it keeps its
-   identity across renders. Both rings key their colors off the month, so a
-   month is one color from the middle out. */
 const mobileRing = pieRing({
   id: "mobile",
   data: mobile,

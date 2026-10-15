@@ -250,13 +250,13 @@ export const BUTTON_PRESS = {
 
 /* Duolingo: 0.8px tracking on 15px labels. Navigation puts the same case
    on tabs, sidebar items and segmented items. */
-export const UPPERCASE = "tracking-[0.05em] uppercase"
+export const UPPERCASE = "tracking-wider uppercase"
 
 export const BUTTON_CASE = {
   // UPPERCASE behind a guard (static for Tailwind; parity-tested): a select
   // trigger shows a value, not a label, so it keeps its case.
   uppercase: {
-    base: "not-has-data-[slot=select-value]:tracking-[0.05em] not-has-data-[slot=select-value]:uppercase",
+    base: "not-has-data-[slot=select-value]:tracking-wider not-has-data-[slot=select-value]:uppercase",
   },
 }
 

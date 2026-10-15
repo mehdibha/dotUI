@@ -57,15 +57,6 @@ export default function ListBoxExamples() {
       <Example title="File actions with shortcuts">
         <FileActions />
       </Example>
-      {/* <Example title="Inside a Select">
-				<InSelect />
-			</Example>
-			<Example title="Inside a Combobox">
-				<InCombobox />
-			</Example> */}
-      {/* <Example title="Inside a Command palette">
-				<InCommand />
-			</Example> */}
     </Examples>
   )
 }

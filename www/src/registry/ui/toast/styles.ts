@@ -2,8 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import toastMeta from "./meta"
 
-/* The timing is the studio's (styles.css): entering and restacking on the
-   enter leg, a dismissal on the exit leg, a swiped-away toast on its own. */
 const toastTransition =
   "transition-[transform,opacity,height,background-color,border-color] duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) data-ending-style:not-data-swipe-direction:duration-(--studio-toast-exit-duration) data-ending-style:not-data-swipe-direction:ease-(--studio-toast-exit-ease) data-ending-style:data-swipe-direction:duration-(--studio-toast-swipe-state-duration) data-ending-style:data-swipe-direction:ease-(--studio-toast-swipe-state-ease) motion-reduce:transition-none"
 const contentTransition =
@@ -122,7 +120,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
   },
   params: {
     motion: {
-      // Sonner's (shadcn's toast): in from beyond its edge, out sliding down.
       slide: {
         slots: {
           toast: [

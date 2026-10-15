@@ -12,7 +12,6 @@ import {
 const DAYS = 90
 const start = Date.UTC(2024, 3, 1)
 
-// Deterministic, so the server and the client render the same rows.
 const data = Array.from({ length: DAYS }, (_, index) => {
   const wave = Math.sin(index / 6) * 0.5 + 0.5
   return {

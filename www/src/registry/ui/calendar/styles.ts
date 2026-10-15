@@ -7,11 +7,7 @@ import calendarMeta from "./meta"
 export const DATE_CELLS =
   "not-selected:hover:bg-selection-muted selected:bg-selection selected:text-fg-on-selection"
 
-/* A single calendar paints the cell; a range calendar paints the inner chip
-   and uses the cell as the band (the checks tint). Day shape owns every
-   radius: the band ends match the chip and share the row-edge rounding
-   (spelled out twice — the publisher's extractor reads literals only).
-   Today markers land on the element that draws the chip in each calendar. */
+/* The row-edge rounding is spelled out twice because the publisher's extractor reads literals only. */
 
 const { useStyles, styles } = createStyles(calendarMeta, {
   base: {
@@ -69,7 +65,6 @@ const { useStyles, styles } = createStyles(calendarMeta, {
             "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
             "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
           ],
-          // Mid-range chips take the band's shape, as shadcn's one element does.
           cellInner:
             "rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit]",
         },

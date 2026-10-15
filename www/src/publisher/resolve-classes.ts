@@ -335,7 +335,7 @@ export function rewriteClassString(
       if (
         (value === "0" &&
           (utility.startsWith("rounded") || utility === "backdrop-blur")) ||
-        // A zero offset (`-mt-[0px]` under a zero stroke) moves nothing.
+        // A zero offset (`mt-0` under a zero stroke) moves nothing.
         (sign === "-" && /^0(?:px)?$/.test(value) && SPACING.test(utility)) ||
         isNoopRead(variants, utility, value, context, vars)
       ) {

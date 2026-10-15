@@ -15,8 +15,6 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
-/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
-   draws color swatches. */
 export default function ChartRadarIcons() {
   return (
     <div>

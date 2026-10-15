@@ -13,7 +13,6 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
 const labels = [
   text(data, {
     x: "month",

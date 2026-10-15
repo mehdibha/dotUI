@@ -75,13 +75,11 @@ function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
           return <span {...domProps} />
         }
         if (typeof href === "object") {
-          // RouterLink treats a literal `href` as authoritative and recomputes
-          // to/search/hash from it, dropping the ToOptions fields.
+          // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
         if (href.startsWith("/")) {
-          // Internal paths need RouterLink too — a bare <a> full-page reloads.
           const { href: _domHref, ...routerDomProps } = domProps
           return (
             <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />

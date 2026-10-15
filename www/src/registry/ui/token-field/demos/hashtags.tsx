@@ -6,8 +6,6 @@ import type { TokenFieldSegment } from "react-aria-components/TokenField"
 import { Label } from "@/registry/ui/field"
 import { TokenField, TokenInput } from "@/registry/ui/token-field"
 
-// Overriding `tokenize` converts typed text into tokens automatically — here
-// anything matching #hashtag or @username becomes a token once a space follows.
 class HashtagFieldValue extends TokenFieldValue {
   static tokenize(text: string): HashtagFieldValue {
     const list = new this([])

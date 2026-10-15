@@ -50,7 +50,6 @@ export const iconLibraries = [
   },
 ] as const satisfies IconLibrary[]
 
-/** Phosphor's `weight` prop values — the icon weight axis (phosphor-only). */
 export const phosphorWeights = [
   "thin",
   "light",

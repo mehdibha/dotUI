@@ -35,7 +35,7 @@ function Typing() {
     <div
       inert
       data-otp-field=""
-      className={root({ className: "w-fit sm:[zoom:1.5] lg:[zoom:2]" })}
+      className={root({ className: "w-fit sm:zoom-[1.5] lg:zoom-[2]" })}
     >
       <div className="flex items-center">
         <div className={group()}>{[0, 1, 2].map(cell)}</div>

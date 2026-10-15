@@ -26,20 +26,17 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
 type IconComponent = React.ComponentType<CommonIconProps>
 
 /**
- * The active icon library. Icons render lucide by default; the /studio builder
- * provides the user's choice (through `DesignSystemProvider`) so every registry
- * icon swaps at runtime.
+ * The active icon library (default lucide); every registry icon swaps to it at
+ * runtime.
  */
 const IconLibraryContext = createContext<IconLibraryName>("lucide")
 
 /**
- * The icon weight axis — meaningful for libraries whose components take a
- * weight prop (phosphor only today). `undefined` means the library default.
+ * The icon weight, for libraries that take a weight prop (phosphor);
+ * `undefined` = library default.
  */
 const IconWeightContext = createContext<PhosphorWeight | undefined>(undefined)
 
-// One lazy loader per non-default library — the library chunk only ever loads
-// when a design system selects it.
 const loaders = {
   remix: createIconLoader("remix"),
   tabler: createIconLoader("tabler"),
@@ -62,12 +59,9 @@ export function createIcon(
     const weight = use(IconWeightContext)
     if (library === "lucide") return <LucideIcon {...props} />
     const IconLoader = loaders[library]
-    // `weight` is a component prop, not a DOM attribute — only pass it to the
-    // library that understands it.
+    // `weight` is not a DOM attribute; only phosphor accepts it.
     const weightProps =
       library === "phosphor" && weight ? { weight } : undefined
-    // While the library chunk loads (and if the name is missing from it), keep
-    // showing the lucide equivalent — same footprint, no flash.
     return (
       <Suspense fallback={<LucideIcon {...props} />}>
         <IconLoader

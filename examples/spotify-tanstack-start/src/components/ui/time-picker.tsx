@@ -38,10 +38,7 @@ const timePickerVariants = tv({
 
 const { columns, column, item } = timePickerVariants();
 
-/**
- * A time picker combines a TimeField and a scrollable time-column popover to
- * allow users to enter or select a time value.
- */
+/** A TimeField with a scrollable time-column popover. */
 interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
   TimeFieldPrimitive.TimeFieldProps<T>,
   "className" | "children"
@@ -56,18 +53,12 @@ interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
   onOpenChange?: (isOpen: boolean) => void;
 }
 
-/**
- * The scrollable hour / minute / second / day-period columns rendered inside a
- * TimePicker popover. Reads and writes the value from the enclosing TimePicker.
- */
+/** The time columns inside a TimePicker popover; reads and writes the enclosing TimePicker's value. */
 interface TimePickerColumnsProps extends React.ComponentProps<"div"> {}
 
-// Contexts the trigger provides that must NOT leak into the popover content
-// (otherwise a button/label inside the columns would inherit the trigger's props).
+// Trigger contexts that must not leak into the popover content.
 const CLEAR_CONTEXTS = [GroupContext, ButtonContext, LabelContext, TextContext];
 
-// A callback ref + boolean flag: lets the field detect whether a <Label> was
-// rendered so the a11y wiring can fall back to aria-label when it wasn't.
 const useSlot = (
   initialState: boolean,
 ): [(el: Element | null) => void, boolean] => {
@@ -78,11 +69,7 @@ const useSlot = (
 
 /* -------------------------------------------------------------------------- */
 
-// There is no React Aria `TimePicker` primitive, so we compose one from the
-// same building blocks its `DatePicker` uses: a shared `TimeFieldState` drives
-// the editable segments (`DateInput`) and the popover columns, while an overlay
-// trigger state drives the popover. Both are exposed to children through the
-// same contexts `DatePicker` provides, so the composition reads identically.
+// React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
 const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   className,
   children,
@@ -219,9 +206,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     second?: number;
   }) => {
     if (isImmutable) return;
-    // Every TimeValue member (Time / CalendarDateTime / ZonedDateTime) implements
-    // `.set`; the `as Time` cast satisfies the union-method call while the real
-    // object handles the update, preserving date/zone for non-Time values.
+    // Every TimeValue member implements `.set`; the cast only satisfies the union-method call.
     const base = (state.value ?? state.timeValue) as Time;
     state.setValue(base.set(fields) as never);
   };
@@ -310,7 +295,6 @@ const TimeColumn = ({
 }: TimeColumnProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
-  // Center the selected value when the popover opens.
   React.useEffect(() => {
     const container = ref.current;
     const selected = container?.querySelector<HTMLElement>(

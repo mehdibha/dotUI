@@ -1,10 +1,3 @@
-/**
- * `ColorConfig` v2 — the persisted recipe for a design system's colors.
- *
- * Stores seeds + engine axes, never expanded ramps: `resolveColorConfig`
- * (in `primitives.ts`) feeds these to the `@dotui/colors` engine.
- */
-
 import { toOklch } from "@dotui/colors"
 
 import type {
@@ -18,9 +11,8 @@ import { JOB_STEPS, type JobName } from "./types"
 export interface ColorConfig {
   v: 2
   seeds: {
-    /** The brand accent — the one required input. */
     accent: string
-    /** Absent → auto-tinted from the accent hue at whisper chroma (engine D8). */
+    /** Absent → auto-tinted from the accent hue. */
     neutral?: string
     success?: string
     warning?: string
@@ -39,14 +31,13 @@ export interface ColorConfig {
   neutralTint?: number
   /** OKLCH hue the neutral tint leans toward (absent = follow the accent). */
   neutralHue?: number
-  /** Pin the accent verbatim at the solid step; the report prices it. */
+  /** Pin the accent verbatim at the solid step. */
   preserveSeed?: boolean
   /** With `preserveSeed`: white labels on the light solid whatever their
    *  contrast (absent = solved). */
   solidInk?: "white"
   /**
-   * Ramp the primary-action tokens draw from. Stored only as `'accent'`
-   * (brand-colored primary, the default's); absent means neutral
+   * Ramp the primary-action tokens draw from; absent means neutral
    * (black/white).
    */
   primary?: "accent"
@@ -56,27 +47,25 @@ export interface ColorConfig {
    */
   selection?: PrimaryColorSource
   /**
-   * Controls whose checked fill leaves the selection source: the selection
-   * cluster re-declared under `[data-<scope>]` (`checkbox`, `switch`, …).
+   * Per-control selection source, re-declared under `[data-<scope>]`
+   * (`checkbox`, `switch`, …).
    */
   scopes?: Record<string, PrimaryColorSource>
   /**
-   * Per-token remaps (T5): token name → (palette, job), one destination or a
-   * per-mode pair. Applied by the semantic resolver; unknown names are inert.
+   * Per-token remaps: token name → (palette, job), or a per-mode pair. Unknown
+   * names are inert.
    */
   overrides?: TokenOverrides
   /**
-   * Categorical chart series (engine D11): absent = tonal shades of the accent
-   * (shadcn parity); `vivid` / `muted` spread hues around it.
+   * Categorical chart series: absent = tonal shades of the accent; `vivid` /
+   * `muted` spread hues around it.
    */
   chartPalette?: "vivid" | "muted"
 }
 
 /**
- * dotUI's default palette (Origin): a blue brand accent that also fills the
- * primary actions, auto-tinted neutral, and the engine's CVD-gated status
- * defaults (kept absent: the engine supplies them). The accent sits just
- * under Geist's #0072f5 so white labels on the solid clear WCAG AA (4.5:1).
+ * The accent sits just under Geist's #0072f5 so white labels on the solid clear
+ * WCAG AA (4.5:1).
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
@@ -85,15 +74,16 @@ export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   primary: "accent",
 }
 
-/** The site's own chrome (`base/colors.css`): Origin with a neutral primary
- *  over a softer blue. Previews and exports never fall back to it. */
+/**
+ * The site's own chrome (`base/colors.css`); previews and exports never fall
+ * back to it.
+ */
 export const SITE_COLOR_CONFIG: ColorConfig = {
   v: 2,
   seeds: { accent: "#438cd6" },
   background: { dark: 2 },
 }
 
-/** True when the engine can parse `value` as a color (its render-time bar). */
 function isColor(value: unknown): value is string {
   if (typeof value !== "string") return false
   try {
@@ -104,7 +94,6 @@ function isColor(value: unknown): value is string {
   }
 }
 
-/** Salvage the seed table: keep only parseable seeds; a bad accent → default. */
 function salvageSeeds(raw: unknown): ColorConfig["seeds"] {
   const input = (raw ?? {}) as Record<string, unknown>
   const seeds: ColorConfig["seeds"] = {
@@ -131,7 +120,6 @@ const clamp = (value: number, min: number, max: number) =>
 const finite = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)
 
-/** Salvage one remap destination: a non-empty palette + a known job name. */
 function salvageTargetSpec(raw: unknown): TokenTargetSpec | undefined {
   if (typeof raw !== "object" || raw === null) return undefined
   const spec = raw as { palette?: unknown; job?: unknown }
@@ -141,7 +129,6 @@ function salvageTargetSpec(raw: unknown): TokenTargetSpec | undefined {
   return { palette: spec.palette, job: spec.job as JobName }
 }
 
-/** Salvage the per-token remap table: keep only valid entries, drop empties. */
 const isSource = (value: unknown): value is PrimaryColorSource =>
   value === "neutral" || value === "accent"
 
@@ -180,10 +167,8 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
 
 /**
  * Salvage a decoded color config field by field: a corrupt or out-of-range
- * axis is clamped or dropped, never taking valid siblings with it. Anything
- * else falls back to the default, and every kept seed is verified parseable —
- * never a render explosion. The validator in front of the engine
- * (`resolveColorConfig`).
+ * axis is clamped or dropped without discarding valid siblings, and every
+ * kept seed is verified parseable.
  */
 export function salvageColorConfig(input: unknown): ColorConfig {
   if (typeof input !== "object" || input === null) return DEFAULT_COLOR_CONFIG

@@ -5,7 +5,6 @@ import { UPPERCASE } from "../button/styles"
 import { MONO_CAPS } from "../list-box/styles"
 import sidebarMeta from "./meta"
 
-/* Collapse and expand timing is the studio's (styles.css). */
 const collapse =
   "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
 
@@ -17,7 +16,7 @@ const restWash =
 const fill = "data-active:bg-muted data-active:text-fg"
 const tint = "data-active:bg-accent-muted data-active:text-fg-accent"
 const bar =
-  "data-active:before:absolute data-active:before:inset-y-2 data-active:before:start-0 data-active:before:rounded-full"
+  "data-active:before:absolute data-active:before:inset-y-2 data-active:before:inset-s-0 data-active:before:rounded-full"
 // shadcn: a wash, neutral or brand-tinted. Material 3's pill is the same wash
 // on a stadium item (meta.ts rounds it through the item var).
 const FILL = [wash, fill]
@@ -72,17 +71,10 @@ const OUTLINE_ACCENT = [
 const { useStyles, styles } = createStyles(sidebarMeta, {
   base: {
     slots: {
-      // The element that establishes the sidebar layout: a flex row whose first
-      // (or last, for `side="right"`) child reserves the sidebar's width and
-      // whose remaining space is taken by `SidebarInset`. `relative` makes it the
-      // positioning context for `Sidebar` (which is `absolute`), so the whole
-      // thing is self-contained and works embedded in a page, not only full-screen.
+      // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
       wrapper:
         "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-      // The off-screen state machine: every collapsible/variant/side decision is a
-      // data-attribute on this element, read by descendants via `group-data-*`.
       root: "group peer hidden text-fg md:block",
-      // In-flow spacer that reserves the sidebar's width in the layout row.
       gap: [
         "relative w-(--sidebar-width) bg-transparent transition-[width]",
         collapse,
@@ -92,8 +84,6 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
         "group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
       ],
-      // The painted panel. Absolutely positioned over the gap so content reflows
-      // around the gap while the panel can slide/resize independently.
       container: [
         "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex",
         collapse,
@@ -109,17 +99,14 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)]",
         "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
-      // Mobile panel content (rendered inside a Drawer at < md).
       mobile:
         "flex h-full w-full flex-col bg-sidebar text-fg [--surface-bg:var(--color-sidebar)]",
-      // The main content area beside the sidebar.
       inset: [
         "relative flex w-full flex-1 flex-col bg-bg [--surface-bg:var(--color-bg)]",
         "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius)",
         "md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=left]:peer-data-[state=collapsed]:ml-2",
         "md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:peer-data-[side=right]:peer-data-[state=collapsed]:mr-2",
       ],
-      // The thin draggable strip on the inner edge that toggles the sidebar.
       rail: [
         "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-(--studio-sidebar-state-ease) group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
         "after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control",

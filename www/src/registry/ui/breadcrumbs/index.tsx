@@ -25,14 +25,12 @@ export function BreadcrumbLink({
     <BreadcrumbLinkPrimitive
       href={hrefString}
       render={({ ref, ...domProps }) => {
-        // isDisabled can come from context (e.g. a parent Breadcrumbs), so it
-        // won't show up in `props` — read it off the resolved DOM props instead.
+        // isDisabled can come from context, so read it off the resolved DOM props.
         if ((domProps as Record<string, unknown>)["data-disabled"]) {
           return <span ref={ref as React.Ref<HTMLSpanElement>} {...domProps} />
         }
         if (typeof href === "object") {
-          // RouterLink treats a literal `href` as authoritative and recomputes
-          // to/search/hash from it, dropping the ToOptions fields.
+          // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
           const { href: _domHref, ...routerDomProps } = domProps as Extract<
             typeof domProps,
             { href: unknown }
@@ -46,7 +44,6 @@ export function BreadcrumbLink({
           )
         }
         if (href.startsWith("/")) {
-          // Internal paths need RouterLink too — a bare <a> full-page reloads.
           const { href: _domHref, ...routerDomProps } = domProps as Extract<
             typeof domProps,
             { href: unknown }

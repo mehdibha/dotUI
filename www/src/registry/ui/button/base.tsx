@@ -62,9 +62,7 @@ const Button = ({
         styles({ variant, size, isIconOnly, className: cn }),
       )}
       {...props}
-      // Only wrap provided children: passing a render function when `children`
-      // is undefined would override context-injected children (e.g. the
-      // ColorPicker trigger's default swatch) in RAC's context merge.
+      // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
       children={children === undefined ? undefined : renderChildren}
     />
   )

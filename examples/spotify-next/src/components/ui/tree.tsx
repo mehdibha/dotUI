@@ -84,8 +84,6 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
         const hasSelectionCheckbox =
           renderProps.selectionBehavior === "toggle" &&
           renderProps.selectionMode !== "none";
-        // With no selection checkbox, pressing the row toggles the item's
-        // expansion — a parent opens on click, not only via the chevron.
         const toggleExpandOnPress =
           renderProps.hasChildItems && !hasSelectionCheckbox
             ? () => renderProps.state.toggleKey(renderProps.id)

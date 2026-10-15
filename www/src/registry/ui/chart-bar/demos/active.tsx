@@ -27,8 +27,6 @@ const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
 export default function ChartBarActive() {
   const [active, setActive] = useState<string | null>(null)
 
-  /* The focused bar is repainted by a second layer at full opacity: `marks` is
-     identity-compared, so a new array is what rebuilds the chart. */
   const highlight = useMemo(
     () =>
       active === null

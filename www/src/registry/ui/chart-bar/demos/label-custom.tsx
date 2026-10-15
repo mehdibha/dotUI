@@ -13,8 +13,6 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-/* Both labels ride inside the bar, so even the category axis can go: the
-   category anchors to the value baseline, the value to the bar's end. */
 const labels = [
   text(data, {
     x: () => 0,

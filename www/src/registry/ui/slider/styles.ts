@@ -99,14 +99,14 @@ const { useStyles, styles } = createStyles(sliderMeta, {
               thumb:
                 "h-(--slider-size) w-4 before:inset-y-[-14px] before:left-1/2 before:w-1 before:-translate-x-1/2 focus-visible:before:w-0.5 dragging:before:w-0.5",
               track:
-                "after:end-[calc(var(--slider-size)/2-2px)] after:top-1/2 after:-translate-y-1/2",
+                "after:inset-e-[calc(var(--slider-size)/2-2px)] after:top-1/2 after:-translate-y-1/2",
             },
             vertical: {
               control: "min-w-[calc(var(--slider-size)+44px)]",
               thumb:
                 "h-4 w-(--slider-size) before:inset-x-[-14px] before:top-1/2 before:h-1 before:-translate-y-1/2 focus-visible:before:h-0.5 dragging:before:h-0.5",
               track:
-                "after:start-1/2 after:top-[calc(var(--slider-size)/2-2px)] after:-translate-x-1/2",
+                "after:inset-s-1/2 after:top-[calc(var(--slider-size)/2-2px)] after:-translate-x-1/2",
             },
           },
         },

@@ -5,8 +5,6 @@
   --animate-loader-dots: loader-dots 1s ease-in-out infinite;
 }
 
-/* Blades step the whole dial round (the Apple/Geist mechanic); the opacity
-   ramp is static on the spokes. */
 @keyframes loader-blades {
   to {
     transform: rotate(1turn);

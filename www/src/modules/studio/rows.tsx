@@ -402,7 +402,7 @@ function NeutralSlider({
             // Named on the thumb too: the group's label doesn't reach the
             // range input, which is what a screen reader lands on.
             aria-label={label}
-            className="z-10 size-5 rounded-full border-2 border-thumb ring-1 ring-overlay/40"
+            className="z-10 size-5 rounded-full border-2 border-thumb ring-1 ring-scrim"
             style={{ background: thumb }}
           />
         </SliderControl>

@@ -6,7 +6,6 @@ import type { TokenFieldSegment } from "react-aria-components/TokenField"
 import { Label } from "@/registry/ui/field"
 import { TokenField, TokenInput } from "@/registry/ui/token-field"
 
-// A tag input: comma, space, or newline turns the preceding text into a tag.
 class TagFieldValue extends TokenFieldValue {
   protected tokenize(text: string): TokenFieldSegment[] {
     const parts = text.split(/[, \n]/)

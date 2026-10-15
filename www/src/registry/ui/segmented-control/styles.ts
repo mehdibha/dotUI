@@ -57,9 +57,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
-      // The sliding pill, concentric with the track's 3px inset.
-      // SelectionIndicator positions/sizes it over the selected item; `inset-0`
-      // + `isolate` on the item sit it behind the content (which is `z-10`).
+      // `isolate` on the item keeps the pill behind the `z-10` content.
       indicator:
         "pointer-events-none absolute inset-0 rounded-[calc(var(--studio-segmented-control-radius)-3px)] transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
       itemContent: "relative z-10 inline-flex items-center gap-[inherit]",

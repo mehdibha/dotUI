@@ -9,8 +9,7 @@
   --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
 }
 
-/* A 40%-wide segment crossing the track: -100% hides it left, 250% of its
-   own width puts its leading edge past the track's end. */
+/* -100% hides the 40%-wide segment left; 250% of its own width puts its leading edge past the track's end. */
 @keyframes progress-slide {
   from {
     transform: translateX(-100%);

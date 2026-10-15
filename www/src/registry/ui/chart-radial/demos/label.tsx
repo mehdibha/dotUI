@@ -25,7 +25,6 @@ export default function ChartRadialLabel() {
       value="visitors"
       name="browser"
       labels={labels}
-      // The sweep starts at the top, so the labels stack down the rings.
       innerRadius={0.25}
       radiusRatio={0.95}
       track

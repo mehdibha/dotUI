@@ -11,11 +11,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
-/**
- * Nested drawers — open a drawer from inside another drawer. The parent
- * scales/translates back so the new one stacks on top, just like the page
- * indents when the first drawer opens.
- */
 export default function Demo() {
   return (
     <Dialog>

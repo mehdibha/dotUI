@@ -69,7 +69,6 @@ const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
   name: "TabsContext",
 });
 
-// Unset, the design system's tab style applies.
 const [TabListProvider, useTabListContext] = createContext<
   TabsVariant | undefined
 >({

@@ -25,8 +25,6 @@ const data: Row[] = [
 const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
   rows.reduce((winner, row) => (best(row, winner) ? row : winner))
 
-/* Annotate a chosen few rows, not every point: pick them in data preparation
-   so the intent stays auditable. */
 const extremes = [
   {
     ...pick(data, (a, b) => a.desktop > b.desktop),

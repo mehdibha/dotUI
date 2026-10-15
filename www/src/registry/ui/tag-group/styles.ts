@@ -25,13 +25,9 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
       ],
       tag: [
         "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--studio-tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors duration-(--studio-tag-state-duration) ease-(--studio-tag-state-ease) select-ui data-react-aria-pressable:cursor-interactive",
-        // svg
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        // focus
         "focus-visible:focus-ring",
-        // link variant (when href)
         "data-href:cursor-interactive",
-        // disabled
         "data-selection-mode:disabled:cursor-disabled",
         // palette, selected and disabled
         CHIP_NEUTRAL,
@@ -39,7 +35,6 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         "disabled:[--chip-border:var(--disabled-border,var(--color-border))] disabled:[--chip-fg-tint:var(--disabled-fg,var(--color-fg))] disabled:[--chip-fg:var(--disabled-fg,var(--color-fg-on-neutral))] disabled:[--chip-fill:var(--disabled-bg,var(--color-neutral))] disabled:[--chip-tint:var(--disabled-bg,var(--color-muted))]",
 
         "text-xs/relaxed **:[svg]:not-with-[size]:size-3",
-        // remove button
         "has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
       ],
     },

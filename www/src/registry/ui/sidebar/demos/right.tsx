@@ -27,7 +27,6 @@ const items = [
 export default function Demo() {
   return (
     <SidebarProvider className="h-96 min-h-0 overflow-hidden rounded-lg border">
-      {/* For a right sidebar, render it after the inset so it reserves space on the right. */}
       <SidebarInset>
         <header className="flex h-12 items-center justify-end gap-2 border-b px-3">
           <span className="text-sm font-medium">Aligned right</span>

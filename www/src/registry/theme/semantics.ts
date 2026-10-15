@@ -1,15 +1,3 @@
-/**
- * The semantic vocabulary (token system v2) — the typed single source of
- * truth for dotUI's `--color-*` tokens, generated into CSS by `emitCss`.
- *
- * Tokens map roles onto the engine's 12-job ladder:
- * 25 app-bg · 50 subtle-bg · 100/200/300 ui rest/hover/active ·
- * 400/500/600 borders subtle/interactive/emphasized · 700/800 solid/hover ·
- * 900/950 text low/high-contrast. `on-*` are the engine's solved solid
- * labels; text on light-tint surfaces uses the text jobs (correct in both
- * modes by construction — no more reversed-ramp casualties).
- */
-
 import { SITE_COLOR_CONFIG } from "./color-config"
 import type {
   PrimaryColorSource,
@@ -22,11 +10,8 @@ import type {
 } from "./types"
 import { JOB_STEPS } from "./types"
 
-/** Picker pools: the neutral backbone + any custom palette. */
 const NEUTRAL = ["neutral", ".."] as const
-/** Picker pool for "primary"-flavored tokens: neutral or the brand accent ramp. */
 const PRIMARY = ["neutral", "accent", ".."] as const
-/** Picker pool for selection/focus tokens once a `selection` ramp exists. */
 const SELECTION = ["neutral", "accent", "selection", ".."] as const
 
 const ref = (palette: string, step: string): SemanticTarget =>
@@ -65,7 +50,6 @@ const bd = (
   scales,
 })
 
-/** The solid + tinted cluster every status hue shares. */
 function statusCluster(palette: string): SemanticVocabulary {
   return {
     [`color-${palette}`]: bg(ref(palette, "700"), [palette]),
@@ -86,8 +70,6 @@ function statusCluster(palette: string): SemanticVocabulary {
   }
 }
 
-/** The solid one source paints: the accent ramp, or the neutral's text end
- *  as an inverse surface (black/white, text on it is the app background). */
 function sourceFill(source: PrimaryColorSource) {
   const accent = source === "accent"
   return {
@@ -116,8 +98,10 @@ function sourceFill(source: PrimaryColorSource) {
   }
 }
 
-/** Checked-control fills (switch/checkbox/radio), the selected choice card's
- *  wash, and focus — drawn from `source`. */
+/**
+ * Checked-control fills and the selected choice card's wash, drawn from
+ * `source`.
+ */
 export function selectionCluster(
   source: PrimaryColorSource,
 ): SemanticVocabulary {
@@ -132,9 +116,8 @@ export function selectionCluster(
 
 /**
  * Build the vocabulary: the primary cluster from `primary`, the selection
- * cluster from `selection` (the primary's by default), until a `selection`
- * seed moves the latter onto its own ramp (Vercel: black primary, blue
- * selection). One table, no emitter special-cases.
+ * cluster from `selection` (default: the primary's). `hasSelection` moves the
+ * selection cluster onto its own `selection` ramp.
  */
 export function semanticVocabulary(
   primary: PrimaryColorSource = "neutral",
@@ -147,7 +130,6 @@ export function semanticVocabulary(
     "color-primary-hover": fill.hover,
     "color-primary-active": fill.active,
     "color-primary-muted": fill.muted,
-    // The disabled fill stays neutral whatever the primary draws from.
     "color-primary-disabled": bg(ref("neutral", "300"), PRIMARY),
     "color-fg-on-primary": fill.on,
     "color-fg-primary-disabled": fill.fgDisabled,
@@ -166,7 +148,6 @@ export function semanticVocabulary(
     : selectionCluster(selection)
 
   return {
-    // ---- surfaces / backgrounds ----
     "color-bg": bg(ref("neutral", "25"), NEUTRAL),
     "color-muted": bg(ref("neutral", "100"), NEUTRAL),
     "color-inverse": bg(ref("neutral", "950"), NEUTRAL),
@@ -188,26 +169,18 @@ export function semanticVocabulary(
     ...statusCluster("warning"),
     ...statusCluster("info"),
     ...statusCluster("accent"),
-    // ---- foregrounds ----
     "color-fg": fg(ref("neutral", "950"), NEUTRAL),
     "color-fg-muted": fg(ref("neutral", "900"), NEUTRAL),
     "color-fg-inverse": fg(ref("neutral", "25"), NEUTRAL),
     "color-fg-disabled": fg(ref("neutral", "600"), NEUTRAL),
     "color-fg-on-neutral": fg(ref("neutral", "950")),
     // ---- borders ----
-    // Two-weight model: every structural edge (chrome, cards, separators,
-    // overlays) shares one subtle weight, and controls opt into one solid
-    // emphasized weight. Solid, not alpha: an alpha hairline composites over
-    // each element's own background, so the same token paints brighter on
-    // elevated surfaces (a border-t on a bg-card code bar reads stronger than
-    // the frame around it). One fixed color reads identically everywhere.
-    // The same rungs in both modes: dark lifts cards, popovers and fields
-    // toward the border, so it needs the full two-rung gap light has.
+    // Solid, not alpha: an alpha hairline composites over each surface, so it
+    // reads brighter on elevated ones.
     "color-border": bd(
       mix(ref("neutral", "200"), 50, ref("neutral", "300")),
       NEUTRAL,
     ),
-    // The control weight: field, control, and secondary-button edges.
     "color-border-control": bd(ref("neutral", "400"), NEUTRAL),
     "color-border-control-hover": bd(ref("neutral", "500"), NEUTRAL),
     "color-border-focus": bd(
@@ -218,13 +191,8 @@ export function semanticVocabulary(
       ref(hasSelection ? "selection" : "accent", "300"),
       PRIMARY,
     ),
-    // ---- component surfaces ----
     "color-tooltip": bg(ref("neutral", "950"), NEUTRAL),
     "color-fg-on-tooltip": fg(ref("neutral", "25")),
-    // Light cards and overlays sit on the page's own tone (shadcn, Primer):
-    // the edge and shadow separate them. Dark steps up page → card → overlay,
-    // the overlay between card (50) and muted (100) so field/muted content
-    // inside it still reads.
     "color-card": bg(
       { light: ref("neutral", "25"), dark: ref("neutral", "50") },
       NEUTRAL,
@@ -237,11 +205,8 @@ export function semanticVocabulary(
       NEUTRAL,
     ),
     "color-sidebar": bg(ref("neutral", "50"), NEUTRAL),
-    // ---- overlay / chrome (previously hardcoded in components) ----
     "color-overlay": bg({ value: "oklch(0 0 0)" }),
     "color-thumb": bg({ value: "oklch(1 0 0)" }),
-    // `::selection` — a light accent tint under dark text in light mode, a
-    // dark tint under light text in dark (both flip with the ramps).
     "color-text-selection": bg(ref("accent", "300"), PRIMARY),
     "color-fg-on-text-selection": fg(ref("neutral", "950")),
   }
@@ -270,9 +235,8 @@ function overriddenTarget(
 }
 
 /**
- * Apply per-token remaps (T5 `overrides`) to a vocabulary. Unknown token
- * names are ignored (a stale preset must never break emission); category,
- * picker pools, and descriptions survive the remap.
+ * Apply per-token remaps to a vocabulary. Unknown token names are ignored so
+ * a stale preset never breaks emission.
  */
 export function applyTokenOverrides(
   vocabulary: SemanticVocabulary,
@@ -288,7 +252,6 @@ export function applyTokenOverrides(
   return out
 }
 
-/** The recipe fields the vocabulary reads. */
 type ColorSlice = {
   primary?: PrimaryColorSource
   selection?: PrimaryColorSource
@@ -297,7 +260,7 @@ type ColorSlice = {
   seeds?: { selection?: string }
 }
 
-/** The one resolver every emitter goes through (T4): sources + overrides. */
+/** The resolver every emitter goes through: sources + overrides. */
 export function semanticsFor(color: ColorSlice): SemanticVocabulary {
   const primary = color.primary ?? "neutral"
   return applyTokenOverrides(
@@ -310,7 +273,7 @@ export function semanticsFor(color: ColorSlice): SemanticVocabulary {
   )
 }
 
-/** The vocabulary `base/colors.css` declares (the site chrome's). */
+/** The vocabulary `base/colors.css` declares. */
 export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 
 /** `choice-card`: a checkbox, radio or switch control in card mode (it holds
@@ -318,8 +281,10 @@ export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 const CHOICE_CARD_SELECTOR =
   ":is([data-checkbox-control],[data-radio-control],[data-switch-control]):has([data-label])"
 
-/** The selection cluster re-declared per component scope (`scopes`), keyed
- *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
+/**
+ * The selection cluster per component scope, keyed by selector: `checkbox` →
+ * `[data-checkbox]`.
+ */
 export function scopedSemantics(
   color: ColorSlice | undefined,
 ): Record<string, SemanticVocabulary> {
@@ -332,9 +297,8 @@ export function scopedSemantics(
 }
 
 /**
- * The tokens whose target differs from the site vocabulary — for delta
- * re-emits on plain `:root`/`.dark` (the v0 bundle, scoped previews), where
- * the full `@theme` layer ships static and only divergences re-point.
+ * Tokens whose target differs from the site vocabulary, for delta re-emits on
+ * plain `:root`/`.dark`.
  */
 export function semanticDelta(color: ColorSlice): SemanticVocabulary {
   return Object.fromEntries(

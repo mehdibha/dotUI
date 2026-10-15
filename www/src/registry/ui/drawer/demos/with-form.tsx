@@ -15,11 +15,6 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
-/**
- * Drawer with form inputs. Pointerdown on inputs / textarea / select doesn't
- * start a drag (interactive-control skip in the gesture hook), so you can type
- * normally. Drag from outside the inputs (or from the handle) to dismiss.
- */
 export default function Demo() {
   return (
     <Dialog>

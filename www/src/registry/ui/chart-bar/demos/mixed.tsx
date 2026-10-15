@@ -16,7 +16,6 @@ export default function ChartBarMixed() {
       data={data}
       x="browser"
       y="visitors"
-      // One series per category: every bar lands on its own palette slot.
       series="browser"
       labels={{
         chrome: "Chrome",
