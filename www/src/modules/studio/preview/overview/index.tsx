@@ -43,17 +43,18 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
-import { DEFAULT_EFFECTIVE } from "@/modules/studio/axes"
+import { DEFAULT_EFFECTIVE, parseState } from "@/modules/studio/axes"
 import {
-  resolveShape,
+  SHAPES,
   ROLE_VARS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
   shapeVars,
 } from "@/modules/studio/axes/shape"
-import { SHAPE_CHARACTERS } from "@/modules/studio/axes/shape.meta"
+import { SHAPE_OPTIONS } from "@/modules/studio/axes/shape.meta"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 /* ---------------------------------------------------------------------------
  * The preset overview — a style guide the way a senior designer would present a
@@ -542,17 +543,18 @@ const RADII: { token: string; className: string }[] = [
   { token: "3xl", className: "rounded-3xl" },
 ]
 
-/** The character whose role tokens the design system carries, or Custom. */
-function shapeCharacter(tokens: Record<string, string>): string {
-  const radiusVars = (t: Record<string, string>) =>
+const CORNER_TOKEN =
+  /^--(radius|studio-radius-|studio-btn(-xs)?-radius|studio-badge-radius)/
+
+/** The shape whose corner tokens the design system carries, or Custom. */
+function shapeLabel(tokens: Record<string, string>): string {
+  const corners = (t: Record<string, string>) =>
     Object.fromEntries(
-      Object.entries(t).filter(([name]) => name.startsWith("--studio-radius-")),
+      Object.entries(t).filter(([name]) => CORNER_TOKEN.test(name)),
     )
-  const actual = radiusVars(tokens)
-  const match = SHAPE_CHARACTERS.find((character) => {
-    const expected = radiusVars(
-      resolveShape({ ...DEFAULT_EFFECTIVE, ...character.vector }).tokens ?? {},
-    )
+  const actual = corners(tokens)
+  const match = SHAPE_OPTIONS.find(({ value }) => {
+    const expected = corners(designSystemOf(parseState(SHAPES[value])).tokens)
     const names = new Set([...Object.keys(expected), ...Object.keys(actual)])
     return [...names].every((name) => expected[name] === actual[name])
   })
@@ -590,7 +592,7 @@ function ShapeSection({
           <span className="text-fg-muted">base radius</span>
         </div>
         <Badge variant="accent" size="lg">
-          {shapeCharacter(tokens)}
+          {shapeLabel(tokens)}
         </Badge>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
@@ -947,7 +949,7 @@ export function PresetOverview({
       label: "Density",
       value: DENSITY_LABEL[designSystem.density] ?? "Default",
     },
-    { label: "Shape", value: shapeCharacter(designSystem.tokens) },
+    { label: "Shape", value: shapeLabel(designSystem.tokens) },
     {
       label: "Type",
       value:
@@ -1002,7 +1004,7 @@ export function PresetOverview({
           panelId="shape"
           icon={ShapesIcon}
           title="Shape"
-          description="A base radius scales the corner ramp; the character decides which rung each kind of component wears."
+          description="A base radius scales the corner ramp; the shape decides which rung each kind of component wears."
         >
           <ShapeSection radiusPx={numericRadius} tokens={designSystem.tokens} />
         </Section>

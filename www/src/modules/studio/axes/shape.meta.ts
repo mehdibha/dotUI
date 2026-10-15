@@ -1,6 +1,5 @@
 import { options } from "./core/meta"
-import { STROKE_VALUES, TRACK_VALUES } from "./shape"
-import type { ShapeVector } from "./shape"
+import { SHAPE_VALUES, STROKE_VALUES, TRACK_VALUES } from "./shape"
 
 export const STROKE_OPTIONS = options(STROKE_VALUES, {
   regular: { label: "Regular", credits: ["shadcn", "Geist", "Primer"] },
@@ -17,45 +16,30 @@ export const OPTIONS = {
   tracks: TRACK_OPTIONS,
 }
 
-/* Three looks that stay distinct at a glance; the base slider and Custom
-   cover the rest. Checked against shadcn/create: Square ≈ lyra/sera,
-   Standard ≈ mira (vega and nova within a rung), Round ≈ luma/rhea. */
-export const SHAPE_CHARACTERS: Array<{
-  id: string
-  label: string
-  vector: ShapeVector
-}> = [
-  {
-    id: "square",
+export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
+  square: {
     label: "Square",
-    vector: {
-      roleControl: "none",
-      roleItem: "none",
-      roleSurface: "none",
-      rolePanel: "none",
-      roleCard: "auto",
-    },
+    description: "No rounded corners; switch and slider tracks stay round.",
   },
-  {
-    id: "standard",
+  sharp: {
+    label: "Sharp",
+    description: "Small corners on every component.",
+  },
+  standard: {
     label: "Standard",
-    vector: {
-      roleControl: "md",
-      roleItem: "auto",
-      roleSurface: "lg",
-      rolePanel: "xl",
-      roleCard: "auto",
-    },
+    description: "Controls a step tighter than menus, a step under dialogs.",
   },
-  {
-    id: "round",
+  soft: {
+    label: "Soft",
+    description: "Larger corners, closer in size from controls to dialogs.",
+  },
+  round: {
     label: "Round",
-    vector: {
-      roleControl: "3xl",
-      roleItem: "auto",
-      roleSurface: "2xl",
-      rolePanel: "3xl",
-      roleCard: "auto",
-    },
+    description: "Generous corners on every surface, pill buttons.",
   },
-]
+  pill: {
+    label: "Pill",
+    description:
+      "Pill buttons, fields and controls; cards and dialogs moderate.",
+  },
+})

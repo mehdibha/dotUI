@@ -1,5 +1,5 @@
-/* Shape — one base length scales the whole radius ladder; a character picks
-   which rung each role of component wears. Stroke is the width every control
+/* Shape — one base length scales the whole radius ladder; each role of
+   component wears a rung of it. The Radius picker's shapes set them all. Stroke is the width every control
    edge draws at; tracks, whether switch, slider and progress stay round.
 
    Engine: `--radius` is the base every `--radius-*` rung derives from
@@ -11,7 +11,7 @@
    `border` · `border-2`. */
 
 import { defineChapter } from "./core/types"
-import type { Effective, Resolved } from "./index"
+import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -42,7 +42,7 @@ export const strokePx = (id: string) =>
 
 export const TRACK_VALUES = ["round", "follow"] as const
 
-/** Where the base slider runs. Square is a character, not a base of 0: at 0
+/** Where the base slider runs. Square is a shape, not a base of 0: at 0
  *  the exported code would still carry rounded classes reading a dead token. */
 export const RADIUS_RANGE = { min: 2, max: 20, step: 0.5 }
 
@@ -84,7 +84,6 @@ export const SHAPE_ROLES = [
 ] as const
 
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
-export type ShapeVector = Record<ShapeRoleKey, string>
 
 export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
@@ -166,6 +165,68 @@ export function shapeVars(state: Effective): Record<string, string> {
     ]),
   )
 }
+
+/* The Radius picker: each shape writes the base, every role, the tracks and
+   the corners of the components that keep their own (buttons, badges), so a
+   pick never leaves an edit behind. Any other mix is Custom. */
+const shape = (
+  roles: Partial<Record<ShapeRoleKey, string>>,
+  rest: { radiusPx?: number; buttonRadius?: string; badgeShape?: string } = {},
+) => ({
+  radiusPx: SHAPE_DEFAULTS.radiusPx,
+  roleControl: SHAPE_DEFAULTS.roleControl,
+  roleItem: SHAPE_DEFAULTS.roleItem,
+  roleSurface: SHAPE_DEFAULTS.roleSurface,
+  rolePanel: SHAPE_DEFAULTS.rolePanel,
+  roleCard: SHAPE_DEFAULTS.roleCard,
+  tracks: SHAPE_DEFAULTS.tracks,
+  buttonRadius: "same",
+  badgeShape: "pill",
+  ...roles,
+  ...rest,
+})
+
+export const SHAPES = {
+  square: shape(
+    {
+      roleControl: "none",
+      roleItem: "none",
+      roleSurface: "none",
+      rolePanel: "none",
+    },
+    { badgeShape: "rounded" },
+  ),
+  sharp: shape({}, { radiusPx: 6 }),
+  standard: shape({}),
+  soft: shape(
+    { roleControl: "lg", roleSurface: "xl", rolePanel: "2xl" },
+    { radiusPx: 12 },
+  ),
+  round: shape(
+    { roleControl: "3xl", roleSurface: "2xl", rolePanel: "3xl" },
+    { buttonRadius: "pill" },
+  ),
+  pill: shape({ roleControl: "full" }),
+}
+
+export type ShapeId = keyof typeof SHAPES
+
+export const SHAPE_VALUES = Object.keys(SHAPES) as ShapeId[]
+
+/** Every key a shape writes. */
+export const SHAPE_KEYS = Object.keys(SHAPES.standard) as Array<
+  keyof typeof SHAPES.standard
+>
+
+/** The shape the state wears, or undefined when it's Custom. */
+export function shapeOf(state: Record<string, unknown>): ShapeId | undefined {
+  return SHAPE_VALUES.find((id) =>
+    SHAPE_KEYS.every((key) => state[key] === SHAPES[id][key]),
+  )
+}
+
+export const pickShape = (state: StudioState, id: ShapeId): StudioState =>
+  ({ ...state, ...SHAPES[id] }) as StudioState
 
 export function resolveShape(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
