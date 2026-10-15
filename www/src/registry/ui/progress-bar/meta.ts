@@ -14,15 +14,13 @@ const progressBarMeta = {
   params: {
     track: {
       default: "thin",
-      values: ["thin", "thick"] as const,
+      values: ["thin", "medium", "thick", "x-heavy"] as const,
+      description: "The bar's thickness.",
     },
-    indeterminate: {
-      default: "slide",
-      values: ["slide", "pulse"] as const,
-    },
-    gap: {
-      default: "none",
-      values: ["none", "cut"] as const,
+    trackStyle: {
+      default: "plain",
+      values: ["plain", "bordered", "gap"] as const,
+      description: "How the track sits around the fill.",
     },
   },
 } satisfies RegistryItem

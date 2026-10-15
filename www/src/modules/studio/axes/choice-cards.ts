@@ -1,55 +1,52 @@
-/* Choice cards — the card variant of the whole selection-control family
-   (checkbox card, radio card, switch card), one treatment across all three.
-   The control keeps the family Fill; the axes here are card-only.
+/* Choice cards — the card mode of checkbox, radio-group and switch: one
+   `card-selected` param written to all three (the recipe's single source is
+   CHOICE_CARD in the checkbox styles). Every card paints with the selection
+   tokens; where a control's own fill differs from the card's, the card
+   re-declares them as a `choice-card` recipe scope, so the control inside
+   follows. Where the control sits is markup, not an axis. */
 
-   Engine: `card-selected` is an enum param on `checkbox`, `radio-group` and
-   `switch` (a synced group — one axis writes all three); every value paints
-   with the selection tokens, so the card follows the family Fill. Tint is the
-   registry's default — the muted surface + soft edge today's cards ship.
-   `card-control` reaches the box and the dot only: Start leaves the control
-   where the markup puts it, End and Hidden reorder or drop the indicator. A
-   switch card always trails its control. */
+import type { PrimaryColorSource } from "@/registry/theme"
 
-import type { Resolved, StudioState } from "./index"
+import { SOURCE_VALUES } from "./color"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const CHOICE_CARD_DEFAULTS = {
   cardSelected: "tint",
-  cardControl: "start",
+  // Same as checks (Supabase's neutral radio cards beside a brand radio).
+  cardColor: "same" as "same" | PrimaryColorSource,
 }
 
-/* An accent border, a tinted surface, or both; systems split roughly evenly. */
-export const SELECTED_OPTIONS = [
-  { value: "outline", label: "Outline" },
-  { value: "tint", label: "Tint" },
-  { value: "outline-tint", label: "Both" },
-]
-
-/* Where the real check/radio sits — or hidden, so the card treatment alone
-   carries the state (the Ant selectable-card school). */
-export const CONTROL_OPTIONS = [
-  { value: "start", label: "Start" },
-  { value: "end", label: "End" },
-  { value: "hidden", label: "Hidden" },
-]
+/* Tint: a soft edge on a tinted surface. Edged tint: a 1px edge on the tint
+   (nearest for Duolingo and Airbnb, whose edge is 2px). Outline: a 2px edge,
+   no tint (nearest for Carbon and Notion, whose edge is 1px). */
+export const SELECTED_VALUES = ["tint", "outline-tint", "outline"] as const
 
 export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
-  cardSelected: oneOf(SELECTED_OPTIONS),
-  cardControl: oneOf(CONTROL_OPTIONS),
+  cardSelected: oneOf(SELECTED_VALUES),
+  cardColor: oneOf(SOURCE_VALUES),
 }
 
-export function resolveChoiceCards(state: StudioState): Resolved {
-  const selected = state.cardSelected
-  const box = {
-    "card-selected": selected,
-    "card-control": state.cardControl,
-  }
+export function resolveChoiceCards(state: Effective): Resolved {
+  const card = { "card-selected": state.cardSelected }
+  const fill = state.cardColor
+  const fills = [state.checkboxColor, state.radioColor, state.switchColor]
   return {
-    params: {
-      checkbox: box,
-      "radio-group": box,
-      switch: { "card-selected": selected },
-    },
+    params: { checkbox: card, "radio-group": card, switch: card },
+    color: fills.every((own) => own === fill)
+      ? undefined
+      : { scopes: { "choice-card": fill } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "choice-cards",
+  defaults: CHOICE_CARD_DEFAULTS,
+  schema: CHOICE_CARD_SCHEMA,
+  resolve: resolveChoiceCards,
+  follows: {
+    cardColor: [{ kind: "same", id: "same", from: "checkboxColor" }],
+  },
+})

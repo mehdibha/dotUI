@@ -14,10 +14,10 @@ const otpFieldMeta = {
   registryDependencies: ["field", "input"],
   params: {
     cells: {
-      default: "group",
-      values: ["group", "boxes", "underline"] as const,
+      default: "attached",
+      values: ["attached", "separate"] as const,
       description:
-        "How the digit cells sit: one attached group, separate boxes, or a dash per digit.",
+        "How the digit cells sit: one attached row, or separate cells that each wear the field shell.",
     },
   },
 } satisfies RegistryItem

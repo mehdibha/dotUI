@@ -1,4 +1,4 @@
-import { parseState } from "@/modules/studio/axes"
+import { effective, parseState } from "@/modules/studio/axes"
 import type { PanelSystem } from "@/modules/studio/panel"
 import type { Studio } from "@/modules/studio/use-studio"
 
@@ -13,6 +13,7 @@ export function studioAt(partial: State): Studio {
   const noop = () => {}
   return {
     state,
+    effective: effective(state).values,
     designSystem: designSystem(partial),
     set: () => noop,
     setState: noop,

@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { DeleteDialog } from "./delete-dialog"
+import { RowsContext } from "./family-page"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
@@ -31,7 +32,7 @@ import {
   UNSAVED_NOTE,
   useCurrent,
 } from "./selection"
-import { CHAPTERS } from "./state"
+import { ALL_ROWS, CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import {
   copyName,
@@ -227,7 +228,9 @@ export function StudioPanel({ className }: { className?: string }) {
         className,
       )}
     >
-      <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
+      <RowsContext.Provider value={ALL_ROWS}>
+        <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
+      </RowsContext.Provider>
       <NameDialog request={naming} onClose={() => setNaming(undefined)} />
       <DeleteDialog
         system={deleting}

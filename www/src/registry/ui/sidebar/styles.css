@@ -2,6 +2,7 @@
   --studio-sidebar-radius: var(--studio-radius-container);
   --studio-sidebar-inset-radius: var(--studio-radius-panel);
   --studio-sidebar-item-radius: var(--studio-radius-inline-item);
+  --studio-sidebar-button-radius: var(--studio-sidebar-item-radius);
   --studio-sidebar-state-duration: 200ms;
   --studio-sidebar-state-ease: linear;
 }

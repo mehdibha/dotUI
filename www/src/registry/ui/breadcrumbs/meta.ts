@@ -15,11 +15,19 @@ const breadcrumbsMeta = {
       default: "chevron",
       values: ["chevron", "slash"] as const,
     },
-    tone: {
+    ancestors: {
       default: "muted",
-      values: ["muted", "accent"] as const,
+      values: [
+        "muted",
+        "accent-always",
+        "accent-hover",
+        "accent-never",
+        "neutral-always",
+        "neutral-hover",
+        "neutral-never",
+      ] as const,
       description:
-        "Ancestor crumbs: muted labels that sharpen on hover, or accent links.",
+        "Ancestor crumbs: muted labels that sharpen on hover, or links in the link color and underline.",
     },
   },
 } satisfies RegistryItem

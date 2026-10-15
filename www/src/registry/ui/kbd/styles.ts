@@ -2,32 +2,35 @@ import { createStyles } from "@/lib/styles"
 
 import kbdMeta from "./meta"
 
-/* The base is the key's layout only; each treatment ships its own chrome
-   and type, so no value fights another's classes. */
+/* The base is the key's layout only; each style ships its own chrome and
+   type, so no value fights another's classes. */
 
 const { useStyles, styles } = createStyles(kbdMeta, {
   base: {
     slots: {
       group: "inline-flex items-center gap-1",
       kbd: [
-        "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-ui",
+        "pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-(--studio-radius-control-sm) text-fg-muted select-ui",
         "**:[svg]:not-with-[size]:size-3",
       ],
     },
   },
   params: {
-    treatment: {
-      text: {
-        slots: { kbd: "font-sans text-xs tracking-widest" },
-      },
+    style: {
       chip: {
+        slots: { kbd: "bg-muted px-1 font-sans text-xs font-medium" },
+      },
+      // Claude, Linear, Untitled UI: a hairline, no fill.
+      outline: {
         slots: {
-          kbd: "h-5 min-w-5 rounded-(--studio-kbd-radius) bg-muted px-1 font-sans text-xs font-medium",
+          kbd: "border-(length:--studio-control-stroke) px-1 font-sans text-xs font-medium",
         },
       },
+      // Radix Themes: sans at 12px, so ⌘ and ⇧ stay legible (a mono
+      // fallback like Menlo draws them tiny).
       keycap: {
         slots: {
-          kbd: "h-5 min-w-5 rounded-(--studio-kbd-radius) border border-b-2 border-border bg-card px-1.5 font-mono text-[0.6875rem]",
+          kbd: "border-(length:--studio-control-stroke) border-b-2 border-border bg-card px-1.5 font-sans text-xs",
         },
       },
     },

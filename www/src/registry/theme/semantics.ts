@@ -201,15 +201,10 @@ export function semanticVocabulary(
     // each element's own background, so the same token paints brighter on
     // elevated surfaces (a border-t on a bg-card code bar reads stronger than
     // the frame around it). One fixed color reads identically everywhere.
-    // Light matches ~9% ink over the app bg; dark sits between the mids
-    // (Geist-style, ~L 0.25) so edges stay legible on the lighter elevated
-    // surfaces — a dark solid matched to the page-bg hairline would vanish
-    // on popover (both ~L 0.20).
+    // The same rungs in both modes: dark lifts cards, popovers and fields
+    // toward the border, so it needs the full two-rung gap light has.
     "color-border": bd(
-      {
-        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
-        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
-      },
+      mix(ref("neutral", "200"), 50, ref("neutral", "300")),
       NEUTRAL,
     ),
     // The control weight: field, control, and secondary-button edges.
@@ -318,6 +313,11 @@ export function semanticsFor(color: ColorSlice): SemanticVocabulary {
 /** The vocabulary `base/colors.css` declares (the site chrome's). */
 export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 
+/** `choice-card`: a checkbox, radio or switch control in card mode (it holds
+ *  the label). */
+const CHOICE_CARD_SELECTOR =
+  ":is([data-checkbox-control],[data-radio-control],[data-switch-control]):has([data-label])"
+
 /** The selection cluster re-declared per component scope (`scopes`), keyed
  *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
 export function scopedSemantics(
@@ -325,7 +325,7 @@ export function scopedSemantics(
 ): Record<string, SemanticVocabulary> {
   return Object.fromEntries(
     Object.entries(color?.scopes ?? {}).map(([scope, source]) => [
-      `[data-${scope}]`,
+      scope === "choice-card" ? CHOICE_CARD_SELECTOR : `[data-${scope}]`,
       selectionCluster(source),
     ]),
   )

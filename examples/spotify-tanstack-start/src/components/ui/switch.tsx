@@ -15,11 +15,11 @@ const switchVariants = tv({
   slots: {
     root: "flex items-center has-data-description:items-start gap-3",
     control:
-      "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-full not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-lg transition-colors has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
+      "relative flex items-center gap-2 focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring-outside disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-sm focus-visible:has-data-label:focus-ring transition-colors has-data-label:justify-between has-data-label:w-full has-data-label:border has-data-label:p-2.5 not-has-data-label:rounded-full has-data-label:selected:border-selection has-data-label:selected:inset-ring-1 has-data-label:selected:inset-ring-selection",
     indicator:
-      "inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] selected:bg-selection read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+      "inline-flex shrink-0 cursor-pointer items-center transition-[background-color,border-color,box-shadow] invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled rounded-full border border-transparent bg-border-control p-0.5 selected:bg-selection disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-border-control)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
     thumb:
-      "pointer-events-none block rounded-full bg-thumb shadow-sm transition-[background-color,margin,width] selected:bg-fg-on-selection disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
+      "pointer-events-none block rounded-full bg-thumb shadow-sm transition-[background-color,margin,width] dark:not-disabled:selected:bg-fg-on-selection disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
   },
   variants: {
     size: {

@@ -4,9 +4,10 @@
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
    Docked, the field sits at the bottom, on the keyboard, and an empty query
-   lists every row under its chapter. Opens instantly on purpose: it's a frequent gesture.
-   Selecting scrolls to the chapter. ⌘P, not ⌘K — the site header's docs
-   search owns ⌘K everywhere, /studio included. */
+   lists every row under its chapter. Opens instantly on purpose: it's a
+   frequent gesture. A row reads "Page › Row"; selecting one lands on it.
+   ⌘P, not ⌘K — the site header's docs search owns ⌘K everywhere, /studio
+   included. */
 
 import { useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
@@ -25,9 +26,8 @@ import {
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { SEARCH_INDEX } from "./__generated__/search-index"
 import { PanelPopover, PanelPopoverTitle, useDocked, useMedia } from "./rows"
-import type { Chapter } from "./state"
+import type { Chapter, SearchRow } from "./state"
 
 interface Entry {
   id: string
@@ -36,6 +36,8 @@ interface Entry {
   category: string
   /** A settings row inside it; absent for the chapter itself. */
   axis?: string
+  /** Other names the chapter or page answers to. */
+  aliases?: string[]
 }
 
 function categories(chapters: Chapter[]): Entry[] {
@@ -43,19 +45,74 @@ function categories(chapters: Chapter[]): Entry[] {
     id: chapter.id,
     chapterId: chapter.id,
     category: chapter.label,
+    aliases: chapter.aliases,
   }))
+}
+
+/** The rows a row's popover holds, by the row's key: a name, then any
+ *  others it answers to. */
+const HELD: Partial<Record<string, string[][]>> = {
+  brand: [["Keep exact"], ["Ink"], ["Vividness"]],
+  neutralHue: [["Hue"], ["Tint"]],
+  iconLibrary: [["Stroke"], ["Weight"]],
+  successSeed: [["Success"], ["Warning"], ["Danger"], ["Selection"]],
+  surfaceLayers: [
+    ["Layers"],
+    ["Edge"],
+    ["Shadow"],
+    ["Overlays", "Glass"],
+    ["App shell"],
+    ["Light page"],
+    ["Dark page"],
+  ],
+  focusStyle: [["Strength"], ["Width"], ["Color"]],
+  focusInputStyle: [["Weight"], ["Ink"]],
+  selectionHighlight: [["Control text"]],
+  buttonStyle: [["Seam", "Group seam", "Button group"]],
+  dialogBackdrop: [["Strength"], ["Frost"]],
+}
+
+/** A chapter's rows and pages, each with the names it answers to; a
+ *  page's rows read "Page › Row", a popover's "Row › Sub-row". */
+function rowsOf(chapter: Chapter) {
+  const rows = new Map<string, string[] | undefined>()
+  const add = (path: string, row: SearchRow) => {
+    rows.set(path, row.aliases)
+    for (const [name, ...aliases] of HELD[row.key ?? ""] ?? [])
+      rows.set(`${path} › ${name}`, aliases)
+  }
+  for (const row of chapter.rows ?? []) add(row.name, row)
+  for (const page of chapter.pages ?? []) {
+    rows.set(page.label, page.aliases)
+    for (const row of page.rows ?? []) add(`${page.label} › ${row.name}`, row)
+  }
+  return rows
 }
 
 /** Every settings row, under its chapter. */
 function axes(chapters: Chapter[]): Entry[] {
   return chapters.flatMap((chapter) =>
-    (SEARCH_INDEX[chapter.id] ?? []).map((axis) => ({
+    [...rowsOf(chapter)].map(([axis, aliases]) => ({
       id: `${chapter.id}/${axis}`,
       chapterId: chapter.id,
       category: chapter.label,
       axis,
+      aliases,
     })),
   )
+}
+
+/** Matching chapters first, then matching rows. */
+export function searchEntries(
+  chapters: Chapter[],
+  needle: string,
+  contains: (text: string, needle: string) => boolean,
+): Entry[] {
+  const matches = (entry: Entry) =>
+    [entry.axis ?? entry.category, ...(entry.aliases ?? [])].some((name) =>
+      contains(name, needle),
+    )
+  return [...categories(chapters), ...axes(chapters)].filter(matches)
 }
 
 /** The label with the query's characters picked out in accent. */
@@ -90,19 +147,11 @@ export function PanelSearch({
     sensitivity: "base",
     ignorePunctuation: true,
   })
-  // Chapters first: a query that names one lists chapters only. Rows surface
-  // only when no chapter matches — searching "color" means the Color chapter,
-  // not every row called Color. Filtered here, not
-  // left to the Autocomplete, so the list is right even if the field remounts.
+  // Filtered here, not left to the Autocomplete, so the list is right even if
+  // the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()
-    if (!needle) return []
-    const cats = categories(chapters).filter((c) =>
-      contains(c.category, needle),
-    )
-    return cats.length > 0
-      ? cats
-      : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
+    return needle ? searchEntries(chapters, needle, contains) : []
   }, [chapters, query, contains])
   const index = docked && !query.trim()
 
@@ -135,7 +184,9 @@ export function PanelSearch({
     <ListBoxItem
       key={entry.id}
       id={entry.id}
-      textValue={entry.axis ?? entry.category}
+      textValue={[entry.axis ?? entry.category, ...(entry.aliases ?? [])].join(
+        " ",
+      )}
       onAction={() => jump(entry)}
       className="flex-col items-start justify-center gap-0 pointer-coarse:min-h-11"
     >

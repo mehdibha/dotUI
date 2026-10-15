@@ -1,5 +1,6 @@
 "use client"
 
+import { use } from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectPrimitives from "react-aria-components/Select"
 
@@ -8,6 +9,7 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import type { ButtonProps } from "@/registry/ui/button"
 import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
   ListBox,
   ListBoxItem,
@@ -50,9 +52,20 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 // MARK: Separator
 
-const SelectTrigger = (props: ButtonProps) => {
+const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
+  const { buttonTrigger } = useInputStyles()()
+  // React Aria marks the Select invalid, not its button.
+  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
+    .isInvalid
   return (
-    <Button {...props}>
+    <Button
+      size={size}
+      data-invalid={isInvalid || undefined}
+      className={composeRenderProps(className, (className) =>
+        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+      )}
+      {...props}
+    >
       {composeRenderProps(props.children, (children) => {
         return (
           <>
@@ -80,7 +93,7 @@ const SelectValue = <T extends object>({
       data-slot="select-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex-1 truncate text-left placeholder-shown:text-fg-muted",
+          "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
           className,
         ),
       )}

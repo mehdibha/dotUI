@@ -10,7 +10,7 @@ import {
 import type { CodeOptions } from "@/publisher/code-options"
 import { getPreset, ORIGIN, resolvePreset } from "@/modules/presets"
 import type { DesignSystem } from "@/modules/studio/preset/types"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 import { notFound, registryError } from "./response"
 
@@ -98,9 +98,6 @@ export async function resolveSource(
   }
   const snapshot = await loadSnapshot(source.id, store)
   return snapshot
-    ? {
-        name: snapshot.name,
-        designSystem: resolveDesignSystem(snapshot.state),
-      }
+    ? { name: snapshot.name, designSystem: designSystemOf(snapshot.state) }
     : undefined
 }

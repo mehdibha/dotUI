@@ -1,18 +1,15 @@
 :root {
   --studio-skeleton-radius: var(--studio-radius-detail);
   --studio-skeleton-block-radius: var(--studio-radius-field);
-  --studio-skeleton-loop-duration: 2000ms;
-  --studio-skeleton-loop-ease: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 /* Theme animations, because the painter reaches its loop through a var:
    Tailwind drops a theme keyframe that no used `--animate-*` names. */
 @theme inline {
-  --animate-skeleton-shimmer: skeleton-shimmer
-    var(--studio-skeleton-loop-duration) var(--studio-skeleton-loop-ease)
+  --animate-skeleton-shimmer: skeleton-shimmer 2s cubic-bezier(0.4, 0, 0.6, 1)
     infinite;
-  --animate-skeleton-pulse: skeleton-pulse var(--studio-skeleton-loop-duration)
-    var(--studio-skeleton-loop-ease) infinite;
+  --animate-skeleton-pulse: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1)
+    infinite;
 }
 
 /* One painter for every placeholder (the root applies it to descendants via

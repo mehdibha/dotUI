@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_STATE, validate } from "@/modules/studio/axes"
+import {
+  DEFAULT_STATE,
+  DEFAULTS,
+  effective,
+  validate,
+} from "@/modules/studio/axes"
+import { COLUMNS } from "@/modules/studio/axes/style"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 import { ORIGIN, PRESETS } from "./index"
 
@@ -20,7 +27,37 @@ describe("built-in presets", () => {
   })
 
   it("start from Origin, the builder defaults", () => {
+    expect(ORIGIN.diff).toEqual({})
     expect(ORIGIN.state).toEqual(DEFAULT_STATE)
+  })
+
+  it("hold only what differs from Origin and their Style", () => {
+    for (const preset of PRESETS)
+      for (const [key, value] of Object.entries(preset.diff)) {
+        const column = COLUMNS[key as keyof typeof COLUMNS]
+        const implied = column
+          ? column[preset.state.style]
+          : DEFAULTS[key as keyof typeof DEFAULTS]
+        expect(value, `${preset.id}.${key}`).not.toBe(implied)
+      }
+  })
+
+  it("fire no rule: every value they write is the one that ships", () => {
+    for (const preset of PRESETS) {
+      const { explain } = effective(preset.state)
+      const fired = Object.entries(explain)
+        .filter(([, e]) => e?.rule)
+        .map(([key, e]) => `${key}: ${e?.rule}`)
+      expect(fired, preset.id).toEqual([])
+    }
+  })
+
+  // Serialized, so token order (which reaches the emitted CSS) is pinned too; `vitest -u` re-pins.
+  it("resolve to their pinned design systems", () => {
+    for (const preset of PRESETS)
+      expect(
+        JSON.stringify(designSystemOf(preset.state), null, 2),
+      ).toMatchSnapshot(preset.id)
   })
 
   it("credit the brand they recreate", () => {

@@ -1,232 +1,69 @@
 /* Surfaces — how the page, cards and floating layers separate. A style is a
    named starting point over three settings; Glass sits beside it, and each
-   mode's page L* is Color's (the engine re-anchors every ramp on it).
+   mode's page L* is Color's (the engine re-anchors every ramp on it; the
+   light page is Auto on Layers).
 
-   - Layers, in light: cards on the page's tone (Same — shadcn, Primer), white
-     cards on a gray page (Grouped — Apple, Polaris, HeroUI), or cards shaded
-     below the page (Tonal — Material 3). The page is always the page slider's
+   - Layers, in light: cards on the page's tone (Same), white cards on a gray
+     page (Grouped), or cards shaded below the page (Tonal). The page is always the page slider's
      tone, so Grouped's depth is the page's gray. Dark always steps up page →
      card → overlay, under the field/muted rung so content inside still reads.
    - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
      edgeless system's dark is derived: shadows die on near-black, so they
      double, cards lift a quarter rung and overlays take the hairline
-     (Atlassian, Spectrum, HeroUI).
+     (Atlassian, Spectrum, HeroUI), unless Tonal's steps already part them
+     (Material 3's dark menus and dialogs draw no edge). Bevel draws Polaris's inset rim instead
+     of a border; Ledge draws the control stroke with a bottom lip on cards
+     and tiles, which a pressed or disabled tile sinks into, and no shadow
+     on popovers or dialogs (Duolingo).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
-     modal lg); Low is shadcn New York, Medium shadcn Luma.
+     modal lg).
    - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
      dialogs and drawers sit on a scrim and stay solid.
+   - App shell: the sidebar and the frame around an inset content panel.
 
    Only what differs from the registry's defaults is emitted. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
+import { strokePx } from "./shape"
 
 export const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
   surfaceShadow: "flat",
   surfaceGlass: false,
+  shellTone: "subtle",
 }
 
-export const LAYERS_OPTIONS = [
-  {
-    value: "same",
-    label: "Same",
-    description: "In light, cards share the page's tone",
-  },
-  {
-    value: "grouped",
-    label: "Grouped",
-    description: "In light, white cards on a gray page",
-  },
-  {
-    value: "tonal",
-    label: "Tonal",
-    description: "In light, cards a shade below the page",
-  },
-]
+export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
-export const EDGE_OPTIONS = [
-  {
-    value: "line",
-    label: "Line",
-    description: "A hairline around every surface",
-  },
-  {
-    value: "none",
-    label: "None",
-    description: "Shadows and tone do the separating",
-  },
-]
+export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
 
-export const SHADOW_OPTIONS = [
-  {
-    value: "flat",
-    label: "Flat",
-    description: "No card shadows; menus and dialogs cast",
-  },
-  { value: "low", label: "Low", description: "A small shadow under cards" },
-  { value: "medium", label: "Medium", description: "Cards lift off the page" },
-  { value: "high", label: "High", description: "Deep, soft shadows" },
-]
+export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
-export const GLASS_OPTIONS = [
-  {
-    value: "solid",
-    label: "Solid",
-    description: "Opaque menus, popovers and toasts",
-  },
-  {
-    value: "glass",
-    label: "Glass",
-    description: "Translucent over a blur; dialogs stay solid",
-  },
-]
+export const SHELL_VALUES = ["subtle", "page", "recessed"] as const
+
+/** The recessed dark shell: the page at this share over black, so it sinks
+ *  no deeper than light's half-rung (about 0.02 L) on any page tone. */
+export const RECESSED_DARK_PAGE = 93
+
+/* Light: halfway between the 50 and 100 rungs (Linear's #efeff0 frame on a
+   #f9f9fa panel). Dark: the page shaded toward black, never below the page
+   by more than light's step (Material 3 rails sit at the surface tone). */
+const SHELL_SIDEBAR: Record<string, string> = {
+  page: "var(--color-bg)",
+  recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
+}
 
 export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
-  surfaceLayers: oneOf(LAYERS_OPTIONS),
-  surfaceEdge: oneOf(EDGE_OPTIONS),
-  surfaceShadow: oneOf(SHADOW_OPTIONS),
+  surfaceLayers: oneOf(LAYERS_VALUES),
+  surfaceEdge: oneOf(EDGE_VALUES),
+  surfaceShadow: oneOf(SHADOW_VALUES),
   surfaceGlass: BOOLEAN,
-}
-
-/* --------------------------------- Styles --------------------------------- */
-
-type StyleKey = "surfaceLayers" | "surfaceEdge" | "surfaceShadow"
-
-export interface SurfaceStyle {
-  id: string
-  label: string
-  /** Who draws their surfaces this way. */
-  credits: string
-  description: string
-  values: Record<StyleKey, string>
-}
-
-const style = (
-  id: string,
-  label: string,
-  credits: string,
-  description: string,
-  surfaceLayers: string,
-  surfaceEdge: string,
-  surfaceShadow: string,
-): SurfaceStyle => ({
-  id,
-  label,
-  credits,
-  description,
-  values: { surfaceLayers, surfaceEdge, surfaceShadow },
-})
-
-export const SURFACE_STYLES: SurfaceStyle[] = [
-  style(
-    "outlined",
-    "Outlined",
-    "shadcn, GitHub",
-    "Hairlines, flat cards",
-    "same",
-    "line",
-    "flat",
-  ),
-  style(
-    "soft",
-    "Soft",
-    "shadcn New York, Radix",
-    "Hairlines and a small shadow",
-    "same",
-    "line",
-    "low",
-  ),
-  style(
-    "elevated",
-    "Elevated",
-    "Fluent, Atlassian",
-    "Shadows instead of lines",
-    "same",
-    "none",
-    "low",
-  ),
-  style(
-    "grouped",
-    "Grouped",
-    "HeroUI, Polaris",
-    "White cards on a gray page",
-    "grouped",
-    "none",
-    "low",
-  ),
-  style(
-    "tonal",
-    "Tonal",
-    "Material",
-    "Cards toned off the page",
-    "tonal",
-    "none",
-    "flat",
-  ),
-]
-
-const SHADOWS = SHADOW_OPTIONS.map((o) => o.value)
-
-/** How close the state sits to a style, 9 on it: Layers outweighs Edge,
- *  which outweighs how far apart the shadows are. */
-export const styleScore = (state: StudioState, { values }: SurfaceStyle) =>
-  (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
-  (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
-  3 -
-  Math.abs(
-    SHADOWS.indexOf(state.surfaceShadow) -
-      SHADOWS.indexOf(values.surfaceShadow),
-  )
-
-/** The style the state sits on, or the closest one. */
-export function surfaceStyle(state: StudioState): {
-  style: SurfaceStyle
-  exact: boolean
-} {
-  const best = SURFACE_STYLES.reduce((a, b) =>
-    styleScore(state, b) > styleScore(state, a) ? b : a,
-  )
-  return { style: best, exact: styleScore(state, best) === 9 }
-}
-
-/** Grouped's page: its cards are white, so the page's gray is its depth. The
- *  engine re-anchors every ramp on the page, so fills on those white cards
- *  read deeper too — contextual fills belong to the color rewrite. */
-export const GROUPED_PAGE = 96
-
-/** Flat cards need an edge or a tone apart from the page: Same has none, and
- *  Grouped's white cards none on a near-white page. */
-export const flatAllowed = (state: StudioState) =>
-  state.surfaceEdge !== "none" ||
-  state.surfaceLayers === "tonal" ||
-  (state.surfaceLayers === "grouped" && state.lightBg <= GROUPED_PAGE + 1)
-
-/** `patch` applied. Entering Grouped takes a light page down to gray, and
- *  leaving gives back `before`, the page it took, unless the page moved since;
- *  then Flat lifts to Low where it would hide cards. */
-export function withSurface(
-  state: StudioState,
-  patch: Partial<Record<StyleKey, string>>,
-  before?: number,
-): { state: StudioState; before?: number } {
-  const next = { ...state, ...patch }
-  const grouped = (s: StudioState) => s.surfaceLayers === "grouped"
-  let kept = before
-  if (grouped(next) && !grouped(state)) {
-    kept = state.lightBg > GROUPED_PAGE + 1 ? state.lightBg : undefined
-    if (kept !== undefined) next.lightBg = GROUPED_PAGE
-  } else if (grouped(state) && !grouped(next)) {
-    if (before !== undefined && state.lightBg === GROUPED_PAGE)
-      next.lightBg = before
-    kept = undefined
-  }
-  if (!flatAllowed(next) && next.surfaceShadow === "flat")
-    next.surfaceShadow = "low"
-  return { state: next, before: kept }
+  shellTone: oneOf(SHELL_VALUES),
 }
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -238,8 +75,8 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, white, the system's hairline, black at an alpha, or
- *  nothing. */
+ *  of two rungs, white, the system's hairline, black at an alpha, Polaris's
+ *  #ccc highlight at an alpha, or nothing. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "white" }
@@ -247,10 +84,12 @@ export type SurfaceColor =
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
   | { kind: "shade"; alpha: number }
+  | { kind: "glint"; alpha: number }
 
 export interface ShadowLayer {
   offset: string
   color: PerMode<SurfaceColor>
+  inset?: boolean
 }
 
 export interface SurfaceLook {
@@ -266,6 +105,9 @@ export interface SurfaceRecipe {
   popover: SurfaceLook
   modalShadow: ShadowLayer[]
   glass: boolean
+  /** Border widths: cards, choice tiles, popovers and tooltips; the lip a
+   *  pressed or disabled tile sinks into. */
+  stroke: { card: string; tile: string; overlay: string; lip: string }
 }
 
 const NONE: SurfaceColor = { kind: "none" }
@@ -310,18 +152,34 @@ const LADDER = {
   high: [4, 5, 6],
 } satisfies Record<string, [number, number, number]>
 
-/** Flat where it would hide cards renders as Low, whatever wrote the state. */
-const ladder = (state: StudioState) =>
-  state.surfaceShadow === "flat" && !flatAllowed(state)
-    ? LADDER.low
-    : (LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat)
+const ladder = (state: Effective) =>
+  LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat
 
 /** The card's rung, for glyphs that hint at its shadow. */
-export const cardRung = (state: StudioState) => ladder(state)[0]
+export const cardRung = (state: Effective) => ladder(state)[0]
 
 /* The soft 0-offset outline shadow-led systems draw around every raised
    surface (Fluent's 0 0 2px). */
 const PERIMETER: [string, number] = ["0 0 2px 0", 0.12]
+
+/* Polaris's ShadowBevel (shadow-bevel-100, light and dark-experimental): a
+   1px inset rim, darker at the bottom, with a highlight on top. */
+const rim = (offset: string, light: SurfaceColor, dark: SurfaceColor) => ({
+  offset,
+  inset: true,
+  color: { light, dark },
+})
+const shade = (alpha: number): SurfaceColor => ({ kind: "shade", alpha })
+const glint = (alpha: number): SurfaceColor => ({ kind: "glint", alpha })
+const BEVEL: ShadowLayer[] = [
+  rim("1px 0 0 0", shade(0.13), glint(0.08)),
+  rim("-1px 0 0 0", shade(0.13), glint(0.08)),
+  rim("0 -1px 0 0", shade(0.17), glint(0.08)),
+  rim("0 1px 0 0", glint(0.5), glint(0.16)),
+]
+
+/** Duolingo's lip under cards and tiles. */
+const LEDGE_LIP = 2
 
 function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
@@ -341,31 +199,53 @@ function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
 }
 
 /** Every setting resolved together, so no combination contradicts itself. */
-export function surfaceRecipe(state: StudioState): SurfaceRecipe {
+export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
+  const bevel = state.surfaceEdge === "bevel"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
-  const [card, popover, modal] = ladder(state)
+  const [card, ...floating] = ladder(state)
+  // Ledge's depth is the lip; floating layers draw the plain stroke only
+  // (Duolingo: no shadow on popovers or dialogs).
+  const [popover, modal] = state.surfaceEdge === "ledge" ? [0, 0] : floating
+  const rimmed = (layers: ShadowLayer[]) =>
+    bevel ? [...BEVEL, ...layers] : layers
   return {
     card: {
-      edge: both(edgeless ? NONE : HAIRLINE),
+      edge: both(edgeless || bevel ? NONE : HAIRLINE),
       bg: {
         light: grouped ? WHITE : tonal ? HALF : step("25"),
         dark: edgeless || tonal ? QUARTER : step("50"),
       },
-      shadow: shadowLayers(card, edgeless),
+      shadow: rimmed(shadowLayers(card, edgeless)),
     },
     popover: {
-      edge: { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
+      edge: bevel
+        ? both(NONE)
+        : {
+            light: edgeless ? NONE : HAIRLINE,
+            dark: edgeless && tonal ? NONE : HAIRLINE,
+          },
       bg: {
         light: grouped ? WHITE : tonal ? step("50") : step("25"),
         dark: HALF,
       },
-      shadow: shadowLayers(popover, edgeless),
+      shadow: rimmed(shadowLayers(popover, edgeless)),
     },
     modalShadow: shadowLayers(modal, edgeless),
     glass: state.surfaceGlass,
+    stroke: surfaceStroke(state),
   }
+}
+
+function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
+  if (state.surfaceEdge === "bevel")
+    return { card: "0px", tile: "1px", overlay: "0px", lip: "0px" }
+  if (state.surfaceEdge !== "ledge")
+    return { card: "1px", tile: "1px", overlay: "1px", lip: "0px" }
+  const px = strokePx(state.controlStroke)
+  const ledge = `${px}px ${px}px ${px + LEDGE_LIP}px`
+  return { card: ledge, tile: ledge, overlay: `${px}px`, lip: `${LEDGE_LIP}px` }
 }
 
 /* ----------------------------- Serialization ----------------------------- */
@@ -396,6 +276,8 @@ export function surfaceColorCss(
       return `color-mix(in oklab, ${palette.step(color.a)} ${color.weight}%, ${palette.step(color.b)})`
     case "shade":
       return `rgb(0 0 0 / ${alpha(color.alpha)})`
+    case "glint":
+      return `rgb(204 204 204 / ${alpha(color.alpha)})`
   }
 }
 
@@ -409,7 +291,10 @@ export function shadowCss(
 ): string {
   if (layers.length === 0) return NO_SHADOW
   return layers
-    .map((layer) => `${layer.offset} ${color(layer.color)}`)
+    .map(
+      (layer) =>
+        `${layer.inset ? "inset " : ""}${layer.offset} ${color(layer.color)}`,
+    )
     .join(", ")
 }
 
@@ -424,9 +309,13 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
   return light === dark ? light : `light-dark(${light}, ${dark})`
 }
 
-function surfaceTokens(state: StudioState): Record<string, string> {
-  const { card, popover, modalShadow, glass } = surfaceRecipe(state)
+function surfaceTokens(state: Effective): Record<string, string> {
+  const { card, popover, modalShadow, glass, stroke } = surfaceRecipe(state)
   return {
+    "--studio-card-stroke": stroke.card,
+    "--studio-tile-stroke": stroke.tile,
+    "--studio-overlay-stroke": stroke.overlay,
+    "--studio-tile-lip": stroke.lip,
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
     "--shadow-card": shadowCss(card.shadow, pairCss),
@@ -439,12 +328,46 @@ function surfaceTokens(state: StudioState): Record<string, string> {
   }
 }
 
-const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
+const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as Effective)
 
-export function resolveSurfaces(state: StudioState): Resolved {
+export function resolveSurfaces(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   for (const [name, value] of Object.entries(surfaceTokens(state))) {
     if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
   }
-  return { tokens }
+  const sidebar = SHELL_SIDEBAR[state.shellTone]
+  if (sidebar) tokens["--color-sidebar"] = sidebar
+  const tile = { "card-press": state.surfaceEdge === "ledge" ? "sink" : "none" }
+  return {
+    tokens,
+    params: {
+      sidebar: { shell: state.shellTone },
+      checkbox: tile,
+      "radio-group": tile,
+      switch: tile,
+    },
+  }
 }
+
+export const chapter = defineChapter({
+  id: "surfaces",
+  defaults: SURFACE_DEFAULTS,
+  schema: SURFACE_SCHEMA,
+  resolve: resolveSurfaces,
+  rules: [
+    {
+      // Flat cards need an edge or a tone apart from the page; Grouped's
+      // white cards get theirs from the page clamp (color/grouped-page).
+      id: "surfaces/flat-needs-separation",
+      target: "surfaceShadow",
+      when: {
+        all: [
+          { key: "surfaceEdge", in: ["none"] },
+          { key: "surfaceLayers", in: ["same"] },
+        ],
+      },
+      effect: { kind: "exclude", options: ["flat"], fallback: "low" },
+      cause: "surfaceEdge",
+    },
+  ],
+})

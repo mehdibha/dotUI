@@ -22,7 +22,13 @@ export interface TableContainerProps extends React.ComponentPropsWithoutRef<
  */
 export interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
-> {}
+> {
+  /**
+   * Whether every other body row is shaded.
+   * @default false
+   */
+  striped?: boolean
+}
 
 /**
  * A header within a Table, containing the table columns.

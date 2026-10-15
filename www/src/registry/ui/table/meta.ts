@@ -12,14 +12,15 @@ const tableMeta = {
   ],
   registryDependencies: ["checkbox", "loader"],
   params: {
-    separation: {
-      default: "lines",
-      values: ["lines", "striped", "plain"] as const,
-      description: "How body rows are told apart.",
-    },
     header: {
       default: "plain",
       values: ["plain", "filled"] as const,
+      description: "The header row: a rule under the labels, or a band.",
+    },
+    headerLabel: {
+      default: "muted",
+      values: ["strong", "muted"] as const,
+      description: "The header labels' ink.",
     },
   },
 } satisfies RegistryItem

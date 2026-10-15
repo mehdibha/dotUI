@@ -2,6 +2,9 @@
   --studio-tabs-radius: var(--studio-radius-surface);
   --studio-tabs-list-radius: var(--studio-radius-container);
   --studio-tabs-tab-radius: var(--studio-radius-inline-item);
+  --studio-tabs-pill-radius: var(--studio-radius-control);
   --studio-tabs-state-duration: 150ms;
   --studio-tabs-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --studio-tabs-color-duration: 150ms;
+  --studio-tabs-color-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

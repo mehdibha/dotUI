@@ -14,14 +14,14 @@ const sliderMeta = {
   dependencies: ["react-aria"],
   params: {
     thumb: {
-      default: "circle",
-      values: ["circle", "outline", "bar"] as const,
-      description: "The knob riding the track.",
+      default: "knob",
+      values: ["knob", "ring", "solid", "handle"] as const,
+      description: "The thumb riding the track.",
     },
     track: {
       default: "thin",
-      values: ["thin", "thick"] as const,
-      description: "The track weight: a hairline, or a level bar.",
+      values: ["hairline", "thin", "medium", "thick"] as const,
+      description: "The track weight: 2, 4, 8 or 16px.",
     },
   },
 } satisfies RegistryItem

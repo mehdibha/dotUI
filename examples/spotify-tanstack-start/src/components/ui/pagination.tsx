@@ -16,7 +16,7 @@ const paginationVariants = tv({
     list: "flex flex-row items-center gap-1",
     item: "",
     ellipsis:
-      "flex size-8 items-center justify-center text-fg-muted [&_svg]:size-4 size-9",
+      "flex items-center justify-center text-fg-muted [&_svg]:size-4 size-12",
   },
 });
 
@@ -73,6 +73,7 @@ const PaginationLink = ({
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
+      data-selected={isActive || undefined}
       data-pagination-link=""
       variant={variant ?? (isActive ? activeVariant : "quiet")}
       isIconOnly={isIconOnly}

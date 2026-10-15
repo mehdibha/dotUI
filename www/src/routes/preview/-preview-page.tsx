@@ -14,9 +14,11 @@ import {
 } from "@/modules/studio/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { boardOf } from "@/modules/studio/preview/boards"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
@@ -33,7 +35,10 @@ export function getExamplesPromise(slug: string) {
     // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
-      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+      boardOf(slug) ??
+      BlocksIndex[slug] ??
+      GroupExamplesIndex[slug] ??
+      ExamplesIndex[slug]
     if (!load) return null
     promise = load()
     promiseCache.set(slug, promise)
@@ -57,13 +62,16 @@ export function PreviewPage() {
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(getCurrent().state),
+    designSystemOf(getCurrent().state),
   )
 
   const navigate = route.useNavigate()
 
   useIframeMessageListener(
-    useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
+    useCallback(
+      (ds: DesignSystem) => setDesignSystem(internDesignSystem(ds)),
+      [],
+    ),
   )
 
   // The parent switches previews by navigating this document's own router — the
@@ -142,7 +150,7 @@ export function PreviewPage() {
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}
       <ToastProvider />
-      {content}
+      <BoardFocusProvider>{content}</BoardFocusProvider>
     </DesignSystemProvider>
   )
 }

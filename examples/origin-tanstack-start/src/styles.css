@@ -14,14 +14,17 @@
     --cursor-disabled: not-allowed;
     --cursor-drag: var(--cursor-interactive);
     --cursor-dragging: var(--cursor-interactive);
+    --color-scrim: color-mix(in oklab, var(--overlay) 40%, transparent);
     --focus-ring-color: var(--border-focus);
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
+    --focus-ring-outside-offset: 2px;
     --focus-ring-inner: 0px;
-    --focus-input-color: var(--border-focus-muted);
     --focus-input-width: 2px;
     --focus-input-offset: 0px;
-    --focus-input-inner: 0px;
+    --focus-input-edge: 0px;
+    --focus-invalid-color: var(--danger-muted);
+    --invalid-ring-width: 0px;
     --disabled-bg: var(--disabled);
     --disabled-fg: var(--fg-disabled);
     --disabled-border: var(--border);
@@ -40,6 +43,7 @@
     --font-sans: var(--font-geist-sans);
     --font-heading: var(--font-sans);
     --font-mono: var(--font-geist-mono);
+    --font-reading: var(--font-sans);
     --color-bg: var(--bg);
     --color-muted: var(--muted);
     --color-inverse: var(--inverse);
@@ -158,12 +162,11 @@
     --color-chart-3: var(--chart-3);
     --color-chart-2: var(--chart-2);
     --color-chart-1: var(--chart-1);
-    --animate-loader-blades: loader-blades 1000ms steps(8, end) infinite;
-    --animate-loader-dots: loader-dots 1000ms ease-in-out infinite;
-    --animate-skeleton-shimmer: skeleton-shimmer 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    --animate-skeleton-pulse: skeleton-pulse 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-loader-blades: loader-blades 1s steps(8, end) infinite;
+    --animate-loader-dots: loader-dots 1s ease-in-out infinite;
+    --animate-skeleton-shimmer: skeleton-shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-skeleton-pulse: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
-    --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;
   @keyframes loader-blades {
   to {
     transform: rotate(1turn);
@@ -194,15 +197,6 @@
         }
   to {
     transform: translateX(250%);
-        }
-    }
-  @keyframes progress-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-        }
-  50% {
-    opacity: 1;
         }
     }
 }
@@ -329,6 +323,9 @@
     --overlay-border: var(--color-border);
     --popover-alpha: 100%;
     --popover-backdrop-filter: none;
+    --focus-input-border: var(--color-border-focus);
+    --focus-input-color: var(--color-border-focus-muted);
+    --invalid-fill: transparent;
 }
 
 .dark {
@@ -407,7 +404,7 @@
     --fg-inverse: oklch(0.1311 0.0037 258.05);
     --fg-disabled: oklch(0.5243 0.0128 258.05);
     --fg-on-neutral: oklch(0.9562 0.0029 258.05);
-    --border: oklch(0.249 0.0051 258.05);
+    --border: oklch(0.2906 0.0064 258.05);
     --border-control: oklch(0.3608 0.0082 258.05);
     --border-control-hover: oklch(0.4318 0.0096 258.05);
     --border-focus: oklch(0.5715 0.2087 258.05);
@@ -438,7 +435,7 @@
     --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.2699 0.0059 258.05);
     --sidebar-accent-foreground: oklch(0.9562 0.0029 258.05);
-    --sidebar-border: oklch(0.249 0.0051 258.05);
+    --sidebar-border: oklch(0.2906 0.0064 258.05);
     --sidebar-ring: oklch(0.5715 0.2087 258.05);
     --chart-1: oklch(0.8161 0.1 243.61);
     --chart-2: oklch(0.7559 0.1324 247.17);
@@ -455,13 +452,47 @@
 }
 
 @utility focus-ring {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+    --tw-ring-shadow: var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color), inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg));
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-ring-outside {
+    --tw-ring-shadow: 0 0 0 var(--focus-ring-outside-offset) var(--surface-bg, var(--color-bg)), 0 0 0 calc(var(--focus-ring-outside-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-ring-inside {
+    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
     box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 @utility focus-input {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
+    --tw-ring-shadow: inset 0 0 0 var(--focus-input-edge) var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
     box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-input-indicator {
+    --tw-ring-shadow: inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility focus-input-underline {
+    --tw-ring-shadow: inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), 0 var(--focus-input-offset) 0 0 var(--surface-bg, var(--color-bg)), 0 calc(var(--focus-input-offset) + var(--focus-input-width)) 0 0 var(--tw-ring-color, var(--focus-input-color));
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility invalid-ring {
+    --tw-ring-shadow: 0 0 0 var(--invalid-ring-width) var(--color-danger-muted);
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility invalid-ring-underline {
+    --tw-ring-shadow: 0 var(--invalid-ring-width) 0 0 var(--color-danger-muted);
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@utility invalid-fill {
+    background-image: var(--invalid-icon, none), linear-gradient(var(--invalid-fill), var(--invalid-fill));
 }
 
 @utility no-highlight {
@@ -490,7 +521,11 @@
   body {
     @apply bg-bg font-sans text-fg;
     }
-  :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
+  :is([data-disabled], :disabled, [aria-disabled="true"]):not(
+    [data-pending],
+    [data-current],
+    :is([data-disabled], :disabled, [aria-disabled="true"]) *
+  ) {
     opacity: var(--disabled-opacity, 1);
     }
 }

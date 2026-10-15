@@ -68,6 +68,20 @@ const { useStyles, styles } = createStyles(bubbleMeta, {
         reactions: "text-sm ring-3",
       },
     },
+    spacious: {
+      slots: {
+        group: "gap-2.5",
+        content: "px-4 py-2.5 text-sm leading-relaxed",
+        reactions: "text-sm ring-3",
+      },
+    },
+    touch: {
+      slots: {
+        group: "gap-2.5",
+        content: "px-4 py-2.5 text-sm leading-relaxed",
+        reactions: "text-sm ring-3",
+      },
+    },
   },
 })
 

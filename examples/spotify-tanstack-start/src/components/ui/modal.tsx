@@ -11,7 +11,7 @@ const modalVariants = tv({
     overlay:
       "group/modal absolute top-0 left-0 isolate z-50 h-(--page-height) w-full",
     backdrop:
-      "absolute inset-0 bg-overlay/40 backdrop-blur-sm transition-opacity duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
+      "absolute inset-0 bg-scrim transition-opacity duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
     viewport:
       "@container-size sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center items-center",
     modal:

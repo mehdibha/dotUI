@@ -8,15 +8,20 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { createVariantsContext } from "@/lib/context";
 
 const toggleButtonVariants = tv({
-  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm *:[svg]:not-with-[size]:size-4 selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
+  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm *:[svg]:not-with-[size]:size-4 selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active selected:text-fg-on-selected",
   variants: {
     variant: {
       primary:
-        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected)) bg-primary hover:bg-primary-hover pressed:bg-primary-active",
+        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active",
       secondary:
-        "text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+      link: "disabled:text-(--disabled-fg,var(--color-fg)) text-fg-accent",
+      warning:
+        "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
+      danger:
+        "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger)) bg-danger hover:bg-danger-hover pressed:bg-danger-active",
     },
     size: {
       xs: "rounded-sm h-6 gap-1 px-2 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 data-icon-only:size-6 **:[svg]:not-with-[size]:size-3",
@@ -32,6 +37,13 @@ const toggleButtonVariants = tv({
     variant: "secondary",
     size: "md",
   },
+  compoundVariants: [
+    {
+      variant: "primary",
+      class:
+        "disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
+    },
+  ],
 });
 
 export { toggleButtonVariants as toggleButtonStyles };

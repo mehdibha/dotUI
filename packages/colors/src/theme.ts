@@ -33,6 +33,7 @@ import {
   buildScale,
   type Mode,
   type ScaleColors,
+  solveOnColor,
   transposeSkeleton,
 } from "./scale"
 import type { ThemeOptions } from "./schema"
@@ -79,6 +80,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const hueShift = options.hueShift ?? 1
   const neutralTint = options.neutralTint ?? 1
   const preserveSeed = options.preserveSeed ?? false
+  const whiteInk = preserveSeed && options.solidInk === "white"
 
   const accentSeed = toOklch(options.seeds.accent)
 
@@ -169,17 +171,21 @@ export function createTheme(input: string | ThemeOptions): Theme {
           : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
       preserveSeed: preserveSeed && name === "accent",
     }
+    const white = whiteInk && name === "accent"
     const light = buildScale({
       ...shared,
       mode: "light",
       skeleton: neutral ? skeletons.light.neutral : skeletons.light.chromatic,
+      whiteInk: white,
     })
-    // Step 700 is mode-invariant (verified on Radix) — share the light solve.
+    // Step 700 is mode-invariant (verified on Radix) — share the light solve;
+    // a white light label leaves dark its solved one.
+    const solid = light.steps["700"]
     const dark = buildScale({
       ...shared,
       mode: "dark",
       skeleton: neutral ? skeletons.dark.neutral : skeletons.dark.chromatic,
-      sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
+      sharedSolid: { solid, on: white ? solveOnColor(solid) : light.on["700"] },
     })
     built.light[name] = light
     built.dark[name] = dark
@@ -212,7 +218,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
           (r) => !r.passes && r.name === "on-solid",
         ))
           warnings.push(
-            `accent/${mode}: preserveSeed pins the solid; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
+            `accent/${mode}: ${white && mode === "light" ? "solidInk keeps white labels on the pinned solid" : "preserveSeed pins the solid"}; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
           )
       }
     }

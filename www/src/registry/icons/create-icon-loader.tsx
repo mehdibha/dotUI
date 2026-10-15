@@ -14,6 +14,8 @@ const libraryImporters = {
   tabler: () => import("../__generated__/__tabler__"),
   remix: () => import("../__generated__/__remix__"),
   phosphor: () => import("../__generated__/__phosphor__"),
+  "material-symbols": () => import("../__generated__/__material-symbols__"),
+  octicons: () => import("../__generated__/__octicons__"),
 } satisfies Record<string, () => Promise<IconModule>>
 
 export type LoadableLibrary = keyof typeof libraryImporters

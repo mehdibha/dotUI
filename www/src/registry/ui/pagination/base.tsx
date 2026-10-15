@@ -16,10 +16,11 @@ import { useStyles } from "./styles"
 const useActiveVariant = createParamValue<LinkButtonProps["variant"]>({
   componentName: "pagination",
   paramName: "current",
-  defaultValue: "outline",
+  defaultValue: "secondary",
   values: {
-    filled: "primary",
-    outline: "secondary",
+    secondary: "secondary",
+    primary: "primary",
+    selected: "quiet",
   },
 })
 
@@ -78,6 +79,7 @@ const PaginationLink = ({
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
+      data-selected={isActive || undefined}
       data-pagination-link=""
       variant={variant ?? (isActive ? activeVariant : "quiet")}
       isIconOnly={isIconOnly}

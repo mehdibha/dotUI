@@ -5,26 +5,24 @@ import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
-import {
-  activeCharacter,
-  SHAPE_CHARACTERS,
-  SHAPE_RUNGS,
-  SHAPE_SCHEMA,
-  shapeVars,
-} from "./shape"
+import { designSystemOf } from "../resolve"
+import { DEFAULT_EFFECTIVE, DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import { SHAPE_ROLES, SHAPE_RUNGS, SHAPE_SCHEMA, shapeVars } from "./shape"
+import { SHAPE_CHARACTERS } from "./shape.meta"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem(parseState({ ...overrides }))
+  designSystemOf(parseState({ ...overrides }))
 
 const vector = (id: string) =>
   SHAPE_CHARACTERS.find((character) => character.id === id)!.vector
 
+const rolesOf = (state: typeof DEFAULT_STATE) =>
+  Object.fromEntries(SHAPE_ROLES.map(({ key }) => [key, state[key]]))
+
 describe("shape axis", () => {
   test("defaults emit nothing", () => {
     expect(resolve({}).tokens).toEqual({})
-    expect(activeCharacter(DEFAULT_STATE)).toBe("standard")
+    expect(rolesOf(DEFAULT_STATE)).toEqual(vector("standard"))
   })
 
   test("roles.css declares the default rungs", () => {
@@ -33,7 +31,7 @@ describe("shape axis", () => {
         name.startsWith("--studio-radius-"),
       ),
     )
-    expect(declared).toEqual(shapeVars(DEFAULT_STATE))
+    expect(declared).toEqual(shapeVars(DEFAULT_EFFECTIVE))
   })
 
   test("the base lands on --radius in rem", () => {
@@ -61,7 +59,6 @@ describe("shape axis", () => {
   })
 
   test("auto cards sit one rung below panels", () => {
-    expect(activeCharacter(parseState({ rolePanel: "2xl" }))).toBeUndefined()
     expect(resolve({ rolePanel: "2xl" }).tokens).toEqual({
       "--studio-radius-panel": "var(--radius-2xl)",
       "--studio-radius-card": "var(--radius-xl)",
@@ -90,7 +87,7 @@ describe("shape axis", () => {
         SHAPE_RUNGS.findIndex((rung) => rung.token === token)
       const values = (key: keyof typeof SHAPE_SCHEMA) => {
         const axis = SHAPE_SCHEMA[key].value
-        return axis.type === "enum" ? axis.options.map((o) => o.value) : []
+        return axis.type === "enum" ? axis.values : []
       }
       const pill = "var(--radius-full)"
       for (const roleControl of values("roleControl"))
@@ -99,7 +96,7 @@ describe("shape axis", () => {
             for (const roleItem of values("roleItem"))
               for (const roleCard of values("roleCard")) {
                 const vars = shapeVars({
-                  ...DEFAULT_STATE,
+                  ...DEFAULT_EFFECTIVE,
                   ...{
                     roleControl,
                     roleSurface,
@@ -119,9 +116,36 @@ describe("shape axis", () => {
     },
   )
 
+  test("control stroke writes the edge width; Regular writes nothing", () => {
+    expect(resolve({ controlStroke: "bold" }).tokens).toEqual({
+      "--studio-control-stroke": "2px",
+    })
+    expect(STYLE_VAR_DEFAULTS["--studio-control-stroke"]).toBe("1px")
+  })
+
+  test("a border focus adds only what the stroke doesn't draw", () => {
+    const focus = { focusInputStyle: "border", focusInputWeight: "thick" }
+    expect(resolve(focus).tokens["--focus-input-edge"]).toBe("1px")
+    expect(
+      resolve({ ...focus, controlStroke: "bold" }).tokens["--focus-input-edge"],
+    ).toBe("0px")
+  })
+
+  test("tracks stay round, or follow the detail rung", () => {
+    expect(resolve({ tracks: "follow" }).tokens).toEqual({
+      "--studio-radius-track": "var(--radius-sm)",
+    })
+    expect(resolve({ ...vector("square"), tracks: "follow" }).tokens).toEqual(
+      expect.objectContaining({ "--studio-radius-track": "0" }),
+    )
+    expect(resolve(vector("square")).tokens).not.toHaveProperty(
+      "--studio-radius-track",
+    )
+  })
+
   test("states saved before cards were a role keep their character", () => {
     expect(
-      activeCharacter(
+      rolesOf(
         parseState({
           roleControl: "3xl",
           roleItem: "auto",
@@ -129,10 +153,9 @@ describe("shape axis", () => {
           rolePanel: "3xl",
         }),
       ),
-    ).toBe("round")
-    // Retired characters (Crisp, Soft, Pill) keep their roles and read Custom.
+    ).toEqual(vector("round"))
+    // Retired characters (Crisp, Soft, Pill) keep their roles.
     const pill = parseState({ roleControl: "full", roleSurface: "lg" })
-    expect(activeCharacter(pill)).toBeUndefined()
     expect(pill.roleControl).toBe("full")
   })
 })
@@ -149,30 +172,72 @@ describe("shipped shape", () => {
     }
     return depth === 0
   }
-  test.each(SHAPE_CHARACTERS.map((c) => c.id))(
-    "%s ships whole radius classes and no studio vars",
-    async (id) => {
-      const ds = resolveDesignSystem(parseState(vector(id)))
-      const preset: PublishPreset = {
-        density: ds.density,
-        componentParams: ds.componentParams,
-        tokens: ds.tokens,
-        color: ds.color,
-        icons: ds.icons,
-      }
-      const broken: string[] = []
-      for (const [name, load] of Object.entries(publishables)) {
-        const { item } = publish({
-          publishable: selectPublishable(await load(), preset),
-          preset,
-        })
-        const code = (item.files ?? []).map((f) => f.content).join("\n")
-        for (const [, literal] of code.matchAll(/"([^"\n]*)"/g))
-          for (const token of literal!.split(/\s+/))
-            if (!balanced(token)) broken.push(`${name}: ${token}`)
-        if (code.includes("--studio-")) broken.push(`${name}: --studio- var`)
-      }
-      expect(broken).toEqual([])
-    },
-  )
+  const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
+    const ds = designSystemOf(parseState(state))
+    return {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+  }
+  const shipped = async (name: string, preset: PublishPreset) => {
+    const { item } = publish({
+      publishable: selectPublishable(await publishables[name]!(), preset),
+      preset,
+    })
+    return (item.files ?? []).map((f) => f.content).join("\n")
+  }
+
+  test.each([
+    ...SHAPE_CHARACTERS.map((c) => [c.id, vector(c.id)] as const),
+    ["bold stroke", { controlStroke: "bold" }] as const,
+  ])("%s ships whole classes and no studio vars", async (_, state) => {
+    const preset = presetOf(state)
+    const broken: string[] = []
+    for (const name of Object.keys(publishables)) {
+      const code = await shipped(name, preset)
+      for (const [, literal] of code.matchAll(/"([^"\n]*)"/g))
+        for (const token of literal!.split(/\s+/))
+          if (!balanced(token)) broken.push(`${name}: ${token}`)
+      if (code.includes("--studio-")) broken.push(`${name}: --studio- var`)
+    }
+    expect(broken).toEqual([])
+  })
+
+  test("each stroke ships as Tailwind spells it", async () => {
+    const at = async (controlStroke: string) => ({
+      input: await shipped("input", presetOf({ controlStroke })),
+      otp: await shipped("otp-field", presetOf({ controlStroke })),
+    })
+    const regular = await at("regular")
+    expect(regular.input).toContain("border px-(--edge-to-text)")
+    expect(regular.input).toContain("calc(var(--addon-button-inset)-1px)")
+    expect(regular.otp).toContain("-space-x-px")
+    expect(regular.input).not.toContain("length:")
+    const bold = await at("bold")
+    expect(bold.input).toContain("border-2 px-(--edge-to-text)")
+    expect(bold.otp).toContain("-space-x-[2px]")
+  })
+
+  test("bold reaches every control edge and seam", async () => {
+    const bold = (name: string, state: Partial<typeof DEFAULTS> = {}) =>
+      shipped(name, presetOf({ controlStroke: "bold", ...state }))
+    for (const name of ["checkbox", "radio-group", "button", "toggle-button"])
+      expect(await bold(name), name).toContain("border-2 border-border-control")
+    for (const name of ["group", "toggle-button-group"]) {
+      const divided = await bold(name, { groupSeparator: "divider" })
+      expect(divided, name).toContain("-space-x-[2px]")
+      expect(divided, name).toContain("before:w-[2px]")
+    }
+    expect(await bold("toggle-button-group")).toContain("-space-y-[2px]")
+    const outline = await bold("segmented-control", {
+      segmentedTrack: "outline",
+    })
+    expect(outline).toContain("border-2 border-border p-[1px]")
+    expect(
+      await bold("segmented-control", { segmentedSelected: "raised" }),
+    ).toContain("ring-2 ring-border-control")
+  })
 })

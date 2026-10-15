@@ -9,16 +9,17 @@ import { tv } from "tailwind-variants";
 
 const menuVariants = tv({
   slots: {
-    root: "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] outline-hidden **:data-separator:my-1 **:data-separator:w-auto text-sm p-1 **:data-separator:-mx-1",
-    item: "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0 focus:bg-highlight focus:text-fg-on-highlight disabled:text-(--disabled-fg,currentColor) disabled:**:text-current has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2 has-submenu:pr-8 *:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted data-[variant=danger]:text-fg-danger data-[variant=danger]:focus:bg-danger-muted gap-2 py-1.5 text-sm **:[svg]:not-with-[size]:size-4 data-selection-mode:pr-8 rounded-md px-2",
+    root: "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] outline-hidden layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row layout-grid:grid layout-grid:gap-1 layout-grid:orientation-vertical:grid-cols-2 layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2 **:data-separator:my-1 **:data-separator:w-auto in-data-trigger:min-w-[calc(max(var(--trigger-width,0px),--spacing(32))-2*1px)] in-data-trigger:max-w-[calc(100vw-2rem)] text-base p-1 **:data-separator:-mx-1",
+    item: "group/list-item relative flex w-full cursor-interactive items-center outline-hidden select-ui in-data-trigger:whitespace-nowrap disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:text-(--disabled-fg,currentColor) disabled:**:text-current data-[variant=danger]:text-fg-danger has-[[slot=description]]:flex-col has-[[slot=description]]:items-start has-[[slot=description]]:gap-0 has-[[slot=description]]:has-[>svg]:pl-8 has-[[slot=description]]:*:[svg]:absolute has-[[slot=description]]:*:[svg]:top-2 has-[[slot=description]]:*:[svg]:left-2 has-submenu:pr-8 *:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted gap-3 py-2 text-base **:[svg]:not-with-[size]:size-5 data-selection-mode:pr-8 focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight focus-visible:bg-highlight focus-visible:text-fg-on-highlight hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-highlight hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-highlight data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-danger-muted data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-danger data-[variant=danger]:focus-visible:bg-danger-muted data-[variant=danger]:focus-visible:text-fg-danger data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-danger-muted data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-danger rounded-md px-3",
     indicator:
-      "pointer-events-none absolute flex items-center justify-center right-2",
+      "pointer-events-none group-has-[[slot=description]]/list-item:absolute group-has-[[slot=description]]/list-item:top-2 absolute right-2 flex items-center justify-center",
     submenuIndicator:
       "pointer-events-none absolute right-2 flex items-center justify-center",
-    itemLabel: "",
-    itemDescription: "text-fg-muted",
+    itemLabel:
+      "in-data-trigger:max-w-full in-data-trigger:min-w-0 in-data-trigger:overflow-x-clip in-data-trigger:text-ellipsis",
+    itemDescription: "whitespace-normal text-fg-muted",
     section: "scroll-my-1",
-    sectionTitle: "font-medium text-fg-muted py-1.5 px-2 text-xs",
+    sectionTitle: "font-medium text-fg-muted py-2 px-3 text-xs",
   },
 });
 
@@ -100,9 +101,7 @@ const MenuItem = <T extends object>({
           <>
             {selectionMode !== "none" && (
               <span data-menu-item-indicator="" className={indicator()}>
-                {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
-                )}
+                {isSelected && <CheckIcon aria-hidden />}
               </span>
             )}
             {typeof children === "string" ? (

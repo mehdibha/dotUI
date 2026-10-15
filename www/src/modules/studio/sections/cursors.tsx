@@ -1,12 +1,9 @@
-/* macOS cursor drawings for the Interactivity chapter — see the note on each. */
-
-/* macOS cursor drawings — literal black/white/blue like the real cursors,
-   which never theme; the white casing keeps them readable on dark cards.
-   Hand, not-allowed, I-beam, open-hand and busy geometry is extracted
-   verbatim from the system cursor PDFs (HIServices.framework cursors/); the
-   default arrow ships only as a compiled SkyLight asset, so its path is
-   traced from an NSCursor.arrow bitmap dump. Only the outer fit-to-24-box
-   transforms are ours. */
+/* macOS cursor drawings — literal black/white like the real cursors, which
+   never theme; the white casing keeps them readable on dark cards. Hand and
+   not-allowed geometry is extracted verbatim from the system cursor PDFs
+   (HIServices.framework cursors/); the default arrow ships only as a
+   compiled SkyLight asset, so its path is traced from an NSCursor.arrow
+   bitmap dump. Only the outer fit-to-24-box transforms are ours. */
 const ARROW_PATH =
   "M5.32 5 L13 12.7 C13.45 13.15 13.4 13.5 12.95 13.7 L10.45 13.88 C10.05 13.92 9.95 14.05 10 14.35 L11.7 18.9 C11.65 19.55 9.95 19.65 9.8 18.95 L8.15 14.95 C8.05 14.6 7.85 14.55 7.65 14.75 L5.55 16.63 C5.2 16.95 5 16.85 5 16.3 V5.3 C5 4.85 5.12 4.75 5.32 5 Z"
 
@@ -62,30 +59,8 @@ export function HandCursor() {
   )
 }
 
-/* Extracted from cursors/macos27/openhand/cursor.pdf; the knuckle creases
-   live in a form XObject the extraction skips. */
-export function OpenHandCursor() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <g transform="translate(-2.45 -4.1)">
-        <path
-          transform="matrix(1,0,0,-1,20.9752,9.8732)"
-          d="M0 0C-.33 .013-.608-.052-.848-.197-.803 1.008-1.557 1.869-2.804 1.919-3.305 1.932-3.701 1.801-3.993 1.562-4.094 2.614-4.781 3.359-5.971 3.406-7.272 3.445-7.912 2.62-8.015 1.649-8.324 1.903-8.707 2.025-9.15 2.032-10.569 2.055-11.307 .999-11.137-.295L-10.28-6.896C-10.616-6.512-10.949-6.169-11.341-5.824-12.193-5.086-13.214-4.859-14.021-5.529-14.849-6.198-14.883-7.266-14.248-8.196L-12.477-10.762C-10.252-13.986-8.356-15.655-5.325-15.757-1.487-15.894 1.453-13.419 1.589-8.877L1.794-2.089C1.828-.897 1.158-.034 0 0"
-          fill="#000"
-        />
-        <path
-          transform="matrix(1,0,0,-1,21.5202,18.7168)"
-          d="M0 0L.204 6.687C.227 7.425-.102 7.811-.636 7.822-1.124 7.845-1.499 7.538-1.51 6.766L-1.578 3.531C-1.589 3.201-1.794 3.02-2.066 3.02-2.373 3.02-2.554 3.224-2.554 3.519L-2.464 8.56C-2.452 9.298-2.782 9.718-3.383 9.741-3.951 9.763-4.405 9.423-4.394 8.651L-4.303 3.644C-4.291 3.315-4.507 3.133-4.78 3.133-5.086 3.133-5.268 3.338-5.279 3.633L-5.574 10.115C-5.608 10.83-5.971 11.205-6.539 11.228-7.141 11.25-7.561 10.876-7.504 10.058L-7.096 3.758C-7.073 3.428-7.3 3.247-7.572 3.247-7.879 3.247-8.049 3.451-8.083 3.746L-8.73 8.821C-8.821 9.559-9.162 9.843-9.672 9.854-10.399 9.877-10.728 9.309-10.638 8.616L-9.57 .443C-9.513 .012-9.718-.25-10.047-.239-10.217-.239-10.342-.159-10.501 .023-11.285 1.011-11.954 1.737-12.613 2.304-13.135 2.759-13.578 2.815-13.93 2.543-14.304 2.248-14.327 1.748-13.952 1.203L-12.182-1.385C-10.081-4.439-8.583-5.801-5.824-5.892-2.509-6.017-.125-4.166 0 0"
-          fill="#fff"
-        />
-      </g>
-    </svg>
-  )
-}
-
-/* The small arrow the badge cursors share — the not-allowed and busy assets
-   draw the identical arrow before their disc. */
-export function BadgeArrow() {
+/* The small arrow the not-allowed asset draws before its disc. */
+function BadgeArrow() {
   return (
     <>
       <path
@@ -97,26 +72,6 @@ export function BadgeArrow() {
         transform="matrix(1,0,0,-1,5,5.010601)"
         d="M0 0V-10.897C0-11.487 .697-11.801 1.139-11.41L3.874-8.989 7.674-8.99C8.284-8.99 8.59-8.253 8.159-7.821L.251 .104C.159 .197 0 .131 0 0"
         fill="#000"
-      />
-    </>
-  )
-}
-
-/* The spinning disc from cursors/busybutclickable/cursor.pdf, frame 1 of its
-   15-frame strip; the blues are the asset's literal colors. */
-export function SpinnerDisc() {
-  return (
-    <>
-      <circle cx="14" cy="26" r="9" fill="#00C0ED" />
-      <path
-        transform="matrix(1,0,0,-1,9.0012,23.4717)"
-        d="M0 0C2.165 .049 4.245-1.296 5.001-2.528 6.233-1.772 7.532-.364 7.532 2.123 7.532 4.611 5.762 6.389 5.001 6.472 .031 6.472-3.999 2.442-3.999-2.528-3.915-1.767-2.165-.049 0 0"
-        fill="#0098F6"
-      />
-      <path
-        transform="matrix(1,0,0,-1,19.0037,28.5283)"
-        d="M0 0C-2.165-.049-4.245 1.296-5.001 2.528-6.233 1.772-7.532 .364-7.532-2.123-7.532-4.611-5.762-6.389-5.001-6.472-.031-6.472 3.999-2.442 3.999 2.528 3.915 1.767 2.165 .049 0 0"
-        fill="#00C0ED"
       />
     </>
   )
@@ -154,29 +109,6 @@ export function NotAllowedCursor() {
           d="M0 0-8 8-6.756 9.244 1.244 1.244Z"
           fill="#fff"
         />
-      </g>
-    </svg>
-  )
-}
-
-/** Arrow + spinning disc — busy but clickable, what `progress` renders as. */
-export function ProgressCursor() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <g transform="translate(1.81 -2.42) scale(0.755)">
-        <BadgeArrow />
-        <SpinnerDisc />
-      </g>
-    </svg>
-  )
-}
-
-/** The busy disc without the arrow — busy and blocked, what `wait` means. */
-export function WaitCursor() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <g transform="translate(-2 -14)">
-        <SpinnerDisc />
       </g>
     </svg>
   )
