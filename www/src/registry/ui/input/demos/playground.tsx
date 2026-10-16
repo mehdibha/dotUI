@@ -7,6 +7,7 @@ export default function Demo({
   size = "md",
   disabled = false,
   readOnly = false,
+  "aria-invalid": ariaInvalid = false,
 }: InputProps = {}) {
   return (
     <Input
@@ -15,6 +16,7 @@ export default function Demo({
       size={size}
       disabled={disabled}
       readOnly={readOnly}
+      aria-invalid={ariaInvalid}
     ></Input>
   )
 }
