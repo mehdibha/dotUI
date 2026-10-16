@@ -18,7 +18,7 @@ const questionnaireVariants = tv({
     title:
       "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap) text-xl font-bold",
     description: "text-pretty text-fg-muted text-sm",
-    choices: "group/questionnaire-choices grid min-w-0 gap-3",
+    choices: "grid min-w-0 gap-3",
     choice:
       "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-sm border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-selection/40 data-checked:bg-muted data-invalid:border-fg-danger has-[>input:focus-visible]:focus-ring data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent gap-3 px-4 py-3.5 text-sm",
     choiceInput:

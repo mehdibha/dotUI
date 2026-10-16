@@ -35,7 +35,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       footer: "border-t bg-muted/50 font-medium",
       row: [
         "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
-        "hover:bg-muted/50 data-[state=selected]:bg-selected/50 data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30",
+        "hover:bg-muted/50 pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30",
         "focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
       cell: [
@@ -43,7 +43,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "bg-clip-padding px-2.5",
         "[div]:flex [div]:h-full [div]:w-full [div]:items-center",
         "[&.text-center]:justify-center [&.text-right]:justify-end",
-        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-(--studio-table-cell-radius) data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-['']",
+        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
       ],
       selectionCell: [
         "w-10 min-w-10 px-2.5",

@@ -115,7 +115,6 @@ interface SelectContentProps<T extends object>
       PopoverProps,
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps["placement"];
   virtulized?: boolean;
 }
 
