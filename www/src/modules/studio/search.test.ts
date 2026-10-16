@@ -43,24 +43,20 @@ const UNSTYLED = new Set([
 
 describe("panel search", () => {
   it("lists matching chapters, then matching rows", () => {
-    const results = search("Navigation")
-    expect(results[0]).toBe("Navigation")
-    expect(search("Corner")).toContain("Forms › Checkbox › Corner")
+    const results = search("Components")
+    expect(results[0]).toBe("Components")
+    expect(search("Corner")).toContain("Components › Checkbox › Corner")
   })
 
   it("reads every component row as Page › Row", () => {
-    const categoryOf = (id: string) =>
-      CHAPTERS.find((chapter) => chapter.id === id)?.label
-    for (const { label, chapter } of COMPONENTS)
-      expect(search(label), label).toContain(
-        `${categoryOf(chapter)} › ${label}`,
-      )
-    for (const { label, chapter, rows } of COMPONENTS.filter(
+    for (const { label } of COMPONENTS)
+      expect(search(label), label).toContain(`Components › ${label}`)
+    for (const { label, rows } of COMPONENTS.filter(
       (component) => !isSingle(component),
     ))
       for (const [, row] of rows)
         expect(search(row), `${label} › ${row}`).toContain(
-          `${categoryOf(chapter)} › ${label} › ${row}`,
+          `Components › ${label} › ${row}`,
         )
   })
 
@@ -79,14 +75,14 @@ describe("panel search", () => {
     expect(search("glass")).toContain(
       "Foundations › Color & surfaces › Surfaces › Overlays",
     )
-    expect(search("Frost")).toContain("Overlays › Dialog › Backdrop › Frost")
+    expect(search("Frost")).toContain("Components › Dialog › Backdrop › Frost")
     expect(search("Strength")).toContain(
       "Foundations › Interaction › Focus ring › Strength",
     )
   })
 
   it("finds a one-row component by its row's name", () => {
-    expect(search("Steppers")).toContain("Forms › Number field")
+    expect(search("Steppers")).toContain("Components › Number field")
   })
 
   it("reaches every styled component by name", () => {
