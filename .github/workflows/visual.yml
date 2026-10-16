@@ -1,0 +1,26 @@
+# Screenshots every component's demos (light and dark) and diffs them in Argos.
+# main builds the baseline; each PR gets an Argos check with the changed screenshots.
+
+name: Visual
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+  id-token: write # Argos authenticates with GitHub OIDC, no token secret needed
+
+jobs:
+  demos:
+    runs-on: ubuntu-latest
+    name: Screenshot component demos
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - run: pnpm build:www
+      - run: pnpm --filter www exec playwright install --with-deps chromium
+      - run: pnpm --filter www test:visual
