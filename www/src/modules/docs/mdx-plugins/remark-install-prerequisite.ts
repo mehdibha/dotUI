@@ -1,29 +1,28 @@
-import type { Paragraph, Root, RootContent } from "mdast"
+import type { Root, RootContent } from "mdast"
+import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx"
 import type { Plugin } from "unified"
 import { visit } from "unist-util-visit"
 
-// `@dotui/<name>` only resolves once the studio's init has registered it.
-const prerequisite: Paragraph = {
-  type: "paragraph",
+// `@dotui/<name>` only resolves once `init` has registered the registry.
+const prerequisite: MdxJsxFlowElement = {
+  type: "mdxJsxFlowElement",
+  name: "InstallPrerequisite",
+  attributes: [],
   children: [
     {
-      type: "text",
-      value: "Set up dotUI first — export your design system from the ",
+      type: "paragraph",
+      // A bare span, so the alert's text styles apply instead of the docs' <p>.
+      data: { hName: "span" },
+      children: [
+        { type: "text", value: "Make sure you've " },
+        {
+          type: "link",
+          url: "/docs/installation",
+          children: [{ type: "text", value: "initialized your project" }],
+        },
+        { type: "text", value: " with dotUI before adding components." },
+      ],
     },
-    {
-      type: "link",
-      url: "/studio",
-      children: [{ type: "text", value: "Studio" }],
-    },
-    { type: "text", value: ", which registers " },
-    { type: "inlineCode", value: "@dotui" },
-    { type: "text", value: " in your project. See " },
-    {
-      type: "link",
-      url: "/docs/installation",
-      children: [{ type: "text", value: "Installation" }],
-    },
-    { type: "text", value: "." },
   ],
 }
 
@@ -37,7 +36,7 @@ function addsDotuiItem(nodes: RootContent[]) {
   })
 }
 
-/** Prefixes every `## Installation` section that runs `add @dotui/<name>` with the setup prerequisite. */
+/** Opens every `## Installation` section that runs `add @dotui/<name>` with an init reminder. */
 export const remarkInstallPrerequisite: Plugin<[], Root> = () => (tree) => {
   const start = tree.children.findIndex(
     (node) =>
