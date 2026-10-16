@@ -1,50 +1,11 @@
 "use client"
 
-/* Density: the tier, drawn to scale. */
-
-import { DENSITY_OPTIONS, densityTier } from "../axes/space.meta"
-import { DialGlyph, DialSelect } from "../dial"
+import { DENSITY_OPTIONS } from "../axes/space.meta"
+import { DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 
-const TOUCH = densityTier("touch").ladder
-
-/** A tier's md control, its height to scale against Touch's. */
-function ControlGlyph({ density }: { density: string }) {
-  const h = (densityTier(density).ladder[2] / TOUCH[2]) * 14
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden>
-      <rect
-        x={0.75}
-        y={8 - h / 2}
-        width={14.5}
-        height={h}
-        rx={2.5}
-        stroke="currentColor"
-        strokeWidth={1.25}
-      />
-      <path
-        d="M5 8h6"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
-
-const DENSITY_ROW_OPTIONS = DENSITY_OPTIONS.map((option) => ({
-  ...option,
-  glyph: (
-    <DialGlyph>
-      <ControlGlyph density={option.value} />
-    </DialGlyph>
-  ),
-}))
-
 function DensityRow() {
-  return (
-    <DialSelect axis="density" label="Density" options={DENSITY_ROW_OPTIONS} />
-  )
+  return <DialSelect axis="density" label="Density" options={DENSITY_OPTIONS} />
 }
 
 export const ROWS: RowMap = { density: DensityRow }
