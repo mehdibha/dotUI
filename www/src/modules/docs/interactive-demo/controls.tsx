@@ -37,8 +37,6 @@ import {
 } from "@/registry/ui/select"
 import { Switch } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
-import { ToggleButton } from "@/registry/ui/toggle-button"
-import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 import type {
   ControlValues,
@@ -308,34 +306,11 @@ interface EnumControlRendererProps {
   onChange: (name: string, value: unknown) => void
 }
 
-/**
- * A small enum (a few short options, e.g. `size`: xs/sm/md/lg) renders as a
- * segmented control — quicker to scan and toggle than a dropdown, matching the
- * playground design. Larger option sets fall back to a Select to avoid overflow.
- */
-function isSegmentedEnum(control: SerializableEnumControl): boolean {
-  return (
-    control.options.length > 1 &&
-    control.options.length <= 4 &&
-    control.options.every((option) => option.length <= 8)
-  )
-}
-
 function EnumControlRenderer({
   control,
   value,
   onChange,
 }: EnumControlRendererProps) {
-  if (isSegmentedEnum(control)) {
-    return (
-      <SegmentedEnumControlRenderer
-        control={control}
-        value={value}
-        onChange={onChange}
-      />
-    )
-  }
-
   return (
     <Select
       selectedKey={value}
@@ -352,36 +327,6 @@ function EnumControlRenderer({
         ))}
       </SelectContent>
     </Select>
-  )
-}
-
-function SegmentedEnumControlRenderer({
-  control,
-  value,
-  onChange,
-}: EnumControlRendererProps) {
-  return (
-    <Field>
-      <ControlLabel name={control.name} reference={control.reference} />
-      <ToggleButtonGroup
-        aria-label={control.name}
-        size="sm"
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={value ? [value] : []}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next != null) onChange(control.name, next)
-        }}
-        className="w-full"
-      >
-        {control.options.map((option) => (
-          <ToggleButton key={option} id={option} className="flex-1">
-            {option}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-    </Field>
   )
 }
 
