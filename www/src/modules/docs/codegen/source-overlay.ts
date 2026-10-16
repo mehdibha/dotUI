@@ -5,14 +5,16 @@
  * with oxfmt, then the formatted root JSX is lifted into a tree that keeps
  * verbatim formatted text for everything static and structured nodes for every
  * position a control can change (attr holes, `{param}` text slots,
- * `{cond && <El>…</El>}` conditionals). The runtime renderer in
+ * `{cond && <El>…</El>}` conditionals, `attr={cond ? "…" : undefined}`
+ * attrs and `{!cond && "…"}` text). The runtime renderer in
  * `code-template.ts` owns the layout of the dynamic parts, so no per-value
  * formatting ever happens — and the output stays byte-identical to oxfmt.
  *
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
- * `@control:` marker comment (with optional `@drop-when:`). `{ident}` and
- * `{ident && …}` children match controls anywhere in the tree.
+ * `@control:` marker comment (with optional `@drop-when:`). `{ident}`,
+ * `{ident && …}` and `{!ident && "…"}` children, and `ident ? "…" : undefined`
+ * attrs, match controls anywhere in the tree.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
@@ -254,6 +256,12 @@ class TreeBuilder {
         })
         continue
       }
+      const guarded = this.readGuardedAttr(attr)
+      if (guarded) {
+        this.resolved.add(guarded.showWhen)
+        attrs.push({ part: "static", ...guarded })
+        continue
+      }
       const text = attr.getText()
       if (text.includes("\n")) {
         throw new OverlayError(
@@ -288,6 +296,12 @@ class TreeBuilder {
         if (!control) return null
         this.resolved.add(control.name)
         return { part: "text", control: control.name, kind: control.kind }
+      }
+
+      const hidden = this.readHiddenText(expr)
+      if (hidden) {
+        this.resolved.add(hidden.hideWhen)
+        return { part: "static-text", ...hidden }
       }
 
       if (
@@ -339,6 +353,7 @@ class TreeBuilder {
       if (Node.isJsxAttribute(n)) {
         if (n.getNameNode().getText() === "data-control-target") return true
         if (readDerivedMarker(n)) return true
+        if (this.readGuardedAttr(n)) return true
       }
       if (Node.isJsxExpression(n)) {
         const expr = n.getExpression()
@@ -351,9 +366,60 @@ class TreeBuilder {
           this.byName.has(expr.getLeft().getText())
         )
           return true
+        if (this.readHiddenText(expr)) return true
       }
     }
     return false
+  }
+
+  /** `attr={ident ? "…" : undefined}` → the attr as written when shown. */
+  private readGuardedAttr(
+    attr: JsxAttribute,
+  ): { text: string; showWhen: string } | null {
+    const init = attr.getInitializer()
+    if (!init || !Node.isJsxExpression(init)) return null
+    const expr = init.getExpression()
+    if (
+      !expr ||
+      !Node.isConditionalExpression(expr) ||
+      !this.byName.has(expr.getCondition().getText()) ||
+      expr.getWhenFalse().getText() !== "undefined"
+    )
+      return null
+    const value = expr.getWhenTrue()
+    if (!Node.isStringLiteral(value) || /["\\]/.test(value.getLiteralText())) {
+      throw new OverlayError(
+        `Guarded attribute "${attr.getNameNode().getText()}" must be a plain string literal${named(this.input)}`,
+      )
+    }
+    return {
+      text: `${attr.getNameNode().getText()}="${value.getLiteralText()}"`,
+      showWhen: expr.getCondition().getText(),
+    }
+  }
+
+  /** `{!ident && "…"}` → the text and the control that hides it. */
+  private readHiddenText(
+    expr: Node,
+  ): { text: string; hideWhen: string } | null {
+    if (
+      !Node.isBinaryExpression(expr) ||
+      expr.getOperatorToken().getText() !== "&&"
+    )
+      return null
+    const left = expr.getLeft()
+    const right = expr.getRight()
+    if (
+      !Node.isPrefixUnaryExpression(left) ||
+      left.getOperatorToken() !== SyntaxKind.ExclamationToken ||
+      !this.byName.has(left.getOperand().getText()) ||
+      !Node.isStringLiteral(right)
+    )
+      return null
+    return {
+      text: right.getLiteralText().replace(/\s+/g, " ").trim(),
+      hideWhen: left.getOperand().getText(),
+    }
   }
 }
 
