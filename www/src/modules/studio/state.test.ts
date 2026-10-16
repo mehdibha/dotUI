@@ -130,7 +130,8 @@ describe("deep links", () => {
       feedback: { page: "toast" },
       "feedback/loading": { page: "progress" },
       charts: { page: "chart" },
-      states: { page: "interaction" },
+      states: { page: "focus" },
+      interaction: { page: "focus" },
       motion: { key: "motion" },
     }
     for (const [hash, target] of Object.entries(old))

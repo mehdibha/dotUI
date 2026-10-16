@@ -1,9 +1,10 @@
 "use client"
 
-/* Density: the tier, drawn to scale. */
+/* Density: the tier, drawn to scale; the UI text size under it. */
 
 import { DENSITY_OPTIONS, densityTier } from "../axes/space.meta"
 import { DialGlyph, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 
 const TOUCH = densityTier("touch").ladder
@@ -43,7 +44,14 @@ const DENSITY_ROW_OPTIONS = DENSITY_OPTIONS.map((option) => ({
 
 function DensityRow() {
   return (
-    <DialSelect axis="density" label="Density" options={DENSITY_ROW_OPTIONS} />
+    <DialSelect
+      axis="density"
+      holds={["uiTextSize"]}
+      label="Density"
+      options={DENSITY_ROW_OPTIONS}
+    >
+      <Row axis="uiTextSize" label="Text size" />
+    </DialSelect>
   )
 }
 
