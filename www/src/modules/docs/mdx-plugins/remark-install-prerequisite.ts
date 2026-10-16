@@ -14,13 +14,19 @@ const prerequisite: MdxJsxFlowElement = {
       // A bare span, so the alert's text styles apply instead of the docs' <p>.
       data: { hName: "span" },
       children: [
-        { type: "text", value: "Make sure you've " },
+        {
+          type: "text",
+          value:
+            "Before adding components, initialize your project with your design system: open the ",
+        },
         {
           type: "link",
-          url: "/docs/installation",
-          children: [{ type: "text", value: "initialized your project" }],
+          url: "/studio",
+          children: [{ type: "text", value: "Studio" }],
         },
-        { type: "text", value: " with dotUI before adding components." },
+        { type: "text", value: " and run the init command from " },
+        { type: "strong", children: [{ type: "text", value: "Export" }] },
+        { type: "text", value: "." },
       ],
     },
   ],
