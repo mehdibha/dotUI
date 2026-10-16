@@ -536,7 +536,7 @@ function DesignSystemProvider({
     <div
       data-dotui-scope={scopeToken}
       data-mode={forcedMode}
-      style={{ display: "contents", ...scopeStyle }}
+      style={{ display: "contents", colorScheme: forcedMode, ...scopeStyle }}
     >
       {scopeSheet}
       <UNSAFE_PortalProvider
@@ -551,7 +551,7 @@ function DesignSystemProvider({
               id={portalDomId}
               data-dotui-scope={scopeToken}
               data-mode={forcedMode}
-              style={scopeStyle}
+              style={{ colorScheme: forcedMode, ...scopeStyle }}
             />,
             document.body,
           )}
