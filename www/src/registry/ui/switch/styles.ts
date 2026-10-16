@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
         "invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
       ],
       thumb:
-        "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
+        "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) motion-reduce:transition-none",
     },
     variants: {
       size: {
