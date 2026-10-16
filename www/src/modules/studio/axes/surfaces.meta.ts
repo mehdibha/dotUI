@@ -4,7 +4,25 @@ import {
   LAYERS_VALUES,
   SHADOW_VALUES,
   SHELL_VALUES,
+  SURFACE_LOOK_VALUES,
 } from "./surfaces"
+
+export const LOOK_OPTIONS = options(SURFACE_LOOK_VALUES, {
+  style: { label: "Style", description: "Cards take the Style's look" },
+  outlined: {
+    label: "Outlined",
+    description: "A hairline around cards, no shadow",
+  },
+  raised: { label: "Raised", description: "A hairline and a small shadow" },
+  floating: {
+    label: "Floating",
+    description: "No border; a soft shadow lifts cards",
+  },
+  grouped: {
+    label: "Grouped",
+    description: "In light, white cards on a gray page",
+  },
+})
 
 export const LAYERS_OPTIONS = options(LAYERS_VALUES, {
   same: {
