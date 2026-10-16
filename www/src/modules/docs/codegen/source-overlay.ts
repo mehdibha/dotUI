@@ -12,7 +12,9 @@
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
  * `@control:` marker comment (with optional `@drop-when:`). `{ident}` and
- * `{ident && …}` children match controls anywhere in the tree.
+ * `{ident && …}` children match controls anywhere in the tree, as do members
+ * of an expanded object literal inside an attribute (`{ ident }` shorthand,
+ * `...(ident && { … })` spread) — for imperative APIs like `toast.add({ … })`.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
@@ -23,6 +25,8 @@ import type {
   JsxAttribute,
   JsxElement,
   JsxSelfClosingElement,
+  ObjectLiteralElementLike,
+  ObjectLiteralExpression,
   SourceFile,
 } from "ts-morph"
 
@@ -35,6 +39,8 @@ import type {
   CodeTemplate,
   ConstDecl,
   ImportDecl,
+  MemberPart,
+  ObjectAttr,
   SerializedDefault,
   TemplateElement,
   ValueKind,
@@ -254,6 +260,11 @@ class TreeBuilder {
         })
         continue
       }
+      const object = this.buildObjectAttr(attr)
+      if (object) {
+        attrs.push(object)
+        continue
+      }
       const text = attr.getText()
       if (text.includes("\n")) {
         throw new OverlayError(
@@ -271,6 +282,89 @@ class TreeBuilder {
       }
     }
     return { tag, attrs, children }
+  }
+
+  private buildObjectAttr(attr: JsxAttribute): ObjectAttr | null {
+    const objects = attr
+      .getDescendantsOfKind(SyntaxKind.ObjectLiteralExpression)
+      .filter((o) => this.hasBoundMember(o))
+    const obj = objects[0]
+    if (!obj) return null
+    if (objects.length > 1) {
+      throw new OverlayError(
+        `Attribute "${attr.getNameNode().getText()}" has more than one object with controls${named(this.input)}`,
+      )
+    }
+
+    const lines = nodeLines(attr)
+    const first = attr.getStartLineNumber()
+    const open = obj.getStartLineNumber() - first
+    const close = obj.getEndLineNumber() - first
+    const props = obj.getProperties()
+    if (
+      open === close ||
+      !lines[open]?.endsWith("{") ||
+      !lines[close]?.trimStart().startsWith("}")
+    ) {
+      throw new OverlayError(
+        `Object with controls in "${attr.getNameNode().getText()}" must be expanded (newline after "{")${named(this.input)}`,
+      )
+    }
+
+    const members = props.map((p) => this.buildMember(p))
+    if (
+      !members.some(
+        (m) =>
+          m.part === "static" || (m.part === "member" && m.kind === "enum"),
+      )
+    ) {
+      throw new OverlayError(
+        `Object with controls in "${attr.getNameNode().getText()}" needs a member that always renders${named(this.input)}`,
+      )
+    }
+
+    const column = (n: Node) => n.getStart() - n.getStartLinePos()
+    return {
+      part: "object",
+      head: lines.slice(0, open + 1),
+      memberIndent: column(props[0] ?? obj) - column(attr),
+      members,
+      tail: lines.slice(close),
+    }
+  }
+
+  private buildMember(p: ObjectLiteralElementLike): MemberPart {
+    const name = this.boundMemberControl(p)
+    if (!name) return { part: "static", lines: withComma(nodeLines(p)) }
+    this.resolved.add(name)
+    if (Node.isShorthandPropertyAssignment(p)) {
+      const control = this.byName.get(name)
+      if (control?.kind === "icon" || control?.kind === "node") {
+        throw new OverlayError(
+          `Object member "${name}" can't take a ${control.kind} control${named(this.input)}`,
+        )
+      }
+      return { part: "member", control: name, kind: control?.kind ?? "string" }
+    }
+    return {
+      part: "spread",
+      showWhen: name,
+      lines: (spreadGuard(p)?.object.getProperties() ?? []).flatMap((q) =>
+        withComma(nodeLines(q)),
+      ),
+    }
+  }
+
+  /** The control a `{ ident }` or `...(ident && { … })` member binds to. */
+  private boundMemberControl(p: ObjectLiteralElementLike): string | undefined {
+    const name = Node.isShorthandPropertyAssignment(p)
+      ? p.getName()
+      : spreadGuard(p)?.guard
+    return name && this.byName.has(name) ? name : undefined
+  }
+
+  private hasBoundMember(obj: ObjectLiteralExpression): boolean {
+    return obj.getProperties().some((p) => this.boundMemberControl(p))
   }
 
   private buildChild(child: Node): ChildPart | null {
@@ -339,6 +433,12 @@ class TreeBuilder {
       if (Node.isJsxAttribute(n)) {
         if (n.getNameNode().getText() === "data-control-target") return true
         if (readDerivedMarker(n)) return true
+        if (
+          n
+            .getDescendantsOfKind(SyntaxKind.ObjectLiteralExpression)
+            .some((o) => this.hasBoundMember(o))
+        )
+          return true
       }
       if (Node.isJsxExpression(n)) {
         const expr = n.getExpression()
@@ -373,6 +473,27 @@ function readDerivedMarker(attr: JsxAttribute): { dropWhen?: string } | null {
   if (!/@control:/.test(full)) return null
   const dropMatch = full.match(/@drop-when:\s*([A-Za-z_$][\w$]*)/)
   return { dropWhen: dropMatch?.[1] }
+}
+
+/** The guard and object of a `...(guard && { … })` spread member. */
+function spreadGuard(
+  p: ObjectLiteralElementLike,
+): { guard: string; object: ObjectLiteralExpression } | undefined {
+  if (!Node.isSpreadAssignment(p)) return undefined
+  let expr = p.getExpression()
+  if (Node.isParenthesizedExpression(expr)) expr = expr.getExpression()
+  if (
+    !Node.isBinaryExpression(expr) ||
+    expr.getOperatorToken().getText() !== "&&"
+  )
+    return undefined
+  const object = expr.getRight()
+  if (!Node.isObjectLiteralExpression(object)) return undefined
+  return { guard: expr.getLeft().getText(), object }
+}
+
+function withComma(lines: string[]): string[] {
+  return lines.map((l, i) => (i === lines.length - 1 ? `${l},` : l))
 }
 
 /** A static node's formatted lines, dedented so its first column is 0. */
