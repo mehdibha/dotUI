@@ -7,7 +7,7 @@ import type { Effective } from "./axes"
 import { ROWS as buttonsRows } from "./sections/buttons"
 import { ROWS as chartsRows } from "./sections/charts"
 import { ROWS as colorRows } from "./sections/color"
-import { COMPONENT_CHAPTERS, COMPONENTS, isSingle } from "./sections/components"
+import { COMPONENTS, COMPONENTS_CHAPTER, isSingle } from "./sections/components"
 import { ROWS as dataDisplayRows } from "./sections/data-display"
 import { ROWS as datesRows } from "./sections/dates"
 import { ROWS as dialogsRows } from "./sections/dialogs"
@@ -112,7 +112,7 @@ export const CHAPTERS: Chapter[] = [
     Body: FoundationsSection,
     pages: FOUNDATION_PAGES,
   },
-  ...COMPONENT_CHAPTERS,
+  COMPONENTS_CHAPTER,
 ]
 
 const lists = (place: { owners?: string[] }, name: string) =>
