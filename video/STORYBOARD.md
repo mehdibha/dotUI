@@ -52,14 +52,14 @@ The structure from the planning thread: breadth first, then depth. Safest to mak
 
 ### Scenes
 
-| # | Scene | Bars | What happens |
-|---|-------|------|--------------|
-| 1 | Swap | 4 | Bar 0: the preview wall (no panel) in `origin`, line "Same components." Bar 1: `claude`, `carbon`, `duolingo`, `material3`, one per beat. Bar 2: `vercel`, `airbnb`, line becomes "Any look." on beat 2. Bar 3: hard cut to `origin` with the panel in, line "Let's build one." |
-| 2 | Build | 10 | One step per bar, the change on beat 0, a close shot of the panel row and the card it changes, beats 1–3 hold, camera travels to the next target on beat 3. Steps listed below. |
-| 3 | Export | 3 | Bar 0: cursor to Export, click on beat 2. Bar 1: the real export dialog inline, close on the `npx shadcn@latest init "…/init.json"` command at ≥22 px; Copy clicked on beat 2, the icon turns to a check. Bar 2: line "Installed with the shadcn CLI." |
-| 4 | End | 2 | The finished wall dims behind the dotUI mark, "Design your own shadcn style." and dotui.org. |
+| #   | Scene  | Bars | What happens                                                                                                                                                                                                                                                                    |
+| --- | ------ | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Swap   | 4    | Bar 0: the preview wall (no panel) in `origin`, line "Same components." Bar 1: `claude`, `carbon`, `duolingo`, `material3`, one per beat. Bar 2: `vercel`, `airbnb`, line becomes "Any look." on beat 2. Bar 3: hard cut to `origin` with the panel in, line "Let's build one." |
+| 2   | Build  | 10   | One step per bar, the change on beat 0, a close shot of the panel row and the card it changes, beats 1–3 hold, camera travels to the next target on beat 3. Steps listed below.                                                                                                 |
+| 3   | Export | 3    | Bar 0: cursor to Export, click on beat 2. Bar 1: the real export dialog inline, close on the `npx shadcn@latest init "…/init.json"` command at ≥22 px; Copy clicked on beat 2, the icon turns to a check. Bar 2: line "Installed with the shadcn CLI."                          |
+| 4   | End    | 2    | The finished wall dims behind the dotUI mark, "Design your own shadcn style." and dotui.org.                                                                                                                                                                                    |
 
-**Build steps** (each is a slice of the `linear` diff applied on top of `origin`; the state at step *n* is the first *n* slices):
+**Build steps** (each is a slice of the `linear` diff applied on top of `origin`; the state at step _n_ is the first _n_ slices):
 
 1. **Color** — `brand`, `neutralTint`, semantic seeds. Close: the pricing card's primary button and the brand row.
 2. **Surfaces** — `darkBg`/`lightBg`, `surfaceLayers`, `shellTone`, `surfaceShadow`. Close: two stacked cards.
@@ -94,13 +94,13 @@ Opens on what looks like a real product, then reveals it was built in dotUI. Str
 
 ### Scenes
 
-| # | Scene | Bars | What happens |
-|---|-------|------|--------------|
-| 1 | Hook | 3 | Bars 0–1: the `mail` block full frame in `linear`, dark; the cursor moves to a message row and clicks on bar 1 beat 0, the reading pane updates. Bar 2: on beat 0 the camera pulls back to the whole studio (panel left, mail block in the preview); line "Built in dotUI Studio." on beat 2. |
-| 2 | Rewind | 4 | The `linear` slices from Option A's build list revert in reverse, one per beat (16 beats), camera cutting between the panel row and the block each time. Line "Every decision is yours." from bar 2. Ends on `origin`. |
-| 3 | Swap | 4 | Bar 0: hold `origin`. Bars 1–2: `claude`, `carbon`, `duolingo`, `material3`, `vercel`, `airbnb`, `supabase`, `polaris`, one per beat. Line "Any system." on bar 1. Bar 3: snaps back to `linear`, the look from the hook. |
-| 4 | Export | 3 | As Option A's Export. |
-| 5 | End | 2 | As Option A's End. |
+| #   | Scene  | Bars | What happens                                                                                                                                                                                                                                                                                  |
+| --- | ------ | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Hook   | 3    | Bars 0–1: the `mail` block full frame in `linear`, dark; the cursor moves to a message row and clicks on bar 1 beat 0, the reading pane updates. Bar 2: on beat 0 the camera pulls back to the whole studio (panel left, mail block in the preview); line "Built in dotUI Studio." on beat 2. |
+| 2   | Rewind | 4    | The `linear` slices from Option A's build list revert in reverse, one per beat (16 beats), camera cutting between the panel row and the block each time. Line "Every decision is yours." from bar 2. Ends on `origin`.                                                                        |
+| 3   | Swap   | 4    | Bar 0: hold `origin`. Bars 1–2: `claude`, `carbon`, `duolingo`, `material3`, `vercel`, `airbnb`, `supabase`, `polaris`, one per beat. Line "Any system." on bar 1. Bar 3: snaps back to `linear`, the look from the hook.                                                                     |
+| 4   | Export | 3    | As Option A's Export.                                                                                                                                                                                                                                                                         |
+| 5   | End    | 2    | As Option A's End.                                                                                                                                                                                                                                                                            |
 
 **Hands off:** Hook ends on the wide studio in `linear`; Rewind starts there. Rewind ends on `origin`, Swap starts there. Swap ends on `linear`; Export starts there.
 
@@ -124,13 +124,13 @@ Starts on a single component and lets the viewer watch one decision spread throu
 
 ### Scenes
 
-| # | Scene | Bars | What happens |
-|---|-------|------|--------------|
-| 1 | Button | 4 | Bars 0–1: one primary button, rendered large (not scaled up), centered. One change per beat on top of `origin`: `brand`, `radiusPx`, `buttonRadius` pill, `bodyFont`, `uiTextSize`, `surfaceShadow`, `buttonSecondary` (a second button joins), `darkBg`. Bars 2–3: on bar 2 beat 0 the camera pulls back; the button sits in the pricing card in the wall, which is already in the same look. Line "Every component follows." |
-| 2 | Components | 6 | One per bar, the change on beat 0, panel row and component in a close shot: `tabStyle` pill, `badgeStyle` dot, `menuScale` large with prompt search, `calendarDayShape` circle with ring today, `alertStyle` soft-outline, `spinnerStyle` dots. Line "Down to each component." on the first bar only. Ends with the full `linear` state. |
-| 3 | Swap | 3 | The wide wall: `claude`, `carbon`, `duolingo`, `material3`, `vercel`, `airbnb`, one per beat over bars 0–1, back to `linear` on bar 2. Line "Or start from any look." |
-| 4 | Export | 3 | As Option A's Export. |
-| 5 | End | 2 | As Option A's End. |
+| #   | Scene      | Bars | What happens                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| --- | ---------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Button     | 4    | Bars 0–1: one primary button, rendered large (not scaled up), centered. One change per beat on top of `origin`: `brand`, `radiusPx`, `buttonRadius` pill, `bodyFont`, `uiTextSize`, `surfaceShadow`, `buttonSecondary` (a second button joins), `darkBg`. Bars 2–3: on bar 2 beat 0 the camera pulls back; the button sits in the pricing card in the wall, which is already in the same look. Line "Every component follows." |
+| 2   | Components | 6    | One per bar, the change on beat 0, panel row and component in a close shot: `tabStyle` pill, `badgeStyle` dot, `menuScale` large with prompt search, `calendarDayShape` circle with ring today, `alertStyle` soft-outline, `spinnerStyle` dots. Line "Down to each component." on the first bar only. Ends with the full `linear` state.                                                                                       |
+| 3   | Swap       | 3    | The wide wall: `claude`, `carbon`, `duolingo`, `material3`, `vercel`, `airbnb`, one per beat over bars 0–1, back to `linear` on bar 2. Line "Or start from any look."                                                                                                                                                                                                                                                          |
+| 4   | Export     | 3    | As Option A's Export.                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 5   | End        | 2    | As Option A's End.                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 **Hands off:** Button ends on the wide wall in the first-half state; Components starts there and walks the camera from card to card. Components ends on the full `linear` wall; Swap starts there. Swap ends on `linear`; Export starts there.
 
@@ -140,14 +140,14 @@ Starts on a single component and lets the viewer watch one decision spread throu
 
 ## Comparison
 
-| | A · Swap, then build | B · The reveal | C · One button |
-|---|---|---|---|
-| Length | 38 s | 32 s | 36 s |
-| First 3 s | Six looks flipping | A real-looking app | One button changing |
-| Sells best | Breadth, then depth | Fidelity | Per-component depth |
-| Hero look recognizable at | ~30 s | 0 s | ~20 s |
-| Build effort | Lowest (extends the proof shot) | Medium (mail block, rewind cuts) | Medium (big button, card-to-card camera) |
-| Main risk | Long middle | Hook depends on fidelity | Late payoff |
+|                           | A · Swap, then build            | B · The reveal                   | C · One button                           |
+| ------------------------- | ------------------------------- | -------------------------------- | ---------------------------------------- |
+| Length                    | 38 s                            | 32 s                             | 36 s                                     |
+| First 3 s                 | Six looks flipping              | A real-looking app               | One button changing                      |
+| Sells best                | Breadth, then depth             | Fidelity                         | Per-component depth                      |
+| Hero look recognizable at | ~30 s                           | 0 s                              | ~20 s                                    |
+| Build effort              | Lowest (extends the proof shot) | Medium (mail block, rewind cuts) | Medium (big button, card-to-card camera) |
+| Main risk                 | Long middle                     | Hook depends on fidelity         | Late payoff                              |
 
 ## Open decisions
 
