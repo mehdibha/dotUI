@@ -3,13 +3,23 @@ import { Sequence } from "remotion"
 import { bars } from "./lib/timing"
 import { SCENE_LIST } from "./scene-list"
 import type { SceneId } from "./scene-list"
+import { Agent } from "./scenes/agent"
+import { Catalog } from "./scenes/catalog"
 import { End } from "./scenes/end"
-import { Open } from "./scenes/open"
-import { Studio } from "./scenes/studio"
+import { Looks } from "./scenes/looks"
+import { Mobile } from "./scenes/mobile"
+import { Reveal } from "./scenes/reveal"
+import { Rush } from "./scenes/rush"
+import { Tweak } from "./scenes/tweak"
 
 const COMPONENTS: Record<SceneId, React.ComponentType> = {
-  Open,
-  Studio,
+  Looks,
+  Rush,
+  Reveal,
+  Tweak,
+  Catalog,
+  Mobile,
+  Agent,
   End,
 }
 
