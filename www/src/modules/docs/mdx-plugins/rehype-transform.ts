@@ -704,7 +704,8 @@ async function processInteractiveDemoNode(
 
     return {
       nodeInfo: info,
-      importName: `${toPascalCase(info.name)}Playground`,
+      // Distinct per file so two playgrounds of one item can share a page.
+      importName: toPascalCase(`${info.name}-${fileSlug.replaceAll("/", "-")}`),
       importPath: `@/registry/ui/${info.name}/demos/${fileSlug}`,
       controls: enrichedControls,
       codeTemplate,
