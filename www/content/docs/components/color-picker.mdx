@@ -7,7 +7,26 @@ links:
 wip: true
 ---
 
-<InteractiveDemo name="color-picker" controls={[]} />
+<InteractiveDemo
+  name="color-picker"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Accent",
+    },
+    {
+      type: "boolean",
+      name: "showAlphaChannel",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "showFormatSelector",
+      defaultValue: true,
+    },
+  ]}
+/>
 
 ## Installation
 
