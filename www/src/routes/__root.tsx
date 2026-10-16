@@ -34,7 +34,8 @@ export const Route = createRootRoute({
   head: () => {
     const title = `${siteConfig.title} - ${siteConfig.tagline}`
     const description = truncateOnWord(siteConfig.description, 148, true)
-    const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(siteConfig.og.title)}&description=${encodeURIComponent(siteConfig.og.description)}`
+    // Rendered by scripts/capture-cover.mts; the same cover is the repo's social preview.
+    const ogImageUrl = `${siteConfig.url}/brand/cover/og.png`
 
     return {
       meta: [

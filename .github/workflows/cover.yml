@@ -1,0 +1,55 @@
+# The social cover (www/public/brand/cover/*.png) renders real components under
+# several presets, so it goes stale whenever a preset or a component it shows
+# changes. On a PR that touches either, this regenerates it with
+# `pnpm build:cover` and commits the result to the PR branch.
+
+name: Cover
+
+on:
+  pull_request:
+    paths:
+      - "www/src/modules/presets/**"
+      - "www/src/registry/**"
+      - "www/src/lib/styles.tsx"
+      - "www/src/components/showcase/login-form.tsx"
+      - "www/src/modules/marketing/cover.tsx"
+      - "www/scripts/capture-cover.mts"
+      - "www/public/brand/**"
+      - "packages/colors/**"
+      - ".github/workflows/cover.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cover-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    # Pushing back needs a branch in this repo, so fork PRs are skipped.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          # A push made with the default token doesn't start other workflows,
+          # so CI wouldn't re-run on the cover commit; a token in COVER_TOKEN does.
+          token: ${{ secrets.COVER_TOKEN || github.token }}
+      - uses: ./.github/actions/setup
+
+      - run: pnpm build:cover
+
+      - name: Commit the regenerated cover
+        run: |
+          if git diff --quiet -- www/public/brand/cover; then
+            echo "cover is up to date"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add www/public/brand/cover
+          git commit -m "chore(brand): regenerate cover"
+          git push

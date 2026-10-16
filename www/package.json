@@ -16,7 +16,8 @@
     "build:references": "tsx scripts/api-docs-builder/src/index.ts",
     "probe:registry": "tsx scripts/registry-probe.ts",
     "preview:example": "tsx scripts/preview-example.ts",
-    "check:tailwind": "tsx scripts/tw-canonical.ts"
+    "check:tailwind": "tsx scripts/tw-canonical.ts",
+    "build:cover": "pnpm build:registry && tsx scripts/capture-cover.mts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
