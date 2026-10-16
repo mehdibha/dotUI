@@ -15,17 +15,17 @@ const TEMPOS: Record<(typeof COMPONENT_MOTION_VALUES)[number], OptionMeta> = {
   },
   standard: {
     label: "Standard",
-    description: "Quick eased fades",
+    description: "Quick, even transitions",
     credits: ["shadcn"],
   },
   smooth: {
     label: "Smooth",
-    description: "Longer glides that ease to a stop",
+    description: "Slower and softer, gliding to a stop",
     credits: ["Radix Themes"],
   },
   expressive: {
     label: "Expressive",
-    description: "Springs that overshoot",
+    description: "Springy, with a little bounce",
     credits: ["Material 3"],
   },
 }
@@ -44,17 +44,17 @@ export const SAME_AS_MOTION = {
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   zoom: {
     label: "Zoom",
-    description: "Grows from 95% while fading in",
+    description: "Grows slightly as it fades in",
     credits: ["shadcn"],
   },
   slide: {
     label: "Slide",
-    description: "Slides in from the trigger while fading",
+    description: "Slides in from its trigger as it fades in",
     credits: ["Polaris"],
   },
   fade: {
     label: "Fade",
-    description: "Fades in place, no movement",
+    description: "Fades in place, without moving",
     credits: ["Primer"],
   },
 })

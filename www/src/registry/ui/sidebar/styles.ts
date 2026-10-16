@@ -6,7 +6,7 @@ import { MONO_CAPS } from "../list-box/styles"
 import sidebarMeta from "./meta"
 
 const collapse =
-  "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
+  "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease) motion-reduce:transition-none"
 
 /* The current item's marker, on menu and sub-menu buttons alike. Each marker
    owns its hover; a marker with its own fill or ink keeps it under the pointer. */

@@ -40,7 +40,7 @@ export function springProgress(
 }
 
 /** Milliseconds until the spring stays within 0.1% of rest, to 10ms. */
-export function springSettleMs(spring: Spring): number {
+function springSettleMs(spring: Spring): number {
   let last = 0
   for (let ms = 0; ms <= 5000; ms += 5)
     if (Math.abs(1 - springProgress(ms / 1000, spring)) > 0.001) last = ms
