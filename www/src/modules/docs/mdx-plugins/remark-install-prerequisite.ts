@@ -17,15 +17,13 @@ const prerequisite: MdxJsxFlowElement = {
         {
           type: "text",
           value:
-            "Before adding components, initialize your project with your design system: open the ",
+            "Before adding components, init your project with your design system from the ",
         },
         {
           type: "link",
           url: "/studio",
           children: [{ type: "text", value: "Studio" }],
         },
-        { type: "text", value: " and run the init command from " },
-        { type: "strong", children: [{ type: "text", value: "Export" }] },
         { type: "text", value: "." },
       ],
     },
