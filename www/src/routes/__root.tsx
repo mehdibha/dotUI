@@ -59,14 +59,10 @@ export const Route = createRootRoute({
       ],
       links: [
         { rel: "stylesheet", href: appCss },
+        // The sized ICO is the fallback; browsers that read SVG favicons take
+        // favicon.svg, which follows the OS light/dark scheme.
+        { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
         { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-        {
-          rel: "alternate icon",
-          type: "image/png",
-          href: "/favicon-96x96.png",
-          sizes: "96x96",
-        },
-        { rel: "shortcut icon", href: "/favicon.ico" },
         {
           rel: "apple-touch-icon",
           href: "/apple-touch-icon.png",
