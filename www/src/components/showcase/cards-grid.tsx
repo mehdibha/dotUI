@@ -140,13 +140,19 @@ function CardColumn({
 // never needs to re-render the cards themselves.
 export const CardsGrid = memo(function CardsGrid({
   className,
+  side = true,
 }: {
   className?: string
+  /** The responsive 4th column; off for a fixed three-column grid. */
+  side?: boolean
 }) {
   return (
     <div
       className={cn(
-        "grid grid-cols-[repeat(3,18rem)] items-start gap-5 sm:grid-cols-[repeat(4,18rem)] lg:grid-cols-3 xl:grid-cols-4",
+        "grid items-start gap-5",
+        side
+          ? "grid-cols-[repeat(3,18rem)] sm:grid-cols-[repeat(4,18rem)] lg:grid-cols-3 xl:grid-cols-4"
+          : "grid-cols-3",
         className,
       )}
     >
@@ -158,7 +164,9 @@ export const CardsGrid = memo(function CardsGrid({
           <CardColumn cards={MAIN_RIGHT} />
         </div>
       </div>
-      <CardColumn cards={SIDE} className="hidden sm:flex lg:hidden xl:flex" />
+      {side && (
+        <CardColumn cards={SIDE} className="hidden sm:flex lg:hidden xl:flex" />
+      )}
     </div>
   )
 })

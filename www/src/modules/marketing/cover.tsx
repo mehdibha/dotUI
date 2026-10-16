@@ -4,46 +4,50 @@ import { useEffect } from "react"
 
 import { siteConfig } from "@/config/site"
 import { DesignSystemProvider } from "@/lib/styles"
-import { LoginForm } from "@/components/showcase/login-form"
+import { CardsGrid } from "@/components/showcase/cards-grid"
 import { resolvePreset } from "@/modules/presets"
 
-/* Back to front: each layer is the same card under another preset. */
-const LAYERS: { preset: string; mode: "light" | "dark" }[] = [
-  { preset: "vercel", mode: "dark" },
-  { preset: "airbnb", mode: "light" },
-  { preset: "spotify", mode: "dark" },
-  { preset: "claude", mode: "light" },
+/* Left to right: the same cards grid under each preset, cut into diagonal bands. */
+const BANDS: { preset: string; mode: "light" | "dark" }[] = [
   { preset: "origin", mode: "light" },
+  { preset: "linear", mode: "dark" },
+  { preset: "claude", mode: "light" },
 ]
+const SKEW = 8 // % of the grid's width each band edge leans by, top to bottom.
 
-/* The social cover: README/GitHub preview and the site's share image.
+function bandClip(index: number) {
+  const width = 100 / BANDS.length
+  const from = index === 0 ? -100 : index * width
+  const to = index === BANDS.length - 1 ? 200 : (index + 1) * width
+  return `polygon(${from + SKEW}% 0, ${to + SKEW}% 0, ${to - SKEW}% 100%, ${from - SKEW}% 100%)`
+}
+
+const [lead, rest] = siteConfig.tagline.split(/ (?=for )/)
+
+/* The social cover: the GitHub social preview and the site's share image.
    `scripts/capture-cover.mts` screenshots it at each size it ships in. */
 export function Cover() {
   return (
-    <div className="relative flex h-svh w-svw overflow-hidden bg-[#f2efec] font-sans text-[#231613]">
-      <div className="relative z-10 flex w-[44%] shrink-0 flex-col justify-between py-16 pl-16">
+    <div className="relative h-svh w-svw overflow-hidden bg-[#f2efec] font-sans text-[#231613]">
+      <div className="absolute inset-y-0 left-16 z-10 flex w-[28rem] flex-col justify-center">
         <img
           src="/brand/dotui-wordmark.svg"
           alt="dotUI"
-          className="h-11 w-fit"
+          className="h-10 w-fit"
         />
-        <div>
-          <h1 className="text-[64px] leading-[1.04] font-semibold tracking-[-0.045em] text-balance">
-            {siteConfig.tagline}
-          </h1>
-          <p className="mt-8 font-mono text-[22px] text-[#8c7a72]">dotui.org</p>
-        </div>
+        <h1 className="mt-10 font-features-['calt'_0,'rlig','ss11'] text-[58px] leading-[1.06] font-normal tracking-[-0.06em] text-balance antialiased">
+          {lead} <span className="text-[#8c7a72]">{rest}</span>
+        </h1>
+        <p className="mt-8 font-mono text-[22px] text-[#8c7a72]">dotui.org</p>
       </div>
-      <div className="relative flex-1">
-        {LAYERS.map(({ preset, mode }, index) => {
+      <div className="absolute top-12 left-[47%] w-[1000px] zoom-[0.7]">
+        {BANDS.map(({ preset, mode }, index) => {
           const designSystem = resolvePreset(preset)
-          // Fanned up and to the right from the front card, pinned to the right edge.
-          const step = LAYERS.length - 1 - index
           return (
             <div
               key={preset}
-              className="absolute"
-              style={{ right: 48 + index * 72, top: 196 - step * 36 }}
+              className="absolute inset-x-0 top-0"
+              style={{ clipPath: bandClip(index) }}
             >
               <DesignSystemProvider
                 scoped
@@ -54,7 +58,7 @@ export function Cover() {
                 color={designSystem.color}
                 icons={designSystem.icons}
               >
-                <LoginForm className="w-[360px] shadow-[0_24px_64px_-16px_rgb(56_30_30/0.35)]" />
+                <CardsGrid side={false} />
               </DesignSystemProvider>
             </div>
           )
@@ -70,7 +74,7 @@ function ReadySignal() {
   useEffect(() => {
     let cancelled = false
     void document.fonts.ready
-      .then(() => new Promise((r) => setTimeout(r, 500)))
+      .then(() => new Promise((r) => setTimeout(r, 1000)))
       .then(() => document.fonts.ready)
       .then(() => {
         if (!cancelled) document.documentElement.dataset.coverReady = ""

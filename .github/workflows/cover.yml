@@ -11,7 +11,7 @@ on:
       - "www/src/modules/presets/**"
       - "www/src/registry/**"
       - "www/src/lib/styles.tsx"
-      - "www/src/components/showcase/login-form.tsx"
+      - "www/src/components/showcase/**"
       - "www/src/modules/marketing/cover.tsx"
       - "www/scripts/capture-cover.mts"
       - "www/public/brand/**"
