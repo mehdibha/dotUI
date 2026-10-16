@@ -419,3 +419,49 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// GROUP — one control feeding attrs of another name (@control:<name>)
+// ---------------------------------------------------------------------------
+
+const GROUP_SRC = `"use client";
+
+import { Group } from "@/registry/ui/group";
+import { Input } from "@/registry/ui/input";
+
+export default function Demo({ isDisabled = false } = {}) {
+	return (
+		<Group isDisabled={isDisabled}>
+			<Input
+				placeholder="Email"
+				/* @control:isDisabled */
+				disabled={isDisabled}
+			/>
+		</Group>
+	);
+}
+`
+
+const GROUP_CONTROLS: ControlSelection[] = [
+  { name: "isDisabled", kind: "boolean", default: false },
+]
+
+describe("group", () => {
+  it("default: both attrs dropped", async () => {
+    const { collapsed } = await gen(GROUP_SRC, GROUP_CONTROLS, {
+      isDisabled: false,
+    })
+    expect(collapsed).toBe(`<Group>
+  <Input placeholder="Email" />
+</Group>`)
+  })
+
+  it("on: the marked attr keeps its own name", async () => {
+    const { collapsed } = await gen(GROUP_SRC, GROUP_CONTROLS, {
+      isDisabled: true,
+    })
+    expect(collapsed).toBe(`<Group isDisabled>
+  <Input placeholder="Email" disabled />
+</Group>`)
+  })
+})

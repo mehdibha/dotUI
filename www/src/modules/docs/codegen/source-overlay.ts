@@ -238,13 +238,14 @@ class TreeBuilder {
       }
       const attrName = attr.getNameNode().getText()
       if (attrName === "data-control-target") continue
-      const control = this.byName.get(attrName)
       const derived = readDerivedMarker(attr)
+      const controlName = derived?.control ?? attrName
+      const control = this.byName.get(controlName)
       if (control && (holesAllowed || derived)) {
-        this.resolved.add(attrName)
+        this.resolved.add(controlName)
         attrs.push({
           part: "attr",
-          control: attrName,
+          control: controlName,
           attrName,
           kind: control.kind,
           default: control.default,
@@ -367,12 +368,16 @@ function hasMarker(opening: { getAttributes(): Node[] }): boolean {
     )
 }
 
-/** Read `@control:` + `@drop-when:` leading comments on a derived attr. */
-function readDerivedMarker(attr: JsxAttribute): { dropWhen?: string } | null {
+/** Read `@control:<name>` + `@drop-when:` leading comments on a derived attr.
+ *  The named control may differ from the attr (`disabled` fed by `isDisabled`). */
+function readDerivedMarker(
+  attr: JsxAttribute,
+): { control?: string; dropWhen?: string } | null {
   const full = attr.getFullText()
   if (!/@control:/.test(full)) return null
+  const controlMatch = full.match(/@control:\s*([A-Za-z_$][\w$]*)/)
   const dropMatch = full.match(/@drop-when:\s*([A-Za-z_$][\w$]*)/)
-  return { dropWhen: dropMatch?.[1] }
+  return { control: controlMatch?.[1], dropWhen: dropMatch?.[1] }
 }
 
 /** A static node's formatted lines, dedented so its first column is 0. */
