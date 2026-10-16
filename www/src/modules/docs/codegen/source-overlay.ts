@@ -11,8 +11,11 @@
  *
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
- * `@control:` marker comment (with optional `@drop-when:`). `{ident}` and
- * `{ident && …}` children match controls anywhere in the tree.
+ * `@control:` marker comment (with optional `@drop-when:`). An attr whose
+ * value is an object literal embedding its control (`visibleDuration={{
+ * months: visibleDuration }}`) keeps that literal around the value.
+ * `{ident}`, `{ident && …}` and `{ident > 1 && …}` children match controls
+ * anywhere in the tree.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
@@ -33,6 +36,8 @@ import type {
   AttrPart,
   ChildPart,
   CodeTemplate,
+  CompareOp,
+  Comparison,
   ConstDecl,
   ImportDecl,
   SerializedDefault,
@@ -242,6 +247,7 @@ class TreeBuilder {
       const derived = readDerivedMarker(attr)
       if (control && (holesAllowed || derived)) {
         this.resolved.add(attrName)
+        const wrap = derived ? undefined : readObjectWrap(attr)
         attrs.push({
           part: "attr",
           control: attrName,
@@ -251,6 +257,7 @@ class TreeBuilder {
           ...((derived?.dropWhen ?? control.dropWhen)
             ? { dropWhen: derived?.dropWhen ?? control.dropWhen }
             : {}),
+          ...(wrap ? { wrap } : {}),
         })
         continue
       }
@@ -290,12 +297,9 @@ class TreeBuilder {
         return { part: "text", control: control.name, kind: control.kind }
       }
 
-      if (
-        Node.isBinaryExpression(expr) &&
-        expr.getOperatorToken().getText() === "&&" &&
-        this.byName.has(expr.getLeft().getText())
-      ) {
-        const control = expr.getLeft().getText()
+      const condition = this.readCondition(expr)
+      if (condition && Node.isBinaryExpression(expr)) {
+        const { control, compare } = condition
         let right: Node = expr.getRight()
         if (Node.isParenthesizedExpression(right)) right = right.getExpression()
         if (!Node.isJsxElement(right) && !Node.isJsxSelfClosingElement(right)) {
@@ -308,6 +312,7 @@ class TreeBuilder {
           part: "element",
           el: this.buildElement(right, { holesAllowed: false }),
           showWhen: control,
+          ...(compare ? { compare } : {}),
         }
       }
 
@@ -345,15 +350,69 @@ class TreeBuilder {
         if (!expr) continue
         if (Node.isIdentifier(expr) && this.byName.has(expr.getText()))
           return true
-        if (
-          Node.isBinaryExpression(expr) &&
-          expr.getOperatorToken().getText() === "&&" &&
-          this.byName.has(expr.getLeft().getText())
-        )
-          return true
+        if (this.readCondition(expr)) return true
       }
     }
     return false
+  }
+
+  /** `ident && …` or `ident <op> literal && …` over a control, else null. */
+  private readCondition(
+    expr: Node,
+  ): { control: string; compare?: Comparison } | null {
+    if (
+      !Node.isBinaryExpression(expr) ||
+      expr.getOperatorToken().getText() !== "&&"
+    )
+      return null
+    const left = expr.getLeft()
+    if (Node.isIdentifier(left))
+      return this.byName.has(left.getText())
+        ? { control: left.getText() }
+        : null
+    if (!Node.isBinaryExpression(left)) return null
+    const op = left.getOperatorToken().getText()
+    const ident = left.getLeft()
+    const literal = left.getRight()
+    if (
+      !COMPARE_OPS.has(op) ||
+      !Node.isIdentifier(ident) ||
+      !this.byName.has(ident.getText())
+    )
+      return null
+    if (!Node.isNumericLiteral(literal) && !Node.isStringLiteral(literal))
+      return null
+    return {
+      control: ident.getText(),
+      compare: { op: op as CompareOp, value: literal.getLiteralValue() },
+    }
+  }
+}
+
+const COMPARE_OPS = new Set(["<", "<=", ">", ">=", "===", "!=="])
+
+/** `attr={{ key: attr }}` → the attr text around the control's one occurrence. */
+function readObjectWrap(
+  attr: JsxAttribute,
+): { before: string; after: string } | undefined {
+  const init = attr.getInitializer()
+  const expr = Node.isJsxExpression(init) ? init.getExpression() : undefined
+  if (!expr || !Node.isObjectLiteralExpression(expr)) return undefined
+  const name = attr.getNameNode().getText()
+  const refs = expr.getDescendantsOfKind(SyntaxKind.Identifier).filter((id) => {
+    const parent = id.getParent()
+    return (
+      id.getText() === name &&
+      !(Node.isPropertyAssignment(parent) && parent.getNameNode() === id)
+    )
+  })
+  const [ref] = refs
+  if (refs.length !== 1 || !ref) return undefined
+  const text = attr.getText()
+  const at = ref.getStart() - attr.getStart()
+  return {
+    before: text.slice(0, at),
+    after: text.slice(at + name.length),
   }
 }
 

@@ -10,6 +10,24 @@ links:
   name="calendar"
   controls={[
     {
+      type: "enum",
+      name: "firstDayOfWeek",
+      options: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
+      defaultValue: "sun",
+    },
+    {
+      type: "number",
+      name: "visibleDuration",
+      options: [1, 2, 3],
+      defaultValue: 1,
+    },
+    {
+      type: "enum",
+      name: "pageBehavior",
+      options: ["visible", "single"],
+      defaultValue: "visible",
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
