@@ -1,9 +1,9 @@
 "use client"
 
 import type * as React from "react"
-import * as ButtonPrimitive from "react-aria-components/Button"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as GroupPrimitive from "react-aria-components/Group"
+import * as GroupPrimitives from "react-aria-components/Group"
 import * as NumberFieldPrimitives from "react-aria-components/NumberField"
 
 import { ChevronDownIcon, ChevronUpIcon } from "@/registry/icons"
@@ -43,7 +43,7 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
 }
 
 interface NumberFieldGroupProps extends React.ComponentProps<
-  typeof GroupPrimitive.Group
+  typeof GroupPrimitives.Group
 > {
   size?: "sm" | "md" | "lg"
 }
@@ -56,7 +56,7 @@ const NumberFieldGroup = ({
 }: NumberFieldGroupProps) => {
   const { inputGroup } = useInputStyles()()
   return (
-    <GroupPrimitive.Group
+    <GroupPrimitives.Group
       data-slot="number-field-group"
       data-input-group=""
       data-size={size}
@@ -76,7 +76,7 @@ const NumberFieldGroup = ({
 }
 
 interface NumberFieldStepperProps extends React.ComponentProps<
-  typeof ButtonPrimitive.Button
+  typeof ButtonPrimitives.Button
 > {}
 
 const stepper =
@@ -89,7 +89,7 @@ const NumberFieldDecrement = ({
 }: NumberFieldStepperProps) => {
   const { chip } = useInputStyles()()
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
         chip({ className: cn(stepper, className) }),
@@ -97,7 +97,7 @@ const NumberFieldDecrement = ({
       {...props}
     >
       {children ?? <ChevronDownIcon />}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
 
@@ -108,7 +108,7 @@ const NumberFieldIncrement = ({
 }: NumberFieldStepperProps) => {
   const { chip } = useInputStyles()()
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
         chip({ className: cn(stepper, className) }),
@@ -116,7 +116,7 @@ const NumberFieldIncrement = ({
       {...props}
     >
       {children ?? <ChevronUpIcon />}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
 

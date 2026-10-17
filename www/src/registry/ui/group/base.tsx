@@ -2,8 +2,8 @@
 
 import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as GroupPrimitive from "react-aria-components/Group"
-import * as TextPrimitive from "react-aria-components/Text"
+import * as GroupPrimitives from "react-aria-components/Group"
+import * as TextPrimitives from "react-aria-components/Text"
 import type { VariantProps } from "tailwind-variants"
 
 import { useStyles } from "./styles"
@@ -15,7 +15,7 @@ import type { GroupStyles } from "./styles"
 
 interface GroupProps
   extends
-    React.ComponentProps<typeof GroupPrimitive.Group>,
+    React.ComponentProps<typeof GroupPrimitives.Group>,
     VariantProps<GroupStyles> {}
 
 const Group = ({
@@ -25,7 +25,7 @@ const Group = ({
 }: GroupProps) => {
   const { root } = useStyles()()
   return (
-    <GroupPrimitive.Group
+    <GroupPrimitives.Group
       data-slot="group"
       data-group=""
       className={composeRenderProps(className, (className) =>
@@ -39,13 +39,13 @@ const Group = ({
 // MARK: Separator
 
 interface GroupTextProps extends React.ComponentProps<
-  typeof TextPrimitive.Text
+  typeof TextPrimitives.Text
 > {}
 
 const GroupText = ({ className, ...props }: GroupTextProps) => {
   const { text } = useStyles()()
   return (
-    <TextPrimitive.Text
+    <TextPrimitives.Text
       data-slot="text"
       data-text=""
       className={text({ className })}

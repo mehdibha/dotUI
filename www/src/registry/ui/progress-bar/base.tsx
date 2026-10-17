@@ -2,12 +2,12 @@
 
 import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as ProgressBarPrimitive from "react-aria-components/ProgressBar"
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar"
 
 import { useStyles } from "./styles"
 
 const ProgressBarContext =
-  React.createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null)
+  React.createContext<ProgressBarPrimitives.ProgressBarRenderProps | null>(null)
 const useProgressBarContext = (componentName: string) => {
   const context = React.use(ProgressBarContext)
   if (!context) {
@@ -19,12 +19,12 @@ const useProgressBarContext = (componentName: string) => {
 // MARK: Separator
 
 interface ProgressBarProps extends React.ComponentProps<
-  typeof ProgressBarPrimitive.ProgressBar
+  typeof ProgressBarPrimitives.ProgressBar
 > {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   const { root } = useStyles()()
   return (
-    <ProgressBarPrimitive.ProgressBar
+    <ProgressBarPrimitives.ProgressBar
       data-field=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
@@ -36,7 +36,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
           {children ?? <ProgressBarTrack />}
         </ProgressBarContext>
       ))}
-    </ProgressBarPrimitive.ProgressBar>
+    </ProgressBarPrimitives.ProgressBar>
   )
 }
 

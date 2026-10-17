@@ -1,7 +1,7 @@
 "use client"
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as TimeFieldPrimitive from "react-aria-components/TimeField"
+import * as TimeFieldPrimitives from "react-aria-components/TimeField"
 
 import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/field/styles"
@@ -11,16 +11,16 @@ import { useStyles } from "@/registry/ui/field/styles"
 // MARK: TimeField
 
 interface TimeFieldProps<
-  T extends TimeFieldPrimitive.TimeValue,
-> extends TimeFieldPrimitive.TimeFieldProps<T> {}
+  T extends TimeFieldPrimitives.TimeValue,
+> extends TimeFieldPrimitives.TimeFieldProps<T> {}
 
-const TimeField = <T extends TimeFieldPrimitive.TimeValue>({
+const TimeField = <T extends TimeFieldPrimitives.TimeValue>({
   className,
   ...props
 }: TimeFieldProps<T>) => {
   const fieldStyles = useStyles()
   return (
-    <TimeFieldPrimitive.TimeField
+    <TimeFieldPrimitives.TimeField
       data-time-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>

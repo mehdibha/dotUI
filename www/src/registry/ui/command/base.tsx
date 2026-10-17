@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
 
 import {
   ListBox,
@@ -19,7 +19,7 @@ import { useStyles } from "./styles"
 
 interface CommandProps<T extends object>
   extends
-    Omit<AutocompletePrimitive.AutocompleteProps<T>, "children" | "filter">,
+    Omit<AutocompletePrimitives.AutocompleteProps<T>, "children" | "filter">,
     Omit<React.ComponentProps<"div">, "slot"> {
   filter?: Intl.CollatorOptions
 }
@@ -31,16 +31,16 @@ const Command = <T extends object>({
   ...props
 }: CommandProps<T>) => {
   const styles = useStyles()
-  const { contains } = AutocompletePrimitive.useFilter({
+  const { contains } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
     ignorePunctuation: true,
     ...filter,
   })
 
   return (
-    <AutocompletePrimitive.Autocomplete filter={contains}>
+    <AutocompletePrimitives.Autocomplete filter={contains}>
       <div data-command="" className={styles({ className })} {...props} />
-    </AutocompletePrimitive.Autocomplete>
+    </AutocompletePrimitives.Autocomplete>
   )
 }
 

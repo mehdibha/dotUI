@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import * as ButtonPrimitive from "react-aria-components/Button"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectPrimitives from "react-aria-components/Select"
 
@@ -51,7 +51,7 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 // MARK: Separator
 
-interface SelectTriggerProps extends ButtonPrimitive.ButtonProps {
+interface SelectTriggerProps extends ButtonPrimitives.ButtonProps {
   size?: "sm" | "md" | "lg"
 }
 
@@ -61,7 +61,7 @@ const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
   const isInvalid = React.use(SelectPrimitives.SelectStateContext)
     ?.displayValidation.isInvalid
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       data-select-trigger=""
       data-size={size}
       data-invalid={isInvalid || undefined}
@@ -78,7 +78,7 @@ const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
           </>
         )
       })}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
 

@@ -3,11 +3,11 @@
 import * as React from "react"
 import { OTPField as OTPFieldPrimitive } from "@base-ui/react/otp-field"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as FieldErrorPrimitive from "react-aria-components/FieldError"
-import * as InputPrimitive from "react-aria-components/Input"
-import * as LabelPrimitive from "react-aria-components/Label"
+import * as FieldErrorPrimitives from "react-aria-components/FieldError"
+import * as InputPrimitives from "react-aria-components/Input"
+import * as LabelPrimitives from "react-aria-components/Label"
 import { Provider } from "react-aria-components/slots"
-import * as TextPrimitive from "react-aria-components/Text"
+import * as TextPrimitives from "react-aria-components/Text"
 import { useSlotId } from "react-aria/private/utils/useId"
 
 import { Input } from "@/registry/ui/input"
@@ -16,7 +16,7 @@ import { useStyles } from "./styles"
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>
 type FieldValidationResult = NonNullable<
-  React.ContextType<typeof FieldErrorPrimitive.FieldErrorContext>
+  React.ContextType<typeof FieldErrorPrimitives.FieldErrorContext>
 >
 
 interface OTPFieldProps extends Omit<
@@ -85,9 +85,9 @@ const OTPField = ({
   return (
     <Provider
       values={[
-        [LabelPrimitive.LabelContext, { id: labelId, htmlFor: id }],
+        [LabelPrimitives.LabelContext, { id: labelId, htmlFor: id }],
         [
-          TextPrimitive.TextContext,
+          TextPrimitives.TextContext,
           {
             slots: {
               description: { id: descriptionId },
@@ -95,9 +95,9 @@ const OTPField = ({
             },
           },
         ],
-        [FieldErrorPrimitive.FieldErrorContext, validation],
+        [FieldErrorPrimitives.FieldErrorContext, validation],
         [
-          InputPrimitive.InputContext,
+          InputPrimitives.InputContext,
           {
             "aria-invalid": isInvalid || undefined,
             render: (inputProps) => (

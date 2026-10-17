@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
 import { MenuContext } from "react-aria-components/Menu"
 import type { Key } from "react-aria-components/Menu"
 import { PopoverContext } from "react-aria-components/Popover"
@@ -59,7 +59,7 @@ const Mention = ({
   ...props
 }: MentionProps) => {
   const { root } = useStyles()()
-  const { startsWith } = AutocompletePrimitive.useFilter({
+  const { startsWith } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
   })
   const [value, setValue] = useControlledState(
@@ -155,7 +155,7 @@ const Mention = ({
   )
 
   return (
-    <AutocompletePrimitive.Autocomplete
+    <AutocompletePrimitives.Autocomplete
       inputValue={active?.query ?? ""}
       filter={startsWith}
     >
@@ -193,7 +193,7 @@ const Mention = ({
             : children}
         </TokenField>
       </Provider>
-    </AutocompletePrimitive.Autocomplete>
+    </AutocompletePrimitives.Autocomplete>
   )
 }
 

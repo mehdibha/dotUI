@@ -2,18 +2,18 @@
 
 import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as ListBoxPrimitive from "react-aria-components/ListBox"
+import * as ListBoxPrimitives from "react-aria-components/ListBox"
 import type * as TextPrimitive from "react-aria-components/Text"
-import * as VirtualizerPrimitive from "react-aria-components/Virtualizer"
+import * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
 
 import { CheckIcon } from "@/registry/icons"
 import { Loader } from "@/registry/ui/loader"
 
 import { useStyles } from "./styles"
 
-interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
-  isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"]
-  onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps["onLoadMore"]
+interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
+  isLoading?: ListBoxPrimitives.ListBoxLoadMoreItemProps["isLoading"]
+  onLoadMore?: ListBoxPrimitives.ListBoxLoadMoreItemProps["onLoadMore"]
 }
 const ListBox = <T extends object>({
   className,
@@ -24,34 +24,34 @@ const ListBox = <T extends object>({
   ...props
 }: ListBoxProps<T>) => {
   const { root, loadMore } = useStyles()()
-  const standalone = !React.use(ListBoxPrimitive.ListBoxContext)
+  const standalone = !React.use(ListBoxPrimitives.ListBoxContext)
 
   return (
-    <ListBoxPrimitive.ListBox
+    <ListBoxPrimitives.ListBox
       data-listbox=""
       className={composeRenderProps(className, (cn) => root({ className: cn }))}
       data-standalone={standalone ?? undefined}
       {...props}
     >
-      <ListBoxPrimitive.Collection items={items}>
+      <ListBoxPrimitives.Collection items={items}>
         {children}
-      </ListBoxPrimitive.Collection>
+      </ListBoxPrimitives.Collection>
       {onLoadMore && (
-        <ListBoxPrimitive.ListBoxLoadMoreItem
+        <ListBoxPrimitives.ListBoxLoadMoreItem
           className={loadMore()}
           isLoading={isLoading}
           onLoadMore={onLoadMore}
         >
           <Loader />
-        </ListBoxPrimitive.ListBoxLoadMoreItem>
+        </ListBoxPrimitives.ListBoxLoadMoreItem>
       )}
-    </ListBoxPrimitive.ListBox>
+    </ListBoxPrimitives.ListBox>
   )
 }
 
 // MARK: Separator
 
-interface ListBoxItemProps<T> extends ListBoxPrimitive.ListBoxItemProps<T> {
+interface ListBoxItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T> {
   variant?: "default" | "danger"
 }
 const ListBoxItem = <T extends object>({
@@ -66,7 +66,7 @@ const ListBoxItem = <T extends object>({
     (typeof props.children === "string" ? props.children : undefined)
 
   return (
-    <ListBoxPrimitive.ListBoxItem
+    <ListBoxPrimitives.ListBoxItem
       data-listbox-item=""
       data-variant={variant}
       textValue={textValue}
@@ -90,7 +90,7 @@ const ListBoxItem = <T extends object>({
           </>
         ),
       )}
-    </ListBoxPrimitive.ListBoxItem>
+    </ListBoxPrimitives.ListBoxItem>
   )
 }
 
@@ -102,7 +102,7 @@ interface ListBoxItemLabelProps extends React.ComponentProps<
 const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
   const { itemLabel } = useStyles()()
   return (
-    <ListBoxPrimitive.Text
+    <ListBoxPrimitives.Text
       data-listbox-item-label=""
       slot="label"
       className={itemLabel({ className })}
@@ -122,7 +122,7 @@ const ListBoxItemDescription = ({
 }: ListBoxItemDescriptionProps) => {
   const { itemDescription } = useStyles()()
   return (
-    <ListBoxPrimitive.Text
+    <ListBoxPrimitives.Text
       data-listbox-item-description=""
       slot="description"
       className={itemDescription({ className })}
@@ -135,14 +135,14 @@ const ListBoxItemDescription = ({
 
 interface ListBoxSectionProps<
   T,
-> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
+> extends ListBoxPrimitives.ListBoxSectionProps<T> {}
 const ListBoxSection = <T extends object>({
   className,
   ...props
 }: ListBoxSectionProps<T>) => {
   const { section } = useStyles()()
   return (
-    <ListBoxPrimitive.ListBoxSection
+    <ListBoxPrimitives.ListBoxSection
       data-listbox-section=""
       className={section({ className })}
       {...props}
@@ -153,7 +153,7 @@ const ListBoxSection = <T extends object>({
 // MARK: Separator
 
 interface ListBoxSectionHeaderProps extends React.ComponentProps<
-  typeof ListBoxPrimitive.Header
+  typeof ListBoxPrimitives.Header
 > {}
 const ListBoxSectionHeader = ({
   className,
@@ -161,7 +161,7 @@ const ListBoxSectionHeader = ({
 }: ListBoxSectionHeaderProps) => {
   const { sectionTitle } = useStyles()()
   return (
-    <ListBoxPrimitive.Header
+    <ListBoxPrimitives.Header
       data-listbox-section-header=""
       className={sectionTitle({ className })}
       {...props}
@@ -172,15 +172,15 @@ const ListBoxSectionHeader = ({
 // MARK: Separator
 
 interface ListBoxVirtualizerProps<T> extends Omit<
-  VirtualizerPrimitive.VirtualizerProps<T>,
+  VirtualizerPrimitives.VirtualizerProps<T>,
   "layout"
 > {}
 const ListBoxVirtualizer = <T extends object>({
   ...props
 }: ListBoxVirtualizerProps<T>) => {
   return (
-    <VirtualizerPrimitive.Virtualizer
-      layout={VirtualizerPrimitive.ListLayout}
+    <VirtualizerPrimitives.Virtualizer
+      layout={VirtualizerPrimitives.ListLayout}
       layoutOptions={{
         rowHeight: 32,
         padding: 4,

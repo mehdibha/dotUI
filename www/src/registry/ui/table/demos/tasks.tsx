@@ -38,7 +38,7 @@ import {
   XIcon,
 } from "lucide-react"
 import type { Selection } from "react-aria-components"
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
 import type { SortDescriptor } from "react-aria-components/Table"
 
 import { Badge } from "@/registry/ui/badge"
@@ -484,7 +484,7 @@ const taskColumns: ColumnDef<Task>[] = [
 ]
 
 export default function Demo() {
-  const { contains } = AutocompletePrimitive.useFilter({
+  const { contains } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
     ignorePunctuation: true,
   })

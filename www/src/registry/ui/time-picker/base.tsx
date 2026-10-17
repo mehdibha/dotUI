@@ -12,7 +12,7 @@ import { GroupContext } from "react-aria-components/Group"
 import { useLocale } from "react-aria-components/I18nProvider"
 import { InputContext } from "react-aria-components/Input"
 import { LabelContext } from "react-aria-components/Label"
-import * as ListBoxPrimitive from "react-aria-components/ListBox"
+import * as ListBoxPrimitives from "react-aria-components/ListBox"
 import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
 import { TextContext } from "react-aria-components/Text"
@@ -299,7 +299,7 @@ const TimeColumn = ({
   }, [])
 
   return (
-    <ListBoxPrimitive.ListBox
+    <ListBoxPrimitives.ListBox
       ref={ref}
       data-time-picker-column=""
       aria-label={label}
@@ -316,7 +316,7 @@ const TimeColumn = ({
       }}
     >
       {options.map((option) => (
-        <ListBoxPrimitive.ListBoxItem
+        <ListBoxPrimitives.ListBoxItem
           key={option.id}
           id={option.id}
           data-time-picker-item=""
@@ -324,9 +324,9 @@ const TimeColumn = ({
           className={item()}
         >
           {option.label}
-        </ListBoxPrimitive.ListBoxItem>
+        </ListBoxPrimitives.ListBoxItem>
       ))}
-    </ListBoxPrimitive.ListBox>
+    </ListBoxPrimitives.ListBox>
   )
 }
 
