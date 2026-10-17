@@ -1,5 +1,3 @@
-"use client"
-
 import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react"
 
 const useIsoLayoutEffect =
