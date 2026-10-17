@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import type * as React from "react"
 import {
   Token as TokenPrimitive,
   TokenField as TokenFieldPrimitive,
@@ -29,7 +29,7 @@ interface TokenFieldProps extends Omit<
 }
 
 /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
-function TokenField({ className, ...props }: TokenFieldProps) {
+const TokenField = ({ className, ...props }: TokenFieldProps) => {
   const { root } = useStyles()()
   return <TokenFieldPrimitive className={root({ className })} {...props} />
 }
@@ -48,12 +48,12 @@ interface TokenInputProps extends Omit<
 }
 
 /** The content-editable area of a `TokenField`. */
-function TokenInput({
+const TokenInput = ({
   placeholder,
   className,
   children,
   ...props
-}: TokenInputProps) {
+}: TokenInputProps) => {
   const { input } = useStyles()()
   const { textArea } = useInputStyles()()
   return (
@@ -75,7 +75,7 @@ interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
 }
 
 /** An inline token within a `TokenInput`. */
-function Token({ className, ...props }: TokenProps) {
+const Token = ({ className, ...props }: TokenProps) => {
   const { token } = useStyles()()
   return <TokenPrimitive className={token({ className })} {...props} />
 }

@@ -8,7 +8,7 @@ interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
 const blades = Array.from({ length: 8 }, (_, i) => i)
 
-function Loader({ className, ...props }: LoaderProps) {
+const Loader = ({ className, ...props }: LoaderProps) => {
   return (
     <ProgressBarPrimitives.ProgressBar
       data-loader=""

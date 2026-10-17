@@ -47,7 +47,7 @@ const escapeRegExp = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 
 /** Typing a trigger opens a caret-anchored `Menu` of suggestions; selecting one inserts it as an inline token. */
-function Mention({
+const Mention = ({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
@@ -57,7 +57,7 @@ function Mention({
   defaultValue,
   onChange,
   ...props
-}: MentionProps) {
+}: MentionProps) => {
   const { root } = useStyles()()
   const { startsWith } = AutocompletePrimitive.useFilter({
     sensitivity: "base",

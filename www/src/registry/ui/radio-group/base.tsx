@@ -1,7 +1,6 @@
 "use client"
 
-import { createContext, useContext, useId } from "react"
-import type * as React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { LabelContext } from "react-aria-components/Label"
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup"
@@ -33,7 +32,7 @@ const RadioGroup = ({
 // MARK: Separator
 
 const InternalRadioContext =
-  createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null)
+  React.createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null)
 
 interface RadioProps extends React.ComponentProps<
   typeof RadioGroupPrimitives.RadioField
@@ -41,7 +40,7 @@ interface RadioProps extends React.ComponentProps<
 
 const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
   const { root } = useStyles()()
-  const autoId = useId()
+  const autoId = React.useId()
   const id = idProp ?? autoId
   const labelId = useSlotId()
   return (
@@ -111,7 +110,7 @@ interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
   const { indicator } = useStyles()()
-  const ctx = useContext(InternalRadioContext)
+  const ctx = React.useContext(InternalRadioContext)
   return (
     <span
       data-radio-indicator=""

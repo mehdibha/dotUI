@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import * as React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 import * as ColorPickerPrimitives from "react-aria-components/ColorPicker"
 import { useControlledState } from "react-stately/useControlledState"

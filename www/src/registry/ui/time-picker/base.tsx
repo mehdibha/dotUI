@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import * as React from "react"
 import type { Time } from "@internationalized/date"
 import { ButtonContext } from "react-aria-components/Button"
 import {

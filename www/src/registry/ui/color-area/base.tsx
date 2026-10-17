@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 

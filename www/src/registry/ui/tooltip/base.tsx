@@ -33,12 +33,12 @@ interface TooltipContentProps
   hideArrow?: boolean
 }
 
-function TooltipContent({
+const TooltipContent = ({
   offset = 10,
   hideArrow = false,
   className,
   ...props
-}: TooltipContentProps) {
+}: TooltipContentProps) => {
   const { content } = useStyles()()
   return (
     <TooltipPrimitives.Tooltip
@@ -63,7 +63,7 @@ function TooltipContent({
 
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
-function TooltipArrow({ className }: TooltipArrowProps) {
+const TooltipArrow = ({ className }: TooltipArrowProps) => {
   const { arrow } = useStyles()()
   return (
     <PopoverPrimitives.OverlayArrow className={arrow({ className })}>

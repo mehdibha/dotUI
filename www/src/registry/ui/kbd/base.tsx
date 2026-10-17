@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as KeyboardPrimitive from "react-aria-components/Keyboard"
 
 import { useStyles } from "./styles"

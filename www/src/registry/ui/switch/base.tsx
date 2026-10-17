@@ -1,7 +1,6 @@
 "use client"
 
-import { createContext, useContext, useId } from "react"
-import type * as React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { LabelContext } from "react-aria-components/Label"
 import { Provider, useSlottedContext } from "react-aria-components/slots"
@@ -16,8 +15,8 @@ import type { SwitchStyles } from "./styles"
 
 // MARK: switchStyles
 
-const SwitchStyleContext = createContext<VariantProps<SwitchStyles>>({})
-const InternalSwitchContext = createContext<
+const SwitchStyleContext = React.createContext<VariantProps<SwitchStyles>>({})
+const InternalSwitchContext = React.createContext<
   (SwitchPrimitive.SwitchButtonRenderProps & VariantProps<SwitchStyles>) | null
 >(null)
 
@@ -30,7 +29,7 @@ interface SwitchProps
 
 const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
   const { root } = useStyles()()
-  const autoId = useId()
+  const autoId = React.useId()
   const id = idProp ?? autoId
   const labelId = useSlotId()
 
@@ -80,7 +79,7 @@ const SwitchControl = ({
 }: SwitchControlProps) => {
   const { control } = useStyles()()
   const labelContext = useSlottedContext(LabelContext)
-  const styleContext = useContext(SwitchStyleContext)
+  const styleContext = React.useContext(SwitchStyleContext)
   const { id: labelId } = labelContext ?? {}
   const size = sizeProp ?? styleContext.size
 
@@ -113,7 +112,7 @@ interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
   const { indicator } = useStyles()()
-  const ctx = useContext(InternalSwitchContext)
+  const ctx = React.useContext(InternalSwitchContext)
 
   if (!ctx) {
     return (
@@ -150,7 +149,7 @@ interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
   const { thumb } = useStyles()()
-  const ctx = useContext(InternalSwitchContext)
+  const ctx = React.useContext(InternalSwitchContext)
 
   return (
     <span

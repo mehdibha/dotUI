@@ -53,7 +53,7 @@ const VALID_VALIDITY_STATE: ValidityState = {
 const getAriaIds = (...ids: Array<string | undefined>) =>
   ids.filter(Boolean).join(" ") || undefined
 
-function OTPField({
+const OTPField = ({
   children,
   className,
   id: idProp,
@@ -66,7 +66,7 @@ function OTPField({
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
   ...props
-}: OTPFieldProps) {
+}: OTPFieldProps) => {
   const styles = useStyles()()
   const generatedId = React.useId()
   const id = idProp ?? generatedId
@@ -149,7 +149,7 @@ function OTPField({
   )
 }
 
-function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
+const OTPFieldGroup = ({ className, ...props }: OTPFieldGroupProps) => {
   const { group } = useStyles()()
   return (
     <div
@@ -160,7 +160,7 @@ function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
   )
 }
 
-function OTPFieldSeparator(props: OTPFieldSeparatorProps) {
+const OTPFieldSeparator = (props: OTPFieldSeparatorProps) => {
   return (
     <OTPFieldPrimitive.Separator data-slot="otp-field-separator" {...props} />
   )

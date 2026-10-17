@@ -57,7 +57,7 @@ export type LineChartProps<TDatum> = ChartComponentProps<
   TDatum
 >
 
-export function LineChart<TDatum>(props: LineChartProps<TDatum>) {
+export const LineChart = <TDatum,>(props: LineChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     LineChartSpecOptions<TDatum>

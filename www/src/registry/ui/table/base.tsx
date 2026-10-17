@@ -376,13 +376,13 @@ const TableFooter = <T extends object>({
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
-function TableRow<T extends object>({
+const TableRow = <T extends object>({
   columns,
   children,
   className,
   dependencies,
   ...props
-}: TableRowProps<T>) {
+}: TableRowProps<T>) => {
   const { dragButton, dragCell, row, selectionCell } = useStyles()()
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions()

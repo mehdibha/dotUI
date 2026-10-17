@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SliderPrimitive from "react-aria-components/Slider"
 import { Provider } from "react-aria-components/slots"
@@ -90,7 +90,7 @@ interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { track } = useStyles()()
-  const state = useContext(SliderPrimitive.SliderStateContext)
+  const state = React.useContext(SliderPrimitive.SliderStateContext)
 
   return (
     <div

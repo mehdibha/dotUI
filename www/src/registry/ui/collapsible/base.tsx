@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DisclosurePrimitives from "react-aria-components/Disclosure"
@@ -14,7 +15,7 @@ interface CollapsibleProps extends React.ComponentProps<
   typeof DisclosurePrimitives.Disclosure
 > {}
 
-function Collapsible({ className, ...props }: CollapsibleProps) {
+const Collapsible = ({ className, ...props }: CollapsibleProps) => {
   const { root } = useStyles()()
   return (
     <DisclosurePrimitives.Disclosure
@@ -31,7 +32,10 @@ interface CollapsibleTriggerProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function CollapsibleTrigger({ className, ...props }: CollapsibleTriggerProps) {
+const CollapsibleTrigger = ({
+  className,
+  ...props
+}: CollapsibleTriggerProps) => {
   const { trigger } = useStyles()()
   return (
     <ButtonPrimitives.Button
@@ -51,7 +55,7 @@ interface CollapsiblePanelProps extends React.ComponentProps<
   typeof DisclosurePrimitives.DisclosurePanel
 > {}
 
-function CollapsiblePanel({ className, ...props }: CollapsiblePanelProps) {
+const CollapsiblePanel = ({ className, ...props }: CollapsiblePanelProps) => {
   const { panel } = useStyles()()
   return (
     <DisclosurePrimitives.DisclosurePanel

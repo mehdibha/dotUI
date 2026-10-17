@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import type * as React from "react"
 import * as CheckboxPrimitives from "react-aria-components/Checkbox"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as FieldErrorPrimitives from "react-aria-components/FieldError"
@@ -22,7 +22,7 @@ export { fieldStyles } from "./styles"
 
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
-function Fieldset({ className, ...props }: FieldsetProps) {
+const Fieldset = ({ className, ...props }: FieldsetProps) => {
   const { fieldset } = useStyles()()
   return (
     <fieldset
@@ -37,7 +37,7 @@ function Fieldset({ className, ...props }: FieldsetProps) {
 
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
-function Legend({ className, ...props }: LegendProps) {
+const Legend = ({ className, ...props }: LegendProps) => {
   const { legend } = useStyles()()
   return (
     <legend data-slot="legend" className={legend({ className })} {...props} />
@@ -48,7 +48,7 @@ function Legend({ className, ...props }: LegendProps) {
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
-function FieldGroup({ className, ...props }: FieldGroupProps) {
+const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
   const { fieldGroup } = useStyles()()
   return (
     <div

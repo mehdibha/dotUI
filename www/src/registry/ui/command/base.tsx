@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
 
 import {
@@ -23,12 +24,12 @@ interface CommandProps<T extends object>
   filter?: Intl.CollatorOptions
 }
 
-function Command<T extends object>({
+const Command = <T extends object>({
   className,
   slot,
   filter,
   ...props
-}: CommandProps<T>) {
+}: CommandProps<T>) => {
   const styles = useStyles()
   const { contains } = AutocompletePrimitive.useFilter({
     sensitivity: "base",

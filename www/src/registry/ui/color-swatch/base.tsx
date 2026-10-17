@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ColorSwatchPrimitives from "react-aria-components/ColorSwatch"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { tv } from "tailwind-variants"

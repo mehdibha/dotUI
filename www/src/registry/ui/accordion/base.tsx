@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DisclosurePrimitives from "react-aria-components/Disclosure"
@@ -29,7 +30,7 @@ interface AccordionProps extends React.ComponentProps<
   typeof DisclosureGroupPrimitives.DisclosureGroup
 > {}
 
-function Accordion({ className, ...props }: AccordionProps) {
+const Accordion = ({ className, ...props }: AccordionProps) => {
   const { root } = useStyles()()
   return (
     <DisclosureGroupPrimitives.DisclosureGroup
@@ -46,7 +47,7 @@ interface AccordionItemProps extends React.ComponentProps<
   typeof DisclosurePrimitives.Disclosure
 > {}
 
-function AccordionItem({ className, ...props }: AccordionItemProps) {
+const AccordionItem = ({ className, ...props }: AccordionItemProps) => {
   const { item } = useStyles()()
   return (
     <DisclosurePrimitives.Disclosure
@@ -63,7 +64,7 @@ interface AccordionTriggerProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function AccordionTrigger({ className, ...props }: AccordionTriggerProps) {
+const AccordionTrigger = ({ className, ...props }: AccordionTriggerProps) => {
   const { heading, trigger, marker } = useStyles()()
   const glyph = useMarker()
   return (
@@ -95,7 +96,7 @@ interface AccordionPanelProps extends React.ComponentProps<
   typeof DisclosurePrimitives.DisclosurePanel
 > {}
 
-function AccordionPanel({ className, ...props }: AccordionPanelProps) {
+const AccordionPanel = ({ className, ...props }: AccordionPanelProps) => {
   const { panel, panelContent } = useStyles()()
   return (
     <DisclosurePrimitives.DisclosurePanel

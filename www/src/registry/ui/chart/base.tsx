@@ -1,7 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
-import { useRef } from "react"
+import * as React from "react"
 import type {
   ChannelField,
   ChartAxisOptions,
@@ -474,13 +473,13 @@ export type ChartHostProps<TDatum> = Omit<
 
 export type ChartProps<TDatum> = ChartHostProps<TDatum> & {
   definition: DomChartDefinition<TDatum, ChartValue, number>
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
 /** The full prop surface of a family component, from its spec options. */
 export type ChartComponentProps<TOptions, TDatum> = TOptions &
   ChartBehaviorProps &
-  ChartHostProps<TDatum> & { children?: ReactNode }
+  ChartHostProps<TDatum> & { children?: React.ReactNode }
 
 /* The vars sit on the tooltip element itself because the portal detaches it
    from the chart container. */
@@ -499,11 +498,11 @@ const TOOLTIP_SURFACE_CLASS = [
    which would otherwise suppress the entrance. */
 const MOTION_RENDERER = motion({ initial: "always" })
 
-export function Chart<TDatum>({
+export const Chart = <TDatum,>({
   children,
   className,
   ...props
-}: ChartProps<TDatum>) {
+}: ChartProps<TDatum>) => {
   const { container } = useStyles()()
   return (
     <div className={container({ className })}>
@@ -612,9 +611,10 @@ function useOptionsMemo<T>(
   compute: () => T,
   options: Record<string, unknown>,
 ): T {
-  const cache = useRef<{ options: Record<string, unknown>; value: T } | null>(
-    null,
-  )
+  const cache = React.useRef<{
+    options: Record<string, unknown>
+    value: T
+  } | null>(null)
   if (cache.current !== null && sameOptions(cache.current.options, options)) {
     return cache.current.value
   }
@@ -666,7 +666,7 @@ export function useChartDefinition<TDatum, TOptions>(
 ): {
   definition: DomChartDefinition<TDatum, ChartValue, number>
   host: ChartHostProps<TDatum>
-  children: ReactNode
+  children: React.ReactNode
 } {
   const { host, behavior, spec } = splitChartProps(props)
   const options = spec as TOptions
@@ -711,6 +711,6 @@ export function useChartDefinition<TDatum, TOptions>(
   return {
     definition: definition as DomChartDefinition<TDatum, ChartValue, number>,
     host: host as ChartHostProps<TDatum>,
-    children: (props as { children?: ReactNode }).children,
+    children: (props as { children?: React.ReactNode }).children,
   }
 }

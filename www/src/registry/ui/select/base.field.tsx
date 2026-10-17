@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import * as React from "react"
 import * as ButtonPrimitive from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectPrimitives from "react-aria-components/Select"
@@ -58,8 +58,8 @@ interface SelectTriggerProps extends ButtonPrimitive.ButtonProps {
 const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
   const { trigger } = useInputStyles()()
   // React Aria marks the Select invalid, not its button.
-  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
-    .isInvalid
+  const isInvalid = React.use(SelectPrimitives.SelectStateContext)
+    ?.displayValidation.isInvalid
   return (
     <ButtonPrimitive.Button
       data-select-trigger=""

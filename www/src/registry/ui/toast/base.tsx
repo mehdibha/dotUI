@@ -96,7 +96,7 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
   portalProps?: ToastPrimitive.Portal.Props
 }
 
-function ToastProvider({
+const ToastProvider = ({
   children,
   limit = 3,
   position,
@@ -104,7 +104,7 @@ function ToastProvider({
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
-}: ToastProviderProps) {
+}: ToastProviderProps) => {
   const { defaultVariants } = useStyles()
   return (
     <ToastPrimitive.Provider
@@ -127,7 +127,7 @@ interface ToastListProps {
   portalProps?: ToastPrimitive.Portal.Props
 }
 
-function ToastList({ position, portalProps }: ToastListProps) {
+const ToastList = ({ position, portalProps }: ToastListProps) => {
   const { toasts } = ToastPrimitive.useToastManager<ToastData>()
   const { viewport } = useStyles()()
 
@@ -151,7 +151,7 @@ interface ToastItemProps {
   toast: ToastObject
 }
 
-function ToastItem({ position, toast: toastItem }: ToastItemProps) {
+const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
   const data = toastItem.data
   const variant = getToastVariant(toastItem.type)
   const Icon = variant === "neutral" ? null : toastIcons[variant]

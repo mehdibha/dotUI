@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as PopoverPrimitives from "react-aria-components/Popover"
 import { useSlottedContext } from "react-aria-components/slots"
@@ -17,12 +17,12 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({
+const Popover = ({
   className,
   showArrow = true,
   placement,
   ...props
-}: PopoverProps) {
+}: PopoverProps) => {
   const { popover } = useStyles()()
   const context = useSlottedContext(PopoverPrimitives.PopoverContext)
   const isMobile = useIsMobile()
@@ -67,7 +67,7 @@ function Popover({
 }
 
 interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
-function PopoverArrow({ className, ...props }: PopoverArrowProps) {
+const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   const { arrow } = useStyles()()
   return (
     <PopoverPrimitives.OverlayArrow

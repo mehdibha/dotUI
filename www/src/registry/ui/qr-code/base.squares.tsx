@@ -18,14 +18,14 @@ interface QRCodeProps extends React.ComponentProps<"div"> {
   errorCorrection?: "L" | "M" | "Q" | "H"
 }
 
-function QRCode({
+const QRCode = ({
   value,
   errorCorrection,
   className,
   children,
   "aria-label": ariaLabel = "QR code",
   ...props
-}: QRCodeProps) {
+}: QRCodeProps) => {
   const hasLogo = !!children
 
   const { size, path } = React.useMemo(() => {

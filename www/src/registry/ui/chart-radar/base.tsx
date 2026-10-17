@@ -266,7 +266,7 @@ export type RadarChartProps<TDatum> = ChartComponentProps<
   TDatum
 >
 
-export function RadarChart<TDatum>(props: RadarChartProps<TDatum>) {
+export const RadarChart = <TDatum,>(props: RadarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     RadarChartSpecOptions<TDatum>

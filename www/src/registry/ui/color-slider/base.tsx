@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ColorSliderPrimitives from "react-aria-components/ColorSlider"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SliderPrimitives from "react-aria-components/Slider"

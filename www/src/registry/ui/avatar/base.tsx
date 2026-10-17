@@ -25,7 +25,7 @@ const [AvatarContext, useAvatarContext] = createContext<{
 interface AvatarProps
   extends React.ComponentProps<"span">, VariantProps<AvatarStyles> {}
 
-function Avatar({ className, size = "md", ...props }: AvatarProps) {
+const Avatar = ({ className, size = "md", ...props }: AvatarProps) => {
   const [status, setStatus] = React.useState<ImageLoadingStatus>("idle")
   const { root } = useStyles()()
 
@@ -47,14 +47,14 @@ interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
   src?: string
 }
 
-function AvatarImage({
+const AvatarImage = ({
   src,
   alt,
   className,
   referrerPolicy,
   crossOrigin,
   ...props
-}: AvatarImageProps) {
+}: AvatarImageProps) => {
   const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin })
   const { setStatus } = useAvatarContext("AvatarImage")
   const { image } = useStyles()()

@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 import type { VariantProps } from "tailwind-variants"

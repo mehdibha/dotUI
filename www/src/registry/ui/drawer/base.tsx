@@ -42,13 +42,13 @@ function resolveClassName<TState>(
 }
 
 // Dialog semantics belong to the <Dialog> rendered inside, so the popup drops its own.
-function DrawerPopupElement({
+const DrawerPopupElement = ({
   "aria-describedby": _ariaDescribedBy,
   "aria-labelledby": _ariaLabelledBy,
   role: _role,
   swiping,
   ...props
-}: DrawerPopupRenderProps & { swiping: boolean }) {
+}: DrawerPopupRenderProps & { swiping: boolean }) => {
   // Base UI arms a swipe on every touchstart, so cancel in-flight react-aria presses only once the finger actually drags.
   React.useEffect(() => {
     if (!swiping) return
@@ -95,7 +95,7 @@ interface DrawerProps {
   children?: React.ReactNode
 }
 
-function Drawer({
+const Drawer = ({
   children,
   className,
   defaultOpen,
@@ -106,7 +106,7 @@ function Drawer({
   placement = "bottom",
   swipeToDismiss = true,
   style,
-}: DrawerProps) {
+}: DrawerProps) => {
   const isHidden = useIsHidden()
   const { backdrop, overlay, popup, viewport } = useStyles()()
   const popupRef = React.useRef<HTMLDivElement>(null)
@@ -207,7 +207,7 @@ function Drawer({
 
 interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
-function DrawerHandle({ className, ...props }: DrawerHandleProps) {
+const DrawerHandle = ({ className, ...props }: DrawerHandleProps) => {
   const { handle } = useStyles()()
   const placement = React.useContext(DrawerPlacementContext)
   const orientation =
@@ -230,7 +230,7 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
 
 interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
-function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
+const DrawerSwipeArea = ({ className, ...props }: DrawerSwipeAreaProps) => {
   const { swipeArea } = useStyles()()
   const placement = React.useContext(DrawerPlacementContext)
 
@@ -249,7 +249,7 @@ function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
 
 interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
-function DrawerProvider(props: DrawerProviderProps) {
+const DrawerProvider = (props: DrawerProviderProps) => {
   return <DrawerPrimitive.Provider {...props} />
 }
 
@@ -257,7 +257,7 @@ function DrawerProvider(props: DrawerProviderProps) {
 
 interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
-function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+const DrawerIndent = ({ className, ...props }: DrawerIndentProps) => {
   const { indent } = useStyles()()
   return (
     <DrawerPrimitive.Indent
@@ -274,10 +274,10 @@ function DrawerIndent({ className, ...props }: DrawerIndentProps) {
 interface DrawerIndentBackgroundProps
   extends DrawerPrimitive.IndentBackground.Props {}
 
-function DrawerIndentBackground({
+const DrawerIndentBackground = ({
   className,
   ...props
-}: DrawerIndentBackgroundProps) {
+}: DrawerIndentBackgroundProps) => {
   const { indentBackground } = useStyles()()
   return (
     <DrawerPrimitive.IndentBackground

@@ -60,7 +60,7 @@ interface SidebarProviderProps extends React.ComponentProps<"div"> {
   onOpenChange?: (open: boolean) => void
 }
 
-function SidebarProvider({
+const SidebarProvider = ({
   defaultOpen = true,
   isOpen: openProp,
   onOpenChange,
@@ -68,7 +68,7 @@ function SidebarProvider({
   style,
   children,
   ...props
-}: SidebarProviderProps) {
+}: SidebarProviderProps) => {
   const { wrapper } = useStyles()()
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
@@ -145,7 +145,7 @@ const SidebarItemContext = React.createContext<{
 }>({ collapsible: "offcanvas" })
 
 // Lets a header `<Heading>` label the nav landmark; content/footer reset the id so their headings don't claim it.
-function SidebarNav({
+const SidebarNav = ({
   headingId,
   collapsible,
   children,
@@ -153,7 +153,7 @@ function SidebarNav({
   headingId?: string
   collapsible: SidebarCollapsible
   children: React.ReactNode
-}) {
+}) => {
   return (
     <SidebarItemContext value={{ collapsible }}>
       <Provider
@@ -172,14 +172,14 @@ interface SidebarProps extends React.ComponentProps<"nav"> {
   collapsible?: SidebarCollapsible
 }
 
-function Sidebar({
+const Sidebar = ({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
   className,
   children,
   ...props
-}: SidebarProps) {
+}: SidebarProps) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
   const { root, gap, container, inner, mobile } = useStyles()()
   const headingId = useSlotId()
@@ -258,7 +258,7 @@ function Sidebar({
 
 interface SidebarInsetProps extends React.ComponentProps<"main"> {}
 
-function SidebarInset({ className, ...props }: SidebarInsetProps) {
+const SidebarInset = ({ className, ...props }: SidebarInsetProps) => {
   const { inset } = useStyles()()
   return (
     <main
@@ -273,12 +273,12 @@ function SidebarInset({ className, ...props }: SidebarInsetProps) {
 
 interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
-function SidebarTrigger({
+const SidebarTrigger = ({
   onPress,
   className,
   children,
   ...props
-}: SidebarTriggerProps) {
+}: SidebarTriggerProps) => {
   const { toggleSidebar } = useSidebar()
   return (
     <Button
@@ -304,7 +304,7 @@ interface SidebarRailProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function SidebarRail({ className, ...props }: SidebarRailProps) {
+const SidebarRail = ({ className, ...props }: SidebarRailProps) => {
   const { toggleSidebar } = useSidebar()
   const { rail } = useStyles()()
   return (
@@ -324,7 +324,7 @@ interface SidebarHeaderProps extends React.ComponentProps<
   typeof HeaderPrimitives.Header
 > {}
 
-function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
+const SidebarHeader = ({ className, ...props }: SidebarHeaderProps) => {
   const { header } = useStyles()()
   return (
     <HeaderPrimitives.Header
@@ -339,7 +339,7 @@ function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
 
 interface SidebarFooterProps extends React.ComponentProps<"div"> {}
 
-function SidebarFooter({ className, ...props }: SidebarFooterProps) {
+const SidebarFooter = ({ className, ...props }: SidebarFooterProps) => {
   const { footer } = useStyles()()
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
@@ -356,7 +356,7 @@ function SidebarFooter({ className, ...props }: SidebarFooterProps) {
 
 interface SidebarContentProps extends React.ComponentProps<"div"> {}
 
-function SidebarContent({ className, ...props }: SidebarContentProps) {
+const SidebarContent = ({ className, ...props }: SidebarContentProps) => {
   const { content } = useStyles()()
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
@@ -375,7 +375,7 @@ interface SidebarSeparatorProps extends React.ComponentProps<
   typeof Separator
 > {}
 
-function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
+const SidebarSeparator = ({ className, ...props }: SidebarSeparatorProps) => {
   const { separator } = useStyles()()
   return <Separator className={separator({ className })} {...props} />
 }
@@ -384,7 +384,7 @@ function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
 
 interface SidebarGroupProps extends React.ComponentProps<"div"> {}
 
-function SidebarGroup({ className, ...props }: SidebarGroupProps) {
+const SidebarGroup = ({ className, ...props }: SidebarGroupProps) => {
   const { group } = useStyles()()
   const headingId = useSlotId()
   return (
@@ -406,7 +406,7 @@ interface SidebarGroupLabelProps extends React.ComponentProps<
   typeof HeadingPrimitives.Heading
 > {}
 
-function SidebarGroupLabel({ className, ...props }: SidebarGroupLabelProps) {
+const SidebarGroupLabel = ({ className, ...props }: SidebarGroupLabelProps) => {
   const { groupLabel } = useStyles()()
   return (
     <HeadingPrimitives.Heading
@@ -423,7 +423,10 @@ interface SidebarGroupActionProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
+const SidebarGroupAction = ({
+  className,
+  ...props
+}: SidebarGroupActionProps) => {
   const { groupAction } = useStyles()()
   return (
     <ButtonPrimitives.Button
@@ -440,10 +443,10 @@ function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
 
 interface SidebarGroupContentProps extends React.ComponentProps<"div"> {}
 
-function SidebarGroupContent({
+const SidebarGroupContent = ({
   className,
   ...props
-}: SidebarGroupContentProps) {
+}: SidebarGroupContentProps) => {
   const { groupContent } = useStyles()()
   return (
     <div
@@ -458,7 +461,7 @@ function SidebarGroupContent({
 
 interface SidebarMenuProps extends React.ComponentProps<"ul"> {}
 
-function SidebarMenu({ className, ...props }: SidebarMenuProps) {
+const SidebarMenu = ({ className, ...props }: SidebarMenuProps) => {
   const { menu } = useStyles()()
   return (
     <ul data-slot="sidebar-menu" className={menu({ className })} {...props} />
@@ -469,7 +472,7 @@ function SidebarMenu({ className, ...props }: SidebarMenuProps) {
 
 interface SidebarMenuItemProps extends React.ComponentProps<"li"> {}
 
-function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
+const SidebarMenuItem = ({ className, ...props }: SidebarMenuItemProps) => {
   const { menuItem } = useStyles()()
   return (
     <li
@@ -502,7 +505,7 @@ interface SidebarMenuButtonProps extends Omit<
   children?: React.ReactNode
 }
 
-function SidebarMenuButton({
+const SidebarMenuButton = ({
   isActive = false,
   size = "md",
   variant = "default",
@@ -512,7 +515,7 @@ function SidebarMenuButton({
   className,
   children,
   ...props
-}: SidebarMenuButtonProps) {
+}: SidebarMenuButtonProps) => {
   const { state, isMobile } = useSidebar()
   const { collapsible } = React.useContext(SidebarItemContext)
   const { menuButton } = useStyles()()
@@ -574,11 +577,11 @@ interface SidebarMenuActionProps extends React.ComponentProps<
   showOnHover?: boolean
 }
 
-function SidebarMenuAction({
+const SidebarMenuAction = ({
   showOnHover = false,
   className,
   ...props
-}: SidebarMenuActionProps) {
+}: SidebarMenuActionProps) => {
   const { menuAction } = useStyles()()
   return (
     <ButtonPrimitives.Button
@@ -596,7 +599,7 @@ function SidebarMenuAction({
 
 interface SidebarMenuBadgeProps extends React.ComponentProps<"div"> {}
 
-function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
+const SidebarMenuBadge = ({ className, ...props }: SidebarMenuBadgeProps) => {
   const { menuBadge } = useStyles()()
   return (
     <div
@@ -614,11 +617,11 @@ interface SidebarMenuSkeletonProps extends React.ComponentProps<"div"> {
   showIcon?: boolean
 }
 
-function SidebarMenuSkeleton({
+const SidebarMenuSkeleton = ({
   showIcon = false,
   className,
   ...props
-}: SidebarMenuSkeletonProps) {
+}: SidebarMenuSkeletonProps) => {
   const { menuSkeleton, menuSkeletonIcon, menuSkeletonText } = useStyles()()
 
   // Derived from the React id, not Math.random(), so SSR and client widths match.
@@ -650,7 +653,7 @@ function SidebarMenuSkeleton({
 
 interface SidebarMenuSubProps extends React.ComponentProps<"ul"> {}
 
-function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
+const SidebarMenuSub = ({ className, ...props }: SidebarMenuSubProps) => {
   const { menuSub } = useStyles()()
   return (
     <ul
@@ -665,7 +668,10 @@ function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
 
 interface SidebarMenuSubItemProps extends React.ComponentProps<"li"> {}
 
-function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
+const SidebarMenuSubItem = ({
+  className,
+  ...props
+}: SidebarMenuSubItemProps) => {
   const { menuSubItem } = useStyles()()
   return (
     <li
@@ -694,7 +700,7 @@ interface SidebarMenuSubButtonProps extends Omit<
   children?: React.ReactNode
 }
 
-function SidebarMenuSubButton({
+const SidebarMenuSubButton = ({
   isActive = false,
   size = "md",
   href,
@@ -702,7 +708,7 @@ function SidebarMenuSubButton({
   className,
   children,
   ...props
-}: SidebarMenuSubButtonProps) {
+}: SidebarMenuSubButtonProps) => {
   const { menuSubButton } = useStyles()()
 
   const sharedProps = {

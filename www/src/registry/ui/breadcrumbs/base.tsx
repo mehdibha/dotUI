@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 

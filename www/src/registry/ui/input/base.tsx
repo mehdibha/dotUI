@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback } from "react"
+import * as React from "react"
 import { chain } from "react-aria"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DateFieldPrimitive from "react-aria-components/DateField"
@@ -104,7 +104,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   )
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
 
-  const onHeightChange = useCallback(() => {
+  const onHeightChange = React.useCallback(() => {
     if (inputRef.current) {
       const input = inputRef.current
       const prevAlignment = input.style.alignSelf
@@ -155,11 +155,11 @@ interface InputGroupAddonProps
     React.ComponentProps<"div">,
     Pick<VariantProps<InputStyles>, "variant"> {}
 
-function InputGroupAddon({
+const InputGroupAddon = ({
   className,
   variant,
   ...props
-}: InputGroupAddonProps) {
+}: InputGroupAddonProps) => {
   const { inputGroupAddon } = useStyles()()
   return (
     <div

@@ -1,7 +1,6 @@
 "use client"
 
-import { use } from "react"
-import type React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ListBoxPrimitive from "react-aria-components/ListBox"
 import type * as TextPrimitive from "react-aria-components/Text"
@@ -25,7 +24,7 @@ const ListBox = <T extends object>({
   ...props
 }: ListBoxProps<T>) => {
   const { root, loadMore } = useStyles()()
-  const standalone = !use(ListBoxPrimitive.ListBoxContext)
+  const standalone = !React.use(ListBoxPrimitive.ListBoxContext)
 
   return (
     <ListBoxPrimitive.ListBox
