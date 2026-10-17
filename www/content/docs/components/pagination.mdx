@@ -85,9 +85,9 @@ Pagination holds no page state of its own — you own the current page. Wire `on
 </PaginationLink>
 ```
 
-## Framework Setup
+## Framework setup
 
-`PaginationLink`, `PaginationPrevious`, and `PaginationNext` are built on the Link button, so they pick up router integration from your `button.tsx` — there's nothing pagination-specific to wire up. See the [Button](/docs/components/button) docs to connect `LinkButton` to your framework's router, and pagination links with an `href` will route through it automatically.
+`PaginationLink`, `PaginationPrevious`, and `PaginationNext` are built on `LinkButton`, so they pick up router integration from your `button.tsx` — there's nothing pagination-specific to wire up. Override `LinkButton`'s `render` the way [Breadcrumbs](/docs/components/breadcrumbs#framework-setup) does for `BreadcrumbLink`, and pagination links with an `href` will route through it.
 
 ## Examples
 
