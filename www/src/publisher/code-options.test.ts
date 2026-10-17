@@ -22,10 +22,6 @@ import {
 import { publish, TV_CONFIG_PLACEHOLDER } from "./publish"
 import type { TvLayer } from "./types"
 
-/* ============================================================ */
-/* code flags                                                   */
-/* ============================================================ */
-
 describe("code flags", () => {
   test("round-trip every combination, defaults as no flags", () => {
     expect(codeFlags(DEFAULT_CODE_OPTIONS)).toBe("")
@@ -46,10 +42,6 @@ describe("code flags", () => {
       expect(parseCodeFlags(value)).toBeUndefined()
   })
 })
-
-/* ============================================================ */
-/* flattenClassArrays                                           */
-/* ============================================================ */
 
 describe("flattenClassArrays", () => {
   test("joins a grouped base array into a single string", () => {
@@ -104,10 +96,6 @@ describe("flattenClassArrays", () => {
   })
 })
 
-/* ============================================================ */
-/* applySectionComments                                         */
-/* ============================================================ */
-
 describe("applySectionComments", () => {
   test("always drops the internal <name>Styles marker (disabled)", () => {
     const out = applySectionComments(
@@ -161,10 +149,6 @@ describe("applySectionComments", () => {
     expect(applySectionComments(src, false)).toBe(src)
   })
 })
-
-/* ============================================================ */
-/* publish (integration)                                        */
-/* ============================================================ */
 
 describe("publish + codeOptions", () => {
   test("default options collapse grouped arrays to one string", () => {
