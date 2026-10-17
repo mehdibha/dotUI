@@ -9,7 +9,7 @@ import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { Storage } from "@/components/showcase/storage"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { PanelPage } from "@/modules/studio/page"
-import { CHAPTERS } from "@/modules/studio/state"
+import { CHAPTERS } from "@/modules/studio/chapters"
 
 import { panelSystem, studioAt } from "./studio"
 import { Theme } from "./theme"
