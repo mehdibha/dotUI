@@ -1,4 +1,4 @@
-import AvatarDemo from "@/registry/ui/avatar/demos/default"
+import AvatarDemo from "@/registry/ui/avatar/demos/basic"
 import CardDemo from "@/registry/ui/card/demos/default"
 import GroupDemo from "@/registry/ui/group/demos/basic"
 import { Separator } from "@/registry/ui/separator"
