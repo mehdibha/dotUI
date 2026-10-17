@@ -2,8 +2,6 @@ import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
 
-export type { Density, IconLibraryName }
-
 /**
  * The engine's view of a design system — what the provider renders and the
  * publisher ships. Derived from studio state (see `modules/studio/resolve`),

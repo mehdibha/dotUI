@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest"
 
 import { lstarOf, mixOklab, toOklch } from "@dotui/colors"
-import type { Mode as EngineMode, Oklch, StepName } from "@dotui/colors"
+import type { Mode, Oklch, StepName } from "@dotui/colors"
 
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
@@ -32,7 +32,7 @@ import {
   surfaceColorCss,
   surfaceRecipe,
 } from "./surfaces"
-import type { Mode, PerMode, SurfaceColor } from "./surfaces"
+import type { PerMode, SurfaceColor } from "./surfaces"
 import {
   EDGE_OPTIONS,
   LAYERS_OPTIONS,
@@ -257,7 +257,7 @@ describe("surfaces stay legible", () => {
     const theme = resolveColorConfig(
       buildColorConfig(effective(parseState(page)).values),
     )
-    return (color: SurfaceColor, mode: EngineMode): number => {
+    return (color: SurfaceColor, mode: Mode): number => {
       if (color.kind === "white") return 100
       const ramp: Partial<Record<StepName, string>> =
         theme[mode].scales.neutral ?? {}
@@ -284,7 +284,7 @@ describe("surfaces stay legible", () => {
       const lstar = lstarAt.get(id) ?? lstarFor(at)
       lstarAt.set(id, lstar)
       const recipe = surfaceRecipe(state)
-      const tones = (mode: EngineMode) => ({
+      const tones = (mode: Mode) => ({
         page: lstar(PAGE, mode),
         card: lstar(recipe.card.bg[mode], mode),
         popover: lstar(recipe.popover.bg[mode], mode),
@@ -346,7 +346,7 @@ describe("app shell", () => {
     })
     return (item.files ?? []).map((f) => f.content).join("\n")
   }
-  const shipped = (state: Partial<typeof DEFAULTS>, mode: "light" | "dark") => {
+  const shipped = (state: Partial<typeof DEFAULTS>, mode: Mode) => {
     const vars = emitInitItem({
       baseRegistryCss,
       preset: presetOf(state),

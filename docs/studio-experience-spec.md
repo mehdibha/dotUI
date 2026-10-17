@@ -156,7 +156,7 @@ calendar; Popovers ← tooltips; Navigation ← links + tabs + breadcrumbs +
 pagination; Loading ← skeleton + spinner + progress; Badges ← kbd. Alert and
 Toast have no axes and stay off the page. Per-control colors (checkbox, switch,
 slider, tabs, links…) are leaves of Color › Primary and are not repeated.
-The composite-index machinery is gone; `state.ts` lists the chapters in page
+The composite-index machinery is gone; `chapters.ts` lists the chapters in page
 order.
 
 Answered: Accordion stays solo — accordion and menus share zero state keys or

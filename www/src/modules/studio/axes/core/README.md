@@ -12,12 +12,12 @@ saved ──effective()──▶ Effective ──resolveDesignSystem()──▶ 
 
 ## Add an axis
 
-1. Add the key to its module's `*_DEFAULTS` and `*_SCHEMA` (default = Origin's look).
-   An enum's values are a `*_VALUES` tuple there; its labels, descriptions and
+1. Add the key to its chapter's `defaults` and `schema` (default = Origin's look).
+   An enum's values are a `*_VALUES` tuple in the module; its labels, descriptions and
    credits go in `<module>.meta.ts` (`options()` from `core/meta.ts`, plus the
    key in its `OPTIONS`). Runtime modules ride every docs page; meta modules
    only the panel.
-2. Read it in that module's `resolve(state: Effective)` (index.ts fails to
+2. Read it in that chapter's `resolve(state: Effective)` (index.ts fails to
    compile on a resolver typed over anything else); emit only what differs
    from the registry defaults (Origin stays token-free).
 
@@ -49,7 +49,7 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 
 ## Style
 
-`../style.ts` owns `style` (the material, named by its light: Flat, Soft,
+`../style.ts` owns `style` (the material, named by its light: Flat,
 Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
 chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
 its column, whose Flat entry is the key's chapter default (Origin). An

@@ -19,10 +19,8 @@ import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
 import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const labelOf = (options: { value: string; label: string }[], value: string) =>
   options.find((option) => option.value === value)?.label ?? value
@@ -215,8 +213,6 @@ function ErrorGlyph({ kind }: { kind: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function InputStyleRow() {
   const { effective } = useStudio()

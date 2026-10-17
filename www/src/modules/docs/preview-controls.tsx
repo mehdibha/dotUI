@@ -12,7 +12,7 @@ import { Loader } from "@/registry/ui/loader"
 import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { pickerSections } from "@/modules/studio/picker-sections"
-import type { DesignSystem } from "@/modules/studio/preset"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 import {
   keySelection,
