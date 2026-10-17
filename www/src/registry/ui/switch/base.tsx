@@ -21,6 +21,22 @@ const InternalSwitchContext = createContext<
   (SwitchPrimitive.SwitchButtonRenderProps & VariantProps<SwitchStyles>) | null
 >(null)
 
+// The button's render state, mirrored onto the indicator and thumb.
+const stateAttributes = (
+  ctx: SwitchPrimitive.SwitchButtonRenderProps | null,
+) => ({
+  "data-rac": "",
+  "data-selected": ctx?.isSelected || undefined,
+  "data-pressed": ctx?.isPressed || undefined,
+  "data-hovered": ctx?.isHovered || undefined,
+  "data-focused": ctx?.isFocused || undefined,
+  "data-focus-visible": ctx?.isFocusVisible || undefined,
+  "data-disabled": ctx?.isDisabled || undefined,
+  "data-readonly": ctx?.isReadOnly || undefined,
+  "data-invalid": ctx?.isInvalid || undefined,
+  "data-required": ctx?.isRequired || undefined,
+})
+
 // MARK: Separator
 
 interface SwitchProps
@@ -126,16 +142,7 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
   return (
     <span
       data-switch-indicator=""
-      data-rac=""
-      data-selected={ctx.isSelected || undefined}
-      data-pressed={ctx.isPressed || undefined}
-      data-hovered={ctx.isHovered || undefined}
-      data-focused={ctx.isFocused || undefined}
-      data-focus-visible={ctx.isFocusVisible || undefined}
-      data-disabled={ctx.isDisabled || undefined}
-      data-readonly={ctx.isReadOnly || undefined}
-      data-invalid={ctx.isInvalid || undefined}
-      data-required={ctx.isRequired || undefined}
+      {...stateAttributes(ctx)}
       className={indicator({ size: ctx.size, className })}
       {...props}
     >
@@ -154,16 +161,7 @@ const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
 
   return (
     <span
-      data-rac=""
-      data-selected={ctx?.isSelected || undefined}
-      data-pressed={ctx?.isPressed || undefined}
-      data-hovered={ctx?.isHovered || undefined}
-      data-focused={ctx?.isFocused || undefined}
-      data-focus-visible={ctx?.isFocusVisible || undefined}
-      data-disabled={ctx?.isDisabled || undefined}
-      data-readonly={ctx?.isReadOnly || undefined}
-      data-invalid={ctx?.isInvalid || undefined}
-      data-required={ctx?.isRequired || undefined}
+      {...stateAttributes(ctx)}
       className={thumb({ size: ctx?.size, className })}
       {...props}
     />
