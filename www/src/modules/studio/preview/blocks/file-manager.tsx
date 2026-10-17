@@ -1,5 +1,3 @@
-"use client"
-
 import { useMemo, useState } from "react"
 import { Pressable } from "react-aria-components/Pressable"
 
@@ -94,10 +92,10 @@ import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
-/* ---------------------------------------------------------------------------
- * File Manager — a team drive: folder tree, breadcrumbs, upload drop zone,
- * grid / list views of the same files, per-file menus and storage usage.
- * ------------------------------------------------------------------------- */
+import { initials } from "./shared"
+
+// A team drive: folder tree, breadcrumbs, upload drop zone, grid / list views
+// of the same files, per-file menus and storage usage.
 
 type FileKind =
   | "design"
@@ -549,8 +547,6 @@ const STORAGE_BREAKDOWN = [
   { label: "Documents", size: "17 GB", fill: "bg-warning" },
 ]
 
-/* ------------------------------- Formatting -------------------------------- */
-
 const MONTHS = [
   "Jan",
   "Feb",
@@ -583,16 +579,6 @@ function formatSize(bytes: number) {
     value < 10 && unit > 0 ? value.toFixed(1) : String(Math.round(value))
   return `${rounded} ${units[unit] ?? "B"}`
 }
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part.charAt(0))
-    .join("")
-    .slice(0, 2)
-}
-
-/* --------------------------------- Pieces ---------------------------------- */
 
 function FileActions({ file }: { file: FileEntry }) {
   return (
@@ -910,11 +896,9 @@ function FolderTree({
   )
 }
 
-/* ---------------------------------- Page ----------------------------------- */
-
 type SortKey = "name" | "modified" | "size"
 
-export default function FileManager() {
+export default function FileManagerBlock() {
   const [folderId, setFolderId] = useState("design")
   const [view, setView] = useState<"grid" | "list">("grid")
   const [sort, setSort] = useState<SortKey>("modified")
@@ -1000,9 +984,7 @@ export default function FileManager() {
           </Breadcrumbs>
 
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h1 className="font-heading text-2xl font-semibold tracking-tight">
-              {folder.name}
-            </h1>
+            <h1 className="text-2xl">{folder.name}</h1>
             <span className="text-sm text-fg-muted tabular-nums">
               {folder.folders.length} folders · {folder.files.length} files
             </span>
@@ -1073,7 +1055,7 @@ export default function FileManager() {
           </DropZone>
 
           {selected.size > 0 && (
-            <div className="flex flex-wrap items-center gap-2 rounded-lg border bg-card px-3 py-2">
+            <Card className="flex-row flex-wrap items-center gap-2 px-3 py-2">
               <Badge variant="accent">{selected.size}</Badge>
               <span className="text-sm text-fg-muted">selected</span>
               <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -1097,7 +1079,7 @@ export default function FileManager() {
                   Clear
                 </Button>
               </div>
-            </div>
+            </Card>
           )}
 
           {subFolders.length > 0 && (

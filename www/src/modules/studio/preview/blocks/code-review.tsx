@@ -1,5 +1,3 @@
-"use client"
-
 import { type ReactNode, useMemo, useState } from "react"
 
 import {
@@ -81,6 +79,8 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+
+import { initials } from "./shared"
 
 const PR = {
   number: 4821,
@@ -412,13 +412,6 @@ const TIMELINE: TimelineItem[] = [
   { type: "check", when: "12 minutes ago" },
 ]
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-}
-
 /** Turns the `backtick` spans review comments are written with into code. */
 function inlineCode(text: string) {
   return text.split(/`([^`]+)`/).map((part, index) =>
@@ -455,8 +448,6 @@ function CheckIndicator({
     return <XCircleIcon className="size-4 shrink-0 text-fg-danger" />
   return <Loader className="size-4 shrink-0 text-fg-warning" />
 }
-
-/* --------------------------------- Header --------------------------------- */
 
 function TopBar() {
   return (
@@ -504,7 +495,7 @@ function PullRequestHeader({
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex min-w-0 flex-col gap-3">
-          <h1 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+          <h1 className="text-2xl text-balance sm:text-3xl">
             {PR.title}{" "}
             <span className="font-normal text-fg-muted">#{PR.number}</span>
           </h1>
@@ -631,7 +622,7 @@ function ChecksSummary() {
   const running = CHECKS.length - passed - failed
 
   return (
-    <div className="rounded-xl border bg-card">
+    <Card className="gap-0 py-0">
       <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <AlertCircleIcon className="size-5 shrink-0 text-fg-danger" />
@@ -684,11 +675,9 @@ function ChecksSummary() {
           </ul>
         </CollapsiblePanel>
       </Collapsible>
-    </div>
+    </Card>
   )
 }
-
-/* ------------------------------ Review action ----------------------------- */
 
 function ReviewAction({
   decision,
@@ -766,8 +755,6 @@ function ReviewAction({
     </Dialog>
   )
 }
-
-/* ---------------------------------- Diff ---------------------------------- */
 
 const LINE_TINT: Record<DiffLineKind, string> = {
   add: "bg-success-muted/70",
@@ -929,7 +916,7 @@ function FileDiff({
   onViewedChange: (viewed: boolean) => void
 }) {
   return (
-    <div className="overflow-hidden rounded-xl border bg-card">
+    <Card className="gap-0 overflow-hidden py-0">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b bg-bg px-4 py-3">
         <FileCodeIcon className="size-4 shrink-0 text-fg-muted" />
         <span className="min-w-0 flex-1 truncate font-mono text-sm">
@@ -967,7 +954,7 @@ function FileDiff({
           {chunk.thread && <InlineThread id={chunk.thread} />}
         </div>
       ))}
-    </div>
+    </Card>
   )
 }
 
@@ -1085,8 +1072,6 @@ function FilesChanged() {
     </div>
   )
 }
-
-/* ------------------------------ Conversation ------------------------------ */
 
 function TimelineCard({
   author,
@@ -1344,83 +1329,83 @@ function Conversation({
         </div>
       </div>
 
-      <aside className="flex flex-col gap-6 rounded-xl border bg-card p-4 text-sm lg:sticky lg:top-20">
-        <div className="flex flex-col gap-3">
-          <h3 className="text-sm font-medium">Reviewers</h3>
-          {REVIEWERS.map((reviewer) => (
-            <div key={reviewer.name} className="flex items-center gap-2">
-              <Avatar size="sm" className="shrink-0">
-                <AvatarFallback>{initials(reviewer.name)}</AvatarFallback>
-              </Avatar>
-              <span className="min-w-0 flex-1 truncate">
-                {reviewer.name}
-                <span className="block text-xs text-fg-muted">
-                  {reviewer.when}
+      <aside className="lg:sticky lg:top-20">
+        <Card className="gap-6 p-4 text-sm">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-sm font-medium">Reviewers</h3>
+            {REVIEWERS.map((reviewer) => (
+              <div key={reviewer.name} className="flex items-center gap-2">
+                <Avatar size="sm" className="shrink-0">
+                  <AvatarFallback>{initials(reviewer.name)}</AvatarFallback>
+                </Avatar>
+                <span className="min-w-0 flex-1 truncate">
+                  {reviewer.name}
+                  <span className="block text-xs text-fg-muted">
+                    {reviewer.when}
+                  </span>
                 </span>
-              </span>
-              {reviewer.state === "approved" && (
-                <CheckCircle2Icon className="size-4 shrink-0 text-fg-success" />
-              )}
-              {reviewer.state === "changes" && (
-                <AlertCircleIcon className="size-4 shrink-0 text-fg-danger" />
-              )}
-              {reviewer.state === "pending" && (
-                <CircleDotIcon className="size-4 shrink-0 text-fg-muted" />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <Separator />
-
-        <TagGroup size="sm" aria-label="Labels">
-          <h3 className="text-sm font-medium">Labels</h3>
-          <TagList>
-            {LABELS.map((label) => (
-              <Tag key={label} id={label}>
-                {label}
-              </Tag>
+                {reviewer.state === "approved" && (
+                  <CheckCircle2Icon className="size-4 shrink-0 text-fg-success" />
+                )}
+                {reviewer.state === "changes" && (
+                  <AlertCircleIcon className="size-4 shrink-0 text-fg-danger" />
+                )}
+                {reviewer.state === "pending" && (
+                  <CircleDotIcon className="size-4 shrink-0 text-fg-muted" />
+                )}
+              </div>
             ))}
-          </TagList>
-        </TagGroup>
+          </div>
 
-        <Separator />
+          <Separator />
 
-        <div className="flex flex-col gap-3">
-          <h3 className="text-sm font-medium">Participants</h3>
-          <AvatarGroup size="sm">
-            <Avatar>
-              <AvatarFallback>PR</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarFallback>MF</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarFallback>DW</AvatarFallback>
-            </Avatar>
-            <AvatarGroupCount>+3</AvatarGroupCount>
-          </AvatarGroup>
-        </div>
+          <TagGroup size="sm" aria-label="Labels">
+            <h3 className="text-sm font-medium">Labels</h3>
+            <TagList>
+              {LABELS.map((label) => (
+                <Tag key={label} id={label}>
+                  {label}
+                </Tag>
+              ))}
+            </TagList>
+          </TagGroup>
 
-        <Separator />
+          <Separator />
 
-        <div className="flex flex-col gap-1">
-          <h3 className="text-sm font-medium">Milestone</h3>
-          <span className="text-fg-muted">Relay 3.9 — 62% complete</span>
-          <ProgressBar
-            value={62}
-            aria-label="Milestone progress"
-            className="mt-1"
-          >
-            <ProgressBarControl />
-          </ProgressBar>
-        </div>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-sm font-medium">Participants</h3>
+            <AvatarGroup size="sm">
+              <Avatar>
+                <AvatarFallback>PR</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarFallback>MF</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarFallback>DW</AvatarFallback>
+              </Avatar>
+              <AvatarGroupCount>+3</AvatarGroupCount>
+            </AvatarGroup>
+          </div>
+
+          <Separator />
+
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm font-medium">Milestone</h3>
+            <span className="text-fg-muted">Relay 3.9 — 62% complete</span>
+            <ProgressBar
+              value={62}
+              aria-label="Milestone progress"
+              className="mt-1"
+            >
+              <ProgressBarControl />
+            </ProgressBar>
+          </div>
+        </Card>
       </aside>
     </div>
   )
 }
-
-/* --------------------------------- Page ----------------------------------- */
 
 export default function CodeReviewBlock() {
   const [tab, setTab] = useState("conversation")

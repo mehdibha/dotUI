@@ -1,5 +1,3 @@
-"use client"
-
 import { useMemo, useState } from "react"
 
 import {
@@ -59,14 +57,6 @@ import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Kbd } from "@/registry/ui/kbd"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import {
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  PaginationList,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/registry/ui/pagination"
 import { Popover } from "@/registry/ui/popover"
 import {
   ProgressBar,
@@ -99,11 +89,11 @@ import {
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-/* ---------------------------------------------------------------------------
- * Logs — the observability console of "Meridian", a commerce platform: filter
- * bar, dense monospace event stream with expandable payloads, volume chart and
- * ingest health. Rendered inside the /studio preview under the live system.
- * ------------------------------------------------------------------------- */
+import { PagePicker } from "./shared"
+
+// The observability console of "Meridian", a commerce platform: filter bar,
+// dense monospace event stream with expandable payloads, volume chart and
+// ingest health.
 
 type Level = "error" | "warn" | "info" | "debug"
 
@@ -640,8 +630,6 @@ const TOP_SOURCES = [
 
 const PAGE_SIZE = 6
 
-/* ------------------------------- Primitives ------------------------------- */
-
 function Sparkline({
   values,
   className,
@@ -880,8 +868,6 @@ function LogRow({ entry }: { entry: LogEntry }) {
   )
 }
 
-/* ---------------------------------- Page ---------------------------------- */
-
 export default function LogsBlock() {
   const [query, setQuery] = useState("")
   const [level, setLevel] = useState<Level | "all">("all")
@@ -993,9 +979,7 @@ export default function LogsBlock() {
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-1">
-            <h1 className="font-heading text-2xl font-semibold tracking-tight">
-              Logs
-            </h1>
+            <h1 className="text-2xl">Logs</h1>
             <p className="text-sm text-fg-muted">
               {rangeLabel} · 8 services · retention 30 days
             </p>
@@ -1041,9 +1025,7 @@ export default function LogsBlock() {
           {SUMMARY.map((stat) => (
             <Card key={stat.id} size="sm">
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-fg-muted">
-                  {stat.label}
-                </CardTitle>
+                <CardDescription>{stat.label}</CardDescription>
                 <CardAction>
                   <Badge variant={stat.tone} size="sm">
                     {stat.up ? (
@@ -1100,7 +1082,7 @@ export default function LogsBlock() {
           </CardFooter>
         </Card>
 
-        <section className="flex flex-col gap-3 rounded-lg border bg-card p-3">
+        <Card className="gap-3 p-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
             <SearchField
               aria-label="Search logs"
@@ -1212,7 +1194,7 @@ export default function LogsBlock() {
               {filtered.length} of {ENTRIES.length} events match
             </span>
           </div>
-        </section>
+        </Card>
 
         <Card>
           <CardHeader className="border-b">
@@ -1283,35 +1265,11 @@ export default function LogsBlock() {
             <span className="text-sm text-fg-muted tabular-nums">
               Showing {from}–{to} of {filtered.length} events
             </span>
-            <Pagination>
-              <PaginationList>
-                <PaginationItem>
-                  <PaginationPrevious
-                    isDisabled={safePage === 1}
-                    onPress={() => setPage((p) => Math.max(1, p - 1))}
-                  />
-                </PaginationItem>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (p) => (
-                    <PaginationItem key={p}>
-                      <PaginationLink
-                        isActive={p === safePage}
-                        aria-label={`Page ${p}`}
-                        onPress={() => setPage(p)}
-                      >
-                        {p}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ),
-                )}
-                <PaginationItem>
-                  <PaginationNext
-                    isDisabled={safePage === totalPages}
-                    onPress={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  />
-                </PaginationItem>
-              </PaginationList>
-            </Pagination>
+            <PagePicker
+              page={safePage}
+              pageCount={totalPages}
+              onPageChange={setPage}
+            />
           </CardFooter>
         </Card>
 
