@@ -17,7 +17,7 @@
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
 import { format } from "oxfmt"
-import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph"
+import { Node, SyntaxKind } from "ts-morph"
 import type {
   FunctionDeclaration,
   JsxAttribute,
@@ -29,6 +29,7 @@ import type {
 // NOTE: relative (not `@/`) — this module is loaded by the rehype plugin at vite
 // config-load time, before the `@/` alias is registered.
 import { rewriteImportPath } from "../../../publisher/build-time/transform-base"
+import { parseTsx, releaseTsx } from "../build-time"
 import type {
   AttrPart,
   ChildPart,
@@ -73,19 +74,6 @@ export class OverlayError extends Error {
   }
 }
 
-// Singleton project (matches transformer.ts). Each call removes its files in finally.
-const project = new Project({
-  useInMemoryFileSystem: true,
-  compilerOptions: {},
-})
-let fileCounter = 0
-function createSourceFile(source: string): SourceFile {
-  return project.createSourceFile(`overlay-${fileCounter++}.tsx`, source, {
-    scriptKind: ScriptKind.TSX,
-    overwrite: true,
-  })
-}
-
 // ---------------------------------------------------------------------------
 // Entry
 // ---------------------------------------------------------------------------
@@ -93,7 +81,7 @@ function createSourceFile(source: string): SourceFile {
 export async function buildSourceOverlay(
   input: OverlayInput,
 ): Promise<CodeTemplate> {
-  const sf = createSourceFile(input.source)
+  const sf = parseTsx(input.source)
   try {
     stripNonEmitStatements(sf)
     rewriteImports(sf)
@@ -104,7 +92,7 @@ export async function buildSourceOverlay(
     const formatted = await formatOrThrow(templated, input)
 
     // Lift the FORMATTED file into the template tree.
-    const f2 = createSourceFile(formatted)
+    const f2 = parseTsx(formatted)
     try {
       const fn = findExportFunction(f2)
       if (!fn)
@@ -126,10 +114,10 @@ export async function buildSourceOverlay(
         bodyIndent: BODY_INDENT,
       }
     } finally {
-      project.removeSourceFile(f2)
+      releaseTsx(f2)
     }
   } finally {
-    project.removeSourceFile(sf)
+    releaseTsx(sf)
   }
 }
 

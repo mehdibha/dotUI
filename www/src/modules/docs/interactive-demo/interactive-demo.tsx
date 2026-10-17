@@ -242,7 +242,7 @@ export function InteractiveDemo({
           </Button>
         }
       >
-        <DynamicPre lang="tsx">{displayedCode}</DynamicPre>
+        <DynamicPre>{displayedCode}</DynamicPre>
       </CodeBlock>
     </div>
   )

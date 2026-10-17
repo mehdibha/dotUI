@@ -33,7 +33,7 @@ const DevtoolsHub =
 export const Route = createRootRoute({
   head: () => {
     const title = `${siteConfig.title} - ${siteConfig.tagline}`
-    const description = truncateOnWord(siteConfig.description, 148, true)
+    const description = truncateOnWord(siteConfig.description, 148)
     const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(siteConfig.og.title)}&description=${encodeURIComponent(siteConfig.og.description)}`
 
     return {

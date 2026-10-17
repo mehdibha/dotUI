@@ -22,6 +22,7 @@ import { fileURLToPath } from "node:url"
 import { format } from "oxfmt"
 import { describe, expect, it } from "vitest"
 
+import { evalExpression } from "../build-time"
 import { getDefaultControlValue } from "../interactive-demo/control-defaults"
 import {
   buildControlsFromReference,
@@ -102,8 +103,7 @@ function parseControlsAttr(tag: string): ControlInput[] {
     }
   }
   const expr = tag.slice(start + 1, end)
-  // oxlint-disable-next-line no-new-func -- build-time eval of trusted authored MDX, mirrors rehype-transform
-  const value: unknown = new Function(`"use strict"; return (${expr});`)()
+  const value = evalExpression(expr)
   if (!Array.isArray(value)) {
     throw new Error(`controls={…} did not evaluate to an array: ${expr}`)
   }

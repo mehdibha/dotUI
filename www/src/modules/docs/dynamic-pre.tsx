@@ -8,7 +8,6 @@ import { Pre } from "./code-block"
 import { highlightTsx } from "./highlight"
 
 export interface DynamicPreProps {
-  lang: "tsx"
   children: string
   className?: string
 }
