@@ -33,10 +33,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
 
-      # Also emits the publishables publish-smoke.test.ts imports (gitignored).
+      # publish-smoke.test.ts imports the generated publishables (gitignored).
       - run: pnpm build:registry
+      - run: pnpm test
 
-      - name: Fail if any committed generated registry artifact is stale
+  registry-drift:
+    runs-on: ubuntu-latest
+    name: Check generated registry artifacts are up to date
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Regenerate committed registry artifacts
+        run: pnpm build:registry
+
+      - name: Fail if any committed generated artifact is stale
         run: |
           git diff --exit-code -- \
             www/src/registry/__generated__/demos.tsx \
@@ -53,8 +64,6 @@ jobs:
             www/src/registry/__generated__/__material-symbols__.ts \
             www/src/registry/__generated__/__octicons__.ts \
           || { echo '::error::Committed generated registry artifacts are out of date. Run `pnpm build:registry` and commit the result.'; exit 1; }
-
-      - run: pnpm test
 
   references-drift:
     runs-on: ubuntu-latest
