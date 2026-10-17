@@ -213,7 +213,6 @@ function Sidebar({
       >
         <nav
           data-slot="sidebar"
-          data-mobile="true"
           aria-label="Sidebar"
           aria-labelledby={headingId}
           className={mobile({ className })}
@@ -707,7 +706,6 @@ function SidebarMenuSubButton({
 
   const sharedProps = {
     "data-slot": "sidebar-menu-sub-button",
-    "data-sidebar": "menu-sub-button",
     "data-size": size,
     "data-active": isActive || undefined,
     className: menuSubButton({ className }),

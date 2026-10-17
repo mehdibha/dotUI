@@ -3,7 +3,7 @@ import { fieldStyles } from "@/registry/ui/field"
 
 import progressBarMeta from "./meta"
 
-const { useStyles, styles } = createStyles(progressBarMeta, {
+const { useStyles } = createStyles(progressBarMeta, {
   base: {
     slots: {
       root: fieldStyles().field(),
@@ -75,7 +75,5 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
     },
   },
 })
-
-export type ProgressBarStyles = typeof styles
 
 export { useStyles }

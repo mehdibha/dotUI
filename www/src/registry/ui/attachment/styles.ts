@@ -3,7 +3,7 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import attachmentMeta from "./meta"
 
-const { useStyles, styles } = createStyles(attachmentMeta, {
+const { useStyles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
@@ -225,7 +225,5 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
     },
   },
 })
-
-export type AttachmentStyles = typeof styles
 
 export { useStyles }

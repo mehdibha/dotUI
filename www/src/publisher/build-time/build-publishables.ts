@@ -30,7 +30,7 @@ interface BuildPublishablesOptions {
   items: RegistryItem[]
 }
 
-export interface BuildPublishablesResult {
+interface BuildPublishablesResult {
   written: string[]
   skipped: Array<{ name: string; reason: string }>
 }

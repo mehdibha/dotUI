@@ -3,7 +3,7 @@ import { fieldStyles } from "@/registry/ui/field"
 
 import sliderMeta from "./meta"
 
-const { useStyles, styles } = createStyles(sliderMeta, {
+const { useStyles } = createStyles(sliderMeta, {
   base: {
     slots: {
       root: fieldStyles().field(),
@@ -140,7 +140,5 @@ const { useStyles, styles } = createStyles(sliderMeta, {
     },
   },
 })
-
-export type SliderStyles = typeof styles
 
 export { useStyles }

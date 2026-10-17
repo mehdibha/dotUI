@@ -7,7 +7,7 @@ import cardMeta from "./meta"
 export const CONTAINER_SURFACE =
   "border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]"
 
-const { useStyles, styles } = createStyles(cardMeta, {
+const { useStyles } = createStyles(cardMeta, {
   base: {
     slots: {
       root: [
@@ -218,7 +218,5 @@ const { useStyles, styles } = createStyles(cardMeta, {
     },
   },
 })
-
-export type CardStyles = typeof styles
 
 export { useStyles }

@@ -47,7 +47,6 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   return (
     <ToggleButtonPrimitive.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
       data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}

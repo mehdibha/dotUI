@@ -677,4 +677,4 @@ function Swatch({ ref, color }: { ref?: Ref<HTMLSpanElement>; color: string }) {
   )
 }
 
-export type { PresetPickerItem, PresetPickerSection }
+export type { PresetPickerSection }

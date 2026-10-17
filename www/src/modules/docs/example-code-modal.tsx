@@ -15,7 +15,7 @@ import {
 import { DemoPreset } from "./demo-preset"
 import { buildInstallCommands, PACKAGE_MANAGERS } from "./install-commands"
 
-export interface ExampleCodeModalProps {
+interface ExampleCodeModalProps {
   /** Modal title — the example's title. */
   title: string
   /** The live demo component, rendered as the preview. */

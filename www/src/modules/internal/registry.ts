@@ -1,7 +1,7 @@
 /* The internal tools index — what /internal lists. Dev-only scratch surfaces
    (labs, playgrounds, demos); nothing here ships or is linked from the site. */
 
-export interface InternalTool {
+interface InternalTool {
   href: string
   label: string
   description: string

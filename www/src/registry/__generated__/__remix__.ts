@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 166 icons the registry uses (not the entire library)
+// Only exports the 159 icons the registry uses (not the entire library)
 export {
 	RiPulseLine as ActivityIcon,
 	RiAlertLine as AlertCircleIcon,
@@ -12,7 +12,6 @@ export {
 	RiArrowUpLine as ArrowUpIcon,
 	RiArrowRightUpLine as ArrowUpRightIcon,
 	RiSoundModuleLine as AudioLinesIcon,
-	RiVerifiedBadgeLine as BadgeCheck,
 	RiVerifiedBadgeLine as BadgeCheckIcon,
 	RiNotification3Line as BellIcon,
 	RiBitCoinLine as BitcoinIcon,
@@ -20,7 +19,6 @@ export {
 	RiBold as BoldIcon,
 	RiBookLine as BookIcon,
 	RiBookmarkLine as BookmarkIcon,
-	RiBookOpenLine as BookOpen,
 	RiBookOpenLine as BookOpenIcon,
 	RiRobotLine as BotIcon,
 	RiStackLine as BoxesIcon,
@@ -80,11 +78,9 @@ export {
 	RiTranslate as LanguagesIcon,
 	RiStackLine as LayersIcon,
 	RiLayoutGridLine as LayoutGridIcon,
-	RiLifebuoyLine as LifeBuoy,
 	RiLinkM as LinkIcon,
 	RiFilterLine as ListFilterIcon,
 	RiListUnordered as ListIcon,
-	RiLoader4Line as Loader2Icon,
 	RiLoader4Line as LoaderCircleIcon,
 	RiLogoutBoxLine as LogOutIcon,
 	RiMailCheckLine as MailCheckIcon,
@@ -120,9 +116,7 @@ export {
 	RiRulerLine as RulerIcon,
 	RiSaveLine as SaveIcon,
 	RiScissorsLine as ScissorsIcon,
-	RiSearchLine as Search,
 	RiSearchLine as SearchIcon,
-	RiSendPlaneLine as Send,
 	RiSendPlaneLine as SendIcon,
 	RiServerLine as ServerIcon,
 	RiSettings4Line as Settings2Icon,
@@ -160,7 +154,6 @@ export {
 	RiVolumeDownLine as Volume1Icon,
 	RiVolumeUpLine as Volume2Icon,
 	RiVolumeMuteLine as VolumeOffIcon,
-	RiVolumeMuteLine as VolumeX,
 	RiWalletLine as WalletIcon,
 	RiCloseCircleLine as XCircleIcon,
 	RiCloseLine as XIcon,

@@ -9,7 +9,7 @@
 
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
-import type { Density, RegistryItem, RegistryItemFile } from "@/registry/types"
+import type { Density, RegistryItem } from "@/registry/types"
 
 import type { CodeOptions } from "./code-options"
 
@@ -89,6 +89,3 @@ export interface PublishPreset {
   /** Icon library shipped files import from. When omitted, lucide. */
   icons?: IconLibraryName
 }
-
-/** Subset of `RegistryItemFile` we emit. */
-export type EmittedFile = RegistryItemFile

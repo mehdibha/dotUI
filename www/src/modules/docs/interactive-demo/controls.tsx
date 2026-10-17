@@ -156,7 +156,7 @@ interface ControlRendererProps {
   layout: ControlsLayout
 }
 
-export function ControlRenderer({
+function ControlRenderer({
   control,
   value,
   onChange,

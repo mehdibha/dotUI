@@ -46,7 +46,7 @@ function toCamelCase(slug: string): string {
 
 /* ----------------------- import rewriting ----------------------- */
 
-export const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
+const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
   [/^@\/registry\/ui\//, "@/components/ui/"],
   [/^@\/registry\/hooks\//, "@/hooks/"],
   [/^@\/registry\/lib\//, "@/lib/"],
@@ -506,7 +506,7 @@ function mergeValueImports(sourceFile: SourceFile): void {
 
 /* ----------------------- main transform ----------------------- */
 
-export interface TransformBaseInput {
+interface TransformBaseInput {
   /** Absolute path to `base.tsx` (or `base.<variant>.tsx`). */
   baseTsxPath: string
   /** Component meta name, e.g. `"button"`. Drives the variant identifier name. */
@@ -525,11 +525,9 @@ export interface TransformBaseInput {
   paramSelection?: Record<string, string>
 }
 
-export interface TransformBaseOutput {
+interface TransformBaseOutput {
   /** Source with `%%TV_CONFIG%%` placeholder where the resolved tv literal goes. */
   template: string
-  /** The injected variant identifier, e.g. `"buttonVariants"`. */
-  variantIdent: string
 }
 
 let cachedProject: Project | undefined
@@ -595,7 +593,7 @@ export function transformBase({
     const transformed = sourceFile
       .getFullText()
       .replace(TS_PLACEHOLDER_IDENT, TV_CONFIG_PLACEHOLDER)
-    return { template: transformed, variantIdent }
+    return { template: transformed }
   } finally {
     project.removeSourceFile(sourceFile)
   }
@@ -734,7 +732,7 @@ function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
     (imp) => imp.getModuleSpecifierValue() === "tailwind-variants",
   )
   if (existing) {
-    ensureNamedImport(existing, "tv", false)
+    ensureNamedImport(existing, "tv")
     return
   }
   sourceFile.addImportDeclaration({
@@ -743,17 +741,12 @@ function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
   })
 }
 
-function ensureNamedImport(
-  imp: ImportDeclaration,
-  name: string,
-  isTypeOnly: boolean,
-): void {
+function ensureNamedImport(imp: ImportDeclaration, name: string): void {
   const named = imp.getNamedImports()
   const hit = named.find((n) => n.getName() === name)
   if (hit) {
-    // If both the import declaration and the named import are type-only we're fine.
-    // If we need a value import (tv) but the declaration is `import type`, flip it.
-    if (!isTypeOnly && imp.isTypeOnly()) {
+    // A value import (tv) under `import type`: flip the declaration.
+    if (imp.isTypeOnly()) {
       imp.setIsTypeOnly(false)
       // Mark the other names as type-only to preserve their semantics.
       for (const n of named) {
@@ -762,10 +755,10 @@ function ensureNamedImport(
     }
     return
   }
-  if (imp.isTypeOnly() && !isTypeOnly) {
+  if (imp.isTypeOnly()) {
     // Flip the declaration to value-imports; tag pre-existing names as type-only.
     imp.setIsTypeOnly(false)
     for (const n of named) n.setIsTypeOnly(true)
   }
-  imp.addNamedImport({ name, isTypeOnly })
+  imp.addNamedImport({ name })
 }

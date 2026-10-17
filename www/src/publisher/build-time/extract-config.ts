@@ -157,12 +157,8 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
 
 function propertyKey(nameNode: Node, filePath: string): string {
   if (nameNode.isKind(SyntaxKind.Identifier)) return nameNode.getText()
-  if (
-    nameNode.isKind(SyntaxKind.StringLiteral) ||
-    nameNode.isKind(SyntaxKind.NoSubstitutionTemplateLiteral)
-  ) {
-    return nameNode.asKindOrThrow(SyntaxKind.StringLiteral).getLiteralText()
-  }
+  if (nameNode.isKind(SyntaxKind.StringLiteral))
+    return nameNode.getLiteralText()
   if (nameNode.isKind(SyntaxKind.NumericLiteral)) return nameNode.getText()
   throw new Error(
     `[publisher/extract] unsupported property key ${nameNode.getKindName()} in ${filePath}`,
@@ -433,7 +429,7 @@ function getProject(): Project {
   return cachedProject
 }
 
-export interface ExtractOptions {
+interface ExtractOptions {
   /** Registry metas by name, so a `<x>Styles().slot()` composition of a
    *  parameterized component resolves at its param defaults. */
   metas?: ReadonlyMap<string, RegistryItem>

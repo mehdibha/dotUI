@@ -101,7 +101,7 @@ export function renderStylesheet(
  * The v0 bundle's `globals.css`: the init fields plus every shipped
  * component's `css` block, with the Geist faces from @fontsource.
  */
-export function renderGlobalsCss(fields: RegistryCssFields): string {
+function renderGlobalsCss(fields: RegistryCssFields): string {
   return renderStylesheet(fields, {
     imports: [
       '@import "@fontsource-variable/geist";',
@@ -149,7 +149,7 @@ function projectTarget(target: string): string {
 
 /* -------------------------------- assembly -------------------------------- */
 
-export interface V0File {
+interface V0File {
   type: string
   path: string
   target: string
@@ -160,7 +160,7 @@ function v0File(type: string, target: string, content: string): V0File {
   return { type, path: target, target, content }
 }
 
-export interface BuildV0ItemInput {
+interface BuildV0ItemInput {
   /** Preset-published items, one per publishable component. */
   items: RegistryItem[]
   /** Init CSS fields already merged with the preset (`mergePresetCssFields`). */

@@ -110,7 +110,7 @@ export function collectTemplateHoles(
 // RUNTIME
 // ---------------------------------------------------------------------------
 
-export interface RenderOptions {
+interface RenderOptions {
   expanded: boolean
 }
 
