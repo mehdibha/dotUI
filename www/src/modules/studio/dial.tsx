@@ -180,7 +180,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}
       </DialogContent>
     </PanelPopover>
@@ -383,7 +383,7 @@ export interface DialPickOption {
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
 function PickItem({
   option,
