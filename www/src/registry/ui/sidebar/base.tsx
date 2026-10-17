@@ -709,7 +709,6 @@ const SidebarMenuSubButton = ({
 
   const sharedProps = {
     "data-sidebar-menu-sub-button": "",
-    "data-sidebar": "menu-sub-button",
     "data-size": size,
     "data-active": isActive || undefined,
     className: menuSubButton({ className }),

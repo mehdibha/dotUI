@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import * as React from "react";
 import type { Time } from "@internationalized/date";
 import { ButtonContext } from "react-aria-components/Button";
 import {
@@ -12,12 +12,12 @@ import { GroupContext } from "react-aria-components/Group";
 import { useLocale } from "react-aria-components/I18nProvider";
 import { InputContext } from "react-aria-components/Input";
 import { LabelContext } from "react-aria-components/Label";
-import * as ListBoxPrimitive from "react-aria-components/ListBox";
+import * as ListBoxPrimitives from "react-aria-components/ListBox";
 import { PopoverContext } from "react-aria-components/Popover";
 import { Provider } from "react-aria-components/slots";
 import { TextContext } from "react-aria-components/Text";
 import { TimeFieldStateContext } from "react-aria-components/TimeField";
-import type * as TimeFieldPrimitive from "react-aria-components/TimeField";
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField";
 import { useFocusRing } from "react-aria/useFocusRing";
 import { useOverlayTrigger } from "react-aria/useOverlayTrigger";
 import { useTimeField } from "react-aria/useTimeField";
@@ -39,8 +39,8 @@ const timePickerVariants = tv({
 const { columns, column, item } = timePickerVariants();
 
 /** A TimeField with a scrollable time-column popover. */
-interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
-  TimeFieldPrimitive.TimeFieldProps<T>,
+interface TimePickerProps<T extends TimeFieldPrimitives.TimeValue> extends Omit<
+  TimeFieldPrimitives.TimeFieldProps<T>,
   "className" | "children"
 > {
   className?: string;
@@ -70,7 +70,7 @@ const useSlot = (
 /* -------------------------------------------------------------------------- */
 
 // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
-const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
+const TimePicker = <T extends TimeFieldPrimitives.TimeValue>({
   className,
   children,
   isOpen,
@@ -78,6 +78,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   onOpenChange,
   ...props
 }: TimePickerProps<T>) => {
+  const { field } = fieldStyles();
   const { locale } = useLocale();
 
   const state = useTimeFieldState<T>({ ...props, locale });
@@ -169,7 +170,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
         data-invalid={state.isInvalid || undefined}
         data-readonly={state.isReadOnly || undefined}
         data-required={state.isRequired || undefined}
-        className={fieldStyles().field({ className })}
+        className={field({ className })}
       >
         {children}
       </div>
@@ -310,7 +311,7 @@ const TimeColumn = ({
   }, []);
 
   return (
-    <ListBoxPrimitive.ListBox
+    <ListBoxPrimitives.ListBox
       ref={ref}
       data-time-picker-column=""
       aria-label={label}
@@ -327,7 +328,7 @@ const TimeColumn = ({
       }}
     >
       {options.map((option) => (
-        <ListBoxPrimitive.ListBoxItem
+        <ListBoxPrimitives.ListBoxItem
           key={option.id}
           id={option.id}
           data-time-picker-item=""
@@ -335,9 +336,9 @@ const TimeColumn = ({
           className={item()}
         >
           {option.label}
-        </ListBoxPrimitive.ListBoxItem>
+        </ListBoxPrimitives.ListBoxItem>
       ))}
-    </ListBoxPrimitive.ListBox>
+    </ListBoxPrimitives.ListBox>
   );
 };
 

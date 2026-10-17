@@ -1,6 +1,6 @@
 "use client";
 
-import * as ComboBoxPrimitive from "react-aria-components/ComboBox";
+import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import { fieldStyles } from "@/components/ui/field";
 interface ComboboxProps<
   T extends object,
   M extends "single" | "multiple" = "single",
-> extends ComboBoxPrimitive.ComboBoxProps<T, M> {}
+> extends ComboBoxPrimitives.ComboBoxProps<T, M> {}
 const Combobox = <
   T extends object,
   M extends "single" | "multiple" = "single",
@@ -18,12 +18,13 @@ const Combobox = <
   className,
   ...props
 }: ComboboxProps<T, M>) => {
+  const { field } = fieldStyles();
   return (
-    <ComboBoxPrimitive.ComboBox
+    <ComboBoxPrimitives.ComboBox
       data-field=""
       menuTrigger={menuTrigger}
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({
+        field({
           className: cn("group/combobox", className),
         }),
       )}
@@ -32,23 +33,27 @@ const Combobox = <
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ComboboxValueProps<
   T extends object,
-> extends ComboBoxPrimitive.ComboBoxValueProps<T> {}
+> extends ComboBoxPrimitives.ComboBoxValueProps<T> {}
 const ComboboxValue = <T extends object>({
   className,
   ...props
 }: ComboboxValueProps<T>) => {
   return (
-    <ComboBoxPrimitive.ComboBoxValue
+    <ComboBoxPrimitives.ComboBoxValue
       data-combobox-value=""
-      className={composeRenderProps(className, (c) =>
-        cn("flex items-center gap-1", c),
+      className={composeRenderProps(className, (className) =>
+        cn("flex items-center gap-1", className),
       )}
       {...props}
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ComboboxProps };
 export { Combobox, ComboboxValue };

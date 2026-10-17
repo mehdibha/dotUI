@@ -1,10 +1,11 @@
 "use client";
 
+import type * as React from "react";
 import * as ColorSwatchPrimitives from "react-aria-components/ColorSwatch";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { tv } from "tailwind-variants";
 
-const colorSwatchStyles = tv({
+const colorSwatchVariants = tv({
   base: "relative size-5 shrink-0 rounded-xs border",
 });
 
@@ -15,9 +16,9 @@ interface ColorSwatchProps extends React.ComponentProps<
 const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
   return (
     <ColorSwatchPrimitives.ColorSwatch
-      data-slot="color-swatch"
+      data-color-swatch=""
       className={composeRenderProps(className, (className) =>
-        colorSwatchStyles({ className }),
+        colorSwatchVariants({ className }),
       )}
       style={composeRenderProps(style, (style, { color }) => ({
         ...style,
@@ -28,6 +29,8 @@ const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ColorSwatchProps };
 export { ColorSwatch };

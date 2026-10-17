@@ -154,6 +154,8 @@ const PaginationEllipsis = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type {
   PaginationEllipsisProps,
   PaginationItemProps,
