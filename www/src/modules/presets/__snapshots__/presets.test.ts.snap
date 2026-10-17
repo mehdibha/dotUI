@@ -47,8 +47,8 @@ exports[`built-in presets > resolve to their pinned design systems > airbnb 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -145,8 +145,8 @@ exports[`built-in presets > resolve to their pinned design systems > airbnb 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "raised",
@@ -174,8 +174,8 @@ exports[`built-in presets > resolve to their pinned design systems > airbnb 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -329,8 +329,8 @@ exports[`built-in presets > resolve to their pinned design systems > carbon 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -427,8 +427,8 @@ exports[`built-in presets > resolve to their pinned design systems > carbon 1`] 
     },
     "radio-group": {
       "mark": "ring",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "inverse",
@@ -456,8 +456,8 @@ exports[`built-in presets > resolve to their pinned design systems > carbon 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "filled",
@@ -618,8 +618,8 @@ exports[`built-in presets > resolve to their pinned design systems > claude 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -716,8 +716,8 @@ exports[`built-in presets > resolve to their pinned design systems > claude 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "raised",
@@ -745,8 +745,8 @@ exports[`built-in presets > resolve to their pinned design systems > claude 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -970,8 +970,8 @@ exports[`built-in presets > resolve to their pinned design systems > duolingo 1`
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline-tint",
-      "card-press": "sink"
+      "cardSelected": "outline-tint",
+      "cardPress": "sink"
     },
     "collapsible": {
       "motion": "expand"
@@ -1068,8 +1068,8 @@ exports[`built-in presets > resolve to their pinned design systems > duolingo 1`
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline-tint",
-      "card-press": "sink"
+      "cardSelected": "outline-tint",
+      "cardPress": "sink"
     },
     "segmented-control": {
       "selected": "tone",
@@ -1097,8 +1097,8 @@ exports[`built-in presets > resolve to their pinned design systems > duolingo 1`
     },
     "switch": {
       "style": "slab",
-      "card-selected": "outline-tint",
-      "card-press": "sink"
+      "cardSelected": "outline-tint",
+      "cardPress": "sink"
     },
     "table": {
       "header": "plain",
@@ -1250,8 +1250,8 @@ exports[`built-in presets > resolve to their pinned design systems > github 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -1348,8 +1348,8 @@ exports[`built-in presets > resolve to their pinned design systems > github 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "ring",
@@ -1377,8 +1377,8 @@ exports[`built-in presets > resolve to their pinned design systems > github 1`] 
     },
     "switch": {
       "style": "slab",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "filled",
@@ -1519,8 +1519,8 @@ exports[`built-in presets > resolve to their pinned design systems > linear 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -1617,8 +1617,8 @@ exports[`built-in presets > resolve to their pinned design systems > linear 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -1646,8 +1646,8 @@ exports[`built-in presets > resolve to their pinned design systems > linear 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -1795,8 +1795,8 @@ exports[`built-in presets > resolve to their pinned design systems > material3 1
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -1893,8 +1893,8 @@ exports[`built-in presets > resolve to their pinned design systems > material3 1
     },
     "radio-group": {
       "mark": "ring",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -1922,8 +1922,8 @@ exports[`built-in presets > resolve to their pinned design systems > material3 1
     },
     "switch": {
       "style": "outlined",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -2127,8 +2127,8 @@ exports[`built-in presets > resolve to their pinned design systems > notion 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -2225,8 +2225,8 @@ exports[`built-in presets > resolve to their pinned design systems > notion 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "raised",
@@ -2254,8 +2254,8 @@ exports[`built-in presets > resolve to their pinned design systems > notion 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -2408,8 +2408,8 @@ exports[`built-in presets > resolve to their pinned design systems > origin 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -2506,8 +2506,8 @@ exports[`built-in presets > resolve to their pinned design systems > origin 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -2535,8 +2535,8 @@ exports[`built-in presets > resolve to their pinned design systems > origin 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -2641,8 +2641,8 @@ exports[`built-in presets > resolve to their pinned design systems > polaris 1`]
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -2739,8 +2739,8 @@ exports[`built-in presets > resolve to their pinned design systems > polaris 1`]
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -2768,8 +2768,8 @@ exports[`built-in presets > resolve to their pinned design systems > polaris 1`]
     },
     "switch": {
       "style": "outlined",
-      "card-selected": "tint",
-      "card-press": "none"
+      "cardSelected": "tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "filled",
@@ -2920,8 +2920,8 @@ exports[`built-in presets > resolve to their pinned design systems > radix 1`] =
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -3018,8 +3018,8 @@ exports[`built-in presets > resolve to their pinned design systems > radix 1`] =
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "ring",
@@ -3047,8 +3047,8 @@ exports[`built-in presets > resolve to their pinned design systems > radix 1`] =
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -3242,8 +3242,8 @@ exports[`built-in presets > resolve to their pinned design systems > spotify 1`]
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -3340,8 +3340,8 @@ exports[`built-in presets > resolve to their pinned design systems > spotify 1`]
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "inverse",
@@ -3369,8 +3369,8 @@ exports[`built-in presets > resolve to their pinned design systems > spotify 1`]
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -3540,8 +3540,8 @@ exports[`built-in presets > resolve to their pinned design systems > stripe 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -3638,8 +3638,8 @@ exports[`built-in presets > resolve to their pinned design systems > stripe 1`] 
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "ring",
@@ -3667,8 +3667,8 @@ exports[`built-in presets > resolve to their pinned design systems > stripe 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -3883,8 +3883,8 @@ exports[`built-in presets > resolve to their pinned design systems > supabase 1`
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -3981,8 +3981,8 @@ exports[`built-in presets > resolve to their pinned design systems > supabase 1`
     },
     "radio-group": {
       "mark": "ring",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -4010,8 +4010,8 @@ exports[`built-in presets > resolve to their pinned design systems > supabase 1`
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
@@ -4162,8 +4162,8 @@ exports[`built-in presets > resolve to their pinned design systems > untitled 1`
       "motion": "ease"
     },
     "checkbox": {
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -4260,8 +4260,8 @@ exports[`built-in presets > resolve to their pinned design systems > untitled 1`
     },
     "radio-group": {
       "mark": "dot",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "raised",
@@ -4289,8 +4289,8 @@ exports[`built-in presets > resolve to their pinned design systems > untitled 1`
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline",
-      "card-press": "none"
+      "cardSelected": "outline",
+      "cardPress": "none"
     },
     "table": {
       "header": "filled",
@@ -4429,8 +4429,8 @@ exports[`built-in presets > resolve to their pinned design systems > vercel 1`] 
       "motion": "spring"
     },
     "checkbox": {
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "collapsible": {
       "motion": "expand"
@@ -4527,8 +4527,8 @@ exports[`built-in presets > resolve to their pinned design systems > vercel 1`] 
     },
     "radio-group": {
       "mark": "ring",
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "segmented-control": {
       "selected": "tone",
@@ -4556,8 +4556,8 @@ exports[`built-in presets > resolve to their pinned design systems > vercel 1`] 
     },
     "switch": {
       "style": "inset",
-      "card-selected": "outline-tint",
-      "card-press": "none"
+      "cardSelected": "outline-tint",
+      "cardPress": "none"
     },
     "table": {
       "header": "plain",
