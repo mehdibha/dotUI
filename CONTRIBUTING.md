@@ -66,10 +66,6 @@ This project is a [Turborepo](https://turborepo.org/) monorepo:
 | `pnpm build`          | Builds all packages                     |
 | `pnpm build:www`      | Builds the documentation website        |
 | `pnpm build:registry` | Builds the component registry           |
-| `pnpm lint:check`     | Runs Oxlint                             |
-| `pnpm lint:fix`       | Fixes Oxlint issues                     |
-| `pnpm format:check`   | Checks Oxfmt formatting                 |
-| `pnpm format:fix`     | Formats files with Oxfmt                |
 | `pnpm check`          | Runs lint and format checks             |
 | `pnpm check:fix`      | Fixes lint and format issues            |
 | `pnpm typecheck`      | Runs TypeScript type checking           |
