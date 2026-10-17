@@ -68,7 +68,7 @@ const OUTLINE_ACCENT = [
   "data-active:inset-ring-2 data-active:inset-ring-border-accent",
 ]
 
-const { useStyles, styles } = createStyles(sidebarMeta, {
+const { useStyles } = createStyles(sidebarMeta, {
   base: {
     slots: {
       // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
@@ -174,13 +174,6 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     labels: {
       sentence: { slots: { groupLabel: "font-sans text-xs tracking-normal" } },
@@ -266,7 +259,5 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
     },
   },
 })
-
-export type SidebarStyles = typeof styles
 
 export { useStyles }

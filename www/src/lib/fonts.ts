@@ -37,7 +37,7 @@ export type FontCategory =
   | "handwriting"
   | "mono"
 
-export interface FontOption {
+interface FontOption {
   family: string
   category: FontCategory
 }

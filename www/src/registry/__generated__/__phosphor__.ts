@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 166 icons the registry uses (not the entire library)
+// Only exports the 159 icons the registry uses (not the entire library)
 export {
 	PulseIcon as ActivityIcon,
 	WarningCircleIcon as AlertCircleIcon,
@@ -12,7 +12,6 @@ export {
 	ArrowUpIcon,
 	ArrowUpRightIcon,
 	WaveformIcon as AudioLinesIcon,
-	SealCheckIcon as BadgeCheck,
 	SealCheckIcon as BadgeCheckIcon,
 	BellIcon,
 	CurrencyBtcIcon as BitcoinIcon,
@@ -20,7 +19,6 @@ export {
 	TextBIcon as BoldIcon,
 	BookIcon,
 	BookmarkIcon,
-	BookOpenIcon as BookOpen,
 	BookOpenIcon,
 	RobotIcon as BotIcon,
 	PackageIcon as BoxesIcon,
@@ -80,11 +78,9 @@ export {
 	TranslateIcon as LanguagesIcon,
 	StackIcon as LayersIcon,
 	SquaresFourIcon as LayoutGridIcon,
-	LifebuoyIcon as LifeBuoy,
 	LinkIcon,
 	FunnelIcon as ListFilterIcon,
 	ListIcon,
-	CircleNotchIcon as Loader2Icon,
 	CircleNotchIcon as LoaderCircleIcon,
 	SignOutIcon as LogOutIcon,
 	EnvelopeOpenIcon as MailCheckIcon,
@@ -120,9 +116,7 @@ export {
 	RulerIcon,
 	FloppyDiskIcon as SaveIcon,
 	ScissorsIcon,
-	MagnifyingGlassIcon as Search,
 	MagnifyingGlassIcon as SearchIcon,
-	PaperPlaneTiltIcon as Send,
 	PaperPlaneRightIcon as SendIcon,
 	HardDrivesIcon as ServerIcon,
 	SlidersHorizontalIcon as Settings2Icon,
@@ -160,7 +154,6 @@ export {
 	SpeakerLowIcon as Volume1Icon,
 	SpeakerHighIcon as Volume2Icon,
 	SpeakerXIcon as VolumeOffIcon,
-	SpeakerXIcon as VolumeX,
 	WalletIcon,
 	XCircleIcon,
 	XIcon,

@@ -7,7 +7,7 @@ import { DemoPreset } from "./demo-preset"
 import { ExampleCodeModal } from "./example-code-modal"
 import { PreviewVeil } from "./preview-controls"
 
-export interface ExampleProps extends React.ComponentProps<"div"> {
+interface ExampleProps extends React.ComponentProps<"div"> {
   component: React.ComponentType
   title?: string
   /** Registry items to install, injected by the rehype transform. */

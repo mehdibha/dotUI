@@ -6,7 +6,7 @@ import accordionMeta from "./meta"
 const expand =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
-const { useStyles, styles } = createStyles(accordionMeta, {
+const { useStyles } = createStyles(accordionMeta, {
   base: {
     slots: {
       root: "flex w-full flex-col",
@@ -22,13 +22,6 @@ const { useStyles, styles } = createStyles(accordionMeta, {
         "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted",
       panelContent: "pb-3",
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     motion: {
@@ -85,7 +78,5 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     },
   },
 })
-
-export type AccordionStyles = typeof styles
 
 export { useStyles }

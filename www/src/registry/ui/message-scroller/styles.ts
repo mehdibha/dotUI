@@ -2,10 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import messageScrollerMeta from "./meta"
 
-const { useStyles, styles } = createStyles(messageScrollerMeta, {
+const { useStyles } = createStyles(messageScrollerMeta, {
   base: {
     slots: {
-      root: "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
+      root: "relative flex size-full min-h-0 flex-col overflow-hidden",
       viewport:
         "size-full min-h-0 min-w-0 overflow-y-auto overscroll-contain contain-content",
       content: "flex h-max min-h-full flex-col",
@@ -48,7 +48,5 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
     },
   },
 })
-
-export type MessageScrollerStyles = typeof styles
 
 export { useStyles }

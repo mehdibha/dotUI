@@ -31,13 +31,6 @@ const { useStyles, styles } = createStyles(linkMeta, {
       variant: "default",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     underline: {
       always: { variants: { variant: { default: LINK_ALWAYS } } },

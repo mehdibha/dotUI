@@ -89,7 +89,7 @@ const ctrlProject = new Project({ useInMemoryFileSystem: true })
 let ctrlCounter = 0
 
 /** Read destructured param defaults from the demo's exported function signature. */
-export function readParamDefaults(source: string): Record<string, string> {
+function readParamDefaults(source: string): Record<string, string> {
   const sf = ctrlProject.createSourceFile(`ctl-${ctrlCounter++}.tsx`, source, {
     scriptKind: ScriptKind.TSX,
     overwrite: true,

@@ -19,8 +19,6 @@ import { supabase } from "./supabase"
 import { untitled } from "./untitled"
 import { vercel } from "./vercel"
 
-export type { Preset, PresetMeta }
-
 export const PRESETS: Preset[] = [
   origin,
   claude,

@@ -5,7 +5,7 @@ import toggleButtonGroupMeta from "./meta"
 
 /* Group's seams, imported; segments attach or sit apart as on Group. */
 
-const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
+const { useStyles } = createStyles(toggleButtonGroupMeta, {
   base: {
     slots: {
       root: [
@@ -20,13 +20,6 @@ const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
         vertical: { root: "flex-col" },
       },
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     segments: {
@@ -50,7 +43,5 @@ const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
     separator: SEAMS,
   },
 })
-
-export type ToggleButtonGroupStyles = typeof styles
 
 export { useStyles }

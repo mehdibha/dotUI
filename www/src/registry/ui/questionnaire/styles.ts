@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import questionnaireMeta from "./meta"
 
-const { useStyles, styles } = createStyles(questionnaireMeta, {
+const { useStyles } = createStyles(questionnaireMeta, {
   base: {
     slots: {
       root: "flex w-full min-w-0 flex-col",
@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       title:
         "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
       description: "text-pretty text-fg-muted",
-      choices: "group/questionnaire-choices grid min-w-0",
+      choices: "grid min-w-0",
       choice: [
         "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) select-ui",
         "hover:bg-muted/50",
@@ -37,7 +37,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceDescription: "text-fg-muted",
       shortcut:
         "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-radius-control-sm) border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
-      inputWrapper: "group/questionnaire-input relative w-full min-w-0",
+      inputWrapper: "relative w-full min-w-0",
       // The shell is input's; this adds the questionnaire's own invalid
       // state, which it marks with aria-invalid.
       input:
@@ -210,7 +210,5 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
     },
   },
 })
-
-export type QuestionnaireStyles = typeof styles
 
 export { useStyles }

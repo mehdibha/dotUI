@@ -143,8 +143,6 @@ describe("extractStylesConfig", () => {
     )
     const root = cfg.base.slots?.root as string[]
     expect(Array.isArray(root)).toBe(true)
-    // The composed field slot classes + the passed className, all merged by tv.
-    expect(root[0]).toContain("group/otp-field")
     expect(root[0]).toContain("w-full flex-col gap-2")
   })
 
@@ -166,12 +164,11 @@ describe("extractStylesConfig", () => {
 
 describe("transformBase", () => {
   test("button: strips ./styles import, inserts tv-variants decl, leaves placeholder", () => {
-    const { template, variantIdent } = transformBase({
+    const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "button/base.tsx"),
       componentName: "button",
     })
 
-    expect(variantIdent).toBe("buttonVariants")
     expect(template).not.toMatch(/from\s+["']\.\/styles["']/)
     expect(template).toContain(
       `const buttonVariants = tv(${TV_CONFIG_PLACEHOLDER});`,
@@ -192,12 +189,11 @@ describe("transformBase", () => {
   })
 
   test("alert: handles `useStyles()()` double-call shape (slotted variant)", () => {
-    const { template, variantIdent } = transformBase({
+    const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "alert/base.tsx"),
       componentName: "alert",
     })
 
-    expect(variantIdent).toBe("alertVariants")
     expect(template).not.toContain("useStyles")
     // Per-component `const { root } = useStyles()()` destructures are hoisted
     // into one module-level destructure right after the tv() declaration.

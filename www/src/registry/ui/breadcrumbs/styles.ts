@@ -12,7 +12,7 @@ import breadcrumbsMeta from "./meta"
 /* Ancestors are muted labels that sharpen on hover, or the link recipe in
    its color and underline. The current crumb stays plain foreground. */
 
-const { useStyles, styles } = createStyles(breadcrumbsMeta, {
+const { useStyles } = createStyles(breadcrumbsMeta, {
   base: {
     slots: {
       root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted",
@@ -23,13 +23,6 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
       ],
       separator: "[&_svg]:size-4",
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     ancestors: {
@@ -68,7 +61,5 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
     },
   },
 })
-
-export type BreadcrumbsStyles = typeof styles
 
 export { useStyles }

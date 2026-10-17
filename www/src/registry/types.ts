@@ -1,7 +1,4 @@
-import type {
-  Registry as ShadcnRegistry,
-  RegistryItem as ShadcnRegistryItem,
-} from "shadcn/schema"
+import type { RegistryItem as ShadcnRegistryItem } from "shadcn/schema"
 
 /** Density tiers a design system can be rendered at, smallest first. */
 export const DENSITIES = [
@@ -43,8 +40,4 @@ export type ParamDef = {
 export type RegistryItem = ShadcnRegistryItem & {
   /** The studio axes this component answers to. */
   params?: Record<string, ParamDef>
-}
-
-export type Registry = Omit<ShadcnRegistry, "items"> & {
-  items: RegistryItem[]
 }
