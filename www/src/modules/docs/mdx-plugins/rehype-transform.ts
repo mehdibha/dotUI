@@ -99,7 +99,18 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
 ) => {
   const { registryBasePath = "src/registry" } = options
 
-  return async (tree) => {
+  return async (tree, file) => {
+    const fail =
+      (tag: string, name: string | null) =>
+      (error: unknown): never => {
+        const reason = error instanceof Error ? error.message : String(error)
+        const element = name === null ? `<${tag}>` : `<${tag} name="${name}">`
+        throw new Error(
+          `[rehype-transform] ${file.path}: ${element}: ${reason}`,
+          { cause: error },
+        )
+      }
+
     const demoNodes: DemoNodeInfo[] = []
     const referenceNodes: ReferenceNodeInfo[] = []
     const interactiveDemoNodes: InteractiveDemoNodeInfo[] = []
@@ -124,35 +135,39 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
 
     // Step 1: Collect all Demo/Example/Reference/InteractiveDemo nodes
     visit(tree, "mdxJsxFlowElement", (node: MdxJsxFlowElementHast) => {
-      if (node.name === "Demo" || node.name === "Example") {
-        const name = extractNameAttribute(node)
-        if (name) {
-          const info: DemoNodeInfo = {
-            node,
-            name,
-            type: node.name as "Demo" | "Example",
+      if (
+        node.name !== "Demo" &&
+        node.name !== "Example" &&
+        node.name !== "Reference" &&
+        node.name !== "InteractiveDemo"
+      ) {
+        return
+      }
+      const tag = node.name
+      const name = extractNameAttribute(node)
+      if (!name) return fail(tag, name)(new Error("missing a string `name`"))
+
+      if (tag === "Demo" || tag === "Example") {
+        const info: DemoNodeInfo = { node, name, type: tag }
+        if (tag === "Example") {
+          const title = extractStringAttribute(node, "title")
+          if (title) {
+            info.title = title
+            info.titleId = slugify(title)
           }
-          if (node.name === "Example") {
-            const title = extractStringAttribute(node, "title")
-            if (title) {
-              info.title = title
-              info.titleId = slugify(title)
-            }
-          }
-          demoNodes.push(info)
         }
-      } else if (node.name === "Reference") {
-        const name = extractNameAttribute(node)
-        if (name) {
-          referenceNodes.push({ node, name })
+        demoNodes.push(info)
+      } else if (tag === "Reference") {
+        referenceNodes.push({ node, name })
+      } else {
+        let controls: ControlInput[]
+        try {
+          controls = extractControlsAttribute(node)
+        } catch (error) {
+          return fail(tag, name)(error)
         }
-      } else if (node.name === "InteractiveDemo") {
-        const name = extractNameAttribute(node)
-        const controls = extractControlsAttribute(node)
-        const file = extractStringAttribute(node, "file") ?? undefined
-        if (name && controls) {
-          interactiveDemoNodes.push({ node, name, controls, file })
-        }
+        const demoFile = extractStringAttribute(node, "file") ?? undefined
+        interactiveDemoNodes.push({ node, name, controls, file: demoFile })
       }
     })
 
@@ -171,42 +186,39 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
         hasDemos
           ? Promise.all(
               demoNodes.map((info) =>
-                processDemoNode(info, registryBasePath, highlighter),
+                processDemoNode(info, registryBasePath, highlighter).catch(
+                  fail(info.type, info.name),
+                ),
               ),
             )
           : Promise.resolve([]),
         hasReferences
           ? Promise.all(
               referenceNodes.map((info) =>
-                processReferenceNode(info, highlighter),
+                processReferenceNode(info, highlighter).catch(
+                  fail("Reference", info.name),
+                ),
               ),
             )
           : Promise.resolve([]),
         hasInteractiveDemos
           ? Promise.all(
               interactiveDemoNodes.map((info) =>
-                processInteractiveDemoNode(info, highlighter, registryBasePath),
+                processInteractiveDemoNode(
+                  info,
+                  highlighter,
+                  registryBasePath,
+                ).catch(fail("InteractiveDemo", info.name)),
               ),
             )
           : Promise.resolve([]),
       ])
 
-    // Filter out any failed ones
-    const successfulDemos = processedDemos.filter(
-      (d): d is ProcessedDemo => d !== null,
-    )
-    const successfulReferences = processedReferences.filter(
-      (r): r is ProcessedReference => r !== null,
-    )
-    const successfulInteractiveDemos = processedInteractiveDemos.filter(
-      (d): d is ProcessedInteractiveDemo => d !== null,
-    )
-
     // Step 3: Generate and inject imports (deduplicated)
     const allImports: ImportInfo[] = []
 
     // Demo imports
-    for (const demo of successfulDemos) {
+    for (const demo of processedDemos) {
       allImports.push({
         importName: demo.importName,
         importPath: demo.importPath,
@@ -215,7 +227,7 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
     }
 
     // InteractiveDemo imports — playground demos default-export `Demo`.
-    for (const interactiveDemo of successfulInteractiveDemos) {
+    for (const interactiveDemo of processedInteractiveDemos) {
       allImports.push({
         importName: interactiveDemo.importName,
         importPath: interactiveDemo.importPath,
@@ -229,15 +241,15 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
     }
 
     // Step 4: Transform each node
-    for (const processed of successfulDemos) {
+    for (const processed of processedDemos) {
       transformDemoNode(processed)
     }
 
-    for (const processed of successfulReferences) {
+    for (const processed of processedReferences) {
       transformReferenceNode(processed)
     }
 
-    for (const processed of successfulInteractiveDemos) {
+    for (const processed of processedInteractiveDemos) {
       transformInteractiveDemoNode(processed)
     }
   }
@@ -254,52 +266,44 @@ async function processDemoNode(
   registryBasePath: string,
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
   highlighter: HighlighterGeneric<any, any>,
-): Promise<ProcessedDemo | null> {
-  try {
-    // Resolve file path
-    const filePath = resolveDemoPath(info.name, registryBasePath)
-    const importPath = `@/registry/ui/${info.name}`
+): Promise<ProcessedDemo> {
+  // Resolve file path
+  const filePath = resolveDemoPath(info.name, registryBasePath)
+  const importPath = `@/registry/ui/${info.name}`
 
-    // Read source file
-    const rawSource = await fs.readFile(filePath, "utf-8")
+  // Read source file
+  const rawSource = await fs.readFile(filePath, "utf-8")
 
-    // Transform using the transformer
-    const { source, preview } = transformDemo(rawSource)
+  // Transform using the transformer
+  const { source, preview } = transformDemo(rawSource)
 
-    // Highlight with shiki → HAST
-    // defaultColor: false makes both light/dark use CSS variables instead of inline color
-    const sourceHast = highlighter.codeToHast(source, {
-      lang: "tsx",
-      themes: { light: "github-light", dark: "github-dark" },
-      defaultColor: false,
-    })
-    const previewHast = highlighter.codeToHast(preview, {
-      lang: "tsx",
-      themes: { light: "github-light", dark: "github-dark" },
-      defaultColor: false,
-    })
+  // Highlight with shiki → HAST
+  // defaultColor: false makes both light/dark use CSS variables instead of inline color
+  const sourceHast = highlighter.codeToHast(source, {
+    lang: "tsx",
+    themes: { light: "github-light", dark: "github-dark" },
+    defaultColor: false,
+  })
+  const previewHast = highlighter.codeToHast(preview, {
+    lang: "tsx",
+    themes: { light: "github-light", dark: "github-dark" },
+    defaultColor: false,
+  })
 
-    // Mark pre elements with data-raw so mdx-components won't wrap them
-    markPreAsRaw(sourceHast)
-    markPreAsRaw(previewHast)
+  // Mark pre elements with data-raw so mdx-components won't wrap them
+  markPreAsRaw(sourceHast)
+  markPreAsRaw(previewHast)
 
-    // Generate unique import name
-    const importName = generateImportName(info.name)
+  // Generate unique import name
+  const importName = generateImportName(info.name)
 
-    return {
-      nodeInfo: info,
-      importName,
-      importPath,
-      sourceHast,
-      previewHast,
-      install: computeInstallItems(info.name, rawSource),
-    }
-  } catch (error) {
-    console.error(
-      `[rehype-transform] Failed to process demo "${info.name}":`,
-      error,
-    )
-    return null
+  return {
+    nodeInfo: info,
+    importName,
+    importPath,
+    sourceHast,
+    previewHast,
+    install: computeInstallItems(info.name, rawSource),
   }
 }
 
@@ -375,16 +379,14 @@ function extractStringAttribute(
   return null
 }
 
-function extractControlsAttribute(
-  node: MdxJsxFlowElementHast,
-): ControlInput[] | null {
+function extractControlsAttribute(node: MdxJsxFlowElementHast): ControlInput[] {
   const controlsAttr = node.attributes.find(
     (attr): attr is MdxJsxAttribute =>
       attr.type === "mdxJsxAttribute" && attr.name === "controls",
   )
 
   if (!controlsAttr || typeof controlsAttr.value === "string") {
-    return null
+    throw new Error("missing `controls={[…]}`")
   }
 
   // The value is an expression like {["variant", { name: "children", defaultValue: "Button" }]}.
@@ -396,9 +398,7 @@ function extractControlsAttribute(
     | undefined
   const source = exprValue?.value
   if (!source || typeof source !== "string") {
-    throw new Error(
-      "[rehype-transform] <InteractiveDemo> controls={…} has no source expression",
-    )
+    throw new Error("controls={…} has no source expression")
   }
 
   let value: unknown
@@ -407,13 +407,11 @@ function extractControlsAttribute(
     value = new Function(`"use strict"; return (${source});`)()
   } catch (error) {
     throw new Error(
-      `[rehype-transform] Failed to evaluate controls={…} (${(error as Error).message}). Source: ${source}`,
+      `Failed to evaluate controls={…} (${(error as Error).message}). Source: ${source}`,
     )
   }
   if (!Array.isArray(value)) {
-    throw new Error(
-      `[rehype-transform] controls must be an array; got ${typeof value}`,
-    )
+    throw new Error(`controls must be an array; got ${typeof value}`)
   }
   return value as ControlInput[]
 }
@@ -577,31 +575,9 @@ async function processReferenceNode(
   info: ReferenceNodeInfo,
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
   highlighter: HighlighterGeneric<any, any>,
-): Promise<ProcessedReference | null> {
-  try {
-    // Load the reference data
-    const rawData = await loadApiReference(info.name)
-    if (!rawData) {
-      console.error(
-        `[rehype-transform] API reference not found for "${info.name}"`,
-      )
-      return null
-    }
-
-    // Transform with highlighting
-    const data = transformReference(rawData, highlighter)
-
-    return {
-      nodeInfo: info,
-      data,
-    }
-  } catch (error) {
-    console.error(
-      `[rehype-transform] Failed to process reference "${info.name}":`,
-      error,
-    )
-    return null
-  }
+): Promise<ProcessedReference> {
+  const rawData = await loadApiReference(info.name)
+  return { nodeInfo: info, data: transformReference(rawData, highlighter) }
 }
 
 function transformReferenceNode(processed: ProcessedReference): void {
@@ -664,57 +640,49 @@ async function processInteractiveDemoNode(
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
   highlighter: HighlighterGeneric<any, any>,
   registryBasePath: string,
-): Promise<ProcessedInteractiveDemo | null> {
-  try {
-    const fileSlug = info.file ?? "playground"
+): Promise<ProcessedInteractiveDemo> {
+  const fileSlug = info.file ?? "playground"
 
-    // The real demo source drives everything: defaults come from its param
-    // signature and the displayed code is generated by overlaying control
-    // values onto it.
-    const demoPath = path.join(
-      process.cwd(),
-      registryBasePath,
-      "ui",
-      info.name,
-      "demos",
-      `${fileSlug}.tsx`,
-    )
-    const rawSource = await fs.readFile(demoPath, "utf-8")
+  // The real demo source drives everything: defaults come from its param
+  // signature and the displayed code is generated by overlaying control
+  // values onto it.
+  const demoPath = path.join(
+    process.cwd(),
+    registryBasePath,
+    "ui",
+    info.name,
+    "demos",
+    `${fileSlug}.tsx`,
+  )
+  const rawSource = await fs.readFile(demoPath, "utf-8")
 
-    // 1. Build controls from API reference + param defaults
-    const controls = await buildControlsFromReference(
-      info.name,
-      info.controls,
-      rawSource,
-    )
+  // 1. Build controls from API reference + param defaults
+  const controls = await buildControlsFromReference(
+    info.name,
+    info.controls,
+    rawSource,
+  )
 
-    // 2. Enrich with highlighted types (HTML strings)
-    const enrichedControls = await enrichControlsForSerialization(
-      info.name,
-      controls,
-      highlighter,
-    )
+  // 2. Enrich with highlighted types (HTML strings)
+  const enrichedControls = await enrichControlsForSerialization(
+    info.name,
+    controls,
+    highlighter,
+  )
 
-    // 3. Build the code template by overlaying control values onto the source.
-    const codeTemplate = await buildSourceOverlay({
-      source: rawSource,
-      controls: toControlSelections(controls),
-      componentName: info.name,
-    })
+  // 3. Build the code template by overlaying control values onto the source.
+  const codeTemplate = await buildSourceOverlay({
+    source: rawSource,
+    controls: toControlSelections(controls),
+    componentName: info.name,
+  })
 
-    return {
-      nodeInfo: info,
-      importName: `${toPascalCase(info.name)}Playground`,
-      importPath: `@/registry/ui/${info.name}/demos/${fileSlug}`,
-      controls: enrichedControls,
-      codeTemplate,
-    }
-  } catch (error) {
-    console.error(
-      `[rehype-transform] Failed to process interactive demo "${info.name}":`,
-      error,
-    )
-    return null
+  return {
+    nodeInfo: info,
+    importName: `${toPascalCase(info.name)}Playground`,
+    importPath: `@/registry/ui/${info.name}/demos/${fileSlug}`,
+    controls: enrichedControls,
+    codeTemplate,
   }
 }
 
