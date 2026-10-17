@@ -1,5 +1,3 @@
-"use client"
-
 import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import { Message, MessageContent } from "@/registry/ui/message"
 import {
