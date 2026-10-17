@@ -3,7 +3,7 @@ title: Date Field
 description: A date field allows users to enter and edit date values using a keyboard.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/DateField.html
+    href: https://react-aria.adobe.com/DateField
 wip: true
 ---
 
@@ -41,8 +41,6 @@ npx shadcn@latest add @dotui/date-field
 
 ## Usage
 
-Use `DateField` to allow users to enter and edit date values using a keyboard.
-
 ```tsx
 import { DateField } from "@/components/ui/date-field"
 import { DateInput } from "@/components/ui/input"
@@ -77,7 +75,7 @@ import { Description, FieldError, Label } from "@/components/ui/field"
 
 ## Value
 
-Values are [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/index.html) objects. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+Values are [`@internationalized/date`](https://react-aria.adobe.com/internationalized/date/) objects. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
 
 ```tsx
 import { parseDate } from "@internationalized/date"
