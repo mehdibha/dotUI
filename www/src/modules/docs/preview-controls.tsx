@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
