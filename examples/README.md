@@ -58,7 +58,7 @@ cd examples/spotify-tanstack-start && pnpm install && pnpm dev   # terminal 2
 
 ## CI
 
-`.github/workflows/examples.yml` runs on every pull request and merge-group run. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
+`.github/workflows/examples.yml` runs on every pull request, merge-group run, and push to `main`. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
 
 ## Vercel previews
 
