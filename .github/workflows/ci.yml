@@ -1,6 +1,3 @@
-# this workflow will run on every pr to make sure the project is following the guidelines
-
-# after labeler, run other actions with strict permissions
 name: CI
 
 on:
@@ -16,8 +13,6 @@ jobs:
     name: Run checks
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup
 
       - run: pnpm check
@@ -27,8 +22,6 @@ jobs:
     name: Run typecheck
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup
 
       - run: pnpm typecheck
@@ -38,27 +31,12 @@ jobs:
     name: Run tests
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      # publish-smoke.test.ts imports the generated publishables (gitignored).
+      # Also emits the publishables publish-smoke.test.ts imports (gitignored).
       - run: pnpm build:registry
-      - run: pnpm test
 
-  registry-drift:
-    runs-on: ubuntu-latest
-    name: Check generated registry artifacts are up to date
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup
-
-      - name: Regenerate committed registry artifacts
-        run: pnpm build:registry
-
-      - name: Fail if any committed generated artifact is stale
+      - name: Fail if any committed generated registry artifact is stale
         run: |
           git diff --exit-code -- \
             www/src/registry/__generated__/demos.tsx \
@@ -76,13 +54,13 @@ jobs:
             www/src/registry/__generated__/__octicons__.ts \
           || { echo '::error::Committed generated registry artifacts are out of date. Run `pnpm build:registry` and commit the result.'; exit 1; }
 
+      - run: pnpm test
+
   references-drift:
     runs-on: ubuntu-latest
     name: Check generated API references are up to date
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup
 
       - name: Regenerate committed API reference files
@@ -98,6 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Check client bundle perf budget
     steps:
+      # Full history: the docs' last-modified dates come from git log.
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
