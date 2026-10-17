@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { flushSync } from "react-dom"
+
 import type { Mode } from "@dotui/colors"
 
 import { shareDesignSystem } from "./share-design-system"

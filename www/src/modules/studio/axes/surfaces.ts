@@ -30,10 +30,9 @@ import { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 import { strokePx } from "./shape"
 
-export const SURFACE_DEFAULTS = {
+const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
   surfaceShadow: "flat",
@@ -67,14 +66,6 @@ export const RECESSED_DARK_PAGE = 93
 const SHELL_SIDEBAR: Record<string, string> = {
   page: "var(--color-bg)",
   recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
-}
-
-export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
-  surfaceLayers: oneOf(LAYERS_VALUES),
-  surfaceEdge: oneOf(EDGE_VALUES),
-  surfaceShadow: oneOf(SHADOW_VALUES),
-  translucentOverlays: BOOLEAN,
-  shellTone: oneOf(SHELL_VALUES),
 }
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -341,30 +332,36 @@ function surfaceTokens(state: Effective): Record<string, string> {
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as Effective)
 
-export function resolveSurfaces(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  for (const [name, value] of Object.entries(surfaceTokens(state))) {
-    if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
-  }
-  const sidebar = SHELL_SIDEBAR[state.shellTone]
-  if (sidebar) tokens["--color-sidebar"] = sidebar
-  const tile = { "card-press": state.surfaceEdge === "ledge" ? "sink" : "none" }
-  return {
-    tokens,
-    params: {
-      sidebar: { shell: state.shellTone },
-      checkbox: tile,
-      "radio-group": tile,
-      switch: tile,
-    },
-  }
-}
-
 export const chapter = defineChapter({
   id: "surfaces",
   defaults: SURFACE_DEFAULTS,
-  schema: SURFACE_SCHEMA,
-  resolve: resolveSurfaces,
+  schema: {
+    surfaceLayers: oneOf(LAYERS_VALUES),
+    surfaceEdge: oneOf(EDGE_VALUES),
+    surfaceShadow: oneOf(SHADOW_VALUES),
+    translucentOverlays: BOOLEAN,
+    shellTone: oneOf(SHELL_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const tokens: Record<string, string> = {}
+    for (const [name, value] of Object.entries(surfaceTokens(state))) {
+      if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
+    }
+    const sidebar = SHELL_SIDEBAR[state.shellTone]
+    if (sidebar) tokens["--color-sidebar"] = sidebar
+    const tile = {
+      "card-press": state.surfaceEdge === "ledge" ? "sink" : "none",
+    }
+    return {
+      tokens,
+      params: {
+        sidebar: { shell: state.shellTone },
+        checkbox: tile,
+        "radio-group": tile,
+        switch: tile,
+      },
+    }
+  },
   follows: {
     surfaceEdge: [
       { kind: "auto", id: "auto", from: "buttonStyle", table: EDGE_AUTO },

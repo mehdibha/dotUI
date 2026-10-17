@@ -7,12 +7,6 @@ import { fillScope, SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
-
-export const SWITCH_DEFAULTS = {
-  switchColor: "accent",
-  switchStyle: "inset",
-}
 
 /* Inset: a filled track, a light knob inside it, stretched on press (iOS,
    shadcn, Radix, Linear, Untitled UI). Outlined: a stroked off-track with a
@@ -20,11 +14,6 @@ export const SWITCH_DEFAULTS = {
    Spectrum 2, Polaris). Slab: a rounded-rect track on the controls corner
    with a half-width knob (Primer). */
 export const STYLE_VALUES = ["inset", "outlined", "slab"] as const
-
-export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {
-  switchColor: oneOf(SOURCE_VALUES),
-  switchStyle: oneOf(STYLE_VALUES),
-}
 
 /* The off track (Inset's fill, Outlined's and Slab's edges) is the control
    edge, floored like the check edge. */
@@ -37,17 +26,21 @@ export function trackTokens(controlEdge: string) {
     : undefined
 }
 
-export function resolveSwitch(state: Effective): Resolved {
-  return {
-    tokens: trackTokens(state.controlEdge),
-    params: { switch: { style: state.switchStyle } },
-    color: fillScope(state, "switch", state.switchColor),
-  }
-}
-
 export const chapter = defineChapter({
   id: "switch",
-  defaults: SWITCH_DEFAULTS,
-  schema: SWITCH_SCHEMA,
-  resolve: resolveSwitch,
+  defaults: {
+    switchColor: "accent",
+    switchStyle: "inset",
+  },
+  schema: {
+    switchColor: oneOf(SOURCE_VALUES),
+    switchStyle: oneOf(STYLE_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    return {
+      tokens: trackTokens(state.controlEdge),
+      params: { switch: { style: state.switchStyle } },
+      color: fillScope(state, "switch", state.switchColor),
+    }
+  },
 })

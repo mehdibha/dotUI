@@ -1,16 +1,14 @@
 /* Icons — the library, and the axis that library exposes: stroke width on
-   line sets (Auto: the library's own), weight on Phosphor. Engine: the
-   library reaches every registry icon through the provider; stroke rides on
-   `--icon-stroke-width`, weight on `--icon-weight`. */
+   line sets (Auto: the library's own), weight on Phosphor. The library
+   reaches every registry icon through the provider. */
 
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-export const ICON_DEFAULTS = {
+const ICON_DEFAULTS = {
   iconLibrary: "lucide",
   iconStroke: "auto" as number | "auto",
   iconWeight: "regular",
@@ -41,12 +39,6 @@ export const WEIGHT_VALUES = [
 
 export const STROKE_RANGE = { min: 1, max: 3, step: 0.25 }
 
-export const ICON_SCHEMA: ChapterSchema<typeof ICON_DEFAULTS> = {
-  iconLibrary: oneOf(LIBRARY_VALUES),
-  iconStroke: range(STROKE_RANGE),
-  iconWeight: oneOf(WEIGHT_VALUES),
-}
-
 export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"
 export const ICON_WEIGHT_VAR = "--icon-weight"
 
@@ -67,21 +59,23 @@ export const LIBRARY_STROKE: Record<IconLibraryName, number> = {
 /** Line sets: the libraries whose stroke the axis can move. */
 const LINE_SETS: IconLibraryName[] = ["lucide", "tabler", "hugeicons"]
 
-export function resolveIcons(state: Effective): Resolved {
-  const library = state.iconLibrary as IconLibraryName
-  const tokens: Record<string, string> = {}
-  if (state.iconStroke !== LIBRARY_STROKE[library])
-    tokens[ICON_STROKE_WIDTH_VAR] = String(state.iconStroke)
-  if (state.iconWeight !== ICON_DEFAULTS.iconWeight)
-    tokens[ICON_WEIGHT_VAR] = state.iconWeight
-  return { tokens, icons: library === "lucide" ? undefined : library }
-}
-
 export const chapter = defineChapter({
   id: "icons",
   defaults: ICON_DEFAULTS,
-  schema: ICON_SCHEMA,
-  resolve: resolveIcons,
+  schema: {
+    iconLibrary: oneOf(LIBRARY_VALUES),
+    iconStroke: range(STROKE_RANGE),
+    iconWeight: oneOf(WEIGHT_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const library = state.iconLibrary as IconLibraryName
+    const tokens: Record<string, string> = {}
+    if (state.iconStroke !== LIBRARY_STROKE[library])
+      tokens[ICON_STROKE_WIDTH_VAR] = String(state.iconStroke)
+    if (state.iconWeight !== ICON_DEFAULTS.iconWeight)
+      tokens[ICON_WEIGHT_VAR] = state.iconWeight
+    return { tokens, icons: library === "lucide" ? undefined : library }
+  },
   follows: {
     iconStroke: [
       { kind: "auto", id: "auto", from: "iconLibrary", table: LIBRARY_STROKE },

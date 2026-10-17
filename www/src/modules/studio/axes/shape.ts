@@ -2,7 +2,7 @@
    component wears a rung of it. The Radius picker's shapes set them all. Stroke is the width every control
    edge draws at; tracks, whether switch, slider and progress stay round.
 
-   Engine: `--radius` is the base every `--radius-*` rung derives from
+   `--radius` is the base every `--radius-*` rung derives from
    (base/theme.css). The role vars (roles.css) point each role at a rung —
    five picked, the rest derived — and every component's `--studio-<c>-radius`
    points at a role. On publish the chain resolves to a plain utility per
@@ -13,9 +13,8 @@
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf, range } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-export const SHAPE_DEFAULTS = {
+const SHAPE_DEFAULTS = {
   /** The base radius — the lg rung (popover · menu), in px. */
   radiusPx: 10,
   roleControl: "md",
@@ -64,7 +63,7 @@ const RUNGS = SHAPE_RUNGS.map((rung) => rung.id)
 /* Panels and cards hold multi-line content, which is never a pill. */
 const BLOCK_RUNGS = RUNGS.filter((rung) => rung !== "full")
 
-export const SHAPE_SCHEMA: ChapterSchema<typeof SHAPE_DEFAULTS> = {
+export const SHAPE_SCHEMA = {
   radiusPx: range(RADIUS_RANGE),
   roleControl: oneOf(RUNGS),
   roleItem: oneOf(["auto", ...RUNGS]),
@@ -224,21 +223,19 @@ export function shapeOf(state: Record<string, unknown>): ShapeId | undefined {
 export const pickShape = (state: StudioState, id: ShapeId): StudioState =>
   ({ ...state, ...SHAPES[id] }) as StudioState
 
-export function resolveShape(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  if (state.radiusPx !== SHAPE_DEFAULTS.radiusPx)
-    tokens["--radius"] = `${state.radiusPx / 16}rem`
-  const defaults = shapeVars(SHAPE_DEFAULTS as Effective)
-  for (const [name, token] of Object.entries(shapeVars(state)))
-    if (token !== defaults[name]) tokens[name] = token
-  if (state.controlStroke !== SHAPE_DEFAULTS.controlStroke)
-    tokens["--studio-control-stroke"] = `${strokePx(state.controlStroke)}px`
-  return { tokens }
-}
-
 export const chapter = defineChapter({
   id: "shape",
   defaults: SHAPE_DEFAULTS,
   schema: SHAPE_SCHEMA,
-  resolve: resolveShape,
+  resolve(state: Effective): Resolved {
+    const tokens: Record<string, string> = {}
+    if (state.radiusPx !== SHAPE_DEFAULTS.radiusPx)
+      tokens["--radius"] = `${state.radiusPx / 16}rem`
+    const defaults = shapeVars(SHAPE_DEFAULTS as Effective)
+    for (const [name, token] of Object.entries(shapeVars(state)))
+      if (token !== defaults[name]) tokens[name] = token
+    if (state.controlStroke !== SHAPE_DEFAULTS.controlStroke)
+      tokens["--studio-control-stroke"] = `${strokePx(state.controlStroke)}px`
+    return { tokens }
+  },
 })

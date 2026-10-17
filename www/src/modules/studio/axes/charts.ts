@@ -5,13 +5,6 @@ import type { ColorConfig } from "@/registry/theme"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
-
-export const CHART_DEFAULTS = {
-  chartPalette: "mono",
-  chartGrid: "solid",
-  chartMotion: "spring",
-}
 
 /* Mono = tonal shades of the brand; vivid / muted = hues spread around the
    brand at high or low chroma. */
@@ -28,24 +21,24 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
   return palette === "vivid" || palette === "muted" ? palette : undefined
 }
 
-export const CHART_SCHEMA: ChapterSchema<typeof CHART_DEFAULTS> = {
-  chartPalette: oneOf(PALETTE_VALUES),
-  chartGrid: oneOf(GRID_VALUES),
-  chartMotion: oneOf(MOTION_VALUES),
-}
-
-export function resolveCharts(state: Effective): Resolved {
-  const chartPalette = chartPaletteOf(state.chartPalette)
-  return {
-    // A recipe slice, not a recipe: resolve.ts completes it against the default.
-    ...(chartPalette ? { color: { chartPalette } as ColorConfig } : {}),
-    params: { chart: { grid: state.chartGrid, motion: state.chartMotion } },
-  }
-}
-
 export const chapter = defineChapter({
   id: "charts",
-  defaults: CHART_DEFAULTS,
-  schema: CHART_SCHEMA,
-  resolve: resolveCharts,
+  defaults: {
+    chartPalette: "mono",
+    chartGrid: "solid",
+    chartMotion: "spring",
+  },
+  schema: {
+    chartPalette: oneOf(PALETTE_VALUES),
+    chartGrid: oneOf(GRID_VALUES),
+    chartMotion: oneOf(MOTION_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const chartPalette = chartPaletteOf(state.chartPalette)
+    return {
+      // A recipe slice, not a recipe: resolve.ts completes it against the default.
+      ...(chartPalette ? { color: { chartPalette } as ColorConfig } : {}),
+      params: { chart: { grid: state.chartGrid, motion: state.chartMotion } },
+    }
+  },
 })

@@ -8,7 +8,6 @@ import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioStateInput } from "./index"
 import { auto, BOOLEAN, COLOR, oneOf, range } from "./schema"
-import type { ChapterSchema } from "./schema"
 
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
@@ -76,25 +75,6 @@ export const ORIGIN_PAGE = 99
 /** Grouped's page: its cards are white, so the page's gray is its depth
  *  (Apple, Polaris, HeroUI). */
 export const GROUPED_PAGE = 96
-
-export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
-  brand: COLOR,
-  buttonColor: oneOf(SOURCE_VALUES),
-  selectionColor: oneOf(SOURCE_VALUES),
-  neutralHue: auto(range(NEUTRAL_HUE_RANGE)),
-  successSeed: auto(COLOR),
-  warningSeed: auto(COLOR),
-  dangerSeed: auto(COLOR),
-  selectionSeed: auto(COLOR),
-  vividness: range(VIVIDNESS_RANGE),
-  neutralTint: range(NEUTRAL_TINT_RANGE),
-  preserveSeed: BOOLEAN,
-  solidInk: oneOf(SOLID_INK_VALUES),
-  lightBg: range(LIGHT_BG_RANGE),
-  darkBg: range(DARK_BG_RANGE),
-  controlEdge: oneOf(CONTROL_EDGE_VALUES),
-  selectedWash: oneOf(SELECTED_WASH_VALUES),
-}
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
@@ -191,22 +171,37 @@ export function buildColorConfig(state: Effective): ColorConfig {
   })
 }
 
-export function resolveColor(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  const edge = CONTROL_EDGE_TOKENS[state.controlEdge]
-  if (edge) {
-    tokens["--color-border-control"] = edge[0]
-    tokens["--color-border-control-hover"] = edge[1]
-  }
-  if (state.selectedWash === "brand") Object.assign(tokens, BRAND_WASH)
-  return { tokens, color: buildColorConfig(state) }
-}
-
 export const chapter = defineChapter({
   id: "color",
   defaults: COLOR_DEFAULTS,
-  schema: COLOR_SCHEMA,
-  resolve: resolveColor,
+  schema: {
+    brand: COLOR,
+    buttonColor: oneOf(SOURCE_VALUES),
+    selectionColor: oneOf(SOURCE_VALUES),
+    neutralHue: auto(range(NEUTRAL_HUE_RANGE)),
+    successSeed: auto(COLOR),
+    warningSeed: auto(COLOR),
+    dangerSeed: auto(COLOR),
+    selectionSeed: auto(COLOR),
+    vividness: range(VIVIDNESS_RANGE),
+    neutralTint: range(NEUTRAL_TINT_RANGE),
+    preserveSeed: BOOLEAN,
+    solidInk: oneOf(SOLID_INK_VALUES),
+    lightBg: range(LIGHT_BG_RANGE),
+    darkBg: range(DARK_BG_RANGE),
+    controlEdge: oneOf(CONTROL_EDGE_VALUES),
+    selectedWash: oneOf(SELECTED_WASH_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const tokens: Record<string, string> = {}
+    const edge = CONTROL_EDGE_TOKENS[state.controlEdge]
+    if (edge) {
+      tokens["--color-border-control"] = edge[0]
+      tokens["--color-border-control-hover"] = edge[1]
+    }
+    if (state.selectedWash === "brand") Object.assign(tokens, BRAND_WASH)
+    return { tokens, color: buildColorConfig(state) }
+  },
   follows: {
     lightBg: [
       {

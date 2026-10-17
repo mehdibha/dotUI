@@ -38,7 +38,8 @@ export function useAxis(key: AxisKey | undefined): Axis | undefined {
     explain: explain[key] ?? { saved: state[key], effective: values[key] },
     follows: (FOLLOWS[key] ?? []).map((follow) => follow.id),
     // The state current at the call: two sets in one tick both land.
-    set: (value) => edit({ ...getCurrent().state, [key]: value } as StudioState),
+    set: (value) =>
+      edit({ ...getCurrent().state, [key]: value } as StudioState),
   }
 }
 

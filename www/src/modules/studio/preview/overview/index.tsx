@@ -27,8 +27,8 @@ import {
 import { IconLibraryContext } from "@/registry/icons/create-icon"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
-import type { Density } from "@/registry/types"
 import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from "@/registry/theme"
+import type { Density } from "@/registry/types"
 // Live component atoms — reuse the real demos so the gallery always mirrors the
 // shipped components (and their live params / density / radius), never a stale copy.
 import AvatarDemo from "@/registry/ui/avatar/demos/group"
@@ -45,6 +45,7 @@ import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
 import { DEFAULT_EFFECTIVE, parseState } from "@/modules/studio/axes"
+import type { OptionMeta } from "@/modules/studio/axes/core/meta"
 import {
   SHAPES,
   ROLE_VARS,
@@ -53,7 +54,6 @@ import {
   shapeVars,
 } from "@/modules/studio/axes/shape"
 import { SHAPE_OPTIONS } from "@/modules/studio/axes/shape.meta"
-import type { OptionMeta } from "@/modules/studio/axes/core/meta"
 import { DENSITY_OPTIONS } from "@/modules/studio/axes/space.meta"
 import {
   postToParent,
@@ -151,7 +151,9 @@ function SectionHeader({
         {embedded && panelId && (
           <button
             type="button"
-            onClick={() => postToParent({ type: "preview-inspect", panel: panelId })}
+            onClick={() =>
+              postToParent({ type: "preview-inspect", panel: panelId })
+            }
             className="ml-auto flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs opacity-0 transition-opacity group-hover/section:opacity-100 hover:bg-neutral hover:text-fg focus-visible:opacity-100"
           >
             <Settings2Icon className="size-3" />

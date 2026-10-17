@@ -10,13 +10,6 @@ import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
-
-export const SLIDER_DEFAULTS = {
-  sliderThumb: "knob",
-  sliderTrack: "auto" as "auto" | (typeof TRACK_VALUES)[number],
-  sliderColor: "accent",
-}
 
 /* Knob: a light disc with a neutral edge. Ring: a light disc ringed in the
    fill. Solid: a disc in the fill. Handle: a bar with a cut-away gap and a
@@ -34,29 +27,31 @@ export const THUMB_TRACK: Record<string, string> = {
   handle: "thick",
 }
 
-export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
-  sliderThumb: oneOf(THUMB_VALUES),
-  sliderTrack: oneOf(TRACK_VALUES),
-  sliderColor: oneOf(SOURCE_VALUES),
-}
-
-export function resolveSliders(state: Effective): Resolved {
-  // A selection seed repaints the selection tokens, so any leaf scopes.
-  const scoped =
-    state.sliderColor !== state.selectionColor || state.selectionSeed !== ""
-  return {
-    params: { slider: { thumb: state.sliderThumb, track: state.sliderTrack } },
-    color: scoped
-      ? { scopes: { slider: state.sliderColor as PrimaryColorSource } }
-      : undefined,
-  }
-}
-
 export const chapter = defineChapter({
   id: "sliders",
-  defaults: SLIDER_DEFAULTS,
-  schema: SLIDER_SCHEMA,
-  resolve: resolveSliders,
+  defaults: {
+    sliderThumb: "knob",
+    sliderTrack: "auto" as "auto" | (typeof TRACK_VALUES)[number],
+    sliderColor: "accent",
+  },
+  schema: {
+    sliderThumb: oneOf(THUMB_VALUES),
+    sliderTrack: oneOf(TRACK_VALUES),
+    sliderColor: oneOf(SOURCE_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    // A selection seed repaints the selection tokens, so any leaf scopes.
+    const scoped =
+      state.sliderColor !== state.selectionColor || state.selectionSeed !== ""
+    return {
+      params: {
+        slider: { thumb: state.sliderThumb, track: state.sliderTrack },
+      },
+      color: scoped
+        ? { scopes: { slider: state.sliderColor as PrimaryColorSource } }
+        : undefined,
+    }
+  },
   follows: {
     sliderTrack: [
       { kind: "auto", id: "auto", from: "sliderThumb", table: THUMB_TRACK },
