@@ -265,6 +265,7 @@ export default function Demo() {
                               <MenuItem
                                 key={variant}
                                 id={variant}
+                                textValue={EVENT_VARIANTS[variant].label}
                                 onAction={() => setNewVariant(variant)}
                               >
                                 <span
