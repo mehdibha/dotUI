@@ -192,17 +192,19 @@ export function DialLink({
   page,
   label,
   value,
+  className,
 }: {
   page: string
   label: string
   value: React.ReactNode
+  className?: string
 }) {
   const open = useContext(PanelNav)
   return (
     <RacButton
       data-page-link={page}
       onPress={() => open(page)}
-      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}
+      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
     >
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
@@ -481,7 +483,7 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
 }
 
 /* --------------------------------- Slider --------------------------------- */
