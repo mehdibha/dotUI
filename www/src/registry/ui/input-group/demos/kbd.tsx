@@ -59,12 +59,12 @@ export default function Demo() {
         <InputGroup>
           <Input />
           <InputGroupAddon>
-            <div className="flex size-4 items-center justify-center rounded-full bg-green-500 dark:bg-green-800">
-              <CheckIcon className="size-3 text-white" />
+            <div className="flex size-4 items-center justify-center rounded-full bg-success">
+              <CheckIcon className="size-3 text-fg-on-success" />
             </div>
           </InputGroupAddon>
         </InputGroup>
-        <Description className="text-green-700">
+        <Description className="text-fg-success">
           This username is available.
         </Description>
       </TextField>

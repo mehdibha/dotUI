@@ -8,7 +8,7 @@ import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
 export default function Demo() {
   return (
-    <TimePicker className="w-40" aria-label="Event time" isInvalid>
+    <TimePicker className="w-40" isInvalid>
       <Label>Event time</Label>
       <InputGroup>
         <DateInput />

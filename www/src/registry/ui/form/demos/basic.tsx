@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import * as FormPrimitives from "react-aria-components/Form"
 
 import { Button } from "@/registry/ui/button"
@@ -9,10 +9,11 @@ import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
+  const [submitted, setSubmitted] = React.useState<string | null>(null)
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.currentTarget))
-    alert(JSON.stringify(data, null, 2))
+    setSubmitted(JSON.stringify(data))
   }
 
   return (
@@ -25,6 +26,9 @@ export default function Demo() {
       <Button variant="primary" type="submit">
         Submit
       </Button>
+      {submitted && (
+        <p className="text-sm text-fg-muted">Submitted: {submitted}</p>
+      )}
     </FormPrimitives.Form>
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { ChevronDownIcon } from "lucide-react"
 import * as FormPrimitives from "react-aria-components/Form"
 
@@ -21,6 +22,7 @@ import {
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
+  const [submitted, setSubmitted] = React.useState<string | null>(null)
   return (
     <div className="w-sm space-y-4 rounded-lg border bg-muted p-8">
       <h1 className="text-xl font-bold">Register</h1>
@@ -28,7 +30,7 @@ export default function Demo() {
         onSubmit={(e) => {
           e.preventDefault()
           const data = Object.fromEntries(new FormData(e.currentTarget))
-          alert(JSON.stringify(data, null, 2))
+          setSubmitted(JSON.stringify(data))
         }}
         className="space-y-4"
       >
@@ -96,6 +98,9 @@ export default function Demo() {
         <div className="flex justify-end">
           <Button type="submit">Register</Button>
         </div>
+        {submitted && (
+          <p className="text-sm text-fg-muted">Submitted: {submitted}</p>
+        )}
       </FormPrimitives.Form>
     </div>
   )

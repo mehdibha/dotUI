@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
+import type { Key } from "react-aria-components/Collection"
 import { MenuContext } from "react-aria-components/Menu"
-import type { Key } from "react-aria-components/Menu"
 import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
 import {

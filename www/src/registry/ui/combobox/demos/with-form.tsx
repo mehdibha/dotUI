@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { ChevronDownIcon } from "lucide-react"
 import * as FormPrimitives from "react-aria-components/Form"
 
@@ -14,6 +15,7 @@ import { Popover } from "@/registry/ui/popover"
 const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
 
 export default function Demo() {
+  const [framework, setFramework] = React.useState<string | null>(null)
   return (
     <Card className="w-52">
       <CardContent>
@@ -23,7 +25,7 @@ export default function Demo() {
           onSubmit={(e) => {
             e.preventDefault()
             const data = new FormData(e.currentTarget)
-            alert(`You selected ${data.get("framework")} as your framework.`)
+            setFramework(String(data.get("framework")))
           }}
         >
           <Combobox name="framework" isRequired>
@@ -43,6 +45,11 @@ export default function Demo() {
             </Popover>
           </Combobox>
         </FormPrimitives.Form>
+        {framework && (
+          <p className="mt-2 text-sm text-fg-muted">
+            You selected {framework} as your framework.
+          </p>
+        )}
       </CardContent>
       <CardFooter>
         <Button type="submit" form="form-with-combobox">

@@ -37,8 +37,8 @@ import {
   TimerIcon,
   XIcon,
 } from "lucide-react"
-import type { Selection } from "react-aria-components"
 import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
+import type { Selection } from "react-aria-components/Table"
 import type { SortDescriptor } from "react-aria-components/Table"
 
 import { Badge } from "@/registry/ui/badge"

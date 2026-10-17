@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import type { Selection } from "react-aria-components"
+import type { Selection } from "react-aria-components/Tree"
 
 import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 

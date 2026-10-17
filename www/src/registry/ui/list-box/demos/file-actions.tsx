@@ -7,7 +7,7 @@ import { Separator } from "@/registry/ui/separator"
 export default function Demo() {
   return (
     <div className="rounded-md border bg-card shadow-sm">
-      <ListBox aria-label="File" onAction={() => console.log("action")}>
+      <ListBox aria-label="File" onAction={() => {}}>
         <ListBoxItem id="cut" textValue="Cut">
           <ScissorsIcon />
           Cut

@@ -30,10 +30,7 @@ export default function Demo({ placeholder = "Type a command..." } = {}) {
             <Input data-control-target placeholder={placeholder} />
           </InputGroup>
         </SearchField>
-        <ListBox
-          aria-label="Suggestions"
-          onAction={() => console.log("action")}
-        >
+        <ListBox aria-label="Suggestions" onAction={() => {}}>
           <ListBoxSection>
             <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>
             <ListBoxItem textValue="Calendar">

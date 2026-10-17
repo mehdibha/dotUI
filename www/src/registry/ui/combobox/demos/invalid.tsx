@@ -31,7 +31,7 @@ export default function Demo() {
           </ListBox>
         </Popover>
       </Combobox>
-      <Combobox aria-label="Country" isInvalid>
+      <Combobox isInvalid>
         <Label>Country</Label>
         <InputGroup>
           <Input placeholder="Select a country..." />

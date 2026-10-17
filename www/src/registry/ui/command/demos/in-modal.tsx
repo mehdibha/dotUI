@@ -50,10 +50,7 @@ export default function Demo() {
                   </InputGroupAddon>
                 </InputGroup>
               </SearchField>
-              <ListBox
-                aria-label="Commands"
-                onAction={() => console.log("action")}
-              >
+              <ListBox aria-label="Commands" onAction={() => {}}>
                 <ListBoxSection>
                   <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>
                   <ListBoxItem textValue="Calendar">

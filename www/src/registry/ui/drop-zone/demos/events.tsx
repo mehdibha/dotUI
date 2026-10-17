@@ -1,11 +1,13 @@
 "use client"
 
+import React from "react"
 import { useDrag } from "react-aria"
-import type * as TreePrimitives from "react-aria-components/Tree"
+import type { TextDropItem } from "react-aria-components/useDragAndDrop"
 
 import { DropZone, DropZoneLabel } from "@/registry/ui/drop-zone"
 
 export default function Demo() {
+  const [dropped, setDropped] = React.useState<string | null>(null)
   return (
     <div className="flex items-center gap-8">
       <div className="flex flex-col gap-4">
@@ -19,14 +21,14 @@ export default function Demo() {
               .filter(
                 (item) => item.kind === "text" && item.types.has("text/plain"),
               )
-              .map((item) =>
-                (item as TreePrimitives.TextDropItem).getText("text/plain"),
-              ),
+              .map((item) => (item as TextDropItem).getText("text/plain")),
           )
-          alert(`You dropped ${items.join("\n")}`)
+          setDropped(items.join(", "))
         }}
       >
-        <DropZoneLabel>Droppable</DropZoneLabel>
+        <DropZoneLabel>
+          {dropped ? `You dropped ${dropped}` : "Droppable"}
+        </DropZoneLabel>
       </DropZone>
     </div>
   )

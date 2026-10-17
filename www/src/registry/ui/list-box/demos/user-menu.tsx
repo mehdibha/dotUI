@@ -18,7 +18,7 @@ export default function Demo() {
         </div>
       </div>
       <Separator />
-      <ListBox aria-label="Account" onAction={() => console.log("action")}>
+      <ListBox aria-label="Account" onAction={() => {}}>
         <ListBoxItem id="profile" textValue="Profile">
           <UserIcon />
           Profile
