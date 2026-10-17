@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react"
-import { ChevronDownIcon } from "lucide-react"
 import type * as MenuPrimitives from "react-aria-components/Menu"
 
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Combobox } from "@/registry/ui/combobox"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"

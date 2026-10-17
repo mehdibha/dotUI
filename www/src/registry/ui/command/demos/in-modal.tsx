@@ -9,8 +9,7 @@ import {
   SmileIcon,
   UserIcon,
   XIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"

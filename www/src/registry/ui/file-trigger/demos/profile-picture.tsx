@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { UploadIcon } from "@/registry/__generated__/icons"
+import { UploadIcon } from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import { FileTrigger } from "@/registry/ui/file-trigger"

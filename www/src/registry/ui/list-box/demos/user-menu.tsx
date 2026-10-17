@@ -1,5 +1,4 @@
-import { LogOutIcon, SettingsIcon, UserIcon } from "lucide-react"
-
+import { LogOutIcon, SettingsIcon, UserIcon } from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"

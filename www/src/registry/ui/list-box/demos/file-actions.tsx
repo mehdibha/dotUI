@@ -1,5 +1,9 @@
-import { ClipboardIcon, CopyIcon, ScissorsIcon, Trash2Icon } from "lucide-react"
-
+import {
+  ClipboardIcon,
+  CopyIcon,
+  ScissorsIcon,
+  Trash2Icon,
+} from "@/registry/icons"
 import { Kbd } from "@/registry/ui/kbd"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"

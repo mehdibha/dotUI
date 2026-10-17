@@ -1,6 +1,6 @@
 import type React from "react"
-import { MoreHorizontalIcon, PencilIcon } from "lucide-react"
 
+import { MoreHorizontalIcon, PencilIcon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import { Dialog } from "@/registry/ui/dialog"

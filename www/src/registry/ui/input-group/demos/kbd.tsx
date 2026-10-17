@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  CheckIcon,
-  InfoIcon,
-  SearchIcon,
-  SparklesIcon,
-} from "@/registry/__generated__/icons"
+import { CheckIcon, InfoIcon, SearchIcon, SparklesIcon } from "@/registry/icons"
 import { Description, Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Kbd, KbdGroup } from "@/registry/ui/kbd"

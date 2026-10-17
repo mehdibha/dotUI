@@ -1,7 +1,6 @@
 "use client"
 
-import { MonitorIcon, SmartphoneIcon } from "lucide-react"
-
+import { MonitorIcon, SmartphoneIcon } from "@/registry/icons"
 import { RadarChart } from "@/registry/ui/chart-radar"
 
 const data = [

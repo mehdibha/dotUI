@@ -1,4 +1,4 @@
-import { CaptionsIcon } from "@/registry/__generated__/icons"
+import { CaptionsIcon } from "@/registry/icons"
 import {
   Avatar,
   AvatarFallback,

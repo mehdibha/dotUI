@@ -1,4 +1,4 @@
-import { FolderIcon, PlusIcon } from "@/registry/__generated__/icons"
+import { FolderIcon, PlusIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Empty,

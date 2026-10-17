@@ -1,4 +1,4 @@
-import { MenuIcon } from "@/registry/__generated__/icons"
+import { MenuIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"

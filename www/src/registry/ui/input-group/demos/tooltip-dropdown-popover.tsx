@@ -2,11 +2,7 @@
 
 import React from "react"
 
-import {
-  ChevronDownIcon,
-  InfoIcon,
-  StarIcon,
-} from "@/registry/__generated__/icons"
+import { ChevronDownIcon, InfoIcon, StarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog"
 import { Description, Label } from "@/registry/ui/field"

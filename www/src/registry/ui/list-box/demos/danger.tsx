@@ -3,8 +3,7 @@ import {
   ExternalLinkIcon,
   PencilIcon,
   Trash2Icon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {

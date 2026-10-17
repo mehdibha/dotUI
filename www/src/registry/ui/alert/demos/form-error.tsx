@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { AlertCircleIcon } from "lucide-react"
 
+import { AlertCircleIcon } from "@/registry/icons"
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/field"

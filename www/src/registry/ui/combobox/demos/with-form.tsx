@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react"
-import { ChevronDownIcon } from "lucide-react"
 import * as FormPrimitives from "react-aria-components/Form"
 
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Card, CardContent, CardFooter } from "@/registry/ui/card"
 import { Combobox } from "@/registry/ui/combobox"

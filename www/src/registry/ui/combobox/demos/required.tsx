@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from "lucide-react"
-
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Combobox } from "@/registry/ui/combobox"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"

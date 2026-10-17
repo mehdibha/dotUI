@@ -1,5 +1,4 @@
-import { PlusIcon } from "lucide-react"
-
+import { PlusIcon } from "@/registry/icons"
 import {
   Avatar,
   AvatarBadge,

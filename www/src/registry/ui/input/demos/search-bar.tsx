@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { SearchIcon, XIcon } from "lucide-react"
 
+import { SearchIcon, XIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"

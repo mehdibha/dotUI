@@ -1,5 +1,4 @@
-import { GlobeIcon } from "lucide-react"
-
+import { GlobeIcon } from "@/registry/icons"
 import { QRCode } from "@/registry/ui/qr-code"
 
 export default function Demo() {

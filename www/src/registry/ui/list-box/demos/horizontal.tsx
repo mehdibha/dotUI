@@ -1,5 +1,4 @@
-import { LayoutGridIcon, ListIcon, RowsIcon } from "lucide-react"
-
+import { LayoutGridIcon, ListIcon, RowsIcon } from "@/registry/icons"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {

@@ -3,7 +3,7 @@
 import React from "react"
 import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { InfoIcon } from "@/registry/__generated__/icons"
+import { InfoIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {

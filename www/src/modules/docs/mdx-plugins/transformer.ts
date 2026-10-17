@@ -194,10 +194,12 @@ function findExportFunction(
 // ============================================================================
 
 /**
- * Transform import paths from @/registry to user-facing paths
+ * Transform import paths from @/registry to user-facing paths. Registry icon
+ * names are lucide's, the default library.
  */
 function transformPaths(code: string): string {
   return code
+    .replace(/@\/registry\/icons(?=["'])/g, "lucide-react")
     .replace(/@\/registry\/ui\//g, "@/components/ui/")
     .replace(/@\/registry\//g, "@/")
 }

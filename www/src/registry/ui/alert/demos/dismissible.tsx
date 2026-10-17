@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { CheckCircle2Icon, XIcon } from "lucide-react"
 
+import { CheckCircle2Icon, XIcon } from "@/registry/icons"
 import {
   Alert,
   AlertAction,

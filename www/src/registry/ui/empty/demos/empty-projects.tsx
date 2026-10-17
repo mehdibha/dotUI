@@ -1,5 +1,4 @@
-import { FolderCodeIcon } from "lucide-react"
-
+import { FolderCodeIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Empty,

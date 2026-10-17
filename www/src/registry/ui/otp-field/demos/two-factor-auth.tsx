@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { ShieldCheck } from "lucide-react"
 
+import { ShieldCheckIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { FieldError, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
@@ -30,7 +30,7 @@ export default function Demo() {
       }}
     >
       <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <ShieldCheck className="size-5" />
+        <ShieldCheckIcon className="size-5" />
       </div>
       <div className="flex flex-col gap-1">
         <h3 className="text-base font-semibold">Two-factor authentication</h3>

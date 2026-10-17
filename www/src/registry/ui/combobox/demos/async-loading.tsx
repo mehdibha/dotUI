@@ -1,8 +1,8 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
 import { useAsyncList } from "react-stately"
 
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Combobox } from "@/registry/ui/combobox"
 import { Label } from "@/registry/ui/field"
