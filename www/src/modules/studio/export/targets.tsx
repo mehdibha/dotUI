@@ -10,14 +10,14 @@ import { ReplitIcon } from "@/components/icons/replit"
 import { V0Icon } from "@/components/icons/v0"
 
 import { buildPrompt } from "./prompt"
-import type { ExportUrl } from "./types"
+import type { ExportUrl } from "./use-export-url"
 
 /**
  * An AI builder that starts a new project from the design system. Every tool
  * but v0 opens with a prompt that installs the registry. These only work from
  * the deployed origin: the tools fetch the registry server-side.
  */
-export interface OpenInTarget {
+interface OpenInTarget {
   id: string
   name: string
   icon: ComponentType<SVGProps<SVGSVGElement>>

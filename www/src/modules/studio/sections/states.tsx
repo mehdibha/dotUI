@@ -6,6 +6,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import {
   AUTO_STRENGTH,
@@ -27,9 +28,8 @@ import {
   WIDTH_OPTIONS,
 } from "../axes/states.meta"
 import { DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */

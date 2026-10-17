@@ -5,13 +5,11 @@
 
 import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
+import { isRecord } from "./schema"
 import { COLUMNS, excludedUnder, STYLE_KEYS, STYLE_VALUES } from "./style"
 import { STATE_VERSION } from "./version"
 
 type Raw = Record<string, unknown>
-
-const isRecord = (value: unknown): value is Raw =>
-  typeof value === "object" && value !== null && !Array.isArray(value)
 
 /** A stored state at `STATE_VERSION`, its stamp removed. Anything but an
  *  object is returned as is, for validation to refuse. */

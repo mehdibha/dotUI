@@ -1,7 +1,9 @@
 import { codeFlags } from "@/publisher/code-options"
 
 import { useCodeOptions } from "./code-options-store"
-import type { ExportUrl } from "./types"
+
+/** A registry file's URL for the exported design system. */
+export type ExportUrl = (file: string) => string
 
 /**
  * Registry URLs under a preset (`p/<id>`) or a snapshot

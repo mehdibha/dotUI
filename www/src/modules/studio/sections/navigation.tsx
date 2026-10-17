@@ -15,7 +15,7 @@ import {
   WEIGHT_OPTIONS,
 } from "../axes/navigation.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 
 /* -------------------------------- Specimens -------------------------------- */
 

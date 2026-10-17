@@ -28,6 +28,7 @@ import {
   validate,
 } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+import { isRecord } from "@/modules/studio/axes/schema"
 import { STATE_VERSION, stamp } from "@/modules/studio/axes/version"
 
 /** A read-only starting point: a preset, or a shared link's snapshot. */
@@ -68,9 +69,6 @@ function newId(): string {
 }
 
 /* -------------------------------- reading -------------------------------- */
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null && !Array.isArray(value)
 
 const isTime = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)

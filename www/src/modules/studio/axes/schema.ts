@@ -7,7 +7,7 @@ import { toOklch } from "@dotui/colors"
 
 import { FONT_CATALOG } from "@/lib/fonts"
 
-export type AxisValue =
+type AxisValue =
   | { type: "enum"; values: readonly string[] }
   | { type: "number"; min: number; max: number; step?: number }
   | { type: "boolean" }
@@ -21,6 +21,9 @@ export interface AxisSchema {
   /** The empty value ('' on strings, null on numbers) is allowed: Auto. */
   auto?: true
 }
+
+export const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value)
 
 export const oneOf = (values: readonly string[]): AxisSchema => ({
   value: { type: "enum", values },

@@ -12,15 +12,13 @@ import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 
-export const DENSITY_VALUES = DENSITIES
-
 export const chapter = defineChapter({
   id: "space",
   defaults: {
     density: "default",
   },
   schema: {
-    density: oneOf(DENSITY_VALUES),
+    density: oneOf(DENSITIES),
   },
   resolve(state: Effective): Resolved {
     return { density: state.density as Density }

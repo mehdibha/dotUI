@@ -33,8 +33,8 @@ import {
   STYLE_OPTIONS as TOAST_OPTIONS,
 } from "../axes/toast.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */

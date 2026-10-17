@@ -20,7 +20,7 @@ export const THUMB_VALUES = ["knob", "ring", "solid", "handle"] as const
 export const TRACK_VALUES = ["hairline", "thin", "medium", "thick"] as const
 
 /** Each thumb's own track: Material 3's handle rides a 16px track. */
-export const THUMB_TRACK: Record<string, string> = {
+const THUMB_TRACK: Record<string, string> = {
   knob: "thin",
   ring: "thin",
   solid: "thin",

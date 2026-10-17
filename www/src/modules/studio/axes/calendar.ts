@@ -1,6 +1,6 @@
 /* Date & time — the month grid: a day cell's shape, how today is marked and
    in which color, and the weekday labels. The selected day, range ends and
-   band, and the time picker's selected cell paint the checks fill (O5): a
+   band, and the time picker's selected cell paint the checks fill: a
    Checked color off the selection leaf scopes onto every date-cell host.
 
    `today` is one composite enum (marker × color); `weekdays` rewrites the

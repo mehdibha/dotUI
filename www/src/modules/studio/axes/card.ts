@@ -5,9 +5,7 @@ import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 
-export const FOOTER_VALUES = ["none", "rule", "band"] as const
-
-export const HEADER_VALUES = FOOTER_VALUES
+export const EDGE_VALUES = ["none", "rule", "band"] as const
 
 export const chapter = defineChapter({
   id: "card",
@@ -16,8 +14,8 @@ export const chapter = defineChapter({
     cardFooter: "none",
   },
   schema: {
-    cardHeader: oneOf(HEADER_VALUES),
-    cardFooter: oneOf(FOOTER_VALUES),
+    cardHeader: oneOf(EDGE_VALUES),
+    cardFooter: oneOf(EDGE_VALUES),
   },
   resolve(state: Effective): Resolved {
     return {

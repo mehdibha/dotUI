@@ -4,6 +4,7 @@
 
 import { DEFAULTS, KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
+import type { RowMap } from "./row-host"
 import { ROWS as buttonsRows } from "./sections/buttons"
 import { ROWS as chartsRows } from "./sections/charts"
 import { ROWS as colorRows } from "./sections/color"
@@ -31,12 +32,7 @@ import { ROWS as statesRows } from "./sections/states"
 import { ROWS as styleRows } from "./sections/style"
 import { ROWS as surfacesRows } from "./sections/surfaces"
 import { ROWS as typeRows } from "./sections/type"
-
-export type { Effective, StudioState } from "./axes"
-import type { RowMap } from "./family-page"
 import type { Studio } from "./use-studio"
-
-export type { Studio }
 
 /** Each section's rows. */
 export const SECTION_ROWS: Record<string, RowMap> = {

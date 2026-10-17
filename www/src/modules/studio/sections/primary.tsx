@@ -30,9 +30,9 @@ import {
   DialSeparator,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import type { Studio } from "../state"
+import type { RowMap } from "../row-host"
+import type { Studio } from "../use-studio"
 import { useStudio } from "../use-studio"
 
 /* --------------------------------- Inks ---------------------------------- */

@@ -17,7 +17,7 @@ export const STYLE_VALUES = ["inset", "outlined", "slab"] as const
 
 /* The off track (Inset's fill, Outlined's and Slab's edges) is the control
    edge, floored like the check edge. */
-export function trackTokens(controlEdge: string) {
+function trackTokens(controlEdge: string) {
   return controlEdge === "soft"
     ? {
         "--switch-track": EDGE_FLOOR,

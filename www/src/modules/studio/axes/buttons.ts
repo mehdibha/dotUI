@@ -17,7 +17,7 @@ export const STYLE_VALUES = [
 ] as const
 
 /** Styles that draw their own secondary and press. */
-export const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
+const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
 
 export const SECONDARY_VALUES = [
   "as-style",

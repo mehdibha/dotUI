@@ -5,6 +5,7 @@
    of component wears on it, the tracks, and the components with corners of
    their own. */
 
+import type { Effective } from "../axes"
 import {
   pickShape,
   RADIUS_RANGE,
@@ -27,8 +28,7 @@ import {
   DialSlider,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import type { RowMap } from "../row-host"
 import { valueLabel } from "../use-axis"
 import { useStudio } from "../use-studio"
 

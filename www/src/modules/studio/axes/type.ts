@@ -61,7 +61,7 @@ export const TITLE_VOICE: Record<
   caps: { weight: "semibold", tracking: "wider" },
 }
 
-export const LABEL_WEIGHT_VAR = "--studio-font-weight-label"
+const LABEL_WEIGHT_VAR = "--studio-font-weight-label"
 
 /* The density's control text rung and its line box; sm 20 elsewhere. */
 const TEXT_RUNG: Record<string, [string, number]> = {

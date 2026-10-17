@@ -17,8 +17,8 @@ import {
   STRENGTH_OPTIONS,
 } from "../axes/dialogs.meta"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 

@@ -19,7 +19,7 @@ import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
 import { DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */

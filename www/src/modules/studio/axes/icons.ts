@@ -40,13 +40,13 @@ export const WEIGHT_VALUES = [
 export const STROKE_RANGE = { min: 1, max: 3, step: 0.25 }
 
 export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"
-export const ICON_WEIGHT_VAR = "--icon-weight"
+const ICON_WEIGHT_VAR = "--icon-weight"
 
 /** Each library's own stroke at 24px, total so Auto never falls through.
  *  Phosphor (regular: 16 on its 256 grid), Remix (2px lines), Material
  *  Symbols (weight 400 at opsz 24) and Octicons (1.5px at 16 and 24) are
  *  outlined to fills and draw no variable stroke. */
-export const LIBRARY_STROKE: Record<IconLibraryName, number> = {
+const LIBRARY_STROKE: Record<IconLibraryName, number> = {
   lucide: 2,
   tabler: 2,
   hugeicons: 1.5,

@@ -15,7 +15,7 @@ import {
 } from "../axes/menus.meta"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 

@@ -25,9 +25,9 @@ import {
 } from "../axes/segmented-control.meta"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */

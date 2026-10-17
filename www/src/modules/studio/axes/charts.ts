@@ -17,7 +17,7 @@ export const MOTION_VALUES = ["spring", "ease", "none"] as const
 
 /** The recipe's series strategy for a palette option; `undefined` is the
  *  engine's tonal default. */
-export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
+function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
   return palette === "vivid" || palette === "muted" ? palette : undefined
 }
 

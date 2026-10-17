@@ -84,7 +84,7 @@ export const SHAPE_ROLES = [
 
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
 
-export const rungIndex = (id: string) =>
+const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
 
 const rungAt = (index: number) =>
@@ -209,7 +209,7 @@ export type ShapeId = keyof typeof SHAPES
 export const SHAPE_VALUES = Object.keys(SHAPES) as ShapeId[]
 
 /** Every key a shape writes. */
-export const SHAPE_KEYS = Object.keys(SHAPES.standard) as Array<
+const SHAPE_KEYS = Object.keys(SHAPES.standard) as Array<
   keyof typeof SHAPES.standard
 >
 

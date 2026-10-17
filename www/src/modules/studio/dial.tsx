@@ -20,6 +20,7 @@ import {
 
 import { toHex, toOklch } from "@dotui/colors"
 
+import { useMedia } from "@/hooks/use-media"
 import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
@@ -28,32 +29,29 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { effective } from "./axes"
 import type { StudioState } from "./axes"
 import { COLUMNS } from "./axes/style"
+import type { StyleKey } from "./axes/style"
 import { FOLLOW_STYLE } from "./axes/style.meta"
-import { RowLabel, useRowLabel } from "./family-page"
 import { holdEditFocus } from "./focus"
 import { clearLive, previewNow } from "./live"
 import { useOptionPreview } from "./option-preview"
+import { RowLabel, useRowLabel } from "./row-host"
 import {
   ColorPickerPopover,
   PanelNav,
   PanelPopover,
   PanelPopoverTitle,
   useDraft,
-  useMedia,
 } from "./rows"
 import { useCurrent } from "./selection"
 import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
 import type { Axis, AxisKey } from "./use-axis"
-
-const STYLE_COLUMNS: Partial<Record<string, Record<string, string>>> = COLUMNS
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
-export const DIAL_VALUE =
-  "truncate font-mono text-[13px] font-medium text-fg/60"
+const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
 /* ---------------------------------- Rows ---------------------------------- */
 
@@ -67,7 +65,7 @@ export function DialGlyph({ children }: { children: React.ReactNode }) {
 }
 
 /** A row a rule holds: dimmed, its value set elsewhere, the cause beside it. */
-export function PinnedRow({
+function PinnedRow({
   axis,
   label,
   cause,
@@ -256,7 +254,10 @@ export function DialSelect({
   if (hidden) return null
   // A Style key's first option is the Style itself ("Style · Line"); a
   // follow its column reads ("auto") would list the same pick twice.
-  const column = key && STYLE_COLUMNS[key]?.[state.style]
+  const column =
+    key && Object.hasOwn(COLUMNS, key)
+      ? COLUMNS[key as StyleKey][state.style]
+      : undefined
   const options: DialSelectOption[] =
     axis?.follows.includes(FOLLOW_STYLE.value) &&
     !listed.some((option) => option.value === FOLLOW_STYLE.value)
@@ -373,7 +374,7 @@ function SelectOptions({
 
 /* --------------------------------- Picks ---------------------------------- */
 
-export interface DialPickOption {
+interface DialPickOption {
   value: string
   label: string
   description?: string
@@ -1043,7 +1044,7 @@ export function DialColor({
 
 /* -------------------------------- Segmented -------------------------------- */
 
-export interface DialOption {
+interface DialOption {
   value: string
   label: React.ReactNode
 }

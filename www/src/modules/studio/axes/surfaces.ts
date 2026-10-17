@@ -46,7 +46,7 @@ export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
 
 /* Auto draws the card edge the button finish implies: Polaris bevels its
    cards, Duolingo puts them on a lip; every other finish keeps the line. */
-export const EDGE_AUTO: Record<string, string> = {
+const EDGE_AUTO: Record<string, string> = {
   ...Object.fromEntries(BUTTON_STYLES.map((value) => [value, "line"])),
   bevel: "bevel",
   ledge: "ledge",
@@ -70,7 +70,6 @@ const SHELL_SIDEBAR: Record<string, string> = {
 
 /* -------------------------------- Recipe --------------------------------- */
 
-export type Mode = "light" | "dark"
 export interface PerMode<T> {
   light: T
   dark: T
@@ -88,20 +87,20 @@ export type SurfaceColor =
   | { kind: "shade"; alpha: number }
   | { kind: "glint"; alpha: number }
 
-export interface ShadowLayer {
+interface ShadowLayer {
   offset: string
   color: PerMode<SurfaceColor>
   inset?: boolean
 }
 
-export interface SurfaceLook {
+interface SurfaceLook {
   edge: PerMode<SurfaceColor>
   bg: PerMode<SurfaceColor>
   shadow: ShadowLayer[]
 }
 
 /** The page is always the neutral's 25 rung — the page slider's tone. */
-export interface SurfaceRecipe {
+interface SurfaceRecipe {
   card: SurfaceLook
   /** Popovers, menus, tooltips, toasts; dialogs share its color and edge. */
   popover: SurfaceLook
@@ -254,7 +253,7 @@ function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
 
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
  *  a mode's solved scales (the panel glyphs, tests). */
-export interface SurfacePalette {
+interface SurfacePalette {
   step: (step: string) => string
   hairline: string
 }

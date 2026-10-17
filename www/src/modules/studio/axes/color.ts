@@ -71,7 +71,7 @@ export const LIGHT_BG_RANGE = { min: 90, max: 100, step: 0.5 }
 export const DARK_BG_RANGE = { min: 0, max: 20, step: 0.5 }
 
 /** The engine's own light page. */
-export const ORIGIN_PAGE = 99
+const ORIGIN_PAGE = 99
 /** Grouped's page: its cards are white, so the page's gray is its depth
  *  (Apple, Polaris, HeroUI). */
 export const GROUPED_PAGE = 96

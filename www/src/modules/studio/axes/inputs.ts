@@ -48,7 +48,7 @@ export const HEIGHT_VALUES = ["controls", "step", "tall"] as const
 /* The indicator's rule is the field's only edge: on a Soft or Firm control
    edge it takes Color's Strong edge (Material 3 on-surface-variant, Carbon
    border-strong), which clears 3:1 on the well. */
-export function indicatorTokens(inputStyle: string, controlEdge: string) {
+function indicatorTokens(inputStyle: string, controlEdge: string) {
   return inputStyle === "indicator" && controlEdge !== "strong"
     ? {
         "--indicator-edge": STRONG_EDGE,
