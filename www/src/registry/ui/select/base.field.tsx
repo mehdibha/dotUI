@@ -40,7 +40,6 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
     <SelectPrimitives.Select
       data-field=""
       data-select=""
-      data-slot="select"
       className={composeRenderProps(className, (className) =>
         field({ className }),
       )}
@@ -94,7 +93,7 @@ const SelectValue = <T extends object>({
 }: SelectValueProps<T>) => {
   return (
     <SelectPrimitives.SelectValue
-      data-slot="select-value"
+      data-select-value=""
       className={composeRenderProps(className, (className) =>
         cn(
           "flex-1 truncate text-left placeholder-shown:text-fg-muted",

@@ -26,7 +26,6 @@ const Group = ({
   const { root } = useStyles()()
   return (
     <GroupPrimitives.Group
-      data-slot="group"
       data-group=""
       className={composeRenderProps(className, (className) =>
         root({ className, orientation }),
@@ -46,7 +45,6 @@ const GroupText = ({ className, ...props }: GroupTextProps) => {
   const { text } = useStyles()()
   return (
     <TextPrimitives.Text
-      data-slot="text"
       data-text=""
       className={text({ className })}
       {...props}

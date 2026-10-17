@@ -112,7 +112,7 @@ const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
   const { viewport } = useStyles()()
   return (
     <div
-      data-slot="modal-viewport"
+      data-modal-viewport=""
       className={viewport({ className })}
       {...props}
     />

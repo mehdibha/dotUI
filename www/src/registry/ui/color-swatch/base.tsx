@@ -16,7 +16,7 @@ const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
   const styles = useStyles()
   return (
     <ColorSwatchPrimitives.ColorSwatch
-      data-slot="color-swatch"
+      data-color-swatch=""
       className={composeRenderProps(className, (className) =>
         styles({ className }),
       )}

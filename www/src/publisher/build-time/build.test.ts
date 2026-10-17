@@ -155,7 +155,7 @@ describe("extractStylesConfig", () => {
     )
     // Same default-composed field slot the app renders (no className arg).
     expect(cfg.base.slots?.root).toBe(
-      "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
+      "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2",
     )
   })
 })

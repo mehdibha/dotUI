@@ -138,7 +138,7 @@ const ToastList = ({ position, portalProps }: ToastListProps) => {
   return (
     <ToastPrimitive.Portal {...portalProps}>
       <ToastPrimitive.Viewport
-        data-slot="toast-viewport"
+        data-toast-viewport=""
         data-position={position}
         className={viewport({ position })}
       >
@@ -182,7 +182,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
     <ToastPrimitive.Root
       {...data?.rootProps}
       data-position={position}
-      data-slot="toast"
+      data-toast=""
       swipeDirection={getSwipeDirection(position)}
       toast={toastItem}
       className={toastStyle({ position, variant })}
@@ -190,25 +190,25 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
       <ToastPrimitive.Content className={content()}>
         <div className={body()}>
           {Icon ? (
-            <div data-slot="toast-icon" className={icon({ variant })}>
+            <div data-toast-icon="" className={icon({ variant })}>
               <Icon aria-hidden="true" />
             </div>
           ) : null}
-          <div data-slot="toast-message" className={message()}>
+          <div data-toast-message="" className={message()}>
             <ToastPrimitive.Title
-              data-slot="toast-title"
+              data-toast-title=""
               className={title({ variant })}
             />
             <ToastPrimitive.Description
-              data-slot="toast-description"
+              data-toast-description=""
               className={description({ variant })}
             />
           </div>
         </div>
         {toastItem.actionProps ? (
-          <div data-slot="toast-actions" className={actions()}>
+          <div data-toast-actions="" className={actions()}>
             <ToastPrimitive.Action
-              data-slot="toast-action"
+              data-toast-action=""
               className={buttonStyles({
                 variant: onFill ? "quiet" : "secondary",
                 size: "sm",

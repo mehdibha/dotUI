@@ -119,7 +119,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
       return (
         <TableContainerContext.Provider value={context}>
           <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
+            data-table-container=""
             className={classNames}
             ref={ref}
             onResize={onResize}
@@ -135,7 +135,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
     return (
       <TableContainerContext.Provider value={context}>
         <div
-          data-slot="table-container"
+          data-table-container=""
           className={classNames}
           ref={ref}
           {...props}
@@ -159,7 +159,7 @@ const Table = ({ className, striped, ...props }: TableProps) => {
 
   return (
     <TablePrimitives.Table
-      data-slot="table"
+      data-table=""
       data-striped={striped || undefined}
       className={composeRenderProps(className, (className) =>
         table({ className }),
@@ -193,7 +193,7 @@ const TableHeader = <T extends object>({
 
   return (
     <TablePrimitives.TableHeader
-      data-slot="table-header"
+      data-table-header=""
       className={composeRenderProps(className, (className) =>
         header({ className }),
       )}
@@ -235,7 +235,7 @@ const TableChromeColumn = ({
   const { chromeColumn } = useStyles()()
   return (
     <TablePrimitives.Column
-      data-slot="table-chrome-column"
+      data-table-chrome-column=""
       className={composeRenderProps(className, (className) =>
         chromeColumn({ className }),
       )}
@@ -265,7 +265,7 @@ const TableColumn = ({
   const { resizable } = React.useContext(TableContainerContext)
   return (
     <TablePrimitives.Column
-      data-slot="table-column"
+      data-table-column=""
       className={composeRenderProps(className, (className) =>
         column({ className }),
       )}
@@ -357,7 +357,7 @@ const TableFooter = <T extends object>({
   const { footer } = useStyles()()
   return (
     <TablePrimitives.TableFooter
-      data-slot="table-footer"
+      data-table-footer=""
       className={footer({ className })}
       dependencies={dependencies}
       {...props}
@@ -389,7 +389,7 @@ const TableRow = <T extends object>({
 
   return (
     <TablePrimitives.Row
-      data-slot="table-row"
+      data-table-row=""
       className={composeRenderProps(
         className,
         (className, { isFocusVisibleWithin }) =>
@@ -441,7 +441,7 @@ const TableCell = ({
   const { cell, expandButton, expandIcon } = useStyles()()
   return (
     <TablePrimitives.Cell
-      data-slot="table-cell"
+      data-table-cell=""
       className={composeRenderProps(className, (className) =>
         cell({ className }),
       )}

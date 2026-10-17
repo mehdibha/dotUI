@@ -45,7 +45,6 @@ const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
   const labelId = useSlotId()
   return (
     <RadioGroupPrimitives.RadioField
-      data-slot="radio"
       data-radio=""
       id={id}
       aria-labelledby={labelId}

@@ -59,7 +59,7 @@ const ColorSliderControl = ({
   const { track } = useStyles()()
   return (
     <SliderPrimitives.SliderTrack
-      data-slot="color-slider-control"
+      data-color-slider-control=""
       className={composeRenderProps(className, (className, { orientation }) =>
         track({ orientation, className }),
       )}

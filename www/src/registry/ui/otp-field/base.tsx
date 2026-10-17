@@ -107,7 +107,7 @@ const OTPField = ({
             render: (inputProps) => (
               <OTPFieldPrimitive.Input
                 {...inputProps}
-                data-slot="otp-field-input"
+                data-otp-field-input=""
               />
             ),
             disabled: isDisabled,
@@ -158,20 +158,14 @@ const OTPField = ({
 const OTPFieldGroup = ({ className, ...props }: OTPFieldGroupProps) => {
   const { group } = useStyles()()
   return (
-    <div
-      data-slot="otp-field-group"
-      className={group({ className })}
-      {...props}
-    />
+    <div data-otp-field-group="" className={group({ className })} {...props} />
   )
 }
 
 // MARK: Separator
 
 const OTPFieldSeparator = (props: OTPFieldSeparatorProps) => {
-  return (
-    <OTPFieldPrimitive.Separator data-slot="otp-field-separator" {...props} />
-  )
+  return <OTPFieldPrimitive.Separator data-otp-field-separator="" {...props} />
 }
 
 // MARK: Separator

@@ -195,7 +195,7 @@ function StudioPage() {
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
   // Portaled out of the layout's --header-height: 14 plus a gap.
-  className: "relative z-60 max-md:*:data-[slot=toast-viewport]:top-16!",
+  className: "relative z-60 max-md:*:data-toast-viewport:top-16!",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {

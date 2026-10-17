@@ -16,7 +16,7 @@ const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
   const styles = useStyles()
   return (
     <ColorThumbPrimitives.ColorThumb
-      data-slot="color-thumb"
+      data-color-thumb=""
       className={styles({ className })}
       {...props}
     />

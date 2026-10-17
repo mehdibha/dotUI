@@ -31,7 +31,6 @@ const ToggleButtonGroup = ({
   return (
     <ToggleButtonProvider variant={variant} size={size} isIconOnly={isIconOnly}>
       <ToggleButtonGroupPrimitives.ToggleButtonGroup
-        data-slot="toggle-button-group"
         data-toggle-button-group=""
         data-orientation={orientation}
         orientation={orientation}

@@ -20,7 +20,7 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
   const { field } = useFieldStyles()()
   return (
     <NumberFieldPrimitives.NumberField
-      data-slot="number-field"
+      data-number-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
         field({ className }),
@@ -59,7 +59,7 @@ const NumberFieldGroup = ({
   const { inputGroup } = useInputStyles()()
   return (
     <GroupPrimitives.Group
-      data-slot="number-field-group"
+      data-number-field-group=""
       data-input-group=""
       data-size={size}
       className={composeRenderProps(className, (className) =>

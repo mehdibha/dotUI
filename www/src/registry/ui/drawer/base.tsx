@@ -219,7 +219,7 @@ const DrawerHandle = ({ className, ...props }: DrawerHandleProps) => {
       aria-hidden="true"
       data-orientation={orientation}
       data-placement={placement}
-      data-slot="drawer-handle"
+      data-drawer-handle=""
       className={handle({ className })}
       {...props}
     />
@@ -239,7 +239,7 @@ const DrawerSwipeArea = ({ className, ...props }: DrawerSwipeAreaProps) => {
       className={(state) =>
         swipeArea({ placement, className: resolveClassName(className, state) })
       }
-      data-slot="drawer-swipe-area"
+      data-drawer-swipe-area=""
       {...props}
     />
   )

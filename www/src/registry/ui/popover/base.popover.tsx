@@ -44,7 +44,7 @@ const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   const { arrow } = useStyles()()
   return (
     <PopoverPrimitives.OverlayArrow
-      data-slot="popover-arrow"
+      data-popover-arrow=""
       className={arrow({ className })}
     >
       <svg

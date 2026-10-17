@@ -444,7 +444,7 @@ function SliderFields() {
 function HorizontalFields() {
   return (
     <Example title="Horizontal Fields">
-      <FieldGroup className="**:data-[slot=field-content]:min-w-48">
+      <FieldGroup className="**:data-field-content:min-w-48">
         <Field orientation="horizontal">
           <FieldContent>
             <Label>Username</Label>

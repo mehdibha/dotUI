@@ -42,7 +42,7 @@ const TooltipContent = ({
   const { content } = useStyles()()
   return (
     <TooltipPrimitives.Tooltip
-      data-slot="tooltip"
+      data-tooltip=""
       offset={offset}
       className={composeRenderProps(className, (className) =>
         content({ className }),
@@ -69,7 +69,7 @@ const TooltipArrow = ({ className }: TooltipArrowProps) => {
     <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
       <svg
         aria-hidden="true"
-        data-slot="tooltip-arrow"
+        data-tooltip-arrow=""
         width={8}
         height={8}
         viewBox="0 0 8 8"

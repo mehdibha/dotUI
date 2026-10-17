@@ -29,11 +29,7 @@ interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 const Fieldset = ({ className, ...props }: FieldsetProps) => {
   const { fieldset } = useStyles()()
   return (
-    <fieldset
-      data-slot="fieldset"
-      className={fieldset({ className })}
-      {...props}
-    />
+    <fieldset data-fieldset="" className={fieldset({ className })} {...props} />
   )
 }
 
@@ -43,9 +39,7 @@ interface LegendProps extends React.ComponentProps<"legend"> {}
 
 const Legend = ({ className, ...props }: LegendProps) => {
   const { legend } = useStyles()()
-  return (
-    <legend data-slot="legend" className={legend({ className })} {...props} />
-  )
+  return <legend data-legend="" className={legend({ className })} {...props} />
 }
 
 // MARK: Separator
@@ -55,11 +49,7 @@ interface FieldGroupProps extends React.ComponentProps<"div"> {}
 const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
   const { fieldGroup } = useStyles()()
   return (
-    <div
-      data-slot="field-group"
-      className={fieldGroup({ className })}
-      {...props}
-    />
+    <div data-field-group="" className={fieldGroup({ className })} {...props} />
   )
 }
 
@@ -73,11 +63,7 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId()
   const descriptionId = useSlotId()
   return (
-    <div
-      data-slot="field"
-      className={field({ className, orientation })}
-      {...props}
-    >
+    <div data-field="" className={field({ className, orientation })} {...props}>
       <Provider
         values={[
           [
@@ -108,7 +94,7 @@ const FieldContent = ({ className, ...props }: FieldContentProps) => {
   const { fieldContent } = useStyles()()
   return (
     <div
-      data-slot="field-content"
+      data-field-content=""
       className={fieldContent({ className })}
       {...props}
     />
@@ -125,7 +111,6 @@ const Label = ({ children, className, ...props }: LabelProps) => {
   const { label } = useStyles()()
   return (
     <LabelPrimitives.Label
-      data-slot="label"
       data-label=""
       className={label({ className })}
       {...props}
@@ -146,7 +131,6 @@ const Description = ({ className, ...props }: DescriptionProps) => {
   const { description } = useStyles()()
   return (
     <Text
-      data-slot="description"
       data-description=""
       slot="description"
       className={description({ className })}
@@ -164,7 +148,6 @@ const FieldError = ({ className, children, ...props }: FieldErrorProps) => {
   const { fieldError } = useStyles()()
   return (
     <FieldErrorPrimitives.FieldError
-      data-slot="field-error"
       data-field-error=""
       className={composeRenderProps(className, (className) =>
         fieldError({ className }),

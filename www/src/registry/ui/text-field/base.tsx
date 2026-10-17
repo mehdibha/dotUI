@@ -18,7 +18,7 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
     <TextFieldPrimitives.TextField
       data-field=""
       data-textfield=""
-      data-slot="text-field"
+      data-text-field=""
       className={composeRenderProps(className, (className) =>
         field({ className: cn("group/text-field", className) }),
       )}
