@@ -18,13 +18,13 @@ const Combobox = <
   className,
   ...props
 }: ComboboxProps<T, M>) => {
-  const fieldStyles = useFieldStyles()
+  const { field } = useFieldStyles()()
   return (
     <ComboBoxPrimitives.ComboBox
       data-field=""
       menuTrigger={menuTrigger}
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({
+        field({
           className: cn("group/combobox", className),
         }),
       )}

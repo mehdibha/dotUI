@@ -17,7 +17,7 @@ import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
 import { TextContext } from "react-aria-components/Text"
 import { TimeFieldStateContext } from "react-aria-components/TimeField"
-import type * as TimeFieldPrimitive from "react-aria-components/TimeField"
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField"
 import { useFocusRing } from "react-aria/useFocusRing"
 import { useOverlayTrigger } from "react-aria/useOverlayTrigger"
 import { useTimeField } from "react-aria/useTimeField"
@@ -29,8 +29,8 @@ import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { useStyles } from "./styles"
 
 /** A TimeField with a scrollable time-column popover. */
-interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
-  TimeFieldPrimitive.TimeFieldProps<T>,
+interface TimePickerProps<T extends TimeFieldPrimitives.TimeValue> extends Omit<
+  TimeFieldPrimitives.TimeFieldProps<T>,
   "className" | "children"
 > {
   className?: string
@@ -62,7 +62,7 @@ const useSlot = (
 // MARK: Separator
 
 // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
-const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
+const TimePicker = <T extends TimeFieldPrimitives.TimeValue>({
   className,
   children,
   isOpen,
@@ -70,7 +70,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   onOpenChange,
   ...props
 }: TimePickerProps<T>) => {
-  const fieldStyles = useFieldStyles()
+  const { field } = useFieldStyles()()
   const { locale } = useLocale()
 
   const state = useTimeFieldState<T>({ ...props, locale })
@@ -162,7 +162,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
         data-invalid={state.isInvalid || undefined}
         data-readonly={state.isReadOnly || undefined}
         data-required={state.isRequired || undefined}
-        className={fieldStyles().field({ className })}
+        className={field({ className })}
       >
         {children}
       </div>

@@ -3,7 +3,7 @@
 import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ListBoxPrimitives from "react-aria-components/ListBox"
-import type * as TextPrimitive from "react-aria-components/Text"
+import type * as TextPrimitives from "react-aria-components/Text"
 import * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
 
 import { CheckIcon } from "@/registry/icons"
@@ -101,7 +101,7 @@ const ListBoxItem = <T extends object>({
 // MARK: Separator
 
 interface ListBoxItemLabelProps extends React.ComponentProps<
-  typeof TextPrimitive.Text
+  typeof TextPrimitives.Text
 > {}
 const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
   const { itemLabel } = useStyles()()
@@ -118,7 +118,7 @@ const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
 // MARK: Separator
 
 interface ListBoxItemDescriptionProps extends React.ComponentProps<
-  typeof TextPrimitive.Text
+  typeof TextPrimitives.Text
 > {}
 const ListBoxItemDescription = ({
   className,

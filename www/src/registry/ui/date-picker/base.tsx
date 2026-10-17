@@ -4,7 +4,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DatePickerPrimitives from "react-aria-components/DatePicker"
 import * as DateRangePickerPrimitives from "react-aria-components/DateRangePicker"
 
-import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 
 // MARK: Separator
 
@@ -16,12 +16,12 @@ const DatePicker = <T extends DatePickerPrimitives.DateValue>({
   className,
   ...props
 }: DatePickerProps<T>) => {
-  const fieldStyles = useStyles()
+  const { field } = useFieldStyles()()
   return (
     <DatePickerPrimitives.DatePicker
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />
@@ -38,12 +38,12 @@ const DateRangePicker = <T extends DateRangePickerPrimitives.DateValue>({
   className,
   ...props
 }: DateRangePickerProps<T>) => {
-  const fieldStyles = useStyles()
+  const { field } = useFieldStyles()()
   return (
     <DateRangePickerPrimitives.DateRangePicker
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />

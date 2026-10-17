@@ -7,7 +7,7 @@ import * as SelectPrimitives from "react-aria-components/Select"
 
 import { ChevronDownIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
   ListBox,
@@ -35,14 +35,14 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
-  const fieldStyles = useStyles()
+  const { field } = useFieldStyles()()
   return (
     <SelectPrimitives.Select
       data-field=""
       data-select=""
       data-slot="select"
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />

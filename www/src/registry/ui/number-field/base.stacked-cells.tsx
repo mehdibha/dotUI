@@ -17,13 +17,13 @@ interface NumberFieldProps extends React.ComponentProps<
 > {}
 
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
-  const fieldStyles = useFieldStyles()
+  const { field } = useFieldStyles()()
   return (
     <NumberFieldPrimitives.NumberField
       data-slot="number-field"
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     >
