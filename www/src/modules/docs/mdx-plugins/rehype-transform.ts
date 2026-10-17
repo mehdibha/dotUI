@@ -408,6 +408,7 @@ function extractControlsAttribute(node: MdxJsxFlowElementHast): ControlInput[] {
   } catch (error) {
     throw new Error(
       `Failed to evaluate controls={…} (${(error as Error).message}). Source: ${source}`,
+      { cause: error },
     )
   }
   if (!Array.isArray(value)) {
