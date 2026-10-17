@@ -87,8 +87,13 @@ const rehypeTransform: Plugin<[], Root> = () => {
     const demoNodes: DemoNodeInfo[] = []
     const referenceNodes: ReferenceNodeInfo[] = []
     const interactiveDemoNodes: InteractiveDemoNodeInfo[] = []
-    // Per-file slug dedupe so ids stay deterministic and collisions get suffixed
+    // Example title ids are suffixed past every id already on the page
+    // (markdown headings): rehypeToc lists both, keyed by id.
     const usedSlugs = new Set<string>()
+    visit(tree, "element", (node: Element) => {
+      const id = node.properties?.id
+      if (typeof id === "string") usedSlugs.add(id)
+    })
     const slugify = (text: string): string => {
       const base =
         text
