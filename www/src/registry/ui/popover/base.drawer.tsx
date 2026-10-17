@@ -87,5 +87,7 @@ const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   )
 }
 
+// MARK: Separator
+
 export type { PopoverProps }
 export { Popover }

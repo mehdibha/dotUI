@@ -82,6 +82,8 @@ export function barChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type BarChartProps<TDatum> = ChartComponentProps<
   BarChartSpecOptions<TDatum>,
   TDatum

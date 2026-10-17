@@ -7,7 +7,7 @@ import { useStyles } from "./styles"
 
 // MARK: kbdStyles
 
-// MARK: KbdGroup
+// MARK: Separator
 
 interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
@@ -16,7 +16,7 @@ const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
   return <kbd data-kbd-group="" className={group({ className })} {...props} />
 }
 
-// MARK: Kbd
+// MARK: Separator
 
 interface KbdProps extends React.ComponentProps<
   typeof KeyboardPrimitives.Keyboard
@@ -33,7 +33,7 @@ const Kbd = ({ className, ...props }: KbdProps) => {
   )
 }
 
-// MARK: separator
+// MARK: Separator
 
 export type { KbdGroupProps, KbdProps }
 export { Kbd, KbdGroup }

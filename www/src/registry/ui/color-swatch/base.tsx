@@ -9,6 +9,8 @@ const colorSwatchStyles = tv({
   base: "relative size-5 shrink-0 rounded-(--studio-color-swatch-radius) border",
 })
 
+// MARK: Separator
+
 interface ColorSwatchProps extends React.ComponentProps<
   typeof ColorSwatchPrimitives.ColorSwatch
 > {}
@@ -29,6 +31,8 @@ const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
     />
   )
 }
+
+// MARK: Separator
 
 export type { ColorSwatchProps }
 export { ColorSwatch }

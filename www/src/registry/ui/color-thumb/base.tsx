@@ -23,5 +23,7 @@ const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
   )
 }
 
+// MARK: Separator
+
 export type { ColorThumbProps }
 export { ColorThumb }

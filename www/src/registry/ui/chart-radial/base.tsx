@@ -275,6 +275,8 @@ const radialTooltip: ChartTooltipContentOf<RadialBarChartSpecOptions<any>> = (
   }
 }
 
+// MARK: Separator
+
 export type RadialBarChartProps<TDatum> = ChartComponentProps<
   RadialBarChartSpecOptions<TDatum>,
   TDatum

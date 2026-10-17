@@ -6,7 +6,7 @@ import * as DateRangePickerPrimitives from "react-aria-components/DateRangePicke
 
 import { useStyles } from "@/registry/ui/field/styles"
 
-// MARK: DatePicker
+// MARK: Separator
 
 interface DatePickerProps<
   T extends DatePickerPrimitives.DateValue,
@@ -28,7 +28,7 @@ const DatePicker = <T extends DatePickerPrimitives.DateValue>({
   )
 }
 
-// MARK: DateRangePicker
+// MARK: Separator
 
 interface DateRangePickerProps<
   T extends DateRangePickerPrimitives.DateValue,
@@ -50,7 +50,7 @@ const DateRangePicker = <T extends DateRangePickerPrimitives.DateValue>({
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { DatePickerProps, DateRangePickerProps }
 export { DatePicker, DateRangePicker }

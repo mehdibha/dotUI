@@ -59,7 +59,7 @@ const useSlot = (
   return [ref, hasSlot]
 }
 
-// MARK: TimePicker
+// MARK: Separator
 
 // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
 const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
@@ -170,7 +170,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   )
 }
 
-// MARK: TimePickerColumns
+// MARK: Separator
 
 interface TimeColumnOption {
   id: string
@@ -266,7 +266,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   )
 }
 
-// MARK: TimeColumn
+// MARK: Separator
 
 interface TimeColumnProps {
   label: string
@@ -330,7 +330,7 @@ const TimeColumn = ({
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TimePickerColumnsProps, TimePickerProps }
 export { TimePicker, TimePickerColumns }

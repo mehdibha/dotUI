@@ -146,6 +146,8 @@ export function areaChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type AreaChartProps<TDatum> = ChartComponentProps<
   AreaChartSpecOptions<TDatum>,
   TDatum

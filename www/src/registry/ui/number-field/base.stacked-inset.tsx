@@ -42,6 +42,8 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
   )
 }
 
+// MARK: Separator
+
 interface NumberFieldGroupProps extends React.ComponentProps<
   typeof GroupPrimitives.Group
 > {
@@ -82,6 +84,8 @@ interface NumberFieldStepperProps extends React.ComponentProps<
 const stepper =
   "flex w-5 shrink-0 cursor-interactive items-center justify-center rounded-(--studio-radius-detail) text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,currentColor) *:[svg]:size-3"
 
+// MARK: Separator
+
 const NumberFieldDecrement = ({
   className,
   children,
@@ -101,6 +105,8 @@ const NumberFieldDecrement = ({
   )
 }
 
+// MARK: Separator
+
 const NumberFieldIncrement = ({
   className,
   children,
@@ -119,6 +125,8 @@ const NumberFieldIncrement = ({
     </ButtonPrimitives.Button>
   )
 }
+
+// MARK: Separator
 
 export type { NumberFieldGroupProps, NumberFieldProps, NumberFieldStepperProps }
 export {

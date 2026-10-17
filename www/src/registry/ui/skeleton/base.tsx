@@ -6,6 +6,8 @@ import { cn } from "@/registry/lib/utils"
 
 import { useStyles } from "./styles"
 
+// MARK: skeletonStyles
+
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   isLoading?: boolean
 }
@@ -39,6 +41,8 @@ function useSyncedSkeletonAnimation(
     return () => observer.disconnect()
   }, [className, isLoading, ref])
 }
+
+// MARK: Separator
 
 export const Skeleton = ({
   className,

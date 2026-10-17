@@ -172,6 +172,8 @@ export function heatmapChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type HeatmapChartProps<TDatum> = ChartComponentProps<
   HeatmapChartSpecOptions<TDatum>,
   TDatum

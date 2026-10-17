@@ -35,6 +35,8 @@ import { createParamValue } from "@/lib/styles"
 
 import { useStyles } from "./styles"
 
+// MARK: chartStyles
+
 export const chartDefaults = {
   aspectRatio: 16 / 9,
   curve: "natural",
@@ -497,6 +499,8 @@ const TOOLTIP_SURFACE_CLASS = [
    because the React adapter adopts its prerendered markup on every mount,
    which would otherwise suppress the entrance. */
 const MOTION_RENDERER = motion({ initial: "always" })
+
+// MARK: Separator
 
 export const Chart = <TDatum,>({
   children,

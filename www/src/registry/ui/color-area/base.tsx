@@ -8,6 +8,8 @@ import { ColorThumb } from "@/registry/ui/color-thumb"
 
 import { useStyles } from "./styles"
 
+// MARK: colorAreaStyles
+
 type ColorAreaProps = React.ComponentProps<typeof ColorAreaPrimitives.ColorArea>
 
 const ColorArea = ({ className, ...props }: ColorAreaProps) => {
@@ -23,6 +25,8 @@ const ColorArea = ({ className, ...props }: ColorAreaProps) => {
     </ColorAreaPrimitives.ColorArea>
   )
 }
+
+// MARK: Separator
 
 export type { ColorAreaProps }
 export { ColorArea }

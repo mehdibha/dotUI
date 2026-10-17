@@ -22,7 +22,7 @@ import type { FieldStyles } from "./styles"
 // MARK: fieldStyles
 export { fieldStyles } from "./styles"
 
-// MARK: Fieldset
+// MARK: Separator
 
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
@@ -37,7 +37,7 @@ const Fieldset = ({ className, ...props }: FieldsetProps) => {
   )
 }
 
-// MARK: Legend
+// MARK: Separator
 
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
@@ -48,7 +48,7 @@ const Legend = ({ className, ...props }: LegendProps) => {
   )
 }
 
-// MARK: FieldGroup
+// MARK: Separator
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
@@ -63,7 +63,7 @@ const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
   )
 }
 
-// MARK: Field
+// MARK: Separator
 
 interface FieldProps
   extends React.ComponentProps<"div">, VariantProps<FieldStyles> {}
@@ -100,7 +100,7 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   )
 }
 
-// MARK: FieldContent
+// MARK: Separator
 
 interface FieldContentProps extends React.ComponentProps<"div"> {}
 
@@ -115,7 +115,7 @@ const FieldContent = ({ className, ...props }: FieldContentProps) => {
   )
 }
 
-// MARK: Label
+// MARK: Separator
 
 interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
@@ -135,7 +135,7 @@ const Label = ({ children, className, ...props }: LabelProps) => {
   )
 }
 
-// MARK: Description
+// MARK: Separator
 
 interface DescriptionProps extends Omit<
   React.ComponentProps<typeof Text>,
@@ -155,7 +155,7 @@ const Description = ({ className, ...props }: DescriptionProps) => {
   )
 }
 
-// MARK: FieldError
+// MARK: Separator
 
 interface FieldErrorProps extends React.ComponentProps<
   typeof FieldErrorPrimitives.FieldError
@@ -181,7 +181,7 @@ const FieldError = ({ className, children, ...props }: FieldErrorProps) => {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type {
   DescriptionProps,

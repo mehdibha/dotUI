@@ -8,7 +8,7 @@ import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: textFieldStyles
 
-// MARK: TextField
+// MARK: Separator
 
 interface TextFieldProps extends TextFieldPrimitives.TextFieldProps {}
 
@@ -27,7 +27,7 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TextFieldProps }
 export { TextField }

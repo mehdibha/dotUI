@@ -52,6 +52,8 @@ export function lineChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type LineChartProps<TDatum> = ChartComponentProps<
   LineChartSpecOptions<TDatum>,
   TDatum

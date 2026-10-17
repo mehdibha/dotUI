@@ -47,5 +47,7 @@ const ToggleButtonGroup = ({
   )
 }
 
+// MARK: Separator
+
 export type { ToggleButtonGroupProps }
 export { ToggleButtonGroup }

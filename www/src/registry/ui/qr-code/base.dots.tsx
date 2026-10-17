@@ -39,6 +39,8 @@ function finder(x: number, y: number) {
   )
 }
 
+// MARK: Separator
+
 interface QRCodeProps extends React.ComponentProps<"div"> {
   value: string
   errorCorrection?: "L" | "M" | "Q" | "H"
@@ -102,6 +104,8 @@ const QRCode = ({
     </div>
   )
 }
+
+// MARK: Separator
 
 export type { QRCodeProps }
 export { QRCode }

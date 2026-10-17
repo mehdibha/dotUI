@@ -167,6 +167,8 @@ const SelectContent = <T extends object>({
   )
 }
 
+// MARK: Separator
+
 export type {
   SelectContentProps,
   SelectProps,

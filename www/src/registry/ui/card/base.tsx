@@ -4,7 +4,7 @@ import { useStyles } from "./styles"
 
 // MARK: cardStyles
 
-// MARK: Card
+// MARK: Separator
 
 interface CardProps extends React.ComponentProps<"div"> {
   size?: "sm" | "default"
@@ -22,7 +22,7 @@ const Card = ({ className, size = "default", ...props }: CardProps) => {
   )
 }
 
-// MARK: CardHeader
+// MARK: Separator
 
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
@@ -33,7 +33,7 @@ const CardHeader = ({ className, ...props }: CardHeaderProps) => {
   )
 }
 
-// MARK: CardTitle
+// MARK: Separator
 
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
@@ -42,7 +42,7 @@ const CardTitle = ({ className, ...props }: CardTitleProps) => {
   return <div data-card-title="" className={title({ className })} {...props} />
 }
 
-// MARK: CardDescription
+// MARK: Separator
 
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
@@ -57,7 +57,7 @@ const CardDescription = ({ className, ...props }: CardDescriptionProps) => {
   )
 }
 
-// MARK: CardAction
+// MARK: Separator
 
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
@@ -68,7 +68,7 @@ const CardAction = ({ className, ...props }: CardActionProps) => {
   )
 }
 
-// MARK: CardContent
+// MARK: Separator
 
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
@@ -79,7 +79,7 @@ const CardContent = ({ className, ...props }: CardContentProps) => {
   )
 }
 
-// MARK: CardFooter
+// MARK: Separator
 
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
@@ -90,7 +90,7 @@ const CardFooter = ({ className, ...props }: CardFooterProps) => {
   )
 }
 
-// MARK: separator
+// MARK: Separator
 
 export type {
   CardActionProps,

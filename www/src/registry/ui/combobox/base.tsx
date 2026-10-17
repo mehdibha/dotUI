@@ -33,6 +33,8 @@ const Combobox = <
   )
 }
 
+// MARK: Separator
+
 interface ComboboxValueProps<
   T extends object,
 > extends ComboBoxPrimitives.ComboBoxValueProps<T> {}
@@ -50,6 +52,8 @@ const ComboboxValue = <T extends object>({
     />
   )
 }
+
+// MARK: Separator
 
 export type { ComboboxProps }
 export { Combobox, ComboboxValue }

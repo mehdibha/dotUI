@@ -14,6 +14,8 @@ import { Loader } from "@/registry/ui/loader"
 
 import { useStyles } from "./styles"
 
+// MARK: toastStyles
+
 type ToastVariant =
   | "neutral"
   | "success"
@@ -90,6 +92,8 @@ function getSwipeDirection(
 
   return ["right", verticalDirection]
 }
+
+// MARK: Separator
 
 interface ToastProviderProps extends ToastPrimitive.Provider.Props {
   position?: ToastPosition
@@ -219,6 +223,8 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
 }
 
 const Toaster = ToastProvider
+
+// MARK: Separator
 
 export type { ToastProviderProps }
 export {

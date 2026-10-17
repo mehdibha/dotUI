@@ -218,6 +218,8 @@ const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
   }
 }
 
+// MARK: Separator
+
 export type PieChartProps<TDatum extends object> = ChartComponentProps<
   PieChartSpecOptions<TDatum>,
   PieSlice<TDatum>

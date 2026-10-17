@@ -59,5 +59,7 @@ const ColorPickerInner = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
+// MARK: Separator
+
 export type { ColorPickerProps }
 export { ColorPicker }

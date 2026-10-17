@@ -8,7 +8,7 @@ import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: timeFieldStyles
 
-// MARK: TimeField
+// MARK: Separator
 
 interface TimeFieldProps<
   T extends TimeFieldPrimitives.TimeValue,
@@ -31,7 +31,7 @@ const TimeField = <T extends TimeFieldPrimitives.TimeValue>({
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TimeFieldProps }
 export { TimeField }

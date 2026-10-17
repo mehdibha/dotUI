@@ -8,6 +8,8 @@ interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
 const blades = Array.from({ length: 8 }, (_, i) => i)
 
+// MARK: Separator
+
 const Loader = ({ className, ...props }: LoaderProps) => {
   return (
     <ProgressBarPrimitives.ProgressBar
@@ -44,6 +46,8 @@ const Loader = ({ className, ...props }: LoaderProps) => {
     </ProgressBarPrimitives.ProgressBar>
   )
 }
+
+// MARK: Separator
 
 export type { LoaderProps }
 export { Loader }

@@ -163,6 +163,8 @@ const SelectContent = <T extends object>({
   )
 }
 
+// MARK: Separator
+
 export type { SelectContentProps, SelectProps, SelectValueProps }
 export {
   ListBoxItem as SelectItem,

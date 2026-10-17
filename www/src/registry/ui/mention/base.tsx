@@ -20,7 +20,7 @@ import { useStyles } from "./styles"
 
 // MARK: mentionStyles
 
-// MARK: Mention
+// MARK: Separator
 
 interface MentionState {
   /** The trigger text that opened the suggestions (e.g. `"@"` or `"/"`), or null while closed. */
@@ -199,7 +199,7 @@ const Mention = ({
 
 const emptyValue = new TokenFieldValue([])
 
-// MARK: exports
+// MARK: Separator
 
 export type { MentionProps, MentionState }
 export { Mention }

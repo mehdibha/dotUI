@@ -18,7 +18,7 @@ import { useStyles } from "./styles"
 
 // MARK: tokenFieldStyles
 
-// MARK: TokenField
+// MARK: Separator
 
 interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,
@@ -34,7 +34,7 @@ const TokenField = ({ className, ...props }: TokenFieldProps) => {
   return <TokenFieldPrimitive className={root({ className })} {...props} />
 }
 
-// MARK: TokenInput
+// MARK: Separator
 
 interface TokenInputProps extends Omit<
   TokenInputPrimitiveProps,
@@ -68,7 +68,7 @@ const TokenInput = ({
   )
 }
 
-// MARK: Token
+// MARK: Separator
 
 interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
   className?: string
@@ -80,7 +80,7 @@ const Token = ({ className, ...props }: TokenProps) => {
   return <TokenPrimitive className={token({ className })} {...props} />
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TokenFieldProps, TokenInputProps, TokenProps }
 export { Token, TokenField, TokenInput }

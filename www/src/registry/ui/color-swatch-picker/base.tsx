@@ -8,6 +8,8 @@ import { ColorSwatch } from "@/registry/ui/color-swatch"
 
 import { useStyles } from "./styles"
 
+// MARK: colorSwatchPickerStyles
+
 interface ColorSwatchPickerProps extends React.ComponentProps<
   typeof ColorSwatchPickerPrimitives.ColorSwatchPicker
 > {}
@@ -23,6 +25,8 @@ const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
     />
   )
 }
+
+// MARK: Separator
 
 interface ColorSwatchPickerItemProps extends React.ComponentProps<
   typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem
@@ -52,6 +56,8 @@ const ColorSwatchPickerItem = ({
     </ColorSwatchPickerPrimitives.ColorSwatchPickerItem>
   )
 }
+
+// MARK: Separator
 
 export type { ColorSwatchPickerItemProps, ColorSwatchPickerProps }
 export { ColorSwatchPicker, ColorSwatchPickerItem }

@@ -8,7 +8,7 @@ import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: dateFieldStyles
 
-// MARK: DateField
+// MARK: Separator
 
 interface DateFieldProps<
   T extends DateFieldPrimitives.DateValue,
@@ -31,7 +31,7 @@ const DateField = <T extends DateFieldPrimitives.DateValue>({
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { DateFieldProps }
 export { DateField }

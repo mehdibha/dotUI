@@ -81,7 +81,7 @@ const Tag = ({ className, appearance, ...props }: TagProps) => {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TagGroupProps, TagListProps, TagProps }
 export { Tag, TagGroup, TagList }

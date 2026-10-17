@@ -289,6 +289,8 @@ const DrawerIndentBackground = ({
   )
 }
 
+// MARK: Separator
+
 export type {
   DrawerHandleProps,
   DrawerIndentBackgroundProps,

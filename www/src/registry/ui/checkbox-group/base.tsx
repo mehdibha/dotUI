@@ -8,6 +8,8 @@ const checkboxGroupStyles = tv({
   base: "flex flex-col gap-3",
 })
 
+// MARK: Separator
+
 const CheckboxGroup = ({
   className,
   ...props
@@ -24,6 +26,8 @@ const CheckboxGroup = ({
 }
 
 type CheckboxGroupProps = CheckboxGroupPrimitives.CheckboxGroupProps
+
+// MARK: Separator
 
 export type { CheckboxGroupProps }
 export { CheckboxGroup }

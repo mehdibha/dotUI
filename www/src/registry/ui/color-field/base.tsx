@@ -8,7 +8,7 @@ import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: colorFieldStyles
 
-// MARK: ColorField
+// MARK: Separator
 
 interface ColorFieldProps extends React.ComponentProps<
   typeof ColorFieldPrimitives.ColorField
@@ -27,7 +27,7 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { ColorFieldProps }
 export { ColorField }

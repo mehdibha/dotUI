@@ -14,6 +14,8 @@ import { Input } from "@/registry/ui/input"
 
 import { useStyles } from "./styles"
 
+// MARK: otpFieldStyles
+
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>
 type FieldValidationResult = NonNullable<
   React.ContextType<typeof FieldErrorPrimitives.FieldErrorContext>
@@ -52,6 +54,8 @@ const VALID_VALIDITY_STATE: ValidityState = {
 
 const getAriaIds = (...ids: Array<string | undefined>) =>
   ids.filter(Boolean).join(" ") || undefined
+
+// MARK: Separator
 
 const OTPField = ({
   children,
@@ -149,6 +153,8 @@ const OTPField = ({
   )
 }
 
+// MARK: Separator
+
 const OTPFieldGroup = ({ className, ...props }: OTPFieldGroupProps) => {
   const { group } = useStyles()()
   return (
@@ -160,11 +166,15 @@ const OTPFieldGroup = ({ className, ...props }: OTPFieldGroupProps) => {
   )
 }
 
+// MARK: Separator
+
 const OTPFieldSeparator = (props: OTPFieldSeparatorProps) => {
   return (
     <OTPFieldPrimitive.Separator data-slot="otp-field-separator" {...props} />
   )
 }
+
+// MARK: Separator
 
 export type { OTPFieldGroupProps, OTPFieldProps, OTPFieldSeparatorProps }
 export { OTPField, OTPFieldGroup, OTPFieldSeparator }

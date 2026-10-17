@@ -136,6 +136,8 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps
 
+// MARK: Separator
+
 export type {
   RadioControlProps,
   RadioGroupProps,

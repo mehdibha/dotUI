@@ -34,5 +34,7 @@ const Loader = ({ className, ...props }: LoaderProps) => {
   )
 }
 
+// MARK: Separator
+
 export type { LoaderProps }
 export { Loader }

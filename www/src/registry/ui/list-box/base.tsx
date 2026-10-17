@@ -195,6 +195,8 @@ const ListBoxVirtualizer = <T extends object>({
   )
 }
 
+// MARK: Separator
+
 export type {
   ListBoxItemDescriptionProps,
   ListBoxItemLabelProps,

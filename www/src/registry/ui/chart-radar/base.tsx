@@ -261,6 +261,8 @@ const radarTooltip: ChartTooltipContentOf<RadarChartSpecOptions<any>> = (
   }
 }
 
+// MARK: Separator
+
 export type RadarChartProps<TDatum> = ChartComponentProps<
   RadarChartSpecOptions<TDatum>,
   TDatum

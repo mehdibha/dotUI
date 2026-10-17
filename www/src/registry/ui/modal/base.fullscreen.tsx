@@ -119,6 +119,8 @@ const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
   )
 }
 
+// MARK: Separator
+
 export type {
   ModalBackdropProps,
   ModalOverlayProps,
