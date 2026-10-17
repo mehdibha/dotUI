@@ -32,8 +32,6 @@ import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const INK = "var(--color-border-focus)"
 const MUTED = "var(--color-border-focus-muted)"
 const BG = "var(--color-bg)"
@@ -154,8 +152,6 @@ const ringOf = (state: Effective): Ring => ({
   width: state.focusWidth,
 })
 
-/* --------------------------------- Glyphs --------------------------------- */
-
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default. */
 const HIGHLIGHT_CHIPS: Record<string, string> = {
@@ -170,8 +166,6 @@ function HighlightChip({ value }: { value: string }) {
     </span>
   )
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 export function InteractionPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} />

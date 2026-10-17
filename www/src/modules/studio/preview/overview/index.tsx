@@ -62,15 +62,10 @@ import {
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
-/* ---------------------------------------------------------------------------
- * The preset overview — a style guide the way a senior designer would present a
- * brand system: an editorial spec sheet walking through every axis of the live
- * design system (color, type, icons, shape, density, elevation, components).
- *
- * Rendered inside the /studio preview iframe under `DesignSystemProvider`, so
- * every swatch, ramp and component below is the live, edited system — themed by
- * CSS variables that flip with light / dark and update on every edit.
- * ------------------------------------------------------------------------- */
+/* The preset overview: an editorial spec sheet walking through every axis of
+   the live design system. Rendered in the preview iframe under
+   `DesignSystemProvider`, so every swatch and component below is the edited
+   system, in light and dark. */
 
 const DENSITY = Object.fromEntries<OptionMeta>(
   DENSITY_OPTIONS.map((option) => [option.value, option]),
@@ -124,8 +119,6 @@ function describeAccent(color: string): string {
   return HUE_NAMES.find((r) => hsl.h < r.max)?.name ?? "Signature"
 }
 
-/* ------------------------------- Primitives ------------------------------- */
-
 function SectionHeader({
   index,
   icon: Icon,
@@ -173,8 +166,6 @@ function Label({ children }: { children: ReactNode }) {
     </span>
   )
 }
-
-/* --------------------------------- Cover ---------------------------------- */
 
 function Cover({
   name,
@@ -249,8 +240,6 @@ function Cover({
     </header>
   )
 }
-
-/* --------------------------------- Color ---------------------------------- */
 
 function RampRow({
   palette,
@@ -374,8 +363,6 @@ function ColorSection({ resolved }: { resolved: Theme }) {
   )
 }
 
-/* ------------------------------- Typography ------------------------------- */
-
 const TYPE_SCALE: { label: string; className: string; size: string }[] = [
   {
     label: "Display",
@@ -492,8 +479,6 @@ function TypographySection({
   )
 }
 
-/* --------------------------------- Icons ---------------------------------- */
-
 const ICON_ENTRIES = Object.entries(icons)
   .sort(([a], [b]) => a.localeCompare(b))
   .slice(0, 60)
@@ -530,8 +515,6 @@ function IconSection() {
     </div>
   )
 }
-
-/* --------------------------------- Shape ---------------------------------- */
 
 const RADII: { token: string; className: string }[] = [
   { token: "sm", className: "rounded-sm" },
@@ -627,8 +610,6 @@ function ShapeSection({
   )
 }
 
-/* ------------------------------ Density / Space --------------------------- */
-
 const SPACING_STEPS = [
   { label: "1", px: "4", className: "h-1" },
   { label: "2", px: "8", className: "h-2" },
@@ -681,8 +662,6 @@ function DensitySection({ density }: { density: Density }) {
     </div>
   )
 }
-
-/* ------------------------------- Elevation -------------------------------- */
 
 const SURFACE_LAYERS: { token: string; label: string }[] = [
   { token: "--color-bg", label: "Page" },
@@ -756,8 +735,6 @@ function ElevationSection() {
   )
 }
 
-/* ------------------------------- Components -------------------------------- */
-
 function Atom({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-3 rounded-(--studio-radius-card) border bg-card p-5">
@@ -830,8 +807,6 @@ function ComponentsSection() {
   )
 }
 
-/* ------------------------------ Interactivity ----------------------------- */
-
 function InteractivitySection({
   interactive,
   disabled,
@@ -865,8 +840,6 @@ function InteractivitySection({
     </div>
   )
 }
-
-/* --------------------------------- Shell ---------------------------------- */
 
 function Section({
   index,

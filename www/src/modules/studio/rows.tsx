@@ -166,8 +166,6 @@ export function PanelPopover({
   )
 }
 
-/* ------------------------------- Drafting -------------------------------- */
-
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
  *  controls preview every frame and commit once, on release. */
@@ -180,8 +178,6 @@ export function useDraft<T>(committed: T) {
   }
   return [draft, setDraft] as const
 }
-
-/* ------------------------------ Color picker ------------------------------ */
 
 /** Hue-spaced seeds: one tap to a plausible brand before touching the area. */
 const COLOR_PRESETS = [
@@ -270,8 +266,6 @@ function HexInput() {
     />
   )
 }
-
-/* ----------------------------- Neutral picker ----------------------------- */
 
 /**
  * A gray is not a free color — the engine models it as a hue to lean toward
@@ -548,8 +542,6 @@ export function NeutralPickerPopover({
     </PanelPopover>
   )
 }
-
-/* ------------------------------- Font picker ------------------------------ */
 
 /** The searchable font list shared by every font trigger: search on top, the
  *  catalog grouped by category, each family previewed in its own lazily-loaded

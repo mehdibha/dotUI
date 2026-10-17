@@ -68,8 +68,6 @@ function newId(): string {
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
 }
 
-/* -------------------------------- reading -------------------------------- */
-
 const isTime = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)
 
@@ -226,8 +224,6 @@ holdsStates(store)
  *  written over. */
 export const isUnreadable = store.isUnreadable
 
-/* --------------------------- the pending edit --------------------------- */
-
 /** An edit to a system's state, or to the slot (`id` null). */
 interface Edit {
   id: string | null
@@ -298,8 +294,6 @@ export const useWorkspace = (): Workspace =>
 /** The list as pickers show it: the latest edited first. */
 export const listed = (workspace: Workspace): DesignSystemDoc[] =>
   [...workspace.systems].reverse().sort((a, b) => b.updatedAt - a.updatedAt)
-
-/* ------------------------------ operations ------------------------------ */
 
 function accepts(state: StudioState): boolean {
   // An invalid record would be dropped on the next read: refuse it here.

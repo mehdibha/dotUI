@@ -127,8 +127,6 @@ export function TypePreview({ state }: { state: Effective }) {
   )
 }
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const WEIGHTS: Record<string, number> = {
   normal: 400,
   medium: 500,
@@ -146,8 +144,6 @@ function titleSpecimen(value: string): React.CSSProperties {
     textTransform: value === "caps" ? "uppercase" : undefined,
   }
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 const HeadingRow = () => (
   <FontRow

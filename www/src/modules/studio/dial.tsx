@@ -53,8 +53,6 @@ export const DIAL_PRESS =
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
-/* ---------------------------------- Rows ---------------------------------- */
-
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
   return (
@@ -210,8 +208,6 @@ export function DialLink({
     </RacButton>
   )
 }
-
-/* --------------------------------- Select --------------------------------- */
 
 export interface DialSelectOption {
   value: string
@@ -372,8 +368,6 @@ function SelectOptions({
   )
 }
 
-/* --------------------------------- Picks ---------------------------------- */
-
 interface DialPickOption {
   value: string
   label: string
@@ -484,8 +478,6 @@ export function DialAction({
 export function DialSeparator() {
   return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
 }
-
-/* --------------------------------- Slider --------------------------------- */
 
 /* DialKit's slider: the row is the track, the fill follows the pointer
    unstepped and springs to the nearest step on release. Hashmarks and a
@@ -977,8 +969,6 @@ function SliderRow({
   )
 }
 
-/* ---------------------------------- Color --------------------------------- */
-
 /** Label, hex, swatch; the row opens the picker. With `derived`, an empty
  *  value reads "Auto" on the engine's color. */
 export function DialColor({
@@ -1041,8 +1031,6 @@ export function DialColor({
     </ColorPicker>
   )
 }
-
-/* -------------------------------- Segmented -------------------------------- */
 
 interface DialOption {
   value: string

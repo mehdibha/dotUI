@@ -30,8 +30,6 @@ import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 /* The button vars a pick writes (Pill corners), set where specimens render. */
 const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
 
@@ -141,8 +139,6 @@ function CurrentGlyph({ current }: { current: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function ButtonStyleRow() {
   const options = useGlyphs("buttonStyle", STYLE_OPTIONS, <PrimaryButton />)

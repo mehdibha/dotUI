@@ -13,8 +13,6 @@ import { Board, BoardSection, stateProps, useReplay, useSteps } from "./board"
 import type { StateName } from "./board"
 import { StateGrid } from "./buttons-parts"
 
-/* --------------------------------- States --------------------------------- */
-
 const CONTENT = {
   text: ["Day", "Week", "Month"],
   icon: [
@@ -79,8 +77,6 @@ function States() {
   )
 }
 
-/* --------------------------------- Motion --------------------------------- */
-
 const RANGES = ["day", "week", "month", "year"]
 const THEMES = ["light", "dark", "system"]
 
@@ -123,8 +119,6 @@ function MotionLoop() {
     </div>
   )
 }
-
-/* ---------------------------------- Board --------------------------------- */
 
 export default function SegmentedControlBoard() {
   return (

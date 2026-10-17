@@ -52,8 +52,6 @@ export function ShapePreview({ state }: { state: Effective }) {
   )
 }
 
-/* ---------------------------------- Rows ----------------------------------- */
-
 /** The main page's Radius: a shape sets every corner; Custom opens the page. */
 export function ShapeRow() {
   const { state, setState } = useStudio()

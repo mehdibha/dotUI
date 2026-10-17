@@ -16,8 +16,6 @@ import { DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 /** What a glyph reads from the system: shape, today marker, fills. */
 interface Look {
   shape: string
@@ -80,8 +78,6 @@ function Day({ n, look, today }: { n: number; look: Look; today?: boolean }) {
     </span>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function DayShapeRow() {
   return (

@@ -13,8 +13,6 @@ import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
 
 /** The grid: a header rule or band over its labels, then ruled rows. */
@@ -320,8 +318,6 @@ function CardGlyph({ header, footer }: { header: string; footer: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function TableHeaderRow() {
   const { effective } = useStudio()

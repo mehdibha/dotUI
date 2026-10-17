@@ -19,8 +19,6 @@ import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 function ListFrame() {
   return (
     <rect
@@ -295,8 +293,6 @@ const glyphs = <T extends { value: string }>(
     ...option,
     glyph: <DialGlyph>{draw(option.value)}</DialGlyph>,
   }))
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 const HIGHLIGHT_ROW = glyphs(HIGHLIGHT_OPTIONS, (value) => (
   <HighlightGlyph highlight={value} />

@@ -68,8 +68,6 @@ const SHELL_SIDEBAR: Record<string, string> = {
   recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
 }
 
-/* -------------------------------- Recipe --------------------------------- */
-
 export interface PerMode<T> {
   light: T
   dark: T
@@ -248,8 +246,6 @@ function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
   const ledge = `${px}px ${px}px ${px + LEDGE_LIP}px`
   return { card: ledge, tile: ledge, overlay: `${px}px`, lip: `${LEDGE_LIP}px` }
 }
-
-/* ----------------------------- Serialization ----------------------------- */
 
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
  *  a mode's solved scales (the panel glyphs, tests). */

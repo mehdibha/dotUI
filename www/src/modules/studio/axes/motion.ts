@@ -12,8 +12,6 @@ type Curve =
   | { type: "easing"; ease: Bezier }
   | { type: "physics"; stiffness: number; damping: number; mass: number }
 
-/* --------------------------------- Springs -------------------------------- */
-
 type Spring = Extract<Curve, { type: "physics" }>
 
 /** Normalized position `t` seconds from rest; overshoots when underdamped. */
@@ -78,8 +76,6 @@ function springLinear(spring: Spring, ms: number): string {
   return `linear(${["0", ...stops, "1"].join(", ")})`
 }
 
-/* ---------------------------------- CSS ----------------------------------- */
-
 export function bezierCss([x1, y1, x2, y2]: Bezier): string {
   return x1 === 0 && y1 === 0 && x2 === 1 && y2 === 1
     ? "linear"
@@ -92,8 +88,6 @@ export function legTiming({ ms, curve }: Leg) {
   const settle = springSettleMs(curve)
   return { ease: springLinear(curve, settle), ms: settle }
 }
-
-/* ---------------------------------- Roles ---------------------------------- */
 
 interface Leg {
   ms: number
@@ -215,8 +209,6 @@ const TABLES: Record<string, MotionTable> = {
 
 export const tableOf = (motion: string) => TABLES[motion] ?? STANDARD
 
-/* ---------------------------------- Members -------------------------------- */
-
 // `--studio-<id>-state-*`; radio rides checkbox's, toggle-button button's, token-field input's.
 const STATE_MEMBERS: Record<string, Role> = {
   button: "micro",
@@ -280,8 +272,6 @@ export function motionVars(
   }
   return vars
 }
-
-/* ---------------------------------- Chapter -------------------------------- */
 
 export const MOTION_VALUES = ["standard", "smooth", "expressive"] as const
 

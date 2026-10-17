@@ -35,8 +35,6 @@ import type { RowMap } from "../row-host"
 import type { Studio } from "../use-studio"
 import { useStudio } from "../use-studio"
 
-/* --------------------------------- Inks ---------------------------------- */
-
 /** What a source paints, from the engine's mode: the solid fill and its
  *  label, the text ink, the focus ring, the tinted wash. */
 interface Ink {
@@ -67,8 +65,6 @@ function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
     },
   }
 }
-
-/* -------------------------------- Previews -------------------------------- */
 
 function Check({ color }: { color: string }) {
   return (
@@ -142,8 +138,6 @@ function SourceSwatch({
     </span>
   )
 }
-
-/* ---------------------------------- Row ----------------------------------- */
 
 /** Accent first, wherever a Primary source is picked. */
 const inOrder = <T extends { value: string }>(options: readonly T[]) =>

@@ -12,8 +12,6 @@ import {
 import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 /* Mono rides the real accent; vivid and muted spread fixed hues at high and
    low chroma, the strategy rather than the engine's exact output. */
 const MONO = ["bg-accent", "bg-accent/60", "bg-accent/30"]
@@ -63,8 +61,6 @@ function GridGlyph({ grid }: { grid: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function PaletteRow() {
   return (

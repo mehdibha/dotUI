@@ -34,8 +34,6 @@ const isMain = (state: Raw) =>
       GONE.has(key) || (MAIN_MOTION.has(key) && isRecord(value)),
   )
 
-/* ------------------------------ main → v3 ------------------------------ */
-
 /* Main's values that read differently now; null takes today's default (a
    main default drawn the same, or a value with no home). */
 const VALUES: Record<string, Record<string, unknown>> = {
@@ -287,8 +285,6 @@ function fromMain(main: Raw): Raw {
   motionFrom(main, state)
   return settle(state)
 }
-
-/* ------------------------------- v3 → v4 ------------------------------- */
 
 /* Soft was Flat with these three columns; its finishes were Edge values. */
 const SOFT: Raw = {

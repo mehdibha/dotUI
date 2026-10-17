@@ -55,8 +55,6 @@ function useStep() {
   return { m, mode, step }
 }
 
-/* ---------------------------------- Rows ----------------------------------- */
-
 function BrandRow() {
   const { state, set } = useStudio()
   return (

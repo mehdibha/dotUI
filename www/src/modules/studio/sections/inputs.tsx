@@ -22,8 +22,6 @@ import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const labelOf = (options: { value: string; label: string }[], value: string) =>
   options.find((option) => option.value === value)?.label ?? value
 
@@ -215,8 +213,6 @@ function ErrorGlyph({ kind }: { kind: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function InputStyleRow() {
   const { effective } = useStudio()

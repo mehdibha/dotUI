@@ -22,8 +22,6 @@ import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const SCRIM_FILL: Record<string, number> = {
   light: 0.14,
   medium: 0.3,
@@ -277,8 +275,6 @@ function CloseGlyph({ close }: { close: string }) {
 }
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function DialogSectionsRow() {
   const { state } = useStudio()
