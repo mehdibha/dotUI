@@ -52,8 +52,11 @@ import {
   shapeVars,
 } from "@/modules/studio/axes/shape"
 import { SHAPE_OPTIONS } from "@/modules/studio/axes/shape.meta"
-import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
-import type { DesignSystem } from "@/modules/studio/preset"
+import {
+  postToParent,
+  useIsEmbeddedPreview,
+} from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 /* ---------------------------------------------------------------------------
@@ -154,7 +157,7 @@ function SectionHeader({
         {embedded && panelId && (
           <button
             type="button"
-            onClick={() => sendInspect(panelId)}
+            onClick={() => postToParent({ type: "preview-inspect", panel: panelId })}
             className="ml-auto flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs opacity-0 transition-opacity group-hover/section:opacity-100 hover:bg-neutral hover:text-fg focus-visible:opacity-100"
           >
             <Settings2Icon className="size-3" />
