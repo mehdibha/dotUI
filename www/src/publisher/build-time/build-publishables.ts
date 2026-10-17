@@ -1,8 +1,7 @@
 /**
- * Build-time orchestrator. Iterates the dotui registry and emits a
- * `__generated__/publishables/<name>.ts` for every component whose
- * `styles.ts` can be statically extracted and whose `base.tsx` can be
- * transformed. Skipped components log a warning but don't abort the build.
+ * Build-time orchestrator. Emits a `__generated__/publishables/<name>.ts` for
+ * every registry item with files; any extraction or transform error aborts
+ * the build.
  *
  * Called from `scripts/registry-build.ts`. Imports `ts-morph` (via the
  * extract / transform modules) — never imported from a route bundle.
@@ -31,8 +30,10 @@ interface BuildPublishablesOptions {
 }
 
 export interface BuildPublishablesResult {
+  /** Every file written, including the index and the aggregate files. */
   written: string[]
-  skipped: Array<{ name: string; reason: string }>
+  /** Item names that got a publishable. */
+  published: string[]
 }
 
 export async function buildPublishables({
@@ -43,27 +44,24 @@ export async function buildPublishables({
   await fs.mkdir(outDir, { recursive: true })
 
   const written: string[] = []
-  const skipped: Array<{ name: string; reason: string }> = []
+  const published: string[] = []
   const metas = new Map(items.map((item) => [item.name, item]))
 
   for (const meta of items) {
     try {
-      const result = await buildOne({ meta, metas, registryDir, outDir })
-      if (result === "skipped") {
-        skipped.push({ name: meta.name, reason: "no files in meta.files" })
-      } else if (typeof result === "string") {
-        written.push(result)
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err)
-      skipped.push({ name: meta.name, reason: message })
+      written.push(await buildOne({ meta, metas, registryDir, outDir }))
+    } catch (error) {
+      throw new Error(`[publisher] failed to build "${meta.name}"`, {
+        cause: error,
+      })
     }
+    published.push(meta.name)
   }
 
   // Emit the runtime lookup index so the route handler can resolve a
   // component name without dynamically constructing import paths.
   const indexPath = path.join(outDir, "index.ts")
-  await fs.writeFile(indexPath, renderIndex(written), "utf8")
+  await fs.writeFile(indexPath, renderIndex(published), "utf8")
   written.push(indexPath)
 
   // Convert the base CSS sources into shadcn registry fields so the init
@@ -93,7 +91,7 @@ export async function buildPublishables({
   )
   written.push(defaultsPath)
 
-  return { written, skipped }
+  return { written, published }
 }
 
 async function renderStyleVarDefaults(registryDir: string): Promise<string> {
@@ -135,22 +133,11 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
     ``,
   ].join("\n")
 
-  try {
-    const { code } = await format("style-var-defaults.ts", raw, {
-      printWidth: 120,
-      useTabs: true,
-    })
-    return code
-  } catch {
-    return raw
-  }
+  return formatGenerated("style-var-defaults.ts", raw)
 }
 
-function renderIndex(writtenPaths: string[]): string {
-  const names = writtenPaths
-    .filter((p) => p.endsWith(".ts") && !p.endsWith("/index.ts"))
-    .map((p) => path.basename(p, ".ts"))
-    .sort()
+function renderIndex(published: string[]): string {
+  const names = [...published].sort()
 
   const lines: string[] = []
   lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`)
@@ -187,13 +174,9 @@ async function renderBaseRegistryCss(registryDir: string): Promise<string> {
   ]
   const parts: string[] = []
   for (const file of candidates) {
-    try {
-      const css = await fs.readFile(file, "utf8")
-      parts.push(`/* ===== ${path.basename(file)} ===== */`)
-      parts.push(css.trimEnd())
-    } catch {
-      // Missing source file — skip silently.
-    }
+    const css = await fs.readFile(file, "utf8")
+    parts.push(`/* ===== ${path.basename(file)} ===== */`)
+    parts.push(css.trimEnd())
   }
   const bundle = parts.join("\n\n")
   const fields = cssToRegistryFields(bundle)
@@ -208,15 +191,7 @@ async function renderBaseRegistryCss(registryDir: string): Promise<string> {
     ``,
   ].join("\n")
 
-  try {
-    const { code } = await format("base-css.ts", raw, {
-      printWidth: 120,
-      useTabs: true,
-    })
-    return code
-  } catch {
-    return raw
-  }
+  return formatGenerated("base-css.ts", raw)
 }
 
 interface BuildOneInput {
@@ -227,16 +202,15 @@ interface BuildOneInput {
 }
 
 /**
- * Build one publishable. Returns the file path written, "skipped" when the
- * item has no shippable files, or throws. Style-less lib/hook items (no
- * `base.tsx`) ship their files verbatim so `/r/<name>` serves them too.
+ * Build one publishable and return the file path written. Style-less lib/hook
+ * items (no `base.tsx`) ship their files verbatim so `/r/<name>` serves them too.
  */
 async function buildOne({
   meta,
   metas,
   registryDir,
   outDir,
-}: BuildOneInput): Promise<string | "skipped"> {
+}: BuildOneInput): Promise<string> {
   const baseFiles = collectBaseFiles(meta)
   if (baseFiles.length === 0) {
     return buildStylelessPublishable({ meta, registryDir, outDir })
@@ -340,9 +314,11 @@ async function buildStylelessPublishable({
   meta,
   registryDir,
   outDir,
-}: Omit<BuildOneInput, "metas">): Promise<string | "skipped"> {
+}: Omit<BuildOneInput, "metas">): Promise<string> {
   const files = meta.files ?? []
-  if (files.length === 0) return "skipped"
+  if (files.length === 0) {
+    throw new Error(`[publisher] ${meta.name}: meta.ts lists no files`)
+  }
 
   const extraFiles: Record<string, string> = {}
   for (const file of files) {
@@ -463,6 +439,23 @@ function isBaseFile(file: RegistryItemFile, componentName: string): boolean {
   )
 }
 
+/** Format generated source; a parse error means the generator emitted broken code. */
+export async function formatGenerated(
+  fileName: string,
+  raw: string,
+): Promise<string> {
+  const { code, errors } = await format(fileName, raw, {
+    printWidth: 120,
+    useTabs: true,
+  })
+  if (errors.length > 0) {
+    throw new Error(
+      `${fileName} doesn't parse:${errors.map((e) => e.codeframe ?? ` ${e.message}`).join("")}`,
+    )
+  }
+  return code
+}
+
 function emptyStylesConfig(): StylesConfig {
   return { base: {} }
 }
@@ -505,15 +498,7 @@ async function renderStylelessPublishableSource({
   ]
 
   const raw = lines.join("\n")
-  try {
-    const { code } = await format("publishable.ts", raw, {
-      printWidth: 120,
-      useTabs: true,
-    })
-    return code
-  } catch {
-    return raw
-  }
+  return formatGenerated(`${meta.name}.ts`, raw)
 }
 
 async function renderPublishableSource({
@@ -599,16 +584,7 @@ async function renderPublishableSource({
   lines.push(``)
 
   const raw = lines.join("\n")
-  try {
-    const { code } = await format("publishable.ts", raw, {
-      printWidth: 120,
-      useTabs: true,
-    })
-    return code
-  } catch {
-    // Formatting is cosmetic — never block the build over a formatter hiccup.
-    return raw
-  }
+  return formatGenerated(`${meta.name}.ts`, raw)
 }
 
 function renderExtraFilesLiteral(
