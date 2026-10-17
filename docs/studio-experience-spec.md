@@ -141,8 +141,8 @@ and future search must index absorbed names.
 
 **Adopted (Oct 2026):** after Foundations, six component chapters (Actions,
 Forms, Overlays, Navigation, Data display, Feedback) list **one row per
-component** (`sections/components.tsx`). A component with one key is that
-key's row; one with several opens a drill-in page of its rows. Related
+component** (`sections/components.tsx`). A component with one row renders it
+directly; one with several rows opens a drill-in page of them. Related
 components share a row and are found by alias (Button answers to Toggle
 button and Button group). Alert and Toast have rows like every other
 component. Per-control colors (checkbox, switch, slider, tabs, links…) are

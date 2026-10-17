@@ -69,7 +69,8 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 - `pnpm dev:www` — dev server. Like `build` and `typecheck`, it builds the registry first (~2s), so fresh clones, worktrees, and branch switches always serve current output.
 - `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix. `check:fix` also rewrites Tailwind classes to their canonical spelling (IntelliSense's `suggestCanonicalClasses`); not enforced in CI.
-- `pnpm typecheck` · `pnpm test` — vitest, every `*.test.ts(x)` in the repo (`packages/colors`, the publisher, the studio axes, …).
+- `pnpm typecheck` — tsc across the workspace.
+- `pnpm test` — vitest, every `*.test.ts(x)` in the repo (`packages/colors`, the publisher, the studio axes, …).
 
 ### Registry changes
 
