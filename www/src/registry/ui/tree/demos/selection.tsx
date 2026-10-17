@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 import type { Selection } from "react-aria-components"
 
 import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 export default function Demo() {
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set(["report", "mountains"]),
   )
 

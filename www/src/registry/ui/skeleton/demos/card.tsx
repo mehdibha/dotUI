@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
@@ -18,7 +18,7 @@ import { Skeleton } from "@/registry/ui/skeleton"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export default function Demo() {
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = React.useState(true)
   return (
     <>
       <Switch isSelected={isLoading} onChange={setLoading}>

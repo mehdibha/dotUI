@@ -10,7 +10,7 @@ import {
   EmptyTitle,
 } from "@/registry/ui/empty"
 
-export default function EmptyProjects() {
+export default function Demo() {
   return (
     <Empty>
       <EmptyHeader>

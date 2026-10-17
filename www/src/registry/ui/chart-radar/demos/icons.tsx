@@ -15,7 +15,7 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
-export default function ChartRadarIcons() {
+export default function Demo() {
   return (
     <div>
       <RadarChart

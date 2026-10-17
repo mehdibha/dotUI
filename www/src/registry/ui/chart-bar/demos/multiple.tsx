@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-export default function ChartBarMultiple() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

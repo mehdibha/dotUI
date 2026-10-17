@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Button } from "@/registry/ui/button"
 import { Description, FieldError, Label } from "@/registry/ui/field"
@@ -10,7 +10,7 @@ import { TextField } from "@/registry/ui/text-field"
 const MAX_LENGTH = 240
 
 export default function Demo() {
-  const [feedback, setFeedback] = useState("")
+  const [feedback, setFeedback] = React.useState("")
   const isTooLong = feedback.length > MAX_LENGTH
 
   return (

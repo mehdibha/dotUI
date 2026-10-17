@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import {
   ChevronDownIcon,
@@ -17,7 +17,7 @@ import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 export default function Demo() {
-  const [country, setCountry] = useState("+1")
+  const [country, setCountry] = React.useState("+1")
   return (
     <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>

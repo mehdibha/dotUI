@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type React from "react"
 import { MoreHorizontalIcon, PencilIcon } from "lucide-react"
 
 import { Badge } from "@/registry/ui/badge"
@@ -174,9 +174,9 @@ function EditableCellControl({
   label,
   value,
 }: {
-  children: ReactNode
+  children: React.ReactNode
   label: string
-  value: ReactNode
+  value: React.ReactNode
 }) {
   return (
     <div className="flex min-w-0 items-center justify-between gap-2">

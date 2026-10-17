@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { PieChart } from "@/registry/ui/chart-pie"
 import {
@@ -26,8 +26,8 @@ const labels = {
   may: "May",
 }
 
-export default function ChartPieInteractive() {
-  const [active, setActive] = useState(0)
+export default function Demo() {
+  const [active, setActive] = React.useState(0)
   const row = data[active] ?? data[0]
 
   return (

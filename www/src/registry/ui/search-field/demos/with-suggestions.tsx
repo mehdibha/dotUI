@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Input } from "@/registry/ui/input"
 import { SearchField } from "@/registry/ui/search-field"
@@ -17,7 +17,7 @@ const cities = [
 ]
 
 export default function Demo() {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = React.useState("")
 
   const suggestions = query
     ? cities.filter((city) => city.toLowerCase().includes(query.toLowerCase()))

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import {
   Accordion,
@@ -10,7 +10,7 @@ import {
 } from "@/registry/ui/accordion"
 
 export default function Demo() {
-  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(
+  const [expandedKeys, setExpandedKeys] = React.useState<Set<string>>(
     new Set(["getting-started"]),
   )
 

@@ -13,7 +13,7 @@ const data = [
 
 const values = new Map(data.map((row) => [row.month, row.desktop]))
 
-export default function ChartRadarLabelCustom() {
+export default function Demo() {
   return (
     <RadarChart
       data={data}
