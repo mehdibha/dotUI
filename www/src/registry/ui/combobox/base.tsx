@@ -43,8 +43,8 @@ const ComboboxValue = <T extends object>({
   return (
     <ComboBoxPrimitives.ComboBoxValue
       data-combobox-value=""
-      className={composeRenderProps(className, (c) =>
-        cn("flex items-center gap-1", c),
+      className={composeRenderProps(className, (className) =>
+        cn("flex items-center gap-1", className),
       )}
       {...props}
     />

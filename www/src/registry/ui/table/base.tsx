@@ -161,8 +161,8 @@ const Table = ({ className, striped, ...props }: TableProps) => {
     <TablePrimitives.Table
       data-slot="table"
       data-striped={striped || undefined}
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        table({ className }),
       )}
       {...props}
     />
@@ -194,8 +194,8 @@ const TableHeader = <T extends object>({
   return (
     <TablePrimitives.TableHeader
       data-slot="table-header"
-      className={composeRenderProps(className, (cn) =>
-        header({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        header({ className }),
       )}
       dependencies={dependencies}
       {...props}
@@ -236,8 +236,8 @@ const TableChromeColumn = ({
   return (
     <TablePrimitives.Column
       data-slot="table-chrome-column"
-      className={composeRenderProps(className, (cn) =>
-        chromeColumn({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        chromeColumn({ className }),
       )}
       {...props}
     >
@@ -266,8 +266,8 @@ const TableColumn = ({
   return (
     <TablePrimitives.Column
       data-slot="table-column"
-      className={composeRenderProps(className, (cn) =>
-        column({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        column({ className }),
       )}
       {...props}
     >
@@ -442,7 +442,9 @@ const TableCell = ({
   return (
     <TablePrimitives.Cell
       data-slot="table-cell"
-      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
+      className={composeRenderProps(className, (className) =>
+        cell({ className }),
+      )}
       style={composeRenderProps(
         style,
         (style, { hasChildItems, isTreeColumn, level }) => ({
@@ -491,8 +493,8 @@ const TableDropIndicator = ({
 
   return (
     <DragAndDropPrimitives.DropIndicator
-      className={composeRenderProps(className, (cn) =>
-        dropIndicator({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        dropIndicator({ className }),
       )}
       {...props}
     >

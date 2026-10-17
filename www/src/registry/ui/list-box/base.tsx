@@ -29,7 +29,9 @@ const ListBox = <T extends object>({
   return (
     <ListBoxPrimitives.ListBox
       data-listbox=""
-      className={composeRenderProps(className, (cn) => root({ className: cn }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       data-standalone={standalone ?? undefined}
       {...props}
     >
@@ -70,7 +72,9 @@ const ListBoxItem = <T extends object>({
       data-listbox-item=""
       data-variant={variant}
       textValue={textValue}
-      className={composeRenderProps(className, (cn) => item({ className: cn }))}
+      className={composeRenderProps(className, (className) =>
+        item({ className }),
+      )}
       {...props}
     >
       {composeRenderProps(

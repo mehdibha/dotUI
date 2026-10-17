@@ -24,8 +24,8 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
     <SliderPrimitives.Slider
       data-slider=""
       data-field=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        root({ className: cn, orientation }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        root({ className, orientation }),
       )}
       aria-describedby={descriptionId}
       {...props}
@@ -61,8 +61,8 @@ const SliderControl = ({
   return (
     <SliderPrimitives.SliderTrack
       data-slider-control=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        control({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        control({ orientation, className }),
       )}
       {...props}
     >

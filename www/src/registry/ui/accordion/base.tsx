@@ -35,7 +35,9 @@ const Accordion = ({ className, ...props }: AccordionProps) => {
   return (
     <DisclosureGroupPrimitives.DisclosureGroup
       data-accordion=""
-      className={composeRenderProps(className, (c) => root({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       {...props}
     />
   )
@@ -52,7 +54,9 @@ const AccordionItem = ({ className, ...props }: AccordionItemProps) => {
   return (
     <DisclosurePrimitives.Disclosure
       data-accordion-item=""
-      className={composeRenderProps(className, (c) => item({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        item({ className }),
+      )}
       {...props}
     />
   )
@@ -72,8 +76,8 @@ const AccordionTrigger = ({ className, ...props }: AccordionTriggerProps) => {
       <ButtonPrimitives.Button
         slot="trigger"
         data-accordion-trigger=""
-        className={composeRenderProps(className, (c) =>
-          trigger({ className: c }),
+        className={composeRenderProps(className, (className) =>
+          trigger({ className }),
         )}
         {...props}
       >
@@ -101,7 +105,9 @@ const AccordionPanel = ({ className, ...props }: AccordionPanelProps) => {
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-accordion-panel=""
-      className={composeRenderProps(className, (c) => panel({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
+      )}
       {...props}
     >
       <div className={panelContent()}>{props.children}</div>

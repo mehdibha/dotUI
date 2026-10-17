@@ -58,8 +58,8 @@ const Button = ({
     <ButtonPrimitives.Button
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        styles({ variant, size, isIconOnly, className }),
       )}
       {...props}
       // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
@@ -91,8 +91,8 @@ const LinkButton = ({
     <LinkPrimitives.Link
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        styles({ variant, size, isIconOnly, className }),
       )}
       {...props}
     >

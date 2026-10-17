@@ -312,7 +312,9 @@ const SidebarRail = ({ className, ...props }: SidebarRailProps) => {
       aria-label="Toggle Sidebar"
       excludeFromTabOrder
       onPress={toggleSidebar}
-      className={composeRenderProps(className, (c) => rail({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        rail({ className }),
+      )}
       {...props}
     />
   )
@@ -431,8 +433,8 @@ const SidebarGroupAction = ({
   return (
     <ButtonPrimitives.Button
       data-slot="sidebar-group-action"
-      className={composeRenderProps(className, (c) =>
-        groupAction({ className: c }),
+      className={composeRenderProps(className, (className) =>
+        groupAction({ className }),
       )}
       {...props}
     />
@@ -587,8 +589,8 @@ const SidebarMenuAction = ({
     <ButtonPrimitives.Button
       data-slot="sidebar-menu-action"
       data-show-on-hover={showOnHover || undefined}
-      className={composeRenderProps(className, (c) =>
-        menuAction({ className: c }),
+      className={composeRenderProps(className, (className) =>
+        menuAction({ className }),
       )}
       {...props}
     />

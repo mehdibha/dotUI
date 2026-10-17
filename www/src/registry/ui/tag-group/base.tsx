@@ -40,8 +40,8 @@ const TagList = <T extends object>({
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
-      className={composeRenderProps(className, (cn) =>
-        tagList({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        tagList({ className }),
       )}
       {...props}
     />

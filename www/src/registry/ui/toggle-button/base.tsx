@@ -51,12 +51,12 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
       data-variant={variant}
       data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
+      className={composeRenderProps(className, (className) =>
         styles({
           variant,
           size,
           isIconOnly,
-          className: cn,
+          className,
         }),
       )}
       {...props}

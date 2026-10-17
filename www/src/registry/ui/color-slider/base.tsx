@@ -33,8 +33,8 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
       ]}
     >
       <ColorSliderPrimitives.ColorSlider
-        className={composeRenderProps(className, (cn, { orientation }) =>
-          root({ orientation, className: cn }),
+        className={composeRenderProps(className, (className, { orientation }) =>
+          root({ orientation, className }),
         )}
         aria-describedby={descriptionId}
         {...props}
@@ -60,8 +60,8 @@ const ColorSliderControl = ({
   return (
     <SliderPrimitives.SliderTrack
       data-slot="color-slider-control"
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        track({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        track({ orientation, className }),
       )}
       style={composeRenderProps(style, (style, { defaultStyle }) => ({
         ...defaultStyle,

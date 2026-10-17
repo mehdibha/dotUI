@@ -20,7 +20,9 @@ const Collapsible = ({ className, ...props }: CollapsibleProps) => {
   return (
     <DisclosurePrimitives.Disclosure
       data-collapsible=""
-      className={composeRenderProps(className, (c) => root({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       {...props}
     />
   )
@@ -41,8 +43,8 @@ const CollapsibleTrigger = ({
     <ButtonPrimitives.Button
       slot="trigger"
       data-collapsible-trigger=""
-      className={composeRenderProps(className, (c) =>
-        trigger({ className: c }),
+      className={composeRenderProps(className, (className) =>
+        trigger({ className }),
       )}
       {...props}
     />
@@ -60,7 +62,9 @@ const CollapsiblePanel = ({ className, ...props }: CollapsiblePanelProps) => {
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-collapsible-panel=""
-      className={composeRenderProps(className, (c) => panel({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
+      )}
       {...props}
     />
   )

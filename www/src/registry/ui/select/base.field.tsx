@@ -41,8 +41,8 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
       data-field=""
       data-select=""
       data-slot="select"
-      className={composeRenderProps(className, (cn) =>
-        fieldStyles().field({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        fieldStyles().field({ className }),
       )}
       {...props}
     />

@@ -34,8 +34,8 @@ const Tabs = ({ className, ...props }: TabsProps) => {
   const { root } = useStyles()()
   return (
     <TabsPrimitives.Tabs
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        root({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        root({ orientation, className }),
       )}
       {...props}
     >
@@ -59,8 +59,8 @@ const TabList = ({ className, variant, ...props }: TabListProps) => {
   return (
     <TabListProvider value={variant}>
       <TabsPrimitives.TabList
-        className={composeRenderProps(className, (cn, { orientation }) =>
-          list({ orientation, variant, className: cn }),
+        className={composeRenderProps(className, (className, { orientation }) =>
+          list({ orientation, variant, className }),
         )}
         {...props}
       />
@@ -80,8 +80,8 @@ const Tab = ({ className, ...props }: TabProps) => {
     <TabsPrimitives.Tab
       data-tab=""
       data-orientation={orientation}
-      className={composeRenderProps(className, (cn) =>
-        item({ orientation, variant, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        item({ orientation, variant, className }),
       )}
       {...props}
     >
@@ -114,8 +114,8 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
     <SelectionIndicatorPrimitives.SelectionIndicator
       data-tab-indicator=""
       data-orientation={orientation}
-      className={composeRenderProps(className, (cn) =>
-        indicator({ orientation, variant, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        indicator({ orientation, variant, className }),
       )}
       {...props}
     />
@@ -133,8 +133,8 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
   return (
     <TabsPrimitives.TabPanel
       data-tab-panel
-      className={composeRenderProps(className, (cn) =>
-        panel({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
       )}
       {...props}
     />
