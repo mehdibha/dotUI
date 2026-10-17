@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 166 icons the registry uses (not the entire library)
+// Only exports the 178 icons the registry uses (not the entire library)
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -60,6 +60,7 @@ import {
 	FolderOpenIcon as FolderOpenIconData,
 	FolderAddIcon as FolderAddIconData,
 	Search01Icon as Search01IconData,
+	ArrowTurnForwardIcon as ArrowTurnForwardIconData,
 	CropIcon as CropIconData,
 	GitBranchIcon as GitBranchIconData,
 	GlobalIcon as GlobalIconData,
@@ -96,18 +97,26 @@ import {
 	MoreHorizontalCircle01Icon as MoreHorizontalCircle01IconData,
 	MoreVerticalCircle01Icon as MoreVerticalCircle01IconData,
 	Cursor01Icon as Cursor01IconData,
+	MusicNote01Icon as MusicNote01IconData,
 	MultiplicationSignCircleIcon as MultiplicationSignCircleIconData,
 	PaintBoardIcon as PaintBoardIconData,
 	LayoutLeftIcon as LayoutLeftIconData,
 	AttachmentIcon as AttachmentIconData,
+	PauseIcon as PauseIconData,
 	Edit01Icon as Edit01IconData,
 	Edit02Icon as Edit02IconData,
 	QuillWrite01Icon as QuillWrite01IconData,
 	PinIcon as PinIconData,
+	PlayIcon as PlayIconData,
 	Plug01Icon as Plug01IconData,
 	PlusSignCircleIcon as PlusSignCircleIconData,
 	PlusSignSquareIcon as PlusSignSquareIconData,
+	PrinterIcon as PrinterIconData,
 	RefreshIcon as RefreshIconData,
+	RepeatOne01Icon as RepeatOne01IconData,
+	RepeatIcon as RepeatIconData,
+	MailReplyAll01Icon as MailReplyAll01IconData,
+	MailReply01Icon as MailReply01IconData,
 	Rotate01Icon as Rotate01IconData,
 	RulerIcon as RulerIconData,
 	FloppyDiskIcon as FloppyDiskIconData,
@@ -122,7 +131,10 @@ import {
 	SecurityIcon as SecurityIconData,
 	ShoppingBag01Icon as ShoppingBag01IconData,
 	ShoppingCart01Icon as ShoppingCart01IconData,
+	ShuffleIcon as ShuffleIconData,
 	SignalFull01Icon as SignalFull01IconData,
+	PreviousIcon as PreviousIconData,
+	NextIcon as NextIconData,
 	CommandIcon as CommandIconData,
 	SmileIcon as SmileIconData,
 	SparklesIcon as SparklesIconData,
@@ -223,6 +235,7 @@ export const FolderIcon = wrap(Folder01IconData);
 export const FolderOpenIcon = wrap(FolderOpenIconData);
 export const FolderPlusIcon = wrap(FolderAddIconData);
 export const FolderSearchIcon = wrap(Search01IconData);
+export const ForwardIcon = wrap(ArrowTurnForwardIconData);
 export const FrameIcon = wrap(CropIconData);
 export const GitBranchIcon = wrap(GitBranchIconData);
 export const GlobeIcon = wrap(GlobalIconData);
@@ -262,20 +275,28 @@ export const MoonStarIcon = wrap(Moon02IconData);
 export const MoreHorizontalIcon = wrap(MoreHorizontalCircle01IconData);
 export const MoreVerticalIcon = wrap(MoreVerticalCircle01IconData);
 export const MousePointer2Icon = wrap(Cursor01IconData);
+export const MusicIcon = wrap(MusicNote01IconData);
 export const OctagonXIcon = wrap(MultiplicationSignCircleIconData);
 export const PaletteIcon = wrap(PaintBoardIconData);
 export const PanelLeftIcon = wrap(LayoutLeftIconData);
 export const PaperclipIcon = wrap(AttachmentIconData);
+export const PauseIcon = wrap(PauseIconData);
 export const PencilIcon = wrap(Edit01IconData);
 export const PenSquareIcon = wrap(Edit02IconData);
 export const PenToolIcon = wrap(QuillWrite01IconData);
 export const PinIcon = wrap(PinIconData);
+export const PlayIcon = wrap(PlayIconData);
 export const PlugIcon = wrap(Plug01IconData);
 export const PlusCircleIcon = wrap(PlusSignCircleIconData);
 export const PlusIcon = wrap(PlusSignIconData);
 export const PlusSquareIcon = wrap(PlusSignSquareIconData);
+export const PrinterIcon = wrap(PrinterIconData);
 export const RadioIcon = wrap(RecordIconData);
 export const RefreshCwIcon = wrap(RefreshIconData);
+export const Repeat1Icon = wrap(RepeatOne01IconData);
+export const RepeatIcon = wrap(RepeatIconData);
+export const ReplyAllIcon = wrap(MailReplyAll01IconData);
+export const ReplyIcon = wrap(MailReply01IconData);
 export const RotateCwIcon = wrap(Rotate01IconData);
 export const RulerIcon = wrap(RulerIconData);
 export const SaveIcon = wrap(FloppyDiskIconData);
@@ -293,7 +314,10 @@ export const ShieldCheckIcon = wrap(SecurityCheckIconData);
 export const ShieldIcon = wrap(SecurityIconData);
 export const ShoppingBagIcon = wrap(ShoppingBag01IconData);
 export const ShoppingCartIcon = wrap(ShoppingCart01IconData);
+export const ShuffleIcon = wrap(ShuffleIconData);
 export const SignalHighIcon = wrap(SignalFull01IconData);
+export const SkipBackIcon = wrap(PreviousIconData);
+export const SkipForwardIcon = wrap(NextIconData);
 export const SlashSquareIcon = wrap(CommandIconData);
 export const SmileIcon = wrap(SmileIconData);
 export const SparklesIcon = wrap(SparklesIconData);
