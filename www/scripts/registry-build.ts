@@ -225,16 +225,10 @@ ${iconExports}
 }
 
 async function buildInternalExamples() {
-  // Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
-  // rather than registry/__generated__, so the registry tree never imports "up" into
-  // @/modules/studio/preview/group-examples — keeping registry/ items-only.
+  // Consumed only by the studio preview route (routes/preview/-preview-page.tsx).
   const targetDir = path.join(process.cwd(), "src/modules/studio/__generated__")
   const targetPath = path.join(targetDir, "examples.tsx")
   const uiDir = path.join(REGISTRY_DIR, "ui")
-  const groupExamplesDir = path.join(
-    process.cwd(),
-    "src/modules/studio/preview/group-examples",
-  )
   await fs.mkdir(targetDir, { recursive: true })
 
   const componentFolders = await fs.readdir(uiDir)
@@ -249,18 +243,6 @@ async function buildInternalExamples() {
     }
   }
 
-  const groupEntries: string[] = []
-  if (existsSync(groupExamplesDir)) {
-    const groupFiles = await fs.readdir(groupExamplesDir)
-    for (const file of groupFiles.sort()) {
-      if (!file.endsWith(".tsx")) continue
-      const name = file.replace(/\.tsx$/, "")
-      groupEntries.push(
-        `  "${name}": () => import("@/modules/studio/preview/group-examples/${name}"),`,
-      )
-    }
-  }
-
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
@@ -270,18 +252,11 @@ export const ExamplesIndex: Record<
 > = {
 ${entries.join("\n")}
 };
-
-export const GroupExamplesIndex: Record<
-  string,
-  () => Promise<{ default: React.ComponentType }>
-> = {
-${groupEntries.join("\n")}
-};
 `
 
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ studio/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
+    `  ✓ studio/__generated__/examples.tsx (${entries.length} components)`,
   )
 }
 

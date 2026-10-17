@@ -1,6 +1,6 @@
 /**
  * Every locked constant of the engine, in one place, traceable to SPEC.md.
- * All numbers were measured from primary sources — see `research/`.
+ * All numbers were measured from primary sources.
  */
 
 /** D1 — the 12 job slots, in ladder order. */
