@@ -37,7 +37,7 @@ const ColorPicker = ({
 }
 
 const ColorPickerInner = ({ children }: { children: React.ReactNode }) => {
-  const buttonContext = React.use(ButtonContext)
+  const buttonContext = React.useContext(ButtonContext)
   return (
     <Provider
       values={[

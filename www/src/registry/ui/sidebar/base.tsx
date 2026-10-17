@@ -12,7 +12,6 @@ import { useControlledState } from "react-stately/useControlledState"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { PanelLeftIcon } from "@/registry/icons"
-import { createContext } from "@/registry/lib/context"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Drawer } from "@/registry/ui/drawer"
@@ -42,14 +41,15 @@ interface SidebarContextValue {
   toggleSidebar: () => void
 }
 
-const [SidebarContext, useSidebarContext] = createContext<SidebarContextValue>({
-  name: "SidebarProvider",
-  strict: true,
-})
+const SidebarContext = React.createContext<SidebarContextValue | null>(null)
 
 /** Access the sidebar's open/collapsed state and toggles from any descendant. */
 function useSidebar(): SidebarContextValue {
-  return useSidebarContext("useSidebar")
+  const context = React.useContext(SidebarContext)
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider")
+  }
+  return context
 }
 
 // MARK: Separator

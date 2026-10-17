@@ -24,7 +24,7 @@ const ListBox = <T extends object>({
   ...props
 }: ListBoxProps<T>) => {
   const { root, loadMore } = useStyles()()
-  const standalone = !React.use(ListBoxPrimitives.ListBoxContext)
+  const standalone = !React.useContext(ListBoxPrimitives.ListBoxContext)
 
   return (
     <ListBoxPrimitives.ListBox

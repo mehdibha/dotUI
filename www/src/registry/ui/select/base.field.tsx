@@ -57,7 +57,7 @@ interface SelectTriggerProps extends ButtonPrimitives.ButtonProps {
 const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
   const { trigger } = useInputStyles()()
   // React Aria marks the Select invalid, not its button.
-  const isInvalid = React.use(SelectPrimitives.SelectStateContext)
+  const isInvalid = React.useContext(SelectPrimitives.SelectStateContext)
     ?.displayValidation.isInvalid
   return (
     <ButtonPrimitives.Button

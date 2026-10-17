@@ -9,7 +9,7 @@ import { useStyles } from "./styles"
 const ProgressBarContext =
   React.createContext<ProgressBarPrimitives.ProgressBarRenderProps | null>(null)
 const useProgressBarContext = (componentName: string) => {
-  const context = React.use(ProgressBarContext)
+  const context = React.useContext(ProgressBarContext)
   if (!context) {
     throw new Error(`${componentName} must be used within a ProgressBar`)
   }

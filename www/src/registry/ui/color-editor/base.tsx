@@ -48,7 +48,7 @@ const ColorEditor = ({
   children,
   ...props
 }: ColorEditorProps) => {
-  const state = React.use(ColorPickerPrimitives.ColorPickerStateContext)
+  const state = React.useContext(ColorPickerPrimitives.ColorPickerStateContext)
   const { root } = useStyles()()
   const content = (
     <div className={root({ className })} {...props}>

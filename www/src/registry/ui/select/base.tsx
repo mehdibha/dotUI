@@ -54,7 +54,7 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
   const { buttonTrigger } = useInputStyles()()
   // React Aria marks the Select invalid, not its button.
-  const isInvalid = React.use(SelectPrimitives.SelectStateContext)
+  const isInvalid = React.useContext(SelectPrimitives.SelectStateContext)
     ?.displayValidation.isInvalid
   return (
     <Button
