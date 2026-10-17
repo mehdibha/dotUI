@@ -448,7 +448,7 @@ export function DialPickList({
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
-      className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
+      className="flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
         <PickItem
