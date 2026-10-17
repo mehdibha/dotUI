@@ -14,6 +14,8 @@ import { Loader } from "@/registry/ui/loader"
 
 import { useStyles } from "./styles"
 
+// MARK: toastStyles
+
 type ToastVariant =
   | "neutral"
   | "success"
@@ -91,12 +93,14 @@ function getSwipeDirection(
   return ["right", verticalDirection]
 }
 
+// MARK: Separator
+
 interface ToastProviderProps extends ToastPrimitive.Provider.Props {
   position?: ToastPosition
   portalProps?: ToastPrimitive.Portal.Props
 }
 
-function ToastProvider({
+const ToastProvider = ({
   children,
   limit = 3,
   position,
@@ -104,7 +108,7 @@ function ToastProvider({
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
-}: ToastProviderProps) {
+}: ToastProviderProps) => {
   const { defaultVariants } = useStyles()
   return (
     <ToastPrimitive.Provider
@@ -127,14 +131,14 @@ interface ToastListProps {
   portalProps?: ToastPrimitive.Portal.Props
 }
 
-function ToastList({ position, portalProps }: ToastListProps) {
+const ToastList = ({ position, portalProps }: ToastListProps) => {
   const { toasts } = ToastPrimitive.useToastManager<ToastData>()
   const { viewport } = useStyles()()
 
   return (
     <ToastPrimitive.Portal {...portalProps}>
       <ToastPrimitive.Viewport
-        data-slot="toast-viewport"
+        data-toast-viewport=""
         data-position={position}
         className={viewport({ position })}
       >
@@ -151,7 +155,7 @@ interface ToastItemProps {
   toast: ToastObject
 }
 
-function ToastItem({ position, toast: toastItem }: ToastItemProps) {
+const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
   const data = toastItem.data
   const variant = getToastVariant(toastItem.type)
   const Icon = variant === "neutral" ? null : toastIcons[variant]
@@ -178,7 +182,7 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
     <ToastPrimitive.Root
       {...data?.rootProps}
       data-position={position}
-      data-slot="toast"
+      data-toast=""
       swipeDirection={getSwipeDirection(position)}
       toast={toastItem}
       className={toastStyle({ position, variant })}
@@ -186,25 +190,25 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
       <ToastPrimitive.Content className={content()}>
         <div className={body()}>
           {Icon ? (
-            <div data-slot="toast-icon" className={icon({ variant })}>
+            <div data-toast-icon="" className={icon({ variant })}>
               <Icon aria-hidden="true" />
             </div>
           ) : null}
-          <div data-slot="toast-message" className={message()}>
+          <div data-toast-message="" className={message()}>
             <ToastPrimitive.Title
-              data-slot="toast-title"
+              data-toast-title=""
               className={title({ variant })}
             />
             <ToastPrimitive.Description
-              data-slot="toast-description"
+              data-toast-description=""
               className={description({ variant })}
             />
           </div>
         </div>
         {toastItem.actionProps ? (
-          <div data-slot="toast-actions" className={actions()}>
+          <div data-toast-actions="" className={actions()}>
             <ToastPrimitive.Action
-              data-slot="toast-action"
+              data-toast-action=""
               className={buttonStyles({
                 variant: onFill ? "quiet" : "secondary",
                 size: "sm",
@@ -219,6 +223,8 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
 }
 
 const Toaster = ToastProvider
+
+// MARK: Separator
 
 export type { ToastProviderProps }
 export {

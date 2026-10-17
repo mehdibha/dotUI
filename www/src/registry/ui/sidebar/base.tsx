@@ -12,7 +12,6 @@ import { useControlledState } from "react-stately/useControlledState"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { PanelLeftIcon } from "@/registry/icons"
-import { createContext } from "@/registry/lib/context"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Drawer } from "@/registry/ui/drawer"
@@ -42,14 +41,15 @@ interface SidebarContextValue {
   toggleSidebar: () => void
 }
 
-const [SidebarContext, useSidebarContext] = createContext<SidebarContextValue>({
-  name: "SidebarProvider",
-  strict: true,
-})
+const SidebarContext = React.createContext<SidebarContextValue | null>(null)
 
 /** Access the sidebar's open/collapsed state and toggles from any descendant. */
 function useSidebar(): SidebarContextValue {
-  return useSidebarContext("useSidebar")
+  const context = React.useContext(SidebarContext)
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider")
+  }
+  return context
 }
 
 // MARK: Separator
@@ -60,7 +60,7 @@ interface SidebarProviderProps extends React.ComponentProps<"div"> {
   onOpenChange?: (open: boolean) => void
 }
 
-function SidebarProvider({
+const SidebarProvider = ({
   defaultOpen = true,
   isOpen: openProp,
   onOpenChange,
@@ -68,7 +68,7 @@ function SidebarProvider({
   style,
   children,
   ...props
-}: SidebarProviderProps) {
+}: SidebarProviderProps) => {
   const { wrapper } = useStyles()()
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
@@ -119,7 +119,7 @@ function SidebarProvider({
   return (
     <SidebarContext value={value}>
       <div
-        data-slot="sidebar-wrapper"
+        data-sidebar-wrapper=""
         style={
           {
             "--sidebar-width": SIDEBAR_WIDTH,
@@ -145,7 +145,7 @@ const SidebarItemContext = React.createContext<{
 }>({ collapsible: "offcanvas" })
 
 // Lets a header `<Heading>` label the nav landmark; content/footer reset the id so their headings don't claim it.
-function SidebarNav({
+const SidebarNav = ({
   headingId,
   collapsible,
   children,
@@ -153,7 +153,7 @@ function SidebarNav({
   headingId?: string
   collapsible: SidebarCollapsible
   children: React.ReactNode
-}) {
+}) => {
   return (
     <SidebarItemContext value={{ collapsible }}>
       <Provider
@@ -172,14 +172,14 @@ interface SidebarProps extends React.ComponentProps<"nav"> {
   collapsible?: SidebarCollapsible
 }
 
-function Sidebar({
+const Sidebar = ({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
   className,
   children,
   ...props
-}: SidebarProps) {
+}: SidebarProps) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
   const { root, gap, container, inner, mobile } = useStyles()()
   const headingId = useSlotId()
@@ -187,7 +187,7 @@ function Sidebar({
   if (collapsible === "none") {
     return (
       <nav
-        data-slot="sidebar"
+        data-sidebar=""
         aria-label="Sidebar"
         aria-labelledby={headingId}
         className={inner({ className: cn("w-(--sidebar-width)", className) })}
@@ -212,7 +212,7 @@ function Sidebar({
         }
       >
         <nav
-          data-slot="sidebar"
+          data-sidebar=""
           data-mobile="true"
           aria-label="Sidebar"
           aria-labelledby={headingId}
@@ -230,16 +230,16 @@ function Sidebar({
   return (
     <div
       className={root()}
-      data-slot="sidebar"
+      data-sidebar=""
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
     >
-      <div data-slot="sidebar-gap" className={gap()} />
-      <div data-slot="sidebar-container" className={container()}>
+      <div data-sidebar-gap="" className={gap()} />
+      <div data-sidebar-container="" className={container()}>
         <nav
-          data-slot="sidebar-inner"
+          data-sidebar-inner=""
           aria-label="Sidebar"
           aria-labelledby={headingId}
           className={inner({ className })}
@@ -258,14 +258,10 @@ function Sidebar({
 
 interface SidebarInsetProps extends React.ComponentProps<"main"> {}
 
-function SidebarInset({ className, ...props }: SidebarInsetProps) {
+const SidebarInset = ({ className, ...props }: SidebarInsetProps) => {
   const { inset } = useStyles()()
   return (
-    <main
-      data-slot="sidebar-inset"
-      className={inset({ className })}
-      {...props}
-    />
+    <main data-sidebar-inset="" className={inset({ className })} {...props} />
   )
 }
 
@@ -273,12 +269,12 @@ function SidebarInset({ className, ...props }: SidebarInsetProps) {
 
 interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
-function SidebarTrigger({
+const SidebarTrigger = ({
   onPress,
   className,
   children,
   ...props
-}: SidebarTriggerProps) {
+}: SidebarTriggerProps) => {
   const { toggleSidebar } = useSidebar()
   return (
     <Button
@@ -304,7 +300,7 @@ interface SidebarRailProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function SidebarRail({ className, ...props }: SidebarRailProps) {
+const SidebarRail = ({ className, ...props }: SidebarRailProps) => {
   const { toggleSidebar } = useSidebar()
   const { rail } = useStyles()()
   return (
@@ -312,7 +308,9 @@ function SidebarRail({ className, ...props }: SidebarRailProps) {
       aria-label="Toggle Sidebar"
       excludeFromTabOrder
       onPress={toggleSidebar}
-      className={composeRenderProps(className, (c) => rail({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        rail({ className }),
+      )}
       {...props}
     />
   )
@@ -324,11 +322,11 @@ interface SidebarHeaderProps extends React.ComponentProps<
   typeof HeaderPrimitives.Header
 > {}
 
-function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
+const SidebarHeader = ({ className, ...props }: SidebarHeaderProps) => {
   const { header } = useStyles()()
   return (
     <HeaderPrimitives.Header
-      data-slot="sidebar-header"
+      data-sidebar-header=""
       className={header({ className })}
       {...props}
     />
@@ -339,12 +337,12 @@ function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
 
 interface SidebarFooterProps extends React.ComponentProps<"div"> {}
 
-function SidebarFooter({ className, ...props }: SidebarFooterProps) {
+const SidebarFooter = ({ className, ...props }: SidebarFooterProps) => {
   const { footer } = useStyles()()
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
       <div
-        data-slot="sidebar-footer"
+        data-sidebar-footer=""
         className={footer({ className })}
         {...props}
       />
@@ -356,12 +354,12 @@ function SidebarFooter({ className, ...props }: SidebarFooterProps) {
 
 interface SidebarContentProps extends React.ComponentProps<"div"> {}
 
-function SidebarContent({ className, ...props }: SidebarContentProps) {
+const SidebarContent = ({ className, ...props }: SidebarContentProps) => {
   const { content } = useStyles()()
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
       <div
-        data-slot="sidebar-content"
+        data-sidebar-content=""
         className={content({ className })}
         {...props}
       />
@@ -375,7 +373,7 @@ interface SidebarSeparatorProps extends React.ComponentProps<
   typeof Separator
 > {}
 
-function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
+const SidebarSeparator = ({ className, ...props }: SidebarSeparatorProps) => {
   const { separator } = useStyles()()
   return <Separator className={separator({ className })} {...props} />
 }
@@ -384,13 +382,13 @@ function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
 
 interface SidebarGroupProps extends React.ComponentProps<"div"> {}
 
-function SidebarGroup({ className, ...props }: SidebarGroupProps) {
+const SidebarGroup = ({ className, ...props }: SidebarGroupProps) => {
   const { group } = useStyles()()
   const headingId = useSlotId()
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, { id: headingId }]]}>
       <div
-        data-slot="sidebar-group"
+        data-sidebar-group=""
         role="group"
         aria-labelledby={headingId}
         className={group({ className })}
@@ -406,11 +404,11 @@ interface SidebarGroupLabelProps extends React.ComponentProps<
   typeof HeadingPrimitives.Heading
 > {}
 
-function SidebarGroupLabel({ className, ...props }: SidebarGroupLabelProps) {
+const SidebarGroupLabel = ({ className, ...props }: SidebarGroupLabelProps) => {
   const { groupLabel } = useStyles()()
   return (
     <HeadingPrimitives.Heading
-      data-slot="sidebar-group-label"
+      data-sidebar-group-label=""
       className={groupLabel({ className })}
       {...props}
     />
@@ -423,13 +421,16 @@ interface SidebarGroupActionProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
+const SidebarGroupAction = ({
+  className,
+  ...props
+}: SidebarGroupActionProps) => {
   const { groupAction } = useStyles()()
   return (
     <ButtonPrimitives.Button
-      data-slot="sidebar-group-action"
-      className={composeRenderProps(className, (c) =>
-        groupAction({ className: c }),
+      data-sidebar-group-action=""
+      className={composeRenderProps(className, (className) =>
+        groupAction({ className }),
       )}
       {...props}
     />
@@ -440,14 +441,14 @@ function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
 
 interface SidebarGroupContentProps extends React.ComponentProps<"div"> {}
 
-function SidebarGroupContent({
+const SidebarGroupContent = ({
   className,
   ...props
-}: SidebarGroupContentProps) {
+}: SidebarGroupContentProps) => {
   const { groupContent } = useStyles()()
   return (
     <div
-      data-slot="sidebar-group-content"
+      data-sidebar-group-content=""
       className={groupContent({ className })}
       {...props}
     />
@@ -458,22 +459,20 @@ function SidebarGroupContent({
 
 interface SidebarMenuProps extends React.ComponentProps<"ul"> {}
 
-function SidebarMenu({ className, ...props }: SidebarMenuProps) {
+const SidebarMenu = ({ className, ...props }: SidebarMenuProps) => {
   const { menu } = useStyles()()
-  return (
-    <ul data-slot="sidebar-menu" className={menu({ className })} {...props} />
-  )
+  return <ul data-sidebar-menu="" className={menu({ className })} {...props} />
 }
 
 // MARK: Separator
 
 interface SidebarMenuItemProps extends React.ComponentProps<"li"> {}
 
-function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
+const SidebarMenuItem = ({ className, ...props }: SidebarMenuItemProps) => {
   const { menuItem } = useStyles()()
   return (
     <li
-      data-slot="sidebar-menu-item"
+      data-sidebar-menu-item=""
       className={menuItem({ className })}
       {...props}
     />
@@ -502,7 +501,7 @@ interface SidebarMenuButtonProps extends Omit<
   children?: React.ReactNode
 }
 
-function SidebarMenuButton({
+const SidebarMenuButton = ({
   isActive = false,
   size = "md",
   variant = "default",
@@ -512,13 +511,13 @@ function SidebarMenuButton({
   className,
   children,
   ...props
-}: SidebarMenuButtonProps) {
+}: SidebarMenuButtonProps) => {
   const { state, isMobile } = useSidebar()
   const { collapsible } = React.useContext(SidebarItemContext)
   const { menuButton } = useStyles()()
 
   const sharedProps = {
-    "data-slot": "sidebar-menu-button",
+    "data-sidebar-menu-button": "",
     "data-size": size,
     "data-variant": variant,
     "data-active": isActive || undefined,
@@ -574,18 +573,18 @@ interface SidebarMenuActionProps extends React.ComponentProps<
   showOnHover?: boolean
 }
 
-function SidebarMenuAction({
+const SidebarMenuAction = ({
   showOnHover = false,
   className,
   ...props
-}: SidebarMenuActionProps) {
+}: SidebarMenuActionProps) => {
   const { menuAction } = useStyles()()
   return (
     <ButtonPrimitives.Button
-      data-slot="sidebar-menu-action"
+      data-sidebar-menu-action=""
       data-show-on-hover={showOnHover || undefined}
-      className={composeRenderProps(className, (c) =>
-        menuAction({ className: c }),
+      className={composeRenderProps(className, (className) =>
+        menuAction({ className }),
       )}
       {...props}
     />
@@ -596,11 +595,11 @@ function SidebarMenuAction({
 
 interface SidebarMenuBadgeProps extends React.ComponentProps<"div"> {}
 
-function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
+const SidebarMenuBadge = ({ className, ...props }: SidebarMenuBadgeProps) => {
   const { menuBadge } = useStyles()()
   return (
     <div
-      data-slot="sidebar-menu-badge"
+      data-sidebar-menu-badge=""
       className={menuBadge({ className })}
       {...props}
     />
@@ -614,11 +613,11 @@ interface SidebarMenuSkeletonProps extends React.ComponentProps<"div"> {
   showIcon?: boolean
 }
 
-function SidebarMenuSkeleton({
+const SidebarMenuSkeleton = ({
   showIcon = false,
   className,
   ...props
-}: SidebarMenuSkeletonProps) {
+}: SidebarMenuSkeletonProps) => {
   const { menuSkeleton, menuSkeletonIcon, menuSkeletonText } = useStyles()()
 
   // Derived from the React id, not Math.random(), so SSR and client widths match.
@@ -633,7 +632,7 @@ function SidebarMenuSkeleton({
 
   return (
     <div
-      data-slot="sidebar-menu-skeleton"
+      data-sidebar-menu-skeleton=""
       className={menuSkeleton({ className })}
       {...props}
     >
@@ -650,11 +649,11 @@ function SidebarMenuSkeleton({
 
 interface SidebarMenuSubProps extends React.ComponentProps<"ul"> {}
 
-function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
+const SidebarMenuSub = ({ className, ...props }: SidebarMenuSubProps) => {
   const { menuSub } = useStyles()()
   return (
     <ul
-      data-slot="sidebar-menu-sub"
+      data-sidebar-menu-sub=""
       className={menuSub({ className })}
       {...props}
     />
@@ -665,11 +664,14 @@ function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
 
 interface SidebarMenuSubItemProps extends React.ComponentProps<"li"> {}
 
-function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
+const SidebarMenuSubItem = ({
+  className,
+  ...props
+}: SidebarMenuSubItemProps) => {
   const { menuSubItem } = useStyles()()
   return (
     <li
-      data-slot="sidebar-menu-sub-item"
+      data-sidebar-menu-sub-item=""
       className={menuSubItem({ className })}
       {...props}
     />
@@ -694,7 +696,7 @@ interface SidebarMenuSubButtonProps extends Omit<
   children?: React.ReactNode
 }
 
-function SidebarMenuSubButton({
+const SidebarMenuSubButton = ({
   isActive = false,
   size = "md",
   href,
@@ -702,12 +704,11 @@ function SidebarMenuSubButton({
   className,
   children,
   ...props
-}: SidebarMenuSubButtonProps) {
+}: SidebarMenuSubButtonProps) => {
   const { menuSubButton } = useStyles()()
 
   const sharedProps = {
-    "data-slot": "sidebar-menu-sub-button",
-    "data-sidebar": "menu-sub-button",
+    "data-sidebar-menu-sub-button": "",
     "data-size": size,
     "data-active": isActive || undefined,
     className: menuSubButton({ className }),

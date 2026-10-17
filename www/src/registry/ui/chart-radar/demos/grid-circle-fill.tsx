@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-export default function ChartRadarGridCircleFill() {
+export default function Demo() {
   return (
     <RadarChart
       data={data}

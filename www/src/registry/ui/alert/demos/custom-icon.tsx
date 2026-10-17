@@ -1,4 +1,4 @@
-import { InfoIcon } from "@/registry/__generated__/icons"
+import { InfoIcon } from "@/registry/icons"
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 
 export default function Demo() {

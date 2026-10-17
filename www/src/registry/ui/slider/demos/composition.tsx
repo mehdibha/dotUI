@@ -1,4 +1,4 @@
-import { Volume1Icon, Volume2Icon } from "@/registry/__generated__/icons"
+import { Volume1Icon, Volume2Icon } from "@/registry/icons"
 import { Description, Label } from "@/registry/ui/field"
 import {
   Slider,

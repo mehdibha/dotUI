@@ -52,7 +52,7 @@ const callouts = text(extremes, {
   fill: "var(--color-fg)",
 })
 
-export default function ChartLineLabelCustom() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

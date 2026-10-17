@@ -495,7 +495,7 @@ describe("drawn edges", () => {
     const state = { surfaceEdge: "ledge", controlStroke: "bold" }
     for (const name of ["checkbox", "radio-group", "switch"]) {
       expect(designSystemOf(owned(state)).componentParams[name]).toMatchObject({
-        "card-press": "sink",
+        cardPress: "sink",
       })
       expect(await shippedItem(name, state), name).toContain(sink)
       const origin = await shippedItem(name, {})

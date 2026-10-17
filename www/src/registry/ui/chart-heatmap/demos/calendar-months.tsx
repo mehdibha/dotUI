@@ -40,7 +40,7 @@ const data = years.flatMap(({ year, weight }) =>
   })),
 )
 
-export default function ChartHeatmapCalendarMonths() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

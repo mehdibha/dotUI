@@ -29,37 +29,37 @@ export default function ComboboxExamples() {
       <Example title="Invalid">
         <Invalid />
       </Example>
-      <Example title="With Groups">
+      <Example title="With groups">
         <Sections />
       </Example>
-      <Example title="With Groups and Separator">
+      <Example title="With groups and separator">
         <WithGroupsAndSeparator />
       </Example>
-      <Example title="Large List (1000 items)">
+      <Example title="Large list (1000 items)">
         <LargeList />
       </Example>
-      <Example title="With Icon Addon">
+      <Example title="With icon addon">
         <WithIcon />
       </Example>
-      <Example title="Form with Combobox">
+      <Example title="Form with combobox">
         <WithForm />
       </Example>
-      <Example title="Combobox Multiple">
+      <Example title="Combobox multiple">
         <Multiple />
       </Example>
-      <Example title="Combobox Multiple Disabled">
+      <Example title="Combobox multiple disabled">
         <MultipleDisabled />
       </Example>
-      <Example title="Combobox Multiple Invalid">
+      <Example title="Combobox multiple invalid">
         <MultipleInvalid />
       </Example>
       <Example title="Items with description">
         <WithCustomItems />
       </Example>
-      <Example title="Combobox in Dialog">
+      <Example title="Combobox in dialog">
         <InDialog />
       </Example>
-      <Example title="Disabled Items">
+      <Example title="Disabled items">
         <DisabledItems />
       </Example>
       <Example title="Sides" className="md:col-span-2">

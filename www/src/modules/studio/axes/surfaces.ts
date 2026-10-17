@@ -348,7 +348,7 @@ export function resolveSurfaces(state: Effective): Resolved {
   }
   const sidebar = SHELL_SIDEBAR[state.shellTone]
   if (sidebar) tokens["--color-sidebar"] = sidebar
-  const tile = { "card-press": state.surfaceEdge === "ledge" ? "sink" : "none" }
+  const tile = { cardPress: state.surfaceEdge === "ledge" ? "sink" : "none" }
   return {
     tokens,
     params: {

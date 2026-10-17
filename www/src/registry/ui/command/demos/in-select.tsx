@@ -1,7 +1,6 @@
 "use client"
 
-import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
-
+import { ChevronDownIcon, SearchIcon, XIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Label } from "@/registry/ui/field"

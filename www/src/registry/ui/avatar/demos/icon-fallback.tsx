@@ -1,5 +1,4 @@
-import { UserIcon } from "lucide-react"
-
+import { UserIcon } from "@/registry/icons"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 
 export default function Demo() {

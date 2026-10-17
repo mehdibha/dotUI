@@ -2,7 +2,7 @@
 
 import { Time } from "@internationalized/date"
 
-import { ClockIcon } from "@/registry/__generated__/icons"
+import { ClockIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Label } from "@/registry/ui/field"

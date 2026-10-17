@@ -6,7 +6,7 @@ import * as SearchFieldPrimitives from "react-aria-components/SearchField"
 
 import { SearchIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
 // MARK: searchFieldStyles
@@ -24,15 +24,14 @@ const SearchField = ({
   placeholder,
   ...props
 }: SearchFieldProps) => {
-  const fieldStyles = useStyles()()
+  const { field } = useFieldStyles()()
   return (
     <SearchFieldPrimitives.SearchField
       data-search-field=""
       data-field=""
-      data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         cn(
-          fieldStyles.field({ className }),
+          field({ className }),
           "group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
         ),
       )}

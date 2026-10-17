@@ -3,7 +3,7 @@ import {
   CreditCardIcon,
   LogOutIcon,
   SettingsIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"

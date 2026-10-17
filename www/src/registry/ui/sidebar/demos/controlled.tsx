@@ -1,13 +1,13 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 
 import {
   CalendarIcon,
   HomeIcon,
   InboxIcon,
   SettingsIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Sidebar,

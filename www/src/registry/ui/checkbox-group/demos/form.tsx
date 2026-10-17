@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import * as FormPrimitives from "react-aria-components/Form"
 
 import { Button } from "@/registry/ui/button"
@@ -8,12 +9,13 @@ import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import { Description, FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo() {
+  const [submitted, setSubmitted] = React.useState<string | null>(null)
   return (
     <FormPrimitives.Form
       onSubmit={(e) => {
         e.preventDefault()
         const data = Object.fromEntries(new FormData(e.currentTarget))
-        alert(JSON.stringify(data, null, 2))
+        setSubmitted(JSON.stringify(data))
       }}
       className="w-full max-w-xs space-y-6"
     >
@@ -68,6 +70,9 @@ export default function Demo() {
       <Button type="submit" variant="primary" className="w-full">
         Confirm RSVP
       </Button>
+      {submitted && (
+        <p className="text-sm text-fg-muted">Submitted: {submitted}</p>
+      )}
     </FormPrimitives.Form>
   )
 }

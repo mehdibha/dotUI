@@ -16,7 +16,7 @@ const data = [
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 const formatPercent = (value: ChartValue) => percent.format(Number(value))
 
-export default function ChartAreaStackedExpand() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

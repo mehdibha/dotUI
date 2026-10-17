@@ -1,12 +1,11 @@
-import { BadgeCheck } from "lucide-react"
-
+import { BadgeCheckIcon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 
 export default function Demo() {
   return (
     <div className="flex items-center gap-2">
       <Badge>
-        <BadgeCheck />
+        <BadgeCheckIcon />
         Verified
       </Badge>
     </div>

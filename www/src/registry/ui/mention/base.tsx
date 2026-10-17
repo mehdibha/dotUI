@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
+import type { Key } from "react-aria-components/Collection"
 import { MenuContext } from "react-aria-components/Menu"
-import type { Key } from "react-aria-components/Menu"
 import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
 import {
@@ -20,7 +20,7 @@ import { useStyles } from "./styles"
 
 // MARK: mentionStyles
 
-// MARK: Mention
+// MARK: Separator
 
 interface MentionState {
   /** The trigger text that opened the suggestions (e.g. `"@"` or `"/"`), or null while closed. */
@@ -47,7 +47,7 @@ const escapeRegExp = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 
 /** Typing a trigger opens a caret-anchored `Menu` of suggestions; selecting one inserts it as an inline token. */
-function Mention({
+const Mention = ({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
@@ -57,9 +57,9 @@ function Mention({
   defaultValue,
   onChange,
   ...props
-}: MentionProps) {
+}: MentionProps) => {
   const { root } = useStyles()()
-  const { startsWith } = AutocompletePrimitive.useFilter({
+  const { startsWith } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
   })
   const [value, setValue] = useControlledState(
@@ -155,7 +155,7 @@ function Mention({
   )
 
   return (
-    <AutocompletePrimitive.Autocomplete
+    <AutocompletePrimitives.Autocomplete
       inputValue={active?.query ?? ""}
       filter={startsWith}
     >
@@ -193,13 +193,13 @@ function Mention({
             : children}
         </TokenField>
       </Provider>
-    </AutocompletePrimitive.Autocomplete>
+    </AutocompletePrimitives.Autocomplete>
   )
 }
 
 const emptyValue = new TokenFieldValue([])
 
-// MARK: exports
+// MARK: Separator
 
 export type { MentionProps, MentionState }
 export { Mention }

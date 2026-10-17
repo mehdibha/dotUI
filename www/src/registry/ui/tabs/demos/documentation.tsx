@@ -1,5 +1,4 @@
-import { Copy } from "lucide-react"
-
+import { CopyIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
@@ -26,7 +25,7 @@ export default function Demo() {
             aria-label="Copy code"
             className="absolute top-1.5 right-1.5"
           >
-            <Copy />
+            <CopyIcon />
           </Button>
           <pre className="overflow-x-auto pr-7">
             {`const [on, toggle] = useToggle()`}

@@ -1,5 +1,4 @@
-import { FileIcon, PrinterIcon, SaveIcon, SettingsIcon } from "lucide-react"
-
+import { FileIcon, PrinterIcon, SaveIcon, SettingsIcon } from "@/registry/icons"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"
 

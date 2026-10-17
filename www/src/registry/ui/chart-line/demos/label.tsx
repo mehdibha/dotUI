@@ -25,7 +25,7 @@ const labels = text(data, {
   fill: "var(--color-fg-muted)",
 })
 
-export default function ChartLineLabel() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

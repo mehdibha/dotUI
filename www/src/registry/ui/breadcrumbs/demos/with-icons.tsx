@@ -3,7 +3,7 @@ import {
   FolderIcon,
   FolderOpenIcon,
   HomeIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import {
   BreadcrumbItem,
   BreadcrumbLink,

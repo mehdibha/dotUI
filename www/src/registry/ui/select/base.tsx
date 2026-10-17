@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectPrimitives from "react-aria-components/Select"
 
@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import type { ButtonProps } from "@/registry/ui/button"
-import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
   ListBox,
@@ -36,14 +36,13 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
-  const fieldStyles = useStyles()
+  const { field } = useFieldStyles()()
   return (
     <SelectPrimitives.Select
       data-field=""
       data-select=""
-      data-slot="select"
-      className={composeRenderProps(className, (cn) =>
-        fieldStyles().field({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        field({ className }),
       )}
       {...props}
     />
@@ -55,8 +54,8 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
   const { buttonTrigger } = useInputStyles()()
   // React Aria marks the Select invalid, not its button.
-  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
-    .isInvalid
+  const isInvalid = React.useContext(SelectPrimitives.SelectStateContext)
+    ?.displayValidation.isInvalid
   return (
     <Button
       size={size}
@@ -90,7 +89,7 @@ const SelectValue = <T extends object>({
 }: SelectValueProps<T>) => {
   return (
     <SelectPrimitives.SelectValue
-      data-slot="select-value"
+      data-select-value=""
       className={composeRenderProps(className, (className) =>
         cn(
           "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
@@ -162,6 +161,8 @@ const SelectContent = <T extends object>({
     </Popover>
   )
 }
+
+// MARK: Separator
 
 export type { SelectContentProps, SelectProps, SelectValueProps }
 export {

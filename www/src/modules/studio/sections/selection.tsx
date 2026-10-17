@@ -180,7 +180,7 @@ const slider = (thumb: string, track: string) => (
 )
 
 const card = (value: string, accent: boolean) => (
-  <Recipe name="checkbox" params={{ "card-selected": value }}>
+  <Recipe name="checkbox" params={{ cardSelected: value }}>
     <ChoiceCard accent={accent} />
   </Recipe>
 )

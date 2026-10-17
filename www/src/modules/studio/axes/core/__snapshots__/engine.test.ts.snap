@@ -15,8 +15,8 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
     },
     "group": {
       "segments": "gapped",
@@ -30,13 +30,13 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "style": "inset",
     },
     "toggle-button": {
@@ -78,8 +78,8 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
     },
     "group": {
       "segments": "gapped",
@@ -93,13 +93,13 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "style": "inset",
     },
     "toggle-button": {
@@ -477,8 +477,8 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
     },
     "group": {
       "segments": "gapped",
@@ -492,13 +492,13 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "style": "inset",
     },
     "toggle-button": {
@@ -688,8 +688,8 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
     },
     "group": {
       "segments": "gapped",
@@ -703,13 +703,13 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
-      "card-press": "sink",
-      "card-selected": "tint",
+      "cardPress": "sink",
+      "cardSelected": "tint",
       "style": "inset",
     },
     "toggle-button": {

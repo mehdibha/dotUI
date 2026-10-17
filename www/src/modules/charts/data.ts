@@ -88,6 +88,7 @@ const rawDemoSources = import.meta.glob(
  */
 function toDisplaySource(raw: string): string {
   return raw
+    .replace(/@\/registry\/icons(?=["'])/g, "lucide-react")
     .replace(/@\/registry\/ui\//g, "@/components/ui/")
     .replace(/@\/registry\//g, "@/")
     .replace("export default function", "export function")

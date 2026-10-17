@@ -3,7 +3,7 @@ import {
   MenuIcon,
   PlusSquareIcon,
   SquarePenIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Description, Label } from "@/registry/ui/field"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
