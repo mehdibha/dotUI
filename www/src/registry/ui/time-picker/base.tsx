@@ -199,9 +199,6 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     state.granularity === "minute" || state.granularity === "second"
   const showSeconds = state.granularity === "second"
 
-  // An empty field has no time yet: nothing is selected, and picking starts from
-  // what the field displays (the placeholder plus any typed segments).
-  // A time field's value is always a date-time; the cast narrows `DateValue` to one with `.hour`.
   const base = (state.value ??
     toCalendarDateTime(
       fromDate(state.dateValue, getLocalTimeZone()),
