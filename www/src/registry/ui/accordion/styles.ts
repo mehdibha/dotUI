@@ -3,7 +3,6 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import accordionMeta from "./meta"
 
-/* Accordion's expand timing; collapsible imports it. */
 export const EXPAND =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
