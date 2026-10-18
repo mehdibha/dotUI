@@ -461,7 +461,6 @@ function transformInteractiveDemoNode(
     "controls",
     "engine",
     "file",
-    "fallback",
   ])
   node.attributes.push(makeIdentifierAttr("component", processed.importName))
   node.attributes.push(

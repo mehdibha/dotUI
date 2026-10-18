@@ -3,7 +3,7 @@ title: Popover
 description: A popover displays content in a floating container that appears above other content.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Popover.html
+    href: https://react-aria.adobe.com/Popover
 wip: true
 ---
 
@@ -26,8 +26,6 @@ npx shadcn@latest add @dotui/popover
 ```
 
 ## Usage
-
-Use popovers to display rich content in a floating container that appears above other content.
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -78,10 +76,10 @@ Set `placement` to position the popover relative to its trigger. Values are a si
 
 ## Arrow
 
-Set `showArrow` to render an arrow pointing at the trigger (default `false`).
+Popovers render an arrow pointing at the trigger when the design system's tip style shows one. Set `showArrow={false}` to drop it from a single popover.
 
 ```tsx
-<Popover showArrow />
+<Popover showArrow={false} />
 ```
 
 ## Open state

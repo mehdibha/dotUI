@@ -3,7 +3,7 @@ title: Number Field
 description: A number field allows a user to enter a number value with a keyboard or increment/decrement with step buttons.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/NumberField.html
+    href: https://react-aria.adobe.com/NumberField
 wip: true
 ---
 
@@ -40,8 +40,6 @@ npx shadcn@latest add @dotui/number-field
 ```
 
 ## Usage
-
-Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
 
 ```tsx
 import { NumberField } from "@/components/ui/number-field"
@@ -95,7 +93,7 @@ const [value, setValue] = React.useState(69)
 </NumberField>
 ```
 
-## Format options
+## Value formatting
 
 Pass `formatOptions` (an `Intl.NumberFormat` options object) to format the value as a decimal, percent, currency, or unit.
 
