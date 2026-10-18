@@ -7,7 +7,20 @@ links:
 wip: true
 ---
 
-<Demo name="segmented-control/demos/default" />
+<InteractiveDemo
+  name="segmented-control"
+  controls={[
+    {
+      type: "enum",
+      name: "orientation",
+      options: ["horizontal", "vertical"],
+      defaultValue: "horizontal",
+    },
+    "isDisabled",
+    "disallowEmptySelection",
+    { name: "isIconOnly", type: "boolean", defaultValue: false },
+  ]}
+/>
 
 ## Installation
 
@@ -53,7 +66,7 @@ import {
 
 ## Selection
 
-Selection is single-only and can never be empty (`disallowEmptySelection`). Use `defaultSelectedKeys` for uncontrolled state, or `selectedKeys` with `onSelectionChange` to control it — both are a `Set` of item ids.
+Selection is single-only, and by default the selected item can't be deselected. Pass `disallowEmptySelection={false}` to let users clear the selection. Use `defaultSelectedKeys` for uncontrolled state, or `selectedKeys` with `onSelectionChange` to control it — both are a `Set` of item ids.
 
 ```tsx
 const [selected, setSelected] = React.useState(new Set(['week']))
