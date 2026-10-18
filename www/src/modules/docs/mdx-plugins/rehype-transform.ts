@@ -697,7 +697,7 @@ function transformInteractiveDemoNode(
     (attr) =>
       !(
         attr.type === "mdxJsxAttribute" &&
-        ["name", "controls", "engine", "file", "fallback"].includes(attr.name)
+        ["name", "controls", "engine", "file"].includes(attr.name)
       ),
   )
 
