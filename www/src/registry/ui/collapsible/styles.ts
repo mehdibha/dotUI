@@ -1,9 +1,7 @@
 import { createStyles } from "@/lib/styles"
 
+import { EXPAND } from "../accordion/styles"
 import collapsibleMeta from "./meta"
-
-const expand =
-  "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
 const { useStyles, styles } = createStyles(collapsibleMeta, {
   base: {
@@ -23,7 +21,7 @@ const { useStyles, styles } = createStyles(collapsibleMeta, {
   params: {
     motion: {
       expand: {
-        slots: { panel: [expand, "motion-safe:transition-[height]"] },
+        slots: { panel: [EXPAND, "motion-safe:transition-[height]"] },
       },
       none: {},
     },

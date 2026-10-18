@@ -188,9 +188,15 @@ function Sidebar({
     return (
       <nav
         data-slot="sidebar"
+        data-side={side}
         aria-label="Sidebar"
         aria-labelledby={headingId}
-        className={inner({ className: cn("w-(--sidebar-width)", className) })}
+        className={inner({
+          className: cn(
+            "w-(--sidebar-width) data-[side=right]:order-last",
+            className,
+          ),
+        })}
         {...props}
       >
         <SidebarNav headingId={headingId} collapsible={collapsible}>

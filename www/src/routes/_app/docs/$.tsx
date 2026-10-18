@@ -104,7 +104,7 @@ export const Route = createFileRoute("/_app/docs/$")({
     const title = loaderData?.title ?? "Docs"
     const description = loaderData?.description
     const truncatedDescription = description
-      ? truncateOnWord(description, 148, true)
+      ? truncateOnWord(description, 148)
       : undefined
     const url = loaderData?.url ?? "/docs"
     const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}${truncatedDescription ? `&description=${encodeURIComponent(truncatedDescription)}` : ""}&eyebrow=${encodeURIComponent(ogEyebrow(url))}`

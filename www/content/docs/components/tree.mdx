@@ -3,7 +3,7 @@ title: Tree
 description: A tree provides users with a way to navigate nested hierarchical information, with support for keyboard navigation and selection.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Tree.html
+    href: https://react-aria.adobe.com/Tree
 wip: true
 ---
 
@@ -122,7 +122,7 @@ Set `defaultExpandedKeys` to expand parents by default (uncontrolled), or contro
 
 ## Links
 
-Pass `href` to a `TreeItem` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+Pass `href` to a `TreeItem` to make it a link; add `target` for the link target. The row isn't an `<a>`, so route it through your app router with React Aria's [`RouterProvider`](https://react-aria.adobe.com/frameworks).
 
 ```tsx
 <TreeItem href="/documents/report" textValue="Weekly report">

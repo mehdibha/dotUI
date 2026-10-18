@@ -1,5 +1,12 @@
 # /studio — experience spec (draft 2)
 
+> **Superseded in part (Oct 2026).** The panel's structure lives in the code
+> (`www/src/modules/studio/`: `chapters.ts` lists the chapters,
+> `sections/components.tsx` the components) and in CLAUDE.md's /studio panel
+> entry. The feeling, sessions, non-negotiables and tests below still stand;
+> the taxonomy and layout sections are history, corrected where they
+> contradicted the code.
+
 What building a design system on dotui.org/studio should feel like. Layout
 candidates are judged against this page, not against taste. Draft — correct it;
 every wrong line here is cheaper than a wrong prototype.
@@ -39,8 +46,8 @@ prototypes must be tested against both. Return visit is never allowed to break
    opening anything. (The summary line earned this; it stays in every
    candidate.)
 4. **Not all axes are equal.** Identity decisions get prominence and richness;
-   refinements get compactness and findability. Presenting 44 chapters as
-   equals is the root cause of "too much".
+   refinements get compactness and findability. Presenting every axis as an
+   equal is the root cause of "too much".
 5. **Reversible everywhere.** One global reset; no dead ends. (Per-chapter
    reset buttons: rejected.)
 6. **Live, always.** Every control applies instantly; nothing blocks on
@@ -48,31 +55,23 @@ prototypes must be tested against both. Return visit is never allowed to break
 
 ## Decision weight — Identity vs Refinements
 
-**Identity (8):** Color · Typography · Shape · Space · Surfaces · Buttons ·
-Inputs · Focus. These define ~90% of how a system reads. They deserve the
-richest treatment and come first — a user who only ever touches these eight
-should still leave with a coherent, personal system.
-
-**Refinements (36):** everything else, grouped by family:
-
-- *Foundations:* Icons · Motion · Cursor · Selection · Scrollbars · Disabled · Links
-- *Actions:* Button groups · Toggles · Segmented control · Kbd
-- *Forms:* Switch · Checkbox · Radio · Choice cards · Input groups · Number field · OTP field · Pickers · Calendar · Sliders
-- *Overlays:* Menus · Dialogs · Popovers · Tooltips
-- *Navigation:* Tabs · Breadcrumbs · Pagination
-- *Feedback:* Alert · Toast · Skeleton · Spinner · Progress
-- *Display:* Badges · Avatars · Tables · Accordion
+**Identity (Aug 2026):** Color · Typography · Shape · Space · Surfaces ·
+Buttons · Inputs · Focus define ~90% of how a system reads. They deserve the
+richest treatment and come first — a user who only ever touches these should
+still leave with a coherent, personal system. The original 36 "refinement"
+chapters are gone: the panel is Foundations, then one row per component in
+the component chapters (see Taxonomy revision).
 
 **The inheritance rule that makes this work:** refinements inherit from
 identity (menus inherit Surfaces + Shape; checkbox inherits the accent; every
-control inherits Focus). A refinement chapter is where you *override* an
+control inherits Focus). A component row is where you *override* an
 inherited default — an exception, not a required stop. Most users should never
-open most refinement chapters, and the UI should quietly say "this is already
+open most component pages, and the UI should quietly say "this is already
 fine unless you care."
 
 ## What each session needs from the panel
 
-- **First touch** → the identity eight, big and delightful; refinements out of
+- **First touch** → the identity set, big and delightful; refinements out of
   the way.
 - **Deep build** → full coverage, fast jumping, per-family grouping, state
   audit ("what have I changed?").
@@ -104,12 +103,10 @@ fine unless you care."
 
 ## Decided (Aug 2026)
 
-1. **First touch and deep build are equal.** Neither may be sacrificed for the
-   other; candidates are tested against both.
-2. **First touch is visually prioritized, not guided.** Identity comes first
+1. **First touch is visually prioritized, not guided.** Identity comes first
    and gets richer treatment; no wizard. A guided layer can sit on top of
    whichever layout wins, later.
-3. **Space stays in the Identity 8.** Density is a fast way to tell systems
+2. **Space stays in the identity set.** Density is a fast way to tell systems
    apart; everyone should make that decision.
 
 ## Layout verdict (Aug 2026)
@@ -117,9 +114,10 @@ fine unless you care."
 **Drill-in wins** over the structured scroll and the accordion stacks, with
 Mehdi's modifications:
 
-- The index shows exactly **two sections — Foundations, then Components** — a
-  **Templates** section is planned (user-picked blocks). Identity emphasis
-  survives as ordering, not extra chrome.
+- The index shows **Foundations, then the component chapters** (Actions,
+  Forms, Overlays, Navigation, Data display, Feedback) — a **Templates**
+  section is planned (user-picked blocks). Identity emphasis survives as
+  ordering, not extra chrome.
 - Index rows are one line (Sept 2026): **label, then its muted value** on the
   left — only where the micro-preview can't carry it (identity, page chrome,
   component states) — and a **small state-driven micro-preview** on the right.
@@ -141,26 +139,14 @@ is never split; thinness alone is never grounds for a merge (named chapters
 like Tooltips stay findable); merged cards must SHOW their absorbed members
 and future search must index absorbed names.
 
-**Adopted (Sept 2026):** the page shows the identity and page-chrome
-chapters, then one **Components** chapter: one row per family (Buttons,
-Inputs, Selection controls, Pickers, Sliders, Menus, Dialogs, Popovers,
-Navigation, Loading, Badges, Avatars, Tables, Accordion, Charts), each row
-carrying the family's headline value and specimen and opening the family's
-whole recipe in a popover. Inside, a decision is a picker (a row showing the
-value and a glyph, its options in a nested popover) or specimen cards with the
-dependent knobs under them, so a new option never adds a row to the page.
-Families absorb their followers — Buttons ← button-groups + toggles +
-segmented-control; Inputs ← input-groups + number-field + otp-field;
-Selection controls ← checkbox + radio + switch + choice-cards; Pickers ←
-calendar; Popovers ← tooltips; Navigation ← links + tabs + breadcrumbs +
-pagination; Loading ← skeleton + spinner + progress; Badges ← kbd. Alert and
-Toast have no axes and stay off the page. Per-control colors (checkbox, switch,
-slider, tabs, links…) are leaves of Color › Primary and are not repeated.
-The composite-index machinery is gone; `state.ts` lists the chapters in page
-order.
-
-Answered: Accordion stays solo — accordion and menus share zero state keys or
-recipes; there is no Disclosure family in the code.
+**Adopted (Oct 2026):** after Foundations, six component chapters (Actions,
+Forms, Overlays, Navigation, Data display, Feedback) list **one row per
+component** (`sections/components.tsx`). A component with one row renders it
+directly; one with several rows opens a drill-in page of them. Related
+components share a row and are found by alias (Button answers to Toggle
+button and Button group). Alert and Toast have rows like every other
+component. Per-control colors (checkbox, switch, slider, tabs, links…) are
+leaves of Color › Primary, each also a row on its component's page.
 
 ## Open questions
 

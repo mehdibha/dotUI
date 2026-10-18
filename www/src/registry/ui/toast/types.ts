@@ -34,3 +34,19 @@ export interface ToastData {
  * Options for a toast, passed to the toast manager when adding it to the queue. These include the toast's title, description, type, timeout, and custom data.
  */
 export interface ToastProps extends ToastManagerAddOptions<ToastData> {}
+
+/**
+ * Holds the toast queue and renders the toasts in a viewport corner.
+ */
+export interface ToastProviderProps extends ToastPrimitive.Provider.Props {
+  /**
+   * The viewport corner toasts appear in. Also sets the swipe-to-dismiss direction.
+   * @default 'bottom-right'
+   */
+  position?: ToastPosition
+
+  /**
+   * Props forwarded to the toast portal.
+   */
+  portalProps?: ToastPrimitive.Portal.Props
+}

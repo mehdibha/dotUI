@@ -3,7 +3,7 @@ title: Menu
 description: A menu displays a list of actions or options that a user can choose.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Menu.html
+    href: https://react-aria.adobe.com/Menu
 wip: true
 ---
 
@@ -26,8 +26,6 @@ npx shadcn@latest add @dotui/menu
 ```
 
 ## Usage
-
-Use menus to display a list of actions or options that a user can choose from.
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -137,7 +135,7 @@ Set `selectionMode` to `single` or `multiple` on `MenuContent` to turn items int
 
 ## Links
 
-Pass `href` to a `MenuItem` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+Pass `href` to a `MenuItem` to render it as an `<a>`; add `target` for the link target. To route through your app router, override `MenuItem`'s `render` the way [Breadcrumbs](/docs/components/breadcrumbs#framework-setup) does for `BreadcrumbLink`.
 
 ```tsx
 <MenuItem href="https://twitter.com/mehdibha" target="_blank">
@@ -152,7 +150,7 @@ Pass `href` to a `MenuItem` to render it as an `<a>`; add `target` for the link 
   <Example name="menu/demos/with-avatar" title="Account Dropdown" />
   <Example name="menu/demos/with-destructive" title="Menu with Actions" />
   <Example name="menu/demos/with-icons" title="Menu with Icons" />
-  <Example name="menu/demos/link-items" title="Social Links Menu" />
+  <Example name="menu/demos/link-items" title="Link Items" />
   <Example
     name="menu/demos/checkboxes-with-icons"
     title="Notification Preferences"

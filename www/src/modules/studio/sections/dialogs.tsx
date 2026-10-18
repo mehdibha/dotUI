@@ -17,12 +17,10 @@ import {
   STRENGTH_OPTIONS,
 } from "../axes/dialogs.meta"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const SCRIM_FILL: Record<string, number> = {
   light: 0.14,
@@ -277,8 +275,6 @@ function CloseGlyph({ close }: { close: string }) {
 }
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function DialogSectionsRow() {
   const { state } = useStudio()

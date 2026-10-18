@@ -30,10 +30,9 @@ import { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 import { strokePx } from "./shape"
 
-export const SURFACE_DEFAULTS = {
+const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
   surfaceShadow: "flat",
@@ -47,7 +46,7 @@ export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
 
 /* Auto draws the card edge the button finish implies: Polaris bevels its
    cards, Duolingo puts them on a lip; every other finish keeps the line. */
-export const EDGE_AUTO: Record<string, string> = {
+const EDGE_AUTO: Record<string, string> = {
   ...Object.fromEntries(BUTTON_STYLES.map((value) => [value, "line"])),
   bevel: "bevel",
   ledge: "ledge",
@@ -69,17 +68,6 @@ const SHELL_SIDEBAR: Record<string, string> = {
   recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
 }
 
-export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
-  surfaceLayers: oneOf(LAYERS_VALUES),
-  surfaceEdge: oneOf(EDGE_VALUES),
-  surfaceShadow: oneOf(SHADOW_VALUES),
-  translucentOverlays: BOOLEAN,
-  shellTone: oneOf(SHELL_VALUES),
-}
-
-/* -------------------------------- Recipe --------------------------------- */
-
-export type Mode = "light" | "dark"
 export interface PerMode<T> {
   light: T
   dark: T
@@ -97,20 +85,20 @@ export type SurfaceColor =
   | { kind: "shade"; alpha: number }
   | { kind: "glint"; alpha: number }
 
-export interface ShadowLayer {
+interface ShadowLayer {
   offset: string
   color: PerMode<SurfaceColor>
   inset?: boolean
 }
 
-export interface SurfaceLook {
+interface SurfaceLook {
   edge: PerMode<SurfaceColor>
   bg: PerMode<SurfaceColor>
   shadow: ShadowLayer[]
 }
 
 /** The page is always the neutral's 25 rung — the page slider's tone. */
-export interface SurfaceRecipe {
+interface SurfaceRecipe {
   card: SurfaceLook
   /** Popovers, menus, tooltips, toasts; dialogs share its color and edge. */
   popover: SurfaceLook
@@ -259,11 +247,9 @@ function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
   return { card: ledge, tile: ledge, overlay: `${px}px`, lip: `${LEDGE_LIP}px` }
 }
 
-/* ----------------------------- Serialization ----------------------------- */
-
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
  *  a mode's solved scales (the panel glyphs, tests). */
-export interface SurfacePalette {
+interface SurfacePalette {
   step: (step: string) => string
   hairline: string
 }
@@ -341,30 +327,36 @@ function surfaceTokens(state: Effective): Record<string, string> {
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as Effective)
 
-export function resolveSurfaces(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  for (const [name, value] of Object.entries(surfaceTokens(state))) {
-    if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
-  }
-  const sidebar = SHELL_SIDEBAR[state.shellTone]
-  if (sidebar) tokens["--color-sidebar"] = sidebar
-  const tile = { "card-press": state.surfaceEdge === "ledge" ? "sink" : "none" }
-  return {
-    tokens,
-    params: {
-      sidebar: { shell: state.shellTone },
-      checkbox: tile,
-      "radio-group": tile,
-      switch: tile,
-    },
-  }
-}
-
 export const chapter = defineChapter({
   id: "surfaces",
   defaults: SURFACE_DEFAULTS,
-  schema: SURFACE_SCHEMA,
-  resolve: resolveSurfaces,
+  schema: {
+    surfaceLayers: oneOf(LAYERS_VALUES),
+    surfaceEdge: oneOf(EDGE_VALUES),
+    surfaceShadow: oneOf(SHADOW_VALUES),
+    translucentOverlays: BOOLEAN,
+    shellTone: oneOf(SHELL_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const tokens: Record<string, string> = {}
+    for (const [name, value] of Object.entries(surfaceTokens(state))) {
+      if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
+    }
+    const sidebar = SHELL_SIDEBAR[state.shellTone]
+    if (sidebar) tokens["--color-sidebar"] = sidebar
+    const tile = {
+      "card-press": state.surfaceEdge === "ledge" ? "sink" : "none",
+    }
+    return {
+      tokens,
+      params: {
+        sidebar: { shell: state.shellTone },
+        checkbox: tile,
+        "radio-group": tile,
+        switch: tile,
+      },
+    }
+  },
   follows: {
     surfaceEdge: [
       { kind: "auto", id: "auto", from: "buttonStyle", table: EDGE_AUTO },

@@ -3,7 +3,25 @@ title: Input Group
 description: An input group combines an input with addons like buttons, icons, or labels.
 ---
 
-<Demo name="input-group/demos/input-group" />
+<InteractiveDemo
+  name="input-group"
+  controls={[
+    {
+      name: "size",
+      type: "enum",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
+      name: "variant",
+      type: "enum",
+      options: ["inline", "cell"],
+      defaultValue: "inline",
+    },
+    "isDisabled",
+    "isInvalid",
+  ]}
+/>
 
 ## Installation
 
@@ -82,5 +100,10 @@ Set `size` on the `InputGroup` to scale the group and its control. Available siz
 
 ## API Reference
 
+### InputGroup
+
 <Reference name="input-group" />
+
+### InputGroupAddon
+
 <Reference name="input-group-addon" />

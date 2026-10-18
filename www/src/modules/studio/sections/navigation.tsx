@@ -15,9 +15,7 @@ import {
   WEIGHT_OPTIONS,
 } from "../axes/navigation.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
-
-/* -------------------------------- Specimens -------------------------------- */
+import type { RowMap } from "../row-host"
 
 /** The row's tabs: a chip on a track, an underline, or a lone pill. */
 function TabStyleGlyph({ style }: { style: string }) {
@@ -83,8 +81,6 @@ function TabStyleGlyph({ style }: { style: string }) {
     </DialGlyph>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 const TAB_STYLE_ROW = TAB_STYLE_OPTIONS.map((option) => ({
   ...option,

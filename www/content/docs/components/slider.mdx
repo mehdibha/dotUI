@@ -3,7 +3,7 @@ title: Slider
 description: An input where the user selects a value from within a given range.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Slider.html
+    href: https://react-aria.adobe.com/Slider
 wip: true
 ---
 
@@ -22,6 +22,22 @@ wip: true
       defaultValue: "horizontal",
     },
     {
+      type: "number",
+      name: "minValue",
+      defaultValue: 0,
+    },
+    {
+      type: "number",
+      name: "maxValue",
+      defaultValue: 100,
+    },
+    {
+      type: "number",
+      name: "step",
+      defaultValue: 1,
+      min: 1,
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
@@ -36,8 +52,6 @@ npx shadcn@latest add @dotui/slider
 ```
 
 ## Usage
-
-Use slider to allow users to select a value from within a given range.
 
 ```tsx
 import { Slider, SliderControl } from "@/components/ui/slider"
@@ -86,7 +100,7 @@ A single number renders a standard slider; a `number[]` renders a multi-thumb ra
 </Slider>
 ```
 
-## Range and step
+## Min, max, and step
 
 `minValue` and `maxValue` set the bounds (default `0`–`100`), and `step` snaps movement to fixed increments.
 
@@ -96,7 +110,7 @@ A single number renders a standard slider; a `number[]` renders a multi-thumb ra
 </Slider>
 ```
 
-## Format
+## Value formatting
 
 `formatOptions` accepts any `Intl.NumberFormat` options to format the `SliderOutput` label, such as currency or percent.
 
