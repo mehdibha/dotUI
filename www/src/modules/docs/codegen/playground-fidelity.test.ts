@@ -128,7 +128,9 @@ function variantsFor(control: Control): unknown[] {
     case "string":
       return ["Hello world", "", LONG_TEXT, TRICKY_TEXT].filter((v) => v !== d)
     case "number":
-      return [(control.defaultValue ?? 0) + 37]
+      return control.options
+        ? control.options.filter((o) => o !== d)
+        : [(control.defaultValue ?? 0) + 37]
     case "icon":
       return ["MailIcon", "SettingsIcon"]
     default:
@@ -151,7 +153,7 @@ function widestVariantFor(control: Control): unknown {
     case "string":
       return LONG_TEXT
     case "number":
-      return 1234567.5
+      return control.options ? Math.max(...control.options) : 1234567.5
     case "icon":
       return "SettingsIcon"
     default:
