@@ -11,7 +11,7 @@ import { effective, FOLLOWS } from "./axes"
 import type { StudioState } from "./axes"
 import type { Explained } from "./axes/core/types"
 import { OPTIONS } from "./axes/meta"
-import { edit, useCurrent } from "./selection"
+import { edit, getCurrent, useCurrent } from "./selection"
 
 export type AxisKey = keyof StudioState & string
 
@@ -37,7 +37,9 @@ export function useAxis(key: AxisKey | undefined): Axis | undefined {
     effective: values[key],
     explain: explain[key] ?? { saved: state[key], effective: values[key] },
     follows: (FOLLOWS[key] ?? []).map((follow) => follow.id),
-    set: (value) => edit({ ...state, [key]: value } as StudioState),
+    // The state current at the call: two sets in one tick both land.
+    set: (value) =>
+      edit({ ...getCurrent().state, [key]: value } as StudioState),
   }
 }
 

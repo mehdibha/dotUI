@@ -3,7 +3,7 @@ title: Color Field
 description: A color field allows users to edit a color value using a text field.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/ColorField.html
+    href: https://react-aria.adobe.com/ColorField
 wip: true
 ---
 
@@ -16,6 +16,18 @@ wip: true
       defaultValue: "Color",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
@@ -23,6 +35,16 @@ wip: true
     {
       type: "boolean",
       name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isInvalid",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
   ]}
@@ -35,8 +57,6 @@ npx shadcn@latest add @dotui/color-field
 ```
 
 ## Usage
-
-Use color fields to allow users to edit a color value using a text field.
 
 ```tsx
 import { ColorField } from "@/components/ui/color-field"

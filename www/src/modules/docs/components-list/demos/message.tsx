@@ -1,5 +1,3 @@
-"use client"
-
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import {
@@ -11,7 +9,7 @@ import {
 
 export function MessageDemo() {
   return (
-    <div className="flex w-full max-w-58 flex-col gap-3">
+    <div className="flex w-58 flex-col gap-3">
       <Message>
         <MessageAvatar>
           <Avatar size="sm">

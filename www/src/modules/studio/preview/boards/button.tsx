@@ -36,8 +36,6 @@ import type { StateName } from "./board"
 import { StateGrid } from "./buttons-parts"
 import type { GridColumn } from "./buttons-parts"
 
-/* --------------------------------- States --------------------------------- */
-
 const BUTTON_COLUMNS: GridColumn[] = [
   { id: "rest", label: "Rest", states: [] },
   { id: "hover", label: "Hover", states: ["hover"] },
@@ -102,8 +100,6 @@ function ButtonStates() {
   )
 }
 
-/* --------------------------------- Motion --------------------------------- */
-
 const LOOP: StateName[][] = [[], ["hover"], ["pressed"], ["hover"]]
 
 /** Live while idle; steps hover, press and selection while Motion is edited. */
@@ -147,8 +143,6 @@ function MotionLoop() {
     </div>
   )
 }
-
-/* --------------------------------- Toggle --------------------------------- */
 
 const TOGGLE_COLUMNS: GridColumn[] = [
   { id: "off", label: "Off", states: [] },
@@ -208,8 +202,6 @@ function ToggleStates() {
   )
 }
 
-/* ---------------------------------- Group --------------------------------- */
-
 function Groups() {
   return (
     <div className="grid grid-cols-[auto_auto] items-end justify-items-center gap-x-6 gap-y-8">
@@ -262,8 +254,6 @@ function Groups() {
     </div>
   )
 }
-
-/* ---------------------------------- Board --------------------------------- */
 
 export default function ButtonBoard() {
   return (

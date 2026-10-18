@@ -26,14 +26,15 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
+import { linkTarget, placeOf } from "./chapters"
+import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import { linkTarget, placeOf } from "./state"
-import type { Chapter, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
+import type { Studio } from "./use-studio"
 
 /** The open page is the URL's hash, so a reload or a shared link reopens it. */
 function setHash(page: string | null) {

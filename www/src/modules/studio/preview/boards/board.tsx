@@ -12,15 +12,13 @@ import {
 
 import { useParamSelections } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { usePreviewFocusMessages } from "@/modules/studio/preview/focus-message"
-import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
+import { useMessage } from "@/modules/studio/preset/iframe-sync"
+import type { PreviewFocus } from "@/modules/studio/preset/iframe-sync"
 
 import { BOARD_TITLES } from "./titles"
 import type { BoardId } from "./titles"
 
-const BoardFocusContext = createContext<PreviewFocusMessage>({
-  popover: false,
-})
+const BoardFocusContext = createContext<PreviewFocus>({ popover: false })
 
 // Its own component, so a focus message re-renders only the boards reading it.
 export function BoardFocusProvider({
@@ -28,8 +26,15 @@ export function BoardFocusProvider({
 }: {
   children: React.ReactNode
 }) {
+  const [focus, setFocus] = useState<PreviewFocus>({ popover: false })
+  useMessage("preview-focus", ({ axis, holds, popover }) => {
+    const next = { axis, holds, popover }
+    setFocus((prev) =>
+      JSON.stringify(prev) === JSON.stringify(next) ? prev : next,
+    )
+  })
   return (
-    <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
+    <BoardFocusContext.Provider value={focus}>
       {children}
     </BoardFocusContext.Provider>
   )

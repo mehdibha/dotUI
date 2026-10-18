@@ -20,6 +20,28 @@ wip: true
       name: "placeholder",
       defaultValue: "Type @ to mention someone...",
     },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "enum",
+      name: "placement",
+      options: ["bottom start", "bottom end", "top start", "top end"],
+      defaultValue: "bottom start",
+    },
   ]}
 />
 
@@ -148,7 +170,5 @@ Set `placement` to move the suggestions popover relative to the caret (default `
 ## API Reference
 
 `Mention` composes the [TokenField](/docs/components/token-field)'s `TokenInput` for the editable area, and the [Popover](/docs/components/popover) and [Menu](/docs/components/menu) primitives for the suggestion list.
-
-### Mention
 
 <Reference name="mention" />

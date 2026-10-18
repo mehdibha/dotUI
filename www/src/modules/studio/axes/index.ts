@@ -42,7 +42,7 @@ import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
 import * as progress from "./progress"
 import * as radio from "./radio"
-import { checkAxisValue } from "./schema"
+import { checkAxisValue, isRecord } from "./schema"
 import type { AxisSchema } from "./schema"
 import * as segmentedControl from "./segmented-control"
 import * as select from "./select"
@@ -198,12 +198,9 @@ export interface StateIssue {
   problem: string
 }
 
-export type Validation =
+type Validation =
   | { ok: true; state: StudioState }
   | { ok: false; issues: StateIssue[] }
-
-const isObject = (raw: unknown): raw is Record<string, unknown> =>
-  typeof raw === "object" && raw !== null && !Array.isArray(raw)
 
 /** `undefined` when `value` fits the key, a follow id included. */
 export const checkKey = (key: string, value: unknown) =>
@@ -228,7 +225,7 @@ function checkAxes(input: Record<string, unknown>) {
 /** Checks raw state against every axis schema. A missing key takes the axis
  *  default; an unknown key or a bad value is an issue — nothing is salvaged. */
 export function validate(raw: unknown): Validation {
-  if (!isObject(raw))
+  if (!isRecord(raw))
     return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
   const { state, issues } = checkAxes(raw)
   for (const key of Object.keys(raw))
@@ -240,7 +237,7 @@ export function validate(raw: unknown): Validation {
 /** Stored state read leniently, so a schema change never loses it: unknown
  *  keys are dropped and a missing or bad value takes the axis default. */
 export const salvageState = (raw: unknown): StudioState =>
-  checkAxes(isObject(raw) ? raw : {}).state
+  checkAxes(isRecord(raw) ? raw : {}).state
 
 export const formatIssues = (issues: StateIssue[]) =>
   issues.map(({ key, problem }) => `${key || "state"}: ${problem}`).join("; ")
@@ -297,9 +294,10 @@ const RESOLVERS = CHECKED.map(
 
 /** The engine's view of the state: every chapter's resolution merged. Later
  *  chapters win on a token or param collision, so keep slices disjoint. */
-export interface ResolvedAll extends Omit<Resolved, "tokens" | "params"> {
+interface ResolvedAll extends Omit<Resolved, "tokens" | "params" | "density"> {
   tokens: Record<string, string>
   params: Record<string, Record<string, string>>
+  density: Density
 }
 
 function mergeColor(
@@ -319,7 +317,7 @@ function mergeColor(
 export function resolveAll(state: Effective): ResolvedAll {
   const tokens: Record<string, string> = {}
   const params: Record<string, Record<string, string>> = {}
-  let density: Density | undefined
+  let density: Density = "default"
   let color: Partial<ColorConfig> | undefined
   let icons: IconLibraryName | undefined
   for (const resolve of RESOLVERS) {

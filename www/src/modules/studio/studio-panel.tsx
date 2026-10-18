@@ -16,13 +16,14 @@ import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
+import { ALL_ROWS, CHAPTERS } from "./chapters"
 import { DeleteDialog } from "./delete-dialog"
-import { RowsContext } from "./family-page"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
+import { RowsContext } from "./row-host"
 import {
   createFrom,
   keySelection,
@@ -33,7 +34,6 @@ import {
   UNSAVED_NOTE,
   useCurrent,
 } from "./selection"
-import { ALL_ROWS, CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import {
   copyName,
