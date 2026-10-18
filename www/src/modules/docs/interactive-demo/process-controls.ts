@@ -21,7 +21,6 @@ import type {
   EnumControl,
   IconControl,
   NumberControl,
-  SerializableControl,
   StringControl,
 } from "./types"
 
@@ -377,7 +376,6 @@ function buildControlWithOverrides(
       return {
         type: "icon",
         name,
-        alwaysShow: overrides.alwaysShow,
         defaultValue: (overrides as Partial<IconControl>).defaultValue,
       }
 
@@ -439,47 +437,21 @@ export async function enrichControlsForSerialization(
   name: string,
   controls: Control[],
   highlighter: Highlighter,
-): Promise<SerializableControl[]> {
+): Promise<Control[]> {
   const reference = await loadApiReference(name)
 
-  const enrichedControls: SerializableControl[] = []
-
-  for (const control of controls) {
+  return controls.map((control) => {
     const prop = reference.props[control.name]
-
-    // Base serializable control without reference
-    const baseControl = {
+    // Props outside the reference (e.g. custom icon controls) carry none.
+    if (!prop) return control
+    return {
       ...control,
-      reference: undefined,
-    }
-
-    if (!prop) {
-      // Skip enrichment for props not in reference (e.g., custom icon controls)
-      enrichedControls.push(baseControl as SerializableControl)
-      continue
-    }
-
-    // Highlight type and default value as HTML strings
-    const typeHighlighted = highlightToHtml(prop.type, highlighter)
-    const defaultHighlighted = prop.default
-      ? highlightToHtml(prop.default, highlighter)
-      : undefined
-
-    const enrichedControl: SerializableControl = {
-      ...baseControl,
       reference: {
         description: prop.description,
-        typeHighlighted,
-        defaultHighlighted,
-        defaultRaw: prop.default,
-        required: prop.required,
+        typeHighlighted: highlightToHtml(prop.type, highlighter),
       },
-    } as SerializableControl
-
-    enrichedControls.push(enrichedControl)
-  }
-
-  return enrichedControls
+    }
+  })
 }
 
 /**

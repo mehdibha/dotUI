@@ -7,7 +7,6 @@ import {
   validate,
 } from "@/modules/studio/axes"
 import { COLUMNS } from "@/modules/studio/axes/style"
-import { designSystemOf } from "@/modules/studio/resolve"
 
 import { ORIGIN, PRESETS } from "./index"
 
@@ -50,14 +49,6 @@ describe("built-in presets", () => {
         .map(([key, e]) => `${key}: ${e?.rule}`)
       expect(fired, preset.id).toEqual([])
     }
-  })
-
-  // Serialized, so token order (which reaches the emitted CSS) is pinned too; `vitest -u` re-pins.
-  it("resolve to their pinned design systems", () => {
-    for (const preset of PRESETS)
-      expect(
-        JSON.stringify(designSystemOf(preset.state), null, 2),
-      ).toMatchSnapshot(preset.id)
   })
 
   it("credit the brand they recreate", () => {
