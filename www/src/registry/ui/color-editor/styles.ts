@@ -3,7 +3,6 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import colorEditorMeta from "./meta"
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   slots: {
     root: "gap-2.5",

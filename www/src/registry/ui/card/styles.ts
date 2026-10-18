@@ -7,7 +7,6 @@ import cardMeta from "./meta"
 export const CONTAINER_SURFACE =
   "border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]"
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   slots: {
     root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",

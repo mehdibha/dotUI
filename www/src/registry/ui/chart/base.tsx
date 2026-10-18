@@ -125,7 +125,6 @@ export function finiteOrNull(value: unknown): number | null {
 
 export const TAU = Math.PI * 2
 
-/** Reads a row's `name` field, shown through `labels` when it has one. */
 export function rowLabel(
   name: string,
   labels: Readonly<Record<string, string>> | undefined,

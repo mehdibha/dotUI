@@ -8,7 +8,6 @@ const entrance =
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
-/* An overlay's motion values after its own entrance (popover, tooltip). */
 export const OVERLAY_SCALE = [
   "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
   "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
