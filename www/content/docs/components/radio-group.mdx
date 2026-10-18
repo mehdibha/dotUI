@@ -16,6 +16,18 @@ wip: true
       defaultValue: "Select frameworks",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "string",
+      name: "errorMessage",
+      defaultValue: "",
+      placeholder: "Error text",
+    },
+    {
       type: "enum",
       name: "orientation",
       options: ["horizontal", "vertical"],
@@ -29,6 +41,11 @@ wip: true
     {
       type: "boolean",
       name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
     {
