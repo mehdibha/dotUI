@@ -3,7 +3,6 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import attachmentMeta from "./meta"
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   slots: {
     group: "scroll-px-1 gap-3 py-1",

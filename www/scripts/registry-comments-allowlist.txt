@@ -103,17 +103,9 @@ src/registry/ui/badge/styles.ts: // Primer (Label).
 src/registry/ui/badge/styles.ts: // Radix Themes, Polaris, Chakra (subtle), Carbon, Atlassian, HeroUI.
 src/registry/ui/badge/styles.ts: // shadcn, Geist, Spectrum 2 (bold), Mantine (filled), Fluent 2.
 src/registry/ui/badge/styles.ts: // takes the muted ink, the fill being too light to read.
-src/registry/ui/breadcrumbs/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/breadcrumbs/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/breadcrumbs/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
-src/registry/ui/breadcrumbs/index.tsx: // isDisabled can come from context, so read it off the resolved DOM props.
 src/registry/ui/breadcrumbs/styles.ts: /* Ancestors are muted labels that sharpen on hover, or the link recipe in
 src/registry/ui/breadcrumbs/styles.ts: // The current crumb drops the weight too, or it reads as an ancestor.
 src/registry/ui/button/base.tsx: // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
-src/registry/ui/button/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/button/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/button/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
-src/registry/ui/button/index.tsx: // isDisabled can come from context, so read it off the resolved DOM props.
 src/registry/ui/button/styles.ts: /* A quiet toggle's selected fill and ink per look, apart: pill tabs put the
 src/registry/ui/button/styles.ts: /* A selected toggle's look; a current pagination page can wear it too. */
 src/registry/ui/button/styles.ts: /* Duolingo: 0.8px tracking on 15px labels. Navigation puts the same case
@@ -372,16 +364,9 @@ src/registry/ui/kbd/styles.ts: /* The base is the key's layout only; each style 
 src/registry/ui/kbd/styles.ts: // Claude, Linear, Untitled UI: a hairline, no fill.
 src/registry/ui/kbd/styles.ts: // Radix Themes: sans at 12px, so ⌘ and ⇧ stay legible (a mono
 src/registry/ui/kbd/styles.ts: // fallback like Menlo draws them tiny).
-src/registry/ui/link/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/link/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/link/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
-src/registry/ui/link/index.tsx: // isDisabled can come from context, so read it off the resolved DOM props.
 src/registry/ui/link/styles.ts: /* The link recipe; link buttons and breadcrumb ancestors import it. The
 src/registry/ui/link/styles.ts: // Weight is the only resting cue a neutral link gets (Supabase, Geist); a
 src/registry/ui/link/styles.ts: // link button keeps its label weight instead.
-src/registry/ui/list-box/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/list-box/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/list-box/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
 src/registry/ui/list-box/meta.ts: /* The list-rows params; menu ships the same recipe (./styles LIST_ROWS). */
 src/registry/ui/list-box/styles.ts: /* List rows: one recipe for list-box, menu (imports it) and command. One row
 src/registry/ui/list-box/styles.ts: /* Supabase's heading-meta; sidebar group labels share it. */
@@ -409,9 +394,6 @@ src/registry/ui/mention/base.tsx: /** Where the suggestions popover is placed re
 src/registry/ui/mention/base.tsx: // Anchored to the caret, so drop the field's width as the popover's minimum.
 src/registry/ui/mention/base.tsx: // The `g` flag is dropped so `exec` stays stateless.
 src/registry/ui/mention/base.tsx: // TokenField only applies the stored caret position while focused, so refocus first.
-src/registry/ui/menu/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/menu/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/menu/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
 src/registry/ui/message/styles.ts: // Incoming prose reads in the reading face; controls stay in the body.
 src/registry/ui/modal/base.fullscreen.tsx: /* No backdrop to tap below the mobile line: bring a close. */
 src/registry/ui/modal/base.sheet.tsx: // Below the mobile line the dialog slides up in a bottom drawer; an alert
@@ -443,6 +425,7 @@ src/registry/ui/progress-bar/styles.ts: // Spectrum 2 (6px), Radix Themes (size 
 src/registry/ui/qr-code/base.dots.tsx: // Scanners require solid finder patterns, so the corner markers are rounded squares, not dots.
 src/registry/ui/questionnaire/styles.ts: // The shell is input's; this adds the questionnaire's own invalid
 src/registry/ui/questionnaire/styles.ts: // state, which it marks with aria-invalid.
+src/registry/ui/search-field/demos/with-suggestions.tsx: // Moving through suggestions blurs the input virtually, toward the popover.
 src/registry/ui/segmented-control/styles.ts: /* Item weight at rest, then selected. */
 src/registry/ui/segmented-control/styles.ts: /* The selection bar, shared with tabs' segmented variant (tabs imports
 src/registry/ui/segmented-control/styles.ts: // Outline trades a padding pixel for the hairline so the box stays put.
@@ -466,9 +449,6 @@ src/registry/ui/sidebar/base.tsx: /** Visual style. @default 'default' */
 src/registry/ui/sidebar/base.tsx: /** `inset` is designed for `side="left"`. @default 'sidebar' */
 src/registry/ui/sidebar/base.tsx: // Derived from the React id, not Math.random(), so SSR and client widths match.
 src/registry/ui/sidebar/base.tsx: // Lets a header `<Heading>` label the nav landmark; content/footer reset the id so their headings don't claim it.
-src/registry/ui/sidebar/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/sidebar/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/sidebar/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
 src/registry/ui/sidebar/styles.ts: /* The current item's marker, on menu and sub-menu buttons alike. Each marker
 src/registry/ui/sidebar/styles.ts: // Catalyst, Fluent 2: a bar at the start edge, no fill.
 src/registry/ui/sidebar/styles.ts: // Duolingo: the wash inside a 2px ring.
@@ -477,6 +457,7 @@ src/registry/ui/sidebar/styles.ts: // Polaris: a page-toned chip on a recessed s
 src/registry/ui/sidebar/styles.ts: // Primer, Carbon: a neutral wash and a wider bar.
 src/registry/ui/sidebar/styles.ts: // Stripe: the label and icon alone, a brand wash on hover. Sub-item icons
 src/registry/ui/sidebar/styles.ts: // The inset panel wears the card's edge and shadow (Linear's hairline).
+src/registry/ui/sidebar/styles.ts: // `order-last` keeps a right sidebar on the right wherever it sits in the JSX.
 src/registry/ui/sidebar/styles.ts: // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
 src/registry/ui/sidebar/styles.ts: // on a stadium item (meta.ts rounds it through the item var).
 src/registry/ui/sidebar/styles.ts: // rest muted, so the current one takes the ink.
@@ -488,9 +469,6 @@ src/registry/ui/slider/styles.ts: // A bar in the fill color, a gap cut from the
 src/registry/ui/slider/styles.ts: // control reserves the bar's 44px reach (Material 3's container).
 src/registry/ui/table/styles.ts: /* The plain header blurs the rows scrolling under it; filled is opaque,
 src/registry/ui/table/styles.ts: // Blur lives on the cells, not the thead: a backdrop-filter escapes the scroll container's rounded clip in Chromium.
-src/registry/ui/tabs/index.tsx: // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-src/registry/ui/tabs/index.tsx: // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-src/registry/ui/tabs/index.tsx: // href={undefined} still counts as a link prop to react-aria ('href' in props).
 src/registry/ui/tabs/styles.ts: /* The `variant` prop is per-instance API; the `style` param sets its default
 src/registry/ui/tabs/styles.ts: // A quiet toggle's selected ink and fill; the fill rides the indicator,
 src/registry/ui/tabs/styles.ts: // The line indicator across the tab, or hugging its label: 3px with a
@@ -523,6 +501,7 @@ src/registry/ui/toast/styles.ts: // status fill.
 src/registry/ui/toast/styles.ts: // surface.
 src/registry/ui/toast/styles.ts: // the overlay surface, glass included.
 src/registry/ui/toggle-button-group/styles.ts: /* Group's seams, imported; segments attach or sit apart as on Group. */
+src/registry/ui/toggle-button/base.tsx: // A group attaches its secondary segments by data-variant.
 src/registry/ui/toggle-button/styles.ts: /* Button's recipe tables, imported: the toggle adds only its selected look. */
 src/registry/ui/token-field/base.tsx: /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
 src/registry/ui/token-field/base.tsx: /** An inline token within a `TokenInput`. */
