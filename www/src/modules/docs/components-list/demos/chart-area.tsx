@@ -1,20 +1,29 @@
-"use client"
+import { AreaChart } from "@/registry/ui/chart-area"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { month: "Jan", desktop: 96 },
+  { month: "Feb", desktop: 142 },
+  { month: "Mar", desktop: 204 },
+  { month: "Apr", desktop: 188 },
+  { month: "May", desktop: 236 },
+  { month: "Jun", desktop: 304 },
+  { month: "Jul", desktop: 290 },
+  { month: "Aug", desktop: 352 },
+]
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartAreaVisitors = lazy(() => import("./chart-area.lazy"))
-
-export function ChartAreaDemo() {
+export default function ChartAreaVisitors() {
   return (
-    <div className="w-[180px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[96px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartAreaVisitors />
-      </Suspense>
-    </div>
+    <AreaChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      fill="gradient"
+      strokeWidth={1.5}
+      points
+      height={96}
+      grid={false}
+      ariaLabel="Desktop visitors, January through August"
+    />
   )
 }

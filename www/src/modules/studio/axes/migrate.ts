@@ -5,13 +5,11 @@
 
 import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
+import { isRecord } from "./schema"
 import { COLUMNS, excludedUnder, STYLE_KEYS, STYLE_VALUES } from "./style"
 import { STATE_VERSION } from "./version"
 
 type Raw = Record<string, unknown>
-
-const isRecord = (value: unknown): value is Raw =>
-  typeof value === "object" && value !== null && !Array.isArray(value)
 
 /** A stored state at `STATE_VERSION`, its stamp removed. Anything but an
  *  object is returned as is, for validation to refuse. */
@@ -35,8 +33,6 @@ const isMain = (state: Raw) =>
     ([key, value]) =>
       GONE.has(key) || (MAIN_MOTION.has(key) && isRecord(value)),
   )
-
-/* ------------------------------ main → v3 ------------------------------ */
 
 /* Main's values that read differently now; null takes today's default (a
    main default drawn the same, or a value with no home). */
@@ -289,8 +285,6 @@ function fromMain(main: Raw): Raw {
   motionFrom(main, state)
   return settle(state)
 }
-
-/* ------------------------------- v3 → v4 ------------------------------- */
 
 /* Soft was Flat with these three columns; its finishes were Edge values. */
 const SOFT: Raw = {

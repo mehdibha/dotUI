@@ -42,6 +42,8 @@ export interface AttrHole {
   default: SerializedDefault
   /** Derived attr (progress-bar): drop entirely when this boolean control is truthy. */
   dropWhen?: string
+  /** Object-literal value embedding the control (`visibleDuration={{ months: n }}`): the literal goes between. */
+  wrap?: { before: string; after: string }
 }
 
 /** A `{ key }` shorthand member bound to a control. Dropped when falsy. */
@@ -70,7 +72,11 @@ export interface ObjectAttr {
   tail: string[]
 }
 
-export type AttrPart = { part: "static"; text: string } | AttrHole | ObjectAttr
+/** A static attr; with `showWhen` it came from `attr={cond ? "…" : undefined}`. */
+export type AttrPart =
+  | { part: "static"; text: string; showWhen?: string }
+  | AttrHole
+  | ObjectAttr
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
@@ -82,11 +88,24 @@ export interface TextHole {
 export type ChildPart =
   /** Verbatim formatted lines, dedented so the block's first column is 0. */
   | { part: "static"; lines: string[] }
-  /** Static JSX text, whitespace-collapsed; refilled at render time. */
-  | { part: "static-text"; text: string }
+  /** Static JSX text, whitespace-collapsed; refilled at render time. With
+   *  `hideWhen` it came from `{!cond && "…"}`. */
+  | { part: "static-text"; text: string; hideWhen?: string }
   | TextHole
   /** A nested element; with `showWhen` it came from `{cond && <El>…</El>}`. */
-  | { part: "element"; el: TemplateElement; showWhen?: string }
+  | {
+      part: "element"
+      el: TemplateElement
+      showWhen?: string
+      /** `{months > 1 && <El/>}`: compare the control instead of testing truthiness. */
+      compare?: Comparison
+    }
+
+export type CompareOp = ">" | ">=" | "<" | "<=" | "===" | "!=="
+export interface Comparison {
+  op: CompareOp
+  value: number | string
+}
 
 export interface TemplateElement {
   tag: string
@@ -213,12 +232,16 @@ function renderElement(
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
+    if (attr.part === "static") {
+      if (!attr.showWhen || isTruthy(values[attr.showWhen])) {
+        attrs.push(attr.text)
+      }
+      continue
+    }
     const text =
-      attr.part === "static"
-        ? attr.text
-        : attr.part === "object"
-          ? renderObjectAttr(attr, values, indent + 2)
-          : renderAttrHole(attr, values, icons)
+      attr.part === "object"
+        ? renderObjectAttr(attr, values, indent + 2)
+        : renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
   }
   // A multiline attribute always breaks the open tag.
@@ -304,6 +327,14 @@ function renderAttrHole(
   const value = values[hole.control]
   if (serializeForCompare(value, hole.kind) === hole.default) return null
 
+  if (hole.wrap) {
+    const literal =
+      hole.kind === "number" || hole.kind === "boolean"
+        ? String(value)
+        : quoteString(String(value))
+    return `${hole.wrap.before}${literal}${hole.wrap.after}`
+  }
+
   switch (hole.kind) {
     case "boolean":
       return value === true ? hole.attrName : `${hole.attrName}={false}`
@@ -366,6 +397,7 @@ function renderChild(
       }
     }
     case "static-text":
+      if (child.hideWhen && isTruthy(values[child.hideWhen])) return null
       return { type: "text", text: child.text }
     case "text": {
       const value = values[child.control]
@@ -384,7 +416,13 @@ function renderChild(
         : { type: "text", text: s }
     }
     case "element": {
-      if (child.showWhen && isFalsy(values[child.showWhen])) return null
+      if (child.showWhen) {
+        const value = values[child.showWhen]
+        const shown = child.compare
+          ? compare(value, child.compare)
+          : isTruthy(value)
+        if (!shown) return null
+      }
       return {
         type: "block",
         lines: renderElement(child.el, values, indent, icons),
@@ -420,6 +458,24 @@ function serializeForCompare(
       return value ? String(value) : null
     default:
       return String(value)
+  }
+}
+
+function compare(v: unknown, { op, value }: Comparison): boolean {
+  const left = typeof value === "number" ? Number(v) : String(v)
+  switch (op) {
+    case ">":
+      return left > value
+    case ">=":
+      return left >= value
+    case "<":
+      return left < value
+    case "<=":
+      return left <= value
+    case "===":
+      return left === value
+    case "!==":
+      return left !== value
   }
 }
 

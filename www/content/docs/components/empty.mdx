@@ -4,7 +4,32 @@ description: An empty state placeholder for when there's no content to display.
 wip: true
 ---
 
-<Demo name="empty/demos/empty-projects" />
+<InteractiveDemo
+  name="empty"
+  controls={[
+    {
+      name: "variant",
+      type: "enum",
+      options: ["default", "icon"],
+      defaultValue: "default",
+    },
+    {
+      name: "title",
+      type: "string",
+      defaultValue: "No projects yet",
+    },
+    {
+      name: "description",
+      type: "string",
+      defaultValue: "Get started by creating your first project.",
+    },
+    {
+      name: "showAction",
+      type: "boolean",
+      defaultValue: true,
+    },
+  ]}
+/>
 
 ## Installation
 

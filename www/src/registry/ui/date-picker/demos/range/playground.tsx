@@ -9,17 +9,11 @@ import { Label } from "@/registry/ui/field"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 
-interface DateRangePickerPlaygroundProps {
-  label?: string
-  isDisabled?: boolean
-  isReadOnly?: boolean
-}
-
-export function DateRangePickerPlayground({
+export default function Demo({
   label = "Date range",
   isDisabled = false,
   isReadOnly = false,
-}: DateRangePickerPlaygroundProps) {
+} = {}) {
   return (
     <DateRangePicker
       className="w-52"

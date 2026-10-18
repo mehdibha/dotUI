@@ -8,7 +8,7 @@ Dev-only tooling for tuning a preset against the system it recreates. Nothing he
 
 ## Loop for a preset agent
 
-From `www/`, with your dev server running (`pnpm exec vite dev --port <port>`):
+From `www/`, with your dev server running (`pnpm dev:www --port <port>` from the repo root):
 
 ```sh
 # 1. Capture: writes .scratch-specimens/<preset>/<sheet>-<mode>.png (DPR 2)

@@ -19,10 +19,23 @@ import type { PublishPreset } from "./types"
 
 const KNOWN_NAMES: ReadonlySet<string> = new Set(PUBLISHABLE_NAMES)
 
-// A fixed, conventional baseline — the consumer reformats with their own
-// Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
-// Only meant to keep the shipped + previewed source readable.
-const OUTPUT_FORMAT = { printWidth: 80 } as const
+/**
+ * Format one shipped file. A fixed baseline — the consumer reformats with their
+ * own rules, so formatting isn't a `codeOptions` axis. Throws on a parse error:
+ * the publisher emitted broken code.
+ */
+export async function formatShippedFile(
+  filePath: string,
+  content: string,
+): Promise<string> {
+  const { code, errors } = await format(filePath, content, { printWidth: 80 })
+  if (errors.length > 0) {
+    throw new Error(
+      `[publisher] ${filePath} doesn't parse:${errors.map((e) => e.codeframe ?? ` ${e.message}`).join("")}`,
+    )
+  }
+  return code
+}
 
 export interface PublishItemInput {
   name: string
@@ -45,23 +58,12 @@ export async function publishItem(
     deps: { url: input.itemUrl, known: KNOWN_NAMES },
   })
 
-  // Format per-file — a base `.tsx` and a secondary `.ts` hook carry different
-  // content and need their own parser. A formatter failure keeps the raw
-  // content; it still works.
   if (item.files) {
     item.files = (await Promise.all(
-      item.files.map(async (file) => {
-        try {
-          const result = await format(
-            file.path,
-            file.content ?? "",
-            OUTPUT_FORMAT,
-          )
-          return { ...file, content: result.code }
-        } catch {
-          return file
-        }
-      }),
+      item.files.map(async (file) => ({
+        ...file,
+        content: await formatShippedFile(file.path, file.content ?? ""),
+      })),
     )) as typeof item.files
   }
   return item
