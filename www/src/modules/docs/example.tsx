@@ -26,10 +26,11 @@ export function Example({
   className,
   ...props
 }: ExampleProps) {
-  // A demo `name` that doesn't resolve to a registered component arrives here as `undefined`.
-  // Rendering `<undefined />` throws "Element type is invalid" and crashes the whole page, so
-  // render nothing instead.
-  if (!Component) return null
+  if (!Component) {
+    throw new Error(
+      `<Example title="${title ?? ""}"> has no component; the rehype transform didn't run`,
+    )
+  }
 
   // The rehype transform injects two children: the title `<h3>` (kept in the TOC)
   // and a `<DemoCode>` slot holding the build-time-highlighted source. The source
