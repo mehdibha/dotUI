@@ -9,7 +9,6 @@
 
 import { existsSync, promises as fs } from "node:fs"
 import path from "node:path"
-import { format } from "oxfmt"
 import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
@@ -17,6 +16,7 @@ import { themeOptionsSchema } from "@dotui/colors/schema"
 import {
   buildPublishables,
   collectBaseFiles,
+  formatGenerated,
 } from "../src/publisher/build-time/build-publishables"
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps"
 import { BUNDLED_INTO_INIT, registryDepsFor } from "../src/publisher/publish"
@@ -49,12 +49,11 @@ async function ensureDir(dir: string) {
 }
 
 async function writeGeneratedFile(targetPath: string, content: string) {
-  const { code } = await format(targetPath, content, {
-    printWidth: 120,
-    useTabs: true,
-  })
-
-  await fs.writeFile(targetPath, code, "utf8")
+  await fs.writeFile(
+    targetPath,
+    await formatGenerated(targetPath, content),
+    "utf8",
+  )
 }
 
 // ============================================================================
@@ -292,7 +291,7 @@ async function buildRegistryItemsManifest() {
   // Sort value imports by module specifier (NOT identifier) to match oxfmt's
   // sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
   // "ui/checkbox" ('-' < '/') — so the generated file passes `oxfmt --check` as-is
-  // (writeGeneratedFile's inline format() does not re-sort imports). The type
+  // (writeGeneratedFile's format does not re-sort imports). The type
   // import follows the value group with no blank line; the header comment is
   // detached by a blank line so oxfmt leaves it at the top.
   const valueImports = [
@@ -480,24 +479,15 @@ async function checkRegistryIntegrity(
 }
 
 // ============================================================================
-// Post-publish guards: the emitted publishable set is a CONTRACT — every skip
-// is explained, every declared dep resolves, every docs-advertised name ships.
+// Post-publish guards: the emitted publishable set is a CONTRACT — every
+// declared dep resolves, every docs-advertised name ships.
 // These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
 // ============================================================================
 
-/** Guard 1: every registered item must emit a publishable — a skip is a build break. */
-function checkPublishableSkips(build: PublishablesBuild): string[] {
-  return build.skipped.map(
-    ({ name, reason }) =>
-      `Publishable "${name}" was skipped: ${reason}\n` +
-      `      Fix ui/${name} so it emits a publishable.`,
-  )
-}
-
 /**
- * Guard 2: every publishable's `registryDependencies` must resolve to something
+ * Every publishable's `registryDependencies` must resolve to something
  * shadcn can fetch — another publishable, an init-bundled name, an absolute URL,
  * or an `@namespace/…` dep. A bare unknown name silently resolves against
  * shadcn's default registry (how text-field pulled shadcn's Input), so it fails.
@@ -548,7 +538,7 @@ const DOCS_REGISTRY_URL_RE =
 const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 
 /**
- * Guard 3: every install name advertised in the docs must ship. Scans
+ * Every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
  * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES).
  * This is what would have caught `@dotui/text-field` advertising a component
@@ -602,13 +592,12 @@ async function listMdxFiles(dir: string): Promise<string[]> {
   return out.sort()
 }
 
-/** Runs the post-publish guards (skips, dep closure, docs); throws on any failure. */
+/** Runs the post-publish guards (dep closure, docs); throws on any failure. */
 async function checkPublishableIntegrity(
   registryUi: RegistryItem[],
   build: PublishablesBuild,
 ) {
   const errors = [
-    ...checkPublishableSkips(build),
     ...checkDependencyClosure(registryUi, build),
     ...(await checkDocsRegistryConsistency(build)),
   ]
@@ -617,9 +606,7 @@ async function checkPublishableIntegrity(
       `Publishable integrity check failed:\n  - ${errors.join("\n  - ")}`,
     )
   }
-  console.log(
-    "  ✓ publishable integrity (no unexplained skips, deps resolve, docs names ship)",
-  )
+  console.log("  ✓ publishable integrity (deps resolve, docs names ship)")
 }
 
 // ============================================================================
@@ -627,7 +614,6 @@ async function checkPublishableIntegrity(
 // ============================================================================
 
 interface PublishablesBuild {
-  skipped: Array<{ name: string; reason: string }>
   /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
 }
@@ -635,28 +621,14 @@ interface PublishablesBuild {
 async function buildShadcnPublishables(
   items: RegistryItem[],
 ): Promise<PublishablesBuild> {
-  const { written, skipped } = await buildPublishables({
+  const { written, published } = await buildPublishables({
     registryDir: REGISTRY_DIR,
     items,
   })
   for (const filePath of written) {
     console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`)
   }
-  if (skipped.length > 0) {
-    console.log(`\n  ${skipped.length} component(s) skipped:`)
-    for (const { name, reason } of skipped) {
-      console.log(`    - ${name}: ${reason}`)
-    }
-  }
-
-  // A written path is `<name>.ts`, excluding the index/base-css helpers.
-  const builtNames = new Set(
-    written
-      .filter((p) => p.endsWith(".ts"))
-      .map((p) => path.basename(p, ".ts"))
-      .filter((n) => n !== "index" && n !== "base-css"),
-  )
-  return { skipped, builtNames }
+  return { builtNames: new Set(published) }
 }
 
 /**

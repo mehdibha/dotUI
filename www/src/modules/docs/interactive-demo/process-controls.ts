@@ -34,10 +34,6 @@ export async function buildControlsFromReference(
 ): Promise<Control[]> {
   const reference = await loadApiReference(name)
 
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
-
   const controls: Control[] = []
 
   for (const input of controlInputs) {
@@ -446,10 +442,6 @@ export async function enrichControlsForSerialization(
   highlighter: HighlighterGeneric<any, any>,
 ): Promise<Control[]> {
   const reference = await loadApiReference(name)
-
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
 
   return controls.map((control) => {
     const prop = reference.props[control.name]
