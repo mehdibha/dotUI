@@ -460,8 +460,6 @@ function emptyStylesConfig(): StylesConfig {
   return { base: {} }
 }
 
-/* -------------------------- source generation -------------------------- */
-
 interface RenderInput {
   meta: RegistryItem
   stylesConfig: StylesConfig

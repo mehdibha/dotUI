@@ -1149,27 +1149,14 @@ function extractComponentGroup(componentExportName: string): string {
   return match ? match[0] : baseName
 }
 
-/**
- * Rewrite type strings for consistent naming
- * - Replaces internal naming conventions (.RootInternal → .Root)
- * - Formats component type references (ButtonProps → Button.Props)
- */
+/** Format component type references: `ButtonProps` → `Button.Props`. */
 function rewriteTypeValue(value: string, componentGroup: string): string {
-  let result = value
-
-  // Clean up internal naming
-  result = result.replaceAll(".RootInternal", ".Root")
-
-  // Format component type references (e.g., ButtonProps → Button.Props)
-  if (componentGroup) {
-    const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    result = result.replace(
-      new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
-      `${componentGroup}.$1`,
-    )
-  }
-
-  return result
+  if (!componentGroup) return value
+  const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  return value.replace(
+    new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
+    `${componentGroup}.$1`,
+  )
 }
 
 function rewriteTypeStringsDeep(
