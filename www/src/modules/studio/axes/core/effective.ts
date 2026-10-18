@@ -5,13 +5,13 @@ import type { Cond, Effect, Explained, Follow, Rule } from "./types"
 
 type State = Readonly<Record<string, unknown>>
 
-export interface EngineInput {
+interface EngineInput {
   defaults: State
   follows: Readonly<Record<string, readonly Follow[]>>
   rules: readonly Rule[]
 }
 
-export interface EffectiveResult {
+interface EffectiveResult {
   values: State
   /** Only keys a follow or rule can touch. */
   explain: Readonly<Record<string, Explained>>
@@ -89,7 +89,7 @@ function topoOrder(graph: Map<string, Set<string>>): string[] {
   return order
 }
 
-export function resolveFollow(follow: Follow, values: State): unknown {
+function resolveFollow(follow: Follow, values: State): unknown {
   if (follow.kind === "same") {
     const source = values[follow.from]
     return follow.map?.[String(source)] ?? source

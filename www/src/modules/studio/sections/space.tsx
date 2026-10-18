@@ -2,7 +2,7 @@
 
 import { DENSITY_OPTIONS } from "../axes/space.meta"
 import { DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 
 function DensityRow() {
   return <DialSelect axis="density" label="Density" options={DENSITY_OPTIONS} />

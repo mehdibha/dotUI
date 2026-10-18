@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs"
 import { describe, expect, test } from "vitest"
 
 import { mixOklab, toOklch, wcag2 } from "@dotui/colors"
+import type { Mode } from "@dotui/colors"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import {
@@ -113,7 +114,7 @@ describe.each(literals)("$id", ({ light, dark, theme }) => {
   })
 
   test("a recessed dark shell sinks no deeper than the light one", () => {
-    const n = (mode: "light" | "dark", step: "25" | "50" | "100") =>
+    const n = (mode: Mode, step: "25" | "50" | "100") =>
       toOklch(theme[mode].scales.neutral![step])
     const lightFrame = mixOklab(n("light", "50"), 50, n("light", "100"))
     const darkFrame = mixOklab(

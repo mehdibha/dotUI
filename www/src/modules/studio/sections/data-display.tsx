@@ -10,10 +10,8 @@ import { CARD_HEADER_OPTIONS, FOOTER_OPTIONS } from "../axes/card.meta"
 import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
 import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
 
@@ -320,8 +318,6 @@ function CardGlyph({ header, footer }: { header: string; footer: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function TableHeaderRow() {
   const { effective } = useStudio()

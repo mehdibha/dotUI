@@ -3,6 +3,16 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import colorEditorMeta from "./meta"
 
+// Comfortable, spacious and touch share one tier.
+const roomy = {
+  slots: {
+    root: "gap-2.5",
+    area: "gap-2.5",
+    fields: "gap-2.5",
+    fieldGroup: "gap-2.5",
+  },
+}
+
 const { useStyles, styles } = createStyles(colorEditorMeta, {
   base: {
     slots: {
@@ -29,30 +39,9 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
         fieldGroup: "gap-2",
       },
     },
-    comfortable: {
-      slots: {
-        root: "gap-2.5",
-        area: "gap-2.5",
-        fields: "gap-2.5",
-        fieldGroup: "gap-2.5",
-      },
-    },
-    spacious: {
-      slots: {
-        root: "gap-2.5",
-        area: "gap-2.5",
-        fields: "gap-2.5",
-        fieldGroup: "gap-2.5",
-      },
-    },
-    touch: {
-      slots: {
-        root: "gap-2.5",
-        area: "gap-2.5",
-        fields: "gap-2.5",
-        fieldGroup: "gap-2.5",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
   params: {
     style: {

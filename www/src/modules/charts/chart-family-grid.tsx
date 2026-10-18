@@ -1,5 +1,3 @@
-"use client"
-
 import { PreviewVeil } from "@/modules/docs/preview-controls"
 
 import { ChartCard } from "./chart-card"

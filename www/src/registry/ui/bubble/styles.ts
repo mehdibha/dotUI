@@ -2,6 +2,15 @@ import { createStyles } from "@/lib/styles"
 
 import bubbleMeta from "./meta"
 
+// Comfortable, spacious and touch share one tier.
+const roomy = {
+  slots: {
+    group: "gap-2.5",
+    content: "px-4 py-2.5 text-sm leading-relaxed",
+    reactions: "text-sm ring-3",
+  },
+}
+
 const { useStyles, styles } = createStyles(bubbleMeta, {
   base: {
     slots: {
@@ -61,27 +70,9 @@ const { useStyles, styles } = createStyles(bubbleMeta, {
         reactions: "text-sm ring-3",
       },
     },
-    comfortable: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
-    spacious: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
-    touch: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
 })
 

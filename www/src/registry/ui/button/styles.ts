@@ -11,6 +11,21 @@ import buttonMeta from "./meta"
 /* The recipe tables below are the single source for Button and
    ToggleButton: toggle-button imports them, so a change here lands on both. */
 
+export const BUTTON_BASE = [
+  "relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
+  "focus-reset focus-visible:focus-ring",
+  "**:[svg]:pointer-events-none **:[svg]:shrink-0",
+]
+
+export const BUTTON_SIZE = {
+  xs: "rounded-(--studio-btn-xs-radius)",
+  sm: "",
+  md: "",
+  lg: "",
+}
+
+export const BUTTON_ICON_ONLY = { true: "p-0" }
+
 export const BUTTON_VARIANTS = {
   primary:
     "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
@@ -390,9 +405,8 @@ export const BUTTON_DENSITY = {
 const { useStyles, styles } = createStyles(buttonMeta, {
   base: {
     base: [
-      "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
-      "focus-reset focus-visible:focus-ring",
-      "**:[svg]:pointer-events-none **:[svg]:shrink-0",
+      "group/button",
+      BUTTON_BASE,
       // Pending keeps the face; the spinner takes the label's ink.
       "pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
       "disabled:cursor-disabled",
@@ -400,15 +414,8 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     ],
     variants: {
       variant: BUTTON_VARIANTS,
-      size: {
-        xs: "rounded-(--studio-btn-xs-radius)",
-        sm: "",
-        md: "",
-        lg: "",
-      },
-      isIconOnly: {
-        true: "p-0",
-      },
+      size: BUTTON_SIZE,
+      isIconOnly: BUTTON_ICON_ONLY,
     },
     defaultVariants: {
       variant: "secondary",

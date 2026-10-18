@@ -3,7 +3,7 @@ title: Select
 description: Select displays a collapsible list of options and allows a user to select one of them.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Select.html
+    href: https://react-aria.adobe.com/Select
 wip: true
 ---
 
@@ -21,6 +21,24 @@ wip: true
       defaultValue: "Select a country",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
+      type: "enum",
+      name: "selectionMode",
+      options: ["single", "multiple"],
+      defaultValue: "single",
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
@@ -28,6 +46,11 @@ wip: true
     {
       type: "boolean",
       name: "isInvalid",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
   ]}

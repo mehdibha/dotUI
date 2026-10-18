@@ -1,0 +1,1083 @@
+{
+  "name": "ToastProviderProps",
+  "description": "Holds the toast queue and renders the toasts in a viewport corner.",
+  "props": {
+    "position": {
+      "type": "'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'",
+      "detailedType": "| 'top-left'\n| 'top-center'\n| 'top-right'\n| 'bottom-left'\n| 'bottom-center'\n| 'bottom-right'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom-center"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom-left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom-right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top-center"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top-left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top-right"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
+      },
+      "description": "The viewport corner toasts appear in. Also sets the swipe-to-dismiss direction.",
+      "default": "'bottom-right'"
+    },
+    "portalProps": {
+      "type": "ToastPortalProps",
+      "detailedType": "ToastPortalProps | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ToastPortalProps"
+      },
+      "description": "Props forwarded to the toast portal."
+    },
+    "limit": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The maximum number of toasts that can be displayed at once.\nWhen the limit is exceeded, the oldest toasts are marked as `limited` (via the `data-limited`\nattribute) rather than removed, so they can be hidden or animated out.",
+      "default": "3"
+    },
+    "timeout": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The default amount of time (in ms) before a toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically.",
+      "default": "5000"
+    },
+    "toastManager": {
+      "type": "ToastManager<any>",
+      "detailedType": "ToastManager<any> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "@base-ui/react/toast/createToastManager.d.mts:ToastManager",
+            "name": "ToastManager"
+          }
+        ]
+      },
+      "description": "A global manager for toasts to use outside of a React component."
+    }
+  },
+  "typeLinks": {
+    "@base-ui/react/toast/createToastManager.d.mts:ToastManager": {
+      "type": "interface",
+      "id": "@base-ui/react/toast/createToastManager.d.mts:ToastManager",
+      "name": "ToastManager",
+      "extends": [],
+      "properties": {
+        " subscribe": {
+          "type": "method",
+          "name": " subscribe",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "listener",
+                "value": {
+                  "type": "function",
+                  "parameters": [
+                    {
+                      "type": "parameter",
+                      "name": "data",
+                      "value": {
+                        "type": "link",
+                        "id": "@base-ui/react/toast/createToastManager.d.mts:ToastManagerEvent",
+                        "name": "ToastManagerEvent"
+                      },
+                      "optional": false,
+                      "rest": false
+                    }
+                  ],
+                  "return": {
+                    "type": "void"
+                  },
+                  "typeParameters": []
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "function",
+              "parameters": [],
+              "return": {
+                "type": "void"
+              },
+              "typeParameters": []
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        },
+        "add": {
+          "type": "method",
+          "name": "add",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "options",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerAddOptions",
+                    "name": "ToastManagerAddOptions"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "typeParameter",
+                      "name": "T",
+                      "constraint": {
+                        "type": "any"
+                      },
+                      "default": {
+                        "type": "any"
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "any"
+                },
+                "default": {
+                  "type": "any"
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "description": ""
+        },
+        "close": {
+          "type": "method",
+          "name": "close",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "id",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        },
+        "promise": {
+          "type": "method",
+          "name": "promise",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "promiseValue",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "typeParameter",
+                      "name": "Value",
+                      "constraint": null,
+                      "default": null
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "options",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerPromiseOptions",
+                    "name": "ToastManagerPromiseOptions"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "typeParameter",
+                      "name": "Value",
+                      "constraint": null,
+                      "default": null
+                    },
+                    {
+                      "type": "typeParameter",
+                      "name": "T",
+                      "constraint": {
+                        "type": "any"
+                      },
+                      "default": {
+                        "type": "any"
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "Promise"
+              },
+              "typeParameters": [
+                {
+                  "type": "typeParameter",
+                  "name": "Value",
+                  "constraint": null,
+                  "default": null
+                }
+              ]
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "Value",
+                "constraint": null,
+                "default": null
+              },
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "any"
+                },
+                "default": {
+                  "type": "any"
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "description": ""
+        },
+        "update": {
+          "type": "method",
+          "name": "update",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "id",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "updates",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions",
+                    "name": "ToastManagerUpdateOptions"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "typeParameter",
+                      "name": "T",
+                      "constraint": {
+                        "type": "any"
+                      },
+                      "default": {
+                        "type": "any"
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "any"
+                },
+                "default": {
+                  "type": "any"
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "@base-ui/react/toast/useToastManager.d.mts:ToastManagerAddOptions": {
+      "type": "interface",
+      "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerAddOptions",
+      "name": "ToastManagerAddOptions",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Omit"
+          },
+          "typeParameters": [
+            {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@base-ui/react/toast/useToastManager.d.mts:ToastObject",
+                "name": "ToastObject"
+              },
+              "typeParameters": [
+                {
+                  "type": "identifier",
+                  "name": "Data"
+                }
+              ]
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "stringLiteral",
+                  "value": "animation"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "height"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "id"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "limited"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "ref"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "updateKey"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "actionProps": {
+          "type": "property",
+          "name": "actionProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Omit"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "\"ref\""
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The props for the action button."
+        },
+        "data": {
+          "type": "property",
+          "name": "data",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "identifier",
+                  "name": "any"
+                },
+                "default": {
+                  "type": "identifier",
+                  "name": "any"
+                }
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Custom data for the toast."
+        },
+        "description": {
+          "type": "property",
+          "name": "description",
+          "value": {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The description of the toast."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The unique identifier for the toast. Adding a toast with an existing ID\nupdates it in place and refreshes its auto-dismiss timer."
+        },
+        "onClose": {
+          "type": "property",
+          "name": "onClose",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [],
+                "return": {
+                  "type": "identifier",
+                  "name": "void"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Callback function to be called when the toast is closed."
+        },
+        "onRemove": {
+          "type": "property",
+          "name": "onRemove",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [],
+                "return": {
+                  "type": "identifier",
+                  "name": "void"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Callback function to be called when the toast is removed from the list after any animations are complete when closed."
+        },
+        "positionerProps": {
+          "type": "property",
+          "name": "positionerProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerPositionerProps",
+                "name": "ToastManagerPositionerProps"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The props forwarded to the toast positioner element when rendering anchored toasts."
+        },
+        "priority": {
+          "type": "property",
+          "name": "priority",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "high"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "low"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The priority of the toast.\n- `low` - The toast will be announced politely.\n- `high` - The toast will be announced urgently."
+        },
+        "timeout": {
+          "type": "property",
+          "name": "timeout",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically."
+        },
+        "title": {
+          "type": "property",
+          "name": "title",
+          "value": {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The title of the toast."
+        },
+        "transitionStatus": {
+          "type": "property",
+          "name": "transitionStatus",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "ending"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "starting"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The transition status of the toast."
+        },
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "@base-ui/react/toast/useToastManager.d.mts:ToastManagerPromiseOptions": {
+      "type": "interface",
+      "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerPromiseOptions",
+      "name": "ToastManagerPromiseOptions",
+      "extends": [],
+      "properties": {
+        "error": {
+          "type": "property",
+          "name": "error",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "error",
+                    "value": {
+                      "type": "identifier",
+                      "name": "any"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "string | ToastManagerUpdateOptions<T>"
+                },
+                "typeParameters": []
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions",
+                  "name": "ToastManagerUpdateOptions"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "loading": {
+          "type": "property",
+          "name": "loading",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions",
+                  "name": "ToastManagerUpdateOptions"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "success": {
+          "type": "property",
+          "name": "success",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "result",
+                    "value": {
+                      "type": "identifier",
+                      "name": "Value"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "string | ToastManagerUpdateOptions<T>"
+                },
+                "typeParameters": []
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions",
+                  "name": "ToastManagerUpdateOptions"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions": {
+      "type": "interface",
+      "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerUpdateOptions",
+      "name": "ToastManagerUpdateOptions",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Partial"
+          },
+          "typeParameters": [
+            {
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "Omit"
+              },
+              "typeParameters": [
+                {
+                  "type": "identifier",
+                  "name": "ToastObject<Data>"
+                },
+                {
+                  "type": "identifier",
+                  "name": "\"id\" | \"ref\" | \"height\" | \"limited\" | \"updateKey\" | \"transitionStatus\""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "actionProps": {
+          "type": "property",
+          "name": "actionProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Omit"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "\"ref\""
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The props for the action button."
+        },
+        "data": {
+          "type": "property",
+          "name": "data",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "identifier",
+                  "name": "any"
+                },
+                "default": {
+                  "type": "identifier",
+                  "name": "any"
+                }
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Custom data for the toast."
+        },
+        "description": {
+          "type": "property",
+          "name": "description",
+          "value": {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The description of the toast."
+        },
+        "onClose": {
+          "type": "property",
+          "name": "onClose",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [],
+                "return": {
+                  "type": "identifier",
+                  "name": "void"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Callback function to be called when the toast is closed."
+        },
+        "onRemove": {
+          "type": "property",
+          "name": "onRemove",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [],
+                "return": {
+                  "type": "identifier",
+                  "name": "void"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Callback function to be called when the toast is removed from the list after any animations are complete when closed."
+        },
+        "positionerProps": {
+          "type": "property",
+          "name": "positionerProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@base-ui/react/toast/useToastManager.d.mts:ToastManagerPositionerProps",
+                "name": "ToastManagerPositionerProps"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The props forwarded to the toast positioner element when rendering anchored toasts."
+        },
+        "priority": {
+          "type": "property",
+          "name": "priority",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "high"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "low"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The priority of the toast.\n- `low` - The toast will be announced politely.\n- `high` - The toast will be announced urgently."
+        },
+        "timeout": {
+          "type": "property",
+          "name": "timeout",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically."
+        },
+        "title": {
+          "type": "property",
+          "name": "title",
+          "value": {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The title of the toast."
+        },
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

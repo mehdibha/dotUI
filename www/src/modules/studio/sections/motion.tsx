@@ -27,7 +27,7 @@ import {
   DialSeparator,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import { useStudio } from "../use-studio"
 import { COMPONENTS } from "./components"

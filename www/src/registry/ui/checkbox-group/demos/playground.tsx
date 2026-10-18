@@ -2,13 +2,16 @@
 
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
-import { FieldGroup, Label } from "@/registry/ui/field"
+import { Description, FieldError, FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo({
   label = "Select frameworks",
+  description = "",
+  errorMessage = "",
   isDisabled = false,
   isReadOnly = false,
   isInvalid = false,
+  isRequired = false,
 } = {}) {
   return (
     <CheckboxGroup
@@ -16,8 +19,10 @@ export default function Demo({
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       isInvalid={isInvalid}
+      isRequired={isRequired}
     >
       {label && <Label>{label}</Label>}
+      {description && <Description>{description}</Description>}
       <FieldGroup>
         <Checkbox value="react">
           <CheckboxControl />
@@ -32,6 +37,7 @@ export default function Demo({
           <Label>Angular</Label>
         </Checkbox>
       </FieldGroup>
+      {errorMessage && <FieldError>{errorMessage}</FieldError>}
     </CheckboxGroup>
   )
 }

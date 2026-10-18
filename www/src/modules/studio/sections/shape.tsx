@@ -5,6 +5,7 @@
    of component wears on it, the tracks, and the components with corners of
    their own. */
 
+import type { Effective } from "../axes"
 import {
   pickShape,
   RADIUS_RANGE,
@@ -27,8 +28,7 @@ import {
   DialSlider,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import type { RowMap } from "../row-host"
 import { valueLabel } from "../use-axis"
 import { useStudio } from "../use-studio"
 
@@ -52,8 +52,6 @@ export function ShapePreview({ state }: { state: Effective }) {
   )
 }
 
-/* ---------------------------------- Rows ----------------------------------- */
-
 /** The main page's Radius: a shape sets every corner; Custom opens the page. */
 export function ShapeRow() {
   const { state, setState } = useStudio()
@@ -64,7 +62,8 @@ export function ShapeRow() {
       options={SHAPE_OPTIONS}
       onChange={(id) => setState(pickShape(state, id as ShapeId))}
     >
-      <DialLink page="shape" label="Custom" value={null} />
+      {/* Inset like the shapes above it. */}
+      <DialLink page="shape" label="Custom" value={null} className="px-2.5" />
     </DialSelect>
   )
 }
