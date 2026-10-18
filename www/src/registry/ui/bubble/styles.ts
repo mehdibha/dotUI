@@ -2,7 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import bubbleMeta from "./meta"
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   slots: {
     group: "gap-2.5",

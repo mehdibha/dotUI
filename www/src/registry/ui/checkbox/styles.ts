@@ -40,7 +40,6 @@ export const CHOICE_CARD_PRESS = {
   },
 }
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   slots: {
     root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
