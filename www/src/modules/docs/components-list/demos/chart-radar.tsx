@@ -1,20 +1,24 @@
-"use client"
+import { RadarChart } from "@/registry/ui/chart-radar"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartRadarVisitors = lazy(() => import("./chart-radar.lazy"))
-
-export function ChartRadarDemo() {
+export default function ChartRadarVisitors() {
   return (
-    <div className="w-[240px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[132px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartRadarVisitors />
-      </Suspense>
-    </div>
+    <RadarChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      height={132}
+      axes={false}
+      ariaLabel="Desktop visitors, January through June"
+    />
   )
 }

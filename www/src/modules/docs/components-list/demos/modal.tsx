@@ -10,15 +10,11 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
-import { OverlayPreview, PageMock } from "../overlay"
+import { OverlayPreview } from "../overlay"
 
 export function ModalDemo() {
   return (
-    <OverlayPreview
-      variant="modal"
-      page={<PageMock />}
-      surfaceClassName="flex flex-col gap-4"
-    >
+    <OverlayPreview variant="modal" surfaceClassName="flex flex-col gap-4">
       <DialogHeader>
         <DialogTitle>Edit username</DialogTitle>
         <DialogDescription>

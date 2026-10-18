@@ -49,8 +49,8 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 
 ## Style
 
-`../style.ts` owns `style` (the material, named by its light: Flat,
-Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
+`../style.ts` owns `style` (the material, named by its light; `STYLE_VALUES`:
+Flat, Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
 chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
 its column, whose Flat entry is the key's chapter default (Origin). An
 option that needs another light is an exclude rule with `cause: "style"` and
@@ -85,4 +85,4 @@ exclude? }` for keys a follow or rule can touch. In the panel, `useAxis(key)`
 (`../../use-axis.tsx`) returns `{ saved, effective, explain, set }`, and dial
 primitives take `axis="key"` to hide, pin, exclude and show "Auto · x".
 
-Presets (`presets/<id>.ts`) hold a `diff` over DEFAULTS; Origin is `{}`.
+Presets (`www/src/modules/presets/<id>.ts`) hold a `diff` over DEFAULTS; Origin is `{}`.

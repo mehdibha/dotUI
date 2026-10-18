@@ -1,5 +1,7 @@
 "use client"
 
+import * as FormPrimitives from "react-aria-components/Form"
+
 import { Button } from "@/registry/ui/button"
 import {
   Dialog,
@@ -21,31 +23,46 @@ export default function Demo() {
       <Button>Edit Profile</Button>
       <Modal>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-              Your profile will be updated immediately.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogBody>
-            <TextField defaultValue="Pedro Duarte">
-              <Label>Name</Label>
-              <Input name="name" />
-            </TextField>
-            <TextField defaultValue="@peduarte">
-              <Label>Username</Label>
-              <Input name="username" />
-            </TextField>
-          </DialogBody>
-          <DialogFooter>
-            <Button slot="close" type="button">
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary">
-              Save changes
-            </Button>
-          </DialogFooter>
+          {({ close }) => (
+            <>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>
+                  Make changes to your profile here. Click save when you're
+                  done. Your profile will be updated immediately.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
+                <FormPrimitives.Form
+                  id="edit-profile-form"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    close()
+                  }}
+                  className="flex flex-col gap-2"
+                >
+                  <TextField name="name" defaultValue="Pedro Duarte">
+                    <Label>Name</Label>
+                    <Input />
+                  </TextField>
+                  <TextField name="username" defaultValue="@peduarte">
+                    <Label>Username</Label>
+                    <Input />
+                  </TextField>
+                </FormPrimitives.Form>
+              </DialogBody>
+              <DialogFooter>
+                <Button slot="close">Cancel</Button>
+                <Button
+                  type="submit"
+                  form="edit-profile-form"
+                  variant="primary"
+                >
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Modal>
     </Dialog>
