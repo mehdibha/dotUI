@@ -29,8 +29,6 @@ export const STUDIO_VAR_PREFIX = "--studio-"
 /** Studio var name → its fully resolved CSS value. */
 type StudioVars = ReadonlyMap<string, string>
 
-/* ------------------------------ var → value ------------------------------ */
-
 /** Preset tokens may name a token bare (`--radius-md`); CSS wants `var()`. */
 function asCssValue(value: string): string {
   const trimmed = value.trim()
@@ -75,8 +73,6 @@ export function paramVars(
   return out
 }
 
-/* ------------------------------ substitution ----------------------------- */
-
 type Lookup = (name: string) => string | undefined
 
 /**
@@ -119,8 +115,6 @@ function substituteVarReads(
   }
   return { text: out, unresolved }
 }
-
-/* ----------------------------- class rewrite ----------------------------- */
 
 /** Tailwind's named curves, keyed by their whitespace-free value. */
 const NAMED_EASES: Record<string, string> = {
@@ -462,8 +456,6 @@ export function resolveClasses(layer: TvLayer, vars: StudioVars): TvLayer {
 
   return out
 }
-
-/* ------------------------------- css fields ------------------------------ */
 
 type CssValue = string | CssObject
 interface CssObject {

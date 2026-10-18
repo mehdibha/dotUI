@@ -74,7 +74,7 @@ const { useStyles } = createStyles(sidebarMeta, {
       // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
       wrapper:
         "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-      root: "group peer hidden text-fg md:block",
+      root: "group peer hidden text-fg data-[side=right]:order-last md:block",
       gap: [
         "relative w-(--sidebar-width) bg-transparent transition-[width]",
         collapse,

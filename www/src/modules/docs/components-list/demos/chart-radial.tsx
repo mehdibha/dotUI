@@ -1,20 +1,32 @@
-"use client"
+import { RadialBarChart } from "@/registry/ui/chart-radial"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartRadialVisitors = lazy(() => import("./chart-radial.lazy"))
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-export function ChartRadialDemo() {
+export default function ChartRadialVisitors() {
   return (
-    <div className="w-[136px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[108px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartRadialVisitors />
-      </Suspense>
-    </div>
+    <RadialBarChart
+      data={data}
+      value="visitors"
+      name="browser"
+      labels={labels}
+      height={108}
+      innerRadius={0.3}
+      track
+      ariaLabel="Visitors by browser"
+    />
   )
 }

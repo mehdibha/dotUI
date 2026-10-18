@@ -1,13 +1,15 @@
 import { createStyles } from "@/lib/styles"
 
-import { STROKED_TIP } from "../popover/styles"
+import {
+  OVERLAY_FADE,
+  OVERLAY_SCALE,
+  OVERLAY_SLIDE,
+  STROKED_TIP,
+} from "../popover/styles"
 import tooltipMeta from "./meta"
 
 const entrance =
   "transition-[transform,opacity,scale] duration-(--studio-tooltip-enter-duration) ease-(--studio-tooltip-ease) will-change-[transform,opacity,scale] exiting:duration-(--studio-tooltip-exit-duration) exiting:ease-(--studio-tooltip-exit-ease) motion-reduce:transition-none"
-
-const offset =
-  "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
 const { useStyles, styles } = createStyles(tooltipMeta, {
   base: {
@@ -48,31 +50,9 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       },
     },
     motion: {
-      scale: {
-        slots: {
-          content: [
-            entrance,
-            "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
-      fade: {
-        slots: {
-          content: [entrance, "entering:opacity-0 exiting:opacity-0"],
-        },
-      },
-      slide: {
-        slots: {
-          content: [
-            entrance,
-            "entering:opacity-0 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
+      scale: { slots: { content: [entrance, OVERLAY_SCALE] } },
+      fade: { slots: { content: [entrance, OVERLAY_FADE] } },
+      slide: { slots: { content: [entrance, OVERLAY_SLIDE] } },
       none: {},
     },
   },

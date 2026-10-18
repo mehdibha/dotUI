@@ -8,6 +8,18 @@ const entrance =
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
+export const OVERLAY_SCALE = [
+  "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
+  "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
+  offset,
+]
+export const OVERLAY_FADE = "entering:opacity-0 exiting:opacity-0"
+export const OVERLAY_SLIDE = [
+  OVERLAY_FADE,
+  "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
+  offset,
+]
+
 /* A stroked tip (popover, surface tooltip): sized with the overlay stroke
    (styles.css), and the stroke drawn at its true width. */
 export const STROKED_TIP =
@@ -30,31 +42,9 @@ const { useStyles } = createStyles(popoverMeta, {
   },
   params: {
     motion: {
-      scale: {
-        slots: {
-          popover: [
-            entrance,
-            "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
-      fade: {
-        slots: {
-          popover: [entrance, "entering:opacity-0 exiting:opacity-0"],
-        },
-      },
-      slide: {
-        slots: {
-          popover: [
-            entrance,
-            "entering:opacity-0 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
+      scale: { slots: { popover: [entrance, OVERLAY_SCALE] } },
+      fade: { slots: { popover: [entrance, OVERLAY_FADE] } },
+      slide: { slots: { popover: [entrance, OVERLAY_SLIDE] } },
       none: {},
     },
     tip: {

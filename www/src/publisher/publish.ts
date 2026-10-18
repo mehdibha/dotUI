@@ -1,7 +1,7 @@
 /**
  * Request-time orchestrator. Given a publishable (the build-time artifact
- * for one component) and a preset, return a shadcn registry item with one
- * inline file whose tv config is fully resolved against the preset.
+ * for one component) and a preset, return a shadcn registry item whose files
+ * carry a tv config fully resolved against the preset.
  *
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  *
@@ -12,8 +12,8 @@
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
  *
- * Step 6 (oxfmt) lives outside this module — callers feed the assembled
- * content through `oxfmt.format` since that's async and route-side.
+ * Formatting lives outside this module (`formatShippedFile` in serve.ts),
+ * since it's async and route-side.
  */
 
 import type { RegistryItem } from "@/registry/types"

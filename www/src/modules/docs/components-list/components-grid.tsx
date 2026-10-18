@@ -1,5 +1,3 @@
-"use client"
-
 import { usePreviewPending } from "../preview-controls"
 import { ComponentCard } from "./component-card"
 import { componentsData } from "./components-data"
@@ -32,7 +30,6 @@ export function ComponentsGrid({ category }: { category: string }) {
           key={component.slug}
           name={component.name}
           slug={component.slug}
-          href={component.href}
           scale={component.scale}
           fill={component.fill}
           stretch={component.stretch}

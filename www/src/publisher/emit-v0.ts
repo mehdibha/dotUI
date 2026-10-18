@@ -35,8 +35,6 @@ const FONT_DEPENDENCIES = [
   "@fontsource/geist-mono",
 ]
 
-/* ------------------------------ css rendering ------------------------------ */
-
 function renderCssEntries(record: CssRecord, indent: string): string[] {
   const lines: string[] = []
   for (const [key, value] of Object.entries(record)) {
@@ -140,14 +138,10 @@ export function mergeComponentCss(
   }
 }
 
-/* ------------------------------- source files ------------------------------ */
-
 /** `ui/button.tsx` → `components/ui/button.tsx`; lib/hooks pass through. */
 function projectTarget(target: string): string {
   return target.startsWith("ui/") ? `components/${target}` : target
 }
-
-/* -------------------------------- assembly -------------------------------- */
 
 interface V0File {
   type: string
@@ -230,8 +224,6 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 function fileType(file: RegistryItemFile): string {
   return file.type === "registry:ui" ? "registry:ui" : "registry:lib"
 }
-
-/* ------------------------------ project shell ------------------------------ */
 
 const V0_LAYOUT_TSX = `import type { ReactNode } from "react";
 

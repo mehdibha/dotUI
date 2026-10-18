@@ -3,6 +3,25 @@
   "description": "A card groups related content and actions into a single container.",
   "extendsElement": "div",
   "props": {
+    "size": {
+      "type": "\"default\" | \"sm\"",
+      "detailedType": "'default' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of the card.",
+      "default": "'default'"
+    },
     "className": {
       "type": "string",
       "typeAst": {

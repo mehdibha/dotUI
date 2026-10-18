@@ -3,7 +3,7 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import accordionMeta from "./meta"
 
-const expand =
+export const EXPAND =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
 const { useStyles } = createStyles(accordionMeta, {
@@ -27,8 +27,8 @@ const { useStyles } = createStyles(accordionMeta, {
     motion: {
       expand: {
         slots: {
-          marker: [expand, "transition-transform"],
-          panel: [expand, "motion-safe:transition-[height]"],
+          marker: [EXPAND, "transition-transform"],
+          panel: [EXPAND, "motion-safe:transition-[height]"],
         },
       },
       none: {},

@@ -21,8 +21,6 @@ const useChartMotion = createParamValue({
   values: { spring: "spring", ease: "ease", none: "none" },
 })
 
-/* ---------------------------------- Data ---------------------------------- */
-
 const phases = <T,>(first: T[], second: T[]) => [first, second] as const
 
 const DEVICES = { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }
@@ -134,8 +132,6 @@ const thousands = (value: unknown) =>
   typeof value === "number" && value >= 1000
     ? `${(value / 1000).toFixed(1)}k`
     : String(value)
-
-/* ---------------------------------- Board ---------------------------------- */
 
 export default function ChartBoard() {
   const phase = useLoop(useReplay("chartMotion").running, 1600) ? 1 : 0

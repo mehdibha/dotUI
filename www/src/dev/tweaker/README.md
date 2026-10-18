@@ -1,6 +1,6 @@
 # Dev tweaker
 
-A **dev-only** floating panel (also enabled on Vercel previews) for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (docked bottom-center, Vercel-toolbar style) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
+A **dev-only** floating panel (also enabled on Vercel previews) for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (a trigger docked to a screen edge, centre-right by default) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
 
 It is **not** a product feature and **not** a `/studio` design-system axis. It's throwaway scaffolding for one exploration. Adding a real axis/variant/token is still a product decision (propose-and-approve — see the root `CLAUDE.md`).
 
@@ -114,10 +114,11 @@ State (open, side, vertical position, control values + order) persists in `local
 
 ## How it stays out of production
 
-`useTweak` is gated on `import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'` (see `use-tweak.ts`) — both build-time constants (`VERCEL_ENV` is inlined via Vite `define`). In a real production build the condition is constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. The panel is `lazy()`-imported behind the same condition (plus a `!SSR` guard, so prerendering never evaluates the chunk) in `__root.tsx`. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
+`useTweak` is gated on `import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'` (see `use-tweak.ts`) — both build-time constants (`VERCEL_ENV` is inlined via Vite `define`). In a real production build the condition is constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. `__root.tsx` `lazy()`-imports the devtools hub (`src/dev/devtools/hub.tsx`) behind the same condition (plus a `!SSR` guard, so prerendering never evaluates the chunk); the hub lazy-loads the panel only while its Tweaker switch is on (the default). **⌘⇧D** opens the hub to toggle the tweaker, React Grab and TanStack Devtools. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
 
 ## Files
 
+- `index.ts` — public surface: `useTweak`, `setTweak`, `DevTweaker`.
 - `use-tweak.ts` — the `useTweak` hook (dev/no-op split).
 - `store.ts` — framework-free singleton (values vs. controls, persistence, coercion). Unit-tested in `store.test.ts`.
 - `controls.tsx` — one control row per type.

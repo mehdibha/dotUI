@@ -2,6 +2,14 @@ import { createStyles } from "@/lib/styles"
 
 import bubbleMeta from "./meta"
 
+const roomy = {
+  slots: {
+    group: "gap-2.5",
+    content: "px-4 py-2.5 text-sm leading-relaxed",
+    reactions: "text-sm ring-3",
+  },
+}
+
 const { useStyles } = createStyles(bubbleMeta, {
   base: {
     slots: {
@@ -61,27 +69,9 @@ const { useStyles } = createStyles(bubbleMeta, {
         reactions: "text-sm ring-3",
       },
     },
-    comfortable: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
-    spacious: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
-    touch: {
-      slots: {
-        group: "gap-2.5",
-        content: "px-4 py-2.5 text-sm leading-relaxed",
-        reactions: "text-sm ring-3",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
 })
 

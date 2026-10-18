@@ -59,9 +59,6 @@ async function buildFixture(): Promise<void> {
 
   // Init-bundled cn helper (ships in the registry:base item, not per-component).
   writeFixtureFile("src/lib/utils.ts", CN_UTILS_TS)
-  // `@/components/icons` is resolved to a real library at publish; type it away
-  // in case any emitted file still references the marker.
-  writeFixtureFile("src/env.d.ts", `declare module "@/components/icons";\n`)
 
   // Aliases mirror the consumer's components.json. `@/components/ui/*` MUST hit
   // the emitted fixture files (cross-component type-checking); lib/hook deps not
