@@ -68,7 +68,6 @@ interface ToggleButtonProps
 }
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
-  // A group attaches its secondary segments by data-variant.
   const {
     variant = "secondary",
     size,

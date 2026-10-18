@@ -56,7 +56,6 @@ const InternalSwitchContext = createContext<
   | null
 >(null);
 
-// The button's render state, mirrored onto the indicator and thumb.
 const stateAttributes = (
   ctx: SwitchPrimitive.SwitchButtonRenderProps | null,
 ) => ({
