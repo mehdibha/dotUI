@@ -56,6 +56,8 @@ export async function buildControlsFromReference(
     }
 
     const inferredControl = inferControlFromProp(propName, prop, overrides)
+    const propDefault = readPropDefault(prop.default, inferredControl)
+    if (propDefault !== undefined) inferredControl.propDefault = propDefault
     controls.push(inferredControl)
   }
 
@@ -77,8 +79,34 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
     default:
       c.type === "icon"
         ? null
-        : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
+        : (c.propDefault ??
+          ((c as { defaultValue?: unknown }).defaultValue as never) ??
+          null),
   }))
+}
+
+/**
+ * The reference default as a control value, or undefined when it isn't a
+ * plain literal of the control's type (prose like `'M' — 'H' when …`).
+ */
+function readPropDefault(
+  raw: string | undefined,
+  control: Control,
+): string | number | boolean | undefined {
+  const v = raw?.trim()
+  if (!v) return undefined
+  switch (control.type) {
+    case "boolean":
+      return v === "true" ? true : v === "false" ? false : undefined
+    case "number":
+      return /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : undefined
+    case "enum": {
+      const s = v.replace(/^(['"])(.*)\1$/, "$2")
+      return control.options.includes(s) ? s : undefined
+    }
+    default:
+      return undefined
+  }
 }
 
 // ============================================================================
