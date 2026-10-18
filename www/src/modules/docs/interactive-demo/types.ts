@@ -32,6 +32,8 @@ export interface NumberControl extends BaseControl {
   min?: number
   max?: number
   step?: number
+  /** Render as a select over these values instead of a number field. */
+  options?: number[]
 }
 
 export interface EnumControl extends BaseControl {
