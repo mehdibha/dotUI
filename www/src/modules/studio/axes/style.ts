@@ -11,19 +11,10 @@ import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 
 export const STYLE_VALUES = ["flat", "tonal", "tactile", "chunky"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
-
-export const STYLE_DEFAULTS = {
-  style: "flat" as Style,
-}
-
-export const STYLE_SCHEMA: ChapterSchema<typeof STYLE_DEFAULTS> = {
-  style: oneOf(STYLE_VALUES),
-}
 
 /* A column value may be another follow id of its key ("auto"): it resolves
    one more hop. */
@@ -156,7 +147,11 @@ export const resetToStyle = (state: StudioState): StudioState =>
 
 export const chapter = defineChapter({
   id: "style",
-  defaults: STYLE_DEFAULTS,
-  schema: STYLE_SCHEMA,
+  defaults: {
+    style: "flat" as Style,
+  },
+  schema: {
+    style: oneOf(STYLE_VALUES),
+  },
   resolve: (_state: Effective): Resolved => ({}),
 })

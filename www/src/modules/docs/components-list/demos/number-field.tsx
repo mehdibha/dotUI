@@ -8,7 +8,7 @@ import {
 
 export function NumberFieldDemo() {
   return (
-    <NumberField defaultValue={12}>
+    <NumberField aria-label="Quantity" defaultValue={12}>
       <NumberFieldGroup>
         <NumberFieldDecrement />
         <Input className="w-16" />

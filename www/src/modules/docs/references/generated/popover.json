@@ -9,7 +9,7 @@
         "type": "boolean"
       },
       "description": "Whether to show an arrow pointing to the trigger.",
-      "default": "false"
+      "default": "true"
     },
     "UNSTABLE_portalContainer": {
       "type": "Element",

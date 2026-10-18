@@ -10,7 +10,7 @@ export interface ToggleButtonProps extends React.ComponentProps<
    * The visual style of the toggle button.
    * @default 'secondary'
    */
-  variant?: "primary" | "secondary" | "quiet"
+  variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
 
   /**
    * The size of the toggle button.

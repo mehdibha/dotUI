@@ -3,7 +3,7 @@ title: TextField
 description: TextField allows a user to enter a plain text value with a keyboard.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/TextField.html
+    href: https://react-aria.adobe.com/TextField
 wip: true
 ---
 
@@ -17,6 +17,12 @@ wip: true
     },
     {
       type: "string",
+      name: "placeholder",
+      defaultValue: "",
+      placeholder: "Placeholder text",
+    },
+    {
+      type: "string",
       name: "description",
       defaultValue: "",
       placeholder: "Helper text",
@@ -26,6 +32,17 @@ wip: true
       name: "errorMessage",
       defaultValue: "",
       placeholder: "Error text",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
+      defaultValue: false,
     },
     {
       type: "boolean",

@@ -3,9 +3,10 @@
 /* Surfaces — one row on the Color & surfaces page: the settings the Style
    paints them with, and each mode's page. */
 
-import type { StepName, Theme } from "@dotui/colors"
+import type { Mode, StepName, Theme } from "@dotui/colors"
 
 import { effective } from "../axes"
+import type { Effective } from "../axes"
 import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
@@ -13,7 +14,7 @@ import {
   surfaceColorCss,
   surfaceRecipe,
 } from "../axes/surfaces"
-import type { Mode, PerMode, SurfaceColor } from "../axes/surfaces"
+import type { PerMode, SurfaceColor } from "../axes/surfaces"
 import {
   EDGE_OPTIONS,
   LAYERS_OPTIONS,
@@ -22,10 +23,9 @@ import {
   SHELL_OPTIONS,
 } from "../axes/surfaces.meta"
 import { DialPopover, DialSelect, DialSlider, DialTrigger } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import type { Effective } from "../state"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { valueLabel } from "../use-axis"
 import { useStudio } from "../use-studio"
 
@@ -106,7 +106,7 @@ const SURFACE_KEYS = [
   "darkBg",
 ]
 
-export function SurfacesRow() {
+function SurfacesRow() {
   const { state, effective: values, set } = useStudio()
   const { theme } = usePanelMode()
   return (
