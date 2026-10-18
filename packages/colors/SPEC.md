@@ -7,9 +7,9 @@ exposes, and the check that enforces it in CI.
 **Method:** the colors.dotui.org research is treated as a hypothesis list, not a
 source of truth. Every load-bearing number in this spec is re-measured from
 primary sources — `@radix-ui/colors` v3, `tailwindcss` v4 palettes, the official
-`apca-w3` meter, raw WCAG math — before its decision locks. The measurement
-scripts and fixtures live in `research/` (deterministic, re-runnable; they are
-the verification corpus).
+`apca-w3` meter, raw WCAG math — before its decision locks. The one-off
+measurement scripts were removed once the numbers locked (see git history);
+reference palettes live in `www/src/modules/color-lab/data/`.
 
 **Status legend:** ✅ locked · 🟡 proposed (needs Mehdi's sign-off) ·
 🔬 open (research/measurement needed before locking)
@@ -42,7 +42,7 @@ Naming: 🟡 12 jobs, Tailwind-style names (Mehdi's call), realized as
 Tailwind convention says `600`; primitives are mostly consumed through the
 semantic layer anyway.)
 
-Verified from primary data (`research/`):
+Verified from primary data:
 
 - Radix light-mode spacing is deliberately uneven: backgrounds Δ1–3 L\*,
   border/solid region Δ4–15, a 24–30 L\* cliff between text steps. Equal
@@ -396,8 +396,6 @@ zero out-of-gamut values.
 
 ## Verification corpus
 
-- `research/` scripts + `research/data/` fixtures: the measurements that
-  locked D2/D4/D5/D6/D8/D9/D10/D11 (deterministic, re-runnable).
 - `@radix-ui/colors` (devDep): per-family regression bar (ΔEok per step).
 - `apca-w3` (devDep): APCA parity.
 - `/internal/color-lab` playground: generated ramps beside reference systems,

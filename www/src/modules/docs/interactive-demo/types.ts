@@ -1,30 +1,20 @@
-/**
- * Types for InteractiveDemo with serializable data.
- * Controls are enriched at build time and passed as props to the client component.
- */
+// Controls are built and enriched at build time, then passed as JSON props to the client component.
 
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx"
 
 import type { CodeTemplate } from "../codegen/code-template"
 
-// ============================================================================
-// Base Control Types (used for building controls)
-// ============================================================================
-
-export interface PropReference {
+export interface ControlReference {
   description?: string
-  type: React.ReactNode
-  default?: React.ReactNode
-  defaultRaw?: string
-  required?: boolean
+  /** Highlighted type as an HTML string. */
+  typeHighlighted: string
 }
 
 export interface BaseControl {
   name: string
-  alwaysShow?: boolean
   /** Required by the component: the code panel always shows it. */
   required?: boolean
-  reference?: PropReference
+  reference?: ControlReference
 }
 
 export interface BooleanControl extends BaseControl {
@@ -78,73 +68,6 @@ export type ControlInput =
   | (Partial<Omit<Control, "name">> & { name: string })
 
 /**
- * Serializable prop reference (HTML strings instead of ReactNode).
- * Used for JSON serialization through the rehype transform.
- */
-export interface SerializablePropReference {
-  description?: string
-  /** Highlighted type as HTML string */
-  typeHighlighted: string
-  /** Highlighted default value as HTML string */
-  defaultHighlighted?: string
-  /** Raw default value string */
-  defaultRaw?: string
-  required?: boolean
-}
-
-/**
- * Base serializable control with HTML string reference.
- */
-export interface SerializableBaseControl {
-  name: string
-  alwaysShow?: boolean
-  reference?: SerializablePropReference
-}
-
-export interface SerializableBooleanControl extends SerializableBaseControl {
-  type: "boolean"
-  defaultValue?: boolean
-}
-
-export interface SerializableStringControl extends SerializableBaseControl {
-  type: "string"
-  defaultValue?: string
-  placeholder?: string
-}
-
-export interface SerializableNumberControl extends SerializableBaseControl {
-  type: "number"
-  defaultValue?: number
-  min?: number
-  max?: number
-  step?: number
-  /** Render as a select over these values instead of a number field. */
-  options?: number[]
-}
-
-export interface SerializableEnumControl extends SerializableBaseControl {
-  type: "enum"
-  options: string[]
-  defaultValue?: string
-}
-
-export interface SerializableIconControl extends SerializableBaseControl {
-  type: "icon"
-  defaultValue?: string
-}
-
-/**
- * Serializable control union type.
- * All reference data uses HTML strings for JSON serialization.
- */
-export type SerializableControl =
-  | SerializableBooleanControl
-  | SerializableStringControl
-  | SerializableNumberControl
-  | SerializableEnumControl
-  | SerializableIconControl
-
-/**
  * Node info collected during rehype traversal.
  */
 export interface InteractiveDemoNodeInfo {
@@ -164,8 +87,8 @@ export interface ProcessedInteractiveDemo {
   importName: string
   /** Import path for the playground component */
   importPath: string
-  /** Enriched controls with serializable reference data */
-  controls: SerializableControl[]
+  /** Controls with their highlighted reference data */
+  controls: Control[]
   /** Template-with-holes over the demo source; fills the displayed code. */
   codeTemplate: CodeTemplate
 }
