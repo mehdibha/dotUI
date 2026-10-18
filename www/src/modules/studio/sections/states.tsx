@@ -6,6 +6,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import {
   AUTO_STRENGTH,
@@ -27,12 +28,9 @@ import {
   WIDTH_OPTIONS,
 } from "../axes/states.meta"
 import { DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const INK = "var(--color-border-focus)"
 const MUTED = "var(--color-border-focus-muted)"
@@ -154,8 +152,6 @@ const ringOf = (state: Effective): Ring => ({
   width: state.focusWidth,
 })
 
-/* --------------------------------- Glyphs --------------------------------- */
-
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default. */
 const HIGHLIGHT_CHIPS: Record<string, string> = {
@@ -170,8 +166,6 @@ function HighlightChip({ value }: { value: string }) {
     </span>
   )
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 export function InteractionPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} />

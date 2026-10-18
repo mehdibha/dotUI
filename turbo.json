@@ -10,15 +10,7 @@
       "cache": false,
       "persistent": true
     },
-    "typecheck": {
-      "dependsOn": ["^build"]
-    },
-    "clean": {
-      "cache": false
-    },
-    "//#clean": {
-      "cache": false
-    }
+    "typecheck": {}
   },
   "globalPassThroughEnv": [
     "NODE_ENV",

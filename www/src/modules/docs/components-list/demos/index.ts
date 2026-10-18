@@ -10,27 +10,22 @@ import { BubbleDemo } from "./bubble"
 import { ButtonDemo } from "./button"
 import { CalendarDemo } from "./calendar"
 import { CardDemo } from "./card"
-import { ChartAreaDemo } from "./chart-area"
-import { ChartBarDemo } from "./chart-bar"
-import { ChartHeatmapDemo } from "./chart-heatmap"
-import { ChartLineDemo } from "./chart-line"
-import { ChartPieDemo } from "./chart-pie"
-import { ChartRadarDemo } from "./chart-radar"
-import { ChartRadialDemo } from "./chart-radial"
 import { CheckboxDemo } from "./checkbox"
 import { CheckboxGroupDemo } from "./checkbox-group"
 import { CollapsibleDemo } from "./collapsible"
 import { ColorAreaDemo } from "./color-area"
+import { ColorEditorDemo } from "./color-editor"
 import { ColorFieldDemo } from "./color-field"
 import { ColorPickerDemo } from "./color-picker"
 import { ColorSliderDemo } from "./color-slider"
+import { ColorSwatchDemo } from "./color-swatch"
 import { ColorSwatchPickerDemo } from "./color-swatch-picker"
 import { ComboboxDemo } from "./combobox"
 import { CommandDemo } from "./command"
 import { DateFieldDemo } from "./date-field"
 import { DatePickerDemo } from "./date-picker"
-import { DialogDemo } from "./dialog"
 import { DrawerDemo } from "./drawer"
+import { DropZoneDemo } from "./drop-zone"
 import { EmptyDemo } from "./empty"
 import { FieldDemo } from "./field"
 import { FileTriggerDemo } from "./file-trigger"
@@ -38,6 +33,7 @@ import { GroupDemo } from "./group"
 import { InputDemo } from "./input"
 import { InputGroupDemo } from "./input-group"
 import { KbdDemo } from "./kbd"
+import { lazyChart } from "./lazy-chart"
 import { LinkDemo } from "./link"
 import { ListBoxDemo } from "./list-box"
 import { LoaderDemo } from "./loader"
@@ -56,6 +52,7 @@ import { QRCodeDemo } from "./qr-code"
 import { QuestionnaireDemo } from "./questionnaire"
 import { RadioGroupDemo } from "./radio-group"
 import { SearchFieldDemo } from "./search-field"
+import { SegmentedControlDemo } from "./segmented-control"
 import { SelectDemo } from "./select"
 import { SeparatorDemo } from "./separator"
 import { SidebarDemo } from "./sidebar"
@@ -68,6 +65,7 @@ import { TagGroupDemo } from "./tag-group"
 import { TextAreaDemo } from "./text-area"
 import { TextFieldDemo } from "./text-field"
 import { TimeFieldDemo } from "./time-field"
+import { TimePickerDemo } from "./time-picker"
 import { ToastDemo } from "./toast"
 import { ToggleButtonDemo } from "./toggle-button"
 import { ToggleButtonGroupDemo } from "./toggle-button-group"
@@ -86,27 +84,29 @@ export const componentDemos: Record<string, ComponentType> = {
   button: ButtonDemo,
   calendar: CalendarDemo,
   card: CardDemo,
-  "chart-area": ChartAreaDemo,
-  "chart-bar": ChartBarDemo,
-  "chart-heatmap": ChartHeatmapDemo,
-  "chart-line": ChartLineDemo,
-  "chart-pie": ChartPieDemo,
-  "chart-radar": ChartRadarDemo,
-  "chart-radial": ChartRadialDemo,
+  "chart-area": lazyChart(() => import("./chart-area"), 180, 96),
+  "chart-bar": lazyChart(() => import("./chart-bar"), 164, 96),
+  "chart-heatmap": lazyChart(() => import("./chart-heatmap"), 196, 96),
+  "chart-line": lazyChart(() => import("./chart-line"), 180, 92),
+  "chart-pie": lazyChart(() => import("./chart-pie"), 136, 108),
+  "chart-radar": lazyChart(() => import("./chart-radar"), 240, 132),
+  "chart-radial": lazyChart(() => import("./chart-radial"), 136, 108),
   checkbox: CheckboxDemo,
   "checkbox-group": CheckboxGroupDemo,
   collapsible: CollapsibleDemo,
   "color-area": ColorAreaDemo,
+  "color-editor": ColorEditorDemo,
   "color-field": ColorFieldDemo,
   "color-picker": ColorPickerDemo,
   "color-slider": ColorSliderDemo,
+  "color-swatch": ColorSwatchDemo,
   "color-swatch-picker": ColorSwatchPickerDemo,
   combobox: ComboboxDemo,
   command: CommandDemo,
   "date-field": DateFieldDemo,
   "date-picker": DatePickerDemo,
-  dialog: DialogDemo,
   drawer: DrawerDemo,
+  "drop-zone": DropZoneDemo,
   empty: EmptyDemo,
   field: FieldDemo,
   "file-trigger": FileTriggerDemo,
@@ -119,8 +119,8 @@ export const componentDemos: Record<string, ComponentType> = {
   loader: LoaderDemo,
   marker: MarkerDemo,
   mention: MentionDemo,
-  message: MessageDemo,
   menu: MenuDemo,
+  message: MessageDemo,
   "message-scroller": MessageScrollerDemo,
   modal: ModalDemo,
   "number-field": NumberFieldDemo,
@@ -132,6 +132,7 @@ export const componentDemos: Record<string, ComponentType> = {
   questionnaire: QuestionnaireDemo,
   "radio-group": RadioGroupDemo,
   "search-field": SearchFieldDemo,
+  "segmented-control": SegmentedControlDemo,
   select: SelectDemo,
   separator: SeparatorDemo,
   sidebar: SidebarDemo,
@@ -144,10 +145,11 @@ export const componentDemos: Record<string, ComponentType> = {
   "text-area": TextAreaDemo,
   "text-field": TextFieldDemo,
   "time-field": TimeFieldDemo,
-  "token-field": TokenFieldDemo,
+  "time-picker": TimePickerDemo,
   toast: ToastDemo,
   "toggle-button": ToggleButtonDemo,
   "toggle-button-group": ToggleButtonGroupDemo,
+  "token-field": TokenFieldDemo,
   tooltip: TooltipDemo,
   tree: TreeDemo,
 }

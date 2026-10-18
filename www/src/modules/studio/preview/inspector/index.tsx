@@ -1,10 +1,6 @@
 import * as React from "react"
 
-import {
-  sendInspect,
-  sendInspectorExit,
-  useInspectorModeMessages,
-} from "@/modules/studio/preset"
+import { postToParent, useMessage } from "@/modules/studio/preset/iframe-sync"
 
 import { findOwner, getHostElements } from "./fiber"
 import type { FiberLike } from "./fiber"
@@ -95,12 +91,10 @@ export function PreviewInspector() {
     setCardSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }))
   })
 
-  useInspectorModeMessages(
-    React.useCallback((on: boolean) => {
-      setEnabled(on)
-      if (!on) setSel(null)
-    }, []),
-  )
+  useMessage("inspector-mode", ({ enabled: on }) => {
+    setEnabled(on)
+    if (!on) setSel(null)
+  })
 
   // The identity map pulls in every registry component — load it only once
   // the inspector is actually switched on.
@@ -146,7 +140,10 @@ export function PreviewInspector() {
       block(event)
       const current = selRef.current
       if (current?.entry.customizable) {
-        sendInspect(`component:${current.entry.slug}`)
+        postToParent({
+          type: "preview-inspect",
+          panel: `component:${current.entry.slug}`,
+        })
       }
     }
     const onKeyDown = (event: KeyboardEvent) => {
@@ -154,7 +151,7 @@ export function PreviewInspector() {
       block(event)
       setEnabled(false)
       setSel(null)
-      sendInspectorExit()
+      postToParent({ type: "inspector-exit" })
     }
     const clear = () => setSel(null)
     const onViewportChange = () => bumpTick()

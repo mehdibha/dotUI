@@ -3,7 +3,8 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import accordionMeta from "./meta"
 
-const expand =
+/* Accordion's expand timing; collapsible imports it. */
+export const EXPAND =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
 const { useStyles, styles } = createStyles(accordionMeta, {
@@ -34,8 +35,8 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     motion: {
       expand: {
         slots: {
-          marker: [expand, "transition-transform"],
-          panel: [expand, "motion-safe:transition-[height]"],
+          marker: [EXPAND, "transition-transform"],
+          panel: [EXPAND, "motion-safe:transition-[height]"],
         },
       },
       none: {},

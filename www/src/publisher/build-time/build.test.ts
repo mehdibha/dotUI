@@ -22,10 +22,6 @@ const REGISTRY_UI = path.resolve(__dirname, "../../registry/ui")
 // Composing `fieldStyles()` needs field's param defaults.
 const METAS = { metas: new Map([["field", fieldMeta]]) }
 
-/* ============================================================ */
-/* extract-config                                                */
-/* ============================================================ */
-
 describe("extractStylesConfig", () => {
   test("button: extracts base and density layers", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "button/styles.ts"))
@@ -160,10 +156,6 @@ describe("extractStylesConfig", () => {
   })
 })
 
-/* ============================================================ */
-/* transform-base                                                */
-/* ============================================================ */
-
 describe("transformBase", () => {
   test("button: strips ./styles import, inserts tv-variants decl, leaves placeholder", () => {
     const { template, variantIdent } = transformBase({
@@ -292,10 +284,6 @@ describe("transformBase", () => {
   })
 })
 
-/* ============================================================ */
-/* end-to-end: extract + transform → publish                     */
-/* ============================================================ */
-
 describe("end-to-end (extract + transform → publish)", () => {
   test("button: published content includes expected class for `default` density default variant", () => {
     const stylesConfig = extractStylesConfig(
@@ -389,10 +377,6 @@ describe("end-to-end (extract + transform → publish)", () => {
     expect(rawContent).toMatch(/legend:\s*""/)
   })
 })
-
-/* ============================================================ */
-/* fold-param-values                                             */
-/* ============================================================ */
 
 describe("createParamValue folds", () => {
   const accordion = path.join(REGISTRY_UI, "accordion/base.tsx")

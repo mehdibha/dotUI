@@ -3,7 +3,7 @@ title: Radio Group
 description: A radio group allows a user to select a single item from a list of mutually exclusive options.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/RadioGroup.html
+    href: https://react-aria.adobe.com/RadioGroup
 wip: true
 ---
 
@@ -14,6 +14,18 @@ wip: true
       type: "string",
       name: "label",
       defaultValue: "Select frameworks",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "string",
+      name: "errorMessage",
+      defaultValue: "",
+      placeholder: "Error text",
     },
     {
       type: "enum",
@@ -29,6 +41,11 @@ wip: true
     {
       type: "boolean",
       name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
     {

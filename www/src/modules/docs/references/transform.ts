@@ -3,8 +3,7 @@
  * Transforms raw API reference data for rendering
  */
 
-import type { HighlighterGeneric } from "shiki"
-
+import type { Highlighter } from "../build-time"
 import { DEFAULT_EXPANDED, groupProps } from "./groups"
 import type {
   ComponentApiReference,
@@ -86,11 +85,7 @@ function getShortType(
 /**
  * Highlight code using shiki
  */
-function highlightCode(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
+function highlightCode(code: string, highlighter: Highlighter): string {
   if (!code) return ""
 
   const html = highlighter.codeToHtml(code, {
@@ -112,11 +107,7 @@ function highlightCode(
  * type position (`boolean`, `ReactNode`, … get type colors, matching the AST
  * renderer in the row panel), then drops that first line.
  */
-function highlightTypeCode(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
+function highlightTypeCode(code: string, highlighter: Highlighter): string {
   if (!code) return ""
 
   const html = highlightCode(`type _ =\n${code}`, highlighter)
@@ -130,8 +121,7 @@ function highlightTypeCode(
 function transformProp(
   propName: string,
   prop: PropDefinition,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
+  highlighter: Highlighter,
 ): TransformedProp {
   const shortType = getShortType(propName, prop.type, prop.typeAst)
   const fullType = prop.detailedType ?? prop.type
@@ -157,8 +147,7 @@ function transformProp(
  */
 function transformProps(
   props: Record<string, PropDefinition>,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
+  highlighter: Highlighter,
 ): TransformedProp[] {
   return Object.entries(props).map(([name, prop]) =>
     transformProp(name, prop, highlighter),
@@ -170,8 +159,7 @@ function transformProps(
  */
 export function transformReference(
   data: ComponentApiReference,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
+  highlighter: Highlighter,
 ): TransformedReference {
   // Group the props
   const { ungrouped, groups } = groupProps(data.props)

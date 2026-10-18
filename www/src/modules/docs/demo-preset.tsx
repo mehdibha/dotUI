@@ -1,5 +1,3 @@
-"use client"
-
 import type { ReactNode } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"

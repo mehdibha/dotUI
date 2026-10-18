@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { getRouteApi, useRouterState } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
@@ -12,15 +12,12 @@ import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
 import { ExamplesIndex } from "@/modules/studio/__generated__/examples"
 import {
+  isInIframe,
   useAnnouncePreviewReady,
   useAppliedDesignSystem,
-  usePreviewNavigationMessages,
-  usePreviewWarmMessages,
+  useMessage,
 } from "@/modules/studio/preset/iframe-sync"
-import type {
-  PrepareDesignSystem,
-  PreviewAssets,
-} from "@/modules/studio/preset/iframe-sync"
+import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
 import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
@@ -151,46 +148,39 @@ export function PreviewPage() {
 
   // What the studio is about to preview starts loading now.
   const [warmIcons, setWarmIcons] = useState<IconLibraryName[]>([])
-  usePreviewWarmMessages(
-    useCallback(({ fonts, icons }: PreviewAssets) => {
-      if (fonts) warmFonts(fonts)
-      const added = (icons ?? []).filter((name) => LOADED_LIBRARIES.has(name))
-      if (added.length)
-        setWarmIcons((prev) => {
-          const next = [...new Set([...prev, ...added])] as IconLibraryName[]
-          return next.length === prev.length ? prev : next
-        })
-    }, []),
-  )
+  useMessage("preview-warm", ({ fonts, icons }) => {
+    if (fonts) warmFonts(fonts)
+    const added = (icons ?? []).filter((name) => LOADED_LIBRARIES.has(name))
+    if (added.length)
+      setWarmIcons((prev) => {
+        const next = [...new Set([...prev, ...added])] as IconLibraryName[]
+        return next.length === prev.length ? prev : next
+      })
+  })
 
   // The parent switches previews by navigating this document's own router — the
   // iframe never remounts, so the module cache and design-system state survive
   // and revisited previews render instantly. `replace` keeps these switches out
   // of the shared browsing history; the route loader keeps the current preview
   // on screen while a first-visit chunk loads.
-  usePreviewNavigationMessages({
-    onNavigate: useCallback(
-      (next: string) => {
-        if (next === slug) return
-        void navigate({
-          to: "/preview/$slug",
-          params: { slug: next },
-          search: (prev) => prev,
-          replace: true,
-        })
-      },
-      [slug, navigate],
-    ),
-    onPrefetch: useCallback((next: string) => {
-      void getExamplesPromise(next)
-    }, []),
+  useMessage("preview-navigate", ({ slug: next }) => {
+    if (next === slug) return
+    void navigate({
+      to: "/preview/$slug",
+      params: { slug: next },
+      search: (prev) => prev,
+      replace: true,
+    })
+  })
+  useMessage("preview-prefetch", ({ slug: next }) => {
+    void getExamplesPromise(next)
   })
 
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
 
-  const embedded = typeof window !== "undefined" && window.self !== window.top
+  const embedded = typeof window !== "undefined" && isInIframe()
   // Stable elements: a design-system change re-renders only what reads it.
   const chrome = useMemo(
     () => (

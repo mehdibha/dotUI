@@ -1,9 +1,8 @@
-import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph"
+import { Node, SyntaxKind } from "ts-morph"
 import type { FunctionDeclaration, SourceFile } from "ts-morph"
 
-// ============================================================================
-// Types
-// ============================================================================
+import { parseTsx, releaseTsx } from "../build-time"
+import { toDisplaySource, toInstalledPaths } from "../demo-source"
 
 interface TransformResult {
   /** Full source with paths adjusted */
@@ -17,48 +16,17 @@ interface TopLevelDeclaration {
   placeholder: string
 }
 
-// ============================================================================
-// Singleton Project (reused across calls for performance)
-// ============================================================================
-
-const project = new Project({ compilerOptions: {} })
-let fileCounter = 0
-
-function createSourceFile(source: string): SourceFile {
-  // Use unique filename to avoid conflicts
-  const filename = `demo-${fileCounter++}.tsx`
-  return project.createSourceFile(filename, source, {
-    scriptKind: ScriptKind.TSX,
-    overwrite: true,
-  })
-}
-
-// ============================================================================
-// Main Transform Function
-// ============================================================================
-
 export function transformDemo(rawContent: string): TransformResult {
-  const sourceFile = createSourceFile(rawContent)
-
-  // Build full source (just path replacements + tabs to spaces)
-  const source = tabsToSpaces(
-    transformPaths(rawContent)
-      .replace("export default function", "export function")
-      .trim(),
-  )
-
-  // Build preview (tabs to spaces applied in buildPreview via dedent)
-  const preview = tabsToSpaces(buildPreview(sourceFile))
-
-  // Cleanup
-  project.removeSourceFile(sourceFile)
-
-  return { source, preview }
+  const sourceFile = parseTsx(rawContent)
+  try {
+    return {
+      source: toDisplaySource(rawContent),
+      preview: buildPreview(sourceFile).replace(/\t/g, "  "),
+    }
+  } finally {
+    releaseTsx(sourceFile)
+  }
 }
-
-// ============================================================================
-// Preview Builder
-// ============================================================================
 
 function buildPreview(sourceFile: SourceFile): string {
   const parts: string[] = []
@@ -73,15 +41,11 @@ function buildPreview(sourceFile: SourceFile): string {
   const functionBody = getFunctionBody(sourceFile)
   if (functionBody) {
     if (parts.length > 0) parts.push("") // Empty line separator
-    parts.push(transformPaths(dedent(functionBody)))
+    parts.push(toInstalledPaths(dedent(functionBody)))
   }
 
   return parts.join("\n")
 }
-
-// ============================================================================
-// AST Extraction Helpers
-// ============================================================================
 
 /**
  * Get all top-level variable declarations (const/let/var outside functions)
@@ -187,26 +151,6 @@ function findExportFunction(
 
   // Try to find named export function
   return sourceFile.getFunction((fn) => fn.hasExportKeyword())
-}
-
-// ============================================================================
-// String Transformation Helpers
-// ============================================================================
-
-/**
- * Transform import paths from @/registry to user-facing paths
- */
-function transformPaths(code: string): string {
-  return code
-    .replace(/@\/registry\/ui\//g, "@/components/ui/")
-    .replace(/@\/registry\//g, "@/")
-}
-
-/**
- * Convert tabs to spaces (2 spaces per tab) for consistent code display
- */
-function tabsToSpaces(code: string): string {
-  return code.replace(/\t/g, "  ")
 }
 
 /**

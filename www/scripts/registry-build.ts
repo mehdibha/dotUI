@@ -1,10 +1,7 @@
 /**
- * Registry Build Script
- *
- * Generates internal files for lazy loading:
- * - src/registry/__generated__/ (demos, icons, examples, per-library icon exports)
- *
- * Usage: tsx scripts/registry-build.ts
+ * `pnpm build:registry`: generates base/colors.css, `src/registry/__generated__/`
+ * (item manifest, demos, icons, publishables), the studio examples index and
+ * the preset catalog, checking registry and publishable integrity on the way.
  */
 
 import { existsSync, promises as fs } from "node:fs"
@@ -39,10 +36,6 @@ import type { RegistryItem } from "../src/registry/types"
 const REGISTRY_DIR = path.join(process.cwd(), "src/registry")
 const GENERATED_DIR = path.join(REGISTRY_DIR, "__generated__")
 
-// ============================================================================
-// Utility Functions
-// ============================================================================
-
 async function ensureDir(dir: string) {
   await rimraf(dir)
   await fs.mkdir(dir, { recursive: true })
@@ -55,10 +48,6 @@ async function writeGeneratedFile(targetPath: string, content: string) {
     "utf8",
   )
 }
-
-// ============================================================================
-// Phase 1: Internal Generated Files (registry/__generated__)
-// ============================================================================
 
 async function processDirectory(
   dirPath: string,
@@ -259,10 +248,6 @@ ${entries.join("\n")}
   )
 }
 
-// ============================================================================
-// Generated item manifest: registryUi / registryLib globbed from meta.ts
-// ============================================================================
-
 // PascalCase identifier for a scope+slug, e.g. ("ui","color-area") -> "UiColorArea".
 function toItemIdent(scope: "ui" | "lib", slug: string): string {
   const pascal = slug
@@ -324,10 +309,6 @@ ${arrayBlock("registryLib", "lib", lib)}
     `  ✓ __generated__/registry-items.ts (${ui.length} ui, ${lib.length} lib)`,
   )
 }
-
-// ============================================================================
-// Build-time Guard: registry-items glob drift + integrity
-// ============================================================================
 
 /**
  * Directories under `src/registry/<scope>` that have a `meta.ts` on disk,
@@ -478,13 +459,11 @@ async function checkRegistryIntegrity(
   console.log("  ✓ registry integrity (deps declared, names unique)")
 }
 
-// ============================================================================
 // Post-publish guards: the emitted publishable set is a CONTRACT — every
 // declared dep resolves, every docs-advertised name ships.
 // These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
-// ============================================================================
 
 /**
  * Every publishable's `registryDependencies` must resolve to something
@@ -609,10 +588,6 @@ async function checkPublishableIntegrity(
   console.log("  ✓ publishable integrity (deps resolve, docs names ship)")
 }
 
-// ============================================================================
-// Main
-// ============================================================================
-
 interface PublishablesBuild {
   /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
@@ -631,12 +606,6 @@ async function buildShadcnPublishables(
   return { builtNames: new Set(published) }
 }
 
-/**
- * Generate base/colors.css from the site's ColorConfig: the primitive ramps
- * (both modes solved independently by the engine) and the semantic `@theme`
- * block that references them. This file is site-only — the shipped theme
- * flattens the semantic tokens to literals instead (see publisher/emit-theme).
- */
 // The engine's input contract is a zod schema checked here, at build time,
 // for the default and every built-in preset — `createTheme` itself trusts
 // its typed input so the client never ships zod.
@@ -686,6 +655,12 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
   console.log(`  ✓ presets/__generated__/catalog.ts (${catalog.length})`)
 }
 
+/**
+ * Generate base/colors.css from the site's ColorConfig: the primitive ramps
+ * (both modes solved independently by the engine) and the semantic `@theme`
+ * block that references them. This file is site-only — the shipped theme
+ * flattens the semantic tokens to literals instead (see publisher/emit-theme).
+ */
 async function generateBaseColorsCss() {
   const primitives = emitPrimitivesCss(resolveColorConfig(SITE_COLOR_CONFIG))
   const dark = emitDarkOverridesCss(SITE_SEMANTICS)
