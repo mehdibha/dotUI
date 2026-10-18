@@ -8,7 +8,13 @@ import type * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleB
 export interface SegmentedControlProps extends Omit<
   React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
   "selectionMode"
-> {}
+> {
+  /**
+   * Whether the collection allows empty selection.
+   * @default true
+   */
+  disallowEmptySelection?: boolean
+}
 
 /**
  * A single segment within a `SegmentedControl`. Each item needs a unique `id`,

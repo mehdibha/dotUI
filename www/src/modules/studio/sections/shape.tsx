@@ -64,7 +64,8 @@ export function ShapeRow() {
       options={SHAPE_OPTIONS}
       onChange={(id) => setState(pickShape(state, id as ShapeId))}
     >
-      <DialLink page="shape" label="Custom" value={null} />
+      {/* Inset like the shapes above it. */}
+      <DialLink page="shape" label="Custom" value={null} className="px-2.5" />
     </DialSelect>
   )
 }

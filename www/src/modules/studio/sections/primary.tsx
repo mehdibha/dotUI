@@ -232,7 +232,7 @@ function PrimaryPanel({
             className={cn(
               DIAL_ROW,
               DIAL_PRESS,
-              "h-auto min-h-9 py-2 selected:tint-10",
+              "h-auto min-h-9 py-1.5 selected:tint-10",
             )}
           >
             {({ isSelected }) => (

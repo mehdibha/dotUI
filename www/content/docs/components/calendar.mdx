@@ -3,7 +3,7 @@ title: Calendar
 description: A calendar allows a user to select a single date value.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Calendar.html
+    href: https://react-aria.adobe.com/Calendar
 ---
 
 <InteractiveDemo
@@ -52,8 +52,6 @@ npx shadcn@latest add @dotui/calendar
 ```
 
 ## Usage
-
-Use `Calendar` to allow users to select a single date value.
 
 ```tsx
 import { Calendar } from "@/components/ui/calendar"
@@ -114,7 +112,7 @@ import {
 
 ## Value
 
-Calendar values use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) objects. Pass `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+Calendar values use [`@internationalized/date`](https://react-aria.adobe.com/internationalized/date/) objects. Pass `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
 
 ```tsx
 import { parseDate } from "@internationalized/date"
@@ -138,7 +136,7 @@ function Example() {
 
 ## Date availability
 
-Constrain the selectable range with `minValue` and `maxValue`, or disable individual dates with `isDateUnavailable`. All take [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) values, so derive them from `today(getLocalTimeZone())`.
+Constrain the selectable range with `minValue` and `maxValue`, or disable individual dates with `isDateUnavailable`. All take [`@internationalized/date`](https://react-aria.adobe.com/internationalized/date/) values, so derive them from `today(getLocalTimeZone())`.
 
 ```tsx
 import { getLocalTimeZone, today } from "@internationalized/date"

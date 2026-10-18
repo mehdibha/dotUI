@@ -43,7 +43,10 @@ export interface AttrHole {
   wrap?: { before: string; after: string }
 }
 
-export type AttrPart = { part: "static"; text: string } | AttrHole
+/** A static attr; with `showWhen` it came from `attr={cond ? "…" : undefined}`. */
+export type AttrPart =
+  | { part: "static"; text: string; showWhen?: string }
+  | AttrHole
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
@@ -55,8 +58,9 @@ export interface TextHole {
 export type ChildPart =
   /** Verbatim formatted lines, dedented so the block's first column is 0. */
   | { part: "static"; lines: string[] }
-  /** Static JSX text, whitespace-collapsed; refilled at render time. */
-  | { part: "static-text"; text: string }
+  /** Static JSX text, whitespace-collapsed; refilled at render time. With
+   *  `hideWhen` it came from `{!cond && "…"}`. */
+  | { part: "static-text"; text: string; hideWhen?: string }
   | TextHole
   /** A nested element; with `showWhen` it came from `{cond && <El>…</El>}`. */
   | {
@@ -195,8 +199,13 @@ function renderElement(
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
-    const text =
-      attr.part === "static" ? attr.text : renderAttrHole(attr, values, icons)
+    if (attr.part === "static") {
+      if (!attr.showWhen || isTruthy(values[attr.showWhen])) {
+        attrs.push(attr.text)
+      }
+      continue
+    }
+    const text = renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
   }
 
@@ -318,6 +327,7 @@ function renderChild(
       }
     }
     case "static-text":
+      if (child.hideWhen && isTruthy(values[child.hideWhen])) return null
       return { type: "text", text: child.text }
     case "text": {
       const value = values[child.control]
