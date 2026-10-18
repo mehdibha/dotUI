@@ -1,4 +1,4 @@
-import type { ExportUrl } from "./types"
+import type { ExportUrl } from "./use-export-url"
 
 /** Installs the design system with the shadcn CLI, then builds a starter app.
  *  The task closes the prompt: it's the line users edit. */

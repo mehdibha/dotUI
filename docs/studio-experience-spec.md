@@ -1,7 +1,7 @@
 # /studio — experience spec (draft 2)
 
 > **Superseded in part (Oct 2026).** The panel's structure lives in the code
-> (`www/src/modules/studio/`: `state.ts` lists the chapters,
+> (`www/src/modules/studio/`: `chapters.ts` lists the chapters,
 > `sections/components.tsx` the components) and in CLAUDE.md's /studio panel
 > entry. The feeling, sessions, non-negotiables and tests below still stand;
 > the taxonomy and layout sections are history, corrected where they

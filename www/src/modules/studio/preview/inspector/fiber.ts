@@ -19,7 +19,7 @@ export interface FiberLike {
 const HOST_COMPONENT = 5
 const PORTAL = 4
 
-export function getFiberFromDom(el: Element): FiberLike | null {
+function getFiberFromDom(el: Element): FiberLike | null {
   for (const key of Object.keys(el)) {
     if (key.startsWith("__reactFiber$")) {
       return (el as unknown as Record<string, FiberLike>)[key] ?? null
