@@ -132,6 +132,7 @@ describe("deep links", () => {
       charts: { page: "chart" },
       states: { page: "focus" },
       interaction: { page: "focus" },
+      color: { page: "surfaces" },
       motion: { key: "motion" },
     }
     for (const [hash, target] of Object.entries(old))

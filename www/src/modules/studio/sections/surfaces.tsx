@@ -110,15 +110,15 @@ const formatPage = (mode: Mode) => (v: number) =>
 /** The main page's Surfaces: a look sets layers, edge and shadow; Custom
  *  opens the page. Style reads as the look its column draws. */
 export function SurfacesRow() {
-  const { state, effective: values, setState } = useStudio()
+  const { state, setState } = useStudio()
   const { theme } = usePanelMode()
-  const drawn = surfaceLookOf(values)
   const options = LOOK_OPTIONS.map((option) => {
     const look = effective(
       pickSurfaceLook(state, option.value as SurfaceLookId),
     ).values
+    const drawn = option.value === "style" ? surfaceLookOf(look) : undefined
     const label =
-      option.value === "style" && drawn && drawn !== "style"
+      drawn && drawn !== "style"
         ? `Style · ${LOOK_OPTIONS.find((o) => o.value === drawn)?.label}`
         : option.label
     return {

@@ -151,6 +151,7 @@ const MOVED: Record<string, string> = {
   charts: "chart",
   states: "focus",
   interaction: "focus",
+  color: "surfaces",
 }
 
 /** What `/studio#<hash>` opens: a page, else the row a key or a one-row
