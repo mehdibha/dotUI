@@ -180,7 +180,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}
       </DialogContent>
     </PanelPopover>
@@ -192,17 +192,19 @@ export function DialLink({
   page,
   label,
   value,
+  className,
 }: {
   page: string
   label: string
   value: React.ReactNode
+  className?: string
 }) {
   const open = useContext(PanelNav)
   return (
     <RacButton
       data-page-link={page}
       onPress={() => open(page)}
-      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}
+      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
     >
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
@@ -383,7 +385,7 @@ export interface DialPickOption {
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
 function PickItem({
   option,
@@ -448,7 +450,7 @@ export function DialPickList({
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
-      className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
+      className="flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
         <PickItem
@@ -481,7 +483,7 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
 }
 
 /* --------------------------------- Slider --------------------------------- */

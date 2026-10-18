@@ -6,27 +6,27 @@ import { DENSITY_VALUES } from "./space"
 export const DENSITY_OPTIONS = options(DENSITY_VALUES, {
   compact: {
     label: "Compact",
-    description: "28px controls, 12px text",
+    description: "Small controls and text, made for dense interfaces",
     credits: ["shadcn mira", "Ant Design (compact)"],
   },
   default: {
     label: "Default",
-    description: "32px controls, 14px text",
+    description: "Balanced sizing that suits most apps",
     credits: ["shadcn nova", "Primer", "Radix Themes", "Fluent 2"],
   },
   comfortable: {
     label: "Comfortable",
-    description: "36px controls, 14px text",
+    description: "Slightly larger controls with more room to breathe",
     credits: ["shadcn vega", "Geist", "Mantine", "Catalyst"],
   },
   spacious: {
     label: "Spacious",
-    description: "40px controls, 14px text",
+    description: "Tall controls and generous spacing",
     credits: ["Carbon", "Material 3", "Airbnb"],
   },
   touch: {
     label: "Touch",
-    description: "48px controls, 16px text",
+    description: "Large tap targets and text, made for touch screens",
     credits: ["Duolingo", "Spotify"],
   },
 })
@@ -47,8 +47,5 @@ export const DENSITY_TIERS: Record<
   spacious: { ladder: [28, 32, 40, 48], row: 36, text: 14 },
   touch: { ladder: [28, 32, 48, 56], row: 40, text: 16 },
 }
-
-export const densityTier = (id: string) =>
-  DENSITY_TIERS[id as Density] ?? DENSITY_TIERS.default
 
 export const OPTIONS = { density: DENSITY_OPTIONS }
