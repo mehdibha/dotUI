@@ -40,6 +40,12 @@ export const CHOICE_CARD_PRESS = {
   },
 }
 
+const roomy = {
+  slots: {
+    root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
+  },
+}
+
 const { useStyles, styles } = createStyles(checkboxMeta, {
   base: {
     slots: {
@@ -69,21 +75,9 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
         root: "gap-2 has-data-description:**:data-checkbox-indicator:mt-0.5",
       },
     },
-    comfortable: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
-    spacious: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
-    touch: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
   params: {
     "card-selected": CHOICE_CARD,

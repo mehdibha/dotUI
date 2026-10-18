@@ -23,13 +23,6 @@ import { TextField } from "@/registry/ui/text-field"
 export default function Demo() {
   const [isPending, setIsPending] = React.useState(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsPending(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsPending(false)
-  }
-
   return (
     <Dialog>
       <Button>Edit username</Button>
@@ -47,8 +40,14 @@ export default function Demo() {
                   </DialogHeader>
                   <DialogBody>
                     <FormPrimitives.Form
-                      onSubmit={(e) => {
-                        handleSubmit(e)
+                      id="edit-username-form"
+                      onSubmit={async (e) => {
+                        e.preventDefault()
+                        setIsPending(true)
+                        await new Promise((resolve) =>
+                          setTimeout(resolve, 1000),
+                        )
+                        setIsPending(false)
                         close()
                       }}
                     >
@@ -64,6 +63,7 @@ export default function Demo() {
                     </Button>
                     <Button
                       type="submit"
+                      form="edit-username-form"
                       isPending={isPending}
                       variant="primary"
                     >

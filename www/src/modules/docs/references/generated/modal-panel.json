@@ -1,5 +1,5 @@
 {
-  "name": "ModalContentProps",
+  "name": "ModalPanelProps",
   "description": "The modal panel that contains the dialog content.",
   "props": {
     "UNSTABLE_portalContainer": {

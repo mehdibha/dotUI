@@ -3,13 +3,14 @@
 /* Components — one row per component, grouped in chapters. A component with
    one key is that key's row; the others open a page of their rows. */
 
+import type { Chapter, ChapterPage } from "../chapters"
 import { DialLink } from "../dial"
-import { Row } from "../family-page"
-import type { Chapter, ChapterPage, Studio } from "../state"
+import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
+import type { Studio } from "../use-studio"
 
-export interface Component {
+interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
   id: string
   label: string

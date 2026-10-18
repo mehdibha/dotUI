@@ -284,18 +284,30 @@ function NumberControlRenderer({
   value,
   onChange,
 }: NumberControlRendererProps) {
+  if (control.options) {
+    return (
+      <Select
+        selectedKey={String(value)}
+        onSelectionChange={(key) => onChange(control.name, Number(key))}
+        className="w-full"
+      >
+        <ControlLabel name={control.name} reference={control.reference} />
+        <SelectTrigger size="sm" />
+        <SelectContent>
+          {control.options.map((option) => (
+            <SelectItem key={option} id={String(option)}>
+              {String(option)}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    )
+  }
+
   return (
     <TextField
       value={String(value)}
-      onChange={(val) =>
-        onChange(
-          control.name,
-          Math.min(
-            Math.max(Number(val) || 0, control.min ?? -Infinity),
-            control.max ?? Infinity,
-          ),
-        )
-      }
+      onChange={(val) => onChange(control.name, Number(val) || 0)}
       className="w-full"
     >
       <ControlLabel name={control.name} reference={control.reference} />

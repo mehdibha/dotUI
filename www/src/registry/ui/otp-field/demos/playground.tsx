@@ -16,6 +16,7 @@ export default function Demo({
 } = {}) {
   return (
     <OTPField
+      className="w-fit"
       length={length}
       mask={mask}
       isDisabled={isDisabled}

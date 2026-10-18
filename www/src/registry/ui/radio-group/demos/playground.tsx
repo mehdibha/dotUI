@@ -1,6 +1,6 @@
 "use client"
 
-import { FieldGroup, Label } from "@/registry/ui/field"
+import { Description, FieldError, FieldGroup, Label } from "@/registry/ui/field"
 import {
   Radio,
   RadioControl,
@@ -10,20 +10,29 @@ import {
 
 export default function Demo({
   label = "Select frameworks",
+  description = "",
+  errorMessage = "",
   orientation = "vertical",
   isDisabled = false,
   isReadOnly = false,
+  isRequired = false,
   isInvalid = false,
-}: RadioGroupProps & { label?: string } = {}) {
+}: RadioGroupProps & {
+  label?: string
+  description?: string
+  errorMessage?: string
+} = {}) {
   return (
     <RadioGroup
       defaultValue="react"
       orientation={orientation}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
+      isRequired={isRequired}
       isInvalid={isInvalid}
     >
       {label && <Label>{label}</Label>}
+      {description && <Description>{description}</Description>}
       <FieldGroup>
         <Radio value="react">
           <RadioControl />
@@ -38,6 +47,7 @@ export default function Demo({
           <Label>Angular</Label>
         </Radio>
       </FieldGroup>
+      {errorMessage && <FieldError>{errorMessage}</FieldError>}
     </RadioGroup>
   )
 }

@@ -1,5 +1,3 @@
-"use client"
-
 import { Suspense, useEffect, useRef, useState } from "react"
 import { RotateCcwIcon } from "lucide-react"
 

@@ -5,6 +5,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import type { Effective } from "../axes"
 import {
   DAY_SHAPE_OPTIONS,
   TODAY_COLOR_OPTIONS,
@@ -12,11 +13,8 @@ import {
   WEEKDAY_OPTIONS,
 } from "../axes/calendar.meta"
 import { DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 /** What a glyph reads from the system: shape, today marker, fills. */
 interface Look {
@@ -80,8 +78,6 @@ function Day({ n, look, today }: { n: number; look: Look; today?: boolean }) {
     </span>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function DayShapeRow() {
   return (

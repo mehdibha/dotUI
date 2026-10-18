@@ -4,11 +4,14 @@ import { Button } from "@/registry/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog"
 import { Popover, type PopoverProps } from "@/registry/ui/popover"
 
-export default function Demo({ placement = "bottom" }: PopoverProps = {}) {
+export default function Demo({
+  placement = "bottom",
+  showArrow = true,
+}: PopoverProps = {}) {
   return (
     <Dialog>
       <Button>Open Popover</Button>
-      <Popover data-control-target placement={placement}>
+      <Popover data-control-target placement={placement} showArrow={showArrow}>
         <DialogContent className="w-56">
           <DialogTitle>Popover Title</DialogTitle>
           <p className="text-sm text-fg-muted">

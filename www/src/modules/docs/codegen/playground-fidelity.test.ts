@@ -22,6 +22,7 @@ import { fileURLToPath } from "node:url"
 import { format } from "oxfmt"
 import { describe, expect, it } from "vitest"
 
+import { evalExpression } from "../build-time"
 import { getDefaultControlValue } from "../interactive-demo/control-defaults"
 import {
   buildControlsFromReference,
@@ -102,8 +103,7 @@ function parseControlsAttr(tag: string): ControlInput[] {
     }
   }
   const expr = tag.slice(start + 1, end)
-  // oxlint-disable-next-line no-new-func -- build-time eval of trusted authored MDX, mirrors rehype-transform
-  const value: unknown = new Function(`"use strict"; return (${expr});`)()
+  const value = evalExpression(expr)
   if (!Array.isArray(value)) {
     throw new Error(`controls={…} did not evaluate to an array: ${expr}`)
   }
@@ -128,9 +128,9 @@ function variantsFor(control: Control): unknown[] {
     case "string":
       return ["Hello world", "", LONG_TEXT, TRICKY_TEXT].filter((v) => v !== d)
     case "number":
-      return [
-        Math.min((control.defaultValue ?? 0) + 37, control.max ?? Infinity),
-      ]
+      return control.options
+        ? control.options.filter((o) => o !== d)
+        : [(control.defaultValue ?? 0) + 37]
     case "icon":
       return ["MailIcon", "SettingsIcon"]
     default:
@@ -153,7 +153,7 @@ function widestVariantFor(control: Control): unknown {
     case "string":
       return LONG_TEXT
     case "number":
-      return control.max ?? 1234567.5
+      return control.options ? Math.max(...control.options) : 1234567.5
     case "icon":
       return "SettingsIcon"
     default:

@@ -20,6 +20,7 @@ import {
 
 import { toHex, toOklch } from "@dotui/colors"
 
+import { useMedia } from "@/hooks/use-media"
 import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
@@ -28,34 +29,29 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { effective } from "./axes"
 import type { StudioState } from "./axes"
 import { COLUMNS } from "./axes/style"
+import type { StyleKey } from "./axes/style"
 import { FOLLOW_STYLE } from "./axes/style.meta"
-import { RowLabel, useRowLabel } from "./family-page"
 import { holdEditFocus } from "./focus"
 import { clearLive, previewNow } from "./live"
 import { useOptionPreview } from "./option-preview"
+import { RowLabel, useRowLabel } from "./row-host"
 import {
   ColorPickerPopover,
   PanelNav,
   PanelPopover,
   PanelPopoverTitle,
   useDraft,
-  useMedia,
 } from "./rows"
 import { useCurrent } from "./selection"
 import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
 import type { Axis, AxisKey } from "./use-axis"
-
-const STYLE_COLUMNS: Partial<Record<string, Record<string, string>>> = COLUMNS
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
-export const DIAL_VALUE =
-  "truncate font-mono text-[13px] font-medium text-fg/60"
-
-/* ---------------------------------- Rows ---------------------------------- */
+const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
@@ -67,7 +63,7 @@ export function DialGlyph({ children }: { children: React.ReactNode }) {
 }
 
 /** A row a rule holds: dimmed, its value set elsewhere, the cause beside it. */
-export function PinnedRow({
+function PinnedRow({
   axis,
   label,
   cause,
@@ -180,7 +176,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}
       </DialogContent>
     </PanelPopover>
@@ -192,17 +188,19 @@ export function DialLink({
   page,
   label,
   value,
+  className,
 }: {
   page: string
   label: string
   value: React.ReactNode
+  className?: string
 }) {
   const open = useContext(PanelNav)
   return (
     <RacButton
       data-page-link={page}
       onPress={() => open(page)}
-      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}
+      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
     >
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
@@ -212,8 +210,6 @@ export function DialLink({
     </RacButton>
   )
 }
-
-/* --------------------------------- Select --------------------------------- */
 
 export interface DialSelectOption {
   value: string
@@ -256,7 +252,10 @@ export function DialSelect({
   if (hidden) return null
   // A Style key's first option is the Style itself ("Style · Line"); a
   // follow its column reads ("auto") would list the same pick twice.
-  const column = key && STYLE_COLUMNS[key]?.[state.style]
+  const column =
+    key && Object.hasOwn(COLUMNS, key)
+      ? COLUMNS[key as StyleKey][state.style]
+      : undefined
   const options: DialSelectOption[] =
     axis?.follows.includes(FOLLOW_STYLE.value) &&
     !listed.some((option) => option.value === FOLLOW_STYLE.value)
@@ -371,9 +370,7 @@ function SelectOptions({
   )
 }
 
-/* --------------------------------- Picks ---------------------------------- */
-
-export interface DialPickOption {
+interface DialPickOption {
   value: string
   label: string
   description?: string
@@ -383,7 +380,7 @@ export interface DialPickOption {
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
 function PickItem({
   option,
@@ -448,7 +445,7 @@ export function DialPickList({
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
-      className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
+      className="flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
         <PickItem
@@ -481,10 +478,8 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
 }
-
-/* --------------------------------- Slider --------------------------------- */
 
 /* DialKit's slider: the row is the track, the fill follows the pointer
    unstepped and springs to the nearest step on release. Hashmarks and a
@@ -976,8 +971,6 @@ function SliderRow({
   )
 }
 
-/* ---------------------------------- Color --------------------------------- */
-
 /** Label, hex, swatch; the row opens the picker. With `derived`, an empty
  *  value reads "Auto" on the engine's color. */
 export function DialColor({
@@ -1041,9 +1034,7 @@ export function DialColor({
   )
 }
 
-/* -------------------------------- Segmented -------------------------------- */
-
-export interface DialOption {
+interface DialOption {
   value: string
   label: React.ReactNode
 }

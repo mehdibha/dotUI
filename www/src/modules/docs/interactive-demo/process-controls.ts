@@ -3,9 +3,14 @@
  * Builds and enriches controls from API reference at build time.
  */
 
-import type { HighlighterGeneric } from "shiki"
-import { Node, Project, ScriptKind } from "ts-morph"
+import { Node } from "ts-morph"
 
+import {
+  evalExpression,
+  type Highlighter,
+  parseTsx,
+  releaseTsx,
+} from "../build-time"
 import type { ControlSelection } from "../codegen/source-overlay"
 import { loadApiReference } from "../references/loader"
 import type { PropDefinition, TType } from "../references/types"
@@ -34,10 +39,6 @@ export async function buildControlsFromReference(
   demoSource: string,
 ): Promise<Control[]> {
   const reference = await loadApiReference(name)
-
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
 
   const controls: Control[] = []
 
@@ -87,15 +88,9 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
 // Param-signature defaults (SourceFirst)
 // ============================================================================
 
-const ctrlProject = new Project({ useInMemoryFileSystem: true })
-let ctrlCounter = 0
-
 /** Read destructured param defaults from the demo's exported function signature. */
 export function readParamDefaults(source: string): Record<string, string> {
-  const sf = ctrlProject.createSourceFile(`ctl-${ctrlCounter++}.tsx`, source, {
-    scriptKind: ScriptKind.TSX,
-    overwrite: true,
-  })
+  const sf = parseTsx(source)
   try {
     const fn = sf
       .getFunctions()
@@ -110,7 +105,7 @@ export function readParamDefaults(source: string): Record<string, string> {
     }
     return out
   } finally {
-    ctrlProject.removeSourceFile(sf)
+    releaseTsx(sf)
   }
 }
 
@@ -131,8 +126,7 @@ function applyParamDefaults(
 function parseParamDefault(src: string, type: Control["type"]): unknown {
   let v: unknown
   try {
-    // oxlint-disable-next-line no-new-func -- build-time eval of a trusted authored literal
-    v = new Function(`"use strict"; return (${src});`)()
+    v = evalExpression(src)
   } catch {
     return undefined
   }
@@ -446,14 +440,9 @@ function parseDefaultValue(
 export async function enrichControlsForSerialization(
   name: string,
   controls: Control[],
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
+  highlighter: Highlighter,
 ): Promise<SerializableControl[]> {
   const reference = await loadApiReference(name)
-
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
 
   const enrichedControls: SerializableControl[] = []
 
@@ -498,11 +487,7 @@ export async function enrichControlsForSerialization(
 /**
  * Highlight code to HTML string using shiki.
  */
-function highlightToHtml(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
+function highlightToHtml(code: string, highlighter: Highlighter): string {
   if (!code) return ""
 
   const html = highlighter.codeToHtml(code, {

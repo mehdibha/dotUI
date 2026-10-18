@@ -30,12 +30,10 @@ import {
   DialSeparator,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import type { Studio } from "../state"
+import type { RowMap } from "../row-host"
+import type { Studio } from "../use-studio"
 import { useStudio } from "../use-studio"
-
-/* --------------------------------- Inks ---------------------------------- */
 
 /** What a source paints, from the engine's mode: the solid fill and its
  *  label, the text ink, the focus ring, the tinted wash. */
@@ -67,8 +65,6 @@ function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
     },
   }
 }
-
-/* -------------------------------- Previews -------------------------------- */
 
 function Check({ color }: { color: string }) {
   return (
@@ -142,8 +138,6 @@ function SourceSwatch({
     </span>
   )
 }
-
-/* ---------------------------------- Row ----------------------------------- */
 
 /** Accent first, wherever a Primary source is picked. */
 const inOrder = <T extends { value: string }>(options: readonly T[]) =>
@@ -232,7 +226,7 @@ function PrimaryPanel({
             className={cn(
               DIAL_ROW,
               DIAL_PRESS,
-              "h-auto min-h-9 py-2 selected:tint-10",
+              "h-auto min-h-9 py-1.5 selected:tint-10",
             )}
           >
             {({ isSelected }) => (
