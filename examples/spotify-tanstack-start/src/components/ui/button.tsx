@@ -44,6 +44,13 @@ export { buttonVariants as buttonStyles };
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
+const truncateLabel = (children: React.ReactNode) =>
+  typeof children === "string" ? (
+    <span className="truncate">{children}</span>
+  ) : (
+    children
+  );
+
 /* -------------------------------------------------------------------------- */
 
 interface ButtonProps
@@ -70,11 +77,7 @@ const Button = ({
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {typeof children === "string" ? (
-          <span className="truncate">{children}</span>
-        ) : (
-          children
-        )}
+        {truncateLabel(children)}
       </>
     ),
   );
@@ -119,15 +122,7 @@ const LinkButton = ({
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
+      {composeRenderProps(children, truncateLabel)}
     </LinkPrimitive.Link>
   );
 };
