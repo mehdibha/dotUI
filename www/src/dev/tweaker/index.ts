@@ -7,7 +7,7 @@
  *   No-op in production (returns `config.default`), and the panel tree-shakes away.
  * - `setTweak(label, value, group?)` — write a value from code, for controls that
  *   are two views of one value (px ⇄ line count). No-op in production.
- * - `DevTweaker` — the floating panel; mounted once, dev-gated, in `__root.tsx`.
+ * - `DevTweaker` — the floating panel; mounted by the devtools hub (`src/dev/devtools`).
  */
 
 export { setTweak, useTweak } from "./use-tweak"

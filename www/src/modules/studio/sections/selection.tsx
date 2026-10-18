@@ -19,10 +19,8 @@ import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
 import { DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 /* One stable selection per recipe, so the registry's style cache hits. */
 const SELECTIONS = new Map<string, Record<string, Record<string, string>>>()
@@ -184,8 +182,6 @@ const card = (value: string, accent: boolean) => (
     <ChoiceCard accent={accent} />
   </Recipe>
 )
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 const CORNER_ROW = CORNER_OPTIONS.map((option) => ({
   ...option,

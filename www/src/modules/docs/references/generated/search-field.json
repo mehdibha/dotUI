@@ -2,6 +2,14 @@
   "name": "SearchFieldProps",
   "description": "A search field allows a user to enter and clear a search query.",
   "props": {
+    "placeholder": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Temporary text shown in the input when it is empty."
+    },
     "onFocus": {
       "type": "((e: FocusEvent<HTMLInputElement, Element>) => void)",
       "detailedType": "| ((e: FocusEvent<HTMLInputElement, Element>) => void)\n| undefined",

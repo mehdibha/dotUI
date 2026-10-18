@@ -44,8 +44,6 @@ function toCamelCase(slug: string): string {
   return slug.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
 }
 
-/* ----------------------- import rewriting ----------------------- */
-
 export const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
   [/^@\/registry\/ui\//, "@/components/ui/"],
   [/^@\/registry\/hooks\//, "@/hooks/"],
@@ -144,8 +142,6 @@ function resolveStylesHookCalls(
     call.replaceWithText(name)
   }
 }
-
-/* ------------------ slot hoisting & alias inlining ------------------ */
 
 /** `foo` or `foo: bar` — the binding-pattern entry for one slot. */
 type SlotBinding = { slot: string; local: string }
@@ -503,8 +499,6 @@ function mergeValueImports(sourceFile: SourceFile): void {
     imp.remove()
   }
 }
-
-/* ----------------------- main transform ----------------------- */
 
 export interface TransformBaseInput {
   /** Absolute path to `base.tsx` (or `base.<variant>.tsx`). */

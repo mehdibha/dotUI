@@ -9,9 +9,8 @@ import {
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { FONT, oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-export const TYPE_DEFAULTS = {
+const TYPE_DEFAULTS = {
   // Same as body until pinned; --font-heading falls back to the body face.
   headingFont: "same",
   bodyFont: DEFAULT_BODY_FAMILY,
@@ -50,18 +49,6 @@ export const LABEL_WEIGHT_VALUES = [
 
 export const SECTION_LABEL_VALUES = ["sentence", "caps", "mono-caps"] as const
 
-export const TYPE_SCHEMA: ChapterSchema<typeof TYPE_DEFAULTS> = {
-  headingFont: FONT,
-  bodyFont: FONT,
-  monoFont: FONT,
-  readingFont: FONT,
-  titleStyle: oneOf(TITLE_VALUES),
-  uiTextSize: oneOf(UI_TEXT_VALUES),
-  fieldTextSize: oneOf(FIELD_TEXT_VALUES),
-  labelWeight: oneOf(LABEL_WEIGHT_VALUES),
-  sectionLabels: oneOf(SECTION_LABEL_VALUES),
-}
-
 /** What a non-Quiet title recipe hands base h1–h6. */
 export const TITLE_VOICE: Record<
   string,
@@ -74,7 +61,7 @@ export const TITLE_VOICE: Record<
   caps: { weight: "semibold", tracking: "wider" },
 }
 
-export const LABEL_WEIGHT_VAR = "--studio-font-weight-label"
+const LABEL_WEIGHT_VAR = "--studio-font-weight-label"
 
 /* The density's control text rung and its line box; sm 20 elsewhere. */
 const TEXT_RUNG: Record<string, [string, number]> = {
@@ -82,59 +69,67 @@ const TEXT_RUNG: Record<string, [string, number]> = {
   touch: ["base", 24],
 }
 
-export function resolveType(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  if (state.bodyFont !== DEFAULT_BODY_FAMILY)
-    tokens["--font-sans"] = fontStack(state.bodyFont)
-  // The theme's own fallbacks follow the body: a heading or reading face on
-  // the body family encodes as nothing.
-  if (state.headingFont !== state.bodyFont)
-    tokens["--font-heading"] = fontStack(state.headingFont)
-  if (state.readingFont !== state.bodyFont)
-    tokens["--font-reading"] = fontStack(state.readingFont)
-  if (state.monoFont !== DEFAULT_MONO_FAMILY)
-    tokens["--font-mono"] = fontStack(state.monoFont)
-
-  const voice = TITLE_VOICE[state.titleStyle]
-  if (voice) {
-    tokens["--font-weight-heading"] = `var(--font-weight-${voice.weight})`
-    if (voice.tracking)
-      tokens["--tracking-heading"] = `var(--tracking-${voice.tracking})`
-  }
-
-  if (state.labelWeight !== TYPE_DEFAULTS.labelWeight)
-    tokens[LABEL_WEIGHT_VAR] = `var(--font-weight-${state.labelWeight})`
-
-  // A px size replaces the density's own text rung, keeping its line box.
-  if (state.uiTextSize !== "auto") {
-    const px = Number(state.uiTextSize)
-    const [rung, lineBox] = TEXT_RUNG[state.density] ?? ["sm", 20]
-    tokens[`--text-${rung}`] = `${px / 16}rem`
-    tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / ${px})`
-  }
-
-  const titles = { titles: state.titleStyle }
-  const labels = { labels: state.sectionLabels }
-  return {
-    tokens,
-    params: {
-      card: titles,
-      dialog: titles,
-      empty: titles,
-      questionnaire: titles,
-      menu: labels,
-      "list-box": labels,
-      sidebar: labels,
-      input: { text: state.fieldTextSize },
-    },
-  }
-}
-
 export const chapter = defineChapter({
   id: "type",
   defaults: TYPE_DEFAULTS,
-  schema: TYPE_SCHEMA,
-  resolve: resolveType,
+  schema: {
+    headingFont: FONT,
+    bodyFont: FONT,
+    monoFont: FONT,
+    readingFont: FONT,
+    titleStyle: oneOf(TITLE_VALUES),
+    uiTextSize: oneOf(UI_TEXT_VALUES),
+    fieldTextSize: oneOf(FIELD_TEXT_VALUES),
+    labelWeight: oneOf(LABEL_WEIGHT_VALUES),
+    sectionLabels: oneOf(SECTION_LABEL_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const tokens: Record<string, string> = {}
+    if (state.bodyFont !== DEFAULT_BODY_FAMILY)
+      tokens["--font-sans"] = fontStack(state.bodyFont)
+    // The theme's own fallbacks follow the body: a heading or reading face on
+    // the body family encodes as nothing.
+    if (state.headingFont !== state.bodyFont)
+      tokens["--font-heading"] = fontStack(state.headingFont)
+    if (state.readingFont !== state.bodyFont)
+      tokens["--font-reading"] = fontStack(state.readingFont)
+    if (state.monoFont !== DEFAULT_MONO_FAMILY)
+      tokens["--font-mono"] = fontStack(state.monoFont)
+
+    const voice = TITLE_VOICE[state.titleStyle]
+    if (voice) {
+      tokens["--font-weight-heading"] = `var(--font-weight-${voice.weight})`
+      if (voice.tracking)
+        tokens["--tracking-heading"] = `var(--tracking-${voice.tracking})`
+    }
+
+    if (state.labelWeight !== TYPE_DEFAULTS.labelWeight)
+      tokens[LABEL_WEIGHT_VAR] = `var(--font-weight-${state.labelWeight})`
+
+    // A px size replaces the density's own text rung, keeping its line box.
+    if (state.uiTextSize !== "auto") {
+      const px = Number(state.uiTextSize)
+      const [rung, lineBox] = TEXT_RUNG[state.density] ?? ["sm", 20]
+      tokens[`--text-${rung}`] = `${px / 16}rem`
+      tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / ${px})`
+    }
+
+    const titles = { titles: state.titleStyle }
+    const labels = { labels: state.sectionLabels }
+    return {
+      tokens,
+      params: {
+        card: titles,
+        dialog: titles,
+        empty: titles,
+        questionnaire: titles,
+        menu: labels,
+        "list-box": labels,
+        sidebar: labels,
+        input: { text: state.fieldTextSize },
+      },
+    }
+  },
   follows: {
     headingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
     readingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
