@@ -16,6 +16,29 @@ wip: true
       defaultValue: "Time",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "granularity",
+      options: ["hour", "minute", "second"],
+      defaultValue: "minute",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
+      defaultValue: false,
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
