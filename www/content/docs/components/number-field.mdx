@@ -16,6 +16,18 @@ wip: true
       defaultValue: "Quantity",
     },
     {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
       type: "boolean",
       name: "isDisabled",
       defaultValue: false,
@@ -28,6 +40,11 @@ wip: true
     {
       type: "boolean",
       name: "isInvalid",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
       defaultValue: false,
     },
   ]}
