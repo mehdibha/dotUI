@@ -2,7 +2,6 @@ import { createStyles } from "@/lib/styles"
 
 import colorAreaMeta from "./meta"
 
-// Comfortable, spacious and touch share one tier.
 const roomy = {
   base: "w-56",
 }
