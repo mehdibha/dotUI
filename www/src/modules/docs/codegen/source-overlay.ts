@@ -12,7 +12,9 @@
  *
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
- * `@control:` marker comment (with optional `@drop-when:`). An attr whose
+ * `@control:` marker comment (with optional `@drop-when:`). An attr passing a
+ * control through under another name (`disabled={isDisabled}`) keeps its own
+ * name. An attr whose
  * value is an object literal embedding its control (`visibleDuration={{
  * months: visibleDuration }}`) keeps that literal around the value.
  * `{ident}`, `{ident && …}`, `{ident > 1 && …}` and `{!ident && "…"}`
@@ -233,10 +235,12 @@ class TreeBuilder {
       }
       const attrName = attr.getNameNode().getText()
       if (attrName === "data-control-target") continue
+      const controlName = this.byName.has(attrName)
+        ? attrName
+        : readIdentifierValue(attr)
+      const control = controlName ? this.byName.get(controlName) : undefined
       const derived = readDerivedMarker(attr)
-      const controlName = derived?.control ?? attrName
-      const control = this.byName.get(controlName)
-      if (control && (holesAllowed || derived)) {
+      if (controlName && control && (holesAllowed || derived)) {
         this.resolved.add(controlName)
         const wrap = derived ? undefined : readObjectWrap(attr)
         attrs.push({
@@ -481,16 +485,20 @@ function hasMarker(opening: { getAttributes(): Node[] }): boolean {
     )
 }
 
-/** Read `@control:<name>` + `@drop-when:` leading comments on a derived attr.
- *  The named control may differ from the attr (`disabled` fed by `isDisabled`). */
-function readDerivedMarker(
-  attr: JsxAttribute,
-): { control?: string; dropWhen?: string } | null {
+/** `disabled={isDisabled}`: the identifier an attr passes through as-is. */
+function readIdentifierValue(attr: JsxAttribute): string | undefined {
+  const init = attr.getInitializer()
+  if (!init || !Node.isJsxExpression(init)) return undefined
+  const expr = init.getExpression()
+  return expr && Node.isIdentifier(expr) ? expr.getText() : undefined
+}
+
+/** Read `@control:` + `@drop-when:` leading comments on a derived attr. */
+function readDerivedMarker(attr: JsxAttribute): { dropWhen?: string } | null {
   const full = attr.getFullText()
   if (!/@control:/.test(full)) return null
-  const controlMatch = full.match(/@control:\s*([A-Za-z_$][\w$]*)/)
   const dropMatch = full.match(/@drop-when:\s*([A-Za-z_$][\w$]*)/)
-  return { control: controlMatch?.[1], dropWhen: dropMatch?.[1] }
+  return { dropWhen: dropMatch?.[1] }
 }
 
 /** A static node's formatted lines, dedented so its first column is 0. */

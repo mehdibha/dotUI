@@ -475,7 +475,7 @@ describe("calendar", () => {
 })
 
 // ---------------------------------------------------------------------------
-// GROUP — one control feeding attrs of another name (@control:<name>)
+// GROUP — one control feeding attrs of another name
 // ---------------------------------------------------------------------------
 
 const GROUP_SRC = `"use client";
@@ -486,11 +486,7 @@ import { Input } from "@/registry/ui/input";
 export default function Demo({ isDisabled = false } = {}) {
 	return (
 		<Group isDisabled={isDisabled}>
-			<Input
-				placeholder="Email"
-				/* @control:isDisabled */
-				disabled={isDisabled}
-			/>
+			<Input data-control-target placeholder="Email" disabled={isDisabled} />
 		</Group>
 	);
 }

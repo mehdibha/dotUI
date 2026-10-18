@@ -23,13 +23,11 @@ export default function Demo({
         isInvalid={isInvalid}
       >
         <Input
+          data-control-target
           aria-label="Email"
           placeholder="you@example.com"
-          /* @control:isDisabled */
           disabled={isDisabled}
-          /* @control:isInvalid */
           aria-invalid={isInvalid}
-          /* @control:isReadOnly */
           readOnly={isReadOnly}
         />
       </InputGroup>
