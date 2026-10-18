@@ -5,16 +5,18 @@ import {
   TabList,
   TabPanel,
   Tabs,
+  type TabListProps,
   type TabsProps,
 } from "@/registry/ui/tabs"
 
 export default function Demo({
+  variant = "segmented",
   orientation = "horizontal",
   isDisabled = false,
-}: TabsProps = {}) {
+}: TabsProps & Pick<TabListProps, "variant"> = {}) {
   return (
     <Tabs orientation={orientation} isDisabled={isDisabled}>
-      <TabList>
+      <TabList data-control-target variant={variant}>
         <Tab id="overview">Overview</Tab>
         <Tab id="usage">Usage</Tab>
         <Tab id="settings">Settings</Tab>
