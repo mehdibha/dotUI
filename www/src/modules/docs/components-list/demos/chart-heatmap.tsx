@@ -1,20 +1,39 @@
-"use client"
+import { HeatmapChart } from "@/registry/ui/chart-heatmap"
 
-import { Suspense, lazy } from "react"
+/* Contributions per day over sixteen weeks: mostly quiet, busier midweek. */
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+const weeks = Array.from({ length: 16 }, (_, index) => `W${index + 1}`)
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartHeatmapContributions = lazy(() => import("./chart-heatmap.lazy"))
+let seed = 7
+const random = () => {
+  seed = (seed * 48271) % 2147483647
+  return seed / 2147483647
+}
 
-export function ChartHeatmapDemo() {
+const data = weeks.flatMap((week) =>
+  days.map((day, index) => {
+    const weekend = index >= 5
+    const roll = random()
+    const contributions =
+      roll < (weekend ? 0.7 : 0.4)
+        ? 0
+        : Math.min(4, Math.ceil(random() * (weekend ? 2 : 4)))
+    return { week, day, contributions }
+  }),
+)
+
+export default function ChartHeatmapContributions() {
   return (
-    <div className="w-[196px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[96px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartHeatmapContributions />
-      </Suspense>
-    </div>
+    <HeatmapChart
+      data={data}
+      x="week"
+      y="day"
+      value="contributions"
+      thresholds={[1, 2, 3, 4]}
+      label="Contributions"
+      height={96}
+      axes={false}
+      ariaLabel="Contributions per day over sixteen weeks"
+    />
   )
 }

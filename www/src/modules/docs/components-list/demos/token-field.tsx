@@ -5,6 +5,7 @@ import { TokenField, TokenInput } from "@/registry/ui/token-field"
 export function TokenFieldDemo() {
   return (
     <TokenField
+      aria-label="Message"
       allowsNewlines
       defaultValue={
         new TokenFieldValue([

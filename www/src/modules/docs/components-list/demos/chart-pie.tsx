@@ -1,20 +1,30 @@
-"use client"
+import { PieChart } from "@/registry/ui/chart-pie"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartPieBrowsers = lazy(() => import("./chart-pie.lazy"))
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-export function ChartPieDemo() {
+export default function ChartPieBrowsers() {
   return (
-    <div className="w-[136px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[108px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartPieBrowsers />
-      </Suspense>
-    </div>
+    <PieChart
+      data={data}
+      value="visitors"
+      name="browser"
+      labels={labels}
+      height={108}
+      ariaLabel="Visitors by browser"
+    />
   )
 }
