@@ -1,20 +1,26 @@
-"use client"
+import { LineChart } from "@/registry/ui/chart-line"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { month: "Jan", desktop: 210 },
+  { month: "Feb", desktop: 250 },
+  { month: "Mar", desktop: 236 },
+  { month: "Apr", desktop: 150 },
+  { month: "May", desktop: 120 },
+  { month: "Jun", desktop: 168 },
+  { month: "Jul", desktop: 270 },
+  { month: "Aug", desktop: 330 },
+]
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartLineVisitors = lazy(() => import("./chart-line.lazy"))
-
-export function ChartLineDemo() {
+export default function ChartLineVisitors() {
   return (
-    <div className="w-[180px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[92px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartLineVisitors />
-      </Suspense>
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      height={92}
+      grid={false}
+      ariaLabel="Desktop visitors, January through August"
+    />
   )
 }

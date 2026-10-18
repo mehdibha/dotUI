@@ -163,6 +163,40 @@ export function parseSimpleType(typeName: string): TType {
   }
 }
 
+const RENDER_PROP_ALIASES = [
+  ["ChildrenOrFunction", "ReactNode"],
+  ["ClassNameOrFunction", "string"],
+  ["StyleOrFunction", "CSSProperties"],
+] as const
+
+/** `value | ((values: RenderProps) => value)` */
+function valueOrFunction(value: string, renderPropsName: string): TUnion {
+  return {
+    type: "union",
+    elements: [
+      parseSimpleType(value),
+      {
+        type: "function",
+        parameters: [
+          {
+            type: "parameter",
+            name: "values",
+            value: {
+              type: "link",
+              id: renderPropsName,
+              name: renderPropsName,
+            } as TLink,
+            optional: false,
+            rest: false,
+          } as TParameter,
+        ],
+        return: parseSimpleType(value),
+        typeParameters: [],
+      } as TFunction,
+    ],
+  } as TUnion
+}
+
 /**
  * Build a simplified AST directly from the type string
  * This preserves type aliases like ChildrenOrFunction<T> instead of expanding them
@@ -171,218 +205,22 @@ export function buildTypeAstFromString(
   typeString: string,
   _context: ConversionContext,
 ): TType | null {
-  // ============================================================================
-  // Pattern: ChildrenOrFunction<T> → ReactNode | ((values: T) => ReactNode)
-  // Also matches the expanded form: ReactNode | (values: T) => ReactNode
-  // ============================================================================
-  const childrenOrFunctionMatch = typeString.match(
-    /^ChildrenOrFunction<(\w+(?:<[^>]+>)?)>$/,
-  )
-  if (childrenOrFunctionMatch) {
-    const renderPropsName = childrenOrFunctionMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "identifier", name: "ReactNode" } as TIdentifier,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "identifier", name: "ReactNode" } as TIdentifier,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
+  // RAC render-prop aliases, named or already expanded by the checker:
+  // ChildrenOrFunction<T> / `ReactNode | (values: T) => ReactNode` → ReactNode | ((values: T) => ReactNode)
+  for (const [alias, value] of RENDER_PROP_ALIASES) {
+    const renderPropsName =
+      typeString.match(new RegExp(`^${alias}<(\\w+(?:<[^>]+>)?)>$`))?.[1] ??
+      typeString.match(
+        new RegExp(`^${value} \\| \\(values: (\\w+)\\) => ${value}$`),
+      )?.[1]
+    if (renderPropsName) return valueOrFunction(value, renderPropsName)
   }
 
-  // Expanded form: ReactNode | (values: T) => ReactNode
-  const expandedChildrenMatch = typeString.match(
-    /^ReactNode \| \(values: (\w+)\) => ReactNode$/,
-  )
-  if (expandedChildrenMatch) {
-    const renderPropsName = expandedChildrenMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "identifier", name: "ReactNode" } as TIdentifier,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "identifier", name: "ReactNode" } as TIdentifier,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
-  }
-
-  // ============================================================================
-  // Pattern: ClassNameOrFunction<T> → string | ((values: T) => string)
-  // Also matches the expanded form: string | (values: T) => string
-  // ============================================================================
-  const classNameOrFunctionMatch = typeString.match(
-    /^ClassNameOrFunction<(\w+(?:<[^>]+>)?)>$/,
-  )
-  if (classNameOrFunctionMatch) {
-    const renderPropsName = classNameOrFunctionMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "string" } as TKeyword,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "string" } as TKeyword,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
-  }
-
-  // Expanded form: string | (values: T) => string
-  const expandedClassNameMatch = typeString.match(
-    /^string \| \(values: (\w+)\) => string$/,
-  )
-  if (expandedClassNameMatch) {
-    const renderPropsName = expandedClassNameMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "string" } as TKeyword,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "string" } as TKeyword,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
-  }
-
-  // ============================================================================
-  // Pattern: StyleOrFunction<T> → CSSProperties | ((values: T) => CSSProperties)
-  // Also matches the expanded form: CSSProperties | (values: T) => CSSProperties
-  // ============================================================================
-  const styleOrFunctionMatch = typeString.match(
-    /^StyleOrFunction<(\w+(?:<[^>]+>)?)>$/,
-  )
-  if (styleOrFunctionMatch) {
-    const renderPropsName = styleOrFunctionMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "identifier", name: "CSSProperties" } as TIdentifier,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "identifier", name: "CSSProperties" } as TIdentifier,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
-  }
-
-  // Expanded form: CSSProperties | (values: T) => CSSProperties
-  const expandedStyleMatch = typeString.match(
-    /^CSSProperties \| \(values: (\w+)\) => CSSProperties$/,
-  )
-  if (expandedStyleMatch) {
-    const renderPropsName = expandedStyleMatch[1]
-    return {
-      type: "union",
-      elements: [
-        { type: "identifier", name: "CSSProperties" } as TIdentifier,
-        {
-          type: "function",
-          parameters: [
-            {
-              type: "parameter",
-              name: "values",
-              value: {
-                type: "link",
-                id: renderPropsName,
-                name: renderPropsName,
-              } as TLink,
-              optional: false,
-              rest: false,
-            } as TParameter,
-          ],
-          return: { type: "identifier", name: "CSSProperties" } as TIdentifier,
-          typeParameters: [],
-        } as TFunction,
-      ],
-    } as TUnion
-  }
-
-  // ============================================================================
-  // Pattern: Simple primitives and identifiers (e.g., ReactNode, string, number)
-  // ============================================================================
   const simpleType = parseSimpleType(typeString)
   if (simpleType.type !== "identifier") {
     return simpleType
   }
 
-  // ============================================================================
-  // Pattern: String literal unions like "sm" | "md" | "lg"
-  // ============================================================================
   if (/^"[^"]*"(\s*\|\s*"[^"]*")*$/.test(typeString)) {
     const literals = (typeString.match(/"[^"]*"/g) || []).sort()
     const elements = literals.map(
@@ -401,9 +239,6 @@ export function buildTypeAstFromString(
     return { type: "union", elements } as TUnion
   }
 
-  // ============================================================================
-  // Pattern: Function types like ((e: PressEvent) => void)
-  // ============================================================================
   const functionMatch = typeString.match(
     /^\(\((\w+):\s*(\w+)\)\s*=>\s*(\w+)\)$/,
   )
@@ -503,12 +338,10 @@ export function typeToAst(
     } as TIdentifier
   }
 
-  // ============================================================================
   // IMPORTANT: Check for type alias FIRST before TypeScript expands it!
   // This preserves type aliases like HTMLAttributeAnchorTarget, ReactNode, etc.
   // Similar to baseui-docs approach: if a type has an alias, use the alias name.
   // External types (from node_modules or .d.ts) are preserved as identifiers.
-  // ============================================================================
   const aliasSymbol = type.aliasSymbol
   if (aliasSymbol) {
     const aliasName = aliasSymbol.getName()
@@ -550,10 +383,8 @@ export function typeToAst(
     }
   }
 
-  // ============================================================================
   // Check the string representation for complex React types that we shouldn't expand
   // This catches cases where TypeScript has already expanded the alias
-  // ============================================================================
   const typeString = checker.typeToString(type)
   const simplifiedType = buildTypeAstFromString(typeString, context)
   if (simplifiedType) {

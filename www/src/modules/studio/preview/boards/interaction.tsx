@@ -61,8 +61,6 @@ function Cursor({ token }: { token: string }) {
   )
 }
 
-/* ---------------------------------- Focus ---------------------------------- */
-
 const TABS = ["Overview", "Activity", "Settings"]
 
 function FocusedTabs() {
@@ -147,8 +145,6 @@ function Focus() {
   )
 }
 
-/* ------------------------------- Field focus ------------------------------- */
-
 /** The select trigger the design system ships: the field shell, or a button that takes the focus ring. */
 function FrozenTrigger(props: Record<string, string>) {
   const { trigger, caret } = useComponentParams("select")
@@ -196,8 +192,6 @@ function FieldFocus() {
   )
 }
 
-/* -------------------------------- Disabled --------------------------------- */
-
 function Controls({ disabled }: { disabled?: boolean }) {
   return (
     <Specimen label={disabled ? "Disabled" : "Enabled"}>
@@ -233,8 +227,6 @@ function Controls({ disabled }: { disabled?: boolean }) {
   )
 }
 
-/* --------------------------------- Cursor ---------------------------------- */
-
 function Cursors() {
   const button = useButtonStyles()
   return (
@@ -266,8 +258,6 @@ function Cursors() {
   )
 }
 
-/* --------------------------------- Invalid --------------------------------- */
-
 function Invalid() {
   return (
     <div className="grid w-full grid-cols-1 items-start gap-x-4 gap-y-5 sm:grid-cols-[1fr_1fr_auto]">
@@ -292,8 +282,6 @@ function Invalid() {
     </div>
   )
 }
-
-/* -------------------------------- Selection -------------------------------- */
 
 // A live selection from mid-sentence over the controls into the next line: their labels light up only when control text selects. A click that clears it puts it back.
 function Selection() {

@@ -419,3 +419,57 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// CALENDAR — object-literal attr around its control, compared conditionals
+// ---------------------------------------------------------------------------
+
+const CALENDAR_SRC = `"use client";
+
+import { Calendar, CalendarGrid, CalendarHeader } from "@/registry/ui/calendar";
+
+export default function Demo({ visibleDuration = 1 } = {}) {
+	return (
+		<Calendar aria-label="Date" visibleDuration={{ months: visibleDuration }}>
+			<CalendarHeader />
+			<div className="flex items-start gap-4">
+				<CalendarGrid />
+				{visibleDuration > 1 && <CalendarGrid offset={{ months: 1 }} />}
+				{visibleDuration > 2 && <CalendarGrid offset={{ months: 2 }} />}
+			</div>
+		</Calendar>
+	);
+}
+`
+
+const CALENDAR_CONTROLS: ControlSelection[] = [
+  { name: "visibleDuration", kind: "number", default: 1 },
+]
+
+describe("calendar", () => {
+  it("default duration drops the attr and the extra grids", async () => {
+    const { collapsed } = await gen(CALENDAR_SRC, CALENDAR_CONTROLS, {
+      visibleDuration: 1,
+    })
+    expect(collapsed).toBe(`<Calendar aria-label="Date">
+  <CalendarHeader />
+  <div className="flex items-start gap-4">
+    <CalendarGrid />
+  </div>
+</Calendar>`)
+  })
+
+  it("two months keeps the object literal and shows one extra grid", async () => {
+    const { collapsed } = await gen(CALENDAR_SRC, CALENDAR_CONTROLS, {
+      visibleDuration: 2,
+    })
+    expect(collapsed)
+      .toBe(`<Calendar aria-label="Date" visibleDuration={{ months: 2 }}>
+  <CalendarHeader />
+  <div className="flex items-start gap-4">
+    <CalendarGrid />
+    <CalendarGrid offset={{ months: 1 }} />
+  </div>
+</Calendar>`)
+  })
+})

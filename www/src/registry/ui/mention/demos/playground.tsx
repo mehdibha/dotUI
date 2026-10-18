@@ -1,8 +1,8 @@
 "use client"
 
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
-import { Label } from "@/registry/ui/field"
-import { Mention } from "@/registry/ui/mention"
+import { Description, Label } from "@/registry/ui/field"
+import { Mention, type MentionProps } from "@/registry/ui/mention"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { TokenInput } from "@/registry/ui/token-field"
@@ -21,11 +21,29 @@ const people = [
 export default function Demo({
   label = "Comment",
   placeholder = "Type @ to mention someone...",
+  description = "",
+  isDisabled = false,
+  isReadOnly = false,
+  placement = "bottom start",
+}: {
+  label?: string
+  placeholder?: string
+  description?: string
+  isDisabled?: boolean
+  isReadOnly?: boolean
+  placement?: MentionProps["placement"]
 } = {}) {
   return (
-    <Mention allowsNewlines className="w-[320px]">
+    <Mention
+      allowsNewlines
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+      placement={placement}
+      className="w-[320px]"
+    >
       {label && <Label>{label}</Label>}
       <TokenInput data-control-target placeholder={placeholder} />
+      {description && <Description>{description}</Description>}
       <Popover>
         <MenuContent items={people} renderEmptyState={() => "No people found."}>
           {(person) => (

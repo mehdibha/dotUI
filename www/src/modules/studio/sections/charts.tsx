@@ -10,9 +10,7 @@ import {
   PALETTE_OPTIONS,
 } from "../axes/charts.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
-
-/* -------------------------------- Specimens -------------------------------- */
+import type { RowMap } from "../row-host"
 
 /* Mono rides the real accent; vivid and muted spread fixed hues at high and
    low chroma, the strategy rather than the engine's exact output. */
@@ -63,8 +61,6 @@ function GridGlyph({ grid }: { grid: string }) {
     </svg>
   )
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function PaletteRow() {
   return (

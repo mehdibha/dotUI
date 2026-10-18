@@ -174,21 +174,6 @@ function isDeclaredOnlyInTypesReact(prop: ts.Symbol): boolean {
 }
 
 /**
- * Check if a property is defined in the user's source files (not inherited from HTML)
- */
-function isPropFromUserCode(prop: ts.Symbol): boolean {
-  const declarations = prop.getDeclarations()
-  if (!declarations || declarations.length === 0) return false
-
-  // Check if any declaration is from user's source files
-  return declarations.some((decl) => {
-    const fileName = decl.getSourceFile().fileName
-    // User's code is NOT in node_modules
-    return !fileName.includes("node_modules")
-  })
-}
-
-/**
  * Check if a node has the export modifier
  */
 function hasExportModifier(node: ts.Node): boolean {
@@ -701,12 +686,10 @@ export async function formatComponentData(
   const astContext = createConversionContext(context.checker, 4)
 
   // Get all properties using TypeScript's type checker (includes inherited props)
-  // If extending HTML element, filter out inherited HTML props
   const props = await getPropsWithTypeChecker(
     exportNode.name,
     context,
     astContext,
-    extendsElement,
   )
 
   // Extract render props (CSS state selectors)
@@ -741,13 +724,11 @@ export async function formatComponentData(
 
 /**
  * Use TypeScript's type checker to get ALL properties including inherited ones
- * If extendsElement is provided, filters out props inherited from HTML elements
  */
 async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
   astContext: ConversionContext,
-  extendsElement: string | null = null,
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context
   const result: Record<string, FormattedProp> = {}
@@ -820,11 +801,6 @@ async function getPropsWithTypeChecker(
           // primitive (ComponentProps<typeof Text>, Base UI parts) flood the
           // table with every documented aria-* attribute
           if (isDeclaredOnlyInTypesReact(prop)) continue
-
-          // If extending HTML element, skip props inherited from HTML (not defined in user code)
-          if (extendsElement && !isPropFromUserCode(prop)) {
-            continue
-          }
 
           // Get JSDoc documentation
           const docs = ts.displayPartsToString(
@@ -1173,27 +1149,14 @@ function extractComponentGroup(componentExportName: string): string {
   return match ? match[0] : baseName
 }
 
-/**
- * Rewrite type strings for consistent naming
- * - Replaces internal naming conventions (.RootInternal → .Root)
- * - Formats component type references (ButtonProps → Button.Props)
- */
+/** Format component type references: `ButtonProps` → `Button.Props`. */
 function rewriteTypeValue(value: string, componentGroup: string): string {
-  let result = value
-
-  // Clean up internal naming
-  result = result.replaceAll(".RootInternal", ".Root")
-
-  // Format component type references (e.g., ButtonProps → Button.Props)
-  if (componentGroup) {
-    const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    result = result.replace(
-      new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
-      `${componentGroup}.$1`,
-    )
-  }
-
-  return result
+  if (!componentGroup) return value
+  const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  return value.replace(
+    new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
+    `${componentGroup}.$1`,
+  )
 }
 
 function rewriteTypeStringsDeep(

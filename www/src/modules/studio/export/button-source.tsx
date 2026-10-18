@@ -47,9 +47,7 @@ export default function ButtonSource({ url }: { url: string }) {
         <p className="text-xs text-fg-danger">Couldn't load the preview.</p>
       ) : (
         <div className="max-h-80 min-h-0 flex-1 overflow-auto rounded-md border bg-muted/40">
-          <DynamicPre lang="tsx" className="**:[code]:text-xs">
-            {result.code}
-          </DynamicPre>
+          <DynamicPre className="**:[code]:text-xs">{result.code}</DynamicPre>
         </div>
       )}
     </div>

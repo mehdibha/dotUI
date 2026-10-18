@@ -3,7 +3,7 @@ title: Date Picker
 description: A date picker combines a date field and a calendar popover to allow users to select a date.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/DatePicker.html
+    href: https://react-aria.adobe.com/DatePicker
 wip: true
 ---
 
@@ -16,8 +16,6 @@ npx shadcn@latest add @dotui/date-picker
 ```
 
 ## Usage
-
-Use date pickers to allow users to select a date using a field and a calendar popover.
 
 ```tsx
 import { CalendarIcon } from "lucide-react"
@@ -85,7 +83,7 @@ import { Popover } from "@/components/ui/popover"
 
 ## Value
 
-The value is an [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) object. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. `granularity` (`"day"`, `"hour"`, `"minute"`, `"second"`) sets the smallest editable unit, and `minValue`/`maxValue` bound the selectable range.
+The value is an [`@internationalized/date`](https://react-aria.adobe.com/internationalized/date/) object. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. `granularity` (`"day"`, `"hour"`, `"minute"`, `"second"`) sets the smallest editable unit, and `minValue`/`maxValue` bound the selectable range.
 
 ```tsx
 import { parseDate } from "@internationalized/date"
