@@ -7,6 +7,7 @@
 import { STEPS, toOklch } from "@dotui/colors"
 import type { Mode, StepName } from "@dotui/colors"
 
+import type { Effective } from "../axes"
 import { VIVIDNESS_RANGE } from "../axes/color"
 import {
   CONTROL_EDGE_OPTIONS,
@@ -22,10 +23,9 @@ import {
   DialToggle,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
+import type { RowMap } from "../row-host"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
-import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
 
 const SEMANTIC_SEEDS = [
@@ -54,8 +54,6 @@ function useStep() {
     m.scales[palette]?.[name] ?? m.background
   return { m, mode, step }
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 function BrandRow() {
   const { state, set } = useStudio()

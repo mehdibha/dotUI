@@ -3,7 +3,7 @@ title: Tag Group
 description: A tag group displays a collection of tags.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/TagGroup.html
+    href: https://react-aria.adobe.com/TagGroup
 wip: true
 ---
 
@@ -109,7 +109,7 @@ Render tags statically as children, or pass `items` to `TagList` with a render f
 
 ## Links
 
-Pass `href` to a `Tag` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+Pass `href` to a `Tag` to make it a link; add `target` for the link target. The tag isn't an `<a>`, so route it through your app router with React Aria's [`RouterProvider`](https://react-aria.adobe.com/frameworks).
 
 ```tsx
 <Tag href="https://tailwindcss.com" target="_blank">

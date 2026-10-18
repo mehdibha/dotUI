@@ -12,7 +12,7 @@ import { Skeleton } from "@/registry/ui/skeleton"
 import { Switch } from "@/registry/ui/switch"
 
 import { setCodeOption, useCodeOptions } from "./code-options-store"
-import type { ExportUrl } from "./types"
+import type { ExportUrl } from "./use-export-url"
 
 // The highlighter only loads once someone opens the popover.
 const ButtonSource = lazy(() => import("./button-source"))

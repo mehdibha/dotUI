@@ -5,19 +5,24 @@
  * with oxfmt, then the formatted root JSX is lifted into a tree that keeps
  * verbatim formatted text for everything static and structured nodes for every
  * position a control can change (attr holes, `{param}` text slots,
- * `{cond && <El>…</El>}` conditionals, `attr={cond ? value : undefined}`). The runtime renderer in
+ * `{cond && <El>…</El>}` conditionals, `attr={cond ? value : undefined}`
+ * attrs and `{!cond && "…"}` text). The runtime renderer in
  * `code-template.ts` owns the layout of the dynamic parts, so no per-value
  * formatting ever happens — and the output stays byte-identical to oxfmt.
  *
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
- * `@control:` marker comment (with optional `@drop-when:`). `{ident}` and
- * `{ident && …}` children match controls anywhere in the tree.
+ * `@control:` marker comment (with optional `@drop-when:`). An attr whose
+ * value is an object literal embedding its control (`visibleDuration={{
+ * months: visibleDuration }}`) keeps that literal around the value.
+ * `{ident}`, `{ident && …}`, `{ident > 1 && …}` and `{!ident && "…"}`
+ * children, and `ident ? "…" : undefined` attrs, match controls anywhere in
+ * the tree.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
 import { format } from "oxfmt"
-import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph"
+import { Node, SyntaxKind } from "ts-morph"
 import type {
   FunctionDeclaration,
   JsxAttribute,
@@ -29,10 +34,13 @@ import type {
 // NOTE: relative (not `@/`) — this module is loaded by the rehype plugin at vite
 // config-load time, before the `@/` alias is registered.
 import { rewriteImportPath } from "../../../publisher/build-time/transform-base"
+import { parseTsx, releaseTsx } from "../build-time"
 import type {
   AttrPart,
   ChildPart,
   CodeTemplate,
+  CompareOp,
+  Comparison,
   ConstDecl,
   ImportDecl,
   SerializedDefault,
@@ -73,19 +81,6 @@ export class OverlayError extends Error {
   }
 }
 
-// Singleton project (matches transformer.ts). Each call removes its files in finally.
-const project = new Project({
-  useInMemoryFileSystem: true,
-  compilerOptions: {},
-})
-let fileCounter = 0
-function createSourceFile(source: string): SourceFile {
-  return project.createSourceFile(`overlay-${fileCounter++}.tsx`, source, {
-    scriptKind: ScriptKind.TSX,
-    overwrite: true,
-  })
-}
-
 // ---------------------------------------------------------------------------
 // Entry
 // ---------------------------------------------------------------------------
@@ -93,7 +88,7 @@ function createSourceFile(source: string): SourceFile {
 export async function buildSourceOverlay(
   input: OverlayInput,
 ): Promise<CodeTemplate> {
-  const sf = createSourceFile(input.source)
+  const sf = parseTsx(input.source)
   try {
     stripNonEmitStatements(sf)
     rewriteImports(sf)
@@ -104,7 +99,7 @@ export async function buildSourceOverlay(
     const formatted = await formatOrThrow(templated, input)
 
     // Lift the FORMATTED file into the template tree.
-    const f2 = createSourceFile(formatted)
+    const f2 = parseTsx(formatted)
     try {
       const fn = findExportFunction(f2)
       if (!fn)
@@ -126,10 +121,10 @@ export async function buildSourceOverlay(
         bodyIndent: BODY_INDENT,
       }
     } finally {
-      project.removeSourceFile(f2)
+      releaseTsx(f2)
     }
   } finally {
-    project.removeSourceFile(sf)
+    releaseTsx(sf)
   }
 }
 
@@ -242,6 +237,7 @@ class TreeBuilder {
       const derived = readDerivedMarker(attr)
       if (control && (holesAllowed || derived)) {
         this.resolved.add(attrName)
+        const wrap = derived ? undefined : readObjectWrap(attr)
         attrs.push({
           part: "attr",
           control: attrName,
@@ -251,22 +247,23 @@ class TreeBuilder {
           ...((derived?.dropWhen ?? control.dropWhen)
             ? { dropWhen: derived?.dropWhen ?? control.dropWhen }
             : {}),
+          ...(wrap ? { wrap } : {}),
         })
         continue
       }
-      const gated = this.readGatedAttr(attr)
-      if (gated) this.resolved.add(gated.control)
-      const text = gated?.text ?? attr.getText()
+      const guarded = this.readGuardedAttr(attr)
+      if (guarded) {
+        this.resolved.add(guarded.showWhen)
+        attrs.push({ part: "static", ...guarded })
+        continue
+      }
+      const text = attr.getText()
       if (text.includes("\n")) {
         throw new OverlayError(
           `Multiline attribute "${attrName}" on dynamic <${tag}> is unsupported${named(this.input)}`,
         )
       }
-      attrs.push({
-        part: "static",
-        text,
-        ...(gated ? { showWhen: gated.control } : {}),
-      })
+      attrs.push({ part: "static", text })
     }
 
     const children: ChildPart[] = []
@@ -296,12 +293,15 @@ class TreeBuilder {
         return { part: "text", control: control.name, kind: control.kind }
       }
 
-      if (
-        Node.isBinaryExpression(expr) &&
-        expr.getOperatorToken().getText() === "&&" &&
-        this.byName.has(expr.getLeft().getText())
-      ) {
-        const control = expr.getLeft().getText()
+      const hidden = this.readHiddenText(expr)
+      if (hidden) {
+        this.resolved.add(hidden.hideWhen)
+        return { part: "static-text", ...hidden }
+      }
+
+      const condition = this.readCondition(expr)
+      if (condition && Node.isBinaryExpression(expr)) {
+        const { control, compare } = condition
         let right: Node = expr.getRight()
         if (Node.isParenthesizedExpression(right)) right = right.getExpression()
         if (!Node.isJsxElement(right) && !Node.isJsxSelfClosingElement(right)) {
@@ -314,6 +314,7 @@ class TreeBuilder {
           part: "element",
           el: this.buildElement(right, { holesAllowed: false }),
           showWhen: control,
+          ...(compare ? { compare } : {}),
         }
       }
 
@@ -338,47 +339,136 @@ class TreeBuilder {
     )
   }
 
-  /** `attr={control ? value : undefined}` → `attr={value}`, shown while the control is truthy. */
-  private readGatedAttr(
-    attr: JsxAttribute,
-  ): { control: string; text: string } | null {
-    const init = attr.getInitializer()
-    const expr = Node.isJsxExpression(init) ? init.getExpression() : undefined
-    if (!Node.isConditionalExpression(expr)) return null
-    const control = expr.getCondition().getText()
-    if (
-      !this.byName.has(control) ||
-      expr.getWhenFalse().getText() !== "undefined"
-    )
-      return null
-    return {
-      control,
-      text: `${attr.getNameNode().getText()}={${expr.getWhenTrue().getText()}}`,
-    }
-  }
-
   /** Does this subtree contain anything a control can change? */
   private containsDynamic(node: JsxLike): boolean {
     const openings: Node[] = [node, ...node.getDescendants()]
     for (const n of openings) {
       if (Node.isJsxAttribute(n)) {
         if (n.getNameNode().getText() === "data-control-target") return true
-        if (readDerivedMarker(n) || this.readGatedAttr(n)) return true
+        if (readDerivedMarker(n)) return true
+        if (this.readGuardedAttr(n)) return true
       }
       if (Node.isJsxExpression(n)) {
         const expr = n.getExpression()
         if (!expr) continue
         if (Node.isIdentifier(expr) && this.byName.has(expr.getText()))
           return true
-        if (
-          Node.isBinaryExpression(expr) &&
-          expr.getOperatorToken().getText() === "&&" &&
-          this.byName.has(expr.getLeft().getText())
-        )
-          return true
+        if (this.readCondition(expr)) return true
+        if (this.readHiddenText(expr)) return true
       }
     }
     return false
+  }
+
+  /** `attr={ident ? "…" : undefined}` → the attr as written when shown. */
+  private readGuardedAttr(
+    attr: JsxAttribute,
+  ): { text: string; showWhen: string } | null {
+    const init = attr.getInitializer()
+    if (!init || !Node.isJsxExpression(init)) return null
+    const expr = init.getExpression()
+    if (
+      !expr ||
+      !Node.isConditionalExpression(expr) ||
+      !this.byName.has(expr.getCondition().getText()) ||
+      expr.getWhenFalse().getText() !== "undefined"
+    )
+      return null
+    const name = attr.getNameNode().getText()
+    const value = expr.getWhenTrue()
+    const text =
+      Node.isStringLiteral(value) && !/["\\]/.test(value.getLiteralText())
+        ? `${name}="${value.getLiteralText()}"`
+        : `${name}={${value.getText()}}`
+    if (text.includes("\n")) {
+      throw new OverlayError(
+        `Guarded attribute "${name}" must fit on one line${named(this.input)}`,
+      )
+    }
+    return { text, showWhen: expr.getCondition().getText() }
+  }
+
+  /** `{!ident && "…"}` → the text and the control that hides it. */
+  private readHiddenText(
+    expr: Node,
+  ): { text: string; hideWhen: string } | null {
+    if (
+      !Node.isBinaryExpression(expr) ||
+      expr.getOperatorToken().getText() !== "&&"
+    )
+      return null
+    const left = expr.getLeft()
+    const right = expr.getRight()
+    if (
+      !Node.isPrefixUnaryExpression(left) ||
+      left.getOperatorToken() !== SyntaxKind.ExclamationToken ||
+      !this.byName.has(left.getOperand().getText()) ||
+      !Node.isStringLiteral(right)
+    )
+      return null
+    return {
+      text: right.getLiteralText().replace(/\s+/g, " ").trim(),
+      hideWhen: left.getOperand().getText(),
+    }
+  }
+
+  /** `ident && …` or `ident <op> literal && …` over a control, else null. */
+  private readCondition(
+    expr: Node,
+  ): { control: string; compare?: Comparison } | null {
+    if (
+      !Node.isBinaryExpression(expr) ||
+      expr.getOperatorToken().getText() !== "&&"
+    )
+      return null
+    const left = expr.getLeft()
+    if (Node.isIdentifier(left))
+      return this.byName.has(left.getText())
+        ? { control: left.getText() }
+        : null
+    if (!Node.isBinaryExpression(left)) return null
+    const op = left.getOperatorToken().getText()
+    const ident = left.getLeft()
+    const literal = left.getRight()
+    if (
+      !COMPARE_OPS.has(op) ||
+      !Node.isIdentifier(ident) ||
+      !this.byName.has(ident.getText())
+    )
+      return null
+    if (!Node.isNumericLiteral(literal) && !Node.isStringLiteral(literal))
+      return null
+    return {
+      control: ident.getText(),
+      compare: { op: op as CompareOp, value: literal.getLiteralValue() },
+    }
+  }
+}
+
+const COMPARE_OPS = new Set(["<", "<=", ">", ">=", "===", "!=="])
+
+/** `attr={{ key: attr }}` → the attr text around the control's one occurrence. */
+function readObjectWrap(
+  attr: JsxAttribute,
+): { before: string; after: string } | undefined {
+  const init = attr.getInitializer()
+  const expr = Node.isJsxExpression(init) ? init.getExpression() : undefined
+  if (!expr || !Node.isObjectLiteralExpression(expr)) return undefined
+  const name = attr.getNameNode().getText()
+  const refs = expr.getDescendantsOfKind(SyntaxKind.Identifier).filter((id) => {
+    const parent = id.getParent()
+    return (
+      id.getText() === name &&
+      !(Node.isPropertyAssignment(parent) && parent.getNameNode() === id)
+    )
+  })
+  const [ref] = refs
+  if (refs.length !== 1 || !ref) return undefined
+  const text = attr.getText()
+  const at = ref.getStart() - attr.getStart()
+  return {
+    before: text.slice(0, at),
+    after: text.slice(at + name.length),
   }
 }
 

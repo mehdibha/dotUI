@@ -41,39 +41,35 @@ git checkout -b my-new-branch
 pnpm install
 ```
 
-5. Build the component registry (required once before the dev server works)
+5. Start the dev server (it builds the component registry first)
 
 ```bash
-pnpm build:registry
+pnpm dev:www
 ```
 
 ### Project structure
 
-This project is a [Turborepo](https://turborepo.org/) monorepo:
+This project is a [Turborepo](https://turborepo.org/) monorepo. [CLAUDE.md](CLAUDE.md) describes it in depth.
 
-- `www/` - Documentation website
+- `www/` - dotui.org: the docs, the /studio builder, and the registry endpoints. Registry source lives in `www/src/registry/`.
 - `packages/` - Shared packages
-  - `colors` - Color utilities
-  - `types` - Shared TypeScript types
-- `config/` - Shared configuration (TypeScript configs)
+  - `colors` - `@dotui/colors`, the OKLCH color engine
+  - `ts-config` - Shared TypeScript configs
+- `examples/` - Consumer templates with the registry's resolved output committed (generated, never hand-edited; see [examples/README.md](examples/README.md))
+- `video/` - The launch film, made with Remotion (see [video/README.md](video/README.md))
 
 ### Useful scripts
 
 | Command               | Description                             |
 | --------------------- | --------------------------------------- |
-| `pnpm dev`            | Starts all packages in development mode |
-| `pnpm dev:www`        | Starts the documentation website        |
+| `pnpm dev:www`        | Starts the dev server (builds registry) |
 | `pnpm build`          | Builds all packages                     |
-| `pnpm build:www`      | Builds the documentation website        |
+| `pnpm build:www`      | Builds the website                      |
 | `pnpm build:registry` | Builds the component registry           |
-| `pnpm lint:check`     | Runs Oxlint                             |
-| `pnpm lint:fix`       | Fixes Oxlint issues                     |
-| `pnpm format:check`   | Checks Oxfmt formatting                 |
-| `pnpm format:fix`     | Formats files with Oxfmt                |
 | `pnpm check`          | Runs lint and format checks             |
-| `pnpm check:fix`      | Fixes lint and format issues            |
+| `pnpm check:fix`      | Fixes lint, format and Tailwind classes |
 | `pnpm typecheck`      | Runs TypeScript type checking           |
-| `pnpm test`           | Runs tests                              |
+| `pnpm test`           | Runs every Vitest test in the repo      |
 
 ### Before submitting
 
@@ -84,6 +80,14 @@ pnpm check
 pnpm typecheck
 pnpm test
 ```
+
+CI also fails on stale generated files. Depending on what you touched:
+
+- `www/src/registry/` - run `pnpm build:registry` and commit the regenerated `__generated__/*` and `base/colors.css`.
+- The registry, the publisher, presets, or `/r/*` - run `pnpm smoke:examples` and commit `examples/`.
+- A component's `types.ts` - run `pnpm build:references` and commit `www/src/modules/docs/references/generated/`.
+
+See the Workflow section of [CLAUDE.md](CLAUDE.md) for details.
 
 ## Credits
 

@@ -1,5 +1,3 @@
-"use client"
-
 import { Marker, MarkerContent } from "@/registry/ui/marker"
 
 export function MarkerDemo() {

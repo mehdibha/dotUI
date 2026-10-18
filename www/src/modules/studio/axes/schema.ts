@@ -1,5 +1,5 @@
-/* What each state key accepts. Every axis module exports a `<CHAPTER>_SCHEMA`
-   keyed by its defaults, built from the same value lists and ranges its
+/* What each state key accepts. Every chapter's `schema` is keyed by its
+   defaults, built from the same value lists and ranges its
    panel rows use (labels live in `<chapter>.meta.ts`, panel-only);
    `validate()` (index.ts) checks raw state against them. */
 
@@ -7,7 +7,7 @@ import { toOklch } from "@dotui/colors"
 
 import { FONT_CATALOG } from "@/lib/fonts"
 
-export type AxisValue =
+type AxisValue =
   | { type: "enum"; values: readonly string[] }
   | { type: "number"; min: number; max: number; step?: number }
   | { type: "boolean" }
@@ -22,7 +22,8 @@ export interface AxisSchema {
   auto?: true
 }
 
-export type ChapterSchema<Defaults> = { [K in keyof Defaults]: AxisSchema }
+export const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value)
 
 export const oneOf = (values: readonly string[]): AxisSchema => ({
   value: { type: "enum", values },

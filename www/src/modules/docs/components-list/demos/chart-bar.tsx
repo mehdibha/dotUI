@@ -1,22 +1,32 @@
-"use client"
+import { BarChart } from "@/registry/ui/chart-bar"
 
-import { Suspense, lazy } from "react"
+const data = [
+  { browser: "chrome", visitors: 187 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 275 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
 
-// Lazy so the charts runtime stays out of the page's static chunk. Sibling
-// chart demos lazy-load registry demos for the same reason (and because a
-// module imported both statically and via DemosIndex breaks in production).
-const ChartBarBrowsers = lazy(() => import("./chart-bar.lazy"))
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-export function ChartBarDemo() {
+export default function ChartBarBrowsers() {
   return (
-    <div className="w-[164px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[96px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartBarBrowsers />
-      </Suspense>
-    </div>
+    <BarChart
+      data={data}
+      x="browser"
+      y="visitors"
+      series="browser"
+      labels={labels}
+      height={96}
+      grid={false}
+      ariaLabel="Visitors by browser"
+    />
   )
 }

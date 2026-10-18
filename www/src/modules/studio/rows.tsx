@@ -4,12 +4,7 @@
    color seed, the neutral, the font list. Everything is controlled — value
    in, callback out. */
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useSyncExternalStore,
-} from "react"
+import { createContext, useContext, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -23,6 +18,7 @@ import {
 
 import { FONT_CATALOG, fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
+import { useMedia } from "@/hooks/use-media"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { ColorArea } from "@/registry/ui/color-area"
@@ -76,17 +72,6 @@ const PANEL_PADDING = 8
 const PANEL_BORDER = 1
 const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
 
-export function useMedia(query: string) {
-  return useSyncExternalStore(
-    (onChange) => {
-      const mql = window.matchMedia(query)
-      mql.addEventListener("change", onChange)
-      return () => mql.removeEventListener("change", onChange)
-    },
-    () => window.matchMedia(query).matches,
-    () => false,
-  )
-}
 /* Below `lg` the panel docks under the preview (or beside it, on short
    screens) and its popovers open over the dock, never the preview. */
 const DOCKED_QUERY = "(max-width: 1023px)"
@@ -181,8 +166,6 @@ export function PanelPopover({
   )
 }
 
-/* ------------------------------- Drafting -------------------------------- */
-
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
  *  controls preview every frame and commit once, on release. */
@@ -195,8 +178,6 @@ export function useDraft<T>(committed: T) {
   }
   return [draft, setDraft] as const
 }
-
-/* ------------------------------ Color picker ------------------------------ */
 
 /** Hue-spaced seeds: one tap to a plausible brand before touching the area. */
 const COLOR_PRESETS = [
@@ -286,14 +267,12 @@ function HexInput() {
   )
 }
 
-/* ----------------------------- Neutral picker ----------------------------- */
-
 /**
  * A gray is not a free color — the engine models it as a hue to lean toward
- * plus how far to lean (D8), so those are the only two axes here: no area, no
+ * plus how far to lean, so those are the only two axes here: no area, no
  * spectrum, no hex. `hue: null` follows the brand, which is the engine default.
  */
-export interface NeutralValue {
+interface NeutralValue {
   hue: number | null
   /** Multiplier on the engine's tint peak; 0 is a pure gray. */
   tint: number
@@ -563,8 +542,6 @@ export function NeutralPickerPopover({
     </PanelPopover>
   )
 }
-
-/* ------------------------------- Font picker ------------------------------ */
 
 /** The searchable font list shared by every font trigger: search on top, the
  *  catalog grouped by category, each family previewed in its own lazily-loaded

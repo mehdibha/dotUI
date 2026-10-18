@@ -3,9 +3,9 @@ import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_EFFECTIVE, RULES } from "./axes"
+import { ALL_ROWS, linkTarget, placeOf, SECTION_ROWS } from "./chapters"
 import { COMPONENTS, isSingle, keysOf } from "./sections/components"
 import { FOUNDATION_PAGES, MAIN_ROWS, PAGE_ROWS } from "./sections/foundations"
-import { ALL_ROWS, linkTarget, placeOf, SECTION_ROWS } from "./state"
 import { valueLabel } from "./use-axis"
 
 const SECTIONS = path.join(__dirname, "sections")

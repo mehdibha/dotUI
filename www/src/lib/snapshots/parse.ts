@@ -4,14 +4,12 @@
 import { salvageState, validate } from "@/modules/studio/axes"
 import type { StateIssue } from "@/modules/studio/axes"
 import { migrate } from "@/modules/studio/axes/migrate"
+import { isRecord } from "@/modules/studio/axes/schema"
 
 import { cleanName, MAX_NAME_LENGTH, stripName } from "./snapshot"
 import type { Snapshot } from "./snapshot"
 
 type Parsed<T> = { ok: true; value: T } | { ok: false; issues: StateIssue[] }
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null && !Array.isArray(value)
 
 const INPUT_KEYS = ["name", "state"]
 

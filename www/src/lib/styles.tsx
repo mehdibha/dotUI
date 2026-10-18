@@ -71,6 +71,11 @@ function slotOf(name: string): ParamSlot | undefined {
 const ParamsContext = React.createContext(noParams)
 const DensityContext = React.createContext<Density>("default")
 
+/** The nearest provider's density. */
+function useDensity() {
+  return React.use(DensityContext)
+}
+
 /** Param selections and density: all that `useStyles` consumers read. */
 function ComponentParamsProvider({
   params = noParams,
@@ -878,5 +883,6 @@ export {
   createStyles,
   DesignSystemProvider,
   useComponentParams,
+  useDensity,
   useParamSelections,
 }
