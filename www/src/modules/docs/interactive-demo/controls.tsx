@@ -307,25 +307,13 @@ interface EnumControlRendererProps {
   onChange: (name: string, value: unknown) => void
 }
 
-/**
- * A small enum (a few short options, e.g. `size`: xs/sm/md/lg) renders as a
- * segmented control — quicker to scan and toggle than a dropdown, matching the
- * playground design. Larger option sets fall back to a Select to avoid overflow.
- */
-function isSegmentedEnum(control: EnumControl): boolean {
-  return (
-    control.options.length > 1 &&
-    control.options.length <= 4 &&
-    control.options.every((option) => option.length <= 8)
-  )
-}
-
 function EnumControlRenderer({
   control,
   value,
   onChange,
 }: EnumControlRendererProps) {
-  if (isSegmentedEnum(control)) {
+  // Two options fit side by side as a toggle group; anything more is a select.
+  if (control.options.length === 2) {
     return (
       <SegmentedEnumControlRenderer
         control={control}
