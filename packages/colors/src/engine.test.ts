@@ -13,15 +13,7 @@ import {
   LIGHT_SKELETON_NEUTRAL,
   SOLID_LSTAR_WINDOW,
 } from "./data"
-import {
-  createTheme,
-  fitSrgb,
-  lstarOf,
-  STEPS,
-  toHex,
-  toOklch,
-  wcag2,
-} from "./index"
+import { createTheme, fitSrgb, lstarOf, STEPS, toHex, toOklch } from "./index"
 import { setMemoEnabled } from "./memo"
 
 const CORE_SCALES = [

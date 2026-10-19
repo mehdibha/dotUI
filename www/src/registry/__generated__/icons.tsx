@@ -14,7 +14,6 @@ import {
 	ArrowUpIcon as LucideArrowUpIcon,
 	ArrowUpRightIcon as LucideArrowUpRightIcon,
 	AudioLinesIcon as LucideAudioLinesIcon,
-	BadgeCheck as LucideBadgeCheck,
 	BadgeCheckIcon as LucideBadgeCheckIcon,
 	BellIcon as LucideBellIcon,
 	BitcoinIcon as LucideBitcoinIcon,
@@ -22,7 +21,6 @@ import {
 	BoldIcon as LucideBoldIcon,
 	BookIcon as LucideBookIcon,
 	BookmarkIcon as LucideBookmarkIcon,
-	BookOpen as LucideBookOpen,
 	BookOpenIcon as LucideBookOpenIcon,
 	BotIcon as LucideBotIcon,
 	BoxesIcon as LucideBoxesIcon,
@@ -83,11 +81,9 @@ import {
 	LanguagesIcon as LucideLanguagesIcon,
 	LayersIcon as LucideLayersIcon,
 	LayoutGridIcon as LucideLayoutGridIcon,
-	LifeBuoy as LucideLifeBuoy,
 	LinkIcon as LucideLinkIcon,
 	ListFilterIcon as LucideListFilterIcon,
 	ListIcon as LucideListIcon,
-	Loader2Icon as LucideLoader2Icon,
 	LoaderCircleIcon as LucideLoaderCircleIcon,
 	LogOutIcon as LucideLogOutIcon,
 	MailCheckIcon as LucideMailCheckIcon,
@@ -131,9 +127,7 @@ import {
 	RulerIcon as LucideRulerIcon,
 	SaveIcon as LucideSaveIcon,
 	ScissorsIcon as LucideScissorsIcon,
-	Search as LucideSearch,
 	SearchIcon as LucideSearchIcon,
-	Send as LucideSend,
 	SendIcon as LucideSendIcon,
 	ServerIcon as LucideServerIcon,
 	Settings2Icon as LucideSettings2Icon,
@@ -174,7 +168,6 @@ import {
 	Volume1Icon as LucideVolume1Icon,
 	Volume2Icon as LucideVolume2Icon,
 	VolumeOffIcon as LucideVolumeOffIcon,
-	VolumeX as LucideVolumeX,
 	WalletIcon as LucideWalletIcon,
 	XCircleIcon as LucideXCircleIcon,
 	XIcon as LucideXIcon,
@@ -235,7 +228,6 @@ export const ListFilterIcon = createIcon(LucideListFilterIcon, "ListFilterIcon")
 export const TagIcon = createIcon(LucideTagIcon, "TagIcon");
 export const Trash2Icon = createIcon(LucideTrash2Icon, "Trash2Icon");
 export const ArrowRightIcon = createIcon(LucideArrowRightIcon, "ArrowRightIcon");
-export const VolumeX = createIcon(LucideVolumeX, "VolumeX");
 export const CheckIcon = createIcon(LucideCheckIcon, "CheckIcon");
 export const UserRoundXIcon = createIcon(LucideUserRoundXIcon, "UserRoundXIcon");
 export const AlertTriangleIcon = createIcon(LucideAlertTriangleIcon, "AlertTriangleIcon");
@@ -253,11 +245,9 @@ export const MoonIcon = createIcon(LucideMoonIcon, "MoonIcon");
 export const HelpCircleIcon = createIcon(LucideHelpCircleIcon, "HelpCircleIcon");
 export const FileTextIcon = createIcon(LucideFileTextIcon, "FileTextIcon");
 export const CalendarIcon = createIcon(LucideCalendarIcon, "CalendarIcon");
-export const Search = createIcon(LucideSearch, "Search");
 export const CheckCircle2Icon = createIcon(LucideCheckCircle2Icon, "CheckCircle2Icon");
 export const CircleDollarSignIcon = createIcon(LucideCircleDollarSignIcon, "CircleDollarSignIcon");
 export const ArrowUpRightIcon = createIcon(LucideArrowUpRightIcon, "ArrowUpRightIcon");
-export const BadgeCheck = createIcon(LucideBadgeCheck, "BadgeCheck");
 export const FlipHorizontalIcon = createIcon(LucideFlipHorizontalIcon, "FlipHorizontalIcon");
 export const FlipVerticalIcon = createIcon(LucideFlipVerticalIcon, "FlipVerticalIcon");
 export const RotateCwIcon = createIcon(LucideRotateCwIcon, "RotateCwIcon");
@@ -300,20 +290,16 @@ export const ItalicIcon = createIcon(LucideItalicIcon, "ItalicIcon");
 export const UnderlineIcon = createIcon(LucideUnderlineIcon, "UnderlineIcon");
 export const TableIcon = createIcon(LucideTableIcon, "TableIcon");
 export const ChartLineIcon = createIcon(LucideChartLineIcon, "ChartLineIcon");
-export const BookOpen = createIcon(LucideBookOpen, "BookOpen");
 export const Settings2Icon = createIcon(LucideSettings2Icon, "Settings2Icon");
 export const FrameIcon = createIcon(LucideFrameIcon, "FrameIcon");
 export const MapIcon = createIcon(LucideMapIcon, "MapIcon");
 export const ShoppingCartIcon = createIcon(LucideShoppingCartIcon, "ShoppingCartIcon");
-export const LifeBuoy = createIcon(LucideLifeBuoy, "LifeBuoy");
-export const Send = createIcon(LucideSend, "Send");
 export const AppWindowIcon = createIcon(LucideAppWindowIcon, "AppWindowIcon");
 export const BookmarkIcon = createIcon(LucideBookmarkIcon, "BookmarkIcon");
 export const ChevronUpIcon = createIcon(LucideChevronUpIcon, "ChevronUpIcon");
 export const ChevronLeftIcon = createIcon(LucideChevronLeftIcon, "ChevronLeftIcon");
 export const TriangleAlertIcon = createIcon(LucideTriangleAlertIcon, "TriangleAlertIcon");
 export const OctagonXIcon = createIcon(LucideOctagonXIcon, "OctagonXIcon");
-export const Loader2Icon = createIcon(LucideLoader2Icon, "Loader2Icon");
 export const VolumeOffIcon = createIcon(LucideVolumeOffIcon, "VolumeOffIcon");
 export const AlertCircleIcon = createIcon(LucideAlertCircleIcon, "AlertCircleIcon");
 export const User2Icon = createIcon(LucideUser2Icon, "User2Icon");

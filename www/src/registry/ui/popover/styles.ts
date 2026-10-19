@@ -25,7 +25,7 @@ export const OVERLAY_SLIDE = [
 export const STROKED_TIP =
   "[&>svg]:size-(--studio-popover-tip-size) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke) [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke)"
 
-const { useStyles, styles } = createStyles(popoverMeta, {
+const { useStyles } = createStyles(popoverMeta, {
   base: {
     slots: {
       popover: [
@@ -40,13 +40,6 @@ const { useStyles, styles } = createStyles(popoverMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     motion: {
       scale: { slots: { popover: [entrance, OVERLAY_SCALE] } },
@@ -60,7 +53,5 @@ const { useStyles, styles } = createStyles(popoverMeta, {
     },
   },
 })
-
-export type PopoverStyles = typeof styles
 
 export { useStyles }

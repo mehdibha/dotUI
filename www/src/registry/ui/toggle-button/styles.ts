@@ -21,7 +21,6 @@ import toggleButtonMeta from "./meta"
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
     base: [
-      "group/toggle-button",
       BUTTON_BASE,
       "disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
     ],

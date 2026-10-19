@@ -56,7 +56,7 @@ export const BUNDLED_INTO_INIT = new Set([
  * Rewrites bare dotui dep names (`"loader"`) to absolute URLs so `shadcn add`
  * can follow them without a registry mapping in the consumer's components.json.
  */
-export interface DepResolver {
+interface DepResolver {
   /** Where a dep is served, e.g. `https://dotui.org/r/p/linear/loader.json`. */
   url: (name: string) => string
   /** Names with a publishable; anything else passes through bare. */
@@ -127,7 +127,7 @@ export function registryDepsFor(
   return [...new Set(deps)]
 }
 
-export interface PublishableModule {
+interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
   /** Folded `createParamValue` templates keyed `param=value[&…]`. */
@@ -187,14 +187,14 @@ function applySourceSubstitutions(
   return content
 }
 
-export interface PublishedItem {
+interface PublishedItem {
   /** Shadcn-shaped registry item ready to JSON.stringify. */
   item: RegistryItem
   /** The pre-format component source — caller passes this through oxfmt. */
   rawContent: string
 }
 
-export interface PublishInput {
+interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
   /**

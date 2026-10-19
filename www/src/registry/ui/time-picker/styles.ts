@@ -20,15 +20,6 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
 })
-
-export type TimePickerStyles = typeof styles
 
 export { styles as timePickerStyles, useStyles }

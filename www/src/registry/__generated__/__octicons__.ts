@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 178 icons the registry uses (not the entire library)
+// Only exports the 171 icons the registry uses (not the entire library)
 export {
 	PulseIcon as ActivityIcon,
 	AlertIcon as AlertCircleIcon,
@@ -12,7 +12,6 @@ export {
 	ArrowUpIcon,
 	ArrowUpRightIcon,
 	UnmuteIcon as AudioLinesIcon,
-	VerifiedIcon as BadgeCheck,
 	VerifiedIcon as BadgeCheckIcon,
 	BellIcon,
 	CreditCardIcon as BitcoinIcon,
@@ -20,7 +19,6 @@ export {
 	BoldIcon,
 	BookIcon,
 	BookmarkIcon,
-	BookIcon as BookOpen,
 	BookIcon as BookOpenIcon,
 	HubotIcon as BotIcon,
 	PackageIcon as BoxesIcon,
@@ -81,11 +79,9 @@ export {
 	GlobeIcon as LanguagesIcon,
 	StackIcon as LayersIcon,
 	AppsIcon as LayoutGridIcon,
-	QuestionIcon as LifeBuoy,
 	LinkIcon,
 	FilterIcon as ListFilterIcon,
 	ListUnorderedIcon as ListIcon,
-	SyncIcon as Loader2Icon,
 	SyncIcon as LoaderCircleIcon,
 	SignOutIcon as LogOutIcon,
 	ReadIcon as MailCheckIcon,
@@ -129,9 +125,7 @@ export {
 	SpacingMediumIcon as RulerIcon,
 	DownloadIcon as SaveIcon,
 	UnlinkIcon as ScissorsIcon,
-	SearchIcon as Search,
 	SearchIcon,
-	PaperAirplaneIcon as Send,
 	PaperAirplaneIcon as SendIcon,
 	ServerIcon,
 	SlidersIcon as Settings2Icon,
@@ -172,7 +166,6 @@ export {
 	UnmuteIcon as Volume1Icon,
 	UnmuteIcon as Volume2Icon,
 	MuteIcon as VolumeOffIcon,
-	MuteIcon as VolumeX,
 	CreditCardIcon as WalletIcon,
 	XCircleIcon,
 	XIcon,

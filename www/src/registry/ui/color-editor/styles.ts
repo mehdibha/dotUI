@@ -12,7 +12,7 @@ const roomy = {
   },
 }
 
-const { useStyles, styles } = createStyles(colorEditorMeta, {
+const { useStyles } = createStyles(colorEditorMeta, {
   base: {
     slots: {
       root: "flex w-fit flex-col",
@@ -56,7 +56,5 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
     },
   },
 })
-
-export type ColorEditorStyles = typeof styles
 
 export { useStyles }

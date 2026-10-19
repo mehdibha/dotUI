@@ -111,11 +111,7 @@ interface TableVirtualizerProps<T extends object> extends Omit<
   headingHeight?: number;
 }
 
-const TABLE_VIRTUALIZER_HEIGHTS = {
-  compact: 32,
-  default: 40,
-  comfortable: 48,
-} as const;
+const DEFAULT_ROW_HEIGHT = 40;
 
 const TableVirtualizer = <T extends object>({
   headingHeight,
@@ -123,7 +119,6 @@ const TableVirtualizer = <T extends object>({
   rowHeight,
   ...props
 }: TableVirtualizerProps<T>) => {
-  const densityHeight = TABLE_VIRTUALIZER_HEIGHTS.default;
   const tableLayoutOptions = layoutOptions as
     | { rowHeight?: number; headingHeight?: number }
     | undefined;
@@ -133,9 +128,12 @@ const TableVirtualizer = <T extends object>({
       layout={TableLayout}
       layoutOptions={{
         ...layoutOptions,
-        rowHeight: rowHeight ?? tableLayoutOptions?.rowHeight ?? densityHeight,
+        rowHeight:
+          rowHeight ?? tableLayoutOptions?.rowHeight ?? DEFAULT_ROW_HEIGHT,
         headingHeight:
-          headingHeight ?? tableLayoutOptions?.headingHeight ?? densityHeight,
+          headingHeight ??
+          tableLayoutOptions?.headingHeight ??
+          DEFAULT_ROW_HEIGHT,
       }}
       {...props}
     />

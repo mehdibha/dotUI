@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import tableMeta from "./meta"
 
-const { useStyles, styles } = createStyles(tableMeta, {
+const { useStyles } = createStyles(tableMeta, {
   base: {
     slots: {
       container:
@@ -166,7 +166,5 @@ const { useStyles, styles } = createStyles(tableMeta, {
     },
   },
 })
-
-export type TableStyles = typeof styles
 
 export { useStyles }
