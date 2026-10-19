@@ -1,8 +1,9 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import type { MDXComponents } from "mdx/types"
 
+import { InfoIcon } from "@/registry/__generated__/icons"
 import { cn } from "@/registry/lib/utils"
-import { Alert, type AlertProps } from "@/registry/ui/alert"
+import { Alert, AlertDescription, type AlertProps } from "@/registry/ui/alert"
 import { Link } from "@/registry/ui/link"
 import { CodeBlock, Pre } from "@/modules/docs/code-block"
 import {
@@ -178,6 +179,13 @@ export const mdxComponents: MDXComponents = {
   ),
   Alert: ({ className, ...props }: AlertProps) => (
     <Alert className={cn("mt-4", className)} {...props} />
+  ),
+  // Injected into Installation sections by remark-install-prerequisite.
+  InstallPrerequisite: ({ children }: { children: React.ReactNode }) => (
+    <Alert variant="neutral" className="mt-4">
+      <InfoIcon />
+      <AlertDescription>{children}</AlertDescription>
+    </Alert>
   ),
   Steps: (props) => (
     <div

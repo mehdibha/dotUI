@@ -35,8 +35,8 @@ const tableVariants = tv({
       "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
     body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
     footer: "border-t bg-muted/50 font-medium",
-    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
-    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-14 px-4 leading-5",
+    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 data-[state=selected]:bg-selected/50 data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-md data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-[''] h-14 px-4 leading-5",
     selectionCell:
       "w-10 min-w-10 [div]:h-[calc(100%-1px)] [div]:justify-start px-4",
     dragCell:
@@ -50,7 +50,7 @@ const tableVariants = tv({
       "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-xs text-fg-muted focus-reset focus-visible:focus-ring group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
     expandIcon: "size-3.5 transition-transform",
     loadMore:
-      "relative h-7 **:data-loader:absolute **:data-loader:top-0 **:data-loader:left-1/2 **:data-loader:-translate-x-1/2",
+      "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
   },
 });
 
@@ -111,11 +111,7 @@ interface TableVirtualizerProps<T extends object> extends Omit<
   headingHeight?: number;
 }
 
-const TABLE_VIRTUALIZER_HEIGHTS = {
-  compact: 32,
-  default: 40,
-  comfortable: 48,
-} as const;
+const DEFAULT_ROW_HEIGHT = 40;
 
 const TableVirtualizer = <T extends object>({
   headingHeight,
@@ -123,7 +119,6 @@ const TableVirtualizer = <T extends object>({
   rowHeight,
   ...props
 }: TableVirtualizerProps<T>) => {
-  const densityHeight = TABLE_VIRTUALIZER_HEIGHTS.default;
   const tableLayoutOptions = layoutOptions as
     | { rowHeight?: number; headingHeight?: number }
     | undefined;
@@ -133,9 +128,12 @@ const TableVirtualizer = <T extends object>({
       layout={TableLayout}
       layoutOptions={{
         ...layoutOptions,
-        rowHeight: rowHeight ?? tableLayoutOptions?.rowHeight ?? densityHeight,
+        rowHeight:
+          rowHeight ?? tableLayoutOptions?.rowHeight ?? DEFAULT_ROW_HEIGHT,
         headingHeight:
-          headingHeight ?? tableLayoutOptions?.headingHeight ?? densityHeight,
+          headingHeight ??
+          tableLayoutOptions?.headingHeight ??
+          DEFAULT_ROW_HEIGHT,
       }}
       {...props}
     />
@@ -148,42 +146,58 @@ const TableContainerContext = React.createContext({ resizable: false });
 
 /* -------------------------------------------------------------------------- */
 
-interface TableContainerProps extends React.ComponentProps<
+interface TableContainerProps extends React.ComponentPropsWithoutRef<
   typeof TablePrimitives.ResizableTableContainer
 > {
   resizable?: boolean;
 }
 
-const TableContainer = ({
-  className,
-  onResize,
-  onResizeEnd,
-  onResizeStart,
-  render,
-  resizable = false,
-  ...props
-}: TableContainerProps) => {
-  const classNames = container({ className });
-  const context = React.useMemo(() => ({ resizable }), [resizable]);
+const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
+  (
+    {
+      className,
+      onResize,
+      onResizeEnd,
+      onResizeStart,
+      render,
+      resizable = false,
+      ...props
+    },
+    ref,
+  ) => {
+    const classNames = container({ className });
+    const context = React.useMemo(() => ({ resizable }), [resizable]);
 
-  return (
-    <TableContainerContext value={context}>
-      {resizable ? (
-        <TablePrimitives.ResizableTableContainer
-          data-slot="table-container"
+    if (resizable) {
+      return (
+        <TableContainerContext.Provider value={context}>
+          <TablePrimitives.ResizableTableContainer
+            data-table-container=""
+            className={classNames}
+            ref={ref}
+            onResize={onResize}
+            onResizeEnd={onResizeEnd}
+            onResizeStart={onResizeStart}
+            render={render}
+            {...props}
+          />
+        </TableContainerContext.Provider>
+      );
+    }
+
+    return (
+      <TableContainerContext.Provider value={context}>
+        <div
+          data-table-container=""
           className={classNames}
-          onResize={onResize}
-          onResizeEnd={onResizeEnd}
-          onResizeStart={onResizeStart}
-          render={render}
+          ref={ref}
           {...props}
         />
-      ) : (
-        <div data-slot="table-container" className={classNames} {...props} />
-      )}
-    </TableContainerContext>
-  );
-};
+      </TableContainerContext.Provider>
+    );
+  },
+);
+TableContainer.displayName = "TableContainer";
 
 /* -------------------------------------------------------------------------- */
 
@@ -196,10 +210,10 @@ interface TableProps extends React.ComponentProps<
 const Table = ({ className, striped, ...props }: TableProps) => {
   return (
     <TablePrimitives.Table
-      data-slot="table"
+      data-table=""
       data-striped={striped || undefined}
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        table({ className }),
       )}
       {...props}
     />
@@ -229,9 +243,9 @@ const TableHeader = <T extends object>({
 
   return (
     <TablePrimitives.TableHeader
-      data-slot="table-header"
-      className={composeRenderProps(className, (cn) =>
-        header({ className: cn }),
+      data-table-header=""
+      className={composeRenderProps(className, (className) =>
+        header({ className }),
       )}
       dependencies={dependencies}
       {...props}
@@ -270,9 +284,9 @@ const TableChromeColumn = ({
 }: InternalColumnProps) => {
   return (
     <TablePrimitives.Column
-      data-slot="table-chrome-column"
-      className={composeRenderProps(className, (cn) =>
-        chromeColumn({ className: cn }),
+      data-table-chrome-column=""
+      className={composeRenderProps(className, (className) =>
+        chromeColumn({ className }),
       )}
       {...props}
     >
@@ -298,9 +312,9 @@ const TableColumn = ({
   const { resizable } = React.useContext(TableContainerContext);
   return (
     <TablePrimitives.Column
-      data-slot="table-column"
-      className={composeRenderProps(className, (cn) =>
-        column({ className: cn }),
+      data-table-column=""
+      className={composeRenderProps(className, (className) =>
+        column({ className }),
       )}
       {...props}
     >
@@ -388,7 +402,7 @@ const TableFooter = <T extends object>({
 }: TableFooterProps<T>) => {
   return (
     <TablePrimitives.TableFooter
-      data-slot="table-footer"
+      data-table-footer=""
       className={footer({ className })}
       dependencies={dependencies}
       {...props}
@@ -407,19 +421,19 @@ const TableFooter = <T extends object>({
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
-function TableRow<T extends object>({
+const TableRow = <T extends object>({
   columns,
   children,
   className,
   dependencies,
   ...props
-}: TableRowProps<T>) {
+}: TableRowProps<T>) => {
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions();
 
   return (
     <TablePrimitives.Row
-      data-slot="table-row"
+      data-table-row=""
       className={composeRenderProps(
         className,
         (className, { isFocusVisibleWithin }) =>
@@ -454,7 +468,7 @@ function TableRow<T extends object>({
       </CollectionPrimitives.Collection>
     </TablePrimitives.Row>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -470,8 +484,10 @@ const TableCell = ({
 }: TableCellProps) => {
   return (
     <TablePrimitives.Cell
-      data-slot="table-cell"
-      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
+      data-table-cell=""
+      className={composeRenderProps(className, (className) =>
+        cell({ className }),
+      )}
       style={composeRenderProps(
         style,
         (style, { hasChildItems, isTreeColumn, level }) => ({
@@ -518,8 +534,8 @@ const TableDropIndicator = ({
 }: TableDropIndicatorProps) => {
   return (
     <DragAndDropPrimitives.DropIndicator
-      className={composeRenderProps(className, (cn) =>
-        dropIndicator({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        dropIndicator({ className }),
       )}
       {...props}
     >

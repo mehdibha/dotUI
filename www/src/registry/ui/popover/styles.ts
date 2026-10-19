@@ -8,12 +8,24 @@ const entrance =
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
+export const OVERLAY_SCALE = [
+  "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
+  "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
+  offset,
+]
+export const OVERLAY_FADE = "entering:opacity-0 exiting:opacity-0"
+export const OVERLAY_SLIDE = [
+  OVERLAY_FADE,
+  "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
+  offset,
+]
+
 /* A stroked tip (popover, surface tooltip): sized with the overlay stroke
    (styles.css), and the stroke drawn at its true width. */
 export const STROKED_TIP =
   "[&>svg]:size-(--studio-popover-tip-size) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke) [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke)"
 
-const { useStyles, styles } = createStyles(popoverMeta, {
+const { useStyles } = createStyles(popoverMeta, {
   base: {
     slots: {
       popover: [
@@ -28,45 +40,14 @@ const { useStyles, styles } = createStyles(popoverMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     motion: {
-      scale: {
-        slots: {
-          popover: [
-            entrance,
-            "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
-      fade: {
-        slots: {
-          popover: [entrance, "entering:opacity-0 exiting:opacity-0"],
-        },
-      },
-      slide: {
-        slots: {
-          popover: [
-            entrance,
-            "entering:opacity-0 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
-            offset,
-          ],
-        },
-      },
+      scale: { slots: { popover: [entrance, OVERLAY_SCALE] } },
+      fade: { slots: { popover: [entrance, OVERLAY_FADE] } },
+      slide: { slots: { popover: [entrance, OVERLAY_SLIDE] } },
       none: {},
     },
   },
 })
-
-export type PopoverStyles = typeof styles
 
 export { useStyles }

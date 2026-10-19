@@ -1,7 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { useRef } from "react";
+import * as React from "react";
 import type {
   ChannelField,
   ChartAxisOptions,
@@ -104,8 +103,10 @@ export const CURVES = {
   step: /* @__PURE__ */ d3Curve(curveStepAfter),
 } as const satisfies Record<ChartCurve, unknown>;
 
+// oxlint-disable-next-line no-explicit-any
 export type ChartMarkLayer = ChartMark<unknown, any, any>;
 /** Mark layers spliced inside a polar container — cartesian marks would land outside it. */
+// oxlint-disable-next-line no-explicit-any
 export type PolarMarkLayer = PolarMark<any, any, any, any, any>;
 
 export type ChartXField<TDatum> = ChannelField<
@@ -126,10 +127,30 @@ export function finiteOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-export interface ChartSpec<TDatum> extends ChartFrame {
+export const TAU = Math.PI * 2;
+
+export function rowLabel(
+  name: string,
+  labels: Readonly<Record<string, string>> | undefined,
+) {
+  return (row: unknown) => {
+    const key = String((row as Record<string, unknown>)[name]);
+    return labels?.[key] ?? key;
+  };
+}
+
+export interface ChartSpec<TDatum> {
   marks: readonly ChartMarkLayer[];
+  scales: {
+    x: ChartAxisOptions | null;
+    y: ChartAxisOptions | null;
+  };
+  color?: ChartColorOptions;
   gradients?: readonly ChartLinearGradient[];
+  theme?: Partial<ChartTheme>;
   readonly __datum?: TDatum;
+  readonly __xValue?: ChartValue;
+  readonly __yValue?: number;
 }
 
 export interface ChartFrameOptions {
@@ -473,13 +494,13 @@ export type ChartHostProps<TDatum> = Omit<
 
 export type ChartProps<TDatum> = ChartHostProps<TDatum> & {
   definition: DomChartDefinition<TDatum, ChartValue, number>;
-  children?: ReactNode;
+  children?: React.ReactNode;
 };
 
 /** The full prop surface of a family component, from its spec options. */
 export type ChartComponentProps<TOptions, TDatum> = TOptions &
   ChartBehaviorProps &
-  ChartHostProps<TDatum> & { children?: ReactNode };
+  ChartHostProps<TDatum> & { children?: React.ReactNode };
 
 /* The vars sit on the tooltip element itself because the portal detaches it
    from the chart container. */
@@ -498,11 +519,13 @@ const TOOLTIP_SURFACE_CLASS = [
    which would otherwise suppress the entrance. */
 const MOTION_RENDERER = motion({ initial: "always" });
 
-export function Chart<TDatum>({
+/* -------------------------------------------------------------------------- */
+
+export const Chart = <TDatum,>({
   children,
   className,
   ...props
-}: ChartProps<TDatum>) {
+}: ChartProps<TDatum>) => {
   return (
     <div className={container({ className })}>
       <RendererChart
@@ -517,7 +540,7 @@ export function Chart<TDatum>({
       )}
     </div>
   );
-}
+};
 
 /* Tracks `RendererChartCommonProps` minus `renderer`/`measureText`. */
 const HOST_PROP_NAMES = new Set([
@@ -610,9 +633,10 @@ function useOptionsMemo<T>(
   compute: () => T,
   options: Record<string, unknown>,
 ): T {
-  const cache = useRef<{ options: Record<string, unknown>; value: T } | null>(
-    null,
-  );
+  const cache = React.useRef<{
+    options: Record<string, unknown>;
+    value: T;
+  } | null>(null);
   if (cache.current !== null && sameOptions(cache.current.options, options)) {
     return cache.current.value;
   }
@@ -632,6 +656,7 @@ export type ChartTooltipContentOf<TOptions> = (
 ) => ChartTooltipContent;
 
 export interface ChartFamilyConfig<TOptions> {
+  // oxlint-disable-next-line no-explicit-any
   focus?: ChartDefinitionOptions<any, any, any>["focus"];
   tooltipAnchor?: ChartTooltipAnchor;
   /** Replaces the library's tooltip rows — polar families, whose scale values are angles. */
@@ -649,7 +674,7 @@ export function useChartDefinition<TDatum, TOptions>(
 ): {
   definition: DomChartDefinition<TDatum, ChartValue, number>;
   host: ChartHostProps<TDatum>;
-  children: ReactNode;
+  children: React.ReactNode;
 } {
   const { host, behavior, spec } = splitChartProps(props);
   const options = spec as TOptions;
@@ -698,6 +723,6 @@ export function useChartDefinition<TDatum, TOptions>(
   return {
     definition: definition as DomChartDefinition<TDatum, ChartValue, number>,
     host: host as ChartHostProps<TDatum>,
-    children: (props as { children?: ReactNode }).children,
+    children: (props as { children?: React.ReactNode }).children,
   };
 }

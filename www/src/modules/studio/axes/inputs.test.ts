@@ -228,7 +228,7 @@ describe("field shells", () => {
      forwards it so the shell's own invalid edge applies. */
   it("an invalid Field select wears the shell's danger edge", async () => {
     const select = await shipped("select", { select: { trigger: "field" } })
-    expect(select).toContain("use(SelectPrimitives.SelectStateContext)")
+    expect(select).toContain("useContext(SelectPrimitives.SelectStateContext)")
     expect(select).toMatch(/data-invalid=\{isInvalid \|\| undefined\}/)
     for (const style of Object.keys(SIGNATURE)) {
       const content = await shipped("input", { input: { style } })

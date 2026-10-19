@@ -33,7 +33,7 @@ const DevtoolsHub =
 export const Route = createRootRoute({
   head: () => {
     const title = `${siteConfig.title} - ${siteConfig.tagline}`
-    const description = truncateOnWord(siteConfig.description, 148, true)
+    const description = truncateOnWord(siteConfig.description, 148)
     const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(siteConfig.og.title)}&description=${encodeURIComponent(siteConfig.og.description)}`
 
     return {
@@ -59,13 +59,22 @@ export const Route = createRootRoute({
       ],
       links: [
         { rel: "stylesheet", href: appCss },
+        // The ICO is the fallback for browsers without SVG favicons. Per-scheme
+        // links, not one SVG with an inner media query: browsers re-evaluate
+        // `media` when the OS scheme flips, but rasterize an SVG favicon once.
+        { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
         {
-          rel: "alternate icon",
-          type: "image/png",
-          href: "/favicon-96x96.png",
-          sizes: "96x96",
+          rel: "icon",
+          type: "image/svg+xml",
+          href: "/brand/dotui-logo.svg",
+          media: "(prefers-color-scheme: light)",
         },
-        { rel: "shortcut icon", href: "/favicon.ico" },
+        {
+          rel: "icon",
+          type: "image/svg+xml",
+          href: "/brand/dotui-logo-white.svg",
+          media: "(prefers-color-scheme: dark)",
+        },
         {
           rel: "apple-touch-icon",
           href: "/apple-touch-icon.png",

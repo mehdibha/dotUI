@@ -18,7 +18,7 @@ import { useStyles } from "./styles"
 
 // MARK: tokenFieldStyles
 
-// MARK: TokenField
+// MARK: Separator
 
 interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,
@@ -29,12 +29,12 @@ interface TokenFieldProps extends Omit<
 }
 
 /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
-function TokenField({ className, ...props }: TokenFieldProps) {
+const TokenField = ({ className, ...props }: TokenFieldProps) => {
   const { root } = useStyles()()
   return <TokenFieldPrimitive className={root({ className })} {...props} />
 }
 
-// MARK: TokenInput
+// MARK: Separator
 
 interface TokenInputProps extends Omit<
   TokenInputPrimitiveProps,
@@ -48,12 +48,12 @@ interface TokenInputProps extends Omit<
 }
 
 /** The content-editable area of a `TokenField`. */
-function TokenInput({
+const TokenInput = ({
   placeholder,
   className,
   children,
   ...props
-}: TokenInputProps) {
+}: TokenInputProps) => {
   const { input } = useStyles()()
   const { textArea } = useInputStyles()()
   return (
@@ -68,19 +68,19 @@ function TokenInput({
   )
 }
 
-// MARK: Token
+// MARK: Separator
 
 interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
   className?: string
 }
 
 /** An inline token within a `TokenInput`. */
-function Token({ className, ...props }: TokenProps) {
+const Token = ({ className, ...props }: TokenProps) => {
   const { token } = useStyles()()
   return <TokenPrimitive className={token({ className })} {...props} />
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TokenFieldProps, TokenInputProps, TokenProps }
 export { Token, TokenField, TokenInput }

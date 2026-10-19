@@ -29,8 +29,6 @@ export interface SelectContentProps<T extends object>
       PopoverProps,
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps["placement"]
-
   /**
    * Whether to use virtualization for large lists.
    */

@@ -1,11 +1,10 @@
 "use client";
 
-import { createContext, useContext, useId } from "react";
-import type * as React from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
 import { Provider, useSlottedContext } from "react-aria-components/slots";
-import * as SwitchPrimitive from "react-aria-components/Switch";
+import * as SwitchPrimitives from "react-aria-components/Switch";
 import { useSlotId } from "react-aria/private/utils/useId";
 import { type VariantProps, tv } from "tailwind-variants";
 
@@ -47,30 +46,45 @@ const switchVariants = tv({
 
 const { root, control, indicator, thumb } = switchVariants();
 
-const SwitchStyleContext = createContext<VariantProps<typeof switchVariants>>(
-  {},
-);
-const InternalSwitchContext = createContext<
-  | (SwitchPrimitive.SwitchButtonRenderProps &
+const SwitchStyleContext = React.createContext<
+  VariantProps<typeof switchVariants>
+>({});
+const InternalSwitchContext = React.createContext<
+  | (SwitchPrimitives.SwitchButtonRenderProps &
       VariantProps<typeof switchVariants>)
   | null
 >(null);
+
+const stateAttributes = (
+  ctx: SwitchPrimitives.SwitchButtonRenderProps | null,
+) => ({
+  "data-rac": "",
+  "data-selected": ctx?.isSelected || undefined,
+  "data-pressed": ctx?.isPressed || undefined,
+  "data-hovered": ctx?.isHovered || undefined,
+  "data-focused": ctx?.isFocused || undefined,
+  "data-focus-visible": ctx?.isFocusVisible || undefined,
+  "data-disabled": ctx?.isDisabled || undefined,
+  "data-readonly": ctx?.isReadOnly || undefined,
+  "data-invalid": ctx?.isInvalid || undefined,
+  "data-required": ctx?.isRequired || undefined,
+});
 
 /* -------------------------------------------------------------------------- */
 
 interface SwitchProps
   extends
-    React.ComponentProps<typeof SwitchPrimitive.SwitchField>,
+    React.ComponentProps<typeof SwitchPrimitives.SwitchField>,
     VariantProps<typeof switchVariants> {}
 
 const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
-  const autoId = useId();
+  const autoId = React.useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
 
   return (
     <SwitchStyleContext.Provider value={{ size }}>
-      <SwitchPrimitive.SwitchField
+      <SwitchPrimitives.SwitchField
         data-switch=""
         id={id}
         aria-labelledby={labelId}
@@ -95,7 +109,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
             <SwitchControl />
           );
         })}
-      </SwitchPrimitive.SwitchField>
+      </SwitchPrimitives.SwitchField>
     </SwitchStyleContext.Provider>
   );
 };
@@ -104,7 +118,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
 
 interface SwitchControlProps
   extends
-    React.ComponentProps<typeof SwitchPrimitive.SwitchButton>,
+    React.ComponentProps<typeof SwitchPrimitives.SwitchButton>,
     VariantProps<typeof switchVariants> {}
 
 const SwitchControl = ({
@@ -113,12 +127,12 @@ const SwitchControl = ({
   ...props
 }: SwitchControlProps) => {
   const labelContext = useSlottedContext(LabelContext);
-  const styleContext = useContext(SwitchStyleContext);
+  const styleContext = React.useContext(SwitchStyleContext);
   const { id: labelId } = labelContext ?? {};
   const size = sizeProp ?? styleContext.size;
 
   return (
-    <SwitchPrimitive.SwitchButton
+    <SwitchPrimitives.SwitchButton
       data-switch-control=""
       className={composeRenderProps(className, (className) =>
         control({ size, className }),
@@ -136,7 +150,7 @@ const SwitchControl = ({
           </InternalSwitchContext.Provider>
         );
       })}
-    </SwitchPrimitive.SwitchButton>
+    </SwitchPrimitives.SwitchButton>
   );
 };
 
@@ -145,7 +159,7 @@ const SwitchControl = ({
 interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
-  const ctx = useContext(InternalSwitchContext);
+  const ctx = React.useContext(InternalSwitchContext);
 
   if (!ctx) {
     return (
@@ -158,16 +172,7 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
   return (
     <span
       data-switch-indicator=""
-      data-rac=""
-      data-selected={ctx.isSelected || undefined}
-      data-pressed={ctx.isPressed || undefined}
-      data-hovered={ctx.isHovered || undefined}
-      data-focused={ctx.isFocused || undefined}
-      data-focus-visible={ctx.isFocusVisible || undefined}
-      data-disabled={ctx.isDisabled || undefined}
-      data-readonly={ctx.isReadOnly || undefined}
-      data-invalid={ctx.isInvalid || undefined}
-      data-required={ctx.isRequired || undefined}
+      {...stateAttributes(ctx)}
       className={indicator({ size: ctx.size, className })}
       {...props}
     >
@@ -181,20 +186,11 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
-  const ctx = useContext(InternalSwitchContext);
+  const ctx = React.useContext(InternalSwitchContext);
 
   return (
     <span
-      data-rac=""
-      data-selected={ctx?.isSelected || undefined}
-      data-pressed={ctx?.isPressed || undefined}
-      data-hovered={ctx?.isHovered || undefined}
-      data-focused={ctx?.isFocused || undefined}
-      data-focus-visible={ctx?.isFocusVisible || undefined}
-      data-disabled={ctx?.isDisabled || undefined}
-      data-readonly={ctx?.isReadOnly || undefined}
-      data-invalid={ctx?.isInvalid || undefined}
-      data-required={ctx?.isRequired || undefined}
+      {...stateAttributes(ctx)}
       className={thumb({ size: ctx?.size, className })}
       {...props}
     />

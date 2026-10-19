@@ -1,7 +1,7 @@
 /* Style — the material, named by its light: how every surface and control
-   draws depth. Flat has no light (lines), Soft a diffuse one, Tonal stands
-   tone in for light, Tactile lights controls from above, Chunky casts hard
-   light onto solid ledges. Seven keys default to the "style" follow and read
+   draws depth. Flat has no light (lines), Tonal stands tone in for light,
+   Tactile lights controls from above, Chunky casts hard light onto solid
+   ledges. Seven keys default to the "style" follow and read
    their column below; Flat's column is each key's own default, so Origin is
    untouched. An option that needs another light (Bevel buttons outside
    Tactile) is excluded, falling back to the column. Color, type, radius,
@@ -11,32 +11,16 @@ import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-export const STYLE_VALUES = [
-  "flat",
-  "soft",
-  "tonal",
-  "tactile",
-  "chunky",
-] as const
+export const STYLE_VALUES = ["flat", "tonal", "tactile", "chunky"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
-
-export const STYLE_DEFAULTS = {
-  style: "flat" as Style,
-}
-
-export const STYLE_SCHEMA: ChapterSchema<typeof STYLE_DEFAULTS> = {
-  style: oneOf(STYLE_VALUES),
-}
 
 /* A column value may be another follow id of its key ("auto"): it resolves
    one more hop. */
 export const COLUMNS = {
   surfaceLayers: {
     flat: "same",
-    soft: "same",
     tonal: "tonal",
     tactile: "same",
     chunky: "same",
@@ -44,42 +28,36 @@ export const COLUMNS = {
   // Tactile and Chunky draw the edge their button finish implies.
   surfaceEdge: {
     flat: "line",
-    soft: "line",
     tonal: "none",
     tactile: "auto",
     chunky: "auto",
   },
   surfaceShadow: {
     flat: "flat",
-    soft: "low",
     tonal: "low",
     tactile: "low",
     chunky: "flat",
   },
   buttonStyle: {
     flat: "flat",
-    soft: "flat",
     tonal: "flat",
     tactile: "bevel",
     chunky: "ledge",
   },
   buttonSecondary: {
     flat: "as-style",
-    soft: "raised",
     tonal: "tonal",
     tactile: "as-style",
     chunky: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
-    soft: "raised",
     tonal: "inverse",
     tactile: "auto",
     chunky: "auto",
   },
   inputStyle: {
     flat: "auto",
-    soft: "auto",
     tonal: "indicator",
     tactile: "auto",
     chunky: "auto",
@@ -90,13 +68,12 @@ export type StyleKey = keyof typeof COLUMNS
 
 export const STYLE_KEYS = Object.keys(COLUMNS) as StyleKey[]
 
-/** The styles an option belongs to; outside them it is excluded. */
 /** The styles whose light an option needs; outside them it is excluded. */
 export const ALLOWED: Partial<
   Record<StyleKey, Readonly<Record<string, readonly Style[]>>>
 > = {
   buttonStyle: {
-    hairline: ["flat", "soft"],
+    hairline: ["flat"],
     "rim-light": ["tactile"],
     gloss: ["tactile"],
     bevel: ["tactile"],
@@ -109,7 +86,6 @@ export const ALLOWED: Partial<
 
 /** The key each Style's finish lives in: a variation of its own light. */
 export const FINISH_KEYS: Partial<Record<Style, StyleKey>> = {
-  soft: "surfaceEdge",
   tactile: "buttonStyle",
   chunky: "buttonStyle",
 }
@@ -171,7 +147,11 @@ export const resetToStyle = (state: StudioState): StudioState =>
 
 export const chapter = defineChapter({
   id: "style",
-  defaults: STYLE_DEFAULTS,
-  schema: STYLE_SCHEMA,
+  defaults: {
+    style: "flat" as Style,
+  },
+  schema: {
+    style: oneOf(STYLE_VALUES),
+  },
   resolve: (_state: Effective): Resolved => ({}),
 })

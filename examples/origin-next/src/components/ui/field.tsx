@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type * as React from "react";
 import * as CheckboxPrimitives from "react-aria-components/Checkbox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as FieldErrorPrimitives from "react-aria-components/FieldError";
@@ -17,9 +17,9 @@ const fieldStyles = tv({
     fieldset: "",
     legend: "",
     fieldGroup:
-      "group/field-group @container/field-group flex w-full flex-col gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
+      "@container/field-group flex w-full flex-col gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
     field:
-      "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+      "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
     fieldContent: "flex flex-col gap-1",
     label:
       "inline-flex items-center gap-px select-ui [&_svg]:size-3 in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*'] in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor) in-data-invalid:text-fg-danger text-sm",
@@ -30,8 +30,7 @@ const fieldStyles = tv({
   variants: {
     orientation: {
       horizontal: {
-        field:
-          "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+        field: "flex-row items-center gap-2 has-data-description:items-start",
       },
       vertical: {
         field: "w-full flex-col gap-2",
@@ -58,39 +57,29 @@ const {
 
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
-function Fieldset({ className, ...props }: FieldsetProps) {
+const Fieldset = ({ className, ...props }: FieldsetProps) => {
   return (
-    <fieldset
-      data-slot="fieldset"
-      className={fieldset({ className })}
-      {...props}
-    />
+    <fieldset data-fieldset="" className={fieldset({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
-function Legend({ className, ...props }: LegendProps) {
-  return (
-    <legend data-slot="legend" className={legend({ className })} {...props} />
-  );
-}
+const Legend = ({ className, ...props }: LegendProps) => {
+  return <legend data-legend="" className={legend({ className })} {...props} />;
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
-function FieldGroup({ className, ...props }: FieldGroupProps) {
+const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
   return (
-    <div
-      data-slot="field-group"
-      className={fieldGroup({ className })}
-      {...props}
-    />
+    <div data-field-group="" className={fieldGroup({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -101,11 +90,7 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId();
   const descriptionId = useSlotId();
   return (
-    <div
-      data-slot="field"
-      className={field({ className, orientation })}
-      {...props}
-    >
+    <div data-field="" className={field({ className, orientation })} {...props}>
       <Provider
         values={[
           [
@@ -135,7 +120,7 @@ interface FieldContentProps extends React.ComponentProps<"div"> {}
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
   return (
     <div
-      data-slot="field-content"
+      data-field-content=""
       className={fieldContent({ className })}
       {...props}
     />
@@ -151,7 +136,6 @@ interface LabelProps extends React.ComponentProps<
 const Label = ({ className, ...props }: LabelProps) => {
   return (
     <LabelPrimitives.Label
-      data-slot="label"
       data-label=""
       className={label({ className })}
       {...props}
@@ -169,7 +153,6 @@ interface DescriptionProps extends Omit<
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
     <Text
-      data-slot="description"
       data-description=""
       slot="description"
       className={description({ className })}
@@ -186,7 +169,6 @@ interface FieldErrorProps extends React.ComponentProps<
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
   return (
     <FieldErrorPrimitives.FieldError
-      data-slot="field-error"
       data-field-error=""
       className={composeRenderProps(className, (className) =>
         fieldError({ className }),

@@ -1,8 +1,8 @@
 "use client";
 
-import { useContext } from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as SliderPrimitive from "react-aria-components/Slider";
+import * as SliderPrimitives from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
@@ -10,7 +10,7 @@ import { tv } from "tailwind-variants";
 
 const sliderVariants = tv({
   slots: {
-    root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
+    root: "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2",
     control:
       "relative flex grow cursor-drag touch-none items-center select-none disabled:cursor-disabled [--slider-size:--spacing(1)] [--slider-thumb-size:--spacing(3)]",
     track:
@@ -44,17 +44,17 @@ const { root, control, track, fill, thumb, output } = sliderVariants();
 /* -------------------------------------------------------------------------- */
 
 interface SliderProps extends React.ComponentProps<
-  typeof SliderPrimitive.Slider
+  typeof SliderPrimitives.Slider
 > {}
 
 const Slider = ({ className, children, ...props }: SliderProps) => {
   const descriptionId = useSlotId();
   return (
-    <SliderPrimitive.Slider
+    <SliderPrimitives.Slider
       data-slider=""
       data-field=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        root({ className: cn, orientation }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        root({ className, orientation }),
       )}
       aria-describedby={descriptionId}
       {...props}
@@ -71,14 +71,14 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
           {children}
         </Provider>
       ))}
-    </SliderPrimitive.Slider>
+    </SliderPrimitives.Slider>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface SliderControlProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderTrack
+  typeof SliderPrimitives.SliderTrack
 > {}
 
 const SliderControl = ({
@@ -87,10 +87,10 @@ const SliderControl = ({
   ...props
 }: SliderControlProps) => {
   return (
-    <SliderPrimitive.SliderTrack
+    <SliderPrimitives.SliderTrack
       data-slider-control=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        control({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        control({ orientation, className }),
       )}
       {...props}
     >
@@ -108,7 +108,7 @@ const SliderControl = ({
             </>
           ),
       )}
-    </SliderPrimitive.SliderTrack>
+    </SliderPrimitives.SliderTrack>
   );
 };
 
@@ -117,7 +117,7 @@ const SliderControl = ({
 interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
-  const state = useContext(SliderPrimitive.SliderStateContext);
+  const state = React.useContext(SliderPrimitives.SliderStateContext);
 
   return (
     <div
@@ -134,12 +134,12 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface SliderFillProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderFill
+  typeof SliderPrimitives.SliderFill
 > {}
 
 const SliderFill = ({ className, ...props }: SliderFillProps) => {
   return (
-    <SliderPrimitive.SliderFill
+    <SliderPrimitives.SliderFill
       data-slider-fill=""
       className={composeRenderProps(className, (className) =>
         fill({ className }),
@@ -152,12 +152,12 @@ const SliderFill = ({ className, ...props }: SliderFillProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface SliderThumbProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderThumb
+  typeof SliderPrimitives.SliderThumb
 > {}
 
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   return (
-    <SliderPrimitive.SliderThumb
+    <SliderPrimitives.SliderThumb
       data-slider-thumb=""
       className={composeRenderProps(
         className,
@@ -172,12 +172,12 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface SliderOutputProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderOutput
+  typeof SliderPrimitives.SliderOutput
 > {}
 
 const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
   return (
-    <SliderPrimitive.SliderOutput
+    <SliderPrimitives.SliderOutput
       data-slider-output=""
       className={composeRenderProps(className, (className) =>
         output({ className }),
@@ -190,7 +190,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
           children ??
           state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
       )}
-    </SliderPrimitive.SliderOutput>
+    </SliderPrimitives.SliderOutput>
   );
 };
 

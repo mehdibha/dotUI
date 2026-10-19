@@ -10,11 +10,9 @@ import { mergeRefs } from "react-aria/mergeRefs"
 import { nodeText } from "@/lib/node-text"
 import { cn } from "@/registry/lib/utils"
 
-export type { TableOfContents, TOCItemType } from "fumadocs-core/toc"
-
 const TOCContext = React.createContext<TOCItemType[]>([])
 
-export function useTOCItems(): TOCItemType[] {
+function useTOCItems(): TOCItemType[] {
   return React.use(TOCContext)
 }
 
@@ -44,10 +42,6 @@ export function TOC({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     >
-      {/* <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
-				<AlignLeftIcon className="size-4 text-fg-muted" />
-				On this page
-			</h3> */}
       <TOCScrollArea>
         <TOCItems />
       </TOCScrollArea>
@@ -55,7 +49,7 @@ export function TOC({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-export function TOCScrollArea({
+function TOCScrollArea({
   ref,
   className,
   ...props
@@ -76,11 +70,7 @@ export function TOCScrollArea({
   )
 }
 
-export function TOCItems({
-  ref,
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function TOCItems({ ref, className, ...props }: React.ComponentProps<"div">) {
   const items = useTOCItems()
 
   if (items.length === 0) return null

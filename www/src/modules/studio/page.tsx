@@ -26,20 +26,28 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
+import { linkTarget, placeOf } from "./chapters"
+import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import { linkTarget, placeOf } from "./state"
-import type { Chapter, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
+import type { Studio } from "./use-studio"
 
 /** The open page is the URL's hash, so a reload or a shared link reopens it. */
 function setHash(page: string | null) {
   const url = location.pathname + location.search + (page ? `#${page}` : "")
   if (url !== location.pathname + location.search + location.hash)
     history.replaceState(history.state, "", url)
+}
+
+/* Drilling in slides the page in from the right; Back slides the chapters in
+   from the left. A link opening a page, or a chapter switch, doesn't move. */
+const DRILL = {
+  in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
+  out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
 }
 
 /** Retries each frame: a page's rows mount a frame or more after it opens. */
@@ -193,6 +201,7 @@ export function PanelPage({
   const [active, setActive] = useState(chapters[0]?.id ?? "")
   const [tucked, setTucked] = useState(false)
   const [pageId, setPageId] = useState<string | null>(null)
+  const [drill, setDrill] = useState<keyof typeof DRILL | null>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const scrolled = useRef(0)
   const back = useRef<HTMLButtonElement>(null)
@@ -256,6 +265,7 @@ export function PanelPage({
       const target = pages.find((p) => p.id === id)
       if (!target) return
       if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
+      setDrill("in")
       setActive(target.chapter.id)
       setPageId(id)
       setHash(id)
@@ -276,6 +286,7 @@ export function PanelPage({
     (id: string, axis?: string) => {
       setActive(id)
       setTucked(false)
+      setDrill(null)
       setPageId(null)
       if (pageId) setHash(null)
       requestAnimationFrame(() => {
@@ -347,6 +358,7 @@ export function PanelPage({
     setTucked(false)
     if ("page" in target) openPage(target.page)
     else revealAxis(target.key)
+    setDrill(null)
   })
   useEffect(() => {
     follow()
@@ -402,6 +414,7 @@ export function PanelPage({
                       aria-label={`Back to ${page.chapter.label}`}
                       onPress={() => {
                         moveFocus.current = true
+                        setDrill("out")
                         setPageId(null)
                         setHash(null)
                       }}
@@ -409,7 +422,13 @@ export function PanelPage({
                     >
                       <ChevronLeftIcon />
                     </Button>
-                    <span className="min-w-0 flex-1 truncate text-[13px] font-medium">
+                    <span
+                      key={page.id}
+                      className={cn(
+                        "min-w-0 flex-1 truncate text-[13px] font-medium",
+                        drill === "in" && DRILL.in,
+                      )}
+                    >
                       {page.label}
                     </span>
                   </>
@@ -430,19 +449,27 @@ export function PanelPage({
                   className={cn(
                     "flex w-full shrink-0 flex-col gap-1.5 pb-2.5 max-lg:py-2",
                     !open && "max-lg:hidden",
+                    drill === "in" && DRILL.in,
                   )}
                 >
                   <page.Body studio={studio} />
                 </section>
               ) : (
-                chapters.map((chapter) => (
-                  <ChapterBlock
-                    key={chapter.id}
-                    chapter={chapter}
-                    studio={studio}
-                    docked={open && chapter.id === active}
-                  />
-                ))
+                <div
+                  className={cn(
+                    "flex w-full shrink-0 flex-col",
+                    drill === "out" && DRILL.out,
+                  )}
+                >
+                  {chapters.map((chapter) => (
+                    <ChapterBlock
+                      key={chapter.id}
+                      chapter={chapter}
+                      studio={studio}
+                      docked={open && chapter.id === active}
+                    />
+                  ))}
+                </div>
               )}
             </PanelChrome>
           </div>

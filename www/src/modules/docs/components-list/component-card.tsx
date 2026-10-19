@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useRef, useState } from "react"
 import { Link } from "@tanstack/react-router"
 
@@ -9,10 +7,12 @@ import { DemoPreset } from "../demo-preset"
 import { previewPendingClass } from "../preview-controls"
 import { componentDemos } from "./demos"
 
+// The card width fill scenes are laid out for; narrower cards scale them down.
+const FILL_WIDTH = 280
+
 interface ComponentCardProps {
   name: string
   slug: string
-  href: string
   scale?: number
   /** The demo fills the card and manages its own framing (overlay scenes that
    *  crop at the bottom edge) instead of being centered and scaled. */
@@ -25,38 +25,43 @@ interface ComponentCardProps {
 export function ComponentCard({
   name,
   slug,
-  href,
   scale = 1,
   fill = false,
   stretch = false,
 }: ComponentCardProps) {
   const Demo = componentDemos[slug]
+  const frameRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const demoRef = useRef<HTMLDivElement>(null)
 
   // The card is fluid, so a demo's configured scale can exceed what a narrow
   // stage (mobile, tablet) can hold. Cap it by the measured fit so previews
-  // shrink instead of clipping.
+  // shrink instead of clipping; fill scenes shrink below FILL_WIDTH.
   const [fit, setFit] = useState(1)
   useEffect(() => {
+    const frame = frameRef.current
     const stage = stageRef.current
     const demo = demoRef.current
-    if (!stage || !demo) return
+    if (!frame) return
     const update = () => {
-      const { offsetWidth: w, offsetHeight: h } = demo
-      setFit(
-        w && h ? Math.min(stage.clientWidth / w, stage.clientHeight / h) : 1,
-      )
+      if (fill) {
+        setFit(Math.min(1, frame.clientWidth / FILL_WIDTH))
+      } else if (stage && demo) {
+        const { offsetWidth: w, offsetHeight: h } = demo
+        setFit(
+          w && h ? Math.min(stage.clientWidth / w, stage.clientHeight / h) : 1,
+        )
+      }
     }
     update()
     // Web-font swaps can change the demo's size without a reliable resize
     // notification; re-measure once the fonts settle.
     document.fonts?.ready.then(update).catch(() => {})
     const observer = new ResizeObserver(update)
-    observer.observe(stage)
-    observer.observe(demo)
+    observer.observe(frame)
+    if (demo) observer.observe(demo)
     return () => observer.disconnect()
-  }, [])
+  }, [fill])
 
   const content = Demo ? (
     <Demo />
@@ -67,7 +72,7 @@ export function ComponentCard({
   return (
     <Link
       to="/docs/$"
-      params={{ _splat: href.replace("/docs/", "") }}
+      params={{ _splat: `components/${slug}` }}
       aria-label={name}
       data-component={slug}
       className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
@@ -75,12 +80,26 @@ export function ComponentCard({
       {/* Only the frame renders in the selected preset and mode; the name
           below stays in the site theme so it never fades on a pinned mode. */}
       <DemoPreset>
-        <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control">
+        <div
+          ref={frameRef}
+          className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control"
+        >
           {/* The demo is a non-interactive preview: `inert` keeps its controls out
             of the tab order and lets clicks fall through to the card link, so the
             whole card navigates instead of an embedded demo hijacking the click. */}
           {fill ? (
-            <div inert className={cn("absolute inset-0", previewPendingClass)}>
+            <div
+              inert
+              className={cn(
+                "absolute top-0 left-0 origin-top-left",
+                previewPendingClass,
+              )}
+              style={{
+                width: `${100 / fit}%`,
+                height: `${100 / fit}%`,
+                transform: `scale(${fit})`,
+              }}
+            >
               {content}
             </div>
           ) : (

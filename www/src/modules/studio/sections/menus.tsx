@@ -15,11 +15,9 @@ import {
 } from "../axes/menus.meta"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 function ListFrame() {
   return (
@@ -293,10 +291,8 @@ const glyphs = <T extends { value: string }>(
 ) =>
   options.map((option) => ({
     ...option,
-    preview: <DialGlyph>{draw(option.value)}</DialGlyph>,
+    glyph: <DialGlyph>{draw(option.value)}</DialGlyph>,
   }))
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 const HIGHLIGHT_ROW = glyphs(HIGHLIGHT_OPTIONS, (value) => (
   <HighlightGlyph highlight={value} />

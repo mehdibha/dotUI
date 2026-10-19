@@ -1,5 +1,8 @@
 "use client"
 
+import React from "react"
+import type { Key } from "react-aria-components/Collection"
+
 import {
   Table,
   TableContainer,
@@ -24,28 +27,31 @@ const data: Item[] = [
 ]
 
 export default function Demo() {
+  const [opened, setOpened] = React.useState<Key | null>(null)
   return (
-    <TableContainer>
-      <Table
-        aria-label="Files"
-        onRowAction={(key) => alert(`Opening item ${key}...`)}
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn isRowHeader={column.isRowHeader}>
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={data}>
-          {(item) => (
-            <TableRow columns={columns}>
-              {(column) => <TableCell>{item[column.id]}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="flex flex-col gap-2">
+      <TableContainer>
+        <Table aria-label="Files" onRowAction={setOpened}>
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn isRowHeader={column.isRowHeader}>
+                {column.name}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={data}>
+            {(item) => (
+              <TableRow columns={columns}>
+                {(column) => <TableCell>{item[column.id]}</TableCell>}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {opened !== null && (
+        <p className="text-sm text-fg-muted">Opening item {opened}</p>
+      )}
+    </div>
   )
 }
 

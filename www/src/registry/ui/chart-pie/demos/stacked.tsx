@@ -36,7 +36,7 @@ const mobileRing = pieRing({
   outerRadius: 0.95,
 })
 
-export default function ChartPieStacked() {
+export default function Demo() {
   return (
     <PieChart
       data={desktop}

@@ -473,7 +473,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { inputStyle: "underline" },
     { inputStyle: "filled" },
   ],
-  "style/buttonStyle-flat-soft": [
+  "style/buttonStyle-flat": [
     { buttonStyle: "gloss" },
     { style: "tactile", buttonStyle: "gloss" },
   ],
@@ -489,7 +489,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", buttonStyle: "bevel" },
     { style: "chunky", buttonStyle: "ledge" },
   ],
-  "style/surfaceEdge-flat-soft-tonal": [
+  "style/surfaceEdge-flat-tonal": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
@@ -501,11 +501,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceLayers-flat-soft-tactile-chunky": [
+  "style/surfaceLayers-flat-tactile-chunky": [
     { surfaceLayers: "tonal" },
     { style: "tonal", surfaceLayers: "tonal" },
   ],
-  "style/inputStyle-flat-soft-tonal": [
+  "style/inputStyle-flat-tonal": [
     { inputStyle: "well" },
     { style: "tactile", inputStyle: "well" },
   ],

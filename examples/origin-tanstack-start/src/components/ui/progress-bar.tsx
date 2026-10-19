@@ -2,25 +2,29 @@
 
 import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ProgressBarPrimitive from "react-aria-components/ProgressBar";
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 import { tv } from "tailwind-variants";
 
 const progressBarVariants = tv({
   slots: {
-    root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
+    root: "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2",
     track:
       "relative flex w-full items-center overflow-x-hidden rounded-full h-1 bg-muted",
     fill: "h-full w-full bg-primary transition-all data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide",
     output: "ml-auto text-fg-muted tabular-nums text-sm",
   },
+  variants: {},
+  defaultVariants: {},
 });
 
 const { root, track, fill, output } = progressBarVariants();
 
 const ProgressBarContext =
-  React.createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null);
+  React.createContext<ProgressBarPrimitives.ProgressBarRenderProps | null>(
+    null,
+  );
 const useProgressBarContext = (componentName: string) => {
-  const context = React.use(ProgressBarContext);
+  const context = React.useContext(ProgressBarContext);
   if (!context) {
     throw new Error(`${componentName} must be used within a ProgressBar`);
   }
@@ -30,11 +34,11 @@ const useProgressBarContext = (componentName: string) => {
 /* -------------------------------------------------------------------------- */
 
 interface ProgressBarProps extends React.ComponentProps<
-  typeof ProgressBarPrimitive.ProgressBar
+  typeof ProgressBarPrimitives.ProgressBar
 > {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   return (
-    <ProgressBarPrimitive.ProgressBar
+    <ProgressBarPrimitives.ProgressBar
       data-field=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
@@ -46,7 +50,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
           {children ?? <ProgressBarTrack />}
         </ProgressBarContext>
       ))}
-    </ProgressBarPrimitive.ProgressBar>
+    </ProgressBarPrimitives.ProgressBar>
   );
 };
 
@@ -76,7 +80,7 @@ const ProgressBarFill = ({
   ...props
 }: ProgressBarFillProps) => {
   const { isIndeterminate, percentage } =
-    useProgressBarContext("ProgressBarFill");
+    useProgressBarContext("ProgressBarControl");
 
   return (
     <div

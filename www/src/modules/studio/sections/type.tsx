@@ -1,8 +1,9 @@
 "use client"
 
-/* Typography: each face set in itself, then the voice of titles, labels and
-   control text. Font sits on the main page; Heading and Reading match it
-   until pinned. */
+/* Typography: each face set in itself. Font sits on the main page, Heading
+   and Mono on the Typography page; Heading matches Font until pinned. The
+   voice rows sit where they act: Titles on Card, Label weight on Button,
+   Field text on Field, Section labels on Menu, UI text size under Density. */
 
 import { useMemo } from "react"
 import { Button as RacButton } from "react-aria-components"
@@ -15,6 +16,7 @@ import { Select } from "@/registry/ui/select"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
+import type { Effective } from "../axes"
 import { TITLE_VOICE } from "../axes/type"
 import {
   FIELD_TEXT_OPTIONS,
@@ -24,13 +26,12 @@ import {
   UI_TEXT_OPTIONS,
 } from "../axes/type.meta"
 import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DialSelect } from "../dial"
-import { useRowLabel } from "../family-page"
-import type { RowMap } from "../family-page"
+import { useRowLabel } from "../row-host"
+import type { RowMap } from "../row-host"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
 
-type FontKey = "headingFont" | "bodyFont" | "monoFont" | "readingFont"
+type FontKey = "headingFont" | "bodyFont" | "monoFont"
 
 /** The follow id of a role that matches Font until pinned. */
 const MATCH = "same"
@@ -43,7 +44,6 @@ const HEADING_CATEGORIES: FontCategory[] = [
 ]
 const BODY_CATEGORIES: FontCategory[] = ["sans-serif", "serif"]
 const MONO_CATEGORIES: FontCategory[] = ["mono"]
-const READING_CATEGORIES: FontCategory[] = ["serif", "sans-serif"]
 
 /** A font role as a dial row, its family set in its own face. With `match`,
  *  a switch over the list follows Font or pins the family it shows. */
@@ -127,8 +127,6 @@ export function TypePreview({ state }: { state: Effective }) {
   )
 }
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const WEIGHTS: Record<string, number> = {
   normal: 400,
   medium: 500,
@@ -147,26 +145,6 @@ function titleSpecimen(value: string): React.CSSProperties {
   }
 }
 
-/** A section label as list-box and sidebar draw it. */
-function SectionLabel({ labels, mono }: { labels: string; mono: string }) {
-  const sentence = labels === "sentence"
-  return (
-    <span
-      className={cn(
-        "font-medium text-fg/50",
-        sentence ? "text-xs" : "tracking-wider uppercase",
-        labels === "caps" && "text-[11px]",
-        labels === "mono-caps" && "text-xs",
-      )}
-      style={labels === "mono-caps" ? { fontFamily: fontStack(mono) } : {}}
-    >
-      {sentence ? "Section" : "Label"}
-    </span>
-  )
-}
-
-/* ---------------------------------- Rows ----------------------------------- */
-
 const HeadingRow = () => (
   <FontRow
     axis="headingFont"
@@ -184,15 +162,6 @@ const MonoRow = () => (
   <FontRow axis="monoFont" label="Mono" categories={MONO_CATEGORIES} />
 )
 
-const ReadingRow = () => (
-  <FontRow
-    axis="readingFont"
-    label="Reading"
-    match
-    categories={READING_CATEGORIES}
-  />
-)
-
 function TitlesRow() {
   const { effective } = useStudio()
   return (
@@ -201,7 +170,7 @@ function TitlesRow() {
       label="Titles"
       options={TITLE_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <span
             className="text-[13px] text-fg/80"
             style={{
@@ -235,7 +204,7 @@ const FieldTextRow = () => (
 
 const LABEL_WEIGHT_ROW_OPTIONS = LABEL_WEIGHT_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <span
       className="text-[13px] text-fg/80"
       style={{ fontWeight: WEIGHTS[option.value] }}
@@ -253,28 +222,18 @@ const LabelWeightRow = () => (
   />
 )
 
-function SectionLabelsRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="sectionLabels"
-      label="Section labels"
-      rowPreview={false}
-      options={SECTION_LABEL_OPTIONS.map((option) => ({
-        ...option,
-        preview: (
-          <SectionLabel labels={option.value} mono={effective.monoFont} />
-        ),
-      }))}
-    />
-  )
-}
+const SectionLabelsRow = () => (
+  <DialSelect
+    axis="sectionLabels"
+    label="Section labels"
+    options={SECTION_LABEL_OPTIONS}
+  />
+)
 
 export const ROWS: RowMap = {
   headingFont: HeadingRow,
   bodyFont: BodyRow,
   monoFont: MonoRow,
-  readingFont: ReadingRow,
   titleStyle: TitlesRow,
   uiTextSize: UiTextRow,
   fieldTextSize: FieldTextRow,

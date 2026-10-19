@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-export default function ChartAreaStep() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

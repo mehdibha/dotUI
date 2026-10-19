@@ -35,12 +35,15 @@ describe("pages", () => {
     ).toEqual([])
   })
 
-  it("takes over only for Interaction among the foundation pages", () => {
+  it("takes over only for the state pages among the foundation pages", () => {
     expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
       null,
+      "focus",
+      "disabled",
+      "cursor",
+      "text-selection",
       null,
       null,
-      "interaction",
     ])
   })
 })
@@ -77,11 +80,11 @@ describe("focusOf", () => {
     }
   })
 
-  it("leaves the user's preview for the foundation rows but Motion", () => {
+  it("leaves the user's preview for the foundation rows but Motion and Icons", () => {
     const takeovers = FOUNDATION_KEYS.filter(
       (key) => row(key, { "data-chapter": "foundations" }) !== null,
     )
-    expect(takeovers).toEqual(["motion"])
+    expect(takeovers.sort()).toEqual(["iconLibrary", "motion"])
     expect(row("motion", { "data-chapter": "foundations" })).toEqual({
       board: "motion",
       axis: "motion",
@@ -89,12 +92,12 @@ describe("focusOf", () => {
     })
   })
 
-  it("leaves the user's preview on the color, typography and shape pages", () => {
-    expect(row("successSeed", { "data-page": "color" })).toBeNull()
+  it("leaves the user's preview on the typography, shape and surfaces pages", () => {
     expect(row("headingFont", { "data-page": "typography" })).toBeNull()
     expect(row("roleCard", { "data-page": "shape" })).toBeNull()
-    expect(row("focusStyle", { "data-page": "interaction" })).toEqual({
-      board: "interaction",
+    expect(row("surfaceEdge", { "data-page": "surfaces" })).toBeNull()
+    expect(row("focusStyle", { "data-page": "focus" })).toEqual({
+      board: "focus",
       axis: "focusStyle",
       popover: true,
     })

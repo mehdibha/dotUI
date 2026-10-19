@@ -15,7 +15,7 @@ import type { StudioState } from "./axes"
 import { stamp } from "./axes/version"
 import type { Current } from "./selection"
 
-export type Source = { kind: "preset" | "snapshot"; id: string }
+type Source = { kind: "preset" | "snapshot"; id: string }
 
 /** `p/<preset>` or `s/<snapshot>`, under `/r/`. */
 export const registryPath = ({ kind, id }: Source) =>

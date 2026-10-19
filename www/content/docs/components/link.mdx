@@ -3,9 +3,18 @@ title: Link
 description: A link allows a user to navigate to another page or resource.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Link.html
+    href: https://react-aria.adobe.com/Link
 wip: true
 ---
+
+<InteractiveDemo
+  name="link"
+  controls={[
+    { name: "children", type: "string", defaultValue: "View documentation" },
+    "variant",
+    "isDisabled",
+  ]}
+/>
 
 ## Installation
 
@@ -25,7 +34,7 @@ import { Link } from "@/components/ui/link"
 
 ## As a link
 
-Passing `href` renders a real `<a>`; add `target="_blank"` (with `rel`) to open a new tab. To route internal `href`s through your app router, override `Link` in your project the same way [Breadcrumbs](/docs/components/breadcrumbs) does for `BreadcrumbLink`.
+Passing `href` renders a real `<a>`; add `target="_blank"` (with `rel`) to open a new tab. To route internal `href`s through your app router, override `Link` in your project the same way [Breadcrumbs](/docs/components/breadcrumbs#framework-setup) does for `BreadcrumbLink`.
 
 ```tsx
 <Link href="https://dotui.org" target="_blank" rel="noreferrer">

@@ -17,12 +17,12 @@ const switchMeta = {
       values: ["inset", "outlined", "slab"] as const,
       description: "The track and knob recipe.",
     },
-    "card-selected": {
+    cardSelected: {
       default: "tint",
       values: ["tint", "outline-tint", "outline"] as const,
       description: "What marks the selected card.",
     },
-    "card-press": {
+    cardPress: {
       default: "none",
       values: ["none", "sink"] as const,
       description: "Whether a pressed or disabled card sinks into its lip.",

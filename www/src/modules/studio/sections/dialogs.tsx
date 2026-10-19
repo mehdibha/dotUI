@@ -17,12 +17,10 @@ import {
   STRENGTH_OPTIONS,
 } from "../axes/dialogs.meta"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const SCRIM_FILL: Record<string, number> = {
   light: 0.14,
@@ -278,8 +276,6 @@ function CloseGlyph({ close }: { close: string }) {
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
 
-/* ---------------------------------- Rows ---------------------------------- */
-
 function DialogSectionsRow() {
   const { state } = useStudio()
   return (
@@ -288,7 +284,7 @@ function DialogSectionsRow() {
       label="Sections"
       options={SECTIONS_OPTIONS.map((option) => ({
         ...option,
-        preview: glyph(
+        glyph: glyph(
           <PanelGlyph
             sections={option.value}
             actions={
@@ -311,7 +307,7 @@ function DialogBackdropRow() {
       label="Backdrop"
       options={BACKDROP_OPTIONS.map((option) => ({
         ...option,
-        preview: glyph(
+        glyph: glyph(
           <BackdropGlyph
             backdrop={option.value}
             strength={effective.dialogBackdropStrength}
@@ -349,7 +345,7 @@ function MobileDialogsRow() {
 
 const ACTIONS_ROW = ACTIONS_OPTIONS.map((option) => ({
   ...option,
-  preview: glyph(<PanelGlyph sections="open" actions={option.value} />),
+  glyph: glyph(<PanelGlyph sections="open" actions={option.value} />),
 }))
 
 function DialogActionsRow() {
@@ -360,7 +356,7 @@ function DialogActionsRow() {
 
 const CLOSE_ROW = CLOSE_OPTIONS.map((option) => ({
   ...option,
-  preview: glyph(<CloseGlyph close={option.value} />),
+  glyph: glyph(<CloseGlyph close={option.value} />),
 }))
 
 function DialogCloseRow() {
@@ -389,7 +385,7 @@ function DialogPositionRow() {
 
 const EDGE_ROW = EDGE_OPTIONS.map((option) => ({
   ...option,
-  preview: glyph(<EdgeGlyph edge={option.value} />),
+  glyph: glyph(<EdgeGlyph edge={option.value} />),
 }))
 
 function DrawerEdgeRow() {

@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-export default function ChartAreaLinear() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

@@ -1,12 +1,15 @@
 import { createStyles } from "@/lib/styles"
 
 import {
+  BUTTON_BASE,
   BUTTON_CASE,
   BUTTON_DENSITY,
+  BUTTON_ICON_ONLY,
   BUTTON_LINK_COLOR,
   BUTTON_LINK_UNDERLINE,
   BUTTON_PRESS,
   BUTTON_SECONDARY,
+  BUTTON_SIZE,
   BUTTON_STYLES,
   BUTTON_VARIANTS,
   SELECTED_LOOKS,
@@ -18,22 +21,13 @@ import toggleButtonMeta from "./meta"
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
     base: [
-      "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
-      "focus-reset focus-visible:focus-ring",
-      "**:[svg]:pointer-events-none **:[svg]:shrink-0",
+      BUTTON_BASE,
       "disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
     ],
     variants: {
       variant: BUTTON_VARIANTS,
-      size: {
-        xs: "rounded-(--studio-btn-xs-radius)",
-        sm: "",
-        md: "",
-        lg: "",
-      },
-      isIconOnly: {
-        true: "p-0",
-      },
+      size: BUTTON_SIZE,
+      isIconOnly: BUTTON_ICON_ONLY,
     },
     compoundVariants: [
       {

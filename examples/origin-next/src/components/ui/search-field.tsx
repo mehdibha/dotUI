@@ -22,15 +22,15 @@ const SearchField = ({
   placeholder,
   ...props
 }: SearchFieldProps) => {
+  const { field } = fieldStyles();
   return (
     <SearchFieldPrimitives.SearchField
       data-search-field=""
       data-field=""
-      data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         cn(
-          fieldStyles().field({ className }),
-          "group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
+          field({ className }),
+          "empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
         ),
       )}
       {...props}

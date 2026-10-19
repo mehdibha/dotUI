@@ -27,7 +27,7 @@ export default function ChartLineExamples() {
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>
-      <Example title="Multiple Series">
+      <Example title="Multiple series">
         <LineChart
           className="w-full"
           data={data}

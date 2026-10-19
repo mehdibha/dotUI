@@ -15,6 +15,7 @@ import {
 export const BACKDROP_OPTIONS = options(BACKDROP_VALUES, {
   scrim: {
     label: "Scrim",
+    description: "A dark tint over the page",
     credits: [
       "Radix Themes",
       "Material 3",
@@ -32,10 +33,12 @@ export const BACKDROP_OPTIONS = options(BACKDROP_VALUES, {
   },
   frosted: {
     label: "Frosted",
+    description: "A dark tint over a blurred page",
     credits: ["shadcn", "Supabase", "Untitled UI", "HeroUI (blur)"],
   },
   wash: {
     label: "Wash",
+    description: "A pale film over the page, no blur",
     credits: ["Geist", "Primer", "Linear (side panel)", "Stripe"],
   },
 })
@@ -43,6 +46,7 @@ export const BACKDROP_OPTIONS = options(BACKDROP_VALUES, {
 export const STRENGTH_OPTIONS = options(STRENGTH_VALUES, {
   light: {
     label: "Light",
+    description: "Barely dims the page",
     credits: [
       "shadcn nova, vega, lyra (10%)",
       "shadcn sera (20%)",
@@ -51,6 +55,7 @@ export const STRENGTH_OPTIONS = options(STRENGTH_VALUES, {
   },
   medium: {
     label: "Medium",
+    description: "Clearly dims the page",
     credits: [
       "shadcn luma, rhea (30%)",
       "Material 3 (32%)",
@@ -64,6 +69,7 @@ export const STRENGTH_OPTIONS = options(STRENGTH_VALUES, {
   },
   heavy: {
     label: "Heavy",
+    description: "Almost hides the page",
     credits: [
       "shadcn mira, maia (80%)",
       "Geist (80%)",
@@ -78,10 +84,12 @@ export const STRENGTH_OPTIONS = options(STRENGTH_VALUES, {
 export const FROST_OPTIONS = options(FROST_VALUES, {
   subtle: {
     label: "Subtle",
+    description: "A light blur, shapes stay readable",
     credits: ["shadcn nova, vega, lyra, mira, maia (4px)", "Supabase (4px)"],
   },
   strong: {
     label: "Strong",
+    description: "A deeper blur, the page turns soft",
     credits: ["shadcn sera, luma, rhea (8px)", "Untitled UI (6px)"],
   },
 })
@@ -89,6 +97,7 @@ export const FROST_OPTIONS = options(FROST_VALUES, {
 export const SECTIONS_OPTIONS = options(SECTIONS_VALUES, {
   open: {
     label: "Open",
+    description: "No rules between header, body and footer",
     credits: [
       "Radix Themes",
       "shadcn",
@@ -104,18 +113,22 @@ export const SECTIONS_OPTIONS = options(SECTIONS_VALUES, {
   },
   "on-scroll": {
     label: "On scroll",
+    description: "Rules appear while the body scrolls",
     credits: ["Material 3", "Atlassian", "Stripe"],
   },
   divided: {
     label: "Divided",
+    description: "Rules under the header and over the footer",
     credits: ["Supabase", "Spectrum 1", "Ant Design 4"],
   },
   "footer-band": {
     label: "Footer band",
+    description: "A tinted band behind the actions",
     credits: ["shadcn nova", "Geist"],
   },
   "header-band": {
     label: "Header band",
+    description: "A tinted band behind the title",
     credits: ["Polaris"],
   },
 })
@@ -123,6 +136,7 @@ export const SECTIONS_OPTIONS = options(SECTIONS_VALUES, {
 export const ACTIONS_OPTIONS = options(ACTIONS_VALUES, {
   end: {
     label: "End",
+    description: "Buttons grouped at the right",
     credits: [
       "shadcn",
       "Primer",
@@ -139,26 +153,45 @@ export const ACTIONS_OPTIONS = options(ACTIONS_VALUES, {
       "Polaris",
     ],
   },
-  spread: { label: "Spread", credits: ["Geist"] },
+  spread: {
+    label: "Spread",
+    description: "Buttons pushed to opposite sides",
+    credits: ["Geist"],
+  },
   stack: {
     label: "Stack",
+    description: "Full-width buttons, primary on top",
     credits: ["Duolingo", "Notion", "Apple (3+ alert actions)"],
   },
-  bleed: { label: "Bleed", credits: ["Carbon"] },
+  bleed: {
+    label: "Bleed",
+    description: "Edge-to-edge square buttons form the footer",
+    credits: ["Carbon"],
+  },
 })
 
 export const CLOSE_OPTIONS = options(CLOSE_VALUES, {
   quiet: {
     label: "Quiet",
+    description: "A bare icon button",
     credits: ["shadcn nova, vega, mira, lyra, maia", "Primer", "Polaris"],
   },
-  filled: { label: "Filled", credits: ["shadcn luma, rhea, sera"] },
-  faint: { label: "Faint", credits: ["Supabase"] },
+  filled: {
+    label: "Filled",
+    description: "An icon button on a gray fill",
+    credits: ["shadcn luma, rhea, sera"],
+  },
+  faint: {
+    label: "Faint",
+    description: "Faded until hovered or focused",
+    credits: ["Supabase"],
+  },
 })
 
 export const POSITION_OPTIONS = options(POSITION_VALUES, {
   center: {
     label: "Center",
+    description: "Centered on the screen",
     credits: [
       "shadcn",
       "Radix Themes",
@@ -173,6 +206,7 @@ export const POSITION_OPTIONS = options(POSITION_VALUES, {
   },
   top: {
     label: "Top",
+    description: "Near the top of the screen",
     credits: [
       "Ant Design",
       "Chakra",
@@ -186,6 +220,7 @@ export const POSITION_OPTIONS = options(POSITION_VALUES, {
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   scale: {
     label: "Scale",
+    description: "Fades in while growing slightly",
     credits: [
       "shadcn",
       "Geist",
@@ -199,10 +234,12 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   },
   rise: {
     label: "Rise",
+    description: "Fades in while sliding up",
     credits: ["Radix Themes (nearest)", "Spectrum 2", "Polaris", "Atlassian"],
   },
   drop: {
     label: "Drop",
+    description: "Fades in while sliding down",
     credits: ["Carbon", "Mantine"],
   },
 })
@@ -210,6 +247,7 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
 export const EDGE_OPTIONS = options(EDGE_VALUES, {
   docked: {
     label: "Docked",
+    description: "Flush against the screen edge",
     credits: [
       "shadcn Drawer nova, vega, lyra, sera",
       "shadcn Sheet",
@@ -225,6 +263,7 @@ export const EDGE_OPTIONS = options(EDGE_VALUES, {
   },
   detached: {
     label: "Detached",
+    description: "A floating card inset from the edge",
     credits: [
       "shadcn Drawer mira, luma, maia, rhea",
       "Linear (side panel)",
@@ -237,6 +276,7 @@ export const EDGE_OPTIONS = options(EDGE_VALUES, {
 export const MOBILE_OPTIONS = options(MOBILE_VALUES, {
   center: {
     label: "Center",
+    description: "Stays a centered dialog",
     credits: [
       "shadcn",
       "Radix Themes",
@@ -251,9 +291,14 @@ export const MOBILE_OPTIONS = options(MOBILE_VALUES, {
   },
   sheet: {
     label: "Sheet",
+    description: "Becomes a bottom sheet",
     credits: ["Geist", "Polaris", "Catalyst", "Apple", "Stripe", "Untitled UI"],
   },
-  fullscreen: { label: "Fullscreen", credits: ["Carbon", "Atlassian"] },
+  fullscreen: {
+    label: "Fullscreen",
+    description: "Fills the whole screen",
+    credits: ["Carbon", "Atlassian"],
+  },
 })
 
 export const OPTIONS = {

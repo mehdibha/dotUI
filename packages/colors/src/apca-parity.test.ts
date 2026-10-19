@@ -7,7 +7,8 @@
 import { APCAcontrast, sRGBtoY } from "apca-w3"
 import { expect, test } from "vitest"
 
-import { apca, toOklch } from "./index"
+import { toOklch } from "./index"
+import { apca } from "./meters"
 
 /** Deterministic PRNG (mulberry32) — no Math.random in the corpus. */
 function mulberry32(seed: number): () => number {

@@ -1,9 +1,9 @@
 "use client"
 
 import type * as React from "react"
-import * as ButtonPrimitive from "react-aria-components/Button"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as LinkPrimitive from "react-aria-components/Link"
+import * as LinkPrimitives from "react-aria-components/Link"
 import type { VariantProps } from "tailwind-variants"
 
 import { Loader } from "@/registry/ui/loader"
@@ -17,10 +17,19 @@ export { buttonStyles } from "./styles"
 
 type ButtonVariants = VariantProps<ButtonStyles>
 
+const truncateLabel = (children: React.ReactNode) =>
+  typeof children === "string" ? (
+    <span className="truncate">{children}</span>
+  ) : (
+    children
+  )
+
 // MARK: Separator
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {}
+  extends
+    React.ComponentProps<typeof ButtonPrimitives.Button>,
+    ButtonVariants {}
 
 const Button = ({
   variant,
@@ -38,26 +47,22 @@ const Button = ({
       <>
         {isPending && (
           <Loader
-            data-slot="spinner"
+            data-spinner=""
             aria-label="loading"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {typeof children === "string" ? (
-          <span className="truncate">{children}</span>
-        ) : (
-          children
-        )}
+        {truncateLabel(children)}
       </>
     ),
   )
 
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        styles({ variant, size, isIconOnly, className }),
       )}
       {...props}
       // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
@@ -69,7 +74,7 @@ const Button = ({
 // MARK: Separator
 
 interface LinkButtonProps
-  extends React.ComponentProps<typeof LinkPrimitive.Link>, ButtonVariants {}
+  extends React.ComponentProps<typeof LinkPrimitives.Link>, ButtonVariants {}
 
 const LinkButton = ({
   variant,
@@ -82,22 +87,16 @@ const LinkButton = ({
   const styles = useStyles()
 
   return (
-    <LinkPrimitive.Link
+    <LinkPrimitives.Link
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        styles({ variant, size, isIconOnly, className }),
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) =>
-        typeof children === "string" ? (
-          <span className="truncate">{children}</span>
-        ) : (
-          children
-        ),
-      )}
-    </LinkPrimitive.Link>
+      {composeRenderProps(children, truncateLabel)}
+    </LinkPrimitives.Link>
   )
 }
 

@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { CheckCircle2Icon, XIcon } from "lucide-react"
+import React from "react"
 
+import { CheckCircle2Icon, XIcon } from "@/registry/icons"
 import {
   Alert,
   AlertAction,
@@ -12,7 +12,7 @@ import {
 import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsVisible] = React.useState(true)
 
   if (!isVisible) {
     return (

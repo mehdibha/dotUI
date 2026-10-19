@@ -1,5 +1,4 @@
-import { FileIcon } from "lucide-react"
-
+import { FileIcon } from "@/registry/icons"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 
 const files = [

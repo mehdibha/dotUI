@@ -22,11 +22,12 @@ import {
   DialGlyph,
   DialPickList,
   DialPopover,
+  PICK_POPOVER,
   DialSelect,
   DialSeparator,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import { useStudio } from "../use-studio"
 import { COMPONENTS } from "./components"
@@ -66,17 +67,12 @@ const glyph = (motion: string) => (
   </DialGlyph>
 )
 
-const TEMPO_OPTIONS = MOTION_OPTIONS.map((option) => ({
-  ...option,
-  visual: glyph(option.value),
-}))
-
 // "Same as motion" wears the glyph of the tempo it resolves to.
 const COMPONENT_ROW_OPTIONS = [
   SAME_AS_MOTION,
   ...COMPONENT_MOTION_OPTIONS.map((option) => ({
     ...option,
-    preview: glyph(option.value),
+    glyph: glyph(option.value),
   })),
 ]
 
@@ -109,12 +105,12 @@ function MotionRow() {
         </>
       }
     >
-      <DialPopover>
+      <DialPopover className={PICK_POPOVER}>
         <DialPickList
           label="Motion"
           value={state.motion}
           onChange={set("motion")}
-          options={TEMPO_OPTIONS}
+          options={MOTION_OPTIONS}
         />
         {custom.length > 0 && (
           <>

@@ -21,28 +21,28 @@ export default function CardExamples() {
       <Example title="Small">
         <SmallDemo />
       </Example>
-      <Example title="Header with Border">
+      <Example title="Header with border">
         <HeaderBorderDemo />
       </Example>
-      <Example title="Footer with Border">
+      <Example title="Footer with border">
         <FooterBorderDemo />
       </Example>
-      <Example title="Header with Border (Small)">
+      <Example title="Header with border (Small)">
         <HeaderBorderSmallDemo />
       </Example>
-      <Example title="Footer with Border (Small)">
+      <Example title="Footer with border (Small)">
         <FooterBorderSmallDemo />
       </Example>
-      <Example title="With Image" className="**:data-card:pt-0!">
+      <Example title="With image" className="**:data-card:pt-0!">
         <WithImageDemo />
       </Example>
-      <Example title="With Image (Small)" className="**:data-card:pt-0!">
+      <Example title="With image (Small)" className="**:data-card:pt-0!">
         <WithImageSmallDemo />
       </Example>
       <Example title="Login">
         <BasicDemo />
       </Example>
-      <Example title="Meeting Notes">
+      <Example title="Meeting notes">
         <MeetingNotesDemo />
       </Example>
     </Examples>

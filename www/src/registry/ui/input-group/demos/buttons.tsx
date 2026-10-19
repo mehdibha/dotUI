@@ -1,5 +1,4 @@
-import { CopyIcon, TrashIcon } from "lucide-react"
-
+import { CopyIcon, TrashIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"

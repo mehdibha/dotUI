@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ColorSliderPrimitives from "react-aria-components/ColorSlider"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SliderPrimitives from "react-aria-components/Slider"
@@ -32,8 +33,8 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
       ]}
     >
       <ColorSliderPrimitives.ColorSlider
-        className={composeRenderProps(className, (cn, { orientation }) =>
-          root({ orientation, className: cn }),
+        className={composeRenderProps(className, (className, { orientation }) =>
+          root({ orientation, className }),
         )}
         aria-describedby={descriptionId}
         {...props}
@@ -58,9 +59,9 @@ const ColorSliderControl = ({
   const { track } = useStyles()()
   return (
     <SliderPrimitives.SliderTrack
-      data-slot="color-slider-control"
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        track({ orientation, className: cn }),
+      data-color-slider-control=""
+      className={composeRenderProps(className, (className, { orientation }) =>
+        track({ orientation, className }),
       )}
       style={composeRenderProps(style, (style, { defaultStyle }) => ({
         ...defaultStyle,

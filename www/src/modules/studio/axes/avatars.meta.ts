@@ -4,6 +4,7 @@ import { options } from "./core/meta"
 export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
   circle: {
     label: "Circle",
+    description: "Fully round",
     credits: [
       "shadcn",
       "Geist",
@@ -19,16 +20,22 @@ export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
       "Material 3",
     ],
   },
-  rounded: { label: "Rounded", credits: ["Polaris", "Radix Themes", "Stripe"] },
+  rounded: {
+    label: "Rounded",
+    description: "A square with rounded corners",
+    credits: ["Polaris", "Radix Themes", "Stripe"],
+  },
 })
 
 export const FALLBACK_OPTIONS = options(FALLBACK_VALUES, {
   neutral: {
     label: "Neutral",
+    description: "Initials on a gray fill",
     credits: ["shadcn", "Primer", "Atlassian", "Untitled UI", "Fluent 2"],
   },
   accent: {
     label: "Accent",
+    description: "Brand-colored initials on a brand tint",
     credits: ["Radix Themes (soft)", "Material 3 (list)"],
   },
 })

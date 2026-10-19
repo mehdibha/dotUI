@@ -35,8 +35,12 @@ export const BOARD_TITLES = {
   progress: "Progress",
   spinner: "Spinner",
   skeleton: "Skeleton",
-  interaction: "Interaction",
+  focus: "Focus",
+  disabled: "Disabled",
+  cursor: "Cursor",
+  "text-selection": "Text selection",
   motion: "Motion",
+  icons: "Icons",
 }
 
 export type BoardId = keyof typeof BOARD_TITLES

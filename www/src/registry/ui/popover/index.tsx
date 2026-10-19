@@ -16,7 +16,7 @@ const DynamicPopover = createDynamicComponent({
 
 /* The shipped file takes its `showArrow` default from `tip.source` (meta.ts);
    live, the default follows the tip param here. */
-function Popover({ showArrow, ...props }: PopoverProps) {
+const Popover = ({ showArrow, ...props }: PopoverProps) => {
   const { tip } = useComponentParams(meta.name)
   return <DynamicPopover showArrow={showArrow ?? tip === "tip"} {...props} />
 }

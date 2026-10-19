@@ -33,14 +33,16 @@ An honest snapshot (August 2026) to calibrate against. Task-level work is tracke
 
 - **Solid:** the docs (one last revision pass pending) and the components — they look and behave well individually. Cross-component composition is less proven: treat "these compose cleanly" as a claim to verify, not an assumption.
 - **Known-weak:** the components page (several demos misbehave); the presets page (very slow); the presets themselves on both landing and presets page — due to be replaced by fewer, high-fidelity presets of popular systems (Linear, Vercel, …); chart colors (need a full rewrite); site performance overall (never audited — a docs site must feel instant).
-- **The /studio panel** (`www/src/modules/studio/`): the drill-in panel over the studio state. `axes/<chapter>.ts` exports one `defineChapter` (state slice, `*_VALUES` tuples, schema, follows, rules, `resolve(state: Effective)`) — the pure mapping to what the engine consumes (global tokens, registry enum params, density, the color recipe, the icon library); saved state is never mutated, `effective()` resolves follows and rules, and `designSystemOf(saved)` is the only path to the `DesignSystem` the provider renders, the preview iframe receives, and `/r/*` publishes (contract: `axes/core/README.md`). Labels, descriptions and credits live in panel-only `axes/<chapter>.meta.ts` (only sections, `dial`, `use-axis` and tests import them — they must stay off the /docs bundle). The panel is Foundations (`sections/foundations.tsx`) then the component chapters (`sections/components.tsx`: one row per component, a page for each with several keys); every other `sections/*.tsx` exports `ROWS`, each key's one row, which pages host by key. Adding an axis = a key in the axis module's defaults + a mechanism the registry consumes (a token read by base.css / a `-(--var)` utility, or an enum param with tv slices in `styles.ts`); default selections must flatten to today's look, and exported code must never carry two conflicting classes. Per-component live-tweak vars (`ui/<component>/styles.css` `:root`, `roles.css`) are `--studio-*`: builder-only, resolved to plain utilities on publish, never shipped — the publisher fails on any survivor. Panel chrome is instant by design — no easing on overlay open/close or pane swaps (in-place control feedback like segmented indicators still eases).
+- **The /studio panel** (`www/src/modules/studio/`): the drill-in panel over the studio state. `axes/<chapter>.ts` exports one `defineChapter` (state slice, `*_VALUES` tuples, schema, follows, rules, `resolve(state: Effective)`) — the pure mapping to what the engine consumes (global tokens, registry enum params, density, the color recipe, the icon library); saved state is never mutated, `effective()` resolves follows and rules, and `designSystemOf(saved)` is the only path to the `DesignSystem` the provider renders, the preview iframe receives, and `/r/*` publishes (contract: `axes/core/README.md`). Labels, descriptions and credits live in panel-only `axes/<chapter>.meta.ts` (only sections, `dial`, `use-axis` and tests import them — they must stay off the /docs bundle). The panel is Foundations (`sections/foundations.tsx`) then the component chapters (`sections/components.tsx`: one row per component, a page for each with several keys); every other `sections/*.tsx` exports `ROWS`, each key's one row, which pages host by key. Adding an axis = a key in the axis module's defaults + a mechanism the registry consumes (a token read by base.css / a `-(--var)` utility, or an enum param with tv slices in `styles.ts`); default selections must flatten to today's look, and exported code must never carry two conflicting classes. Per-component live-tweak vars (`ui/<component>/styles.css` `:root`, `roles.css`) are `--studio-*`: builder-only, resolved to plain utilities on publish, never shipped — the publisher fails on any survivor. Panel chrome is instant by design — no easing on overlay open/close (in-place control feedback like segmented indicators still eases); the one exception is the short drill-in slide when a page opens or Back is pressed.
 - **Queued for rewrite — don't deepen:** the color system gets a complete rewrite — the goal is really good foundations, not incremental fixes; it starts with a playground to verify generated colors visually (current output is average). The publisher is also queued (see below), and the registry should get a small refactor and clean up. In these areas, verify behavior by reading the code and keep changes shallow.
 - **AI slop:** much of the codebase was written by AI agents and hasn't all been walked through. When working in an area, leave it simpler than you found it — cut needless comments, indirection, and dead options rather than matching the existing style.
 
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /studio builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
-- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www).
+- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/ts-config` — shared TypeScript configs.
+- `examples/` — consumer templates with the registry's resolved output committed (see Registry changes).
+- `video/` — the launch film (Remotion), rendering the real registry components and /studio panel from `www/src`.
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 
 ## Registry
@@ -67,7 +69,8 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 - `pnpm dev:www` — dev server. Like `build` and `typecheck`, it builds the registry first (~2s), so fresh clones, worktrees, and branch switches always serve current output.
 - `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix. `check:fix` also rewrites Tailwind classes to their canonical spelling (IntelliSense's `suggestCanonicalClasses`); not enforced in CI.
-- `pnpm typecheck` · `pnpm test` — vitest, covers `packages/colors`.
+- `pnpm typecheck` — tsc across the workspace.
+- `pnpm test` — vitest, every `*.test.ts(x)` in the repo (`packages/colors`, the publisher, the studio axes, …).
 
 ### Registry changes
 
@@ -78,7 +81,7 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 ### Before committing
 
 - `pnpm check` — CI fails on formatting and import order.
-- `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
+- `pnpm typecheck` · `pnpm test`.
 - Touched the registry, publisher, presets, or `/r/*`? Regenerate first (see Registry changes), `examples/` included.
 
 ## Dev tweaker (design exploration)

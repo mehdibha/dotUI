@@ -68,13 +68,13 @@ const OUTLINE_ACCENT = [
   "data-active:inset-ring-2 data-active:inset-ring-border-accent",
 ]
 
-const { useStyles, styles } = createStyles(sidebarMeta, {
+const { useStyles } = createStyles(sidebarMeta, {
   base: {
     slots: {
       // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
       wrapper:
         "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-      root: "group peer hidden text-fg md:block",
+      root: "group peer hidden text-fg data-[side=right]:order-last md:block",
       gap: [
         "relative w-(--sidebar-width) bg-transparent transition-[width]",
         collapse,
@@ -140,7 +140,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
         "group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
-        "group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8",
+        "group-has-data-sidebar-menu-action/menu-item:pr-8",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
       ],
       menuAction: [
@@ -173,13 +173,6 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted",
       ],
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     labels: {
@@ -266,7 +259,5 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
     },
   },
 })
-
-export type SidebarStyles = typeof styles
 
 export { useStyles }

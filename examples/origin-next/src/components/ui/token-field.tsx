@@ -17,7 +17,7 @@ import { tv } from "tailwind-variants";
 
 const tokenFieldVariants = tv({
   slots: {
-    root: "group/token-field flex w-full flex-col gap-1.5",
+    root: "flex w-full flex-col gap-1.5",
     input:
       "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
     token:
@@ -38,9 +38,9 @@ interface TokenFieldProps extends Omit<
 }
 
 /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
-function TokenField({ className, ...props }: TokenFieldProps) {
+const TokenField = ({ className, ...props }: TokenFieldProps) => {
   return <TokenFieldPrimitive className={root({ className })} {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -56,12 +56,12 @@ interface TokenInputProps extends Omit<
 }
 
 /** The content-editable area of a `TokenField`. */
-function TokenInput({
+const TokenInput = ({
   placeholder,
   className,
   children,
   ...props
-}: TokenInputProps) {
+}: TokenInputProps) => {
   const { textArea } = inputStyles();
   return (
     <TokenInputPrimitive
@@ -73,7 +73,7 @@ function TokenInput({
       {children ?? ((segment) => <Token>{segment.text}</Token>)}
     </TokenInputPrimitive>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -82,9 +82,9 @@ interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
 }
 
 /** An inline token within a `TokenInput`. */
-function Token({ className, ...props }: TokenProps) {
+const Token = ({ className, ...props }: TokenProps) => {
   return <TokenPrimitive className={token({ className })} {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

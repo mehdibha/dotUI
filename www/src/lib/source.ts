@@ -8,20 +8,20 @@ export interface DocsPageItem extends PageTree.Item {
 }
 
 // Serialized page tree types (ReactNode replaced with string for JSON serialization)
-export interface SerializedItem {
+interface SerializedItem {
   type: "page"
   name: string
   url: string
   wip?: boolean
 }
 
-export interface SerializedFolder {
+interface SerializedFolder {
   type: "folder"
   name: string
   children: SerializedNode[]
 }
 
-export interface SerializedSeparator {
+interface SerializedSeparator {
   type: "separator"
   name: string
 }

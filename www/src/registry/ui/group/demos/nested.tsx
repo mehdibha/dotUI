@@ -1,6 +1,6 @@
 "use client"
 
-import { MicIcon, PlusIcon } from "@/registry/__generated__/icons"
+import { MicIcon, PlusIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Group } from "@/registry/ui/group"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"

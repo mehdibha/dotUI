@@ -210,9 +210,9 @@ describe("buttons axes", () => {
     })
     expect(state.buttonSecondary).toBe("solid")
     expect(
-      designSystemOf({ ...state, style: "soft" }).componentParams.button
+      designSystemOf({ ...state, style: "tonal" }).componentParams.button
         ?.secondary,
-    ).toBe("raised")
+    ).toBe("tonal")
     expect(
       designSystemOf(parseState({ buttonSecondary: "solid" })).componentParams[
         "toggle-button"
@@ -294,7 +294,7 @@ describe("shipped buttons", () => {
         "scale-[0.97]",
       )
       expect(await shipped(name, { buttonCase: "uppercase" })).toContain(
-        "not-has-data-[slot=select-value]:uppercase",
+        "not-has-data-select-value:uppercase",
       )
       const origin = await shipped(name)
       expect(origin).not.toContain("translate-y-px")

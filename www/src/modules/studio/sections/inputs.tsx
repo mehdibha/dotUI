@@ -19,10 +19,8 @@ import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
 import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 const labelOf = (options: { value: string; label: string }[], value: string) =>
   options.find((option) => option.value === value)?.label ?? value
@@ -216,8 +214,6 @@ function ErrorGlyph({ kind }: { kind: string }) {
   )
 }
 
-/* ---------------------------------- Rows ---------------------------------- */
-
 function InputStyleRow() {
   const { effective } = useStudio()
   const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
@@ -234,11 +230,11 @@ function InputStyleRow() {
               {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
             </SourceTag>
           ),
-          preview: <ShellSpecimen style={autoStyle} />,
+          glyph: <ShellSpecimen style={autoStyle} />,
         },
         ...STYLE_OPTIONS.map((option) => ({
           ...option,
-          preview: <ShellSpecimen style={option.value} />,
+          glyph: <ShellSpecimen style={option.value} />,
         })),
       ]}
     />
@@ -263,7 +259,7 @@ function InputHeightRow() {
 
 const STEPPERS_ROW = NUMBER_LAYOUT_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <DialGlyph>
       <SteppersGlyph layout={option.value} />
     </DialGlyph>
@@ -278,7 +274,7 @@ function NumberLayoutRow() {
 
 const CELLS_ROW = OTP_STYLE_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <DialGlyph>
       <CellsGlyph cells={option.value} />
     </DialGlyph>
@@ -297,7 +293,7 @@ function SelectTriggerRow() {
       label="Trigger"
       options={TRIGGER_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <DialGlyph>
             <TriggerGlyph
               trigger={option.value}
@@ -318,7 +314,7 @@ function PickerCaretRow() {
       label="Caret"
       options={CARET_OPTIONS.map((option) => ({
         ...option,
-        preview: (
+        glyph: (
           <DialGlyph>
             <TriggerGlyph
               trigger={effective.selectTrigger}
@@ -333,7 +329,7 @@ function PickerCaretRow() {
 
 const LABEL_ROW = LABEL_OPTIONS.map((option) => ({
   ...option,
-  preview: <LabelGlyph weight={option.value} />,
+  glyph: <LabelGlyph weight={option.value} />,
 }))
 
 function FieldLabelRow() {
@@ -342,7 +338,7 @@ function FieldLabelRow() {
 
 const ERROR_ROW = ERROR_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <DialGlyph>
       <ErrorGlyph kind={option.value} />
     </DialGlyph>

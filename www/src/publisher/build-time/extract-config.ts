@@ -45,8 +45,6 @@ function registryUiDirOf(stylesTsPath: string): string {
   return path.dirname(path.dirname(stylesTsPath))
 }
 
-/* ---------------------------- expression → value ---------------------------- */
-
 function unwrap(expr: Expression): Expression {
   if (
     expr.isKind(SyntaxKind.AsExpression) ||
@@ -157,19 +155,13 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
 
 function propertyKey(nameNode: Node, filePath: string): string {
   if (nameNode.isKind(SyntaxKind.Identifier)) return nameNode.getText()
-  if (
-    nameNode.isKind(SyntaxKind.StringLiteral) ||
-    nameNode.isKind(SyntaxKind.NoSubstitutionTemplateLiteral)
-  ) {
-    return nameNode.asKindOrThrow(SyntaxKind.StringLiteral).getLiteralText()
-  }
+  if (nameNode.isKind(SyntaxKind.StringLiteral))
+    return nameNode.getLiteralText()
   if (nameNode.isKind(SyntaxKind.NumericLiteral)) return nameNode.getText()
   throw new Error(
     `[publisher/extract] unsupported property key ${nameNode.getKindName()} in ${filePath}`,
   )
 }
-
-/* ------------------------- runtime-helper resolution ------------------------- */
 
 /** A module-level `const`: in this file (input's `compactText`), or exported
  *  by a relative import — a shared recipe (menu's `LIST_ROWS`,
@@ -366,8 +358,6 @@ function importOf(name: string, ctx: ExtractCtx) {
   )
 }
 
-/* ---------------------------- entry ---------------------------- */
-
 /**
  * Find the `createStyles(meta, <config>)` call in `sourceFile` and return the
  * `<config>` object as plain JSON. Throws if not found or shape doesn't match.
@@ -433,7 +423,7 @@ function getProject(): Project {
   return cachedProject
 }
 
-export interface ExtractOptions {
+interface ExtractOptions {
   /** Registry metas by name, so a `<x>Styles().slot()` composition of a
    *  parameterized component resolves at its param defaults. */
   metas?: ReadonlyMap<string, RegistryItem>

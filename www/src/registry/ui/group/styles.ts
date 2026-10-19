@@ -37,7 +37,7 @@ const { useStyles, styles } = createStyles(groupMeta, {
     slots: {
       root: [
         "flex w-fit items-stretch",
-        "has-data-[slot=group]:gap-2",
+        "has-data-group:gap-2",
         "*:hover:z-1 *:focus:z-3 *:has-[input]:z-2 *:[input]:z-2",
         "*:data-label:shrink-0 *:data-label:rounded-(--studio-group-radius) *:data-label:border-(length:--studio-control-stroke) *:data-label:bg-card *:data-label:px-4",
       ],
@@ -49,13 +49,6 @@ const { useStyles, styles } = createStyles(groupMeta, {
         vertical: { root: "flex-col" },
       },
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     // Gapped: Duolingo never attaches; its slab would be drawn twice.

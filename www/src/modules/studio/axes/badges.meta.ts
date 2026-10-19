@@ -4,10 +4,12 @@ import { options } from "./core/meta"
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
   solid: {
     label: "Solid",
+    description: "Full status color with contrasting text",
     credits: ["shadcn", "Geist", "Spectrum 2", "Mantine", "Fluent 2"],
   },
   soft: {
     label: "Soft",
+    description: "Light status tint with colored text",
     credits: [
       "Radix Themes",
       "Polaris",
@@ -17,17 +19,27 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
       "HeroUI",
     ],
   },
-  outline: { label: "Outline", credits: ["Primer"] },
+  outline: {
+    label: "Outline",
+    description: "Colored edge and text, no fill",
+    credits: ["Primer"],
+  },
   "soft-outline": {
     label: "Soft + outline",
+    description: "Light tint inside a colored edge",
     credits: ["Ant Design", "Untitled UI", "Supabase"],
   },
-  dot: { label: "Dot", credits: ["Linear"] },
+  dot: {
+    label: "Dot",
+    description: "Neutral outline with a colored status dot",
+    credits: ["Linear"],
+  },
 })
 
 export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
   pill: {
     label: "Pill",
+    description: "Fully rounded ends",
     credits: [
       "Geist",
       "Primer",
@@ -40,6 +52,7 @@ export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
   },
   rounded: {
     label: "Rounded",
+    description: "Small corners from the radius scale",
     credits: [
       "Atlassian",
       "Ant Design",
@@ -55,10 +68,12 @@ export const SHAPE_OPTIONS = options(SHAPE_VALUES, {
 export const CASE_OPTIONS = options(CASE_VALUES, {
   sentence: {
     label: "Sentence",
+    description: "Text kept as written",
     credits: ["shadcn", "Radix Themes", "Primer", "Polaris", "Geist"],
   },
   uppercase: {
     label: "Uppercase",
+    description: "Small, widely spaced capitals",
     credits: ["Supabase", "Mantine", "Atlassian (v15)", "Chakra v2"],
   },
 })

@@ -22,17 +22,17 @@ export const SOURCE_OPTIONS = options(SOURCE_VALUES, {
 export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
   soft: {
     label: "Soft",
-    description: "The hairline",
+    description: "Same light line as surface borders",
     credits: ["shadcn", "Primer", "Geist"],
   },
   firm: {
     label: "Firm",
-    description: "A step firmer",
+    description: "A step darker than surface borders",
     credits: ["Radix Themes", "Linear"],
   },
   strong: {
     label: "Strong",
-    description: "A dark gray",
+    description: "A dark gray, high-contrast edge",
     credits: ["Polaris", "Atlassian", "Material 3"],
   },
 })
@@ -40,17 +40,23 @@ export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
 export const SELECTED_WASH_OPTIONS = options(SELECTED_WASH_VALUES, {
   neutral: {
     label: "Neutral",
+    description: "Selected rows and tags get a gray wash",
     credits: ["shadcn", "Primer", "Polaris", "Carbon"],
   },
   brand: {
     label: "Brand",
+    description: "Selected rows and tags get a brand tint",
     credits: ["Material 3", "Atlassian", "Ant", "Linear"],
   },
 })
 
 export const SOLID_INK_OPTIONS = options(SOLID_INK_VALUES, {
-  auto: { label: "Auto" },
-  white: { label: "White", credits: ["Duolingo"] },
+  auto: { label: "Auto", description: "Label color picked for contrast" },
+  white: {
+    label: "White",
+    description: "Always white labels, even at low contrast",
+    credits: ["Duolingo"],
+  },
 })
 
 export const OPTIONS = {

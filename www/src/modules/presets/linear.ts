@@ -8,7 +8,8 @@ export const linear = definePreset({
   inspiredBy: "Linear",
   diff: {
     // Style: low drops on menus and dialogs; a near-white secondary with a ring.
-    style: "soft",
+    surfaceShadow: "low",
+    buttonSecondary: "raised",
 
     // Color
     brand: "#5e6ad2",
@@ -54,8 +55,6 @@ export const linear = definePreset({
     // Buttons
     // Every app button computes 9999px.
     buttonRadius: "pill",
-    // The chip follows the button style, not Soft's raised one.
-    segmentedSelected: "auto",
     segmentedTrack: "outline",
 
     // Selection

@@ -1,5 +1,4 @@
-import { CopyIcon, RotateCcwIcon, SearchIcon, StarIcon } from "lucide-react"
-
+import { CopyIcon, RotateCcwIcon, SearchIcon, StarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Input,

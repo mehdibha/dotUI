@@ -11,9 +11,10 @@
  * registry shows up through HMR. `--watch` re-runs on changes under
  * `www/src/registry` and `www/src/publisher`.
  *
- * This is a preview, never the committed output: the CLI reprints every file
- * in its own style and wires fonts per framework, so what lands in `examples/`
- * comes only from `pnpm smoke:examples`. Don't commit what this writes.
+ * Component files match what the CLI installs byte for byte; the stylesheet
+ * does not (`shadcn init` merges the CSS fields in its own layout and wires
+ * fonts per framework), so what lands in `examples/` comes only from
+ * `pnpm smoke:examples`. Don't commit what this writes.
  */
 
 import { spawn, spawnSync } from "node:child_process"

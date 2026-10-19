@@ -6,7 +6,7 @@ import {
   MessageSquareIcon,
   SettingsIcon,
   UserIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Kbd } from "@/registry/ui/kbd"
 import {

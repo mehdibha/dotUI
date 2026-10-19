@@ -53,7 +53,7 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
-  const { size } = React.use(AttachmentContext)
+  const { size } = React.useContext(AttachmentContext)
   const { media } = useStyles()({ size, mediaVariant: variant })
   return (
     <div

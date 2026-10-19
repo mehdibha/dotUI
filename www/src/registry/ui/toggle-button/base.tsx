@@ -2,7 +2,7 @@
 
 import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton"
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import type { VariantProps } from "tailwind-variants"
 
 import { createVariantsContext } from "@/registry/lib/context"
@@ -20,22 +20,22 @@ type ToggleButtonVariants = VariantProps<ToggleButtonStyles>
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
   ToggleButtonVariants,
-  React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+  React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
   HTMLButtonElement
->(ToggleButtonPrimitive.ToggleButtonContext)
+>(ToggleButtonPrimitives.ToggleButtonContext)
 
 // MARK: Separator
 
 interface ToggleButtonProps
   extends
-    React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+    React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
     ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const styles = useStyles()
   const {
     variant = "secondary",
-    size = "md",
+    size,
     isIconOnly,
     className,
     children,
@@ -43,18 +43,16 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   } = useContextProps(localProps)
 
   return (
-    <ToggleButtonPrimitive.ToggleButton
+    <ToggleButtonPrimitives.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
-      data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
+      className={composeRenderProps(className, (className) =>
         styles({
           variant,
           size,
           isIconOnly,
-          className: cn,
+          className,
         }),
       )}
       {...props}
@@ -66,7 +64,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
           children
         ),
       )}
-    </ToggleButtonPrimitive.ToggleButton>
+    </ToggleButtonPrimitives.ToggleButton>
   )
 }
 

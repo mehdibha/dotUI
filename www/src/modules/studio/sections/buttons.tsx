@@ -5,9 +5,7 @@
 import { useMemo } from "react"
 
 import { ComponentParamsProvider } from "@/lib/styles"
-import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
-import { useStyles as useGroupStyles } from "@/registry/ui/group/styles"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
@@ -27,12 +25,10 @@ import {
 } from "../axes/segmented-control.meta"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 /* The button vars a pick writes (Pill corners), set where specimens render. */
 const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
@@ -59,13 +55,11 @@ function System({
   )
 }
 
-/** `options`, each previewed by `specimen` drawn in its own design system. */
-function useSpecimens<T extends { value: string }>(
+/** `options`, each with `glyph` drawn in its own design system. */
+function useGlyphs<T extends { value: string }>(
   key: keyof StudioState,
   options: readonly T[],
-  specimen: React.ReactNode,
-  /** The row's specimen, when the popover's is wider. */
-  glyph?: React.ReactNode,
+  glyph: React.ReactNode,
 ) {
   const { state } = useStudio()
   const systems = useMemo(
@@ -78,22 +72,15 @@ function useSpecimens<T extends { value: string }>(
   )
   return systems.map(({ option, ds }) => ({
     ...option,
-    preview: <System ds={ds}>{specimen}</System>,
-    ...(glyph && { glyph: <System ds={ds}>{glyph}</System> }),
+    glyph: <System ds={ds}>{glyph}</System>,
   }))
 }
 
-function ButtonSpecimen({
-  variant,
-  label,
-}: {
-  variant: "primary" | "secondary"
-  label: string
-}) {
+function PrimaryButton() {
   const styles = useButtonStyles()
   return (
-    <span data-button="" className={styles({ variant, size: "xs" })}>
-      {label}
+    <span data-button="" className={styles({ variant: "primary", size: "xs" })}>
+      Save
     </span>
   )
 }
@@ -109,74 +96,6 @@ function SelectedToggle() {
       className={styles({ variant: "secondary", size: "xs", isIconOnly: true })}
     >
       B
-    </span>
-  )
-}
-
-/** Three attached buttons as the group draws their seams. */
-function GroupSpecimen() {
-  const { root } = useGroupStyles()()
-  const styles = useButtonStyles()
-  return (
-    <span className={root({ orientation: "horizontal" })}>
-      {["L", "C", "R"].map((letter) => (
-        <span
-          key={letter}
-          data-button=""
-          data-icon-only=""
-          className={styles({
-            variant: "secondary",
-            size: "xs",
-            isIconOnly: true,
-          })}
-        >
-          {letter}
-        </span>
-      ))}
-    </span>
-  )
-}
-
-const CORNER: Record<string, string> = {
-  same: "rounded-[4px]",
-  pill: "rounded-full",
-}
-
-function CornerGlyph({ corners }: { corners: string }) {
-  return (
-    <span
-      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[corners])}
-    />
-  )
-}
-
-const CHIP: Record<string, string> = {
-  tone: "bg-selected text-fg-on-selected",
-  raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  ring: "bg-bg text-fg ring-1 ring-border-control",
-  inverse: "bg-inverse text-fg-inverse",
-}
-
-/** A three-segment control: the chip against its track. */
-function SegmentedGlyph({ chip, track }: { chip: string; track: string }) {
-  return (
-    <span
-      className={cn(
-        "flex shrink-0 rounded-[5px] p-[2px]",
-        track === "outline" ? "border border-border" : "bg-muted",
-      )}
-    >
-      {["A", "B", "C"].map((letter, i) => (
-        <span
-          key={letter}
-          className={cn(
-            "flex h-3 items-center rounded-[3px] px-1 text-[8px] font-medium text-fg-muted",
-            i === 0 && CHIP[chip],
-          )}
-        >
-          {letter}
-        </span>
-      ))}
     </span>
   )
 }
@@ -221,19 +140,8 @@ function CurrentGlyph({ current }: { current: string }) {
   )
 }
 
-/* ---------------------------------- Rows ---------------------------------- */
-
 function ButtonStyleRow() {
-  // A style draws the secondary too (unless Secondary overrides it).
-  const options = useSpecimens(
-    "buttonStyle",
-    STYLE_OPTIONS,
-    <span className="flex gap-1">
-      <ButtonSpecimen variant="secondary" label="Cancel" />
-      <ButtonSpecimen variant="primary" label="Save" />
-    </span>,
-    <ButtonSpecimen variant="primary" label="Save" />,
-  )
+  const options = useGlyphs("buttonStyle", STYLE_OPTIONS, <PrimaryButton />)
   return (
     <DialSelect
       axis="buttonStyle"
@@ -247,34 +155,18 @@ function ButtonStyleRow() {
 }
 
 function ButtonSecondaryRow() {
-  const options = useSpecimens(
-    "buttonSecondary",
-    SECONDARY_OPTIONS,
-    <ButtonSpecimen variant="secondary" label="Cancel" />,
-  )
   return (
     <DialSelect
       axis="buttonSecondary"
       label="Secondary"
-      rowPreview={false}
-      options={options}
+      options={SECONDARY_OPTIONS}
     />
   )
 }
 
-const CORNER_ROW = RADIUS_OPTIONS.map((option) => ({
-  ...option,
-  preview: <CornerGlyph corners={option.value} />,
-}))
-
 function ButtonRadiusRow() {
   return (
-    <DialSelect
-      axis="buttonRadius"
-      label="Corners"
-      rowPreview={false}
-      options={CORNER_ROW}
-    />
+    <DialSelect axis="buttonRadius" label="Corners" options={RADIUS_OPTIONS} />
   )
 }
 
@@ -287,7 +179,7 @@ function ButtonCaseRow() {
 }
 
 function ToggleSelectedRow() {
-  const options = useSpecimens(
+  const options = useGlyphs(
     "toggleSelected",
     TOGGLE_OPTIONS,
     <SelectedToggle />,
@@ -296,41 +188,21 @@ function ToggleSelectedRow() {
 }
 
 function GroupSeparatorRow() {
-  const options = useSpecimens(
-    "groupSeparator",
-    SEPARATOR_OPTIONS,
-    <GroupSpecimen />,
-  )
   return (
     <DialSelect
       axis="groupSeparator"
-      rowPreview={false}
       label="Seam"
-      options={options}
+      options={SEPARATOR_OPTIONS}
     />
   )
 }
 
 function SegmentedSelectedRow() {
-  const { effective } = useStudio()
   return (
     <DialSelect
       axis="segmentedSelected"
-      rowPreview={false}
       label="Segmented chip"
-      options={CHIP_OPTIONS.map((option) => ({
-        ...option,
-        preview: (
-          <SegmentedGlyph
-            chip={
-              option.value === "auto"
-                ? effective.segmentedSelected
-                : option.value
-            }
-            track={effective.segmentedTrack}
-          />
-        ),
-      }))}
+      options={CHIP_OPTIONS}
     />
   )
 }
@@ -343,7 +215,7 @@ function SegmentedTrackRow() {
 
 const CURRENT_ROW = CURRENT_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  glyph: (
     <DialGlyph>
       <CurrentGlyph current={option.value} />
     </DialGlyph>

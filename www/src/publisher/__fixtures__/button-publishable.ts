@@ -17,9 +17,9 @@ const template = `"use client";
 
 import type * as React from "react";
 
-import * as ButtonPrimitive from "react-aria-components/Button";
+import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as LinkPrimitive from "react-aria-components/Link";
+import * as LinkPrimitives from "react-aria-components/Link";
 
 import { tv, type VariantProps } from "tailwind-variants";
 
@@ -29,13 +29,13 @@ const buttonVariants = tv(%%TV_CONFIG%%);
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
-interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
+interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitives.Button>, ButtonVariants {
 	isIconOnly?: boolean;
 }
 
 const Button = ({ variant, size, isIconOnly, className, children, ...props }: ButtonProps) => {
 	return (
-		<ButtonPrimitive.Button
+		<ButtonPrimitives.Button
 			data-button=""
 			data-icon-only={isIconOnly ? "" : undefined}
 			className={composeRenderProps(className, (cn) => buttonVariants({ variant, size, isIconOnly, className: cn }))}
@@ -45,7 +45,7 @@ const Button = ({ variant, size, isIconOnly, className, children, ...props }: Bu
 				<>
 					{isPending && (
 						<Loader
-							data-slot="spinner"
+							data-spinner=""
 							aria-label="loading"
 							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 						/>
@@ -53,17 +53,17 @@ const Button = ({ variant, size, isIconOnly, className, children, ...props }: Bu
 					{typeof children === "string" ? <span className="truncate">{children}</span> : children}
 				</>
 			))}
-		</ButtonPrimitive.Button>
+		</ButtonPrimitives.Button>
 	);
 };
 
-interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitive.Link>, ButtonVariants {
+interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitives.Link>, ButtonVariants {
 	isIconOnly?: boolean;
 }
 
 const LinkButton = ({ variant, size, isIconOnly, className, children, ...props }: LinkButtonProps) => {
 	return (
-		<LinkPrimitive.Link
+		<LinkPrimitives.Link
 			data-button=""
 			data-icon-only={isIconOnly ? "" : undefined}
 			className={composeRenderProps(className, (cn) => buttonVariants({ variant, size, isIconOnly, className: cn }))}
@@ -72,7 +72,7 @@ const LinkButton = ({ variant, size, isIconOnly, className, children, ...props }
 			{composeRenderProps(children, (children) => (
 				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
 			))}
-		</LinkPrimitive.Link>
+		</LinkPrimitives.Link>
 	);
 };
 
@@ -88,7 +88,7 @@ export const buttonPublishable: Publishable = {
         "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow] select-none",
         "focus-reset focus-visible:focus-ring",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        "pending:cursor-default pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+        "pending:cursor-default pending:bg-disabled pending:text-transparent pending:**:not-data-spinner:not-in-data-spinner:opacity-0 pending:**:data-spinner:text-fg-muted",
         "disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
       ],
       variants: {

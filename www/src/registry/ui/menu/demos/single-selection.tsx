@@ -1,8 +1,4 @@
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-} from "@/registry/__generated__/icons"
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Menu,

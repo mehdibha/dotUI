@@ -260,12 +260,14 @@ const radarTooltip: ChartTooltipContentOf<RadarChartSpecOptions<any>> = (
   };
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type RadarChartProps<TDatum> = ChartComponentProps<
   RadarChartSpecOptions<TDatum>,
   TDatum
 >;
 
-export function RadarChart<TDatum>(props: RadarChartProps<TDatum>) {
+export const RadarChart = <TDatum,>(props: RadarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     RadarChartSpecOptions<TDatum>
@@ -279,4 +281,4 @@ export function RadarChart<TDatum>(props: RadarChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

@@ -1,6 +1,8 @@
 import { memo } from "react"
 
+import { useDensity } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import type { Density } from "@/registry/types"
 import { AccountMenu } from "@/components/showcase/account-menu"
 import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
@@ -222,7 +224,7 @@ function CanvasColumn({
   return (
     <div
       className={cn(
-        "flex flex-col gap-(--gap) [contain-intrinsic-size:340px_1200px]",
+        "flex flex-col gap-(--gap) [contain-intrinsic-size:var(--col)_1200px]",
         SHADOW_ROOM,
         className,
       )}
@@ -242,20 +244,33 @@ function CanvasCard({ card }: { card: CardKey }) {
   )
 }
 
+// Card width per density: denser controls fit narrower cards, roomier ones
+// need wider cards to keep the same content per row.
+const COLUMN_WIDTH: Record<Density, number> = {
+  compact: 300,
+  default: 340,
+  comfortable: 360,
+  spacious: 380,
+  touch: 420,
+}
+
 export function CardsCanvas() {
+  const density = useDensity()
   return (
-    <div className="no-scrollbar min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]">
+    <div
+      style={{ "--col": `${COLUMN_WIDTH[density]}px` } as React.CSSProperties}
+      className="no-scrollbar min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]"
+    >
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
       <div className="flex w-full min-w-max justify-center">
-        {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
-            so tightening --gap keeps cards life-size instead of growing them. */}
-        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2208px]">
+        {/* 6 columns + 5 gaps + 2 edge paddings. */}
+        <div className="grid w-[calc(var(--col)*6+var(--gap)*7)] grid-cols-6 items-start gap-(--gap) p-(--gap)">
           <CanvasColumn cards={CANVAS_1} />
           <CanvasColumn cards={CANVAS_2} />
           <div
             className={cn(
-              "col-span-2 flex flex-col gap-(--gap) [contain-intrinsic-size:790px_1200px]",
+              "col-span-2 flex flex-col gap-(--gap) [contain-intrinsic-size:calc(var(--col)*2+var(--gap))_1200px]",
               SHADOW_ROOM,
             )}
           >

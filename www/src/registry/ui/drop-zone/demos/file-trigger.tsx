@@ -1,4 +1,4 @@
-import { UploadIcon } from "@/registry/__generated__/icons"
+import { UploadIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { DropZone, DropZoneLabel } from "@/registry/ui/drop-zone"
 import { FileTrigger } from "@/registry/ui/file-trigger"

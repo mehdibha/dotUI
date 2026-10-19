@@ -2,13 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import colorSliderMeta from "./meta"
 
-const { useStyles, styles } = createStyles(colorSliderMeta, {
+const { useStyles } = createStyles(colorSliderMeta, {
   base: {
     slots: {
       root: "flex flex-col gap-2",
       output: "text-sm text-fg-muted tabular-nums",
       track:
-        "relative rounded-(--studio-color-slider-radius) disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-[slot=color-thumb]:top-1/2 orientation-vertical:**:data-[slot=color-thumb]:left-1/2",
+        "relative rounded-(--studio-color-slider-radius) disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-color-thumb:top-1/2 orientation-vertical:**:data-color-thumb:left-1/2",
     },
     variants: {
       orientation: {
@@ -26,15 +26,6 @@ const { useStyles, styles } = createStyles(colorSliderMeta, {
       orientation: "horizontal",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
 })
-
-export type ColorSliderStyles = typeof styles
 
 export { useStyles }

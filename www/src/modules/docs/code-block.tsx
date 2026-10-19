@@ -8,7 +8,7 @@ import { Button } from "@/registry/ui/button"
 const CodeBlockContext =
   createContext<React.RefObject<HTMLElement | null> | null>(null)
 
-export interface CodeBlockProps extends React.ComponentProps<"figure"> {
+interface CodeBlockProps extends React.ComponentProps<"figure"> {
   title?: string
   actions?: React.ReactNode
   icon?: string | React.ReactNode

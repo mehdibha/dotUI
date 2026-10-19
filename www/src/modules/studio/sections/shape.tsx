@@ -1,20 +1,35 @@
 "use client"
 
-/* Shape — the base radius on the main page; on the Shape page, the rung each
-   role of component wears on it, and the tracks. */
+/* Shape — on the main page, the Radius picker: a few shapes that set every
+   corner, then Custom. On the Shape page, the base radius, the rung each role
+   of component wears on it, the tracks, and the components with corners of
+   their own. */
 
+import type { Effective } from "../axes"
 import {
+  pickShape,
   RADIUS_RANGE,
   roleRadiusPx,
   roleRatio,
   SHAPE_ROLES,
   SHAPE_RUNGS,
+  shapeOf,
 } from "../axes/shape"
-import type { ShapeRoleKey } from "../axes/shape"
-import { STROKE_OPTIONS, TRACK_OPTIONS } from "../axes/shape.meta"
-import { DialSelect, DialSlider } from "../dial"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import type { ShapeId, ShapeRoleKey } from "../axes/shape"
+import {
+  SHAPE_OPTIONS,
+  STROKE_OPTIONS,
+  TRACK_OPTIONS,
+} from "../axes/shape.meta"
+import {
+  DialLink,
+  DialPopover,
+  DialSelect,
+  DialSlider,
+  DialTrigger,
+} from "../dial"
+import type { RowMap } from "../row-host"
+import { valueLabel } from "../use-axis"
 import { useStudio } from "../use-studio"
 
 const px = (value: number) => `${Math.round(value * 10) / 10}px`
@@ -37,7 +52,21 @@ export function ShapePreview({ state }: { state: Effective }) {
   )
 }
 
-/* ---------------------------------- Rows ----------------------------------- */
+/** The main page's Radius: a shape sets every corner; Custom opens the page. */
+export function ShapeRow() {
+  const { state, setState } = useStudio()
+  return (
+    <DialSelect
+      label="Radius"
+      value={shapeOf(state) ?? "Custom"}
+      options={SHAPE_OPTIONS}
+      onChange={(id) => setState(pickShape(state, id as ShapeId))}
+    >
+      {/* Inset like the shapes above it. */}
+      <DialLink page="shape" label="Custom" value={null} className="px-2.5" />
+    </DialSelect>
+  )
+}
 
 const ROLE_LABELS = Object.fromEntries(
   SHAPE_ROLES.map(({ key, label }) => [key, label]),
@@ -94,6 +123,31 @@ const ControlStrokeRow = () => (
 const TracksRow = () => (
   <DialSelect axis="tracks" label="Tracks" options={TRACK_OPTIONS} />
 )
+
+/* Corners a component keeps apart from its role; each edits on its own page. */
+const COMPONENT_CORNERS = [
+  { page: "button", key: "buttonRadius", label: "Button corners" },
+  { page: "badge", key: "badgeShape", label: "Badge shape" },
+] as const
+
+/** The Shape page's way to the components with corners of their own. */
+export function ComponentCornersRow() {
+  const { state } = useStudio()
+  return (
+    <DialTrigger label="Components" value={null}>
+      <DialPopover>
+        {COMPONENT_CORNERS.map(({ page, key, label }) => (
+          <DialLink
+            key={key}
+            page={page}
+            label={label}
+            value={valueLabel(key, state[key])}
+          />
+        ))}
+      </DialPopover>
+    </DialTrigger>
+  )
+}
 
 export const ROWS: RowMap = {
   radiusPx: RadiusRow,

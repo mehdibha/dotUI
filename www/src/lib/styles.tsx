@@ -8,7 +8,6 @@ import type {
   ClassValue,
   TVReturnType,
   TVReturnTypeLike,
-  VariantProps,
 } from "tailwind-variants"
 
 import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
@@ -70,6 +69,11 @@ function slotOf(name: string): ParamSlot | undefined {
 // Names past the last slot read the whole map.
 const ParamsContext = React.createContext(noParams)
 const DensityContext = React.createContext<Density>("default")
+
+/** The nearest provider's density. */
+function useDensity() {
+  return React.use(DensityContext)
+}
 
 /** Param selections and density: all that `useStyles` consumers read. */
 function ComponentParamsProvider({
@@ -707,7 +711,7 @@ type CompoundVariantsOverride<Base> =
       }
     : { compoundVariants?: never }
 
-export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
+type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
   VariantsOverride<Base> &
   CompoundVariantsOverride<Base>
 
@@ -870,7 +874,6 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 }
 
-export type { VariantProps }
 export {
   ComponentParamsProvider,
   createDynamicComponent,
@@ -878,5 +881,6 @@ export {
   createStyles,
   DesignSystemProvider,
   useComponentParams,
+  useDensity,
   useParamSelections,
 }

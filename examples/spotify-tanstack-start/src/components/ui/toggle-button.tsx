@@ -2,13 +2,13 @@
 
 import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton";
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { createVariantsContext } from "@/lib/context";
 
-const toggleButtonStyles = tv({
-  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-base *:[svg]:not-with-[size]:size-5",
+const toggleButtonVariants = tv({
+  base: "relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-base *:[svg]:not-with-[size]:size-5",
   variants: {
     variant: {
       primary:
@@ -46,27 +46,31 @@ const toggleButtonStyles = tv({
   ],
 });
 
-type ToggleButtonVariants = VariantProps<typeof toggleButtonStyles>;
+export { toggleButtonVariants as toggleButtonStyles };
+
+type ToggleButtonVariants = VariantProps<typeof toggleButtonVariants>;
 
 /* -------------------------------------------------------------------------- */
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
   ToggleButtonVariants,
-  React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+  React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
   HTMLButtonElement
->(ToggleButtonPrimitive.ToggleButtonContext);
+>(ToggleButtonPrimitives.ToggleButtonContext);
 
 /* -------------------------------------------------------------------------- */
 
 interface ToggleButtonProps
   extends
-    React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
-    ToggleButtonVariants {}
+    React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
+    ToggleButtonVariants {
+  isIconOnly?: boolean;
+}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const {
     variant = "secondary",
-    size = "md",
+    size,
     isIconOnly,
     className,
     children,
@@ -74,18 +78,16 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   } = useContextProps(localProps);
 
   return (
-    <ToggleButtonPrimitive.ToggleButton
+    <ToggleButtonPrimitives.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
-      data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        toggleButtonStyles({
+      className={composeRenderProps(className, (className) =>
+        toggleButtonVariants({
           variant,
           size,
           isIconOnly,
-          className: cn,
+          className,
         }),
       )}
       {...props}
@@ -97,11 +99,11 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
           children
         ),
       )}
-    </ToggleButtonPrimitive.ToggleButton>
+    </ToggleButtonPrimitives.ToggleButton>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 export type { ToggleButtonProps };
-export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };
+export { ToggleButton, ToggleButtonProvider };
