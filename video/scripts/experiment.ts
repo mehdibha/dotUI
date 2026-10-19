@@ -55,6 +55,9 @@ if (mode === "stills") {
       jpegQuality: 88,
       scale: Number(flag("scale") ?? 0.8),
       puppeteerInstance: browser,
+      onBrowserLog: (log) => {
+        if (log.text.startsWith("DUMP")) console.log(log.text)
+      },
     })
     console.log(output)
   }
