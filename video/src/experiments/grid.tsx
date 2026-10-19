@@ -42,6 +42,7 @@ import { CHAPTERS } from "@/modules/studio/state"
 import { ease, lerp, progress } from "../lib/motion"
 import { panelSystem, studioAt } from "../lib/studio"
 import { preset, Theme, WarmIcons } from "../lib/theme"
+import { Outro, OUTRO_FRAMES } from "./outro"
 import type { Look, Rgba } from "./steps"
 import {
   cardWidth,
@@ -54,34 +55,86 @@ import {
   presetFaces,
   rgbaOf,
   STEPS_SIZE,
-  swapAt,
 } from "./steps"
 
-/* The Controls card morphing through every preset (the Steps film). At
-   about 7 s the camera pulls back on Controls' center while the cards of the
-   studio preview arrive around it one at a time, nearest first; then the
-   studio's panel slides in from the left and the preview settles into its
-   frame beside it, as /studio lays it out at 1920×1080. Every card is as
-   wide as Controls, so the wall widens and narrows with each density. */
+/* The Controls card morphing through the presets, then the studio around
+   it. At 7 s the camera pulls back from Controls into the studio's "cards"
+   canvas (Controls at its top left) while the other cards arrive. At 11 s,
+   on a held look, it eases out a little further to show the preview's frame;
+   then the panel slides in from the left, pushing the preview narrower. The
+   presets run at a varying tempo: steady, slow through the studio reveal,
+   then faster and faster until a hard stop, a pause, and the end screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
-/** The pull-back, on Controls' center, to the studio at 1920 px wide. */
-const ZOOM_AT = 420
-const ZOOM_FOR = 200
-const ZOOM_TO = STEPS_SIZE.width / 1920
-/** Cards arrive one after another, nearest first. */
-const ARRIVE_AT = ZOOM_AT + 20
-const ARRIVE_EVERY = 12
-const ARRIVE_FOR = 45
-/** Then the panel slides in and the preview takes its place beside it. */
-const PANEL_AT = 700
-const PANEL_FOR = 70
+/** The pull-back from Controls at true size into the preview. */
+const PULL_AT = 420
+const PULL_FOR = 220
+/** Cards arrive as the pull-back starts, nearest Controls first. */
+const ARRIVE_AT = PULL_AT + 10
+const ARRIVE_SPREAD = 110
+const ARRIVE_FOR = 60
+/** The preview's frame comes into view. */
+const REVEAL_AT = 660
+const REVEAL_FOR = 55
+/** The panel pushes in, slow and linear. */
+const PUSH_AT = REVEAL_AT + REVEAL_FOR
+const PUSH_FOR = 140
 
-/** /studio at 1920×1080: the panel, and the preview framed beside it. */
+/** /studio at 1920×1080: the preview alone (padded), then the panel and the
+    preview beside it, drawn at the frame's 1200/1920. */
+const ZOOM_TO = STEPS_SIZE.width / 1920
 const STUDIO = {
+  alone: { x: 24, y: 24, width: 1872, height: 1032 },
   panel: { x: 24, y: 24, width: 256, height: 1032 },
-  preview: { x: 304, y: 24, width: 1592, height: 1032, radius: 12 },
+  preview: { x: 304, y: 24, width: 1592, height: 1032 },
+  radius: 12,
+}
+/** Before the reveal, the preview overfills the frame by this much. */
+const BLEED = 10
+const ZOOM_IN = (STEPS_SIZE.height + 2 * BLEED) / STUDIO.alone.height
+
+/** Every swap of look: the frame it's centered on and how long it morphs. */
+const SWAPS = (() => {
+  const swaps: { at: number; morph: number }[] = []
+  // Steady, one look a second, Controls alone.
+  for (let at = 60; at <= 420; at += 60) swaps.push({ at, morph: 44 })
+  // Slower through the pull-back; none during the reveal; one, slower
+  // still, as the panel pushes in.
+  swaps.push({ at: 515, morph: 70 }, { at: 615, morph: 70 })
+  swaps.push({ at: 785, morph: 90 })
+  // Then faster and faster, to a hard stop back on the first look.
+  let at = 870
+  for (const gap of [
+    54, 46, 39, 33, 28, 24, 20, 17, 15, 13, 11, 10, 9, 8, 8, 8, 8, 8, 8, 8, 8,
+  ]) {
+    swaps.push({ at, morph: Math.min(44, Math.round(gap * 0.8)) })
+    at += gap
+  }
+  swaps.push({ at, morph: 6 })
+  return swaps
+})()
+const lookOf = (i: number) => LOOKS[i % LOOKS.length]!
+const STOP = SWAPS.at(-1)!.at + 3
+/** The pause on the last look, then the end screens. */
+const OUTRO_AT = STOP + 45
+export const GRID_FRAMES = OUTRO_AT + OUTRO_FRAMES
+
+/** The look pair and eased progress at `frame`. */
+function lookAt(frame: number) {
+  const k = SWAPS.findIndex(
+    ({ at, morph }) => frame >= at - morph / 2 && frame < at + morph / 2,
+  )
+  if (k >= 0) {
+    const { at, morph } = SWAPS[k]!
+    return {
+      from: lookOf(k),
+      to: lookOf(k + 1),
+      t: progress(frame, at - morph / 2, morph, ease.camera),
+    }
+  }
+  const settled = SWAPS.filter(({ at, morph }) => frame >= at + morph / 2)
+  return { from: lookOf(settled.length), to: lookOf(settled.length), t: 0 }
 }
 
 // Every showcase card, laid out flat: no content-visibility, which would
@@ -133,27 +186,80 @@ function Column({ cards }: { cards: CardKey[] }) {
   )
 }
 
-/** Columns left to right; the middle one holds Controls. */
-const COLUMNS: CardKey[][] = [
-  ["storage", "booking", "loginForm"],
-  ["filters", "commandMenu", "twoFactor"],
-  ["displaySettings", "controls", "pricingPlans"],
-  ["accountMenu", "cookiePreferences", "payment"],
-  ["notifications", "faq", "teamName"],
-]
-const MIDDLE = 2
-/** Each side column's stack is centered on Controls, then nudged by this
-    much so the rows don't line up. */
-const STAGGER = [-90, 60, 0, -40, 80]
-
-function Wall({ col }: { col: number }) {
+/** The studio's "cards" canvas (www CardsCanvas), its columns as wide as
+    the Controls card in the Steps film, per density. */
+function Canvas({ col }: { col: number }) {
   return (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: GAP }}>
-      {COLUMNS.map((cards, i) => (
-        <div key={i} data-grid-column={i} style={{ width: col }}>
-          <Column cards={cards} />
+    <div
+      style={{
+        display: "grid",
+        width: col * 6 + GAP * 7,
+        gridTemplateColumns: `repeat(6, ${col}px)`,
+        alignItems: "start",
+        gap: GAP,
+        padding: GAP,
+      }}
+    >
+      <Column
+        cards={[
+          "controls",
+          "twoFactor",
+          "filters",
+          "accountMenu",
+          "customDomain",
+        ]}
+      />
+      <Column
+        cards={["commandMenu", "payment", "storage", "loginForm", "emptyState"]}
+      />
+      <div
+        style={{
+          gridColumn: "span 2",
+          display: "flex",
+          flexDirection: "column",
+          gap: GAP,
+        }}
+      >
+        <Column cards={["aiPrompt"]} />
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            alignItems: "start",
+            gap: GAP,
+          }}
+        >
+          <Column
+            cards={["metrics", "booking", "agentTasks", "connectedTools"]}
+          />
+          <Column
+            cards={[
+              "uploadAvatar",
+              "pricingPlans",
+              "supportChat",
+              "approvalPrompt",
+            ]}
+          />
         </div>
-      ))}
+      </div>
+      <Column
+        cards={[
+          "computerUse",
+          "notifications",
+          "faq",
+          "displaySettings",
+          "usageCredits",
+        ]}
+      />
+      <Column
+        cards={[
+          "inviteMembers",
+          "appearance",
+          "colorEditor",
+          "cookiePreferences",
+          "teamName",
+        ]}
+      />
     </div>
   )
 }
@@ -166,40 +272,26 @@ interface Placed {
 
 interface Layout {
   page: Rgba
-  /** Card corners from Controls' corner. */
+  /** Card corners from the canvas' corner. */
   cards: Map<string, Placed>
 }
 
 async function measure(probe: HTMLElement): Promise<Layout | null> {
-  const wall = probe.firstElementChild as HTMLElement | null
-  if (!wall?.offsetHeight) return null
+  const grid = probe.firstElementChild as HTMLElement | null
+  if (!grid?.offsetHeight) return null
   const page = rgbaOf(getComputedStyle(probe).backgroundColor)
-  const controls = probe
-    .querySelector('[data-grid-card="controls"]')!
-    .firstElementChild!.getBoundingClientRect()
+  const origin = grid.getBoundingClientRect()
   const cards = new Map<string, Placed>()
-  for (const column of probe.querySelectorAll<HTMLElement>(
-    "[data-grid-column]",
-  )) {
-    const i = Number(column.dataset.gridColumn)
-    const r = column.getBoundingClientRect()
-    const shift =
-      i === MIDDLE
-        ? 0
-        : controls.y + controls.height / 2 - (r.y + r.height / 2) + STAGGER[i]!
-    for (const slot of column.querySelectorAll<HTMLElement>(
-      "[data-grid-card]",
-    )) {
-      // Each card's root is its surface (the AI prompt is a plain div).
-      const card = slot.firstElementChild as HTMLElement | null
-      if (!card) continue
-      const c = card.getBoundingClientRect()
-      cards.set(slot.dataset.gridCard!, {
-        x: c.x - controls.x,
-        y: c.y - controls.y + shift,
-        look: await measureCard(card, page),
-      })
-    }
+  for (const slot of probe.querySelectorAll<HTMLElement>("[data-grid-card]")) {
+    // Each card's root is its surface (the AI prompt is a plain div).
+    const card = slot.firstElementChild as HTMLElement | null
+    if (!card) continue
+    const r = card.getBoundingClientRect()
+    cards.set(slot.dataset.gridCard!, {
+      x: r.x - origin.x,
+      y: r.y - origin.y,
+      look: await measureCard(card, page),
+    })
   }
   return { page, cards }
 }
@@ -208,6 +300,41 @@ const centerOf = (a: Placed, b: Placed, t: number) => ({
   x: lerp(a.x + a.look.card.width / 2, b.x + b.look.card.width / 2, t),
   y: lerp(a.y + a.look.card.height / 2, b.y + b.look.card.height / 2, t),
 })
+
+type Rect = { x: number; y: number; width: number; height: number }
+const lerpRect = (a: Rect, b: Rect, t: number) => ({
+  x: lerp(a.x, b.x, t),
+  y: lerp(a.y, b.y, t),
+  width: lerp(a.width, b.width, t),
+  height: lerp(a.height, b.height, t),
+})
+const scaleRect = (r: Rect, s: number) => ({
+  x: r.x * s,
+  y: r.y * s,
+  width: r.width * s,
+  height: r.height * s,
+})
+
+/** The preview's rect in the frame (frame px) at `frame`, and the canvas'
+    scale inside it. */
+function previewAt(frame: number) {
+  const reveal = progress(frame, REVEAL_AT, REVEAL_FOR, ease.camera)
+  const push = progress(frame, PUSH_AT, PUSH_FOR, ease.linear)
+  const bled = {
+    x: -BLEED,
+    y: -BLEED,
+    width: STUDIO.alone.width * ZOOM_IN,
+    height: STUDIO.alone.height * ZOOM_IN,
+  }
+  const alone = scaleRect(STUDIO.alone, ZOOM_TO)
+  const beside = scaleRect(STUDIO.preview, ZOOM_TO)
+  return {
+    reveal,
+    push,
+    view: lerpRect(lerpRect(bled, alone, reveal), beside, push),
+    zoom: Math.exp(lerp(Math.log(ZOOM_IN), Math.log(ZOOM_TO), reveal)),
+  }
+}
 
 function draw(
   ctx: CanvasRenderingContext2D,
@@ -221,59 +348,71 @@ function draw(
   const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
   paintPage(ctx, a.page, b.page, t, rand)
 
-  // The preview starts as the whole frame and ends in its studio frame;
-  // Controls stays on the preview's center throughout.
-  const zoom = Math.exp(
-    lerp(0, Math.log(ZOOM_TO), progress(frame, ZOOM_AT, ZOOM_FOR, ease.camera)),
-  )
-  const p = progress(frame, PANEL_AT, PANEL_FOR, ease.camera)
-  const { preview } = STUDIO
-  const view = {
-    x: lerp(0, preview.x * ZOOM_TO, p) * dpr,
-    y: lerp(0, preview.y * ZOOM_TO, p) * dpr,
-    width: lerp(STEPS_SIZE.width, preview.width * ZOOM_TO, p) * dpr,
-    height: lerp(STEPS_SIZE.height, preview.height * ZOOM_TO, p) * dpr,
-    radius: lerp(0, preview.radius * ZOOM_TO, p) * dpr,
-  }
+  // First Controls at true size on the frame's center; the pull-back brings
+  // the canvas' corner to the preview's, the preview just past the frame.
+  const { reveal, view, zoom } = previewAt(frame)
   const home = centerOf(a.cards.get("controls")!, b.cards.get("controls")!, t)
-  const scale = dpr * zoom
-  const ox = view.x + view.width / 2 - home.x * scale
-  const oy = view.y + view.height / 2 - home.y * scale
+  const pull = progress(frame, PULL_AT, PULL_FOR, ease.camera)
+  const z = pull < 1 ? Math.exp(lerp(0, Math.log(zoom), pull)) : zoom
+  const center = { x: STEPS_SIZE.width / 2, y: STEPS_SIZE.height / 2 }
+  const corner = {
+    x: (center.x - view.x) / zoom,
+    y: (center.y - view.y) / zoom,
+  }
+  const focus = {
+    x: lerp(home.x, corner.x, pull),
+    y: lerp(home.y, corner.y, pull),
+  }
+  const scale = dpr * z
+  const ox = center.x * dpr - focus.x * scale
+  const oy = center.y * dpr - focus.y * scale
 
+  // Cards right of or below the preview are hidden by the chrome: skip.
+  const right = (view.x + view.width) * dpr
+  const bottom = (view.y + view.height) * dpr
   for (const [key, pa] of a.cards) {
     const pb = b.cards.get(key)
     if (!pb) continue
     let [dx, dy, alpha] = [0, 0, 1]
     if (key !== "controls") {
-      // Each card comes in from further out along the line from Controls.
+      // Each card comes in from further out along the line from Controls,
+      // the nearest first.
       const c = centerOf(pa, pb, t)
       const [vx, vy] = [c.x - home.x, c.y - home.y]
-      const start = ARRIVE_AT + arrivalOf(key) * ARRIVE_EVERY
+      const start =
+        ARRIVE_AT + Math.min(Math.hypot(vx, vy) / 2000, 1) * ARRIVE_SPREAD
       const q = progress(frame, start, ARRIVE_FOR, ease.out)
       if (q <= 0) continue
-      ;[dx, dy, alpha] = [vx * 0.25 * (1 - q), vy * 0.25 * (1 - q), q]
+      ;[dx, dy, alpha] = [vx * 0.3 * (1 - q), vy * 0.3 * (1 - q), q]
     }
     const x = ox + (lerp(pa.x, pb.x, t) + dx) * scale
     const y = oy + (lerp(pa.y, pb.y, t) + dy) * scale
     const w = lerp(pa.look.card.width, pb.look.card.width, t) * scale
     const h = lerp(pa.look.card.height, pb.look.card.height, t) * scale
-    // Off-frame cards cost a whole card of text each: skip them.
-    if (x > W || y > H || x + w < 0 || y + h < 0) continue
+    if (x > Math.min(W, right) || y > Math.min(H, bottom) || x + w < 0) continue
+    if (y + h < 0) continue
     ctx.globalAlpha = alpha
     paintCard(ctx, pa.look, pb.look, t, x, y, scale, rand)
   }
   ctx.globalAlpha = 1
 
-  // The site's chrome closes in around the preview, with its hairline.
-  if (p > 0 && chrome) {
+  // The site's chrome around the preview, with its hairline.
+  if (reveal > 0 && chrome) {
+    const r = {
+      x: view.x * dpr,
+      y: view.y * dpr,
+      width: view.width * dpr,
+      height: view.height * dpr,
+    }
+    const radius = STUDIO.radius * ZOOM_TO * dpr
     ctx.beginPath()
     ctx.rect(0, 0, W, H)
-    ctx.roundRect(view.x, view.y, view.width, view.height, view.radius)
+    ctx.roundRect(r.x, r.y, r.width, r.height, radius)
     ctx.fillStyle = css(chrome.fill)
     ctx.fill("evenodd")
     ctx.beginPath()
-    ctx.roundRect(view.x, view.y, view.width, view.height, view.radius)
-    ctx.strokeStyle = css(chrome.border, chrome.border[3] * p)
+    ctx.roundRect(r.x, r.y, r.width, r.height, radius)
+    ctx.strokeStyle = css(chrome.border, chrome.border[3] * reveal)
     ctx.lineWidth = ZOOM_TO * dpr
     ctx.stroke()
   }
@@ -282,36 +421,13 @@ function draw(
 /** The site's dark chrome around the preview: its background and hairline. */
 let chrome: { fill: Rgba; border: Rgba } | null = null
 
-/** Each card's place in the arrival order: nearest Controls first, in the
-    first look's layout so every render tab agrees. */
-let arrival: Map<string, number> | null = null
-function arrivalOf(key: string) {
-  if (!arrival) {
-    const first = layouts.get(ORDER[0]!)!
-    const home = centerOf(
-      first.cards.get("controls")!,
-      first.cards.get("controls")!,
-      0,
-    )
-    arrival = new Map(
-      [...first.cards]
-        .filter(([k]) => k !== "controls")
-        .map(([k, p]) => {
-          const c = centerOf(p, p, 0)
-          return [k, Math.hypot(c.x - home.x, c.y - home.y)] as const
-        })
-        .sort((x, y) => x[1] - y[1])
-        .map(([k], i) => [k, i]),
-    )
-  }
-  return arrival.get(key) ?? 0
-}
-
 const layouts = new Map<string, Layout>()
 
 export function GridStep() {
   const frame = useCurrentFrame()
-  const { from, to, t } = swapAt(frame)
+  const outro = frame >= OUTRO_AT
+  // The canvas holds its last look through the outro.
+  const { from, to, t } = lookAt(outro ? OUTRO_AT - 1 : frame)
   const canvas = useRef<HTMLCanvasElement>(null)
   const probes = useRef<Record<string, HTMLDivElement | null>>({})
   const chromeProbe = useRef<HTMLDivElement>(null)
@@ -320,6 +436,10 @@ export function GridStep() {
 
   useLayoutEffect(() => {
     const handle = delayRender("grid step")
+    if (outro) {
+      continueRender(handle)
+      return
+    }
     let raf = 0
     let tries = 0
     let alive = true
@@ -356,7 +476,7 @@ export function GridStep() {
       cancelAnimationFrame(raf)
       continueRender(handle)
     }
-  }, [from, to, t, frame])
+  }, [from, to, t, frame, outro])
 
   return (
     <AbsoluteFill>
@@ -373,7 +493,7 @@ export function GridStep() {
                 className="bg-bg"
                 style={{ position: "absolute", opacity: 0 }}
               >
-                <Wall col={cardWidth(id)} />
+                <Canvas col={cardWidth(id)} />
               </div>
             </Theme>
           )),
@@ -392,18 +512,21 @@ export function GridStep() {
         height={Math.round(STEPS_SIZE.height * dpr)}
         style={{ width: "100%", height: "100%" }}
       />
-      <Panel frame={frame} look={t < 0.5 ? from : to} />
+      {!outro && <Panel frame={frame} look={t < 0.5 ? from : to} />}
+      {outro && <Outro frame={frame - OUTRO_AT} />}
     </AbsoluteFill>
   )
 }
 
 /** The real studio panel in the site's dark chrome, at its 1920×1080 place,
-    sliding in from the left; it shows the look on screen. */
+    its right edge pushing the preview's left; it shows the look on screen. */
 function Panel({ frame, look }: { frame: number; look: string }) {
-  const p = progress(frame, PANEL_AT, PANEL_FOR, ease.camera)
-  if (p <= 0) return null
+  const { push, view } = previewAt(frame)
+  if (push <= 0) return null
   const { panel } = STUDIO
   const state = preset(look)
+  // The panel keeps the studio's gap to the preview's edge.
+  const shift = view.x / ZOOM_TO - STUDIO.preview.x
   return (
     <div
       style={{
@@ -423,7 +546,7 @@ function Panel({ frame, look }: { frame: number; look: string }) {
             top: panel.y,
             width: panel.width,
             height: panel.height,
-            transform: `translateX(${-(1 - p) * (panel.x + panel.width + 24)}px)`,
+            transform: `translateX(${shift}px)`,
           }}
         >
           <PanelPage
