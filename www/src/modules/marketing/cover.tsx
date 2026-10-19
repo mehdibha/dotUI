@@ -2,32 +2,72 @@
 
 import { useEffect } from "react"
 
-import { siteConfig } from "@/config/site"
 import { DesignSystemProvider } from "@/lib/styles"
+import { cn } from "@/registry/lib/utils"
 import { CardsGrid } from "@/components/showcase/cards-grid"
 import { resolvePreset } from "@/modules/presets"
 
-const PRESETS: { preset: string; mode: "light" | "dark" }[] = [
-  { preset: "origin", mode: "light" },
-  { preset: "vercel", mode: "dark" },
-  { preset: "airbnb", mode: "light" },
-  { preset: "linear", mode: "dark" },
-  { preset: "claude", mode: "light" },
-  { preset: "carbon", mode: "dark" },
-  { preset: "material3", mode: "light" },
-  { preset: "spotify", mode: "dark" },
+type Side = "top" | "right" | "bottom" | "left"
+
+// The clear area around the logo is 2 × HALF_W by 2 × HALF_H; containers run
+// BLEED past the canvas edge.
+const BLEED = -40
+const HALF_W = 220
+const HALF_H = 112
+const GUTTER = 56
+
+const fromCenter = (px: number) => `calc(50% + ${px}px)`
+
+const SLOTS: {
+  preset: string
+  mode: "light" | "dark"
+  inset: Record<Side, number | string>
+}[] = [
+  {
+    preset: "origin",
+    mode: "light",
+    inset: {
+      top: BLEED,
+      left: BLEED,
+      right: fromCenter(HALF_W),
+      bottom: fromCenter(GUTTER - HALF_H),
+    },
+  },
+  {
+    preset: "linear",
+    mode: "dark",
+    inset: {
+      top: BLEED,
+      right: BLEED,
+      left: fromCenter(GUTTER - HALF_W),
+      bottom: fromCenter(HALF_H),
+    },
+  },
+  {
+    preset: "claude",
+    mode: "light",
+    inset: {
+      bottom: BLEED,
+      right: BLEED,
+      left: fromCenter(HALF_W),
+      top: fromCenter(GUTTER - HALF_H),
+    },
+  },
+  {
+    preset: "spotify",
+    mode: "dark",
+    inset: {
+      bottom: BLEED,
+      left: BLEED,
+      right: fromCenter(GUTTER - HALF_W),
+      top: fromCenter(HALF_H),
+    },
+  },
 ]
 
-const STEP = 76
-
-const [lead, rest] = siteConfig.tagline.split(/ (?=for )/)
-
-function PresetContainer({
-  preset,
-  mode,
-  index,
-}: (typeof PRESETS)[number] & { index: number }) {
+function PresetContainer({ preset, mode, inset }: (typeof SLOTS)[number]) {
   const designSystem = resolvePreset(preset)
+  const pad = (side: Side) => (inset[side] === BLEED ? 20 - BLEED : 20)
   return (
     <DesignSystemProvider
       scoped
@@ -40,12 +80,18 @@ function PresetContainer({
     >
       <div
         style={{
-          left: index * STEP,
-          right: (PRESETS.length - 1 - index) * STEP,
+          ...inset,
+          paddingTop: pad("top"),
+          paddingRight: pad("right"),
+          paddingBottom: pad("bottom"),
+          paddingLeft: pad("left"),
         }}
-        className="absolute top-0 h-[480px] overflow-hidden rounded-2xl border border-border bg-bg p-5 shadow-[-16px_0_40px_-16px_rgb(56_30_30/0.45),0_24px_64px_-24px_rgb(56_30_30/0.4)]"
+        className={cn(
+          "absolute overflow-hidden rounded-2xl border bg-bg",
+          mode === "dark" ? "border-white/15" : "border-border",
+        )}
       >
-        <CardsGrid side={false} className="w-[1016px] zoom-[0.6]" />
+        <CardsGrid side={false} className="w-[1120px] zoom-[0.7]" />
       </div>
     </DesignSystemProvider>
   )
@@ -55,17 +101,15 @@ function PresetContainer({
    `scripts/capture-cover.mts` screenshots it at each size it ships in. */
 export function Cover() {
   return (
-    <div className="relative flex h-svh w-svw flex-col items-center overflow-hidden bg-[#f2efec] pt-12 font-sans text-[#231613]">
-      <img src="/brand/dotui-wordmark.svg" alt="dotUI" className="h-9" />
-      <h1 className="mt-6 font-features-['calt'_0,'rlig','ss11'] text-[44px] leading-none font-normal tracking-[-0.06em] antialiased">
-        {lead} <span className="text-[#8c7a72]">{rest}</span>
-      </h1>
-      <div className="relative mx-12 mt-10 flex-1 self-stretch">
-        {PRESETS.map((p, i) => (
-          <PresetContainer key={p.preset} {...p} index={i} />
-        ))}
-      </div>
-      <div className="absolute inset-x-0 bottom-0 z-10 h-4 bg-[#381e1e]" />
+    <div className="relative h-svh w-svw overflow-hidden bg-[#1a100f]">
+      {SLOTS.map((slot) => (
+        <PresetContainer key={slot.preset} {...slot} />
+      ))}
+      <img
+        src="/brand/dotui-wordmark-white.svg"
+        alt="dotUI"
+        className="absolute top-1/2 left-1/2 h-20 -translate-1/2"
+      />
       <ReadySignal />
     </div>
   )
