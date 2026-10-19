@@ -2,6 +2,15 @@
   "name": "SegmentedControlProps",
   "description": "A segmented control lets the user pick one option from a small, mutually\nexclusive set, with a pill indicator that slides to the selection.",
   "props": {
+    "disallowEmptySelection": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the collection allows empty selection.",
+      "default": "true"
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -126,14 +135,6 @@
         ]
       },
       "description": "The initial selected keys in the collection (uncontrolled)."
-    },
-    "disallowEmptySelection": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the collection allows empty selection."
     },
     "isDisabled": {
       "type": "boolean",

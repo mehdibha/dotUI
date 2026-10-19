@@ -16,6 +16,7 @@ import { Select } from "@/registry/ui/select"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
+import type { Effective } from "../axes"
 import { TITLE_VOICE } from "../axes/type"
 import {
   FIELD_TEXT_OPTIONS,
@@ -25,10 +26,9 @@ import {
   UI_TEXT_OPTIONS,
 } from "../axes/type.meta"
 import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DialSelect } from "../dial"
-import { useRowLabel } from "../family-page"
-import type { RowMap } from "../family-page"
+import { useRowLabel } from "../row-host"
+import type { RowMap } from "../row-host"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
 
 type FontKey = "headingFont" | "bodyFont" | "monoFont"
@@ -127,8 +127,6 @@ export function TypePreview({ state }: { state: Effective }) {
   )
 }
 
-/* -------------------------------- Specimens -------------------------------- */
-
 const WEIGHTS: Record<string, number> = {
   normal: 400,
   medium: 500,
@@ -146,8 +144,6 @@ function titleSpecimen(value: string): React.CSSProperties {
     textTransform: value === "caps" ? "uppercase" : undefined,
   }
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 const HeadingRow = () => (
   <FontRow

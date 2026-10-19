@@ -19,6 +19,7 @@ import { Autocomplete, useFilter } from "react-aria-components/Autocomplete"
 import { useTheme } from "starter-themes"
 
 import { navItems, siteConfig } from "@/config/site"
+import { createPersistedStore } from "@/lib/persisted-store"
 import { useStyles as useCommandStyles } from "@/registry/ui/command/styles"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
@@ -36,7 +37,6 @@ import { GitHubIcon } from "@/components/icons/github"
 // that runs fully client-side.
 const searchClient = oramaStaticClient({ from: "/api/search" })
 
-const RECENT_KEY = "dotui.search.recent"
 const RECENT_LIMIT = 5
 
 interface RecentEntry {
@@ -44,34 +44,36 @@ interface RecentEntry {
   url: string
 }
 
-function readRecents(): RecentEntry[] {
-  try {
-    const parsed: unknown = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]")
-    if (!Array.isArray(parsed)) return []
-    return parsed
-      .filter(
-        (entry): entry is RecentEntry =>
-          typeof entry === "object" &&
-          entry !== null &&
-          typeof (entry as RecentEntry).title === "string" &&
-          typeof (entry as RecentEntry).url === "string",
-      )
-      .slice(0, RECENT_LIMIT)
-  } catch {
-    return []
-  }
+function isRecentEntry(entry: unknown): entry is RecentEntry {
+  return (
+    typeof entry === "object" &&
+    entry !== null &&
+    typeof (entry as RecentEntry).title === "string" &&
+    typeof (entry as RecentEntry).url === "string"
+  )
 }
 
+const recentStore = createPersistedStore<RecentEntry[]>(
+  "dotui.search.recent",
+  [],
+  {
+    decode: (raw) => {
+      const parsed: unknown = JSON.parse(raw)
+      return Array.isArray(parsed)
+        ? parsed.filter(isRecentEntry).slice(0, RECENT_LIMIT)
+        : []
+    },
+    encode: (entries) => JSON.stringify(entries),
+  },
+)
+
 function pushRecent(entry: RecentEntry) {
-  try {
-    const next = [
-      entry,
-      ...readRecents().filter((recent) => recent.url !== entry.url),
-    ].slice(0, RECENT_LIMIT)
-    localStorage.setItem(RECENT_KEY, JSON.stringify(next))
-  } catch {
-    // localStorage unavailable (private mode, quota) — recents just don't persist.
-  }
+  recentStore.update((recents) =>
+    [entry, ...recents.filter((recent) => recent.url !== entry.url)].slice(
+      0,
+      RECENT_LIMIT,
+    ),
+  )
 }
 
 /** Search result URLs are `/docs/...#anchor` strings; route them through the
@@ -139,7 +141,7 @@ export default function SearchDialog({
   const commandStyles = useCommandStyles()
   const { resolvedTheme, setTheme } = useTheme()
   const { search, setSearch, query } = useDocsSearch({ client: searchClient })
-  const [recents] = React.useState(readRecents)
+  const [recents] = React.useState(recentStore.get)
 
   React.useEffect(() => {
     // Warm the index (download + build) while the user starts typing.

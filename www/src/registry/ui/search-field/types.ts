@@ -5,4 +5,9 @@ import type * as SearchFieldPrimitives from "react-aria-components/SearchField"
  */
 export interface SearchFieldProps extends React.ComponentProps<
   typeof SearchFieldPrimitives.SearchField
-> {}
+> {
+  /**
+   * Temporary text shown in the input when it is empty.
+   */
+  placeholder?: string
+}

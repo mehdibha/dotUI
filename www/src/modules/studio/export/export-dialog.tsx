@@ -48,7 +48,7 @@ import { registryPath, useSource } from "@/modules/studio/share"
 import { CodeStyle } from "./code-style"
 import { buildPrompt } from "./prompt"
 import { OPEN_IN_TARGETS } from "./targets"
-import type { ExportUrl } from "./types"
+import type { ExportUrl } from "./use-export-url"
 import { useExportUrl } from "./use-export-url"
 
 const MODES = ["new", "existing"] as const

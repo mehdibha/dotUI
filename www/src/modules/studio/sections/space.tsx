@@ -4,8 +4,8 @@
 
 import { DENSITY_OPTIONS } from "../axes/space.meta"
 import { DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 
 function DensityRow() {
   return (

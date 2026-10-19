@@ -5,10 +5,11 @@
 
 import { Fragment } from "react"
 
+import type { ChapterPage, SearchRow } from "../chapters"
 import { DialGap, DialLink } from "../dial"
-import { Row, RowLabel } from "../family-page"
-import type { ChapterPage, SearchRow, Studio } from "../state"
+import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
+import type { Studio } from "../use-studio"
 import { PrimaryRow } from "./primary"
 import { ComponentCornersRow, ShapeRow } from "./shape"
 import {

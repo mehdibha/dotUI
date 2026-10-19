@@ -17,8 +17,8 @@ import {
   DialToggle,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
+import type { RowMap } from "../row-host"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import { useStudio } from "../use-studio"
 
@@ -36,8 +36,6 @@ function useStep() {
     m.scales[palette]?.[name] ?? m.background
   return { m, mode, step }
 }
-
-/* ---------------------------------- Rows ----------------------------------- */
 
 function BrandRow() {
   const { state, set } = useStudio()

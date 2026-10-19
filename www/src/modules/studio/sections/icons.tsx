@@ -13,8 +13,8 @@ import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { ICON_STROKE_WIDTH_VAR, STROKE_RANGE } from "../axes/icons"
 import { LIBRARY_OPTIONS, WEIGHT_OPTIONS } from "../axes/icons.meta"
 import { DialSelect, DialSlider } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 
 const SPECIMEN_ICONS = [SearchIcon, SettingsIcon, HeartIcon]
 

@@ -33,11 +33,9 @@ import {
   STYLE_OPTIONS as TOAST_OPTIONS,
 } from "../axes/toast.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
 
 /* The vars a pick writes (Rounded badges). */
 const LOCAL_VARS = ["--studio-badge-radius"]
@@ -199,8 +197,6 @@ const LOADERS: Record<string, typeof RingLoader> = {
   blades: BladesLoader,
   dots: DotsLoader,
 }
-
-/* ---------------------------------- Rows ---------------------------------- */
 
 function BadgeStyleRow() {
   const { state } = useStudio()

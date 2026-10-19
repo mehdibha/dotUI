@@ -52,8 +52,6 @@ export function People({ count = PEOPLE.length }: { count?: number }) {
   ))
 }
 
-/* ---------------------------------- Screen --------------------------------- */
-
 const PROJECTS = [
   { name: "Acme Web", meta: "Deployed 2h ago", tone: "bg-primary" },
   { name: "Billing API", meta: "Deployed yesterday", tone: "bg-success" },

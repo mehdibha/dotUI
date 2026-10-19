@@ -5,9 +5,10 @@
    layers, edge, shadow, overlays, the app shell, each mode's page tone and
    the control edges. */
 
-import type { StepName, Theme } from "@dotui/colors"
+import type { Mode, StepName, Theme } from "@dotui/colors"
 
 import { effective } from "../axes"
+import type { Effective } from "../axes"
 import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
@@ -17,12 +18,7 @@ import {
   surfaceLookOf,
   surfaceRecipe,
 } from "../axes/surfaces"
-import type {
-  Mode,
-  PerMode,
-  SurfaceColor,
-  SurfaceLookId,
-} from "../axes/surfaces"
+import type { PerMode, SurfaceColor, SurfaceLookId } from "../axes/surfaces"
 import {
   EDGE_OPTIONS,
   LAYERS_OPTIONS,
@@ -38,9 +34,8 @@ import {
   DialSlider,
   DialTrigger,
 } from "../dial"
-import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import type { Effective } from "../state"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
