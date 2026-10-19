@@ -15,15 +15,18 @@ export default function Demo({
   appearance = "solid",
   selectionMode = "none",
   removable = false,
+  size = "md",
 }: {
   label?: string
   description?: string
   appearance?: TagProps["appearance"]
   selectionMode?: TagGroupProps["selectionMode"]
   removable?: boolean
+  size?: TagGroupProps["size"]
 } = {}) {
   return (
     <TagGroup
+      size={size}
       selectionMode={selectionMode}
       onRemove={removable ? (keys) => console.log(keys) : undefined}
     >
