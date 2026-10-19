@@ -133,7 +133,7 @@ describe("deep links", () => {
       states: { page: "focus" },
       interaction: { page: "focus" },
       color: { page: "surfaces" },
-      motion: { key: "motion" },
+      motion: { page: "motion" },
     }
     for (const [hash, target] of Object.entries(old))
       expect(linkTarget(hash), hash).toEqual(target)

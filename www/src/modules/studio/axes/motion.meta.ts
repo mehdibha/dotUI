@@ -1,13 +1,12 @@
 import { options } from "./core/meta"
-import type { OptionMeta } from "./core/meta"
 import {
   COMPONENT_MOTION_KEYS,
-  COMPONENT_MOTION_VALUES,
   ENTRANCE_VALUES,
   MOTION_VALUES,
+  SPEED_VALUES,
 } from "./motion"
 
-const TEMPOS: Record<(typeof COMPONENT_MOTION_VALUES)[number], OptionMeta> = {
+export const MOTION_OPTIONS = options(MOTION_VALUES, {
   none: {
     label: "None",
     description: "No animation, changes are instant",
@@ -28,11 +27,13 @@ const TEMPOS: Record<(typeof COMPONENT_MOTION_VALUES)[number], OptionMeta> = {
     description: "Springy, with a little bounce",
     credits: ["Material 3"],
   },
-}
+})
 
-export const MOTION_OPTIONS = options(MOTION_VALUES, TEMPOS)
-
-export const COMPONENT_MOTION_OPTIONS = options(COMPONENT_MOTION_VALUES, TEMPOS)
+export const SPEED_OPTIONS = options(SPEED_VALUES, {
+  faster: { label: "Faster", description: "Every animation runs shorter" },
+  default: { label: "Default", description: "Each tempo's own timing" },
+  slower: { label: "Slower", description: "Every animation runs longer" },
+})
 
 /** What a component's own Motion row offers first: following the global. */
 export const SAME_AS_MOTION = {
@@ -61,9 +62,10 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
 
 export const OPTIONS = {
   motion: MOTION_OPTIONS,
+  motionSpeed: SPEED_OPTIONS,
   popoverEntrance: ENTRANCE_OPTIONS,
   tooltipEntrance: ENTRANCE_OPTIONS,
   ...Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, COMPONENT_MOTION_OPTIONS]),
+    COMPONENT_MOTION_KEYS.map((key) => [key, MOTION_OPTIONS]),
   ),
 }

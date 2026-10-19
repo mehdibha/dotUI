@@ -52,7 +52,7 @@ export const untitled = definePreset({
     // Motion: menus fade with a 2px nudge.
     popoverEntrance: "fade",
     tooltipEntrance: "fade",
-    chartMotion: "ease",
+    chartMotion: "smooth",
 
     // Buttons: Rim light's Auto field is the raised field.
     buttonStyle: "rim-light",
