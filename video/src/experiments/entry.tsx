@@ -4,6 +4,7 @@ import { Composition, registerRoot } from "remotion"
 
 import { Film } from "../film"
 import { FPS } from "../lib/timing"
+import { Catalog, CATALOG_FRAMES } from "./catalog"
 import { GRID_FRAMES, GridStep } from "./grid"
 import { CardStep, RealCard, STEPS_FRAMES, STEPS_SIZE } from "./steps"
 
@@ -31,8 +32,24 @@ function Real() {
   )
 }
 
+function Components() {
+  return (
+    <Film>
+      <Catalog />
+    </Film>
+  )
+}
+
 registerRoot(() => (
   <>
+    <Composition
+      id="Catalog"
+      component={Components}
+      durationInFrames={CATALOG_FRAMES}
+      fps={FPS}
+      width={STEPS_SIZE.width}
+      height={STEPS_SIZE.height}
+    />
     <Composition
       id="Grid"
       component={Grid}
