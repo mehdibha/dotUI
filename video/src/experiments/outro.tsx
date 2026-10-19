@@ -1,16 +1,19 @@
 import { ease, lerp, progress } from "../lib/motion"
 import { Theme } from "../lib/theme"
-import { Logo, LOGO_FRAMES } from "./logo"
+import { LogoOption, OPTION_FRAMES, OPTIONS } from "./logo-options"
 
 /* The end: three screens cut in hard after the presets stop, each one's
-   words arriving one after another, the last one the logo (logo.tsx). */
+   words arriving one after another, the last one the logo (logo-options.tsx). */
 
 const WORD_EVERY = 6
 const WORD_FOR = 18
 
 /** Where each screen starts, from the outro's first frame. */
 const SCREENS = [0, 120, 230] as const
-export const OUTRO_FRAMES = SCREENS[2] + LOGO_FRAMES
+export const OUTRO_FRAMES = SCREENS[2] + OPTION_FRAMES
+
+/** The logo screen Mehdi picked: the dot growing into the mark. */
+const DOT = OPTIONS.findIndex(([name]) => name === "dot")
 
 function Words({ text, frame }: { text: string; frame: number }) {
   return (
@@ -50,7 +53,7 @@ export function Outro({ frame }: { frame: number }) {
           <Words text="Build your design system." frame={local} />
         )}
         {screen === 1 && <Words text="Free and open source." frame={local} />}
-        {screen === 2 && <Logo frame={local} />}
+        {screen === 2 && <LogoOption index={DOT} frame={local} />}
       </div>
     </Theme>
   )
