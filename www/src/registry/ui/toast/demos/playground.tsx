@@ -23,19 +23,19 @@ export default function Demo({
   return (
     <ToastProvider position={position}>
       <Button
-        onPress={() =>
-          toastManager.add({
+        onPress={() => {
+          const id = toastManager.add({
             title,
             description,
             type,
             ...(action && {
               actionProps: {
                 children: "Undo",
-                onClick: () => toastManager.close(),
+                onClick: () => toastManager.close(id),
               },
             }),
           })
-        }
+        }}
       >
         Show toast
       </Button>
