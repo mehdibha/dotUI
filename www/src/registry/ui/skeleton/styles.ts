@@ -6,7 +6,7 @@ const { useStyles } = createStyles(skeletonMeta, {
   base: {
     slots: {
       root: [
-        "pointer-events-none select-none",
+        "group/skeleton pointer-events-none select-none",
 
         "**:data-[skeleton=text]:rounded-(--studio-skeleton-radius) **:data-[skeleton=text]:text-transparent",
         "**:data-[skeleton=block]:skeleton **:data-[skeleton=text]:skeleton",

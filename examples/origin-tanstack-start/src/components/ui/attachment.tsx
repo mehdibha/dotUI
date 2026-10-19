@@ -109,7 +109,7 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
-  const { size } = React.use(AttachmentContext);
+  const { size } = React.useContext(AttachmentContext);
   return (
     <div
       data-attachment-media=""
