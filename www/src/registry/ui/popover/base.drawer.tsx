@@ -17,7 +17,7 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({ className, showArrow = true, ...props }: PopoverProps) {
+function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   const { popover } = useStyles()()
   const context = useSlottedContext(PopoverPrimitives.PopoverContext)
   const isMobile = useIsMobile()

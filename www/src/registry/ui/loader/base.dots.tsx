@@ -14,13 +14,12 @@ function Loader({ className, ...props }: LoaderProps) {
         "inline-flex size-4 shrink-0 items-center justify-center",
         className,
       )}
-      aria-label="loading..."
+      aria-label="Loading"
       {...props}
       isIndeterminate
     >
       <span
-        role="status"
-        aria-label="Loading"
+        aria-hidden
         className="flex size-full items-center justify-center gap-[12.5%]"
       >
         <span className="size-[25%] animate-loader-dots rounded-full bg-current" />

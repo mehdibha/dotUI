@@ -28,6 +28,11 @@ function Command<T extends object>({
   className,
   slot,
   filter,
+  inputValue,
+  defaultInputValue,
+  onInputChange,
+  disableAutoFocusFirst,
+  disableVirtualFocus,
   ...props
 }: CommandProps<T>) {
   const { contains } = AutocompletePrimitive.useFilter({
@@ -37,7 +42,15 @@ function Command<T extends object>({
   });
 
   return (
-    <AutocompletePrimitive.Autocomplete filter={contains}>
+    <AutocompletePrimitive.Autocomplete
+      slot={slot}
+      filter={contains}
+      inputValue={inputValue}
+      defaultInputValue={defaultInputValue}
+      onInputChange={onInputChange}
+      disableAutoFocusFirst={disableAutoFocusFirst}
+      disableVirtualFocus={disableVirtualFocus}
+    >
       <div
         data-command=""
         className={commandVariants({ className })}
