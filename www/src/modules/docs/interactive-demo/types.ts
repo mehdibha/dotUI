@@ -12,6 +12,8 @@ export interface ControlReference {
 
 export interface BaseControl {
   name: string
+  /** Required by the component: the code panel always shows it. */
+  required?: boolean
   reference?: ControlReference
 }
 
