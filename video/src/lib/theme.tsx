@@ -63,7 +63,14 @@ export function Theme({
       color={ds.color}
       icons={ds.icons}
     >
-      <Suspense fallback={<Hold label="theme suspense" />}>{children}</Suspense>
+      {/* Surface tokens use light-dark(), which follows color-scheme, not
+          the forced mode: without this, grouped surfaces (white cards in
+          light) stay white in dark. */}
+      <div style={{ colorScheme: mode, display: "contents" }}>
+        <Suspense fallback={<Hold label="theme suspense" />}>
+          {children}
+        </Suspense>
+      </div>
     </DesignSystemProvider>
   )
 }

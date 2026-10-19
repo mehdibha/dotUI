@@ -8,6 +8,7 @@ import {
 } from "remotion"
 
 import { Controls } from "@/components/showcase/controls"
+import { PRESETS } from "@/modules/presets"
 
 import { ease, progress } from "../lib/motion"
 import { preset, Theme, WarmIcons } from "../lib/theme"
@@ -32,17 +33,8 @@ import { BEAT } from "../lib/timing"
    (pseudo-elements included), text run, icon and input text is read off
    the probes and paired up across looks by its place in the tree. */
 
-export const ORDER = [
-  "origin",
-  "claude",
-  "carbon",
-  "duolingo",
-  "material3",
-  "airbnb",
-  "spotify",
-  "stripe",
-  "origin",
-] as const
+/** Every preset, in the site's order, back to the first. */
+export const ORDER = [...PRESETS.map((p) => p.id), PRESETS[0]!.id]
 
 export const EVERY = BEAT * 2
 export const MORPH = 44
@@ -249,12 +241,14 @@ const painted = (box: Box) =>
   (box.border[3] > 0 && box.borders.some((w) => w > 0)) ||
   box.shadows.length > 0
 
-/** A pseudo-element's box: absolute ones from their insets, others
-    centered in their host (how the controls lay them out). */
+/** A pseudo-element's box: absolute ones from their insets; in-flow ones
+    centered in an empty host (a radio's dot), else leading or trailing its
+    content (a badge's status dot), as the controls lay them out. */
 function pseudoRect(
   el: HTMLElement,
   host: DOMRect,
   ps: CSSStyleDeclaration,
+  pseudo: string,
 ): Rect | null {
   const width = parseFloat(ps.width)
   const height = parseFloat(ps.height)
@@ -272,12 +266,23 @@ function pseudoRect(
       height,
     }
   }
-  return {
-    x: host.x + (host.width - width) / 2 + m.e,
-    y: host.y + (host.height - height) / 2 + m.f,
-    width,
-    height,
-  }
+  const y = host.y + (host.height - height) / 2 + m.f
+  // Empty or visually hidden children (a radio's native input) don't count.
+  const content = [...el.children].some((c) => {
+    const r = c.getBoundingClientRect()
+    return r.width > 1 && r.height > 1
+  })
+  if (!el.textContent?.trim() && !content)
+    return { x: host.x + (host.width - width) / 2 + m.e, y, width, height }
+  const hs = getComputedStyle(el)
+  const x =
+    pseudo === "::before"
+      ? host.x + parseFloat(hs.borderLeftWidth) + parseFloat(hs.paddingLeft)
+      : host.right -
+        parseFloat(hs.borderRightWidth) -
+        parseFloat(hs.paddingRight) -
+        width
+  return { x: x + m.e, y, width, height }
 }
 
 const icons = new Map<string, Promise<HTMLImageElement>>()
@@ -389,7 +394,7 @@ async function measure(probe: HTMLElement): Promise<Look | null> {
     for (const pseudo of ["::before", "::after"]) {
       const ps = getComputedStyle(el, pseudo)
       if (ps.content === "none" || ps.display === "none") continue
-      const r = pseudoRect(el, rect, ps)
+      const r = pseudoRect(el, rect, ps, pseudo)
       if (!r) continue
       const box = boxOf(ps, rel(r), alpha * parseFloat(ps.opacity))
       if (painted(box)) add(key + pseudo, box)
