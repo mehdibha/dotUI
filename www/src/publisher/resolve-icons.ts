@@ -44,7 +44,7 @@ const LIBRARY_IMPORTS = Object.fromEntries(
   iconLibraries.map((library) => [library.name, library.import]),
 ) as Record<IconLibraryName, string>
 
-export interface ResolveIconOptions {
+interface ResolveIconOptions {
   /** Phosphor weight; anything not in `phosphorWeights` (or 'regular') is the default. */
   weight?: string
 }
@@ -107,100 +107,83 @@ function insertAfterImports(content: string, block: string): string {
   return `${content.slice(0, end)}\n\n${block}${content.slice(end)}`
 }
 
-function resolveHugeicons(content: string): string {
-  const wrapped: Array<ImportedIcon & { target: string }> = []
-  let usesHugeicons = false
+interface WrappedLibrary {
+  library: "hugeicons" | "phosphor"
+  /** Imports emitted once, before the first mapped icon import. */
+  setup: string[]
+  importIcons: (icons: Array<ImportedIcon & { target: string }>) => string
+  /** The component named `local` that the file's JSX keeps using. */
+  wrapper: (local: string) => string
+}
 
-  let out = content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
-    const icons = parseNamedImports(inner)
+/**
+ * Import each mapped icon under an alias and emit a wrapper component per icon
+ * after the import block, so JSX usages stay untouched.
+ */
+function resolveWrapped(
+  content: string,
+  { library, setup, importIcons, wrapper }: WrappedLibrary,
+): string {
+  const wrapped: ImportedIcon[] = []
+
+  const out = content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
     const mapped: Array<ImportedIcon & { target: string }> = []
     const unmapped: ImportedIcon[] = []
-    for (const icon of icons) {
-      const target = registryIcons[icon.name]?.hugeicons
+    for (const icon of parseNamedImports(inner)) {
+      const target = registryIcons[icon.name]?.[library]
       if (target) mapped.push({ ...icon, target })
       else unmapped.push(icon)
     }
-    wrapped.push(...mapped)
     const lines: string[] = []
     if (mapped.length > 0) {
-      if (!usesHugeicons) {
-        usesHugeicons = true
-        lines.push(
-          'import { HugeiconsIcon } from "@hugeicons/react";',
-          'import type { HugeiconsIconProps } from "@hugeicons/react";',
-        )
-      }
-      lines.push(
-        `import { ${mapped
-          .map(({ target, local }) => `${target} as ${local}Data`)
-          .join(", ")} } from "@hugeicons/core-free-icons";`,
-      )
+      if (wrapped.length === 0) lines.push(...setup)
+      lines.push(importIcons(mapped))
     }
+    wrapped.push(...mapped)
     if (unmapped.length > 0) lines.push(lucideImport(unmapped))
     return lines.join("\n")
   })
 
-  if (wrapped.length > 0) {
-    // The `hugeicon` marker class hooks the stroke-width axis rule in base.css
-    // (hugeicons paths carry their own stroke-width attribute).
-    const wrappers = wrapped
-      .map(
-        ({ local }) =>
-          `function ${local}({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {\n\treturn <HugeiconsIcon icon={${local}Data} className={className ? \`hugeicon \${className}\` : "hugeicon"} {...props} />;\n}`,
-      )
-      .join("\n\n")
-    out = insertAfterImports(out, wrappers)
-  }
-  return out
+  if (wrapped.length === 0) return out
+  return insertAfterImports(
+    out,
+    wrapped.map(({ local }) => wrapper(local)).join("\n\n"),
+  )
 }
 
-/**
- * Phosphor with a non-default weight: import under an alias and wrap each icon
- * in a component that pins the weight, so JSX usages stay untouched.
- */
+function resolveHugeicons(content: string): string {
+  return resolveWrapped(content, {
+    library: "hugeicons",
+    setup: [
+      'import { HugeiconsIcon } from "@hugeicons/react";',
+      'import type { HugeiconsIconProps } from "@hugeicons/react";',
+    ],
+    importIcons: (icons) =>
+      `import { ${icons
+        .map(({ target, local }) => `${target} as ${local}Data`)
+        .join(", ")} } from "@hugeicons/core-free-icons";`,
+    // The `hugeicon` marker class hooks the stroke-width axis rule in base.css
+    // (hugeicons paths carry their own stroke-width attribute).
+    wrapper: (local) =>
+      `function ${local}({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {\n\treturn <HugeiconsIcon icon={${local}Data} className={className ? \`hugeicon \${className}\` : "hugeicon"} {...props} />;\n}`,
+  })
+}
+
+/** Phosphor with a non-default weight: each wrapper pins the weight. */
 function resolvePhosphorWeighted(
   content: string,
   weight: PhosphorWeight,
 ): string {
-  const wrapped: Array<ImportedIcon & { target: string }> = []
-  let first = true
-
-  let out = content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
-    const icons = parseNamedImports(inner)
-    const mapped: Array<ImportedIcon & { target: string }> = []
-    const unmapped: ImportedIcon[] = []
-    for (const icon of icons) {
-      const target = registryIcons[icon.name]?.phosphor
-      if (target) mapped.push({ ...icon, target })
-      else unmapped.push(icon)
-    }
-    wrapped.push(...mapped)
-    const lines: string[] = []
-    if (mapped.length > 0) {
-      if (first) {
-        first = false
-        lines.push('import type { IconProps } from "@phosphor-icons/react";')
-      }
-      lines.push(
-        `import { ${mapped
-          .map(({ target, local }) => `${target} as Phosphor${local}`)
-          .join(", ")} } from "@phosphor-icons/react";`,
-      )
-    }
-    if (unmapped.length > 0) lines.push(lucideImport(unmapped))
-    return lines.join("\n")
+  return resolveWrapped(content, {
+    library: "phosphor",
+    setup: ['import type { IconProps } from "@phosphor-icons/react";'],
+    importIcons: (icons) =>
+      `import { ${icons
+        .map(({ target, local }) => `${target} as Phosphor${local}`)
+        .join(", ")} } from "@phosphor-icons/react";`,
+    wrapper: (local) =>
+      `function ${local}(props: IconProps) {\n\treturn <Phosphor${local} weight="${weight}" {...props} />;\n}`,
   })
-
-  if (wrapped.length > 0) {
-    const wrappers = wrapped
-      .map(
-        ({ local }) =>
-          `function ${local}(props: IconProps) {\n\treturn <Phosphor${local} weight="${weight}" {...props} />;\n}`,
-      )
-      .join("\n\n")
-    out = insertAfterImports(out, wrappers)
-  }
-  return out
 }
 
 /**

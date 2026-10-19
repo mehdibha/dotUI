@@ -1,9 +1,9 @@
+import { DENSITIES } from "@/registry/types"
 import type { Density } from "@/registry/types"
 
 import { options } from "./core/meta"
-import { DENSITY_VALUES } from "./space"
 
-export const DENSITY_OPTIONS = options(DENSITY_VALUES, {
+export const DENSITY_OPTIONS = options(DENSITIES, {
   compact: {
     label: "Compact",
     description: "Small controls and text, made for dense interfaces",

@@ -25,7 +25,7 @@ const sidebarVariants = tv({
   slots: {
     wrapper:
       "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-    root: "group peer hidden text-fg md:block",
+    root: "group peer hidden text-fg data-[side=right]:order-last md:block",
     gap: "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
     container:
       "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex duration-200 ease-linear group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=sidebar]:group-data-[side=left]:border-r group-data-[variant=sidebar]:group-data-[side=right]:border-l group-data-[variant=floating]:p-2 group-data-[variant=inset]:p-2 group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
@@ -258,9 +258,15 @@ const Sidebar = ({
     return (
       <nav
         data-sidebar=""
+        data-side={side}
         aria-label="Sidebar"
         aria-labelledby={headingId}
-        className={inner({ className: cn("w-(--sidebar-width)", className) })}
+        className={inner({
+          className: cn(
+            "w-(--sidebar-width) data-[side=right]:order-last",
+            className,
+          ),
+        })}
         {...props}
       >
         <SidebarNav headingId={headingId} collapsible={collapsible}>
@@ -283,7 +289,6 @@ const Sidebar = ({
       >
         <nav
           data-sidebar=""
-          data-mobile="true"
           aria-label="Sidebar"
           aria-labelledby={headingId}
           className={mobile({ className })}

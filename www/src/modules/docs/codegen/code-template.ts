@@ -15,6 +15,7 @@
 //  - an open tag that exceeds PRINT_WIDTH breaks to one attribute per line
 //  - JSX text fill-wraps greedily at PRINT_WIDTH
 //  - when every child drops, the element self-closes
+//  - a repeated element renders once per count, each copy on its own lines
 //  - a single-line body inlines into `return …;`, otherwise wraps in parens
 //  - string literals pick the quote that needs fewer escapes (ties → double)
 // ============================================================================
@@ -39,9 +40,14 @@ export interface AttrHole {
   default: SerializedDefault
   /** Derived attr (progress-bar): drop entirely when this boolean control is truthy. */
   dropWhen?: string
+  /** Object-literal value embedding the control (`visibleDuration={{ months: n }}`): the literal goes between. */
+  wrap?: { before: string; after: string }
 }
 
-export type AttrPart = { part: "static"; text: string } | AttrHole
+/** A static attr; with `showWhen` it came from `attr={cond ? value : undefined}`. */
+export type AttrPart =
+  | { part: "static"; text: string; showWhen?: string }
+  | AttrHole
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
@@ -53,11 +59,26 @@ export interface TextHole {
 export type ChildPart =
   /** Verbatim formatted lines, dedented so the block's first column is 0. */
   | { part: "static"; lines: string[] }
-  /** Static JSX text, whitespace-collapsed; refilled at render time. */
-  | { part: "static-text"; text: string }
+  /** Static JSX text, whitespace-collapsed; refilled at render time. With
+   *  `hideWhen` it came from `{!cond && "…"}`. */
+  | { part: "static-text"; text: string; hideWhen?: string }
   | TextHole
   /** A nested element; with `showWhen` it came from `{cond && <El>…</El>}`. */
-  | { part: "element"; el: TemplateElement; showWhen?: string }
+  | {
+      part: "element"
+      el: TemplateElement
+      showWhen?: string
+      /** `{months > 1 && <El/>}`: compare the control instead of testing truthiness. */
+      compare?: Comparison
+    }
+  /** From `{Array.from({ length: count }, () => <El />)}`: `count` copies of the element. */
+  | { part: "repeat"; el: TemplateElement; count: string }
+
+export type CompareOp = ">" | ">=" | "<" | "<=" | "===" | "!=="
+export interface Comparison {
+  op: CompareOp
+  value: number | string
+}
 
 export interface TemplateElement {
   tag: string
@@ -100,7 +121,7 @@ export function collectTemplateHoles(
   }
   for (const child of el.children) {
     if (child.part === "text") holes.push(child)
-    else if (child.part === "element")
+    else if (child.part === "element" || child.part === "repeat")
       holes.push(...collectTemplateHoles(child.el))
   }
   return holes
@@ -110,7 +131,7 @@ export function collectTemplateHoles(
 // RUNTIME
 // ---------------------------------------------------------------------------
 
-export interface RenderOptions {
+interface RenderOptions {
   expanded: boolean
 }
 
@@ -181,8 +202,13 @@ function renderElement(
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
-    const text =
-      attr.part === "static" ? attr.text : renderAttrHole(attr, values, icons)
+    if (attr.part === "static") {
+      if (!attr.showWhen || isTruthy(values[attr.showWhen])) {
+        attrs.push(attr.text)
+      }
+      continue
+    }
+    const text = renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
   }
 
@@ -260,6 +286,14 @@ function renderAttrHole(
   const value = values[hole.control]
   if (serializeForCompare(value, hole.kind) === hole.default) return null
 
+  if (hole.wrap) {
+    const literal =
+      hole.kind === "number" || hole.kind === "boolean"
+        ? String(value)
+        : quoteString(String(value))
+    return `${hole.wrap.before}${literal}${hole.wrap.after}`
+  }
+
   switch (hole.kind) {
     case "boolean":
       return value === true ? hole.attrName : `${hole.attrName}={false}`
@@ -296,6 +330,7 @@ function renderChild(
       }
     }
     case "static-text":
+      if (child.hideWhen && isTruthy(values[child.hideWhen])) return null
       return { type: "text", text: child.text }
     case "text": {
       const value = values[child.control]
@@ -314,10 +349,25 @@ function renderChild(
         : { type: "text", text: s }
     }
     case "element": {
-      if (child.showWhen && isFalsy(values[child.showWhen])) return null
+      if (child.showWhen) {
+        const value = values[child.showWhen]
+        const shown = child.compare
+          ? compare(value, child.compare)
+          : isTruthy(value)
+        if (!shown) return null
+      }
       return {
         type: "block",
         lines: renderElement(child.el, values, indent, icons),
+      }
+    }
+    case "repeat": {
+      const count = Math.trunc(Number(values[child.count]) || 0)
+      if (count <= 0) return null
+      const lines = renderElement(child.el, values, indent, icons)
+      return {
+        type: "block",
+        lines: Array.from({ length: count }, () => lines).flat(),
       }
     }
   }
@@ -350,6 +400,24 @@ function serializeForCompare(
       return value ? String(value) : null
     default:
       return String(value)
+  }
+}
+
+function compare(v: unknown, { op, value }: Comparison): boolean {
+  const left = typeof value === "number" ? Number(v) : String(v)
+  switch (op) {
+    case ">":
+      return left > value
+    case ">=":
+      return left >= value
+    case "<":
+      return left < value
+    case "<=":
+      return left <= value
+    case "===":
+      return left === value
+    case "!==":
+      return left !== value
   }
 }
 

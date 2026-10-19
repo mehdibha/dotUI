@@ -8,7 +8,7 @@ import type { ImageLoadingStatus } from "@/hooks/use-image-loading-status";
 
 const avatarVariants = tv({
   slots: {
-    root: "group/avatar relative inline-flex size-8 shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0 rounded-full",
+    root: "group/avatar relative inline-flex shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0 rounded-full",
     image: "aspect-square size-full rounded-[inherit] object-cover",
     fallback:
       "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem] bg-muted",

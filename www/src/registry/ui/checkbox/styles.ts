@@ -40,7 +40,13 @@ export const CHOICE_CARD_PRESS = {
   },
 }
 
-const { useStyles, styles } = createStyles(checkboxMeta, {
+const roomy = {
+  slots: {
+    root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
+  },
+}
+
+const { useStyles } = createStyles(checkboxMeta, {
   base: {
     slots: {
       root: "flex items-center has-data-description:items-start",
@@ -69,28 +75,14 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
         root: "gap-2 has-data-description:**:data-checkbox-indicator:mt-0.5",
       },
     },
-    comfortable: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
-    spacious: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
-    touch: {
-      slots: {
-        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
   params: {
     cardSelected: CHOICE_CARD,
     cardPress: CHOICE_CARD_PRESS,
   },
 })
-
-export type CheckboxStyles = typeof styles
 
 export { useStyles }

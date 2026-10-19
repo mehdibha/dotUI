@@ -1,30 +1,44 @@
 "use client"
 
+import type { DateValue } from "react-aria-components/DatePicker"
+
 import { CalendarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Calendar } from "@/registry/ui/calendar"
-import { DatePicker } from "@/registry/ui/date-picker"
+import { DatePicker, type DatePickerProps } from "@/registry/ui/date-picker"
 import { DialogContent } from "@/registry/ui/dialog"
-import { Label } from "@/registry/ui/field"
+import { Description, Label } from "@/registry/ui/field"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 
-interface DatePickerPlaygroundProps {
-  label?: string
-  isDisabled?: boolean
-  isReadOnly?: boolean
-}
-
-export function DatePickerPlayground({
+export default function Demo({
   label = "Date",
+  description = "",
+  granularity = "day",
+  firstDayOfWeek = "sun",
   isDisabled = false,
   isReadOnly = false,
-}: DatePickerPlaygroundProps) {
+  isInvalid = false,
+  isRequired = false,
+}: {
+  label?: string
+  description?: string
+  granularity?: DatePickerProps<DateValue>["granularity"]
+  firstDayOfWeek?: DatePickerProps<DateValue>["firstDayOfWeek"]
+  isDisabled?: boolean
+  isReadOnly?: boolean
+  isInvalid?: boolean
+  isRequired?: boolean
+} = {}) {
   return (
     <DatePicker
-      className="w-52"
+      className="w-fit min-w-52"
+      granularity={granularity}
+      firstDayOfWeek={firstDayOfWeek}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
+      isInvalid={isInvalid}
+      isRequired={isRequired}
     >
       {label && <Label>{label}</Label>}
       <InputGroup>
@@ -35,6 +49,7 @@ export function DatePickerPlayground({
           </Button>
         </InputGroupAddon>
       </InputGroup>
+      {description && <Description>{description}</Description>}
       <Popover>
         <DialogContent>
           <Calendar />

@@ -8,7 +8,7 @@ const backdropFade =
 const entrance =
   "duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) exiting:duration-(--studio-modal-exit-duration) exiting:ease-(--studio-modal-exit-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(modalMeta, {
+const { useStyles } = createStyles(modalMeta, {
   base: {
     slots: {
       // Shares the drawers' layer so the last opened sits on top (a select's drawer over its modal).
@@ -101,7 +101,5 @@ const { useStyles, styles } = createStyles(modalMeta, {
     },
   },
 })
-
-export type ModalStyles = typeof styles
 
 export { useStyles }

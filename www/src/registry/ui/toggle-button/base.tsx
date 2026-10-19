@@ -37,7 +37,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   const styles = useStyles()
   const {
     variant = "secondary",
-    size = "md",
+    size,
     isIconOnly,
     className,
     children,
@@ -47,9 +47,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   return (
     <ToggleButtonPrimitives.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
-      data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (className) =>
         styles({
@@ -61,15 +59,13 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
+      {composeRenderProps(children, (children) =>
+        typeof children === "string" ? (
+          <span className="truncate">{children}</span>
+        ) : (
+          children
+        ),
+      )}
     </ToggleButtonPrimitives.ToggleButton>
   )
 }

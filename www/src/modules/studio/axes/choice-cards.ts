@@ -11,41 +11,34 @@ import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
-
-export const CHOICE_CARD_DEFAULTS = {
-  cardSelected: "tint",
-  // Same as checks (Supabase's neutral radio cards beside a brand radio).
-  cardColor: "same" as "same" | PrimaryColorSource,
-}
 
 /* Tint: a soft edge on a tinted surface. Edged tint: a 1px edge on the tint
    (nearest for Duolingo and Airbnb, whose edge is 2px). Outline: a 2px edge,
    no tint (nearest for Carbon and Notion, whose edge is 1px). */
 export const SELECTED_VALUES = ["tint", "outline-tint", "outline"] as const
 
-export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
-  cardSelected: oneOf(SELECTED_VALUES),
-  cardColor: oneOf(SOURCE_VALUES),
-}
-
-export function resolveChoiceCards(state: Effective): Resolved {
-  const card = { cardSelected: state.cardSelected }
-  const fill = state.cardColor
-  const fills = [state.checkboxColor, state.radioColor, state.switchColor]
-  return {
-    params: { checkbox: card, "radio-group": card, switch: card },
-    color: fills.every((own) => own === fill)
-      ? undefined
-      : { scopes: { "choice-card": fill } },
-  }
-}
-
 export const chapter = defineChapter({
   id: "choice-cards",
-  defaults: CHOICE_CARD_DEFAULTS,
-  schema: CHOICE_CARD_SCHEMA,
-  resolve: resolveChoiceCards,
+  defaults: {
+    cardSelected: "tint",
+    // Same as checks (Supabase's neutral radio cards beside a brand radio).
+    cardColor: "same" as "same" | PrimaryColorSource,
+  },
+  schema: {
+    cardSelected: oneOf(SELECTED_VALUES),
+    cardColor: oneOf(SOURCE_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const card = { cardSelected: state.cardSelected }
+    const fill = state.cardColor
+    const fills = [state.checkboxColor, state.radioColor, state.switchColor]
+    return {
+      params: { checkbox: card, "radio-group": card, switch: card },
+      color: fills.every((own) => own === fill)
+        ? undefined
+        : { scopes: { "choice-card": fill } },
+    }
+  },
   follows: {
     cardColor: [{ kind: "same", id: "same", from: "checkboxColor" }],
   },

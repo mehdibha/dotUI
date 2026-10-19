@@ -188,9 +188,15 @@ const Sidebar = ({
     return (
       <nav
         data-sidebar=""
+        data-side={side}
         aria-label="Sidebar"
         aria-labelledby={headingId}
-        className={inner({ className: cn("w-(--sidebar-width)", className) })}
+        className={inner({
+          className: cn(
+            "w-(--sidebar-width) data-[side=right]:order-last",
+            className,
+          ),
+        })}
         {...props}
       >
         <SidebarNav headingId={headingId} collapsible={collapsible}>
@@ -213,7 +219,6 @@ const Sidebar = ({
       >
         <nav
           data-sidebar=""
-          data-mobile="true"
           aria-label="Sidebar"
           aria-labelledby={headingId}
           className={mobile({ className })}

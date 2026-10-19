@@ -16,10 +16,6 @@ import type { PopoverProps } from "@/registry/ui/popover"
 import { TokenField } from "@/registry/ui/token-field"
 import type { TokenFieldProps } from "@/registry/ui/token-field"
 
-import { useStyles } from "./styles"
-
-// MARK: mentionStyles
-
 // MARK: Separator
 
 interface MentionState {
@@ -51,14 +47,12 @@ const Mention = ({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
-  className,
   children,
   value: valueProp,
   defaultValue,
   onChange,
   ...props
 }: MentionProps) => {
-  const { root } = useStyles()()
   const { startsWith } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
   })
@@ -178,13 +172,7 @@ const Mention = ({
           [MenuContext, { onAction: insert }],
         ]}
       >
-        <TokenField
-          {...props}
-          ref={rootRef}
-          value={value}
-          onChange={setValue}
-          className={root({ className })}
-        >
+        <TokenField {...props} ref={rootRef} value={value} onChange={setValue}>
           {typeof children === "function"
             ? children({
                 trigger: active?.trigger ?? null,

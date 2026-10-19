@@ -69,24 +69,16 @@ const Calendar = <T extends CalendarPrimitives.DateValue>({
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {children ?? (
+      {composeRenderProps(
+        props.children,
+        (children) =>
+          children ?? (
             <>
-              <CalendarHeader>
-                <Button slot="previous" variant="quiet" isIconOnly>
-                  <ChevronLeftIcon />
-                </Button>
-                <CalendarHeading />
-                <Button slot="next" variant="quiet" isIconOnly>
-                  <ChevronRightIcon />
-                </Button>
-              </CalendarHeader>
+              <CalendarHeader />
               <CalendarGrid />
             </>
-          )}
-        </>
-      ))}
+          ),
+      )}
     </CalendarPrimitives.Calendar>
   );
 };
@@ -108,24 +100,16 @@ const RangeCalendar = <T extends CalendarPrimitives.DateValue>({
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {children ?? (
+      {composeRenderProps(
+        props.children,
+        (children) =>
+          children ?? (
             <>
-              <CalendarHeader>
-                <Button slot="previous" variant="quiet" isIconOnly>
-                  <ChevronLeftIcon />
-                </Button>
-                <CalendarHeading />
-                <Button slot="next" variant="quiet" isIconOnly>
-                  <ChevronRightIcon />
-                </Button>
-              </CalendarHeader>
+              <CalendarHeader />
               <CalendarGrid />
             </>
-          )}
-        </>
-      ))}
+          ),
+      )}
     </RangeCalendarPrimitives.RangeCalendar>
   );
 };

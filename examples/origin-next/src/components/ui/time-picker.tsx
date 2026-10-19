@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import type { Time } from "@internationalized/date";
+import {
+  fromDate,
+  getLocalTimeZone,
+  toCalendarDateTime,
+  type CalendarDateTime,
+} from "@internationalized/date";
 import { ButtonContext } from "react-aria-components/Button";
 import {
   DialogContext,
@@ -200,6 +205,11 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     state.granularity === "minute" || state.granularity === "second";
   const showSeconds = state.granularity === "second";
 
+  const base = (state.value ??
+    toCalendarDateTime(
+      fromDate(state.dateValue, getLocalTimeZone()),
+    )) as CalendarDateTime;
+
   const isImmutable = state.isDisabled || state.isReadOnly;
   const update = (fields: {
     hour?: number;
@@ -207,13 +217,11 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     second?: number;
   }) => {
     if (isImmutable) return;
-    // Every TimeValue member implements `.set`; the cast only satisfies the union-method call.
-    const base = (state.value ?? state.timeValue) as Time;
-    state.setValue(base.set(fields) as never);
+    state.setValue(base.set(fields));
   };
 
-  const period = time.hour >= 12 ? "PM" : "AM";
-  const displayHour = time.hour % 12 === 0 ? 12 : time.hour % 12;
+  const period = base.hour >= 12 ? "PM" : "AM";
+  const displayHour = base.hour % 12 === 0 ? 12 : base.hour % 12;
 
   const hourOptions: TimeColumnOption[] = use12Hour
     ? range(12, 1).map((h) => ({ id: String(h), label: String(h) }))
@@ -236,7 +244,9 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
       <TimeColumn
         label="Hour"
         options={hourOptions}
-        selectedKey={use12Hour ? String(displayHour) : String(time.hour)}
+        selectedKey={
+          time && (use12Hour ? String(displayHour) : String(time.hour))
+        }
         onSelect={(id) => {
           const value = Number(id);
           update({
@@ -248,7 +258,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
         <TimeColumn
           label="Minute"
           options={minuteOptions}
-          selectedKey={String(time.minute)}
+          selectedKey={time && String(time.minute)}
           onSelect={(id) => update({ minute: Number(id) })}
         />
       )}
@@ -256,7 +266,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
         <TimeColumn
           label="Second"
           options={secondOptions}
-          selectedKey={String(time.second)}
+          selectedKey={time && String(time.second)}
           onSelect={(id) => update({ second: Number(id) })}
         />
       )}
@@ -267,11 +277,11 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
             { id: "AM", label: "AM" },
             { id: "PM", label: "PM" },
           ]}
-          selectedKey={period}
+          selectedKey={time && period}
           onSelect={(id) => {
-            if (id === "AM" && time.hour >= 12)
-              update({ hour: time.hour - 12 });
-            if (id === "PM" && time.hour < 12) update({ hour: time.hour + 12 });
+            if (id === "AM" && base.hour >= 12)
+              update({ hour: base.hour - 12 });
+            if (id === "PM" && base.hour < 12) update({ hour: base.hour + 12 });
           }}
         />
       )}
@@ -284,7 +294,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
 interface TimeColumnProps {
   label: string;
   options: TimeColumnOption[];
-  selectedKey: string;
+  selectedKey: string | null;
   onSelect: (id: string) => void;
 }
 
@@ -320,7 +330,7 @@ const TimeColumn = ({
       selectionBehavior="replace"
       disallowEmptySelection
       shouldFocusWrap
-      selectedKeys={[selectedKey]}
+      selectedKeys={selectedKey === null ? [] : [selectedKey]}
       onSelectionChange={(keys) => {
         if (keys === "all") return;
         const id = [...keys][0];

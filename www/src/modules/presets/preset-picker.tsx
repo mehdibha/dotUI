@@ -35,7 +35,7 @@ import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
-import type { DesignSystem } from "@/modules/studio/preset"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
 interface PresetPickerItem {
   id: string
@@ -677,4 +677,4 @@ function Swatch({ ref, color }: { ref?: Ref<HTMLSpanElement>; color: string }) {
   )
 }
 
-export type { PresetPickerItem, PresetPickerSection }
+export type { PresetPickerSection }

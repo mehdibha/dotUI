@@ -27,8 +27,13 @@ interface CommandProps<T extends object>
 
 const Command = <T extends object>({
   className,
-  slot,
   filter,
+  inputValue,
+  defaultInputValue,
+  onInputChange,
+  disableAutoFocusFirst,
+  disableVirtualFocus,
+  slot,
   ...props
 }: CommandProps<T>) => {
   const { contains } = AutocompletePrimitives.useFilter({
@@ -38,7 +43,15 @@ const Command = <T extends object>({
   });
 
   return (
-    <AutocompletePrimitives.Autocomplete filter={contains}>
+    <AutocompletePrimitives.Autocomplete
+      filter={contains}
+      inputValue={inputValue}
+      defaultInputValue={defaultInputValue}
+      onInputChange={onInputChange}
+      disableAutoFocusFirst={disableAutoFocusFirst}
+      disableVirtualFocus={disableVirtualFocus}
+      slot={slot}
+    >
       <div
         data-command=""
         className={commandVariants({ className })}

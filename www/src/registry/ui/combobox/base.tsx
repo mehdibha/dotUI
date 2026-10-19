@@ -55,5 +55,5 @@ const ComboboxValue = <T extends object>({
 
 // MARK: Separator
 
-export type { ComboboxProps }
+export type { ComboboxProps, ComboboxValueProps }
 export { Combobox, ComboboxValue }

@@ -89,8 +89,6 @@ function useStarted(ms: number) {
   return started
 }
 
-/* --------------------------------- Layout ---------------------------------- */
-
 const STAGE = "relative min-h-60 overflow-hidden p-0 max-sm:p-0"
 
 /** The stage's window, inset alike on every stage; fixed layers resolve against it. */
@@ -210,8 +208,6 @@ function Invoices() {
   )
 }
 
-/* -------------------------------- Controls --------------------------------- */
-
 const RANGES = ["Day", "Week", "Month"]
 const PROGRESS = [12, 38, 64, 87, 100]
 
@@ -266,8 +262,6 @@ function Controls({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* -------------------------------- Popovers --------------------------------- */
 
 // One presence for both, so they open and close together and never meet.
 function Popovers({ replay }: { replay: number }) {
@@ -351,8 +345,6 @@ function Popovers({ replay }: { replay: number }) {
   )
 }
 
-/* ------------------------------- Accordion --------------------------------- */
-
 const FAQ = [
   {
     id: "plan",
@@ -390,8 +382,6 @@ function Disclosure({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* --------------------------------- Dialogs --------------------------------- */
 
 const OVERLAY = { open: 2000, closed: 1200 }
 
@@ -485,8 +475,6 @@ function Sheet({ replay }: { replay: number }) {
   )
 }
 
-/* --------------------------------- Toasts ---------------------------------- */
-
 const TOASTS = [
   { title: "Invoice paid", type: "success" },
   { title: "Receipt sent", description: "Copied to billing@acme.com." },
@@ -540,8 +528,6 @@ function Toasts({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* ---------------------------------- Board ---------------------------------- */
 
 export default function MotionBoard() {
   const { replay } = useReplay()

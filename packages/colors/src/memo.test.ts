@@ -6,12 +6,7 @@
 
 import { beforeEach, describe, expect, test, vi } from "vitest"
 
-import {
-  categoricalPalettes,
-  divergingArms,
-  sequentialPalette,
-  tonalCategoricalPalette,
-} from "./charts"
+import { categoricalPalettes, tonalCategoricalPalette } from "./charts"
 import { memoize, setMemoEnabled } from "./memo"
 import { buildScale } from "./scale"
 import type { ThemeOptions } from "./schema"
@@ -34,10 +29,6 @@ vi.mock("./charts", async (importOriginal) => {
     tonalCategoricalPalette: vi.fn<typeof actual.tonalCategoricalPalette>(
       actual.tonalCategoricalPalette,
     ),
-    sequentialPalette: vi.fn<typeof actual.sequentialPalette>(
-      actual.sequentialPalette,
-    ),
-    divergingArms: vi.fn<typeof actual.divergingArms>(actual.divergingArms),
   }
 })
 
@@ -283,12 +274,7 @@ describe("a drag re-solves only what it moves", () => {
   const solves = (options: ThemeOptions) => {
     vi.clearAllMocks()
     createTheme(options)
-    const charts = [
-      categoricalPalettes,
-      tonalCategoricalPalette,
-      sequentialPalette,
-      divergingArms,
-    ]
+    const charts = [categoricalPalettes, tonalCategoricalPalette]
     return {
       scales: vi.mocked(buildScale).mock.calls.length,
       charts: charts.reduce((n, fn) => n + vi.mocked(fn).mock.calls.length, 0),
@@ -306,7 +292,7 @@ describe("a drag re-solves only what it moves", () => {
 
   test("brand: the accent's light + dark scales and its charts", () => {
     const seeds = { ...base.seeds, accent: "#c2410c" }
-    expect(solves({ ...base, seeds })).toEqual({ scales: 2, charts: 6 })
+    expect(solves({ ...base, seeds })).toEqual({ scales: 2, charts: 2 })
   })
 
   test("neutral tint or hue: the neutral's two scales, no charts", () => {

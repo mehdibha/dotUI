@@ -19,7 +19,6 @@ import { useStyles } from "./styles"
 type ToastVariant =
   | "neutral"
   | "success"
-  | "error"
   | "danger"
   | "warning"
   | "info"
@@ -44,7 +43,6 @@ type ToastObject = ToastPrimitive.Root.ToastObject<ToastData>
 
 const toastIcons = {
   danger: CircleAlertIcon,
-  error: CircleAlertIcon,
   info: InfoIcon,
   loading: Loader,
   success: CircleCheckIcon,
@@ -74,6 +72,7 @@ const useSolidStatus = createParamValue<boolean | undefined>({
 })
 
 function getToastVariant(type: string | undefined): ToastVariant {
+  if (type === "error") return "danger"
   return type && type in toastIcons ? (type as ToastVariant) : "neutral"
 }
 
@@ -222,14 +221,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
   )
 }
 
-const Toaster = ToastProvider
-
 // MARK: Separator
 
 export type { ToastProviderProps }
-export {
-  defaultToastManager as toastManager,
-  Toaster,
-  ToastPrimitive,
-  ToastProvider,
-}
+export { defaultToastManager as toastManager, ToastPrimitive, ToastProvider }

@@ -8,7 +8,7 @@ export interface PopoverProps extends React.ComponentProps<
 > {
   /**
    * Whether to show an arrow pointing to the trigger.
-   * @default false
+   * @default true
    */
   showArrow?: boolean
 }

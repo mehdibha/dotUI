@@ -3,27 +3,33 @@
 import { ClockIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { DialogContent } from "@/registry/ui/dialog"
-import { Label } from "@/registry/ui/field"
+import { Description, Label } from "@/registry/ui/field"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
-interface TimePickerPlaygroundProps {
-  label?: string
-  isDisabled?: boolean
-  isReadOnly?: boolean
-}
-
-export function TimePickerPlayground({
+export default function Demo({
   label = "Time",
+  description = "",
+  granularity = "minute",
   isDisabled = false,
   isReadOnly = false,
-}: TimePickerPlaygroundProps) {
+  isInvalid = false,
+}: {
+  label?: string
+  description?: string
+  granularity?: "hour" | "minute" | "second"
+  isDisabled?: boolean
+  isReadOnly?: boolean
+  isInvalid?: boolean
+} = {}) {
   return (
     <TimePicker
       className="w-40"
+      granularity={granularity}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
+      isInvalid={isInvalid}
     >
       {label && <Label>{label}</Label>}
       <InputGroup>
@@ -39,6 +45,7 @@ export function TimePickerPlayground({
           </Button>
         </InputGroupAddon>
       </InputGroup>
+      {description && <Description>{description}</Description>}
       <Popover>
         <DialogContent>
           <TimePickerColumns />

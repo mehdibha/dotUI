@@ -53,9 +53,6 @@ const toastVariants = tv({
       danger: {
         icon: "text-fg-danger",
       },
-      error: {
-        icon: "text-fg-danger",
-      },
       info: {
         icon: "text-fg-info",
       },
@@ -86,7 +83,6 @@ const {
 type ToastVariant =
   | "neutral"
   | "success"
-  | "error"
   | "danger"
   | "warning"
   | "info"
@@ -111,7 +107,6 @@ type ToastObject = ToastPrimitive.Root.ToastObject<ToastData>;
 
 const toastIcons = {
   danger: CircleAlertIcon,
-  error: CircleAlertIcon,
   info: InfoIcon,
   loading: Loader,
   success: CircleCheckIcon,
@@ -122,6 +117,7 @@ const defaultToastManager = ToastPrimitive.createToastManager<ToastData>();
 // Whether a status toast's own fill is solid; undefined sits on the surface.
 
 function getToastVariant(type: string | undefined): ToastVariant {
+  if (type === "error") return "danger";
   return type && type in toastIcons ? (type as ToastVariant) : "neutral";
 }
 
@@ -256,14 +252,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
   );
 };
 
-const Toaster = ToastProvider;
-
 /* -------------------------------------------------------------------------- */
 
 export type { ToastProviderProps };
-export {
-  defaultToastManager as toastManager,
-  Toaster,
-  ToastPrimitive,
-  ToastProvider,
-};
+export { defaultToastManager as toastManager, ToastPrimitive, ToastProvider };

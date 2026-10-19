@@ -17,7 +17,7 @@ import { tv } from "tailwind-variants";
 
 const tokenFieldVariants = tv({
   slots: {
-    root: "group/token-field flex w-full flex-col gap-1.5",
+    root: "flex w-full flex-col gap-1.5",
     input:
       "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
     token:

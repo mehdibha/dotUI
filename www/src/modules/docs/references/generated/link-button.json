@@ -64,6 +64,14 @@
       "description": "The size of the button.\nFor an icon-only button, set `isIconOnly` rather than a dedicated size.",
       "default": "\"md\""
     },
+    "isIconOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button only contains an icon."
+    },
     "onPress": {
       "type": "((e: PressEvent) => void)",
       "detailedType": "((e: PressEvent) => void) | undefined",

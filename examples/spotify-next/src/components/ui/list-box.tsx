@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ListBoxPrimitives from "react-aria-components/ListBox";
 import type * as TextPrimitives from "react-aria-components/Text";
@@ -48,15 +48,12 @@ const ListBox = <T extends object>({
   children,
   ...props
 }: ListBoxProps<T>) => {
-  const standalone = !React.useContext(ListBoxPrimitives.ListBoxContext);
-
   return (
     <ListBoxPrimitives.ListBox
       data-listbox=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}
-      data-standalone={standalone ?? undefined}
       {...props}
     >
       <ListBoxPrimitives.Collection items={items}>

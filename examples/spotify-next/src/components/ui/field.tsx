@@ -17,7 +17,7 @@ const fieldVariants = tv({
     fieldset: "",
     legend: "",
     fieldGroup:
-      "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      "@container/field-group flex w-full flex-col gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
     field:
       "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
     fieldContent: "flex flex-col gap-1",
