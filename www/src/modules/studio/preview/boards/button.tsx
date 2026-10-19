@@ -314,17 +314,21 @@ function Sizes() {
 
 /** The specimens each key reaches beyond buttons. */
 const SHARED_LIT: Record<string, string[]> = {
-  buttonStyle: ["field", "select", "segmented"],
-  buttonSecondary: ["select"],
+  buttonStyle: ["field", "select", "segmented", "pagination"],
+  buttonSecondary: ["select", "pagination"],
+  buttonPress: ["pagination"],
   buttonCase: ["segmented"],
   buttonRadius: ["calendar", "pagination"],
+  labelWeight: ["select", "pagination"],
+  buttonMotion: ["select", "pagination"],
 }
 
 /** Components drawn with the button recipe, or following its keys. */
 function Shared() {
   const { axis } = useBoardFocus()
   const { root, cell } = useCalendarStyles()()
-  const lit = axis ? SHARED_LIT[axis] : undefined
+  // A key that reaches none of them dims them all.
+  const lit = axis ? (SHARED_LIT[axis] ?? []) : undefined
   const dim = (id: string) =>
     cn(
       "transition-opacity duration-300",
