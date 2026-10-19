@@ -149,7 +149,7 @@ interface ControlRendererProps {
   onChange: (name: string, value: unknown) => void
 }
 
-export function ControlRenderer({
+function ControlRenderer({
   control,
   value,
   onChange,

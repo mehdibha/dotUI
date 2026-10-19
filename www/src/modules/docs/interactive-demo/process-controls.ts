@@ -116,7 +116,7 @@ function readPropDefault(
 // ============================================================================
 
 /** Read destructured param defaults from the demo's exported function signature. */
-export function readParamDefaults(source: string): Record<string, string> {
+function readParamDefaults(source: string): Record<string, string> {
   const sf = parseTsx(source)
   try {
     const fn = sf

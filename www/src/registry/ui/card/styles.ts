@@ -19,7 +19,7 @@ const roomy = {
   },
 }
 
-const { useStyles, styles } = createStyles(cardMeta, {
+const { useStyles } = createStyles(cardMeta, {
   base: {
     slots: {
       root: [
@@ -200,7 +200,5 @@ const { useStyles, styles } = createStyles(cardMeta, {
     },
   },
 })
-
-export type CardStyles = typeof styles
 
 export { useStyles }

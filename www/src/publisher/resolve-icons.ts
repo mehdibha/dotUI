@@ -44,7 +44,7 @@ const LIBRARY_IMPORTS = Object.fromEntries(
   iconLibraries.map((library) => [library.name, library.import]),
 ) as Record<IconLibraryName, string>
 
-export interface ResolveIconOptions {
+interface ResolveIconOptions {
   /** Phosphor weight; anything not in `phosphorWeights` (or 'regular') is the default. */
   weight?: string
 }

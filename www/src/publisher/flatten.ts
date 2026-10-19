@@ -238,7 +238,7 @@ function mergeLayer(a: TvLayer, b: TvLayer): TvLayer {
   return merged
 }
 
-export interface FlattenInput {
+interface FlattenInput {
   stylesConfig: StylesConfig
   meta: RegistryItem
   density: Density

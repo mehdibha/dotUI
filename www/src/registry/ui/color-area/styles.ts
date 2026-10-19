@@ -6,7 +6,7 @@ const roomy = {
   base: "w-56",
 }
 
-const { useStyles, styles } = createStyles(colorAreaMeta, {
+const { useStyles } = createStyles(colorAreaMeta, {
   base: {
     base: "block aspect-square min-w-20 rounded-(--studio-color-area-radius) disabled:[background:var(--color-disabled)]! in-data-dialog:w-full",
   },
@@ -22,7 +22,5 @@ const { useStyles, styles } = createStyles(colorAreaMeta, {
     touch: roomy,
   },
 })
-
-export type ColorAreaStyles = typeof styles
 
 export { useStyles }

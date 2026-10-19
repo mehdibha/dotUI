@@ -10,7 +10,7 @@ const roomy = {
   },
 }
 
-const { useStyles, styles } = createStyles(bubbleMeta, {
+const { useStyles } = createStyles(bubbleMeta, {
   base: {
     slots: {
       group: "flex min-w-0 flex-col",
@@ -74,7 +74,5 @@ const { useStyles, styles } = createStyles(bubbleMeta, {
     touch: roomy,
   },
 })
-
-export type BubbleStyles = typeof styles
 
 export { useStyles }

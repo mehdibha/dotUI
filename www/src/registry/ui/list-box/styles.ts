@@ -218,8 +218,6 @@ export const LIST_ROWS = {
   },
 }
 
-const { useStyles, styles } = createStyles(listBoxMeta, LIST_ROWS)
-
-export type ListBoxStyles = typeof styles
+const { useStyles } = createStyles(listBoxMeta, LIST_ROWS)
 
 export { useStyles }

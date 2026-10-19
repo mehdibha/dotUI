@@ -181,13 +181,8 @@ function cuspUncached(h: number): { l: number; c: number } {
 const KAPPA = 903.2962962
 const CB_EPSILON = 0.0088564516
 
-/** CIE L* → relative luminance Y (D65). */
-export function yFromLstar(lstar: number): number {
-  return lstar > 8 ? ((lstar + 16) / 116) ** 3 : lstar / KAPPA
-}
-
 /** Relative luminance Y → CIE L*. */
-export function lstarFromY(y: number): number {
+function lstarFromY(y: number): number {
   return y > CB_EPSILON ? 116 * Math.cbrt(y) - 16 : y * KAPPA
 }
 

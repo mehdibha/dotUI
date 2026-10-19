@@ -22,13 +22,6 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     style: {
       inverted: {

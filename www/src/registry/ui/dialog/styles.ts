@@ -20,7 +20,7 @@ const rule = "-mx-(--dialog-padding) border-t px-(--dialog-padding) pt-4"
 const band =
   "-mx-(--dialog-padding) -mb-(--dialog-padding) rounded-b-[calc(var(--surface-radius)-1px)] border-t bg-fg/2 p-(--dialog-padding) dark:bg-fg/4"
 
-const { useStyles, styles } = createStyles(dialogMeta, {
+const { useStyles } = createStyles(dialogMeta, {
   base: {
     slots: {
       content:
@@ -333,7 +333,5 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     },
   },
 })
-
-export type DialogStyles = typeof styles
 
 export { useStyles }
