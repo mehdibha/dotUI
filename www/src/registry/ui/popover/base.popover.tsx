@@ -13,12 +13,7 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({
-  className,
-  showArrow = true,
-  placement,
-  ...props
-}: PopoverProps) {
+function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   const { popover } = useStyles()()
   return (
     <PopoverPrimitives.Popover
@@ -26,7 +21,6 @@ function Popover({
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}
-      placement={placement}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (

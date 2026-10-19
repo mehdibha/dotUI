@@ -13,10 +13,10 @@ import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { useControlledState } from "react-stately/useControlledState";
 import { type VariantProps, tv } from "tailwind-variants";
 
-const inputVariants = tv({
+const inputStyles = tv({
   slots: {
     inputGroup:
-      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center **:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0! **:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none **:data-date-input:px-0 **:data-input:px-0 has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-textarea:px-0 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag-group:contents **:data-tag-list:contents border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-transparent dark:bg-border-control/30 group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-(--focus-input-border) has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring not-has-data-textarea:rounded-md has-data-textarea:rounded-md text-base sm:text-sm",
+      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center **:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0! **:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none **:data-input:px-0 has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-textarea:px-0 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag-group:contents **:data-tag-list:contents border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-transparent dark:bg-border-control/30 group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-(--focus-input-border) has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring not-has-data-textarea:rounded-md has-data-textarea:rounded-md text-base sm:text-sm",
     inputGroupAddon:
       "flex cursor-text items-center justify-center gap-(--addon-gap) select-none text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size) group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start **:data-button:rounded-[max(min(var(--radius-sm),var(--radius-md)),calc(var(--radius-md)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-textarea/input-group:px-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text) group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
     input:
@@ -79,13 +79,11 @@ const inputVariants = tv({
 });
 
 const { inputGroup, input, textArea, inputGroupAddon, dateInputSegment } =
-  inputVariants();
-
-export { inputVariants as inputStyles };
+  inputStyles();
 
 /* -------------------------------------------------------------------------- */
 
-type InputSize = Pick<VariantProps<typeof inputVariants>, "size">;
+type InputSize = Pick<VariantProps<typeof inputStyles>, "size">;
 
 interface InputGroupProps
   extends React.ComponentProps<typeof GroupPrimitive.Group>, InputSize {}
@@ -168,31 +166,26 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
   const onHeightChange = useCallback(() => {
-    if (inputRef.current) {
-      const input = inputRef.current;
-      const prevAlignment = input.style.alignSelf;
-      const prevOverflow = input.style.overflow;
-      const prevFlex = input.style.flex;
+    const input = inputRef.current;
+    if (!input) return;
+    const prevAlignment = input.style.alignSelf;
+    const prevOverflow = input.style.overflow;
+    const prevFlex = input.style.flex;
 
-      const isFirefox = "MozAppearance" in input.style;
-      if (!isFirefox) {
-        input.style.overflow = "hidden";
-      }
-      input.style.flex = "none";
-      input.style.alignSelf = "start";
-      input.style.height = "auto";
-      input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
-      input.style.overflow = prevOverflow;
-      input.style.alignSelf = prevAlignment;
-      input.style.flex = prevFlex;
+    const isFirefox = "MozAppearance" in input.style;
+    if (!isFirefox) {
+      input.style.overflow = "hidden";
     }
+    input.style.flex = "none";
+    input.style.alignSelf = "start";
+    input.style.height = "auto";
+    input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
+    input.style.overflow = prevOverflow;
+    input.style.alignSelf = prevAlignment;
+    input.style.flex = prevFlex;
   }, []);
 
-  useLayoutEffect(() => {
-    if (inputRef.current) {
-      onHeightChange();
-    }
-  }, [onHeightChange, inputValue, inputRef]);
+  useLayoutEffect(() => onHeightChange(), [onHeightChange, inputValue]);
 
   return (
     <TextAreaPrimitive.TextArea
@@ -216,7 +209,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 interface InputGroupAddonProps
   extends
     React.ComponentProps<"div">,
-    Pick<VariantProps<typeof inputVariants>, "variant"> {}
+    Pick<VariantProps<typeof inputStyles>, "variant"> {}
 
 function InputGroupAddon({
   className,
@@ -289,4 +282,12 @@ export type {
   InputProps,
   TextAreaProps,
 };
-export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, TextArea };
+export {
+  DateInput,
+  DateSegment,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  TextArea,
+  inputStyles,
+};

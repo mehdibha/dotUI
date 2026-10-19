@@ -58,14 +58,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
           action: "text-current hover:bg-current/10 pressed:bg-current/20",
         },
       },
-      position: {
-        "top-left": {},
-        "top-center": {},
-        "top-right": {},
-        "bottom-left": {},
-        "bottom-center": {},
-        "bottom-right": {},
-      },
       variant: {
         neutral: {},
         success: {},
@@ -77,7 +69,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
       },
     },
     defaultVariants: {
-      position: "bottom-right",
       variant: "neutral",
     },
   },

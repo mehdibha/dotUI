@@ -17,19 +17,14 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({
-  className,
-  showArrow = true,
-  placement,
-  ...props
-}: PopoverProps) {
+function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   const { popover } = useStyles()()
   const context = useSlottedContext(PopoverPrimitives.PopoverContext)
   const isMobile = useIsMobile()
 
-  // Render-prop children read placement and entering state, which only the popover can provide.
   const isNonModal = props.isNonModal ?? context?.isNonModal
   const isSubmenu = context?.trigger === "SubmenuTrigger"
+  // Render-prop children read placement and entering state, which only the popover can provide.
   if (
     isMobile &&
     (!isNonModal || isSubmenu) &&
@@ -53,7 +48,6 @@ function Popover({
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}
-      placement={placement}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (

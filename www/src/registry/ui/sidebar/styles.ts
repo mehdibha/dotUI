@@ -116,7 +116,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       header: "flex flex-col gap-2 p-2",
       footer: "flex flex-col gap-2 p-2",
-      separator: "mx-2 w-auto bg-border",
+      separator: "mx-2 w-auto",
       content:
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",

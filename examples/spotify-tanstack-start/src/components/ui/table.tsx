@@ -50,7 +50,7 @@ const tableVariants = tv({
       "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-xs text-fg-muted focus-reset focus-visible:focus-ring group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
     expandIcon: "size-3.5 transition-transform",
     loadMore:
-      "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
+      "relative h-7 **:data-loader:absolute **:data-loader:top-0 **:data-loader:left-1/2 **:data-loader:-translate-x-1/2",
   },
 });
 
@@ -148,58 +148,42 @@ const TableContainerContext = React.createContext({ resizable: false });
 
 /* -------------------------------------------------------------------------- */
 
-interface TableContainerProps extends React.ComponentPropsWithoutRef<
+interface TableContainerProps extends React.ComponentProps<
   typeof TablePrimitives.ResizableTableContainer
 > {
   resizable?: boolean;
 }
 
-const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
-  (
-    {
-      className,
-      onResize,
-      onResizeEnd,
-      onResizeStart,
-      render,
-      resizable = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const classNames = container({ className });
-    const context = React.useMemo(() => ({ resizable }), [resizable]);
+const TableContainer = ({
+  className,
+  onResize,
+  onResizeEnd,
+  onResizeStart,
+  render,
+  resizable = false,
+  ...props
+}: TableContainerProps) => {
+  const classNames = container({ className });
+  const context = React.useMemo(() => ({ resizable }), [resizable]);
 
-    if (resizable) {
-      return (
-        <TableContainerContext.Provider value={context}>
-          <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
-            className={classNames}
-            ref={ref}
-            onResize={onResize}
-            onResizeEnd={onResizeEnd}
-            onResizeStart={onResizeStart}
-            render={render}
-            {...props}
-          />
-        </TableContainerContext.Provider>
-      );
-    }
-
-    return (
-      <TableContainerContext.Provider value={context}>
-        <div
+  return (
+    <TableContainerContext value={context}>
+      {resizable ? (
+        <TablePrimitives.ResizableTableContainer
           data-slot="table-container"
           className={classNames}
-          ref={ref}
+          onResize={onResize}
+          onResizeEnd={onResizeEnd}
+          onResizeStart={onResizeStart}
+          render={render}
           {...props}
         />
-      </TableContainerContext.Provider>
-    );
-  },
-);
-TableContainer.displayName = "TableContainer";
+      ) : (
+        <div data-slot="table-container" className={classNames} {...props} />
+      )}
+    </TableContainerContext>
+  );
+};
 
 /* -------------------------------------------------------------------------- */
 

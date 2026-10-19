@@ -34,14 +34,6 @@ const toastVariants = tv({
         action: "text-current hover:bg-current/10 pressed:bg-current/20",
       },
     },
-    position: {
-      "top-left": {},
-      "top-center": {},
-      "top-right": {},
-      "bottom-left": {},
-      "bottom-center": {},
-      "bottom-right": {},
-    },
     variant: {
       neutral: {},
       success: {
@@ -65,7 +57,6 @@ const toastVariants = tv({
     },
   },
   defaultVariants: {
-    position: "bottom-right",
     variant: "neutral",
   },
 });
@@ -119,7 +110,6 @@ const toastIcons = {
 } as const;
 
 const defaultToastManager = ToastPrimitive.createToastManager<ToastData>();
-// Whether a status toast's own fill is solid; undefined sits on the surface.
 
 function getToastVariant(type: string | undefined): ToastVariant {
   return type && type in toastIcons ? (type as ToastVariant) : "neutral";
@@ -149,13 +139,12 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 function ToastProvider({
   children,
   limit = 3,
-  position,
+  position = "bottom-right",
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
 }: ToastProviderProps) {
-  const { defaultVariants } = toastVariants;
   return (
     <ToastPrimitive.Provider
       limit={limit}
@@ -164,10 +153,7 @@ function ToastProvider({
       {...props}
     >
       {children}
-      <ToastList
-        position={position ?? defaultVariants.position ?? "bottom-right"}
-        portalProps={portalProps}
-      />
+      <ToastList position={position} portalProps={portalProps} />
     </ToastPrimitive.Provider>
   );
 }
@@ -184,7 +170,7 @@ function ToastList({ position, portalProps }: ToastListProps) {
       <ToastPrimitive.Viewport
         data-slot="toast-viewport"
         data-position={position}
-        className={viewport({ position })}
+        className={viewport()}
       >
         {toasts.map((toastItem) => (
           <ToastItem key={toastItem.id} position={position} toast={toastItem} />
@@ -217,7 +203,7 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
       data-slot="toast"
       swipeDirection={getSwipeDirection(position)}
       toast={toastItem}
-      className={toastStyle({ position, variant })}
+      className={toastStyle({ variant })}
     >
       <ToastPrimitive.Content className={content()}>
         <div className={body()}>
@@ -227,10 +213,7 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
             </div>
           ) : null}
           <div data-slot="toast-message" className={message()}>
-            <ToastPrimitive.Title
-              data-slot="toast-title"
-              className={title({ variant })}
-            />
+            <ToastPrimitive.Title data-slot="toast-title" className={title()} />
             <ToastPrimitive.Description
               data-slot="toast-description"
               className={description({ variant })}

@@ -38,7 +38,7 @@ const SearchField = ({
       )}
       {...props}
     >
-      {props?.children ?? (
+      {props.children ?? (
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ComponentProps, createContext, use } from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ProgressBarPrimitive from "react-aria-components/ProgressBar";
 import { tv } from "tailwind-variants";
@@ -13,16 +13,14 @@ const progressBarVariants = tv({
     fill: "h-full w-full bg-primary transition-all data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide",
     output: "ml-auto text-fg-muted tabular-nums text-sm",
   },
-  variants: {},
-  defaultVariants: {},
 });
 
 const { root, track, fill, output } = progressBarVariants();
 
 const ProgressBarContext =
-  createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null);
+  React.createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null);
 const useProgressBarContext = (componentName: string) => {
-  const context = use(ProgressBarContext);
+  const context = React.use(ProgressBarContext);
   if (!context) {
     throw new Error(`${componentName} must be used within a ProgressBar`);
   }
@@ -31,7 +29,7 @@ const useProgressBarContext = (componentName: string) => {
 
 /* -------------------------------------------------------------------------- */
 
-interface ProgressBarProps extends ComponentProps<
+interface ProgressBarProps extends React.ComponentProps<
   typeof ProgressBarPrimitive.ProgressBar
 > {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {

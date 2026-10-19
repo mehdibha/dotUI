@@ -64,10 +64,6 @@ const { useStyles, styles } = createStyles(popoverMeta, {
       },
       none: {},
     },
-    tip: {
-      none: { slots: { arrow: "hidden" } },
-      tip: {},
-    },
   },
 })
 

@@ -20,9 +20,7 @@ type ButtonVariants = VariantProps<ButtonStyles>
 // MARK: Separator
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
-  isIconOnly?: boolean
-}
+  extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {}
 
 const Button = ({
   variant,
@@ -71,11 +69,7 @@ const Button = ({
 // MARK: Separator
 
 interface LinkButtonProps
-  extends
-    React.ComponentProps<typeof LinkPrimitive.Link>,
-    VariantProps<ButtonStyles> {
-  isIconOnly?: boolean
-}
+  extends React.ComponentProps<typeof LinkPrimitive.Link>, ButtonVariants {}
 
 const LinkButton = ({
   variant,
@@ -96,15 +90,13 @@ const LinkButton = ({
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
+      {composeRenderProps(children, (children) =>
+        typeof children === "string" ? (
+          <span className="truncate">{children}</span>
+        ) : (
+          children
+        ),
+      )}
     </LinkPrimitive.Link>
   )
 }

@@ -20,8 +20,8 @@
  * Build-time only. Imports ts-morph.
  */
 
-import { SyntaxKind } from "ts-morph"
-import type { CallExpression, SourceFile } from "ts-morph"
+import { Node, SyntaxKind } from "ts-morph"
+import type { CallExpression, CommentStatement, SourceFile } from "ts-morph"
 
 export interface ParamValueHook {
   /** The hook's local name, e.g. `useMarker`. */
@@ -121,8 +121,10 @@ export function selectionKey(
   return paramNames.map((name) => `${name}=${selection[name]}`).join("&")
 }
 
-/** Rewrite the file for one selection: calls become the value's expression,
- *  the hook declarations go, and imports left unreferenced go with them. */
+/** Rewrite the file for one selection: calls become the value's expression
+ *  (inlined at the use when a `const` held it for one read), the hook
+ *  declarations and their comments go, and imports left unreferenced go with
+ *  them. */
 export function foldParamValues(
   sourceFile: SourceFile,
   hooks: readonly ParamValueHook[],
@@ -147,11 +149,96 @@ export function foldParamValues(
           )
         })
       if (!call) break
-      call.replaceWithText(text)
+      inlineSingleUseConst(call.replaceWithText(text))
     }
-    sourceFile.getVariableDeclarationOrThrow(hook.hookName).remove()
+    removeWithComments(sourceFile.getVariableDeclarationOrThrow(hook.hookName))
   }
   pruneUnusedImports(sourceFile)
+}
+
+/** Drop a declaration and, when it was its statement's only one, the line
+ *  comments directly above it. */
+function removeWithComments(decl: Node): void {
+  const stmt = decl.getFirstAncestorByKind(SyntaxKind.VariableStatement)
+  if (!stmt || stmt.getDeclarations().length !== 1) {
+    decl.asKindOrThrow(SyntaxKind.VariableDeclaration).remove()
+    return
+  }
+  const comments: CommentStatement[] = []
+  let line = stmt.getStartLineNumber()
+  for (
+    let prev = stmt.getPreviousSibling();
+    prev &&
+    Node.isCommentStatement(prev) &&
+    prev.getEndLineNumber() === line - 1;
+    prev = prev.getPreviousSibling()
+  ) {
+    comments.push(prev)
+    line = prev.getStartLineNumber()
+  }
+  stmt.remove()
+  for (const comment of comments) comment.remove()
+}
+
+const INLINABLE = new Set([
+  SyntaxKind.StringLiteral,
+  SyntaxKind.NumericLiteral,
+  SyntaxKind.JsxElement,
+  SyntaxKind.JsxSelfClosingElement,
+  SyntaxKind.JsxFragment,
+])
+
+/**
+ * `const glyph = <ChevronRightIcon />` read once as `{children ?? glyph}` →
+ * `{children ?? <ChevronRightIcon />}`. Only literal/JSX values in an
+ * unannotated single-declaration `const`, read exactly once in the same block
+ * and never re-declared there.
+ */
+function inlineSingleUseConst(value: Node): void {
+  if (!INLINABLE.has(value.getKind())) return
+  const decl = value.getParentIfKind(SyntaxKind.VariableDeclaration)
+  if (!decl || decl.getTypeNode()) return
+  const name = decl.getNameNode()
+  if (!name.isKind(SyntaxKind.Identifier)) return
+  const list = decl.getParentIfKind(SyntaxKind.VariableDeclarationList)
+  const stmt = list?.getParentIfKind(SyntaxKind.VariableStatement)
+  const block = stmt?.getParent()
+  if (!list || !stmt || !block || list.getDeclarations().length !== 1) return
+  if (stmt.getDeclarationKind() !== "const") return
+
+  const uses: Node[] = []
+  for (const id of block.getDescendantsOfKind(SyntaxKind.Identifier)) {
+    if (id === name || id.getText() !== name.getText()) continue
+    const parent = id.getParent()
+    if (
+      (Node.isPropertyAccessExpression(parent) &&
+        parent.getNameNode() === id) ||
+      (Node.isPropertyAssignment(parent) && parent.getNameNode() === id) ||
+      (Node.isJsxAttribute(parent) && parent.getNameNode() === id)
+    )
+      continue
+    if (
+      Node.isVariableDeclaration(parent) ||
+      Node.isParameterDeclaration(parent) ||
+      Node.isBindingElement(parent) ||
+      Node.isShorthandPropertyAssignment(parent)
+    )
+      return
+    uses.push(id)
+  }
+  const [use] = uses
+  if (!use || uses.length !== 1) return
+  // A JSX value read as a child drops its braces: `{glyph}` → `<Icon />`.
+  const container = use.getParent()
+  const target =
+    Node.isJsxExpression(container) &&
+    !Node.isLiteralExpression(value) &&
+    (Node.isJsxElement(container.getParent()) ||
+      Node.isJsxFragment(container.getParent()))
+      ? container
+      : use
+  target.replaceWithText(value.getText())
+  stmt.remove()
 }
 
 function pruneUnusedImports(sourceFile: SourceFile): void {

@@ -273,12 +273,7 @@ function SidebarInset({ className, ...props }: SidebarInsetProps) {
 
 interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
-function SidebarTrigger({
-  onPress,
-  className,
-  children,
-  ...props
-}: SidebarTriggerProps) {
+function SidebarTrigger({ onPress, children, ...props }: SidebarTriggerProps) {
   const { toggleSidebar } = useSidebar()
   return (
     <Button
@@ -286,7 +281,6 @@ function SidebarTrigger({
       size="sm"
       isIconOnly
       aria-label="Toggle Sidebar"
-      className={cn("size-7", className)}
       onPress={(event) => {
         onPress?.(event)
         toggleSidebar()

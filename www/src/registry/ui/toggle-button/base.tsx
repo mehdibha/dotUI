@@ -29,9 +29,7 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 interface ToggleButtonProps
   extends
     React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
-    ToggleButtonVariants {
-  isIconOnly?: boolean
-}
+    ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const styles = useStyles()
@@ -61,15 +59,13 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
+      {composeRenderProps(children, (children) =>
+        typeof children === "string" ? (
+          <span className="truncate">{children}</span>
+        ) : (
+          children
+        ),
+      )}
     </ToggleButtonPrimitive.ToggleButton>
   )
 }
