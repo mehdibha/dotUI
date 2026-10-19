@@ -149,11 +149,7 @@ interface ControlRendererProps {
   onChange: (name: string, value: unknown) => void
 }
 
-function ControlRenderer({
-  control,
-  value,
-  onChange,
-}: ControlRendererProps) {
+function ControlRenderer({ control, value, onChange }: ControlRendererProps) {
   switch (control.type) {
     case "boolean":
       return (
