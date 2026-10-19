@@ -8,7 +8,8 @@ const linkVariants = tv({
   base: "focus-reset focus-visible:focus-ring-outside inline-flex items-center gap-1 transition-colors",
   variants: {
     variant: {
-      default: "disabled:text-(--disabled-fg,currentColor) text-fg-accent",
+      default:
+        "disabled:text-(--disabled-fg,currentColor) hover:opacity-80 text-fg-accent",
       quiet:
         "font-medium text-fg underline underline-offset-2 disabled:text-(--disabled-fg,var(--color-fg))",
       unstyled: "",
