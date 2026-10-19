@@ -119,37 +119,25 @@ interface SelectContentProps<T extends object>
       PopoverProps,
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps["placement"];
-  virtulized?: boolean;
+  virtualized?: boolean;
 }
 
 const SelectContent = <T extends object>({
-  virtulized,
+  virtualized,
   placement = "bottom",
   defaultOpen,
   isOpen,
   onOpenChange,
   ...props
 }: SelectContentProps<T>) => {
-  const listBoxClassName = composeRenderProps(props.className, (className) =>
-    cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+  const listBox = (
+    <ListBox
+      {...props}
+      className={composeRenderProps(props.className, (className) =>
+        cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+      )}
+    />
   );
-
-  if (virtulized) {
-    return (
-      <Popover
-        className="overflow-hidden"
-        placement={placement}
-        defaultOpen={defaultOpen}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-      >
-        <ListBoxVirtualizer>
-          <ListBox {...props} className={listBoxClassName} />
-        </ListBoxVirtualizer>
-      </Popover>
-    );
-  }
 
   return (
     <Popover
@@ -159,7 +147,11 @@ const SelectContent = <T extends object>({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
     >
-      <ListBox {...props} className={listBoxClassName} />
+      {virtualized ? (
+        <ListBoxVirtualizer>{listBox}</ListBoxVirtualizer>
+      ) : (
+        listBox
+      )}
     </Popover>
   );
 };

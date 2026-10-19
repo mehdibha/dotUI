@@ -1,27 +1,36 @@
 "use client"
 
-/* Foundations — the eight decisions every component reads, then the pages
-   that refine them. */
+/* Foundations — the decisions every component reads, then the pages that
+   refine them. Shape and Surfaces open from their picker's Custom. */
 
 import { Fragment } from "react"
 
+import type { ChapterPage, SearchRow } from "../chapters"
 import { DialGap, DialLink } from "../dial"
-import { Row, RowLabel } from "../family-page"
-import type { ChapterPage, SearchRow, Studio } from "../state"
+import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
-import { SemanticsPreview } from "./color"
+import type { Studio } from "../use-studio"
 import { PrimaryRow } from "./primary"
-import { ComponentCornersRow, ShapePreview, ShapeRow } from "./shape"
-import { InteractionPreview } from "./states"
+import { ComponentCornersRow, ShapeRow } from "./shape"
+import {
+  CursorPreview,
+  DisabledPreview,
+  FocusPreview,
+  TextSelectionPreview,
+} from "./states"
+import { SurfacesRow } from "./surfaces"
 import { TypePreview } from "./type"
 
-/** A row and its name: a key's row, or one with no key of its own. */
-type FoundationRow = [AxisKey | React.ComponentType, string]
+/** A row, its name and other names search knows it by: a key's row, or one
+ *  with no key of its own. */
+type FoundationRow = [AxisKey | React.ComponentType, string, string[]?]
 
 export const MAIN_ROWS: FoundationRow[] = [
   ["style", "Style"],
   ["brand", "Brand"],
   ["neutralHue", "Neutral"],
+  [PrimaryRow, "Primary"],
+  [SurfacesRow, "Surfaces"],
   ["bodyFont", "Font"],
   [ShapeRow, "Radius"],
   ["density", "Density"],
@@ -29,7 +38,7 @@ export const MAIN_ROWS: FoundationRow[] = [
   ["motion", "Motion"],
 ]
 
-/** The keys whose rows sit on the main page, in or under its eight rows. */
+/** The keys whose rows sit on the main page, in or under its rows. */
 export const FOUNDATION_KEYS = [
   "style",
   "brand",
@@ -40,6 +49,7 @@ export const FOUNDATION_KEYS = [
   "neutralTint",
   "bodyFont",
   "density",
+  "uiTextSize",
   "iconLibrary",
   "iconStroke",
   "iconWeight",
@@ -48,31 +58,29 @@ export const FOUNDATION_KEYS = [
 
 /** Each page's rows, in groups. */
 export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
-  color: [
-    [
-      ["successSeed", "Semantics"],
-      [PrimaryRow, "Primary"],
-      ["selectionColor", "Selected fill"],
-      ["selectedWash", "Selected wash"],
-    ],
-    [
-      ["surfaceLayers", "Surfaces"],
-      ["controlEdge", "Control edge"],
-      ["controlStroke", "Control stroke"],
-    ],
-  ],
   typography: [
     [
       ["headingFont", "Heading"],
-      ["readingFont", "Reading"],
       ["monoFont", "Mono"],
     ],
+  ],
+  focus: [
     [
-      ["titleStyle", "Titles"],
-      ["uiTextSize", "UI text size"],
-      ["fieldTextSize", "Field text"],
-      ["labelWeight", "Label weight"],
-      ["sectionLabels", "Section labels"],
+      ["focusStyle", "Focus ring"],
+      ["focusInputStyle", "Field focus"],
+    ],
+  ],
+  disabled: [[["disabledTreatment", "Style"]]],
+  cursor: [
+    [
+      ["cursorControls", "Controls"],
+      ["cursorDisabled", "Disabled"],
+    ],
+  ],
+  "text-selection": [
+    [
+      ["selectionHighlight", "Highlight"],
+      ["selectionUiText", "Control text"],
     ],
   ],
   shape: [
@@ -87,24 +95,28 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
     ],
     [[ComponentCornersRow, "Components"]],
   ],
-  interaction: [
+  surfaces: [
     [
-      ["focusStyle", "Focus ring"],
-      ["focusInputStyle", "Field focus"],
-      ["invalidStyle", "Invalid"],
-      ["disabledTreatment", "Disabled"],
+      ["surfaceLayers", "Layers"],
+      ["surfaceEdge", "Edge"],
+      ["surfaceShadow", "Shadow"],
     ],
     [
-      ["cursorControls", "Control cursor"],
-      ["cursorDisabled", "Disabled cursor"],
-      ["selectionHighlight", "Text selection"],
+      ["translucentOverlays", "Overlays", ["Glass"]],
+      ["shellTone", "App shell"],
+      ["lightBg", "Page"],
+    ],
+    [
+      ["controlEdge", "Control edge"],
+      ["controlStroke", "Control stroke"],
     ],
   ],
 }
 
-const searchRow = ([row, name]: FoundationRow): SearchRow => ({
+const searchRow = ([row, name, aliases]: FoundationRow): SearchRow => ({
   name,
   key: typeof row === "string" ? row : undefined,
+  aliases,
 })
 
 function Rows({ rows }: { rows: FoundationRow[] }) {
@@ -138,46 +150,64 @@ const page = (page: Omit<ChapterPage, "Body" | "rows">): ChapterPage => {
 
 export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
-    id: "color",
-    label: "Color & surfaces",
-    owners: [
-      "successSeed",
-      "warningSeed",
-      "dangerSeed",
-      "selectionSeed",
-      "selectionColor",
-      "selectedWash",
-      "surfaces",
-      "lightBg",
-      "darkBg",
-      "controlEdge",
-      "controlStroke",
-    ],
-    aliases: ["Color", "Semantics", "Primary", "Surfaces", "Elevation"],
-    Preview: SemanticsPreview,
-  }),
-  page({
     id: "typography",
     label: "Typography",
-    owners: ["type"],
-    aliases: ["Fonts", "Menu labels"],
+    owners: ["headingFont", "monoFont"],
+    aliases: ["Fonts"],
     Preview: TypePreview,
+  }),
+  page({
+    id: "focus",
+    label: "Focus",
+    owners: [
+      "focusStyle",
+      "focusStrength",
+      "focusWidth",
+      "focusColor",
+      "focusInputStyle",
+      "focusInputWeight",
+      "focusInputColor",
+    ],
+    aliases: ["Focus ring", "Keyboard"],
+    Preview: FocusPreview,
+  }),
+  page({
+    id: "disabled",
+    label: "Disabled",
+    owners: ["disabledTreatment"],
+    Preview: DisabledPreview,
+  }),
+  page({
+    id: "cursor",
+    label: "Cursor",
+    owners: ["cursorControls", "cursorDisabled"],
+    aliases: ["Cursors", "Pointer"],
+    Preview: CursorPreview,
+  }),
+  page({
+    id: "text-selection",
+    label: "Text selection",
+    owners: ["selection", "selectionUiText"],
+    aliases: ["Highlight", "Select text"],
+    Preview: TextSelectionPreview,
   }),
   page({
     id: "shape",
     label: "Shape",
     owners: ["shape"],
     aliases: ["Corners", "Radius"],
-    Preview: ShapePreview,
   }),
   page({
-    id: "interaction",
-    label: "Interaction",
-    owners: ["states", "selection"],
-    aliases: ["States", "Interactivity", "Focus", "Cursors"],
-    Preview: InteractionPreview,
+    id: "surfaces",
+    label: "Surfaces",
+    owners: ["surfaces", "lightBg", "darkBg", "controlEdge", "controlStroke"],
+    aliases: ["Elevation", "Cards", "Shadows"],
   }),
 ]
+
+/** The pages listed under the main page's rows; the rest open from a
+ *  picker's Custom. */
+const LISTED = ["typography", "focus", "disabled", "cursor", "text-selection"]
 
 /** The main page's rows, for search. */
 export const FOUNDATION_ROWS = MAIN_ROWS.map(searchRow)
@@ -187,14 +217,16 @@ export function FoundationsSection({ studio }: { studio: Studio }) {
     <>
       <Rows rows={MAIN_ROWS} />
       <DialGap />
-      {FOUNDATION_PAGES.map(({ id, label, Preview }) => (
-        <DialLink
-          key={id}
-          page={id}
-          label={label}
-          value={Preview && <Preview state={studio.effective} />}
-        />
-      ))}
+      {FOUNDATION_PAGES.filter(({ id }) => LISTED.includes(id)).map(
+        ({ id, label, Preview }) => (
+          <DialLink
+            key={id}
+            page={id}
+            label={label}
+            value={Preview && <Preview state={studio.effective} />}
+          />
+        ),
+      )}
     </>
   )
 }

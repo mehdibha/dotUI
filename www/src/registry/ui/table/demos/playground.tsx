@@ -8,21 +8,31 @@ import {
   TableContainer,
   TableHeader,
   TableRow,
+  type TableContainerProps,
   type TableProps,
 } from "@/registry/ui/table"
 
-export default function Demo({ selectionMode = "none" }: TableProps = {}) {
+export default function Demo({
+  selectionMode = "none",
+  striped = false,
+  resizable = false,
+}: TableProps & Pick<TableContainerProps, "resizable"> = {}) {
   return (
-    <TableContainer>
+    <TableContainer resizable={resizable}>
       <Table
         aria-label="Files"
         data-control-target
         selectionMode={selectionMode}
+        striped={striped}
       >
         <TableHeader>
-          <TableColumn isRowHeader>Name</TableColumn>
-          <TableColumn>Type</TableColumn>
-          <TableColumn>Date Modified</TableColumn>
+          <TableColumn id="name" isRowHeader allowsResizing>
+            Name
+          </TableColumn>
+          <TableColumn id="type" allowsResizing>
+            Type
+          </TableColumn>
+          <TableColumn id="date">Date Modified</TableColumn>
         </TableHeader>
         <TableBody>
           <TableRow>
@@ -39,6 +49,11 @@ export default function Demo({ selectionMode = "none" }: TableProps = {}) {
             <TableCell>bootmgr</TableCell>
             <TableCell>System file</TableCell>
             <TableCell>11/20/2010</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>log.txt</TableCell>
+            <TableCell>Text Document</TableCell>
+            <TableCell>1/18/2016</TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -1,15 +1,11 @@
 /**
- * Registry Build Script
- *
- * Generates internal files for lazy loading:
- * - src/registry/__generated__/ (demos, icons, examples, per-library icon exports)
- *
- * Usage: tsx scripts/registry-build.ts
+ * `pnpm build:registry`: generates base/colors.css, `src/registry/__generated__/`
+ * (item manifest, demos, icons, publishables), the studio examples index and
+ * the preset catalog, checking registry and publishable integrity on the way.
  */
 
 import { existsSync, promises as fs } from "node:fs"
 import path from "node:path"
-import { format } from "oxfmt"
 import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
@@ -17,6 +13,7 @@ import { themeOptionsSchema } from "@dotui/colors/schema"
 import {
   buildPublishables,
   collectBaseFiles,
+  formatGenerated,
 } from "../src/publisher/build-time/build-publishables"
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps"
 import { BUNDLED_INTO_INIT, registryDepsFor } from "../src/publisher/publish"
@@ -39,27 +36,18 @@ import type { RegistryItem } from "../src/registry/types"
 const REGISTRY_DIR = path.join(process.cwd(), "src/registry")
 const GENERATED_DIR = path.join(REGISTRY_DIR, "__generated__")
 
-// ============================================================================
-// Utility Functions
-// ============================================================================
-
 async function ensureDir(dir: string) {
   await rimraf(dir)
   await fs.mkdir(dir, { recursive: true })
 }
 
 async function writeGeneratedFile(targetPath: string, content: string) {
-  const { code } = await format(targetPath, content, {
-    printWidth: 120,
-    useTabs: true,
-  })
-
-  await fs.writeFile(targetPath, code, "utf8")
+  await fs.writeFile(
+    targetPath,
+    await formatGenerated(targetPath, content),
+    "utf8",
+  )
 }
-
-// ============================================================================
-// Phase 1: Internal Generated Files (registry/__generated__)
-// ============================================================================
 
 async function processDirectory(
   dirPath: string,
@@ -225,16 +213,10 @@ ${iconExports}
 }
 
 async function buildInternalExamples() {
-  // Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
-  // rather than registry/__generated__, so the registry tree never imports "up" into
-  // @/modules/studio/preview/group-examples — keeping registry/ items-only.
+  // Consumed only by the studio preview route (routes/preview/-preview-page.tsx).
   const targetDir = path.join(process.cwd(), "src/modules/studio/__generated__")
   const targetPath = path.join(targetDir, "examples.tsx")
   const uiDir = path.join(REGISTRY_DIR, "ui")
-  const groupExamplesDir = path.join(
-    process.cwd(),
-    "src/modules/studio/preview/group-examples",
-  )
   await fs.mkdir(targetDir, { recursive: true })
 
   const componentFolders = await fs.readdir(uiDir)
@@ -249,18 +231,6 @@ async function buildInternalExamples() {
     }
   }
 
-  const groupEntries: string[] = []
-  if (existsSync(groupExamplesDir)) {
-    const groupFiles = await fs.readdir(groupExamplesDir)
-    for (const file of groupFiles.sort()) {
-      if (!file.endsWith(".tsx")) continue
-      const name = file.replace(/\.tsx$/, "")
-      groupEntries.push(
-        `  "${name}": () => import("@/modules/studio/preview/group-examples/${name}"),`,
-      )
-    }
-  }
-
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
@@ -270,24 +240,13 @@ export const ExamplesIndex: Record<
 > = {
 ${entries.join("\n")}
 };
-
-export const GroupExamplesIndex: Record<
-  string,
-  () => Promise<{ default: React.ComponentType }>
-> = {
-${groupEntries.join("\n")}
-};
 `
 
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ studio/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
+    `  ✓ studio/__generated__/examples.tsx (${entries.length} components)`,
   )
 }
-
-// ============================================================================
-// Generated item manifest: registryUi / registryLib globbed from meta.ts
-// ============================================================================
 
 // PascalCase identifier for a scope+slug, e.g. ("ui","color-area") -> "UiColorArea".
 function toItemIdent(scope: "ui" | "lib", slug: string): string {
@@ -317,7 +276,7 @@ async function buildRegistryItemsManifest() {
   // Sort value imports by module specifier (NOT identifier) to match oxfmt's
   // sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
   // "ui/checkbox" ('-' < '/') — so the generated file passes `oxfmt --check` as-is
-  // (writeGeneratedFile's inline format() does not re-sort imports). The type
+  // (writeGeneratedFile's format does not re-sort imports). The type
   // import follows the value group with no blank line; the header comment is
   // detached by a blank line so oxfmt leaves it at the top.
   const valueImports = [
@@ -350,10 +309,6 @@ ${arrayBlock("registryLib", "lib", lib)}
     `  ✓ __generated__/registry-items.ts (${ui.length} ui, ${lib.length} lib)`,
   )
 }
-
-// ============================================================================
-// Build-time Guard: registry-items glob drift + integrity
-// ============================================================================
 
 /**
  * Directories under `src/registry/<scope>` that have a `meta.ts` on disk,
@@ -504,25 +459,14 @@ async function checkRegistryIntegrity(
   console.log("  ✓ registry integrity (deps declared, names unique)")
 }
 
-// ============================================================================
-// Post-publish guards: the emitted publishable set is a CONTRACT — every skip
-// is explained, every declared dep resolves, every docs-advertised name ships.
+// Post-publish guards: the emitted publishable set is a CONTRACT — every
+// declared dep resolves, every docs-advertised name ships.
 // These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
-// ============================================================================
-
-/** Guard 1: every registered item must emit a publishable — a skip is a build break. */
-function checkPublishableSkips(build: PublishablesBuild): string[] {
-  return build.skipped.map(
-    ({ name, reason }) =>
-      `Publishable "${name}" was skipped: ${reason}\n` +
-      `      Fix ui/${name} so it emits a publishable.`,
-  )
-}
 
 /**
- * Guard 2: every publishable's `registryDependencies` must resolve to something
+ * Every publishable's `registryDependencies` must resolve to something
  * shadcn can fetch — another publishable, an init-bundled name, an absolute URL,
  * or an `@namespace/…` dep. A bare unknown name silently resolves against
  * shadcn's default registry (how text-field pulled shadcn's Input), so it fails.
@@ -573,7 +517,7 @@ const DOCS_REGISTRY_URL_RE =
 const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 
 /**
- * Guard 3: every install name advertised in the docs must ship. Scans
+ * Every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
  * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES).
  * This is what would have caught `@dotui/text-field` advertising a component
@@ -627,13 +571,12 @@ async function listMdxFiles(dir: string): Promise<string[]> {
   return out.sort()
 }
 
-/** Runs the post-publish guards (skips, dep closure, docs); throws on any failure. */
+/** Runs the post-publish guards (dep closure, docs); throws on any failure. */
 async function checkPublishableIntegrity(
   registryUi: RegistryItem[],
   build: PublishablesBuild,
 ) {
   const errors = [
-    ...checkPublishableSkips(build),
     ...checkDependencyClosure(registryUi, build),
     ...(await checkDocsRegistryConsistency(build)),
   ]
@@ -642,17 +585,10 @@ async function checkPublishableIntegrity(
       `Publishable integrity check failed:\n  - ${errors.join("\n  - ")}`,
     )
   }
-  console.log(
-    "  ✓ publishable integrity (no unexplained skips, deps resolve, docs names ship)",
-  )
+  console.log("  ✓ publishable integrity (deps resolve, docs names ship)")
 }
 
-// ============================================================================
-// Main
-// ============================================================================
-
 interface PublishablesBuild {
-  skipped: Array<{ name: string; reason: string }>
   /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
 }
@@ -660,36 +596,16 @@ interface PublishablesBuild {
 async function buildShadcnPublishables(
   items: RegistryItem[],
 ): Promise<PublishablesBuild> {
-  const { written, skipped } = await buildPublishables({
+  const { written, published } = await buildPublishables({
     registryDir: REGISTRY_DIR,
     items,
   })
   for (const filePath of written) {
     console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`)
   }
-  if (skipped.length > 0) {
-    console.log(`\n  ${skipped.length} component(s) skipped:`)
-    for (const { name, reason } of skipped) {
-      console.log(`    - ${name}: ${reason}`)
-    }
-  }
-
-  // A written path is `<name>.ts`, excluding the index/base-css helpers.
-  const builtNames = new Set(
-    written
-      .filter((p) => p.endsWith(".ts"))
-      .map((p) => path.basename(p, ".ts"))
-      .filter((n) => n !== "index" && n !== "base-css"),
-  )
-  return { skipped, builtNames }
+  return { builtNames: new Set(published) }
 }
 
-/**
- * Generate base/colors.css from the site's ColorConfig: the primitive ramps
- * (both modes solved independently by the engine) and the semantic `@theme`
- * block that references them. This file is site-only — the shipped theme
- * flattens the semantic tokens to literals instead (see publisher/emit-theme).
- */
 // The engine's input contract is a zod schema checked here, at build time,
 // for the default and every built-in preset — `createTheme` itself trusts
 // its typed input so the client never ships zod.
@@ -739,6 +655,12 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
   console.log(`  ✓ presets/__generated__/catalog.ts (${catalog.length})`)
 }
 
+/**
+ * Generate base/colors.css from the site's ColorConfig: the primitive ramps
+ * (both modes solved independently by the engine) and the semantic `@theme`
+ * block that references them. This file is site-only — the shipped theme
+ * flattens the semantic tokens to literals instead (see publisher/emit-theme).
+ */
 async function generateBaseColorsCss() {
   const primitives = emitPrimitivesCss(resolveColorConfig(SITE_COLOR_CONFIG))
   const dark = emitDarkOverridesCss(SITE_SEMANTICS)

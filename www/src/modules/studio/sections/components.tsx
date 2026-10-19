@@ -3,13 +3,14 @@
 /* Components — one row per component, A to Z. A component with one key is
    that key's row; the others open a page of their rows. */
 
+import type { Chapter, ChapterPage } from "../chapters"
 import { DialLink } from "../dial"
-import { Row } from "../family-page"
-import type { Chapter, ChapterPage, Studio } from "../state"
+import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
+import type { Studio } from "../use-studio"
 
-export interface Component {
+interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
   id: string
   label: string
@@ -79,6 +80,7 @@ export const COMPONENTS: Component[] = [
       ["buttonPress", "Press"],
       ["buttonRadius", "Corners"],
       ["buttonCase", "Case"],
+      ["labelWeight", "Label weight"],
       ["toggleSelected", "Toggled"],
       ["buttonColor", "Color"],
       ["buttonMotion", "Motion"],
@@ -119,6 +121,7 @@ export const COMPONENTS: Component[] = [
     rows: [
       ["cardHeader", "Header"],
       ["cardFooter", "Footer"],
+      ["titleStyle", "Titles"],
     ],
   },
   {
@@ -191,6 +194,8 @@ export const COMPONENTS: Component[] = [
       ["inputHeight", "Height"],
       ["fieldLabel", "Label"],
       ["inputError", "Error message"],
+      ["invalidStyle", "Invalid"],
+      ["fieldTextSize", "Text size"],
       ["fieldMotion", "Motion"],
     ],
     aliases: [
@@ -233,6 +238,7 @@ export const COMPONENTS: Component[] = [
       ["menuIndicator", "Check"],
       ["menuSelectedRow", "Selected row"],
       ["menuRows", "Rows"],
+      ["sectionLabels", "Section labels"],
       ["popoverMotion", "Motion"],
     ],
     hosts: ["popoverMotion"],

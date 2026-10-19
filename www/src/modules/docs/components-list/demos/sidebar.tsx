@@ -32,7 +32,7 @@ const platform = [
 const projects = ["Design system", "Marketing site", "Mobile app"]
 
 // Native size, anchored top-left and cropped by the card on the right and
-// bottom. The sidebar is narrowed so the inset's collapse trigger stays visible.
+// bottom. Not collapsible, so it stays docked at mobile widths too.
 export function SidebarDemo() {
   return (
     <div className="absolute inset-0 pt-4 pl-4">
@@ -40,7 +40,7 @@ export function SidebarDemo() {
         className="h-80 min-h-0 w-104 overflow-hidden rounded-lg border"
         style={{ "--sidebar-width": "12.5rem" } as React.CSSProperties}
       >
-        <Sidebar>
+        <Sidebar collapsible="none">
           <SidebarHeader>
             <SidebarMenu>
               <SidebarMenuItem>

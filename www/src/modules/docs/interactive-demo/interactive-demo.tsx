@@ -26,7 +26,7 @@ import { toggleCodeBlock } from "@/modules/docs/toggle-code-block"
 
 import { defaultControlValues } from "./control-defaults"
 import { availableIcons, Controls } from "./controls"
-import type { ControlValues, SerializableControl } from "./types"
+import type { Control, ControlValues } from "./types"
 
 /**
  * Interactive demo component.
@@ -51,7 +51,7 @@ import type { ControlValues, SerializableControl } from "./types"
 
 interface InteractiveDemoProps {
   component: ComponentType<Record<string, unknown>>
-  controls: SerializableControl[]
+  controls: Control[]
   codeTemplate: CodeTemplate
   className?: string
 }
@@ -209,7 +209,6 @@ export function InteractiveDemo({
                 controls={controls}
                 values={values}
                 onChange={handleChange}
-                layout="horizontal"
               />
             </div>
           </div>
@@ -242,7 +241,7 @@ export function InteractiveDemo({
           </Button>
         }
       >
-        <DynamicPre lang="tsx">{displayedCode}</DynamicPre>
+        <DynamicPre>{displayedCode}</DynamicPre>
       </CodeBlock>
     </div>
   )

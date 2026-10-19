@@ -91,7 +91,7 @@ export interface Explained {
 
 /** One axis module: its keys' defaults and schema, the resolver over the
  *  effective state, and the follows and rules on its own keys. */
-export interface Chapter<D extends object = object, R = unknown> {
+interface Chapter<D extends object = object, R = unknown> {
   id: string
   defaults: D
   schema: { [K in keyof D]: AxisSchema }

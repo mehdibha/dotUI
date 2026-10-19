@@ -15,7 +15,7 @@ export interface ModalOverlayProps extends React.ComponentProps<
 /**
  * The modal panel that contains the dialog content.
  */
-export interface ModalContentProps extends React.ComponentProps<
+export interface ModalPanelProps extends React.ComponentProps<
   typeof ModalPrimitives.Modal
 > {}
 

@@ -123,6 +123,18 @@ export function finiteOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null
 }
 
+export const TAU = Math.PI * 2
+
+export function rowLabel(
+  name: string,
+  labels: Readonly<Record<string, string>> | undefined,
+) {
+  return (row: unknown) => {
+    const key = String((row as Record<string, unknown>)[name])
+    return labels?.[key] ?? key
+  }
+}
+
 export interface ChartSpec<TDatum> {
   marks: readonly ChartMarkLayer[]
   scales: {

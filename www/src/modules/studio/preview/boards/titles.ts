@@ -35,7 +35,10 @@ export const BOARD_TITLES = {
   tabs: "Tabs",
   toast: "Toast",
   tooltip: "Tooltip",
-  interaction: "Interaction",
+  focus: "Focus",
+  disabled: "Disabled",
+  cursor: "Cursor",
+  "text-selection": "Text selection",
   motion: "Motion",
   icons: "Icons",
 }

@@ -18,6 +18,84 @@
         "type": "string"
       },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "defaultInputValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The default value of the autocomplete input (uncontrolled)."
+    },
+    "disableAutoFocusFirst": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether or not to focus the first item in the collection after a filter is performed. Note this\nis only applicable if virtual focus behavior is not turned off via `disableVirtualFocus`.",
+      "default": "false"
+    },
+    "disableVirtualFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the autocomplete should disable virtual focus, instead making the wrapped collection\ndirectly tabbable.",
+      "default": "false"
+    },
+    "inputValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The value of the autocomplete input (controlled)."
+    },
+    "onInputChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the autocomplete input value changes."
+    },
+    "slot": {
+      "type": "null | string",
+      "detailedType": "null | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     }
   }
 }

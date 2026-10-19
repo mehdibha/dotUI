@@ -19,16 +19,8 @@ const GENERATED_DIR = fileURLToPath(new URL("generated", import.meta.url))
  */
 export async function loadApiReference(
   name: string,
-): Promise<ComponentApiReference | null> {
-  try {
-    const filePath = path.join(GENERATED_DIR, `${name}.json`)
-    const content = await fs.readFile(filePath, "utf-8")
-    return JSON.parse(content) as ComponentApiReference
-  } catch (error) {
-    console.error(
-      `[references] Failed to load API reference for "${name}":`,
-      error,
-    )
-    return null
-  }
+): Promise<ComponentApiReference> {
+  const filePath = path.join(GENERATED_DIR, `${name}.json`)
+  const content = await fs.readFile(filePath, "utf-8")
+  return JSON.parse(content) as ComponentApiReference
 }

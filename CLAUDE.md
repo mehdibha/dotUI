@@ -40,7 +40,9 @@ An honest snapshot (August 2026) to calibrate against. Task-level work is tracke
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /studio builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
-- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www).
+- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/ts-config` — shared TypeScript configs.
+- `examples/` — consumer templates with the registry's resolved output committed (see Registry changes).
+- `video/` — the launch film (Remotion), rendering the real registry components and /studio panel from `www/src`.
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 
 ## Registry
@@ -67,7 +69,8 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 - `pnpm dev:www` — dev server. Like `build` and `typecheck`, it builds the registry first (~2s), so fresh clones, worktrees, and branch switches always serve current output.
 - `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix. `check:fix` also rewrites Tailwind classes to their canonical spelling (IntelliSense's `suggestCanonicalClasses`); not enforced in CI.
-- `pnpm typecheck` · `pnpm test` — vitest, covers `packages/colors`.
+- `pnpm typecheck` — tsc across the workspace.
+- `pnpm test` — vitest, every `*.test.ts(x)` in the repo (`packages/colors`, the publisher, the studio axes, …).
 
 ### Registry changes
 
@@ -78,7 +81,7 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 ### Before committing
 
 - `pnpm check` — CI fails on formatting and import order.
-- `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
+- `pnpm typecheck` · `pnpm test`.
 - Touched the registry, publisher, presets, or `/r/*`? Regenerate first (see Registry changes), `examples/` included.
 
 ## Dev tweaker (design exploration)
