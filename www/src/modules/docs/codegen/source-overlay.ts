@@ -6,20 +6,23 @@
  * verbatim formatted text for everything static and structured nodes for every
  * position a control can change (attr holes, `{param}` text slots,
  * `{cond && <El>…</El>}` conditionals, `attr={cond ? "…" : undefined}`
- * attrs and `{!cond && "…"}` text). The runtime renderer in
+ * attrs, `{!cond && "…"}` text and `{Array.from({ length }, () => <El />)}`
+ * repeats). The runtime renderer in
  * `code-template.ts` owns the layout of the dynamic parts, so no per-value
  * formatting ever happens — and the output stays byte-identical to oxfmt.
  *
  * Hole scoping: attr holes attach to the ROOT element, to elements marked with
  * a bare `data-control-target` attribute, and to attrs carrying an
- * `@control:` marker comment (with optional `@drop-when:`). An attr whose
+ * `@control:` marker comment (with optional `@drop-when:`). An attr passing a
+ * control through under another name (`disabled={isDisabled}`) keeps its own
+ * name. An attr whose
  * value is an object literal embedding its control (`visibleDuration={{
  * months: visibleDuration }}`) keeps that literal around the value.
- * `{ident}`, `{ident && …}`, `{ident > 1 && …}` and `{!ident && "…"}`
- * children, and `ident ? "…" : undefined` attrs, match controls anywhere in
- * the tree, as do members of an expanded object literal inside an attribute
- * (`{ ident }` shorthand, `...(ident && { … })` spread) — for imperative APIs
- * like `toast.add({ … })`.
+ * `{ident}`, `{ident && …}`, `{ident > 1 && …}`, `{!ident && "…"}` and
+ * `{Array.from({ length: ident }, …)}` children, and `ident ? "…" : undefined`
+ * attrs, match controls anywhere in the tree, as do members of an expanded
+ * object literal inside an attribute (`{ ident }` shorthand,
+ * `...(ident && { … })` spread) — for imperative APIs like `toast.add({ … })`.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
@@ -239,14 +242,17 @@ class TreeBuilder {
       }
       const attrName = attr.getNameNode().getText()
       if (attrName === "data-control-target") continue
-      const control = this.byName.get(attrName)
+      const controlName = this.byName.has(attrName)
+        ? attrName
+        : readIdentifierValue(attr)
+      const control = controlName ? this.byName.get(controlName) : undefined
       const derived = readDerivedMarker(attr)
-      if (control && (holesAllowed || derived)) {
-        this.resolved.add(attrName)
+      if (controlName && control && (holesAllowed || derived)) {
+        this.resolved.add(controlName)
         const wrap = derived ? undefined : readObjectWrap(attr)
         attrs.push({
           part: "attr",
-          control: attrName,
+          control: controlName,
           attrName,
           kind: control.kind,
           default: control.default,
@@ -412,6 +418,17 @@ class TreeBuilder {
         }
       }
 
+      const repeat = this.readRepeat(expr)
+      if (repeat) {
+        this.resolved.add(repeat.count)
+        const el = this.buildElement(repeat.el, { holesAllowed: false })
+        // The displayed copies are siblings in JSX, not an array: no key.
+        el.attrs = el.attrs.filter(
+          (a) => a.part !== "static" || !a.text.startsWith("key="),
+        )
+        return { part: "repeat", el, count: repeat.count }
+      }
+
       return { part: "static", lines: nodeLines(child) }
     }
 
@@ -455,9 +472,34 @@ class TreeBuilder {
           return true
         if (this.readCondition(expr)) return true
         if (this.readHiddenText(expr)) return true
+        if (this.readRepeat(expr)) return true
       }
     }
     return false
+  }
+
+  /** `Array.from({ length: count }, (_, i) => <El key={i} />)` with `count` a control. */
+  private readRepeat(expr: Node): { count: string; el: JsxLike } | null {
+    if (
+      !Node.isCallExpression(expr) ||
+      expr.getExpression().getText() !== "Array.from"
+    )
+      return null
+    const [size, map] = expr.getArguments()
+    if (!Node.isObjectLiteralExpression(size) || !Node.isArrowFunction(map))
+      return null
+    const length = size.getProperty("length")
+    const count = Node.isShorthandPropertyAssignment(length)
+      ? length.getName()
+      : Node.isPropertyAssignment(length)
+        ? length.getInitializer()?.getText()
+        : undefined
+    if (!count || !this.byName.has(count)) return null
+    let body: Node = map.getBody()
+    if (Node.isParenthesizedExpression(body)) body = body.getExpression()
+    if (!Node.isJsxElement(body) && !Node.isJsxSelfClosingElement(body))
+      return null
+    return { count, el: body }
   }
 
   /** `attr={ident ? "…" : undefined}` → the attr as written when shown. */
@@ -578,6 +620,14 @@ function hasMarker(opening: { getAttributes(): Node[] }): boolean {
         Node.isJsxAttribute(a) &&
         a.getNameNode().getText() === "data-control-target",
     )
+}
+
+/** `disabled={isDisabled}`: the identifier an attr passes through as-is. */
+function readIdentifierValue(attr: JsxAttribute): string | undefined {
+  const init = attr.getInitializer()
+  if (!init || !Node.isJsxExpression(init)) return undefined
+  const expr = init.getExpression()
+  return expr && Node.isIdentifier(expr) ? expr.getText() : undefined
 }
 
 /** Read `@control:` + `@drop-when:` leading comments on a derived attr. */

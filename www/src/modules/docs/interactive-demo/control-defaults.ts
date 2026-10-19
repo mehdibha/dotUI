@@ -1,12 +1,10 @@
-import type { Control, ControlValues, SerializableControl } from "./types"
+import type { Control, ControlValues } from "./types"
 
 /**
  * Default value semantics for a control, shared by the InteractiveDemo client
  * component and the build/test pipeline so they can never disagree.
  */
-export function getDefaultControlValue(
-  control: Control | SerializableControl,
-): unknown {
+export function getDefaultControlValue(control: Control): unknown {
   switch (control.type) {
     case "boolean":
       return control.defaultValue ?? false
@@ -24,7 +22,7 @@ export function getDefaultControlValue(
 }
 
 export function defaultControlValues(
-  controls: readonly (Control | SerializableControl)[],
+  controls: readonly Control[],
 ): ControlValues {
   const values: ControlValues = {}
   for (const control of controls) {

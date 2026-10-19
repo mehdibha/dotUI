@@ -42,13 +42,13 @@ import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 import type {
   ControlValues,
-  SerializableBooleanControl,
-  SerializableControl,
-  SerializableEnumControl,
-  SerializableIconControl,
-  SerializableNumberControl,
-  SerializablePropReference,
-  SerializableStringControl,
+  BooleanControl,
+  Control,
+  EnumControl,
+  IconControl,
+  NumberControl,
+  ControlReference,
+  StringControl,
 } from "./types"
 
 /**
@@ -82,7 +82,7 @@ function ContextualHelp({
   reference,
 }: {
   name: string
-  reference?: SerializablePropReference
+  reference?: ControlReference
 }) {
   // Select-based controls render their children twice: once into a hidden <template> pass
   // that RAC uses to build the collection. There the DialogTrigger's PressResponder mounts
@@ -133,7 +133,7 @@ function ControlLabel({
   reference,
 }: {
   name: string
-  reference?: SerializablePropReference
+  reference?: ControlReference
 }) {
   return (
     <div className="flex min-w-0 items-center gap-1">
@@ -143,24 +143,16 @@ function ControlLabel({
   )
 }
 
-/**
- * Control components for the interactive demo.
- */
-
-type ControlsLayout = "horizontal" | "vertical"
-
 interface ControlRendererProps {
-  control: SerializableControl
+  control: Control
   value: unknown
   onChange: (name: string, value: unknown) => void
-  layout: ControlsLayout
 }
 
 export function ControlRenderer({
   control,
   value,
   onChange,
-  layout,
 }: ControlRendererProps) {
   switch (control.type) {
     case "boolean":
@@ -169,7 +161,6 @@ export function ControlRenderer({
           control={control}
           value={value as boolean}
           onChange={onChange}
-          layout={layout}
         />
       )
     case "string":
@@ -210,33 +201,21 @@ export function ControlRenderer({
 }
 
 interface BooleanControlRendererProps {
-  control: SerializableBooleanControl
+  control: BooleanControl
   value: boolean
   onChange: (name: string, value: unknown) => void
-  layout: ControlsLayout
 }
 
-/**
- * Beneath the preview (the default, and on small screens) the switch stacks under its label like
- * the other controls; in the horizontal layout it sits inline with the label (label left, switch
- * right) at md+. The orientation switch is pure CSS — a vertical base with md: overrides — so it
- * needs no JS media query.
- */
+// Stacked under its label on small screens; label left, switch right at md+.
 function BooleanControlRenderer({
   control,
   value,
   onChange,
-  layout,
 }: BooleanControlRendererProps) {
-  const horizontal = layout === "horizontal"
   return (
     <Field
       orientation="vertical"
-      className={cn(
-        "w-auto",
-        horizontal &&
-          "md:w-full md:flex-row md:items-center md:justify-between",
-      )}
+      className="w-auto md:w-full md:flex-row md:items-center md:justify-between"
     >
       <ControlLabel name={control.name} reference={control.reference} />
       <Switch
@@ -251,7 +230,7 @@ function BooleanControlRenderer({
 }
 
 interface StringControlRendererProps {
-  control: SerializableStringControl
+  control: StringControl
   value: string
   onChange: (name: string, value: unknown) => void
 }
@@ -274,7 +253,7 @@ function StringControlRenderer({
 }
 
 interface NumberControlRendererProps {
-  control: SerializableNumberControl
+  control: NumberControl
   value: number
   onChange: (name: string, value: unknown) => void
 }
@@ -323,22 +302,9 @@ function NumberControlRenderer({
 }
 
 interface EnumControlRendererProps {
-  control: SerializableEnumControl
+  control: EnumControl
   value: string
   onChange: (name: string, value: unknown) => void
-}
-
-/**
- * A small enum (a few short options, e.g. `size`: xs/sm/md/lg) renders as a
- * segmented control — quicker to scan and toggle than a dropdown, matching the
- * playground design. Larger option sets fall back to a Select to avoid overflow.
- */
-function isSegmentedEnum(control: SerializableEnumControl): boolean {
-  return (
-    control.options.length > 1 &&
-    control.options.length <= 4 &&
-    control.options.every((option) => option.length <= 8)
-  )
 }
 
 function EnumControlRenderer({
@@ -346,7 +312,8 @@ function EnumControlRenderer({
   value,
   onChange,
 }: EnumControlRendererProps) {
-  if (isSegmentedEnum(control)) {
+  // Two options fit side by side as a toggle group; anything more is a select.
+  if (control.options.length === 2) {
     return (
       <SegmentedEnumControlRenderer
         control={control}
@@ -406,7 +373,7 @@ function SegmentedEnumControlRenderer({
 }
 
 interface IconControlRendererProps {
-  control: SerializableIconControl
+  control: IconControl
   value: string | null
   onChange: (name: string, value: unknown) => void
 }
@@ -450,38 +417,29 @@ function IconControlRenderer({
 }
 
 interface ControlsProps {
-  controls: SerializableControl[]
+  controls: Control[]
   values: ControlValues
   onChange: (name: string, value: unknown) => void
-  layout: ControlsLayout
 }
 
-export function Controls({
-  controls,
-  values,
-  onChange,
-  layout,
-}: ControlsProps) {
-  const horizontal = layout === "horizontal"
+export function Controls({ controls, values, onChange }: ControlsProps) {
   return (
     <>
-      {controls.map((control) => {
-        // Beneath the preview (the default, and on small screens) controls sit in a wrapping row, so
-        // text/select controls get a fixed width and booleans size to content. The horizontal layout
-        // fills the column instead at md+ — switched purely via a md: variant, no JS.
-        const base = control.type === "boolean" ? "w-auto" : "w-44"
-        const wrapperWidth = horizontal ? cn(base, "md:w-full") : base
-        return (
-          <div key={control.name} className={cn("shrink-0", wrapperWidth)}>
-            <ControlRenderer
-              control={control}
-              value={values[control.name]}
-              onChange={onChange}
-              layout={layout}
-            />
-          </div>
-        )
-      })}
+      {controls.map((control) => (
+        <div
+          key={control.name}
+          className={cn(
+            "shrink-0 md:w-full",
+            control.type === "boolean" ? "w-auto" : "w-44",
+          )}
+        >
+          <ControlRenderer
+            control={control}
+            value={values[control.name]}
+            onChange={onChange}
+          />
+        </div>
+      ))}
     </>
   )
 }
