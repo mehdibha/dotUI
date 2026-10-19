@@ -4,9 +4,16 @@ import { useComponentParams } from "@/lib/styles"
 import { MailIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { Checkbox } from "@/registry/ui/checkbox"
 import { Description, FieldError, Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/registry/ui/select"
 import { TextField } from "@/registry/ui/text-field"
 
 import {
@@ -142,6 +149,31 @@ function Replay() {
   )
 }
 
+function Invalid() {
+  return (
+    <div className="grid w-full grid-cols-1 items-start gap-x-4 gap-y-5 sm:grid-cols-[1fr_1fr_auto]">
+      <TextField defaultValue="ada@example" isInvalid>
+        <Label>Email</Label>
+        <Input />
+        <FieldError>Enter a valid email.</FieldError>
+      </TextField>
+      <Select isInvalid placeholder="Choose a plan">
+        <Label>Plan</Label>
+        <SelectTrigger />
+        <SelectContent>
+          <SelectItem>Starter</SelectItem>
+          <SelectItem>Team</SelectItem>
+          <SelectItem>Enterprise</SelectItem>
+        </SelectContent>
+        <FieldError>Pick a plan.</FieldError>
+      </Select>
+      <Checkbox isInvalid className="sm:self-center">
+        Accept terms
+      </Checkbox>
+    </div>
+  )
+}
+
 export default function FieldBoard() {
   return (
     <Board id="field">
@@ -150,6 +182,9 @@ export default function FieldBoard() {
       </BoardSection>
       <BoardSection title="In context">
         <Fields />
+      </BoardSection>
+      <BoardSection title="Invalid">
+        <Invalid />
       </BoardSection>
       <BoardSection title="Motion">
         <Replay />

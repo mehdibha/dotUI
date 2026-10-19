@@ -561,6 +561,51 @@ describe("otp-field", () => {
 })
 
 // ---------------------------------------------------------------------------
+// TAG GROUP — `attr={cond ? value : undefined}` shows the attr while cond holds
+// ---------------------------------------------------------------------------
+
+const TAG_GROUP_SRC = `import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
+
+export default function Demo({ removable = false } = {}) {
+	return (
+		<TagGroup onRemove={removable ? (keys) => console.log(keys) : undefined}>
+			<TagList>
+				<Tag>News</Tag>
+			</TagList>
+		</TagGroup>
+	);
+}
+`
+
+const TAG_GROUP_CONTROLS: ControlSelection[] = [
+  { name: "removable", kind: "boolean", default: false },
+]
+
+describe("tag-group", () => {
+  it("removable: gated attr rendered with its value only", async () => {
+    const { collapsed } = await gen(TAG_GROUP_SRC, TAG_GROUP_CONTROLS, {
+      removable: true,
+    })
+    expect(collapsed).toBe(`<TagGroup onRemove={(keys) => console.log(keys)}>
+  <TagList>
+    <Tag>News</Tag>
+  </TagList>
+</TagGroup>`)
+  })
+
+  it("not removable: gated attr dropped", async () => {
+    const { collapsed } = await gen(TAG_GROUP_SRC, TAG_GROUP_CONTROLS, {
+      removable: false,
+    })
+    expect(collapsed).toBe(`<TagGroup>
+  <TagList>
+    <Tag>News</Tag>
+  </TagList>
+</TagGroup>`)
+  })
+})
+
+// ---------------------------------------------------------------------------
 // TOAST — members of an object literal inside an attribute
 // ---------------------------------------------------------------------------
 

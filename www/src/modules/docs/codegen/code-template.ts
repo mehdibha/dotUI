@@ -73,7 +73,7 @@ export interface ObjectAttr {
   tail: string[]
 }
 
-/** A static attr; with `showWhen` it came from `attr={cond ? "…" : undefined}`. */
+/** A static attr; with `showWhen` it came from `attr={cond ? value : undefined}`. */
 export type AttrPart =
   | { part: "static"; text: string; showWhen?: string }
   | AttrHole
