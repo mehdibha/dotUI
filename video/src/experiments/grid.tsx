@@ -75,11 +75,18 @@ const ARRIVE_AT = PULL_AT + 10
 const ARRIVE_SPREAD = 110
 const ARRIVE_FOR = 60
 
-/** /studio at 1920×1080, drawn at the frame's 1200/1920. */
-const ZOOM_TO = STEPS_SIZE.width / 1920
+/** /studio in a laptop browser window (1512 px wide, as on a MacBook),
+    cropped to the frame's 16:9. */
+const SCREEN = { width: 1512, height: (1512 * 9) / 16 }
+const ZOOM_TO = STEPS_SIZE.width / SCREEN.width
 const STUDIO = {
-  panel: { x: 24, y: 24, width: 256, height: 1032 },
-  preview: { x: 304, y: 24, width: 1592, height: 1032 },
+  panel: { x: 24, y: 24, width: 256, height: SCREEN.height - 48 },
+  preview: {
+    x: 304,
+    y: 24,
+    width: SCREEN.width - 304 - 24,
+    height: SCREEN.height - 48,
+  },
   radius: 12,
 }
 
@@ -289,12 +296,6 @@ const centerOf = (a: Placed, b: Placed, t: number) => ({
 })
 
 type Rect = { x: number; y: number; width: number; height: number }
-const lerpRect = (a: Rect, b: Rect, t: number) => ({
-  x: lerp(a.x, b.x, t),
-  y: lerp(a.y, b.y, t),
-  width: lerp(a.width, b.width, t),
-  height: lerp(a.height, b.height, t),
-})
 const scaleRect = (r: Rect, s: number) => ({
   x: r.x * s,
   y: r.y * s,
@@ -302,15 +303,35 @@ const scaleRect = (r: Rect, s: number) => ({
   height: r.height * s,
 })
 
-/** The move at `frame`: its progress, the preview's rect in the frame
-    (frame px) and the canvas' scale inside it. */
+/** How far into the move the panel's gap opens: the preview's left edge
+    has come in by the gap. Its other edges are home by then, so the panel
+    meets a preview of its own height. */
+const GAP_OPENS = (() => {
+  const gap = STUDIO.preview.x - STUDIO.panel.x - STUDIO.panel.width
+  let u = 0
+  while (ease.camera(u) < gap / STUDIO.preview.x) u += 0.001
+  return u
+})()
+
+/** The move at `frame`: its progress, the preview's edges' progress, the
+    preview's rect in the frame (frame px) and the canvas' scale inside it. */
 function previewAt(frame: number) {
   const p = progress(frame, PULL_AT, PULL_FOR, ease.camera)
-  const full = { x: 0, y: 0, ...STEPS_SIZE }
+  const edges = progress(frame, PULL_AT, PULL_FOR * GAP_OPENS, ease.camera)
+  const to = scaleRect(STUDIO.preview, ZOOM_TO)
+  const top = lerp(0, to.y, edges)
+  const right = lerp(STEPS_SIZE.width, to.x + to.width, edges)
+  const left = lerp(0, to.x, p)
   return {
     p,
-    view: lerpRect(full, scaleRect(STUDIO.preview, ZOOM_TO), p),
-    radius: lerp(0, STUDIO.radius * ZOOM_TO, p),
+    edges,
+    view: {
+      x: left,
+      y: top,
+      width: right - left,
+      height: lerp(STEPS_SIZE.height, to.height, edges),
+    },
+    radius: lerp(0, STUDIO.radius * ZOOM_TO, edges),
     zoom: Math.exp(lerp(0, Math.log(ZOOM_TO), p)),
   }
 }
@@ -329,7 +350,7 @@ function draw(
 
   // First Controls at true size on the frame's center; the move brings the
   // canvas' corner to the preview's.
-  const { p, view, radius, zoom } = previewAt(frame)
+  const { p, edges, view, radius, zoom } = previewAt(frame)
   const home = centerOf(a.cards.get("controls")!, b.cards.get("controls")!, t)
   const center = { x: STEPS_SIZE.width / 2, y: STEPS_SIZE.height / 2 }
   const end = previewAt(PULL_AT + PULL_FOR)
@@ -372,7 +393,7 @@ function draw(
   ctx.globalAlpha = 1
 
   // The site's chrome around the preview, with its hairline.
-  if (p > 0 && chrome) {
+  if (edges > 0 && chrome) {
     const r = {
       x: view.x * dpr,
       y: view.y * dpr,
@@ -386,7 +407,7 @@ function draw(
     ctx.fill("evenodd")
     ctx.beginPath()
     ctx.roundRect(r.x, r.y, r.width, r.height, radius * dpr)
-    ctx.strokeStyle = css(chrome.border, chrome.border[3] * p)
+    ctx.strokeStyle = css(chrome.border, chrome.border[3] * edges)
     ctx.lineWidth = ZOOM_TO * dpr
     ctx.stroke()
   }
@@ -492,7 +513,7 @@ export function GridStep() {
   )
 }
 
-/** The real studio panel in the site's dark chrome, at its 1920×1080 place,
+/** The real studio panel in the site's dark chrome, at its place on screen,
     its right edge pushing the preview's left; it shows the look on screen. */
 function Panel({ frame, look }: { frame: number; look: string }) {
   const { p, view } = previewAt(frame)
@@ -505,8 +526,8 @@ function Panel({ frame, look }: { frame: number; look: string }) {
     <div
       style={{
         position: "absolute",
-        width: 1920,
-        height: 1080,
+        width: SCREEN.width,
+        height: SCREEN.height,
         transform: `scale(${ZOOM_TO})`,
         transformOrigin: "0 0",
       }}
