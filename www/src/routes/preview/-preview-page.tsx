@@ -68,12 +68,10 @@ export function getExamplesPromise(slug: string) {
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 // Overscroll bounces the preview itself, not the whole studio.
 // Live previews (drags, hovers) skip transitions, or the preview trails them.
-// Board swaps animate their view transition from script (see swapBoard).
 const EMBEDDED_CSS = `
 html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 [data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
-::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 `
 
 // Dev tweaker exploration (the board's swap): trim to the pick once Mehdi
@@ -81,12 +79,22 @@ html::-webkit-scrollbar { display: none; }
 // new one fades in from 24px off, so it animates the new content alone.
 // "slide-fade" and "crossfade" also fade the old view out, which takes a view
 // transition: its capture restyles the whole preview before anything moves.
-const fadeOut = [{ opacity: 1 }, { opacity: 0 }]
-const fadeIn = [{ opacity: 0 }, { opacity: 1 }]
 const slideFrom = (x: number) => [
   { opacity: 0, transform: `translateX(${x}px)` },
   { opacity: 1, transform: "none" },
 ]
+
+// The site keeps :root out of view transitions (styles.css), so the stage
+// takes part under its own name. Its animations go in CSS: Chrome ends a
+// transition whose pseudo-elements only have script animations still pending.
+// Their own <style>, as a variable on <html> would restyle the whole preview.
+let swapStyle: HTMLStyleElement | undefined
+const SWAP_KEYFRAMES = `
+@keyframes board-fade-out { to { opacity: 0; } }
+@keyframes board-fade-in { from { opacity: 0; } }
+@keyframes board-from-right { from { opacity: 0; transform: translateX(24px); } }
+@keyframes board-from-left { from { opacity: 0; transform: translateX(-24px); } }
+`
 
 /** Runs `update`, then animates `stage` (the preview's content) into it. */
 function swapBoard(
@@ -101,29 +109,31 @@ function swapBoard(
   )
     return flushSync(update)
   // A popover's takeover and a board-to-board hop don't drill: they fade.
-  const drill = !popover && direction !== "swap"
-  const next =
-    drill && transition !== "crossfade"
-      ? slideFrom(direction === "in" ? 24 : -24)
-      : fadeIn
-  const timing = { duration, easing: "ease-out" }
-  if (transition === "slide" || !document.startViewTransition) {
+  const slide = !popover && direction !== "swap" && transition !== "crossfade"
+  if (transition === "slide" || !document.startViewTransition || !stage) {
     flushSync(update)
-    stage?.animate(next, timing)
+    stage?.animate(
+      slide
+        ? slideFrom(direction === "in" ? 24 : -24)
+        : [{ opacity: 0 }, { opacity: 1 }],
+      { duration, easing: "ease-out" },
+    )
     return
   }
+  const next = !slide
+    ? "board-fade-in"
+    : direction === "in"
+      ? "board-from-right"
+      : "board-from-left"
+  swapStyle ??= document.head.appendChild(document.createElement("style"))
+  swapStyle.textContent = `${SWAP_KEYFRAMES}
+::view-transition-group(board-stage) { animation: none; }
+::view-transition-old(board-stage) { animation: board-fade-out ${duration}ms ease-out both; }
+::view-transition-new(board-stage) { animation: ${next} ${duration}ms ease-out both; }`
+  stage.style.viewTransitionName = "board-stage"
   const run = document.startViewTransition(() => flushSync(update))
-  void run.ready.then(() => {
-    const root = document.documentElement
-    const fill = { ...timing, fill: "both" } as const
-    root.animate(fadeOut, {
-      ...fill,
-      pseudoElement: "::view-transition-old(root)",
-    })
-    root.animate(next, {
-      ...fill,
-      pseudoElement: "::view-transition-new(root)",
-    })
+  void run.finished.finally(() => {
+    stage.style.viewTransitionName = ""
   })
 }
 

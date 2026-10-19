@@ -107,10 +107,21 @@ const cueStore = createPersistedStore("dotui:preview-follow-cues", 0, {
 })
 const CUE_LIMIT = 3
 const CUE_MS = 2400
-// A board outlives its focus so hopping between popovers never flashes the user's preview.
-const FOCUS_RELEASE_MS = 200
-// Panel popovers are modal: a click dismisses one, a second opens the next.
-const CLICK_RELEASE_MS = 800
+// A board outlives its focus by a beat, so a popover handing over to a page
+// (or another popover) never flashes the user's preview.
+const FOCUS_RELEASE_MS = 50
+// Panel popovers are modal: a click on another board's row only dismisses the
+// open one, and a second click opens the next. The board waits that long.
+const HOP_RELEASE_MS = 800
+
+/** The board a panel row or page link shows, if any. */
+function boardOfElement(element: Element) {
+  const link = element
+    .closest("[data-page-link]")
+    ?.getAttribute("data-page-link")
+  const axis = element.closest("[data-axis]")?.getAttribute("data-axis")
+  return pageBoard(link) ?? (axis ? KEY_BOARDS[axis] : undefined)
+}
 
 // CSS `zoom`: magnifies without the reflow a device size causes.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
@@ -287,34 +298,10 @@ export function PreviewPanel({ className }: { className?: string }) {
     default: false,
     group,
   })
-  const backDelay = useTweak("Back delay (ms)", {
-    type: "number",
-    min: 0,
-    max: 400,
-    step: 50,
-    default: FOCUS_RELEASE_MS,
-    group,
-  })
-  const popoverDelay = useTweak("Popover close delay (ms)", {
-    type: "number",
-    min: 0,
-    max: 400,
-    step: 50,
-    default: FOCUS_RELEASE_MS,
-    group,
-  })
-  const clickDelay = useTweak("Click close delay (ms)", {
-    type: "number",
-    min: 0,
-    max: 1000,
-    step: 50,
-    default: CLICK_RELEASE_MS,
-    group,
-  })
-  // Whether the focus that last held the board was a popover's, not a page's.
-  const lastPopover = useRef(false)
+  // The focus that last held the board: a popover's or a page's.
+  const lastFocus = useRef(focus)
   useEffect(() => {
-    if (focus) lastPopover.current = focus.popover
+    if (focus) lastFocus.current = focus
   }, [focus])
   const takenOver = board !== null
   const [cueing, setCueing] = useState(false)
@@ -328,47 +315,45 @@ export function PreviewPanel({ className }: { className?: string }) {
       setCueing(false)
     }
   }, [takenOver])
-  const lastPress = useRef(-Infinity)
+  const lastHop = useRef({ at: -Infinity, board: "" })
   useEffect(() => {
-    // A press that dismisses a popover; by rect, as the underlay covers the preview.
+    // A press that dismisses a popover on another board's row: the user is
+    // hopping to it. By rect, as the popover's underlay covers the row.
     const onPress = ({ clientX: x, clientY: y }: PointerEvent) => {
       if (!document.querySelector("[data-panel-popover]")) return
-      const rect = panelRef.current?.getBoundingClientRect()
-      const inPreview =
-        rect &&
-        x >= rect.left &&
-        x <= rect.right &&
-        y >= rect.top &&
-        y <= rect.bottom
-      if (!inPreview) lastPress.current = performance.now()
+      const row = [
+        ...document.querySelectorAll("[data-axis], [data-page-link]"),
+      ].find((element) => {
+        const rect = element.getBoundingClientRect()
+        return (
+          x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+        )
+      })
+      const hop = row && boardOfElement(row)
+      if (hop) lastHop.current = { at: performance.now(), board: hop }
     }
     document.addEventListener("pointerdown", onPress, true)
     return () => document.removeEventListener("pointerdown", onPress, true)
   }, [])
   useEffect(() => {
     if (target || !following) return setBoard(target)
-    const clicked = performance.now() - lastPress.current < clickDelay
-    const delay = !lastPopover.current
-      ? backDelay
-      : clicked
-        ? clickDelay
-        : popoverDelay
-    if (delay === 0) return setBoard(null)
-    const timer = setTimeout(() => setBoard(null), delay)
+    const from = lastFocus.current
+    const hopping =
+      from?.popover &&
+      lastHop.current.board !== from.board &&
+      performance.now() - lastHop.current.at < HOP_RELEASE_MS
+    const timer = setTimeout(
+      () => setBoard(null),
+      hopping ? HOP_RELEASE_MS : FOCUS_RELEASE_MS,
+    )
     return () => clearTimeout(timer)
-  }, [target, following, backDelay, popoverDelay, clickDelay])
+  }, [target, following])
 
   // A hovered page link or board row loads its board's chunk, so the switch is instant.
   useEffect(() => {
     const onOver = (event: PointerEvent) => {
       if (!(event.target instanceof Element)) return
-      const link = event.target
-        .closest("[data-page-link]")
-        ?.getAttribute("data-page-link")
-      const axis = event.target
-        .closest("[data-axis]")
-        ?.getAttribute("data-axis")
-      const next = pageBoard(link) ?? (axis ? KEY_BOARDS[axis] : undefined)
+      const next = boardOfElement(event.target)
       if (next)
         postToIframe(iframeRef.current, {
           type: "preview-prefetch",
@@ -427,7 +412,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   usePreviewSync(iframeRef, {
     type: "preview-board",
     slug: board && BOARD_SLUG_PREFIX + board,
-    popover: lastPopover.current,
+    popover: !!lastFocus.current?.popover,
     transition,
     duration,
     keepAlive,
