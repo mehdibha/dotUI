@@ -1,5 +1,6 @@
 "use client"
 
+import { useComponentParams } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import {
@@ -12,7 +13,8 @@ import {
   PaginationPrevious,
 } from "@/registry/ui/pagination"
 
-import { Board, BoardSection, Specimen, StateRow } from "./board"
+import { Board, BoardSection, Specimen, stateProps } from "./board"
+import type { StateName } from "./board"
 
 function pageRange(current: number, pages: number): (number | "gap")[] {
   if (pages <= 7) return Array.from({ length: pages }, (_, i) => i + 1)
@@ -63,8 +65,26 @@ function Pager({ pages, current }: { pages: number; current: number }) {
   )
 }
 
+/** The current page's button variant, as `PaginationLink` picks it. */
+const CURRENT_VARIANT = {
+  secondary: "secondary",
+  primary: "primary",
+  selected: "quiet",
+} as const
+
+const CELLS: { label: string; states: StateName[] }[] = [
+  { label: "Rest", states: [] },
+  { label: "Hover", states: ["hover"] },
+  { label: "Focus", states: ["focus"] },
+  { label: "Current", states: ["selected"] },
+  { label: "Current, hover", states: ["selected", "hover"] },
+]
+
 export default function PaginationBoard() {
   const button = useButtonStyles()
+  const { current = "secondary" } = useComponentParams("pagination")
+  const variant =
+    CURRENT_VARIANT[current as keyof typeof CURRENT_VARIANT] ?? "secondary"
   return (
     <Board id="pagination">
       <BoardSection title="Variants" className="gap-x-16 gap-y-8">
@@ -76,24 +96,26 @@ export default function PaginationBoard() {
         </Specimen>
       </BoardSection>
       <BoardSection title="States">
-        <StateRow states={["rest", "hover", "selected"]}>
-          {(props, state) =>
-            state === "selected" ? (
-              <PaginationLink isActive aria-label="Page 3">
-                3
-              </PaginationLink>
-            ) : (
+        <div
+          inert
+          className="flex flex-wrap items-end justify-center gap-x-6 gap-y-4"
+        >
+          {CELLS.map(({ label, states }) => (
+            <Specimen key={label} label={label} className="gap-2">
               <span
-                {...props}
+                {...stateProps(...states)}
                 data-button=""
                 data-icon-only=""
-                className={button({ variant: "quiet", isIconOnly: true })}
+                className={button({
+                  variant: states.includes("selected") ? variant : "quiet",
+                  isIconOnly: true,
+                })}
               >
                 3
               </span>
-            )
-          }
-        </StateRow>
+            </Specimen>
+          ))}
+        </div>
       </BoardSection>
     </Board>
   )

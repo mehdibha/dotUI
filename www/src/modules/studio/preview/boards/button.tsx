@@ -4,20 +4,42 @@ import { useEffect, useRef, useState } from "react"
 
 import { useComponentParams } from "@/lib/styles"
 import {
+  BellIcon,
   BoldIcon,
   ChevronDownIcon,
   LayoutGridIcon,
   ListIcon,
   MaximizeIcon,
   PinIcon,
+  PlusIcon,
   StarIcon,
   TableIcon,
   ZoomInIcon,
   ZoomOutIcon,
 } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { useStyles as useCalendarStyles } from "@/registry/ui/calendar/styles"
 import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import {
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  PaginationList,
+} from "@/registry/ui/pagination"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
@@ -166,6 +188,19 @@ function ToggleStates() {
       emphasis={axis === "toggleSelected" ? "on" : undefined}
       rows={[
         {
+          id: "primary",
+          label: "Primary",
+          render: (props) => (
+            <span
+              {...props}
+              {...icon}
+              className={styles({ variant: "primary", isIconOnly: true })}
+            >
+              <BellIcon />
+            </span>
+          ),
+        },
+        {
           id: "text",
           label: "Text",
           render: (props) => (
@@ -255,6 +290,107 @@ function Groups() {
   )
 }
 
+const SIZES = ["xs", "sm", "md", "lg"] as const
+
+function Sizes() {
+  return (
+    <div className="flex flex-wrap items-end justify-center gap-x-8 gap-y-6">
+      {SIZES.map((size) => (
+        <Specimen key={size} label={size}>
+          <div className="flex items-center gap-1.5">
+            <Button variant="primary" size={size}>
+              Save
+            </Button>
+            <Button size={size}>Cancel</Button>
+            <Button size={size} isIconOnly aria-label="Add">
+              <PlusIcon />
+            </Button>
+          </div>
+        </Specimen>
+      ))}
+    </div>
+  )
+}
+
+/** The specimens each key reaches beyond buttons. */
+const SHARED_LIT: Record<string, string[]> = {
+  buttonStyle: ["field", "select", "segmented"],
+  buttonSecondary: ["select"],
+  buttonCase: ["segmented"],
+  buttonRadius: ["calendar", "pagination"],
+}
+
+/** Components drawn with the button recipe, or following its keys. */
+function Shared() {
+  const { axis } = useBoardFocus()
+  const { root, cell } = useCalendarStyles()()
+  const lit = axis ? SHARED_LIT[axis] : undefined
+  const dim = (id: string) =>
+    cn(
+      "transition-opacity duration-300",
+      lit && !lit.includes(id) && "opacity-35",
+    )
+  return (
+    <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-8">
+      <Specimen label="Field" className={dim("field")}>
+        <TextField aria-label="Name" defaultValue="Acme Inc." className="w-40">
+          <Input />
+        </TextField>
+      </Specimen>
+      <Specimen label="Select" className={dim("select")}>
+        <Select aria-label="Region" defaultSelectedKey="eu" className="w-36">
+          <SelectTrigger />
+          <SelectContent>
+            <SelectItem id="eu">Europe</SelectItem>
+            <SelectItem id="us">Americas</SelectItem>
+          </SelectContent>
+        </Select>
+      </Specimen>
+      <Specimen label="Segmented control" className={dim("segmented")}>
+        <SegmentedControl defaultSelectedKeys={["week"]} aria-label="Range">
+          <SegmentedControlItem id="day">Day</SegmentedControlItem>
+          <SegmentedControlItem id="week">Week</SegmentedControlItem>
+          <SegmentedControlItem id="month">Month</SegmentedControlItem>
+        </SegmentedControl>
+      </Specimen>
+      <Specimen label="Calendar days" className={dim("calendar")}>
+        <div
+          inert
+          data-calendar=""
+          className={root({ className: "flex-row gap-0" })}
+        >
+          {[11, 12, 13].map((day) => (
+            <div key={day} className="size-(--cell-size)">
+              <div
+                {...stateProps(...(day === 12 ? (["selected"] as const) : []))}
+                className={cell()}
+              >
+                {day}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Specimen>
+      <Specimen label="Pagination" className={dim("pagination")}>
+        <Pagination className="w-auto">
+          <PaginationList>
+            {[1, 2, 3].map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={page === 2}
+                  aria-label={`Page ${page}`}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+          </PaginationList>
+        </Pagination>
+      </Specimen>
+    </div>
+  )
+}
+
 export default function ButtonBoard() {
   return (
     <Board id="button">
@@ -272,6 +408,12 @@ export default function ButtonBoard() {
           <MotionLoop />
         </BoardSection>
       </div>
+      <BoardSection title="Sizes">
+        <Sizes />
+      </BoardSection>
+      <BoardSection title="Follows buttons">
+        <Shared />
+      </BoardSection>
     </Board>
   )
 }

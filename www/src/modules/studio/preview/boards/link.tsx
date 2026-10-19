@@ -7,6 +7,7 @@ import {
 } from "@/registry/icons"
 import { BreadcrumbLink } from "@/registry/ui/breadcrumbs"
 import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { Link } from "@/registry/ui/link"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
 
@@ -66,6 +67,7 @@ function Replay() {
 
 export default function LinkBoard() {
   const link = useLinkStyles()
+  const button = useButtonStyles()
   return (
     <Board id="link">
       <BoardSection title="In context" className="flex-col gap-6">
@@ -92,11 +94,23 @@ export default function LinkBoard() {
         </div>
       </BoardSection>
       <div className="grid min-w-0 gap-8 md:grid-cols-2">
-        <BoardSection title="States" className="flex-1">
-          <StateRow states={["rest", "hover"]}>
+        <BoardSection title="States" className="flex-1 flex-col gap-6">
+          <StateRow states={["rest", "hover", "focus"]}>
             {(props) => (
               <span {...props} className={link({ className: "h-5 text-sm" })}>
                 View invoice
+              </span>
+            )}
+          </StateRow>
+          {/* Button's link variant takes the same underline and color. */}
+          <StateRow states={["rest", "hover", "focus"]}>
+            {(props) => (
+              <span
+                {...props}
+                data-button=""
+                className={button({ variant: "link", size: "sm" })}
+              >
+                Learn more
               </span>
             )}
           </StateRow>
