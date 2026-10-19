@@ -56,7 +56,7 @@ const ColorSwatchPickerItem = ({
       )}
       {...props}
     >
-      <ColorSwatch />
+      <ColorSwatch className="size-full rounded-[inherit]" />
     </ColorSwatchPickerPrimitives.ColorSwatchPickerItem>
   );
 };
