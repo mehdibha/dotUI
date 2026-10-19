@@ -143,6 +143,8 @@ describe("extractStylesConfig", () => {
     )
     const root = cfg.base.slots?.root as string[]
     expect(Array.isArray(root)).toBe(true)
+    // The composed field slot classes + the passed className, all merged by tv.
+    expect(root[0]).toContain("group/otp-field")
     expect(root[0]).toContain("w-full flex-col gap-2")
   })
 

@@ -3,6 +3,7 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as TimeFieldPrimitive from "react-aria-components/TimeField"
 
+import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: timeFieldStyles
@@ -23,7 +24,7 @@ const TimeField = <T extends TimeFieldPrimitive.TimeValue>({
       data-time-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        fieldStyles().field({ className: cn("group/time-field", className) }),
       )}
       {...props}
     />

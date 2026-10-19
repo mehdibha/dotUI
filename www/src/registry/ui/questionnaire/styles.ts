@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       title:
         "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
       description: "text-pretty text-fg-muted",
-      choices: "grid min-w-0",
+      choices: "group/questionnaire-choices grid min-w-0",
       choice: [
         "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) select-ui",
         "hover:bg-muted/50",

@@ -3,6 +3,7 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitive from "react-aria-components/DateField";
 
+import { cn } from "@/lib/utils";
 import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
@@ -20,7 +21,7 @@ const DateField = <T extends DateFieldPrimitive.DateValue>({
       data-date-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        fieldStyles().field({ className: cn("group/date-field", className) }),
       )}
       {...props}
     />

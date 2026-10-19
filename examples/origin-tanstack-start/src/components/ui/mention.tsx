@@ -12,6 +12,7 @@ import {
 } from "react-aria-components/TokenField";
 import { useControlledState } from "react-stately/useControlledState";
 
+import { cn } from "@/lib/utils";
 import type { PopoverProps } from "@/components/ui/popover";
 import { TokenField } from "@/components/ui/token-field";
 import type { TokenFieldProps } from "@/components/ui/token-field";
@@ -47,6 +48,7 @@ function Mention({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
+  className,
   children,
   value: valueProp,
   defaultValue,
@@ -172,7 +174,13 @@ function Mention({
           [MenuContext, { onAction: insert }],
         ]}
       >
-        <TokenField {...props} ref={rootRef} value={value} onChange={setValue}>
+        <TokenField
+          {...props}
+          ref={rootRef}
+          value={value}
+          onChange={setValue}
+          className={cn("group/mention", className)}
+        >
           {typeof children === "function"
             ? children({
                 trigger: active?.trigger ?? null,
