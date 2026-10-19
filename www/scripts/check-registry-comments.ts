@@ -33,8 +33,28 @@ function files(dir: string): string[] {
   })
 }
 
+// Skips quoted strings, so `content: "/* x */"` isn't read as a comment.
+function cssComments(text: string): string[] {
+  const found: string[] = []
+  let i = 0
+  while (i < text.length) {
+    const ch = text[i]
+    if (ch === '"' || ch === "'") {
+      i++
+      while (i < text.length && text[i] !== ch) i += text[i] === "\\" ? 2 : 1
+      i++
+    } else if (ch === "/" && text[i + 1] === "*") {
+      const end = text.indexOf("*/", i + 2)
+      const stop = end === -1 ? text.length : end + 2
+      found.push(text.slice(i, stop))
+      i = stop
+    } else i++
+  }
+  return found
+}
+
 function comments(file: string, text: string): string[] {
-  if (file.endsWith(".css")) return text.match(/\/\*[\s\S]*?\*\//g) ?? []
+  if (file.endsWith(".css")) return cssComments(text)
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true)
   const found = new Map<number, string>()
   // `//` inside JSX text (a URL, a "//" separator) is text, not a comment.
