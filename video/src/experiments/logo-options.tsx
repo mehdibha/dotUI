@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react"
+import { Easing } from "remotion"
 
-import { ease, lerp, progress } from "../lib/motion"
+import { clamp01, ease, lerp, progress, springAt } from "../lib/motion"
 import { Theme } from "../lib/theme"
 import { Glow, LETTERS, markPath } from "./logo"
 import { STEPS_SIZE } from "./steps"
@@ -30,6 +31,7 @@ function Wordmark({
   markStyle,
   letter,
   clip,
+  letterClip,
   ink = "flat",
   sheen,
   style,
@@ -41,6 +43,8 @@ function Wordmark({
   letter?: (i: number) => Style
   /** Hide everything outside this rect (viewBox units). */
   clip?: [number, number, number, number]
+  /** Hide the letters outside this rect (viewBox units). */
+  letterClip?: [number, number, number, number]
   ink?: "flat" | "soft"
   /** Where a band of light is across the wordmark (viewBox x), if anywhere. */
   sheen?: number
@@ -79,6 +83,16 @@ function Wordmark({
             <rect x={clip[0]} y={clip[1]} width={clip[2]} height={clip[3]} />
           </clipPath>
         )}
+        {letterClip && (
+          <clipPath id="letter-clip">
+            <rect
+              x={letterClip[0]}
+              y={letterClip[1]}
+              width={letterClip[2]}
+              height={letterClip[3]}
+            />
+          </clipPath>
+        )}
       </defs>
       <g clipPath={clip ? "url(#clip)" : undefined}>
         <g style={{ transformOrigin: "50px 50px", ...markStyle }}>
@@ -87,12 +101,14 @@ function Wordmark({
             <path d={mark} fill="url(#sheen)" fillRule="evenodd" />
           )}
         </g>
-        {LETTERS.map((d, i) => (
-          <g key={i} style={letter?.(i)}>
-            <path d={d} fill={fill} />
-            {sheen !== undefined && <path d={d} fill="url(#sheen)" />}
-          </g>
-        ))}
+        <g clipPath={letterClip ? "url(#letter-clip)" : undefined}>
+          {LETTERS.map((d, i) => (
+            <g key={i} style={letter?.(i)}>
+              <path d={d} fill={fill} />
+              {sheen !== undefined && <path d={d} fill="url(#sheen)" />}
+            </g>
+          ))}
+        </g>
       </g>
     </svg>
   )
@@ -304,6 +320,72 @@ function Light({ frame }: { frame: number }) {
   )
 }
 
+/** The dot (t=0) grown into the square (t=1) around it, rounder for longer
+ *  (`round` 1 = a circle), its own dot opened to `hole`. ViewBox units. */
+function grownMark(t: number, round: number, hole: number) {
+  const x0 = lerp(64, 0, t)
+  const x1 = lerp(86, 100, t)
+  const half = (x1 - x0) / 2
+  const r = lerp(12, half, round)
+  const rect =
+    `M${x0 + r} ${x0}H${x1 - r}A${r} ${r} 0 0 1 ${x1} ${x0 + r}` +
+    `V${x1 - r}A${r} ${r} 0 0 1 ${x1 - r} ${x1}H${x0 + r}` +
+    `A${r} ${r} 0 0 1 ${x0} ${x1 - r}V${x0 + r}A${r} ${r} 0 0 1 ${x0 + r} ${x0}Z`
+  if (hole <= 0) return rect
+  return `${rect}M${75 - hole} 75a${hole} ${hole} 0 1 0 ${hole * 2} 0a${hole} ${hole} 0 1 0 ${-hole * 2} 0Z`
+}
+
+/** Starts from rest and lands softly: for moves of something standing still. */
+const glide = Easing.bezier(0.45, 0, 0.1, 1)
+
+/** 9 · The dot, refined: it lands with a little give, stays put while the
+ *  square grows round-first around it and its own dot opens where it stood,
+ *  then the mark glides once to its place and uncovers the letters. A slow
+ *  push keeps the hold alive. */
+function DotRefined({ frame }: { frame: number }) {
+  const land = springAt(frame, 0, { damping: 12, stiffness: 220, mass: 0.5 })
+  const grow = progress(frame, 30, 48, ease.out)
+  const round = 1 - progress(frame, 30, 40, ease.soft)
+  const x1 = lerp(86, 100, grow)
+  // Opens as soon as the square has room around it, never touching an edge.
+  const hole =
+    frame < 30 ? 0 : Math.min(11, x1 - 75 - 4) * progress(frame, 33, 24, ease.out)
+
+  const move = progress(frame, 90, 60, glide)
+  const x = lerp(W / 2 - 75 * K, LEFT, move)
+  const zoom = lerp(1, 1.02, progress(frame, 0, OPTION_FRAMES, ease.soft))
+
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        transform: `scale(${zoom})`,
+        transformOrigin: `${W / 2}px ${CY}px`,
+      }}
+    >
+      <Wordmark
+        x={x}
+        mark={grownMark(grow, round, Math.max(0, hole))}
+        markStyle={{
+          opacity: progress(frame, 0, 6, ease.linear),
+          transform: `scale(${land})`,
+          transformOrigin: "75px 75px",
+        }}
+        letterClip={[106, -40, 260, 180]}
+        letter={(i) => {
+          const at = 94 + i * 3
+          const p = progress(frame, at, 56, glide)
+          return {
+            opacity: clamp01(progress(frame, at, 30, ease.soft) * 1.2),
+            transform: `translateX(${lerp(-28, 0, p)}px)`,
+          }
+        }}
+      />
+      <Address frame={frame} at={150} />
+    </div>
+  )
+}
+
 export const OPTIONS = [
   ["settle", Settle],
   ["focus", Focus],
@@ -313,6 +395,7 @@ export const OPTIONS = [
   ["dot", Dot],
   ["hairline", Hairline],
   ["light", Light],
+  ["dot-refined", DotRefined],
 ] as const
 
 export function LogoOption({
