@@ -106,11 +106,11 @@ const CARD_WIDTH = {
 export const cardWidth = (id: string) =>
   CARD_WIDTH[(preset(id).density ?? "default") as keyof typeof CARD_WIDTH]
 
-type Rgba = [number, number, number, number]
+export type Rgba = [number, number, number, number]
 
 let swatch: CanvasRenderingContext2D | null = null
 /** 8-bit sRGB + alpha of any CSS color, via a 1×1 canvas. */
-function rgbaOf(css: string, opacity = 1): Rgba {
+export function rgbaOf(css: string, opacity = 1): Rgba {
   swatch ??= document
     .createElement("canvas")
     .getContext("2d", { willReadFrequently: true })!
@@ -130,7 +130,7 @@ interface Shadow {
 }
 
 /** A painted rectangle; x/y are relative to the card. */
-interface Box {
+export interface Box {
   x: number
   y: number
   width: number
@@ -212,7 +212,7 @@ const over = (top: Rgba, base: Rgba): Rgba => [
 
 type Rect = { x: number; y: number; width: number; height: number }
 
-function boxOf(cs: CSSStyleDeclaration, r: Rect, opacity: number): Box {
+export function boxOf(cs: CSSStyleDeclaration, r: Rect, opacity: number): Box {
   const borders = [
     cs.borderTopWidth,
     cs.borderRightWidth,
@@ -470,10 +470,10 @@ const mixLab = (a: number[], b: number[], t: number) =>
   a.map((v, i) => lerp(v, b[i]!, t))
 
 /** Two opaque colors blended in OKLab, unrounded sRGB. */
-const mixOklab = (a: Rgba, b: Rgba, t: number) =>
+export const mixOklab = (a: Rgba, b: Rgba, t: number) =>
   srgb(mixLab(oklab(a), oklab(b), t))
 
-const css = ([r, g, b]: number[], alpha = 1) =>
+export const css = ([r, g, b]: number[], alpha = 1) =>
   `rgba(${clamp(r!, 0, 255)}, ${clamp(g!, 0, 255)}, ${clamp(b!, 0, 255)}, ${alpha})`
 
 /** Translucent colors blend premultiplied, so a fade never darkens. */
@@ -504,7 +504,7 @@ const ghost = (box: Box): Box => ({
 })
 
 /** Triangular noise of ±1 level, seeded so a frame always renders alike. */
-function noise(seed: number) {
+export function noise(seed: number) {
   let x = seed * 0x9e3779b1 || 1
   const next = () => {
     x ^= x << 13
@@ -536,7 +536,7 @@ function roundRectDistance(
 }
 
 /** A box blended at `t`, placed from the card corner (ox, oy) in device px. */
-function paintBox(
+export function paintBox(
   ctx: CanvasRenderingContext2D,
   a: Box,
   b: Box,

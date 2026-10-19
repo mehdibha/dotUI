@@ -63,7 +63,12 @@ export function tweenState(
     const y = (b as Record<string, unknown>)[key]
     if (typeof x === "number" && typeof y === "number") {
       out[key] = Math.round((x + (y - x) * t) * 100) / 100
-    } else if (typeof x === "string" && typeof y === "string" && HEX.test(x) && HEX.test(y)) {
+    } else if (
+      typeof x === "string" &&
+      typeof y === "string" &&
+      HEX.test(x) &&
+      HEX.test(y)
+    ) {
       const p = toOklab(x)
       const q = toOklab(y)
       out[key] = toHex(p.map((v, i) => v + (q[i]! - v) * t))
