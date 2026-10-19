@@ -5,7 +5,7 @@
  * with oxfmt, then the formatted root JSX is lifted into a tree that keeps
  * verbatim formatted text for everything static and structured nodes for every
  * position a control can change (attr holes, `{param}` text slots,
- * `{cond && <El>…</El>}` conditionals, `attr={cond ? "…" : undefined}`
+ * `{cond && <El>…</El>}` conditionals, `attr={cond ? value : undefined}`
  * attrs, `{!cond && "…"}` text and `{Array.from({ length }, () => <El />)}`
  * repeats). The runtime renderer in
  * `code-template.ts` owns the layout of the dynamic parts, so no per-value
@@ -416,16 +416,18 @@ class TreeBuilder {
       expr.getWhenFalse().getText() !== "undefined"
     )
       return null
+    const name = attr.getNameNode().getText()
     const value = expr.getWhenTrue()
-    if (!Node.isStringLiteral(value) || /["\\]/.test(value.getLiteralText())) {
+    const text =
+      Node.isStringLiteral(value) && !/["\\]/.test(value.getLiteralText())
+        ? `${name}="${value.getLiteralText()}"`
+        : `${name}={${value.getText()}}`
+    if (text.includes("\n")) {
       throw new OverlayError(
-        `Guarded attribute "${attr.getNameNode().getText()}" must be a plain string literal${named(this.input)}`,
+        `Guarded attribute "${name}" must fit on one line${named(this.input)}`,
       )
     }
-    return {
-      text: `${attr.getNameNode().getText()}="${value.getLiteralText()}"`,
-      showWhen: expr.getCondition().getText(),
-    }
+    return { text, showWhen: expr.getCondition().getText() }
   }
 
   /** `{!ident && "…"}` → the text and the control that hides it. */
