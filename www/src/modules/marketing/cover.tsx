@@ -17,7 +17,12 @@ const GUTTER = 56
 
 const fromCenter = (px: number) => `calc(50% + ${px}px)`
 
-const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
+const SLOTS: {
+  preset: string
+  inset: Record<Side, number | string>
+  /** Scrolls the cards canvas to its end on these axes, cropping it at the image edge. */
+  scrollEnd?: { x?: boolean; y?: boolean }
+}[] = [
   {
     preset: "origin",
     inset: {
@@ -26,6 +31,7 @@ const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
       right: fromCenter(HALF_W),
       bottom: fromCenter(GUTTER - HALF_H),
     },
+    scrollEnd: { x: true, y: true },
   },
   {
     preset: "linear",
@@ -35,6 +41,7 @@ const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
       left: fromCenter(GUTTER - HALF_W),
       bottom: fromCenter(HALF_H),
     },
+    scrollEnd: { y: true },
   },
   {
     preset: "spotify",
@@ -56,7 +63,7 @@ const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
   },
 ]
 
-function PresetContainer({ preset, inset }: (typeof SLOTS)[number]) {
+function PresetContainer({ preset, inset, scrollEnd }: (typeof SLOTS)[number]) {
   const designSystem = resolvePreset(preset)
   // Bleeding sides pad back to the visible edge; the canvas pads itself.
   const pad = (side: Side) => (inset[side] === BLEED ? -BLEED : 0)
@@ -70,6 +77,7 @@ function PresetContainer({ preset, inset }: (typeof SLOTS)[number]) {
       color={designSystem.color}
       icons={designSystem.icons}
     >
+      {/* content-visibility: auto would leave a scrolled canvas's cards unrendered. */}
       <div
         style={{
           ...inset,
@@ -78,9 +86,19 @@ function PresetContainer({ preset, inset }: (typeof SLOTS)[number]) {
           paddingBottom: pad("bottom"),
           paddingLeft: pad("left"),
         }}
-        className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg"
+        className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg [&_*]:[content-visibility:visible]!"
       >
-        <div className="zoom-[0.7]">
+        <div
+          style={{
+            zoom: 0.7,
+            ...(scrollEnd && {
+              position: "absolute",
+              width: "max-content",
+              [scrollEnd.x ? "right" : "left"]: 0,
+              [scrollEnd.y ? "bottom" : "top"]: 0,
+            }),
+          }}
+        >
           <CardsCanvas />
         </div>
       </div>
