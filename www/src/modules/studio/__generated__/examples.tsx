@@ -82,24 +82,3 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	tooltip: () => import("@/registry/ui/tooltip/examples"),
 	tree: () => import("@/registry/ui/tree/examples"),
 };
-
-export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {
-	buttons: () => import("@/modules/studio/preview/group-examples/buttons"),
-	calendar: () => import("@/modules/studio/preview/group-examples/calendar"),
-	cards: () => import("@/modules/studio/preview/group-examples/cards"),
-	"color-swatches": () => import("@/modules/studio/preview/group-examples/color-swatches"),
-	containers: () => import("@/modules/studio/preview/group-examples/containers"),
-	disclosure: () => import("@/modules/studio/preview/group-examples/disclosure"),
-	"drop-zone": () => import("@/modules/studio/preview/group-examples/drop-zone"),
-	feedback: () => import("@/modules/studio/preview/group-examples/feedback"),
-	inputs: () => import("@/modules/studio/preview/group-examples/inputs"),
-	"menus-lists": () => import("@/modules/studio/preview/group-examples/menus-lists"),
-	navigation: () => import("@/modules/studio/preview/group-examples/navigation"),
-	overlays: () => import("@/modules/studio/preview/group-examples/overlays"),
-	pickers: () => import("@/modules/studio/preview/group-examples/pickers"),
-	progress: () => import("@/modules/studio/preview/group-examples/progress"),
-	"selection-controls": () => import("@/modules/studio/preview/group-examples/selection-controls"),
-	sliders: () => import("@/modules/studio/preview/group-examples/sliders"),
-	tags: () => import("@/modules/studio/preview/group-examples/tags"),
-	typography: () => import("@/modules/studio/preview/group-examples/typography"),
-};

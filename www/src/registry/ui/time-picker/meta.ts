@@ -10,6 +10,7 @@ const timePickerMeta = {
       target: "ui/time-picker.tsx",
     },
   ],
+  dependencies: ["@internationalized/date"],
   registryDependencies: ["button", "dialog", "field", "input", "popover"],
 } satisfies RegistryItem
 

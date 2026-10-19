@@ -20,6 +20,28 @@ wip: true
       name: "placeholder",
       defaultValue: "Type @ to mention someone...",
     },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "enum",
+      name: "placement",
+      options: ["bottom start", "bottom end", "top start", "top end"],
+      defaultValue: "bottom start",
+    },
   ]}
 />
 
