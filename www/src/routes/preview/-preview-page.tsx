@@ -10,10 +10,7 @@ import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
 import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
-import {
-  ExamplesIndex,
-  GroupExamplesIndex,
-} from "@/modules/studio/__generated__/examples"
+import { ExamplesIndex } from "@/modules/studio/__generated__/examples"
 import {
   isInIframe,
   useAnnouncePreviewReady,
@@ -40,16 +37,20 @@ const promiseCache = new Map<
   Promise<{ default: React.ComponentType }>
 >()
 
+const loadCards = () =>
+  import("@/components/showcase/cards-grid").then((m) => ({
+    default: m.CardsCanvas,
+  }))
+
 export function getExamplesPromise(slug: string) {
   let promise = promiseCache.get(slug)
   if (!promise) {
-    // Block/group slugs share one namespace with component slugs and win the
-    // lookup — e.g. the "cards" group resolves here before the "card" component.
+    // Block slugs share one namespace with component slugs and win the lookup.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
       boardOf(slug) ??
       BlocksIndex[slug] ??
-      GroupExamplesIndex[slug] ??
+      (slug === "cards" ? loadCards : undefined) ??
       ExamplesIndex[slug]
     if (!load) return null
     promise = load()

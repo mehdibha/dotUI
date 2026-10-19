@@ -1,8 +1,7 @@
 import type { ComponentType } from "react"
 
-// Slugs share a namespace with component and group-example slugs and are looked
-// up first — never reuse one of those (e.g. a calendar block must not be
-// slugged "calendar", which is a component).
+// Slugs share a namespace with component slugs and are looked up first —
+// never reuse one (e.g. a calendar block must not be slugged "calendar").
 export const AVAILABLE_BLOCKS = [
   { slug: "dashboard", name: "Dashboard" },
   { slug: "settings", name: "Settings" },

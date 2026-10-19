@@ -7,7 +7,31 @@ links:
 wip: true
 ---
 
-<Demo name="date-picker/demos/basic" />
+<InteractiveDemo
+  name="date-picker"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Date",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    "granularity",
+    {
+      name: "firstDayOfWeek",
+      options: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
+    },
+    "isDisabled",
+    "isReadOnly",
+    "isInvalid",
+    "isRequired",
+  ]}
+/>
 
 ## Installation
 
@@ -100,32 +124,32 @@ import { parseDate } from "@internationalized/date"
 
 `DateRangePicker` selects a start and end date as a `{ start, end }` value. Use two `DateInput`s with `slot="start"` and `slot="end"`, and a `RangeCalendar` in the popover.
 
-```tsx
-import { parseDate } from "@internationalized/date"
-
-import { RangeCalendar } from "@/components/ui/calendar"
-import { DateRangePicker } from "@/components/ui/date-picker"
-```
-
-```tsx
-<DateRangePicker
-  defaultValue={{
-    start: parseDate("2020-02-03"),
-    end: parseDate("2020-02-12"),
-  }}
->
-  <InputGroup>
-    <DateInput slot="start" />
-    <span>–</span>
-    <DateInput slot="end" />
-  </InputGroup>
-  <Popover>
-    <DialogContent>
-      <RangeCalendar />
-    </DialogContent>
-  </Popover>
-</DateRangePicker>
-```
+<InteractiveDemo
+  name="date-picker"
+  file="range/playground"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Date range",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    "granularity",
+    {
+      name: "firstDayOfWeek",
+      options: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
+    },
+    "isDisabled",
+    "isReadOnly",
+    "isInvalid",
+    "isRequired",
+  ]}
+/>
 
 ## Examples
 

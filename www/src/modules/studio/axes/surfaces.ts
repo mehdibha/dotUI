@@ -28,7 +28,7 @@
 
 import { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
-import type { Effective, Resolved } from "./index"
+import type { Effective, Resolved, StudioState } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import { strokePx } from "./shape"
 
@@ -67,6 +67,45 @@ const SHELL_SIDEBAR: Record<string, string> = {
   page: "var(--color-bg)",
   recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
 }
+
+/* The Surfaces picker: a look writes layers, edge and shadow together;
+   Style puts all three back on the Style's column. Any other mix is Custom.
+   Every look stands under every Style (none needs Tonal's layers or a
+   finish's edge). */
+const look = (layers: string, edge: string, shadow: string) => ({
+  surfaceLayers: layers,
+  surfaceEdge: edge,
+  surfaceShadow: shadow,
+})
+
+export const SURFACE_LOOKS = {
+  style: look("style", "style", "style"),
+  outlined: look("same", "line", "flat"),
+  raised: look("same", "line", "low"),
+  floating: look("same", "none", "medium"),
+  grouped: look("grouped", "none", "low"),
+}
+
+export type SurfaceLookId = keyof typeof SURFACE_LOOKS
+
+export const SURFACE_LOOK_VALUES = Object.keys(SURFACE_LOOKS) as SurfaceLookId[]
+
+const LOOK_KEYS = Object.keys(SURFACE_LOOKS.style) as Array<
+  keyof typeof SURFACE_LOOKS.style
+>
+
+/** The look `state` wears, or undefined when it's Custom. */
+export const surfaceLookOf = (
+  state: Record<string, unknown>,
+): SurfaceLookId | undefined =>
+  SURFACE_LOOK_VALUES.find((id) =>
+    LOOK_KEYS.every((key) => state[key] === SURFACE_LOOKS[id][key]),
+  )
+
+export const pickSurfaceLook = (
+  state: StudioState,
+  id: SurfaceLookId,
+): StudioState => ({ ...state, ...SURFACE_LOOKS[id] }) as StudioState
 
 export interface PerMode<T> {
   light: T

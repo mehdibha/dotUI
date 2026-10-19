@@ -40,6 +40,7 @@ export const COMPONENTS: Component[] = [
       ["buttonPress", "Press"],
       ["buttonRadius", "Corners"],
       ["buttonCase", "Case"],
+      ["labelWeight", "Label weight"],
       ["toggleSelected", "Toggled"],
       ["buttonColor", "Color"],
       ["buttonMotion", "Motion"],
@@ -88,6 +89,8 @@ export const COMPONENTS: Component[] = [
       ["inputHeight", "Height"],
       ["fieldLabel", "Label"],
       ["inputError", "Error message"],
+      ["invalidStyle", "Invalid"],
+      ["fieldTextSize", "Text size"],
       ["fieldMotion", "Motion"],
     ],
     aliases: [
@@ -212,6 +215,7 @@ export const COMPONENTS: Component[] = [
       ["menuIndicator", "Check"],
       ["menuSelectedRow", "Selected row"],
       ["menuRows", "Rows"],
+      ["sectionLabels", "Section labels"],
       ["popoverMotion", "Motion"],
     ],
     hosts: ["popoverMotion"],
@@ -339,6 +343,7 @@ export const COMPONENTS: Component[] = [
     rows: [
       ["cardHeader", "Header"],
       ["cardFooter", "Footer"],
+      ["titleStyle", "Titles"],
     ],
   },
   {
