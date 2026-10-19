@@ -41,7 +41,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
         id={id}
         aria-labelledby={labelId}
         className={composeRenderProps(className, (className) =>
-          root({ className }),
+          root({ size, className }),
         )}
         {...props}
       >

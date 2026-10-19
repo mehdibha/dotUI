@@ -123,11 +123,11 @@ interface SelectContentProps<T extends object>
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
   placement?: PopoverProps["placement"]
-  virtulized?: boolean
+  virtualized?: boolean
 }
 
 const SelectContent = <T extends object>({
-  virtulized,
+  virtualized,
   placement = "bottom",
   defaultOpen,
   isOpen,
@@ -138,7 +138,7 @@ const SelectContent = <T extends object>({
     cn("max-h-[inherit] overflow-auto overscroll-contain", className),
   )
 
-  if (virtulized) {
+  if (virtualized) {
     return (
       <Popover
         className="overflow-hidden"

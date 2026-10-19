@@ -8,8 +8,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether to show an arrow pointing to the trigger.",
-      "default": "false"
+      "description": "Whether to show an arrow pointing to the trigger. Defaults to the design\nsystem's tip setting."
     },
     "UNSTABLE_portalContainer": {
       "type": "Element",

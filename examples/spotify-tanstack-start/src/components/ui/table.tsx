@@ -49,7 +49,8 @@ const tableVariants = tv({
     expandButton:
       "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-xs text-fg-muted focus-reset focus-visible:focus-ring group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
     expandIcon: "size-3.5 transition-transform",
-    loadMore: "relative h-7",
+    loadMore:
+      "relative h-7 **:data-loader:absolute **:data-loader:top-0 **:data-loader:left-1/2 **:data-loader:-translate-x-1/2",
   },
 });
 

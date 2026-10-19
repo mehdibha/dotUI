@@ -104,7 +104,7 @@
       "description": "The placement of the element with respect to its anchor element.",
       "default": "'bottom'"
     },
-    "virtulized": {
+    "virtualized": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {

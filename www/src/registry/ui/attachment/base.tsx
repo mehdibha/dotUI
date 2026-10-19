@@ -1,6 +1,6 @@
 "use client"
 
-import type * as React from "react"
+import * as React from "react"
 
 import { Button } from "@/registry/ui/button"
 
@@ -16,6 +16,10 @@ interface AttachmentProps extends React.ComponentProps<"div"> {
   orientation?: "horizontal" | "vertical"
 }
 
+const AttachmentContext = React.createContext<{
+  size: NonNullable<AttachmentProps["size"]>
+}>({ size: "md" })
+
 const Attachment = ({
   className,
   state = "done",
@@ -25,14 +29,16 @@ const Attachment = ({
 }: AttachmentProps) => {
   const { root } = useStyles()({ size, orientation })
   return (
-    <div
-      data-attachment=""
-      data-state={state}
-      data-size={size}
-      data-orientation={orientation}
-      className={root({ className })}
-      {...props}
-    />
+    <AttachmentContext value={{ size }}>
+      <div
+        data-attachment=""
+        data-state={state}
+        data-size={size}
+        data-orientation={orientation}
+        className={root({ className })}
+        {...props}
+      />
+    </AttachmentContext>
   )
 }
 
@@ -47,7 +53,8 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
-  const { media } = useStyles()({ mediaVariant: variant })
+  const { size } = React.use(AttachmentContext)
+  const { media } = useStyles()({ size, mediaVariant: variant })
   return (
     <div
       data-attachment-media=""

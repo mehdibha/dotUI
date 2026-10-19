@@ -1,6 +1,6 @@
 "use client";
 
-import type * as React from "react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { tv } from "tailwind-variants";
@@ -73,6 +73,10 @@ interface AttachmentProps extends React.ComponentProps<"div"> {
   orientation?: "horizontal" | "vertical";
 }
 
+const AttachmentContext = React.createContext<{
+  size: NonNullable<AttachmentProps["size"]>;
+}>({ size: "md" });
+
 const Attachment = ({
   className,
   state = "done",
@@ -81,14 +85,16 @@ const Attachment = ({
   ...props
 }: AttachmentProps) => {
   return (
-    <div
-      data-attachment=""
-      data-state={state}
-      data-size={size}
-      data-orientation={orientation}
-      className={root({ size, orientation, className })}
-      {...props}
-    />
+    <AttachmentContext value={{ size }}>
+      <div
+        data-attachment=""
+        data-state={state}
+        data-size={size}
+        data-orientation={orientation}
+        className={root({ size, orientation, className })}
+        {...props}
+      />
+    </AttachmentContext>
   );
 };
 
@@ -103,11 +109,12 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
+  const { size } = React.use(AttachmentContext);
   return (
     <div
       data-attachment-media=""
       data-variant={variant}
-      className={media({ mediaVariant: variant, className })}
+      className={media({ size, mediaVariant: variant, className })}
       {...props}
     />
   );

@@ -114,11 +114,11 @@ interface SelectContentProps<T extends object>
       PopoverProps,
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  virtulized?: boolean;
+  virtualized?: boolean;
 }
 
 const SelectContent = <T extends object>({
-  virtulized,
+  virtualized,
   placement = "bottom",
   defaultOpen,
   isOpen,
@@ -142,7 +142,7 @@ const SelectContent = <T extends object>({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
     >
-      {virtulized ? (
+      {virtualized ? (
         <ListBoxVirtualizer>{listBox}</ListBoxVirtualizer>
       ) : (
         listBox

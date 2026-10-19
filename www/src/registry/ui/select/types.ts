@@ -34,5 +34,5 @@ export interface SelectContentProps<T extends object>
   /**
    * Whether to use virtualization for large lists.
    */
-  virtulized?: boolean
+  virtualized?: boolean
 }
