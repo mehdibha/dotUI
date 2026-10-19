@@ -11,9 +11,10 @@ type Side = "top" | "right" | "bottom" | "left"
 // The clear area around the logo is 2 × HALF_W by 2 × HALF_H; containers run
 // BLEED past the canvas edge.
 const BLEED = -40
-const HALF_W = 220
-const HALF_H = 112
+const HALF_W = 250
+const HALF_H = 142
 const GUTTER = 56
+const ZOOM = 0.6
 
 const fromCenter = (px: number) => `calc(50% + ${px}px)`
 
@@ -31,7 +32,7 @@ const SLOTS: {
       right: fromCenter(HALF_W),
       bottom: fromCenter(GUTTER - HALF_H),
     },
-    scroll: [622, 212],
+    scroll: [597, 212],
   },
   {
     preset: "linear",
@@ -94,7 +95,7 @@ function PresetContainer({
         className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg [&_*]:[content-visibility:visible]!"
       >
         <div
-          style={{ zoom: 0.7, marginLeft: -scroll[0], marginTop: -scroll[1] }}
+          style={{ zoom: ZOOM, marginLeft: -scroll[0], marginTop: -scroll[1] }}
         >
           <CardsCanvas />
         </div>
