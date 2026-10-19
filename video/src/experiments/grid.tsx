@@ -7,7 +7,6 @@ import {
   useCurrentFrame,
 } from "remotion"
 
-import type { Density } from "@/registry/types"
 import { AccountMenu } from "@/components/showcase/account-menu"
 import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
@@ -39,48 +38,30 @@ import { UploadAvatar } from "@/components/showcase/upload-avatar"
 import { UsageCredits } from "@/components/showcase/usage-credits"
 
 import { ease, lerp, progress } from "../lib/motion"
+import { preset, Theme, WarmIcons } from "../lib/theme"
+import type { Look, Rgba } from "./steps"
 import {
-  facesReady,
-  preset,
-  PRESET_FONTS,
-  Theme,
-  WarmIcons,
-} from "../lib/theme"
-import type { Box, Rgba } from "./steps"
-import {
-  boxOf,
-  css,
-  EVERY,
-  MORPH,
-  mixOklab,
+  cardWidth,
+  measureCard,
   noise,
-  paintBox,
+  ORDER,
+  paintCard,
+  paintPage,
+  presetFaces,
   rgbaOf,
   STEPS_SIZE,
+  swapAt,
 } from "./steps"
 
-/* Step 2 (the empty Controls card morphing through looks), then the camera
-   pulls back and the rest of the "cards" block assembles around it: every
-   card flies in from beyond Controls to its place in the studio canvas,
-   nearest first, all of them keeping up with the look. Surfaces only. */
+/* The Controls card morphing through every preset (the Steps film), then the
+   camera pulls back and the rest of the "cards" block assembles around it:
+   every card, drawn whole like Controls, flies in from beyond it to its
+   place in the studio canvas, nearest first, all keeping up with the look. */
 
-const ORDER = [
-  "origin",
-  "claude",
-  "carbon",
-  "duolingo",
-  "material3",
-  "airbnb",
-  "spotify",
-  "stripe",
-  "origin",
-]
 const LOOKS = [...new Set(ORDER)]
 
-export const GRID_FRAMES = EVERY * ORDER.length
-
 /** The pull-back: from the Controls card at true size to the whole canvas. */
-const ZOOM_AT = 150
+const ZOOM_AT = 210
 const ZOOM_FOR = 180
 /** Frame margin around the canvas once pulled back. */
 const EDGE = 28
@@ -89,21 +70,8 @@ const ARRIVE_AT = ZOOM_AT + 10
 const ARRIVE_SPREAD = 110
 const ARRIVE_FOR = 60
 
-function lookAt(frame: number) {
-  const swaps = ORDER.slice(1).map((_, i) => (i + 1) * EVERY)
-  const k = swaps.findIndex(
-    (at) => frame >= at - MORPH / 2 && frame < at + MORPH / 2,
-  )
-  const settled = swaps.filter((at) => frame >= at + MORPH / 2).length
-  const from = k >= 0 ? k : settled
-  return {
-    from: ORDER[from]!,
-    to: ORDER[k >= 0 ? k + 1 : from]!,
-    t: k >= 0 ? progress(frame, swaps[k]! - MORPH / 2, MORPH, ease.camera) : 0,
-  }
-}
-
-// The studio's "cards" canvas (www CardsCanvas), laid out flat: no
+// The studio's "cards" canvas, its columns as wide as the Controls card in
+// the Steps film (per density) (www CardsCanvas), laid out flat: no
 // content-visibility, which would size the off-screen probes' cards at a
 // guess.
 const CARDS = {
@@ -139,13 +107,6 @@ const CARDS = {
 }
 type CardKey = keyof typeof CARDS
 
-const COLUMN_WIDTH: Record<Density, number> = {
-  compact: 300,
-  default: 340,
-  comfortable: 360,
-  spacious: 380,
-  touch: 420,
-}
 const GAP = 24
 
 function Column({ cards }: { cards: CardKey[] }) {
@@ -236,46 +197,41 @@ function Canvas({ col }: { col: number }) {
   )
 }
 
+interface Placed {
+  x: number
+  y: number
+  look: Look
+}
+
 interface Layout {
   page: Rgba
   width: number
-  cards: Map<string, Box>
+  cards: Map<string, Placed>
 }
 
-function measure(probe: HTMLElement): Layout | null {
+async function measure(probe: HTMLElement): Promise<Layout | null> {
   const grid = probe.firstElementChild as HTMLElement | null
   if (!grid?.offsetHeight) return null
+  const page = rgbaOf(getComputedStyle(probe).backgroundColor)
   const origin = grid.getBoundingClientRect()
-  const cards = new Map<string, Box>()
+  const cards = new Map<string, Placed>()
   for (const slot of probe.querySelectorAll<HTMLElement>("[data-grid-card]")) {
     // Each card's root is its surface (the AI prompt is a plain div).
     const card = slot.firstElementChild as HTMLElement | null
     if (!card) continue
     const r = card.getBoundingClientRect()
-    cards.set(
-      slot.dataset.gridCard!,
-      boxOf(
-        getComputedStyle(card),
-        {
-          x: r.x - origin.x,
-          y: r.y - origin.y,
-          width: r.width,
-          height: r.height,
-        },
-        1,
-      ),
-    )
+    cards.set(slot.dataset.gridCard!, {
+      x: r.x - origin.x,
+      y: r.y - origin.y,
+      look: await measureCard(card, page),
+    })
   }
-  return {
-    page: rgbaOf(getComputedStyle(probe).backgroundColor),
-    width: origin.width,
-    cards,
-  }
+  return { page, width: origin.width, cards }
 }
 
-const centerOf = (a: Box, b: Box, t: number) => ({
-  x: lerp(a.x + a.width / 2, b.x + b.width / 2, t),
-  y: lerp(a.y + a.height / 2, b.y + b.height / 2, t),
+const centerOf = (a: Placed, b: Placed, t: number) => ({
+  x: lerp(a.x + a.look.card.width / 2, b.x + b.look.card.width / 2, t),
+  y: lerp(a.y + a.look.card.height / 2, b.y + b.look.card.height / 2, t),
 })
 
 function draw(
@@ -288,22 +244,7 @@ function draw(
 ) {
   const { width: W, height: H } = ctx.canvas
   const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
-
-  const page = mixOklab(a.page, b.page, t)
-  if (!rand) {
-    ctx.fillStyle = css(page)
-    ctx.fillRect(0, 0, W, H)
-  } else {
-    const img = ctx.createImageData(W, H)
-    for (let i = 0; i < img.data.length; i += 4) {
-      const n = rand()
-      img.data[i] = page[0]! + n
-      img.data[i + 1] = page[1]! + n
-      img.data[i + 2] = page[2]! + n
-      img.data[i + 3] = 255
-    }
-    ctx.putImageData(img, 0, 0)
-  }
+  paintPage(ctx, a.page, b.page, t, rand)
 
   // The camera starts on Controls at true size and ends with the canvas
   // filling the frame width (it widens with density), top cards just under
@@ -319,14 +260,14 @@ function draw(
   const ox = W / 2 - cam.x * scale
   const oy = H / 2 - cam.y * scale
 
-  for (const [key, ba] of a.cards) {
-    const bb = b.cards.get(key)
-    if (!bb) continue
+  for (const [key, pa] of a.cards) {
+    const pb = b.cards.get(key)
+    if (!pb) continue
     let [dx, dy, alpha] = [0, 0, 1]
     if (key !== "controls") {
       // Each card comes in from further out along the line from Controls,
       // the nearest first.
-      const c = centerOf(ba, bb, t)
+      const c = centerOf(pa, pb, t)
       const [vx, vy] = [c.x - home.x, c.y - home.y]
       const start =
         ARRIVE_AT + Math.min(Math.hypot(vx, vy) / 2000, 1) * ARRIVE_SPREAD
@@ -334,8 +275,14 @@ function draw(
       if (q <= 0) continue
       ;[dx, dy, alpha] = [vx * 0.3 * (1 - q), vy * 0.3 * (1 - q), q]
     }
+    const x = ox + (lerp(pa.x, pb.x, t) + dx) * scale
+    const y = oy + (lerp(pa.y, pb.y, t) + dy) * scale
+    const w = lerp(pa.look.card.width, pb.look.card.width, t) * scale
+    const h = lerp(pa.look.card.height, pb.look.card.height, t) * scale
+    // Off-frame cards cost a whole card of text each: skip them.
+    if (x > W || y > H || x + w < 0 || y + h < 0) continue
     ctx.globalAlpha = alpha
-    paintBox(ctx, ba, bb, t, ox + dx * scale, oy + dy * scale, scale, rand)
+    paintCard(ctx, pa.look, pb.look, t, x, y, scale, rand)
   }
   ctx.globalAlpha = 1
 }
@@ -344,7 +291,7 @@ const layouts = new Map<string, Layout>()
 
 export function GridStep() {
   const frame = useCurrentFrame()
-  const { from, to, t } = lookAt(frame)
+  const { from, to, t } = swapAt(frame)
   const canvas = useRef<HTMLCanvasElement>(null)
   const probes = useRef<Record<string, HTMLDivElement | null>>({})
   const dpr = window.devicePixelRatio
@@ -355,10 +302,12 @@ export function GridStep() {
     let raf = 0
     let tries = 0
     let alive = true
-    const attempt = () => {
+    const attempt = async () => {
+      // Every look up front (a second or so each), then the probes go:
+      // sixteen canvases of cards in the page would slow every frame.
       for (const id of LOOKS) {
         const probe = probes.current[id]
-        const layout = !layouts.has(id) && probe && measure(probe)
+        const layout = !layouts.has(id) && probe && (await measure(probe))
         if (layout) layouts.set(id, layout)
       }
       const [a, b] = [layouts.get(from), layouts.get(to)]
@@ -367,11 +316,12 @@ export function GridStep() {
       if (a && b && canvas.current) {
         draw(canvas.current.getContext("2d")!, a, b, t, frame, dpr)
         continueRender(handle)
-      } else if (tries++ < 600) raf = requestAnimationFrame(attempt)
+      } else if (tries++ < 600)
+        raf = requestAnimationFrame(() => void attempt())
       else continueRender(handle)
     }
-    void facesReady(PRESET_FONTS).then(() => {
-      raf = requestAnimationFrame(attempt)
+    void presetFaces().then(() => {
+      raf = requestAnimationFrame(() => void attempt())
     })
     return () => {
       alive = false
@@ -395,11 +345,7 @@ export function GridStep() {
                 className="bg-bg"
                 style={{ position: "absolute", opacity: 0 }}
               >
-                <Canvas
-                  col={
-                    COLUMN_WIDTH[(preset(id).density ?? "default") as Density]
-                  }
-                />
+                <Canvas col={cardWidth(id)} />
               </div>
             </Theme>
           )),

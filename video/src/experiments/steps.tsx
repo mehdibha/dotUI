@@ -164,11 +164,22 @@ interface Ink {
   image?: HTMLImageElement
 }
 
-interface Look {
+/** Something drawn as is, in full color: a chart, a gradient. */
+interface Picture {
+  x: number
+  y: number
+  width: number
+  height: number
+  picture: HTMLImageElement
+}
+
+type Item = Box | Ink | Picture
+
+export interface Look {
   page: Rgba
   card: Box
   /** Everything inside the card, keyed by its place in the tree. */
-  items: Map<string, Box | Ink>
+  items: Map<string, Item>
   order: string[]
 }
 
@@ -318,6 +329,108 @@ function iconImage(svg: SVGSVGElement) {
   return image
 }
 
+const loadImage = (markup: string) =>
+  new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(markup)}`
+  })
+
+/** Rasterized at this many times its layout size: crisp at 1080p. */
+const PICTURE_SCALE = 2
+
+const SVG_PAINT = [
+  "fill",
+  "fill-opacity",
+  "stroke",
+  "stroke-opacity",
+  "stroke-width",
+  "stroke-linecap",
+  "stroke-linejoin",
+  "stroke-dasharray",
+  "opacity",
+  "stop-color",
+  "stop-opacity",
+  "color",
+]
+
+/** An SVG in its own colors: every painted property is copied inline, since
+    the image can't see the page's stylesheets. */
+function svgPicture(svg: SVGSVGElement, rect: Rect) {
+  const copy = svg.cloneNode(true) as SVGSVGElement
+  const from = [svg, ...svg.querySelectorAll("*")]
+  const to = [copy, ...copy.querySelectorAll("*")]
+  from.forEach((el, i) => {
+    const cs = getComputedStyle(el)
+    to[i]!.setAttribute(
+      "style",
+      SVG_PAINT.map((p) => `${p}:${cs.getPropertyValue(p)}`).join(";"),
+    )
+    to[i]!.removeAttribute("class")
+  })
+  copy.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+  copy.setAttribute("width", String(rect.width * PICTURE_SCALE))
+  copy.setAttribute("height", String(rect.height * PICTURE_SCALE))
+  if (!copy.getAttribute("viewBox"))
+    copy.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`)
+  return loadImage(copy.outerHTML)
+}
+
+/** A CSS background gradient, rendered by the browser itself through an
+    SVG foreignObject. */
+function gradientPicture(cs: CSSStyleDeclaration, rect: Rect) {
+  const [w, h] = [rect.width * PICTURE_SCALE, rect.height * PICTURE_SCALE]
+  const style = [
+    `width:${rect.width}px`,
+    `height:${rect.height}px`,
+    `transform:scale(${PICTURE_SCALE})`,
+    "transform-origin:0 0",
+    `background-image:${cs.backgroundImage}`,
+    `background-size:${cs.backgroundSize}`,
+    `background-position:${cs.backgroundPosition}`,
+    `background-repeat:${cs.backgroundRepeat}`,
+    `border-radius:${cs.borderRadius}`,
+  ].join(";")
+  return loadImage(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><foreignObject width="${w}" height="${h}"><div xmlns="http://www.w3.org/1999/xhtml" style="${style.replaceAll('"', "'")}"></div></foreignObject></svg>`,
+  )
+}
+
+/** A text node's runs, one per line it wraps onto. */
+function textRuns(node: Text) {
+  const range = document.createRange()
+  range.selectNodeContents(node)
+  if (range.getClientRects().length <= 1)
+    return [{ value: node.textContent!, rect: range.getBoundingClientRect() }]
+  const text = node.textContent!
+  const runs: { value: string; rect: DOMRect }[] = []
+  let start = 0
+  let top = NaN
+  const flush = (end: number) => {
+    if (end <= start) return
+    range.setStart(node, start)
+    range.setEnd(node, end)
+    runs.push({
+      value: text.slice(start, end),
+      rect: range.getBoundingClientRect(),
+    })
+  }
+  for (let i = 0; i < text.length; i++) {
+    range.setStart(node, i)
+    range.setEnd(node, i + 1)
+    const r = range.getClientRects()[0]
+    if (!r || !r.width) continue
+    if (!Number.isNaN(top) && Math.abs(r.top - top) > r.height / 2) {
+      flush(i)
+      start = i
+    }
+    top = r.top
+  }
+  flush(text.length)
+  return runs.filter((run) => run.value.trim() && run.rect.width)
+}
+
 let ruler: CanvasRenderingContext2D | null = null
 const textWidth = (value: string, font: string, spacing: number) => {
   ruler ??= document.createElement("canvas").getContext("2d")!
@@ -350,7 +463,11 @@ function textOf(cs: CSSStyleDeclaration, value: string) {
 async function measure(probe: HTMLElement): Promise<Look | null> {
   const card = probe.querySelector<HTMLElement>("[data-card]")
   if (!card?.offsetHeight) return null
-  const page = rgbaOf(getComputedStyle(probe).backgroundColor)
+  return measureCard(card, rgbaOf(getComputedStyle(probe).backgroundColor))
+}
+
+/** One card's box and everything painted inside it, from its corner. */
+export async function measureCard(card: HTMLElement, page: Rgba) {
   const origin = card.getBoundingClientRect()
   const rel = (r: Rect): Rect => ({
     x: r.x - origin.x,
@@ -359,22 +476,61 @@ async function measure(probe: HTMLElement): Promise<Look | null> {
     height: r.height,
   })
   const cardBox = boxOf(getComputedStyle(card), rel(origin), 1)
-  const items = new Map<string, Box | Ink>()
+  const items = new Map<string, Item>()
   const order: string[] = []
   const pending: Promise<unknown>[] = []
-  const add = (key: string, item: Box | Ink) => {
+  const add = (key: string, item: Item) => {
     items.set(key, item)
     order.push(key)
   }
 
-  const walk = (el: Element, key: string, ground: Rgba, opacity: number) => {
+  // Overflow clips: whatever falls mostly outside one isn't drawn (a
+  // collapsed panel, the hidden end of a scrolled list).
+  const shown = (r: Rect, clip: Rect) => {
+    const w =
+      Math.min(r.x + r.width, clip.x + clip.width) - Math.max(r.x, clip.x)
+    const h =
+      Math.min(r.y + r.height, clip.y + clip.height) - Math.max(r.y, clip.y)
+    return w > 0 && h > 0 && w * h >= 0.5 * r.width * r.height
+  }
+
+  const walk = (
+    el: Element,
+    key: string,
+    ground: Rgba,
+    opacity: number,
+    clip: Rect,
+  ) => {
     const cs = getComputedStyle(el)
     if (cs.display === "none" || cs.visibility === "hidden") return
     if (cs.clip !== "auto" || cs.clipPath !== "none") return
     const alpha = opacity * parseFloat(cs.opacity)
     if (alpha <= 0) return
     const rect = el.getBoundingClientRect()
+    if (rect.width * rect.height > 0 && !shown(rect, clip)) return
+    if (cs.overflowX !== "visible" || cs.overflowY !== "visible") {
+      const x = Math.max(clip.x, rect.x)
+      const y = Math.max(clip.y, rect.y)
+      clip = {
+        x,
+        y,
+        width: Math.min(clip.x + clip.width, rect.right) - x,
+        height: Math.min(clip.y + clip.height, rect.bottom) - y,
+      }
+      if (clip.width <= 0 || clip.height <= 0) return
+    }
 
+    // A chart or illustration keeps its own colors; an icon is one ink.
+    if (
+      el instanceof SVGSVGElement &&
+      (Math.abs(rect.width - rect.height) > 1 || rect.width > 32)
+    ) {
+      const picture: Picture = { ...rel(rect), picture: new Image() }
+      pending.push(svgPicture(el, rect).then((img) => (picture.picture = img)))
+      if (alpha < 1) return
+      add(key, picture)
+      return
+    }
     if (el instanceof SVGSVGElement) {
       const color = rgbaOf(cs.color, alpha)
       const ink: Ink = {
@@ -396,6 +552,13 @@ async function measure(probe: HTMLElement): Promise<Look | null> {
       if (painted(box)) {
         add(key, box)
         under = over(box.fill, ground)
+      }
+      if (cs.backgroundImage.includes("gradient(") && alpha === 1) {
+        const picture: Picture = { ...rel(rect), picture: new Image() }
+        pending.push(
+          gradientPicture(cs, rect).then((img) => (picture.picture = img)),
+        )
+        add(key + "/gradient", picture)
       }
     }
     for (const pseudo of ["::before", "::after"]) {
@@ -443,27 +606,26 @@ async function measure(probe: HTMLElement): Promise<Look | null> {
     }
 
     el.childNodes.forEach((node, i) => {
-      if (node instanceof Element) walk(node, `${key}/${i}`, under, alpha)
-      else if (node.nodeType === Node.TEXT_NODE && node.textContent!.trim()) {
-        const range = document.createRange()
-        range.selectNodeContents(node)
-        const r = range.getBoundingClientRect()
-        if (!r.width) return
-        add(`${key}/${i}`, {
-          cx: r.x + r.width / 2 - origin.x,
-          cy: r.y + r.height / 2 - origin.y,
-          width: r.width,
-          color: over(rgbaOf(cs.color, alpha), under),
-          ground: under,
-          text: textOf(cs, node.textContent!.trim()),
+      if (node instanceof Element) walk(node, `${key}/${i}`, under, alpha, clip)
+      else if (node instanceof Text && node.textContent!.trim()) {
+        textRuns(node).forEach(({ value, rect: r }, line) => {
+          if (!shown(r, clip)) return
+          add(`${key}/${i}${line ? `:${line}` : ""}`, {
+            cx: r.x + r.width / 2 - origin.x,
+            cy: r.y + r.height / 2 - origin.y,
+            width: r.width,
+            color: over(rgbaOf(cs.color, alpha), under),
+            ground: under,
+            text: textOf(cs, value.trim()),
+          })
         })
       }
     })
   }
 
-  walk(card, "card", over(cardBox.fill, page), 1)
+  walk(card, "card", over(cardBox.fill, page), 1, origin)
   await Promise.all(pending)
-  return { page, card: cardBox, items, order }
+  return { page, card: cardBox, items, order } satisfies Look as Look
 }
 
 const mixLab = (a: number[], b: number[], t: number) =>
@@ -808,51 +970,118 @@ function paintInk(
   ctx.drawImage(mix, ...region, ...region)
 }
 
-const isInk = (item: Box | Ink): item is Ink => "ground" in item
+const isInk = (item: Item): item is Ink => "ground" in item
+const isPicture = (item: Item): item is Picture => "picture" in item
 
 /* Near-black looks differ by only ~16 levels of 8-bit, so plain fills step
    through them visibly (and the encoder wobbles the tint): every fill is
    computed in float and dithered with sub-level noise instead. Everything
    is drawn on one canvas, so edges, radii and borders move by fractions of
    a pixel instead of the browser's whole-pixel snaps. */
-function draw(
+/** A picture cross-fades: each side drawn in the blended rect. */
+function paintPicture(
+  ctx: CanvasRenderingContext2D,
+  a: Item | undefined,
+  b: Item | undefined,
+  t: number,
+  ox: number,
+  oy: number,
+  scale: number,
+) {
+  const [pa, pb] = [
+    a && isPicture(a) ? a : undefined,
+    b && isPicture(b) ? b : undefined,
+  ]
+  const [ra, rb] = [pa ?? pb!, pb ?? pa!]
+  const x = ox + lerp(ra.x, rb.x, t) * scale
+  const y = oy + lerp(ra.y, rb.y, t) * scale
+  const w = lerp(ra.width, rb.width, t) * scale
+  const h = lerp(ra.height, rb.height, t) * scale
+  const base = ctx.globalAlpha
+  for (const [side, alpha] of [
+    [pa, 1 - t],
+    [pb, t],
+  ] as const) {
+    if (!side || alpha <= 0 || !side.picture.complete) continue
+    ctx.globalAlpha = base * alpha
+    ctx.drawImage(side.picture, x, y, w, h)
+  }
+  ctx.globalAlpha = base
+}
+
+/** The page color, dithered when rendering (`rand`), flat in the preview. */
+export function paintPage(
+  ctx: CanvasRenderingContext2D,
+  a: Rgba,
+  b: Rgba,
+  t: number,
+  rand: (() => number) | null,
+) {
+  const { width: W, height: H } = ctx.canvas
+  const page = mixOklab(a, b, t)
+  if (!rand) {
+    ctx.fillStyle = css(page)
+    ctx.fillRect(0, 0, W, H)
+    return
+  }
+  const img = ctx.createImageData(W, H)
+  for (let i = 0; i < img.data.length; i += 4) {
+    const n = rand()
+    img.data[i] = page[0]! + n
+    img.data[i + 1] = page[1]! + n
+    img.data[i + 2] = page[2]! + n
+    img.data[i + 3] = 255
+  }
+  ctx.putImageData(img, 0, 0)
+}
+
+/** A card and everything inside it, blended at `t`, its corner at (ox, oy). */
+export function paintCard(
   ctx: CanvasRenderingContext2D,
   a: Look,
   b: Look,
   t: number,
-  frame: number,
+  ox: number,
+  oy: number,
   scale: number,
+  rand: (() => number) | null,
 ) {
-  const { width: W, height: H } = ctx.canvas
-  // Dithering is for the encoder's sake, and too slow to keep up live: the
-  // studio preview paints flat colors.
-  const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
-
-  const page = mixOklab(a.page, b.page, t)
-  if (!rand) {
-    ctx.fillStyle = css(page)
-    ctx.fillRect(0, 0, W, H)
-  } else {
-    const img = ctx.createImageData(W, H)
-    for (let i = 0; i < img.data.length; i += 4) {
-      const n = rand()
-      img.data[i] = page[0]! + n
-      img.data[i + 1] = page[1]! + n
-      img.data[i + 2] = page[2]! + n
-      img.data[i + 3] = 255
-    }
-    ctx.putImageData(img, 0, 0)
-  }
-
-  // The card stays centered; everything inside is placed from its corner.
-  const ox = (W - lerp(a.card.width, b.card.width, t) * scale) / 2
-  const oy = (H - lerp(a.card.height, b.card.height, t) * scale) / 2
   paintBox(ctx, a.card, b.card, t, ox, oy, scale, rand)
+  // What's inside stays inside, as the card's overflow clip has it (a
+  // scrolled list, say).
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(
+    ox,
+    oy,
+    lerp(a.card.width, b.card.width, t) * scale,
+    lerp(a.card.height, b.card.height, t) * scale,
+    Math.min(lerp(a.card.radii[0], b.card.radii[0], t), 32) * scale,
+  )
+  ctx.clip()
 
   const keys = [...a.order, ...b.order.filter((k) => !a.items.has(k))]
   for (const key of keys) {
     let [ia, ib] = [a.items.get(key), b.items.get(key)]
-    // Different kinds of thing in the same place: each fades on its own.
+    if ((ia && isPicture(ia)) || (ib && isPicture(ib))) {
+      paintPicture(ctx, ia, ib, t, ox, oy, scale)
+      continue
+    }
+    // Different kinds of thing in the same place, or text that wraps
+    // differently (another line's words): each fades on its own.
+    const rewrapped =
+      ia &&
+      ib &&
+      isInk(ia) &&
+      isInk(ib) &&
+      !!ia.text &&
+      !!ib.text &&
+      ia.text.value !== ib.text.value
+    if (rewrapped) {
+      paintInk(ctx, ia as Ink, undefined, t, ox, oy, scale)
+      paintInk(ctx, undefined, ib as Ink, t, ox, oy, scale)
+      continue
+    }
     if (ia && ib && isInk(ia) !== isInk(ib)) {
       if (isInk(ia)) paintInk(ctx, ia, undefined, t, ox, oy, scale)
       else paintInk(ctx, undefined, ib as Ink, t, ox, oy, scale)
@@ -874,7 +1103,32 @@ function draw(
       paintBox(ctx, ba ?? ghost(bb!), bb ?? ghost(ba!), t, ox, oy, scale, rand)
     }
   }
+  ctx.restore()
 }
+
+function draw(
+  ctx: CanvasRenderingContext2D,
+  a: Look,
+  b: Look,
+  t: number,
+  frame: number,
+  scale: number,
+) {
+  const { width: W, height: H } = ctx.canvas
+  // Dithering is for the encoder's sake, and too slow to keep up live: the
+  // studio preview paints flat colors.
+  const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
+  paintPage(ctx, a.page, b.page, t, rand)
+  // The card stays centered; everything inside is placed from its corner.
+  const ox = (W - lerp(a.card.width, b.card.width, t) * scale) / 2
+  const oy = (H - lerp(a.card.height, b.card.height, t) * scale) / 2
+  paintCard(ctx, a, b, t, ox, oy, scale, rand)
+}
+
+/** Every preset's faces, waited for once: asking again each frame costs
+    seconds. */
+let faces: Promise<void> | null = null
+export const presetFaces = () => (faces ??= facesReady(PRESET_FONTS))
 
 const looks = new Map<string, Look>()
 
@@ -921,7 +1175,7 @@ export function CardStep() {
     }
     // Fonts change the card's height: measure once every preset's are in,
     // since a look is measured only once.
-    void facesReady(PRESET_FONTS).then(() => {
+    void presetFaces().then(() => {
       raf = requestAnimationFrame(() => void attempt())
     })
     return () => {

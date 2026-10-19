@@ -5,10 +5,10 @@
 
    Set BROWSER to a Chrome binary when Remotion can't download its own. */
 
+import fs from "node:fs"
 import { createRequire } from "node:module"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import fs from "node:fs"
 import { bundle } from "@remotion/bundler"
 import {
   openBrowser,
@@ -39,6 +39,7 @@ const composition = await selectComposition({
   serveUrl,
   id: flag("id") ?? "Steps",
   puppeteerInstance: browser,
+  timeoutInMilliseconds: 120_000,
 })
 
 if (mode === "stills") {
@@ -55,6 +56,7 @@ if (mode === "stills") {
       jpegQuality: 88,
       scale: Number(flag("scale") ?? 0.8),
       puppeteerInstance: browser,
+      timeoutInMilliseconds: 120_000,
       onBrowserLog: (log) => {
         if (log.text.startsWith("DUMP")) console.log(log.text)
       },
@@ -83,11 +85,14 @@ if (mode === "stills") {
       ? (flag("frames")!.split("-").map(Number) as [number, number])
       : null,
     timeoutInMilliseconds: 120_000,
+    onBrowserLog: (log) => {
+      if (log.text.startsWith("DUMP")) console.log(log.text)
+    },
     outputLocation: path.resolve(arg ?? "out/card-looks.mp4"),
     puppeteerInstance: browser,
     onProgress: ({ progress }) => {
       const p = Math.floor(progress * 20)
-      if (p !== last) console.log(`${p * 5}%`), (last = p)
+      if (p !== last) (console.log(`${p * 5}%`), (last = p))
     },
   })
 }
