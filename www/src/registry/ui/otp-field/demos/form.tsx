@@ -7,7 +7,7 @@ import { Description, FieldError, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field"
 
-export default function Form() {
+export default function Demo() {
   const [value, setValue] = React.useState("")
   const [submitted, setSubmitted] = React.useState(false)
   const isInvalid = submitted && value.length !== 6

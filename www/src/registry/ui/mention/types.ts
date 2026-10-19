@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import type { Key } from "react-aria-components/Menu"
+import type { Key } from "react-aria-components/Collection"
 
 import type { PopoverProps } from "@/registry/ui/popover"
 import type { TokenFieldProps } from "@/registry/ui/token-field"

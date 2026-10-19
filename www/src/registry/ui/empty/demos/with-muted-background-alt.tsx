@@ -1,4 +1,4 @@
-import { CircleDashedIcon } from "@/registry/__generated__/icons"
+import { CircleDashedIcon } from "@/registry/icons"
 import {
   Empty,
   EmptyContent,

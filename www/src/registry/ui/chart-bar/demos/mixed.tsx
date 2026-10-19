@@ -10,7 +10,7 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-export default function ChartBarMixed() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

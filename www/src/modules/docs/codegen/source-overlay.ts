@@ -173,10 +173,12 @@ function rewriteImports(sf: SourceFile): void {
     }
     // `rewriteImportPath` yields the shipped paths, where `ui/*` maps to
     // `@/components/ui/*` — the default shadcn `aliases.ui`, and where a real
-    // install lands files.
+    // install lands files. Registry icon names are lucide's, the default library.
+    const specifier = imp.getModuleSpecifierValue()
     imp.setModuleSpecifier(
-      rewriteImportPath(imp.getModuleSpecifierValue()) ??
-        imp.getModuleSpecifierValue(),
+      specifier === "@/registry/icons"
+        ? "lucide-react"
+        : (rewriteImportPath(specifier) ?? specifier),
     )
   }
 }

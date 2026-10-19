@@ -1,4 +1,4 @@
-import { CalendarIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Calendar } from "@/registry/ui/calendar"
 import { DatePicker } from "@/registry/ui/date-picker"

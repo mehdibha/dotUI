@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, FolderIcon } from "@/registry/__generated__/icons"
+import { ArrowUpRightIcon, FolderIcon } from "@/registry/icons"
 import { Button, LinkButton } from "@/registry/ui/button"
 import { Card, CardContent } from "@/registry/ui/card"
 import {

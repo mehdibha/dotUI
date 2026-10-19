@@ -47,12 +47,14 @@ function useSyncedSkeletonAnimation(
   }, [className, isLoading, ref]);
 }
 
-export function Skeleton({
+/* -------------------------------------------------------------------------- */
+
+export const Skeleton = ({
   className,
   children,
   isLoading,
   ...props
-}: SkeletonProps) {
+}: SkeletonProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const hasChildren = children != null;
   const shouldShowSkeleton = isLoading ?? !hasChildren;
@@ -81,4 +83,4 @@ export function Skeleton({
       {children}
     </div>
   );
-}
+};

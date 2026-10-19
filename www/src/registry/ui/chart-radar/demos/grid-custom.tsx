@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 264 },
 ]
 
-export default function ChartRadarGridCustom() {
+export default function Demo() {
   return (
     <RadarChart
       data={data}

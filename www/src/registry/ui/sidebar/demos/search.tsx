@@ -3,7 +3,7 @@ import {
   HomeIcon,
   InboxIcon,
   SettingsIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { SearchField } from "@/registry/ui/search-field"
 import {
   Sidebar,

@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-export default function ChartAreaStacked() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

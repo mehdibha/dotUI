@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { Slider, SliderControl } from "@/registry/ui/slider"

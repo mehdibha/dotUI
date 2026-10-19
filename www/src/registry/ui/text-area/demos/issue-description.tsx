@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Button } from "@/registry/ui/button"
 import { Description, FieldError, Label } from "@/registry/ui/field"
@@ -10,8 +10,8 @@ import { TextField } from "@/registry/ui/text-field"
 const MIN_LENGTH = 20
 
 export default function Demo() {
-  const [description, setDescription] = useState("")
-  const [submitted, setSubmitted] = useState(false)
+  const [description, setDescription] = React.useState("")
+  const [submitted, setSubmitted] = React.useState(false)
   const isTooShort = description.trim().length < MIN_LENGTH
 
   return (

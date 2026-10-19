@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectPrimitives from "react-aria-components/Select";
 
@@ -34,13 +34,13 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
+  const { field } = fieldStyles();
   return (
     <SelectPrimitives.Select
       data-field=""
       data-select=""
-      data-slot="select"
-      className={composeRenderProps(className, (cn) =>
-        fieldStyles().field({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        field({ className }),
       )}
       {...props}
     />
@@ -52,8 +52,8 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
   const { buttonTrigger } = inputStyles();
   // React Aria marks the Select invalid, not its button.
-  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
-    .isInvalid;
+  const isInvalid = React.useContext(SelectPrimitives.SelectStateContext)
+    ?.displayValidation.isInvalid;
   return (
     <Button
       size={size}
@@ -87,7 +87,7 @@ const SelectValue = <T extends object>({
 }: SelectValueProps<T>) => {
   return (
     <SelectPrimitives.SelectValue
-      data-slot="select-value"
+      data-select-value=""
       className={composeRenderProps(className, (className) =>
         cn(
           "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
@@ -151,6 +151,8 @@ const SelectContent = <T extends object>({
     </Popover>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { SelectContentProps, SelectProps, SelectValueProps };
 export {

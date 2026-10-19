@@ -4,7 +4,7 @@ import React from "react"
 import { getLocalTimeZone, today } from "@internationalized/date"
 import type * as CalendarPrimitives from "react-aria-components/Calendar"
 
-import { PlusIcon, Trash2Icon } from "@/registry/__generated__/icons"
+import { PlusIcon, Trash2Icon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {

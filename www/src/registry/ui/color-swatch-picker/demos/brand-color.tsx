@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 import { Button } from "@/registry/ui/button"
@@ -13,7 +13,7 @@ import { Description, Label } from "@/registry/ui/field"
 const brandColors = ["#635bff", "#0070f3", "#16a34a", "#ea580c", "#db2777"]
 
 export default function Demo() {
-  const [value, setValue] = useState<ColorAreaPrimitives.Color>(
+  const [value, setValue] = React.useState<ColorAreaPrimitives.Color>(
     ColorAreaPrimitives.parseColor("#635bff"),
   )
 

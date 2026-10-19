@@ -301,9 +301,9 @@ describe("navigation case, pill marker and line indicator", () => {
 
   test("uppercase labels are the buttons' case, off the select guard", () => {
     const button = config("button").params.case.uppercase.base
-    expect(
-      classes(button).replaceAll("not-has-data-[slot=select-value]:", ""),
-    ).toBe(UPPERCASE)
+    expect(classes(button).replaceAll("not-has-data-select-value:", "")).toBe(
+      UPPERCASE,
+    )
     expect(config("tabs").params.case.uppercase.slots.item).toBe(UPPERCASE)
     expect(config("segmented-control").params.case.uppercase.slots.item).toBe(
       UPPERCASE,

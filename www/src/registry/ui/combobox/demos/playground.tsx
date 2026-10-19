@@ -1,7 +1,6 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
-
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Combobox, type ComboboxProps } from "@/registry/ui/combobox"
 import { Description, Label } from "@/registry/ui/field"

@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import type * as React from "react"
 import * as SeparatorPrimitives from "react-aria-components/Separator"
 import { useSlottedContext } from "react-aria-components/slots"
 
@@ -28,6 +28,8 @@ const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
     />
   )
 }
+
+// MARK: Separator
 
 export type { SeparatorProps }
 export { Separator }

@@ -10,7 +10,7 @@ const avatarMeta = {
       target: "ui/avatar.tsx",
     },
   ],
-  registryDependencies: ["context", "use-image-loading-status"],
+  registryDependencies: ["use-image-loading-status"],
   params: {
     shape: {
       default: "circle",

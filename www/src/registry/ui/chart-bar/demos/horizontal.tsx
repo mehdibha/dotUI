@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-export default function ChartBarHorizontal() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

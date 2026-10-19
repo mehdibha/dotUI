@@ -26,7 +26,7 @@ export default function ChartRadarExamples() {
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>
-      <Example title="Multiple Series">
+      <Example title="Multiple series">
         <RadarChart
           className="w-full"
           data={data}

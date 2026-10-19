@@ -4,7 +4,7 @@ import {
   PencilIcon,
   ShareIcon,
   TrashIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
