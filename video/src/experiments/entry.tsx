@@ -10,7 +10,7 @@ import { Demos, DEMOS_FRAMES } from "./demos"
 import { Export, EXPORT_FRAMES } from "./export"
 import { GRID_FRAMES, GridStep } from "./grid"
 import { CardStep, RealCard, STEPS_FRAMES, STEPS_SIZE } from "./steps"
-import { Story, STORY_FRAMES } from "./story"
+import { SCENES, Story, STORY_FRAMES } from "./story"
 
 function Filmed() {
   return (
@@ -55,7 +55,12 @@ const scenes = [
   ["Export", Export, EXPORT_FRAMES],
   ["Agent", Agent, AGENT_FRAMES],
 ] as const
-const filmedScenes = scenes.map(
+const filmedScenes = [
+  ...scenes,
+  ...SCENES.filter(({ id }) => id === "Create" || id === "End").map(
+    ({ id, Scene, frames }) => [`Story${id}`, Scene, frames] as const,
+  ),
+].map(
   ([id, Scene, frames]) => [id, filmed(Scene), frames] as const,
 )
 
