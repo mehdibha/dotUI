@@ -76,12 +76,10 @@ describe("panel search", () => {
     expect(search("Vividness")).toContain("Foundations › Brand › Vividness")
     expect(search("Keep exact")).toContain("Foundations › Brand › Keep exact")
     expect(search("stroke")).toContain("Foundations › Icons › Stroke")
-    expect(search("glass")).toContain(
-      "Foundations › Color & surfaces › Surfaces › Overlays",
-    )
+    expect(search("glass")).toContain("Foundations › Surfaces › Overlays")
     expect(search("Frost")).toContain("Overlays › Dialog › Backdrop › Frost")
     expect(search("Strength")).toContain(
-      "Foundations › Interaction › Focus ring › Strength",
+      "Foundations › Focus › Focus ring › Strength",
     )
   })
 

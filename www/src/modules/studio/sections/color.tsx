@@ -1,22 +1,16 @@
 "use client"
 
 /* Color — its rows are the specimen, drawn by the engine the preview runs in
-   the panel's own mode. Brand and Neutral sit on the main page; the Color &
-   surfaces page holds the semantics, Primary, the surfaces and control inks. */
+   the panel's own mode. Brand and Neutral sit on the main page, the control
+   edge on the Surfaces page. */
 
 import { STEPS, toOklch } from "@dotui/colors"
 import type { Mode, StepName } from "@dotui/colors"
 
-import type { Effective } from "../axes"
 import { VIVIDNESS_RANGE } from "../axes/color"
-import {
-  CONTROL_EDGE_OPTIONS,
-  SELECTED_WASH_OPTIONS,
-  SOLID_INK_OPTIONS,
-} from "../axes/color.meta"
+import { CONTROL_EDGE_OPTIONS, SOLID_INK_OPTIONS } from "../axes/color.meta"
 import {
   DialColor,
-  DialPopover,
   DialSegmented,
   DialSelect,
   DialSlider,
@@ -28,23 +22,11 @@ import type { RowMap } from "../row-host"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import { useStudio } from "../use-studio"
 
-const SEMANTIC_SEEDS = [
-  { key: "successSeed", palette: "success", label: "Success" },
-  { key: "warningSeed", palette: "warning", label: "Warning" },
-  { key: "dangerSeed", palette: "danger", label: "Danger" },
-  { key: "selectionSeed", palette: "selection", label: "Selection" },
-] as const
-
 /* The rungs each edge mixes, per mode (the hairline steps down in dark). */
 const EDGE_STEPS: Record<string, Record<Mode, [StepName, StepName]>> = {
   soft: { light: ["200", "300"], dark: ["100", "200"] },
   firm: { light: ["400", "400"], dark: ["400", "400"] },
   strong: { light: ["700", "700"], dark: ["700", "700"] },
-}
-
-const WASH: Record<string, [string, StepName]> = {
-  neutral: ["neutral", "300"],
-  brand: ["accent", "100"],
 }
 
 /** A palette rung in the panel's mode. */
@@ -121,72 +103,6 @@ function NeutralRow() {
   )
 }
 
-/** The semantic solids, the selection one read the way the engine paints it. */
-function useSemantics(state: Effective) {
-  const { m } = usePanelMode(state)
-  const selection =
-    m.scales.selection?.["700"] ??
-    m.scales[state.selectionColor]?.[
-      state.selectionColor === "neutral" ? "950" : "700"
-    ]
-  return SEMANTIC_SEEDS.map((seed) => ({
-    ...seed,
-    color:
-      (seed.palette === "selection"
-        ? selection
-        : m.scales[seed.palette]?.["700"]) ?? m.background,
-  }))
-}
-
-/* Each dot but the last is cut where the next one overlaps it (12px dots,
-   4px overlap, 1.5px gap), so the stack reads on any row tint. */
-const STACK_CUTOUT =
-  "radial-gradient(circle at 14px 50%, #0000 7.5px, #000 8px)"
-
-/** The four semantic colors, stacked. */
-export function SemanticsPreview({ state }: { state: Effective }) {
-  const semantics = useSemantics(state)
-  return (
-    <span className="flex -space-x-1">
-      {semantics.map(({ key, color }, i) => (
-        <span
-          key={key}
-          className="size-3 shrink-0 rounded-full"
-          style={{
-            background: color,
-            mask: i < semantics.length - 1 ? STACK_CUTOUT : undefined,
-          }}
-        />
-      ))}
-    </span>
-  )
-}
-
-function SemanticsRow() {
-  const { state, effective, set } = useStudio()
-  const semantics = useSemantics(effective)
-  return (
-    <DialTrigger
-      label="Semantics"
-      holds={SEMANTIC_SEEDS.map(({ key }) => key)}
-      swatch
-      value={<SemanticsPreview state={effective} />}
-    >
-      <DialPopover>
-        {semantics.map(({ key, label, color }) => (
-          <DialColor
-            key={key}
-            label={label}
-            value={state[key]}
-            derived={color}
-            onChange={set(key)}
-          />
-        ))}
-      </DialPopover>
-    </DialTrigger>
-  )
-}
-
 function ControlEdgeRow() {
   const { m, mode, step } = useStep()
   return (
@@ -212,28 +128,6 @@ function ControlEdgeRow() {
   )
 }
 
-function SelectedWashRow() {
-  const { step } = useStep()
-  return (
-    <DialSelect
-      axis="selectedWash"
-      label="Selected wash"
-      options={SELECTED_WASH_OPTIONS.map((option) => {
-        const [palette, name] = WASH[option.value] ?? ["neutral", "300"]
-        return {
-          ...option,
-          glyph: (
-            <span
-              className="h-3.5 w-6 shrink-0 rounded-[4px]"
-              style={{ backgroundColor: step(palette, name) }}
-            />
-          ),
-        }
-      })}
-    />
-  )
-}
-
 export const ROWS: RowMap = {
   brand: BrandRow,
   preserveSeed: BrandRow,
@@ -241,7 +135,5 @@ export const ROWS: RowMap = {
   vividness: BrandRow,
   neutralHue: NeutralRow,
   neutralTint: NeutralRow,
-  ...Object.fromEntries(SEMANTIC_SEEDS.map(({ key }) => [key, SemanticsRow])),
   controlEdge: ControlEdgeRow,
-  selectedWash: SelectedWashRow,
 }

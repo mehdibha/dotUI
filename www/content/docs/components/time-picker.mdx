@@ -7,7 +7,43 @@ links:
 wip: true
 ---
 
-<Demo name="time-picker/demos/basic" />
+<InteractiveDemo
+  name="time-picker"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Time",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "granularity",
+      options: ["hour", "minute", "second"],
+      defaultValue: "minute",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isInvalid",
+      defaultValue: false,
+    },
+  ]}
+/>
 
 ## Installation
 

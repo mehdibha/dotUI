@@ -306,6 +306,10 @@ const leafRow = (leaf: PrimaryLeaf) =>
     )
   }
 
+/* Selected fill has no page of its own: Primary sets it. */
 export const ROWS: RowMap = Object.fromEntries(
-  PRIMARY_LEAVES.map((leaf) => [leaf, leafRow(leaf)]),
+  PRIMARY_LEAVES.filter((leaf) => leaf !== "selectionColor").map((leaf) => [
+    leaf,
+    leafRow(leaf),
+  ]),
 )

@@ -145,7 +145,9 @@ const MOVED: Record<string, string> = {
   feedback: "toast",
   "feedback/loading": "progress",
   charts: "chart",
-  states: "interaction",
+  states: "focus",
+  interaction: "focus",
+  color: "surfaces",
 }
 
 /** What `/studio#<hash>` opens: a page, else the row a key or a one-row

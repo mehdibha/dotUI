@@ -28,8 +28,12 @@ import {
 import { excludedUnder, STYLE_VALUES } from "./style"
 import {
   NO_SHADOW,
+  pickSurfaceLook,
   shadowCss,
+  SURFACE_LOOK_VALUES,
+  SURFACE_LOOKS,
   surfaceColorCss,
+  surfaceLookOf,
   surfaceRecipe,
 } from "./surfaces"
 import type { PerMode, SurfaceColor } from "./surfaces"
@@ -534,5 +538,31 @@ describe("drawn edges", () => {
       tooltipStyle: "surface",
     })
     expect(bevel).not.toMatch(/-m[tblr]-\[0px\]/)
+  })
+})
+
+describe("surface looks", () => {
+  test("Origin wears Style, and Flat's column draws Outlined", () => {
+    expect(surfaceLookOf(DEFAULT_STATE)).toBe("style")
+    expect(surfaceLookOf(DEFAULT_EFFECTIVE)).toBe("outlined")
+  })
+
+  test("a pick reads back as its look; any other mix is Custom", () => {
+    const edited = { ...DEFAULT_STATE, surfaceShadow: "high" }
+    expect(surfaceLookOf(edited)).toBeUndefined()
+    for (const id of SURFACE_LOOK_VALUES)
+      expect(surfaceLookOf(pickSurfaceLook(edited, id))).toBe(id)
+  })
+
+  test("every look draws as picked under every Style", () => {
+    for (const style of STYLE_VALUES)
+      for (const id of SURFACE_LOOK_VALUES) {
+        if (id === "style") continue
+        const { values } = effective(
+          pickSurfaceLook({ ...DEFAULT_STATE, style }, id),
+        )
+        expect(surfaceLookOf(values), `${style} ${id}`).toBe(id)
+        expect(parseState(SURFACE_LOOKS[id])).toMatchObject(SURFACE_LOOKS[id])
+      }
   })
 })

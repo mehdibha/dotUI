@@ -1,8 +1,9 @@
 "use client"
 
-/* Typography: each face set in itself, then the voice of titles, labels and
-   control text. Font sits on the main page; Heading and Reading match it
-   until pinned. */
+/* Typography: each face set in itself. Font sits on the main page, Heading
+   and Mono on the Typography page; Heading matches Font until pinned. The
+   voice rows sit where they act: Titles on Card, Label weight on Button,
+   Field text on Field, Section labels on Menu, UI text size under Density. */
 
 import { useMemo } from "react"
 import { Button as RacButton } from "react-aria-components"
@@ -30,7 +31,7 @@ import type { RowMap } from "../row-host"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import { useStudio } from "../use-studio"
 
-type FontKey = "headingFont" | "bodyFont" | "monoFont" | "readingFont"
+type FontKey = "headingFont" | "bodyFont" | "monoFont"
 
 /** The follow id of a role that matches Font until pinned. */
 const MATCH = "same"
@@ -43,7 +44,6 @@ const HEADING_CATEGORIES: FontCategory[] = [
 ]
 const BODY_CATEGORIES: FontCategory[] = ["sans-serif", "serif"]
 const MONO_CATEGORIES: FontCategory[] = ["mono"]
-const READING_CATEGORIES: FontCategory[] = ["serif", "sans-serif"]
 
 /** A font role as a dial row, its family set in its own face. With `match`,
  *  a switch over the list follows Font or pins the family it shows. */
@@ -162,15 +162,6 @@ const MonoRow = () => (
   <FontRow axis="monoFont" label="Mono" categories={MONO_CATEGORIES} />
 )
 
-const ReadingRow = () => (
-  <FontRow
-    axis="readingFont"
-    label="Reading"
-    match
-    categories={READING_CATEGORIES}
-  />
-)
-
 function TitlesRow() {
   const { effective } = useStudio()
   return (
@@ -243,7 +234,6 @@ export const ROWS: RowMap = {
   headingFont: HeadingRow,
   bodyFont: BodyRow,
   monoFont: MonoRow,
-  readingFont: ReadingRow,
   titleStyle: TitlesRow,
   uiTextSize: UiTextRow,
   fieldTextSize: FieldTextRow,
