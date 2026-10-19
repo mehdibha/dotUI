@@ -60,6 +60,7 @@ const SLOTS: {
       right: fromCenter(GUTTER - HALF_W),
       top: fromCenter(HALF_H),
     },
+    scroll: [60, 0],
   },
 ]
 
