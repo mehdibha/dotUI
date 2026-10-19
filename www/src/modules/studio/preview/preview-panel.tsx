@@ -42,7 +42,7 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { usePreviewFocus } from "@/modules/studio/focus"
+import { KEY_BOARDS, pageBoard, usePreviewFocus } from "@/modules/studio/focus"
 import {
   clearSettled,
   isDragPreview,
@@ -63,6 +63,7 @@ import type { BoardId } from "@/modules/studio/preview/boards/titles"
 import { designSystemOf } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
 import { useCurrent } from "@/modules/studio/selection"
+import { useTweak } from "@/dev/tweaker"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
 
@@ -264,6 +265,57 @@ export function PreviewPanel({ className }: { className?: string }) {
   const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
+
+  // Dev tweaker exploration: remove once Mehdi picks.
+  const group = "Follow the panel"
+  const transition = useTweak("Transition", {
+    type: "select",
+    options: ["none", "slide", "slide-fade", "crossfade"],
+    default: "none",
+    group,
+  })
+  const duration = useTweak("Duration (ms)", {
+    type: "number",
+    min: 100,
+    max: 400,
+    step: 25,
+    default: 200,
+    group,
+  })
+  const keepAlive = useTweak("Keep preview alive", {
+    type: "boolean",
+    default: false,
+    group,
+  })
+  const backDelay = useTweak("Back delay (ms)", {
+    type: "number",
+    min: 0,
+    max: 400,
+    step: 50,
+    default: FOCUS_RELEASE_MS,
+    group,
+  })
+  const popoverDelay = useTweak("Popover close delay (ms)", {
+    type: "number",
+    min: 0,
+    max: 400,
+    step: 50,
+    default: FOCUS_RELEASE_MS,
+    group,
+  })
+  const clickDelay = useTweak("Click close delay (ms)", {
+    type: "number",
+    min: 0,
+    max: 1000,
+    step: 50,
+    default: CLICK_RELEASE_MS,
+    group,
+  })
+  // Whether the focus that last held the board was a popover's, not a page's.
+  const lastPopover = useRef(false)
+  useEffect(() => {
+    if (focus) lastPopover.current = focus.popover
+  }, [focus])
   const takenOver = board !== null
   const [cueing, setCueing] = useState(false)
   useEffect(() => {
@@ -295,13 +347,37 @@ export function PreviewPanel({ className }: { className?: string }) {
   }, [])
   useEffect(() => {
     if (target || !following) return setBoard(target)
-    const clicked = performance.now() - lastPress.current < CLICK_RELEASE_MS
-    const timer = setTimeout(
-      () => setBoard(null),
-      clicked ? CLICK_RELEASE_MS : FOCUS_RELEASE_MS,
-    )
+    const clicked = performance.now() - lastPress.current < clickDelay
+    const delay = !lastPopover.current
+      ? backDelay
+      : clicked
+        ? clickDelay
+        : popoverDelay
+    if (delay === 0) return setBoard(null)
+    const timer = setTimeout(() => setBoard(null), delay)
     return () => clearTimeout(timer)
-  }, [target, following])
+  }, [target, following, backDelay, popoverDelay, clickDelay])
+
+  // A hovered page link or board row loads its board's chunk, so the switch is instant.
+  useEffect(() => {
+    const onOver = (event: PointerEvent) => {
+      if (!(event.target instanceof Element)) return
+      const link = event.target
+        .closest("[data-page-link]")
+        ?.getAttribute("data-page-link")
+      const axis = event.target
+        .closest("[data-axis]")
+        ?.getAttribute("data-axis")
+      const next = pageBoard(link) ?? (axis ? KEY_BOARDS[axis] : undefined)
+      if (next)
+        postToIframe(iframeRef.current, {
+          type: "preview-prefetch",
+          slug: BOARD_SLUG_PREFIX + next,
+        })
+    }
+    document.addEventListener("pointerover", onOver)
+    return () => document.removeEventListener("pointerover", onOver)
+  }, [])
 
   const effectivePreview = board ? BOARD_SLUG_PREFIX + board : preview
   const constrained = size !== "desktop"
@@ -318,7 +394,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // Fixed at mount: everything after goes over postMessage, so the iframe
   // never reloads.
-  const [iframeSrc] = useState(() => `/preview/${effectivePreview}`)
+  const [iframeSrc] = useState(() => `/preview/${preview}`)
 
   // The skeleton stays until the preview reports it rendered (`load` fires
   // before the SPA paints). Its first report is often lost to hydration, so
@@ -346,9 +422,15 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // Switches navigate the iframe's own router: no remount, and revisited
   // previews come from its module cache.
+  // The board goes over the user's preview, which stays on the iframe's route.
+  usePreviewSync(iframeRef, { type: "preview-navigate", slug: preview })
   usePreviewSync(iframeRef, {
-    type: "preview-navigate",
-    slug: effectivePreview,
+    type: "preview-board",
+    slug: board && BOARD_SLUG_PREFIX + board,
+    popover: lastPopover.current,
+    transition,
+    duration,
+    keepAlive,
   })
   usePreviewSync(iframeRef, { type: "preview-mode", mode: previewMode })
   const sentFocus = following ? focus : null

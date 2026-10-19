@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react"
+import { Activity, useEffect, useMemo, useRef, useState } from "react"
+import { flushSync } from "react-dom"
 import { getRouteApi, useRouterState } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
@@ -17,7 +18,10 @@ import {
   useAppliedDesignSystem,
   useMessage,
 } from "@/modules/studio/preset/iframe-sync"
-import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
+import type {
+  PrepareDesignSystem,
+  PreviewBoard,
+} from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
 import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
@@ -64,11 +68,64 @@ export function getExamplesPromise(slug: string) {
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 // Overscroll bounces the preview itself, not the whole studio.
 // Live previews (drags, hovers) skip transitions, or the preview trails them.
+// Board swaps animate their view transition from script (see swapBoard).
 const EMBEDDED_CSS = `
 html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 [data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 `
+
+// Dev tweaker exploration (the board's swap): trim to the pick once Mehdi
+// chooses. "slide" is the panel's drill-in: the old view goes at once and the
+// new one fades in from 24px off, so it animates the new content alone.
+// "slide-fade" and "crossfade" also fade the old view out, which takes a view
+// transition: its capture restyles the whole preview before anything moves.
+const fadeOut = [{ opacity: 1 }, { opacity: 0 }]
+const fadeIn = [{ opacity: 0 }, { opacity: 1 }]
+const slideFrom = (x: number) => [
+  { opacity: 0, transform: `translateX(${x}px)` },
+  { opacity: 1, transform: "none" },
+]
+
+/** Runs `update`, then animates `stage` (the preview's content) into it. */
+function swapBoard(
+  update: () => void,
+  stage: HTMLElement | null,
+  { transition, duration, popover }: PreviewBoard,
+  direction: "in" | "out" | "swap",
+) {
+  if (
+    transition === "none" ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
+    return flushSync(update)
+  // A popover's takeover and a board-to-board hop don't drill: they fade.
+  const drill = !popover && direction !== "swap"
+  const next =
+    drill && transition !== "crossfade"
+      ? slideFrom(direction === "in" ? 24 : -24)
+      : fadeIn
+  const timing = { duration, easing: "ease-out" }
+  if (transition === "slide" || !document.startViewTransition) {
+    flushSync(update)
+    stage?.animate(next, timing)
+    return
+  }
+  const run = document.startViewTransition(() => flushSync(update))
+  void run.ready.then(() => {
+    const root = document.documentElement
+    const fill = { ...timing, fill: "both" } as const
+    root.animate(fadeOut, {
+      ...fill,
+      pseudoElement: "::view-transition-old(root)",
+    })
+    root.animate(next, {
+      ...fill,
+      pseudoElement: "::view-transition-new(root)",
+    })
+  })
+}
 
 const route = getRouteApi("/preview/$slug")
 
@@ -112,8 +169,9 @@ function WarmIcons({ libraries }: { libraries: IconLibraryName[] }) {
 
 // While the next preview's loader runs, the router keeps the current one on
 // screen: dim it under a spinner so the switch shows at once.
-function PendingOverlay() {
-  const pending = useRouterState({ select: (s) => s.status === "pending" })
+function PendingOverlay({ loading }: { loading: boolean }) {
+  const routing = useRouterState({ select: (s) => s.status === "pending" })
+  const pending = routing || loading
   return (
     <div
       aria-hidden
@@ -176,6 +234,51 @@ export function PreviewPage() {
     void getExamplesPromise(next)
   })
 
+  // The board the panel is editing, over the user's preview. Kept alive, the
+  // preview stays mounted under it (hidden, updating at idle priority), so
+  // coming back doesn't render it from scratch.
+  const [board, setBoard] = useState<{
+    slug: string
+    Examples: React.ComponentType
+  } | null>(null)
+  const [boardLoading, setBoardLoading] = useState(false)
+  const [keepAlive, setKeepAlive] = useState(false)
+  const requested = useRef<string | null>(null)
+  const shownBoard = useRef<string | null>(null)
+  const previewScroll = useRef(0)
+  const stage = useRef<HTMLDivElement>(null)
+  useMessage("preview-board", (message) => {
+    const next = message.slug
+    setKeepAlive(message.keepAlive)
+    if (next === requested.current) return
+    requested.current = next
+    const show = (view: typeof board) => {
+      setBoardLoading(false)
+      const from = shownBoard.current
+      if ((view?.slug ?? null) === from) return
+      shownBoard.current = view?.slug ?? null
+      const direction = !from ? "in" : !view ? "out" : "swap"
+      if (!from) previewScroll.current = window.scrollY
+      swapBoard(
+        () => {
+          setBoard(view)
+          window.scrollTo(0, view ? 0 : previewScroll.current)
+        },
+        stage.current,
+        message,
+        direction,
+      )
+    }
+    if (!next) return show(null)
+    const promise = getExamplesPromise(next)
+    if (!promise) return show(null)
+    setBoardLoading(true)
+    void promise.then((mod) => {
+      if (requested.current === next)
+        show({ slug: next, Examples: mod.default })
+    })
+  })
+
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
@@ -222,8 +325,20 @@ export function PreviewPage() {
     [color, tokens, density],
   )
   const examples = useMemo(() => Examples && <Examples />, [Examples])
-  const content = slug === "overview" ? overview : examples
-  if (!content) {
+  const preview = slug === "overview" ? overview : examples
+  const boardContent = useMemo(
+    () => board && <board.Examples key={board.slug} />,
+    [board],
+  )
+  const content = keepAlive ? (
+    <>
+      <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+      {boardContent}
+    </>
+  ) : (
+    (boardContent ?? preview)
+  )
+  if (!preview && !boardContent) {
     return (
       <div className="flex h-screen items-center justify-center">
         <span className="text-fg-muted">Preview not found</span>
@@ -241,9 +356,11 @@ export function PreviewPage() {
       icons={designSystem.icons}
     >
       {chrome}
-      <BoardFocusProvider>{content}</BoardFocusProvider>
+      <BoardFocusProvider>
+        <div ref={stage}>{content}</div>
+      </BoardFocusProvider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
-      <PendingOverlay />
+      <PendingOverlay loading={boardLoading} />
     </DesignSystemProvider>
   )
 }

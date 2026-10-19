@@ -33,6 +33,18 @@ export interface PreviewFocus {
   popover: boolean
 }
 
+/** The board the panel puts over the user's preview, and how it swaps in. */
+export interface PreviewBoard {
+  /** The board's preview slug; null shows the user's preview again. */
+  slug: string | null
+  /** A popover's takeover, not a page's drill-in. */
+  popover: boolean
+  // Dev tweaker exploration: remove once a transition is picked.
+  transition: "none" | "slide" | "slide-fade" | "crossfade"
+  duration: number
+  keepAlive: boolean
+}
+
 /** A board's preview slug is this prefix and its panel page or chapter id. */
 export const BOARD_SLUG_PREFIX = "board-"
 
@@ -48,6 +60,7 @@ export type ParentToIframeMessage =
   | { type: "inspector-mode"; enabled: boolean }
   | ({ type: "preview-warm" } & PreviewAssets)
   | ({ type: "preview-focus" } & PreviewFocus)
+  | ({ type: "preview-board" } & PreviewBoard)
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
