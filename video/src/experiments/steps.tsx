@@ -12,7 +12,13 @@ import { Controls } from "@/components/showcase/controls"
 import { PRESETS } from "@/modules/presets"
 
 import { ease, progress } from "../lib/motion"
-import { preset, Theme, WarmIcons } from "../lib/theme"
+import {
+  facesReady,
+  preset,
+  PRESET_FONTS,
+  Theme,
+  WarmIcons,
+} from "../lib/theme"
 import { BEAT } from "../lib/timing"
 
 /* Step-by-step rebuild of the morph, one layer at a time.
@@ -621,7 +627,7 @@ function paintBox(
           img.data[i + 3] = clamp(0.5 - d, 0, 1) * alpha * 255
         }
       }
-      const layer = new OffscreenCanvas(bw, bh)
+      const layer = canvasOf(bw, bh)
       layer.getContext("2d")!.putImageData(img, 0, 0)
       ctx.drawImage(layer, bx, by)
     }
@@ -690,8 +696,12 @@ function inks(a: Ink, b: Ink, t: number) {
   }
 }
 
-let glyph: OffscreenCanvas | null = null
-let mix: OffscreenCanvas | null = null
+// Plain canvases, not OffscreenCanvas: Safari's offscreen canvases can't
+// see the page's web fonts and draw every label in a fallback face.
+const canvasOf = (width: number, height: number) =>
+  Object.assign(document.createElement("canvas"), { width, height })
+let glyph: HTMLCanvasElement | null = null
+let mix: HTMLCanvasElement | null = null
 
 /* A text run or icon cross-dissolves: each look's run is drawn in its own
    typeface (or icon set) into the blended slot, sized so both share the
@@ -710,8 +720,8 @@ function paintInk(
 ) {
   const [pa, pb] = [a ?? b!, b ?? a!]
   const { width: W, height: H } = ctx.canvas
-  mix ??= new OffscreenCanvas(W, H)
-  glyph ??= new OffscreenCanvas(8, 8)
+  mix ??= canvasOf(W, H)
+  glyph ??= canvasOf(8, 8)
   const m = mix.getContext("2d")!
   const g = glyph.getContext("2d")!
   const ink = inks(pa, pb, t)
@@ -909,8 +919,9 @@ export function CardStep() {
         raf = requestAnimationFrame(() => void attempt())
       else continueRender(handle)
     }
-    // Fonts change the card's height: measure once they have loaded.
-    void document.fonts.ready.then(() => {
+    // Fonts change the card's height: measure once every preset's are in,
+    // since a look is measured only once.
+    void facesReady(PRESET_FONTS).then(() => {
       raf = requestAnimationFrame(() => void attempt())
     })
     return () => {
