@@ -2,11 +2,11 @@ import { createStyles } from "@/lib/styles"
 
 import skeletonMeta from "./meta"
 
-const { useStyles, styles } = createStyles(skeletonMeta, {
+const { useStyles } = createStyles(skeletonMeta, {
   base: {
     slots: {
       root: [
-        "group/skeleton pointer-events-none select-none",
+        "pointer-events-none select-none",
 
         "**:data-[skeleton=text]:rounded-(--studio-skeleton-radius) **:data-[skeleton=text]:text-transparent",
         "**:data-[skeleton=block]:skeleton **:data-[skeleton=text]:skeleton",
@@ -77,6 +77,4 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
   },
 })
 
-export type SkeletonStyles = typeof styles
-
-export { styles as skeletonStyles, useStyles }
+export { useStyles }

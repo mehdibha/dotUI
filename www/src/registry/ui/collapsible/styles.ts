@@ -3,20 +3,13 @@ import { createStyles } from "@/lib/styles"
 import { EXPAND } from "../accordion/styles"
 import collapsibleMeta from "./meta"
 
-const { useStyles, styles } = createStyles(collapsibleMeta, {
+const { useStyles } = createStyles(collapsibleMeta, {
   base: {
     slots: {
       root: "group/collapsible",
       trigger: "cursor-interactive focus-reset focus-visible:focus-ring",
       panel: "h-(--disclosure-panel-height) overflow-clip",
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     motion: {
@@ -27,7 +20,5 @@ const { useStyles, styles } = createStyles(collapsibleMeta, {
     },
   },
 })
-
-export type CollapsibleStyles = typeof styles
 
 export { useStyles }

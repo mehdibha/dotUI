@@ -7,7 +7,7 @@ const toastTransition =
 const contentTransition =
   "transition-opacity duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(toastMeta, {
+const { useStyles } = createStyles(toastMeta, {
   base: {
     slots: {
       viewport: [
@@ -71,7 +71,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
         success: {},
         warning: {},
         danger: {},
-        error: {},
         info: {},
         loading: {},
       },
@@ -163,7 +162,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
             success: { icon: "text-fg-success" },
             warning: { icon: "text-fg-warning" },
             danger: { icon: "text-fg-danger" },
-            error: { icon: "text-fg-danger" },
             info: { icon: "text-fg-info" },
           },
         },
@@ -176,7 +174,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
             success: { icon: "text-success" },
             warning: { icon: "text-warning" },
             danger: { icon: "text-danger" },
-            error: { icon: "text-danger" },
             info: { icon: "text-info" },
           },
         },
@@ -197,11 +194,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
               description: "text-fg-on-warning",
             },
             danger: {
-              toast: "border-transparent bg-danger text-fg-on-danger",
-              content: "[--surface-bg:var(--color-danger)]",
-              description: "text-fg-on-danger",
-            },
-            error: {
               toast: "border-transparent bg-danger text-fg-on-danger",
               content: "[--surface-bg:var(--color-danger)]",
               description: "text-fg-on-danger",
@@ -234,11 +226,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
               content: "[--surface-bg:var(--color-danger-muted)]",
               description: "text-fg-danger",
             },
-            error: {
-              toast: "border-border-danger bg-danger-muted text-fg-danger",
-              content: "[--surface-bg:var(--color-danger-muted)]",
-              description: "text-fg-danger",
-            },
             info: {
               toast: "border-border-info bg-info-muted text-fg-info",
               content: "[--surface-bg:var(--color-info-muted)]",
@@ -250,7 +237,5 @@ const { useStyles, styles } = createStyles(toastMeta, {
     },
   },
 })
-
-export type ToastStyles = typeof styles
 
 export { useStyles }

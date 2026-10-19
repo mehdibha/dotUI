@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import markerMeta from "./meta"
 
-const { useStyles, styles } = createStyles(markerMeta, {
+const { useStyles } = createStyles(markerMeta, {
   base: {
     slots: {
       root: [
@@ -88,7 +88,5 @@ const { useStyles, styles } = createStyles(markerMeta, {
     },
   },
 })
-
-export type MarkerStyles = typeof styles
 
 export { useStyles }

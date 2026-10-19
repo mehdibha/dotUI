@@ -28,7 +28,7 @@ import tabsMeta from "./meta"
    for the design system. Segmented wears the segmented control's chip and
    track, pill a quiet toggle's selected look, line the indicator color. */
 
-const { useStyles, styles } = createStyles(tabsMeta, {
+const { useStyles } = createStyles(tabsMeta, {
   base: {
     slots: {
       root: "flex gap-2",
@@ -267,7 +267,5 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     },
   },
 })
-
-export type TabsStyles = typeof styles
 
 export { useStyles }

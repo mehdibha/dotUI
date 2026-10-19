@@ -17,7 +17,7 @@ import {
   Breadcrumbs,
 } from "@/registry/ui/breadcrumbs"
 
-export interface Crumb {
+interface Crumb {
   label: string
   /** Omit on the current page — the last crumb isn't a link. */
   href?: string

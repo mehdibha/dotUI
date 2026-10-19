@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import messageMeta from "./meta"
 
-const { useStyles, styles } = createStyles(messageMeta, {
+const { useStyles } = createStyles(messageMeta, {
   base: {
     slots: {
       group: "flex min-w-0 flex-col",
@@ -74,7 +74,5 @@ const { useStyles, styles } = createStyles(messageMeta, {
     },
   },
 })
-
-export type MessageStyles = typeof styles
 
 export { useStyles }

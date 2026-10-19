@@ -4,7 +4,13 @@ description: A labeled divider row — a date in a message list, a section label
 wip: true
 ---
 
-<Demo name="marker/demos/marker" />
+<InteractiveDemo
+  name="marker"
+  controls={[
+    { name: "label", type: "string", defaultValue: "Today" },
+    "variant",
+  ]}
+/>
 
 ## Installation
 

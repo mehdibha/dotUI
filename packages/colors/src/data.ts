@@ -20,9 +20,6 @@ export const STEPS = [
 ] as const
 export type StepName = (typeof STEPS)[number]
 
-/** Steps 1–8 ride the skeleton; 9–12 are solved (D1/D2). */
-export const SKELETON_STEPS = STEPS.slice(0, 8)
-
 /** D4 — light-mode CIELAB-D65 L* skeleton, jobs 1–8 (Radix chromatic median). */
 export const LIGHT_SKELETON = [99.0, 98.0, 95.5, 92.0, 88.5, 84.0, 77.5, 69.0]
 
@@ -65,7 +62,7 @@ export function darkTextChromaMult(hue: number): number {
  * the dark side (L below the seed); light side uses `lightSlope`. Positive =
  * toward violet (hue angle increases), negative = toward gold/orange.
  */
-export interface HueBand {
+interface HueBand {
   /** Seed-hue range [from, to) in degrees. */
   from: number
   to: number
@@ -157,9 +154,6 @@ export const BARS = {
   border600: 1.8,
 } as const
 
-/** D2 — solid text pole rule: white unless |Lc(white on 700)| < this. */
-export const SOLID_POLE_LC_THRESHOLD = 40
-
 /** D10 — status seed defaults (identity-preserving CVD search winners). */
 export const STATUS_SEEDS = {
   success: "#6ac48c",
@@ -184,8 +178,6 @@ export const CHART_GATES = {
   categoricalNormal: 0.09,
   categoricalCvd: 0.045,
   lstarRange: 25,
-  adjacentLstar: 8,
-  sequentialAdjacentDeltaEok: 0.02,
 } as const
 
 /** D9 — default dark app-background L* (never pure black; 'oled' opts into 0). */

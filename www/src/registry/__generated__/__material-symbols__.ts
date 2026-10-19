@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 166 icons the registry uses (not the entire library)
+// Only exports the 159 icons the registry uses (not the entire library)
 export {
 	VitalSigns as ActivityIcon,
 	Error as AlertCircleIcon,
@@ -12,7 +12,6 @@ export {
 	ArrowUpward as ArrowUpIcon,
 	ArrowOutward as ArrowUpRightIcon,
 	GraphicEq as AudioLinesIcon,
-	Verified as BadgeCheck,
 	Verified as BadgeCheckIcon,
 	Notifications as BellIcon,
 	CurrencyBitcoin as BitcoinIcon,
@@ -20,7 +19,6 @@ export {
 	FormatBold as BoldIcon,
 	Book as BookIcon,
 	Bookmark as BookmarkIcon,
-	MenuBook as BookOpen,
 	MenuBook as BookOpenIcon,
 	SmartToy as BotIcon,
 	InventoryTwo as BoxesIcon,
@@ -80,11 +78,9 @@ export {
 	Translate as LanguagesIcon,
 	Layers as LayersIcon,
 	GridView as LayoutGridIcon,
-	Support as LifeBuoy,
 	Link as LinkIcon,
 	FilterList as ListFilterIcon,
 	List as ListIcon,
-	ProgressActivity as Loader2Icon,
 	ProgressActivity as LoaderCircleIcon,
 	Logout as LogOutIcon,
 	MarkEmailRead as MailCheckIcon,
@@ -120,9 +116,7 @@ export {
 	Straighten as RulerIcon,
 	Save as SaveIcon,
 	ContentCut as ScissorsIcon,
-	Search,
 	Search as SearchIcon,
-	Send,
 	Send as SendIcon,
 	Dns as ServerIcon,
 	Tune as Settings2Icon,
@@ -160,7 +154,6 @@ export {
 	VolumeDown as Volume1Icon,
 	VolumeUp as Volume2Icon,
 	VolumeOff as VolumeOffIcon,
-	VolumeOff as VolumeX,
 	Wallet as WalletIcon,
 	Cancel as XCircleIcon,
 	Close as XIcon,

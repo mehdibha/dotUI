@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import treeMeta from "./meta"
 
-const { useStyles, styles } = createStyles(treeMeta, {
+const { useStyles } = createStyles(treeMeta, {
   base: {
     slots: {
       root: [
@@ -73,7 +73,5 @@ const { useStyles, styles } = createStyles(treeMeta, {
     },
   },
 })
-
-export type TreeStyles = typeof styles
 
 export { useStyles }
