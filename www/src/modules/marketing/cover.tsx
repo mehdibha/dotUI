@@ -6,67 +6,60 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { CardsCanvas } from "@/components/showcase/cards-grid"
 import { resolvePreset } from "@/modules/presets"
 
-// Four equal windows pinwheel around the logo's 2 × HALF_W by 2 × HALF_H clear
-// area, GUTTER apart; each reaches one edge of the 1280×640 canvas and runs
-// BLEED past it.
-const HALF_W = 180
-const HALF_H = 88
+type Side = "top" | "right" | "bottom" | "left"
+
+// The clear area around the logo is 2 × HALF_W by 2 × HALF_H; containers run
+// BLEED past the canvas edge.
+const BLEED = -40
+const HALF_W = 220
+const HALF_H = 112
 const GUTTER = 56
-const WIDTH = 640 - HALF_W
-const HEIGHT = 320 - HALF_H
-const BLEED = 40
-const ZOOM = 0.7
 
 const fromCenter = (px: number) => `calc(50% + ${px}px)`
 
-const SLOTS: {
-  preset: string
-  /** The window's top-left, from the canvas center. */
-  x: number
-  y: number
-  bleed: "left" | "top" | "right" | "bottom"
-  /** Where the window sits in the cards canvas, in canvas pixels. */
-  view: [number, number]
-}[] = [
+const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
   {
     preset: "origin",
-    x: -HALF_W - WIDTH,
-    y: HALF_H - GUTTER - HEIGHT,
-    bleed: "left",
-    view: [12, 220],
+    inset: {
+      top: BLEED,
+      left: BLEED,
+      right: fromCenter(HALF_W),
+      bottom: fromCenter(GUTTER - HALF_H),
+    },
   },
   {
     preset: "linear",
-    x: GUTTER - HALF_W,
-    y: -HALF_H - HEIGHT,
-    bleed: "top",
-    view: [740, 130],
+    inset: {
+      top: BLEED,
+      right: BLEED,
+      left: fromCenter(GUTTER - HALF_W),
+      bottom: fromCenter(HALF_H),
+    },
   },
   {
     preset: "spotify",
-    x: HALF_W,
-    y: GUTTER - HALF_H,
-    bleed: "right",
-    view: [900, 470],
+    inset: {
+      bottom: BLEED,
+      right: BLEED,
+      left: fromCenter(HALF_W),
+      top: fromCenter(GUTTER - HALF_H),
+    },
   },
   {
     preset: "airbnb",
-    x: HALF_W - GUTTER - WIDTH,
-    y: HALF_H,
-    bleed: "bottom",
-    view: [416, 1000],
+    inset: {
+      bottom: BLEED,
+      left: BLEED,
+      right: fromCenter(GUTTER - HALF_W),
+      top: fromCenter(HALF_H),
+    },
   },
 ]
 
-function PresetContainer({
-  preset,
-  x,
-  y,
-  bleed,
-  view,
-}: (typeof SLOTS)[number]) {
+function PresetContainer({ preset, inset }: (typeof SLOTS)[number]) {
   const designSystem = resolvePreset(preset)
-  const horizontal = bleed === "left" || bleed === "right"
+  // Bleeding sides pad back to the visible edge; the canvas pads itself.
+  const pad = (side: Side) => (inset[side] === BLEED ? -BLEED : 0)
   return (
     <DesignSystemProvider
       scoped
@@ -79,16 +72,15 @@ function PresetContainer({
     >
       <div
         style={{
-          left: fromCenter(bleed === "left" ? x - BLEED : x),
-          top: fromCenter(bleed === "top" ? y - BLEED : y),
-          width: horizontal ? WIDTH + BLEED : WIDTH,
-          height: horizontal ? HEIGHT : HEIGHT + BLEED,
-          paddingLeft: bleed === "left" ? BLEED : 0,
-          paddingTop: bleed === "top" ? BLEED : 0,
+          ...inset,
+          paddingTop: pad("top"),
+          paddingRight: pad("right"),
+          paddingBottom: pad("bottom"),
+          paddingLeft: pad("left"),
         }}
         className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg"
       >
-        <div style={{ zoom: ZOOM, marginLeft: -view[0], marginTop: -view[1] }}>
+        <div className="zoom-[0.7]">
           <CardsCanvas />
         </div>
       </div>
