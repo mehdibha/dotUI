@@ -4,12 +4,12 @@ import { Composition, registerRoot } from "remotion"
 
 import { Film } from "../film"
 import { FPS } from "../lib/timing"
-import { BackgroundStep, STEPS_FRAMES, STEPS_SIZE } from "./steps"
+import { CardSurfaceStep, STEPS_FRAMES, STEPS_SIZE } from "./steps"
 
 function Filmed() {
   return (
     <Film>
-      <BackgroundStep />
+      <CardSurfaceStep />
     </Film>
   )
 }
