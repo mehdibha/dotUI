@@ -1,8 +1,9 @@
-import { useLayoutEffect, useRef } from "react"
+import { useLayoutEffect, useMemo, useRef, useState } from "react"
 import {
   AbsoluteFill,
   continueRender,
   delayRender,
+  getRemotionEnvironment,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion"
@@ -537,7 +538,7 @@ function paintBox(
   ox: number,
   oy: number,
   scale: number,
-  rand: () => number,
+  rand: (() => number) | null,
 ) {
   const x0 = ox + lerp(a.x, b.x, t) * scale
   const y0 = oy + lerp(a.y, b.y, t) * scale
@@ -592,31 +593,38 @@ function paintBox(
       b.fill[3] ? b.fill : a.fill,
       t,
     )
-    const [bx, by] = [Math.floor(x0), Math.floor(y0)]
-    const [bw, bh] = [Math.ceil(x0 + w) - bx, Math.ceil(y0 + h) - by]
-    const img = new ImageData(bw, bh)
-    for (let y = 0; y < bh; y++) {
-      for (let x = 0; x < bw; x++) {
-        const d = roundRectDistance(
-          bx + x + 0.5,
-          by + y + 0.5,
-          x0 + w / 2,
-          y0 + h / 2,
-          w / 2,
-          h / 2,
-          radii,
-        )
-        const i = (y * bw + x) * 4
-        const n = rand()
-        img.data[i] = fill[0]! + n
-        img.data[i + 1] = fill[1]! + n
-        img.data[i + 2] = fill[2]! + n
-        img.data[i + 3] = clamp(0.5 - d, 0, 1) * alpha * 255
+    if (!rand) {
+      ctx.fillStyle = css(fill, alpha)
+      ctx.beginPath()
+      ctx.roundRect(x0, y0, w, h, radii)
+      ctx.fill()
+    } else {
+      const [bx, by] = [Math.floor(x0), Math.floor(y0)]
+      const [bw, bh] = [Math.ceil(x0 + w) - bx, Math.ceil(y0 + h) - by]
+      const img = new ImageData(bw, bh)
+      for (let y = 0; y < bh; y++) {
+        for (let x = 0; x < bw; x++) {
+          const d = roundRectDistance(
+            bx + x + 0.5,
+            by + y + 0.5,
+            x0 + w / 2,
+            y0 + h / 2,
+            w / 2,
+            h / 2,
+            radii,
+          )
+          const i = (y * bw + x) * 4
+          const n = rand()
+          img.data[i] = fill[0]! + n
+          img.data[i + 1] = fill[1]! + n
+          img.data[i + 2] = fill[2]! + n
+          img.data[i + 3] = clamp(0.5 - d, 0, 1) * alpha * 255
+        }
       }
+      const layer = new OffscreenCanvas(bw, bh)
+      layer.getContext("2d")!.putImageData(img, 0, 0)
+      ctx.drawImage(layer, bx, by)
     }
-    const layer = new OffscreenCanvas(bw, bh)
-    layer.getContext("2d")!.putImageData(img, 0, 0)
-    ctx.drawImage(layer, bx, by)
   }
 
   // The border is a ring between the outer shape and the inner one, so
@@ -806,18 +814,25 @@ function draw(
   scale: number,
 ) {
   const { width: W, height: H } = ctx.canvas
-  const rand = noise(frame + 1)
+  // Dithering is for the encoder's sake, and too slow to keep up live: the
+  // studio preview paints flat colors.
+  const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
 
   const page = mixOklab(a.page, b.page, t)
-  const img = ctx.createImageData(W, H)
-  for (let i = 0; i < img.data.length; i += 4) {
-    const n = rand()
-    img.data[i] = page[0]! + n
-    img.data[i + 1] = page[1]! + n
-    img.data[i + 2] = page[2]! + n
-    img.data[i + 3] = 255
+  if (!rand) {
+    ctx.fillStyle = css(page)
+    ctx.fillRect(0, 0, W, H)
+  } else {
+    const img = ctx.createImageData(W, H)
+    for (let i = 0; i < img.data.length; i += 4) {
+      const n = rand()
+      img.data[i] = page[0]! + n
+      img.data[i + 1] = page[1]! + n
+      img.data[i + 2] = page[2]! + n
+      img.data[i + 3] = 255
+    }
+    ctx.putImageData(img, 0, 0)
   }
-  ctx.putImageData(img, 0, 0)
 
   // The card stays centered; everything inside is placed from its corner.
   const ox = (W - lerp(a.card.width, b.card.width, t) * scale) / 2
@@ -851,14 +866,31 @@ function draw(
   }
 }
 
+const looks = new Map<string, Look>()
+
 export function CardStep() {
   const frame = useCurrentFrame()
   const { width, height } = useVideoConfig()
   const { from, to, t } = swapAt(frame)
   const canvas = useRef<HTMLCanvasElement>(null)
   const probes = useRef<Record<string, HTMLDivElement | null>>({})
-  const w = Math.round(width * STEPS_SIZE.scale)
-  const h = Math.round(height * STEPS_SIZE.scale)
+  // Draw at the render's pixel density: 1.6 for the final 1080p, less for
+  // drafts and the studio preview.
+  const dpr = window.devicePixelRatio
+  const w = Math.round(width * dpr)
+  const h = Math.round(height * dpr)
+
+  // A look never changes once its fonts are in, so measure each one once,
+  // then drop the probes: sixteen hidden cards would relayout on every frame
+  // of the live preview.
+  const [measured, setMeasured] = useState(looks.size === LOOKS.length)
+  const look = async (id: string) => {
+    const probe = probes.current[id]
+    if (looks.has(id) || !probe) return looks.get(id)
+    const measured = await measure(probe)
+    if (measured) looks.set(id, measured)
+    return measured
+  }
 
   useLayoutEffect(() => {
     const handle = delayRender("card step")
@@ -866,11 +898,12 @@ export function CardStep() {
     let tries = 0
     let alive = true
     const attempt = async () => {
-      const [pa, pb] = [probes.current[from], probes.current[to]]
-      const [a, b] = await Promise.all([pa && measure(pa), pb && measure(pb)])
+      await Promise.all(LOOKS.map(look))
+      const [a, b] = [looks.get(from), looks.get(to)]
       if (!alive) return
+      if (looks.size === LOOKS.length) setMeasured(true)
       if (a && b && canvas.current) {
-        draw(canvas.current.getContext("2d")!, a, b, t, frame, STEPS_SIZE.scale)
+        draw(canvas.current.getContext("2d")!, a, b, t, frame, dpr)
         continueRender(handle)
       } else if (tries++ < 600)
         raf = requestAnimationFrame(() => void attempt())
@@ -890,23 +923,28 @@ export function CardStep() {
   return (
     <AbsoluteFill>
       <WarmIcons />
-      {LOOKS.map((id) => (
-        <Theme key={id} state={preset(id)}>
-          <div
-            ref={(el) => {
-              probes.current[id] = el
-            }}
-            className="bg-bg"
-            style={{
-              position: "absolute",
-              width: cardWidth(id),
-              opacity: 0,
-            }}
-          >
-            <Controls />
-          </div>
-        </Theme>
-      ))}
+      {useMemo(
+        () =>
+          !measured &&
+          LOOKS.map((id) => (
+            <Theme key={id} state={preset(id)}>
+              <div
+                ref={(el) => {
+                  probes.current[id] = el
+                }}
+                className="bg-bg"
+                style={{
+                  position: "absolute",
+                  width: cardWidth(id),
+                  opacity: 0,
+                }}
+              >
+                <Controls />
+              </div>
+            </Theme>
+          )),
+        [measured],
+      )}
       <canvas
         ref={canvas}
         width={w}
