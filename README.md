@@ -1,6 +1,6 @@
 # dotUI
 
-**dotUI Studio — build your design system, then own it as code.**
+**The design system studio for humans and agents.**
 
 Compose your design system at [dotui.org/studio](https://dotui.org/studio) —
 colors, typography, icons, density, radius and per-component styles — preview

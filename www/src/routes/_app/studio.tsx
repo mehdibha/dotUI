@@ -53,7 +53,7 @@ export const Route = createFileRoute("/_app/studio")({
     middlewares: [stripSearchParams(searchDefaults)],
   },
   head: () => {
-    const title = `${siteConfig.name} Studio - Build your design system`
+    const title = `${siteConfig.name} Studio`
     const description =
       "Compose colors, typography, icons, density, radius and per-component styles, preview every change on real components, then export code you own."
     const url = `${siteConfig.url}/studio`

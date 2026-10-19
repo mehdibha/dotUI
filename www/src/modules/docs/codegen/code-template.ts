@@ -15,6 +15,7 @@
 //  - an open tag that exceeds PRINT_WIDTH breaks to one attribute per line
 //  - JSX text fill-wraps greedily at PRINT_WIDTH
 //  - when every child drops, the element self-closes
+//  - a repeated element renders once per count, each copy on its own lines
 //  - a single-line body inlines into `return …;`, otherwise wraps in parens
 //  - string literals pick the quote that needs fewer escapes (ties → double)
 // ============================================================================
@@ -70,6 +71,8 @@ export type ChildPart =
       /** `{months > 1 && <El/>}`: compare the control instead of testing truthiness. */
       compare?: Comparison
     }
+  /** From `{Array.from({ length: count }, () => <El />)}`: `count` copies of the element. */
+  | { part: "repeat"; el: TemplateElement; count: string }
 
 export type CompareOp = ">" | ">=" | "<" | "<=" | "===" | "!=="
 export interface Comparison {
@@ -118,7 +121,7 @@ export function collectTemplateHoles(
   }
   for (const child of el.children) {
     if (child.part === "text") holes.push(child)
-    else if (child.part === "element")
+    else if (child.part === "element" || child.part === "repeat")
       holes.push(...collectTemplateHoles(child.el))
   }
   return holes
@@ -356,6 +359,15 @@ function renderChild(
       return {
         type: "block",
         lines: renderElement(child.el, values, indent, icons),
+      }
+    }
+    case "repeat": {
+      const count = Math.trunc(Number(values[child.count]) || 0)
+      if (count <= 0) return null
+      const lines = renderElement(child.el, values, indent, icons)
+      return {
+        type: "block",
+        lines: Array.from({ length: count }, () => lines).flat(),
       }
     }
   }
