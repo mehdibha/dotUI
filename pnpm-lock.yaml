@@ -129,6 +129,12 @@ importers:
       css-loader:
         specifier: 7.1.4
         version: 7.1.4(@rspack/core@1.7.11(@swc/helpers@0.5.21))(webpack@5.105.0(lightningcss@1.33.0)(postcss@8.5.15))
+      hast-util-to-jsx-runtime:
+        specifier: ^2.3.6
+        version: 2.3.6
+      lucide-react:
+        specifier: ^1.16.0
+        version: 1.16.0(react@19.2.1)
       react:
         specifier: 'catalog:'
         version: 19.2.1
