@@ -31,7 +31,7 @@ for (const item of registryUi) {
    params keep the set finite. */
 const interned = new Map<string, Readonly<Record<string, string>>>()
 
-export function intern(
+function intern(
   component: string,
   selections: Record<string, string>,
 ): Readonly<Record<string, string>> {
@@ -85,7 +85,7 @@ export function resolveDesignSystem(state: Effective): DesignSystem {
   return {
     componentParams,
     tokens,
-    density: resolved.density ?? "default",
+    density: resolved.density,
     // Always explicit: the page's `base/colors.css` is the site chrome's
     // palette, not Origin's.
     color: resolved.color as ColorConfig,

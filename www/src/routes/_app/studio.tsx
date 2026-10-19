@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
-import { StudioHeaderActions } from "@/modules/studio/export"
+import { StudioHeaderActions } from "@/modules/studio/export/header-action"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select } from "@/modules/studio/selection"
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/_app/studio")({
     middlewares: [stripSearchParams(searchDefaults)],
   },
   head: () => {
-    const title = `${siteConfig.name} Studio - Build your design system`
+    const title = `${siteConfig.name} Studio`
     const description =
       "Compose colors, typography, icons, density, radius and per-component styles, preview every change on real components, then export code you own."
     const url = `${siteConfig.url}/studio`

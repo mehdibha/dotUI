@@ -3,11 +3,30 @@ title: Color Picker
 description: A color picker allows users to select a color from a palette or input a custom color value.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
+    href: https://react-aria.adobe.com/ColorPicker
 wip: true
 ---
 
-<InteractiveDemo name="color-picker" controls={[]} />
+<InteractiveDemo
+  name="color-picker"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Accent",
+    },
+    {
+      type: "boolean",
+      name: "showAlphaChannel",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "showFormatSelector",
+      defaultValue: true,
+    },
+  ]}
+/>
 
 ## Installation
 
@@ -17,7 +36,7 @@ npx shadcn@latest add @dotui/color-picker
 
 ## Usage
 
-Use color pickers to allow users to select a color from a palette or input a custom color value. The editing surface inside the popover is a [Color Editor](/docs/components/color-editor).
+The editing surface inside the popover is a [Color Editor](/docs/components/color-editor).
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -90,8 +109,6 @@ The popover is uncontrolled by default. Use `defaultOpen`, or `isOpen` with `onO
 </Examples>
 
 ## API Reference
-
-### ColorPicker
 
 <Reference name="color-picker" />
 

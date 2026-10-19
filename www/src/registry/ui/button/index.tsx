@@ -1,5 +1,5 @@
-import { Link as RouterLink } from "@tanstack/react-router"
-import type { ToOptions } from "@tanstack/react-router"
+import { routerLinkProps } from "@/lib/router-link"
+import type { RouterHref } from "@/lib/router-link"
 
 import { LinkButton as LinkButtonPrimitive } from "./base"
 import type { LinkButtonProps as BaseLinkButtonProps } from "./base"
@@ -9,43 +9,11 @@ export type { ButtonProps } from "./base"
 export { buttonStyles } from "./styles"
 
 type LinkButtonProps = Omit<BaseLinkButtonProps, "href"> & {
-  href?: string | ToOptions
+  href?: RouterHref
 }
 
 function LinkButton({ href, ...props }: LinkButtonProps) {
-  // href={undefined} still counts as a link prop to react-aria ('href' in props).
-  if (href === undefined) {
-    return <LinkButtonPrimitive {...props} />
-  }
-  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-  const hrefString = typeof href === "object" ? (href.to ?? "#") : href
-  return (
-    <LinkButtonPrimitive
-      href={hrefString}
-      render={(domProps) => {
-        if (!("href" in domProps)) {
-          return <span {...domProps} />
-        }
-        // isDisabled can come from context, so read it off the resolved DOM props.
-        if ((domProps as unknown as Record<string, unknown>)["data-disabled"]) {
-          return <span {...domProps} />
-        }
-        if (typeof href === "object") {
-          // RouterLink treats a literal `href` as authoritative and drops the ToOptions fields.
-          const { href: _domHref, ...routerDomProps } = domProps
-          return <RouterLink {...href} {...routerDomProps} />
-        }
-        if (href.startsWith("/")) {
-          const { href: _domHref, ...routerDomProps } = domProps
-          return (
-            <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />
-          )
-        }
-        return <a {...domProps} />
-      }}
-      {...props}
-    />
-  )
+  return <LinkButtonPrimitive {...routerLinkProps(href)} {...props} />
 }
 
 export type { LinkButtonProps }

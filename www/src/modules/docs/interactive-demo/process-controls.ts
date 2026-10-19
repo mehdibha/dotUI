@@ -3,9 +3,14 @@
  * Builds and enriches controls from API reference at build time.
  */
 
-import type { HighlighterGeneric } from "shiki"
-import { Node, Project, ScriptKind } from "ts-morph"
+import { Node } from "ts-morph"
 
+import {
+  evalExpression,
+  type Highlighter,
+  parseTsx,
+  releaseTsx,
+} from "../build-time"
 import type { ControlSelection } from "../codegen/source-overlay"
 import { loadApiReference } from "../references/loader"
 import type { PropDefinition, TType } from "../references/types"
@@ -16,7 +21,6 @@ import type {
   EnumControl,
   IconControl,
   NumberControl,
-  SerializableControl,
   StringControl,
 } from "./types"
 
@@ -35,10 +39,6 @@ export async function buildControlsFromReference(
 ): Promise<Control[]> {
   const reference = await loadApiReference(name)
 
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
-
   const controls: Control[] = []
 
   for (const input of controlInputs) {
@@ -56,6 +56,7 @@ export async function buildControlsFromReference(
     }
 
     const inferredControl = inferControlFromProp(propName, prop, overrides)
+    if (prop.required) inferredControl.required = true
     controls.push(inferredControl)
   }
 
@@ -74,8 +75,9 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
   return controls.map((c) => ({
     name: c.name,
     kind: c.type,
+    // A null default never matches a value, so the attr is never dropped.
     default:
-      c.type === "icon"
+      c.type === "icon" || c.required
         ? null
         : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
   }))
@@ -85,15 +87,9 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
 // Param-signature defaults (SourceFirst)
 // ============================================================================
 
-const ctrlProject = new Project({ useInMemoryFileSystem: true })
-let ctrlCounter = 0
-
 /** Read destructured param defaults from the demo's exported function signature. */
 export function readParamDefaults(source: string): Record<string, string> {
-  const sf = ctrlProject.createSourceFile(`ctl-${ctrlCounter++}.tsx`, source, {
-    scriptKind: ScriptKind.TSX,
-    overwrite: true,
-  })
+  const sf = parseTsx(source)
   try {
     const fn = sf
       .getFunctions()
@@ -108,7 +104,7 @@ export function readParamDefaults(source: string): Record<string, string> {
     }
     return out
   } finally {
-    ctrlProject.removeSourceFile(sf)
+    releaseTsx(sf)
   }
 }
 
@@ -129,8 +125,7 @@ function applyParamDefaults(
 function parseParamDefault(src: string, type: Control["type"]): unknown {
   let v: unknown
   try {
-    // oxlint-disable-next-line no-new-func -- build-time eval of a trusted authored literal
-    v = new Function(`"use strict"; return (${src});`)()
+    v = evalExpression(src)
   } catch {
     return undefined
   }
@@ -383,7 +378,6 @@ function buildControlWithOverrides(
       return {
         type: "icon",
         name,
-        alwaysShow: overrides.alwaysShow,
         defaultValue: (overrides as Partial<IconControl>).defaultValue,
       }
 
@@ -444,63 +438,28 @@ function parseDefaultValue(
 export async function enrichControlsForSerialization(
   name: string,
   controls: Control[],
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): Promise<SerializableControl[]> {
+  highlighter: Highlighter,
+): Promise<Control[]> {
   const reference = await loadApiReference(name)
 
-  if (!reference) {
-    throw new Error(`API reference not found for ${name}`)
-  }
-
-  const enrichedControls: SerializableControl[] = []
-
-  for (const control of controls) {
+  return controls.map((control) => {
     const prop = reference.props[control.name]
-
-    // Base serializable control without reference
-    const baseControl = {
+    // Props outside the reference (e.g. custom icon controls) carry none.
+    if (!prop) return control
+    return {
       ...control,
-      reference: undefined,
-    }
-
-    if (!prop) {
-      // Skip enrichment for props not in reference (e.g., custom icon controls)
-      enrichedControls.push(baseControl as SerializableControl)
-      continue
-    }
-
-    // Highlight type and default value as HTML strings
-    const typeHighlighted = highlightToHtml(prop.type, highlighter)
-    const defaultHighlighted = prop.default
-      ? highlightToHtml(prop.default, highlighter)
-      : undefined
-
-    const enrichedControl: SerializableControl = {
-      ...baseControl,
       reference: {
         description: prop.description,
-        typeHighlighted,
-        defaultHighlighted,
-        defaultRaw: prop.default,
-        required: prop.required,
+        typeHighlighted: highlightToHtml(prop.type, highlighter),
       },
-    } as SerializableControl
-
-    enrichedControls.push(enrichedControl)
-  }
-
-  return enrichedControls
+    }
+  })
 }
 
 /**
  * Highlight code to HTML string using shiki.
  */
-function highlightToHtml(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
+function highlightToHtml(code: string, highlighter: Highlighter): string {
   if (!code) return ""
 
   const html = highlighter.codeToHtml(code, {

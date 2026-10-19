@@ -13,6 +13,7 @@ import { memo, useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import { useFilter } from "react-aria-components/Autocomplete"
 
+import { useMedia } from "@/hooks/use-media"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Dialog } from "@/registry/ui/dialog"
@@ -26,8 +27,8 @@ import {
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { PanelPopover, PanelPopoverTitle, useDocked, useMedia } from "./rows"
-import type { Chapter, SearchRow } from "./state"
+import type { Chapter, SearchRow } from "./chapters"
+import { PanelPopover, PanelPopoverTitle, useDocked } from "./rows"
 
 interface Entry {
   id: string
@@ -55,19 +56,10 @@ const HELD: Partial<Record<string, string[][]>> = {
   brand: [["Keep exact"], ["Ink"], ["Vividness"]],
   neutralHue: [["Hue"], ["Tint"]],
   iconLibrary: [["Stroke"], ["Weight"]],
-  successSeed: [["Success"], ["Warning"], ["Danger"], ["Selection"]],
-  surfaceLayers: [
-    ["Layers"],
-    ["Edge"],
-    ["Shadow"],
-    ["Overlays", "Glass"],
-    ["App shell"],
-    ["Light page"],
-    ["Dark page"],
-  ],
+  density: [["Text size"]],
+  lightBg: [["Light page"], ["Dark page"]],
   focusStyle: [["Strength"], ["Width"], ["Color"]],
   focusInputStyle: [["Weight"], ["Ink"]],
-  selectionHighlight: [["Control text"]],
   buttonStyle: [["Seam", "Group seam", "Button group"]],
   dialogBackdrop: [["Strength"], ["Frost"]],
 }

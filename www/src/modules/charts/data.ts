@@ -30,85 +30,24 @@ export function getDemoComponent(key: string) {
   return demoComponents.get(key)
 }
 
-/** Package managers offered in the install section, in display order. */
-export const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn", "bun"] as const
-export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
-
-/** Family id from a demo key: `chart-bar/demos/multiple` → `chart-bar`. */
-export function familyOf(demoKey: string): string {
-  return demoKey.slice(0, demoKey.indexOf("/"))
-}
-
-/**
- * The registry items to install for a variant: its family, plus any other
- * registry UI components the variant's source imports (e.g. a stat-card demo
- * pulls in `card`). Matches the rewritten display source, so the paths are
- * the installed `@/ui/*` ones, not `@/registry/ui/*`.
- */
-export function installItems(demoKey: string, source: string | null): string[] {
-  const family = familyOf(demoKey)
-  if (!source) return [family]
-  const extras = new Set<string>()
-  for (const match of source.matchAll(/@\/ui\/([a-z0-9-]+)/g)) {
-    const name = match[1]
-    // Skip the chart core and sibling chart families — installing the family
-    // item already pulls those in.
-    if (name && name !== "chart" && !name.startsWith("chart-")) {
-      extras.add(name)
-    }
-  }
-  return [family, ...[...extras].sort()]
-}
-
-/** The shadcn install command per package manager for a set of registry items. */
-export function installCommands(
-  items: string[],
-): Record<PackageManager, string> {
-  const arg = `shadcn@latest add ${items.map((i) => `@dotui/${i}`).join(" ")}`
-  return {
-    npm: `npx ${arg}`,
-    pnpm: `pnpm dlx ${arg}`,
-    yarn: `yarn dlx ${arg}`,
-    bun: `bunx ${arg}`,
-  }
-}
-
 // Raw demo sources, lazily loaded per variant — only the opened variant's
-// source is fetched. Keyed by file path; matched to a demo key by suffix.
+// source is fetched.
 const rawDemoSources = import.meta.glob(
   "../../registry/ui/chart-*/demos/*.tsx",
   { query: "?raw", import: "default" },
 ) as Record<string, () => Promise<string>>
 
-/**
- * Rewrite a demo's source the way the docs display it: registry imports become
- * the installed `@/*` paths, the default export is unwrapped, and tabs become
- * spaces. (Mirrors the docs transformer's full-source output; the ts-morph
- * preview pass it also runs is build-only and unneeded here.)
- */
-function toDisplaySource(raw: string): string {
-  return raw
-    .replace(/@\/registry\/ui\//g, "@/components/ui/")
-    .replace(/@\/registry\//g, "@/")
-    .replace("export default function", "export function")
-    .replace(/\t/g, "  ")
-    .trim()
-}
-
 const sourceCache = new Map<string, Promise<string | null>>()
 
 /**
- * A cached promise of a variant's display source, or `null` if the file is
+ * A cached promise of a variant's raw source, or `null` if the file is
  * missing. Cached so React's `use()` gets a stable promise across renders.
  */
 export function demoSource(demoKey: string): Promise<string | null> {
   let promise = sourceCache.get(demoKey)
   if (!promise) {
-    const suffix = `${demoKey}.tsx`
-    const entry = Object.entries(rawDemoSources).find(([p]) =>
-      p.endsWith(suffix),
-    )
-    promise = entry ? entry[1]().then(toDisplaySource) : Promise.resolve(null)
+    const load = rawDemoSources[`../../registry/ui/${demoKey}.tsx`]
+    promise = load ? load() : Promise.resolve(null)
     sourceCache.set(demoKey, promise)
   }
   return promise

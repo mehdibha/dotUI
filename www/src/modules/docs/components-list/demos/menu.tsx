@@ -1,6 +1,6 @@
 import { MenuIcon } from "@/registry/__generated__/icons"
 import { Button } from "@/registry/ui/button"
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
 
 import { DemoState } from "../demo-state"
 import { Surface } from "../overlay"
@@ -12,7 +12,7 @@ export function MenuDemo() {
     <DemoState
       states={{
         "[data-button]": ["data-pressed"],
-        "[data-listbox-item]:first-of-type": [
+        "[data-menu-item]:first-of-type": [
           "data-hovered",
           "data-focused",
           "data-focus-visible",
@@ -23,15 +23,12 @@ export function MenuDemo() {
         <Button aria-label="Menu" isIconOnly>
           <MenuIcon />
         </Button>
-        <Surface variant="menu" className="w-44 p-0">
-          <ListBox
-            aria-label="Menu"
-            className="border-0 bg-transparent shadow-none"
-          >
-            <ListBoxItem id="account">Account settings</ListBoxItem>
-            <ListBoxItem id="team">Create team</ListBoxItem>
-            <ListBoxItem id="logout">Log out</ListBoxItem>
-          </ListBox>
+        <Surface variant="menu" className="w-44">
+          <MenuContent aria-label="Menu">
+            <MenuItem id="account">Account settings</MenuItem>
+            <MenuItem id="team">Create team</MenuItem>
+            <MenuItem id="logout">Log out</MenuItem>
+          </MenuContent>
         </Surface>
       </div>
     </DemoState>

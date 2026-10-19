@@ -14,7 +14,13 @@ export interface DialogProps extends React.ComponentProps<
  */
 export interface DialogContentProps extends React.ComponentProps<
   typeof DialogPrimitives.Dialog
-> {}
+> {
+  /**
+   * Whether to render a close button in the corner of the dialog.
+   * @default false
+   */
+  showCloseButton?: boolean
+}
 
 /**
  * The header of the dialog. Contains the title and description.

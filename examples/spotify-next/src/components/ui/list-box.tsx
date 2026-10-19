@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import type React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ListBoxPrimitive from "react-aria-components/ListBox";
@@ -49,13 +48,10 @@ const ListBox = <T extends object>({
   children,
   ...props
 }: ListBoxProps<T>) => {
-  const standalone = !use(ListBoxPrimitive.ListBoxContext);
-
   return (
     <ListBoxPrimitive.ListBox
       data-listbox=""
       className={composeRenderProps(className, (cn) => root({ className: cn }))}
-      data-standalone={standalone ?? undefined}
       {...props}
     >
       <ListBoxPrimitive.Collection items={items}>

@@ -4,15 +4,13 @@ import { defineChapter } from "./core/types"
 import type { Follow } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { AxisSchema, ChapterSchema } from "./schema"
+import type { AxisSchema } from "./schema"
 
 type Bezier = [number, number, number, number]
 
 type Curve =
   | { type: "easing"; ease: Bezier }
   | { type: "physics"; stiffness: number; damping: number; mass: number }
-
-/* --------------------------------- Springs -------------------------------- */
 
 type Spring = Extract<Curve, { type: "physics" }>
 
@@ -78,8 +76,6 @@ function springLinear(spring: Spring, ms: number): string {
   return `linear(${["0", ...stops, "1"].join(", ")})`
 }
 
-/* ---------------------------------- CSS ----------------------------------- */
-
 export function bezierCss([x1, y1, x2, y2]: Bezier): string {
   return x1 === 0 && y1 === 0 && x2 === 1 && y2 === 1
     ? "linear"
@@ -92,8 +88,6 @@ export function legTiming({ ms, curve }: Leg) {
   const settle = springSettleMs(curve)
   return { ease: springLinear(curve, settle), ms: settle }
 }
-
-/* ---------------------------------- Roles ---------------------------------- */
 
 interface Leg {
   ms: number
@@ -215,8 +209,6 @@ const TABLES: Record<string, MotionTable> = {
 
 export const tableOf = (motion: string) => TABLES[motion] ?? STANDARD
 
-/* ---------------------------------- Members -------------------------------- */
-
 // `--studio-<id>-state-*`; radio rides checkbox's, toggle-button button's, token-field input's.
 const STATE_MEMBERS: Record<string, Role> = {
   button: "micro",
@@ -281,8 +273,6 @@ export function motionVars(
   return vars
 }
 
-/* ---------------------------------- Chapter -------------------------------- */
-
 export const MOTION_VALUES = ["standard", "smooth", "expressive"] as const
 
 /** A component's own Motion can also stop it. */
@@ -333,56 +323,50 @@ const KEY_OF: Record<string, ComponentMotionKey> = Object.fromEntries(
   ),
 )
 
-export const MOTION_DEFAULTS = {
-  motion: "standard",
-  popoverEntrance: "zoom",
-  tooltipEntrance: "zoom",
-  ...(Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
-  ) as Record<ComponentMotionKey, string>),
-}
-
-export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
-  motion: oneOf(MOTION_VALUES),
-  popoverEntrance: oneOf(ENTRANCE_VALUES),
-  tooltipEntrance: oneOf(ENTRANCE_VALUES),
-  ...(Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(COMPONENT_MOTION_VALUES)]),
-  ) as Record<ComponentMotionKey, AxisSchema>),
-}
-
 const SAME_AS_MOTION: readonly Follow[] = [
   { kind: "same", id: "same", from: "motion" },
 ]
 
 const STANDARD_VARS = motionVars(() => STANDARD)
 
-export function resolveMotion(state: Effective): Resolved {
-  const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
-  const vars = motionVars((member) => tableOf(motionOf(member)))
-  const off = (member: string) => motionOf(member) === "none"
-  const entrance = (member: string, value: string) =>
-    off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
-  return {
-    // Only what leaves Standard: Origin writes nothing.
-    tokens: Object.fromEntries(
-      Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
-    ),
-    params: {
-      popover: { motion: entrance("popover", state.popoverEntrance) },
-      tooltip: { motion: entrance("tooltip", state.tooltipEntrance) },
-      toast: { motion: off("toast") ? "none" : "slide" },
-      accordion: { motion: off("accordion") ? "none" : "expand" },
-      collapsible: { motion: off("collapsible") ? "none" : "expand" },
-    },
-  }
-}
-
 export const chapter = defineChapter({
   id: "motion",
-  defaults: MOTION_DEFAULTS,
-  schema: MOTION_SCHEMA,
-  resolve: resolveMotion,
+  defaults: {
+    motion: "standard",
+    popoverEntrance: "zoom",
+    tooltipEntrance: "zoom",
+    ...(Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
+    ) as Record<ComponentMotionKey, string>),
+  },
+  schema: {
+    motion: oneOf(MOTION_VALUES),
+    popoverEntrance: oneOf(ENTRANCE_VALUES),
+    tooltipEntrance: oneOf(ENTRANCE_VALUES),
+    ...(Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(COMPONENT_MOTION_VALUES)]),
+    ) as Record<ComponentMotionKey, AxisSchema>),
+  },
+  resolve(state: Effective): Resolved {
+    const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
+    const vars = motionVars((member) => tableOf(motionOf(member)))
+    const off = (member: string) => motionOf(member) === "none"
+    const entrance = (member: string, value: string) =>
+      off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
+    return {
+      // Only what leaves Standard: Origin writes nothing.
+      tokens: Object.fromEntries(
+        Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
+      ),
+      params: {
+        popover: { motion: entrance("popover", state.popoverEntrance) },
+        tooltip: { motion: entrance("tooltip", state.tooltipEntrance) },
+        toast: { motion: off("toast") ? "none" : "slide" },
+        accordion: { motion: off("accordion") ? "none" : "expand" },
+        collapsible: { motion: off("collapsible") ? "none" : "expand" },
+      },
+    }
+  },
   follows: Object.fromEntries(
     COMPONENT_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
   ),

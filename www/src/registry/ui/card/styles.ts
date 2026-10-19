@@ -7,6 +7,18 @@ import cardMeta from "./meta"
 export const CONTAINER_SURFACE =
   "border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]"
 
+const roomy = {
+  slots: {
+    root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
+    header:
+      "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+    description: "text-sm",
+    content: "px-6 group-data-[size=sm]/card:px-4",
+    footer:
+      "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
+  },
+}
+
 const { useStyles, styles } = createStyles(cardMeta, {
   base: {
     slots: {
@@ -47,39 +59,9 @@ const { useStyles, styles } = createStyles(cardMeta, {
           "px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
       },
     },
-    comfortable: {
-      slots: {
-        root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
-        header:
-          "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-        description: "text-sm",
-        content: "px-6 group-data-[size=sm]/card:px-4",
-        footer:
-          "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
-      },
-    },
-    spacious: {
-      slots: {
-        root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
-        header:
-          "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-        description: "text-sm",
-        content: "px-6 group-data-[size=sm]/card:px-4",
-        footer:
-          "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
-      },
-    },
-    touch: {
-      slots: {
-        root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
-        header:
-          "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-        description: "text-sm",
-        content: "px-6 group-data-[size=sm]/card:px-4",
-        footer:
-          "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
   params: {
     // The band runs to the card's top edge, so the card drops its top inset

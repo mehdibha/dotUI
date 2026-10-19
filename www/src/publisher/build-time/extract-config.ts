@@ -45,8 +45,6 @@ function registryUiDirOf(stylesTsPath: string): string {
   return path.dirname(path.dirname(stylesTsPath))
 }
 
-/* ---------------------------- expression → value ---------------------------- */
-
 function unwrap(expr: Expression): Expression {
   if (
     expr.isKind(SyntaxKind.AsExpression) ||
@@ -168,8 +166,6 @@ function propertyKey(nameNode: Node, filePath: string): string {
     `[publisher/extract] unsupported property key ${nameNode.getKindName()} in ${filePath}`,
   )
 }
-
-/* ------------------------- runtime-helper resolution ------------------------- */
 
 /** A module-level `const`: in this file (input's `compactText`), or exported
  *  by a relative import — a shared recipe (menu's `LIST_ROWS`,
@@ -365,8 +361,6 @@ function importOf(name: string, ctx: ExtractCtx) {
     `[publisher/extract] no import found for "${name}" in ${ctx.filePath}`,
   )
 }
-
-/* ---------------------------- entry ---------------------------- */
 
 /**
  * Find the `createStyles(meta, <config>)` call in `sourceFile` and return the

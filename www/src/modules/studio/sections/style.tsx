@@ -9,7 +9,7 @@ import { FINISH_KEYS, pickStyle, resetToStyle } from "../axes/style"
 import type { Style } from "../axes/style"
 import { FINISHES, STYLE_OPTIONS } from "../axes/style.meta"
 import { DialAction, DialSegmented, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
 function StyleRow() {
