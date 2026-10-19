@@ -7,23 +7,19 @@ import { componentsData } from "@/modules/docs/components-list/components-data"
 import { ease, keys, lerp, progress } from "../lib/motion"
 import { preset, Theme, WarmIcons } from "../lib/theme"
 import { BAR, BEAT } from "../lib/timing"
-import { STEPS_SIZE } from "./steps"
+import { Caption, H, W, YOURS } from "./shared"
 
 /* Every component: the docs components page (www docs/components-list), its
    cards wearing the design system just made while the docs chrome keeps the
-   site theme. The camera holds on the top, glides down the whole page,
-   faster then slower, and pushes into a card. Laid out by hand at the page's
-   own sizes so only the rows in view mount. */
-
-/** The look the cards wear: the one made in the Create scene. */
-const LOOK = "linear"
+   site theme. The camera starts at the foot of the page, glides up the whole
+   of it, faster then slower, lands on Button at the top and pushes into it.
+   Laid out by hand at the page's own sizes so only the rows in view mount. */
 
 export const CATALOG_FRAMES = BAR * 2
 
 /** No charts: their colors are being rewritten. */
 const CATEGORIES = componentsData.filter((c) => c.slug !== "charts")
 
-const { width: W, height: H } = STEPS_SIZE
 const PAGE_X = 50
 const PAGE_W = W - 2 * PAGE_X
 const COLS = 3
@@ -68,7 +64,7 @@ PAGE_H += 64
     (above the line). */
 const TARGET = PLACED.find(
   (p): p is Extract<Placed, { kind: "card" }> =>
-    p.kind === "card" && p.info.slug === "popover",
+    p.kind === "card" && p.info.slug === "button",
 )!
 const LAND_AT = H * 0.4
 
@@ -76,7 +72,7 @@ const LAND_AT = H * 0.4
 function camera(frame: number) {
   const land = TARGET.y + STAGE_H / 2 - LAND_AT
   const glide = progress(frame, BEAT, BEAT * 5.5, GLIDE)
-  const y = lerp(0, land, glide)
+  const y = lerp(PAGE_H - H, land, glide)
   const zoom = keys(
     frame,
     [
@@ -100,7 +96,7 @@ function Card({ info }: { info: Extract<Placed, { kind: "card" }>["info"] }) {
   )
   return (
     <div className="flex flex-col items-center gap-3">
-      <Theme state={preset(LOOK)}>
+      <Theme state={preset(YOURS)}>
         <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg">
           {info.fill ? (
             <div inert className="absolute inset-0">
@@ -131,37 +127,6 @@ function Card({ info }: { info: Extract<Placed, { kind: "card" }>["info"] }) {
   )
 }
 
-const LINE = "Every component."
-const WORD_EVERY = 6
-const WORD_FOR = 18
-
-function Line({ frame }: { frame: number }) {
-  return (
-    <div
-      className="font-semibold text-fg"
-      style={{ fontSize: 56, letterSpacing: "-0.035em", lineHeight: 1.1 }}
-    >
-      {LINE.split(" ").map((word, i) => {
-        const p = progress(frame, i * WORD_EVERY, WORD_FOR, ease.out)
-        return (
-          <span
-            key={i}
-            style={{
-              display: "inline-block",
-              marginRight: "0.25em",
-              opacity: p,
-              transform: `translateY(${lerp(0.3, 0, p)}em)`,
-              filter: `blur(${lerp(12, 0, p)}px)`,
-            }}
-          >
-            {word}
-          </span>
-        )
-      })}
-    </div>
-  )
-}
-
 export function Catalog() {
   const frame = useCurrentFrame()
   const { y, zoom } = camera(frame)
@@ -170,7 +135,6 @@ export function Catalog() {
   const oy = y + LAND_AT
   const top = y - H / 2
   const bottom = y + H + H / 2
-  const line = frame - BEAT * 2
   return (
     <AbsoluteFill>
       <WarmIcons />
@@ -222,20 +186,7 @@ export function Catalog() {
               )
             })}
           </div>
-          {line >= 0 && (
-            <>
-              <div
-                className="absolute inset-x-0 bottom-0 bg-linear-to-b from-bg/0 to-bg/95"
-                style={{
-                  height: 300,
-                  opacity: progress(line, 0, WORD_FOR, ease.out),
-                }}
-              />
-              <div className="absolute" style={{ left: PAGE_X, bottom: 48 }}>
-                <Line frame={line} />
-              </div>
-            </>
-          )}
+          <Caption frame={frame} lines={[[BEAT * 2, "Every component."]]} />
         </AbsoluteFill>
       </Theme>
     </AbsoluteFill>
