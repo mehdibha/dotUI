@@ -14,6 +14,8 @@ const BLEED = -40
 const HALF_W = 220
 const HALF_H = 112
 const GUTTER = 56
+// Where the top and bottom rows split in two, from the center.
+const SPLIT = 360
 
 const fromCenter = (px: number) => `calc(50% + ${px}px)`
 
@@ -31,8 +33,17 @@ const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
     preset: "linear",
     inset: {
       top: BLEED,
-      right: BLEED,
       left: fromCenter(GUTTER - HALF_W),
+      right: fromCenter(GUTTER - SPLIT),
+      bottom: fromCenter(HALF_H),
+    },
+  },
+  {
+    preset: "airbnb",
+    inset: {
+      top: BLEED,
+      right: BLEED,
+      left: fromCenter(SPLIT),
       bottom: fromCenter(HALF_H),
     },
   },
@@ -46,11 +57,20 @@ const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
     },
   },
   {
-    preset: "airbnb",
+    preset: "claude",
+    inset: {
+      bottom: BLEED,
+      left: fromCenter(GUTTER - SPLIT),
+      right: fromCenter(GUTTER - HALF_W),
+      top: fromCenter(HALF_H),
+    },
+  },
+  {
+    preset: "carbon",
     inset: {
       bottom: BLEED,
       left: BLEED,
-      right: fromCenter(GUTTER - HALF_W),
+      right: fromCenter(SPLIT),
       top: fromCenter(HALF_H),
     },
   },
