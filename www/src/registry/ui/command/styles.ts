@@ -5,7 +5,7 @@ import commandMeta from "./meta"
 const HAIRLINE_FIELD =
   "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0 **:data-search-field:border-b"
 
-const { useStyles, styles } = createStyles(commandMeta, {
+const { useStyles } = createStyles(commandMeta, {
   base: {
     base: [
       "group/command flex w-full flex-col gap-1 text-fg",
@@ -87,7 +87,5 @@ const { useStyles, styles } = createStyles(commandMeta, {
     },
   },
 })
-
-export type CommandStyles = typeof styles
 
 export { useStyles }

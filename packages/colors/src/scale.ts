@@ -29,7 +29,6 @@ import {
   maxChroma,
   type Oklch,
   solveLstar,
-  yFromLstar,
 } from "./space"
 
 export type Mode = "light" | "dark"
@@ -351,6 +350,3 @@ export function transposeSkeleton(
     out[1] = out[0]! + minFirstGap
   return out
 }
-
-/** Convenience for guarantees relying on the Y bridge. */
-export const bgYFromLstar = yFromLstar

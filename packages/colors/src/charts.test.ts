@@ -1,9 +1,6 @@
 /**
  * Chart palettes (SPEC D11): categorical passes its CVD gate in both modes
- * and keeps its series clear of muddy hue-lightness pairings; sequential is
- * strictly L*-monotonic away from the mode's surface with perceptible
- * neighbor steps; diverging pins its midpoint to the surface neutral and
- * deepens monotonically outward.
+ * and keeps its series clear of muddy hue-lightness pairings.
  */
 
 import { describe, expect, test } from "vitest"
@@ -11,18 +8,11 @@ import { describe, expect, test } from "vitest"
 import {
   categoricalGateReport,
   categoricalPalette,
-  createTheme,
-  cusp,
-  deltaEok,
-  divergingPalette,
-  lstarOf,
-  type Oklch,
-  sequentialPalette,
-  toHex,
   tonalCategoricalPalette,
   tonalGateReport,
-  toOklch,
-} from "./index"
+} from "./charts"
+import { createTheme, lstarOf, type Oklch, toOklch } from "./index"
+import { cusp } from "./space"
 
 const ACCENTS: Oklch[] = [
   { l: 0.63, c: 0.13, h: 251 },
@@ -56,39 +46,6 @@ describe.each(ACCENTS)("accent oklch($l $c $h)", (accent) => {
         ).toBeGreaterThanOrEqual(0.38)
       }
     }
-  })
-
-  test("sequential palette is strictly monotonic away from the surface", () => {
-    for (const mode of ["light", "dark"] as const) {
-      const palette = sequentialPalette(accent.h, 7, mode)
-      const lstars = palette.map(lstarOf)
-      for (let i = 1; i < palette.length; i++) {
-        if (mode === "light")
-          expect(lstars[i]!, `stop ${i}`).toBeLessThan(lstars[i - 1]!)
-        else expect(lstars[i]!, `stop ${i}`).toBeGreaterThan(lstars[i - 1]!)
-        expect(
-          deltaEok(palette[i]!, palette[i - 1]!),
-          `stop ${i}`,
-        ).toBeGreaterThanOrEqual(0.02)
-      }
-    }
-  })
-
-  test("diverging palette pins the neutral midpoint, arms deepen outward", () => {
-    const theme = createTheme("#438cd6")
-    const neutral100 = toOklch(theme.light.scales.neutral!["100"])
-    const palette = divergingPalette(accent.h, neutral100)
-    expect(palette).toHaveLength(7)
-
-    const mid = 3
-    expect(toHex(palette[mid]!)).toBe(toHex(neutral100))
-
-    const lstars = palette.map(lstarOf)
-    // Left arm: L* rises toward the midpoint; right arm: falls away from it.
-    for (let i = 0; i < mid; i++)
-      expect(lstars[i]!, `left stop ${i}`).toBeLessThan(lstars[i + 1]!)
-    for (let i = mid; i < palette.length - 1; i++)
-      expect(lstars[i]!, `right stop ${i}`).toBeGreaterThan(lstars[i + 1]!)
   })
 })
 

@@ -1,8 +1,6 @@
 /**
  * Chart palettes (D11): generated per mode from the theme's seeds, never
- * aliased. Categorical is hue-spread + L*-staggered and CVD-gated; sequential
- * is strictly L*-monotonic away from the mode's surface; diverging pins its
- * midpoint to the surface neutral.
+ * aliased. Categorical is hue-spread + L*-staggered and CVD-gated.
  */
 
 import { CHART_GATES } from "./data"
@@ -22,12 +20,6 @@ import {
   type Oklch,
   solveLstar,
 } from "./space"
-
-export interface ChartPalettes {
-  categorical: Oklch[]
-  sequential: Oklch[]
-  diverging: Oklch[]
-}
 
 /**
  * L* ladders for categorical series: adjacent gaps ≥ 8 by construction,
@@ -51,7 +43,7 @@ const TONAL_LSTAR: Record<Mode, number[]> = {
 }
 
 /** Minimum adjacent L* separation for a tonal palette (its only encoding). */
-export const TONAL_MIN_ADJACENT_LSTAR = 6
+const TONAL_MIN_ADJACENT_LSTAR = 6
 
 /**
  * The default categorical palette: tonal shades of the brand accent
@@ -296,59 +288,6 @@ export function categoricalPalette(
   chroma: number = CATEGORICAL_CHROMA.vivid,
 ): Oklch[] {
   return categoricalPalettes(accent, n, chroma)[mode]
-}
-
-/**
- * Sequential: `n` stops, strictly L*-monotonic from the mode's surface end
- * toward the deep accent (light: near-white → deep; dark: near-black → bright).
- */
-export function sequentialPalette(
-  accentHue: number,
-  n = 7,
-  mode: Mode = "light",
-): Oklch[] {
-  const peak = cusp(accentHue)
-  const [from, to] = mode === "light" ? [95, 25] : [12, 82]
-  const out: Oklch[] = []
-  for (let i = 0; i < n; i++) {
-    const t = i / (n - 1)
-    const lstar = from + (to - from) * t
-    // Chroma rises away from the surface end, bounded by the gamut.
-    const c = peak.c * (0.15 + 0.75 * t)
-    out.push(
-      solveLstar(
-        lstar,
-        (l) => Math.min(c, maxChroma(l, accentHue)),
-        () => accentHue,
-      ),
-    )
-  }
-  return out
-}
-
-/** Diverging arms `[opposite, accent]`, deepening away from the midpoint. */
-export function divergingArms(
-  accentHue: number,
-  armLength = 3,
-  mode: Mode = "light",
-): [Oklch[], Oklch[]] {
-  const opposite = (accentHue + 180) % 360
-  const arm = (hue: number) =>
-    sequentialPalette(hue, armLength + 1, mode)
-      .slice(1) // drop the near-surface stop; the midpoint takes its place
-      .reverse()
-  return [arm(opposite), arm(accentHue).reverse()]
-}
-
-/** Diverging: two sequential arms around the surface neutral midpoint. */
-export function divergingPalette(
-  accentHue: number,
-  neutralMidpoint: Oklch,
-  armLength = 3,
-  mode: Mode = "light",
-): Oklch[] {
-  const [left, right] = divergingArms(accentHue, armLength, mode)
-  return [...left, fitSrgb(neutralMidpoint), ...right]
 }
 
 /** D11 gate report for a categorical palette. */

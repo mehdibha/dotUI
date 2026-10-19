@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { SpecimenPage } from "@/modules/preset-lab/page"
 
-export interface SpecimenSearch {
+interface SpecimenSearch {
   preset?: string
   mode?: "light" | "dark"
   sheet?: string

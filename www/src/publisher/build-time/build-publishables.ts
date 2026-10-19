@@ -29,7 +29,7 @@ interface BuildPublishablesOptions {
   items: RegistryItem[]
 }
 
-export interface BuildPublishablesResult {
+interface BuildPublishablesResult {
   /** Every file written, including the index and the aggregate files. */
   written: string[]
   /** Item names that got a publishable. */

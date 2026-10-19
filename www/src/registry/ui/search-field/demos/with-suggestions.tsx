@@ -39,7 +39,6 @@ export default function Demo() {
         ref={triggerRef}
         aria-label="Search cities"
         onBlur={(e) => {
-          // Moving through suggestions blurs the input virtually, toward the popover.
           if (!popoverRef.current?.contains(e.relatedTarget as Node)) {
             setOpen(false)
           }

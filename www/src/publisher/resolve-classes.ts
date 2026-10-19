@@ -27,7 +27,7 @@ import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 export const STUDIO_VAR_PREFIX = "--studio-"
 
 /** Studio var name → its fully resolved CSS value. */
-export type StudioVars = ReadonlyMap<string, string>
+type StudioVars = ReadonlyMap<string, string>
 
 /** Preset tokens may name a token bare (`--radius-md`); CSS wants `var()`. */
 function asCssValue(value: string): string {

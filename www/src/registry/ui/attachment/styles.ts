@@ -35,7 +35,7 @@ const roomy = {
   },
 }
 
-const { useStyles, styles } = createStyles(attachmentMeta, {
+const { useStyles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
@@ -167,7 +167,5 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
     touch: roomy,
   },
 })
-
-export type AttachmentStyles = typeof styles
 
 export { useStyles }

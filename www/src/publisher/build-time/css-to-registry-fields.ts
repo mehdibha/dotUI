@@ -1,6 +1,6 @@
 import type { RegistryItem } from "@/registry/types"
 
-export type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
+type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
 type CssValue = NonNullable<RegistryItem["css"]>[string]
 type CssObject = Record<string, CssValue>
@@ -37,9 +37,7 @@ export function cssToRegistryFields(css: string): RegistryCssFields {
 
 function addNodeToFields(fields: RegistryCssFields, node: CssNode): void {
   if (node.type === "atrule" && node.name === "theme") {
-    addDeclarationsToVars(fields, "theme", node.nodes, {
-      stripCustomPropertyPrefix: false,
-    })
+    addDeclarationsToVars(fields, "theme", node.nodes)
     return
   }
 
@@ -54,7 +52,6 @@ function addDeclarationsToVars(
   fields: RegistryCssFields,
   key: keyof CssVars,
   nodes: CssNode[],
-  options: { stripCustomPropertyPrefix: boolean },
 ): void {
   const declarations = nodes.filter(
     (node): node is DeclarationNode =>
@@ -65,7 +62,7 @@ function addDeclarationsToVars(
   fields.cssVars ??= {}
   const target = (fields.cssVars[key] ??= {})
   for (const declaration of declarations) {
-    target[cssVarKey(declaration.prop, options)] = declaration.value
+    target[declaration.prop] = declaration.value
   }
 }
 
@@ -117,13 +114,6 @@ function compactFields(fields: RegistryCssFields): RegistryCssFields {
 
 function isPlainObject(value: unknown): value is Record<string, CssValue> {
   return typeof value === "object" && value !== null && !Array.isArray(value)
-}
-
-function cssVarKey(
-  prop: string,
-  options: { stripCustomPropertyPrefix: boolean },
-): string {
-  return options.stripCustomPropertyPrefix ? prop.replace(/^--/, "") : prop
 }
 
 function parseCss(input: string): CssNode[] {

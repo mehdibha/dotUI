@@ -1,7 +1,7 @@
 import { LinkButton } from "@/registry/ui/button"
 import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
-import Cards from "@/modules/marketing/cards"
+import { Cards } from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { HeroStack } from "@/modules/marketing/hero-stack"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"

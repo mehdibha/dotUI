@@ -77,7 +77,7 @@ export interface ControlSelection {
   dropWhen?: string
 }
 
-export interface OverlayInput {
+interface OverlayInput {
   source: string
   controls: ControlSelection[]
   componentName?: string

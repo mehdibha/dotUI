@@ -46,13 +46,6 @@ const { useStyles, styles } = createStyles(calendarMeta, {
     },
     defaultVariants: { range: false },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     dayShape: {
       same: {
@@ -143,7 +136,5 @@ const { useStyles, styles } = createStyles(calendarMeta, {
     },
   },
 })
-
-export type CalendarStyles = typeof styles
 
 export { styles as calendarStyles, useStyles }
