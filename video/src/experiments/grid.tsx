@@ -54,26 +54,24 @@ import {
 } from "./steps"
 
 /* The Controls card morphing through every preset (the Steps film), then the
-   camera pulls back and the rest of the "cards" block assembles around it:
-   every card, drawn whole like Controls, flies in from beyond it to its
-   place in the studio canvas, nearest first, all keeping up with the look. */
+   camera pulls back with Controls held in the center while the other
+   showcase cards arrive around it on every side, nearest first, each drawn
+   whole and keeping up with the look. Every card is as wide as Controls,
+   so the whole wall widens and narrows with each preset's density. */
 
 const LOOKS = [...new Set(ORDER)]
 
-/** The pull-back: from the Controls card at true size to the whole canvas. */
+/** The pull-back: from Controls at true size to half size, on its center. */
 const ZOOM_AT = 210
 const ZOOM_FOR = 180
-/** Frame margin around the canvas once pulled back. */
-const EDGE = 28
+const ZOOM_TO = 0.5
 /** Cards start arriving as the pull-back starts, nearest first. */
 const ARRIVE_AT = ZOOM_AT + 10
 const ARRIVE_SPREAD = 110
 const ARRIVE_FOR = 60
 
-// The studio's "cards" canvas, its columns as wide as the Controls card in
-// the Steps film (per density) (www CardsCanvas), laid out flat: no
-// content-visibility, which would size the off-screen probes' cards at a
-// guess.
+// Every showcase card, laid out flat: no content-visibility, which would
+// size the off-screen probes' cards at a guess.
 const CARDS = {
   accountMenu: <AccountMenu />,
   agentTasks: <AgentTasks />,
@@ -121,78 +119,29 @@ function Column({ cards }: { cards: CardKey[] }) {
   )
 }
 
-function Canvas({ col }: { col: number }) {
+/** Columns left to right; the middle one holds Controls. */
+const COLUMNS: CardKey[][] = [
+  ["commandMenu", "payment", "storage", "loginForm"],
+  ["metrics", "booking", "agentTasks", "connectedTools"],
+  ["twoFactor", "filters", "accountMenu", "customDomain"],
+  ["teamName", "uploadAvatar", "controls", "pricingPlans", "emptyState"],
+  ["computerUse", "notifications", "faq", "displaySettings"],
+  ["inviteMembers", "appearance", "colorEditor", "cookiePreferences"],
+  ["aiPrompt", "supportChat", "approvalPrompt", "usageCredits"],
+]
+const MIDDLE = 3
+/** Each side column's stack is centered on Controls, then nudged by this
+    much so the rows don't line up. */
+const STAGGER = [-140, 90, -60, 0, 50, -110, 70]
+
+function Wall({ col }: { col: number }) {
   return (
-    <div
-      style={{
-        display: "grid",
-        width: col * 6 + GAP * 7,
-        gridTemplateColumns: `repeat(6, ${col}px)`,
-        alignItems: "start",
-        gap: GAP,
-        padding: GAP,
-      }}
-    >
-      <Column
-        cards={[
-          "controls",
-          "twoFactor",
-          "filters",
-          "accountMenu",
-          "customDomain",
-        ]}
-      />
-      <Column
-        cards={["commandMenu", "payment", "storage", "loginForm", "emptyState"]}
-      />
-      <div
-        style={{
-          gridColumn: "span 2",
-          display: "flex",
-          flexDirection: "column",
-          gap: GAP,
-        }}
-      >
-        <Column cards={["aiPrompt"]} />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            alignItems: "start",
-            gap: GAP,
-          }}
-        >
-          <Column
-            cards={["metrics", "booking", "agentTasks", "connectedTools"]}
-          />
-          <Column
-            cards={[
-              "uploadAvatar",
-              "pricingPlans",
-              "supportChat",
-              "approvalPrompt",
-            ]}
-          />
+    <div style={{ display: "flex", alignItems: "flex-start", gap: GAP }}>
+      {COLUMNS.map((cards, i) => (
+        <div key={i} data-grid-column={i} style={{ width: col }}>
+          <Column cards={cards} />
         </div>
-      </div>
-      <Column
-        cards={[
-          "computerUse",
-          "notifications",
-          "faq",
-          "displaySettings",
-          "usageCredits",
-        ]}
-      />
-      <Column
-        cards={[
-          "inviteMembers",
-          "appearance",
-          "colorEditor",
-          "cookiePreferences",
-          "teamName",
-        ]}
-      />
+      ))}
     </div>
   )
 }
@@ -205,28 +154,42 @@ interface Placed {
 
 interface Layout {
   page: Rgba
-  width: number
+  /** Card corners from Controls' corner. */
   cards: Map<string, Placed>
 }
 
 async function measure(probe: HTMLElement): Promise<Layout | null> {
-  const grid = probe.firstElementChild as HTMLElement | null
-  if (!grid?.offsetHeight) return null
+  const wall = probe.firstElementChild as HTMLElement | null
+  if (!wall?.offsetHeight) return null
   const page = rgbaOf(getComputedStyle(probe).backgroundColor)
-  const origin = grid.getBoundingClientRect()
+  const controls = probe
+    .querySelector('[data-grid-card="controls"]')!
+    .firstElementChild!.getBoundingClientRect()
   const cards = new Map<string, Placed>()
-  for (const slot of probe.querySelectorAll<HTMLElement>("[data-grid-card]")) {
-    // Each card's root is its surface (the AI prompt is a plain div).
-    const card = slot.firstElementChild as HTMLElement | null
-    if (!card) continue
-    const r = card.getBoundingClientRect()
-    cards.set(slot.dataset.gridCard!, {
-      x: r.x - origin.x,
-      y: r.y - origin.y,
-      look: await measureCard(card, page),
-    })
+  for (const column of probe.querySelectorAll<HTMLElement>(
+    "[data-grid-column]",
+  )) {
+    const i = Number(column.dataset.gridColumn)
+    const r = column.getBoundingClientRect()
+    const shift =
+      i === MIDDLE
+        ? 0
+        : controls.y + controls.height / 2 - (r.y + r.height / 2) + STAGGER[i]!
+    for (const slot of column.querySelectorAll<HTMLElement>(
+      "[data-grid-card]",
+    )) {
+      // Each card's root is its surface (the AI prompt is a plain div).
+      const card = slot.firstElementChild as HTMLElement | null
+      if (!card) continue
+      const c = card.getBoundingClientRect()
+      cards.set(slot.dataset.gridCard!, {
+        x: c.x - controls.x,
+        y: c.y - controls.y + shift,
+        look: await measureCard(card, page),
+      })
+    }
   }
-  return { page, width: origin.width, cards }
+  return { page, cards }
 }
 
 const centerOf = (a: Placed, b: Placed, t: number) => ({
@@ -246,16 +209,11 @@ function draw(
   const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
   paintPage(ctx, a.page, b.page, t, rand)
 
-  // The camera starts on Controls at true size and ends with the canvas
-  // filling the frame width (it widens with density), top cards just under
-  // the edge.
+  // The camera stays on Controls' center, pulling back from true size.
   const home = centerOf(a.cards.get("controls")!, b.cards.get("controls")!, t)
   const p = progress(frame, ZOOM_AT, ZOOM_FOR, ease.camera)
-  const width = lerp(a.width, b.width, t)
-  const fit = (STEPS_SIZE.width - 2 * EDGE) / (width - 2 * GAP)
-  const zoom = Math.exp(lerp(0, Math.log(fit), p))
-  const wide = { x: width / 2, y: GAP + (STEPS_SIZE.height / 2 - EDGE) / fit }
-  const cam = { x: lerp(home.x, wide.x, p), y: lerp(home.y, wide.y, p) }
+  const zoom = Math.exp(lerp(0, Math.log(ZOOM_TO), p))
+  const cam = home
   const scale = dpr * zoom
   const ox = W / 2 - cam.x * scale
   const oy = H / 2 - cam.y * scale
@@ -345,7 +303,7 @@ export function GridStep() {
                 className="bg-bg"
                 style={{ position: "absolute", opacity: 0 }}
               >
-                <Canvas col={cardWidth(id)} />
+                <Wall col={cardWidth(id)} />
               </div>
             </Theme>
           )),
