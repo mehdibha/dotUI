@@ -63,11 +63,17 @@ if (mode === "stills") {
   await renderMedia({
     composition,
     serveUrl,
-    codec: "h264",
-    crf: 16,
-    pixelFormat: "yuv420p",
-    imageFormat: "jpeg",
-    jpegQuality: 95,
+    // A .mov is a lossless-ish ProRes 4444 master from PNG frames, for
+    // footage (dither, near-black fades) that jpeg frames would band.
+    ...(arg?.endsWith(".mov")
+      ? { codec: "prores", proResProfile: "4444", imageFormat: "png" }
+      : {
+          codec: "h264",
+          crf: 16,
+          pixelFormat: "yuv420p",
+          imageFormat: "jpeg",
+          jpegQuality: 95,
+        }),
     concurrency: Number(flag("concurrency") ?? 3),
     scale: Number(flag("scale") ?? 1.6),
     frameRange: flag("frames")
