@@ -40,7 +40,14 @@ export function CardTween() {
     preset(ORDER[k >= 0 ? k + 1 : from]!),
     t,
   )
-  const drift = keys(frame, [[0, 1], [CARD_TWEEN_FRAMES, 1.04]], ease.linear)
+  const drift = keys(
+    frame,
+    [
+      [0, 1],
+      [CARD_TWEEN_FRAMES, 1.04],
+    ],
+    ease.linear,
+  )
 
   return (
     <AbsoluteFill style={{ transform: `scale(${drift})` }}>

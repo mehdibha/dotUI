@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react"
-import { continueRender, delayRender } from "remotion"
 import type { ReactNode } from "react"
+import { continueRender, delayRender } from "remotion"
 
 import { Theme } from "../lib/theme"
 import type { State } from "../lib/theme"
@@ -62,15 +62,21 @@ function blendStroke(
   t: number,
 ) {
   const visible = (s: CSSStyleDeclaration) =>
-    s.getPropertyValue(style) !== "none" && (px(s.getPropertyValue(width)) ?? 0) > 0
+    s.getPropertyValue(style) !== "none" &&
+    (px(s.getPropertyValue(width)) ?? 0) > 0
   const va = visible(a)
   const vb = visible(b)
   if (!va && !vb) return `${width}:0px!important;`
-  const wa = va ? px(a.getPropertyValue(width))! : px(b.getPropertyValue(width))!
+  const wa = va
+    ? px(a.getPropertyValue(width))!
+    : px(b.getPropertyValue(width))!
   const wb = vb ? px(b.getPropertyValue(width))! : wa
   const ca = va ? a.getPropertyValue(color) : "transparent"
   const cb = vb ? b.getPropertyValue(color) : "transparent"
-  const st = (t < 0.5 && va) || !vb ? a.getPropertyValue(style) : b.getPropertyValue(style)
+  const st =
+    (t < 0.5 && va) || !vb
+      ? a.getPropertyValue(style)
+      : b.getPropertyValue(style)
   // Chrome floors stroke widths to whole pixels (1.99 px draws as 1 px).
   return `${style}:${st}!important;${width}:${Math.round(lerp(wa, wb, t))}px!important;${color}:${blendColor(ca, cb, t)}!important;`
 }
@@ -91,9 +97,18 @@ const px = (v: string) => {
   return Number.isFinite(n) && /px$|^0$/.test(v.trim()) ? n : null
 }
 
-function blendLength(prop: string, a: CSSStyleDeclaration, b: CSSStyleDeclaration, t: number) {
+function blendLength(
+  prop: string,
+  a: CSSStyleDeclaration,
+  b: CSSStyleDeclaration,
+  t: number,
+) {
   // "normal" depends on the face; each view keeps its own.
-  if (prop === "line-height" && (a.lineHeight === "normal" || b.lineHeight === "normal")) return null
+  if (
+    prop === "line-height" &&
+    (a.lineHeight === "normal" || b.lineHeight === "normal")
+  )
+    return null
   const va = a.getPropertyValue(prop)
   const vb = b.getPropertyValue(prop)
   const zero = prop === "letter-spacing" ? "0px" : null
@@ -105,10 +120,19 @@ function blendLength(prop: string, a: CSSStyleDeclaration, b: CSSStyleDeclaratio
 
 /* A pill (9999px) and a square both clamp to half the short side first, or
    the radius would jump straight to the small value. */
-function blendCorner(prop: string, a: CSSStyleDeclaration, b: CSSStyleDeclaration, t: number) {
+function blendCorner(
+  prop: string,
+  a: CSSStyleDeclaration,
+  b: CSSStyleDeclaration,
+  t: number,
+) {
   const cap = (s: CSSStyleDeclaration) => {
     const v = px(s.getPropertyValue(prop)) ?? 0
-    const half = Math.min(Number.parseFloat(s.width) || 0, Number.parseFloat(s.height) || 0) / 2
+    const half =
+      Math.min(
+        Number.parseFloat(s.width) || 0,
+        Number.parseFloat(s.height) || 0,
+      ) / 2
     return half > 0 ? Math.min(v, half) : v
   }
   return `${lerp(cap(a), cap(b), t)}px`
@@ -128,7 +152,9 @@ function shadows(v: string): Shadow[] {
     if (ch === "(") depth++
     if (ch === ")") depth--
     if (ch === "," && depth === 0) {
-      const m = part.trim().match(/^((?:[a-z-]+\([^)]*\))|#[0-9a-f]+|[a-z]+)\s+(.*)$/i)
+      const m = part
+        .trim()
+        .match(/^((?:[a-z-]+\([^)]*\))|#[0-9a-f]+|[a-z]+)\s+(.*)$/i)
       if (m) {
         const rest = m[2]!
         out.push({
@@ -147,7 +173,11 @@ function blendShadow(a: string, b: string, t: number) {
   const sa = shadows(a)
   const sb = shadows(b)
   // Each side gets a transparent twin of the other's extra layers.
-  const ghost = (s: Shadow): Shadow => ({ ...s, color: "transparent", n: [0, 0, 0, 0] })
+  const ghost = (s: Shadow): Shadow => ({
+    ...s,
+    color: "transparent",
+    n: [0, 0, 0, 0],
+  })
   const layers: string[] = []
   for (let i = 0; i < Math.max(sa.length, sb.length); i++) {
     const x = sa[i] ?? ghost(sb[i]!)
@@ -198,8 +228,19 @@ function rules(
      shorter window to keep the unreadable middle brief. */
   const tText = Math.min(1, Math.max(0, (t - 0.4) / 0.2))
   for (const p of COLORS)
-    set(p, blendColor(a.getPropertyValue(p), b.getPropertyValue(p), p === "color" ? tText : t))
-  const weight = lerp(Number(a.fontWeight) || 400, Number(b.fontWeight) || 400, t)
+    set(
+      p,
+      blendColor(
+        a.getPropertyValue(p),
+        b.getPropertyValue(p),
+        p === "color" ? tText : t,
+      ),
+    )
+  const weight = lerp(
+    Number(a.fontWeight) || 400,
+    Number(b.fontWeight) || 400,
+    t,
+  )
   set("font-weight", String(Math.round(weight)))
   set("opacity", String(lerp(Number(a.opacity), Number(b.opacity), t)))
   set("box-shadow", blendShadow(a.boxShadow, b.boxShadow, t))
@@ -260,13 +301,17 @@ function morphCss(views: Element[], a: Element, b: Element, t: number) {
       if (pa && pb) {
         const fade = ba && bb ? 1 : ba ? 1 - t : t
         rule = `${rules(sx, sy, t, { pin: false })}position:absolute!important;margin:0!important;right:auto!important;bottom:auto!important;transform:none!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;left:${lerp(pa.x, pb.x, t)}px!important;top:${lerp(pa.y, pb.y, t)}px!important;width:${lerp(pa.w, pb.w, t)}px!important;height:${lerp(pa.h, pb.h, t)}px!important;${fade < 1 ? `opacity:${fade}!important;` : ""}`
-        if (text) rule += "text-overflow:clip!important;overflow:visible!important;"
+        if (text)
+          rule += "text-overflow:clip!important;overflow:visible!important;"
         /* Bare text (a link, a label) keeps each look's own width in each
            view, so it never rewraps mid-morph; the crossfade carries it. */
         const bare = (st: CSSStyleDeclaration) =>
           st.backgroundColor === "rgba(0, 0, 0, 0)" &&
           !["Top", "Right", "Bottom", "Left"].some(
-            (side) => Number.parseFloat(st.getPropertyValue(`border-${side.toLowerCase()}-width`)) > 0,
+            (side) =>
+              Number.parseFloat(
+                st.getPropertyValue(`border-${side.toLowerCase()}-width`),
+              ) > 0,
           )
         if (text && ba && bb && bare(sx) && bare(sy)) {
           // One attribute more specific than the shared rule.
@@ -278,7 +323,8 @@ function morphCss(views: Element[], a: Element, b: Element, t: number) {
       const pin = mode === "root" || inline ? false : text ? "height" : "box"
       rule = rules(sx, sy, t, { pin })
       if (mode === "root") rule += "position:relative!important;"
-      if (text) rule += "text-overflow:clip!important;overflow:visible!important;"
+      if (text)
+        rule += "text-overflow:clip!important;overflow:visible!important;"
     }
     css += `[data-morph-view] [data-m="${m}"]{${rule}}`
     for (const pseudo of ["::before", "::after"]) {
@@ -289,12 +335,19 @@ function morphCss(views: Element[], a: Element, b: Element, t: number) {
     }
     if (x.tagName.toLowerCase() === "svg") return
     const childMode: Mode = mode === "flow" || text ? "flow" : "placed"
-    const n = Math.min(x.children.length, y.children.length, ...vs.map((v) => v.children.length))
+    const n = Math.min(
+      x.children.length,
+      y.children.length,
+      ...vs.map((v) => v.children.length),
+    )
     for (let i = 0; i < n; i++) {
       const cx = x.children[i]!
       const cy = y.children[i]!
       const cvs = vs.map((v) => v.children[i]!)
-      if (cx.tagName === cy.tagName && cvs.every((c) => c.tagName === cx.tagName))
+      if (
+        cx.tagName === cy.tagName &&
+        cvs.every((c) => c.tagName === cx.tagName)
+      )
         walk(cvs, cx, cy, childMode, [x, y])
     }
   }
@@ -340,7 +393,12 @@ export function Morph({
     let raf = 0
     let tries = 0
     const apply = () => {
-      const [va, vb, a, b] = [viewA.current, viewB.current, probeA.current, probeB.current]
+      const [va, vb, a, b] = [
+        viewA.current,
+        viewB.current,
+        probeA.current,
+        probeB.current,
+      ]
       const ready = (p: HTMLElement | null) =>
         (p?.firstElementChild as HTMLElement | null)?.offsetWidth
       if (va && vb && a && b && ready(a) && ready(b)) {

@@ -59,7 +59,11 @@ export function CardHybrid() {
   return (
     <AbsoluteFill>
       <WarmIcons />
-      <Morph from={tweenState(a, b, t, "a")} to={tweenState(a, b, t, "b")} t={t}>
+      <Morph
+        from={tweenState(a, b, t, "a")}
+        to={tweenState(a, b, t, "b")}
+        t={t}
+      >
         <Card />
       </Morph>
     </AbsoluteFill>

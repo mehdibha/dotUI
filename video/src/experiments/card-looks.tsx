@@ -37,7 +37,9 @@ const GLOW = 6
 
 function Look({ id, mask }: { id: string; mask?: string }) {
   return (
-    <AbsoluteFill style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}>
+    <AbsoluteFill
+      style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}
+    >
       <Theme state={preset(id)} mode="dark">
         <div className="absolute inset-0 flex items-center justify-center bg-bg">
           <div style={{ width: CARD_WIDTH, zoom: SCALE }}>
@@ -53,7 +55,9 @@ export function CardLooks() {
   const frame = useCurrentFrame()
   const swaps = ORDER.slice(1).map((_, i) => (i + 1) * EVERY)
   // The swap in flight, if any: its wipe spans [beat - WIPE/2, beat + WIPE/2].
-  const k = swaps.findIndex((at) => frame >= at - WIPE / 2 && frame < at + WIPE / 2)
+  const k = swaps.findIndex(
+    (at) => frame >= at - WIPE / 2 && frame < at + WIPE / 2,
+  )
   const settled = swaps.filter((at) => frame >= at + WIPE / 2).length
   const from = k >= 0 ? k : settled
   const t = k >= 0 ? progress(frame, swaps[k]! - WIPE / 2, WIPE, ease.inOut) : 0
@@ -61,7 +65,14 @@ export function CardLooks() {
   const edge = -FEATHER + t * (100 + 2 * FEATHER)
   const mask = `linear-gradient(115deg, black ${edge - FEATHER / 2}%, transparent ${edge + FEATHER / 2}%)`
 
-  const drift = keys(frame, [[0, 1], [CARD_LOOKS_FRAMES, 1.04]], ease.linear)
+  const drift = keys(
+    frame,
+    [
+      [0, 1],
+      [CARD_LOOKS_FRAMES, 1.04],
+    ],
+    ease.linear,
+  )
   const scale = drift * (1 + punches(frame, swaps, 0.012))
 
   return (

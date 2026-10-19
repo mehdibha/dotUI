@@ -52,7 +52,14 @@ export function CardMorph() {
   const from = k >= 0 ? k : settled
   const t =
     k >= 0 ? progress(frame, swaps[k]! - MORPH / 2, MORPH, ease.camera) : 0
-  const drift = keys(frame, [[0, 1], [CARD_MORPH_FRAMES, 1.04]], ease.linear)
+  const drift = keys(
+    frame,
+    [
+      [0, 1],
+      [CARD_MORPH_FRAMES, 1.04],
+    ],
+    ease.linear,
+  )
 
   return (
     <AbsoluteFill style={{ transform: `scale(${drift})` }}>
