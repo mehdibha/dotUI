@@ -40,7 +40,7 @@ export interface ToastProps extends ToastManagerAddOptions<ToastData> {}
  */
 export interface ToastProviderProps extends ToastPrimitive.Provider.Props {
   /**
-   * The viewport corner toasts appear in, and the swipe-to-dismiss direction. Defaults to the design system's toast position, else `'bottom-right'`.
+   * The viewport corner toasts appear in; also sets the swipe-to-dismiss direction. Defaults to the design system's toast position, else `'bottom-right'`.
    */
   position?: ToastPosition
 

@@ -37,7 +37,7 @@
           }
         ]
       },
-      "description": "The viewport corner toasts appear in, and the swipe-to-dismiss direction. Defaults to the design system's toast position, else `'bottom-right'`."
+      "description": "The viewport corner toasts appear in; also sets the swipe-to-dismiss direction. Defaults to the design system's toast position, else `'bottom-right'`."
     },
     "portalProps": {
       "type": "ToastPortalProps",
