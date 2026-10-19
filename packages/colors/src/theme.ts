@@ -6,8 +6,6 @@
 import {
   CATEGORICAL_CHROMA,
   categoricalPalettes,
-  divergingArms,
-  sequentialPalette,
   tonalCategoricalPalette,
   tonalGateReport,
 } from "./charts"
@@ -39,7 +37,7 @@ import {
   transposeSkeleton,
 } from "./scale"
 import type { ThemeOptions } from "./schema"
-import { fitSrgb, lstarOf, type Oklch, oklchCss, toOklch } from "./space"
+import { lstarOf, type Oklch, oklchCss, toOklch } from "./space"
 import { type GuaranteeResult, verifyLadder, verifyScale } from "./verify"
 
 export interface ModeOutput {
@@ -60,8 +58,6 @@ export interface ThemeReport {
 
 export interface ChartSet {
   categorical: string[]
-  sequential: string[]
-  diverging: string[]
 }
 
 export interface Theme {
@@ -107,11 +103,9 @@ const buildScales = memoize(
 
 interface AccentCharts {
   categorical: Oklch[]
-  sequential: Oklch[]
-  arms: [Oklch[], Oklch[]]
 }
 
-/** D11 — accent-only chart work; the neutral diverging midpoint joins later. */
+/** D11 — accent-only chart work. */
 const accentCharts = memoize(
   16,
   (
@@ -125,8 +119,6 @@ const accentCharts = memoize(
     const forMode = (mode: Mode): AccentCharts => ({
       categorical:
         hueSpread?.[mode] ?? tonalCategoricalPalette(accent, 8, mode),
-      sequential: sequentialPalette(accent.h, 7, mode),
-      arms: divergingArms(accent.h, 3, mode),
     })
     return { light: forMode("light"), dark: forMode("dark") }
   },
@@ -296,7 +288,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const chartPalette = options.chartPalette ?? "tonal"
   const accentChartSets = accentCharts(accentSeed, chartPalette)
   const chartSet = (mode: Mode): ChartSet => {
-    const { categorical, sequential, arms } = accentChartSets[mode]
+    const { categorical } = accentChartSets[mode]
     if (chartPalette === "tonal") {
       const gate = tonalGateReport(categorical)
       if (!gate.passes)
@@ -304,12 +296,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
           `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
         )
     }
-    const midpoint = fitSrgb(built[mode].neutral!.steps["100"])
-    return {
-      categorical: categorical.map(oklchCss),
-      sequential: sequential.map(oklchCss),
-      diverging: [...arms[0], midpoint, ...arms[1]].map(oklchCss),
-    }
+    return { categorical: categorical.map(oklchCss) }
   }
   const charts = { light: chartSet("light"), dark: chartSet("dark") }
 

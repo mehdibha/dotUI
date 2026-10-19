@@ -9,7 +9,7 @@ const ease =
 const behind =
   "duration-(--studio-drawer-enter-duration) ease-(--studio-drawer-ease) data-inactive:duration-(--studio-drawer-exit-duration) data-inactive:ease-(--studio-drawer-exit-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(drawerMeta, {
+const { useStyles } = createStyles(drawerMeta, {
   base: {
     slots: {
       overlay: "fixed inset-0 isolate z-50 [--drawer-peek:24px]",
@@ -67,13 +67,6 @@ const { useStyles, styles } = createStyles(drawerMeta, {
       placement: "bottom",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     edge: {
       // Flush to the screen edge, bleeding past it for the overscroll. The
@@ -99,7 +92,5 @@ const { useStyles, styles } = createStyles(drawerMeta, {
     },
   },
 })
-
-export type DrawerStyles = typeof styles
 
 export { useStyles }

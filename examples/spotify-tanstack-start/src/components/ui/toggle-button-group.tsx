@@ -45,7 +45,6 @@ const ToggleButtonGroup = ({
       <ToggleButtonGroupPrimitives.ToggleButtonGroup
         data-slot="toggle-button-group"
         data-toggle-button-group=""
-        data-orientation={orientation}
         orientation={orientation}
         className={composeRenderProps(className, (className) =>
           root({

@@ -128,7 +128,7 @@ export function CodeModalBody({
   )
 }
 
-export interface ExampleCodeModalProps {
+interface ExampleCodeModalProps {
   /** Modal title — the example's title. */
   title: string
   /** The live demo component, rendered as the preview. */

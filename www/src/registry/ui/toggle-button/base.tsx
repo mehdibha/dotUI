@@ -35,7 +35,6 @@ interface ToggleButtonProps
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const styles = useStyles()
-  // A group attaches its secondary segments by data-variant.
   const {
     variant = "secondary",
     size,
@@ -48,7 +47,6 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   return (
     <ToggleButtonPrimitive.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>

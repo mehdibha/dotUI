@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import colorSliderMeta from "./meta"
 
-const { useStyles, styles } = createStyles(colorSliderMeta, {
+const { useStyles } = createStyles(colorSliderMeta, {
   base: {
     slots: {
       root: "flex flex-col gap-2",
@@ -26,15 +26,6 @@ const { useStyles, styles } = createStyles(colorSliderMeta, {
       orientation: "horizontal",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
 })
-
-export type ColorSliderStyles = typeof styles
 
 export { useStyles }

@@ -248,13 +248,7 @@ describe("shipped classes", () => {
     const { stylesConfig, meta } = await config("toast")
     for (const surface of ["surface", "inverse"])
       for (const status of ["bold", "soft"])
-        for (const variant of [
-          "success",
-          "warning",
-          "danger",
-          "error",
-          "info",
-        ]) {
+        for (const variant of ["success", "warning", "danger", "info"]) {
           const layer = flatten({
             stylesConfig,
             meta,

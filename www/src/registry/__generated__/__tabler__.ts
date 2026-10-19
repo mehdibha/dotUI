@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 166 icons the registry uses (not the entire library)
+// Only exports the 159 icons the registry uses (not the entire library)
 export {
 	IconActivity as ActivityIcon,
 	IconAlertCircle as AlertCircleIcon,
@@ -12,7 +12,6 @@ export {
 	IconArrowUp as ArrowUpIcon,
 	IconArrowUpRight as ArrowUpRightIcon,
 	IconMicrophone as AudioLinesIcon,
-	IconRosetteDiscountCheck as BadgeCheck,
 	IconRosetteDiscountCheck as BadgeCheckIcon,
 	IconBell as BellIcon,
 	IconCurrencyBitcoin as BitcoinIcon,
@@ -20,7 +19,6 @@ export {
 	IconBold as BoldIcon,
 	IconBook2 as BookIcon,
 	IconBookmark as BookmarkIcon,
-	IconBook as BookOpen,
 	IconBook as BookOpenIcon,
 	IconRobot as BotIcon,
 	IconBoxMultiple as BoxesIcon,
@@ -80,11 +78,9 @@ export {
 	IconLanguage as LanguagesIcon,
 	IconStack2 as LayersIcon,
 	IconLayoutGrid as LayoutGridIcon,
-	IconLifebuoy as LifeBuoy,
 	IconLink as LinkIcon,
 	IconFilterPlus as ListFilterIcon,
 	IconList as ListIcon,
-	IconLoader as Loader2Icon,
 	IconLoader2 as LoaderCircleIcon,
 	IconLogout as LogOutIcon,
 	IconMailCheck as MailCheckIcon,
@@ -120,9 +116,7 @@ export {
 	IconRuler as RulerIcon,
 	IconDeviceFloppy as SaveIcon,
 	IconCut as ScissorsIcon,
-	IconSearch as Search,
 	IconSearch as SearchIcon,
-	IconSend as Send,
 	IconSend as SendIcon,
 	IconServer as ServerIcon,
 	IconSettings as Settings2Icon,
@@ -160,7 +154,6 @@ export {
 	IconVolume2 as Volume1Icon,
 	IconVolume as Volume2Icon,
 	IconVolume as VolumeOffIcon,
-	IconVolume as VolumeX,
 	IconWallet as WalletIcon,
 	IconCircleX as XCircleIcon,
 	IconX as XIcon,

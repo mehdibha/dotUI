@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import paginationMeta from "./meta"
 
-const { useStyles, styles } = createStyles(paginationMeta, {
+const { useStyles } = createStyles(paginationMeta, {
   base: {
     slots: {
       root: "mx-auto flex w-full justify-center",
@@ -38,7 +38,5 @@ const { useStyles, styles } = createStyles(paginationMeta, {
     },
   },
 })
-
-export type PaginationStyles = typeof styles
 
 export { useStyles }

@@ -2,18 +2,11 @@ import { createStyles } from "@/lib/styles"
 
 import chartMeta from "./meta"
 
-const { useStyles, styles } = createStyles(chartMeta, {
+const { useStyles } = createStyles(chartMeta, {
   base: {
     slots: {
       container: "relative",
     },
-  },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
   },
   params: {
     grid: {
@@ -33,7 +26,5 @@ const { useStyles, styles } = createStyles(chartMeta, {
     },
   },
 })
-
-export type ChartStyles = typeof styles
 
 export { useStyles }

@@ -7,7 +7,7 @@ import {
 } from "../checkbox/styles"
 import radioGroupMeta from "./meta"
 
-const { useStyles, styles } = createStyles(radioGroupMeta, {
+const { useStyles } = createStyles(radioGroupMeta, {
   base: {
     slots: {
       group: ["flex flex-col gap-3"],
@@ -77,7 +77,5 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
     "card-press": CHOICE_CARD_PRESS,
   },
 })
-
-export type RadioGroupStyles = typeof styles
 
 export { useStyles }

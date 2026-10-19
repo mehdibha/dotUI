@@ -46,7 +46,7 @@ const roomy = {
   },
 }
 
-const { useStyles, styles } = createStyles(checkboxMeta, {
+const { useStyles } = createStyles(checkboxMeta, {
   base: {
     slots: {
       root: "flex items-center has-data-description:items-start",
@@ -84,7 +84,5 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
     "card-press": CHOICE_CARD_PRESS,
   },
 })
-
-export type CheckboxStyles = typeof styles
 
 export { useStyles }
