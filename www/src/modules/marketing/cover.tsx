@@ -3,8 +3,7 @@
 import { useEffect } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"
-import { cn } from "@/registry/lib/utils"
-import { CardsGrid } from "@/components/showcase/cards-grid"
+import { CardsCanvas } from "@/components/showcase/cards-grid"
 import { resolvePreset } from "@/modules/presets"
 
 type Side = "top" | "right" | "bottom" | "left"
@@ -15,19 +14,12 @@ const BLEED = -40
 const HALF_W = 220
 const HALF_H = 112
 const GUTTER = 56
-// Where the top and bottom rows split in two, from the center.
-const SPLIT = 360
 
 const fromCenter = (px: number) => `calc(50% + ${px}px)`
 
-const SLOTS: {
-  preset: string
-  mode: "light" | "dark"
-  inset: Record<Side, number | string>
-}[] = [
+const SLOTS: { preset: string; inset: Record<Side, number | string> }[] = [
   {
     preset: "origin",
-    mode: "light",
     inset: {
       top: BLEED,
       left: BLEED,
@@ -37,27 +29,15 @@ const SLOTS: {
   },
   {
     preset: "linear",
-    mode: "dark",
-    inset: {
-      top: BLEED,
-      left: fromCenter(GUTTER - HALF_W),
-      right: fromCenter(GUTTER - SPLIT),
-      bottom: fromCenter(HALF_H),
-    },
-  },
-  {
-    preset: "airbnb",
-    mode: "light",
     inset: {
       top: BLEED,
       right: BLEED,
-      left: fromCenter(SPLIT),
+      left: fromCenter(GUTTER - HALF_W),
       bottom: fromCenter(HALF_H),
     },
   },
   {
     preset: "spotify",
-    mode: "dark",
     inset: {
       bottom: BLEED,
       right: BLEED,
@@ -66,34 +46,24 @@ const SLOTS: {
     },
   },
   {
-    preset: "claude",
-    mode: "light",
-    inset: {
-      bottom: BLEED,
-      left: fromCenter(GUTTER - SPLIT),
-      right: fromCenter(GUTTER - HALF_W),
-      top: fromCenter(HALF_H),
-    },
-  },
-  {
-    preset: "carbon",
-    mode: "dark",
+    preset: "airbnb",
     inset: {
       bottom: BLEED,
       left: BLEED,
-      right: fromCenter(SPLIT),
+      right: fromCenter(GUTTER - HALF_W),
       top: fromCenter(HALF_H),
     },
   },
 ]
 
-function PresetContainer({ preset, mode, inset }: (typeof SLOTS)[number]) {
+function PresetContainer({ preset, inset }: (typeof SLOTS)[number]) {
   const designSystem = resolvePreset(preset)
-  const pad = (side: Side) => (inset[side] === BLEED ? 20 - BLEED : 20)
+  // Bleeding sides pad back to the visible edge; the canvas pads itself.
+  const pad = (side: Side) => (inset[side] === BLEED ? -BLEED : 0)
   return (
     <DesignSystemProvider
       scoped
-      forcedMode={mode}
+      forcedMode="dark"
       params={designSystem.componentParams}
       tokens={designSystem.tokens}
       density={designSystem.density}
@@ -108,12 +78,11 @@ function PresetContainer({ preset, mode, inset }: (typeof SLOTS)[number]) {
           paddingBottom: pad("bottom"),
           paddingLeft: pad("left"),
         }}
-        className={cn(
-          "absolute overflow-hidden rounded-2xl border bg-bg",
-          mode === "dark" ? "border-white/15" : "border-border",
-        )}
+        className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg"
       >
-        <CardsGrid side={false} className="w-[1120px] zoom-[0.7]" />
+        <div className="zoom-[0.7]">
+          <CardsCanvas />
+        </div>
       </div>
     </DesignSystemProvider>
   )
