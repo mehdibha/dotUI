@@ -58,53 +58,40 @@ import {
 } from "./steps"
 
 /* The Controls card morphing through the presets, then the studio around
-   it. At 7 s the camera pulls back from Controls into the studio's "cards"
-   canvas (Controls at its top left) while the other cards arrive. At 11 s,
-   on a held look, it eases out a little further to show the preview's frame;
-   then the panel slides in from the left, pushing the preview narrower. The
-   presets run at a varying tempo: steady, slow through the studio reveal,
-   then faster and faster until a hard stop, a pause, and the end screens. */
+   it. At 7 s, in one move, the camera pulls back from Controls into the
+   studio's "cards" canvas (Controls to its top left) while the other cards
+   arrive, the frame closes in to the preview's rounded border, and the
+   panel slides in from the left beside it. The look holds from 9 s until
+   the studio is in place, then the presets run on: slow at first, then
+   faster and faster to a hard stop, a pause, and the end screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
-/** The pull-back from Controls at true size into the preview. */
+/** The move from Controls at true size into the studio. */
 const PULL_AT = 420
 const PULL_FOR = 220
-/** Cards arrive as the pull-back starts, nearest Controls first. */
+/** Cards arrive as the move starts, nearest Controls first. */
 const ARRIVE_AT = PULL_AT + 10
 const ARRIVE_SPREAD = 110
 const ARRIVE_FOR = 60
-/** The preview's frame comes into view. */
-const REVEAL_AT = 660
-const REVEAL_FOR = 55
-/** The panel pushes in, slow and linear. */
-const PUSH_AT = REVEAL_AT + REVEAL_FOR
-const PUSH_FOR = 140
 
-/** /studio at 1920×1080: the preview alone (padded), then the panel and the
-    preview beside it, drawn at the frame's 1200/1920. */
+/** /studio at 1920×1080, drawn at the frame's 1200/1920. */
 const ZOOM_TO = STEPS_SIZE.width / 1920
 const STUDIO = {
-  alone: { x: 24, y: 24, width: 1872, height: 1032 },
   panel: { x: 24, y: 24, width: 256, height: 1032 },
   preview: { x: 304, y: 24, width: 1592, height: 1032 },
   radius: 12,
 }
-/** Before the reveal, the preview overfills the frame by this much. */
-const BLEED = 10
-const ZOOM_IN = (STEPS_SIZE.height + 2 * BLEED) / STUDIO.alone.height
 
 /** Every swap of look: the frame it's centered on and how long it morphs. */
 const SWAPS = (() => {
   const swaps: { at: number; morph: number }[] = []
-  // Steady, one look a second, Controls alone.
-  for (let at = 60; at <= 420; at += 60) swaps.push({ at, morph: 44 })
-  // Slower through the pull-back; none during the reveal; one, slower
-  // still, as the panel pushes in.
-  swaps.push({ at: 515, morph: 70 }, { at: 615, morph: 70 })
-  swaps.push({ at: 785, morph: 90 })
+  // Steady, one look a second, until 9 s.
+  for (let at = 60; at <= 480; at += 60) swaps.push({ at, morph: 44 })
+  // Held while the studio comes in, then slow once it's in place.
+  swaps.push({ at: 720, morph: 70 }, { at: 820, morph: 70 })
   // Then faster and faster, to a hard stop back on the first look.
-  let at = 870
+  let at = 900
   for (const gap of [
     54, 46, 39, 33, 28, 24, 20, 17, 15, 13, 11, 10, 9, 8, 8, 8, 8, 8, 8, 8, 8,
   ]) {
@@ -315,24 +302,16 @@ const scaleRect = (r: Rect, s: number) => ({
   height: r.height * s,
 })
 
-/** The preview's rect in the frame (frame px) at `frame`, and the canvas'
-    scale inside it. */
+/** The move at `frame`: its progress, the preview's rect in the frame
+    (frame px) and the canvas' scale inside it. */
 function previewAt(frame: number) {
-  const reveal = progress(frame, REVEAL_AT, REVEAL_FOR, ease.camera)
-  const push = progress(frame, PUSH_AT, PUSH_FOR, ease.linear)
-  const bled = {
-    x: -BLEED,
-    y: -BLEED,
-    width: STUDIO.alone.width * ZOOM_IN,
-    height: STUDIO.alone.height * ZOOM_IN,
-  }
-  const alone = scaleRect(STUDIO.alone, ZOOM_TO)
-  const beside = scaleRect(STUDIO.preview, ZOOM_TO)
+  const p = progress(frame, PULL_AT, PULL_FOR, ease.camera)
+  const full = { x: 0, y: 0, ...STEPS_SIZE }
   return {
-    reveal,
-    push,
-    view: lerpRect(lerpRect(bled, alone, reveal), beside, push),
-    zoom: Math.exp(lerp(Math.log(ZOOM_IN), Math.log(ZOOM_TO), reveal)),
+    p,
+    view: lerpRect(full, scaleRect(STUDIO.preview, ZOOM_TO), p),
+    radius: lerp(0, STUDIO.radius * ZOOM_TO, p),
+    zoom: Math.exp(lerp(0, Math.log(ZOOM_TO), p)),
   }
 }
 
@@ -348,22 +327,18 @@ function draw(
   const rand = getRemotionEnvironment().isRendering ? noise(frame + 1) : null
   paintPage(ctx, a.page, b.page, t, rand)
 
-  // First Controls at true size on the frame's center; the pull-back brings
-  // the canvas' corner to the preview's, the preview just past the frame.
-  const { reveal, view, zoom } = previewAt(frame)
+  // First Controls at true size on the frame's center; the move brings the
+  // canvas' corner to the preview's.
+  const { p, view, radius, zoom } = previewAt(frame)
   const home = centerOf(a.cards.get("controls")!, b.cards.get("controls")!, t)
-  const pull = progress(frame, PULL_AT, PULL_FOR, ease.camera)
-  const z = pull < 1 ? Math.exp(lerp(0, Math.log(zoom), pull)) : zoom
   const center = { x: STEPS_SIZE.width / 2, y: STEPS_SIZE.height / 2 }
+  const end = previewAt(PULL_AT + PULL_FOR)
   const corner = {
-    x: (center.x - view.x) / zoom,
-    y: (center.y - view.y) / zoom,
+    x: (center.x - end.view.x) / end.zoom,
+    y: (center.y - end.view.y) / end.zoom,
   }
-  const focus = {
-    x: lerp(home.x, corner.x, pull),
-    y: lerp(home.y, corner.y, pull),
-  }
-  const scale = dpr * z
+  const focus = { x: lerp(home.x, corner.x, p), y: lerp(home.y, corner.y, p) }
+  const scale = dpr * zoom
   const ox = center.x * dpr - focus.x * scale
   const oy = center.y * dpr - focus.y * scale
 
@@ -397,22 +372,21 @@ function draw(
   ctx.globalAlpha = 1
 
   // The site's chrome around the preview, with its hairline.
-  if (reveal > 0 && chrome) {
+  if (p > 0 && chrome) {
     const r = {
       x: view.x * dpr,
       y: view.y * dpr,
       width: view.width * dpr,
       height: view.height * dpr,
     }
-    const radius = STUDIO.radius * ZOOM_TO * dpr
     ctx.beginPath()
     ctx.rect(0, 0, W, H)
-    ctx.roundRect(r.x, r.y, r.width, r.height, radius)
+    ctx.roundRect(r.x, r.y, r.width, r.height, radius * dpr)
     ctx.fillStyle = css(chrome.fill)
     ctx.fill("evenodd")
     ctx.beginPath()
-    ctx.roundRect(r.x, r.y, r.width, r.height, radius)
-    ctx.strokeStyle = css(chrome.border, chrome.border[3] * reveal)
+    ctx.roundRect(r.x, r.y, r.width, r.height, radius * dpr)
+    ctx.strokeStyle = css(chrome.border, chrome.border[3] * p)
     ctx.lineWidth = ZOOM_TO * dpr
     ctx.stroke()
   }
@@ -521,8 +495,8 @@ export function GridStep() {
 /** The real studio panel in the site's dark chrome, at its 1920×1080 place,
     its right edge pushing the preview's left; it shows the look on screen. */
 function Panel({ frame, look }: { frame: number; look: string }) {
-  const { push, view } = previewAt(frame)
-  if (push <= 0) return null
+  const { p, view } = previewAt(frame)
+  if (p <= 0) return null
   const { panel } = STUDIO
   const state = preset(look)
   // The panel keeps the studio's gap to the preview's edge.
