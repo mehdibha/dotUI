@@ -61,19 +61,22 @@ import {
    it. At 7 s, in one move, the camera pulls back from Controls into the
    studio's "cards" canvas (Controls to its top left) while the other cards
    arrive, the frame closes in to the preview's rounded border, and the
-   panel slides in from the left beside it. The look holds from 9 s until
-   the studio is in place, then the presets run on: slow at first, then
-   faster and faster to a hard stop, a pause, and the end screens. */
+   panel slides in from the left beside it. The cards arrive slowly, one
+   after another, the last as Controls lands. The look holds from 9 s until
+   the studio is in place, then the presets run on at the same pace; then a
+   pause and the end screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
 /** The move from Controls at true size into the studio. */
 const PULL_AT = 420
 const PULL_FOR = 220
-/** Cards arrive as the move starts, nearest Controls first. */
-const ARRIVE_AT = PULL_AT + 10
-const ARRIVE_SPREAD = 110
-const ARRIVE_FOR = 60
+/** Cards arrive through the move, nearest Controls first, the farthest in
+    the preview (this far from Controls) as Controls lands. */
+const ARRIVE_AT = PULL_AT + 15
+const ARRIVE_FOR = 100
+const ARRIVE_SPREAD = PULL_AT + PULL_FOR - ARRIVE_FOR - ARRIVE_AT
+const ARRIVE_REACH = 1300
 
 /** /studio in a laptop browser window (1512 px wide, as on a MacBook),
     cropped to the frame's 16:9. */
@@ -93,23 +96,13 @@ const STUDIO = {
 /** Every swap of look: the frame it's centered on and how long it morphs. */
 const SWAPS = (() => {
   const swaps: { at: number; morph: number }[] = []
-  // Steady, one look a second, until 9 s.
-  for (let at = 60; at <= 480; at += 60) swaps.push({ at, morph: 44 })
-  // Held while the studio comes in, then slow once it's in place.
-  swaps.push({ at: 720, morph: 70 }, { at: 820, morph: 70 })
-  // Then faster and faster, to a hard stop back on the first look.
-  let at = 900
-  for (const gap of [
-    54, 46, 39, 33, 28, 24, 20, 17, 15, 13, 11, 10, 9, 8, 8, 8, 8, 8, 8, 8, 8,
-  ]) {
-    swaps.push({ at, morph: Math.min(44, Math.round(gap * 0.8)) })
-    at += gap
-  }
-  swaps.push({ at, morph: 6 })
+  // One look a second, held from 9 s while the studio comes in.
+  for (let at = 60; at <= 1260; at += 60)
+    if (at <= 480 || at >= 720) swaps.push({ at, morph: 44 })
   return swaps
 })()
 const lookOf = (i: number) => LOOKS[i % LOOKS.length]!
-const STOP = SWAPS.at(-1)!.at + 3
+const STOP = SWAPS.at(-1)!.at + SWAPS.at(-1)!.morph / 2
 /** The pause on the last look, then the end screens. */
 const OUTRO_AT = STOP + 45
 export const GRID_FRAMES = OUTRO_AT + OUTRO_FRAMES
@@ -376,8 +369,9 @@ function draw(
       const c = centerOf(pa, pb, t)
       const [vx, vy] = [c.x - home.x, c.y - home.y]
       const start =
-        ARRIVE_AT + Math.min(Math.hypot(vx, vy) / 2000, 1) * ARRIVE_SPREAD
-      const q = progress(frame, start, ARRIVE_FOR, ease.out)
+        ARRIVE_AT +
+        Math.min(Math.hypot(vx, vy) / ARRIVE_REACH, 1) * ARRIVE_SPREAD
+      const q = progress(frame, start, ARRIVE_FOR, ease.soft)
       if (q <= 0) continue
       ;[dx, dy, alpha] = [vx * 0.3 * (1 - q), vy * 0.3 * (1 - q), q]
     }
