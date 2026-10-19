@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState } from "react"
+import * as FormPrimitives from "react-aria-components/Form"
 
 import {
   ArrowLeftIcon,
@@ -178,24 +179,32 @@ function SendInvoiceDialog({
           {INVOICE_NUMBER} · {formatCurrency(TOTAL)} to Helios Robotics GmbH
         </DialogDescription>
       </DialogHeader>
-      <DialogBody>
-        <TextField value={email} onChange={setEmail} type="email">
-          <Label>Recipient</Label>
-          <Input placeholder="name@company.com" />
-          <Description>A PDF copy is attached to the email.</Description>
-        </TextField>
-        <TextField defaultValue="Hi Marta — invoice for the August sprint work is attached. Shout if anything needs splitting across cost centres.">
-          <Label>Message</Label>
-          <TextArea rows={4} />
-        </TextField>
-      </DialogBody>
-      <DialogFooter>
-        <Button slot="close">Cancel</Button>
-        <Button variant="primary" onPress={() => onSent(email)}>
-          <SendIcon />
-          Send invoice
-        </Button>
-      </DialogFooter>
+      <FormPrimitives.Form
+        className="contents"
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSent(email)
+        }}
+      >
+        <DialogBody>
+          <TextField value={email} onChange={setEmail} type="email" isRequired>
+            <Label>Recipient</Label>
+            <Input placeholder="name@company.com" />
+            <Description>A PDF copy is attached to the email.</Description>
+          </TextField>
+          <TextField defaultValue="Hi Marta — invoice for the August sprint work is attached. Shout if anything needs splitting across cost centres.">
+            <Label>Message</Label>
+            <TextArea rows={4} />
+          </TextField>
+        </DialogBody>
+        <DialogFooter>
+          <Button slot="close">Cancel</Button>
+          <Button variant="primary" type="submit">
+            <SendIcon />
+            Send invoice
+          </Button>
+        </DialogFooter>
+      </FormPrimitives.Form>
     </DialogContent>
   )
 

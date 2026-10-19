@@ -1514,7 +1514,7 @@ export const registryIcons: Record<
     hugeicons: "PauseIcon",
     phosphor: "PauseIcon",
     "material-symbols": "Pause",
-    octicons: "ColumnsIcon",
+    octicons: "PauseIcon",
   },
   SkipBackIcon: {
     lucide: "SkipBackIcon",

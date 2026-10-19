@@ -112,7 +112,7 @@ export {
 	PaintbrushIcon as PaletteIcon,
 	SidebarExpandIcon as PanelLeftIcon,
 	PaperclipIcon,
-	ColumnsIcon as PauseIcon,
+	PauseIcon,
 	PencilIcon,
 	PencilIcon as PenSquareIcon,
 	PencilIcon as PenToolIcon,
