@@ -20,8 +20,8 @@ const fromCenter = (px: number) => `calc(50% + ${px}px)`
 const SLOTS: {
   preset: string
   inset: Record<Side, number | string>
-  /** Scrolls the cards canvas to its end on these axes, cropping it at the image edge. */
-  scrollEnd?: { x?: boolean; y?: boolean }
+  /** The cards canvas point at the window's top-left, in canvas pixels. */
+  scroll?: [number, number]
 }[] = [
   {
     preset: "origin",
@@ -31,7 +31,7 @@ const SLOTS: {
       right: fromCenter(HALF_W),
       bottom: fromCenter(GUTTER - HALF_H),
     },
-    scrollEnd: { x: true, y: true },
+    scroll: [622, 212],
   },
   {
     preset: "linear",
@@ -41,7 +41,7 @@ const SLOTS: {
       left: fromCenter(GUTTER - HALF_W),
       bottom: fromCenter(HALF_H),
     },
-    scrollEnd: { y: true },
+    scroll: [0, 1611],
   },
   {
     preset: "spotify",
@@ -63,7 +63,11 @@ const SLOTS: {
   },
 ]
 
-function PresetContainer({ preset, inset, scrollEnd }: (typeof SLOTS)[number]) {
+function PresetContainer({
+  preset,
+  inset,
+  scroll = [0, 0],
+}: (typeof SLOTS)[number]) {
   const designSystem = resolvePreset(preset)
   // Bleeding sides pad back to the visible edge; the canvas pads itself.
   const pad = (side: Side) => (inset[side] === BLEED ? -BLEED : 0)
@@ -89,15 +93,7 @@ function PresetContainer({ preset, inset, scrollEnd }: (typeof SLOTS)[number]) {
         className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg [&_*]:[content-visibility:visible]!"
       >
         <div
-          style={{
-            zoom: 0.7,
-            ...(scrollEnd && {
-              position: "absolute",
-              width: "max-content",
-              [scrollEnd.x ? "right" : "left"]: 0,
-              [scrollEnd.y ? "bottom" : "top"]: 0,
-            }),
-          }}
+          style={{ zoom: 0.7, marginLeft: -scroll[0], marginTop: -scroll[1] }}
         >
           <CardsCanvas />
         </div>
