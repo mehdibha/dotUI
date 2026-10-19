@@ -1505,7 +1505,7 @@ export const registryIcons: Record<
     hugeicons: "ArrowLeftDoubleIcon",
     phosphor: "CaretDoubleLeftIcon",
     "material-symbols": "KeyboardDoubleArrowLeft",
-    octicons: "ChevronLeftIcon",
+    octicons: "MoveToStartIcon",
   },
   ChevronsRightIcon: {
     lucide: "ChevronsRightIcon",
@@ -1514,7 +1514,7 @@ export const registryIcons: Record<
     hugeicons: "ArrowRightDoubleIcon",
     phosphor: "CaretDoubleRightIcon",
     "material-symbols": "KeyboardDoubleArrowRight",
-    octicons: "ChevronRightIcon",
+    octicons: "MoveToEndIcon",
   },
   CircleDotDashedIcon: {
     lucide: "CircleDotDashedIcon",
