@@ -41,7 +41,7 @@ const SLOTS: {
       left: fromCenter(GUTTER - HALF_W),
       bottom: fromCenter(HALF_H),
     },
-    scroll: [0, 1611],
+    scroll: [0, 182],
   },
   {
     preset: "spotify",
