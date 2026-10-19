@@ -39,7 +39,8 @@ function cssComments(text: string): string[] {
   let i = 0
   while (i < text.length) {
     const ch = text[i]
-    if (ch === '"' || ch === "'") {
+    if (ch === "\\") i += 2
+    else if (ch === '"' || ch === "'") {
       i++
       while (i < text.length && text[i] !== ch) i += text[i] === "\\" ? 2 : 1
       i++
