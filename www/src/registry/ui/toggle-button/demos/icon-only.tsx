@@ -1,4 +1,4 @@
-import { PinIcon } from "@/registry/__generated__/icons"
+import { PinIcon } from "@/registry/icons"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 
 export default function Demo() {

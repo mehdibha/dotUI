@@ -4,7 +4,7 @@ import {
   FlipHorizontalIcon,
   FlipVerticalIcon,
   RotateCwIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Group } from "@/registry/ui/group"
 

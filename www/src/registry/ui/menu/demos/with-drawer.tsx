@@ -4,7 +4,7 @@ import {
   LogOutIcon,
   SettingsIcon,
   UserIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {

@@ -5,8 +5,7 @@ import {
   CalendarIcon,
   SearchIcon,
   SmileIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Card } from "@/registry/ui/card"
 import { Command } from "@/registry/ui/command"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
@@ -30,10 +29,7 @@ export default function Demo({ placeholder = "Type a command..." } = {}) {
             <Input data-control-target placeholder={placeholder} />
           </InputGroup>
         </SearchField>
-        <ListBox
-          aria-label="Suggestions"
-          onAction={() => console.log("action")}
-        >
+        <ListBox aria-label="Suggestions" onAction={() => {}}>
           <ListBoxSection>
             <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>
             <ListBoxItem textValue="Calendar">

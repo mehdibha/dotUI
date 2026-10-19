@@ -36,7 +36,7 @@ export default function ChartRadialExamples() {
           ariaLabel="Visitors by browser"
         />
       </Example>
-      <Example title="Progress Ring">
+      <Example title="Progress ring">
         <RadialBarChart
           className="w-full"
           data={total}

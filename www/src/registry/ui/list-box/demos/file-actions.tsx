@@ -1,5 +1,9 @@
-import { ClipboardIcon, CopyIcon, ScissorsIcon, Trash2Icon } from "lucide-react"
-
+import {
+  ClipboardIcon,
+  CopyIcon,
+  ScissorsIcon,
+  Trash2Icon,
+} from "@/registry/icons"
 import { Kbd } from "@/registry/ui/kbd"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"
@@ -7,7 +11,7 @@ import { Separator } from "@/registry/ui/separator"
 export default function Demo() {
   return (
     <div className="rounded-md border bg-card shadow-sm">
-      <ListBox aria-label="File" onAction={() => console.log("action")}>
+      <ListBox aria-label="File" onAction={() => {}}>
         <ListBoxItem id="cut" textValue="Cut">
           <ScissorsIcon />
           Cut

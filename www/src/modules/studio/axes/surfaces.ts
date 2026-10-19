@@ -384,7 +384,7 @@ export const chapter = defineChapter({
     const sidebar = SHELL_SIDEBAR[state.shellTone]
     if (sidebar) tokens["--color-sidebar"] = sidebar
     const tile = {
-      "card-press": state.surfaceEdge === "ledge" ? "sink" : "none",
+      cardPress: state.surfaceEdge === "ledge" ? "sink" : "none",
     }
     return {
       tokens,

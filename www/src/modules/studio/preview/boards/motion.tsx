@@ -515,7 +515,7 @@ function Toasts({ replay }: { replay: number }) {
       <Invoices />
       <div
         ref={setFrame}
-        className="absolute inset-0 **:data-[slot=toast-viewport]:w-[calc(100%-2*var(--toast-inset))]"
+        className="absolute inset-0 **:data-toast-viewport:w-[calc(100%-2*var(--toast-inset))]"
       >
         {frame && (
           <ToastProvider

@@ -6,7 +6,7 @@ import { cn } from "@/registry/lib/utils"
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
-function Loader({ className, ...props }: LoaderProps) {
+const Loader = ({ className, ...props }: LoaderProps) => {
   return (
     <ProgressBarPrimitives.ProgressBar
       data-loader=""
@@ -29,6 +29,8 @@ function Loader({ className, ...props }: LoaderProps) {
     </ProgressBarPrimitives.ProgressBar>
   )
 }
+
+// MARK: Separator
 
 export type { LoaderProps }
 export { Loader }

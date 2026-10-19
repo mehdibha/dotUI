@@ -1,26 +1,27 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DateFieldPrimitive from "react-aria-components/DateField";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
 
 import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
 
 interface DateFieldProps<
-  T extends DateFieldPrimitive.DateValue,
-> extends DateFieldPrimitive.DateFieldProps<T> {}
+  T extends DateFieldPrimitives.DateValue,
+> extends DateFieldPrimitives.DateFieldProps<T> {}
 
-const DateField = <T extends DateFieldPrimitive.DateValue>({
+const DateField = <T extends DateFieldPrimitives.DateValue>({
   className,
   ...props
 }: DateFieldProps<T>) => {
+  const { field } = fieldStyles();
   return (
-    <DateFieldPrimitive.DateField
+    <DateFieldPrimitives.DateField
       data-date-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />

@@ -1,11 +1,9 @@
 "use client"
 
-import type * as React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
 import * as TabsPrimitives from "react-aria-components/Tabs"
-
-import { createContext } from "@/registry/lib/context"
 
 import { useStyles } from "./styles"
 
@@ -15,16 +13,16 @@ type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
 
 // MARK: Separator
 
-const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
-  name: "TabsContext",
-})
+const TabsContext = React.createContext<TabsProps["orientation"] | null>(null)
+const useTabsContext = (componentName: string) => {
+  const context = React.useContext(TabsContext)
+  if (!context) {
+    throw new Error(`${componentName} must be used within Tabs`)
+  }
+  return context
+}
 
-const [TabListProvider, useTabListContext] = createContext<
-  TabsVariant | undefined
->({
-  name: "TabListContext",
-  strict: false,
-})
+const TabListContext = React.createContext<TabsVariant | undefined>(undefined)
 
 // MARK: Separator
 
@@ -34,13 +32,13 @@ const Tabs = ({ className, ...props }: TabsProps) => {
   const { root } = useStyles()()
   return (
     <TabsPrimitives.Tabs
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        root({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        root({ orientation, className }),
       )}
       {...props}
     >
       {composeRenderProps(props.children, (children, { orientation }) => (
-        <TabsProvider value={orientation}>{children}</TabsProvider>
+        <TabsContext value={orientation}>{children}</TabsContext>
       ))}
     </TabsPrimitives.Tabs>
   )
@@ -57,14 +55,14 @@ interface TabListProps extends React.ComponentProps<
 const TabList = ({ className, variant, ...props }: TabListProps) => {
   const { list } = useStyles()()
   return (
-    <TabListProvider value={variant}>
+    <TabListContext value={variant}>
       <TabsPrimitives.TabList
-        className={composeRenderProps(className, (cn, { orientation }) =>
-          list({ orientation, variant, className: cn }),
+        className={composeRenderProps(className, (className, { orientation }) =>
+          list({ orientation, variant, className }),
         )}
         {...props}
       />
-    </TabListProvider>
+    </TabListContext>
   )
 }
 
@@ -75,13 +73,13 @@ interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 const Tab = ({ className, ...props }: TabProps) => {
   const { item } = useStyles()()
   const orientation = useTabsContext("Tab")
-  const variant = useTabListContext("Tab")
+  const variant = React.useContext(TabListContext)
   return (
     <TabsPrimitives.Tab
       data-tab=""
       data-orientation={orientation}
-      className={composeRenderProps(className, (cn) =>
-        item({ orientation, variant, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        item({ orientation, variant, className }),
       )}
       {...props}
     >
@@ -109,13 +107,13 @@ interface TabIndicatorProps extends React.ComponentProps<
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
   const { indicator } = useStyles()()
   const orientation = useTabsContext("TabIndicator")
-  const variant = useTabListContext("TabIndicator")
+  const variant = React.useContext(TabListContext)
   return (
     <SelectionIndicatorPrimitives.SelectionIndicator
       data-tab-indicator=""
       data-orientation={orientation}
-      className={composeRenderProps(className, (cn) =>
-        indicator({ orientation, variant, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        indicator({ orientation, variant, className }),
       )}
       {...props}
     />
@@ -133,8 +131,8 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
   return (
     <TabsPrimitives.TabPanel
       data-tab-panel
-      className={composeRenderProps(className, (cn) =>
-        panel({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
       )}
       {...props}
     />

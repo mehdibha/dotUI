@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeftIcon, ArrowRightIcon } from "@/registry/__generated__/icons"
+import { ArrowLeftIcon, ArrowRightIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Group } from "@/registry/ui/group"
 

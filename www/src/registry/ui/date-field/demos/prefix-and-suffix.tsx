@@ -1,4 +1,4 @@
-import { CalendarIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/icons"
 import { DateField } from "@/registry/ui/date-field"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 

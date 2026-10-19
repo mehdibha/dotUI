@@ -29,7 +29,7 @@ interface SegmentedControlProps extends Omit<
 const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
   return (
     <ToggleButtonGroupPrimitives.ToggleButtonGroup
-      data-slot="segmented-control"
+      data-segmented-control=""
       selectionMode="single"
       disallowEmptySelection
       className={composeRenderProps(className, (className) =>
@@ -53,7 +53,7 @@ const SegmentedControlItem = ({
 }: SegmentedControlItemProps) => {
   return (
     <ToggleButtonPrimitives.ToggleButton
-      data-slot="segmented-control-item"
+      data-segmented-control-item=""
       className={composeRenderProps(className, (className) =>
         item({ className }),
       )}

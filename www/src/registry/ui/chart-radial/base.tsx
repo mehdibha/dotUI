@@ -265,12 +265,14 @@ const radialTooltip: ChartTooltipContentOf<RadialBarChartSpecOptions<any>> = (
   }
 }
 
+// MARK: Separator
+
 export type RadialBarChartProps<TDatum> = ChartComponentProps<
   RadialBarChartSpecOptions<TDatum>,
   TDatum
 >
 
-export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
+export const RadialBarChart = <TDatum,>(props: RadialBarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     RadialBarChartSpecOptions<TDatum>

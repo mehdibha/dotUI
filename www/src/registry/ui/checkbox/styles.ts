@@ -80,8 +80,8 @@ const { useStyles } = createStyles(checkboxMeta, {
     touch: roomy,
   },
   params: {
-    "card-selected": CHOICE_CARD,
-    "card-press": CHOICE_CARD_PRESS,
+    cardSelected: CHOICE_CARD,
+    cardPress: CHOICE_CARD_PRESS,
   },
 })
 

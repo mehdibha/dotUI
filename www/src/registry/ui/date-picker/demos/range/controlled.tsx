@@ -5,7 +5,7 @@ import { getLocalTimeZone, parseDate } from "@internationalized/date"
 import { useDateFormatter } from "react-aria"
 import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar"
 
-import { CalendarIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { RangeCalendar } from "@/registry/ui/calendar"
 import { DateRangePicker } from "@/registry/ui/date-picker"

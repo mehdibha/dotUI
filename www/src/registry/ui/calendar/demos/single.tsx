@@ -2,10 +2,7 @@
 
 import { getLocalTimeZone, today } from "@internationalized/date"
 
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@/registry/__generated__/icons"
+import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Calendar,

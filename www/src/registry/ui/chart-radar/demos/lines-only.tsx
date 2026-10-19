@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 174, mobile: 204 },
 ]
 
-export default function ChartRadarLinesOnly() {
+export default function Demo() {
   return (
     <RadarChart
       data={data}

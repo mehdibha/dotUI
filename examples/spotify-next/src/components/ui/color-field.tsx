@@ -13,11 +13,12 @@ interface ColorFieldProps extends React.ComponentProps<
 > {}
 
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
+  const { field } = fieldStyles();
   return (
     <ColorFieldPrimitives.ColorField
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />

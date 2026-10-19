@@ -16,7 +16,7 @@ interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
   size?: "sm" | "md" | "lg"
 }
 
-function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
+const TagGroup = ({ className, size = "md", ...props }: TagGroupProps) => {
   const { tagGroup } = useStyles()()
   return (
     <TagGroupPrimitives.TagGroup
@@ -32,13 +32,16 @@ function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
-function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
+const TagList = <T extends object>({
+  className,
+  ...props
+}: TagListProps<T>) => {
   const { tagList } = useStyles()()
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
-      className={composeRenderProps(className, (cn) =>
-        tagList({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        tagList({ className }),
       )}
       {...props}
     />
@@ -50,7 +53,7 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 interface TagProps
   extends TagGroupPrimitives.TagProps, VariantProps<TagGroupStyles> {}
 
-function Tag({ className, appearance, ...props }: TagProps) {
+const Tag = ({ className, appearance, ...props }: TagProps) => {
   const { tag } = useStyles()()
   const textValue =
     typeof props.children === "string" ? props.children : undefined
@@ -78,7 +81,7 @@ function Tag({ className, appearance, ...props }: TagProps) {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TagGroupProps, TagListProps, TagProps }
 export { Tag, TagGroup, TagList }

@@ -56,7 +56,7 @@ const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
   return (
-    <span data-slot="glyph" className="size-4 shrink-0 *:size-full">
+    <span data-glyph="" className="size-4 shrink-0 *:size-full">
       {children}
     </span>
   )

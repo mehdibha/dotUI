@@ -20,7 +20,7 @@ const labels = {
 
 const total = data.reduce((sum, row) => sum + row.visitors, 0)
 
-export default function ChartPieDonutText() {
+export default function Demo() {
   return (
     <PieChart
       data={data}

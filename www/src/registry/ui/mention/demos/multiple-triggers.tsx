@@ -1,8 +1,8 @@
 "use client"
 
-import { FileIcon, TerminalIcon } from "lucide-react"
 import { TokenFieldValue } from "react-aria-components/TokenField"
 
+import { FileIcon, TerminalIcon } from "@/registry/icons"
 import { Mention } from "@/registry/ui/mention"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"

@@ -3,8 +3,7 @@ import {
   GlobeIcon,
   ShieldCheckIcon,
   UserIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import {
   ListBox,
   ListBoxItem,

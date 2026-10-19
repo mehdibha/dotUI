@@ -1,4 +1,4 @@
-import { UploadIcon } from "@/registry/__generated__/icons"
+import { UploadIcon } from "@/registry/icons"
 import { DropZone } from "@/registry/ui/drop-zone"
 
 export default function Demo() {

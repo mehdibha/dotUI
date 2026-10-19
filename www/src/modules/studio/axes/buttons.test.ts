@@ -294,7 +294,7 @@ describe("shipped buttons", () => {
         "scale-[0.97]",
       )
       expect(await shipped(name, { buttonCase: "uppercase" })).toContain(
-        "not-has-data-[slot=select-value]:uppercase",
+        "not-has-data-select-value:uppercase",
       )
       const origin = await shipped(name)
       expect(origin).not.toContain("translate-y-px")

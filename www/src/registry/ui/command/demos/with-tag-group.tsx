@@ -1,7 +1,6 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
-
+import { SearchIcon } from "@/registry/icons"
 import { Command } from "@/registry/ui/command"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { SearchField } from "@/registry/ui/search-field"

@@ -117,7 +117,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
       return (
         <TableContainerContext.Provider value={context}>
           <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
+            data-table-container=""
             className={classNames}
             ref={ref}
             onResize={onResize}
@@ -133,7 +133,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
     return (
       <TableContainerContext.Provider value={context}>
         <div
-          data-slot="table-container"
+          data-table-container=""
           className={classNames}
           ref={ref}
           {...props}
@@ -157,10 +157,10 @@ const Table = ({ className, striped, ...props }: TableProps) => {
 
   return (
     <TablePrimitives.Table
-      data-slot="table"
+      data-table=""
       data-striped={striped || undefined}
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        table({ className }),
       )}
       {...props}
     />
@@ -191,9 +191,9 @@ const TableHeader = <T extends object>({
 
   return (
     <TablePrimitives.TableHeader
-      data-slot="table-header"
-      className={composeRenderProps(className, (cn) =>
-        header({ className: cn }),
+      data-table-header=""
+      className={composeRenderProps(className, (className) =>
+        header({ className }),
       )}
       dependencies={dependencies}
       {...props}
@@ -233,9 +233,9 @@ const TableChromeColumn = ({
   const { chromeColumn } = useStyles()()
   return (
     <TablePrimitives.Column
-      data-slot="table-chrome-column"
-      className={composeRenderProps(className, (cn) =>
-        chromeColumn({ className: cn }),
+      data-table-chrome-column=""
+      className={composeRenderProps(className, (className) =>
+        chromeColumn({ className }),
       )}
       {...props}
     >
@@ -263,9 +263,9 @@ const TableColumn = ({
   const { resizable } = React.useContext(TableContainerContext)
   return (
     <TablePrimitives.Column
-      data-slot="table-column"
-      className={composeRenderProps(className, (cn) =>
-        column({ className: cn }),
+      data-table-column=""
+      className={composeRenderProps(className, (className) =>
+        column({ className }),
       )}
       {...props}
     >
@@ -355,7 +355,7 @@ const TableFooter = <T extends object>({
   const { footer } = useStyles()()
   return (
     <TablePrimitives.TableFooter
-      data-slot="table-footer"
+      data-table-footer=""
       className={footer({ className })}
       dependencies={dependencies}
       {...props}
@@ -374,20 +374,20 @@ const TableFooter = <T extends object>({
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
-function TableRow<T extends object>({
+const TableRow = <T extends object>({
   columns,
   children,
   className,
   dependencies,
   ...props
-}: TableRowProps<T>) {
+}: TableRowProps<T>) => {
   const { dragButton, dragCell, row, selectionCell } = useStyles()()
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions()
 
   return (
     <TablePrimitives.Row
-      data-slot="table-row"
+      data-table-row=""
       className={composeRenderProps(
         className,
         (className, { isFocusVisibleWithin }) =>
@@ -439,8 +439,10 @@ const TableCell = ({
   const { cell, expandButton, expandIcon } = useStyles()()
   return (
     <TablePrimitives.Cell
-      data-slot="table-cell"
-      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
+      data-table-cell=""
+      className={composeRenderProps(className, (className) =>
+        cell({ className }),
+      )}
       style={composeRenderProps(
         style,
         (style, { hasChildItems, isTreeColumn, level }) => ({
@@ -489,8 +491,8 @@ const TableDropIndicator = ({
 
   return (
     <DragAndDropPrimitives.DropIndicator
-      className={composeRenderProps(className, (cn) =>
-        dropIndicator({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        dropIndicator({ className }),
       )}
       {...props}
     >

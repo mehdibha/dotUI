@@ -1,5 +1,9 @@
-import { BookmarkIcon, FlameIcon, SparklesIcon, TagIcon } from "lucide-react"
-
+import {
+  BookmarkIcon,
+  FlameIcon,
+  SparklesIcon,
+  TagIcon,
+} from "@/registry/icons"
 import { Label } from "@/registry/ui/field"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 

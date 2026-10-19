@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-export default function ChartLineStep() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

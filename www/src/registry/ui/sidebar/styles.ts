@@ -140,7 +140,7 @@ const { useStyles } = createStyles(sidebarMeta, {
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
         "group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
-        "group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8",
+        "group-has-data-sidebar-menu-action/menu-item:pr-8",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
       ],
       menuAction: [
