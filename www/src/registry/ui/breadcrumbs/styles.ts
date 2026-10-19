@@ -6,6 +6,7 @@ import {
   LINK_HOVER,
   LINK_NEUTRAL,
   LINK_NEUTRAL_WEIGHT,
+  LINK_NEVER,
 } from "../link/styles"
 import breadcrumbsMeta from "./meta"
 
@@ -31,7 +32,7 @@ const { useStyles } = createStyles(breadcrumbsMeta, {
         slots: { link: [LINK_ACCENT, LINK_ALWAYS, "current:no-underline"] },
       },
       "accent-hover": { slots: { link: [LINK_ACCENT, LINK_HOVER] } },
-      "accent-never": { slots: { link: LINK_ACCENT } },
+      "accent-never": { slots: { link: [LINK_ACCENT, LINK_NEVER] } },
       // The current crumb drops the weight too, or it reads as an ancestor.
       "neutral-always": {
         slots: {
@@ -55,7 +56,12 @@ const { useStyles } = createStyles(breadcrumbsMeta, {
       },
       "neutral-never": {
         slots: {
-          link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL, "current:font-normal"],
+          link: [
+            LINK_NEUTRAL_WEIGHT,
+            LINK_NEUTRAL,
+            LINK_NEVER,
+            "current:font-normal",
+          ],
         },
       },
     },

@@ -274,7 +274,7 @@ describe("navigation recipes", () => {
         .replace(" current:no-underline", "")
       expect(own, value).toBe(recipe(color, underline))
     }
-    for (const name of ["button", "toggle-button"]) {
+    for (const name of ["button"]) {
       const button = config(name).params
       for (const value of linkMeta.params.underline.values)
         expect(

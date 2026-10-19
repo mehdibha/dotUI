@@ -13,6 +13,7 @@ import type { StudioState } from "../axes"
 import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
 import {
   CASE_OPTIONS,
+  DANGER_OPTIONS,
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
   SECONDARY_OPTIONS,
@@ -164,6 +165,12 @@ function ButtonSecondaryRow() {
   )
 }
 
+function ButtonDangerRow() {
+  return (
+    <DialSelect axis="buttonDanger" label="Danger" options={DANGER_OPTIONS} />
+  )
+}
+
 function ButtonRadiusRow() {
   return (
     <DialSelect axis="buttonRadius" label="Corners" options={RADIUS_OPTIONS} />
@@ -235,6 +242,7 @@ function PaginationCurrentRow() {
 export const ROWS: RowMap = {
   buttonStyle: ButtonStyleRow,
   buttonSecondary: ButtonSecondaryRow,
+  buttonDanger: ButtonDangerRow,
   buttonRadius: ButtonRadiusRow,
   buttonPress: ButtonPressRow,
   buttonCase: ButtonCaseRow,

@@ -52,16 +52,6 @@ const toggleButtonMeta = {
       default: "tone",
       values: ["tone", "solid", "tint", "inverse"] as const,
     },
-    linkUnderline: {
-      default: "never",
-      values: ["always", "hover", "never"] as const,
-      description: "The link variant's underline, from the link recipe.",
-    },
-    linkColor: {
-      default: "accent",
-      values: ["accent", "neutral"] as const,
-      description: "The link variant's color, from the link recipe.",
-    },
   },
 } satisfies RegistryItem
 

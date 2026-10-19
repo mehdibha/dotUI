@@ -73,7 +73,7 @@ describe("homes", () => {
     expect(where("checkboxMotion")).toBe("checkbox")
   })
 
-  it("keeps a page to eight rows; Button holds nine", () => {
+  it("keeps a page to eight rows; Button holds ten", () => {
     const pages = [
       ...FOUNDATION_PAGES.map(
         (page) => [page.id, pageRows(page.id).length] as const,
@@ -81,7 +81,7 @@ describe("homes", () => {
       ...COMPONENTS.map((c) => [c.id, c.rows.length] as const),
     ]
     for (const [id, count] of pages)
-      expect(count, id).toBeLessThanOrEqual(id === "button" ? 9 : 8)
+      expect(count, id).toBeLessThanOrEqual(id === "button" ? 10 : 8)
   })
 
   it("names each component row's value by its lead option", () => {

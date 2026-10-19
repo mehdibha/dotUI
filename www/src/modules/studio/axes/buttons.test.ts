@@ -99,7 +99,8 @@ describe("button styles", () => {
   })
 })
 
-/* The toggle imports Button's tables, so every shared param flattens alike. */
+/* The toggle imports Button's tables, so every shared param flattens alike
+   on the variants it has (no link or status ones). */
 describe("button ⇄ toggle-button parity", () => {
   const configs = async () => ({
     button: (await publishables.button!()).publishable.stylesConfig,
@@ -109,43 +110,57 @@ describe("button ⇄ toggle-button parity", () => {
     stylesConfig: Awaited<ReturnType<typeof configs>>["button"],
     meta: typeof buttonMeta | typeof toggleButtonMeta,
     paramSelections: Record<string, string>,
-  ) =>
-    flatten({ stylesConfig, meta, density: "default", paramSelections })
-      .variants
+  ) => {
+    const { variant, ...rest } = flatten({
+      stylesConfig,
+      meta,
+      density: "default",
+      paramSelections,
+    }).variants as Record<string, Record<string, unknown>>
+    const { primary, secondary, quiet } = variant ?? {}
+    return { ...rest, variant: { primary, secondary, quiet } }
+  }
 
-  test.each([
-    "style",
-    "secondary",
-    "press",
-    "case",
-    "linkUnderline",
-    "linkColor",
-  ] as const)("%s flattens to the same variants on both", async (param) => {
-    const { button, toggle } = await configs()
-    for (const value of buttonMeta.params[param].values) {
-      const selection = { [param]: value }
-      expect(
-        variantsOf(toggle, toggleButtonMeta, selection),
-        `${param}=${value}`,
-      ).toEqual(variantsOf(button, buttonMeta, selection))
-      expect(toggle.params?.[param]?.[value], `${param}=${value}`).toEqual(
-        button.params?.[param]?.[value],
-      )
-    }
-  })
+  test.each(["style", "secondary", "press", "case"] as const)(
+    "%s flattens to the same variants on both",
+    async (param) => {
+      const { button, toggle } = await configs()
+      for (const value of buttonMeta.params[param].values) {
+        const selection = { [param]: value }
+        // The selected look aside: Button only wears it as a current page.
+        expect(
+          variantsOf(toggle, toggleButtonMeta, {
+            ...selection,
+            selected: "none",
+          }),
+          `${param}=${value}`,
+        ).toEqual(variantsOf(button, buttonMeta, selection))
+        expect(toggle.params?.[param]?.[value], `${param}=${value}`).toEqual(
+          button.params?.[param]?.[value],
+        )
+      }
+    },
+  )
 
   test("both list the same values", () => {
-    for (const param of [
-      "style",
-      "secondary",
-      "press",
-      "case",
-      "linkUnderline",
-      "linkColor",
-    ] as const)
+    for (const param of ["style", "secondary", "press", "case"] as const)
       expect(toggleButtonMeta.params[param].values, param).toEqual(
         buttonMeta.params[param].values,
       )
+  })
+
+  test("the toggle has no link or status variants", async () => {
+    const { toggle } = await configs()
+    expect(
+      Object.keys(
+        flatten({
+          stylesConfig: toggle,
+          meta: toggleButtonMeta,
+          density: "default",
+          paramSelections: {},
+        }).variants?.variant ?? {},
+      ),
+    ).toEqual(["primary", "secondary", "quiet"])
   })
 
   test("the toggle's selected looks are the current page's", async () => {
@@ -254,6 +269,30 @@ describe("buttons axes", () => {
     expect(ds.componentParams.button?.current).toBe("tint")
   })
 
+  test("Danger: Solid is the style's own fill; a closed style hides the row", () => {
+    const danger = (state: Partial<typeof DEFAULTS>) =>
+      designSystemOf(parseState(state)).componentParams.button?.danger
+    expect(danger({})).toBe("flat")
+    expect(danger({ buttonStyle: "hairline" })).toBe("hairline")
+    expect(danger({ buttonDanger: "tint" })).toBe("tint")
+    const state = parseState({ ...owned("bevel"), buttonDanger: "outline" })
+    expect(danger(state)).toBe("bevel")
+    expect(effective(state).explain.buttonDanger?.lock?.kind).toBe("hide")
+    expect(
+      designSystemOf(state).componentParams["toggle-button"],
+    ).not.toHaveProperty("danger")
+  })
+
+  test("Tonal secondaries select with Solid", () => {
+    const { values } = effective(parseState({ buttonSecondary: "tonal" }))
+    expect(values.toggleSelected).toBe("solid")
+    expect(
+      effective(
+        parseState({ buttonSecondary: "tonal", toggleSelected: "inverse" }),
+      ).values.toggleSelected,
+    ).toBe("inverse")
+  })
+
   test("Pill writes the button radius vars; Same as controls writes none", () => {
     expect(designSystemOf(parseState({})).tokens).toEqual({})
     expect(designSystemOf(parseState({ buttonRadius: "pill" })).tokens).toEqual(
@@ -283,6 +322,37 @@ describe("shipped buttons", () => {
           line,
         ).toBe(1)
     }
+  })
+
+  test.each([
+    ["solid", "bg-danger hover:bg-danger-hover"],
+    ["tint", "bg-danger-muted text-fg-danger"],
+    ["outline", "border-border-danger bg-transparent text-fg-danger"],
+  ])(
+    "danger %s ships one fill and one text color",
+    async (buttonDanger, sig) => {
+      const content = await shipped("button", { buttonDanger })
+      expect(content).toContain(sig)
+      for (const variant of ["warning", "danger"]) {
+        const line = content.match(new RegExp(`${variant}:\\s*"([^"]*)"`))?.[1]
+        expect(line, variant).toBeDefined()
+        for (const prop of ["text", "bg"])
+          expect(
+            line?.match(
+              new RegExp(
+                `(?<![:\\w-])${prop}-(?:[\\w-]+|\\(--[\\w-]+\\))`,
+                "g",
+              ),
+            )?.length ?? 0,
+            `${variant} ${prop}`,
+          ).toBe(1)
+      }
+    },
+  )
+
+  test("the toggle ships no link or status variants", async () => {
+    const content = await shipped("toggle-button")
+    expect(content).not.toMatch(/\b(?:link|warning|danger):/)
   })
 
   test("press and case ship on both", async () => {

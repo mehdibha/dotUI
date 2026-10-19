@@ -7,6 +7,7 @@ import linkMeta from "./meta"
    reads without color, so its underline is its definition, not a policy. */
 export const LINK_ALWAYS = "underline underline-offset-2"
 export const LINK_HOVER = "underline-offset-2 hover:underline"
+export const LINK_NEVER = "hover:opacity-80"
 export const LINK_ACCENT = "text-fg-accent"
 export const LINK_NEUTRAL = "text-fg"
 // Weight is the only resting cue a neutral link gets (Supabase, Geist); a
@@ -35,7 +36,7 @@ const { useStyles, styles } = createStyles(linkMeta, {
     underline: {
       always: { variants: { variant: { default: LINK_ALWAYS } } },
       hover: { variants: { variant: { default: LINK_HOVER } } },
-      never: {},
+      never: { variants: { variant: { default: LINK_NEVER } } },
     },
     color: {
       accent: { variants: { variant: { default: LINK_ACCENT } } },

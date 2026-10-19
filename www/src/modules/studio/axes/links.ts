@@ -3,8 +3,7 @@
    until Emphasis lands).
 
    `underline` and `color` are params on `link` (its default variant),
-   `linkUnderline` and `linkColor` on `button` and `toggle-button`
-   (their link variant); breadcrumbs fold both into `ancestors`. */
+   `linkUnderline` and `linkColor` on `button` (its link variant); breadcrumbs fold both into `ancestors`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -31,10 +30,6 @@ export const chapter = defineChapter({
       params: {
         link: { underline: state.linkUnderline, color: state.linkColor },
         button: {
-          linkUnderline: state.linkUnderline,
-          linkColor: state.linkColor,
-        },
-        "toggle-button": {
           linkUnderline: state.linkUnderline,
           linkColor: state.linkColor,
         },

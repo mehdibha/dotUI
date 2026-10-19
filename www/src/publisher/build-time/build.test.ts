@@ -91,7 +91,8 @@ describe("extractStylesConfig", () => {
     const toggle = extractStylesConfig(
       path.join(REGISTRY_UI, "toggle-button/styles.ts"),
     )
-    expect(toggle.base.variants?.variant).toEqual(button.base.variants?.variant)
+    const { primary, secondary, quiet } = button.base.variants?.variant ?? {}
+    expect(toggle.base.variants?.variant).toEqual({ primary, secondary, quiet })
     expect(toggle.density).toEqual(button.density)
     for (const param of ["style", "secondary", "press", "case"])
       expect(toggle.params?.[param], param).toEqual(button.params?.[param])

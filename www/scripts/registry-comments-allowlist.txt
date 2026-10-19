@@ -122,14 +122,12 @@ src/registry/ui/button/styles.ts: // Clerk: a same-color ring, two tight drops, 
 src/registry/ui/button/styles.ts: // Duolingo's stroke button: the control stroke (Duolingo sets 2px) and a
 src/registry/ui/button/styles.ts: // Duolingo: a 4px lip a shade under the fill (2px on xs, standing in for
 src/registry/ui/button/styles.ts: // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
-src/registry/ui/button/styles.ts: // M3, Spectrum 2: the selection fill. A primary toggle already wears a
 src/registry/ui/button/styles.ts: // Material 3's filled tonal: the brand's muted tint under its ink.
 src/registry/ui/button/styles.ts: // One neutral step down (shadcn, Fluent, Polaris, Untitled UI).
 src/registry/ui/button/styles.ts: // Pending keeps the face; the spinner takes the label's ink.
 src/registry/ui/button/styles.ts: // Polaris: a white card plate (it holds on a grouped page) with a gray
 src/registry/ui/button/styles.ts: // Radix (soft gray), Airbnb, Spectrum 2: a gray fill, no edge.
 src/registry/ui/button/styles.ts: // Shopify Polaris: a deep inset rim and a bottom sheen; press inverts
-src/registry/ui/button/styles.ts: // Snaps to full contrast. Primary already wears the inverse color, so it
 src/registry/ui/button/styles.ts: // Supabase, Claude, shadcn vega: a card plate on an edge and an xs drop;
 src/registry/ui/button/styles.ts: // Supabase: shrinks to 97%.
 src/registry/ui/button/styles.ts: // The mode swap rides local vars so disabled and selected still win.
@@ -142,11 +140,8 @@ src/registry/ui/button/styles.ts: // choice card.
 src/registry/ui/button/styles.ts: // dark lifts the plate instead. The plate rides a local var so selected
 src/registry/ui/button/styles.ts: // disabled sink into it; hover is a brightness filter; nothing eases.
 src/registry/ui/button/styles.ts: // dotUI's own: solid fills.
-src/registry/ui/button/styles.ts: // fill, so it keeps the tone.
-src/registry/ui/button/styles.ts: // flips the other way: a page chip inside an inverse hairline (shadow-none
 src/registry/ui/button/styles.ts: // hover (the fill lightens) and returns on press.
 src/registry/ui/button/styles.ts: // its 26px pill size): the
-src/registry/ui/button/styles.ts: // keeps the ring composite valid on flat styles).
 src/registry/ui/button/styles.ts: // ramp's pressed step in light, which flips lighter in dark. Press and
 src/registry/ui/button/styles.ts: // shadcn, Geist, Notion, Stripe: an edge on no fill.
 src/registry/ui/button/styles.ts: // shadcn, Mantine: down a pixel.

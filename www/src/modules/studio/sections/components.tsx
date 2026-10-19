@@ -37,6 +37,7 @@ export const COMPONENTS: Component[] = [
     rows: [
       ["buttonStyle", "Style"],
       ["buttonSecondary", "Secondary"],
+      ["buttonDanger", "Danger"],
       ["buttonPress", "Press"],
       ["buttonRadius", "Corners"],
       ["buttonCase", "Case"],

@@ -5,13 +5,13 @@ import {
   BUTTON_CASE,
   BUTTON_DENSITY,
   BUTTON_ICON_ONLY,
-  BUTTON_LINK_COLOR,
-  BUTTON_LINK_UNDERLINE,
   BUTTON_PRESS,
   BUTTON_SECONDARY,
   BUTTON_SIZE,
   BUTTON_STYLES,
-  BUTTON_VARIANTS,
+  PRIMARY_VARIANT,
+  QUIET_VARIANT,
+  SECONDARY_VARIANT,
   SELECTED_LOOKS,
 } from "../button/styles"
 import toggleButtonMeta from "./meta"
@@ -25,7 +25,11 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       "disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
     ],
     variants: {
-      variant: BUTTON_VARIANTS,
+      variant: {
+        primary: PRIMARY_VARIANT,
+        secondary: SECONDARY_VARIANT,
+        quiet: QUIET_VARIANT,
+      },
       size: BUTTON_SIZE,
       isIconOnly: BUTTON_ICON_ONLY,
     },
@@ -48,8 +52,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     press: BUTTON_PRESS,
     case: BUTTON_CASE,
     selected: SELECTED_LOOKS,
-    linkUnderline: BUTTON_LINK_UNDERLINE,
-    linkColor: BUTTON_LINK_COLOR,
   },
 })
 

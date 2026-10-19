@@ -43,6 +43,21 @@ const buttonMeta = {
       ] as const,
       description: "The secondary button: a style's own, or one swapped in.",
     },
+    danger: {
+      default: "flat",
+      values: [
+        "flat",
+        "hairline",
+        "rim-light",
+        "gloss",
+        "bevel",
+        "ledge",
+        "tint",
+        "outline",
+      ] as const,
+      description:
+        "Warning and danger buttons: a style's own fill, a tint or an outline.",
+    },
     press: {
       default: "as-style",
       values: ["as-style", "nudge", "scale"] as const,

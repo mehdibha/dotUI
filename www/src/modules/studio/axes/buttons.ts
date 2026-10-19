@@ -1,5 +1,5 @@
 /* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
-   here writes both). Style picks a real system's recipe, copied whole; an
+   here but Danger writes both; a toggle has no status variants). Style picks a real system's recipe, copied whole; an
    open style (Flat, Hairline) lets Secondary and Press swap in, a closed one
    draws its own. Under Ledge, groups always sit apart. */
 
@@ -28,6 +28,9 @@ export const SECONDARY_VALUES = [
   "solid",
 ] as const
 
+// Warning buttons follow.
+export const DANGER_VALUES = ["solid", "tint", "outline"] as const
+
 export const RADIUS_VALUES = ["same", "pill"] as const
 
 export const PRESS_VALUES = ["as-style", "nudge", "scale"] as const
@@ -41,6 +44,7 @@ export const chapter = defineChapter({
   defaults: {
     buttonStyle: "flat",
     buttonSecondary: "as-style",
+    buttonDanger: "solid",
     buttonRadius: "same",
     buttonPress: "as-style",
     buttonCase: "sentence",
@@ -48,6 +52,7 @@ export const chapter = defineChapter({
   schema: {
     buttonStyle: oneOf(STYLE_VALUES),
     buttonSecondary: oneOf(SECONDARY_VALUES),
+    buttonDanger: oneOf(DANGER_VALUES),
     buttonRadius: oneOf(RADIUS_VALUES),
     buttonPress: oneOf(PRESS_VALUES),
     buttonCase: oneOf(CASE_VALUES),
@@ -71,7 +76,10 @@ export const chapter = defineChapter({
             }
           : {},
       params: {
-        button: selection,
+        button: {
+          ...selection,
+          danger: state.buttonDanger === "solid" ? style : state.buttonDanger,
+        },
         "toggle-button": selection,
         group: segments,
         "toggle-button-group": segments,
@@ -98,6 +106,14 @@ export const chapter = defineChapter({
       target: "buttonSecondary",
       when: closed,
       effect: { kind: "hide", value: "as-style" },
+      cause: "buttonStyle",
+    },
+    {
+      // A tint or outline beside a closed style's fills reads unfinished.
+      id: "buttons/closed-style-owns-danger",
+      target: "buttonDanger",
+      when: closed,
+      effect: { kind: "hide", value: "solid" },
       cause: "buttonStyle",
     },
     {

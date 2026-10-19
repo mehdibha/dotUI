@@ -1,5 +1,6 @@
 import {
   CASE_VALUES,
+  DANGER_VALUES,
   PRESS_VALUES,
   RADIUS_VALUES,
   SECONDARY_VALUES,
@@ -73,6 +74,24 @@ export const SECONDARY_OPTIONS = options(SECONDARY_VALUES, {
   },
 })
 
+export const DANGER_OPTIONS = options(DANGER_VALUES, {
+  solid: {
+    label: "Solid",
+    description: "A red fill, drawn by the button Style",
+    credits: ["Carbon", "Polaris", "Geist"],
+  },
+  tint: {
+    label: "Tint",
+    description: "A light red fill, red text",
+    credits: ["shadcn", "Radix"],
+  },
+  outline: {
+    label: "Outline",
+    description: "A red edge and red text, no fill",
+    credits: ["Ant Design", "Carbon"],
+  },
+})
+
 export const RADIUS_OPTIONS = options(RADIUS_VALUES, {
   same: {
     label: "Same as controls",
@@ -120,6 +139,7 @@ export const CASE_OPTIONS = options(CASE_VALUES, {
 export const OPTIONS = {
   buttonStyle: STYLE_OPTIONS,
   buttonSecondary: SECONDARY_OPTIONS,
+  buttonDanger: DANGER_OPTIONS,
   buttonRadius: RADIUS_OPTIONS,
   buttonPress: PRESS_OPTIONS,
   buttonCase: CASE_OPTIONS,

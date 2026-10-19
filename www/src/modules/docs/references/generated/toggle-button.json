@@ -3,19 +3,11 @@
   "description": "A toggle button allows a user to toggle a selection on or off, for example switching between two states or modes.",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"link\" | \"primary\" | \"quiet\" | \"secondary\" | \"warning\"",
-      "detailedType": "| 'danger'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'secondary'\n| 'warning'\n| undefined",
+      "type": "\"primary\" | \"quiet\" | \"secondary\"",
+      "detailedType": "'primary' | 'quiet' | 'secondary' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "link"
-          },
           {
             "type": "stringLiteral",
             "value": "primary"
@@ -27,14 +19,10 @@
           {
             "type": "stringLiteral",
             "value": "secondary"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
           }
         ]
       },
-      "description": "The visual style of the toggle button.",
+      "description": "The visual style of the toggle button. A primary toggle rests as a\nsecondary one and fills with the primary color when selected.",
       "default": "'secondary'"
     },
     "size": {

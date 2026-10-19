@@ -71,7 +71,8 @@ describe("columns", () => {
     for (const style of STYLE_VALUES)
       expect(valuesOf({ style }), style).toMatchObject({
         controlEdge: "firm",
-        toggleSelected: "tone",
+        // Tonal's secondary is the brand tint: its toggles select Solid.
+        toggleSelected: style === "tonal" ? "solid" : "tone",
         toastStyle: "surface",
         menuInset: "inset",
         menuSelectedRow: "none",

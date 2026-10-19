@@ -8,6 +8,7 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "ledge",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -41,8 +42,6 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -63,7 +62,7 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+exports[`rules > buttons/closed-style-owns-danger: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -71,69 +70,7 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "ledge",
-      "style": "ledge",
-    },
-    "checkbox": {
-      "card-press": "sink",
-      "card-selected": "tint",
-    },
-    "group": {
-      "segments": "gapped",
-      "separator": "shared-edge",
-    },
-    "input": {
-      "errorIcon": "none",
-      "height": "controls",
-      "hover": "edge",
-      "style": "well",
-      "text": "same",
-    },
-    "radio-group": {
-      "card-press": "sink",
-      "card-selected": "tint",
-      "mark": "dot",
-    },
-    "switch": {
-      "card-press": "sink",
-      "card-selected": "tint",
-      "style": "inset",
-    },
-    "toggle-button": {
-      "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "ledge",
-      "selected": "tone",
-      "style": "ledge",
-    },
-    "toggle-button-group": {
-      "segments": "gapped",
-      "separator": "shared-edge",
-    },
-  },
-  "tokens": {
-    "--shadow-modal": "0 0 #0000",
-    "--shadow-popover": "0 0 #0000",
-    "--studio-card-stroke": "1px 1px 3px",
-    "--studio-tile-lip": "2px",
-    "--studio-tile-stroke": "1px 1px 3px",
-  },
-}
-`;
-
-exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "button": {
-      "case": "sentence",
-      "current": "none",
+      "danger": "bevel",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -165,8 +102,125 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
     },
     "toggle-button": {
       "case": "sentence",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "danger": "ledge",
       "linkColor": "accent",
       "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "checkbox": {
+      "card-press": "sink",
+      "card-selected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "radio-group": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "mark": "dot",
+    },
+    "switch": {
+      "card-press": "sink",
+      "card-selected": "tint",
+      "style": "inset",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
+  },
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "danger": "bevel",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
       "press": "as-style",
       "secondary": "bevel",
       "selected": "tone",
@@ -470,6 +524,7 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "ledge",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -503,8 +558,6 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -542,6 +595,7 @@ exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "bevel",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -573,8 +627,6 @@ exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "selected": "tone",
@@ -600,6 +652,7 @@ exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "flat",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -631,18 +684,16 @@ exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
       "chip": "inverse",
       "color": "neutral",
       "indicator": "full",
-      "pill": "tone",
+      "pill": "solid",
       "style": "segmented",
       "track": "filled",
       "weight": "medium",
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "tonal",
-      "selected": "tone",
+      "selected": "solid",
       "style": "flat",
     },
     "toggle-button-group": {
@@ -681,6 +732,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "ledge",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -714,8 +766,6 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -753,6 +803,7 @@ exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "bevel",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -784,8 +835,6 @@ exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "selected": "tone",
@@ -836,6 +885,7 @@ exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then hold
     "button": {
       "case": "sentence",
       "current": "none",
+      "danger": "flat",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
@@ -858,11 +908,54 @@ exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then hold
     },
     "toggle-button": {
       "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "solid",
       "selected": "inverse",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > toggles/tonal-secondary-needs-solid-selected: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "danger": "flat",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "tone",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "solid",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "tonal",
+      "selected": "solid",
       "style": "flat",
     },
     "toggle-button-group": {

@@ -5,6 +5,7 @@ import {
   LINK_ALWAYS,
   LINK_HOVER,
   LINK_NEUTRAL,
+  LINK_NEVER,
 } from "../link/styles"
 import buttonMeta from "./meta"
 
@@ -26,31 +27,31 @@ export const BUTTON_SIZE = {
 
 export const BUTTON_ICON_ONLY = { true: "p-0" }
 
+export const PRIMARY_VARIANT =
+  "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))"
+export const SECONDARY_VARIANT =
+  "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))"
+export const QUIET_VARIANT =
+  "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20"
+
 export const BUTTON_VARIANTS = {
-  primary:
-    "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
-  secondary:
-    "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
-  quiet:
-    "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+  primary: PRIMARY_VARIANT,
+  secondary: SECONDARY_VARIANT,
+  quiet: QUIET_VARIANT,
   link: "disabled:text-(--disabled-fg,var(--color-fg))",
-  warning:
-    "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
-  danger:
-    "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
+  warning: "",
+  danger: "",
 }
 
 /* Each style is a real system's recipe, copied whole: its fills, edges,
-   hover and press. Its secondary lives in BUTTON_SECONDARY under the same
-   name. */
+   hover and press. Its secondary lives in BUTTON_SECONDARY and its
+   warning and danger in BUTTON_DANGER, under the same name. */
 export const BUTTON_STYLES = {
   // dotUI's own: solid fills.
   flat: {
     variants: {
       variant: {
         primary: "bg-primary hover:bg-primary-hover pressed:bg-primary-active",
-        warning: "bg-warning hover:bg-warning-hover pressed:bg-warning-active",
-        danger: "bg-danger hover:bg-danger-hover pressed:bg-danger-active",
       },
     },
   },
@@ -61,10 +62,6 @@ export const BUTTON_STYLES = {
       variant: {
         primary:
           "border border-black/15 bg-primary shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-primary-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-primary-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
-        warning:
-          "border border-black/15 bg-warning shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-warning-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-warning-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
-        danger:
-          "border border-black/15 bg-danger shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-danger-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-danger-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
       },
     },
   },
@@ -75,10 +72,6 @@ export const BUTTON_STYLES = {
       variant: {
         primary:
           "bg-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-primary-hover disabled:shadow-none disabled:after:hidden",
-        warning:
-          "bg-warning shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-warning-hover disabled:shadow-none disabled:after:hidden",
-        danger:
-          "bg-danger shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-danger-hover disabled:shadow-none disabled:after:hidden",
       },
     },
   },
@@ -89,10 +82,6 @@ export const BUTTON_STYLES = {
       variant: {
         primary:
           "isolate bg-primary shadow-[0_0_0_1px_var(--color-primary),inset_0_1px_1px_0_rgb(255_255_255/0.07),0_2px_3px_0_rgb(34_42_53/0.2),0_1px_1px_0_rgb(0_0_0/0.24)] after:pointer-events-none after:absolute after:inset-0 after:-z-1 after:rounded-[inherit] after:bg-linear-to-b after:from-white/11 after:to-transparent after:transition-opacity hover:bg-[color-mix(in_srgb,var(--color-primary),white_20%)] hover:after:opacity-0 disabled:shadow-none pressed:after:opacity-100",
-        warning:
-          "isolate bg-warning shadow-[0_0_0_1px_var(--color-warning),inset_0_1px_1px_0_rgb(255_255_255/0.07),0_2px_3px_0_rgb(34_42_53/0.2),0_1px_1px_0_rgb(0_0_0/0.24)] after:pointer-events-none after:absolute after:inset-0 after:-z-1 after:rounded-[inherit] after:bg-linear-to-b after:from-white/11 after:to-transparent after:transition-opacity hover:bg-[color-mix(in_srgb,var(--color-warning),white_20%)] hover:after:opacity-0 disabled:shadow-none pressed:after:opacity-100",
-        danger:
-          "isolate bg-danger shadow-[0_0_0_1px_var(--color-danger),inset_0_1px_1px_0_rgb(255_255_255/0.07),0_2px_3px_0_rgb(34_42_53/0.2),0_1px_1px_0_rgb(0_0_0/0.24)] after:pointer-events-none after:absolute after:inset-0 after:-z-1 after:rounded-[inherit] after:bg-linear-to-b after:from-white/11 after:to-transparent after:transition-opacity hover:bg-[color-mix(in_srgb,var(--color-danger),white_20%)] hover:after:opacity-0 disabled:shadow-none pressed:after:opacity-100",
       },
     },
   },
@@ -103,10 +92,6 @@ export const BUTTON_STYLES = {
       variant: {
         primary:
           "bg-primary bg-linear-to-b from-transparent from-63% to-white/15 shadow-[inset_0_-1px_0_1px_rgb(0_0_0/0.8),inset_0_0_0_1px_var(--color-primary),inset_0_0.5px_0_1.5px_rgb(255_255_255/0.25)] hover:bg-primary-hover disabled:bg-none disabled:shadow-none pressed:bg-primary-hover pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(0_0_0/0.2),inset_1px_0_1px_0_rgb(0_0_0/0.2),inset_0_2px_0_0_rgb(0_0_0/0.6)]",
-        warning:
-          "bg-warning bg-linear-to-b from-transparent from-63% to-white/15 shadow-[inset_0_-1px_0_1px_rgb(0_0_0/0.8),inset_0_0_0_1px_var(--color-warning),inset_0_0.5px_0_1.5px_rgb(255_255_255/0.25)] hover:bg-warning-hover disabled:bg-none disabled:shadow-none pressed:bg-warning-hover pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(0_0_0/0.2),inset_1px_0_1px_0_rgb(0_0_0/0.2),inset_0_2px_0_0_rgb(0_0_0/0.6)]",
-        danger:
-          "bg-danger bg-linear-to-b from-transparent from-63% to-white/15 shadow-[inset_0_-1px_0_1px_rgb(0_0_0/0.8),inset_0_0_0_1px_var(--color-danger),inset_0_0.5px_0_1.5px_rgb(255_255_255/0.25)] hover:bg-danger-hover disabled:bg-none disabled:shadow-none pressed:bg-danger-hover pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(0_0_0/0.2),inset_1px_0_1px_0_rgb(0_0_0/0.2),inset_0_2px_0_0_rgb(0_0_0/0.6)]",
       },
     },
   },
@@ -119,10 +104,6 @@ export const BUTTON_STYLES = {
       variant: {
         primary:
           "bg-primary shadow-[0_4px_0_0_var(--color-primary-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
-        warning:
-          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
-        danger:
-          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
       },
     },
     compoundVariants: [
@@ -132,6 +113,100 @@ export const BUTTON_STYLES = {
         class:
           "shadow-[0_2px_0_0_var(--color-primary-active)] disabled:translate-y-0.5 dark:shadow-[0_2px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-0.5",
       },
+    ],
+  },
+}
+
+const WARNING_SOLID =
+  "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))"
+const DANGER_SOLID =
+  "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))"
+
+export const BUTTON_DANGER = {
+  flat: {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "bg-warning hover:bg-warning-hover pressed:bg-warning-active",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "bg-danger hover:bg-danger-hover pressed:bg-danger-active",
+        ],
+      },
+    },
+  },
+  hairline: {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "border border-black/15 bg-warning shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-warning-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-warning-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "border border-black/15 bg-danger shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-danger-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-danger-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
+        ],
+      },
+    },
+  },
+  "rim-light": {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "bg-warning shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-warning-hover disabled:shadow-none disabled:after:hidden",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "bg-danger shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-danger-hover disabled:shadow-none disabled:after:hidden",
+        ],
+      },
+    },
+  },
+  gloss: {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "isolate bg-warning shadow-[0_0_0_1px_var(--color-warning),inset_0_1px_1px_0_rgb(255_255_255/0.07),0_2px_3px_0_rgb(34_42_53/0.2),0_1px_1px_0_rgb(0_0_0/0.24)] after:pointer-events-none after:absolute after:inset-0 after:-z-1 after:rounded-[inherit] after:bg-linear-to-b after:from-white/11 after:to-transparent after:transition-opacity hover:bg-[color-mix(in_srgb,var(--color-warning),white_20%)] hover:after:opacity-0 disabled:shadow-none pressed:after:opacity-100",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "isolate bg-danger shadow-[0_0_0_1px_var(--color-danger),inset_0_1px_1px_0_rgb(255_255_255/0.07),0_2px_3px_0_rgb(34_42_53/0.2),0_1px_1px_0_rgb(0_0_0/0.24)] after:pointer-events-none after:absolute after:inset-0 after:-z-1 after:rounded-[inherit] after:bg-linear-to-b after:from-white/11 after:to-transparent after:transition-opacity hover:bg-[color-mix(in_srgb,var(--color-danger),white_20%)] hover:after:opacity-0 disabled:shadow-none pressed:after:opacity-100",
+        ],
+      },
+    },
+  },
+  bevel: {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "bg-warning bg-linear-to-b from-transparent from-63% to-white/15 shadow-[inset_0_-1px_0_1px_rgb(0_0_0/0.8),inset_0_0_0_1px_var(--color-warning),inset_0_0.5px_0_1.5px_rgb(255_255_255/0.25)] hover:bg-warning-hover disabled:bg-none disabled:shadow-none pressed:bg-warning-hover pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(0_0_0/0.2),inset_1px_0_1px_0_rgb(0_0_0/0.2),inset_0_2px_0_0_rgb(0_0_0/0.6)]",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "bg-danger bg-linear-to-b from-transparent from-63% to-white/15 shadow-[inset_0_-1px_0_1px_rgb(0_0_0/0.8),inset_0_0_0_1px_var(--color-danger),inset_0_0.5px_0_1.5px_rgb(255_255_255/0.25)] hover:bg-danger-hover disabled:bg-none disabled:shadow-none pressed:bg-danger-hover pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(0_0_0/0.2),inset_1px_0_1px_0_rgb(0_0_0/0.2),inset_0_2px_0_0_rgb(0_0_0/0.6)]",
+        ],
+      },
+    },
+  },
+  ledge: {
+    variants: {
+      variant: {
+        warning: [
+          WARNING_SOLID,
+          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
+        ],
+        danger: [
+          DANGER_SOLID,
+          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
+        ],
+      },
+    },
+    compoundVariants: [
       {
         variant: "warning" as const,
         size: "xs" as const,
@@ -145,6 +220,26 @@ export const BUTTON_STYLES = {
           "shadow-[0_2px_0_0_var(--color-danger-active)] disabled:translate-y-0.5 dark:shadow-[0_2px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-0.5",
       },
     ],
+  },
+  tint: {
+    variants: {
+      variant: {
+        warning:
+          "bg-warning-muted text-fg-warning hover:bg-warning-muted-hover disabled:bg-(--disabled-bg,var(--color-warning-muted)) disabled:text-(--disabled-fg,var(--color-fg-warning)) pressed:bg-warning-muted-hover",
+        danger:
+          "bg-danger-muted text-fg-danger hover:bg-danger-muted-hover disabled:bg-(--disabled-bg,var(--color-danger-muted)) disabled:text-(--disabled-fg,var(--color-fg-danger)) pressed:bg-danger-muted-hover",
+      },
+    },
+  },
+  outline: {
+    variants: {
+      variant: {
+        warning:
+          "border-(length:--studio-control-stroke) border-border-warning bg-transparent text-fg-warning hover:bg-warning-muted disabled:border-(--disabled-border,var(--color-border-warning)) disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg-warning)) pressed:bg-warning-muted-hover",
+        danger:
+          "border-(length:--studio-control-stroke) border-border-danger bg-transparent text-fg-danger hover:bg-danger-muted disabled:border-(--disabled-border,var(--color-border-danger)) disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg-danger)) pressed:bg-danger-muted-hover",
+      },
+    },
   },
 }
 
@@ -292,13 +387,17 @@ export const SELECTED_INVERSE_INK = "selected:text-fg-inverse"
 /* A selected toggle's look; a current pagination page can wear it too. */
 export const SELECTED_LOOKS = {
   // One neutral step down (shadcn, Fluent, Polaris, Untitled UI).
-  tone: { base: [SELECTED_TONE_FILL, SELECTED_TONE_INK] },
-  // M3, Spectrum 2: the selection fill. A primary toggle already wears a
-  // fill, so it keeps the tone.
+  tone: {
+    variants: {
+      variant: {
+        secondary: [SELECTED_TONE_FILL, SELECTED_TONE_INK],
+        quiet: [SELECTED_TONE_FILL, SELECTED_TONE_INK],
+      },
+    },
+  },
   solid: {
     variants: {
       variant: {
-        primary: [SELECTED_TONE_FILL, SELECTED_TONE_INK],
         secondary:
           "selected:border-selection selected:bg-selection selected:text-fg-on-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover",
         quiet: [SELECTED_SOLID_FILL, SELECTED_SOLID_INK],
@@ -310,21 +409,15 @@ export const SELECTED_LOOKS = {
   tint: {
     variants: {
       variant: {
-        primary: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
         secondary:
           "selected:border-selection/25 selected:bg-selection-muted selected:text-fg",
         quiet: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
       },
     },
   },
-  // Snaps to full contrast. Primary already wears the inverse color, so it
-  // flips the other way: a page chip inside an inverse hairline (shadow-none
-  // keeps the ring composite valid on flat styles).
   inverse: {
     variants: {
       variant: {
-        primary:
-          "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
         secondary:
           "selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
         quiet: [SELECTED_INVERSE_FILL, SELECTED_INVERSE_INK],
@@ -337,7 +430,7 @@ export const SELECTED_LOOKS = {
 export const BUTTON_LINK_UNDERLINE = {
   always: { variants: { variant: { link: LINK_ALWAYS } } },
   hover: { variants: { variant: { link: LINK_HOVER } } },
-  never: {},
+  never: { variants: { variant: { link: LINK_NEVER } } },
 }
 export const BUTTON_LINK_COLOR = {
   accent: { variants: { variant: { link: LINK_ACCENT } } },
@@ -426,6 +519,7 @@ const { useStyles, styles } = createStyles(buttonMeta, {
   params: {
     style: BUTTON_STYLES,
     secondary: BUTTON_SECONDARY,
+    danger: BUTTON_DANGER,
     press: BUTTON_PRESS,
     case: BUTTON_CASE,
     current: SELECTED_LOOKS,

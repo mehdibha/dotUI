@@ -437,6 +437,14 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "tactile", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
   ],
+  "toggles/tonal-secondary-needs-solid-selected": [
+    { buttonSecondary: "tonal" },
+    { buttonSecondary: "soft" },
+  ],
+  "buttons/closed-style-owns-danger": [
+    { style: "tactile", buttonDanger: "tint" },
+    { buttonDanger: "tint" },
+  ],
   "buttons/closed-style-owns-press": [
     { style: "chunky", buttonPress: "nudge" },
     { buttonPress: "nudge" },

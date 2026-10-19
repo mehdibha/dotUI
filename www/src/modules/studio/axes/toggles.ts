@@ -33,5 +33,13 @@ export const chapter = defineChapter({
       },
       cause: "buttonSecondary",
     },
+    {
+      // Tone and Tint would read backwards: off is the brand's tint, on gray.
+      id: "toggles/tonal-secondary-needs-solid-selected",
+      target: "toggleSelected",
+      when: { key: "buttonSecondary", in: ["tonal"] },
+      effect: { kind: "exclude", options: ["tone", "tint"], fallback: "solid" },
+      cause: "buttonSecondary",
+    },
   ],
 })

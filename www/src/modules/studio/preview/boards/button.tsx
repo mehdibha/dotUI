@@ -78,6 +78,7 @@ const VARIANTS = [
 const BUTTON_EMPHASIS: Record<string, string> = {
   buttonColor: "primary",
   buttonSecondary: "secondary",
+  buttonDanger: "danger",
   buttonPress: "pressed",
 }
 
@@ -194,7 +195,11 @@ function ToggleStates() {
             <span
               {...props}
               {...icon}
-              className={styles({ variant: "primary", isIconOnly: true })}
+              className={styles({
+                // As ToggleButton does: primary only once it is on.
+                variant: props["data-selected"] ? "primary" : "secondary",
+                isIconOnly: true,
+              })}
             >
               <BellIcon />
             </span>
