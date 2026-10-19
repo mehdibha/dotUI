@@ -70,6 +70,7 @@ import {
 	FolderOpenIcon as LucideFolderOpenIcon,
 	FolderPlusIcon as LucideFolderPlusIcon,
 	FolderSearchIcon as LucideFolderSearchIcon,
+	ForwardIcon as LucideForwardIcon,
 	FrameIcon as LucideFrameIcon,
 	GitBranchIcon as LucideGitBranchIcon,
 	GlobeIcon as LucideGlobeIcon,
@@ -108,20 +109,28 @@ import {
 	MoreHorizontalIcon as LucideMoreHorizontalIcon,
 	MoreVerticalIcon as LucideMoreVerticalIcon,
 	MousePointer2Icon as LucideMousePointer2Icon,
+	MusicIcon as LucideMusicIcon,
 	OctagonXIcon as LucideOctagonXIcon,
 	PaletteIcon as LucidePaletteIcon,
 	PanelLeftIcon as LucidePanelLeftIcon,
 	PaperclipIcon as LucidePaperclipIcon,
+	PauseIcon as LucidePauseIcon,
 	PencilIcon as LucidePencilIcon,
 	PenSquareIcon as LucidePenSquareIcon,
 	PenToolIcon as LucidePenToolIcon,
 	PinIcon as LucidePinIcon,
+	PlayIcon as LucidePlayIcon,
 	PlugIcon as LucidePlugIcon,
 	PlusCircleIcon as LucidePlusCircleIcon,
 	PlusIcon as LucidePlusIcon,
 	PlusSquareIcon as LucidePlusSquareIcon,
+	PrinterIcon as LucidePrinterIcon,
 	RadioIcon as LucideRadioIcon,
 	RefreshCwIcon as LucideRefreshCwIcon,
+	Repeat1Icon as LucideRepeat1Icon,
+	RepeatIcon as LucideRepeatIcon,
+	ReplyAllIcon as LucideReplyAllIcon,
+	ReplyIcon as LucideReplyIcon,
 	RotateCcwIcon as LucideRotateCcwIcon,
 	RotateCwIcon as LucideRotateCwIcon,
 	RowsIcon as LucideRowsIcon,
@@ -139,8 +148,11 @@ import {
 	ShieldIcon as LucideShieldIcon,
 	ShoppingBagIcon as LucideShoppingBagIcon,
 	ShoppingCartIcon as LucideShoppingCartIcon,
+	ShuffleIcon as LucideShuffleIcon,
 	SignalHighIcon as LucideSignalHighIcon,
 	SignalIcon as LucideSignalIcon,
+	SkipBackIcon as LucideSkipBackIcon,
+	SkipForwardIcon as LucideSkipForwardIcon,
 	SlashSquareIcon as LucideSlashSquareIcon,
 	SmartphoneIcon as LucideSmartphoneIcon,
 	SmileIcon as LucideSmileIcon,
@@ -338,6 +350,18 @@ export const MousePointer2Icon = createIcon(LucideMousePointer2Icon, "MousePoint
 export const RulerIcon = createIcon(LucideRulerIcon, "RulerIcon");
 export const ShapesIcon = createIcon(LucideShapesIcon, "ShapesIcon");
 export const TypeIcon = createIcon(LucideTypeIcon, "TypeIcon");
+export const PlayIcon = createIcon(LucidePlayIcon, "PlayIcon");
+export const PauseIcon = createIcon(LucidePauseIcon, "PauseIcon");
+export const SkipBackIcon = createIcon(LucideSkipBackIcon, "SkipBackIcon");
+export const SkipForwardIcon = createIcon(LucideSkipForwardIcon, "SkipForwardIcon");
+export const ShuffleIcon = createIcon(LucideShuffleIcon, "ShuffleIcon");
+export const RepeatIcon = createIcon(LucideRepeatIcon, "RepeatIcon");
+export const Repeat1Icon = createIcon(LucideRepeat1Icon, "Repeat1Icon");
+export const MusicIcon = createIcon(LucideMusicIcon, "MusicIcon");
+export const ReplyIcon = createIcon(LucideReplyIcon, "ReplyIcon");
+export const ReplyAllIcon = createIcon(LucideReplyAllIcon, "ReplyAllIcon");
+export const ForwardIcon = createIcon(LucideForwardIcon, "ForwardIcon");
+export const PrinterIcon = createIcon(LucidePrinterIcon, "PrinterIcon");
 export const ChevronsLeftIcon = createIcon(LucideChevronsLeftIcon, "ChevronsLeftIcon");
 export const ChevronsRightIcon = createIcon(LucideChevronsRightIcon, "ChevronsRightIcon");
 export const CircleDotDashedIcon = createIcon(LucideCircleDotDashedIcon, "CircleDotDashedIcon");
