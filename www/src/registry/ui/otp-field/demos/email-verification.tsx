@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { Mail } from "lucide-react"
 
+import { MailIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Description, FieldError, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
@@ -38,7 +38,7 @@ export default function Demo() {
       onSubmit={handleSubmit}
     >
       <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <Mail className="size-5" />
+        <MailIcon className="size-5" />
       </div>
       <div className="flex flex-col gap-1">
         <h3 className="text-base font-semibold">Verify your email</h3>

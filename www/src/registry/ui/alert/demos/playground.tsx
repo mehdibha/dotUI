@@ -1,6 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
+import type React from "react"
 
 import {
   Alert,
@@ -18,7 +18,7 @@ export default function Demo({
   title?: string
   description?: string
   variant?: AlertProps["variant"]
-  icon?: ReactNode
+  icon?: React.ReactNode
 } = {}) {
   return (
     <Alert variant={variant} className="w-full max-w-md">

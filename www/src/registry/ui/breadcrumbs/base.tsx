@@ -1,6 +1,7 @@
 "use client"
 
-import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs"
+import type * as React from "react"
+import * as BreadcrumbsPrimitives from "react-aria-components/Breadcrumbs"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { createParamValue } from "@/lib/styles"
@@ -24,7 +25,7 @@ const useSeparatorGlyph = createParamValue({
 
 interface BreadcrumbsProps<
   T extends object,
-> extends BreadcrumbsPrimitive.BreadcrumbsProps<T> {
+> extends BreadcrumbsPrimitives.BreadcrumbsProps<T> {
   ref?: React.RefObject<HTMLOListElement>
 }
 const Breadcrumbs = <T extends object>({
@@ -33,7 +34,7 @@ const Breadcrumbs = <T extends object>({
 }: BreadcrumbsProps<T>) => {
   const { root } = useStyles()()
   return (
-    <BreadcrumbsPrimitive.Breadcrumbs
+    <BreadcrumbsPrimitives.Breadcrumbs
       data-breadcrumbs=""
       className={root({ className })}
       {...props}
@@ -44,12 +45,12 @@ const Breadcrumbs = <T extends object>({
 // MARK: Separator
 
 interface BreadcrumbItemProps extends React.ComponentProps<
-  typeof BreadcrumbsPrimitive.Breadcrumb
+  typeof BreadcrumbsPrimitives.Breadcrumb
 > {}
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
   const { item } = useStyles()()
   return (
-    <BreadcrumbsPrimitive.Breadcrumb
+    <BreadcrumbsPrimitives.Breadcrumb
       data-breadcrumb-item=""
       className={composeRenderProps(className, (className) =>
         item({ className }),
@@ -62,12 +63,12 @@ const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
 // MARK: Separator
 
 interface BreadcrumbLinkProps extends React.ComponentProps<
-  typeof BreadcrumbsPrimitive.Link
+  typeof BreadcrumbsPrimitives.Link
 > {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
   const { link } = useStyles()()
   return (
-    <BreadcrumbsPrimitive.Link
+    <BreadcrumbsPrimitives.Link
       data-breadcrumb-link=""
       className={composeRenderProps(className, (className) =>
         link({ className }),

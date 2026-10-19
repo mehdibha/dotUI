@@ -8,47 +8,21 @@
  * (that lives in the www semantic layer).
  */
 
-export {
-  type ChartSet,
-  createTheme,
-  type ModeOutput,
-  type Theme,
-  type ThemeReport,
-} from "./theme"
+export { createTheme, type ModeOutput, type Theme } from "./theme"
 export type { ThemeOptions } from "./schema"
 
-export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from "./data"
+export { STEPS, type StepName } from "./data"
 
-export { type GuaranteeResult } from "./verify"
 export { type Mode } from "./scale"
 
 // Color ops for the semantic layer, the builder UI, and the playground.
 export {
-  cusp,
   fitSrgb,
   lstarOf,
-  maxChroma,
   mixOklab,
   type Oklch,
   oklchCss,
   toHex,
   toOklch,
 } from "./space"
-export {
-  apca,
-  type CvdKind,
-  deltaEok,
-  minPairwiseDeltaEok,
-  simulateCvd,
-  wcag2,
-} from "./meters"
-export {
-  CATEGORICAL_CHROMA,
-  categoricalGateReport,
-  categoricalPalette,
-  categoricalPalettes,
-  divergingPalette,
-  sequentialPalette,
-  tonalCategoricalPalette,
-  tonalGateReport,
-} from "./charts"
+export { wcag2 } from "./meters"

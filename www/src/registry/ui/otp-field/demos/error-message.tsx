@@ -2,7 +2,7 @@ import { FieldError, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field"
 
-export default function ErrorMessage() {
+export default function Demo() {
   return (
     <OTPField length={6} isInvalid>
       <Label>Verification code</Label>

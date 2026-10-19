@@ -18,7 +18,7 @@ const labels = {
   other: "Other",
 }
 
-export default function ChartPieLabel() {
+export default function Demo() {
   return (
     <PieChart
       data={data}

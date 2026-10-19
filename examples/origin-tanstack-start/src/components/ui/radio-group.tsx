@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext, useContext, useId } from "react";
-import type * as React from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
@@ -42,19 +41,18 @@ const RadioGroup = ({
 /* -------------------------------------------------------------------------- */
 
 const InternalRadioContext =
-  createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
+  React.createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
 
 interface RadioProps extends React.ComponentProps<
   typeof RadioGroupPrimitives.RadioField
 > {}
 
 const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
-  const autoId = useId();
+  const autoId = React.useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
   return (
     <RadioGroupPrimitives.RadioField
-      data-slot="radio"
       data-radio=""
       id={id}
       aria-labelledby={labelId}
@@ -117,7 +115,7 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
 interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
-  const ctx = useContext(InternalRadioContext);
+  const ctx = React.useContext(InternalRadioContext);
   return (
     <span
       data-radio-indicator=""
@@ -142,6 +140,8 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 /* -------------------------------------------------------------------------- */
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   RadioControlProps,

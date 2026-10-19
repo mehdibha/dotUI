@@ -4,7 +4,7 @@ import {
   HomeIcon,
   InboxIcon,
   PlusIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import {
   Sidebar,
   SidebarContent,

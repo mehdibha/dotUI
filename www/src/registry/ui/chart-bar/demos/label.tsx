@@ -25,7 +25,7 @@ const labels = [
   }),
 ]
 
-export default function ChartBarLabel() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

@@ -1,4 +1,4 @@
-import { CalendarIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { RangeCalendar } from "@/registry/ui/calendar"
 import { DateRangePicker } from "@/registry/ui/date-picker"
@@ -9,7 +9,7 @@ import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (
-    <DateRangePicker className="w-52" aria-label="Meeting date" isInvalid>
+    <DateRangePicker className="w-52" isInvalid>
       <Label>Meeting date</Label>
       <InputGroup>
         <DateInput slot="start" />

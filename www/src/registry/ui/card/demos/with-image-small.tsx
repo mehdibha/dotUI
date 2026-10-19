@@ -1,4 +1,4 @@
-import { PlusIcon } from "@/registry/__generated__/icons"
+import { PlusIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Card,

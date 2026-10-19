@@ -10,9 +10,7 @@ import {
   SignalIcon,
   WifiIcon,
   ZapIcon,
-  type LucideIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import {
   Table,
@@ -28,7 +26,7 @@ type Issue = {
   id: string
   title: string
   description: string
-  icon: LucideIcon
+  icon: typeof SearchIcon
   iconClassName: string
 }
 

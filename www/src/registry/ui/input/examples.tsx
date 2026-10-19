@@ -48,7 +48,7 @@ function InputInvalid() {
 
 function InputWithLabel() {
   return (
-    <Example title="With Label">
+    <Example title="With label">
       <TextField>
         <Label>Email</Label>
         <Input type="email" placeholder="name@example.com" />
@@ -59,7 +59,7 @@ function InputWithLabel() {
 
 function InputWithDescription() {
   return (
-    <Example title="With Description">
+    <Example title="With description">
       <TextField>
         <Label>Username</Label>
         <Input type="text" placeholder="Enter your username" />
@@ -82,7 +82,7 @@ function InputDisabled() {
 
 function InputTypes() {
   return (
-    <Example title="Input Types">
+    <Example title="Input types">
       <div className="flex w-full flex-col gap-6">
         <TextField>
           <Label>Password</Label>
@@ -123,7 +123,7 @@ function InputTypes() {
 
 function InputWithSelect() {
   return (
-    <Example title="With Select">
+    <Example title="With select">
       <div className="flex w-full gap-2">
         <Input type="text" placeholder="Enter amount" className="flex-1" />
         <Select aria-label="Currency" defaultSelectedKey="usd">
@@ -143,7 +143,7 @@ function InputWithSelect() {
 
 function InputWithButton() {
   return (
-    <Example title="With Button">
+    <Example title="With button">
       <div className="flex w-full gap-2">
         <Input type="search" placeholder="Search..." className="flex-1" />
         <Button>Search</Button>

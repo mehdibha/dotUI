@@ -7,7 +7,36 @@ links:
 wip: true
 ---
 
-<Demo name="otp-field/demos/basic" />
+<InteractiveDemo
+  name="otp-field"
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Verification code",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "string",
+      name: "errorMessage",
+      defaultValue: "",
+      placeholder: "Error text",
+    },
+    {
+      name: "length",
+      options: [4, 5, 6, 7, 8],
+    },
+    "mask",
+    "isDisabled",
+    "isReadOnly",
+    "isInvalid",
+  ]}
+/>
 
 ## Installation
 

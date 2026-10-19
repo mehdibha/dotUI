@@ -7,10 +7,9 @@ const { useStyles, styles } = createStyles(fieldMeta, {
     slots: {
       fieldset: "",
       legend: "",
-      fieldGroup:
-        "group/field-group @container/field-group flex w-full flex-col",
+      fieldGroup: "@container/field-group flex w-full flex-col",
       field:
-        "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+        "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
       fieldContent: "flex flex-col gap-1",
       label: [
         "inline-flex items-center gap-px select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3",
@@ -25,8 +24,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
     variants: {
       orientation: {
         horizontal: {
-          field:
-            "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+          field: "flex-row items-center gap-2 has-data-description:items-start",
         },
         vertical: {
           field: "w-full flex-col gap-2",

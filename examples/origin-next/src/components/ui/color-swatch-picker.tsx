@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type * as React from "react";
 import * as ColorSwatchPickerPrimitives from "react-aria-components/ColorSwatchPicker";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
@@ -10,7 +10,7 @@ import { tv } from "tailwind-variants";
 const colorSwatchPickerVariants = tv({
   slots: {
     root: "flex flex-wrap gap-1",
-    item: "relative rounded-md transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit] focus-reset focus-visible:focus-ring-outside disabled:cursor-disabled disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]! before:absolute before:inset-0 before:scale-90 before:rounded-[inherit] before:bg-(--surface-bg,var(--color-bg)) before:opacity-0 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:content-[''] selected:before:scale-100 selected:before:opacity-100 size-8",
+    item: "relative rounded-md transition-shadow focus:z-10 focus-reset focus-visible:focus-ring-outside disabled:cursor-disabled disabled:*:data-color-swatch:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]! before:absolute before:inset-0 before:scale-90 before:rounded-[inherit] before:bg-(--surface-bg,var(--color-bg)) before:opacity-0 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:content-[''] selected:before:scale-100 selected:before:opacity-100 size-8",
   },
 });
 
@@ -30,6 +30,8 @@ const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface ColorSwatchPickerItemProps extends React.ComponentProps<
   typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem
@@ -58,6 +60,8 @@ const ColorSwatchPickerItem = ({
     </ColorSwatchPickerPrimitives.ColorSwatchPickerItem>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ColorSwatchPickerItemProps, ColorSwatchPickerProps };
 export { ColorSwatchPicker, ColorSwatchPickerItem };

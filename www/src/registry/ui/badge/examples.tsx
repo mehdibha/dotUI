@@ -46,7 +46,7 @@ function BadgeVariants() {
 
 function BadgeWithIconLeft() {
   return (
-    <Example title="Icon Left" className="max-w-fit">
+    <Example title="Icon left" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
           ["neutral", "accent", "danger", "success", "warning", "info"] as const
@@ -63,7 +63,7 @@ function BadgeWithIconLeft() {
 
 function BadgeWithIconRight() {
   return (
-    <Example title="Icon Right" className="max-w-fit">
+    <Example title="Icon right" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
           ["neutral", "accent", "danger", "success", "warning", "info"] as const
@@ -80,7 +80,7 @@ function BadgeWithIconRight() {
 
 function BadgeWithSpinner() {
   return (
-    <Example title="With Spinner" className="max-w-fit">
+    <Example title="With spinner" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
           ["neutral", "accent", "danger", "success", "warning", "info"] as const
@@ -97,7 +97,7 @@ function BadgeWithSpinner() {
 
 function BadgeLongText() {
   return (
-    <Example title="Long Text">
+    <Example title="Long text">
       <div className="flex flex-wrap gap-2">
         <Badge>A badge with a lot of text to see how it wraps</Badge>
       </div>
@@ -107,7 +107,7 @@ function BadgeLongText() {
 
 function BadgeCustomColors() {
   return (
-    <Example title="Custom Colors" className="max-w-fit">
+    <Example title="Custom colors" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         <Badge className="bg-blue-600 text-blue-50 dark:bg-blue-600 dark:text-blue-50">
           Blue

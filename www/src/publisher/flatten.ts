@@ -21,8 +21,6 @@ import type {
   VariantSliceValue,
 } from "./types"
 
-/* -------------------------------- class merge -------------------------------- */
-
 function toClassArray(value: ClassValue | undefined): string[] {
   if (value == null || value === false) return []
   if (Array.isArray(value)) return value.flatMap(toClassArray)
@@ -164,8 +162,6 @@ function mergeVariantSlice(
   return result
 }
 
-/* --------------------------------- merge tv --------------------------------- */
-
 function mergeSlots(
   a: Record<string, ClassValue> | undefined,
   b: Record<string, ClassValue> | undefined,
@@ -242,9 +238,7 @@ function mergeLayer(a: TvLayer, b: TvLayer): TvLayer {
   return merged
 }
 
-/* --------------------------------- entry --------------------------------- */
-
-export interface FlattenInput {
+interface FlattenInput {
   stylesConfig: StylesConfig
   meta: RegistryItem
   density: Density

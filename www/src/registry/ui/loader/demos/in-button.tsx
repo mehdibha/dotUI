@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Button } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 
 export default function Demo() {
-  const [isSaving, setIsSaving] = useState(false)
+  const [isSaving, setIsSaving] = React.useState(false)
   return (
     <Button
       isDisabled={isSaving}

@@ -8,7 +8,8 @@
 import { blue } from "@radix-ui/colors"
 import { expect, test } from "vitest"
 
-import { createTheme, deltaEok, STEPS, toOklch } from "./index"
+import { createTheme, STEPS, toOklch } from "./index"
+import { deltaEok } from "./meters"
 
 test("a blue-9 seed regenerates the Radix blue scale within the bar", () => {
   const theme = createTheme(blue.blue9)

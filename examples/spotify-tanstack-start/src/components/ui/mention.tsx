@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete";
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete";
+import type { Key } from "react-aria-components/Collection";
 import { MenuContext } from "react-aria-components/Menu";
-import type { Key } from "react-aria-components/Menu";
 import { PopoverContext } from "react-aria-components/Popover";
 import { Provider } from "react-aria-components/slots";
 import {
@@ -15,15 +15,6 @@ import { useControlledState } from "react-stately/useControlledState";
 import type { PopoverProps } from "@/components/ui/popover";
 import { TokenField } from "@/components/ui/token-field";
 import type { TokenFieldProps } from "@/components/ui/token-field";
-import { tv } from "tailwind-variants";
-
-const mentionVariants = tv({
-  slots: {
-    root: "group/mention",
-  },
-});
-
-const { root } = mentionVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -52,18 +43,17 @@ const escapeRegExp = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Typing a trigger opens a caret-anchored `Menu` of suggestions; selecting one inserts it as an inline token. */
-function Mention({
+const Mention = ({
   trigger = "@",
   getItemText = (key) => String(key),
   placement = "bottom start",
-  className,
   children,
   value: valueProp,
   defaultValue,
   onChange,
   ...props
-}: MentionProps) {
-  const { startsWith } = AutocompletePrimitive.useFilter({
+}: MentionProps) => {
+  const { startsWith } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
   });
   const [value, setValue] = useControlledState(
@@ -159,7 +149,7 @@ function Mention({
   );
 
   return (
-    <AutocompletePrimitive.Autocomplete
+    <AutocompletePrimitives.Autocomplete
       inputValue={active?.query ?? ""}
       filter={startsWith}
     >
@@ -182,13 +172,7 @@ function Mention({
           [MenuContext, { onAction: insert }],
         ]}
       >
-        <TokenField
-          {...props}
-          ref={rootRef}
-          value={value}
-          onChange={setValue}
-          className={root({ className })}
-        >
+        <TokenField {...props} ref={rootRef} value={value} onChange={setValue}>
           {typeof children === "function"
             ? children({
                 trigger: active?.trigger ?? null,
@@ -197,9 +181,9 @@ function Mention({
             : children}
         </TokenField>
       </Provider>
-    </AutocompletePrimitive.Autocomplete>
+    </AutocompletePrimitives.Autocomplete>
   );
-}
+};
 
 const emptyValue = new TokenFieldValue([]);
 

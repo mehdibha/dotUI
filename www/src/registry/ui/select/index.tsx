@@ -1,5 +1,5 @@
 import { use } from "react"
-import * as ButtonPrimitive from "react-aria-components/Button"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { SelectStateContext } from "react-aria-components/Select"
 
@@ -33,7 +33,7 @@ const FieldDoubleTrigger = ({
   const { trigger } = useInputStyles()()
   const isInvalid = use(SelectStateContext)?.displayValidation.isInvalid
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       data-select-trigger=""
       data-size={size}
       data-invalid={isInvalid || undefined}
@@ -43,7 +43,7 @@ const FieldDoubleTrigger = ({
       {...props}
     >
       {withDoubleCaret(children)}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
 

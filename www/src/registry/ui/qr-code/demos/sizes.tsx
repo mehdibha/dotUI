@@ -1,6 +1,6 @@
 import { QRCode } from "@/registry/ui/qr-code"
 
-export default function Sizes() {
+export default function Demo() {
   return (
     <div className="flex items-end gap-4">
       <QRCode value="https://dotui.org" className="size-20" />

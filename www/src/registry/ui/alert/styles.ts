@@ -32,13 +32,6 @@ const { useStyles, styles } = createStyles(alertMeta, {
       variant: "neutral",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     style: {
       // shadcn, HeroUI: the card, its hairline, the status in the ink.

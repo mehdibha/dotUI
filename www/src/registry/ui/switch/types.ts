@@ -1,10 +1,10 @@
-import type * as SwitchPrimitive from "react-aria-components/Switch"
+import type * as SwitchPrimitives from "react-aria-components/Switch"
 
 /**
  * A switch allows a user to turn a setting on or off.
  */
 export interface SwitchProps extends React.ComponentProps<
-  typeof SwitchPrimitive.SwitchField
+  typeof SwitchPrimitives.SwitchField
 > {
   /**
    * The size of the switch.
@@ -17,7 +17,7 @@ export interface SwitchProps extends React.ComponentProps<
  * The control element of a switch.
  */
 export interface SwitchControlProps extends React.ComponentProps<
-  typeof SwitchPrimitive.SwitchButton
+  typeof SwitchPrimitives.SwitchButton
 > {
   /**
    * The size of the switch control.

@@ -1,5 +1,4 @@
-import { PaletteIcon } from "lucide-react"
-
+import { PaletteIcon } from "@/registry/icons"
 import { ColorField } from "@/registry/ui/color-field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 

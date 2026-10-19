@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 import type { ChartValue } from "@tanstack/charts"
 
 import { LineChart } from "@/registry/ui/chart-line"
@@ -32,8 +32,8 @@ const totals = {
   mobile: data.reduce((sum, row) => sum + row.mobile, 0),
 }
 
-export default function ChartLineInteractive() {
-  const [series, setSeries] = useState<Series>("desktop")
+export default function Demo() {
+  const [series, setSeries] = React.useState<Series>("desktop")
 
   return (
     <div className="flex w-full flex-col gap-4">

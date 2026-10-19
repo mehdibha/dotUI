@@ -1,5 +1,4 @@
-import { Star } from "lucide-react"
-
+import { StarIcon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
@@ -46,9 +45,9 @@ export default function Demo() {
           <div className="flex items-center gap-1.5 text-sm">
             <div className="flex text-warning">
               {Array.from({ length: 4 }).map((_, i) => (
-                <Star key={i} className="size-3.5 fill-current" />
+                <StarIcon key={i} className="size-3.5 fill-current" />
               ))}
-              <Star className="size-3.5" />
+              <StarIcon className="size-3.5" />
             </div>
             <span className="text-fg-muted">4.0 (128 reviews)</span>
           </div>

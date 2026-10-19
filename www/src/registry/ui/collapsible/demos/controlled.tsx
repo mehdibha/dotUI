@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { ChevronDownIcon } from "@/registry/__generated__/icons"
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
 

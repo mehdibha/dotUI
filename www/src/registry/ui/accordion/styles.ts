@@ -3,10 +3,10 @@ import { createStyles } from "@/lib/styles"
 import { CONTAINER_SURFACE } from "../card/styles"
 import accordionMeta from "./meta"
 
-const expand =
+export const EXPAND =
   "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
 
-const { useStyles, styles } = createStyles(accordionMeta, {
+const { useStyles } = createStyles(accordionMeta, {
   base: {
     slots: {
       root: "flex w-full flex-col",
@@ -23,19 +23,12 @@ const { useStyles, styles } = createStyles(accordionMeta, {
       panelContent: "pb-3",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
   params: {
     motion: {
       expand: {
         slots: {
-          marker: [expand, "transition-transform"],
-          panel: [expand, "motion-safe:transition-[height]"],
+          marker: [EXPAND, "transition-transform"],
+          panel: [EXPAND, "motion-safe:transition-[height]"],
         },
       },
       none: {},
@@ -85,7 +78,5 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     },
   },
 })
-
-export type AccordionStyles = typeof styles
 
 export { useStyles }

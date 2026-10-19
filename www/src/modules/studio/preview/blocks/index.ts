@@ -8,15 +8,13 @@ export interface BlockMeta {
 // Every planned real-world block. A block appears in the /studio preview picker
 // once its `./<slug>.tsx` file lands — entries without a file are simply not
 // offered yet, so this list can stay ahead of the implementations.
-// Slugs share a namespace with component and group-example slugs and are looked
-// up first — never reuse one of those (e.g. a calendar block must not be
-// slugged "calendar", which is a component).
+// Slugs share a namespace with component slugs and are looked up first — never
+// reuse one (e.g. a calendar block must not be slugged "calendar").
 export const BLOCKS: BlockMeta[] = [
   { slug: "dashboard", name: "Dashboard" },
   { slug: "settings", name: "Settings" },
   { slug: "customers", name: "Customers" },
   { slug: "mail", name: "Mail" },
-  { slug: "kanban", name: "Kanban" },
   { slug: "file-manager", name: "File Manager" },
   { slug: "notifications-center", name: "Notifications" },
   { slug: "search-results", name: "Search Results" },

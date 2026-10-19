@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import * as React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 import * as ColorPickerPrimitives from "react-aria-components/ColorPicker"
 import { useControlledState } from "react-stately/useControlledState"
@@ -48,7 +48,7 @@ const ColorEditor = ({
   children,
   ...props
 }: ColorEditorProps) => {
-  const state = React.use(ColorPickerPrimitives.ColorPickerStateContext)
+  const state = React.useContext(ColorPickerPrimitives.ColorPickerStateContext)
   const { root } = useStyles()()
   const content = (
     <div className={root({ className })} {...props}>

@@ -25,7 +25,7 @@ const rings = dot(data, {
   strokeWidth: 2,
 })
 
-export default function ChartLineDotsCustom() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

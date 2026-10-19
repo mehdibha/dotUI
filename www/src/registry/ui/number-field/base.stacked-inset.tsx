@@ -1,9 +1,9 @@
 "use client"
 
 import type * as React from "react"
-import * as ButtonPrimitive from "react-aria-components/Button"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as GroupPrimitive from "react-aria-components/Group"
+import * as GroupPrimitives from "react-aria-components/Group"
 import * as NumberFieldPrimitives from "react-aria-components/NumberField"
 
 import { ChevronDownIcon, ChevronUpIcon } from "@/registry/icons"
@@ -17,13 +17,13 @@ interface NumberFieldProps extends React.ComponentProps<
 > {}
 
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
-  const fieldStyles = useFieldStyles()
+  const { field } = useFieldStyles()()
   return (
     <NumberFieldPrimitives.NumberField
-      data-slot="number-field"
+      data-number-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     >
@@ -42,8 +42,10 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
   )
 }
 
+// MARK: Separator
+
 interface NumberFieldGroupProps extends React.ComponentProps<
-  typeof GroupPrimitive.Group
+  typeof GroupPrimitives.Group
 > {
   size?: "sm" | "md" | "lg"
 }
@@ -56,8 +58,8 @@ const NumberFieldGroup = ({
 }: NumberFieldGroupProps) => {
   const { inputGroup } = useInputStyles()()
   return (
-    <GroupPrimitive.Group
-      data-slot="number-field-group"
+    <GroupPrimitives.Group
+      data-number-field-group=""
       data-input-group=""
       data-size={size}
       className={composeRenderProps(className, (className) =>
@@ -76,11 +78,13 @@ const NumberFieldGroup = ({
 }
 
 interface NumberFieldStepperProps extends React.ComponentProps<
-  typeof ButtonPrimitive.Button
+  typeof ButtonPrimitives.Button
 > {}
 
 const stepper =
   "flex w-5 shrink-0 cursor-interactive items-center justify-center rounded-(--studio-radius-detail) text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,currentColor) *:[svg]:size-3"
+
+// MARK: Separator
 
 const NumberFieldDecrement = ({
   className,
@@ -89,7 +93,7 @@ const NumberFieldDecrement = ({
 }: NumberFieldStepperProps) => {
   const { chip } = useInputStyles()()
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
         chip({ className: cn(stepper, className) }),
@@ -97,9 +101,11 @@ const NumberFieldDecrement = ({
       {...props}
     >
       {children ?? <ChevronDownIcon />}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
+
+// MARK: Separator
 
 const NumberFieldIncrement = ({
   className,
@@ -108,7 +114,7 @@ const NumberFieldIncrement = ({
 }: NumberFieldStepperProps) => {
   const { chip } = useInputStyles()()
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
         chip({ className: cn(stepper, className) }),
@@ -116,9 +122,11 @@ const NumberFieldIncrement = ({
       {...props}
     >
       {children ?? <ChevronUpIcon />}
-    </ButtonPrimitive.Button>
+    </ButtonPrimitives.Button>
   )
 }
+
+// MARK: Separator
 
 export type { NumberFieldGroupProps, NumberFieldProps, NumberFieldStepperProps }
 export {

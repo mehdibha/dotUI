@@ -114,7 +114,7 @@ function AvatarWithBadge() {
 
 function AvatarWithBadgeIcon() {
   return (
-    <Example title="Badge with Icon">
+    <Example title="Badge with icon">
       <div className="flex flex-wrap items-center gap-2">
         <Avatar size="sm">
           <AvatarImage
@@ -240,7 +240,7 @@ function AvatarGroupExample() {
 
 function AvatarGroupWithCount() {
   return (
-    <Example title="Group with Count">
+    <Example title="Group with count">
       <AvatarGroup size="sm">
         <Avatar>
           <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
@@ -310,7 +310,7 @@ function AvatarGroupWithCount() {
 
 function AvatarGroupWithIconCount() {
   return (
-    <Example title="Group with Icon Count">
+    <Example title="Group with icon count">
       <AvatarGroup size="sm">
         <Avatar>
           <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
@@ -393,7 +393,7 @@ function AvatarGroupWithIconCount() {
 function AvatarInEmpty() {
   return (
     <Example
-      title="In Empty"
+      title="In empty"
       className="max-w-none sm:col-span-2 lg:col-span-3"
     >
       <Empty className="w-full flex-none border">

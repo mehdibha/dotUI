@@ -191,7 +191,7 @@ function advance(token: ParsedToken, state: State) {
   }
 }
 
-export interface Token {
+interface Token {
   content: string
   /** Start offset in the source, 0-indexed. */
   offset: number

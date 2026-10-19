@@ -4,7 +4,7 @@ import {
   InboxIcon,
   SearchIcon,
   SettingsIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import {
   Sidebar,
   SidebarContent,

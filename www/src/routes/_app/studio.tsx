@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
-import { StudioHeaderActions } from "@/modules/studio/export"
+import { StudioHeaderActions } from "@/modules/studio/export/header-action"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select } from "@/modules/studio/selection"
@@ -195,7 +195,7 @@ function StudioPage() {
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
   // Portaled out of the layout's --header-height: 14 plus a gap.
-  className: "relative z-60 max-md:*:data-[slot=toast-viewport]:top-16!",
+  className: "relative z-60 max-md:*:data-toast-viewport:top-16!",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {

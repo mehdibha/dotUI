@@ -419,3 +419,267 @@ describe("progress-bar", () => {
 </ProgressBar>`)
   })
 })
+
+// ---------------------------------------------------------------------------
+// CALENDAR — object-literal attr around its control, compared conditionals
+// ---------------------------------------------------------------------------
+
+const CALENDAR_SRC = `"use client";
+
+import { Calendar, CalendarGrid, CalendarHeader } from "@/registry/ui/calendar";
+
+export default function Demo({ visibleDuration = 1 } = {}) {
+	return (
+		<Calendar aria-label="Date" visibleDuration={{ months: visibleDuration }}>
+			<CalendarHeader />
+			<div className="flex items-start gap-4">
+				<CalendarGrid />
+				{visibleDuration > 1 && <CalendarGrid offset={{ months: 1 }} />}
+				{visibleDuration > 2 && <CalendarGrid offset={{ months: 2 }} />}
+			</div>
+		</Calendar>
+	);
+}
+`
+
+const CALENDAR_CONTROLS: ControlSelection[] = [
+  { name: "visibleDuration", kind: "number", default: 1 },
+]
+
+describe("calendar", () => {
+  it("default duration drops the attr and the extra grids", async () => {
+    const { collapsed } = await gen(CALENDAR_SRC, CALENDAR_CONTROLS, {
+      visibleDuration: 1,
+    })
+    expect(collapsed).toBe(`<Calendar aria-label="Date">
+  <CalendarHeader />
+  <div className="flex items-start gap-4">
+    <CalendarGrid />
+  </div>
+</Calendar>`)
+  })
+
+  it("two months keeps the object literal and shows one extra grid", async () => {
+    const { collapsed } = await gen(CALENDAR_SRC, CALENDAR_CONTROLS, {
+      visibleDuration: 2,
+    })
+    expect(collapsed)
+      .toBe(`<Calendar aria-label="Date" visibleDuration={{ months: 2 }}>
+  <CalendarHeader />
+  <div className="flex items-start gap-4">
+    <CalendarGrid />
+    <CalendarGrid offset={{ months: 1 }} />
+  </div>
+</Calendar>`)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// GROUP — one control feeding attrs of another name
+// ---------------------------------------------------------------------------
+
+const GROUP_SRC = `"use client";
+
+import { Group } from "@/registry/ui/group";
+import { Input } from "@/registry/ui/input";
+
+export default function Demo({ isDisabled = false } = {}) {
+	return (
+		<Group isDisabled={isDisabled}>
+			<Input data-control-target placeholder="Email" disabled={isDisabled} />
+		</Group>
+	);
+}
+`
+
+const GROUP_CONTROLS: ControlSelection[] = [
+  { name: "isDisabled", kind: "boolean", default: false },
+]
+
+describe("group", () => {
+  it("default: both attrs dropped", async () => {
+    const { collapsed } = await gen(GROUP_SRC, GROUP_CONTROLS, {
+      isDisabled: false,
+    })
+    expect(collapsed).toBe(`<Group>
+  <Input placeholder="Email" />
+</Group>`)
+  })
+
+  it("on: the marked attr keeps its own name", async () => {
+    const { collapsed } = await gen(GROUP_SRC, GROUP_CONTROLS, {
+      isDisabled: true,
+    })
+    expect(collapsed).toBe(`<Group isDisabled>
+  <Input placeholder="Email" disabled />
+</Group>`)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// OTP-FIELD — repeated slots via Array.from, required length never dropped
+// ---------------------------------------------------------------------------
+
+const OTP_SRC = `"use client";
+
+import { Input } from "@/registry/ui/input";
+import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field";
+
+export default function Demo({ length = 6, mask = false } = {}) {
+	return (
+		<OTPField length={length} mask={mask}>
+			<OTPFieldGroup>
+				{Array.from({ length }, (_, index) => (
+					<Input key={index} />
+				))}
+			</OTPFieldGroup>
+		</OTPField>
+	);
+}
+`
+
+const OTP_CONTROLS: ControlSelection[] = [
+  { name: "length", kind: "number", default: null },
+  { name: "mask", kind: "boolean", default: false },
+]
+
+describe("otp-field", () => {
+  it("renders one slot per length, without keys", async () => {
+    const { collapsed } = await gen(OTP_SRC, OTP_CONTROLS, {
+      length: 4,
+      mask: true,
+    })
+    expect(collapsed).toBe(`<OTPField length={4} mask>
+  <OTPFieldGroup>
+    <Input />
+    <Input />
+    <Input />
+    <Input />
+  </OTPFieldGroup>
+</OTPField>`)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// TAG GROUP — `attr={cond ? value : undefined}` shows the attr while cond holds
+// ---------------------------------------------------------------------------
+
+const TAG_GROUP_SRC = `import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
+
+export default function Demo({ removable = false } = {}) {
+	return (
+		<TagGroup onRemove={removable ? (keys) => console.log(keys) : undefined}>
+			<TagList>
+				<Tag>News</Tag>
+			</TagList>
+		</TagGroup>
+	);
+}
+`
+
+const TAG_GROUP_CONTROLS: ControlSelection[] = [
+  { name: "removable", kind: "boolean", default: false },
+]
+
+describe("tag-group", () => {
+  it("removable: gated attr rendered with its value only", async () => {
+    const { collapsed } = await gen(TAG_GROUP_SRC, TAG_GROUP_CONTROLS, {
+      removable: true,
+    })
+    expect(collapsed).toBe(`<TagGroup onRemove={(keys) => console.log(keys)}>
+  <TagList>
+    <Tag>News</Tag>
+  </TagList>
+</TagGroup>`)
+  })
+
+  it("not removable: gated attr dropped", async () => {
+    const { collapsed } = await gen(TAG_GROUP_SRC, TAG_GROUP_CONTROLS, {
+      removable: false,
+    })
+    expect(collapsed).toBe(`<TagGroup>
+  <TagList>
+    <Tag>News</Tag>
+  </TagList>
+</TagGroup>`)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// TOAST — members of an object literal inside an attribute
+// ---------------------------------------------------------------------------
+
+const TOAST_SRC = `import { Button } from "@/registry/ui/button";
+import { toastManager } from "@/registry/ui/toast";
+
+export default function Demo({ title = "Saved", type = "success", action = false } = {}) {
+	return (
+		<Button
+			onPress={() =>
+				toastManager.add({
+					title,
+					type,
+					...(action && { actionProps: { children: "Undo" } }),
+				})
+			}
+		>
+			Show toast
+		</Button>
+	);
+}
+`
+
+const TOAST_CONTROLS: ControlSelection[] = [
+  { name: "title", kind: "string", default: "Saved" },
+  { name: "type", kind: "enum", default: "success" },
+  { name: "action", kind: "boolean", default: false },
+]
+
+describe("toast", () => {
+  it("shorthand members render as key: value, spread when truthy", async () => {
+    const { collapsed } = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "Saved",
+      type: "success",
+      action: true,
+    })
+    expect(collapsed).toBe(`<Button
+  onPress={() =>
+    toastManager.add({
+      title: "Saved",
+      type: "success",
+      actionProps: { children: "Undo" },
+    })
+  }
+>
+  Show toast
+</Button>`)
+  })
+
+  it("empty string drops its member; an overflowing one breaks after the colon", async () => {
+    const empty = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "",
+      type: "info",
+      action: false,
+    })
+    expect(empty.collapsed).toContain(`toastManager.add({
+      type: "info",
+    })`)
+
+    const long = await gen(TOAST_SRC, TOAST_CONTROLS, {
+      title: "x".repeat(110),
+      type: "info",
+      action: false,
+    })
+    expect(long.collapsed).toContain(`      title:
+        "${"x".repeat(110)}",`)
+  })
+
+  it("rejects an object with no member that always renders", async () => {
+    await expect(
+      buildSourceOverlay({
+        source: TOAST_SRC.replace("\t\t\t\t\ttype,\n", ""),
+        controls: TOAST_CONTROLS.filter((c) => c.name !== "type"),
+      }),
+    ).rejects.toThrow(/always renders/)
+  })
+})

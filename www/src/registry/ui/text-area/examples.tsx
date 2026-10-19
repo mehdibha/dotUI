@@ -36,7 +36,7 @@ function TextAreaInvalid() {
 
 function TextAreaWithLabel() {
   return (
-    <Example title="With Label">
+    <Example title="With label">
       <TextField>
         <Label>Message</Label>
         <TextArea placeholder="Type your message here." />
@@ -47,7 +47,7 @@ function TextAreaWithLabel() {
 
 function TextAreaWithDescription() {
   return (
-    <Example title="With Description">
+    <Example title="With description">
       <TextField>
         <Label>Message</Label>
         <TextArea placeholder="Type your message here." />

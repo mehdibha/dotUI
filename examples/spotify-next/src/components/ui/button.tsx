@@ -1,15 +1,15 @@
 "use client";
 
 import type * as React from "react";
-import * as ButtonPrimitive from "react-aria-components/Button";
+import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as LinkPrimitive from "react-aria-components/Link";
+import * as LinkPrimitives from "react-aria-components/Link";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { Loader } from "@/components/ui/loader";
 
 const buttonVariants = tv({
-  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-base *:[svg]:not-with-[size]:size-5",
+  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-spinner:not-in-data-spinner:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-base *:[svg]:not-with-[size]:size-5",
   variants: {
     variant: {
       primary:
@@ -44,10 +44,17 @@ export { buttonVariants as buttonStyles };
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
+const truncateLabel = (children: React.ReactNode) =>
+  typeof children === "string" ? (
+    <span className="truncate">{children}</span>
+  ) : (
+    children
+  );
+
 /* -------------------------------------------------------------------------- */
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
+  extends React.ComponentProps<typeof ButtonPrimitives.Button>, ButtonVariants {
   isIconOnly?: boolean;
 }
 
@@ -65,26 +72,22 @@ const Button = ({
       <>
         {isPending && (
           <Loader
-            data-slot="spinner"
+            data-spinner=""
             aria-label="loading"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {typeof children === "string" ? (
-          <span className="truncate">{children}</span>
-        ) : (
-          children
-        )}
+        {truncateLabel(children)}
       </>
     ),
   );
 
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        buttonVariants({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        buttonVariants({ variant, size, isIconOnly, className }),
       )}
       {...props}
       // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
@@ -97,7 +100,7 @@ const Button = ({
 
 interface LinkButtonProps
   extends
-    React.ComponentProps<typeof LinkPrimitive.Link>,
+    React.ComponentProps<typeof LinkPrimitives.Link>,
     VariantProps<typeof buttonVariants> {
   isIconOnly?: boolean;
 }
@@ -111,24 +114,16 @@ const LinkButton = ({
   ...props
 }: LinkButtonProps) => {
   return (
-    <LinkPrimitive.Link
+    <LinkPrimitives.Link
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        buttonVariants({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        buttonVariants({ variant, size, isIconOnly, className }),
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
-    </LinkPrimitive.Link>
+      {composeRenderProps(children, truncateLabel)}
+    </LinkPrimitives.Link>
   );
 };
 

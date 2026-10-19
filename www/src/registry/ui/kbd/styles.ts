@@ -5,7 +5,7 @@ import kbdMeta from "./meta"
 /* The base is the key's layout only; each style ships its own chrome and
    type, so no value fights another's classes. */
 
-const { useStyles, styles } = createStyles(kbdMeta, {
+const { useStyles } = createStyles(kbdMeta, {
   base: {
     slots: {
       group: "inline-flex items-center gap-1",
@@ -36,7 +36,5 @@ const { useStyles, styles } = createStyles(kbdMeta, {
     },
   },
 })
-
-export type KbdStyles = typeof styles
 
 export { useStyles }

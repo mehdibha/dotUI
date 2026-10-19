@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import {
   CheckIcon,
@@ -8,7 +9,6 @@ import { Button } from "@/registry/ui/button"
 import { Group } from "@/registry/ui/group"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { getBaseUrl } from "@/modules/docs/url"
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
@@ -109,7 +109,7 @@ export function DocsCopyPage({
             {options.map((option) => (
               <MenuItem
                 key={option.name}
-                href={option.href(`${getBaseUrl()}${url}`)}
+                href={option.href(`${siteConfig.url}${url}`)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

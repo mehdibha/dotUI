@@ -75,7 +75,7 @@ function StaticToast({ type, title, text, action }: (typeof TOASTS)[number]) {
     surface === "inverse"
   return (
     <div
-      data-slot="toast"
+      data-toast=""
       className={styles.toast({
         variant: type,
         className: "relative h-auto w-full max-w-96",
@@ -158,7 +158,7 @@ function Replay() {
     <div
       ref={setStage}
       // Transformed, so the fixed toast viewport anchors to this stage.
-      className="absolute inset-0 transform-gpu **:data-[slot=toast-viewport]:w-[calc(100%-2*var(--toast-inset))]"
+      className="absolute inset-0 transform-gpu **:data-toast-viewport:w-[calc(100%-2*var(--toast-inset))]"
     >
       {stage && (
         <ToastProvider

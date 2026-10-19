@@ -5,7 +5,6 @@
   "scripts": {
     "postinstall": "fumadocs-mdx",
     "dev": "pnpm build:registry && vite dev",
-    "dev:clean": "rm -rf node_modules/.vite .cache && pnpm build:registry && vite dev",
     "build:registry": "tsx scripts/registry-build.ts",
     "build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
     "build:postprocess": "tsx scripts/patch-vercel-config.ts",
@@ -17,7 +16,8 @@
     "probe:registry": "tsx scripts/registry-probe.ts",
     "preview:example": "tsx scripts/preview-example.ts",
     "check:tailwind": "tsx scripts/tw-canonical.ts",
-    "build:cover": "pnpm build:registry && tsx scripts/capture-cover.mts"
+    "build:cover": "pnpm build:registry && tsx scripts/capture-cover.mts",
+    "check:registry-comments": "tsx scripts/check-registry-comments.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
@@ -41,7 +41,6 @@
     "@tanstack/react-router-devtools": "^1.167.0",
     "@tanstack/react-start": "catalog:",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/router-plugin": "catalog:",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.8.0",
     "@vercel/og": "^0.11.1",
@@ -91,6 +90,7 @@
     "@vitejs/plugin-react": "catalog:",
     "mdast-util-mdx-jsx": "^3.2.0",
     "nitro": "catalog:",
+    "puppeteer": "^25.0.2",
     "react-grab": "^0.1.48",
     "rimraf": "^6.0.1",
     "shadcn": "^4.12.0",

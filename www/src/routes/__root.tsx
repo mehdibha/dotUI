@@ -33,7 +33,7 @@ const DevtoolsHub =
 export const Route = createRootRoute({
   head: () => {
     const title = `${siteConfig.title} - ${siteConfig.tagline}`
-    const description = truncateOnWord(siteConfig.description, 148, true)
+    const description = truncateOnWord(siteConfig.description, 148)
     // Rendered by scripts/capture-cover.mts; the same cover is the repo's social preview.
     const ogImageUrl = `${siteConfig.url}/brand/cover/og.png`
 
@@ -60,10 +60,22 @@ export const Route = createRootRoute({
       ],
       links: [
         { rel: "stylesheet", href: appCss },
-        // The sized ICO is the fallback; browsers that read SVG favicons take
-        // favicon.svg, which follows the OS light/dark scheme.
+        // The ICO is the fallback for browsers without SVG favicons. Per-scheme
+        // links, not one SVG with an inner media query: browsers re-evaluate
+        // `media` when the OS scheme flips, but rasterize an SVG favicon once.
         { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
-        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        {
+          rel: "icon",
+          type: "image/svg+xml",
+          href: "/brand/dotui-logo.svg",
+          media: "(prefers-color-scheme: light)",
+        },
+        {
+          rel: "icon",
+          type: "image/svg+xml",
+          href: "/brand/dotui-logo-white.svg",
+          media: "(prefers-color-scheme: dark)",
+        },
         {
           rel: "apple-touch-icon",
           href: "/apple-touch-icon.png",

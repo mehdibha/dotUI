@@ -54,7 +54,7 @@ import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
-export interface EmitThemeInput {
+interface EmitThemeInput {
   /** Structured shadcn registry CSS fields generated from base/*.css. */
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
