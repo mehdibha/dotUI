@@ -37,12 +37,12 @@ const browser = await openBrowser("chrome", {
 })
 const composition = await selectComposition({
   serveUrl,
-  id: "Steps",
+  id: flag("id") ?? "Steps",
   puppeteerInstance: browser,
 })
 
 if (mode === "stills") {
-  const dir = path.join(root, "out/frames/Steps")
+  const dir = path.join(root, `out/frames/${composition.id}`)
   fs.mkdirSync(dir, { recursive: true })
   for (const frame of arg!.split(",").map(Number)) {
     const output = path.join(dir, `${String(frame).padStart(5, "0")}.jpg`)

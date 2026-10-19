@@ -26,7 +26,11 @@ import { BEAT } from "../lib/timing"
    Step 3: the buttons. Each button's box is blended like the card; its
    label and icon cross-dissolve between the two looks' typefaces and icon
    sets inside the blended slot, in a color that keeps its contrast against
-   the blended fill. */
+   the blended fill.
+
+   Step 4: every component in the card, the same way: every painted box
+   (pseudo-elements included), text run, icon and input text is read off
+   the probes and paired up across looks by its place in the tree. */
 
 export const ORDER = [
   "origin",
@@ -92,13 +96,22 @@ function srgb([L, a, b]: number[]) {
 }
 
 const LOOKS = [...new Set(ORDER)]
-const CARD_WIDTH = 340
+/** The card widens with the look's density, as it would given room. */
+const CARD_WIDTH = {
+  compact: 320,
+  default: 340,
+  comfortable: 370,
+  spacious: 400,
+  touch: 460,
+}
+export const cardWidth = (id: string) =>
+  CARD_WIDTH[(preset(id).density ?? "default") as keyof typeof CARD_WIDTH]
 
 type Rgba = [number, number, number, number]
 
 let swatch: CanvasRenderingContext2D | null = null
 /** 8-bit sRGB + alpha of any CSS color, via a 1×1 canvas. */
-function rgbaOf(css: string): Rgba {
+function rgbaOf(css: string, opacity = 1): Rgba {
   swatch ??= document
     .createElement("canvas")
     .getContext("2d", { willReadFrequently: true })!
@@ -106,7 +119,7 @@ function rgbaOf(css: string): Rgba {
   swatch.fillStyle = css
   swatch.fillRect(0, 0, 1, 1)
   const [r, g, b, a] = swatch.getImageData(0, 0, 1, 1).data
-  return [r!, g!, b!, a! / 255]
+  return [r!, g!, b!, (a! / 255) * opacity]
 }
 
 interface Shadow {
@@ -124,45 +137,40 @@ interface Box {
   width: number
   height: number
   fill: Rgba
-  /** The fill composited over what is under it: what text sits on. */
-  ground: Rgba
+  /** Border widths: top, right, bottom, left. */
+  borders: [number, number, number, number]
   border: Rgba
-  stroke: number
-  radius: number
+  /** Corner radii: top-left, top-right, bottom-right, bottom-left. */
+  radii: [number, number, number, number]
   shadows: Shadow[]
 }
 
-interface Label {
-  text: string
-  /** CSS font with a SIZE placeholder. */
-  font: string
-  size: number
-  spacing: number
-  /** Opaque, composited over the control's fill. */
-  color: Rgba
-  /** Center and width of the text run, relative to the card. */
+/** A run of text or an icon, drawn in one color over `ground`. */
+interface Ink {
   cx: number
   cy: number
+  /** Text run width, or icon size. */
   width: number
-}
-
-interface Icon {
-  cx: number
-  cy: number
-  size: number
-  image: HTMLImageElement
-}
-
-interface Control {
-  box: Box
-  label?: Label
-  icon?: Icon
+  color: Rgba
+  /** The opaque color under it, for contrast. */
+  ground: Rgba
+  text?: {
+    value: string
+    font: string
+    size: number
+    spacing: number
+    /** Underline offset below the baseline and thickness, if underlined. */
+    underline?: [number, number]
+  }
+  image?: HTMLImageElement
 }
 
 interface Look {
   page: Rgba
   card: Box
-  controls: Control[]
+  /** Everything inside the card, keyed by its place in the tree. */
+  items: Map<string, Box | Ink>
+  order: string[]
 }
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
@@ -174,7 +182,7 @@ const smoothstep = (a: number, b: number, v: number) => {
 }
 
 /** Outer shadows of a computed box-shadow ("color x y blur spread, …"). */
-function shadowsOf(css: string): Shadow[] {
+function shadowsOf(css: string, opacity: number): Shadow[] {
   if (css === "none") return []
   return css
     .split(/,(?![^(]*\))/)
@@ -184,8 +192,15 @@ function shadowsOf(css: string): Shadow[] {
       const [x = 0, y = 0, blur = 0, spread = 0] = [
         ...layer.replace(color ?? "", "").matchAll(/(-?[\d.]+)px/g),
       ].map((m) => Number(m[1]))
-      return { x, y, blur, spread, color: rgbaOf(color ?? "transparent") }
+      return {
+        x,
+        y,
+        blur,
+        spread,
+        color: rgbaOf(color ?? "transparent", opacity),
+      }
     })
+    .filter((s) => s.color[3] > 0 && (s.x || s.y || s.blur || s.spread))
 }
 
 /** `top` composited over an opaque `base`, in sRGB like the browser. */
@@ -196,47 +211,72 @@ const over = (top: Rgba, base: Rgba): Rgba => [
   1,
 ]
 
-function boxOf(el: HTMLElement, origin: DOMRect, under: Rgba): Box {
-  const cs = getComputedStyle(el)
-  const r = el.getBoundingClientRect()
-  const fill = rgbaOf(cs.backgroundColor)
+type Rect = { x: number; y: number; width: number; height: number }
+
+function boxOf(cs: CSSStyleDeclaration, r: Rect, opacity: number): Box {
+  const borders = [
+    cs.borderTopWidth,
+    cs.borderRightWidth,
+    cs.borderBottomWidth,
+    cs.borderLeftWidth,
+  ].map(parseFloat) as Box["borders"]
+  const side = ["Top", "Right", "Bottom", "Left"][
+    Math.max(
+      borders.findIndex((w) => w > 0),
+      0,
+    )
+  ]!
   return {
-    x: r.x - origin.x,
-    y: r.y - origin.y,
-    width: r.width,
-    height: r.height,
-    fill,
-    ground: over(fill, under),
-    border: rgbaOf(cs.borderTopColor),
-    stroke: parseFloat(cs.borderTopWidth),
-    radius: parseFloat(cs.borderTopLeftRadius),
-    shadows: shadowsOf(cs.boxShadow),
+    ...r,
+    fill: rgbaOf(cs.backgroundColor, opacity),
+    borders,
+    border: rgbaOf(
+      cs.getPropertyValue(`border-${side.toLowerCase()}-color`),
+      opacity,
+    ),
+    radii: [
+      cs.borderTopLeftRadius,
+      cs.borderTopRightRadius,
+      cs.borderBottomRightRadius,
+      cs.borderBottomLeftRadius,
+    ].map((v) => parseFloat(v) || 0) as Box["radii"],
+    shadows: shadowsOf(cs.boxShadow, opacity),
   }
 }
 
-function labelOf(
+const painted = (box: Box) =>
+  box.fill[3] > 0 ||
+  (box.border[3] > 0 && box.borders.some((w) => w > 0)) ||
+  box.shadows.length > 0
+
+/** A pseudo-element's box: absolute ones from their insets, others
+    centered in their host (how the controls lay them out). */
+function pseudoRect(
   el: HTMLElement,
-  origin: DOMRect,
-  under: Rgba,
-): Label | undefined {
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
-  let node: Node | null = walker.nextNode()
-  while (node && !node.textContent!.trim()) node = walker.nextNode()
-  if (!node) return undefined
-  const range = document.createRange()
-  range.selectNodeContents(node)
-  const r = range.getBoundingClientRect()
-  const cs = getComputedStyle(node.parentElement!)
-  const text = node.textContent!.trim()
+  host: DOMRect,
+  ps: CSSStyleDeclaration,
+): Rect | null {
+  const width = parseFloat(ps.width)
+  const height = parseFloat(ps.height)
+  if (!(width > 0 && height > 0)) return null
+  const m = new DOMMatrix(ps.transform === "none" ? undefined : ps.transform)
+  if (ps.position === "absolute") {
+    const hs = getComputedStyle(el)
+    const left = parseFloat(ps.left)
+    const top = parseFloat(ps.top)
+    if (Number.isNaN(left) || Number.isNaN(top)) return null
+    return {
+      x: host.x + parseFloat(hs.borderLeftWidth) + left + m.e,
+      y: host.y + parseFloat(hs.borderTopWidth) + top + m.f,
+      width,
+      height,
+    }
+  }
   return {
-    text: cs.textTransform === "uppercase" ? text.toUpperCase() : text,
-    font: `${cs.fontWeight} SIZE ${cs.fontFamily}`,
-    size: parseFloat(cs.fontSize),
-    spacing: parseFloat(cs.letterSpacing) || 0,
-    color: over(rgbaOf(cs.color), under),
-    cx: r.x + r.width / 2 - origin.x,
-    cy: r.y + r.height / 2 - origin.y,
-    width: r.width,
+    x: host.x + (host.width - width) / 2 + m.e,
+    y: host.y + (host.height - height) / 2 + m.f,
+    width,
+    height,
   }
 }
 
@@ -266,37 +306,152 @@ function iconImage(svg: SVGSVGElement) {
   return image
 }
 
-/** Everything drawn for one look, read off its hidden probe. */
+let ruler: CanvasRenderingContext2D | null = null
+const textWidth = (value: string, font: string, spacing: number) => {
+  ruler ??= document.createElement("canvas").getContext("2d")!
+  ruler.font = font
+  ruler.letterSpacing = `${spacing}px`
+  return ruler.measureText(value).width
+}
+
+function textOf(cs: CSSStyleDeclaration, value: string) {
+  const size = parseFloat(cs.fontSize)
+  return {
+    value: cs.textTransform === "uppercase" ? value.toUpperCase() : value,
+    font: `${cs.fontWeight} SIZE ${cs.fontFamily}`,
+    size,
+    spacing: parseFloat(cs.letterSpacing) || 0,
+    // "auto" placement approximated from the font size.
+    underline: cs.textDecorationLine.includes("underline")
+      ? ([
+          parseFloat(cs.textUnderlineOffset) || size * 0.14,
+          parseFloat(cs.textDecorationThickness) || Math.max(size / 14, 1),
+        ] as [number, number])
+      : undefined,
+  }
+}
+
+/* Everything painted inside the card, read off a look's hidden probe: each
+   element's box (and its ::before/::after), every text run, every icon,
+   and what an input shows. Items are keyed by their place in the tree, so
+   the same control pairs up across looks. */
 async function measure(probe: HTMLElement): Promise<Look | null> {
   const card = probe.querySelector<HTMLElement>("[data-card]")
   if (!card?.offsetHeight) return null
   const page = rgbaOf(getComputedStyle(probe).backgroundColor)
   const origin = card.getBoundingClientRect()
-  const cardBox = boxOf(card, origin, page)
-  // The first row of the card: the three buttons.
-  const row = card.firstElementChild!.firstElementChild!
-  const controls = await Promise.all(
-    [...row.children].map(async (child): Promise<Control> => {
-      const el = child as HTMLElement
-      const box = boxOf(el, origin, cardBox.ground)
-      const svg = el.querySelector("svg")
-      const s = svg?.getBoundingClientRect()
-      return {
-        box,
-        label: labelOf(el, origin, box.ground),
-        icon:
-          svg && s
-            ? {
-                cx: s.x + s.width / 2 - origin.x,
-                cy: s.y + s.height / 2 - origin.y,
-                size: s.width,
-                image: await iconImage(svg),
-              }
-            : undefined,
+  const rel = (r: Rect): Rect => ({
+    x: r.x - origin.x,
+    y: r.y - origin.y,
+    width: r.width,
+    height: r.height,
+  })
+  const cardBox = boxOf(getComputedStyle(card), rel(origin), 1)
+  const items = new Map<string, Box | Ink>()
+  const order: string[] = []
+  const pending: Promise<unknown>[] = []
+  const add = (key: string, item: Box | Ink) => {
+    items.set(key, item)
+    order.push(key)
+  }
+
+  const walk = (el: Element, key: string, ground: Rgba, opacity: number) => {
+    const cs = getComputedStyle(el)
+    if (cs.display === "none" || cs.visibility === "hidden") return
+    if (cs.clip !== "auto" || cs.clipPath !== "none") return
+    const alpha = opacity * parseFloat(cs.opacity)
+    if (alpha <= 0) return
+    const rect = el.getBoundingClientRect()
+
+    if (el instanceof SVGSVGElement) {
+      const color = rgbaOf(cs.color, alpha)
+      const ink: Ink = {
+        cx: rect.x + rect.width / 2 - origin.x,
+        cy: rect.y + rect.height / 2 - origin.y,
+        width: rect.width,
+        color: over(color, ground),
+        ground,
       }
-    }),
-  )
-  return { page, card: cardBox, controls }
+      pending.push(iconImage(el).then((image) => (ink.image = image)))
+      add(key, ink)
+      return
+    }
+    if (!(el instanceof HTMLElement)) return
+
+    let under = ground
+    if (el !== card) {
+      const box = boxOf(cs, rel(rect), alpha)
+      if (painted(box)) {
+        add(key, box)
+        under = over(box.fill, ground)
+      }
+    }
+    for (const pseudo of ["::before", "::after"]) {
+      const ps = getComputedStyle(el, pseudo)
+      if (ps.content === "none" || ps.display === "none") continue
+      const r = pseudoRect(el, rect, ps)
+      if (!r) continue
+      const box = boxOf(ps, rel(r), alpha * parseFloat(ps.opacity))
+      if (painted(box)) add(key + pseudo, box)
+    }
+
+    if (el instanceof HTMLInputElement) {
+      const value = el.value || el.placeholder
+      if (!value) return
+      const color = el.value
+        ? cs.color
+        : getComputedStyle(el, "::placeholder").color
+      const text = textOf(cs, value)
+      const width = textWidth(
+        text.value,
+        text.font.replace("SIZE", `${text.size}px`),
+        text.spacing,
+      )
+      const left =
+        rect.x + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft)
+      const right =
+        rect.right -
+        parseFloat(cs.borderRightWidth) -
+        parseFloat(cs.paddingRight)
+      const cx =
+        cs.textAlign === "center"
+          ? (left + right) / 2
+          : cs.textAlign === "right" || cs.textAlign === "end"
+            ? right - width / 2
+            : left + width / 2
+      add(key + "/value", {
+        cx: cx - origin.x,
+        cy: rect.y + rect.height / 2 - origin.y,
+        width,
+        color: over(rgbaOf(color, alpha), under),
+        ground: under,
+        text,
+      })
+      return
+    }
+
+    el.childNodes.forEach((node, i) => {
+      if (node instanceof Element) walk(node, `${key}/${i}`, under, alpha)
+      else if (node.nodeType === Node.TEXT_NODE && node.textContent!.trim()) {
+        const range = document.createRange()
+        range.selectNodeContents(node)
+        const r = range.getBoundingClientRect()
+        if (!r.width) return
+        add(`${key}/${i}`, {
+          cx: r.x + r.width / 2 - origin.x,
+          cy: r.y + r.height / 2 - origin.y,
+          width: r.width,
+          color: over(rgbaOf(cs.color, alpha), under),
+          ground: under,
+          text: textOf(cs, node.textContent!.trim()),
+        })
+      }
+    })
+  }
+
+  walk(card, "card", over(cardBox.fill, page), 1)
+  await Promise.all(pending)
+  return { page, card: cardBox, items, order }
 }
 
 const mixLab = (a: number[], b: number[], t: number) =>
@@ -325,6 +480,17 @@ const NO_SHADOW: Shadow = {
   color: [0, 0, 0, 0],
 }
 
+/** The same box with nothing painted: what a one-sided box fades to. */
+const ghost = (box: Box): Box => ({
+  ...box,
+  fill: [...box.fill.slice(0, 3), 0] as Rgba,
+  border: [...box.border.slice(0, 3), 0] as Rgba,
+  shadows: box.shadows.map((s) => ({
+    ...s,
+    color: [...s.color.slice(0, 3), 0] as Rgba,
+  })),
+})
+
 /** Triangular noise of ±1 level, seeded so a frame always renders alike. */
 function noise(seed: number) {
   let x = seed * 0x9e3779b1 || 1
@@ -345,8 +511,9 @@ function roundRectDistance(
   cy: number,
   hx: number,
   hy: number,
-  r: number,
+  [tl, tr, br, bl]: number[],
 ) {
+  const r = px < cx ? (py < cy ? tl! : bl!) : py < cy ? tr! : br!
   const qx = Math.abs(px - cx) - (hx - r)
   const qy = Math.abs(py - cy) - (hy - r)
   return (
@@ -371,16 +538,28 @@ function paintBox(
   const y0 = oy + lerp(a.y, b.y, t) * scale
   const w = lerp(a.width, b.width, t) * scale
   const h = lerp(a.height, b.height, t) * scale
-  const r = Math.min(lerp(a.radius, b.radius, t) * scale, w / 2, h / 2)
+  if (w <= 0 || h <= 0) return
+  // A pill's radius is huge (9999px): blend each side's visible radii, or
+  // the corners would snap round at the first frame.
+  const visible = (box: Box, i: number) =>
+    Math.min(box.radii[i]!, box.width / 2, box.height / 2)
+  const radii = a.radii.map((_, i) =>
+    Math.min(lerp(visible(a, i), visible(b, i), t) * scale, w / 2, h / 2),
+  )
+  const grown = (by: number) => radii.map((r) => Math.max(r + by, 0))
   const W = ctx.canvas.width
 
   const count = Math.max(a.shadows.length, b.shadows.length)
   for (let k = 0; k < count; k++) {
     const [sa, sb] = [a.shadows[k] ?? NO_SHADOW, b.shadows[k] ?? NO_SHADOW]
-    if (!sa.color[3] && !sb.color[3]) continue
     const spread = lerp(sa.spread, sb.spread, t) * scale
-    // Cast the shadow from a shape parked off-canvas, so only the shadow lands.
+    // Cast the shadow from a shape parked off-canvas, so only the shadow
+    // lands, and only outside the box, as CSS paints outer shadows.
     ctx.save()
+    ctx.beginPath()
+    ctx.rect(0, 0, W, ctx.canvas.height)
+    ctx.roundRect(x0, y0, w, h, radii)
+    ctx.clip("evenodd")
     ctx.shadowColor = mixRgba(sa.color, sb.color, t)
     ctx.shadowBlur = lerp(sa.blur, sb.blur, t) * scale
     ctx.shadowOffsetX = lerp(sa.x, sb.x, t) * scale + 2 * W
@@ -392,7 +571,7 @@ function paintBox(
       y0 - spread,
       w + 2 * spread,
       h + 2 * spread,
-      Math.max(r + spread, 0),
+      grown(spread),
     )
     ctx.fill()
     ctx.restore()
@@ -402,13 +581,13 @@ function paintBox(
   // edge, so it never steps through 8-bit levels. A see-through side fades
   // its opacity and borrows the other side's color.
   const alpha = lerp(a.fill[3], b.fill[3], t)
-  const fill = mixOklab(
-    a.fill[3] ? a.fill : b.fill,
-    b.fill[3] ? b.fill : a.fill,
-    t,
-  )
-  const [bx, by] = [Math.floor(x0), Math.floor(y0)]
   if (alpha > 0) {
+    const fill = mixOklab(
+      a.fill[3] ? a.fill : b.fill,
+      b.fill[3] ? b.fill : a.fill,
+      t,
+    )
+    const [bx, by] = [Math.floor(x0), Math.floor(y0)]
     const [bw, bh] = [Math.ceil(x0 + w) - bx, Math.ceil(y0 + h) - by]
     const img = new ImageData(bw, bh)
     for (let y = 0; y < bh; y++) {
@@ -420,7 +599,7 @@ function paintBox(
           y0 + h / 2,
           w / 2,
           h / 2,
-          r,
+          radii,
         )
         const i = (y * bw + x) * 4
         const n = rand()
@@ -435,42 +614,49 @@ function paintBox(
     ctx.drawImage(layer, bx, by)
   }
 
-  const stroke = lerp(a.stroke, b.stroke, t) * scale
-  if (stroke > 0) {
-    ctx.strokeStyle = mixRgba(a.border, b.border, t)
-    ctx.lineWidth = stroke
-    ctx.beginPath()
-    ctx.roundRect(
-      x0 + stroke / 2,
-      y0 + stroke / 2,
-      w - stroke,
-      h - stroke,
-      Math.max(r - stroke / 2, 0),
+  // The border is a ring between the outer shape and the inner one, so
+  // each side keeps its own (fractional) width.
+  const [top, right, bottom, left] = a.borders.map(
+    (v, i) => lerp(v, b.borders[i]!, t) * scale,
+  ) as Box["borders"]
+  if (top + right + bottom + left > 0) {
+    ctx.fillStyle = mixRgba(
+      a.border[3] ? a.border : ([...b.border.slice(0, 3), 0] as Rgba),
+      b.border[3] ? b.border : ([...a.border.slice(0, 3), 0] as Rgba),
+      t,
     )
-    ctx.stroke()
+    ctx.beginPath()
+    ctx.roundRect(x0, y0, w, h, radii)
+    ctx.roundRect(
+      x0 + left,
+      y0 + top,
+      Math.max(w - left - right, 0),
+      Math.max(h - top - bottom, 0),
+      grown(-Math.max(top, right, bottom, left)),
+    )
+    ctx.fill("evenodd")
   }
 }
 
-/* Each look's label color, held at its own lightness offset from the
-   blended fill so it keeps its contrast while the fill moves, and when the
-   label hands over from one look to the other: mid-way, or, when one look
-   is light-on-dark and the other dark-on-light, as soon as the incoming
-   ink reads better than the outgoing one. */
-function inks(a: Control, b: Control, t: number) {
-  const [fa, fb] = [oklab(a.box.ground), oklab(b.box.ground)]
-  const [ia, ib] = [
-    oklab(a.label?.color ?? b.label?.color ?? a.box.ground),
-    oklab(b.label?.color ?? a.label?.color ?? b.box.ground),
-  ]
-  const fillL = (u: number) => lerp(fa[0]!, fb[0]!, u)
+/* An ink's color at `t`, held at its own lightness offset from the
+   blended ground so it keeps its contrast while the ground moves, and its
+   two runs' opacities. Runs hand over mid-way; when one look is
+   light-on-dark and the other dark-on-light, any mix of the two inks lands
+   on the ground, so the outgoing run fades out just before the incoming
+   one fades in, as soon as the incoming ink reads better. */
+function inks(a: Ink, b: Ink, t: number) {
+  const [fa, fb] = [oklab(a.ground), oklab(b.ground)]
+  const [ia, ib] = [oklab(a.color), oklab(b.color)]
+  const groundL = (u: number) => lerp(fa[0]!, fb[0]!, u)
   const [da, db] = [ia[0]! - fa[0]!, ib[0]! - fb[0]!]
-  const heldL = (u: number, d: number) => clamp(fillL(u) + d, 0, 1)
+  const heldL = (u: number, d: number) => clamp(groundL(u) + d, 0, 1)
   const held = (ink: number[], d: number) =>
     css(srgb([heldL(t, d), ink[1]!, ink[2]!]))
-  const flips = Math.sign(da) !== Math.sign(db)
+  const flips = Math.sign(da) !== Math.sign(db) && Math.abs(da - db) > 0.2
   let handover = 0.5
   if (flips) {
-    const contrast = (u: number, d: number) => Math.abs(heldL(u, d) - fillL(u))
+    const contrast = (u: number, d: number) =>
+      Math.abs(heldL(u, d) - groundL(u))
     handover = 1
     for (let u = 0; u <= 1; u += 0.01) {
       if (contrast(u, db) >= contrast(u, da)) {
@@ -481,9 +667,6 @@ function inks(a: Control, b: Control, t: number) {
     handover = clamp(handover, 0.1, 0.9)
   }
   // Two typefaces overlap only briefly, and never before t = 0 or after 1.
-  // Opposite inks can't overlap at all (any mix of the two lands on the
-  // fill), so the outgoing label fades out just before the incoming one
-  // fades in.
   const half = Math.min(0.12, handover, 1 - handover)
   const u = smoothstep(handover - half, handover + half, t)
   return {
@@ -497,101 +680,112 @@ function inks(a: Control, b: Control, t: number) {
 let glyph: OffscreenCanvas | null = null
 let mix: OffscreenCanvas | null = null
 
-/* A control's label and icon cross-dissolve: each look's run is drawn in
-   its own typeface into the blended slot (sized so both runs share the
-   blended width), the two are added so the sum never dips mid-way, and the
-   result is laid over the fill. Each run is rasterized on a whole pixel and
-   placed at its fractional position by drawImage, so slow drifts glide
-   instead of snapping. */
+/* A text run or icon cross-dissolves: each look's run is drawn in its own
+   typeface (or icon set) into the blended slot, sized so both share the
+   blended width, the two are added so the sum never dips mid-way, and the
+   result is laid over what is below. Each run is rasterized on a whole
+   pixel and placed at its fractional position by drawImage, so slow drifts
+   glide instead of snapping. An ink only one look has fades in place. */
 function paintInk(
   ctx: CanvasRenderingContext2D,
-  a: Control,
-  b: Control,
+  a: Ink | undefined,
+  b: Ink | undefined,
   t: number,
   ox: number,
   oy: number,
   scale: number,
 ) {
+  const [pa, pb] = [a ?? b!, b ?? a!]
   const { width: W, height: H } = ctx.canvas
   mix ??= new OffscreenCanvas(W, H)
   glyph ??= new OffscreenCanvas(8, 8)
   const m = mix.getContext("2d")!
   const g = glyph.getContext("2d")!
-  const ink = inks(a, b, t)
-  const x = Math.floor(ox + Math.min(a.box.x, b.box.x) * scale) - 16
-  const y = Math.floor(oy + Math.min(a.box.y, b.box.y) * scale) - 16
-  const right =
-    ox + Math.max(a.box.x + a.box.width, b.box.x + b.box.width) * scale
-  const bottom =
-    oy + Math.max(a.box.y + a.box.height, b.box.y + b.box.height) * scale
+  const ink = inks(pa, pb, t)
+  const alphas = [a ? ink.alphaA : 0, b ? ink.alphaB : 0]
+  if (!a) alphas[1] = t
+  if (!b) alphas[0] = 1 - t
+
+  const width = lerp(pa.width, pb.width, t) * scale
+  const cx = ox + lerp(pa.cx, pb.cx, t) * scale
+  const cy = oy + lerp(pa.cy, pb.cy, t) * scale
+  const reach = Math.max(pa.width, pb.width) * scale * 1.5 + 24
   const region = [
-    x,
-    y,
-    Math.ceil(right) + 16 - x,
-    Math.ceil(bottom) + 16 - y,
+    Math.floor(cx - reach),
+    Math.floor(cy - reach / 2 - 24),
+    Math.ceil(reach * 2),
+    Math.ceil(reach + 48),
   ] as const
   m.globalCompositeOperation = "source-over"
   m.globalAlpha = 1
   m.clearRect(...region)
 
   let first = true
-  const place = (alpha: number, dx: number, dy: number) => {
-    m.globalAlpha = alpha
-    // The two runs add up, so their sum never dips mid-way.
-    m.globalCompositeOperation = first ? "source-over" : "lighter"
-    m.drawImage(glyph!, dx, dy)
-    first = false
-  }
-
-  for (const [side, alpha, color] of [
-    [a, ink.alphaA, ink.a],
-    [b, ink.alphaB, ink.b],
-  ] as const) {
-    if (alpha <= 0) continue
-    const { label, icon } = side
-    if (label && a.label && b.label) {
-      const width = lerp(a.label.width, b.label.width, t) * scale
-      const zoom = width / (label.width * scale)
-      const font = label.font.replace("SIZE", `${label.size * scale * zoom}px`)
-      const spacing = `${label.spacing * scale * zoom}px`
+  ;[pa, pb].forEach((side, k) => {
+    const alpha = alphas[k]!
+    if (alpha <= 0) return
+    const color = k === 0 ? ink.a : ink.b
+    const zoom = width / (side.width * scale)
+    let dx: number
+    let dy: number
+    if (side.text) {
+      const { value, size, spacing } = side.text
+      const font = side.text.font.replace("SIZE", `${size * scale * zoom}px`)
+      const tracking = `${spacing * scale * zoom}px`
       g.font = font
-      g.letterSpacing = spacing
-      const run = g.measureText(label.text)
+      g.letterSpacing = tracking
+      const run = g.measureText(value)
       const asc = Math.ceil(run.fontBoundingBoxAscent) + 2
-      const desc = Math.ceil(run.fontBoundingBoxDescent) + 2
-      glyph.width = Math.ceil(run.width) + 8
-      glyph.height = asc + desc
+      const desc =
+        Math.ceil(
+          Math.max(
+            run.fontBoundingBoxDescent,
+            (side.text.underline?.[0] ?? 0) * 2 * scale * zoom,
+          ),
+        ) + 4
+      glyph!.width = Math.ceil(run.width) + 8
+      glyph!.height = asc + desc
       g.font = font
-      g.letterSpacing = spacing
+      g.letterSpacing = tracking
       g.fillStyle = color
-      g.fillText(label.text, 4, asc)
-      const cx = ox + lerp(a.label.cx, b.label.cx, t) * scale
-      const cy = oy + lerp(a.label.cy, b.label.cy, t) * scale
+      g.fillText(value, 4, asc)
+      if (side.text.underline) {
+        const [offset, thickness] = side.text.underline
+        g.fillRect(
+          4,
+          asc + offset * scale * zoom,
+          run.width,
+          thickness * scale * zoom,
+        )
+      }
       const baseline =
         cy + (run.fontBoundingBoxAscent - run.fontBoundingBoxDescent) / 2
-      place(alpha, cx - run.width / 2 - 4, baseline - asc)
-    }
-    if (icon) {
-      // An icon only one look has fades in place on that look's box.
-      const [ia, ib] = [a.icon ?? icon, b.icon ?? icon]
-      const size = lerp(ia.size, ib.size, t) * scale
-      const px = Math.ceil(size) + 2
-      glyph.width = px
-      glyph.height = px
-      g.drawImage(icon.image, 1, 1, size, size)
+      dx = cx - run.width / 2 - 4
+      dy = baseline - asc
+    } else if (side.image) {
+      const px = Math.ceil(width) + 2
+      glyph!.width = px
+      glyph!.height = px
+      g.drawImage(side.image, 1, 1, width, width)
       g.globalCompositeOperation = "source-in"
       g.fillStyle = color
       g.fillRect(0, 0, px, px)
       g.globalCompositeOperation = "source-over"
-      const cx = ox + lerp(ia.cx, ib.cx, t) * scale
-      const cy = oy + lerp(ia.cy, ib.cy, t) * scale
-      place(alpha, cx - size / 2 - 1, cy - size / 2 - 1)
-    }
-  }
+      dx = cx - width / 2 - 1
+      dy = cy - width / 2 - 1
+    } else return
+    // The two runs add up, so their sum never dips mid-way.
+    m.globalAlpha = alpha
+    m.globalCompositeOperation = first ? "source-over" : "lighter"
+    m.drawImage(glyph!, dx, dy)
+    first = false
+  })
   m.globalAlpha = 1
   m.globalCompositeOperation = "source-over"
   ctx.drawImage(mix, ...region, ...region)
 }
+
+const isInk = (item: Box | Ink): item is Ink => "ground" in item
 
 /* Near-black looks differ by only ~16 levels of 8-bit, so plain fills step
    through them visibly (and the encoder wobbles the tint): every fill is
@@ -623,24 +817,32 @@ function draw(
   // The card stays centered; everything inside is placed from its corner.
   const ox = (W - lerp(a.card.width, b.card.width, t) * scale) / 2
   const oy = (H - lerp(a.card.height, b.card.height, t) * scale) / 2
-  paintBox(
-    ctx,
-    { ...a.card, x: 0, y: 0 },
-    { ...b.card, x: 0, y: 0 },
-    t,
-    ox,
-    oy,
-    scale,
-    rand,
-  )
-  // See-through controls go first, so one gliding to another row passes
-  // behind solid neighbors instead of printing its label over theirs.
-  const pairs = a.controls.map((ca, i) => [ca, b.controls[i]!] as const)
-  const opacity = ([ca, cb]: (typeof pairs)[number]) =>
-    ca.box.fill[3] + cb.box.fill[3]
-  for (const [ca, cb] of pairs.sort((p, q) => opacity(p) - opacity(q))) {
-    paintBox(ctx, ca.box, cb.box, t, ox, oy, scale, rand)
-    paintInk(ctx, ca, cb, t, ox, oy, scale)
+  paintBox(ctx, a.card, b.card, t, ox, oy, scale, rand)
+
+  const keys = [...a.order, ...b.order.filter((k) => !a.items.has(k))]
+  for (const key of keys) {
+    let [ia, ib] = [a.items.get(key), b.items.get(key)]
+    // Different kinds of thing in the same place: each fades on its own.
+    if (ia && ib && isInk(ia) !== isInk(ib)) {
+      if (isInk(ia)) paintInk(ctx, ia, undefined, t, ox, oy, scale)
+      else paintInk(ctx, undefined, ib as Ink, t, ox, oy, scale)
+      ;[ia, ib] = isInk(ia) ? [undefined, ib] : [ia, undefined]
+    }
+    const one = (ia ?? ib)!
+    if (isInk(one)) {
+      paintInk(
+        ctx,
+        ia as Ink | undefined,
+        ib as Ink | undefined,
+        t,
+        ox,
+        oy,
+        scale,
+      )
+    } else {
+      const [ba, bb] = [ia as Box | undefined, ib as Box | undefined]
+      paintBox(ctx, ba ?? ghost(bb!), bb ?? ghost(ba!), t, ox, oy, scale, rand)
+    }
   }
 }
 
@@ -692,8 +894,8 @@ export function CardStep() {
             className="bg-bg"
             style={{
               position: "absolute",
-              width: CARD_WIDTH,
-              visibility: "hidden",
+              width: cardWidth(id),
+              opacity: 0,
             }}
           >
             <Controls />
@@ -706,6 +908,23 @@ export function CardStep() {
         height={h}
         style={{ width: "100%", height: "100%" }}
       />
+    </AbsoluteFill>
+  )
+}
+
+/** The real card of the look resting at `frame`, for checking the drawing. */
+export function RealCard() {
+  const { from } = swapAt(useCurrentFrame())
+  return (
+    <AbsoluteFill>
+      <WarmIcons />
+      <Theme state={preset(from)}>
+        <div className="flex size-full items-center justify-center bg-bg">
+          <div style={{ width: cardWidth(from) }}>
+            <Controls />
+          </div>
+        </div>
+      </Theme>
     </AbsoluteFill>
   )
 }
