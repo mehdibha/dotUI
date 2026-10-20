@@ -35,7 +35,7 @@ describe("pages", () => {
     ).toEqual([])
   })
 
-  it("takes over only for the state pages among the foundation pages", () => {
+  it("takes over only for the state pages and Motion among the foundation pages", () => {
     expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
       null,
       "focus",
@@ -43,6 +43,7 @@ describe("pages", () => {
       "cursor",
       "text-selection",
       null,
+      "motion",
       null,
     ])
   })
