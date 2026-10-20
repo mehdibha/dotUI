@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode, Ref } from "react"
 import {
-  CheckIcon,
   MoreHorizontalIcon,
   PlusIcon,
   SearchIcon,
@@ -58,7 +57,7 @@ interface PresetPickerProps {
   /** The pressable trigger — the Select's button, through its context. */
   children: ReactNode
   sections: PresetPickerSection[]
-  /** Item flagged with a check mark (e.g. the current selection). */
+  /** The current selection, checked in the list. */
   selectedId?: string
   onPick: (item: PresetPickerItem) => void
   isOpen?: boolean
@@ -292,7 +291,7 @@ export function PresetPicker({
           <Button
             variant="secondary"
             size="md"
-            className="mt-2 shrink-0"
+            className="mt-(--command-inset) shrink-0"
             onPress={onCreate}
           >
             <PlusIcon />
@@ -302,6 +301,7 @@ export function PresetPicker({
       </div>
       <CommandContent
         aria-label="Design systems"
+        shouldFocusWrap
         // App-only utilities (fine here, www-side): hide the scrollbar and
         // fade the rows out at the scroll edges instead of clipping them hard.
         className="no-scrollbar scroll-fade-y scroll-fade-4"
@@ -329,13 +329,7 @@ export function PresetPicker({
               <span className="tabular-nums">{section.items.length}</span>
             </CommandSectionHeader>
             {section.items.map((item) => (
-              <CommandItem
-                key={item.id}
-                id={item.id}
-                textValue={item.name}
-                // The row draws its own check, at the end.
-                className="*:data-listbox-item-indicator:hidden"
-              >
+              <CommandItem key={item.id} id={item.id} textValue={item.name}>
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
                     item={item}
@@ -538,7 +532,6 @@ function PresetOptionRow({
       <span dir="auto" className="min-w-0 flex-1 truncate">
         {item.name}
       </span>
-      {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
       {onMenu && (
         <Tooltip>
           {/* A press here never picks the row (see isRowMenuPress). */}
