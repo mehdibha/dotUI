@@ -22,14 +22,8 @@ export const siteConfig = {
     },
   ],
   creator: "mehdibha",
-  thumbnail: "/images/thumbnail.png",
   twitter: {
     creator: "@mehdibha",
-  },
-  og: {
-    title: "The design system studio for humans and agents",
-    description:
-      "Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
   },
   links: {
     github: "https://github.com/mehdibha/dotUI",

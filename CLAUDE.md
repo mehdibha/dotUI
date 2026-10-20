@@ -78,6 +78,8 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 
 `examples/` holds consumer templates with the registry's resolved output committed (styles collapsed to the preset, icons swapped, params inlined) — generated output, like `__generated__/*`. Touched the registry, the publisher, presets, or `/r/*`? Run `pnpm smoke:examples` (offline, ~5 min for all four; `--example <name>` for one) and commit `examples/` — the diff is the consumer-facing change, review it. CI regenerates every template with the real shadcn CLI, builds, type-checks, and fails on drift. Never hand-edit `examples/`; on a conflict, regenerate. To watch real consumer files change as you work, `pnpm examples:preview --example <name> --watch` with that template's dev server running. See `examples/README.md`.
 
+The social cover (`www/public/brand/cover/*.png`: the GitHub social preview and the site's share image) renders real components under several presets. CI's Cover workflow regenerates it on any PR touching presets or the registry and commits the result to the branch; `pnpm build:cover` does the same locally. Don't hand-edit it.
+
 ### Before committing
 
 - `pnpm check` — CI fails on formatting and import order.

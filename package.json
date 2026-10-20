@@ -25,6 +25,7 @@
     "build:www": "pnpm --filter=www build",
     "build:registry": "pnpm --filter=www build:registry",
     "build:references": "pnpm --filter=www build:references",
+    "build:cover": "pnpm --filter=www build:cover",
     "probe:registry": "pnpm --filter=www probe:registry",
     "smoke:examples": "node examples/scripts/smoke.ts",
     "examples:preview": "pnpm --filter=www preview:example",
