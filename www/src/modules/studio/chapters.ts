@@ -150,14 +150,24 @@ const MOVED: Record<string, string> = {
   color: "surfaces",
 }
 
+/** The component a registry slug names by one of its aliases ("radio-group"). */
+const aliasOf = (slug: string) =>
+  COMPONENTS.find((c) =>
+    c.aliases?.some(
+      (alias) => alias.toLowerCase().replaceAll(" ", "-") === slug,
+    ),
+  )?.id
+
 /** What `/studio#<hash>` opens: a page, else the row a key or a one-row
- *  component sits on. Old `#<family>[/<member>]` hashes land nearby. */
+ *  component sits on. Old `#<family>[/<member>]` hashes land nearby, and
+ *  an alias lands on its component. */
 export function linkTarget(
   hash: string,
 ): { page: string } | { key: string } | undefined {
   const [family = "", member = ""] = hash.split("/")
   const pages = CHAPTERS.flatMap((chapter) => chapter.pages ?? [])
-  for (const id of [MOVED[hash], member, MOVED[family], family]) {
+  const alias = aliasOf(hash)
+  for (const id of [MOVED[hash], member, MOVED[family], family, alias]) {
     if (!id) continue
     if (pages.some((page) => page.id === id)) return { page: id }
     const single = COMPONENTS.find((c) => c.id === id && isSingle(c))

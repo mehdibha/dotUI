@@ -108,6 +108,13 @@ describe("deep links", () => {
     expect(linkTarget("nope")).toBeUndefined()
   })
 
+  // The preview's inspector sends registry slugs.
+  it("lands an alias on its component", () => {
+    expect(linkTarget("radio-group")).toEqual({ page: "radio" })
+    expect(linkTarget("modal")).toEqual({ page: "dialog" })
+    expect(linkTarget("loader")).toEqual({ key: "spinnerStyle" })
+  })
+
   it("sends the old family hashes to the nearest page", () => {
     const old = {
       buttons: { page: "button" },

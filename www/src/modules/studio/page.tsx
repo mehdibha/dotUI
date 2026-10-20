@@ -31,6 +31,7 @@ import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
+import { useMessage } from "./preset/iframe-sync"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
@@ -352,19 +353,27 @@ export function PanelPage({
   )
 
   // `/studio#<page>` opens a page; a one-row component's id lands on its row.
-  const follow = useEffectEvent(() => {
-    const target = linkTarget(decodeURIComponent(location.hash.slice(1)))
+  const land = (hash: string) => {
+    const target = linkTarget(hash)
     if (!target) return
     setTucked(false)
     if ("page" in target) openPage(target.page)
     else revealAxis(target.key)
     setDrill(null)
-  })
+  }
+  const follow = useEffectEvent(() =>
+    land(decodeURIComponent(location.hash.slice(1))),
+  )
   useEffect(() => {
     follow()
     window.addEventListener("hashchange", follow)
     return () => window.removeEventListener("hashchange", follow)
   }, [])
+
+  // A component clicked in the preview's inspector lands like its deep link.
+  useMessage("preview-inspect", ({ panel }) =>
+    land(panel.replace(/^component:/, "")),
+  )
 
   return (
     <RevealAxis.Provider value={revealAxis}>
