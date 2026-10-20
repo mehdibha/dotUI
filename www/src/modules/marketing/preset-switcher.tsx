@@ -1,7 +1,7 @@
 import type * as React from "react"
+import { useEffect, useRef, useState } from "react"
 import type { Selection } from "react-aria-components"
 
-import { cn } from "@/registry/lib/utils"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -37,12 +37,58 @@ export function PresetSwitcher({
     default: 1,
     group: "Preset tabs",
   })
-  const inactiveSwatch = useTweak("Inactive swatch", {
+  const fade = useTweak("Fade", {
     type: "select",
-    options: ["color", "grey", "faded"],
-    default: "color",
+    options: ["none", "edges", "from selected"],
+    default: "none",
     group: "Preset tabs",
   })
+  const fadeLength = useTweak("Fade length", {
+    type: "number",
+    min: 40,
+    max: 600,
+    step: 20,
+    default: 240,
+    group: "Preset tabs",
+  })
+  const fadeFloor = useTweak("Fade floor", {
+    type: "number",
+    min: 0,
+    max: 1,
+    step: 0.05,
+    default: 0.2,
+    group: "Preset tabs",
+  })
+
+  // The selected tab's span within the list, for the "from selected" fade.
+  const rowRef = useRef<HTMLDivElement>(null)
+  const [selectedSpan, setSelectedSpan] = useState<[number, number]>([0, 0])
+  useEffect(() => {
+    const list = rowRef.current?.querySelector("[data-segmented-control]")
+    if (!list) return
+    const measure = () => {
+      const tab = list.querySelector(
+        "[data-segmented-control-item][data-selected]",
+      )
+      if (!tab) return
+      const listLeft = list.getBoundingClientRect().left
+      const rect = tab.getBoundingClientRect()
+      setSelectedSpan([rect.left - listLeft, rect.right - listLeft])
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(list)
+    return () => observer.disconnect()
+  }, [activeId])
+
+  const floor = `rgb(0 0 0 / ${fadeFloor})`
+  const [start, end] = selectedSpan
+  const fadeMask =
+    fade === "edges"
+      ? `linear-gradient(to right, ${floor} 0, #000 ${fadeLength}px, #000 calc(100% - ${fadeLength}px), ${floor} 100%)`
+      : fade === "from selected"
+        ? `linear-gradient(to right, ${floor} ${start - fadeLength}px, #000 ${start}px, #000 ${end}px, ${floor} ${end + fadeLength}px)`
+        : "none"
 
   const handleChange = (keys: Selection) => {
     if (keys === "all") return
@@ -59,16 +105,26 @@ export function PresetSwitcher({
     "--indicator-bg": active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
       : "var(--color-selected)",
-    "--inactive-opacity": inactiveOpacity,
   } as React.CSSProperties
 
   return (
     // Negative margins cancel the landing container's padding so the row still
     // scrolls edge-to-edge on small screens; lg fits without overflowing.
-    <div className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+    <div
+      ref={rowRef}
+      className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
+      style={
+        {
+          "--inactive-opacity": inactiveOpacity,
+          "--fade-mask": fadeMask,
+        } as React.CSSProperties
+      }
+    >
       <SegmentedControl
         aria-label="Preview design system"
-        className="mx-auto bg-transparent p-0 **:data-segmented-control-indicator:rounded-(--indicator-radius) **:data-segmented-control-indicator:bg-(--indicator-bg) **:data-segmented-control-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
+        // Plain :hover — the `hover:` variant waits on react-aria's data-hovered,
+        // which the group never sets.
+        className="mx-auto bg-transparent [mask-image:var(--fade-mask)] p-0 has-data-focus-visible:[--fade-mask:none] has-data-focus-visible:[--inactive-opacity:1] **:data-segmented-control-indicator:rounded-(--indicator-radius) **:data-segmented-control-indicator:bg-(--indicator-bg) **:data-segmented-control-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color] [&:hover]:[--fade-mask:none] [&:hover]:[--inactive-opacity:1]"
         style={indicatorStyle}
         selectedKeys={activeId ? [activeId] : []}
         onSelectionChange={handleChange}
@@ -77,17 +133,12 @@ export function PresetSwitcher({
           <SegmentedControlItem
             key={preset.id}
             id={preset.id}
-            className="group/tab opacity-(--inactive-opacity) transition-[color,opacity] data-focus-visible:opacity-100 data-hovered:opacity-100 data-selected:opacity-100"
+            className="opacity-(--inactive-opacity) transition-[color,opacity] data-selected:opacity-100"
             style={{ fontFamily: presetLabelStack(preset.id) }}
           >
             <span
               aria-hidden="true"
-              className={cn(
-                "size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset motion-safe:transition-[filter,opacity]",
-                inactiveSwatch === "grey" && "grayscale",
-                inactiveSwatch === "faded" && "opacity-40",
-                "group-data-focus-visible/tab:opacity-100 group-data-focus-visible/tab:grayscale-0 group-data-hovered/tab:opacity-100 group-data-hovered/tab:grayscale-0 group-data-selected/tab:opacity-100 group-data-selected/tab:grayscale-0",
-              )}
+              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset"
               style={{ background: preset.swatch }}
             />
             {preset.name}
