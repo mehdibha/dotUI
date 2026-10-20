@@ -11,8 +11,8 @@ type Side = "top" | "right" | "bottom" | "left"
 // The clear area around the logo is 2 × HALF_W by 2 × HALF_H; containers run
 // BLEED past the canvas edge.
 const BLEED = -40
-const HALF_W = 250
-const HALF_H = 142
+const HALF_W = 300
+const HALF_H = 170
 const GUTTER = 56
 const ZOOM = 0.6
 
@@ -32,7 +32,7 @@ const SLOTS: {
       right: fromCenter(HALF_W),
       bottom: fromCenter(GUTTER - HALF_H),
     },
-    scroll: [597, 212],
+    scroll: [639, 212],
   },
   {
     preset: "linear",
@@ -115,7 +115,7 @@ export function Cover() {
       <img
         src="/brand/dotui-wordmark-white.svg"
         alt="dotUI"
-        className="absolute top-1/2 left-1/2 h-20 -translate-1/2"
+        className="absolute top-1/2 left-1/2 h-24 -translate-1/2"
       />
       <ReadySignal />
     </div>
