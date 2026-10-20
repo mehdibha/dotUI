@@ -478,7 +478,7 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 h-px shrink-0 bg-fg/8" />
 }
 
 /* DialKit's slider: the row is the track, the fill follows the pointer
