@@ -11,10 +11,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
-/**
- * Controlled drawer via `isOpen` / `onOpenChange`. Useful when an outside event
- * (effect, message, parent state) needs to open or close the drawer.
- */
 export default function Demo() {
   const [open, setOpen] = React.useState(false)
   return (

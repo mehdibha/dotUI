@@ -26,7 +26,7 @@ import {
 import { Switch } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
 import type { StudioState } from "@/modules/studio/axes"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 import { describe, useCurrent } from "@/modules/studio/selection"
 import { studioLink, useSource } from "@/modules/studio/share"
 import { useWorkspace } from "@/modules/studio/workspace"
@@ -143,7 +143,7 @@ function ShareBody() {
 
 /** What the link opens, drawn in its own design system. */
 function SharedPreview({ name, state }: { name: string; state: StudioState }) {
-  const designSystem = useMemo(() => resolveDesignSystem(state), [state])
+  const designSystem = useMemo(() => designSystemOf(state), [state])
   return (
     <DesignSystemProvider
       scoped

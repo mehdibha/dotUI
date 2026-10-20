@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import React from "react"
 import { defineChart } from "@tanstack/charts"
 import { areaY } from "@tanstack/charts/area"
 import { lineY } from "@tanstack/charts/line"
@@ -19,7 +19,6 @@ import {
 const DAYS = 90
 const start = Date.UTC(2024, 3, 1)
 
-// Deterministic, so the server and the client render the same rows.
 const data = Array.from({ length: DAYS }, (_, index) => {
   const wave = Math.sin(index / 6) * 0.5 + 0.5
   return {
@@ -41,9 +40,9 @@ const fields = ["mobile", "desktop"] as const
 const RANGES = { "90d": 90, "30d": 30, "7d": 7 } as const
 type Range = keyof typeof RANGES
 
-export default function ChartAreaInteractive() {
-  const [range, setRange] = useState<Range>("90d")
-  const chart = useMemo(() => {
+export default function Demo() {
+  const [range, setRange] = React.useState<Range>("90d")
+  const chart = React.useMemo(() => {
     const rows = stackRowsY(
       fold(data.slice(-RANGES[range]), {
         fields,

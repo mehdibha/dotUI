@@ -10,11 +10,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
-/**
- * Drawer with a tall scrollable body. Drag the handle to dismiss; scroll the
- * body normally. Once scrolled to the top, dragging down should take over and
- * dismiss the drawer (scroll-edge gate).
- */
 export default function Demo() {
   return (
     <Dialog>

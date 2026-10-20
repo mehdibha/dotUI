@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import dropZoneMeta from "./meta"
 
-const { useStyles, styles } = createStyles(dropZoneMeta, {
+const { useStyles } = createStyles(dropZoneMeta, {
   base: {
     slots: {
       dropzone:
@@ -10,13 +10,6 @@ const { useStyles, styles } = createStyles(dropZoneMeta, {
       label: "text-base",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-  },
 })
-
-export type DropZoneStyles = typeof styles
 
 export { useStyles }

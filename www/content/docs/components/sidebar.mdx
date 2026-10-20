@@ -3,7 +3,14 @@ title: Sidebar
 description: A composable, collapsible sidebar for application shells — with a mobile drawer, icon mode, and keyboard toggle.
 ---
 
-<Demo name="sidebar/demos/basic" />
+<InteractiveDemo
+  name="sidebar"
+  controls={[
+    "side",
+    { name: "variant", options: ["sidebar", "floating", "inset"] },
+    "collapsible",
+  ]}
+/>
 
 ## Installation
 
@@ -11,9 +18,7 @@ description: A composable, collapsible sidebar for application shells — with a
 npx shadcn@latest add @dotui/sidebar
 ```
 
-## Anatomy
-
-A sidebar is built from a `SidebarProvider` wrapping the `Sidebar` and a `SidebarInset` (the main content). Inside the sidebar, compose a header, scrollable content split into groups of menus, and a footer.
+## Usage
 
 ```tsx
 import {
@@ -31,31 +36,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 ```
-
-```tsx
-<SidebarProvider>
-  <Sidebar>
-    <SidebarHeader />
-    <SidebarContent>
-      <SidebarGroup>
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>Dashboard</SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarGroup>
-    </SidebarContent>
-    <SidebarFooter />
-  </Sidebar>
-  <SidebarInset>
-    <SidebarTrigger />
-    {/* page content */}
-  </SidebarInset>
-</SidebarProvider>
-```
-
-## Usage
 
 The `Sidebar` positions itself relative to the `SidebarProvider`, so the whole shell is self-contained. For a full-screen app, give the provider the viewport height and let the content scroll inside the inset:
 
@@ -99,10 +79,39 @@ const {
 
 Drive the open state yourself with `isOpen` and `onOpenChange` on `SidebarProvider` — useful for persisting it (e.g. in a cookie or `localStorage`).
 
+## Anatomy
+
+A sidebar is built from a `SidebarProvider` wrapping the `Sidebar` and a `SidebarInset` (the main content). Inside the sidebar, compose a header, scrollable content split into groups of menus, and a footer.
+
+```tsx
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>Dashboard</SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarFooter />
+  </Sidebar>
+  <SidebarInset>
+    <SidebarTrigger />
+    {/* page content */}
+  </SidebarInset>
+</SidebarProvider>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">
   <Example name="sidebar/demos/basic" title="Basic Sidebar" />
+  <Example name="sidebar/demos/inset" title="Inset" />
+  <Example name="sidebar/demos/floating" title="Floating" />
   <Example name="sidebar/demos/groups" title="Multiple Groups" />
   <Example name="sidebar/demos/submenu" title="Nested Menu" />
   <Example name="sidebar/demos/badges-and-actions" title="Badges & Actions" />

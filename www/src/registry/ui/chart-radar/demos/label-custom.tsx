@@ -47,7 +47,6 @@ const chart = defineChart({
           shape: "polygon",
           strokeDasharray: chartLook.grid.strokeDasharray,
         }),
-        // Two label lines: the month below, its value above.
         angleGrid({
           ...chartAngleLabels,
           labelDy: (label) => chartAngleLabels.labelDy(label) + 7,
@@ -77,7 +76,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarLabelCustom() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

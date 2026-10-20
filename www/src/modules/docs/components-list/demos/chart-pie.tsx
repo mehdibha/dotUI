@@ -1,20 +1,37 @@
-"use client"
+import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Suspense, lazy } from "react"
+import { Chart, chartSliceTooltip } from "@/registry/ui/chart"
 
-// Lazy on purpose — see the note in chart-bar.tsx.
-const ChartPieBrowsers = lazy(() => import("./chart-pie.lazy"))
+const data = [
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
+]
 
-export function ChartPieDemo() {
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
+
+export default function ChartPieBrowsers() {
   return (
-    <div className="w-[136px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[108px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartPieBrowsers />
-      </Suspense>
-    </div>
+    <Chart definition={chart} height={108} ariaLabel="Visitors by browser" />
   )
 }

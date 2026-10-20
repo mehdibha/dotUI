@@ -63,6 +63,8 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
+import { initials } from "./shared"
+
 type Category = "mentions" | "reviews" | "deploys" | "team" | "activity"
 
 type Kind =
@@ -337,14 +339,6 @@ const DELIVERY: { id: string; label: string; hint: string }[] = [
   { id: "quiet", label: "Weekend quiet hours", hint: "Sat–Sun, all channels" },
 ]
 
-function initialsOf(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
-}
-
 function matchesTab(item: Item, tab: TabId) {
   if (tab === "archive") return item.archived
   if (item.archived) return false
@@ -361,8 +355,6 @@ function matchesQuery(item: Item, query: string) {
     .toLowerCase()
   return haystack.includes(query.toLowerCase())
 }
-
-/* --------------------------------- Row ----------------------------------- */
 
 function NotificationRow({
   item,
@@ -392,7 +384,7 @@ function NotificationRow({
         )}
       />
       <Avatar size="md" className="mt-0.5 shrink-0">
-        <AvatarFallback>{initialsOf(item.actor)}</AvatarFallback>
+        <AvatarFallback>{initials(item.actor)}</AvatarFallback>
         <AvatarBadge className={tone}>
           <KindIcon />
         </AvatarBadge>
@@ -490,8 +482,6 @@ function NotificationRow({
   )
 }
 
-/* --------------------------------- Rail ----------------------------------- */
-
 function SideRail() {
   const [delivery, setDelivery] = useState<Record<string, boolean>>({
     digest: true,
@@ -561,9 +551,7 @@ function SideRail() {
   )
 }
 
-/* --------------------------------- Page ----------------------------------- */
-
-export default function NotificationsCenter() {
+export default function NotificationsCenterBlock() {
   const [items, setItems] = useState<Item[]>(ITEMS)
   const [tab, setTab] = useState<TabId>("all")
   const [query, setQuery] = useState("")
@@ -646,25 +634,25 @@ export default function NotificationsCenter() {
     setCategories(new Set(CATEGORIES.map((c) => c.id)))
   }
 
-  const { backdrop } = useModalStyles()()
+  const { backdrop, modal } = useModalStyles()()
 
   return (
-    // Same fake-modal shell as the settings block — the backdrop and card
-    // reuse the Modal styles so the fake tracks the axis.
+    // A fake open modal: the shell reuses the Modal slots so it tracks the axes.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
       <div className={backdrop()} />
       <Tabs
         selectedKey={tab}
         onSelectionChange={(key) => setTab(key as TabId)}
-        className="relative flex h-full max-h-184 w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--studio-modal-background)]"
+        className={modal({
+          className:
+            "h-full max-h-184 max-w-5xl gap-0 overflow-hidden sm:max-h-184 sm:max-w-5xl",
+        })}
       >
         <header className="shrink-0 border-b">
           <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">
             <div className="flex items-center gap-3">
               <div className="flex min-w-0 flex-col">
-                <h1 className="truncate font-heading text-lg font-semibold tracking-tight">
-                  Notifications
-                </h1>
+                <h1 className="truncate text-lg">Notifications</h1>
                 <p className="truncate text-xs text-fg-muted">
                   Northwind Analytics · {inboxUnread} unread
                 </p>
@@ -826,28 +814,32 @@ export default function NotificationsCenter() {
               {TABS.map((t) => (
                 <TabPanel key={t.id} id={t.id} className="flex flex-col gap-6">
                   {groups.length === 0 ? (
-                    <Empty className="rounded-xl border bg-card">
-                      <EmptyHeader>
-                        <EmptyMedia variant="icon">
-                          <InboxIcon />
-                        </EmptyMedia>
-                        <EmptyTitle>
-                          {isFiltered
-                            ? "Nothing matches"
-                            : "You're all caught up"}
-                        </EmptyTitle>
-                        <EmptyDescription>
-                          {isFiltered
-                            ? "No notifications match the current filters. Widen the categories or clear the search."
-                            : "New mentions, reviews and deploys will land here as your team works."}
-                        </EmptyDescription>
-                      </EmptyHeader>
-                      {isFiltered ? (
-                        <EmptyContent>
-                          <Button onPress={resetFilters}>Clear filters</Button>
-                        </EmptyContent>
-                      ) : null}
-                    </Empty>
+                    <Card className="py-0">
+                      <Empty>
+                        <EmptyHeader>
+                          <EmptyMedia variant="icon">
+                            <InboxIcon />
+                          </EmptyMedia>
+                          <EmptyTitle>
+                            {isFiltered
+                              ? "Nothing matches"
+                              : "You're all caught up"}
+                          </EmptyTitle>
+                          <EmptyDescription>
+                            {isFiltered
+                              ? "No notifications match the current filters. Widen the categories or clear the search."
+                              : "New mentions, reviews and deploys will land here as your team works."}
+                          </EmptyDescription>
+                        </EmptyHeader>
+                        {isFiltered ? (
+                          <EmptyContent>
+                            <Button onPress={resetFilters}>
+                              Clear filters
+                            </Button>
+                          </EmptyContent>
+                        ) : null}
+                      </Empty>
+                    </Card>
                   ) : (
                     groups.map((group) => (
                       <section key={group.day} className="flex flex-col gap-1">

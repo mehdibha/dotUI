@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const tokenFieldMeta = {
   name: "token-field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",
@@ -11,7 +10,7 @@ const tokenFieldMeta = {
       target: "ui/token-field.tsx",
     },
   ],
-  registryDependencies: ["field"],
+  registryDependencies: ["field", "input"],
 } satisfies RegistryItem
 
 export default tokenFieldMeta

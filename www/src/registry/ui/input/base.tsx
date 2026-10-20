@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useCallback } from "react"
+import * as React from "react"
 import { chain } from "react-aria"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as DateFieldPrimitive from "react-aria-components/DateField"
-import * as GroupPrimitive from "react-aria-components/Group"
-import * as InputPrimitive from "react-aria-components/Input"
-import * as TextAreaPrimitive from "react-aria-components/TextArea"
+import * as DateFieldPrimitives from "react-aria-components/DateField"
+import * as GroupPrimitives from "react-aria-components/Group"
+import * as InputPrimitives from "react-aria-components/Input"
+import * as TextAreaPrimitives from "react-aria-components/TextArea"
 import { mergeRefs } from "react-aria/mergeRefs"
 import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions"
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect"
@@ -15,12 +15,14 @@ import type { VariantProps } from "tailwind-variants"
 
 import { type InputStyles, useStyles } from "./styles"
 
+export { inputStyles } from "./styles"
+
 // MARK: Separator
 
+type InputSize = Pick<VariantProps<InputStyles>, "size">
+
 interface InputGroupProps
-  extends
-    React.ComponentProps<typeof GroupPrimitive.Group>,
-    VariantProps<InputStyles> {}
+  extends React.ComponentProps<typeof GroupPrimitives.Group>, InputSize {}
 
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']"
 
@@ -37,7 +39,7 @@ const InputGroup = ({
 }: InputGroupProps) => {
   const { inputGroup } = useStyles()()
   return (
-    <GroupPrimitive.Group
+    <GroupPrimitives.Group
       data-input-group=""
       data-size={size}
       onPointerDown={(e) => {
@@ -69,13 +71,13 @@ const InputGroup = ({
 
 interface InputProps
   extends
-    Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
-    VariantProps<InputStyles> {}
+    Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size">,
+    InputSize {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
   const { input } = useStyles()()
   return (
-    <InputPrimitive.Input
+    <InputPrimitives.Input
       data-input=""
       data-size={size}
       data-input-control=""
@@ -90,7 +92,7 @@ const Input = ({ className, size, ...props }: InputProps) => {
 // MARK: Separator
 
 interface TextAreaProps extends React.ComponentProps<
-  typeof TextAreaPrimitive.TextArea
+  typeof TextAreaPrimitives.TextArea
 > {}
 
 const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
@@ -102,35 +104,30 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   )
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
 
-  const onHeightChange = useCallback(() => {
-    if (inputRef.current) {
-      const input = inputRef.current
-      const prevAlignment = input.style.alignSelf
-      const prevOverflow = input.style.overflow
-      const prevFlex = input.style.flex
+  const onHeightChange = React.useCallback(() => {
+    const input = inputRef.current
+    if (!input) return
+    const prevAlignment = input.style.alignSelf
+    const prevOverflow = input.style.overflow
+    const prevFlex = input.style.flex
 
-      const isFirefox = "MozAppearance" in input.style
-      if (!isFirefox) {
-        input.style.overflow = "hidden"
-      }
-      input.style.flex = "none"
-      input.style.alignSelf = "start"
-      input.style.height = "auto"
-      input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`
-      input.style.overflow = prevOverflow
-      input.style.alignSelf = prevAlignment
-      input.style.flex = prevFlex
+    const isFirefox = "MozAppearance" in input.style
+    if (!isFirefox) {
+      input.style.overflow = "hidden"
     }
+    input.style.flex = "none"
+    input.style.alignSelf = "start"
+    input.style.height = "auto"
+    input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`
+    input.style.overflow = prevOverflow
+    input.style.alignSelf = prevAlignment
+    input.style.flex = prevFlex
   }, [])
 
-  useLayoutEffect(() => {
-    if (inputRef.current) {
-      onHeightChange()
-    }
-  }, [onHeightChange, inputValue, inputRef])
+  useLayoutEffect(() => onHeightChange(), [onHeightChange, inputValue])
 
   return (
-    <TextAreaPrimitive.TextArea
+    <TextAreaPrimitives.TextArea
       ref={mergeRefs(
         inputRef,
         ref as React.RefObject<HTMLTextAreaElement | null>,
@@ -148,14 +145,21 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 
 // MARK: Separator
 
-interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
+interface InputGroupAddonProps
+  extends
+    React.ComponentProps<"div">,
+    Pick<VariantProps<InputStyles>, "variant"> {}
 
-function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
+const InputGroupAddon = ({
+  className,
+  variant,
+  ...props
+}: InputGroupAddonProps) => {
   const { inputGroupAddon } = useStyles()()
   return (
     <div
       data-input-group-addon=""
-      className={inputGroupAddon({ className })}
+      className={inputGroupAddon({ className, variant })}
       {...props}
     />
   )
@@ -164,16 +168,14 @@ function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
 // MARK: Separator
 
 interface DateInputProps
-  extends
-    Omit<DateFieldPrimitive.DateInputProps, "children">,
-    VariantProps<InputStyles> {
-  children?: DateFieldPrimitive.DateInputProps["children"]
+  extends Omit<DateFieldPrimitives.DateInputProps, "children">, InputSize {
+  children?: DateFieldPrimitives.DateInputProps["children"]
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
   const { input } = useStyles()()
   return (
-    <DateFieldPrimitive.DateInput
+    <DateFieldPrimitives.DateInput
       data-input=""
       data-date-input=""
       data-input-control=""
@@ -184,35 +186,31 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
       {...props}
     >
       {(segment) => <DateSegment segment={segment} />}
-    </DateFieldPrimitive.DateInput>
+    </DateFieldPrimitives.DateInput>
   )
 }
 
 // MARK: Separator
 
 interface DateSegmentProps extends React.ComponentProps<
-  typeof DateFieldPrimitive.DateSegment
+  typeof DateFieldPrimitives.DateSegment
 > {}
 
-// Date/time segments are formatted with `Intl`, whose separator whitespace differs between the
-// Node SSR runtime and the browser: e.g. the AM/PM separator is a narrow no-break space (U+202F)
-// on Node but a regular space in the browser, and date ranges use a thin space (U+2009). Folding
-// these exotic spaces to a regular space makes server and client render identical text, which
-// avoids a hydration mismatch on the literal segments.
+// Intl's separator whitespace (U+202F, U+2009) differs between Node and the browser; folding it to a plain space avoids hydration mismatches.
 const normalizeSegmentWhitespace = (text: string) =>
   text.replace(/[\u00A0\u2007\u2009\u202F]/g, " ")
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
   const { dateInputSegment } = useStyles()()
   return (
-    <DateFieldPrimitive.DateSegment
+    <DateFieldPrimitives.DateSegment
       className={composeRenderProps(className, (className) =>
         dateInputSegment({ className }),
       )}
       {...props}
     >
       {({ text }) => normalizeSegmentWhitespace(text)}
-    </DateFieldPrimitive.DateSegment>
+    </DateFieldPrimitives.DateSegment>
   )
 }
 

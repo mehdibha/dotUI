@@ -45,13 +45,12 @@ const chart = defineChart({
   },
   color: { legend: chartLegend },
   marks: [
-    // A zero baseline overlaps the series instead of stacking them.
     areaY(rows, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
     decorative(lineY(rows, { ...series, strokeWidth: chartLook.strokeWidth })),
   ],
 })
 
-export default function ChartAreaLegend() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

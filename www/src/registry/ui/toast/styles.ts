@@ -2,23 +2,21 @@ import { createStyles } from "@/lib/styles"
 
 import toastMeta from "./meta"
 
-/* The timing is the studio's (styles.css): entering and restacking on the
-   enter leg, a dismissal on the exit leg, a swiped-away toast on its own. */
 const toastTransition =
   "transition-[transform,opacity,height,background-color,border-color] duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) data-ending-style:not-data-swipe-direction:duration-(--studio-toast-exit-duration) data-ending-style:not-data-swipe-direction:ease-(--studio-toast-exit-ease) data-ending-style:data-swipe-direction:duration-(--studio-toast-swipe-state-duration) data-ending-style:data-swipe-direction:ease-(--studio-toast-swipe-state-ease) motion-reduce:transition-none"
 const contentTransition =
   "transition-opacity duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(toastMeta, {
+const { useStyles } = createStyles(toastMeta, {
   base: {
     slots: {
       viewport: [
-        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset outline-none [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
+        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
         "data-[position*=bottom]:bottom-(--toast-inset) data-[position*=top]:top-(--toast-inset)",
         "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
       ],
       toast: [
-        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset outline-none select-none focus-visible:focus-ring",
+        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
         "after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full",
         "data-ending-style:opacity-0 data-limited:opacity-0",
@@ -40,57 +38,36 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "data-expanded:data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))]",
         "data-expanded:data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
         "data-expanded:data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
-        "border border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)]",
+        "border-(length:--studio-overlay-stroke)",
       ],
       content:
-        "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm [--surface-bg:var(--color-popover)] data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
+        "pointer-events-auto flex items-center justify-between gap-1.5 overflow-hidden text-sm data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
       body: "flex min-w-0 items-center gap-2",
       icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
       message: "flex min-w-0 flex-1 flex-col gap-0.5",
-      title: "text-sm leading-snug font-medium empty:hidden",
-      description: "text-sm leading-snug text-fg-muted empty:hidden",
+      // Base UI's title is an <h2>; keep the body face, not the heading's.
+      title: "font-sans font-medium tracking-normal empty:hidden",
+      description: "empty:hidden",
       actions: "ml-2 flex shrink-0 items-center gap-1",
-      action:
-        "inline-flex h-7 max-w-32 items-center justify-center rounded-(--studio-toast-action-radius) bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
+      action: "max-w-32 empty:hidden **:[span]:truncate",
     },
     variants: {
-      position: {
-        "top-left": {},
-        "top-center": {},
-        "top-right": {},
-        "bottom-left": {},
-        "bottom-center": {},
-        "bottom-right": {},
+      // On a solid fill the action is the quiet button in the toast's ink.
+      onFill: {
+        true: {
+          action: "text-current hover:bg-current/10 pressed:bg-current/20",
+        },
       },
       variant: {
         neutral: {},
-        success: {
-          toast: "border-border-success",
-          icon: "text-fg-success",
-        },
-        warning: {
-          toast: "border-border-warning",
-          icon: "text-fg-warning",
-        },
-        danger: {
-          toast: "border-border-danger",
-          icon: "text-fg-danger",
-        },
-        error: {
-          toast: "border-border-danger",
-          icon: "text-fg-danger",
-        },
-        info: {
-          toast: "border-border-info",
-          icon: "text-fg-info",
-        },
-        loading: {
-          icon: "animate-spin text-fg-muted",
-        },
+        success: {},
+        warning: {},
+        danger: {},
+        info: {},
+        loading: {},
       },
     },
     defaultVariants: {
-      position: "bottom-right",
       variant: "neutral",
     },
   },
@@ -98,20 +75,41 @@ const { useStyles, styles } = createStyles(toastMeta, {
     compact: {
       slots: {
         content: "min-h-10 px-3 py-2.5",
-        title: "text-[0.8125rem]",
-        description: "text-xs",
+        title: "text-[0.8125rem] leading-snug",
+        description: "text-xs leading-snug",
       },
     },
-    default: {},
+    default: {
+      slots: {
+        content: "min-h-12 px-3.5 py-3",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
+      },
+    },
     comfortable: {
       slots: {
         content: "min-h-16 px-4 py-3.5",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
+      },
+    },
+    spacious: {
+      slots: {
+        content: "min-h-16 px-4 py-3.5",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
+      },
+    },
+    touch: {
+      slots: {
+        content: "min-h-16 px-4 py-3.5",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
       },
     },
   },
   params: {
     motion: {
-      // Sonner's (shadcn's toast): in from beyond its edge, out sliding down.
       slide: {
         slots: {
           toast: [
@@ -123,17 +121,112 @@ const { useStyles, styles } = createStyles(toastMeta, {
           content: contentTransition,
         },
       },
-      fade: {
+      none: {},
+    },
+    surface: {
+      // Sonner (shadcn), Atlassian, Fluent 2, Ant, HeroUI, Chakra, Mantine:
+      // the overlay surface, glass included.
+      surface: {
         slots: {
-          toast: [toastTransition, "data-starting-style:opacity-0"],
-          content: contentTransition,
+          toast:
+            "border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)]",
+          content: "[--surface-bg:var(--color-popover)]",
+          description: "text-fg-muted",
+        },
+        variants: { variant: { loading: { icon: "text-fg-muted" } } },
+      },
+      // Material 3 (snackbar), Polaris, Spectrum 2, Carbon: opaque inverse.
+      inverse: {
+        slots: {
+          toast: "border-transparent bg-inverse text-fg-inverse",
+          content: "[--surface-bg:var(--color-inverse)]",
+          description: "text-fg-inverse",
         },
       },
-      none: {},
+    },
+    status: {
+      // Sonner (shadcn), Fluent 2, Ant, HeroUI, Mantine, Carbon: only the
+      // icon carries the status.
+      icon: {
+        variants: {
+          variant: {
+            success: { icon: "text-fg-success" },
+            warning: { icon: "text-fg-warning" },
+            danger: { icon: "text-fg-danger" },
+            info: { icon: "text-fg-info" },
+          },
+        },
+      },
+      // Carbon (inverse): the solid status color, to read on an inverse
+      // surface.
+      "solid-icon": {
+        variants: {
+          variant: {
+            success: { icon: "text-success" },
+            warning: { icon: "text-warning" },
+            danger: { icon: "text-danger" },
+            info: { icon: "text-info" },
+          },
+        },
+      },
+      // Spectrum 2, Polaris (critical), Chakra, Atlassian (bold): the solid
+      // status fill.
+      bold: {
+        variants: {
+          variant: {
+            success: {
+              toast: "border-transparent bg-success text-fg-on-success",
+              content: "[--surface-bg:var(--color-success)]",
+              description: "text-fg-on-success",
+            },
+            warning: {
+              toast: "border-transparent bg-warning text-fg-on-warning",
+              content: "[--surface-bg:var(--color-warning)]",
+              description: "text-fg-on-warning",
+            },
+            danger: {
+              toast: "border-transparent bg-danger text-fg-on-danger",
+              content: "[--surface-bg:var(--color-danger)]",
+              description: "text-fg-on-danger",
+            },
+            info: {
+              toast: "border-transparent bg-info text-fg-on-info",
+              content: "[--surface-bg:var(--color-info)]",
+              description: "text-fg-on-info",
+            },
+          },
+        },
+      },
+      // Sonner (richColors), Carbon (low contrast): the status wash inside
+      // a status edge, tinted ink.
+      soft: {
+        variants: {
+          variant: {
+            success: {
+              toast: "border-border-success bg-success-muted text-fg-success",
+              content: "[--surface-bg:var(--color-success-muted)]",
+              description: "text-fg-success",
+            },
+            warning: {
+              toast: "border-border-warning bg-warning-muted text-fg-warning",
+              content: "[--surface-bg:var(--color-warning-muted)]",
+              description: "text-fg-warning",
+            },
+            danger: {
+              toast: "border-border-danger bg-danger-muted text-fg-danger",
+              content: "[--surface-bg:var(--color-danger-muted)]",
+              description: "text-fg-danger",
+            },
+            info: {
+              toast: "border-border-info bg-info-muted text-fg-info",
+              content: "[--surface-bg:var(--color-info-muted)]",
+              description: "text-fg-info",
+            },
+          },
+        },
+      },
     },
   },
 })
-
-export type ToastStyles = typeof styles
 
 export { useStyles }

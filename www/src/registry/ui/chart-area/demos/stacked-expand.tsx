@@ -24,8 +24,6 @@ const devices = { desktop: "Desktop", mobile: "Mobile", other: "Other" }
 
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 
-/* `"normalize"` divides each band by its x-group total, so the stack fills
-   the plot and reads as share rather than volume. */
 const rows = stackRowsY(
   fold(data, {
     fields: ["desktop", "mobile", "other"],
@@ -63,7 +61,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaStackedExpand() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

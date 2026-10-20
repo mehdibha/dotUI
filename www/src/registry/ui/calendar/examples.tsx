@@ -27,40 +27,40 @@ export default function CalendarExamples() {
       <Example title="Range">
         <RangeDemo />
       </Example>
-      <Example title="Range Multiple Months" className="lg:col-span-2">
+      <Example title="Range multiple months" className="lg:col-span-2">
         <RangeMultipleMonthsDemo />
       </Example>
-      <Example title="Booked Dates">
+      <Example title="Booked dates">
         <BookedDatesDemo />
       </Example>
-      <Example title="With Presets">
+      <Example title="With presets">
         <WithPresetsDemo />
       </Example>
-      <Example title="With Time">
+      <Example title="With time">
         <WithTimeDemo />
       </Example>
-      <Example title="With Dropdowns">
+      <Example title="With dropdowns">
         <WithDropdownsDemo />
       </Example>
-      <Example title="Short Weekdays">
+      <Example title="Short weekdays">
         <ShortWeekdaysDemo />
       </Example>
-      <Example title="Custom Days" className="lg:col-span-2">
+      <Example title="Custom days" className="lg:col-span-2">
         <CustomDaysDemo />
       </Example>
       <Example title="Disabled">
         <DisabledDemo />
       </Example>
-      <Example title="Min & Max">
+      <Example title="Min & max">
         <MinMaxDemo />
       </Example>
-      <Example title="Unavailable Weekends">
+      <Example title="Unavailable weekends">
         <UnavailableWeekendsDemo />
       </Example>
       <Example title="Invalid">
         <InvalidDemo />
       </Example>
-      <Example title="Today Indicator">
+      <Example title="Today indicator">
         <TodayIndicatorDemo />
       </Example>
       <Example title="International (Arabic)">

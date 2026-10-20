@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup";
 import { type VariantProps, tv } from "tailwind-variants";
@@ -9,7 +10,7 @@ import type { toggleButtonStyles } from "@/components/ui/toggle-button";
 
 const toggleButtonGroupVariants = tv({
   slots: {
-    root: "flex w-fit items-stretch *:data-button:min-w-0 *:data-button:shrink-0 *:data-button:shadow-none *:data-button:hover:z-10 *:data-button:focus-visible:z-20 *:data-button:selected:z-10 *:data-button:selected:focus-visible:z-20",
+    root: "flex w-fit items-stretch *:data-button:min-w-0 *:data-button:shrink-0 *:data-button:hover:z-1 *:data-button:focus-visible:z-3 *:data-button:selected:z-1 *:data-button:selected:focus-visible:z-3 *:data-button:shadow-none",
   },
   variants: {
     orientation: {
@@ -43,9 +44,7 @@ const ToggleButtonGroup = ({
   return (
     <ToggleButtonProvider variant={variant} size={size} isIconOnly={isIconOnly}>
       <ToggleButtonGroupPrimitives.ToggleButtonGroup
-        data-slot="toggle-button-group"
         data-toggle-button-group=""
-        data-orientation={orientation}
         orientation={orientation}
         className={composeRenderProps(className, (className) =>
           root({
@@ -58,6 +57,8 @@ const ToggleButtonGroup = ({
     </ToggleButtonProvider>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ToggleButtonGroupProps };
 export { ToggleButtonGroup };

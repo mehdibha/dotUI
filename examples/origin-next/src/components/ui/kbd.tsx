@@ -1,12 +1,13 @@
 "use client";
 
-import * as KeyboardPrimitive from "react-aria-components/Keyboard";
+import type * as React from "react";
+import * as KeyboardPrimitives from "react-aria-components/Keyboard";
 import { tv } from "tailwind-variants";
 
 const kbdVariants = tv({
   slots: {
     group: "inline-flex items-center gap-1",
-    kbd: "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-ui **:[svg]:not-with-[size]:size-3 h-5 min-w-5 rounded-sm bg-muted px-1 font-sans text-xs font-medium",
+    kbd: "pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm text-fg-muted select-ui **:[svg]:not-with-[size]:size-3 bg-muted px-1 font-sans text-xs font-medium",
   },
 });
 
@@ -23,12 +24,12 @@ const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface KbdProps extends React.ComponentProps<
-  typeof KeyboardPrimitive.Keyboard
+  typeof KeyboardPrimitives.Keyboard
 > {}
 
 const Kbd = ({ className, ...props }: KbdProps) => {
   return (
-    <KeyboardPrimitive.Keyboard
+    <KeyboardPrimitives.Keyboard
       data-kbd=""
       className={kbd({ className })}
       {...props}

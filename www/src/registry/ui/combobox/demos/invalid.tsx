@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from "lucide-react"
-
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Combobox } from "@/registry/ui/combobox"
 import { FieldError, Label } from "@/registry/ui/field"
@@ -31,7 +30,7 @@ export default function Demo() {
           </ListBox>
         </Popover>
       </Combobox>
-      <Combobox aria-label="Country" isInvalid>
+      <Combobox isInvalid>
         <Label>Country</Label>
         <InputGroup>
           <Input placeholder="Select a country..." />

@@ -27,7 +27,6 @@ const chart = defineChart({
     },
   },
   marks: [
-    // A baseline under the bars, so the sign flip reads as a crossing.
     ruleY([0], { stroke: "var(--color-border)" }),
     barY(data, {
       x: "month",
@@ -40,7 +39,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartBarNegative() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

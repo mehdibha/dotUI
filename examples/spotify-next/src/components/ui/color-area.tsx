@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
@@ -7,7 +8,7 @@ import { ColorThumb } from "@/components/ui/color-thumb";
 import { tv } from "tailwind-variants";
 
 const colorAreaVariants = tv({
-  base: "block aspect-square min-w-20 rounded-md disabled:[background:var(--color-disabled)]! in-data-dialog:w-full w-56",
+  base: "block aspect-square min-w-20 rounded-md disabled:[background:var(--color-disabled)]! w-56",
 });
 
 type ColorAreaProps = React.ComponentProps<
@@ -26,6 +27,8 @@ const ColorArea = ({ className, ...props }: ColorAreaProps) => {
     </ColorAreaPrimitives.ColorArea>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ColorAreaProps };
 export { ColorArea };

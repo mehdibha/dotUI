@@ -1,13 +1,13 @@
 "use client";
 
-import type * as React from "react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { tv } from "tailwind-variants";
 
 const attachmentVariants = tv({
   slots: {
-    root: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-lg border border-(--card-border) bg-card text-fg shadow-(--shadow-card,0_0_#0000) transition-colors has-[>a,>button]:hover:bg-muted/50 has-[[data-attachment-trigger]:focus-visible]:focus-ring data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
+    root: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-lg border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] text-fg transition-colors has-[>a,>button]:hover:bg-muted/50 has-[[data-attachment-trigger]:focus-visible]:focus-ring data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
     media:
       "relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-fg **:[svg]:pointer-events-none group-data-[state=error]/attachment:bg-danger-muted group-data-[state=error]/attachment:text-fg-danger group-orientation-vertical/attachment:w-full",
     content:
@@ -15,9 +15,9 @@ const attachmentVariants = tv({
     title:
       "block max-w-full min-w-0 truncate font-medium group-data-[state=processing]/attachment:animate-pulse group-data-[state=uploading]/attachment:animate-pulse",
     description:
-      "mt-0.5 block max-w-full min-w-0 truncate text-fg-muted group-data-[state=error]/attachment:text-fg-danger",
+      "mt-0.5 block max-w-full min-w-0 truncate text-fg-muted group-data-[state=error]/attachment:text-fg-danger text-xs",
     actions:
-      "relative z-20 flex shrink-0 items-center [--surface-bg:var(--color-card)] group-orientation-vertical/attachment:absolute group-orientation-vertical/attachment:top-3 group-orientation-vertical/attachment:right-3 group-orientation-vertical/attachment:gap-1",
+      "relative z-20 flex shrink-0 items-center group-orientation-vertical/attachment:absolute group-orientation-vertical/attachment:top-3 group-orientation-vertical/attachment:right-3 group-orientation-vertical/attachment:gap-1",
     trigger: "absolute inset-0 z-10 cursor-interactive focus-reset",
     group:
       "flex min-w-0 snap-x snap-mandatory scrollbar-none overflow-x-auto overscroll-x-contain *:data-attachment:flex-none *:data-attachment:snap-start scroll-px-1 gap-3 py-1",
@@ -27,19 +27,16 @@ const attachmentVariants = tv({
       xs: {
         root: "gap-1.5 text-xs has-data-attachment-content:px-1.5 has-data-attachment-content:py-1 has-data-attachment-media:p-1",
         media: "w-7 **:[svg]:not-with-[size]:size-3.5",
-        description: "text-xs",
       },
       sm: {
         root: "gap-2.5 text-xs has-data-attachment-content:px-2 has-data-attachment-content:py-1.5 has-data-attachment-media:p-1.5",
         media:
           "w-8 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-        description: "text-xs",
       },
       md: {
         root: "gap-2 text-sm has-data-attachment-content:px-2.5 has-data-attachment-content:py-2 has-data-attachment-media:p-2",
         media:
           "w-10 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-        description: "text-xs",
       },
     },
     orientation: {
@@ -76,6 +73,10 @@ interface AttachmentProps extends React.ComponentProps<"div"> {
   orientation?: "horizontal" | "vertical";
 }
 
+const AttachmentContext = React.createContext<{
+  size: NonNullable<AttachmentProps["size"]>;
+}>({ size: "md" });
+
 const Attachment = ({
   className,
   state = "done",
@@ -84,14 +85,16 @@ const Attachment = ({
   ...props
 }: AttachmentProps) => {
   return (
-    <div
-      data-attachment=""
-      data-state={state}
-      data-size={size}
-      data-orientation={orientation}
-      className={root({ size, orientation, className })}
-      {...props}
-    />
+    <AttachmentContext value={{ size }}>
+      <div
+        data-attachment=""
+        data-state={state}
+        data-size={size}
+        data-orientation={orientation}
+        className={root({ size, orientation, className })}
+        {...props}
+      />
+    </AttachmentContext>
   );
 };
 
@@ -106,11 +109,12 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
+  const { size } = React.useContext(AttachmentContext);
   return (
     <div
       data-attachment-media=""
       data-variant={variant}
-      className={media({ mediaVariant: variant, className })}
+      className={media({ size, mediaVariant: variant, className })}
       {...props}
     />
   );

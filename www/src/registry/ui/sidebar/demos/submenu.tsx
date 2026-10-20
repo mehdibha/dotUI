@@ -1,4 +1,4 @@
-import { FrameIcon, HomeIcon } from "@/registry/__generated__/icons"
+import { FrameIcon, HomeIcon } from "@/registry/icons"
 import {
   Sidebar,
   SidebarContent,

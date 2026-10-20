@@ -9,7 +9,7 @@ export interface ButtonProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {
   /**
-   * The visual style of the button (Vanilla CSS implementation specific).
+   * The visual style of the button.
    * @default 'secondary'
    */
   variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
@@ -20,6 +20,11 @@ export interface ButtonProps extends React.ComponentProps<
    * @default "md"
    */
   size?: "xs" | "sm" | "md" | "lg"
+
+  /**
+   * Whether the button only contains an icon.
+   */
+  isIconOnly?: boolean
 }
 
 /**
@@ -41,4 +46,9 @@ export interface LinkButtonProps extends React.ComponentProps<
    * @default "md"
    */
   size?: "xs" | "sm" | "md" | "lg"
+
+  /**
+   * Whether the button only contains an icon.
+   */
+  isIconOnly?: boolean
 }

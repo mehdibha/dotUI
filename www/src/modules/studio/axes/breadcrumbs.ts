@@ -1,49 +1,37 @@
-/* Breadcrumbs — the trail's two forks: the separator glyph (slash: Carbon,
-   Primer, Vercel · chevron: Spectrum, shadcn, Fluent) and the ancestor tone
-   (muted labels that sharpen on hover · accent links). The current crumb is
-   plain foreground in both camps.
+/* Breadcrumbs — the separator glyph and how ancestors read: muted labels
+   that sharpen on hover, or links in the link recipe. The current crumb is
+   plain foreground either way. `ancestors` folds in the link color and
+   underline. */
 
-   Engine: `separator` and `tone` are enum params on `breadcrumbs`; the link's
-   hover color eases on the `--studio-breadcrumbs-state-*` vars. */
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
-import type { ChapterSchema } from "./schema"
+export const SEPARATOR_VALUES = ["chevron", "slash"] as const
 
-/* shadcn's breadcrumb link: `transition-colors` on Tailwind's default. */
-const MOTION = TAILWIND_TIMING
+export const ANCESTOR_VALUES = ["muted", "link"] as const
 
-export const BREADCRUMB_DEFAULTS = {
-  breadcrumbSeparator: "chevron",
-  breadcrumbTone: "muted",
-  breadcrumbsMotion: MOTION,
-}
-
-export const SEPARATOR_OPTIONS = [
-  { value: "slash", label: "Slash" },
-  { value: "chevron", label: "Chevron" },
-]
-
-export const TONE_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "muted", label: "Muted" },
-]
-
-export const BREADCRUMB_SCHEMA: ChapterSchema<typeof BREADCRUMB_DEFAULTS> = {
-  breadcrumbSeparator: oneOf(SEPARATOR_OPTIONS),
-  breadcrumbTone: oneOf(TONE_OPTIONS),
-  breadcrumbsMotion: STATE_CHANGE,
-}
-
-export function resolveBreadcrumbs(state: StudioState): Resolved {
-  return {
-    tokens: resolveStateChange("breadcrumbs", state.breadcrumbsMotion, MOTION),
-    params: {
-      breadcrumbs: {
-        separator: state.breadcrumbSeparator,
-        tone: state.breadcrumbTone,
+export const chapter = defineChapter({
+  id: "breadcrumbs",
+  defaults: {
+    breadcrumbSeparator: "chevron",
+    breadcrumbTone: "muted",
+  },
+  schema: {
+    breadcrumbSeparator: oneOf(SEPARATOR_VALUES),
+    breadcrumbTone: oneOf(ANCESTOR_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    return {
+      params: {
+        breadcrumbs: {
+          separator: state.breadcrumbSeparator,
+          ancestors:
+            state.breadcrumbTone === "link"
+              ? `${state.linkColor}-${state.linkUnderline}`
+              : "muted",
+        },
       },
-    },
-  }
-}
+    }
+  },
+})

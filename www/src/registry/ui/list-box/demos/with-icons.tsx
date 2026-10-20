@@ -1,5 +1,4 @@
-import { CopyIcon, PencilIcon, ShareIcon, StarIcon } from "lucide-react"
-
+import { CopyIcon, PencilIcon, ShareIcon, StarIcon } from "@/registry/icons"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {

@@ -34,9 +34,6 @@ const series = {
   curve: chartLook.curve,
 } as const
 
-/* The gradient paints from a decorative copy: the interactive area keeps the
-   series color, which the tooltip swatch reads. `y1: 0` overlaps the series
-   instead of stacking them. */
 const chart = defineChart({
   scales: {
     x: { scale: scalePoint },
@@ -61,7 +58,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaGradient() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

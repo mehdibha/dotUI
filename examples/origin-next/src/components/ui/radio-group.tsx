@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext, useContext, useId } from "react";
-import type * as React from "react";
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
@@ -16,9 +15,9 @@ const radioGroupVariants = tv({
     group: "flex flex-col gap-3",
     root: "flex items-center has-data-description:items-start gap-2 has-data-description:**:data-radio-indicator:mt-0.5",
     control:
-      "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-full not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-md transition-colors has-data-label:w-full has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
+      "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-full not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring-outside disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-md focus-visible:has-data-label:focus-ring transition-colors has-data-label:w-full has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
     indicator:
-      "grid size-4 shrink-0 place-content-center rounded-full border border-border-control bg-transparent text-transparent before:size-1.5 before:rounded-full before:bg-current before:content-[''] transition-[background-color,border-color,box-shadow,color] selected:border-transparent selected:bg-selection selected:text-fg-on-selection disabled:border-(--disabled-border,var(--color-border-control)) disabled:selected:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection)) invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-danger",
+      "grid size-4 shrink-0 place-content-center rounded-full border border-border-control bg-transparent text-transparent before:rounded-full before:bg-current before:content-[''] transition-[background-color,border-color,box-shadow,color] disabled:border-(--disabled-border,var(--color-border-control)) invalid:border-fg-danger invalid:invalid-ring before:size-1.5 selected:border-transparent selected:bg-selection selected:text-fg-on-selection disabled:selected:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection)) invalid:selected:bg-danger-muted invalid:selected:text-fg-danger",
   },
 });
 
@@ -42,19 +41,18 @@ const RadioGroup = ({
 /* -------------------------------------------------------------------------- */
 
 const InternalRadioContext =
-  createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
+  React.createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
 
 interface RadioProps extends React.ComponentProps<
   typeof RadioGroupPrimitives.RadioField
 > {}
 
 const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
-  const autoId = useId();
+  const autoId = React.useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
   return (
     <RadioGroupPrimitives.RadioField
-      data-slot="radio"
       data-radio=""
       id={id}
       aria-labelledby={labelId}
@@ -117,7 +115,7 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
 interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
-  const ctx = useContext(InternalRadioContext);
+  const ctx = React.useContext(InternalRadioContext);
   return (
     <span
       data-radio-indicator=""
@@ -142,6 +140,8 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 /* -------------------------------------------------------------------------- */
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   RadioControlProps,

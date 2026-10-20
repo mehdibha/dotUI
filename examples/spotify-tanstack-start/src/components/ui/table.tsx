@@ -19,38 +19,38 @@ import { tv } from "tailwind-variants";
 const tableVariants = tv({
   slots: {
     container:
-      "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-lg border bg-(--surface-bg,var(--color-bg)) scroll-pt-12",
-    table: "min-w-full text-sm text-fg outline-hidden select-ui text-sm",
+      "relative isolate min-h-0 w-full overflow-auto rounded-sm border bg-(--surface-bg,var(--color-bg)) scroll-pt-14",
+    table: "min-w-full text-fg outline-hidden select-ui text-sm",
     header:
       "sticky top-0 z-10 bg-(--surface-bg,var(--color-bg))/95 supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
     column:
-      "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-lg)-1px)] last:rounded-tr-[calc(var(--radius-lg)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-[''] h-12 px-3 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
+      "box-border cursor-default text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-sm)-1px)] last:rounded-tr-[calc(var(--radius-sm)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-14 px-4 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg)) text-fg-muted",
     columnContent: "flex h-full min-w-0 items-center gap-1.5",
     columnLabel: "min-w-0 flex-1 truncate",
     chromeColumn:
-      "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-lg)-1px)] last:rounded-tr-[calc(var(--radius-lg)-1px)] [div]:flex [div]:h-full [div]:items-center relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-[''] h-12 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
-    selectionColumn: "w-10 min-w-10 px-2.5 px-3",
+      "box-border px-0 text-left align-middle focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-sm)-1px)] last:rounded-tr-[calc(var(--radius-sm)-1px)] [div]:flex [div]:h-full [div]:items-center relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-14 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
+    selectionColumn: "w-10 min-w-10 px-4",
     sortIndicator: "size-3.5 shrink-0 text-fg-muted transition-transform",
     resizer:
       "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
     body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
     footer: "border-t bg-muted/50 font-medium",
-    row: "group/row relative box-border cursor-default bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors [div]:h-full hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70 focus-visible:bg-accent-muted/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)] border-b last:border-b-0",
-    cell: "relative box-border h-10 align-middle leading-5 whitespace-nowrap focus-reset outline-hidden bg-clip-padding px-2.5 [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-md data-focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] data-focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] data-focus-visible:before:content-[''] h-12 px-3 leading-5",
+    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-14 px-4 leading-5",
     selectionCell:
-      "w-10 min-w-10 px-2.5 [div]:h-[calc(100%-1px)] [div]:justify-start px-3",
+      "w-10 min-w-10 [div]:h-[calc(100%-1px)] [div]:justify-start px-4",
     dragCell:
-      "w-8 min-w-8 cursor-drag px-1 text-fg-muted group-dragging/row:cursor-dragging [div]:justify-center px-1.5",
+      "w-8 min-w-8 cursor-drag text-fg-muted group-dragging/row:cursor-dragging [div]:justify-center px-2",
     dragButton:
-      "inline-flex size-6 cursor-drag items-center justify-center rounded-full text-fg-muted focus-reset transition-colors focus-visible:focus-ring group-hover/row:text-fg group-dragging/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
+      "inline-flex size-6 cursor-drag items-center justify-center rounded-xs text-fg-muted focus-reset transition-colors focus-visible:focus-ring group-hover/row:text-fg group-dragging/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
     dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
     dropIndicatorLine:
       "pointer-events-none relative z-30 block h-0 w-full opacity-0 transition-opacity before:absolute before:inset-x-2 before:top-0 before:h-0.5 before:-translate-y-1/2 before:rounded-full before:bg-border-focus before:shadow-[0_0_0_1px_var(--surface-bg,var(--color-bg))] before:content-['']",
     expandButton:
-      "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-full text-fg-muted focus-reset focus-visible:focus-ring hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
+      "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-xs text-fg-muted focus-reset focus-visible:focus-ring group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
     expandIcon: "size-3.5 transition-transform",
     loadMore:
-      "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
+      "relative h-7 **:data-loader:absolute **:data-loader:top-0 **:data-loader:left-1/2 **:data-loader:-translate-x-1/2",
   },
 });
 
@@ -111,11 +111,7 @@ interface TableVirtualizerProps<T extends object> extends Omit<
   headingHeight?: number;
 }
 
-const TABLE_VIRTUALIZER_HEIGHTS = {
-  compact: 32,
-  default: 40,
-  comfortable: 48,
-} as const;
+const DEFAULT_ROW_HEIGHT = 40;
 
 const TableVirtualizer = <T extends object>({
   headingHeight,
@@ -123,7 +119,6 @@ const TableVirtualizer = <T extends object>({
   rowHeight,
   ...props
 }: TableVirtualizerProps<T>) => {
-  const densityHeight = TABLE_VIRTUALIZER_HEIGHTS.default;
   const tableLayoutOptions = layoutOptions as
     | { rowHeight?: number; headingHeight?: number }
     | undefined;
@@ -133,9 +128,12 @@ const TableVirtualizer = <T extends object>({
       layout={TableLayout}
       layoutOptions={{
         ...layoutOptions,
-        rowHeight: rowHeight ?? tableLayoutOptions?.rowHeight ?? densityHeight,
+        rowHeight:
+          rowHeight ?? tableLayoutOptions?.rowHeight ?? DEFAULT_ROW_HEIGHT,
         headingHeight:
-          headingHeight ?? tableLayoutOptions?.headingHeight ?? densityHeight,
+          headingHeight ??
+          tableLayoutOptions?.headingHeight ??
+          DEFAULT_ROW_HEIGHT,
       }}
       {...props}
     />
@@ -148,71 +146,58 @@ const TableContainerContext = React.createContext({ resizable: false });
 
 /* -------------------------------------------------------------------------- */
 
-interface TableContainerProps extends React.ComponentPropsWithoutRef<
+interface TableContainerProps extends React.ComponentProps<
   typeof TablePrimitives.ResizableTableContainer
 > {
   resizable?: boolean;
 }
 
-const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
-  (
-    {
-      className,
-      onResize,
-      onResizeEnd,
-      onResizeStart,
-      render,
-      resizable = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const classNames = container({ className });
-    const context = React.useMemo(() => ({ resizable }), [resizable]);
+const TableContainer = ({
+  className,
+  onResize,
+  onResizeEnd,
+  onResizeStart,
+  render,
+  resizable = false,
+  ...props
+}: TableContainerProps) => {
+  const classNames = container({ className });
+  const context = React.useMemo(() => ({ resizable }), [resizable]);
 
-    if (resizable) {
-      return (
-        <TableContainerContext.Provider value={context}>
-          <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
-            className={classNames}
-            ref={ref}
-            onResize={onResize}
-            onResizeEnd={onResizeEnd}
-            onResizeStart={onResizeStart}
-            render={render}
-            {...props}
-          />
-        </TableContainerContext.Provider>
-      );
-    }
-
-    return (
-      <TableContainerContext.Provider value={context}>
-        <div
-          data-slot="table-container"
+  return (
+    <TableContainerContext value={context}>
+      {resizable ? (
+        <TablePrimitives.ResizableTableContainer
+          data-table-container=""
           className={classNames}
-          ref={ref}
+          onResize={onResize}
+          onResizeEnd={onResizeEnd}
+          onResizeStart={onResizeStart}
+          render={render}
           {...props}
         />
-      </TableContainerContext.Provider>
-    );
-  },
-);
-TableContainer.displayName = "TableContainer";
+      ) : (
+        <div data-table-container="" className={classNames} {...props} />
+      )}
+    </TableContainerContext>
+  );
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
-> {}
+> {
+  striped?: boolean;
+}
 
-const Table = ({ className, ...props }: TableProps) => {
+const Table = ({ className, striped, ...props }: TableProps) => {
   return (
     <TablePrimitives.Table
-      data-slot="table"
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
+      data-table=""
+      data-striped={striped || undefined}
+      className={composeRenderProps(className, (className) =>
+        table({ className }),
       )}
       {...props}
     />
@@ -242,9 +227,9 @@ const TableHeader = <T extends object>({
 
   return (
     <TablePrimitives.TableHeader
-      data-slot="table-header"
-      className={composeRenderProps(className, (cn) =>
-        header({ className: cn }),
+      data-table-header=""
+      className={composeRenderProps(className, (className) =>
+        header({ className }),
       )}
       dependencies={dependencies}
       {...props}
@@ -283,9 +268,9 @@ const TableChromeColumn = ({
 }: InternalColumnProps) => {
   return (
     <TablePrimitives.Column
-      data-slot="table-chrome-column"
-      className={composeRenderProps(className, (cn) =>
-        chromeColumn({ className: cn }),
+      data-table-chrome-column=""
+      className={composeRenderProps(className, (className) =>
+        chromeColumn({ className }),
       )}
       {...props}
     >
@@ -311,9 +296,9 @@ const TableColumn = ({
   const { resizable } = React.useContext(TableContainerContext);
   return (
     <TablePrimitives.Column
-      data-slot="table-column"
-      className={composeRenderProps(className, (cn) =>
-        column({ className: cn }),
+      data-table-column=""
+      className={composeRenderProps(className, (className) =>
+        column({ className }),
       )}
       {...props}
     >
@@ -401,7 +386,7 @@ const TableFooter = <T extends object>({
 }: TableFooterProps<T>) => {
   return (
     <TablePrimitives.TableFooter
-      data-slot="table-footer"
+      data-table-footer=""
       className={footer({ className })}
       dependencies={dependencies}
       {...props}
@@ -420,19 +405,19 @@ const TableFooter = <T extends object>({
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
-function TableRow<T extends object>({
+const TableRow = <T extends object>({
   columns,
   children,
   className,
   dependencies,
   ...props
-}: TableRowProps<T>) {
+}: TableRowProps<T>) => {
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions();
 
   return (
     <TablePrimitives.Row
-      data-slot="table-row"
+      data-table-row=""
       className={composeRenderProps(
         className,
         (className, { isFocusVisibleWithin }) =>
@@ -440,7 +425,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                "bg-accent-muted/70 hover:bg-accent-muted/70 selected:bg-accent-muted",
+                "bg-selected/30 hover:bg-selected/30 selected:bg-selected/70",
             ),
           }),
       )}
@@ -467,7 +452,7 @@ function TableRow<T extends object>({
       </CollectionPrimitives.Collection>
     </TablePrimitives.Row>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -483,8 +468,10 @@ const TableCell = ({
 }: TableCellProps) => {
   return (
     <TablePrimitives.Cell
-      data-slot="table-cell"
-      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
+      data-table-cell=""
+      className={composeRenderProps(className, (className) =>
+        cell({ className }),
+      )}
       style={composeRenderProps(
         style,
         (style, { hasChildItems, isTreeColumn, level }) => ({
@@ -498,14 +485,12 @@ const TableCell = ({
     >
       {composeRenderProps(
         children,
-        (children, { hasChildItems, isDisabled, isExpanded, isTreeColumn }) => (
+        (children, { hasChildItems, isExpanded, isTreeColumn }) => (
           <>
             {hasChildItems && isTreeColumn && (
               <ButtonPrimitives.Button
                 slot="chevron"
-                className={expandButton({
-                  className: isDisabled ? "opacity-50" : undefined,
-                })}
+                className={expandButton()}
               >
                 <ChevronRightIcon
                   aria-hidden
@@ -533,8 +518,8 @@ const TableDropIndicator = ({
 }: TableDropIndicatorProps) => {
   return (
     <DragAndDropPrimitives.DropIndicator
-      className={composeRenderProps(className, (cn) =>
-        dropIndicator({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        dropIndicator({ className }),
       )}
       {...props}
     >

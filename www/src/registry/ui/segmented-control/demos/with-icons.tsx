@@ -1,8 +1,4 @@
-import {
-  LayoutGridIcon,
-  ListIcon,
-  TableIcon,
-} from "@/registry/__generated__/icons"
+import { LayoutGridIcon, ListIcon, TableIcon } from "@/registry/icons"
 import {
   SegmentedControl,
   SegmentedControlItem,

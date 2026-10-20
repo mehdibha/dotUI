@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { BoldIcon, ItalicIcon } from "@/registry/__generated__/icons"
+import { BoldIcon, ItalicIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/field"
 import { Group } from "@/registry/ui/group"

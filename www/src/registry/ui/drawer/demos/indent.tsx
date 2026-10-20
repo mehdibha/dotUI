@@ -10,11 +10,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
-/**
- * The indent + indent-background effect is wired up at the app root
- * (see routes/__root.tsx). Open this drawer and watch the entire page
- * scale away to reveal the dark layer behind.
- */
 export default function Demo() {
   return (
     <Dialog>

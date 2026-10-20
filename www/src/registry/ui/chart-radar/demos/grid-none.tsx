@@ -38,7 +38,6 @@ const chart = defineChart({
         radius: { scale: scaleLinear, nice: 4 },
       },
       radiusRatio: 0.78,
-      // The month labels without their spokes.
       guides: [angleGrid({ ...chartAngleLabels, strokeOpacity: 0 })],
       marks: [
         radialArea(data, {
@@ -57,7 +56,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarGridNone() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import React from "react"
 import { defineChart } from "@tanstack/charts"
 import { lineY } from "@tanstack/charts/line"
 import { scaleLinear } from "@tanstack/charts/scales/linear"
@@ -15,7 +15,6 @@ import {
 const DAYS = 90
 const start = Date.UTC(2024, 3, 1)
 
-// Deterministic, so the server and the client render the same rows.
 const data = Array.from({ length: DAYS }, (_, index) => {
   const wave = Math.sin(index / 6) * 0.5 + 0.5
   return {
@@ -39,9 +38,9 @@ const totals = {
   mobile: data.reduce((sum, row) => sum + row.mobile, 0),
 }
 
-export default function ChartLineInteractive() {
-  const [series, setSeries] = useState<Series>("desktop")
-  const chart = useMemo(
+export default function Demo() {
+  const [series, setSeries] = React.useState<Series>("desktop")
+  const chart = React.useMemo(
     () =>
       defineChart({
         scales: {

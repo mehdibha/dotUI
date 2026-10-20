@@ -1,27 +1,29 @@
 "use client"
 
 import type * as React from "react"
+import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as GroupPrimitive from "react-aria-components/Group"
+import * as GroupPrimitives from "react-aria-components/Group"
 import * as NumberFieldPrimitives from "react-aria-components/NumberField"
 
 import { MinusIcon, PlusIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Button, type ButtonProps } from "@/registry/ui/button"
-import { fieldStyles } from "@/registry/ui/field"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { Input } from "@/registry/ui/input"
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 
 interface NumberFieldProps extends React.ComponentProps<
   typeof NumberFieldPrimitives.NumberField
 > {}
 
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
+  const { field } = useFieldStyles()()
   return (
     <NumberFieldPrimitives.NumberField
-      data-slot="number-field"
+      data-number-field=""
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     >
@@ -40,47 +42,105 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
   )
 }
 
-interface NumberFieldGroupProps extends React.ComponentProps<
-  typeof GroupPrimitive.Group
-> {}
+// MARK: Separator
 
-// One stepper at each end. Parts are placed by slot, so the authored order
-// never matters.
-const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
+interface NumberFieldGroupProps extends React.ComponentProps<
+  typeof GroupPrimitives.Group
+> {
+  size?: "sm" | "md" | "lg"
+}
+
+// Minus at the start, plus at the end; parts are placed by slot.
+const NumberFieldGroup = ({
+  className,
+  size,
+  ...props
+}: NumberFieldGroupProps) => {
+  const { inputGroup } = useInputStyles()()
   return (
-    <GroupPrimitive.Group
-      data-slot="number-field-group"
+    <GroupPrimitives.Group
+      data-number-field-group=""
+      data-input-group=""
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn(
-          "flex w-fit items-stretch -space-x-px *:focus:z-2 *:[input]:z-1",
-          "*:data-input:rounded-none *:data-input:text-center",
-          "*:[[slot=decrement]]:-order-1 *:[[slot=decrement]]:rounded-r-none",
-          "*:[[slot=increment]]:order-1 *:[[slot=increment]]:rounded-l-none",
-          className,
-        ),
+        inputGroup({
+          size,
+          className: cn(
+            "w-fit overflow-hidden px-0 *:data-input:text-center",
+            "*:[[slot=decrement]]:-order-1 *:[[slot=increment]]:order-1",
+            className,
+          ),
+        }),
       )}
       {...props}
     />
   )
 }
 
-const NumberFieldDecrement = ({ children, ...props }: ButtonProps) => {
+interface NumberFieldStepperProps extends React.ComponentProps<
+  typeof ButtonPrimitives.Button
+> {}
+
+const stepper =
+  "flex shrink-0 cursor-interactive items-center justify-center self-stretch text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-(--input-h) *:[svg]:size-(--icon-size)"
+
+// MARK: Separator
+
+const NumberFieldDecrement = ({
+  className,
+  children,
+  ...props
+}: NumberFieldStepperProps) => {
+  const { divider } = useInputStyles()()
   return (
-    <Button slot="decrement" isIconOnly {...props}>
+    <ButtonPrimitives.Button
+      slot="decrement"
+      className={composeRenderProps(className, (className) =>
+        divider({
+          className: cn(
+            stepper,
+            "border-r-(length:--studio-control-stroke)",
+            className,
+          ),
+        }),
+      )}
+      {...props}
+    >
       {children ?? <MinusIcon />}
-    </Button>
+    </ButtonPrimitives.Button>
   )
 }
 
-const NumberFieldIncrement = ({ children, ...props }: ButtonProps) => {
+// MARK: Separator
+
+const NumberFieldIncrement = ({
+  className,
+  children,
+  ...props
+}: NumberFieldStepperProps) => {
+  const { divider } = useInputStyles()()
   return (
-    <Button slot="increment" isIconOnly {...props}>
+    <ButtonPrimitives.Button
+      slot="increment"
+      className={composeRenderProps(className, (className) =>
+        divider({
+          className: cn(
+            stepper,
+            "border-l-(length:--studio-control-stroke)",
+            className,
+          ),
+        }),
+      )}
+      {...props}
+    >
       {children ?? <PlusIcon />}
-    </Button>
+    </ButtonPrimitives.Button>
   )
 }
 
-export type { NumberFieldGroupProps, NumberFieldProps }
+// MARK: Separator
+
+export type { NumberFieldGroupProps, NumberFieldProps, NumberFieldStepperProps }
 export {
   NumberField,
   NumberFieldDecrement,

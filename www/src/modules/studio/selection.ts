@@ -13,6 +13,7 @@ import { getPreset, ORIGIN } from "@/modules/presets"
 import { sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
+import { captureEdit, clearLive, showLive, warmPreview } from "./live"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc, Unsaved, View, Workspace } from "./workspace"
 
@@ -48,9 +49,10 @@ const store = createPersistedStore<Selection>("dotui:current", ORIGIN_VIEW, {
       return ORIGIN_VIEW
     }
   },
-  encode: (sel) => JSON.stringify(sel),
+  encode: (sel) => JSON.stringify(sel, workspace.stampStates),
   onWriteError: workspace.storageFailed,
 })
+workspace.holdsStates(store)
 
 const getSelection = store.get
 
@@ -169,10 +171,27 @@ export function useCurrent(): Current {
 }
 
 /** Edits the design on screen: a system saves itself; a view fills the
- *  slot, which empties once the edit lands back on the view. */
+ *  slot, which empties once the edit lands back on the view. A preview
+ *  capturing the edit takes it instead; a commit clears the preview. */
 export function edit(next: StudioState): void {
   const current = getCurrent()
+  if (captureEdit(next, current.state)) return
+  clearLive()
   if (sameState(current.state, next)) return
+  // Read before `migrate` landed: the change lands on the upgrade, or is
+  // dropped if it can't load (the next edit tries again).
+  if (workspace.isUnmigrated(current.state)) {
+    const changes = Object.entries(next).filter(
+      ([key, value]) =>
+        !Object.is(current.state[key as keyof StudioState], value),
+    )
+    void workspace.upgradeStored().then(() => {
+      const { key, state } = getCurrent()
+      if (key === current.key && !workspace.isUnmigrated(state))
+        edit({ ...state, ...Object.fromEntries(changes) })
+    })
+    return
+  }
   if (current.doc) {
     workspace.setState(current.doc.id, next)
     return
@@ -187,10 +206,23 @@ export function edit(next: StudioState): void {
 /** Opens `sel`, dropping the slot: back on its view, it starts pristine.
  *  The slot goes after the selection: no tab is left on a missing slot. */
 export function select(sel: Selection): void {
+  clearLive()
   if (selectionKey(getSelection()) === selectionKey(sel)) return
   setSelection(sel)
   workspace.setUnsaved(undefined)
   workspace.flush()
+}
+
+/** Previews what a picker row opens, by key, once it settles; null drops
+ *  the preview. */
+export function previewSelection(key: string | null): void {
+  if (key === null) return showLive(null)
+  const { state } = describe(keySelection(key), workspace.getWorkspace())
+  // Its icons load while the hover settles: a render waiting on them stalls.
+  warmPreview({ icons: [state.iconLibrary] })
+  showLive(sameState(state, getCurrent().state) ? null : state, {
+    settle: true,
+  })
 }
 
 /** Drops the slot for its untouched view. */

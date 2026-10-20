@@ -38,7 +38,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineDots() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

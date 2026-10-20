@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type * as React from "react";
 import * as CheckboxPrimitives from "react-aria-components/Checkbox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as FieldErrorPrimitives from "react-aria-components/FieldError";
@@ -12,17 +12,17 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { Text } from "@/components/ui/text";
 
-const fieldVariants = tv({
+const fieldStyles = tv({
   slots: {
     fieldset: "",
     legend: "",
     fieldGroup:
       "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
     field:
-      "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+      "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
     fieldContent: "flex flex-col gap-1",
     label:
-      "inline-flex items-center gap-px select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3 in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*'] in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor) in-data-invalid:text-fg-danger text-sm",
+      "inline-flex items-center gap-px select-ui [&_svg]:size-3 in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*'] in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor) in-data-invalid:text-fg-danger text-sm not-in-data-checkbox:not-in-data-radio:not-in-data-switch:font-semibold",
     description:
       "text-fg-muted last:mt-0 in-data-disabled:text-(--disabled-fg,var(--color-fg-muted)) nth-last-2:-mt-1 text-sm",
     fieldError: "text-fg-danger text-sm",
@@ -30,8 +30,7 @@ const fieldVariants = tv({
   variants: {
     orientation: {
       horizontal: {
-        field:
-          "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+        field: "flex-row items-center gap-2 has-data-description:items-start",
       },
       vertical: {
         field: "w-full flex-col gap-2",
@@ -52,62 +51,46 @@ const {
   label,
   description,
   fieldError,
-} = fieldVariants();
-
-export { fieldVariants as fieldStyles };
+} = fieldStyles();
 
 /* -------------------------------------------------------------------------- */
 
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
-function Fieldset({ className, ...props }: FieldsetProps) {
+const Fieldset = ({ className, ...props }: FieldsetProps) => {
   return (
-    <fieldset
-      data-slot="fieldset"
-      className={fieldset({ className })}
-      {...props}
-    />
+    <fieldset data-fieldset="" className={fieldset({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
-function Legend({ className, ...props }: LegendProps) {
-  return (
-    <legend data-slot="legend" className={legend({ className })} {...props} />
-  );
-}
+const Legend = ({ className, ...props }: LegendProps) => {
+  return <legend data-legend="" className={legend({ className })} {...props} />;
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
-function FieldGroup({ className, ...props }: FieldGroupProps) {
+const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
   return (
-    <div
-      data-slot="field-group"
-      className={fieldGroup({ className })}
-      {...props}
-    />
+    <div data-field-group="" className={fieldGroup({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface FieldProps
-  extends React.ComponentProps<"div">, VariantProps<typeof fieldVariants> {}
+  extends React.ComponentProps<"div">, VariantProps<typeof fieldStyles> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId();
   const descriptionId = useSlotId();
   return (
-    <div
-      data-slot="field"
-      className={field({ className, orientation })}
-      {...props}
-    >
+    <div data-field="" className={field({ className, orientation })} {...props}>
       <Provider
         values={[
           [
@@ -137,7 +120,7 @@ interface FieldContentProps extends React.ComponentProps<"div"> {}
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
   return (
     <div
-      data-slot="field-content"
+      data-field-content=""
       className={fieldContent({ className })}
       {...props}
     />
@@ -150,16 +133,13 @@ interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
 > {}
 
-const Label = ({ children, className, ...props }: LabelProps) => {
+const Label = ({ className, ...props }: LabelProps) => {
   return (
     <LabelPrimitives.Label
-      data-slot="label"
       data-label=""
       className={label({ className })}
       {...props}
-    >
-      {children}
-    </LabelPrimitives.Label>
+    />
   );
 };
 
@@ -173,7 +153,6 @@ interface DescriptionProps extends Omit<
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
     <Text
-      data-slot="description"
       data-description=""
       slot="description"
       className={description({ className })}
@@ -190,7 +169,6 @@ interface FieldErrorProps extends React.ComponentProps<
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
   return (
     <FieldErrorPrimitives.FieldError
-      data-slot="field-error"
       data-field-error=""
       className={composeRenderProps(className, (className) =>
         fieldError({ className }),
@@ -221,4 +199,5 @@ export {
   Fieldset,
   Label,
   Legend,
+  fieldStyles,
 };

@@ -20,7 +20,6 @@ const chart = defineChart({
   scales: { x: null, y: null },
   marks: [
     polar({
-      // Identity scales: a label sits at its slice's angle, a share of the radius out.
       scales: {
         angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
         radius: { scale: scaleLinear().domain([0, 1]) },
@@ -48,7 +47,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieLabel() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

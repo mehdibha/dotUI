@@ -33,6 +33,6 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieLegend() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

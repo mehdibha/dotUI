@@ -35,10 +35,8 @@ export default function Demo() {
             ))}
           </DialogBody>
           <DialogFooter>
-            <Button slot="close" type="button">
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary">
+            <Button slot="close">Cancel</Button>
+            <Button slot="close" variant="primary">
               Save changes
             </Button>
           </DialogFooter>

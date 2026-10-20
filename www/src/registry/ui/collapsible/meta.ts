@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const collapsibleMeta = {
   name: "collapsible",
   type: "registry:ui",
-  group: "disclosure",
   files: [
     {
       type: "registry:ui",
@@ -14,11 +13,9 @@ const collapsibleMeta = {
   // Synced with the accordion's motion.
   params: {
     motion: {
-      kind: "enum",
       default: "expand",
-      values: ["expand", "fade", "none"] as const,
-      description:
-        "How the panel opens and closes: its height alone, the height with a fade, or at once.",
+      values: ["expand", "none"] as const,
+      description: "How the panel opens and closes: its height, or at once.",
     },
   },
 } satisfies RegistryItem

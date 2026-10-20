@@ -41,21 +41,15 @@ function resolveClassName<TState>(
   return typeof className === "function" ? className(state) : className
 }
 
-// The popup is a presentation container: the dialog semantics belong to the
-// <Dialog> rendered inside it.
-function DrawerPopupElement({
+// Dialog semantics belong to the <Dialog> rendered inside, so the popup drops its own.
+const DrawerPopupElement = ({
   "aria-describedby": _ariaDescribedBy,
   "aria-labelledby": _ariaLabelledBy,
   role: _role,
   swiping,
   ...props
-}: DrawerPopupRenderProps & { swiping: boolean }) {
-  // A swipe that starts on a pressable (menu item, button) never cancels the
-  // react-aria press: the content moves with the finger, so the pointer stays
-  // over the target, and the drawer claims the gesture before the browser
-  // would fire pointercancel. Releasing then fires onPress. Base UI arms a
-  // swipe on every touchstart, so cancel in-flight presses only once the
-  // finger actually drags, the way the platform does when a gesture takes over.
+}: DrawerPopupRenderProps & { swiping: boolean }) => {
+  // Base UI arms a swipe on every touchstart, so cancel in-flight react-aria presses only once the finger actually drags.
   React.useEffect(() => {
     if (!swiping) return
     let origin: { x: number; y: number } | undefined
@@ -101,7 +95,7 @@ interface DrawerProps {
   children?: React.ReactNode
 }
 
-function Drawer({
+const Drawer = ({
   children,
   className,
   defaultOpen,
@@ -112,7 +106,7 @@ function Drawer({
   placement = "bottom",
   swipeToDismiss = true,
   style,
-}: DrawerProps) {
+}: DrawerProps) => {
   const isHidden = useIsHidden()
   const { backdrop, overlay, popup, viewport } = useStyles()()
   const popupRef = React.useRef<HTMLDivElement>(null)
@@ -128,15 +122,13 @@ function Drawer({
       ? localState
       : contextState
 
-  // Joins react-aria's overlay stack, so a tap outside dismisses only the
-  // topmost layer (a nested drawer, a popover opened inside).
+  // Joins react-aria's overlay stack so an outside tap dismisses only the topmost layer.
   useOverlay(
     { isOpen: state.isOpen, isDismissable, onClose: state.close },
     popupRef,
   )
 
-  // And its hiding, as its popovers do: opened from a modal, the drawer isn't
-  // made inert by it, and makes what's under it inert instead.
+  // Like its popovers: opened from a modal, the drawer isn't made inert by it, and makes what's under it inert instead.
   React.useEffect(() => {
     if (state.isOpen && layer)
       return ariaHideOutside([layer], { shouldUseInert: true })
@@ -169,8 +161,6 @@ function Drawer({
         }}
         swipeDirection={swipeDirectionMap[placement]}
       >
-        {/* Keyboard-aware focus/scroll handling: publishes --drawer-keyboard-inset
-            on the viewport while the software keyboard is open. */}
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
@@ -217,7 +207,7 @@ function Drawer({
 
 interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
-function DrawerHandle({ className, ...props }: DrawerHandleProps) {
+const DrawerHandle = ({ className, ...props }: DrawerHandleProps) => {
   const { handle } = useStyles()()
   const placement = React.useContext(DrawerPlacementContext)
   const orientation =
@@ -229,7 +219,7 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
       aria-hidden="true"
       data-orientation={orientation}
       data-placement={placement}
-      data-slot="drawer-handle"
+      data-drawer-handle=""
       className={handle({ className })}
       {...props}
     />
@@ -240,7 +230,7 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
 
 interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
-function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
+const DrawerSwipeArea = ({ className, ...props }: DrawerSwipeAreaProps) => {
   const { swipeArea } = useStyles()()
   const placement = React.useContext(DrawerPlacementContext)
 
@@ -249,7 +239,7 @@ function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
       className={(state) =>
         swipeArea({ placement, className: resolveClassName(className, state) })
       }
-      data-slot="drawer-swipe-area"
+      data-drawer-swipe-area=""
       {...props}
     />
   )
@@ -259,7 +249,7 @@ function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
 
 interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
-function DrawerProvider(props: DrawerProviderProps) {
+const DrawerProvider = (props: DrawerProviderProps) => {
   return <DrawerPrimitive.Provider {...props} />
 }
 
@@ -267,7 +257,7 @@ function DrawerProvider(props: DrawerProviderProps) {
 
 interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
-function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+const DrawerIndent = ({ className, ...props }: DrawerIndentProps) => {
   const { indent } = useStyles()()
   return (
     <DrawerPrimitive.Indent
@@ -284,10 +274,10 @@ function DrawerIndent({ className, ...props }: DrawerIndentProps) {
 interface DrawerIndentBackgroundProps
   extends DrawerPrimitive.IndentBackground.Props {}
 
-function DrawerIndentBackground({
+const DrawerIndentBackground = ({
   className,
   ...props
-}: DrawerIndentBackgroundProps) {
+}: DrawerIndentBackgroundProps) => {
   const { indentBackground } = useStyles()()
   return (
     <DrawerPrimitive.IndentBackground
@@ -298,6 +288,8 @@ function DrawerIndentBackground({
     />
   )
 }
+
+// MARK: Separator
 
 export type {
   DrawerHandleProps,

@@ -1,22 +1,36 @@
-"use client"
+import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Suspense, lazy } from "react"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
-// Lazy so the charts runtime stays out of the page's static chunk. Sibling
-// chart demos lazy-load registry demos for the same reason (and because a
-// module imported both statically and via DemosIndex breaks in production).
-const ChartBarBrowsers = lazy(() => import("./chart-bar.lazy"))
+const data = [
+  { browser: "Chrome", visitors: 187 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 275 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
+]
 
-export function ChartBarDemo() {
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: { scale: scaleLinear, nice: true, axis: false },
+  },
+  marks: [
+    barY(data, {
+      x: "browser",
+      y: "visitors",
+      color: "browser",
+      z: "browser",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
+
+export default function ChartBarBrowsers() {
   return (
-    <div className="w-[164px] max-w-full">
-      <Suspense
-        fallback={
-          <div className="h-[96px] w-full animate-pulse rounded-xl bg-muted" />
-        }
-      >
-        <ChartBarBrowsers />
-      </Suspense>
-    </div>
+    <Chart definition={chart} height={96} ariaLabel="Visitors by browser" />
   )
 }

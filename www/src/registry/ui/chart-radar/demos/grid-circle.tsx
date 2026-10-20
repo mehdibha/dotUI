@@ -67,7 +67,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarGridCircle() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

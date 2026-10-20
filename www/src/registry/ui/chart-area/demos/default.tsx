@@ -21,7 +21,6 @@ const data = [
 const series = {
   x: "month",
   y: "desktop",
-  // Names the series in the tooltip.
   z: () => "Desktop",
   curve: chartLook.curve,
 } as const
@@ -38,12 +37,11 @@ const chart = defineChart({
   },
   marks: [
     areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
-    // The edge is its own mark: an area's stroke would outline the whole shape.
     decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
   ],
 })
 
-export default function ChartAreaDefault() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

@@ -9,7 +9,6 @@ import { scaleQuantize } from "d3-scale"
 
 import { Chart, chartLook } from "@/registry/ui/chart"
 
-/* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
 const months = [
   { month: "Jan", normal: 82 },
   { month: "Feb", normal: 64 },
@@ -45,7 +44,6 @@ const millimeters = new Intl.NumberFormat("en-US", {
   unit: "millimeter",
 })
 
-// Low values fade into the surface, high ones deepen toward the foreground.
 const colors = [
   "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
   "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
@@ -92,7 +90,7 @@ const chart = defineChart({
   },
 })
 
-export default function ChartHeatmapCalendarMonths() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

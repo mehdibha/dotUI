@@ -47,8 +47,6 @@ const chart = defineChart({
           color: "browser",
           cornerRadius: chartLook.barRadius,
         }),
-        /* Rings sit at their row index, the default, so the names can find
-           them: a text radius must be a number. */
         polarDecorative(
           radialText(data, {
             angle: 0,
@@ -67,7 +65,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartRadialLabel() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

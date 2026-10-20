@@ -48,7 +48,7 @@ export default function FieldExamples() {
 
 function InputFields() {
   return (
-    <Example title="Input Fields">
+    <Example title="Input fields">
       <FieldGroup>
         <TextField>
           <Label>Basic Input</Label>
@@ -97,7 +97,7 @@ function InputFields() {
 
 function TextareaFields() {
   return (
-    <Example title="Textarea Fields">
+    <Example title="Textarea fields">
       <FieldGroup>
         <TextField>
           <Label>Basic Textarea</Label>
@@ -133,7 +133,7 @@ function TextareaFields() {
 
 function SelectFields() {
   return (
-    <Example title="Select Fields">
+    <Example title="Select fields">
       <FieldGroup>
         <Select placeholder="Choose an option">
           <Label>Basic Select</Label>
@@ -195,7 +195,7 @@ function SelectFields() {
 
 function CheckboxFields() {
   return (
-    <Example title="Checkbox Fields">
+    <Example title="Checkbox fields">
       <FieldGroup>
         <Checkbox defaultSelected>
           <CheckboxControl />
@@ -254,7 +254,7 @@ function CheckboxFields() {
 
 function RadioFields() {
   return (
-    <Example title="Radio Fields">
+    <Example title="Radio fields">
       <FieldGroup>
         <RadioGroup defaultValue="free">
           <Label>Subscription Plan</Label>
@@ -340,7 +340,7 @@ function RadioFields() {
 
 function SwitchFields() {
   return (
-    <Example title="Switch Fields">
+    <Example title="Switch fields">
       <FieldGroup>
         <Field orientation="horizontal">
           <FieldContent>
@@ -405,7 +405,7 @@ function SwitchFields() {
 
 function SliderFields() {
   return (
-    <Example title="Slider Fields">
+    <Example title="Slider fields">
       <FieldGroup>
         <Slider defaultValue={50}>
           <Label>Volume</Label>
@@ -443,8 +443,8 @@ function SliderFields() {
 
 function HorizontalFields() {
   return (
-    <Example title="Horizontal Fields">
-      <FieldGroup className="**:data-[slot=field-content]:min-w-48">
+    <Example title="Horizontal fields">
+      <FieldGroup className="**:data-field-content:min-w-48">
         <Field orientation="horizontal">
           <FieldContent>
             <Label>Username</Label>

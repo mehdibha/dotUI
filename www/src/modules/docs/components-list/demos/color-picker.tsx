@@ -26,9 +26,7 @@ export function ColorPickerDemo() {
         </Button>
       }
     >
-      {/* `data-dialog` lets the color area fill the width, as it does inside a
-          real popover dialog, so the editor fits the trigger-wide surface. */}
-      <div data-dialog="" className="w-full">
+      <div className="w-full">
         <ColorEditor
           defaultValue={COLOR}
           showFormatSelector={false}

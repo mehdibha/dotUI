@@ -2,9 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import colorAreaMeta from "./meta"
 
-const { useStyles, styles } = createStyles(colorAreaMeta, {
+const roomy = {
+  base: "w-56",
+}
+
+const { useStyles } = createStyles(colorAreaMeta, {
   base: {
-    base: "block aspect-square min-w-20 rounded-(--studio-color-area-radius) disabled:[background:var(--color-disabled)]! in-data-dialog:w-full",
+    base: "block aspect-square min-w-20 rounded-(--studio-color-area-radius) disabled:[background:var(--color-disabled)]!",
   },
   density: {
     compact: {
@@ -13,12 +17,10 @@ const { useStyles, styles } = createStyles(colorAreaMeta, {
     default: {
       base: "w-48",
     },
-    comfortable: {
-      base: "w-56",
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
 })
-
-export type ColorAreaStyles = typeof styles
 
 export { useStyles }

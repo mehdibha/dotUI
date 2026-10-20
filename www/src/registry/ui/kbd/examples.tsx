@@ -17,19 +17,19 @@ export default function KbdExamples() {
       <Example title="Basic">
         <Basic />
       </Example>
-      <Example title="Modifier Keys">
+      <Example title="Modifier keys">
         <ModifierKeys />
       </Example>
       <Example title="KbdGroup">
         <Group />
       </Example>
-      <Example title="Arrow Keys">
+      <Example title="Arrow keys">
         <ArrowKeys />
       </Example>
-      <Example title="With Icons">
+      <Example title="With icons">
         <WithIcons />
       </Example>
-      <Example title="With Icons and Text">
+      <Example title="With icons and text">
         <WithIconsAndText />
       </Example>
       <Example title="InputGroup">

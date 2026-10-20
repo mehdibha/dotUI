@@ -1,8 +1,18 @@
 import { createStyles } from "@/lib/styles"
 
+import { CONTAINER_SURFACE } from "../card/styles"
 import colorEditorMeta from "./meta"
 
-const { useStyles, styles } = createStyles(colorEditorMeta, {
+const roomy = {
+  slots: {
+    root: "gap-2.5",
+    area: "gap-2.5",
+    fields: "gap-2.5",
+    fieldGroup: "gap-2.5",
+  },
+}
+
+const { useStyles } = createStyles(colorEditorMeta, {
   base: {
     slots: {
       root: "flex w-fit flex-col",
@@ -28,27 +38,23 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
         fieldGroup: "gap-2",
       },
     },
-    comfortable: {
-      slots: {
-        root: "gap-2.5",
-        area: "gap-2.5",
-        fields: "gap-2.5",
-        fieldGroup: "gap-2.5",
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
   params: {
     style: {
       default: {},
       hammamet: {
         slots: {
-          root: "rounded-(--studio-color-editor-radius) border border-(--card-border) bg-card p-3 shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]",
+          root: [
+            "rounded-(--studio-color-editor-radius) p-3",
+            CONTAINER_SURFACE,
+          ],
         },
       },
     },
   },
 })
-
-export type ColorEditorStyles = typeof styles
 
 export { useStyles }

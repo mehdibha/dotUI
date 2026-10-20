@@ -11,10 +11,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
-/**
- * `swipeToDismiss={false}` disables gesture dismissal, `isDismissable={false}`
- * disables outside dismissal, and `isKeyboardDismissDisabled` suppresses Escape.
- */
 export default function Demo() {
   return (
     <Dialog>

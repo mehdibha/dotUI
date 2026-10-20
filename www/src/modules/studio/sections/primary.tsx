@@ -1,14 +1,13 @@
 "use client"
 
-/* Primary — the Color chapter's view over every role that paints with a
-   source (axes/color.ts PRIMARY_LEAVES). Accent and Neutral write all of
-   them; Custom opens a panel with a row per leaf, and is the selection while
-   the leaves disagree. Each preview is the role at glyph scale in the
-   engine's own colors, so a choice reads before it lands. */
+/* Primary — a view over every role that paints with a source (axes/color.ts
+   PRIMARY_LEAVES). Accent and Neutral write all of them; while they disagree
+   it reads Custom and lists each. Each leaf has its own row on its
+   component's page. Swatches and specimens draw in the engine's own
+   colors. */
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
+import { CheckIcon } from "lucide-react"
 import {
-  Button as RacButton,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -17,40 +16,24 @@ import type { ModeOutput } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
-import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
-import {
-  PRIMARY_LEAVES,
-  primaryValue,
-  SOURCE_OPTIONS,
-  withSource,
-} from "../axes/color"
+import { PRIMARY_LEAVES, primaryValue, withSource } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
+import { SOURCE_OPTIONS } from "../axes/color.meta"
+import { OPTIONS } from "../axes/meta"
 import {
-  DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
   DialPopover,
+  DialSelect,
+  DialSeparator,
   DialTrigger,
-  SegmentedGroup,
 } from "../dial"
-import { PanelPopover, PanelPopoverTitle } from "../rows"
-import type { Studio } from "../state"
-
-const LEAF_LABELS: Record<PrimaryLeaf, string> = {
-  buttonColor: "Buttons",
-  checkboxColor: "Checkbox",
-  radioColor: "Radio",
-  switchColor: "Switch",
-  selectionColor: "Selection",
-  sliderColor: "Slider",
-  tabsColor: "Tabs",
-  linkColor: "Links",
-  focusColor: "Focus ring",
-}
-
-/* --------------------------------- Inks ---------------------------------- */
+import { usePanelMode } from "../panel-mode"
+import type { RowMap } from "../row-host"
+import type { Studio } from "../use-studio"
+import { useStudio } from "../use-studio"
 
 /** What a source paints, from the engine's mode: the solid fill and its
  *  label, the text ink, the focus ring, the tinted wash. */
@@ -82,8 +65,6 @@ function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
     },
   }
 }
-
-/* -------------------------------- Previews -------------------------------- */
 
 function Check({ color }: { color: string }) {
   return (
@@ -124,15 +105,6 @@ function CheckboxGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function RadioGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="size-4 rounded-full border-[5px]"
-      style={{ borderColor: ink.fill, background: ink.on }}
-    />
-  )
-}
-
 function SwitchGlyph({ ink }: { ink: Ink }) {
   return (
     <span
@@ -142,82 +114,6 @@ function SwitchGlyph({ ink }: { ink: Ink }) {
       <span className="size-3 rounded-full" style={{ background: ink.on }} />
     </span>
   )
-}
-
-function SelectionGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="flex h-5 items-center gap-1 rounded-md px-1.5 text-[10.5px] font-medium"
-      style={{ background: ink.fill, color: ink.on }}
-    >
-      <Check color={ink.on} />
-      Item
-    </span>
-  )
-}
-
-function SliderGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex h-1 w-14 items-center rounded-full bg-fg/15">
-      <span
-        className="flex h-1 w-8 items-center justify-end rounded-full"
-        style={{ background: ink.fill }}
-      >
-        <span
-          className="-mr-1.5 size-3 rounded-full ring-2 ring-bg"
-          style={{ background: ink.fill }}
-        />
-      </span>
-    </span>
-  )
-}
-
-function TabsGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex gap-2.5 text-[10.5px] font-medium">
-      <span
-        className="border-b-2 pb-px"
-        style={{ color: ink.text, borderColor: ink.fill }}
-      >
-        Tab
-      </span>
-      <span className="border-b-2 border-transparent pb-px text-fg/50">
-        Tab
-      </span>
-    </span>
-  )
-}
-
-function LinkGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="text-[11px] font-medium underline underline-offset-2"
-      style={{ color: ink.text }}
-    >
-      Learn more
-    </span>
-  )
-}
-
-function FocusGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="h-4 w-8 rounded-[5px] bg-fg/10 ring-2 ring-offset-1 ring-offset-bg"
-      style={{ ["--tw-ring-color" as string]: ink.ring }}
-    />
-  )
-}
-
-const GLYPHS: Record<PrimaryLeaf, (props: { ink: Ink }) => React.ReactNode> = {
-  buttonColor: ButtonGlyph,
-  checkboxColor: CheckboxGlyph,
-  radioColor: RadioGlyph,
-  switchColor: SwitchGlyph,
-  selectionColor: SelectionGlyph,
-  sliderColor: SliderGlyph,
-  tabsColor: TabsGlyph,
-  linkColor: LinkGlyph,
-  focusColor: FocusGlyph,
 }
 
 /** The trigger's swatch: one source, or both halves when they disagree. */
@@ -243,12 +139,11 @@ function SourceSwatch({
   )
 }
 
-/* ---------------------------------- Row ----------------------------------- */
+/** Accent first, wherever a Primary source is picked. */
+const inOrder = <T extends { value: string }>(options: readonly T[]) =>
+  ["accent", "neutral"].flatMap((id) => options.filter((o) => o.value === id))
 
-const CHOICES: { id: PrimaryColorSource; label: string }[] = [
-  { id: "accent", label: "Accent" },
-  { id: "neutral", label: "Neutral" },
-]
+const CHOICES = inOrder(SOURCE_OPTIONS)
 
 function ChoiceStrip({ ink }: { ink: Ink }) {
   return (
@@ -260,45 +155,41 @@ function ChoiceStrip({ ink }: { ink: Ink }) {
   )
 }
 
-function leavesSummary(state: Studio["state"]) {
-  const neutral = PRIMARY_LEAVES.filter((l) => state[l] === "neutral").length
-  return `${neutral} neutral · ${PRIMARY_LEAVES.length - neutral} accent`
+const LEAF_LABELS: Record<PrimaryLeaf, string> = {
+  buttonColor: "Button",
+  checkboxColor: "Checkbox",
+  radioColor: "Radio",
+  switchColor: "Switch",
+  selectionColor: "Selected fill",
+  sliderColor: "Slider",
+  tabsColor: "Tabs",
+  linkColor: "Link",
+  focusColor: "Focus ring",
 }
 
-/** A row per leaf, each on its own source. */
-function CustomPanel({
-  studio,
+/** Where each leaf stands while they disagree; each is set on its own page. */
+function LeafList({
+  state,
   ink,
 }: {
-  studio: Studio
+  state: Studio["state"]
   ink: Record<PrimaryColorSource, Ink>
 }) {
-  const { state, set } = studio
   return (
-    <PanelPopover className="w-[352px] min-w-0">
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
-        {PRIMARY_LEAVES.map((leaf) => {
-          const Glyph = GLYPHS[leaf]
-          const source = state[leaf] as PrimaryColorSource
-          return (
-            <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
-              <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center">
-                <Glyph ink={ink[source]} />
-              </span>
-              <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
-                value={source}
-                onChange={set(leaf)}
-                options={SOURCE_OPTIONS}
-              />
-            </div>
-          )
-        })}
-      </DialogContent>
-    </PanelPopover>
+    <dl className="flex flex-col px-3 py-1 text-[13px] font-medium">
+      {PRIMARY_LEAVES.map((leaf) => {
+        const source = state[leaf] as PrimaryColorSource
+        return (
+          <div key={leaf} className="flex h-7 items-center justify-between">
+            <dt className="text-fg/85">{LEAF_LABELS[leaf]}</dt>
+            <dd className="flex items-center gap-2 text-fg/60">
+              {source === "accent" ? "Accent" : "Neutral"}
+              <SourceSwatch value={source} ink={ink} />
+            </dd>
+          </div>
+        )
+      })}
+    </dl>
   )
 }
 
@@ -330,15 +221,24 @@ function PrimaryPanel({
       >
         {CHOICES.map((choice) => (
           <RacToggleButton
-            key={choice.id}
-            id={choice.id}
-            className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
+            key={choice.value}
+            id={choice.value}
+            className={cn(
+              DIAL_ROW,
+              DIAL_PRESS,
+              "h-auto min-h-9 py-1.5 selected:tint-10",
+            )}
           >
             {({ isSelected }) => (
               <>
-                <span className={DIAL_LABEL}>{choice.label}</span>
-                <span className="flex items-center gap-2">
-                  <ChoiceStrip ink={ink[choice.id]} />
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span className={DIAL_LABEL}>{choice.label}</span>
+                  <span className="text-xs leading-snug text-fg/55">
+                    {choice.description}
+                  </span>
+                </span>
+                <span className="flex shrink-0 items-center gap-2">
+                  <ChoiceStrip ink={ink[choice.value as PrimaryColorSource]} />
                   <CheckIcon
                     className={cn(
                       "size-4 shrink-0 text-fg",
@@ -351,37 +251,26 @@ function PrimaryPanel({
           </RacToggleButton>
         ))}
       </RacToggleButtonGroup>
-      <Dialog>
-        <RacButton
-          className={cn(DIAL_ROW, DIAL_PRESS, primary === "mixed" && "tint-10")}
-        >
-          <span className={DIAL_LABEL}>Custom</span>
-          <span className="flex min-w-0 items-center gap-2">
-            {primary === "mixed" && (
-              <span className="truncate text-[13px] font-medium text-fg/50">
-                {leavesSummary(state)}
-              </span>
-            )}
-            <ChevronRightIcon className={DIAL_CHEVRON} />
-          </span>
-        </RacButton>
-        <PanelPopoverTitle.Provider value="Custom">
-          <CustomPanel studio={studio} ink={ink} />
-        </PanelPopoverTitle.Provider>
-      </Dialog>
+      {primary === "mixed" && (
+        <>
+          <DialSeparator />
+          <LeafList state={state} ink={ink} />
+        </>
+      )}
     </>
   )
 }
 
-export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
-  const ink = inks(m)
+export function PrimaryRow() {
+  const studio = useStudio()
+  const ink = inks(usePanelMode().m)
   const primary = primaryValue(studio.state)
   const label =
     primary === "mixed" ? "Custom" : primary === "accent" ? "Accent" : "Neutral"
   return (
     <DialTrigger
       label="Primary"
-      chevron={false}
+      swatch
       value={
         <>
           {label}
@@ -395,3 +284,32 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
     </DialTrigger>
   )
 }
+
+/** One leaf on its own source; its component's page hosts it. */
+const leafRow = (leaf: PrimaryLeaf) =>
+  function LeafRow() {
+    const ink = inks(usePanelMode().m)
+    return (
+      <DialSelect
+        axis={leaf}
+        label="Color"
+        options={inOrder(OPTIONS[leaf] ?? SOURCE_OPTIONS).map((option) => ({
+          ...option,
+          glyph: (
+            <SourceSwatch
+              value={option.value as PrimaryColorSource}
+              ink={ink}
+            />
+          ),
+        }))}
+      />
+    )
+  }
+
+/* Selected fill has no page of its own: Primary sets it. */
+export const ROWS: RowMap = Object.fromEntries(
+  PRIMARY_LEAVES.filter((leaf) => leaf !== "selectionColor").map((leaf) => [
+    leaf,
+    leafRow(leaf),
+  ]),
+)

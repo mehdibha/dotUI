@@ -37,7 +37,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartBarActive() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

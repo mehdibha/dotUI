@@ -41,14 +41,13 @@ const chart = defineChart({
       y: "visitors",
       color: (row) => devices[row.device],
       layout: stack(),
-      // Only the top of each stack is rounded, so segments meet flush.
       radius: { end: chartLook.barRadius },
       maxThickness: chartLook.barMaxThickness,
     }),
   ],
 })
 
-export default function ChartBarStacked() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

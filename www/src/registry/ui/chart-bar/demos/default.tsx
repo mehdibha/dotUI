@@ -29,7 +29,6 @@ const chart = defineChart({
     barY(data, {
       x: "month",
       y: "desktop",
-      // Names the series in the tooltip.
       z: () => "Desktop",
       radius: chartLook.barRadius,
       maxThickness: chartLook.barMaxThickness,
@@ -37,7 +36,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartBarDefault() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

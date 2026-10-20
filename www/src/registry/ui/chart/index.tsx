@@ -11,7 +11,6 @@ import { chartLooks } from "./meta"
 
 export * from "./base"
 
-/** The design system's chart look, live: the shipped file carries it as the `chartLook` literal. */
 export function useChartLook(): ChartLook {
   const params = useComponentParams("chart")
   const key = JSON.stringify(params)

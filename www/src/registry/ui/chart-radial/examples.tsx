@@ -29,7 +29,6 @@ const track = {
   motion: false,
 } as const
 
-// Built from the live look, so the studio restyles the rings as it changes.
 function ringsChart(look: ChartLook) {
   return defineChart({
     scales: { x: null, y: null },

@@ -21,7 +21,6 @@ const arc = {
   strokeWidth: 2,
 } as const
 
-// Slices read nothing from the look: the host applies its legend and motion.
 const simple = defineChart({
   scales: { x: null, y: null },
   marks: [

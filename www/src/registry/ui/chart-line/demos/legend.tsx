@@ -46,7 +46,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineLegend() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

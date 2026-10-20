@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import React from "react"
 import { defineChart } from "@tanstack/charts"
 import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
@@ -29,10 +29,10 @@ const ring = {
   strokeWidth: 2,
 } as const
 
-export default function ChartPieInteractive() {
-  const [month, setMonth] = useState("January")
+export default function Demo() {
+  const [month, setMonth] = React.useState("January")
   const row = data.find((entry) => entry.month === month)
-  const chart = useMemo(
+  const chart = React.useMemo(
     () =>
       defineChart({
         scales: { x: null, y: null },

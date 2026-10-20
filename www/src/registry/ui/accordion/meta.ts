@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const accordionMeta = {
   name: "accordion",
   type: "registry:ui",
-  group: "disclosure",
   files: [
     {
       type: "registry:ui",
@@ -14,30 +13,21 @@ const accordionMeta = {
   // The collapsible rides on the accordion's motion.
   params: {
     motion: {
-      kind: "enum",
       default: "expand",
-      values: ["expand", "fade", "none"] as const,
-      description:
-        "How a panel opens and closes: its height alone, the height with a fade, or at once.",
+      values: ["expand", "none"] as const,
+      description: "How a panel opens and closes: its height, or at once.",
     },
-    container: {
-      kind: "enum",
+    layout: {
       default: "divided",
-      values: ["divided", "boxed", "cards"] as const,
+      values: ["divided", "contained", "separated", "plain"] as const,
       description:
-        "How the items are grouped: hairline rows, one bordered surface, or a card each.",
+        "How the items are grouped: hairline rows, one container, a container each, or nothing.",
     },
     marker: {
-      kind: "enum",
-      default: "chevron",
-      values: ["chevron", "plus"] as const,
+      default: "trailing-chevron",
+      values: ["trailing-chevron", "leading-caret"] as const,
       description:
-        "The glyph that shows a trigger opens: a turning chevron or a plus that becomes a minus.",
-    },
-    markerPosition: {
-      kind: "enum",
-      default: "trailing",
-      values: ["trailing", "leading"] as const,
+        "What shows a trigger opens: a trailing chevron that flips, or a leading caret that turns.",
     },
   },
 } satisfies RegistryItem

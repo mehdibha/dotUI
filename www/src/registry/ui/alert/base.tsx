@@ -11,7 +11,7 @@ import type { AlertStyles } from "./styles"
 interface AlertProps
   extends React.ComponentProps<"div">, VariantProps<AlertStyles> {}
 
-function Alert({ className, variant, ...props }: AlertProps) {
+const Alert = ({ className, variant, ...props }: AlertProps) => {
   const { root } = useStyles()()
   return (
     <div
@@ -27,7 +27,7 @@ function Alert({ className, variant, ...props }: AlertProps) {
 
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
-function AlertTitle({ className, ...props }: AlertTitleProps) {
+const AlertTitle = ({ className, ...props }: AlertTitleProps) => {
   const { title } = useStyles()()
   return <div data-alert-title="" className={title({ className })} {...props} />
 }
@@ -36,7 +36,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
-function AlertDescription({ className, ...props }: AlertDescriptionProps) {
+const AlertDescription = ({ className, ...props }: AlertDescriptionProps) => {
   const { description } = useStyles()()
   return (
     <div
@@ -51,7 +51,7 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
-function AlertAction({ className, ...props }: AlertActionProps) {
+const AlertAction = ({ className, ...props }: AlertActionProps) => {
   const { action } = useStyles()()
   return (
     <div data-alert-action="" className={action({ className })} {...props} />

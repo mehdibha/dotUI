@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DisclosurePrimitives from "react-aria-components/Disclosure";
@@ -12,9 +13,9 @@ const accordionVariants = tv({
   slots: {
     root: "flex w-full flex-col",
     item: "group/accordion-item w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) not-last:border-b",
-    heading: "flex",
+    heading: "flex font-sans tracking-normal",
     trigger:
-      "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start gap-4 rounded-lg py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between",
+      "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start rounded-sm py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between gap-4",
     marker:
       "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4 duration-200 ease-[cubic-bezier(0,0,0.58,1)] transition-transform group-expanded/accordion-item:rotate-180",
     panel:
@@ -32,15 +33,17 @@ interface AccordionProps extends React.ComponentProps<
   typeof DisclosureGroupPrimitives.DisclosureGroup
 > {}
 
-function Accordion({ className, ...props }: AccordionProps) {
+const Accordion = ({ className, ...props }: AccordionProps) => {
   return (
     <DisclosureGroupPrimitives.DisclosureGroup
       data-accordion=""
-      className={composeRenderProps(className, (c) => root({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -48,15 +51,17 @@ interface AccordionItemProps extends React.ComponentProps<
   typeof DisclosurePrimitives.Disclosure
 > {}
 
-function AccordionItem({ className, ...props }: AccordionItemProps) {
+const AccordionItem = ({ className, ...props }: AccordionItemProps) => {
   return (
     <DisclosurePrimitives.Disclosure
       data-accordion-item=""
-      className={composeRenderProps(className, (c) => item({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        item({ className }),
+      )}
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -64,15 +69,14 @@ interface AccordionTriggerProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function AccordionTrigger({ className, ...props }: AccordionTriggerProps) {
-  const glyph = <ChevronDownIcon />;
+const AccordionTrigger = ({ className, ...props }: AccordionTriggerProps) => {
   return (
     <HeadingPrimitives.Heading className={heading()}>
       <ButtonPrimitives.Button
         slot="trigger"
         data-accordion-trigger=""
-        className={composeRenderProps(className, (c) =>
-          trigger({ className: c }),
+        className={composeRenderProps(className, (className) =>
+          trigger({ className }),
         )}
         {...props}
       >
@@ -80,14 +84,14 @@ function AccordionTrigger({ className, ...props }: AccordionTriggerProps) {
           <>
             {children}
             <span data-accordion-marker="" className={marker()}>
-              {glyph}
+              <ChevronDownIcon />
             </span>
           </>
         ))}
       </ButtonPrimitives.Button>
     </HeadingPrimitives.Heading>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -95,17 +99,19 @@ interface AccordionPanelProps extends React.ComponentProps<
   typeof DisclosurePrimitives.DisclosurePanel
 > {}
 
-function AccordionPanel({ className, ...props }: AccordionPanelProps) {
+const AccordionPanel = ({ className, ...props }: AccordionPanelProps) => {
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-accordion-panel=""
-      className={composeRenderProps(className, (c) => panel({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
+      )}
       {...props}
     >
       <div className={panelContent()}>{props.children}</div>
     </DisclosurePrimitives.DisclosurePanel>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

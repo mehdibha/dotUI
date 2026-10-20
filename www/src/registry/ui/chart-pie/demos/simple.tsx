@@ -22,18 +22,16 @@ const chart = defineChart({
       marks: [
         radialArc(pie(data, { value: "visitors" }), {
           color: "browser",
-          // The surface color, so the slices read apart.
           stroke: "var(--surface-bg,var(--color-bg))",
           strokeWidth: 2,
         }),
       ],
     }),
   ],
-  // A slice's x and y are its angle and radius: focus the nearest slice.
   focus: "nearest",
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieSimple() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

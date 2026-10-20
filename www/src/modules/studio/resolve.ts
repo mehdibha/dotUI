@@ -1,6 +1,6 @@
-/* From studio state to the design system the engine consumes. The registry's
+/* From effective studio state to the design system the engine consumes. The registry's
    param defaults are the floor; every chapter's resolution lands on top, and
-   the CSS vars an enum param value carries fold into the global tokens — one
+   the CSS vars a param value carries fold into the global tokens — one
    path for the provider, the exported theme and the class rewriter alike.
    Pure and React-free — shared by the panel, the preview iframe, the docs
    demos and the /r/* registry routes. */
@@ -10,23 +10,53 @@ import { registryUi } from "@/registry/ui/registry"
 import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/studio/preset/defaults"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { resolveAll } from "./axes"
-import type { StudioState } from "./axes"
+import { effective, resolveAll } from "./axes"
+import type { Effective, StudioState } from "./axes"
 
-const enumVars = new Map<
+const varsByComponent = new Map<
   string,
   Record<string, Record<string, Record<string, string>>>
 >()
 for (const item of registryUi) {
   for (const [paramName, def] of Object.entries(item.params ?? {})) {
-    if (def.kind !== "enum" || !def.vars) continue
-    const byParam = enumVars.get(item.name) ?? {}
+    if (!def.vars) continue
+    const byParam = varsByComponent.get(item.name) ?? {}
     byParam[paramName] = def.vars
-    enumVars.set(item.name, byParam)
+    varsByComponent.set(item.name, byParam)
   }
 }
 
-export function resolveDesignSystem(state: StudioState): DesignSystem {
+/* Equal selections are one frozen object, so `useStyles`' compose cache
+   (keyed by object identity) hits across edits and renders. Enum-only
+   params keep the set finite. */
+const interned = new Map<string, Readonly<Record<string, string>>>()
+
+function intern(
+  component: string,
+  selections: Record<string, string>,
+): Readonly<Record<string, string>> {
+  const id = `${component}|${Object.keys(selections)
+    .sort()
+    .map((name) => `${name}=${selections[name]}`)
+    .join("&")}`
+  let hit = interned.get(id)
+  if (!hit) interned.set(id, (hit = Object.freeze({ ...selections })))
+  return hit
+}
+
+/** A design system that crossed a boundary (postMessage) with its
+ *  selections interned again. */
+export const internDesignSystem = (ds: DesignSystem): DesignSystem => ({
+  ...ds,
+  componentParams: Object.fromEntries(
+    Object.entries(ds.componentParams).map(([component, selections]) => [
+      component,
+      intern(component, selections),
+    ]),
+  ),
+})
+
+export function resolveDesignSystem(state: Effective): DesignSystem {
   const resolved = resolveAll(state)
   const componentParams: Record<string, Record<string, string>> = {}
   for (const [component, defaults] of Object.entries(
@@ -42,7 +72,7 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
   // scoped providers (docs demos) skip the closure clone entirely.
   const tokens = { ...resolved.tokens }
   for (const [component, selections] of Object.entries(componentParams)) {
-    const byParam = enumVars.get(component)
+    const byParam = varsByComponent.get(component)
     if (!byParam) continue
     for (const [paramName, value] of Object.entries(selections)) {
       if (value === REGISTRY_DEFAULTS.componentParams[component]?.[paramName])
@@ -50,13 +80,19 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
       Object.assign(tokens, byParam[paramName]?.[value])
     }
   }
+  for (const [component, selections] of Object.entries(componentParams))
+    componentParams[component] = intern(component, selections)
   return {
     componentParams,
     tokens,
-    density: resolved.density ?? "default",
+    density: resolved.density,
     // Always explicit: the page's `base/colors.css` is the site chrome's
     // palette, not Origin's.
     color: resolved.color as ColorConfig,
     icons: resolved.icons,
   }
 }
+
+/** Saved state → design system: the one path every consumer takes. */
+export const designSystemOf = (state: StudioState) =>
+  resolveDesignSystem(effective(state).values)

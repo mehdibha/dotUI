@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 import type { VariantProps } from "tailwind-variants"
@@ -30,9 +31,7 @@ const ToggleButtonGroup = ({
   return (
     <ToggleButtonProvider variant={variant} size={size} isIconOnly={isIconOnly}>
       <ToggleButtonGroupPrimitives.ToggleButtonGroup
-        data-slot="toggle-button-group"
         data-toggle-button-group=""
-        data-orientation={orientation}
         orientation={orientation}
         className={composeRenderProps(className, (className) =>
           root({
@@ -45,6 +44,8 @@ const ToggleButtonGroup = ({
     </ToggleButtonProvider>
   )
 }
+
+// MARK: Separator
 
 export type { ToggleButtonGroupProps }
 export { ToggleButtonGroup }

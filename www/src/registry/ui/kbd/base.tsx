@@ -1,12 +1,13 @@
 "use client"
 
-import * as KeyboardPrimitive from "react-aria-components/Keyboard"
+import type * as React from "react"
+import * as KeyboardPrimitives from "react-aria-components/Keyboard"
 
 import { useStyles } from "./styles"
 
 // MARK: kbdStyles
 
-// MARK: KbdGroup
+// MARK: Separator
 
 interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
@@ -15,16 +16,16 @@ const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
   return <kbd data-kbd-group="" className={group({ className })} {...props} />
 }
 
-// MARK: Kbd
+// MARK: Separator
 
 interface KbdProps extends React.ComponentProps<
-  typeof KeyboardPrimitive.Keyboard
+  typeof KeyboardPrimitives.Keyboard
 > {}
 
 const Kbd = ({ className, ...props }: KbdProps) => {
   const { kbd } = useStyles()()
   return (
-    <KeyboardPrimitive.Keyboard
+    <KeyboardPrimitives.Keyboard
       data-kbd=""
       className={kbd({ className })}
       {...props}
@@ -32,7 +33,7 @@ const Kbd = ({ className, ...props }: KbdProps) => {
   )
 }
 
-// MARK: separator
+// MARK: Separator
 
 export type { KbdGroupProps, KbdProps }
 export { Kbd, KbdGroup }

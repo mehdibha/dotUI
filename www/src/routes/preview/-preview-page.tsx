@@ -1,22 +1,34 @@
-import { type ReactNode, useCallback, useState } from "react"
-import { getRouteApi } from "@tanstack/react-router"
+import { Activity, useEffect, useMemo, useRef, useState } from "react"
+import { flushSync } from "react-dom"
+import { getRouteApi, useRouterState } from "@tanstack/react-router"
 
+import { loadFontFaces } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
+import { SearchIcon } from "@/registry/icons"
+import { IconLibraryContext } from "@/registry/icons/create-icon"
+import { iconLibraries } from "@/registry/icons/icon-map"
+import type { IconLibraryName } from "@/registry/icons/icon-map"
+import { cn } from "@/registry/lib/utils"
+import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
+import { ExamplesIndex } from "@/modules/studio/__generated__/examples"
 import {
-  ExamplesIndex,
-  GroupExamplesIndex,
-} from "@/modules/studio/__generated__/examples"
-import {
+  isInIframe,
   useAnnouncePreviewReady,
-  useIframeMessageListener,
-  usePreviewNavigationMessages,
+  useAppliedDesignSystem,
+  useMessage,
 } from "@/modules/studio/preset/iframe-sync"
-import type { DesignSystem } from "@/modules/studio/preset/types"
+import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { boardOf } from "@/modules/studio/preview/boards"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import {
+  requestThemeCss,
+  themeCssNow,
+} from "@/modules/studio/preview/theme-css-worker"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
@@ -26,82 +38,270 @@ const promiseCache = new Map<
   Promise<{ default: React.ComponentType }>
 >()
 
+const loadCards = () =>
+  import("@/components/showcase/cards-grid").then((m) => ({
+    default: m.CardsCanvas,
+  }))
+
 export function getExamplesPromise(slug: string) {
   let promise = promiseCache.get(slug)
   if (!promise) {
-    // Block/group slugs share one namespace with component slugs and win the
-    // lookup — e.g. the "cards" group resolves here before the "card" component.
+    // Block slugs share one namespace with component slugs and win the lookup.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
-      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+      boardOf(slug) ??
+      BlocksIndex[slug] ??
+      (slug === "cards" ? loadCards : undefined) ??
+      ExamplesIndex[slug]
     if (!load) return null
-    promise = load()
+    // A failed chunk (a network error, a deploy since) is retried next time.
+    promise = load().catch((error: unknown) => {
+      promiseCache.delete(slug)
+      throw error
+    })
     promiseCache.set(slug, promise)
   }
   return promise
 }
 
-// Embedded, the preview sits inside the /create panel's rounded card; a native
+// Embedded, the preview sits inside the /studio panel's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
-const EMBEDDED_SCROLLBAR_CSS = `
-html { scrollbar-width: none; }
+// Overscroll bounces the preview itself, not the whole studio.
+// Live previews (drags, hovers) skip transitions, or the preview trails them.
+// Rows docked to the viewport bottom clear the studio's floating toolbar.
+// A board crossfades over the user's preview (swapBoard).
+const EMBEDDED_CSS = `
+html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
+[data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
+[data-toolbar-clearance] { padding-bottom: 4rem; }
+@keyframes board-fade-out { to { opacity: 0; } }
+@keyframes board-fade-in { from { opacity: 0; } }
+::view-transition-group(board-stage) { animation: none; }
+::view-transition-old(board-stage) { animation: board-fade-out 100ms ease-out both; }
+::view-transition-new(board-stage) { animation: board-fade-in 100ms ease-out both; }
 `
 
+// Crossfades the stage (the preview's content) into `update`. The site keeps
+// :root out of view transitions (styles.css), so the stage takes part under
+// its own name; its animations live in EMBEDDED_CSS.
+function swapBoard(update: () => void, stage: HTMLElement | null) {
+  if (
+    !stage ||
+    !document.startViewTransition ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
+    return flushSync(update)
+  stage.style.viewTransitionName = "board-stage"
+  const run = document.startViewTransition(() => flushSync(update))
+  void run.finished.finally(() => {
+    stage.style.viewTransitionName = ""
+  })
+}
+
 const route = getRouteApi("/preview/$slug")
+
+const LOADED_LIBRARIES = new Set<string>(
+  iconLibraries
+    .map((library) => library.name)
+    .filter((name) => name !== "lucide"),
+)
+
+// Faces load once the pointer rests on a font, so sweeping the list fetches
+// nothing; the preview itself settles later.
+const FONT_DWELL_MS = 30
+let fontTimer: ReturnType<typeof setTimeout> | undefined
+function warmFonts(families: string[]) {
+  clearTimeout(fontTimer)
+  fontTimer = setTimeout(() => loadFontFaces(document, families), FONT_DWELL_MS)
+}
+
+// Live color changes compute their CSS off the main thread; the release
+// waits for the job already computing its color.
+const prepareThemeCss: PrepareDesignSystem<string | undefined> = (
+  { data: { color }, live },
+  ready,
+) => {
+  if (color) requestThemeCss(color, live, ready)
+  else ready(undefined)
+}
+
+// One hidden icon per library loads its chunk before a preview needs it.
+function WarmIcons({ libraries }: { libraries: IconLibraryName[] }) {
+  return (
+    <div hidden>
+      {libraries.map((library) => (
+        <IconLibraryContext.Provider key={library} value={library}>
+          <SearchIcon />
+        </IconLibraryContext.Provider>
+      ))}
+    </div>
+  )
+}
+
+// While the next preview's loader runs, the router keeps the current one on
+// screen: dim it under a spinner so the switch shows at once.
+function PendingOverlay({ loading }: { loading: boolean }) {
+  const routing = useRouterState({ select: (s) => s.status === "pending" })
+  const pending = routing || loading
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-bg/60 opacity-0 transition-opacity duration-150",
+        pending && "opacity-100",
+      )}
+    >
+      {pending && <Loader className="size-5 text-fg-muted" />}
+    </div>
+  )
+}
 
 export function PreviewPage() {
   const { slug } = route.useParams()
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
-  const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(getCurrent().state),
+  const { designSystem, prepared: themeCss } = useAppliedDesignSystem(
+    prepareThemeCss,
+    () => {
+      const initial = designSystemOf(getCurrent().state)
+      return {
+        designSystem: initial,
+        prepared: initial.color && themeCssNow(initial.color),
+      }
+    },
+    // A message's clone, its selections one object again for the style caches.
+    internDesignSystem,
   )
 
   const navigate = route.useNavigate()
 
-  useIframeMessageListener(
-    useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
-  )
+  // What the studio is about to preview starts loading now.
+  const [warmIcons, setWarmIcons] = useState<IconLibraryName[]>([])
+  useMessage("preview-warm", ({ fonts, icons }) => {
+    if (fonts) warmFonts(fonts)
+    const added = (icons ?? []).filter((name) => LOADED_LIBRARIES.has(name))
+    if (added.length)
+      setWarmIcons((prev) => {
+        const next = [...new Set([...prev, ...added])] as IconLibraryName[]
+        return next.length === prev.length ? prev : next
+      })
+  })
 
   // The parent switches previews by navigating this document's own router — the
   // iframe never remounts, so the module cache and design-system state survive
   // and revisited previews render instantly. `replace` keeps these switches out
   // of the shared browsing history; the route loader keeps the current preview
   // on screen while a first-visit chunk loads.
-  usePreviewNavigationMessages({
-    onNavigate: useCallback(
-      (next: string) => {
-        if (next === slug) return
-        void navigate({
-          to: "/preview/$slug",
-          params: { slug: next },
-          search: (prev) => prev,
-          replace: true,
-        })
+  useMessage("preview-navigate", ({ slug: next }) => {
+    if (next === slug) return
+    void navigate({
+      to: "/preview/$slug",
+      params: { slug: next },
+      search: (prev) => prev,
+      replace: true,
+    })
+  })
+  useMessage("preview-prefetch", ({ slug: next }) => {
+    void getExamplesPromise(next)?.catch(() => {})
+  })
+
+  // The board the panel is editing, over the user's preview. The preview stays
+  // mounted under it (hidden, updating at idle priority), so coming back
+  // doesn't render it from scratch.
+  const [board, setBoard] = useState<{
+    slug: string
+    Examples: React.ComponentType
+  } | null>(null)
+  const [boardLoading, setBoardLoading] = useState(false)
+  const requested = useRef<string | null>(null)
+  const shownBoard = useRef<string | null>(null)
+  const previewScroll = useRef(0)
+  const stage = useRef<HTMLDivElement>(null)
+  useMessage("preview-board", ({ slug: next }) => {
+    if (next === requested.current) return
+    requested.current = next
+    const show = (view: typeof board) => {
+      setBoardLoading(false)
+      const from = shownBoard.current
+      if ((view?.slug ?? null) === from) return
+      shownBoard.current = view?.slug ?? null
+      if (!from) previewScroll.current = window.scrollY
+      swapBoard(() => {
+        setBoard(view)
+        window.scrollTo(0, view ? 0 : previewScroll.current)
+      }, stage.current)
+    }
+    if (!next) return show(null)
+    const promise = getExamplesPromise(next)
+    if (!promise) return show(null)
+    setBoardLoading(true)
+    void promise.then(
+      (mod) => {
+        if (requested.current === next)
+          show({ slug: next, Examples: mod.default })
       },
-      [slug, navigate],
-    ),
-    onPrefetch: useCallback((next: string) => {
-      void getExamplesPromise(next)
-    }, []),
+      () => {
+        if (requested.current !== next) return
+        requested.current = null
+        show(null)
+      },
+    )
   })
 
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
 
+  const embedded = typeof window !== "undefined" && isInIframe()
+  // Stable elements: a design-system change re-renders only what reads it.
+  const chrome = useMemo(
+    () => (
+      <>
+        {embedded && <style>{EMBEDDED_CSS}</style>}
+        {embedded && <PreviewInspector />}
+        {/* Inside the provider so toasts wear the previewed params; the app
+            itself fires none. */}
+        <ToastProvider />
+      </>
+    ),
+    [embedded],
+  )
+
+  // Elastic overscroll pulls this page away and reveals the <iframe> element,
+  // which the studio paints in its own theme — repaint it with ours.
+  useEffect(() => {
+    const frame = window.frameElement as HTMLElement | null
+    if (!frame) return
+    const paint = () => {
+      frame.style.backgroundColor = getComputedStyle(
+        document.body,
+      ).backgroundColor
+    }
+    paint()
+    // Mode flips land on <html> from the root ThemeProvider's effect, after this one.
+    const observer = new MutationObserver(paint)
+    observer.observe(document.documentElement, { attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [designSystem.color, themeCss])
+
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.
   const { Examples } = route.useLoaderData()
-  let content: ReactNode
-  if (slug === "overview") {
-    content = <PresetOverview designSystem={designSystem} />
-  } else if (Examples) {
-    content = <Examples />
-  } else {
+  const { color, tokens, density } = designSystem
+  const overview = useMemo(
+    () => <PresetOverview designSystem={{ color, tokens, density }} />,
+    [color, tokens, density],
+  )
+  const examples = useMemo(() => Examples && <Examples />, [Examples])
+  const preview = slug === "overview" ? overview : examples
+  const boardContent = useMemo(
+    () => board && <board.Examples key={board.slug} />,
+    [board],
+  )
+  if (!preview && !boardContent) {
     return (
       <div className="flex h-screen items-center justify-center">
         <span className="text-fg-muted">Preview not found</span>
@@ -109,22 +309,24 @@ export function PreviewPage() {
     )
   }
 
-  const embedded = typeof window !== "undefined" && window.self !== window.top
-
   return (
     <DesignSystemProvider
       params={designSystem.componentParams}
-      tokens={designSystem.tokens}
-      density={designSystem.density}
-      color={designSystem.color}
+      tokens={tokens}
+      density={density}
+      color={color}
+      themeCss={themeCss}
       icons={designSystem.icons}
     >
-      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
-      {embedded && <PreviewInspector />}
-      {/* Inside the provider so toasts wear the previewed params; the app
-          itself fires none. */}
-      <ToastProvider />
-      {content}
+      {chrome}
+      <BoardFocusProvider>
+        <div ref={stage}>
+          <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+          {boardContent}
+        </div>
+      </BoardFocusProvider>
+      {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
+      <PendingOverlay loading={boardLoading} />
     </DesignSystemProvider>
   )
 }

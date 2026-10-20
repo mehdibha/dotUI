@@ -3,17 +3,13 @@ import {
   ExternalLinkIcon,
   PencilIcon,
   Trash2Icon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {
   return (
     <div className="rounded-md border bg-card shadow-sm">
-      <ListBox
-        aria-label="Project actions"
-        onAction={() => console.log("action")}
-      >
+      <ListBox aria-label="Project actions" onAction={() => {}}>
         <ListBoxItem id="rename" textValue="Rename project">
           <PencilIcon />
           Rename project

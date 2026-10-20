@@ -69,12 +69,12 @@ const PaginationLink = ({
   isIconOnly = true,
   ...props
 }: PaginationLinkProps) => {
-  const activeVariant = "secondary";
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
+      data-selected={isActive || undefined}
       data-pagination-link=""
-      variant={variant ?? (isActive ? activeVariant : "quiet")}
+      variant={variant ?? (isActive ? "secondary" : "quiet")}
       isIconOnly={isIconOnly}
       {...props}
     />
@@ -152,6 +152,8 @@ const PaginationEllipsis = ({
     </span>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   PaginationEllipsisProps,

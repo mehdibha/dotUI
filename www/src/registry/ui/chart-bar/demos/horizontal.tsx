@@ -37,7 +37,7 @@ const chart = defineChart({
   focus: "group-y",
 })
 
-export default function ChartBarHorizontal() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

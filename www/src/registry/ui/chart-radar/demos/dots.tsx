@@ -67,7 +67,6 @@ const chart = defineChart({
           curve: curveLinearClosed,
           strokeWidth: 1.5,
         }),
-        // The line already carries each point's focus.
         polarDecorative(radialDot(data, { ...series, r: 4 })),
       ],
     }),
@@ -75,7 +74,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarDots() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

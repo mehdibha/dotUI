@@ -13,8 +13,8 @@ import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { scalePoint } from "@tanstack/charts/scales/point"
 import { fold } from "@tanstack/charts/transform/fold"
 import { curveLinearClosed } from "d3-shape"
-import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
+import { MonitorIcon, SmartphoneIcon } from "@/registry/icons"
 import { Chart, chartAngleLabels, chartLook } from "@/registry/ui/chart"
 
 const data = [
@@ -76,8 +76,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-/* An icon legend is HTML beside the chart: the SVG legend draws color swatches. */
-export default function ChartRadarIcons() {
+export default function Demo() {
   return (
     <div>
       <Chart

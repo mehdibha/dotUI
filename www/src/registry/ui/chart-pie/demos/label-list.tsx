@@ -47,7 +47,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieLabelList() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

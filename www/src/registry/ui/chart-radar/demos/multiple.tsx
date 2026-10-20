@@ -82,7 +82,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarMultiple() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

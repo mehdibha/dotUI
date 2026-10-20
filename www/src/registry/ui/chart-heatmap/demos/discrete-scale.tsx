@@ -37,8 +37,6 @@ const chart = defineChart({
     x: { scale: scaleBand },
     y: { scale: scaleBand },
   },
-  /* The cuts are a policy, not an extent: one incident is already worth
-     seeing, ten is an outage week. */
   color: {
     scale: scaleThreshold<number, string>,
     domain: [1, 4, 10],
@@ -70,7 +68,7 @@ const chart = defineChart({
   },
 })
 
-export default function ChartHeatmapDiscreteScale() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

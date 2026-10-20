@@ -8,7 +8,7 @@
  *
  * Used as a DRIFT GUARD in scripts/registry-build.ts: the shipped import graph is a
  * subset of the intended dependency closure (hand-written deps additionally cover
- * demo/composition usage and CSS-only deps like focus-styles), so this is the
+ * demo/composition usage), so this is the
  * oracle for "a base file imports something meta forgot to declare", not a
  * wholesale replacement.
  */
@@ -30,7 +30,7 @@ function firstSegment(rest: string): string {
 }
 
 /** Map a module specifier to its dotui dep name, or undefined if it isn't a registry import. */
-export function specifierToDepName(specifier: string): string | undefined {
+function specifierToDepName(specifier: string): string | undefined {
   for (const [pattern, pick] of SPEC_REWRITES) {
     const m = specifier.match(pattern)
     if (m) return pick(m)
@@ -62,7 +62,7 @@ function registryDepsInFile(sourceFile: SourceFile): string[] {
   return out
 }
 
-export interface DeriveRegistryDepsInput {
+interface DeriveRegistryDepsInput {
   /** Absolute path to `www/src/registry`. */
   registryDir: string
   /** Shipped base files for one item (from collectBaseFiles). */

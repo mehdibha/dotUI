@@ -7,10 +7,14 @@ import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
  */
 export interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
   /**
-   * Whether the list box is in a loading state. Renders a `ListBoxLoader` strip
-   * directly after the items.
+   * Whether more items are loading. Shows a loader after the items when `onLoadMore` is set.
    */
-  isLoading?: boolean
+  isLoading?: ListBoxPrimitives.ListBoxLoadMoreItemProps["isLoading"]
+
+  /**
+   * Handler called when the user scrolls near the end of the list. Setting it renders the loader row.
+   */
+  onLoadMore?: ListBoxPrimitives.ListBoxLoadMoreItemProps["onLoadMore"]
 }
 
 /**
@@ -39,11 +43,6 @@ export interface ListBoxSectionProps<
 export interface ListBoxSectionHeaderProps extends React.ComponentProps<
   typeof HeaderPrimitives.Header
 > {}
-
-/**
- * Loader strip rendered below the items collection.
- */
-export interface ListBoxLoaderProps extends React.ComponentProps<"div"> {}
 
 /**
  * A Virtualizer renders a scrollable collection of data using customizable layouts.

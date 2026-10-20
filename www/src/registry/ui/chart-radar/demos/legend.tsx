@@ -52,7 +52,6 @@ const chart = defineChart({
         angle: { scale: scalePoint },
         radius: { scale: scaleLinear, nice: 4 },
       },
-      // Smaller, so the month labels clear the legend.
       radiusRatio: 0.68,
       guides: [
         radialGrid({
@@ -82,7 +81,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarLegend() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

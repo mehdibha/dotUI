@@ -1,34 +1,48 @@
 import { describe, expect, test } from "vitest"
 
 import { lstarOf, mixOklab, toOklch } from "@dotui/colors"
-import type { Mode as EngineMode, Oklch, StepName } from "@dotui/colors"
+import type { Mode, Oklch, StepName } from "@dotui/colors"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
+import { publishables } from "@/registry/__generated__/publishables"
 import {
   DEFAULT_COLOR_CONFIG,
   resolveColorConfig,
   semanticsFor,
 } from "@/registry/theme"
 import type { SemanticTarget } from "@/registry/theme"
+import { emitInitItem } from "@/publisher/emit-theme"
+import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { buildColorConfig } from "./color"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import { GROUPED_PAGE } from "./color"
+import {
+  DEFAULT_EFFECTIVE,
+  DEFAULT_STATE,
+  DEFAULTS,
+  effective,
+  parseState,
+} from "./index"
+import { excludedUnder, STYLE_VALUES } from "./style"
+import {
+  NO_SHADOW,
+  pickSurfaceLook,
+  shadowCss,
+  SURFACE_LOOK_VALUES,
+  SURFACE_LOOKS,
+  surfaceColorCss,
+  surfaceLookOf,
+  surfaceRecipe,
+} from "./surfaces"
+import type { PerMode, SurfaceColor } from "./surfaces"
 import {
   EDGE_OPTIONS,
-  flatAllowed,
-  GROUPED_PAGE,
   LAYERS_OPTIONS,
-  NO_SHADOW,
   SHADOW_OPTIONS,
-  shadowCss,
-  surfaceColorCss,
-  surfaceRecipe,
-  SURFACE_STYLES,
-  styleScore,
-  surfaceStyle,
-  withSurface,
-} from "./surfaces"
-import type { Mode, PerMode, SurfaceColor } from "./surfaces"
+  SHELL_OPTIONS,
+} from "./surfaces.meta"
 
 const SURFACE_TOKENS = [
   "--card-border",
@@ -53,8 +67,21 @@ const HALF = "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))"
 const QUARTER = "color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100))"
 const WHITE = "oklch(1 0 0)"
 
+/* The first Style that allows every value (Bevel edges under Tactile). */
+const ownerOf = (values: Partial<typeof DEFAULTS>) =>
+  STYLE_VALUES.find((style) =>
+    Object.entries(values).every(
+      ([key, value]) => !excludedUnder(key, style).includes(String(value)),
+    ),
+  )
+
+const owned = (values: Partial<typeof DEFAULTS>) =>
+  parseState({ style: ownerOf(values) ?? "flat", ...values })
+
 const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem(parseState({ ...overrides })).tokens
+  designSystemOf(owned(overrides)).tokens
+
+const resolved = (values: Partial<typeof DEFAULTS>) => effective(owned(values))
 
 const PALETTE = {
   step: (s: string) => `var(--neutral-${s})`,
@@ -76,6 +103,7 @@ const registryColor = (token: string, mode: Mode) => {
   return targetCss("light" in target ? target[mode] : target)
 }
 
+/* Every combination some Style allows. */
 const combos = LAYERS_OPTIONS.flatMap((l) =>
   EDGE_OPTIONS.flatMap((e) =>
     SHADOW_OPTIONS.map((s) => ({
@@ -84,7 +112,7 @@ const combos = LAYERS_OPTIONS.flatMap((l) =>
       surfaceShadow: s.value,
     })),
   ),
-)
+).filter((values) => ownerOf(values))
 
 describe("surfaces", () => {
   test("defaults emit no surface tokens", () => {
@@ -95,7 +123,7 @@ describe("surfaces", () => {
   test.each(["light", "dark"] as const)(
     "the default recipe is the registry's look in %s",
     (mode) => {
-      const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_STATE)
+      const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_EFFECTIVE)
       const css = (pair: PerMode<SurfaceColor>) =>
         surfaceColorCss(pair[mode], PALETTE)
       expect(css(card.bg)).toBe(registryColor("color-card", mode))
@@ -108,98 +136,51 @@ describe("surfaces", () => {
     },
   )
 
-  test("Outlined is the default, and every style reads back as itself", () => {
-    expect(surfaceStyle(DEFAULT_STATE)).toMatchObject({
-      style: { id: "outlined" },
-      exact: true,
+  test("flat cards with no edge on the page render Low, saved Flat kept", () => {
+    const { values, explain } = resolved({
+      surfaceEdge: "none",
+      surfaceShadow: "flat",
     })
-    for (const s of SURFACE_STYLES) {
-      const state = parseState(s.values)
-      expect(surfaceStyle(state)).toEqual({ style: s, exact: true })
-      expect(flatAllowed(state) || s.values.surfaceShadow !== "flat").toBe(true)
-    }
-  })
-
-  test("every combination names one closest style, without ties", () => {
-    for (const values of combos) {
-      const state = parseState(values)
-      const scores = SURFACE_STYLES.map((s) => styleScore(state, s))
-      const best = Math.max(...scores)
-      expect(
-        scores.filter((n) => n === best),
-        JSON.stringify(values),
-      ).toHaveLength(1)
-    }
-    const named = (values: Partial<typeof DEFAULTS>) =>
-      surfaceStyle(parseState(values)).style.id
-    expect(named({ surfaceShadow: "medium" })).toBe("soft")
-    expect(named({ surfaceEdge: "none", surfaceShadow: "high" })).toBe(
-      "elevated",
-    )
-    expect(named({ surfaceLayers: "grouped", surfaceEdge: "line" })).toBe(
-      "grouped",
-    )
-    expect(named({ surfaceLayers: "tonal", surfaceShadow: "low" })).toBe(
-      "tonal",
-    )
-  })
-
-  test("dropping the edge off flat cards on the page lifts them to Low", () => {
-    const { state } = withSurface(DEFAULT_STATE, { surfaceEdge: "none" })
-    expect(state.surfaceShadow).toBe("low")
-    expect(surfaceStyle(state)).toMatchObject({
-      style: { id: "elevated" },
-      exact: true,
+    expect(values.surfaceShadow).toBe("low")
+    expect(explain.surfaceShadow).toMatchObject({
+      saved: "flat",
+      rule: "surfaces/flat-needs-separation",
     })
-    const tonal = parseState({ surfaceLayers: "tonal" })
     expect(
-      withSurface(tonal, { surfaceEdge: "none" }).state.surfaceShadow,
-    ).toBe("flat")
+      resolved({
+        surfaceEdge: "none",
+        surfaceLayers: "tonal",
+        surfaceShadow: "flat",
+      }).values,
+    ).toMatchObject({ surfaceShadow: "flat" })
   })
 
-  test("Flat that would hide cards renders and edits as Low", () => {
-    const flat = withSurface(DEFAULT_STATE, {
+  test("Grouped's page is Auto: gray under Grouped, an explicit page kept", () => {
+    expect(DEFAULT_EFFECTIVE.lightBg).toBe(99)
+    expect(resolved({ surfaceLayers: "grouped" }).values.lightBg).toBe(
+      GROUPED_PAGE,
+    )
+    const white = { lightBg: 100 }
+    expect(
+      resolved({ ...white, surfaceLayers: "grouped" }).values.lightBg,
+    ).toBe(100)
+    expect(resolved(white).values.lightBg).toBe(100)
+  })
+
+  test("grouped, edgeless flat cards clamp a lighter page to gray", () => {
+    const flat = {
       surfaceLayers: "grouped",
       surfaceEdge: "none",
       surfaceShadow: "flat",
-    }).state
-    expect(flat).toMatchObject({ lightBg: GROUPED_PAGE, surfaceShadow: "flat" })
-    // The page slider goes through the same guard…
-    const white = withSurface({ ...flat, lightBg: 100 }, {}).state
-    expect(white.surfaceShadow).toBe("low")
-    // …and a state written elsewhere still renders a shadow.
-    const raw = parseState({ ...flat, lightBg: 100 })
-    expect(flatAllowed(raw)).toBe(false)
-    expect(surfaceRecipe(raw).card.shadow.length).toBeGreaterThan(0)
-  })
-
-  test("Grouped takes a light page down to gray and gives it back", () => {
-    const white = parseState({ lightBg: 100 })
-    const entered = withSurface(white, { surfaceLayers: "grouped" })
-    expect(entered).toEqual({
-      state: expect.objectContaining({ lightBg: GROUPED_PAGE }),
-      before: 100,
+    }
+    const { values, explain } = resolved({ ...flat, lightBg: 100 })
+    expect(values).toMatchObject({
+      lightBg: GROUPED_PAGE,
+      surfaceShadow: "flat",
     })
-    const left = withSurface(
-      entered.state,
-      { surfaceLayers: "same" },
-      entered.before,
-    )
-    expect(left.state.lightBg).toBe(100)
-    expect(left.before).toBeUndefined()
-
-    // A page moved while grouped stays; a gray page is kept on the way in.
-    const moved = { ...entered.state, lightBg: 94 }
-    expect(
-      withSurface(moved, { surfaceLayers: "same" }, entered.before).state
-        .lightBg,
-    ).toBe(94)
-    const gray = withSurface(parseState({ lightBg: 95 }), {
-      surfaceLayers: "grouped",
-    })
-    expect(gray).toEqual({
-      state: expect.objectContaining({ lightBg: 95 }),
-    })
+    expect(explain.lightBg?.rule).toBe("color/grouped-page")
+    expect(resolved({ ...flat, lightBg: 94 }).values.lightBg).toBe(94)
+    expect(surfaceRecipe(values).card.shadow).toEqual([])
   })
 
   test("shadow moves every role together", () => {
@@ -225,6 +206,16 @@ describe("surfaces", () => {
     )
   })
 
+  test("an edgeless tonal system keeps its dark overlays edgeless", () => {
+    const tokens = tokensFor({
+      surfaceEdge: "none",
+      surfaceLayers: "tonal",
+      surfaceShadow: "low",
+    })
+    expect(tokens["--overlay-border"]).toBe("transparent")
+    expect(tokens["--card-border"]).toBe("transparent")
+  })
+
   test("grouped puts white cards and overlays on the page in light", () => {
     const tokens = tokensFor({ surfaceLayers: "grouped" })
     expect(tokens["--color-card"]).toBe(
@@ -242,7 +233,7 @@ describe("surfaces", () => {
   })
 
   test("glass turns the floating tier translucent; solid is the default", () => {
-    const tokens = tokensFor({ surfaceGlass: true })
+    const tokens = tokensFor({ translucentOverlays: true })
     expect(tokens["--popover-alpha"]).toBe("70%")
     expect(tokens["--popover-backdrop-filter"]).toBe(
       "blur(40px) saturate(150%)",
@@ -267,8 +258,10 @@ describe("surfaces stay legible", () => {
   ]
 
   const lstarFor = (page: (typeof pages)[number]) => {
-    const theme = resolveColorConfig(buildColorConfig(parseState(page)))
-    return (color: SurfaceColor, mode: EngineMode): number => {
+    const theme = resolveColorConfig(
+      buildColorConfig(effective(parseState(page)).values),
+    )
+    return (color: SurfaceColor, mode: Mode): number => {
       if (color.kind === "white") return 100
       const ramp: Partial<Record<StepName, string>> =
         theme[mode].scales.neutral ?? {}
@@ -283,13 +276,19 @@ describe("surfaces stay legible", () => {
     }
   }
 
-  for (const page of pages) {
-    const lstar = lstarFor(page)
-    const PAGE: SurfaceColor = { kind: "step", step: "25" }
+  const lstarAt = new Map<string, ReturnType<typeof lstarFor>>()
+  const PAGE: SurfaceColor = { kind: "step", step: "25" }
 
+  for (const page of pages) {
     test.each(combos)(`page ${page.lightBg}/${page.darkBg}: %o`, (values) => {
-      const recipe = surfaceRecipe(parseState({ ...values, ...page }))
-      const tones = (mode: EngineMode) => ({
+      const state = resolved({ ...values, ...page }).values
+      // A rule may move the page (grouped, edgeless flat cards).
+      const at = { lightBg: state.lightBg, darkBg: state.darkBg }
+      const id = JSON.stringify(at)
+      const lstar = lstarAt.get(id) ?? lstarFor(at)
+      lstarAt.set(id, lstar)
+      const recipe = surfaceRecipe(state)
+      const tones = (mode: Mode) => ({
         page: lstar(PAGE, mode),
         card: lstar(recipe.card.bg[mode], mode),
         popover: lstar(recipe.popover.bg[mode], mode),
@@ -318,7 +317,7 @@ describe("surfaces stay legible", () => {
 
   test("in light, Same sits on the page and Tonal and Grouped read apart", () => {
     const at = (values: Partial<typeof DEFAULTS>) => {
-      const state = parseState(values)
+      const state = resolved(values).values
       const lstar = lstarFor({ lightBg: state.lightBg, darkBg: state.darkBg })
       const recipe = surfaceRecipe(state)
       return (
@@ -328,8 +327,242 @@ describe("surfaces stay legible", () => {
     }
     expect(at({})).toBe(0)
     expect(at({ surfaceLayers: "tonal" })).toBeLessThan(-2)
+    expect(at({ surfaceLayers: "grouped" })).toBeGreaterThan(3.5)
+  })
+})
+
+describe("app shell", () => {
+  const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
+    const ds = designSystemOf(parseState(state))
+    return {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+  }
+  const shippedSidebar = async (state: Partial<typeof DEFAULTS>) => {
+    const preset = presetOf(state)
+    const { item } = publish({
+      publishable: selectPublishable(await publishables.sidebar!(), preset),
+      preset,
+    })
+    return (item.files ?? []).map((f) => f.content).join("\n")
+  }
+  const shipped = (state: Partial<typeof DEFAULTS>, mode: Mode) => {
+    const vars = emitInitItem({
+      baseRegistryCss,
+      preset: presetOf(state),
+      itemUrl: (name) => name,
+    }).cssVars![mode]!
+    return (name: string) => toOklch(vars[name]!).l
+  }
+
+  test("Subtle is Origin: no sidebar token, the default param", () => {
+    expect(DEFAULTS.shellTone).toBe("subtle")
+    expect(Object.keys(tokensFor({}))).not.toContain("--color-sidebar")
+    expect(designSystemOf(DEFAULT_STATE).componentParams.sidebar).toMatchObject(
+      { shell: "subtle" },
+    )
+  })
+
+  test("Page puts the sidebar on the page tone", () => {
+    expect(tokensFor({ shellTone: "page" })["--color-sidebar"]).toBe(
+      "var(--color-bg)",
+    )
+  })
+
+  test("Recessed sits below the page at any page tone, dark no deeper than light", () => {
+    for (const state of [{}, { lightBg: 96 }, { darkBg: 8 }]) {
+      const light = shipped({ ...state, shellTone: "recessed" }, "light")
+      const dark = shipped({ ...state, shellTone: "recessed" }, "dark")
+      const lightDepth = light("background") - light("sidebar")
+      const darkDepth = dark("background") - dark("sidebar")
+      expect(lightDepth, JSON.stringify(state)).toBeGreaterThan(0.015)
+      expect(darkDepth, JSON.stringify(state)).toBeGreaterThan(0.005)
+      expect(darkDepth, JSON.stringify(state)).toBeLessThanOrEqual(lightDepth)
+    }
+  })
+
+  test.each(SHELL_OPTIONS.map((o) => o.value))(
+    "%s ships one inset shadow and whole classes",
+    async (shellTone) => {
+      const code = await shippedSidebar({ shellTone })
+      const inset = /inset: "([^"]*)"/.exec(code)?.[1] ?? ""
+      const shadows = inset
+        .split(/\s+/)
+        .filter((c) => c.startsWith("md:peer-data-[variant=inset]:shadow-"))
+      const recessed = shellTone === "recessed"
+      expect(shadows).toEqual([
+        recessed
+          ? "md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)"
+          : "md:peer-data-[variant=inset]:shadow-sm",
+      ])
+      expect(inset.includes("border-(--card-border)")).toBe(recessed)
+      expect(code).not.toContain("--studio-")
+    },
+  )
+})
+
+describe("drawn edges", () => {
+  const shippedItem = async (name: string, state: Partial<typeof DEFAULTS>) => {
+    const ds = designSystemOf(owned(state))
+    const preset: PublishPreset = {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+    const { item } = publish({
+      publishable: selectPublishable(await publishables[name]!(), preset),
+      preset,
+    })
+    const code = (item.files ?? []).map((f) => f.content).join("\n")
+    expect(code, name).not.toContain("--studio-")
+    return code
+  }
+
+  test("Bevel trades the border for Polaris's inset rim, light and dark", () => {
+    const tokens = tokensFor({ surfaceEdge: "bevel", surfaceShadow: "flat" })
+    const rim =
+      "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))"
+    expect(tokens).toMatchObject({
+      "--card-border": "transparent",
+      "--overlay-border": "transparent",
+      "--shadow-card": rim,
+      "--shadow-popover": `${rim}, ${SHADOW_MD}`,
+      "--studio-card-stroke": "0px",
+      "--studio-overlay-stroke": "0px",
+    })
+    expect(tokens).not.toHaveProperty("--studio-tile-stroke")
+    expect(tokens).not.toHaveProperty("--shadow-modal")
+  })
+
+  test("Ledge draws the control stroke with a 2px lip under cards and tiles", () => {
+    const regular = tokensFor({ surfaceEdge: "ledge" })
+    expect(regular).toMatchObject({
+      "--studio-card-stroke": "1px 1px 3px",
+      "--studio-tile-stroke": "1px 1px 3px",
+    })
+    expect(regular).not.toHaveProperty("--studio-overlay-stroke")
+    expect(regular).not.toHaveProperty("--card-border")
     expect(
-      at(withSurface(DEFAULT_STATE, { surfaceLayers: "grouped" }).state),
-    ).toBeGreaterThan(3.5)
+      tokensFor({ surfaceEdge: "ledge", controlStroke: "bold" }),
+    ).toMatchObject({
+      "--studio-card-stroke": "2px 2px 4px",
+      "--studio-tile-stroke": "2px 2px 4px",
+      "--studio-overlay-stroke": "2px",
+    })
+  })
+
+  test("Origin ships its 1px borders unchanged", async () => {
+    expect(await shippedItem("card", {})).toContain(
+      "border border-(--card-border)",
+    )
+    expect(await shippedItem("popover", {})).toContain(
+      "border border-(--overlay-border)",
+    )
+  })
+
+  test.each([
+    ["ledge", "border-[2px_2px_4px]", "border-2"],
+    ["bevel", "border-0", "border-0"],
+  ])("%s ships whole border classes", async (surfaceEdge, card, overlay) => {
+    const state = { surfaceEdge, controlStroke: "bold" }
+    expect(await shippedItem("card", state)).toContain(
+      `${card} border-(--card-border)`,
+    )
+    expect(await shippedItem("popover", state)).toContain(
+      `${overlay} border-(--overlay-border)`,
+    )
+    expect(
+      await shippedItem("tooltip", { ...state, tooltipStyle: "surface" }),
+    ).toContain(`${overlay} border-(--overlay-border)`)
+  })
+
+  test("checkbox, radio and switch cards share one tile edge", async () => {
+    const state = { surfaceEdge: "ledge", controlStroke: "bold" }
+    const shell =
+      "has-data-label:w-full has-data-label:border-[2px_2px_4px] has-data-label:p-2.5"
+    for (const name of ["checkbox", "radio-group", "switch"])
+      expect(await shippedItem(name, state), name).toContain(shell)
+    expect(await shippedItem("checkbox", { surfaceEdge: "bevel" })).toContain(
+      "has-data-label:w-full has-data-label:border has-data-label:p-2.5",
+    )
+  })
+
+  test("a pressed or disabled ledge tile sinks into its lip", async () => {
+    const sink =
+      "has-data-label:pressed:mt-[2px] has-data-label:pressed:border-b-2 has-data-label:disabled:mt-[2px] has-data-label:disabled:border-b-2"
+    const state = { surfaceEdge: "ledge", controlStroke: "bold" }
+    for (const name of ["checkbox", "radio-group", "switch"]) {
+      expect(designSystemOf(owned(state)).componentParams[name]).toMatchObject({
+        cardPress: "sink",
+      })
+      expect(await shippedItem(name, state), name).toContain(sink)
+      const origin = await shippedItem(name, {})
+      expect(origin, name).not.toContain("pressed:mt-")
+      expect(origin, name).not.toContain("disabled:border-b")
+    }
+    expect(tokensFor({ surfaceEdge: "ledge" })["--studio-tile-lip"]).toBe("2px")
+  })
+
+  test("under Ledge, popovers and dialogs drop their shadow", () => {
+    const tokens = tokensFor({ surfaceEdge: "ledge", surfaceShadow: "high" })
+    expect(tokens["--shadow-popover"]).toBe(NO_SHADOW)
+    expect(tokens["--shadow-modal"]).toBe(NO_SHADOW)
+    expect(tokens["--shadow-card"]).not.toBe(NO_SHADOW)
+  })
+
+  test("the overlay arrow follows the overlay stroke", async () => {
+    const origin = await shippedItem("popover", {})
+    expect(origin).toContain("[&>svg]:stroke-1")
+    expect(origin).toContain("placement-top:-mt-px")
+    const ledge = await shippedItem("popover", {
+      surfaceEdge: "ledge",
+      controlStroke: "bold",
+    })
+    expect(ledge).toContain("[&>svg]:stroke-2")
+    expect(ledge).toContain("placement-top:-mt-[2px]")
+    expect(
+      await shippedItem("tooltip", {
+        surfaceEdge: "ledge",
+        controlStroke: "bold",
+        tooltipStyle: "surface",
+      }),
+    ).toContain("placement-bottom:-mb-[2px]")
+    const bevel = await shippedItem("tooltip", {
+      surfaceEdge: "bevel",
+      tooltipStyle: "surface",
+    })
+    expect(bevel).not.toMatch(/-m[tblr]-\[0px\]/)
+  })
+})
+
+describe("surface looks", () => {
+  test("Origin wears Style, and Flat's column draws Outlined", () => {
+    expect(surfaceLookOf(DEFAULT_STATE)).toBe("style")
+    expect(surfaceLookOf(DEFAULT_EFFECTIVE)).toBe("outlined")
+  })
+
+  test("a pick reads back as its look; any other mix is Custom", () => {
+    const edited = { ...DEFAULT_STATE, surfaceShadow: "high" }
+    expect(surfaceLookOf(edited)).toBeUndefined()
+    for (const id of SURFACE_LOOK_VALUES)
+      expect(surfaceLookOf(pickSurfaceLook(edited, id))).toBe(id)
+  })
+
+  test("every look draws as picked under every Style", () => {
+    for (const style of STYLE_VALUES)
+      for (const id of SURFACE_LOOK_VALUES) {
+        if (id === "style") continue
+        const { values } = effective(
+          pickSurfaceLook({ ...DEFAULT_STATE, style }, id),
+        )
+        expect(surfaceLookOf(values), `${style} ${id}`).toBe(id)
+        expect(parseState(SURFACE_LOOKS[id])).toMatchObject(SURFACE_LOOKS[id])
+      }
   })
 })

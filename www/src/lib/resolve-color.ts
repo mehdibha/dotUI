@@ -6,8 +6,9 @@ import type { ColorConfig } from "@/registry/theme"
 const MAX_ENTRIES = 16
 const cache = new Map<string, ReturnType<typeof resolveColorConfig>>()
 
-function stableStringify(value: unknown): string {
-  return JSON.stringify(value, (_key, v: unknown) =>
+/** A content key for `color`: equal configs give equal keys, key order aside. */
+export function colorKey(color: ColorConfig): string {
+  return JSON.stringify(color, (_key, v: unknown) =>
     v && typeof v === "object" && !Array.isArray(v)
       ? Object.fromEntries(
           Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
@@ -17,7 +18,7 @@ function stableStringify(value: unknown): string {
 }
 
 export function resolveColorConfigCached(color: ColorConfig) {
-  const key = stableStringify(color)
+  const key = colorKey(color)
   let resolved = cache.get(key)
   if (resolved) {
     cache.delete(key)

@@ -49,7 +49,6 @@ const multiple = {
 const area = { curve: curveLinearClosed, fillOpacity: 0.6 }
 const line = { curve: curveLinearClosed, strokeWidth: 1.5 }
 
-// Built from the live look, so the studio restyles the grid as it changes.
 function charts(look: ChartLook) {
   const frame = {
     scales: {

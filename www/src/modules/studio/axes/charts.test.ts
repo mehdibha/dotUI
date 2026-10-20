@@ -6,7 +6,7 @@ import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
 import chartMeta, { chartLooks, lookLine } from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import {
   AREA_OPTIONS,
   AXES_OPTIONS,
@@ -14,14 +14,13 @@ import {
   GRID_OPTIONS,
   LEGEND_OPTIONS,
   LINES_OPTIONS,
-  MOTION_OPTIONS,
-} from "./charts"
+} from "./charts.meta"
 import { DEFAULT_STATE, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** The chart kit as it ships under the studio state. */
 async function shipped(state: StudioState = DEFAULT_STATE) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -43,28 +42,32 @@ const LOOKS = {
   area: ["chartArea", AREA_OPTIONS],
   bars: ["chartBars", BARS_OPTIONS],
   legend: ["chartLegend", LEGEND_OPTIONS],
-  motion: ["chartMotion", MOTION_OPTIONS],
 } as const
+
+/* The chart motion param each tempo picks. */
+const MOTION: Record<string, keyof typeof chartLooks.motion> = {
+  none: "none",
+  standard: "spring",
+  smooth: "ease",
+  expressive: "bouncy",
+}
+
+const DEFAULT_PARAMS = Object.fromEntries(
+  Object.entries(chartMeta.params).map(([key, def]) => [key, def.default]),
+)
 
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and every look on its default", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(ds.componentParams.chart).toEqual(
-      Object.fromEntries(
-        Object.entries(chartMeta.params).map(([key, def]) => [
-          key,
-          def.default,
-        ]),
-      ),
-    )
+    expect(ds.componentParams.chart).toEqual(DEFAULT_PARAMS)
     expect(Object.keys(ds.tokens).some((k) => k.startsWith("--chart"))).toBe(
       false,
     )
   })
 
   it("a hue-spread palette rides on the color recipe, completed from the default", () => {
-    const { color } = resolveDesignSystem(parseState({ chartPalette: "vivid" }))
+    const { color } = designSystemOf(parseState({ chartPalette: "vivid" }))
     expect(color).toEqual({ ...DEFAULT_COLOR_CONFIG, chartPalette: "vivid" })
     if (!color) throw new Error("unreachable")
     const vivid = resolveColorConfig(color).charts
@@ -78,6 +81,9 @@ describe("charts axes", () => {
       const def = chartMeta.params[param as keyof typeof LOOKS]
       expect(options.map((o) => o.value).sort()).toEqual([...def.values].sort())
     }
+    expect(Object.values(MOTION).sort()).toEqual(
+      [...chartMeta.params.motion.values].sort(),
+    )
   })
 
   it("each swap names one line of the kit's defaults, unambiguously", () => {
@@ -107,6 +113,33 @@ describe("charts axes", () => {
         }
         expect(content).not.toContain("--studio-")
       }
+    }
+  })
+})
+
+describe("chart motion", () => {
+  it("follows the global Motion, else its own pick, as a chart param", () => {
+    for (const [tempo, param] of Object.entries(MOTION)) {
+      for (const state of [{ motion: tempo }, { chartMotion: tempo }]) {
+        const ds = designSystemOf(parseState(state))
+        expect(ds.componentParams.chart).toEqual({
+          ...DEFAULT_PARAMS,
+          motion: param,
+        })
+      }
+    }
+    const own = designSystemOf(parseState({ chartMotion: "smooth" }))
+    expect(own.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
+  })
+
+  it("ships the selected transition in the look literal", async () => {
+    for (const [tempo, param] of Object.entries(MOTION)) {
+      const content = await shipped(parseState({ chartMotion: tempo }))
+      expect(content).toContain(
+        lookLine("motion", chartLooks.motion[param].motion),
+      )
+      expect(content).not.toContain("createParamValue")
+      expect(content).not.toContain("--studio-")
     }
   })
 })

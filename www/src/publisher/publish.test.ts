@@ -4,8 +4,8 @@
  *
  * Coverage:
  *   - button   : no slots, no params, multiple variants × densities
- *   - alert    : slots, enum param ("style") that merges variants per-slot,
- *                scalar param ("radius") whose var ref must be rewritten
+ *   - alert    : slots, param ("style") that merges variants per-slot, and a
+ *                `--studio-*` var class that preset tokens rewrite
  */
 
 import { describe, expect, test } from "vitest"
@@ -34,10 +34,6 @@ import {
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
 import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
-
-/* ============================================================ */
-/* flatten                                                       */
-/* ============================================================ */
 
 describe("flatten", () => {
   test("button: base + density 'compact' merges per-variant classes", () => {
@@ -84,7 +80,6 @@ describe("flatten", () => {
       files: [],
       params: {
         inset: {
-          kind: "enum",
           default: "inset",
           values: ["inset", "full-bleed"],
         },
@@ -124,7 +119,7 @@ describe("flatten", () => {
     expect(comfortable.slots?.item).toBe("flex")
   })
 
-  test("alert: enum param 'style' merges slot maps inside variants", () => {
+  test("alert: param 'style' merges slot maps inside variants", () => {
     const layer = flatten({
       stylesConfig: alertPublishable.stylesConfig,
       meta: alertPublishable.meta,
@@ -199,10 +194,6 @@ describe("flatten", () => {
   })
 })
 
-/* ============================================================ */
-/* resolve-classes                                               */
-/* ============================================================ */
-
 describe("resolve-classes", () => {
   test("resolveStudioVars follows chains and normalizes bare token names", () => {
     const vars = resolveStudioVars({
@@ -219,16 +210,36 @@ describe("resolve-classes", () => {
   test("rewriteClassString maps theme tokens to utility suffixes", () => {
     const vars = resolveStudioVars({
       "--studio-alert-radius": "var(--radius-md)",
-      "--studio-btn-font-weight": "var(--font-weight-medium)",
+      "--studio-font-weight-label": "var(--font-weight-medium)",
       "--studio-modal-background": "var(--color-popover)",
-      "--studio-slider-cursor": "var(--cursor-drag)",
+      "--studio-drag-cursor": "var(--cursor-drag)",
+      "--studio-check-edge": "var(--color-border-control)",
     })
     expect(
       rewriteClassString(
-        "rounded-(--studio-alert-radius) font-(--studio-btn-font-weight) bg-(--studio-modal-background) dragging:cursor-(--studio-slider-cursor) bg-card",
+        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-drag-cursor) border-(--studio-check-edge) bg-card",
         vars,
       ),
-    ).toBe("rounded-md font-medium bg-popover dragging:cursor-drag bg-card")
+    ).toBe(
+      "rounded-md font-medium bg-popover dragging:cursor-drag border-border-control bg-card",
+    )
+  })
+
+  test("rewriteClassString spells a faded token as an opacity modifier", () => {
+    const vars = resolveStudioVars({
+      "--studio-row-wash":
+        "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+      "--studio-row-tint":
+        "color-mix(in srgb, var(--color-highlight) 60%, red)",
+    })
+    expect(
+      rewriteClassString(
+        "hover:bg-(--studio-row-wash) bg-(--studio-row-tint)",
+        vars,
+      ),
+    ).toBe(
+      "hover:bg-highlight/60 bg-[color-mix(in_srgb,_var(--color-highlight)_60%,_red)]",
+    )
   })
 
   test("rewriteClassString resolves spacing, the registry's literals, and arbitrary values", () => {
@@ -246,6 +257,29 @@ describe("resolve-classes", () => {
         vars,
       ),
     ).toBe("size-8 h-3 shadow-none rounded-[4px] rounded-(--surface-radius)")
+  })
+
+  test("rewriteClassString spells stroke widths as Tailwind does", () => {
+    const at = (stroke: string) =>
+      rewriteClassString(
+        "border-(length:--studio-control-stroke) border-b-(length:--studio-control-stroke) selected:ring-(length:--studio-control-stroke) -space-x-(--studio-control-stroke) before:w-(--studio-control-stroke) p-[calc(3px-var(--studio-control-stroke))] pr-[calc(var(--inset)-var(--studio-control-stroke))]",
+        resolveStudioVars({ "--studio-control-stroke": stroke }),
+      )
+    expect(at("1px")).toBe(
+      "border border-b selected:ring-1 -space-x-px before:w-px p-[2px] pr-[calc(var(--inset)-1px)]",
+    )
+    expect(at("2px")).toBe(
+      "border-2 border-b-2 selected:ring-2 -space-x-[2px] before:w-[2px] p-[1px] pr-[calc(var(--inset)-2px)]",
+    )
+    expect(at("0.5px")).toBe(
+      "border-[0.5px] border-b-[0.5px] selected:ring-[0.5px] -space-x-[0.5px] before:w-[0.5px] p-[2.5px] pr-[calc(var(--inset)-0.5px)]",
+    )
+    expect(
+      rewriteClassString(
+        "border-(length:--studio-w)",
+        resolveStudioVars({ "--studio-w": "var(--line)" }),
+      ),
+    ).toBe("border-(length:--line)")
   })
 
   test("rewriteClassString substitutes non-shorthand reads, honoring fallbacks", () => {
@@ -268,7 +302,7 @@ describe("resolve-classes", () => {
       "--studio-radius-control": "0",
       "--studio-btn-radius": "var(--studio-radius-control)",
       "--studio-modal-radius": "0",
-      "--studio-slider-thumb-shadow": "0 0 #0000",
+      "--studio-thumb-shadow": "0 0 #0000",
     })
     expect(
       rewriteClassString("px-4 rounded-(--studio-btn-radius) h-9", vars),
@@ -282,10 +316,17 @@ describe("resolve-classes", () => {
     // The variant chain goes with it; a var declaration stays a declaration.
     expect(
       rewriteClassString(
-        "flex max-md:rounded-t-(--studio-modal-radius) [--surface-radius:var(--studio-modal-radius)] *:[img]:first:rounded-t-(--studio-modal-radius) shadow-(--studio-slider-thumb-shadow)",
+        "flex max-md:rounded-t-(--studio-modal-radius) [--surface-radius:var(--studio-modal-radius)] *:[img]:first:rounded-t-(--studio-modal-radius) shadow-(--studio-thumb-shadow)",
         vars,
       ),
     ).toBe("flex [--surface-radius:0] shadow-none")
+    // An unfrosted scrim ships no blur.
+    expect(
+      rewriteClassString(
+        "bg-scrim backdrop-blur-(--studio-scrim-blur)",
+        resolveStudioVars({ "--studio-scrim-blur": "0" }),
+      ),
+    ).toBe("bg-scrim")
     // So does an arbitrary radius derived from it.
     expect(
       rewriteClassString(
@@ -493,7 +534,6 @@ describe("resolve-classes", () => {
       type: "registry:ui",
       params: {
         error: {
-          kind: "enum",
           default: "border",
           values: ["border", "bar"],
           vars: { bar: { "--studio-field-error-bar": "3px" } },
@@ -506,10 +546,6 @@ describe("resolve-classes", () => {
     })
   })
 })
-
-/* ============================================================ */
-/* resolveCssFields                                              */
-/* ============================================================ */
 
 describe("resolveCssFields", () => {
   test("drops studio defaults and the selector they emptied", () => {
@@ -588,10 +624,6 @@ describe("resolveCssFields", () => {
   })
 })
 
-/* ============================================================ */
-/* serialize                                                     */
-/* ============================================================ */
-
 describe("serialize", () => {
   test("emits unquoted identifier keys", () => {
     const out = serializeTvConfig({ variant: { primary: "bg-primary" } })
@@ -612,10 +644,6 @@ describe("serialize", () => {
   })
 })
 
-/* ============================================================ */
-/* publish (end-to-end)                                          */
-/* ============================================================ */
-
 describe("publish", () => {
   test("button: substitutes resolved config into template", () => {
     const { item, rawContent } = publish({
@@ -632,7 +660,7 @@ describe("publish", () => {
     // Shadcn item is shaped correctly.
     expect(item.name).toBe("button")
     expect(item.type).toBe("registry:ui")
-    // `focus-styles` is bundled into the registry:base init item so it gets
+    // `utils` is bundled into the registry:base init item so it gets
     // dropped from per-component registryDependencies. `loader` stays as a
     // bare name — without a `deps` resolver there's no URL rewrite.
     expect(item.registryDependencies).toEqual(["loader"])
@@ -644,7 +672,7 @@ describe("publish", () => {
     expect(file?.content).toBe(rawContent)
   })
 
-  test("enum param `source`: the selected value rewrites the shipped source", () => {
+  test("param `source`: the selected value rewrites the shipped source", () => {
     const publishable: Publishable = {
       template: `import { ChevronDownIcon } from "@/components/icons";\n\nconst caretVariants = tv(%%TV_CONFIG%%);\n\nconst Caret = () => <ChevronDownIcon className="ml-auto" />;\n`,
       stylesConfig: { base: { base: "flex" } },
@@ -654,7 +682,6 @@ describe("publish", () => {
         files: [{ type: "registry:ui", path: "ui/caret/base.tsx" }],
         params: {
           caret: {
-            kind: "enum",
             default: "chevron",
             values: ["chevron", "double"],
             source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },
@@ -686,13 +713,13 @@ describe("publish", () => {
     expect(swapped).not.toContain("ChevronDownIcon")
   })
 
-  test("enum param `source`: every substitution key occurs in its template", async () => {
+  test("param `source`: every substitution key occurs in its template", async () => {
     // A renamed identifier or reformatted prop default would otherwise turn
     // the swap into a silent no-op.
     for (const name of PUBLISHABLE_NAMES) {
       const { publishable } = await publishables[name]!()
       for (const def of Object.values(publishable.meta.params ?? {})) {
-        if (def.kind !== "enum" || !def.source) continue
+        if (!def.source) continue
         for (const swaps of Object.values(def.source)) {
           for (const from of Object.keys(swaps)) {
             expect(publishable.template, `${name}: "${from}"`).toContain(from)
@@ -771,7 +798,6 @@ describe("publish", () => {
         ],
         params: {
           mobile: {
-            kind: "enum",
             default: "drawer",
             values: ["drawer", "popover"],
             registryDependencies: { drawer: ["drawer", "use-mobile"] },
@@ -939,7 +965,6 @@ describe("publish", () => {
         },
         params: {
           error: {
-            kind: "enum",
             default: "border",
             values: ["border", "bar"],
             vars: { bar: { "--studio-field-error-bar": "3px" } },
@@ -975,14 +1000,12 @@ describe("publish", () => {
     expect(plain.item.css).toBeUndefined()
   })
 
-  test("alert: published item drops dotui-only fields (params, group)", () => {
+  test("alert: published item drops dotui-only fields (params)", () => {
     const { item } = publish({
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // `params` and `group` are dev-time concerns only.
     expect((item as Record<string, unknown>).params).toBeUndefined()
-    expect((item as Record<string, unknown>).group).toBeUndefined()
   })
 
   test("includes component-level registry css fields", () => {
@@ -1055,10 +1078,6 @@ describe("publish", () => {
   })
 })
 
-/* ============================================================ */
-/* depsFromFileImports                                           */
-/* ============================================================ */
-
 describe("depsFromFileImports", () => {
   const deps = (content: string) => depsFromFileImports([{ content }])
 
@@ -1106,7 +1125,6 @@ describe("selectPublishable: createParamValue selections", () => {
     files: [],
     params: {
       marker: {
-        kind: "enum",
         default: "chevron",
         values: ["chevron", "plus"],
       },

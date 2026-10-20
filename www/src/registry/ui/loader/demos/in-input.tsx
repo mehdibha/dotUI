@@ -1,15 +1,15 @@
 "use client"
 
-import { useState } from "react"
-import { SearchIcon } from "lucide-react"
+import React from "react"
 
+import { SearchIcon } from "@/registry/icons"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Loader } from "@/registry/ui/loader"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
-  const [value, setValue] = useState("")
-  const [isSearching, setIsSearching] = useState(false)
+  const [value, setValue] = React.useState("")
+  const [isSearching, setIsSearching] = React.useState(false)
   return (
     <TextField
       aria-label="Search"

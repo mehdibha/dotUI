@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
+import { createFileRoute, notFound } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { setResponseHeader } from "@tanstack/react-start/server"
 import { findNeighbour } from "fumadocs-core/page-tree"
@@ -23,69 +23,7 @@ function ogEyebrow(url: string) {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-type Moved = { to: string; hash?: string }
-
-/** Removed docs pages → where their content lives now. */
-const MOVED: Record<string, Moved> = {
-  cli: { to: "installation" },
-  introduction: { to: "" },
-  "getting-started/installation": { to: "installation" },
-  "getting-started/cli": { to: "installation" },
-  "getting-started/api-reference/cli": { to: "installation" },
-  "components/chat": { to: "components/message" },
-  "components/context-menu": { to: "components/menu", hash: "triggers" },
-  "components/disclosure": { to: "components/collapsible" },
-  "components/feedback/progress": { to: "components/progress-bar" },
-}
-
-// Component pages sat in category folders until Aug 2025.
-const OLD_CATEGORIES = new Set([
-  "buttons",
-  "colors",
-  "data-display",
-  "dates",
-  "drag-and-drop",
-  "feedback",
-  "inputs",
-  "layout",
-  "menus-and-selection",
-  "navigation",
-  "overlay",
-])
-const DROPPED = new Set([
-  "aspect-ratio",
-  "date-range-picker",
-  "range-calendar",
-  "scroll-area",
-])
-
-function movedTo(splat: string): Moved | undefined {
-  if (MOVED[splat]) return MOVED[splat]
-  if (splat.startsWith("getting-started/")) return { to: "" }
-  const [root, category, name, ...rest] = splat.split("/")
-  if (
-    root === "components" &&
-    OLD_CATEGORIES.has(category ?? "") &&
-    name &&
-    !rest.length &&
-    !DROPPED.has(name)
-  ) {
-    return { to: `components/${name}` }
-  }
-}
-
 export const Route = createFileRoute("/_app/docs/$")({
-  beforeLoad: ({ params }) => {
-    const moved = params._splat ? movedTo(params._splat) : undefined
-    if (moved) {
-      throw redirect({
-        to: "/docs/$",
-        params: { _splat: moved.to },
-        hash: moved.hash,
-        statusCode: 301,
-      })
-    }
-  },
   component: DocsPage,
   // Docs content only changes with a build/deploy (Vercel purges the CDN cache
   // on deploy), so never background-revalidate it on re-match.
@@ -103,7 +41,7 @@ export const Route = createFileRoute("/_app/docs/$")({
     const title = loaderData?.title ?? "Docs"
     const description = loaderData?.description
     const truncatedDescription = description
-      ? truncateOnWord(description, 148, true)
+      ? truncateOnWord(description, 148)
       : undefined
     const url = loaderData?.url ?? "/docs"
     const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}${truncatedDescription ? `&description=${encodeURIComponent(truncatedDescription)}` : ""}&eyebrow=${encodeURIComponent(ogEyebrow(url))}`

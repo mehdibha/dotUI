@@ -16,7 +16,6 @@ const data = [
   { browser: "Other", visitors: 90, color: "var(--chart-5)" },
 ]
 
-// The line's series name as `z` keeps each dot in the line's focus group.
 const series = { x: "browser", y: "visitors", z: () => "Visitors" } as const
 
 const chart = defineChart({
@@ -35,11 +34,10 @@ const chart = defineChart({
       curve: chartLook.curve,
       strokeWidth: chartLook.strokeWidth,
     }),
-    // `dot.fill` is a constant, so per-point color means one mark per color.
     ...data.map((row) => dot([row], { ...series, r: 4, fill: row.color })),
   ],
 })
 
-export default function ChartLineDotsColors() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

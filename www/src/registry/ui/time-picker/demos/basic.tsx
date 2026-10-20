@@ -1,6 +1,6 @@
 import { Time } from "@internationalized/date"
 
-import { ClockIcon } from "@/registry/__generated__/icons"
+import { ClockIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { DialogContent } from "@/registry/ui/dialog"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"

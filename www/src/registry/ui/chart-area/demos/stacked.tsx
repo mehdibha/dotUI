@@ -22,7 +22,6 @@ const data = [
 
 const devices = { desktop: "Desktop", mobile: "Mobile", other: "Other" }
 
-// Stacked up front, so each edge can trace its band's top (`y2`).
 const rows = stackRowsY(
   fold(data, {
     fields: ["desktop", "mobile", "other"],
@@ -60,7 +59,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaStacked() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

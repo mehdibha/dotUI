@@ -1,7 +1,5 @@
-/* Radius roles (#579) — the hop between the ladder and the per-component
-   studio vars. A shape character retargets the five picked roles; the rest
-   derive from them (studio axes/shape.ts). The publisher resolves the whole
-   chain to plain utilities, so exported code never carries them. */
+/* Radius roles (#579): retargeted by studio axes/shape.ts and resolved to
+   plain utilities by the publisher, so exported code never carries them. */
 :root {
   --studio-radius-control: var(--radius-md);
   --studio-radius-item: var(--radius-md);
@@ -11,7 +9,20 @@
   --studio-radius-control-sm: var(--radius-sm);
   --studio-radius-detail: var(--radius-sm);
   --studio-radius-pill: var(--radius-full);
+  --studio-radius-track: var(--radius-full);
   --studio-radius-field: var(--radius-md);
   --studio-radius-container: var(--radius-lg);
   --studio-radius-inline-item: var(--radius-md);
+  /* Every control edge: field shells, checks, secondary buttons, seams. */
+  --studio-control-stroke: 1px;
+  /* Surface edges (studio Surfaces › Edge): cards, choice tiles, popovers. */
+  --studio-card-stroke: 1px;
+  --studio-tile-stroke: 1px;
+  --studio-overlay-stroke: 1px;
+  /* The ledge lip a pressed or disabled choice card sinks into. */
+  --studio-tile-lip: 0px;
+  /* Every scrim's frost (modal, drawer). */
+  --studio-scrim-blur: var(--blur-sm);
+  /* Action labels only (Button, ToggleButton, GroupText). */
+  --studio-font-weight-label: var(--font-weight-medium);
 }

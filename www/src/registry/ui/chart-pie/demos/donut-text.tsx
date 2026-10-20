@@ -35,13 +35,12 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieDonutText() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}
       ariaLabel="Visitors by browser, with the total in the centre"
     >
-      {/* Real text, not a mark competing for focus. */}
       <div className="flex h-full flex-col items-center justify-center">
         <span className="text-3xl font-bold">{total}</span>
         <span className="text-sm text-fg-muted">Visitors</span>

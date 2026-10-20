@@ -1,12 +1,45 @@
 import { createStyles } from "@/lib/styles"
 
+import { CONTAINER_SURFACE } from "../card/styles"
 import attachmentMeta from "./meta"
 
-const { useStyles, styles } = createStyles(attachmentMeta, {
+const roomy = {
+  slots: {
+    group: "scroll-px-1 gap-3 py-1",
+    description: "text-xs",
+  },
+  variants: {
+    size: {
+      xs: {
+        root: "gap-2 text-xs has-data-attachment-content:px-2 has-data-attachment-content:py-1.5 has-data-attachment-media:p-1.5",
+        media: "w-8 **:[svg]:not-with-[size]:size-4",
+      },
+      sm: {
+        root: "gap-2.5 text-xs has-data-attachment-content:px-2.5 has-data-attachment-content:py-2 has-data-attachment-media:p-2",
+        media:
+          "w-9 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
+      },
+      md: {
+        root: "gap-2.5 text-sm has-data-attachment-content:px-3 has-data-attachment-content:py-2.5 has-data-attachment-media:p-2.5",
+        media:
+          "w-11 **:[svg]:not-with-[size]:size-4.5 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
+      },
+    },
+    orientation: {
+      vertical: {
+        root: "w-26 has-data-attachment-content:w-32",
+      },
+    },
+  },
+}
+
+const { useStyles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
-        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--studio-attachment-radius) border border-(--card-border) bg-card text-fg shadow-(--shadow-card,0_0_#0000) transition-colors",
+        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--studio-attachment-radius)",
+        CONTAINER_SURFACE,
+        "text-fg transition-colors",
         "has-[>a,>button]:hover:bg-muted/50",
         "has-[[data-attachment-trigger]:focus-visible]:focus-ring",
         "data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
@@ -20,14 +53,14 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
         "max-w-full min-w-0 flex-1 leading-tight group-orientation-vertical/attachment:px-1",
       title: [
         "block max-w-full min-w-0 truncate font-medium",
-        "group-data-[state=processing]/attachment:animate-(--studio-attachment-pulse) group-data-[state=uploading]/attachment:animate-(--studio-attachment-pulse)",
+        "group-data-[state=processing]/attachment:animate-pulse group-data-[state=uploading]/attachment:animate-pulse",
       ],
       description: [
         "mt-0.5 block max-w-full min-w-0 truncate text-fg-muted",
         "group-data-[state=error]/attachment:text-fg-danger",
       ],
       actions: [
-        "relative z-20 flex shrink-0 items-center [--surface-bg:var(--color-card)]",
+        "relative z-20 flex shrink-0 items-center",
         "group-orientation-vertical/attachment:absolute group-orientation-vertical/attachment:top-3 group-orientation-vertical/attachment:right-3 group-orientation-vertical/attachment:gap-1",
       ],
       trigger: "absolute inset-0 z-10 cursor-interactive focus-reset",
@@ -68,25 +101,23 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
     compact: {
       slots: {
         group: "scroll-px-1 gap-2 py-1",
+        description: "text-[0.625rem]",
       },
       variants: {
         size: {
           xs: {
             root: "gap-1.5 text-xs has-data-attachment-content:px-1.5 has-data-attachment-content:py-1 has-data-attachment-media:p-1",
             media: "w-6 **:[svg]:not-with-[size]:size-3",
-            description: "text-[0.625rem]",
           },
           sm: {
             root: "gap-2 text-xs has-data-attachment-content:px-1.5 has-data-attachment-content:py-1 has-data-attachment-media:p-1",
             media:
               "w-7 **:[svg]:not-with-[size]:size-3.5 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-5",
-            description: "text-[0.625rem]",
           },
           md: {
             root: "gap-2 text-xs has-data-attachment-content:px-2 has-data-attachment-content:py-1.5 has-data-attachment-media:p-1.5",
             media:
               "w-8 **:[svg]:not-with-[size]:size-3.5 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-5",
-            description: "text-[0.625rem]",
           },
         },
         orientation: {
@@ -99,25 +130,23 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
     default: {
       slots: {
         group: "scroll-px-1 gap-3 py-1",
+        description: "text-xs",
       },
       variants: {
         size: {
           xs: {
             root: "gap-1.5 text-xs has-data-attachment-content:px-1.5 has-data-attachment-content:py-1 has-data-attachment-media:p-1",
             media: "w-7 **:[svg]:not-with-[size]:size-3.5",
-            description: "text-xs",
           },
           sm: {
             root: "gap-2.5 text-xs has-data-attachment-content:px-2 has-data-attachment-content:py-1.5 has-data-attachment-media:p-1.5",
             media:
               "w-8 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-            description: "text-xs",
           },
           md: {
             root: "gap-2 text-sm has-data-attachment-content:px-2.5 has-data-attachment-content:py-2 has-data-attachment-media:p-2",
             media:
               "w-10 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-            description: "text-xs",
           },
         },
         orientation: {
@@ -127,40 +156,10 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
         },
       },
     },
-    comfortable: {
-      slots: {
-        group: "scroll-px-1 gap-3 py-1",
-      },
-      variants: {
-        size: {
-          xs: {
-            root: "gap-2 text-xs has-data-attachment-content:px-2 has-data-attachment-content:py-1.5 has-data-attachment-media:p-1.5",
-            media: "w-8 **:[svg]:not-with-[size]:size-4",
-            description: "text-xs",
-          },
-          sm: {
-            root: "gap-2.5 text-xs has-data-attachment-content:px-2.5 has-data-attachment-content:py-2 has-data-attachment-media:p-2",
-            media:
-              "w-9 **:[svg]:not-with-[size]:size-4 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-            description: "text-xs",
-          },
-          md: {
-            root: "gap-2.5 text-sm has-data-attachment-content:px-3 has-data-attachment-content:py-2.5 has-data-attachment-media:p-2.5",
-            media:
-              "w-11 **:[svg]:not-with-[size]:size-4.5 group-orientation-vertical/attachment:**:[svg]:not-with-[size]:size-6",
-            description: "text-xs",
-          },
-        },
-        orientation: {
-          vertical: {
-            root: "w-26 has-data-attachment-content:w-32",
-          },
-        },
-      },
-    },
+    comfortable: roomy,
+    spacious: roomy,
+    touch: roomy,
   },
 })
-
-export type AttachmentStyles = typeof styles
 
 export { useStyles }

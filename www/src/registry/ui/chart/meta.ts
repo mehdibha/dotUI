@@ -1,4 +1,4 @@
-import type { EnumParamDef, RegistryItem } from "@/registry/types"
+import type { ParamDef, RegistryItem } from "@/registry/types"
 
 import type { ChartLook, chartCurves } from "./base"
 
@@ -6,8 +6,6 @@ type LookFields = Partial<
   Omit<ChartLook, "curve"> & { curve: keyof typeof chartCurves }
 >
 
-/* Each option is the `chartLook` fields it sets. The first option is the
-   shipped literal; the others swap its lines on export. */
 export const chartLooks = {
   axes: {
     minimal: { valueAxis: false },
@@ -37,9 +35,9 @@ export const chartLooks = {
   },
   motion: {
     spring: { motion: { type: "spring", stiffness: 170, damping: 26 } },
-    off: { motion: false },
-    quick: { motion: { type: "tween", duration: 300, easing: "ease-out" } },
-    bouncy: { motion: { type: "spring", stiffness: 180, damping: 12 } },
+    ease: { motion: { type: "tween", duration: 400, easing: "ease" } },
+    bouncy: { motion: { type: "spring", stiffness: 170, damping: 16 } },
+    none: { motion: false },
   },
 } satisfies Record<string, Record<string, LookFields>>
 
@@ -53,7 +51,6 @@ function source(key: string, value: unknown): string {
   return `{ ${entries.map(([k, v]) => `${k}: ${source(k, v)}`).join(", ")} }`
 }
 
-/** The literal line a look field ships as. */
 export function lookLine(key: string, value: unknown): string {
   return `  ${key}: ${source(key, value)},`
 }
@@ -61,13 +58,12 @@ export function lookLine(key: string, value: unknown): string {
 function look(
   options: Record<string, LookFields>,
   description: string,
-): EnumParamDef {
+): ParamDef {
   const [[fallback, base], ...rest] = Object.entries(options) as [
     [string, LookFields],
     ...[string, LookFields][],
   ]
   return {
-    kind: "enum",
     default: fallback,
     values: [fallback, ...rest.map(([value]) => value)],
     source: Object.fromEntries(
@@ -93,7 +89,6 @@ function look(
 const chartMeta = {
   name: "chart",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",

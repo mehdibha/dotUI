@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const switchMeta = {
   name: "switch",
   type: "registry:ui",
-  group: "selection-controls",
   files: [
     {
       type: "registry:ui",
@@ -11,13 +10,22 @@ const switchMeta = {
       target: "ui/switch.tsx",
     },
   ],
-  registryDependencies: ["focus-styles", "field"],
+  registryDependencies: ["field"],
   params: {
-    "card-selected": {
-      kind: "enum",
+    style: {
+      default: "inset",
+      values: ["inset", "outlined", "slab"] as const,
+      description: "The track and knob recipe.",
+    },
+    cardSelected: {
       default: "tint",
-      values: ["outline", "tint", "outline-tint"] as const,
+      values: ["tint", "outline-tint", "outline"] as const,
       description: "What marks the selected card.",
+    },
+    cardPress: {
+      default: "none",
+      values: ["none", "sink"] as const,
+      description: "Whether a pressed or disabled card sinks into its lip.",
     },
   },
 } satisfies RegistryItem

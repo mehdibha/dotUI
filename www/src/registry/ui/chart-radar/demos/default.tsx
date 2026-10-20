@@ -24,7 +24,6 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-// Names the series in the tooltip.
 const series = {
   angle: "month",
   radius: "desktop",
@@ -37,10 +36,8 @@ const chart = defineChart({
     polar({
       scales: {
         angle: { scale: scalePoint },
-        // Nice to the rings' 4 ticks, so the outer ring is the edge.
         radius: { scale: scaleLinear, nice: 4 },
       },
-      // Room outside the circle for the month labels.
       radiusRatio: 0.78,
       guides: [
         radialGrid({
@@ -67,11 +64,10 @@ const chart = defineChart({
       ],
     }),
   ],
-  // Two months can share a screen x: focus the nearest spoke instead.
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarDefault() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

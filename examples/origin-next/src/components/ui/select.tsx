@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectPrimitives from "react-aria-components/Select";
 
@@ -8,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { ButtonProps } from "@/components/ui/button";
 import { fieldStyles } from "@/components/ui/field";
+import { inputStyles } from "@/components/ui/input";
 import {
   ListBox,
   ListBoxItem,
@@ -32,13 +34,13 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
+  const { field } = fieldStyles();
   return (
     <SelectPrimitives.Select
       data-field=""
       data-select=""
-      data-slot="select"
-      className={composeRenderProps(className, (cn) =>
-        fieldStyles().field({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        field({ className }),
       )}
       {...props}
     />
@@ -47,9 +49,20 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 /* -------------------------------------------------------------------------- */
 
-const SelectTrigger = (props: ButtonProps) => {
+const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
+  const { buttonTrigger } = inputStyles();
+  // React Aria marks the Select invalid, not its button.
+  const isInvalid = React.useContext(SelectPrimitives.SelectStateContext)
+    ?.displayValidation.isInvalid;
   return (
-    <Button {...props}>
+    <Button
+      size={size}
+      data-invalid={isInvalid || undefined}
+      className={composeRenderProps(className, (className) =>
+        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+      )}
+      {...props}
+    >
       {composeRenderProps(props.children, (children) => {
         return (
           <>
@@ -74,10 +87,10 @@ const SelectValue = <T extends object>({
 }: SelectValueProps<T>) => {
   return (
     <SelectPrimitives.SelectValue
-      data-slot="select-value"
+      data-select-value=""
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex-1 truncate text-left placeholder-shown:text-fg-muted",
+          "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
           className,
         ),
       )}
@@ -85,9 +98,8 @@ const SelectValue = <T extends object>({
     >
       {composeRenderProps(
         props.children,
-        (children, { selectedText, defaultChildren }) => {
-          return <>{children || selectedText || defaultChildren}</>;
-        },
+        (children, { selectedText, defaultChildren }) =>
+          children || selectedText || defaultChildren,
       )}
     </SelectPrimitives.SelectValue>
   );
@@ -102,37 +114,25 @@ interface SelectContentProps<T extends object>
       PopoverProps,
       "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps["placement"];
-  virtulized?: boolean;
+  virtualized?: boolean;
 }
 
 const SelectContent = <T extends object>({
-  virtulized,
+  virtualized,
   placement = "bottom",
   defaultOpen,
   isOpen,
   onOpenChange,
   ...props
 }: SelectContentProps<T>) => {
-  const listBoxClassName = composeRenderProps(props.className, (className) =>
-    cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+  const listBox = (
+    <ListBox
+      {...props}
+      className={composeRenderProps(props.className, (className) =>
+        cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+      )}
+    />
   );
-
-  if (virtulized) {
-    return (
-      <Popover
-        className="overflow-hidden"
-        placement={placement}
-        defaultOpen={defaultOpen}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-      >
-        <ListBoxVirtualizer>
-          <ListBox {...props} className={listBoxClassName} />
-        </ListBoxVirtualizer>
-      </Popover>
-    );
-  }
 
   return (
     <Popover
@@ -142,10 +142,16 @@ const SelectContent = <T extends object>({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
     >
-      <ListBox {...props} className={listBoxClassName} />
+      {virtualized ? (
+        <ListBoxVirtualizer>{listBox}</ListBoxVirtualizer>
+      ) : (
+        listBox
+      )}
     </Popover>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { SelectContentProps, SelectProps, SelectValueProps };
 export {

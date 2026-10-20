@@ -37,7 +37,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineLinear() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

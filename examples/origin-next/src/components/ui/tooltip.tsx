@@ -4,14 +4,14 @@ import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import * as TooltipPrimitives from "react-aria-components/Tooltip";
-import { type VariantProps, tv } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tooltipVariants = tv({
   slots: {
     content:
       "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-md px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none bg-tooltip text-fg-on-tooltip transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[transform,opacity,scale] motion-reduce:transition-none entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0 [--slide-offset:--spacing(2)] entering:transform-(--offset) placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]",
     arrow:
-      "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 [&>svg]:fill-tooltip",
+      "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 [&>svg]:size-2.5 [&>svg]:fill-tooltip",
   },
 });
 
@@ -32,22 +32,21 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 
 /* -------------------------------------------------------------------------- */
 
-interface TooltipContentProps
-  extends
-    React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
-    VariantProps<typeof tooltipVariants> {
+interface TooltipContentProps extends React.ComponentProps<
+  typeof TooltipPrimitives.Tooltip
+> {
   hideArrow?: boolean;
 }
 
-function TooltipContent({
+const TooltipContent = ({
   offset = 10,
   hideArrow = false,
   className,
   ...props
-}: TooltipContentProps) {
+}: TooltipContentProps) => {
   return (
     <TooltipPrimitives.Tooltip
-      data-slot="tooltip"
+      data-tooltip=""
       offset={offset}
       className={composeRenderProps(className, (className) =>
         content({ className }),
@@ -62,18 +61,16 @@ function TooltipContent({
       ))}
     </TooltipPrimitives.Tooltip>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
-interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
-
-function TooltipArrow({ className }: TooltipArrowProps) {
+const TooltipArrow = () => {
   return (
-    <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
+    <PopoverPrimitives.OverlayArrow className={arrow()}>
       <svg
         aria-hidden="true"
-        data-slot="tooltip-arrow"
+        data-tooltip-arrow=""
         width={8}
         height={8}
         viewBox="0 0 8 8"
@@ -82,7 +79,7 @@ function TooltipArrow({ className }: TooltipArrowProps) {
       </svg>
     </PopoverPrimitives.OverlayArrow>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

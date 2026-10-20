@@ -9,7 +9,6 @@ import { scaleQuantize } from "d3-scale"
 
 import { Chart, chartLook } from "@/registry/ui/chart"
 
-/* Sessions per weekday and hour: a daily shape scaled by how busy the day is. */
 const hours = [
   { hour: "08", base: 14 },
   { hour: "09", base: 32 },
@@ -41,7 +40,6 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-// Low values fade into the surface, high ones deepen toward the foreground.
 const colors = [
   "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
   "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
@@ -55,7 +53,6 @@ const chart = defineChart({
     x: { scale: scaleBand, axis: { label: "Hour" } },
     y: { scale: scaleBand, axis: { label: "Day" } },
   },
-  // Equal bins over the rounded extent, one per color.
   color: {
     scale: scaleQuantize<string>,
     range: colors,
@@ -71,7 +68,6 @@ const chart = defineChart({
       inset: 1,
     }),
   ],
-  // A cell is read on its own, not against its column.
   focus: "nearest",
   tooltip: {
     use: tooltip,
@@ -87,6 +83,6 @@ const chart = defineChart({
   },
 })
 
-export default function ChartHeatmapMatrix() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />
 }

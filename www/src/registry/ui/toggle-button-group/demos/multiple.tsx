@@ -1,8 +1,4 @@
-import {
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-} from "@/registry/__generated__/icons"
+import { BoldIcon, ItalicIcon, UnderlineIcon } from "@/registry/icons"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 

@@ -10,7 +10,7 @@
  *                                  (`--color-bg: var(--bg)`, radius rungs, fonts)
  *   - `css`                     -> imports, plugins, utilities, layers,
  *                                  selectors, and the preset's other vars
- *                                  (density, component tokens) on `:root`,
+ *                                  (component tokens) on `:root`,
  *                                  plus their dark values on `.dark`
  *
  * Keys in `light`/`dark` carry no `--`: shadcn's theme updater aliases every
@@ -54,7 +54,7 @@ import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
-export interface EmitThemeInput {
+interface EmitThemeInput {
   /** Structured shadcn registry CSS fields generated from base/*.css. */
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
@@ -137,7 +137,7 @@ function resolveCssValue(value: string): string {
  * - `semantic`: re-points of vocabulary tokens (`--color-selection`), as
  *   per-mode literals for `cssVars.light` / `.dark` — the aliases in
  *   `@theme inline` are baked, so only the `:root` names can carry them.
- * - `root` / `dark`: everything else lands on `:root` (density, component
+ * - `root` / `dark`: everything else lands on `:root` (component
  *   tokens), same as the live provider, with the dark literal on `.dark`
  *   when it differs — minus `--radius` (it rides in `cssVars.light`) and
  *   studio vars (the builder's live-tweak indirection), which the component
@@ -162,8 +162,6 @@ function splitPresetTokens(
     light: {},
     dark: {},
   }
-  // dotui's default density is `default`, so it needs no declaration.
-  if (preset.density !== "default") root["--dotui-density"] = preset.density
   const tokens = Object.fromEntries(
     Object.entries(preset.tokens ?? {}).map(([key, value]) => [
       key.startsWith("--") ? key : `--${key}`,

@@ -1,56 +1,74 @@
-/* Progress — the linear bar's three forks. Track weight: hairline 4px (iOS,
-   Material 3, Spectrum, Carbon) vs chunky 8px (Ant, shadcn h-2) — independent
-   of the slider track. Indeterminate motion: a sliding segment (Material,
-   Carbon) vs a pulsing fill (Bootstrap striped, dashboard shimmer). Track
-   gap: M3's cut track + stop dot, a boolean for preset fidelity.
+/* Progress: the linear bar's thickness, how its track sits around the fill,
+   and which control's fill it shares. End caps ride Shape's tracks.
 
-   Motion: how long the fill takes to reach a new value.
+   The fill rides `--studio-progress-fill-color` (the primary tokens), re-pointed
+   only when the bar reads another source than the buttons. */
 
-   Engine: three enum params on `progress-bar` (`track`, `indeterminate`,
-   `gap`) plus its `--studio-progress-state-*` timing vars; end caps ride the
-   global Shape chapter. */
+import { SOURCE_VALUES } from "./color"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { BOOLEAN, oneOf, STATE_CHANGE } from "./schema"
-import type { ChapterSchema } from "./schema"
+export const TRACK_VALUES = ["thin", "medium", "thick", "x-heavy"] as const
 
-/* shadcn's indicator rides Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
+export const TRACK_STYLE_VALUES = ["plain", "bordered", "gap"] as const
 
-export const PROGRESS_DEFAULTS = {
-  progressTrack: "thin",
-  progressIndeterminate: "slide",
-  progressGap: false,
-  progressMotion: MOTION,
+export const COLOR_VALUES = ["same-buttons", "same-checks"] as const
+
+/** What the follows resolve to: a source, or whatever the checks paint. */
+export const FILL_VALUES = [...SOURCE_VALUES, "checks"] as const
+
+const FILL_TOKENS: Record<string, string> = {
+  neutral: "var(--color-inverse)",
+  accent: "var(--color-accent)",
 }
 
-export const TRACK_OPTIONS = [
-  { value: "thin", label: "Thin" },
-  { value: "thick", label: "Thick" },
-]
-
-export const INDETERMINATE_OPTIONS = [
-  { value: "slide", label: "Slide" },
-  { value: "pulse", label: "Pulse" },
-]
-
-export const PROGRESS_SCHEMA: ChapterSchema<typeof PROGRESS_DEFAULTS> = {
-  progressTrack: oneOf(TRACK_OPTIONS),
-  progressIndeterminate: oneOf(INDETERMINATE_OPTIONS),
-  progressGap: BOOLEAN,
-  progressMotion: STATE_CHANGE,
+/** The fill as a token, undefined where it is the buttons' own. */
+function fillToken(state: Effective): string | undefined {
+  const source = (value: string) =>
+    value === state.buttonColor ? undefined : FILL_TOKENS[value]
+  if (state.progressColor !== "checks") return source(state.progressColor)
+  // Off the selection leaf the checks paint their own source.
+  if (state.checkboxColor !== state.selectionColor)
+    return source(state.checkboxColor)
+  return state.selectionSeed || state.selectionColor !== state.buttonColor
+    ? "var(--color-selection)"
+    : undefined
 }
 
-export function resolveProgress(state: StudioState): Resolved {
-  return {
-    tokens: resolveStateChange("progress", state.progressMotion, MOTION),
-    params: {
-      "progress-bar": {
-        track: state.progressTrack,
-        indeterminate: state.progressIndeterminate,
-        gap: state.progressGap ? "cut" : "none",
+export const chapter = defineChapter({
+  id: "progress",
+  defaults: {
+    progressTrack: "thin",
+    progressTrackStyle: "plain",
+    progressColor: "same-buttons",
+  },
+  schema: {
+    progressTrack: oneOf(TRACK_VALUES),
+    progressTrackStyle: oneOf(TRACK_STYLE_VALUES),
+    progressColor: oneOf(FILL_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const fill = fillToken(state)
+    return {
+      params: {
+        "progress-bar": {
+          track: state.progressTrack,
+          trackStyle: state.progressTrackStyle,
+        },
       },
-    },
-  }
-}
+      tokens: fill ? { "--studio-progress-fill-color": fill } : {},
+    }
+  },
+  follows: {
+    progressColor: [
+      { kind: "same", id: "same-buttons", from: "buttonColor" },
+      {
+        kind: "same",
+        id: "same-checks",
+        from: "checkboxColor",
+        map: { neutral: "checks", accent: "checks" },
+      },
+    ],
+  },
+})

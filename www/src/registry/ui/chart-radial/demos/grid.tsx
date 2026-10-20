@@ -25,7 +25,6 @@ const chart = defineChart({
           scale: () => scaleBand().paddingInner(0.2),
           range: [({ radius }) => radius * 0.3, ({ radius }) => radius],
         },
-        // The gridlines step through the whole radius, not the rings.
         grid: {
           channel: "radius",
           scale: scaleLinear().domain([0, 1]),
@@ -53,7 +52,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartRadialGrid() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

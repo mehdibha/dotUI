@@ -16,14 +16,15 @@ import { useStyles } from "./styles"
 const useActiveVariant = createParamValue<LinkButtonProps["variant"]>({
   componentName: "pagination",
   paramName: "current",
-  defaultValue: "outline",
+  defaultValue: "secondary",
   values: {
-    filled: "primary",
-    outline: "secondary",
+    secondary: "secondary",
+    primary: "primary",
+    selected: "quiet",
   },
 })
 
-// MARK: Pagination
+// MARK: Separator
 
 interface PaginationProps extends React.ComponentProps<"nav"> {}
 const Pagination = ({ className, ...props }: PaginationProps) => {
@@ -38,7 +39,7 @@ const Pagination = ({ className, ...props }: PaginationProps) => {
   )
 }
 
-// MARK: PaginationList
+// MARK: Separator
 
 interface PaginationListProps extends React.ComponentProps<"ul"> {}
 const PaginationList = ({ className, ...props }: PaginationListProps) => {
@@ -53,7 +54,7 @@ const PaginationList = ({ className, ...props }: PaginationListProps) => {
   )
 }
 
-// MARK: PaginationItem
+// MARK: Separator
 
 interface PaginationItemProps extends React.ComponentProps<"li"> {}
 const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
@@ -63,7 +64,7 @@ const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
   )
 }
 
-// MARK: PaginationLink
+// MARK: Separator
 
 interface PaginationLinkProps extends LinkButtonProps {
   isActive?: boolean
@@ -78,6 +79,7 @@ const PaginationLink = ({
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
+      data-selected={isActive || undefined}
       data-pagination-link=""
       variant={variant ?? (isActive ? activeVariant : "quiet")}
       isIconOnly={isIconOnly}
@@ -86,7 +88,7 @@ const PaginationLink = ({
   )
 }
 
-// MARK: PaginationPrevious
+// MARK: Separator
 
 interface PaginationPreviousProps extends Omit<
   PaginationLinkProps,
@@ -114,7 +116,7 @@ const PaginationPrevious = ({
   )
 }
 
-// MARK: PaginationNext
+// MARK: Separator
 
 interface PaginationNextProps extends Omit<PaginationLinkProps, "children"> {
   children?: React.ReactNode
@@ -139,7 +141,7 @@ const PaginationNext = ({
   )
 }
 
-// MARK: PaginationEllipsis
+// MARK: Separator
 
 interface PaginationEllipsisProps extends React.ComponentProps<"span"> {}
 const PaginationEllipsis = ({
@@ -158,6 +160,8 @@ const PaginationEllipsis = ({
     </span>
   )
 }
+
+// MARK: Separator
 
 export type {
   PaginationEllipsisProps,

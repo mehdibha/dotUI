@@ -45,7 +45,6 @@ const chart = defineChart({
           shape: "circle",
           strokeDasharray: chartLook.grid.strokeDasharray,
         }),
-        // The month labels without their spokes.
         angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
       ],
       marks: [
@@ -65,7 +64,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarGridCircleNoLines() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

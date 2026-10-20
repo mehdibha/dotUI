@@ -41,7 +41,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaStep() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

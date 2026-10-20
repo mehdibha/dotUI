@@ -15,12 +15,6 @@ export default defineConfig({
     ],
   },
   test: {
-    exclude: [
-      ...configDefaults.exclude,
-      "**/node_modules/**",
-      "**/fixtures/**",
-      "**/templates/**",
-      "**/.claude/worktrees/**",
-    ],
+    exclude: [...configDefaults.exclude, "**/.claude/worktrees/**"],
   },
 })

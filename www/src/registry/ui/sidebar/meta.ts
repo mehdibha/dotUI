@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const sidebarMeta = {
   name: "sidebar",
   type: "registry:ui",
-  group: "navigation",
   files: [
     {
       type: "registry:ui",
@@ -13,13 +12,67 @@ const sidebarMeta = {
   ],
   registryDependencies: [
     "button",
-    "context",
     "drawer",
     "separator",
     "skeleton",
     "tooltip",
     "use-mobile",
   ],
+  params: {
+    labels: {
+      default: "sentence",
+      values: ["sentence", "caps", "mono-caps"] as const,
+      description: "Group label casing and face.",
+    },
+    shell: {
+      default: "subtle",
+      values: ["subtle", "page", "recessed"] as const,
+      description: "The sidebar and frame tone around an inset panel.",
+    },
+    marker: {
+      default: "fill",
+      values: [
+        "fill",
+        "fill-accent",
+        "surface",
+        "bar",
+        "bar-accent",
+        "fill-bar",
+        "fill-bar-accent",
+        "ink",
+        "ink-accent",
+        "outline",
+        "outline-accent",
+        "pill",
+        "pill-accent",
+      ] as const,
+      description: "The current item's marker, in the indicator color.",
+      vars: {
+        pill: { "--studio-sidebar-button-radius": "var(--radius-full)" },
+        "pill-accent": {
+          "--studio-sidebar-button-radius": "var(--radius-full)",
+        },
+      },
+    },
+    weight: {
+      default: "regular-medium",
+      values: [
+        "regular",
+        "regular-medium",
+        "regular-semibold",
+        "medium",
+        "medium-semibold",
+        "semibold",
+        "bold",
+      ] as const,
+      description: "Item weight at rest, then current.",
+    },
+    case: {
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+      description: "Item label case.",
+    },
+  },
 } satisfies RegistryItem
 
 export default sidebarMeta

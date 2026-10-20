@@ -30,7 +30,6 @@ const chart = defineChart({
     lineY(data, {
       x: "month",
       y: "desktop",
-      // Names the series in the tooltip.
       z: () => "Desktop",
       curve: chartLook.curve,
       strokeWidth: chartLook.strokeWidth,
@@ -38,7 +37,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineDefault() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

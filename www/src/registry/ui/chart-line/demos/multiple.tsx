@@ -19,7 +19,6 @@ const data = [
 
 const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-// One row per point.
 const rows = fold(data, {
   fields: ["desktop", "mobile"],
   as: { key: "device", value: "visitors" },
@@ -46,7 +45,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineMultiple() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

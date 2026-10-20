@@ -3,7 +3,7 @@ title: Time Field
 description: A time field allows users to enter and edit time values using a keyboard.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/TimeField.html
+    href: https://react-aria.adobe.com/TimeField
 wip: true
 ---
 
@@ -14,6 +14,29 @@ wip: true
       type: "string",
       name: "label",
       defaultValue: "Time",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "granularity",
+      options: ["hour", "minute", "second"],
+      defaultValue: "minute",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+    {
+      type: "boolean",
+      name: "isRequired",
+      defaultValue: false,
     },
     {
       type: "boolean",
@@ -40,8 +63,6 @@ npx shadcn@latest add @dotui/time-field
 ```
 
 ## Usage
-
-Use `TimeField` to allow users to enter and edit time values using a keyboard.
 
 ```tsx
 import { TimeField } from "@/components/ui/time-field"

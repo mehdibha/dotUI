@@ -1,38 +1,29 @@
-/* Selection — whether UI text can be selected, and what selected content
-   looks like. Engine: the `select-ui` utility (base.css) every control and
-   label wears reads `--user-select-ui` (none unless a system opts text back
-   in; the arrow cursor follows for free — `cursor: auto` is the arrow over
-   unselectable text), and `::selection` reads the `text-selection` semantic
-   pair, re-pointed at the OS highlight when the system leaves it alone. */
+/* Selection — what selected text looks like. `::selection` reads the
+   `text-selection` semantic pair, re-pointed at the OS highlight when the
+   system leaves it alone. Whether control text selects is States'. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-/* Defaults mirror the registry: controls are unselectable, `::selection` is
-   the accent tint. */
-export const SELECTION_DEFAULTS = {
-  selectionUiText: "none",
-  selectionHighlight: "accent",
-}
+export const HIGHLIGHT_VALUES = ["accent", "browser"] as const
 
-export const HIGHLIGHT_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "browser", label: "Browser" },
-]
-
-export const SELECTION_SCHEMA: ChapterSchema<typeof SELECTION_DEFAULTS> = {
-  selectionUiText: oneOf([{ value: "none" }, { value: "selectable" }]),
-  selectionHighlight: oneOf(HIGHLIGHT_OPTIONS),
-}
-
-export function resolveSelection(state: StudioState): Resolved {
-  const tokens: Record<string, string> = {}
-  if (state.selectionUiText === "selectable")
-    tokens["--user-select-ui"] = "auto"
-  if (state.selectionHighlight === "browser") {
-    tokens["--color-text-selection"] = "Highlight"
-    tokens["--color-fg-on-text-selection"] = "HighlightText"
-  }
-  return { tokens }
-}
+export const chapter = defineChapter({
+  id: "selection",
+  defaults: {
+    selectionHighlight: "accent",
+  },
+  schema: {
+    selectionHighlight: oneOf(HIGHLIGHT_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    return state.selectionHighlight === "browser"
+      ? {
+          tokens: {
+            "--color-text-selection": "Highlight",
+            "--color-fg-on-text-selection": "HighlightText",
+          },
+        }
+      : {}
+  },
+})

@@ -13,7 +13,6 @@ const data = [{ month: "january", desktop: 1260, mobile: 570 }]
 
 const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-// One segment per device, each starting where the one before it ends.
 const rows = stackRowsX(
   fold(data, {
     fields: ["desktop", "mobile"],
@@ -22,7 +21,6 @@ const rows = stackRowsX(
   {
     x: "visitors",
     y: "month",
-    // `z` names each segment; the row type doesn't flow into accessors here.
     z: (row: { device: keyof typeof devices }) => devices[row.device],
   },
 )
@@ -56,7 +54,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("z", "visitors"),
 })
 
-export default function ChartRadialStacked() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

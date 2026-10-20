@@ -4,19 +4,25 @@
  *
  * Concretely, given input:
  *
- *   import { buttonStyles, useStyles } from "./styles";
+ *   import { useStyles } from "./styles";
  *   import type { ButtonStyles } from "./styles";
+ *   export { buttonStyles } from "./styles";
  *   type ButtonVariants = VariantProps<ButtonStyles>;
  *   ...
  *   const styles = useStyles();
+ *   ...
+ *   export { Button };
  *
  * produces:
  *
  *   import { tv, type VariantProps } from "tailwind-variants"; // tv added
- *   const buttonVariants = tv(__TV_CONFIG__);
- *   type ButtonVariants = VariantProps<typeof buttonVariants>;
- *   ...
- *   const styles = buttonVariants;
+ *   const buttonStyles = tv(__TV_CONFIG__);
+ *   type ButtonVariants = VariantProps<typeof buttonStyles>;
+ *   ...                                // `styles` reads become `buttonStyles`
+ *   export { Button, buttonStyles };
+ *
+ * The `tv()` const takes the name the file exports its styles under, else
+ * `<name>Variants`.
  *
  * Then swaps the `__TV_CONFIG__` identifier for `%%TV_CONFIG%%` (matching
  * `publish.TV_CONFIG_PLACEHOLDER`) so the resulting string is the request-time
@@ -44,9 +50,7 @@ function toCamelCase(slug: string): string {
   return slug.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
 }
 
-/* ----------------------- import rewriting ----------------------- */
-
-export const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
+const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
   [/^@\/registry\/ui\//, "@/components/ui/"],
   [/^@\/registry\/hooks\//, "@/hooks/"],
   [/^@\/registry\/lib\//, "@/lib/"],
@@ -144,8 +148,6 @@ function resolveStylesHookCalls(
     call.replaceWithText(name)
   }
 }
-
-/* ------------------ slot hoisting & alias inlining ------------------ */
 
 /** `foo` or `foo: bar` — the binding-pattern entry for one slot. */
 type SlotBinding = { slot: string; local: string }
@@ -483,12 +485,28 @@ function rewriteImports(sourceFile: SourceFile): Set<string> {
       names.add(local)
     }
   }
+  mergeValueImports(sourceFile)
   return names
 }
 
-/* ----------------------- main transform ----------------------- */
+/** Two value imports of one module (`ui/input` and `ui/input/styles` both land
+ *  on `@/components/ui/input`) become one. */
+function mergeValueImports(sourceFile: SourceFile): void {
+  const first = new Map<string, ImportDeclaration>()
+  for (const imp of sourceFile.getImportDeclarations()) {
+    if (imp.isTypeOnly() || imp.getDefaultImport() || imp.getNamespaceImport())
+      continue
+    const kept = first.get(imp.getModuleSpecifierValue())
+    if (!kept) {
+      first.set(imp.getModuleSpecifierValue(), imp)
+      continue
+    }
+    kept.addNamedImports(imp.getNamedImports().map((n) => n.getStructure()))
+    imp.remove()
+  }
+}
 
-export interface TransformBaseInput {
+interface TransformBaseInput {
   /** Absolute path to `base.tsx` (or `base.<variant>.tsx`). */
   baseTsxPath: string
   /** Component meta name, e.g. `"button"`. Drives the variant identifier name. */
@@ -507,11 +525,9 @@ export interface TransformBaseInput {
   paramSelection?: Record<string, string>
 }
 
-export interface TransformBaseOutput {
+interface TransformBaseOutput {
   /** Source with `%%TV_CONFIG%%` placeholder where the resolved tv literal goes. */
   template: string
-  /** The injected variant identifier, e.g. `"buttonVariants"`. */
-  variantIdent: string
 }
 
 let cachedProject: Project | undefined
@@ -553,18 +569,17 @@ export function transformBase({
   hasStylesConfig = true,
   paramSelection,
 }: TransformBaseInput): TransformBaseOutput {
-  const variantIdent = `${toCamelCase(componentName)}Variants`
-  const oldStylesIdent = `${toCamelCase(componentName)}Styles` // e.g. "buttonStyles"
-  const oldStylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles` // e.g. "ButtonStyles"
+  const stylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles` // e.g. "ButtonStyles"
 
   const project = getProject()
   const sourceFile = project.addSourceFileAtPath(baseTsxPath)
 
   try {
+    const variantIdent =
+      exportedStylesName(sourceFile) ?? `${toCamelCase(componentName)}Variants`
     applyTransform(sourceFile, {
       variantIdent,
-      oldStylesIdent,
-      oldStylesTypeIdent,
+      stylesTypeIdent,
       hasStylesConfig,
     })
     if (paramSelection) {
@@ -579,10 +594,28 @@ export function transformBase({
     const transformed = sourceFile
       .getFullText()
       .replace(TS_PLACEHOLDER_IDENT, TV_CONFIG_PLACEHOLDER)
-    return { template: transformed, variantIdent }
+      .replace(LINT_DIRECTIVE_LINE_RE, "")
+    return { template: transformed }
   } finally {
     project.removeSourceFile(sourceFile)
   }
+}
+
+/** The repo's own lint directives (`// oxlint-disable-next-line …`,
+ *  `/* oxlint-disable … *\/`) stay in registry source, not in shipped files. */
+const LINT_DIRECTIVE_LINE_RE =
+  /^[ \t]*(?:\/\/[ \t]*oxlint-disable.*|\/\*[ \t]*oxlint-disable.*?\*\/[ \t]*)\r?\n/gm
+
+/** `export { buttonStyles } from "./styles"` names the styles function the
+ *  published file exports: the injected `tv()` const takes that name. */
+function exportedStylesName(sourceFile: SourceFile): string | undefined {
+  const specs = sourceFile
+    .getExportDeclarations()
+    .filter((exp) => exp.getModuleSpecifierValue() === "./styles")
+    .flatMap((exp) => exp.getNamedExports())
+  const [spec] = specs
+  if (!spec || specs.length !== 1) return undefined
+  return spec.getAliasNode()?.getText() ?? spec.getName()
 }
 
 function capitalize(s: string): string {
@@ -592,14 +625,12 @@ function capitalize(s: string): string {
 
 interface ApplyContext {
   variantIdent: string
-  oldStylesIdent: string
-  oldStylesTypeIdent: string
+  stylesTypeIdent: string
   hasStylesConfig: boolean
 }
 
 function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
-  const { variantIdent, oldStylesIdent, oldStylesTypeIdent, hasStylesConfig } =
-    ctx
+  const { variantIdent, stylesTypeIdent, hasStylesConfig } = ctx
 
   if (!hasStylesConfig) {
     // No `styles.ts` → just rewrite registry-internal import paths and bail.
@@ -616,7 +647,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   //    Re-snapshot between replacements: each `replaceWithText` invalidates
   //    sibling nodes in the original snapshot.
   while (true) {
-    const next = findNextVariantProps(sourceFile, oldStylesTypeIdent)
+    const next = findNextVariantProps(sourceFile, stylesTypeIdent)
     if (!next) break
     next.replaceWithText(`typeof ${variantIdent}`)
   }
@@ -644,42 +675,36 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   }
 
   // 2b. Resolve `export { fieldStyles } from './styles'`: the styles module
-  //     doesn't ship, so re-export the injected variant const under the same
-  //     public name — cross-component imports rely on it staying stable.
+  //     doesn't ship, so export the injected variant const under the same
+  //     public name — cross-component imports rely on it staying stable. It
+  //     carries that name already (`exportedStylesName`), so it joins the
+  //     file's closing export list.
   for (const exp of [...sourceFile.getExportDeclarations()]) {
     if (exp.getModuleSpecifierValue() !== "./styles") continue
-    const specs = exp
+    const names = exp
       .getNamedExports()
-      .map(
-        (s) =>
-          `${variantIdent} as ${s.getAliasNode()?.getText() ?? s.getName()}`,
+      .map((s) => s.getAliasNode()?.getText() ?? s.getName())
+    const list = sourceFile
+      .getExportDeclarations()
+      .filter((e) => !e.getModuleSpecifier() && !e.isTypeOnly())
+      .at(-1)
+    if (names.length === 1 && names[0] === variantIdent && list) {
+      list.addNamedExport(variantIdent)
+      exp.remove()
+    } else {
+      const specs = names.map((name) =>
+        name === variantIdent ? name : `${variantIdent} as ${name}`,
       )
-    exp.replaceWithText(`export { ${specs.join(", ")} };`)
+      exp.replaceWithText(`export { ${specs.join(", ")} };`)
+    }
   }
 
-  // 3. Replace value-position references to `<oldStylesIdent>` (e.g. `buttonStyles`)
-  //    in re-exports or local usages with the new variant ident. Skip identifiers
-  //    inside import declarations (those imports get removed below anyway) and
-  //    export aliases (the public name step 2b just pinned).
-  for (const id of sourceFile.getDescendantsOfKind(SyntaxKind.Identifier)) {
-    if (id.wasForgotten()) continue
-    if (id.getText() !== oldStylesIdent) continue
-    if (id.getFirstAncestorByKind(SyntaxKind.ImportDeclaration)) continue
-    const parent = id.getParent()
-    if (
-      parent?.isKind(SyntaxKind.ExportSpecifier) &&
-      parent.getAliasNode() === id
-    )
-      continue
-    id.replaceWithText(variantIdent)
-  }
-
-  // 4. Remove imports from "./styles" (both value and type).
+  // 3. Remove imports from "./styles" (both value and type).
   for (const imp of [...sourceFile.getImportDeclarations()]) {
     if (imp.getModuleSpecifierValue() === "./styles") imp.remove()
   }
 
-  // 5. Rewrite registry-internal import paths to consumer aliases, resolve
+  // 4. Rewrite registry-internal import paths to consumer aliases, resolve
   //    cross-component styles-hook calls to the imported function, then drop
   //    the local `const styles = …` aliases the hooks leave behind.
   const stylesLocals = rewriteImports(sourceFile)
@@ -688,10 +713,10 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     hoist,
   })
 
-  // 6. Ensure `tailwind-variants` import provides `tv`.
+  // 5. Ensure `tailwind-variants` import provides `tv`.
   ensureTailwindVariantsImport(sourceFile)
 
-  // 7. Insert the variant declaration after the last import. ts-morph drops a
+  // 6. Insert the variant declaration after the last import. ts-morph drops a
   //    leading empty statement, so write the blank line explicitly.
   const lastImport = sourceFile.getImportDeclarations().at(-1)
   const insertIndex = lastImport ? lastImport.getChildIndex() + 1 : 0
@@ -708,17 +733,14 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   })
 }
 
-function findNextVariantProps(
-  sourceFile: SourceFile,
-  oldStylesTypeIdent: string,
-) {
+function findNextVariantProps(sourceFile: SourceFile, stylesTypeIdent: string) {
   // `type X = VariantProps<...>` → TypeReference.
   for (const ref of sourceFile.getDescendantsOfKind(SyntaxKind.TypeReference)) {
     if (ref.wasForgotten()) continue
     if (ref.getTypeName().getText() !== "VariantProps") continue
     const first = ref.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
-    if (first.getText() === oldStylesTypeIdent) return first
+    if (first.getText() === stylesTypeIdent) return first
   }
   // `interface X extends VariantProps<...>` → ExpressionWithTypeArguments.
   for (const ewta of sourceFile.getDescendantsOfKind(
@@ -728,7 +750,7 @@ function findNextVariantProps(
     if (ewta.getExpression().getText() !== "VariantProps") continue
     const first = ewta.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
-    if (first.getText() === oldStylesTypeIdent) return first
+    if (first.getText() === stylesTypeIdent) return first
   }
   return undefined
 }
@@ -740,7 +762,7 @@ function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
     (imp) => imp.getModuleSpecifierValue() === "tailwind-variants",
   )
   if (existing) {
-    ensureNamedImport(existing, "tv", false)
+    ensureNamedImport(existing, "tv")
     return
   }
   sourceFile.addImportDeclaration({
@@ -749,17 +771,12 @@ function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
   })
 }
 
-function ensureNamedImport(
-  imp: ImportDeclaration,
-  name: string,
-  isTypeOnly: boolean,
-): void {
+function ensureNamedImport(imp: ImportDeclaration, name: string): void {
   const named = imp.getNamedImports()
   const hit = named.find((n) => n.getName() === name)
   if (hit) {
-    // If both the import declaration and the named import are type-only we're fine.
-    // If we need a value import (tv) but the declaration is `import type`, flip it.
-    if (!isTypeOnly && imp.isTypeOnly()) {
+    // A value import (tv) under `import type`: flip the declaration.
+    if (imp.isTypeOnly()) {
       imp.setIsTypeOnly(false)
       // Mark the other names as type-only to preserve their semantics.
       for (const n of named) {
@@ -768,18 +785,10 @@ function ensureNamedImport(
     }
     return
   }
-  if (imp.isTypeOnly() && !isTypeOnly) {
+  if (imp.isTypeOnly()) {
     // Flip the declaration to value-imports; tag pre-existing names as type-only.
     imp.setIsTypeOnly(false)
     for (const n of named) n.setIsTypeOnly(true)
   }
-  imp.addNamedImport({ name, isTypeOnly })
+  imp.addNamedImport({ name })
 }
-
-// Re-export for callers that want to know what placeholder shows up in the template.
-export { TS_PLACEHOLDER_IDENT }
-// Re-export the runtime placeholder string for convenience.
-export { TV_CONFIG_PLACEHOLDER }
-
-// Used by ts-morph's Node typeguards in some paths (kept for completeness).
-export { Node }

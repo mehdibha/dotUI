@@ -39,7 +39,6 @@ const chart = defineChart({
     polar({
       scales: {
         angle: { scale: scalePoint },
-        // Lines alone don't pull the radius to zero, as an area does.
         radius: { scale: scaleLinear().domain([0, max]), nice: 4 },
       },
       radiusRatio: 0.78,
@@ -49,7 +48,6 @@ const chart = defineChart({
           shape: "polygon",
           strokeDasharray: chartLook.grid.strokeDasharray,
         }),
-        // The month labels without their spokes.
         angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
       ],
       marks: [
@@ -66,7 +64,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarLinesOnly() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

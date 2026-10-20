@@ -3,7 +3,7 @@ title: Table
 description: A table displays data in rows and columns and enables a user to navigate and select its contents.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Table.html
+    href: https://react-aria.adobe.com/Table
 wip: true
 ---
 
@@ -15,6 +15,16 @@ wip: true
       name: "selectionMode",
       options: ["none", "single", "multiple"],
       defaultValue: "none",
+    },
+    {
+      type: "boolean",
+      name: "striped",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "resizable",
+      defaultValue: false,
     },
   ]}
 />
@@ -164,6 +174,16 @@ Pass static `TableRow`s as children, or drive the table from data by giving `Tab
 </Table>
 ```
 
+## Striped rows
+
+Pass `striped` to fill every other row.
+
+```tsx
+<Table aria-label="Files" striped>
+  {/* ... */}
+</Table>
+```
+
 ## Selection
 
 Set `selectionMode` to `single` or `multiple` to enable row selection. Control it with `selectedKeys` and `onSelectionChange` (the value is `'all'` or a `Set` of keys), and pass `disallowEmptySelection` to keep at least one row selected.
@@ -218,6 +238,7 @@ const list = useAsyncList({ async load({ signal }) { /* ... */ } })
 
 <Examples className="md:grid-cols-2">
   <Example name="table/demos/basic" title="Basic Table" />
+  <Example name="table/demos/striped" title="Striped" />
   <Example
     name="table/demos/invoices"
     title="Invoices Table"

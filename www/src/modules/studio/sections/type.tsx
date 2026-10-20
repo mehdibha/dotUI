@@ -1,54 +1,99 @@
 "use client"
 
-/* Typography — the three font roles, each row set in its own face so the row
-   is the specimen. Heading reads Auto on the body font until pinned. */
+/* Typography: each face set in itself. Font sits on the main page, Heading
+   and Mono on the Typography page; Heading matches Font until pinned. The
+   voice rows sit where they act: Titles on Card, Label weight on Button,
+   Field text on Field, Section labels on Menu, UI text size under Density. */
 
-import { ChevronDownIcon } from "lucide-react"
+import { useMemo } from "react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
+import { Label } from "@/registry/ui/field"
 import { Select } from "@/registry/ui/select"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
+import type { Effective } from "../axes"
+import { TITLE_VOICE } from "../axes/type"
 import {
-  DIAL_CHEVRON,
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
-  DIAL_VALUE,
-} from "../dial"
+  FIELD_TEXT_OPTIONS,
+  LABEL_WEIGHT_OPTIONS,
+  SECTION_LABEL_OPTIONS,
+  TITLE_OPTIONS,
+  UI_TEXT_OPTIONS,
+} from "../axes/type.meta"
+import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DialSelect } from "../dial"
+import { useRowLabel } from "../row-host"
+import type { RowMap } from "../row-host"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import { useStudio } from "../use-studio"
 
-/** A font role as a dial row: label, the family in its own typeface, the
- *  searchable list under it. With `derived`, '' reads Auto on that family. */
+type FontKey = "headingFont" | "bodyFont" | "monoFont"
+
+/** The follow id of a role that matches Font until pinned. */
+const MATCH = "same"
+
+const HEADING_CATEGORIES: FontCategory[] = [
+  "sans-serif",
+  "serif",
+  "display",
+  "handwriting",
+]
+const BODY_CATEGORIES: FontCategory[] = ["sans-serif", "serif"]
+const MONO_CATEGORIES: FontCategory[] = ["mono"]
+
+/** A font role as a dial row, its family set in its own face. With `match`,
+ *  a switch over the list follows Font or pins the family it shows. */
 function FontRow({
-  label,
-  value,
-  derived,
+  axis,
+  label: labelProp,
+  match,
   categories,
-  onChange,
 }: {
+  axis: FontKey
   label: string
-  value: string
-  /** The family followed while `value` is ''. */
-  derived?: string
+  match?: boolean
   categories: FontCategory[]
-  onChange: (family: string) => void
 }) {
-  const auto = derived !== undefined && value === ""
-  const resolved = value || derived || ""
+  const { state, effective, set } = useStudio()
+  const label = useRowLabel(labelProp)
+  const value = state[axis]
+  const resolved = effective[axis]
+  const onChange = set(axis)
+  const matching = match && value === MATCH
   useLoadedFamilies([resolved])
+  // The Select's collection: one element, so a new value doesn't rebuild
+  // its hundreds of hidden items.
+  const list = useMemo(
+    () => (
+      <PanelPopoverTitle.Provider value={label}>
+        <FontListPopover categories={categories} onPreview={onChange}>
+          {match && (
+            <Switch
+              size="sm"
+              isSelected={matching}
+              onChange={(on) => onChange(on ? MATCH : resolved)}
+            >
+              <Label className="flex-1">Match font</Label>
+              <SwitchControl />
+            </Switch>
+          )}
+        </FontListPopover>
+      </PanelPopoverTitle.Provider>
+    ),
+    [label, categories, onChange, match, matching, resolved],
+  )
   return (
     <Select
       className="w-full"
-      selectedKey={value || null}
+      selectedKey={matching ? null : value}
       onSelectionChange={(key) => onChange(key as string)}
       aria-label={label}
     >
-      <div className={cn(DIAL_ROW, "relative pr-0")}>
+      <div data-axis={axis} className={cn(DIAL_ROW, "relative pr-0")}>
         <RacButton
           className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
         >
@@ -57,61 +102,141 @@ function FontRow({
         <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
           {label}
         </span>
-        <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
-          {auto && <span className={DIAL_VALUE}>Auto ·</span>}
-          <span
-            className="truncate text-[13px] font-medium text-fg/70"
-            style={{ fontFamily: fontStack(resolved) }}
-          >
-            {resolved}
-          </span>
-          <ChevronDownIcon className={DIAL_CHEVRON} />
+        <span
+          className="pointer-events-none relative truncate pr-3 text-[13px] font-medium text-fg/60"
+          style={{ fontFamily: fontStack(resolved) }}
+        >
+          {resolved}
         </span>
       </div>
-      <PanelPopoverTitle.Provider value={label}>
-        <FontListPopover categories={categories} />
-      </PanelPopoverTitle.Provider>
+      {list}
     </Select>
   )
 }
 
 /** Beside the title: Aa in the heading face. */
-export function TypePreview({ state }: { state: StudioState }) {
-  const heading = state.headingFont || state.bodyFont
-  useLoadedFamilies([heading])
+export function TypePreview({ state }: { state: Effective }) {
+  useLoadedFamilies([state.headingFont])
   return (
     <span
       className="text-[15px]/none font-semibold"
-      style={{ fontFamily: fontStack(heading) }}
+      style={{ fontFamily: fontStack(state.headingFont) }}
     >
       Aa
     </span>
   )
 }
 
-export function TypeSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+const WEIGHTS: Record<string, number> = {
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+}
+
+const TRACKING: Record<string, string> = { tight: "-0.025em", wider: "0.05em" }
+
+function titleSpecimen(value: string): React.CSSProperties {
+  const voice = TITLE_VOICE[value]
+  return {
+    fontWeight: WEIGHTS[voice?.weight ?? "medium"],
+    letterSpacing: voice?.tracking && TRACKING[voice.tracking],
+    textTransform: value === "caps" ? "uppercase" : undefined,
+  }
+}
+
+const HeadingRow = () => (
+  <FontRow
+    axis="headingFont"
+    label="Heading"
+    match
+    categories={HEADING_CATEGORIES}
+  />
+)
+
+const BodyRow = () => (
+  <FontRow axis="bodyFont" label="Font" categories={BODY_CATEGORIES} />
+)
+
+const MonoRow = () => (
+  <FontRow axis="monoFont" label="Mono" categories={MONO_CATEGORIES} />
+)
+
+function TitlesRow() {
+  const { effective } = useStudio()
   return (
-    <>
-      <FontRow
-        label="Heading"
-        value={state.headingFont}
-        derived={state.bodyFont}
-        categories={["sans-serif", "serif", "display", "handwriting"]}
-        onChange={set("headingFont")}
-      />
-      <FontRow
-        label="Body"
-        value={state.bodyFont}
-        categories={["sans-serif", "serif"]}
-        onChange={set("bodyFont")}
-      />
-      <FontRow
-        label="Mono"
-        value={state.monoFont}
-        categories={["mono"]}
-        onChange={set("monoFont")}
-      />
-    </>
+    <DialSelect
+      axis="titleStyle"
+      label="Titles"
+      options={TITLE_OPTIONS.map((option) => ({
+        ...option,
+        glyph: (
+          <span
+            className="text-[13px] text-fg/80"
+            style={{
+              fontFamily: fontStack(effective.headingFont),
+              ...titleSpecimen(option.value),
+            }}
+          >
+            Aa
+          </span>
+        ),
+      }))}
+    />
   )
+}
+
+const UiTextRow = () => (
+  <DialSelect
+    axis="uiTextSize"
+    label="UI text size"
+    options={UI_TEXT_OPTIONS}
+  />
+)
+
+const FieldTextRow = () => (
+  <DialSelect
+    axis="fieldTextSize"
+    label="Field text"
+    options={FIELD_TEXT_OPTIONS}
+  />
+)
+
+const LABEL_WEIGHT_ROW_OPTIONS = LABEL_WEIGHT_OPTIONS.map((option) => ({
+  ...option,
+  glyph: (
+    <span
+      className="text-[13px] text-fg/80"
+      style={{ fontWeight: WEIGHTS[option.value] }}
+    >
+      Aa
+    </span>
+  ),
+}))
+
+const LabelWeightRow = () => (
+  <DialSelect
+    axis="labelWeight"
+    label="Label weight"
+    options={LABEL_WEIGHT_ROW_OPTIONS}
+  />
+)
+
+const SectionLabelsRow = () => (
+  <DialSelect
+    axis="sectionLabels"
+    label="Section labels"
+    options={SECTION_LABEL_OPTIONS}
+  />
+)
+
+export const ROWS: RowMap = {
+  headingFont: HeadingRow,
+  bodyFont: BodyRow,
+  monoFont: MonoRow,
+  titleStyle: TitlesRow,
+  uiTextSize: UiTextRow,
+  fieldTextSize: FieldTextRow,
+  labelWeight: LabelWeightRow,
+  sectionLabels: SectionLabelsRow,
 }

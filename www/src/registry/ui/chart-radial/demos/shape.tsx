@@ -62,7 +62,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartRadialShape() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

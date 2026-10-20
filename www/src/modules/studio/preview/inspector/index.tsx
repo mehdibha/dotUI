@@ -1,10 +1,6 @@
 import * as React from "react"
 
-import {
-  sendInspect,
-  sendInspectorExit,
-  useInspectorModeMessages,
-} from "@/modules/studio/preset"
+import { postToParent, useMessage } from "@/modules/studio/preset/iframe-sync"
 
 import { findOwner, getHostElements } from "./fiber"
 import type { FiberLike } from "./fiber"
@@ -64,7 +60,7 @@ function propsOf(fiber: FiberLike): [string, unknown][] {
 }
 
 /**
- * The /create preview inspector — rendered inside the preview iframe. Toggled
+ * The /studio preview inspector — rendered inside the preview iframe. Toggled
  * from the parent's toolbar; hovering highlights the nearest dotUI component
  * (matched by identity against the registry exports) with its name and props,
  * clicking opens that component's params in the panel, Escape exits.
@@ -90,20 +86,15 @@ export function PreviewInspector() {
   React.useLayoutEffect(() => {
     const el = cardRef.current
     if (!el) return
-    const rect = el.getBoundingClientRect()
-    setCardSize((prev) =>
-      prev.w === rect.width && prev.h === rect.height
-        ? prev
-        : { w: rect.width, h: rect.height },
-    )
+    // Not the rect: Firefox's rect width jitters with the left it feeds, so it never settles.
+    const { offsetWidth: w, offsetHeight: h } = el
+    setCardSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }))
   })
 
-  useInspectorModeMessages(
-    React.useCallback((on: boolean) => {
-      setEnabled(on)
-      if (!on) setSel(null)
-    }, []),
-  )
+  useMessage("inspector-mode", ({ enabled: on }) => {
+    setEnabled(on)
+    if (!on) setSel(null)
+  })
 
   // The identity map pulls in every registry component — load it only once
   // the inspector is actually switched on.
@@ -149,7 +140,10 @@ export function PreviewInspector() {
       block(event)
       const current = selRef.current
       if (current?.entry.customizable) {
-        sendInspect(`component:${current.entry.slug}`)
+        postToParent({
+          type: "preview-inspect",
+          panel: `component:${current.entry.slug}`,
+        })
       }
     }
     const onKeyDown = (event: KeyboardEvent) => {
@@ -157,7 +151,7 @@ export function PreviewInspector() {
       block(event)
       setEnabled(false)
       setSel(null)
-      sendInspectorExit()
+      postToParent({ type: "inspector-exit" })
     }
     const clear = () => setSel(null)
     const onViewportChange = () => bumpTick()

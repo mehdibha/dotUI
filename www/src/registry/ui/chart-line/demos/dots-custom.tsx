@@ -36,7 +36,6 @@ const chart = defineChart({
       curve: chartLook.curve,
       strokeWidth: chartLook.strokeWidth,
     }),
-    // Decorative: the line keeps the focus stops and the tooltip rows.
     decorative(
       dot(data, {
         x: "month",
@@ -50,7 +49,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineDotsCustom() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

@@ -27,7 +27,6 @@ const rows = fold(data, {
   as: { key: "device", value: "visitors" },
 })
 
-// Built from the live look, so the studio restyles the bars as it changes.
 function charts(look: ChartLook) {
   const value = {
     scale: scaleLinear,

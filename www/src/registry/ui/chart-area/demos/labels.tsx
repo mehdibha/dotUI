@@ -9,7 +9,6 @@ import { scalePoint } from "@tanstack/charts/scales/point"
 
 import { Chart, chartLook } from "@/registry/ui/chart"
 
-/* Long format: one row per series per x value, with the series key in a field. */
 const data = [
   { month: "Jan", channel: "organic_search", visitors: 186 },
   { month: "Jan", channel: "paid_social", visitors: 80 },
@@ -47,7 +46,6 @@ const chart = defineChart({
       axis: chartLook.valueAxis,
     },
   },
-  // The domain orders the colors: paid social takes the first.
   color: { domain: ["Paid social", "Organic search"] },
   marks: [
     areaY(data, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
@@ -55,7 +53,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaLabels() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

@@ -9,8 +9,7 @@ import {
   SmileIcon,
   UserIcon,
   XIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
@@ -50,10 +49,7 @@ export default function Demo() {
                   </InputGroupAddon>
                 </InputGroup>
               </SearchField>
-              <ListBox
-                aria-label="Commands"
-                onAction={() => console.log("action")}
-              >
+              <ListBox aria-label="Commands" onAction={() => {}}>
                 <ListBoxSection>
                   <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>
                   <ListBoxItem textValue="Calendar">

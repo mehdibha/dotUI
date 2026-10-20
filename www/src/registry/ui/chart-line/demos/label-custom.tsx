@@ -19,7 +19,6 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-// Annotate a chosen few rows, picked in data preparation.
 const peak = data.reduce((max, row) => (row.desktop > max.desktop ? row : max))
 const low = data.reduce((min, row) => (row.desktop < min.desktop ? row : min))
 const extremes = [
@@ -62,7 +61,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineLabelCustom() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

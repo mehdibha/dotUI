@@ -9,6 +9,7 @@
  *   --font-sans     body font (Tailwind's `font-sans`, applied on <body>)
  *   --font-heading  heading font (defaults to var(--font-sans) in the theme)
  *   --font-mono     monospace font (`font-mono`)
+ *   --font-reading  incoming chat messages (defaults to var(--font-sans))
  *
  * Pure JS — no React. Safe to import from the publisher.
  */
@@ -16,11 +17,13 @@
 export const FONT_SANS_VAR = "--font-sans"
 export const FONT_HEADING_VAR = "--font-heading"
 export const FONT_MONO_VAR = "--font-mono"
+export const FONT_READING_VAR = "--font-reading"
 
 export const FONT_TOKEN_VARS = [
   FONT_SANS_VAR,
   FONT_HEADING_VAR,
   FONT_MONO_VAR,
+  FONT_READING_VAR,
 ] as const
 
 /** Families the app self-hosts (fontsource) — the no-token defaults. */
@@ -34,7 +37,7 @@ export type FontCategory =
   | "handwriting"
   | "mono"
 
-export interface FontOption {
+interface FontOption {
   family: string
   category: FontCategory
 }
@@ -47,6 +50,7 @@ export interface FontOption {
  */
 export const FONT_CATALOG: FontOption[] = [
   // Sans serif (285)
+  { family: "System", category: "sans-serif" },
   { family: "Geist", category: "sans-serif" },
   { family: "Inter", category: "sans-serif" },
   { family: "Roboto", category: "sans-serif" },
@@ -491,6 +495,7 @@ export const FONT_CATALOG: FontOption[] = [
   { family: "Wavefont", category: "display" },
 
   // Monospace (22)
+  { family: "System Mono", category: "mono" },
   { family: "Geist Mono", category: "mono" },
   { family: "JetBrains Mono", category: "mono" },
   { family: "Fira Code", category: "mono" },
@@ -607,14 +612,32 @@ const FALLBACK_STACKS: Record<FontCategory, string> = {
   mono: "ui-monospace, 'SF Mono', monospace",
 }
 
+/* The OS faces (Primer's stacks; Radix Themes, Stripe and Ant Design ship
+   the same idea): nothing loads, the token is the platform stack. */
+const SYSTEM_STACKS: Record<string, string> = {
+  System:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
+  "System Mono":
+    "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+}
+
+export const isSystemFamily = (family: string) =>
+  Object.hasOwn(SYSTEM_STACKS, family)
+
 /** `'Inter', ui-sans-serif, system-ui, sans-serif` — the token value. */
 export function fontStack(family: string): string {
+  const system = SYSTEM_STACKS[family]
+  if (system) return system
   const category = CATEGORY_BY_FAMILY.get(family) ?? "sans-serif"
   return `'${family}', ${FALLBACK_STACKS[category]}`
 }
 
 /** First family of a stack, unquoted — the display name / load target. */
 export function familyFromStack(stack: string): string {
+  const system = Object.keys(SYSTEM_STACKS).find(
+    (family) => SYSTEM_STACKS[family] === stack,
+  )
+  if (system) return system
   const first = stack.split(",")[0] ?? stack
   return first.trim().replace(/^['"]|['"]$/g, "")
 }
@@ -628,7 +651,8 @@ export function fontFamiliesFromTokens(
     const stack = tokens[varName]
     if (!stack) continue
     const family = familyFromStack(stack)
-    if (family && !families.includes(family)) families.push(family)
+    if (family && !isSystemFamily(family) && !families.includes(family))
+      families.push(family)
   }
   return families
 }
@@ -657,6 +681,7 @@ export function googleFontsUrl(
  * fetches only the handful actually seen instead of every face up front.
  */
 export function loadFontPreview(doc: Document, family: string): void {
+  if (isSystemFamily(family)) return
   const id = `dotui-font-preview-${family.replaceAll(" ", "-").toLowerCase()}`
   if (doc.getElementById(id)) return
   const text = [...new Set([...family])].join("")
@@ -672,14 +697,36 @@ export function loadFontPreview(doc: Document, family: string): void {
  * links (not one combined) so switching fonts never re-fetches already-loaded
  * ones. Links are never removed — a font once loaded stays usable.
  */
-export function ensureFontStylesheets(doc: Document, families: string[]): void {
-  for (const family of families) {
+export function ensureFontStylesheets(
+  doc: Document,
+  families: string[],
+): Array<HTMLLinkElement | undefined> {
+  return families.map((family) => {
+    if (isSystemFamily(family)) return undefined
     const id = `dotui-font-${family.replaceAll(" ", "-").toLowerCase()}`
-    if (doc.getElementById(id)) continue
+    const existing = doc.getElementById(id)
+    if (existing) return existing as HTMLLinkElement
     const link = doc.createElement("link")
     link.id = id
     link.rel = "stylesheet"
     link.href = googleFontsUrl([family])
     doc.head.append(link)
-  }
+    return link
+  })
+}
+
+/**
+ * Fetches the families' font files now. A stylesheet alone downloads no faces
+ * until text uses them, so a font previewed next would paint its fallback.
+ */
+export function loadFontFaces(doc: Document, families: string[]): void {
+  const links = ensureFontStylesheets(doc, families)
+  families.forEach((family, i) => {
+    const load = () => {
+      for (const weight of ["400", "500", "600", "700"])
+        doc.fonts.load(`${weight} 1em "${family}"`).catch(() => {})
+    }
+    if (links[i]?.sheet) load()
+    else links[i]?.addEventListener("load", load, { once: true })
+  })
 }

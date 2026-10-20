@@ -64,7 +64,6 @@ const MenuItem = <T extends object>({
 
   return (
     <MenuPrimitives.MenuItem
-      data-slot="menu-item"
       data-menu-item=""
       data-variant={variant}
       textValue={textValue}
@@ -79,9 +78,7 @@ const MenuItem = <T extends object>({
           <>
             {selectionMode !== "none" && (
               <span data-menu-item-indicator="" className={indicator()}>
-                {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
-                )}
+                {isSelected && <CheckIcon aria-hidden />}
               </span>
             )}
             {typeof children === "string" ? (
@@ -142,7 +139,6 @@ const MenuItemDescription = ({
 
 interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({
-  children,
   className,
   ...props
 }: MenuSectionProps<T>) => {
@@ -152,9 +148,7 @@ const MenuSection = <T extends object>({
       data-menu-section=""
       className={section({ className })}
       {...props}
-    >
-      {children}
-    </MenuPrimitives.MenuSection>
+    />
   )
 }
 

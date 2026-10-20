@@ -15,8 +15,12 @@
 //  - an open tag that exceeds PRINT_WIDTH breaks to one attribute per line
 //  - JSX text fill-wraps greedily at PRINT_WIDTH
 //  - when every child drops, the element self-closes
+//  - a repeated element renders once per count, each copy on its own lines
 //  - a single-line body inlines into `return …;`, otherwise wraps in parens
 //  - string literals pick the quote that needs fewer escapes (ties → double)
+//  - an attribute holding an expanded object literal (newline after `{`) stays
+//    expanded, so it forces its tag open; a member that overflows breaks after
+//    its colon
 // ============================================================================
 
 export type ValueKind =
@@ -39,9 +43,41 @@ export interface AttrHole {
   default: SerializedDefault
   /** Derived attr (progress-bar): drop entirely when this boolean control is truthy. */
   dropWhen?: string
+  /** Object-literal value embedding the control (`visibleDuration={{ months: n }}`): the literal goes between. */
+  wrap?: { before: string; after: string }
 }
 
-export type AttrPart = { part: "static"; text: string } | AttrHole
+/** A `{ key }` shorthand member bound to a control. Dropped when falsy. */
+export interface MemberHole {
+  part: "member"
+  control: string
+  kind: ValueKind
+}
+
+export type MemberPart =
+  /** Verbatim member lines, trailing comma included. */
+  | { part: "static"; lines: string[] }
+  | MemberHole
+  /** From `...(cond && { … })`: the inner members, shown when `cond` is truthy. */
+  | { part: "spread"; showWhen: string; lines: string[] }
+
+/** An attribute whose expanded object literal has control-bound members. */
+export interface ObjectAttr {
+  part: "object"
+  /** Attribute lines through the object's `{`, dedented to the attribute. */
+  head: string[]
+  /** Column of the members, relative to the attribute. */
+  memberIndent: number
+  members: MemberPart[]
+  /** Attribute lines from the object's `}` on. */
+  tail: string[]
+}
+
+/** A static attr; with `showWhen` it came from `attr={cond ? value : undefined}`. */
+export type AttrPart =
+  | { part: "static"; text: string; showWhen?: string }
+  | AttrHole
+  | ObjectAttr
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
@@ -53,11 +89,26 @@ export interface TextHole {
 export type ChildPart =
   /** Verbatim formatted lines, dedented so the block's first column is 0. */
   | { part: "static"; lines: string[] }
-  /** Static JSX text, whitespace-collapsed; refilled at render time. */
-  | { part: "static-text"; text: string }
+  /** Static JSX text, whitespace-collapsed; refilled at render time. With
+   *  `hideWhen` it came from `{!cond && "…"}`. */
+  | { part: "static-text"; text: string; hideWhen?: string }
   | TextHole
   /** A nested element; with `showWhen` it came from `{cond && <El>…</El>}`. */
-  | { part: "element"; el: TemplateElement; showWhen?: string }
+  | {
+      part: "element"
+      el: TemplateElement
+      showWhen?: string
+      /** `{months > 1 && <El/>}`: compare the control instead of testing truthiness. */
+      compare?: Comparison
+    }
+  /** From `{Array.from({ length: count }, () => <El />)}`: `count` copies of the element. */
+  | { part: "repeat"; el: TemplateElement; count: string }
+
+export type CompareOp = ">" | ">=" | "<" | "<=" | "===" | "!=="
+export interface Comparison {
+  op: CompareOp
+  value: number | string
+}
 
 export interface TemplateElement {
   tag: string
@@ -90,17 +141,20 @@ export interface CodeTemplate {
   bodyIndent: number
 }
 
-/** All holes in a template subtree (attr holes, text holes, conditional guards). */
+/** All holes in a template subtree (attr, member and text holes). */
 export function collectTemplateHoles(
   el: TemplateElement,
-): (AttrHole | TextHole)[] {
-  const holes: (AttrHole | TextHole)[] = []
+): (AttrHole | MemberHole | TextHole)[] {
+  const holes: (AttrHole | MemberHole | TextHole)[] = []
   for (const attr of el.attrs) {
     if (attr.part === "attr") holes.push(attr)
+    else if (attr.part === "object") {
+      for (const m of attr.members) if (m.part === "member") holes.push(m)
+    }
   }
   for (const child of el.children) {
     if (child.part === "text") holes.push(child)
-    else if (child.part === "element")
+    else if (child.part === "element" || child.part === "repeat")
       holes.push(...collectTemplateHoles(child.el))
   }
   return holes
@@ -110,7 +164,7 @@ export function collectTemplateHoles(
 // RUNTIME
 // ---------------------------------------------------------------------------
 
-export interface RenderOptions {
+interface RenderOptions {
   expanded: boolean
 }
 
@@ -181,10 +235,20 @@ function renderElement(
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
+    if (attr.part === "static") {
+      if (!attr.showWhen || isTruthy(values[attr.showWhen])) {
+        attrs.push(attr.text)
+      }
+      continue
+    }
     const text =
-      attr.part === "static" ? attr.text : renderAttrHole(attr, values, icons)
+      attr.part === "object"
+        ? renderObjectAttr(attr, values, indent + 2)
+        : renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
   }
+  // A multiline attribute always breaks the open tag.
+  const multiline = attrs.some((a) => a.includes("\n"))
 
   const kids: Kid[] = []
   for (const child of el.children) {
@@ -196,11 +260,14 @@ function renderElement(
   // oxfmt never breaks an open tag whose only attribute is a plain string
   // literal, no matter how long the line gets.
   const neverBreakOpen =
-    attrs.length === 1 && /^[\w-]+="[^"]*"$/.test(attrs[0] ?? "")
+    !multiline && attrs.length === 1 && /^[\w-]+="[^"]*"$/.test(attrs[0] ?? "")
 
   // Every child dropped → self-close.
   if (kids.length === 0) {
-    if (neverBreakOpen || indent + openInline.length + 3 <= PRINT_WIDTH) {
+    if (
+      neverBreakOpen ||
+      (!multiline && indent + openInline.length + 3 <= PRINT_WIDTH)
+    ) {
       return [`${pad}${openInline} />`]
     }
     return [`${pad}<${el.tag}`, ...attrLines(attrs, indent + 2), `${pad}/>`]
@@ -208,14 +275,15 @@ function renderElement(
 
   // Single text/expression child + at most one attribute → join when it fits.
   const only = kids.length === 1 ? kids[0] : undefined
-  if (only && only.type !== "block" && attrs.length <= 1) {
+  if (only && only.type !== "block" && attrs.length <= 1 && !multiline) {
     const inner = only.type === "text" ? only.text : only.code
     const joined = `${openInline}>${inner}</${el.tag}>`
     if (indent + joined.length <= PRINT_WIDTH) return [pad + joined]
   }
 
   const open =
-    neverBreakOpen || indent + openInline.length + 1 <= PRINT_WIDTH
+    neverBreakOpen ||
+    (!multiline && indent + openInline.length + 1 <= PRINT_WIDTH)
       ? [`${pad}${openInline}>`]
       : [`${pad}<${el.tag}`, ...attrLines(attrs, indent + 2), `${pad}>`]
 
@@ -230,7 +298,9 @@ function renderElement(
 
 function attrLines(attrs: string[], indent: number): string[] {
   const pad = " ".repeat(indent)
-  return attrs.map((a) => pad + a)
+  return attrs.flatMap((a) =>
+    a.split("\n").map((l) => (l === "" ? "" : pad + l)),
+  )
 }
 
 /** Greedy fill at PRINT_WIDTH — matches oxfmt's JSX text wrapping. */
@@ -260,6 +330,14 @@ function renderAttrHole(
   const value = values[hole.control]
   if (serializeForCompare(value, hole.kind) === hole.default) return null
 
+  if (hole.wrap) {
+    const literal =
+      hole.kind === "number" || hole.kind === "boolean"
+        ? String(value)
+        : quoteString(String(value))
+    return `${hole.wrap.before}${literal}${hole.wrap.after}`
+  }
+
   switch (hole.kind) {
     case "boolean":
       return value === true ? hole.attrName : `${hole.attrName}={false}`
@@ -281,6 +359,32 @@ function renderAttrHole(
   }
 }
 
+/** The attribute's lines, relative to `indent`, the column it sits at. */
+function renderObjectAttr(
+  attr: ObjectAttr,
+  values: Record<string, unknown>,
+  indent: number,
+): string {
+  const pad = " ".repeat(attr.memberIndent)
+  const members = attr.members.flatMap((m) => {
+    if (m.part === "static") return m.lines.map((l) => pad + l)
+    if (m.part === "spread") {
+      return isTruthy(values[m.showWhen]) ? m.lines.map((l) => pad + l) : []
+    }
+    const value = values[m.control]
+    if (isFalsy(value)) return []
+    const literal =
+      m.kind === "boolean" || m.kind === "number"
+        ? String(value)
+        : quoteString(String(value))
+    const line = `${pad}${m.control}: ${literal},`
+    return indent + line.length <= PRINT_WIDTH
+      ? [line]
+      : [`${pad}${m.control}:`, `${pad}  ${literal},`]
+  })
+  return [...attr.head, ...members, ...attr.tail].join("\n")
+}
+
 function renderChild(
   child: ChildPart,
   values: Record<string, unknown>,
@@ -296,6 +400,7 @@ function renderChild(
       }
     }
     case "static-text":
+      if (child.hideWhen && isTruthy(values[child.hideWhen])) return null
       return { type: "text", text: child.text }
     case "text": {
       const value = values[child.control]
@@ -314,10 +419,25 @@ function renderChild(
         : { type: "text", text: s }
     }
     case "element": {
-      if (child.showWhen && isFalsy(values[child.showWhen])) return null
+      if (child.showWhen) {
+        const value = values[child.showWhen]
+        const shown = child.compare
+          ? compare(value, child.compare)
+          : isTruthy(value)
+        if (!shown) return null
+      }
       return {
         type: "block",
         lines: renderElement(child.el, values, indent, icons),
+      }
+    }
+    case "repeat": {
+      const count = Math.trunc(Number(values[child.count]) || 0)
+      if (count <= 0) return null
+      const lines = renderElement(child.el, values, indent, icons)
+      return {
+        type: "block",
+        lines: Array.from({ length: count }, () => lines).flat(),
       }
     }
   }
@@ -350,6 +470,24 @@ function serializeForCompare(
       return value ? String(value) : null
     default:
       return String(value)
+  }
+}
+
+function compare(v: unknown, { op, value }: Comparison): boolean {
+  const left = typeof value === "number" ? Number(v) : String(v)
+  switch (op) {
+    case ">":
+      return left > value
+    case ">=":
+      return left >= value
+    case "<":
+      return left < value
+    case "<=":
+      return left <= value
+    case "===":
+      return left === value
+    case "!==":
+      return left !== value
   }
 }
 

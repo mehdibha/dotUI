@@ -1,15 +1,11 @@
 /**
- * Registry Build Script
- *
- * Generates internal files for lazy loading:
- * - src/registry/__generated__/ (demos, icons, examples, per-library icon exports)
- *
- * Usage: tsx scripts/registry-build.ts
+ * `pnpm build:registry`: generates base/colors.css, `src/registry/__generated__/`
+ * (item manifest, demos, icons, publishables), the studio examples index and
+ * the preset catalog, checking registry and publishable integrity on the way.
  */
 
 import { existsSync, promises as fs } from "node:fs"
 import path from "node:path"
-import { format } from "oxfmt"
 import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
@@ -17,10 +13,10 @@ import { themeOptionsSchema } from "@dotui/colors/schema"
 import {
   buildPublishables,
   collectBaseFiles,
+  formatGenerated,
 } from "../src/publisher/build-time/build-publishables"
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps"
 import { BUNDLED_INTO_INIT, registryDepsFor } from "../src/publisher/publish"
-import { registryBase } from "../src/registry/base/registry"
 import { registryHooks } from "../src/registry/hooks/registry"
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map"
 import {
@@ -40,27 +36,18 @@ import type { RegistryItem } from "../src/registry/types"
 const REGISTRY_DIR = path.join(process.cwd(), "src/registry")
 const GENERATED_DIR = path.join(REGISTRY_DIR, "__generated__")
 
-// ============================================================================
-// Utility Functions
-// ============================================================================
-
 async function ensureDir(dir: string) {
   await rimraf(dir)
   await fs.mkdir(dir, { recursive: true })
 }
 
 async function writeGeneratedFile(targetPath: string, content: string) {
-  const { code } = await format(targetPath, content, {
-    printWidth: 120,
-    useTabs: true,
-  })
-
-  await fs.writeFile(targetPath, code, "utf8")
+  await fs.writeFile(
+    targetPath,
+    await formatGenerated(targetPath, content),
+    "utf8",
+  )
 }
-
-// ============================================================================
-// Phase 1: Internal Generated Files (registry/__generated__)
-// ============================================================================
 
 async function processDirectory(
   dirPath: string,
@@ -131,53 +118,24 @@ export const DemosIndex: Record<
   console.log("  ✓ __generated__/demos.tsx")
 }
 
-// Get the package import for each library
-function getLibraryPackage(library: string): string {
-  switch (library) {
-    case "tabler":
-      return "@tabler/icons-react"
-    case "hugeicons":
-      return "@hugeicons/core-free-icons"
-    case "remix":
-      return "@remixicon/react"
-    case "phosphor":
-      return "@phosphor-icons/react"
-    default:
-      return ""
-  }
-}
-
-// Generate __libraryName__.ts files with only the icons we use
+// Generate __libraryName__.ts files exporting each library's glyph under the
+// registry name, so the runtime loader looks icons up by registry name alone.
 async function buildIconLibraryExports() {
-  const iconsDir = GENERATED_DIR
-
-  // Collect unique icon names per library
-  const libraryIcons: Record<string, Set<string>> = {
-    tabler: new Set(),
-    hugeicons: new Set(),
-    remix: new Set(),
-    phosphor: new Set(),
-  }
-
-  for (const iconMapping of Object.values(registryIcons)) {
-    if (iconMapping.tabler) libraryIcons.tabler?.add(iconMapping.tabler)
-    if (iconMapping.hugeicons)
-      libraryIcons.hugeicons?.add(iconMapping.hugeicons)
-    if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix)
-    if (iconMapping.phosphor) libraryIcons.phosphor?.add(iconMapping.phosphor)
-  }
-
-  // Generate a file for each library. Remix/tabler export plain components;
-  // hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
-  // wraps each one into a component — the runtime loader stays uniform.
-  for (const [library, icons] of Object.entries(libraryIcons)) {
-    const packageName = getLibraryPackage(library)
-    const sortedIcons = [...icons].sort((a, b) => a.localeCompare(b))
-
-    const isHugeicons = library === "hugeicons"
+  const keys = Object.keys(registryIcons).sort((a, b) => a.localeCompare(b))
+  for (const { name: library, import: packageName } of iconLibraries) {
+    if (library === "lucide") continue
+    const pairs = keys.map((key) => {
+      const name = registryIcons[key]?.[library]
+      if (!name)
+        throw new Error(`Icon "${key}" not found for library "${library}"`)
+      return [key, name] as const
+    })
     const header = `// AUTO-GENERATED - DO NOT EDIT
-// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)`
+// Only exports the ${pairs.length} icons the registry uses (not the entire library)`
 
+    // Hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
+    // wraps each one into a component — the runtime loader stays uniform.
+    const isHugeicons = library === "hugeicons"
     const content = isHugeicons
       ? `${header}
 "use client";
@@ -185,8 +143,8 @@ async function buildIconLibraryExports() {
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import {
-${sortedIcons.map((name) => `\t${name} as ${name}Data,`).join("\n")}
-} from "${packageName}";
+${[...new Set(pairs.map(([, name]) => name))].map((name) => `\t${name} as ${name}Data,`).join("\n")}
+} from "@hugeicons/core-free-icons";
 
 // The \`hugeicon\` marker class lets the stroke-width axis target the paths
 // (see base.css) — hugeicons paths carry their own stroke-width attribute.
@@ -196,65 +154,44 @@ function wrap(icon: HugeiconsIconProps["icon"]) {
 \t};
 }
 
-${sortedIcons.map((name) => `export const ${name} = wrap(${name}Data);`).join("\n")}
+${pairs.map(([key, name]) => `export const ${key} = wrap(${name}Data);`).join("\n")}
 `
       : `${header}
-${sortedIcons.length > 0 ? `export { ${sortedIcons.join(", ")} } from "${packageName}";` : ""}
+export { ${pairs.map(([key, name]) => (key === name ? key : `${name} as ${key}`)).join(", ")} } from "${packageName}";
 `
 
     const ext = isHugeicons ? "tsx" : "ts"
-    const targetPath = path.join(iconsDir, `__${library}__.${ext}`)
+    const targetPath = path.join(GENERATED_DIR, `__${library}__.${ext}`)
     await writeGeneratedFile(targetPath, content)
     console.log(
-      `  ✓ __generated__/__${library}__.${ext} (${sortedIcons.length} icons)`,
+      `  ✓ __generated__/__${library}__.${ext} (${pairs.length} icons)`,
     )
   }
 }
 
 async function buildInternalIcons() {
   const targetPath = path.join(GENERATED_DIR, "icons.tsx")
-
   const iconKeys = Object.keys(registryIcons)
 
-  // Collect all unique lucide icon names for individual imports
-  const lucideIconNames = new Set<string>()
-  for (const iconKey of iconKeys) {
-    const iconMapping = registryIcons[iconKey]
-    if (iconMapping?.lucide) {
-      lucideIconNames.add(iconMapping.lucide)
-    }
-  }
-
-  // Generate individual imports with aliases to avoid naming collisions (tree-shakeable)
+  // Individual lucide imports, aliased to avoid collisions (tree-shakeable)
+  const lucideIconNames = new Set(
+    iconKeys.map((key) => {
+      const name = registryIcons[key]?.lucide
+      if (!name) throw new Error(`Icon "${key}" not found for library "lucide"`)
+      return name
+    }),
+  )
   const lucideImports = Array.from(lucideIconNames)
     .sort((a, b) => a.localeCompare(b))
     .map((name) => `  ${name} as Lucide${name},`)
     .join("\n")
 
   const iconExports = iconKeys
-    .map((iconKey) => {
-      const iconMapping = registryIcons[iconKey]
-      if (!iconMapping) {
-        throw new Error(`Icon mapping not found for: ${iconKey}`)
-      }
-
-      const names = iconLibraries
-        .map((library) => {
-          const iconName = iconMapping[library.name]
-          if (!iconName) {
-            throw new Error(
-              `Icon "${iconKey}" not found for library "${library.name}"`,
-            )
-          }
-          return `  ${library.name}: "${iconName}",`
-        })
-        .join("\n")
-
-      return `export const ${iconKey} = createIcon(Lucide${iconMapping.lucide}, {
-${names}
-});`
-    })
-    .join("\n\n")
+    .map(
+      (key) =>
+        `export const ${key} = createIcon(Lucide${registryIcons[key]?.lucide}, "${key}");`,
+    )
+    .join("\n")
 
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
@@ -276,16 +213,10 @@ ${iconExports}
 }
 
 async function buildInternalExamples() {
-  // Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
-  // rather than registry/__generated__, so the registry tree never imports "up" into
-  // @/modules/studio/preview/group-examples — keeping registry/ items-only.
+  // Consumed only by the studio preview route (routes/preview/-preview-page.tsx).
   const targetDir = path.join(process.cwd(), "src/modules/studio/__generated__")
   const targetPath = path.join(targetDir, "examples.tsx")
   const uiDir = path.join(REGISTRY_DIR, "ui")
-  const groupExamplesDir = path.join(
-    process.cwd(),
-    "src/modules/studio/preview/group-examples",
-  )
   await fs.mkdir(targetDir, { recursive: true })
 
   const componentFolders = await fs.readdir(uiDir)
@@ -300,18 +231,6 @@ async function buildInternalExamples() {
     }
   }
 
-  const groupEntries: string[] = []
-  if (existsSync(groupExamplesDir)) {
-    const groupFiles = await fs.readdir(groupExamplesDir)
-    for (const file of groupFiles.sort()) {
-      if (!file.endsWith(".tsx")) continue
-      const name = file.replace(/\.tsx$/, "")
-      groupEntries.push(
-        `  "${name}": () => import("@/modules/studio/preview/group-examples/${name}"),`,
-      )
-    }
-  }
-
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
@@ -321,114 +240,13 @@ export const ExamplesIndex: Record<
 > = {
 ${entries.join("\n")}
 };
-
-export const GroupExamplesIndex: Record<
-  string,
-  () => Promise<{ default: React.ComponentType }>
-> = {
-${groupEntries.join("\n")}
-};
 `
 
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ create/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
+    `  ✓ studio/__generated__/examples.tsx (${entries.length} components)`,
   )
 }
-
-/** Studio panel search index: every settings row label and group title in
- *  each chapter's section, keyed by chapter id — so search reaches nested
- *  axes, not just chapter names. Read off the section JSX, plus the motion
- *  registry's entries and presets (their rows are data-driven); other data-driven
- *  labels (color roles, shape roles) are out of scope. */
-async function buildStudioSearchIndex() {
-  const studioDir = path.join(process.cwd(), "src/modules/studio")
-  const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
-  const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
-  const motion = await fs.readFile(
-    path.join(studioDir, "motion-controls.tsx"),
-    "utf8",
-  )
-  const presets = await fs.readFile(
-    path.join(studioDir, "axes", "motion-presets.ts"),
-    "utf8",
-  )
-
-  const sectionOf = new Map<string, string>()
-  for (const [, names = "", file = ""] of state.matchAll(
-    /import \{([^}]+)\} from "\.\/sections\/([\w-]+)"/g,
-  )) {
-    for (const name of names.split(",")) sectionOf.set(name.trim(), file)
-  }
-
-  const lines: string[] = []
-  for (const [, id = "", body = ""] of state.matchAll(
-    /id: "([\w-]+)",[\s\S]*?Body: (\w+),/g,
-  )) {
-    const file = sectionOf.get(body)
-    if (!file) continue
-    const read = (name: string) =>
-      fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
-    const rowLabels = (source: string) => {
-      const found: string[] = []
-      // A row's own label (a folded row's title) — the tag must not contain
-      // another "<" before it.
-      for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|\w+Motion|CardGrid)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
-      ))
-        found.push(label)
-      for (const [, title = ""] of source.matchAll(
-        /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
-      ))
-        found.push(title.trim())
-      return found
-    }
-    const source = await read(file)
-    const labels = new Set<string>(rowLabels(source))
-    // A section that composes sibling sections (Components) indexes their
-    // rows too, under the sibling's name.
-    for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g)) {
-      const title = sibling.replace(/-/g, " ")
-      const prefix = title[0]!.toUpperCase() + title.slice(1)
-      labels.add(prefix)
-      for (const label of rowLabels(await read(sibling)))
-        labels.add(`${prefix} › ${label}`)
-    }
-    if (id === "motion") {
-      for (const [, label = ""] of presets.matchAll(
-        /preset\("[^"]+", "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, label = ""] of motion.matchAll(
-        /id: "[^"]+",\s*label: "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, list = ""] of motion.matchAll(/followers: \[([^\]]+)\]/g))
-        for (const [, label = ""] of list.matchAll(/"([^"]+)"/g))
-          labels.add(label)
-    }
-    lines.push(
-      `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
-    )
-  }
-
-  const content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "tsx scripts/registry-build.ts" to regenerate
-
-/** Settings row labels per chapter id, for the panel search. */
-export const SEARCH_INDEX: Record<string, string[]> = {
-${lines.join("\n")}
-}
-`
-  await writeGeneratedFile(targetPath, content)
-  console.log(
-    `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
-  )
-}
-
-// ============================================================================
-// Generated item manifest: registryUi / registryLib globbed from meta.ts
-// ============================================================================
 
 // PascalCase identifier for a scope+slug, e.g. ("ui","color-area") -> "UiColorArea".
 function toItemIdent(scope: "ui" | "lib", slug: string): string {
@@ -441,11 +259,10 @@ function toItemIdent(scope: "ui" | "lib", slug: string): string {
 }
 
 // Emits __generated__/registry-items.ts — the single source of truth for
-// registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts minus the
-// ORPHAN_ALLOWLIST. Committed and load-bearing for the app: ui/registry.ts +
-// lib/registry.ts re-export it. This script derives its own fresh item lists
-// (loadRegisteredItems) rather than importing the manifest, so a stale manifest
-// never blocks regenerating it.
+// registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts. Committed
+// and load-bearing for the app: ui/registry.ts + lib/registry.ts re-export it.
+// This script derives its own fresh item lists (loadRegisteredItems) rather
+// than importing the manifest, so a stale manifest never blocks regenerating it.
 async function buildRegistryItemsManifest() {
   const targetPath = path.join(GENERATED_DIR, "registry-items.ts")
   const ui = await listRegistryFolders("ui")
@@ -459,7 +276,7 @@ async function buildRegistryItemsManifest() {
   // Sort value imports by module specifier (NOT identifier) to match oxfmt's
   // sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
   // "ui/checkbox" ('-' < '/') — so the generated file passes `oxfmt --check` as-is
-  // (writeGeneratedFile's inline format() does not re-sort imports). The type
+  // (writeGeneratedFile's format does not re-sort imports). The type
   // import follows the value group with no blank line; the header comment is
   // detached by a blank line so oxfmt leaves it at the top.
   const valueImports = [
@@ -493,35 +310,10 @@ ${arrayBlock("registryLib", "lib", lib)}
   )
 }
 
-// ============================================================================
-// Build-time Guard: registry-items glob drift + integrity
-// ============================================================================
-
 /**
- * Folders that have a `meta.ts` on disk but are intentionally EXCLUDED from the
- * generated registry (work-in-progress, not shipped). This single Set is the
- * source of truth read by BOTH the glob that emits __generated__/registry-items.ts
- * AND the build-time guards — so emitter and guard can never disagree about the
- * registered set. Removing an entry makes that folder start shipping on the next
- * build:registry; adding a slug keeps a WIP item out.
- *
- *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
- *                         not exist yet.
- *   ui/tanstack-form     WIP — name:"form"; stub (index.tsx + meta only).
- *
- * NOTE: react-hook-form and tanstack-form both declare name:"form"; they never
- * collide because both are excluded here (and bare ui/form has no meta.ts).
- */
-const ORPHAN_ALLOWLIST = new Set<string>([
-  "ui/react-hook-form",
-  "ui/tanstack-form",
-])
-
-/**
- * Directories under `src/registry/<scope>` that have a `meta.ts` on disk, minus
- * the ORPHAN_ALLOWLIST, sorted by slug. The ONE place the glob + exclusion lives
- * — both the manifest emitter and the item loader call it, so they can never
- * disagree about what is registered.
+ * Directories under `src/registry/<scope>` that have a `meta.ts` on disk,
+ * sorted by slug. Both the manifest emitter and the item loader call it, so
+ * they can never disagree about what is registered.
  */
 async function listRegistryFolders(scope: "ui" | "lib"): Promise<string[]> {
   const scopeDir = path.join(REGISTRY_DIR, scope)
@@ -530,7 +322,6 @@ async function listRegistryFolders(scope: "ui" | "lib"): Promise<string[]> {
   for (const entry of dirEntries) {
     if (!entry.isDirectory()) continue
     if (!existsSync(path.join(scopeDir, entry.name, "meta.ts"))) continue
-    if (ORPHAN_ALLOWLIST.has(`${scope}/${entry.name}`)) continue
     folders.push(entry.name)
   }
   return folders.sort()
@@ -558,47 +349,6 @@ async function loadRegisteredItems(
   return items
 }
 
-/** Fails if an ORPHAN_ALLOWLIST entry no longer has a meta.ts on disk (rotted entry). */
-function checkAllowlistStale(): string[] {
-  const errors: string[] = []
-  for (const key of ORPHAN_ALLOWLIST) {
-    if (!existsSync(path.join(REGISTRY_DIR, key, "meta.ts"))) {
-      errors.push(
-        `Stale ORPHAN_ALLOWLIST entry "${key}" — ${key}/meta.ts no longer exists. ` +
-          `Remove it from ORPHAN_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  return errors
-}
-
-/** Non-fatal: warns when an excluded ui/* folder looks production-ready (has demos/examples). */
-function checkAllowlistReadiness(): void {
-  for (const key of ORPHAN_ALLOWLIST) {
-    if (!key.startsWith("ui/")) continue
-    const dir = path.join(REGISTRY_DIR, key)
-    if (
-      existsSync(path.join(dir, "demos")) ||
-      existsSync(path.join(dir, "examples.tsx"))
-    ) {
-      console.warn(
-        `  ⚠ ${key} is allowlisted (excluded from the registry) but has demos/examples — ` +
-          `looks production-ready. Consider removing it from ORPHAN_ALLOWLIST so it ships.`,
-      )
-    }
-  }
-}
-
-/**
- * Derived dep names whose target is NOT a registered item yet — a known packaging gap.
- * Skipped so the drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed
- * by DEP-NAME and covers the hooks scope, so it is deliberately DISTINCT from
- * ORPHAN_ALLOWLIST (folder-path keyed, ui|lib only) — do not unify them. Drop an entry
- * once its target is a registered item, and the guard will then require consumers to
- * declare it. Currently empty — every derived dep resolves to a registered item.
- */
-const UNREGISTERED_DEP_ALLOWLIST = new Set<string>()
-
 /**
  * Asserts each registered ui item DECLARES every registry dependency its shipped base
  * file(s) import. The shipped import graph is a SUBSET of the intended dependency
@@ -610,14 +360,12 @@ async function checkRegistryDepsDrift(
   registryLib: RegistryItem[],
 ): Promise<string[]> {
   const registeredNames = new Set<string>(
-    [...registryBase, ...registryUi, ...registryLib, ...registryHooks].map(
-      (item) => item.name,
-    ),
+    [...registryUi, ...registryLib, ...registryHooks].map((item) => item.name),
   )
   const errors: string[] = []
 
   for (const meta of registryUi) {
-    // A base file an enum value swaps in is checked against that value's deps.
+    // A base file a param value swaps in is checked against that value's deps.
     for (const baseFile of collectBaseFiles(meta)) {
       const derived = deriveRegistryDeps({
         registryDir: REGISTRY_DIR,
@@ -630,7 +378,6 @@ async function checkRegistryDepsDrift(
       for (const dep of derived) {
         if (declared.has(dep)) continue
         if (BUNDLED_INTO_INIT.has(dep)) continue
-        if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue
         if (registeredNames.has(dep)) {
           errors.push(
             `registryDependencies drift: "${meta.name}" ${baseFile.path} imports "${dep}" but meta omits it. ` +
@@ -639,7 +386,7 @@ async function checkRegistryDepsDrift(
         } else {
           errors.push(
             `Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
-              `not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+              `and not bundled. Register it.`,
           )
         }
       }
@@ -655,7 +402,7 @@ function selectionsShipping(
 ): Record<string, string> {
   const selections: Record<string, string> = {}
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.files) continue
+    if (!def.files) continue
     for (const [value, files] of Object.entries(def.files)) {
       if (files.some((file) => file.path === filePath)) {
         selections[paramName] = value
@@ -665,11 +412,7 @@ function selectionsShipping(
   return selections
 }
 
-/**
- * Asserts `meta.name` is globally unique across all REGISTERED items
- * (base + ui + lib + hooks). Unregistered/allowlisted items are not
- * checked here, so the two unregistered name:"form" folders don't collide.
- */
+/** Asserts `meta.name` is globally unique across ui, lib and hooks items. */
 function checkUniqueRegisteredNames(
   registryUi: RegistryItem[],
   registryLib: RegistryItem[],
@@ -677,7 +420,6 @@ function checkUniqueRegisteredNames(
   const seen = new Map<string, string>() // name -> scope it was first seen in
   const errors: string[] = []
   const groups: Array<[string, RegistryItem[]]> = [
-    ["base", registryBase as unknown as RegistryItem[]],
     ["ui", registryUi],
     ["lib", registryLib],
     ["hooks", registryHooks],
@@ -704,9 +446,7 @@ async function checkRegistryIntegrity(
   registryUi: RegistryItem[],
   registryLib: RegistryItem[],
 ) {
-  checkAllowlistReadiness()
   const errors = [
-    ...checkAllowlistStale(),
     ...(await checkRegistryDepsDrift(registryUi, registryLib)),
     ...checkUniqueRegisteredNames(registryUi, registryLib),
   ]
@@ -716,64 +456,17 @@ async function checkRegistryIntegrity(
       `Registry integrity check failed:\n  - ${errors.join("\n  - ")}`,
     )
   }
-  console.log(
-    "  ✓ registry integrity (allowlist fresh, deps declared, names unique)",
-  )
+  console.log("  ✓ registry integrity (deps declared, names unique)")
 }
 
-// ============================================================================
-// Post-publish guards: the emitted publishable set is a CONTRACT — every skip
-// is explained, every declared dep resolves, every docs-advertised name ships.
+// Post-publish guards: the emitted publishable set is a CONTRACT — every
+// declared dep resolves, every docs-advertised name ships.
 // These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
-// ============================================================================
 
 /**
- * ui items allowed to NOT emit a publishable, name → reason. Mirrors
- * ORPHAN_ALLOWLIST: a skip that is NOT listed here fails the build, and a listed
- * name that DID publish is stale and also fails. Every registered ui item must
- * publish, so this starts EMPTY — an extractor/transform error is a build break,
- * never a silent skip (the original #477 failure).
- */
-const SKIP_ALLOWLIST = new Map<string, string>()
-
-/** Guard 1: fails on any unexplained publishable skip and on stale allowlist entries. */
-function checkPublishableSkips(build: PublishablesBuild): string[] {
-  const errors: string[] = []
-  for (const { name, reason } of build.skipped) {
-    if (SKIP_ALLOWLIST.has(name)) continue
-    errors.push(
-      `Publishable "${name}" was skipped: ${reason}\n` +
-        `      Fix ui/${name} so it emits a publishable, or (only if intentional) add ` +
-        `"${name}" to SKIP_ALLOWLIST in scripts/registry-build.ts with a reason.`,
-    )
-  }
-  for (const name of SKIP_ALLOWLIST.keys()) {
-    if (build.builtNames.has(name)) {
-      errors.push(
-        `Stale SKIP_ALLOWLIST entry "${name}" — it now publishes fine. ` +
-          `Remove it from SKIP_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  return errors
-}
-
-/**
- * Registered lib/hook items referenced as `registryDependencies` that are NOT
- * independently servable at GET /r/{name}.json (only ui items become publishables).
- * shadcn add would fall through to its DEFAULT registry for these bare names —
- * the exact #477 failure. They are a KNOWN packaging gap: the fix is to ship the
- * file inline (as ui/tabs does with lib/context) or make lib/hooks servable.
- * name → reason. Keyed by DEP-NAME; distinct from ORPHAN_ALLOWLIST (folder-path)
- * and UNREGISTERED_DEP_ALLOWLIST (derived-import gaps). Drop an entry once the
- * dep is inlined or becomes a publishable, and the guard requires it to resolve.
- */
-const KNOWN_UNSERVABLE_DEPS = new Map<string, string>()
-
-/**
- * Guard 2: every publishable's `registryDependencies` must resolve to something
+ * Every publishable's `registryDependencies` must resolve to something
  * shadcn can fetch — another publishable, an init-bundled name, an absolute URL,
  * or an `@namespace/…` dep. A bare unknown name silently resolves against
  * shadcn's default registry (how text-field pulled shadcn's Input), so it fails.
@@ -783,50 +476,22 @@ function checkDependencyClosure(
   build: PublishablesBuild,
 ): string[] {
   const errors: string[] = []
-  const referenced = new Set<string>()
   for (const meta of registryUi) {
     if (!build.builtNames.has(meta.name)) continue
     for (const dep of registryDepsFor(meta)) {
       if (build.builtNames.has(dep)) continue
       if (BUNDLED_INTO_INIT.has(dep)) continue
       if (dep.includes("://") || dep.startsWith("@")) continue
-      if (KNOWN_UNSERVABLE_DEPS.has(dep)) {
-        referenced.add(dep)
-        continue
-      }
       errors.push(
         `Dangling registryDependency: "${meta.name}" declares "${dep}", which is not a ` +
           `published component, not bundled into init, and not an absolute-URL / @namespace dep. ` +
           `shadcn add would resolve "${dep}" against its DEFAULT registry (the #477 failure). ` +
-          `Publish "${dep}" (add ui/${dep}), fix the name in ui/${meta.name}/meta.ts, or — if it is a ` +
-          `known lib/hook gap — add it to KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  for (const [dep, reason] of KNOWN_UNSERVABLE_DEPS) {
-    if (build.builtNames.has(dep)) {
-      errors.push(
-        `Stale KNOWN_UNSERVABLE_DEPS entry "${dep}" — it now publishes and is servable. ` +
-          `Remove it from KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
-      )
-    } else if (!referenced.has(dep)) {
-      errors.push(
-        `Stale KNOWN_UNSERVABLE_DEPS entry "${dep}" — no publishable declares it anymore (${reason}). ` +
-          `Remove it from KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
+          `Publish "${dep}" (add ui/${dep}) or fix the name in ui/${meta.name}/meta.ts.`,
       )
     }
   }
   return errors
 }
-
-/**
- * Non-component `@dotui/<name>` install targets docs may advertise, name →
- * reason. Starts EMPTY: every install name in the docs must resolve to a
- * publishable or a served route (see SERVED_ROUTE_NAMES). An entry here is a
- * standing excuse for a name that 404s, so add one only for a genuinely
- * unservable target, with a reason; a name that starts publishing makes it stale.
- */
-const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
 
 /**
  * Names that resolve to a real `/r/<name>.json` file but aren't components, so
@@ -852,11 +517,11 @@ const DOCS_REGISTRY_URL_RE =
 const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 
 /**
- * Guard 3: every install name advertised in the docs must ship. Scans
+ * Every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
- * URLs; each must be a publishable, a served route (SERVED_ROUTE_NAMES), or an
- * allowlisted non-component. This is what would have caught `@dotui/text-field`
- * advertising a component that 404'd.
+ * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES).
+ * This is what would have caught `@dotui/text-field` advertising a component
+ * that 404'd.
  */
 async function checkDocsRegistryConsistency(
   build: PublishablesBuild,
@@ -864,7 +529,6 @@ async function checkDocsRegistryConsistency(
   const docsDir = path.join(process.cwd(), "content/docs")
   const files = await listMdxFiles(docsDir)
   const errors: string[] = []
-  const seen = new Set<string>()
 
   for (const file of files) {
     const source = await fs.readFile(file, "utf8")
@@ -885,34 +549,15 @@ async function checkDocsRegistryConsistency(
           if (!name) continue
           if (build.builtNames.has(name)) continue
           if (SERVED_ROUTE_NAMES.has(name)) continue
-          if (DOCS_INSTALL_NAME_ALLOWLIST.has(name)) {
-            seen.add(name)
-            continue
-          }
           errors.push(
             `${path.relative(process.cwd(), file)}:${i + 1} advertises "@dotui/${name}", ` +
-              `which is not a published component. Publish "${name}" (add ui/${name}), fix the docs ` +
-              `name, or — if it is a known non-component target — add it to DOCS_INSTALL_NAME_ALLOWLIST ` +
-              `in scripts/registry-build.ts.`,
+              `which is not a published component. Publish "${name}" (add ui/${name}) or fix the docs name.`,
           )
         }
       }
     })
   }
 
-  for (const [name, reason] of DOCS_INSTALL_NAME_ALLOWLIST) {
-    if (build.builtNames.has(name)) {
-      errors.push(
-        `Stale DOCS_INSTALL_NAME_ALLOWLIST entry "${name}" — it now publishes as a component. ` +
-          `Remove it from DOCS_INSTALL_NAME_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    } else if (!seen.has(name)) {
-      errors.push(
-        `Stale DOCS_INSTALL_NAME_ALLOWLIST entry "${name}" — no docs page advertises it anymore (${reason}). ` +
-          `Remove it from DOCS_INSTALL_NAME_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
   return errors
 }
 
@@ -926,13 +571,12 @@ async function listMdxFiles(dir: string): Promise<string[]> {
   return out.sort()
 }
 
-/** Runs the post-publish guards (skips, dep closure, docs); throws on any failure. */
+/** Runs the post-publish guards (dep closure, docs); throws on any failure. */
 async function checkPublishableIntegrity(
   registryUi: RegistryItem[],
   build: PublishablesBuild,
 ) {
   const errors = [
-    ...checkPublishableSkips(build),
     ...checkDependencyClosure(registryUi, build),
     ...(await checkDocsRegistryConsistency(build)),
   ]
@@ -941,17 +585,10 @@ async function checkPublishableIntegrity(
       `Publishable integrity check failed:\n  - ${errors.join("\n  - ")}`,
     )
   }
-  console.log(
-    "  ✓ publishable integrity (no unexplained skips, deps resolve, docs names ship)",
-  )
+  console.log("  ✓ publishable integrity (deps resolve, docs names ship)")
 }
 
-// ============================================================================
-// Main
-// ============================================================================
-
 interface PublishablesBuild {
-  skipped: Array<{ name: string; reason: string }>
   /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
 }
@@ -959,36 +596,16 @@ interface PublishablesBuild {
 async function buildShadcnPublishables(
   items: RegistryItem[],
 ): Promise<PublishablesBuild> {
-  const { written, skipped } = await buildPublishables({
+  const { written, published } = await buildPublishables({
     registryDir: REGISTRY_DIR,
     items,
   })
   for (const filePath of written) {
     console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`)
   }
-  if (skipped.length > 0) {
-    console.log(`\n  ${skipped.length} component(s) skipped:`)
-    for (const { name, reason } of skipped) {
-      console.log(`    - ${name}: ${reason}`)
-    }
-  }
-
-  // A written path is `<name>.ts`, excluding the index/base-css helpers.
-  const builtNames = new Set(
-    written
-      .filter((p) => p.endsWith(".ts"))
-      .map((p) => path.basename(p, ".ts"))
-      .filter((n) => n !== "index" && n !== "base-css"),
-  )
-  return { skipped, builtNames }
+  return { builtNames: new Set(published) }
 }
 
-/**
- * Generate base/colors.css from the site's ColorConfig: the primitive ramps
- * (both modes solved independently by the engine) and the semantic `@theme`
- * block that references them. This file is site-only — the shipped theme
- * flattens the semantic tokens to literals instead (see publisher/emit-theme).
- */
 // The engine's input contract is a zod schema checked here, at build time,
 // for the default and every built-in preset — `createTheme` itself trusts
 // its typed input so the client never ships zod.
@@ -1038,6 +655,12 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
   console.log(`  ✓ presets/__generated__/catalog.ts (${catalog.length})`)
 }
 
+/**
+ * Generate base/colors.css from the site's ColorConfig: the primitive ramps
+ * (both modes solved independently by the engine) and the semantic `@theme`
+ * block that references them. This file is site-only — the shipped theme
+ * flattens the semantic tokens to literals instead (see publisher/emit-theme).
+ */
 async function generateBaseColorsCss() {
   const primitives = emitPrimitivesCss(resolveColorConfig(SITE_COLOR_CONFIG))
   const dark = emitDarkOverridesCss(SITE_SEMANTICS)
@@ -1071,7 +694,6 @@ async function main() {
     await buildInternalDemos()
     await buildInternalIcons()
     await buildInternalExamples()
-    await buildStudioSearchIndex()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies

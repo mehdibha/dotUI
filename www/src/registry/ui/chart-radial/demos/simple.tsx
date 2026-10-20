@@ -23,7 +23,6 @@ const data = [
 
 const max = Math.max(...data.map((row) => row.visitors))
 
-// One ring per browser, innermost first.
 const chart = defineChart({
   scales: { x: null, y: null },
   color: { legend: chartLegend },
@@ -38,7 +37,6 @@ const chart = defineChart({
       },
       radiusRatio: 0.95,
       marks: [
-        // The track behind each ring stays put while the rings sweep in.
         polarDecorative(
           radialBarAngle(data, {
             angle: () => max,
@@ -60,6 +58,6 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartRadialSimple() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

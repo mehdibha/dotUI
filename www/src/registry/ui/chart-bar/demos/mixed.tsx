@@ -14,7 +14,6 @@ const data = [
   { browser: "Other", visitors: 90 },
 ]
 
-// One series per category: every bar lands on its own palette slot.
 const chart = defineChart({
   scales: {
     x: {
@@ -38,6 +37,6 @@ const chart = defineChart({
   focus: "group-y",
 })
 
-export default function ChartBarMixed() {
+export default function Demo() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

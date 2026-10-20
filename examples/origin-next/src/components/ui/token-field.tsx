@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import {
   Token as TokenPrimitive,
   TokenField as TokenFieldPrimitive,
@@ -11,15 +11,17 @@ import type {
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
 } from "react-aria-components/TokenField";
+
+import { inputStyles } from "@/components/ui/input";
 import { tv } from "tailwind-variants";
 
 const tokenFieldVariants = tv({
   slots: {
     root: "group/token-field flex w-full flex-col gap-1.5",
     input:
-      "min-h-16 w-full rounded-md border border-border-control bg-field px-2.5 py-2 text-base outline-none sm:text-sm transition-[box-shadow,border-color,color] focus:border-border-focus focus:focus-input data-disabled:cursor-disabled data-disabled:border-(--disabled-border,var(--color-border-control)) data-disabled:bg-(--disabled-bg,var(--color-field)) data-disabled:text-(--disabled-fg,currentColor) empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
+      "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
     token:
-      "rounded-sm bg-accent-muted px-0.5 text-fg-accent data-selected:bg-accent data-selected:text-fg-on-accent",
+      "rounded-sm bg-selected px-0.5 text-fg-on-selected data-selected:bg-selection data-selected:text-fg-on-selection",
   },
 });
 
@@ -35,15 +37,10 @@ interface TokenFieldProps extends Omit<
   className?: string;
 }
 
-/**
- * A token field lets users enter text with inline tokens — mentions, tags, or
- * object references. The field root provides the label and description slots;
- * compose a `TokenInput` for the editable area, and a `Label` before it when
- * you want a visible label.
- */
-function TokenField({ className, ...props }: TokenFieldProps) {
+/** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
+const TokenField = ({ className, ...props }: TokenFieldProps) => {
   return <TokenFieldPrimitive className={root({ className })} {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -54,34 +51,29 @@ interface TokenInputProps extends Omit<
   /** Text shown while the field is empty. */
   placeholder?: string;
   className?: string;
-  /**
-   * Renders each inline token. @default a `Token` with the segment's text
-   */
+  /** Renders each inline token. @default a `Token` with the segment's text */
   children?: TokenInputPrimitiveProps["children"];
 }
 
-/**
- * The editable area of a `TokenField`: a content-editable surface that renders
- * the value's text and inline tokens. Tokens render as `Token`s unless a
- * render function is provided.
- */
-function TokenInput({
+/** The content-editable area of a `TokenField`. */
+const TokenInput = ({
   placeholder,
   className,
   children,
   ...props
-}: TokenInputProps) {
+}: TokenInputProps) => {
+  const { textArea } = inputStyles();
   return (
     <TokenInputPrimitive
       data-token-input=""
       data-placeholder={placeholder}
-      className={input({ className })}
+      className={textArea({ className: input({ className }) })}
       {...props}
     >
       {children ?? ((segment) => <Token>{segment.text}</Token>)}
     </TokenInputPrimitive>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -90,9 +82,9 @@ interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
 }
 
 /** An inline token within a `TokenInput`. */
-function Token({ className, ...props }: TokenProps) {
+const Token = ({ className, ...props }: TokenProps) => {
   return <TokenPrimitive className={token({ className })} {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

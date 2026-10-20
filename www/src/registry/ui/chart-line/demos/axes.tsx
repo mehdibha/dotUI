@@ -42,7 +42,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartLineAxes() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

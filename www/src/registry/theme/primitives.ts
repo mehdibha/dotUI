@@ -1,13 +1,3 @@
-/**
- * Resolve a {@link ColorConfig} into engine output and emit it as
- * `base/colors.css`.
- *
- * The `@dotui/colors` engine generates BOTH modes as independent passes
- * (no ladder reversal, no post-hoc lightness surgery) plus solved `on-*`
- * labels and chart palettes. Emission routes light into
- * `:root`, dark into `.dark`; the semantic layer stays mode-agnostic.
- */
-
 import {
   createTheme,
   STEPS,
@@ -23,7 +13,6 @@ export type Ramp = Record<string, string>
 /** Base radius length; presets override it through `tokens["--radius"]`. */
 export const DEFAULT_RADIUS = "0.625rem"
 
-/** Convert the persisted config into engine options. */
 export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   const options: ThemeOptions = { seeds: { accent: config.seeds.accent } }
   for (const name of [
@@ -44,15 +33,15 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.neutralHue !== undefined) options.neutralHue = config.neutralHue
   if (config.preserveSeed !== undefined)
     options.preserveSeed = config.preserveSeed
+  if (config.solidInk) options.solidInk = config.solidInk
   if (config.chartPalette !== undefined)
     options.chartPalette = config.chartPalette
   return options
 }
 
 /**
- * Resolve a config through the engine. Salvages first — this also runs in
- * the publisher path on decoded request data, where a clamped axis beats a
- * deep engine throw.
+ * Resolve a config through the engine, salvaging first: the publisher passes
+ * decoded request data.
  */
 export function resolveColorConfig(config: ColorConfig): Theme {
   return createTheme(themeOptionsFromConfig(salvageColorConfig(config)))
@@ -60,11 +49,8 @@ export function resolveColorConfig(config: ColorConfig): Theme {
 
 export interface EmitPrimitivesOptions {
   /**
-   * Selector for the light-mode block (default `:root`). Pass a subtree
-   * selector (e.g. `[data-dotui-scope="x"]`) to override the primitives on a
-   * scope rather than globally. The default `:root` also carries the
-   * `base/colors.css` banner + `--radius` base; a custom selector
-   * omits both.
+   * Selector for the light-mode block (default `:root`). Only `:root` also
+   * emits the `base/colors.css` banner and the `--radius` base.
    */
   lightSelector?: string
   /** Selector for the dark-mode block (default `.dark`). */

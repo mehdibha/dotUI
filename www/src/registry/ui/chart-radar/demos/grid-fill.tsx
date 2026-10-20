@@ -40,7 +40,6 @@ const chart = defineChart({
       },
       radiusRatio: 0.78,
       guides: [
-        // A fill on the rings would stack up: fill the outer ring alone.
         {
           render: (context) =>
             radialGrid({
@@ -78,7 +77,7 @@ const chart = defineChart({
   focus: focusGroupAngle,
 })
 
-export default function ChartRadarGridFill() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

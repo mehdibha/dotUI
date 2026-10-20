@@ -66,7 +66,6 @@ describe("withChartLook", () => {
       ticks: { size: 0, padding: 10 },
     })
     expect(scales.y?.axis).toBe(false)
-    // The library paints the grid at 11%; the border token is the hairline.
     expect(scales.y?.grid).toEqual({ strokeOpacity: 1 })
   })
 

@@ -17,8 +17,6 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-/* Both labels ride inside the bar: the category anchors to the value
-   baseline, the value to the bar's end. */
 const chart = defineChart({
   scales: {
     x: { scale: scaleLinear, nice: true, axis: false },
@@ -59,7 +57,7 @@ const chart = defineChart({
   focus: "group-y",
 })
 
-export default function ChartBarLabelCustom() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

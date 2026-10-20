@@ -27,8 +27,6 @@ const ring = {
   strokeWidth: 2,
 } as const
 
-/* A second series is a second ring. Both rings color slices by month, so a
-   month is one color from the middle out. */
 const chart = defineChart({
   scales: { x: null, y: null },
   marks: [
@@ -49,11 +47,10 @@ const chart = defineChart({
     }),
   ],
   focus: "nearest",
-  // `value` is the slice's size, whichever ring it sits in.
   tooltip: chartSliceTooltip("month", "value"),
 })
 
-export default function ChartPieStacked() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

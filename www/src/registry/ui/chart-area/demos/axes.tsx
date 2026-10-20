@@ -46,7 +46,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartAreaAxes() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

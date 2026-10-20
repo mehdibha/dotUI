@@ -1,30 +1,35 @@
 "use client";
 
-import React, { useCallback } from "react";
+import * as React from "react";
 import { chain } from "react-aria";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DateFieldPrimitive from "react-aria-components/DateField";
-import * as GroupPrimitive from "react-aria-components/Group";
-import * as InputPrimitive from "react-aria-components/Input";
-import * as TextAreaPrimitive from "react-aria-components/TextArea";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
+import * as GroupPrimitives from "react-aria-components/Group";
+import * as InputPrimitives from "react-aria-components/Input";
+import * as TextAreaPrimitives from "react-aria-components/TextArea";
 import { mergeRefs } from "react-aria/mergeRefs";
 import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions";
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { useControlledState } from "react-stately/useControlledState";
 import { type VariantProps, tv } from "tailwind-variants";
 
-const inputVariants = tv({
+const inputStyles = tv({
   slots: {
     inputGroup:
-      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center **:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0 **:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none **:data-date-input:px-0 **:data-input:px-0 has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-textarea:px-0 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag-group:contents **:data-tag-list:contents text-base sm:text-sm border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus not-has-data-textarea:rounded-full has-data-textarea:rounded-lg hover:not-focus-within:not-disabled:bg-neutral-hover",
+      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center **:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0! **:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none **:data-input:px-0 has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-textarea:px-0 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag-group:contents **:data-tag-list:contents border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)] group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-(--focus-input-border) has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring not-has-data-textarea:rounded-sm has-data-textarea:rounded-sm hover:not-focus-within:not-invalid:not-disabled:border-border-control-hover text-base",
     inputGroupAddon:
-      "flex cursor-text items-center justify-center gap-(--addon-gap) select-none text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size) group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start **:data-button:rounded-[max(min(var(--radius-sm),var(--radius-full)),calc(var(--radius-full)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-textarea/input-group:px-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text) group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
+      "flex cursor-text items-center justify-center gap-(--addon-gap) select-none text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size) group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start **:data-button:rounded-[max(min(var(--radius-sm),var(--radius-sm)),calc(var(--radius-sm)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-textarea/input-group:px-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text) group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
     input:
-      "inline-flex w-full cursor-text items-center outline-none h-(--input-h) in-data-input-group:h-auto disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) text-base sm:text-sm border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus rounded-full hover:not-focus-within:not-disabled:bg-neutral-hover",
+      "inline-flex w-full cursor-text items-center outline-none h-(--input-h) in-data-input-group:h-auto disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)] focus:focus-input focus:not-invalid:border-(--focus-input-border) invalid:not-focus:invalid-ring rounded-sm hover:not-focus:not-invalid:not-disabled:border-border-control-hover text-base",
     textArea:
-      "min-h-16 w-full resize-none py-(--top-to-text) outline-none disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) text-base sm:text-sm border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus rounded-lg hover:not-focus-within:not-disabled:bg-neutral-hover",
+      "min-h-16 w-full resize-none py-(--top-to-text) outline-none disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)] focus:focus-input focus:not-invalid:border-(--focus-input-border) invalid:not-focus:invalid-ring rounded-sm hover:not-focus:not-invalid:not-disabled:border-border-control-hover text-base",
+    trigger:
+      "inline-flex h-(--input-h) w-full cursor-interactive items-center gap-(--text-to-visual) text-left whitespace-nowrap outline-none select-none *:[svg]:pointer-events-none *:[svg]:size-(--icon-size) *:[svg]:shrink-0 *:[svg]:text-fg-muted disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) border px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)] focus-visible:focus-input focus-visible:not-invalid:border-(--focus-input-border) invalid:not-focus-visible:invalid-ring rounded-sm pr-(--edge-to-visual) hover:not-focus-visible:not-invalid:not-disabled:border-border-control-hover text-base",
+    buttonTrigger: "",
+    divider: "border-border-control",
+    chip: "bg-neutral",
     dateInputSegment:
-      "rounded-sm px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
+      "rounded-xs px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
   },
   variants: {
     size: {
@@ -35,39 +40,53 @@ const inputVariants = tv({
           "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(8)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
         textArea:
           "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(8)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+        trigger:
+          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(8)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
       },
       md: {
         inputGroup:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(9)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(12)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3)]",
         input:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(9)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(12)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3)]",
         textArea:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(9)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(12)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3)]",
+        trigger:
+          "[--addon-button-inset:--spacing(2)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(12)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3)]",
       },
       lg: {
         inputGroup:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3)] [--edge-to-visual:--spacing(2.5)] [--icon-size:--spacing(4.5)] [--input-h:--spacing(10)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(14)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4)]",
         input:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3)] [--edge-to-visual:--spacing(2.5)] [--icon-size:--spacing(4.5)] [--input-h:--spacing(10)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(14)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4)]",
         textArea:
-          "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3)] [--edge-to-visual:--spacing(2.5)] [--icon-size:--spacing(4.5)] [--input-h:--spacing(10)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+          "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(14)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4)]",
+        trigger:
+          "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(14)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4)]",
+      },
+    },
+    variant: {
+      inline: {},
+      cell: {
+        inputGroupAddon:
+          "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text) border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t",
       },
     },
   },
   defaultVariants: {
     size: "md",
+    variant: "inline",
   },
 });
 
 const { inputGroup, input, textArea, inputGroupAddon, dateInputSegment } =
-  inputVariants();
+  inputStyles();
 
 /* -------------------------------------------------------------------------- */
 
+type InputSize = Pick<VariantProps<typeof inputStyles>, "size">;
+
 interface InputGroupProps
-  extends
-    React.ComponentProps<typeof GroupPrimitive.Group>,
-    VariantProps<typeof inputVariants> {}
+  extends React.ComponentProps<typeof GroupPrimitives.Group>, InputSize {}
 
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']";
 
@@ -83,7 +102,7 @@ const InputGroup = ({
   ...props
 }: InputGroupProps) => {
   return (
-    <GroupPrimitive.Group
+    <GroupPrimitives.Group
       data-input-group=""
       data-size={size}
       onPointerDown={(e) => {
@@ -115,12 +134,12 @@ const InputGroup = ({
 
 interface InputProps
   extends
-    Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
-    VariantProps<typeof inputVariants> {}
+    Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size">,
+    InputSize {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
   return (
-    <InputPrimitive.Input
+    <InputPrimitives.Input
       data-input=""
       data-size={size}
       data-input-control=""
@@ -135,7 +154,7 @@ const Input = ({ className, size, ...props }: InputProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface TextAreaProps extends React.ComponentProps<
-  typeof TextAreaPrimitive.TextArea
+  typeof TextAreaPrimitives.TextArea
 > {}
 
 const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
@@ -146,35 +165,30 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   );
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const onHeightChange = useCallback(() => {
-    if (inputRef.current) {
-      const input = inputRef.current;
-      const prevAlignment = input.style.alignSelf;
-      const prevOverflow = input.style.overflow;
-      const prevFlex = input.style.flex;
+  const onHeightChange = React.useCallback(() => {
+    const input = inputRef.current;
+    if (!input) return;
+    const prevAlignment = input.style.alignSelf;
+    const prevOverflow = input.style.overflow;
+    const prevFlex = input.style.flex;
 
-      const isFirefox = "MozAppearance" in input.style;
-      if (!isFirefox) {
-        input.style.overflow = "hidden";
-      }
-      input.style.flex = "none";
-      input.style.alignSelf = "start";
-      input.style.height = "auto";
-      input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
-      input.style.overflow = prevOverflow;
-      input.style.alignSelf = prevAlignment;
-      input.style.flex = prevFlex;
+    const isFirefox = "MozAppearance" in input.style;
+    if (!isFirefox) {
+      input.style.overflow = "hidden";
     }
+    input.style.flex = "none";
+    input.style.alignSelf = "start";
+    input.style.height = "auto";
+    input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
+    input.style.overflow = prevOverflow;
+    input.style.alignSelf = prevAlignment;
+    input.style.flex = prevFlex;
   }, []);
 
-  useLayoutEffect(() => {
-    if (inputRef.current) {
-      onHeightChange();
-    }
-  }, [onHeightChange, inputValue, inputRef]);
+  useLayoutEffect(() => onHeightChange(), [onHeightChange, inputValue]);
 
   return (
-    <TextAreaPrimitive.TextArea
+    <TextAreaPrimitives.TextArea
       ref={mergeRefs(
         inputRef,
         ref as React.RefObject<HTMLTextAreaElement | null>,
@@ -192,30 +206,35 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 
 /* -------------------------------------------------------------------------- */
 
-interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
+interface InputGroupAddonProps
+  extends
+    React.ComponentProps<"div">,
+    Pick<VariantProps<typeof inputStyles>, "variant"> {}
 
-function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
+const InputGroupAddon = ({
+  className,
+  variant,
+  ...props
+}: InputGroupAddonProps) => {
   return (
     <div
       data-input-group-addon=""
-      className={inputGroupAddon({ className })}
+      className={inputGroupAddon({ className, variant })}
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DateInputProps
-  extends
-    Omit<DateFieldPrimitive.DateInputProps, "children">,
-    VariantProps<typeof inputVariants> {
-  children?: DateFieldPrimitive.DateInputProps["children"];
+  extends Omit<DateFieldPrimitives.DateInputProps, "children">, InputSize {
+  children?: DateFieldPrimitives.DateInputProps["children"];
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
   return (
-    <DateFieldPrimitive.DateInput
+    <DateFieldPrimitives.DateInput
       data-input=""
       data-date-input=""
       data-input-control=""
@@ -226,34 +245,30 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
       {...props}
     >
       {(segment) => <DateSegment segment={segment} />}
-    </DateFieldPrimitive.DateInput>
+    </DateFieldPrimitives.DateInput>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface DateSegmentProps extends React.ComponentProps<
-  typeof DateFieldPrimitive.DateSegment
+  typeof DateFieldPrimitives.DateSegment
 > {}
 
-// Date/time segments are formatted with `Intl`, whose separator whitespace differs between the
-// Node SSR runtime and the browser: e.g. the AM/PM separator is a narrow no-break space (U+202F)
-// on Node but a regular space in the browser, and date ranges use a thin space (U+2009). Folding
-// these exotic spaces to a regular space makes server and client render identical text, which
-// avoids a hydration mismatch on the literal segments.
+// Intl's separator whitespace (U+202F, U+2009) differs between Node and the browser; folding it to a plain space avoids hydration mismatches.
 const normalizeSegmentWhitespace = (text: string) =>
   text.replace(/[\u00A0\u2007\u2009\u202F]/g, " ");
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
   return (
-    <DateFieldPrimitive.DateSegment
+    <DateFieldPrimitives.DateSegment
       className={composeRenderProps(className, (className) =>
         dateInputSegment({ className }),
       )}
       {...props}
     >
       {({ text }) => normalizeSegmentWhitespace(text)}
-    </DateFieldPrimitive.DateSegment>
+    </DateFieldPrimitives.DateSegment>
   );
 };
 
@@ -267,4 +282,12 @@ export type {
   InputProps,
   TextAreaProps,
 };
-export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, TextArea };
+export {
+  DateInput,
+  DateSegment,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  TextArea,
+  inputStyles,
+};

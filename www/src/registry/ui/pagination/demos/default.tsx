@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 
 import {
   Pagination,
@@ -54,8 +54,6 @@ export default function Demo() {
   )
 }
 
-// Always keep the first, last, current, and neighbouring pages; collapse the
-// rest into ellipses.
 function getPageRange(current: number, total: number): (number | "ellipsis")[] {
   const shown = new Set(
     [1, total, current, current - 1, current + 1].filter(

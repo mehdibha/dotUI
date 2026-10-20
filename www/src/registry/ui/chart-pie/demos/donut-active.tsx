@@ -22,7 +22,6 @@ const ring = {
   strokeWidth: 2,
 } as const
 
-// Static, so the highlighted slice reads without hovering.
 const chart = defineChart({
   scales: { x: null, y: null },
   marks: [
@@ -34,7 +33,6 @@ const chart = defineChart({
           ...ring,
           outerRadius: ({ radius }) => radius * 0.88,
         }),
-        // Chrome again, grown past the ring.
         polarDecorative(
           radialArc(
             slices.filter((slice) => slice.browser === "Chrome"),
@@ -48,7 +46,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartPieDonutActive() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

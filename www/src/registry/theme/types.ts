@@ -1,52 +1,37 @@
-/**
- * Semantic color vocabulary types (token system v2 — see SPEC.md).
- *
- * A token targets the engine's primitives by (palette, step) — steps are the
- * 12-job ladder — or a solved on-label, a mix, or a literal.
- * Targets are per-mode capable: `.dark` re-points are generated, never
- * hand-authored. `@dotui/colors` stays the pure engine (ramp generation);
- * this layer owns the semantic vocabulary + CSS.
- */
-
 import type { StepName } from "@dotui/colors"
 
 export type ModeName = "light" | "dark"
 
 /**
- * Which ramp the primary-action tokens (`color-primary*`, `color-fg-on-primary`)
- * draw from: the neutral backbone (black/white buttons — Vercel-style) or the
- * brand accent ramp (colored buttons — Material/Linear-style).
+ * Which ramp the primary-action tokens draw from: neutral (black/white) or the
+ * brand accent.
  */
 export type PrimaryColorSource = "neutral" | "accent"
 
-/** How a semantic token resolves to a CSS value. */
 export type SemanticTarget =
   | { ref: { palette: string; step: StepName } } // → var(--<palette>-<step>)
   | { on: { palette: string; step: "700" | "800" } } // → var(--on-<palette>-<step>)
   | { value: string } // a literal CSS value
   | { mix: [SemanticTarget, number, SemanticTarget] } // → color-mix(in oklab, a <n>%, b)
 
-/** Customizer grouping for a token. The picker filters on this today. */
+/** Customizer grouping for a token; the picker filters on it. */
 export type SemanticCategory = "background" | "foreground" | "border"
 
 export interface SemanticToken {
-  /** A mode-agnostic target, or a per-mode pair (dark re-points are generated). */
   target: SemanticTarget | { light: SemanticTarget; dark: SemanticTarget }
-  /** Customizer grouping + filter. */
   category: SemanticCategory
   /**
    * Ramp pools the customizer picker may offer for this token; `".."` means
    * "any custom palette". Omitted for solved `on-*` tokens.
    */
   scales?: readonly string[]
-  /** Optional human description for the picker UI. */
   description?: string
 }
 
 /** The semantic vocabulary, keyed by token name WITHOUT the leading `--` (e.g. `"color-bg"`). */
 export type SemanticVocabulary = Record<string, SemanticToken>
 
-/** The engine's 12-job ladder by job name (T2) — the remap-facing vocabulary. */
+/** The engine's 12-job ladder by job name. */
 export const JOB_STEPS = {
   "app-bg": "25",
   "subtle-bg": "50",
@@ -71,8 +56,8 @@ export interface TokenTargetSpec {
 }
 
 /**
- * A per-token remap (T5 `overrides`): one destination for both modes, or a
- * per-mode pair — a missing mode keeps the token's default target there.
+ * A per-token remap: one destination for both modes, or a per-mode pair where
+ * a missing mode keeps the token's default target.
  */
 export type TokenOverride =
   | TokenTargetSpec

@@ -28,7 +28,6 @@ const usd = new Intl.NumberFormat("en-US", {
 })
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 
-/* Bars, a line on a second y axis, and a dashed target in one definition. */
 const chart = defineChart({
   scales: {
     x: { scale: chartBand },
@@ -98,7 +97,7 @@ const chart = defineChart({
   },
 })
 
-export default function ChartComposed() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

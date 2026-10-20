@@ -2,11 +2,13 @@ export const siteConfig = {
   url: "https://dotui.org",
   name: "dotUI",
   title: "dotUI",
-  tagline: "The Design System Studio for the Web",
+  tagline: "The design system studio for humans and agents",
   description:
-    "The design system studio for the web. Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
+    "The design system studio for humans and agents. Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
   keywords: [
     "dotUI",
+    "design system",
+    "shadcn",
     "React",
     "Tailwind CSS",
     "React components",
@@ -20,14 +22,8 @@ export const siteConfig = {
     },
   ],
   creator: "mehdibha",
-  thumbnail: "/images/thumbnail.png",
   twitter: {
     creator: "@mehdibha",
-  },
-  og: {
-    title: "The Design System Studio for the Web",
-    description:
-      "Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
   },
   links: {
     github: "https://github.com/mehdibha/dotUI",

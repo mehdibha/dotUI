@@ -4,13 +4,13 @@ import { useStyles } from "./styles"
 
 // MARK: cardStyles
 
-// MARK: Card
+// MARK: Separator
 
 interface CardProps extends React.ComponentProps<"div"> {
   size?: "sm" | "default"
 }
 
-function Card({ className, size = "default", ...props }: CardProps) {
+const Card = ({ className, size = "default", ...props }: CardProps) => {
   const { root } = useStyles()()
   return (
     <div
@@ -22,31 +22,31 @@ function Card({ className, size = "default", ...props }: CardProps) {
   )
 }
 
-// MARK: CardHeader
+// MARK: Separator
 
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
-function CardHeader({ className, ...props }: CardHeaderProps) {
+const CardHeader = ({ className, ...props }: CardHeaderProps) => {
   const { header } = useStyles()()
   return (
     <div data-card-header="" className={header({ className })} {...props} />
   )
 }
 
-// MARK: CardTitle
+// MARK: Separator
 
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
-function CardTitle({ className, ...props }: CardTitleProps) {
+const CardTitle = ({ className, ...props }: CardTitleProps) => {
   const { title } = useStyles()()
   return <div data-card-title="" className={title({ className })} {...props} />
 }
 
-// MARK: CardDescription
+// MARK: Separator
 
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
-function CardDescription({ className, ...props }: CardDescriptionProps) {
+const CardDescription = ({ className, ...props }: CardDescriptionProps) => {
   const { description } = useStyles()()
   return (
     <div
@@ -57,40 +57,40 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
   )
 }
 
-// MARK: CardAction
+// MARK: Separator
 
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
-function CardAction({ className, ...props }: CardActionProps) {
+const CardAction = ({ className, ...props }: CardActionProps) => {
   const { action } = useStyles()()
   return (
     <div data-card-action="" className={action({ className })} {...props} />
   )
 }
 
-// MARK: CardContent
+// MARK: Separator
 
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
-function CardContent({ className, ...props }: CardContentProps) {
+const CardContent = ({ className, ...props }: CardContentProps) => {
   const { content } = useStyles()()
   return (
     <div data-card-content="" className={content({ className })} {...props} />
   )
 }
 
-// MARK: CardFooter
+// MARK: Separator
 
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
-function CardFooter({ className, ...props }: CardFooterProps) {
+const CardFooter = ({ className, ...props }: CardFooterProps) => {
   const { footer } = useStyles()()
   return (
     <div data-card-footer="" className={footer({ className })} {...props} />
   )
 }
 
-// MARK: separator
+// MARK: Separator
 
 export type {
   CardActionProps,

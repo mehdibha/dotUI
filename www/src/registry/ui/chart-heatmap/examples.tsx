@@ -39,7 +39,6 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-// Built from the live look, so the studio restyles the cells as it changes.
 function charts(look: ChartLook) {
   const scales = { x: { scale: scaleBand }, y: { scale: scaleBand } }
   const cells = {

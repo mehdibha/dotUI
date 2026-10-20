@@ -46,7 +46,7 @@ const chart = defineChart({
   tooltip: chartSliceTooltip("browser", "visitors"),
 })
 
-export default function ChartRadialText() {
+export default function Demo() {
   return (
     <Chart definition={chart} ariaLabel="Safari visitors as a progress ring">
       <div className="flex h-full flex-col items-center justify-center">

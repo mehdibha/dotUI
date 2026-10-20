@@ -3,14 +3,11 @@ import { createDynamicComponent } from "@/lib/styles"
 import { QRCode as DotsQRCode } from "./base.dots"
 import { QRCode as RoundedQRCode } from "./base.rounded"
 import { type QRCodeProps, QRCode as SquaresQRCode } from "./base.squares"
+import meta from "./meta"
 
-const QRCode = createDynamicComponent<
-  QRCodeProps,
-  "squares" | "rounded" | "dots"
->({
-  componentName: "qr-code",
+const QRCode = createDynamicComponent({
+  meta,
   paramName: "style",
-  defaultValue: "squares",
   components: {
     squares: SquaresQRCode,
     rounded: RoundedQRCode,

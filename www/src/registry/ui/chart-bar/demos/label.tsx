@@ -35,7 +35,6 @@ const chart = defineChart({
       radius: chartLook.barRadius,
       maxThickness: chartLook.barMaxThickness,
     }),
-    // Decorative, so the labels never become focus stops or tooltip rows.
     decorative(
       text(data, {
         x: "month",
@@ -49,7 +48,7 @@ const chart = defineChart({
   ],
 })
 
-export default function ChartBarLabel() {
+export default function Demo() {
   return (
     <Chart
       definition={chart}

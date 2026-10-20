@@ -1,31 +1,33 @@
 "use client";
 
 import * as React from "react";
-import { tv } from "tailwind-variants";
 import { encode } from "uqr";
+import { tv } from "tailwind-variants";
 
-const qrCodeStyles = tv({
+const qrCodeVariants = tv({
   slots: {
-    root: "relative inline-flex size-32 shrink-0 items-center justify-center rounded-(--qr-code-radius) bg-(--surface-bg,var(--color-bg)) p-2 text-fg",
+    root: "relative inline-flex size-32 shrink-0 items-center justify-center rounded-md bg-(--surface-bg,var(--color-bg)) p-2 text-fg",
     logo: "absolute flex size-1/5 items-center justify-center *:size-full",
   },
 });
 
-const { root, logo } = qrCodeStyles();
+const { root, logo } = qrCodeVariants();
+
+/* -------------------------------------------------------------------------- */
 
 interface QRCodeProps extends React.ComponentProps<"div"> {
   value: string;
   errorCorrection?: "L" | "M" | "Q" | "H";
 }
 
-function QRCode({
+const QRCode = ({
   value,
   errorCorrection,
   className,
   children,
   "aria-label": ariaLabel = "QR code",
   ...props
-}: QRCodeProps) {
+}: QRCodeProps) => {
   const hasLogo = !!children;
 
   const { size, path } = React.useMemo(() => {
@@ -33,7 +35,6 @@ function QRCode({
       ecc: errorCorrection ?? (hasLogo ? "H" : "M"),
       border: 0,
     });
-    // Center modules are skipped so the logo sits in clean whitespace.
     const reserved = hasLogo ? Math.ceil(qr.size * 0.3) : 0;
     const start = Math.floor((qr.size - reserved) / 2);
     const end = start + reserved;
@@ -73,7 +74,9 @@ function QRCode({
       )}
     </div>
   );
-}
+};
+
+/* -------------------------------------------------------------------------- */
 
 export type { QRCodeProps };
 export { QRCode };

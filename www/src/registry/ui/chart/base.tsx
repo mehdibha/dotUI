@@ -1,7 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
-import { useMemo } from "react"
+import * as React from "react"
 import type {
   ChartAxisPresentationOptions,
   ChartGuideLineStyle,
@@ -31,7 +30,6 @@ import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
 import { cn } from "@/registry/lib/utils"
 
-/** The series colors, in slot order. */
 export const chartColors = [
   "var(--chart-1)",
   "var(--chart-2)",
@@ -51,30 +49,17 @@ export const chartCurves = {
 }
 
 export interface ChartLook {
-  /** Interpolation of lines and area edges. */
   curve: (typeof chartCurves)[keyof typeof chartCurves]
-  /** Width of lines and area edges. */
   strokeWidth: number
-  /** Fill opacity of areas. */
   areaOpacity: number
-  /** Corner radius of bars, radial bars and heatmap cells. */
   barRadius: number
-  /** The widest a bar gets, in pixels. */
   barMaxThickness: number | undefined
-  /** The value axis labels; `false` keeps only its gridlines. */
   valueAxis: false | ChartAxisPresentationOptions
-  /** Gridlines, wherever a scale sets `grid: true`. */
   grid: ChartGuideLineStyle
-  /** Where `chartLegend` sits. */
   legend: "top" | "bottom"
-  /** How marks move between data states; `false` jumps. */
   motion: ChartMotionTransition | false
 }
 
-/**
- * The design system's chart look, written by the studio. Charts read it, so
- * changing a value here restyles every chart that does.
- */
 export const chartLook: ChartLook = {
   curve: chartCurves.natural,
   strokeWidth: 2,
@@ -87,7 +72,6 @@ export const chartLook: ChartLook = {
   motion: { type: "spring", stiffness: 170, damping: 26 },
 }
 
-/** A band scale with room between and around the bands. */
 export const chartBand = () => scaleBand().paddingInner(0.2).paddingOuter(0.1)
 
 function legendAt(placement: ChartLook["legend"]) {
@@ -101,10 +85,8 @@ function legendAt(placement: ChartLook["legend"]) {
   })
 }
 
-/** The color legend. */
 export const chartLegend = legendAt(chartLook.legend)
 
-/** One fade toward the baseline per series color; fill with `url(#chart-fade-N)`. */
 export const chartFades: ChartLinearGradient[] = chartColors.map(
   (color, slot) => ({
     id: `chart-fade-${slot}`,
@@ -117,14 +99,8 @@ export const chartFades: ChartLinearGradient[] = chartColors.map(
   }),
 )
 
-/* ------------------------------------------------------------------ */
-/* Polar                                                               */
-/* ------------------------------------------------------------------ */
+// MARK: Separator
 
-/**
- * A tooltip for slices and rings, whose x and y are an angle and a radius:
- * a row per focused datum, named and valued from its own fields.
- */
 export function chartSliceTooltip(
   label: string,
   value: string,
@@ -146,7 +122,6 @@ export function chartSliceTooltip(
   }
 }
 
-/** Nudges circumference labels clear of the circle, for `angleGrid`. */
 export const chartAngleLabels = {
   labelDx: ({ x }: PolarGuideLabelContext) => (x < -1 ? -3 : x > 1 ? 3 : 0),
   labelDy: ({ y }: PolarGuideLabelContext) => (y < -1 ? -2 : y > 1 ? 2 : 0),
@@ -155,9 +130,6 @@ export const chartAngleLabels = {
 // oxlint-disable-next-line no-explicit-any
 type AnyPolarMark = PolarMark<any, any, any, any, any>
 
-/* Paints without becoming a focus stop or tooltip target. The library's
-   `decorative` strips interaction in `postDomain`, which `polar()` never
-   calls — this runs it in `render`. */
 export function polarDecorative<TMark extends AnyPolarMark>(
   mark: TMark,
 ): TMark {
@@ -180,9 +152,7 @@ export function polarDecorative<TMark extends AnyPolarMark>(
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Host                                                                */
-/* ------------------------------------------------------------------ */
+// MARK: Separator
 
 const theme = {
   palette: chartColors,
@@ -191,9 +161,6 @@ const theme = {
   grid: "var(--color-border)",
 } satisfies Partial<ChartTheme>
 
-/* The library's tooltip surface defaults to UA `Canvas` colors and
-   `system-ui`. The vars sit on the tooltip itself, so the portal can't
-   detach them from the chart. */
 const TOOLTIP_CLASS = [
   "[--ts-chart-tooltip-background:color-mix(in_oklab,var(--color-popover)_var(--popover-alpha),transparent)]",
   "[backdrop-filter:var(--popover-backdrop-filter)]",
@@ -204,7 +171,6 @@ const TOOLTIP_CLASS = [
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ")
 
-// Lines and areas are single paths; dots and cells can number in the hundreds.
 const STAGGER = stagger({ each: 25, roles: ["arc", "bar"] })
 
 type Spec = {
@@ -218,8 +184,6 @@ type Scale = {
   axis?: false | ChartAxisPresentationOptions
 }
 
-/* No domain line or tick marks, labels clear of the plot, and the look's
-   gridlines — the library paints its own at 11%. */
 function styleScale(scale: Scale, look: ChartLook): Scale {
   const { grid, axis } = scale
   return {
@@ -240,7 +204,6 @@ function styleSpec<TSpec extends Spec>(spec: TSpec, look: ChartLook): TSpec {
       scale && typeof scale === "object" ? styleScale(scale, look) : scale,
     ]),
   )
-  // The house legend follows the look's placement.
   const legend =
     spec.color?.legend === chartLegend && look.legend !== chartLook.legend
       ? legendAt(look.legend)
@@ -279,7 +242,6 @@ function sameValue(left: ChartValue, right: ChartValue) {
     : Object.is(left, right)
 }
 
-/* The value a point stands for: a stacked segment reports its own size. */
 function pointValue(point: ChartPoint, axis: "x" | "y", format: Format) {
   const interval = axis === "x" ? point.xInterval : point.yInterval
   const start = axis === "x" ? point.x1Value : point.y1Value
@@ -297,8 +259,6 @@ function pointValue(point: ChartPoint, axis: "x" | "y", format: Format) {
   return format(axis === "x" ? point.xValue : point.yValue)
 }
 
-/* The category as the title and a row per series, formatted by the tooltip's
-   `x`/`y` items, else the axis tick formats. */
 function houseContent(
   items: readonly unknown[] = [],
   formats: Partial<Record<"x" | "y", Format>>,
@@ -325,7 +285,6 @@ function houseContent(
         axis,
         formats[axis] ?? (axis === "x" ? context.formatX : context.formatY),
       )
-    // Horizontal bars share y: their category is the y value.
     const byY =
       points.length > 1
         ? points.every((point) => sameValue(point.yValue, first.yValue)) &&
@@ -370,11 +329,6 @@ function styleTooltip(
   }
 }
 
-/**
- * Fills what a definition leaves unset — the theme, the axis and grid look,
- * focus, keyboard, the tooltip and motion. `Chart` applies it; call it to
- * render a definition through another host.
- */
 export function withChartLook<
   TDatum,
   TXValue extends ChartValue,
@@ -415,9 +369,6 @@ export function withChartLook<
   } as DomChartDefinition<TDatum, TXValue, TYValue>
 }
 
-/* Module scope: a renderer identity change remounts the surface. `initial:
-   "always"` because the React adapter adopts its own prerendered markup,
-   which would otherwise skip the entrance. */
 const RENDERER = motion({ initial: "always" })
 
 export type ChartProps<
@@ -428,15 +379,12 @@ export type ChartProps<
   RendererChartCommonProps<TDatum, TXValue, TYValue>,
   "renderer" | "measureText"
 > & {
-  /** Keep its identity stable: define it at module scope, or memoize it. */
   definition: DomChartDefinition<TDatum, TXValue, TYValue>
-  /** The look the chart fills its axes, grid, legend and motion from. */
   look?: ChartLook
-  /** HTML laid over the chart — a donut's total, a badge. */
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
-export function Chart<
+export const Chart = <
   TDatum,
   TXValue extends ChartValue = ChartValue,
   TYValue extends ChartValue = ChartValue,
@@ -446,12 +394,11 @@ export function Chart<
   children,
   className,
   ...props
-}: ChartProps<TDatum, TXValue, TYValue>) {
-  const styled = useMemo(
+}: ChartProps<TDatum, TXValue, TYValue>) => {
+  const styled = React.useMemo(
     () => withChartLook(definition, look),
     [definition, look],
   )
-  // Without x and y scales — a pie, a radar, radial bars — the chart is round.
   const round =
     !isResponsiveChartDefinition(definition) &&
     definition.scales.x === null &&
