@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import {
@@ -45,11 +43,9 @@ import {
 import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-/* -------------------------------------------------------------------------- *
- * Messaging — a two-pane chat client: conversation list + thread. Renders in
- * the /studio preview iframe, so every surface, bubble and control below is the
- * live design system.
- * -------------------------------------------------------------------------- */
+import { initials } from "./shared"
+
+// A two-pane chat client: conversation list + thread.
 
 interface Attachment {
   name: string
@@ -322,12 +318,6 @@ const INITIAL_THREADS: Record<string, ThreadDay[]> = {
   ],
 }
 
-function initialsOf(name: string) {
-  const parts = name.split(" ")
-  const last = parts.length > 1 ? parts[parts.length - 1] : ""
-  return `${parts[0]?.[0] ?? ""}${last?.[0] ?? ""}`
-}
-
 function lastMessageOf(days: ThreadDay[]) {
   const day = days[days.length - 1]
   return day ? day.messages[day.messages.length - 1] : undefined
@@ -363,7 +353,7 @@ function ContactAvatar({
         {contact.kind === "group" ? (
           <Users2Icon className="size-4" />
         ) : (
-          initialsOf(contact.name)
+          initials(contact.name)
         )}
       </AvatarFallback>
       {contact.online && (
@@ -404,7 +394,7 @@ function TypingIndicator({ contact }: { contact: ChatContact }) {
     <Message aria-label={`${contact.name} is typing`}>
       <MessageAvatar>
         <Avatar size="sm">
-          <AvatarFallback>{initialsOf(contact.name)}</AvatarFallback>
+          <AvatarFallback>{initials(contact.name)}</AvatarFallback>
         </Avatar>
       </MessageAvatar>
       <MessageContent>
@@ -443,8 +433,8 @@ function MessageBubble({
           <Avatar size="sm">
             <AvatarFallback>
               {message.sender
-                ? initialsOf(message.sender)
-                : initialsOf(contact.name)}
+                ? initials(message.sender)
+                : initials(contact.name)}
             </AvatarFallback>
           </Avatar>
         </MessageAvatar>
@@ -562,7 +552,6 @@ export default function MessagingBlock() {
   return (
     <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-bg text-fg">
       <div className="flex min-h-0 flex-1">
-        {/* Conversation list */}
         <aside
           className={cn(
             "flex w-full min-w-0 shrink-0 flex-col border-r bg-sidebar md:w-80 lg:w-96",
@@ -570,7 +559,7 @@ export default function MessagingBlock() {
           )}
         >
           <div className="flex items-center gap-2 px-4 py-3">
-            <h1 className="flex min-w-0 flex-1 items-center gap-2 text-base font-semibold">
+            <h1 className="flex min-w-0 flex-1 items-center gap-2 text-base">
               Messages
               {totalUnread > 0 && (
                 <Badge variant="accent" size="sm">
@@ -709,9 +698,10 @@ export default function MessagingBlock() {
             )}
           </div>
 
-          {/* max-md:pb-16: single-pane, this row sits under the preview's
-              floating toolbar. */}
-          <div className="flex items-center gap-3 border-t px-4 py-3 max-md:pb-16">
+          <div
+            data-toolbar-clearance
+            className="flex items-center gap-3 border-t px-4 py-3"
+          >
             <Avatar size="md" className="shrink-0">
               <AvatarFallback>AN</AvatarFallback>
               <AvatarBadge className="bg-success" aria-label="Online" />
@@ -728,7 +718,6 @@ export default function MessagingBlock() {
           </div>
         </aside>
 
-        {/* Thread */}
         <section
           className={cn(
             "flex min-w-0 flex-1 flex-col",
@@ -841,8 +830,7 @@ export default function MessagingBlock() {
             {active.typing && !sent && <TypingIndicator contact={active} />}
           </div>
 
-          {/* pb-16: the /studio preview floats its toolbar over the page bottom. */}
-          <div className="border-t p-3 pb-16 md:px-4">
+          <div data-toolbar-clearance className="border-t p-3 md:px-4">
             <form
               onSubmit={(e) => {
                 e.preventDefault()

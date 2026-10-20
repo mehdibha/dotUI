@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 
 import {
@@ -17,10 +15,18 @@ import {
   MaximizeIcon,
   MicIcon,
   MoreHorizontalIcon,
+  MusicIcon,
+  PauseIcon,
+  PlayIcon,
   PlusIcon,
   RadioIcon,
+  Repeat1Icon,
+  RepeatIcon,
   SearchIcon,
   ShareIcon,
+  ShuffleIcon,
+  SkipBackIcon,
+  SkipForwardIcon,
   Volume1Icon,
   Volume2Icon,
   VolumeOffIcon,
@@ -75,100 +81,6 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-
-/* Transport and media glyphs are absent from the curated icon set — these
-   follow the same 24px lucide geometry so they sit with the rest. */
-
-function Glyph({ children, ...props }: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      {children}
-    </svg>
-  )
-}
-
-function PlayIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <polygon points="6 3 20 12 6 21 6 3" />
-    </Glyph>
-  )
-}
-
-function PauseIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <rect x="14" y="4" width="4" height="16" rx="1" />
-      <rect x="6" y="4" width="4" height="16" rx="1" />
-    </Glyph>
-  )
-}
-
-function SkipBackIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <polygon points="19 20 9 12 19 4 19 20" />
-      <line x1="5" x2="5" y1="19" y2="5" />
-    </Glyph>
-  )
-}
-
-function SkipForwardIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <polygon points="5 4 15 12 5 20 5 4" />
-      <line x1="19" x2="19" y1="5" y2="19" />
-    </Glyph>
-  )
-}
-
-function ShuffleIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22" />
-      <path d="m18 2 4 4-4 4" />
-      <path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2" />
-      <path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8" />
-      <path d="m18 14 4 4-4 4" />
-    </Glyph>
-  )
-}
-
-function RepeatIcon({
-  one,
-  ...props
-}: { one?: boolean } & React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <path d="m17 2 4 4-4 4" />
-      <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
-      <path d="m7 22-4-4 4-4" />
-      <path d="M21 13v1a4 4 0 0 1-4 4H3" />
-      {one && <path d="M11 10h1v4" />}
-    </Glyph>
-  )
-}
-
-function MusicIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <Glyph {...props}>
-      <path d="M9 18V5l12-2v13" />
-      <circle cx="6" cy="18" r="3" />
-      <circle cx="18" cy="16" r="3" />
-    </Glyph>
-  )
-}
-
-/* --------------------------------- Content -------------------------------- */
 
 interface Track {
   id: string
@@ -277,8 +189,6 @@ function formatTime(seconds: number) {
   const whole = Math.max(0, Math.round(seconds))
   return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`
 }
-
-/* -------------------------------- Fragments ------------------------------- */
 
 function AlbumArt({
   className,
@@ -480,9 +390,7 @@ function Hero({
               Porto, Portugal · Recording since 2016
             </span>
           </div>
-          <h1 className="font-heading text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Vesper Lane
-          </h1>
+          <h1 className="text-3xl text-balance sm:text-4xl">Vesper Lane</h1>
           <p className="max-w-prose text-sm text-pretty text-fg-muted">
             Tape-saturated synths, a borrowed drum machine and a voice recorded
             in a stairwell. The new album, Neon Cartography, maps a city after
@@ -816,7 +724,7 @@ function NowPlayingBar({
             aria-label={`Repeat: ${repeat}`}
             className="hidden sm:inline-flex"
           >
-            <RepeatIcon one={repeat === "one"} />
+            {repeat === "one" ? <Repeat1Icon /> : <RepeatIcon />}
           </ToggleButton>
         </div>
 
@@ -887,8 +795,6 @@ function NowPlayingBar({
     </footer>
   )
 }
-
-/* ---------------------------------- Page ---------------------------------- */
 
 export default function MusicPlayerBlock() {
   const [currentIndex, setCurrentIndex] = useState(0)

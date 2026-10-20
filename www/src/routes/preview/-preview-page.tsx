@@ -64,10 +64,12 @@ export function getExamplesPromise(slug: string) {
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 // Overscroll bounces the preview itself, not the whole studio.
 // Live previews (drags, hovers) skip transitions, or the preview trails them.
+// Rows docked to the viewport bottom clear the studio's floating toolbar.
 const EMBEDDED_CSS = `
 html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 [data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
+[data-toolbar-clearance] { padding-bottom: 4rem; }
 `
 
 const route = getRouteApi("/preview/$slug")

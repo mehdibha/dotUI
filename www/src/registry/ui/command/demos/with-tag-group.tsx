@@ -9,7 +9,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 export default function Demo() {
   return (
     <Command aria-label="Command menu" className="gap-2">
-      <SearchField aria-label="Search" autoFocus>
+      <SearchField aria-label="Search">
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />
