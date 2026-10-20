@@ -187,14 +187,14 @@ describe("emitInitItem", () => {
     )
   })
 
-  test("adds non-default density as a root css var without mutating the base fields", () => {
+  test("density ships no css var and leaves the base fields untouched", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "compact", componentParams: {} },
       itemUrl,
     })
 
-    expect(item.css?.[":root"]).toMatchObject({ "--dotui-density": "compact" })
+    expect(JSON.stringify(item)).not.toContain("--dotui-density")
     expect(baseRegistryCss.css).not.toHaveProperty(":root")
   })
 

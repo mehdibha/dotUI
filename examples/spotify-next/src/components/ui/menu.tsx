@@ -159,7 +159,6 @@ const MenuItemDescription = ({
 
 interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({
-  children,
   className,
   ...props
 }: MenuSectionProps<T>) => {
@@ -168,9 +167,7 @@ const MenuSection = <T extends object>({
       data-menu-section=""
       className={section({ className })}
       {...props}
-    >
-      {children}
-    </MenuPrimitives.MenuSection>
+    />
   );
 };
 

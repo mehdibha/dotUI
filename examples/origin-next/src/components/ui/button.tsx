@@ -8,8 +8,8 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { Loader } from "@/components/ui/loader";
 
-const buttonVariants = tv({
-  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-spinner:not-in-data-spinner:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-sm *:[svg]:not-with-[size]:size-4",
+const buttonStyles = tv({
+  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-spinner:not-in-data-spinner:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-sm",
   variants: {
     variant: {
       primary:
@@ -40,9 +40,7 @@ const buttonVariants = tv({
   },
 });
 
-export { buttonVariants as buttonStyles };
-
-type ButtonVariants = VariantProps<typeof buttonVariants>;
+type ButtonVariants = VariantProps<typeof buttonStyles>;
 
 const truncateLabel = (children: React.ReactNode) =>
   typeof children === "string" ? (
@@ -54,9 +52,9 @@ const truncateLabel = (children: React.ReactNode) =>
 /* -------------------------------------------------------------------------- */
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitives.Button>, ButtonVariants {
-  isIconOnly?: boolean;
-}
+  extends
+    React.ComponentProps<typeof ButtonPrimitives.Button>,
+    ButtonVariants {}
 
 const Button = ({
   variant,
@@ -87,7 +85,7 @@ const Button = ({
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (className) =>
-        buttonVariants({ variant, size, isIconOnly, className }),
+        buttonStyles({ variant, size, isIconOnly, className }),
       )}
       {...props}
       // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
@@ -99,11 +97,7 @@ const Button = ({
 /* -------------------------------------------------------------------------- */
 
 interface LinkButtonProps
-  extends
-    React.ComponentProps<typeof LinkPrimitives.Link>,
-    VariantProps<typeof buttonVariants> {
-  isIconOnly?: boolean;
-}
+  extends React.ComponentProps<typeof LinkPrimitives.Link>, ButtonVariants {}
 
 const LinkButton = ({
   variant,
@@ -118,7 +112,7 @@ const LinkButton = ({
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (className) =>
-        buttonVariants({ variant, size, isIconOnly, className }),
+        buttonStyles({ variant, size, isIconOnly, className }),
       )}
       {...props}
     >
@@ -130,4 +124,4 @@ const LinkButton = ({
 /* -------------------------------------------------------------------------- */
 
 export type { ButtonProps, LinkButtonProps };
-export { Button, LinkButton };
+export { Button, LinkButton, buttonStyles };

@@ -103,10 +103,8 @@ export const CURVES = {
   step: /* @__PURE__ */ d3Curve(curveStepAfter),
 } as const satisfies Record<ChartCurve, unknown>;
 
-// oxlint-disable-next-line no-explicit-any
 export type ChartMarkLayer = ChartMark<unknown, any, any>;
 /** Mark layers spliced inside a polar container — cartesian marks would land outside it. */
-// oxlint-disable-next-line no-explicit-any
 export type PolarMarkLayer = PolarMark<any, any, any, any, any>;
 
 export type ChartXField<TDatum> = ChannelField<
@@ -139,18 +137,10 @@ export function rowLabel(
   };
 }
 
-export interface ChartSpec<TDatum> {
+export interface ChartSpec<TDatum> extends ChartFrame {
   marks: readonly ChartMarkLayer[];
-  scales: {
-    x: ChartAxisOptions | null;
-    y: ChartAxisOptions | null;
-  };
-  color?: ChartColorOptions;
   gradients?: readonly ChartLinearGradient[];
-  theme?: Partial<ChartTheme>;
   readonly __datum?: TDatum;
-  readonly __xValue?: ChartValue;
-  readonly __yValue?: number;
 }
 
 export interface ChartFrameOptions {
@@ -656,7 +646,6 @@ export type ChartTooltipContentOf<TOptions> = (
 ) => ChartTooltipContent;
 
 export interface ChartFamilyConfig<TOptions> {
-  // oxlint-disable-next-line no-explicit-any
   focus?: ChartDefinitionOptions<any, any, any>["focus"];
   tooltipAnchor?: ChartTooltipAnchor;
   /** Replaces the library's tooltip rows — polar families, whose scale values are angles. */

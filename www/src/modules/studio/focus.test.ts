@@ -35,7 +35,7 @@ describe("pages", () => {
     ).toEqual([])
   })
 
-  it("takes over only for the state pages among the foundation pages", () => {
+  it("takes over only for the state pages and Motion among the foundation pages", () => {
     expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
       null,
       "focus",
@@ -43,6 +43,7 @@ describe("pages", () => {
       "cursor",
       "text-selection",
       null,
+      "motion",
       null,
     ])
   })
@@ -57,7 +58,7 @@ describe("focusOf", () => {
             row(
               key,
               { "data-page": component.id },
-              { "data-chapter": component.chapter },
+              { "data-chapter": "components" },
             )?.board !== component.id,
         )
         .map((key) => `${component.id}.${key}`),
@@ -71,7 +72,7 @@ describe("focusOf", () => {
     for (const component of singles) {
       const [axis = ""] = keysOf(component)
       const page = { "data-page": component.id }
-      const chapter = { "data-chapter": component.chapter }
+      const chapter = { "data-chapter": "components" }
       expect(row(axis, page, chapter)).toEqual({
         board: component.id,
         axis,

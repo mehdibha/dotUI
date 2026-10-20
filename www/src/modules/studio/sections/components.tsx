@@ -1,7 +1,7 @@
 "use client"
 
-/* Components — one row per component, grouped in chapters. A component with
-   one key is that key's row; the others open a page of their rows. */
+/* Components — one row per component, A to Z. A component with one key is
+   that key's row; the others open a page of their rows. */
 
 import type { Chapter, ChapterPage } from "../chapters"
 import { DialLink } from "../dial"
@@ -14,7 +14,6 @@ interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
   id: string
   label: string
-  chapter: string
   /** Its rows in order, lead first, each with its name on the page (a
    *  single row is named for the component; search knows it by both). */
   rows: [AxisKey, string][]
@@ -31,9 +30,50 @@ interface Component {
 
 export const COMPONENTS: Component[] = [
   {
+    id: "accordion",
+    label: "Accordion",
+    rows: [
+      ["accordionContainer", "Layout"],
+      ["accordionMarker", "Marker"],
+      ["accordionMotion", "Motion"],
+    ],
+    aliases: ["Collapsible"],
+  },
+  {
+    id: "alert",
+    label: "Alert",
+    rows: [["alertStyle", "Style"]],
+    aliases: ["Empty"],
+  },
+  {
+    id: "avatar",
+    label: "Avatar",
+    rows: [
+      ["avatarShape", "Shape"],
+      ["avatarFallback", "Fallback"],
+    ],
+  },
+  {
+    id: "badge",
+    label: "Badge",
+    rows: [
+      ["badgeStyle", "Style"],
+      ["badgeShape", "Shape"],
+      ["badgeCase", "Case"],
+    ],
+    aliases: ["Tag group", "Tag"],
+  },
+  {
+    id: "breadcrumbs",
+    label: "Breadcrumbs",
+    rows: [
+      ["breadcrumbSeparator", "Separator"],
+      ["breadcrumbTone", "Ancestors"],
+    ],
+  },
+  {
     id: "button",
     label: "Button",
-    chapter: "actions",
     rows: [
       ["buttonStyle", "Style"],
       ["buttonSecondary", "Secondary"],
@@ -55,34 +95,99 @@ export const COMPONENTS: Component[] = [
     ],
   },
   {
-    id: "segmented-control",
-    label: "Segmented control",
-    chapter: "actions",
+    id: "calendar",
+    label: "Calendar",
+    says: { same: "Days like buttons", circle: "Circle days" },
     rows: [
-      ["segmentedSelected", "Selected"],
-      ["segmentedTrack", "Track"],
-      ["segmentedMotion", "Motion"],
+      ["calendarDayShape", "Day shape"],
+      ["calendarToday", "Today"],
+      ["calendarTodayColor", "Today color"],
+      ["calendarWeekdays", "Weekdays"],
+      ["calendarMotion", "Motion"],
+    ],
+    aliases: [
+      "Date & time",
+      "Date picker",
+      "Date range picker",
+      "Date field",
+      "Time field",
+      "Time picker",
     ],
   },
   {
-    id: "link",
-    label: "Link",
-    chapter: "actions",
+    id: "card",
+    label: "Card",
+    says: { none: "Plain header", rule: "Ruled header", band: "Banded header" },
+    rows: [
+      ["cardHeader", "Header"],
+      ["cardFooter", "Footer"],
+      ["titleStyle", "Titles"],
+    ],
+  },
+  {
+    id: "chart",
+    label: "Chart",
     says: {
-      always: "Underlined",
-      hover: "Underline on hover",
-      never: "No underline",
+      mono: "Mono palette",
+      vivid: "Vivid palette",
+      muted: "Muted palette",
     },
     rows: [
-      ["linkUnderline", "Underline"],
-      ["linkColor", "Color"],
-      ["linkMotion", "Motion"],
+      ["chartPalette", "Palette"],
+      ["chartGrid", "Gridlines"],
+      ["chartMotion", "Motion"],
     ],
+    aliases: ["Charts", "Area chart", "Bar chart", "Line chart", "Pie chart"],
+  },
+  {
+    id: "checkbox",
+    label: "Checkbox",
+    says: { auto: "Rounded corners", sharp: "Sharp corners" },
+    rows: [
+      ["checkCorner", "Corner"],
+      ["checkEdge", "Edge"],
+      ["checkboxColor", "Color"],
+      ["checkboxMotion", "Motion"],
+    ],
+    aliases: ["Checkbox group", "Selection"],
+  },
+  {
+    id: "choice-card",
+    label: "Choice card",
+    rows: [
+      ["cardSelected", "Selected"],
+      ["cardColor", "Color"],
+    ],
+  },
+  {
+    id: "command",
+    label: "Command",
+    says: { field: "Search field", bar: "Search bar", prompt: "Prompt" },
+    rows: [
+      ["menuSearch", "Search"],
+      ["menuScale", "Scale"],
+    ],
+    aliases: ["Command palette"],
+  },
+  {
+    id: "dialog",
+    label: "Dialog",
+    rows: [
+      ["dialogBackdrop", "Backdrop"],
+      ["dialogSections", "Sections"],
+      ["dialogActions", "Actions"],
+      ["dialogClose", "Close"],
+      ["dialogPosition", "Position"],
+      ["dialogEntrance", "Entrance"],
+      ["mobileDialogs", "On mobile"],
+      ["dialogMotion", "Motion"],
+    ],
+    holds: ["dialogBackdropStrength", "dialogFrost"],
+    aliases: ["Dialogs", "Modal", "Alert dialog"],
   },
   {
     id: "field",
     label: "Field",
-    chapter: "forms",
     rows: [
       ["inputStyle", "Style"],
       ["inputHover", "Hover"],
@@ -106,109 +211,27 @@ export const COMPONENTS: Component[] = [
     ],
   },
   {
-    id: "select",
-    label: "Select",
-    chapter: "forms",
-    says: { field: "Field trigger", button: "Button trigger" },
+    id: "kbd",
+    label: "Kbd",
+    rows: [["kbdTreatment", "Style"]],
+  },
+  {
+    id: "link",
+    label: "Link",
+    says: {
+      always: "Underlined",
+      hover: "Underline on hover",
+      never: "No underline",
+    },
     rows: [
-      ["selectTrigger", "Trigger"],
-      ["pickerCaret", "Caret"],
-      ["mobilePickers", "On mobile"],
-    ],
-    aliases: ["Combobox", "Picker"],
-  },
-  {
-    id: "number-field",
-    label: "Number field",
-    chapter: "forms",
-    rows: [["numberLayout", "Steppers"]],
-  },
-  {
-    id: "otp-field",
-    label: "OTP field",
-    chapter: "forms",
-    rows: [["otpStyle", "Cells"]],
-  },
-  {
-    id: "checkbox",
-    label: "Checkbox",
-    chapter: "forms",
-    says: { auto: "Rounded corners", sharp: "Sharp corners" },
-    rows: [
-      ["checkCorner", "Corner"],
-      ["checkEdge", "Edge"],
-      ["checkboxColor", "Color"],
-      ["checkboxMotion", "Motion"],
-    ],
-    aliases: ["Checkbox group", "Selection"],
-  },
-  {
-    id: "radio",
-    label: "Radio",
-    chapter: "forms",
-    rows: [
-      ["radioMark", "Mark"],
-      ["radioColor", "Color"],
-      ["checkboxMotion", "Motion"],
-    ],
-    hosts: ["checkboxMotion"],
-    aliases: ["Radio group"],
-  },
-  {
-    id: "switch",
-    label: "Switch",
-    chapter: "forms",
-    rows: [
-      ["switchStyle", "Style"],
-      ["switchColor", "Color"],
-      ["switchMotion", "Motion"],
-    ],
-  },
-  {
-    id: "slider",
-    label: "Slider",
-    chapter: "forms",
-    rows: [
-      ["sliderThumb", "Thumb"],
-      ["sliderTrack", "Track"],
-      ["sliderColor", "Color"],
-      ["sliderMotion", "Motion"],
-    ],
-  },
-  {
-    id: "choice-card",
-    label: "Choice card",
-    chapter: "forms",
-    rows: [
-      ["cardSelected", "Selected"],
-      ["cardColor", "Color"],
-    ],
-  },
-  {
-    id: "calendar",
-    label: "Calendar",
-    chapter: "forms",
-    says: { same: "Days like buttons", circle: "Circle days" },
-    rows: [
-      ["calendarDayShape", "Day shape"],
-      ["calendarToday", "Today"],
-      ["calendarTodayColor", "Today color"],
-      ["calendarWeekdays", "Weekdays"],
-      ["calendarMotion", "Motion"],
-    ],
-    aliases: [
-      "Date & time",
-      "Date picker",
-      "Date range picker",
-      "Date field",
-      "Time field",
-      "Time picker",
+      ["linkUnderline", "Underline"],
+      ["linkColor", "Color"],
+      ["linkMotion", "Motion"],
     ],
   },
   {
     id: "menu",
     label: "Menu",
-    chapter: "overlays",
     rows: [
       ["menuInset", "Items"],
       ["menuHighlight", "Highlight"],
@@ -222,9 +245,23 @@ export const COMPONENTS: Component[] = [
     aliases: ["Menus", "Dropdown", "Context menu", "List box"],
   },
   {
+    id: "number-field",
+    label: "Number field",
+    rows: [["numberLayout", "Steppers"]],
+  },
+  {
+    id: "otp-field",
+    label: "OTP field",
+    rows: [["otpStyle", "Cells"]],
+  },
+  {
+    id: "pagination",
+    label: "Pagination",
+    rows: [["paginationCurrent", "Current page"]],
+  },
+  {
     id: "popover",
     label: "Popover",
-    chapter: "overlays",
     says: {
       tooltips: "Arrows on tooltips",
       none: "No arrows",
@@ -238,54 +275,106 @@ export const COMPONENTS: Component[] = [
     ],
   },
   {
-    id: "tooltip",
-    label: "Tooltip",
-    chapter: "overlays",
+    id: "progress",
+    label: "Progress",
     rows: [
-      ["tooltipStyle", "Style"],
-      ["tooltipEntrance", "Entrance"],
-      ["tooltipMotion", "Motion"],
+      ["progressTrack", "Thickness"],
+      ["progressTrackStyle", "Track"],
+      ["progressColor", "Fill"],
+      ["progressMotion", "Motion"],
+    ],
+    aliases: ["Progress bar"],
+  },
+  {
+    id: "radio",
+    label: "Radio",
+    rows: [
+      ["radioMark", "Mark"],
+      ["radioColor", "Color"],
+      ["checkboxMotion", "Motion"],
+    ],
+    hosts: ["checkboxMotion"],
+    aliases: ["Radio group"],
+  },
+  {
+    id: "segmented-control",
+    label: "Segmented control",
+    rows: [
+      ["segmentedSelected", "Selected"],
+      ["segmentedTrack", "Track"],
+      ["segmentedMotion", "Motion"],
     ],
   },
   {
-    id: "command",
-    label: "Command",
-    chapter: "overlays",
-    says: { field: "Search field", bar: "Search bar", prompt: "Prompt" },
+    id: "select",
+    label: "Select",
+    says: { field: "Field trigger", button: "Button trigger" },
     rows: [
-      ["menuSearch", "Search"],
-      ["menuScale", "Scale"],
+      ["selectTrigger", "Trigger"],
+      ["pickerCaret", "Caret"],
+      ["mobilePickers", "On mobile"],
     ],
-    aliases: ["Command palette"],
-  },
-  {
-    id: "dialog",
-    label: "Dialog",
-    chapter: "overlays",
-    rows: [
-      ["dialogBackdrop", "Backdrop"],
-      ["dialogSections", "Sections"],
-      ["dialogActions", "Actions"],
-      ["dialogClose", "Close"],
-      ["dialogPosition", "Position"],
-      ["dialogEntrance", "Entrance"],
-      ["mobileDialogs", "On mobile"],
-      ["dialogMotion", "Motion"],
-    ],
-    holds: ["dialogBackdropStrength", "dialogFrost"],
-    aliases: ["Dialogs", "Modal", "Alert dialog"],
+    aliases: ["Combobox", "Picker"],
   },
   {
     id: "sheet",
     label: "Sheet",
-    chapter: "overlays",
     rows: [["drawerEdge", "Edge"]],
     aliases: ["Drawer"],
   },
   {
+    id: "sidebar",
+    label: "Sidebar",
+    rows: [
+      ["navMarker", "Current item"],
+      ["navItemWeight", "Weight"],
+      ["sidebarMotion", "Motion"],
+    ],
+  },
+  {
+    id: "skeleton",
+    label: "Skeleton",
+    rows: [["skeletonAnimation", "Animation"]],
+  },
+  {
+    id: "slider",
+    label: "Slider",
+    rows: [
+      ["sliderThumb", "Thumb"],
+      ["sliderTrack", "Track"],
+      ["sliderColor", "Color"],
+      ["sliderMotion", "Motion"],
+    ],
+  },
+  {
+    id: "spinner",
+    label: "Spinner",
+    rows: [["spinnerStyle", "Style"]],
+    aliases: ["Loader"],
+  },
+  {
+    id: "switch",
+    label: "Switch",
+    rows: [
+      ["switchStyle", "Style"],
+      ["switchColor", "Color"],
+      ["switchMotion", "Motion"],
+    ],
+  },
+  {
+    id: "table",
+    label: "Table",
+    says: { plain: "Plain header", filled: "Filled header" },
+    rows: [
+      ["tableHeader", "Header"],
+      ["tableHeaderLabel", "Header label"],
+      ["tableMotion", "Motion"],
+    ],
+    aliases: ["Tree"],
+  },
+  {
     id: "tabs",
     label: "Tabs",
-    chapter: "navigation",
     rows: [
       ["tabStyle", "Style"],
       ["tabIndicator", "Indicator"],
@@ -297,117 +386,8 @@ export const COMPONENTS: Component[] = [
     ],
   },
   {
-    id: "sidebar",
-    label: "Sidebar",
-    chapter: "navigation",
-    rows: [
-      ["navMarker", "Current item"],
-      ["navItemWeight", "Weight"],
-      ["sidebarMotion", "Motion"],
-    ],
-  },
-  {
-    id: "breadcrumbs",
-    label: "Breadcrumbs",
-    chapter: "navigation",
-    rows: [
-      ["breadcrumbSeparator", "Separator"],
-      ["breadcrumbTone", "Ancestors"],
-    ],
-  },
-  {
-    id: "pagination",
-    label: "Pagination",
-    chapter: "navigation",
-    rows: [["paginationCurrent", "Current page"]],
-  },
-  {
-    id: "accordion",
-    label: "Accordion",
-    chapter: "navigation",
-    rows: [
-      ["accordionContainer", "Layout"],
-      ["accordionMarker", "Marker"],
-      ["accordionMotion", "Motion"],
-    ],
-    aliases: ["Collapsible"],
-  },
-  {
-    id: "card",
-    label: "Card",
-    chapter: "data",
-    says: { none: "Plain header", rule: "Ruled header", band: "Banded header" },
-    rows: [
-      ["cardHeader", "Header"],
-      ["cardFooter", "Footer"],
-      ["titleStyle", "Titles"],
-    ],
-  },
-  {
-    id: "table",
-    label: "Table",
-    chapter: "data",
-    says: { plain: "Plain header", filled: "Filled header" },
-    rows: [
-      ["tableHeader", "Header"],
-      ["tableHeaderLabel", "Header label"],
-      ["tableMotion", "Motion"],
-    ],
-    aliases: ["Tree"],
-  },
-  {
-    id: "badge",
-    label: "Badge",
-    chapter: "data",
-    rows: [
-      ["badgeStyle", "Style"],
-      ["badgeShape", "Shape"],
-      ["badgeCase", "Case"],
-    ],
-    aliases: ["Tag group", "Tag"],
-  },
-  {
-    id: "avatar",
-    label: "Avatar",
-    chapter: "data",
-    rows: [
-      ["avatarShape", "Shape"],
-      ["avatarFallback", "Fallback"],
-    ],
-  },
-  {
-    id: "kbd",
-    label: "Kbd",
-    chapter: "data",
-    rows: [["kbdTreatment", "Style"]],
-  },
-  {
-    id: "chart",
-    label: "Chart",
-    chapter: "data",
-    says: {
-      mono: "Mono palette",
-      vivid: "Vivid palette",
-      muted: "Muted palette",
-    },
-    rows: [
-      ["chartPalette", "Palette"],
-      ["chartGrid", "Gridlines"],
-      ["chartMotion", "Motion"],
-    ],
-    aliases: ["Charts", "Area chart", "Bar chart", "Line chart", "Pie chart"],
-  },
-  {
-    id: "alert",
-    label: "Alert",
-    chapter: "feedback",
-    rows: [["alertStyle", "Style"]],
-    aliases: ["Empty"],
-  },
-  {
     id: "toast",
     label: "Toast",
-    chapter: "feedback",
     rows: [
       ["toastStyle", "Style"],
       ["toastStatus", "Status"],
@@ -415,29 +395,13 @@ export const COMPONENTS: Component[] = [
     ],
   },
   {
-    id: "progress",
-    label: "Progress",
-    chapter: "feedback",
+    id: "tooltip",
+    label: "Tooltip",
     rows: [
-      ["progressTrack", "Thickness"],
-      ["progressTrackStyle", "Track"],
-      ["progressColor", "Fill"],
-      ["progressMotion", "Motion"],
+      ["tooltipStyle", "Style"],
+      ["tooltipEntrance", "Entrance"],
+      ["tooltipMotion", "Motion"],
     ],
-    aliases: ["Progress bar"],
-  },
-  {
-    id: "spinner",
-    label: "Spinner",
-    chapter: "feedback",
-    rows: [["spinnerStyle", "Style"]],
-    aliases: ["Loader"],
-  },
-  {
-    id: "skeleton",
-    label: "Skeleton",
-    chapter: "feedback",
-    rows: [["skeletonAnimation", "Animation"]],
   },
 ]
 
@@ -497,36 +461,22 @@ const pageOf = (component: Component): ChapterPage => ({
   },
 })
 
-const GROUPS: { id: string; label: string }[] = [
-  { id: "actions", label: "Actions" },
-  { id: "forms", label: "Forms" },
-  { id: "overlays", label: "Overlays" },
-  { id: "navigation", label: "Navigation" },
-  { id: "data", label: "Data display" },
-  { id: "feedback", label: "Feedback" },
-]
+const singles = COMPONENTS.filter(isSingle)
 
-export const COMPONENT_CHAPTERS: Chapter[] = GROUPS.map(({ id, label }) => {
-  const members = COMPONENTS.filter((component) => component.chapter === id)
-  return {
-    id,
-    label,
-    owners: members.filter(isSingle).flatMap(homeKeys),
-    // A one-row component is its row: search knows it by the row's name too.
-    rows: members.filter(isSingle).map(({ label, aliases = [], rows }) => ({
-      name: label,
-      key: rows[0]?.[0],
-      aliases: [...aliases, ...rows.map(([, name]) => name)],
-    })),
-    Body: function ComponentRows({ studio }: { studio: Studio }) {
-      return members.map((component) => (
-        <ComponentRow
-          key={component.id}
-          component={component}
-          studio={studio}
-        />
-      ))
-    },
-    pages: members.filter((component) => !isSingle(component)).map(pageOf),
-  }
-})
+export const COMPONENTS_CHAPTER: Chapter = {
+  id: "components",
+  label: "Components",
+  owners: singles.flatMap(homeKeys),
+  // A one-row component is its row: search knows it by the row's name too.
+  rows: singles.map(({ label, aliases = [], rows }) => ({
+    name: label,
+    key: rows[0]?.[0],
+    aliases: [...aliases, ...rows.map(([, name]) => name)],
+  })),
+  Body: function ComponentRows({ studio }: { studio: Studio }) {
+    return COMPONENTS.map((component) => (
+      <ComponentRow key={component.id} component={component} studio={studio} />
+    ))
+  },
+  pages: COMPONENTS.filter((component) => !isSingle(component)).map(pageOf),
+}

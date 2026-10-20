@@ -265,6 +265,25 @@ describe("migrate", () => {
     })
   })
 
+  it("reads the chart's own transition as a tempo, following Motion where it matches", () => {
+    const v4 = (picks: Record<string, unknown>) =>
+      migrate({ version: 4, ...DEFAULT_STATE, ...picks })
+    expect(v4({ chartMotion: "spring" })).toEqual(DEFAULT_STATE)
+    expect(v4({ chartMotion: "ease" })).toEqual({
+      ...DEFAULT_STATE,
+      chartMotion: "smooth",
+    })
+    expect(v4({ chartMotion: "none" })).toEqual({
+      ...DEFAULT_STATE,
+      chartMotion: "none",
+    })
+    expect(v4({ motion: "smooth", chartMotion: "spring" })).toEqual({
+      ...DEFAULT_STATE,
+      motion: "smooth",
+      chartMotion: "standard",
+    })
+  })
+
   it("returns anything but an object as is", () => {
     for (const raw of [null, 3, "state", [1]]) expect(migrate(raw)).toBe(raw)
   })

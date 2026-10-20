@@ -79,7 +79,6 @@ const BreadcrumbSeparator = ({
   className,
   ...props
 }: BreadcrumbSeparatorProps) => {
-  const glyph = <ChevronRightIcon />;
   return (
     <span
       data-breadcrumb-separator=""
@@ -87,7 +86,7 @@ const BreadcrumbSeparator = ({
       className={separator({ className })}
       {...props}
     >
-      {children ?? glyph}
+      {children ?? <ChevronRightIcon />}
     </span>
   );
 };

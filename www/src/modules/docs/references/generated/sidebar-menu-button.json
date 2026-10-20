@@ -1514,61 +1514,6 @@
               ]
             }
           ]
-        },
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "VariantProps"
-          },
-          "typeParameters": [
-            {
-              "type": "function",
-              "parameters": [
-                {
-                  "type": "parameter",
-                  "name": "props",
-                  "value": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "identifier",
-                        "name": "{} & { class?: ClassNameValue; className?: undefined; }"
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "{} & { class?: undefined; className?: ClassNameValue; }"
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "undefined"
-                      }
-                    ]
-                  },
-                  "optional": true,
-                  "rest": false
-                }
-              ],
-              "return": {
-                "type": "intersection",
-                "types": [
-                  {
-                    "type": "identifier",
-                    "name": "{}"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "{ readonly content: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; readonly arrow: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "{ base: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
-                  }
-                ]
-              },
-              "typeParameters": []
-            }
-          ]
         }
       ],
       "properties": {

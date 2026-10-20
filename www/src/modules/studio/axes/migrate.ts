@@ -44,7 +44,13 @@ const VALUES: Record<string, Record<string, unknown>> = {
   buttonRadius: { auto: null, sharp: null, round: null },
   calendarDayShape: { rounded: null, square: null },
   calendarToday: { none: null },
-  chartMotion: { stiff: "spring", wobbly: "spring", slow: "ease" },
+  chartMotion: {
+    spring: "standard",
+    stiff: "standard",
+    wobbly: "standard",
+    slow: "smooth",
+    ease: "smooth",
+  },
   checkCorner: { rounded: null, square: "sharp", circle: null },
   dialogBackdrop: { dim: null, blur: null, none: "wash" },
   disabledTreatment: { alpha: "fade" },
@@ -297,5 +303,20 @@ function fromSoft(state: Raw): Raw {
   return next
 }
 
+/* Chart motion was the chart's own transition; it is now a tempo that
+   follows Motion. */
+const CHART_TEMPO: Raw = { spring: "standard", ease: "smooth", none: "none" }
+
+function fromChartTransition(state: Raw): Raw {
+  const tempo = CHART_TEMPO[String(state.chartMotion)]
+  if (tempo === undefined) return state
+  const same = tempo === (state.motion ?? "standard")
+  return { ...state, chartMotion: same ? "same" : tempo }
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
-const STEPS: Record<number, (state: Raw) => Raw> = { 2: fromMain, 3: fromSoft }
+const STEPS: Record<number, (state: Raw) => Raw> = {
+  2: fromMain,
+  3: fromSoft,
+  4: fromChartTransition,
+}

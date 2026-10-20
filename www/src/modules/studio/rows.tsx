@@ -569,7 +569,7 @@ export function FontListPopover({
       )}
       {/* Docked, the list fills the sheet over the field, which sits on the
           keyboard. */}
-      <Command className="max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
+      <Command className="gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
         <SearchField autoFocus={finePointer} aria-label="Search fonts">
           <InputGroup>
             <InputGroupAddon>

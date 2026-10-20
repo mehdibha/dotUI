@@ -6,7 +6,7 @@ import { MONO_CAPS } from "../list-box/styles"
 import sidebarMeta from "./meta"
 
 const collapse =
-  "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
+  "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease) motion-reduce:transition-none"
 
 /* The current item's marker, on menu and sub-menu buttons alike. Each marker
    owns its hover; a marker with its own fill or ink keeps it under the pointer. */
@@ -116,7 +116,7 @@ const { useStyles } = createStyles(sidebarMeta, {
       ],
       header: "flex flex-col gap-2 p-2",
       footer: "flex flex-col gap-2 p-2",
-      separator: "mx-2 w-auto bg-border",
+      separator: "mx-2 w-auto",
       content:
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",

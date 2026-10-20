@@ -14,9 +14,9 @@ import { tv } from "tailwind-variants";
 const toastVariants = tv({
   slots: {
     viewport:
-      "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset outline-none [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)] data-[position*=bottom]:bottom-(--toast-inset) data-[position*=top]:top-(--toast-inset) data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
+      "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)] data-[position*=bottom]:bottom-(--toast-inset) data-[position*=top]:top-(--toast-inset) data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
     toast:
-      "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-md shadow-(--shadow-modal,var(--shadow-lg)) focus-reset outline-none select-none focus-visible:focus-ring [--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))] after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full data-ending-style:opacity-0 data-limited:opacity-0 data-expanded:h-(--toast-height) data-[position*=bottom]:top-auto data-[position*=bottom]:bottom-0 data-[position*=bottom]:origin-[50%_calc(50%+50%*min(var(--toast-index),1))] data-[position*=top]:top-0 data-[position*=top]:bottom-auto data-[position*=top]:origin-[50%_calc(50%-50%*min(var(--toast-index),1))] data-[position*=center]:right-0 data-[position*=center]:left-0 data-[position*=left]:right-auto data-[position*=left]:left-0 data-[position*=right]:right-0 data-[position*=right]:left-auto data-[position*=bottom]:[--toast-calc-offset-y:calc(var(--toast-offset-y)*-1+var(--toast-index)*var(--toast-gap)*-1+var(--toast-swipe-movement-y))] data-[position*=top]:[--toast-calc-offset-y:calc(var(--toast-offset-y)+var(--toast-index)*var(--toast-gap)+var(--toast-swipe-movement-y))] data-[position*=bottom]:transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--toast-peek))-(var(--toast-shrink)*var(--toast-calc-height))))_scale(var(--toast-scale))] data-[position*=top]:transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--toast-peek))+(var(--toast-shrink)*var(--toast-calc-height))))_scale(var(--toast-scale))] data-[position*=bottom]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))] data-[position*=top]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))] data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-inset)))] data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))] data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-expanded:data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-inset)))] data-expanded:data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))] data-expanded:data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-expanded:data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] border transition-[transform,opacity,height,background-color,border-color] duration-400 ease-[cubic-bezier(0.25,0.1,0.25,1)] data-ending-style:data-swipe-direction:duration-200 data-ending-style:data-swipe-direction:ease-out motion-reduce:transition-none data-[position*=bottom]:data-starting-style:transform-[translateY(calc(100%+var(--toast-inset)))] data-[position*=top]:data-starting-style:transform-[translateY(calc(-100%-var(--toast-inset)))] data-ending-style:not-data-limited:not-data-swipe-direction:transform-[translateY(calc(100%+var(--toast-inset)))] border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)]",
+      "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-md shadow-(--shadow-modal,var(--shadow-lg)) focus-reset select-none focus-visible:focus-ring [--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))] after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full data-ending-style:opacity-0 data-limited:opacity-0 data-expanded:h-(--toast-height) data-[position*=bottom]:top-auto data-[position*=bottom]:bottom-0 data-[position*=bottom]:origin-[50%_calc(50%+50%*min(var(--toast-index),1))] data-[position*=top]:top-0 data-[position*=top]:bottom-auto data-[position*=top]:origin-[50%_calc(50%-50%*min(var(--toast-index),1))] data-[position*=center]:right-0 data-[position*=center]:left-0 data-[position*=left]:right-auto data-[position*=left]:left-0 data-[position*=right]:right-0 data-[position*=right]:left-auto data-[position*=bottom]:[--toast-calc-offset-y:calc(var(--toast-offset-y)*-1+var(--toast-index)*var(--toast-gap)*-1+var(--toast-swipe-movement-y))] data-[position*=top]:[--toast-calc-offset-y:calc(var(--toast-offset-y)+var(--toast-index)*var(--toast-gap)+var(--toast-swipe-movement-y))] data-[position*=bottom]:transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--toast-peek))-(var(--toast-shrink)*var(--toast-calc-height))))_scale(var(--toast-scale))] data-[position*=top]:transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--toast-peek))+(var(--toast-shrink)*var(--toast-calc-height))))_scale(var(--toast-scale))] data-[position*=bottom]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))] data-[position*=top]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))] data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-inset)))] data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))] data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-expanded:data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-inset)))] data-expanded:data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))] data-expanded:data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] data-expanded:data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))] border transition-[transform,opacity,height,background-color,border-color] duration-400 ease-[cubic-bezier(0.25,0.1,0.25,1)] data-ending-style:data-swipe-direction:duration-200 data-ending-style:data-swipe-direction:ease-out motion-reduce:transition-none data-[position*=bottom]:data-starting-style:transform-[translateY(calc(100%+var(--toast-inset)))] data-[position*=top]:data-starting-style:transform-[translateY(calc(-100%-var(--toast-inset)))] data-ending-style:not-data-limited:not-data-swipe-direction:transform-[translateY(calc(100%+var(--toast-inset)))] border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)]",
     content:
       "pointer-events-auto flex items-center justify-between gap-1.5 overflow-hidden text-sm data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100 min-h-12 px-3.5 py-3 transition-opacity duration-400 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none [--surface-bg:var(--color-popover)]",
     body: "flex min-w-0 items-center gap-2",
@@ -33,14 +33,6 @@ const toastVariants = tv({
       true: {
         action: "text-current hover:bg-current/10 pressed:bg-current/20",
       },
-    },
-    position: {
-      "top-left": {},
-      "top-center": {},
-      "top-right": {},
-      "bottom-left": {},
-      "bottom-center": {},
-      "bottom-right": {},
     },
     variant: {
       neutral: {},
@@ -62,7 +54,6 @@ const toastVariants = tv({
     },
   },
   defaultVariants: {
-    position: "bottom-right",
     variant: "neutral",
   },
 });
@@ -114,7 +105,6 @@ const toastIcons = {
 } as const;
 
 const defaultToastManager = ToastPrimitive.createToastManager<ToastData>();
-// Whether a status toast's own fill is solid; undefined sits on the surface.
 
 function getToastVariant(type: string | undefined): ToastVariant {
   if (type === "error") return "danger";
@@ -147,13 +137,12 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 const ToastProvider = ({
   children,
   limit = 3,
-  position,
+  position = "bottom-right",
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
 }: ToastProviderProps) => {
-  const { defaultVariants } = toastVariants;
   return (
     <ToastPrimitive.Provider
       limit={limit}
@@ -162,10 +151,7 @@ const ToastProvider = ({
       {...props}
     >
       {children}
-      <ToastList
-        position={position ?? defaultVariants.position ?? "bottom-right"}
-        portalProps={portalProps}
-      />
+      <ToastList position={position} portalProps={portalProps} />
     </ToastPrimitive.Provider>
   );
 };
@@ -182,7 +168,7 @@ const ToastList = ({ position, portalProps }: ToastListProps) => {
       <ToastPrimitive.Viewport
         data-toast-viewport=""
         data-position={position}
-        className={viewport({ position })}
+        className={viewport()}
       >
         {toasts.map((toastItem) => (
           <ToastItem key={toastItem.id} position={position} toast={toastItem} />
@@ -215,7 +201,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
       data-toast=""
       swipeDirection={getSwipeDirection(position)}
       toast={toastItem}
-      className={toastStyle({ position, variant })}
+      className={toastStyle({ variant })}
     >
       <ToastPrimitive.Content className={content()}>
         <div className={body()}>
@@ -225,10 +211,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
             </div>
           ) : null}
           <div data-toast-message="" className={message()}>
-            <ToastPrimitive.Title
-              data-toast-title=""
-              className={title({ variant })}
-            />
+            <ToastPrimitive.Title data-toast-title="" className={title()} />
             <ToastPrimitive.Description
               data-toast-description=""
               className={description({ variant })}

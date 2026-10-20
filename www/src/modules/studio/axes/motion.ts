@@ -38,7 +38,7 @@ export function springProgress(
 }
 
 /** Milliseconds until the spring stays within 0.1% of rest, to 10ms. */
-export function springSettleMs(spring: Spring): number {
+function springSettleMs(spring: Spring): number {
   let last = 0
   for (let ms = 0; ms <= 5000; ms += 5)
     if (Math.abs(1 - springProgress(ms / 1000, spring)) > 0.001) last = ms
@@ -234,38 +234,47 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   "message-scroller": { role: "notification", exit: true },
 }
 
-/** Each member's vars, timed by its own table. */
+/** Each member's vars, timed by its own table and stretched by `speed`. */
 export function motionVars(
   tableFor: (member: string) => MotionTable,
+  speed = 1,
 ): Record<string, string> {
   const vars: Record<string, string> = {}
+  const duration = (ms: number) => `${Math.round((ms * speed) / 10) * 10}ms`
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
     const { ms, ease } = legTiming(tableFor(id)[role].enter)
-    vars[`--studio-${id}-state-duration`] = `${ms}ms`
+    vars[`--studio-${id}-state-duration`] = duration(ms)
     vars[`--studio-${id}-state-ease`] = ease
   }
   for (const id of COLOR_MEMBERS) {
     const color = legTiming(tableFor(id).micro.enter)
-    vars[`--studio-${id}-color-duration`] = `${color.ms}ms`
+    vars[`--studio-${id}-color-duration`] = duration(color.ms)
     vars[`--studio-${id}-color-ease`] = color.ease
   }
   for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
     const { enter, exit } = tableFor(id)[member.role]
     const { ms, ease } = legTiming(enter)
-    vars[`--studio-${id}-enter-duration`] = `${ms}ms`
+    vars[`--studio-${id}-enter-duration`] = duration(ms)
     vars[`--studio-${id}-ease`] = ease
     if (member.exit && exit) {
-      vars[`--studio-${id}-exit-duration`] = `${exit.ms}ms`
+      vars[`--studio-${id}-exit-duration`] = duration(exit.ms)
       vars[`--studio-${id}-exit-ease`] = bezierCss(exit.ease)
     }
   }
   return vars
 }
 
-export const MOTION_VALUES = ["standard", "smooth", "expressive"] as const
+export const MOTION_VALUES = [
+  "none",
+  "standard",
+  "smooth",
+  "expressive",
+] as const
 
-/** A component's own Motion can also stop it. */
-export const COMPONENT_MOTION_VALUES = ["none", ...MOTION_VALUES] as const
+export const SPEED_VALUES = ["faster", "default", "slower"] as const
+
+/** What Speed multiplies every duration by. */
+const SPEED: Record<string, number> = { faster: 0.75, default: 1, slower: 1.5 }
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
@@ -311,7 +320,7 @@ const KEY_OF: Record<string, ComponentMotionKey> = Object.fromEntries(
   ),
 )
 
-const SAME_AS_MOTION: readonly Follow[] = [
+export const FOLLOWS_MOTION: readonly Follow[] = [
   { kind: "same", id: "same", from: "motion" },
 ]
 
@@ -321,6 +330,7 @@ export const chapter = defineChapter({
   id: "motion",
   defaults: {
     motion: "standard",
+    motionSpeed: "default",
     popoverEntrance: "zoom",
     tooltipEntrance: "zoom",
     ...(Object.fromEntries(
@@ -329,15 +339,19 @@ export const chapter = defineChapter({
   },
   schema: {
     motion: oneOf(MOTION_VALUES),
+    motionSpeed: oneOf(SPEED_VALUES),
     popoverEntrance: oneOf(ENTRANCE_VALUES),
     tooltipEntrance: oneOf(ENTRANCE_VALUES),
     ...(Object.fromEntries(
-      COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(COMPONENT_MOTION_VALUES)]),
+      COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(MOTION_VALUES)]),
     ) as Record<ComponentMotionKey, AxisSchema>),
   },
   resolve(state: Effective): Resolved {
     const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
-    const vars = motionVars((member) => tableOf(motionOf(member)))
+    const vars = motionVars(
+      (member) => tableOf(motionOf(member)),
+      SPEED[state.motionSpeed],
+    )
     const off = (member: string) => motionOf(member) === "none"
     const entrance = (member: string, value: string) =>
       off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
@@ -356,7 +370,7 @@ export const chapter = defineChapter({
     }
   },
   follows: Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
+    COMPONENT_MOTION_KEYS.map((key) => [key, FOLLOWS_MOTION]),
   ),
   rules: [
     {

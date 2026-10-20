@@ -105,31 +105,26 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
 
   const onHeightChange = React.useCallback(() => {
-    if (inputRef.current) {
-      const input = inputRef.current
-      const prevAlignment = input.style.alignSelf
-      const prevOverflow = input.style.overflow
-      const prevFlex = input.style.flex
+    const input = inputRef.current
+    if (!input) return
+    const prevAlignment = input.style.alignSelf
+    const prevOverflow = input.style.overflow
+    const prevFlex = input.style.flex
 
-      const isFirefox = "MozAppearance" in input.style
-      if (!isFirefox) {
-        input.style.overflow = "hidden"
-      }
-      input.style.flex = "none"
-      input.style.alignSelf = "start"
-      input.style.height = "auto"
-      input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`
-      input.style.overflow = prevOverflow
-      input.style.alignSelf = prevAlignment
-      input.style.flex = prevFlex
+    const isFirefox = "MozAppearance" in input.style
+    if (!isFirefox) {
+      input.style.overflow = "hidden"
     }
+    input.style.flex = "none"
+    input.style.alignSelf = "start"
+    input.style.height = "auto"
+    input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`
+    input.style.overflow = prevOverflow
+    input.style.alignSelf = prevAlignment
+    input.style.flex = prevFlex
   }, [])
 
-  useLayoutEffect(() => {
-    if (inputRef.current) {
-      onHeightChange()
-    }
-  }, [onHeightChange, inputValue, inputRef])
+  useLayoutEffect(() => onHeightChange(), [onHeightChange, inputValue])
 
   return (
     <TextAreaPrimitives.TextArea

@@ -12,17 +12,17 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { Text } from "@/components/ui/text";
 
-const fieldVariants = tv({
+const fieldStyles = tv({
   slots: {
     fieldset: "",
     legend: "",
     fieldGroup:
-      "@container/field-group flex w-full flex-col gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
+      "group/field-group @container/field-group flex w-full flex-col gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
     field:
       "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
     fieldContent: "flex flex-col gap-1",
     label:
-      "inline-flex items-center gap-px select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3 in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*'] in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor) in-data-invalid:text-fg-danger text-sm",
+      "inline-flex items-center gap-px select-ui [&_svg]:size-3 in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*'] in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor) in-data-invalid:text-fg-danger text-sm",
     description:
       "text-fg-muted last:mt-0 in-data-disabled:text-(--disabled-fg,var(--color-fg-muted)) nth-last-2:-mt-1 text-sm",
     fieldError: "text-fg-danger text-sm",
@@ -51,9 +51,7 @@ const {
   label,
   description,
   fieldError,
-} = fieldVariants();
-
-export { fieldVariants as fieldStyles };
+} = fieldStyles();
 
 /* -------------------------------------------------------------------------- */
 
@@ -86,7 +84,7 @@ const FieldGroup = ({ className, ...props }: FieldGroupProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface FieldProps
-  extends React.ComponentProps<"div">, VariantProps<typeof fieldVariants> {}
+  extends React.ComponentProps<"div">, VariantProps<typeof fieldStyles> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId();
@@ -135,15 +133,13 @@ interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
 > {}
 
-const Label = ({ children, className, ...props }: LabelProps) => {
+const Label = ({ className, ...props }: LabelProps) => {
   return (
     <LabelPrimitives.Label
       data-label=""
       className={label({ className })}
       {...props}
-    >
-      {children}
-    </LabelPrimitives.Label>
+    />
   );
 };
 
@@ -203,4 +199,5 @@ export {
   Fieldset,
   Label,
   Legend,
+  fieldStyles,
 };

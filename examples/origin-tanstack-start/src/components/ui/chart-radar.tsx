@@ -242,7 +242,6 @@ export function radarChartSpec<TDatum>(
   };
 }
 
-// oxlint-disable-next-line no-explicit-any
 const radarTooltip: ChartTooltipContentOf<RadarChartSpecOptions<any>> = (
   points,
   _context,

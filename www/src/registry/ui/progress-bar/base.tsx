@@ -68,7 +68,7 @@ const ProgressBarFill = ({
 }: ProgressBarFillProps) => {
   const { fill } = useStyles()()
   const { isIndeterminate, percentage } =
-    useProgressBarContext("ProgressBarControl")
+    useProgressBarContext("ProgressBarFill")
 
   return (
     <div

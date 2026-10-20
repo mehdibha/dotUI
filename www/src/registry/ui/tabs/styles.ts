@@ -28,14 +28,14 @@ import tabsMeta from "./meta"
    for the design system. Segmented wears the segmented control's chip and
    track, pill a quiet toggle's selected look, line the indicator color. */
 
-const { useStyles } = createStyles(tabsMeta, {
+const { useStyles, styles } = createStyles(tabsMeta, {
   base: {
     slots: {
       root: "flex gap-2",
       list: "inline-flex w-fit items-center justify-center text-fg-muted",
       item: [
         "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] duration-(--studio-tabs-color-duration) ease-(--studio-tabs-color-ease) select-ui focus-visible:focus-ring-outside",
-        "text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor)",
+        "text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
       indicator:
@@ -267,5 +267,7 @@ const { useStyles } = createStyles(tabsMeta, {
     },
   },
 })
+
+export type TabsStyles = typeof styles
 
 export { useStyles }

@@ -276,7 +276,6 @@ interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
 const SidebarTrigger = ({
   onPress,
-  className,
   children,
   ...props
 }: SidebarTriggerProps) => {
@@ -287,7 +286,6 @@ const SidebarTrigger = ({
       size="sm"
       isIconOnly
       aria-label="Toggle Sidebar"
-      className={cn("size-7", className)}
       onPress={(event) => {
         onPress?.(event)
         toggleSidebar()
@@ -551,7 +549,6 @@ const SidebarMenuButton = ({
   }
 
   const tooltipContentProps: TooltipContentProps =
-    tooltip != null &&
     typeof tooltip === "object" &&
     !React.isValidElement(tooltip) &&
     !Array.isArray(tooltip)

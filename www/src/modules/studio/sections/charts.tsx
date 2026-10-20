@@ -1,14 +1,10 @@
 "use client"
 
-/* Charts: palette, grid and transition. */
+/* Charts: palette and grid; the chart's Motion row is Motion's. */
 
 import { cn } from "@/registry/lib/utils"
 
-import {
-  GRID_OPTIONS,
-  MOTION_OPTIONS,
-  PALETTE_OPTIONS,
-} from "../axes/charts.meta"
+import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts.meta"
 import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 
@@ -92,18 +88,7 @@ function GridRow() {
   )
 }
 
-function ChartMotionRow() {
-  return (
-    <DialSelect
-      axis="chartMotion"
-      label="Chart transition"
-      options={MOTION_OPTIONS}
-    />
-  )
-}
-
 export const ROWS: RowMap = {
   chartPalette: PaletteRow,
   chartGrid: GridRow,
-  chartMotion: ChartMotionRow,
 }

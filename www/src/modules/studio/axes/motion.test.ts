@@ -18,7 +18,7 @@ import {
   springProgress,
   tableOf,
 } from "./motion"
-import { COMPONENT_MOTION_OPTIONS } from "./motion.meta"
+import { MOTION_OPTIONS } from "./motion.meta"
 
 const MOTION_SUFFIX =
   /-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
@@ -60,7 +60,7 @@ describe("role tables", () => {
 
   test("every option times every member", () => {
     const names = Object.keys(motionVars(() => tableOf("standard"))).sort()
-    for (const { value } of COMPONENT_MOTION_OPTIONS)
+    for (const { value } of MOTION_OPTIONS)
       expect(
         Object.keys(motionVars(() => tableOf(value))).sort(),
         value,
@@ -94,10 +94,46 @@ describe("resolve", () => {
       expect(Object.keys(tokens).length, motion).toBeGreaterThan(0)
       for (const name of Object.keys(tokens))
         expect(name, motion).toMatch(MOTION_VAR)
-      expect(componentParams).toEqual(
-        designSystemOf(DEFAULT_STATE).componentParams,
-      )
+      // Charts follow the tempo through their own param.
+      const { chart: _, ...params } = componentParams
+      const { chart: __, ...origin } =
+        designSystemOf(DEFAULT_STATE).componentParams
+      expect(params).toEqual(origin)
     }
+  })
+
+  test("None stops every member and every pattern", () => {
+    const { tokens, componentParams } = designSystemOf(
+      parseState({ motion: "none" }),
+    )
+    const durations = Object.entries(tokens).filter(([name]) =>
+      name.endsWith("duration"),
+    )
+    expect(durations.length).toBeGreaterThan(0)
+    for (const [name, value] of durations) expect(value, name).toBe("0ms")
+    for (const id of ["popover", "tooltip", "toast", "accordion", "chart"])
+      expect(componentParams[id], id).toMatchObject({ motion: "none" })
+  })
+
+  test("Speed stretches every duration and keeps every curve", () => {
+    const base = motionVars(() => tableOf("smooth"))
+    for (const factor of [0.75, 1.5]) {
+      const scaled = Object.fromEntries(
+        Object.entries(base).map(([name, value]) => [
+          name,
+          name.endsWith("duration")
+            ? `${Math.round((Number.parseInt(value) * factor) / 10) * 10}ms`
+            : value,
+        ]),
+      )
+      expect(motionVars(() => tableOf("smooth"), factor)).toEqual(scaled)
+    }
+    const faster = designSystemOf(parseState({ motionSpeed: "faster" })).tokens
+    expect(Object.keys(faster).length).toBeGreaterThan(0)
+    for (const name of Object.keys(faster)) expect(name).toMatch(MOTION_VAR)
+    expect(
+      designSystemOf(parseState({ motionSpeed: "default" })).tokens,
+    ).toEqual({})
   })
 
   test("each entrance moves its own pattern", () => {
@@ -323,7 +359,7 @@ describe("shipped motion", () => {
 
   test("every option ships plain classes, no studio vars", async () => {
     const survivors: string[] = []
-    for (const { value } of COMPONENT_MOTION_OPTIONS) {
+    for (const { value } of MOTION_OPTIONS) {
       // The global covers the members no component Motion times.
       const shipped = await shipAll(
         parseState({
