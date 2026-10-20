@@ -113,6 +113,7 @@ describe("deep links", () => {
     expect(linkTarget("radio-group")).toEqual({ page: "radio" })
     expect(linkTarget("modal")).toEqual({ page: "dialog" })
     expect(linkTarget("loader")).toEqual({ key: "spinnerStyle" })
+    expect(linkTarget("group")).toEqual({ page: "button" })
   })
 
   it("sends the old family hashes to the nearest page", () => {
