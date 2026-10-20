@@ -79,8 +79,8 @@ html::-webkit-scrollbar { display: none; }
 @keyframes board-fade-out { to { opacity: 0; } }
 @keyframes board-fade-in { from { opacity: 0; } }
 ::view-transition-group(board-stage) { animation: none; }
-::view-transition-old(board-stage) { animation: board-fade-out 125ms ease-out both; }
-::view-transition-new(board-stage) { animation: board-fade-in 125ms ease-out both; }
+::view-transition-old(board-stage) { animation: board-fade-out 100ms ease-out both; }
+::view-transition-new(board-stage) { animation: board-fade-in 100ms ease-out both; }
 `
 
 // Crossfades the stage (the preview's content) into `update`. The site keeps
