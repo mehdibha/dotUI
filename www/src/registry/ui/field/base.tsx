@@ -103,16 +103,14 @@ interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
 > {}
 
-const Label = ({ children, className, ...props }: LabelProps) => {
+const Label = ({ className, ...props }: LabelProps) => {
   const { label } = useStyles()()
   return (
     <LabelPrimitives.Label
       data-label=""
       className={label({ className })}
       {...props}
-    >
-      {children}
-    </LabelPrimitives.Label>
+    />
   )
 }
 

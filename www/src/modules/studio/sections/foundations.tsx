@@ -1,7 +1,7 @@
 "use client"
 
 /* Foundations — the decisions every component reads, then the pages that
-   refine them. Shape and Surfaces open from their picker's Custom. */
+   refine them. Shape, Surfaces and Motion open from their picker's Custom. */
 
 import { Fragment } from "react"
 
@@ -10,6 +10,7 @@ import { DialGap, DialLink } from "../dial"
 import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
+import { ComponentMotionRow } from "./motion"
 import { PrimaryRow } from "./primary"
 import { ComponentCornersRow, ShapeRow } from "./shape"
 import {
@@ -95,6 +96,7 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
     ],
     [[ComponentCornersRow, "Components"]],
   ],
+  motion: [[["motionSpeed", "Speed"]], [[ComponentMotionRow, "Components"]]],
   surfaces: [
     [
       ["surfaceLayers", "Layers"],
@@ -196,6 +198,12 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
     label: "Shape",
     owners: ["shape"],
     aliases: ["Corners", "Radius"],
+  }),
+  page({
+    id: "motion",
+    label: "Motion",
+    owners: ["motionSpeed"],
+    aliases: ["Animation", "Transitions"],
   }),
   page({
     id: "surfaces",

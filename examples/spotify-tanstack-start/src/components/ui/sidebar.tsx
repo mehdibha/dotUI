@@ -26,9 +26,9 @@ const sidebarVariants = tv({
     wrapper:
       "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
     root: "group peer hidden text-fg data-[side=right]:order-last md:block",
-    gap: "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
+    gap: "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear motion-reduce:transition-none group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
     container:
-      "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex duration-200 ease-linear group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=sidebar]:group-data-[side=left]:border-r group-data-[variant=sidebar]:group-data-[side=right]:border-l group-data-[variant=floating]:p-2 group-data-[variant=inset]:p-2 group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
+      "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex duration-200 ease-linear motion-reduce:transition-none group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[variant=sidebar]:group-data-[side=left]:border-r group-data-[variant=sidebar]:group-data-[side=right]:border-l group-data-[variant=floating]:p-2 group-data-[variant=inset]:p-2 group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)] group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
     inner:
       "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)] group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
     mobile:
@@ -38,12 +38,12 @@ const sidebarVariants = tv({
     rail: "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[side=left]:group-data-[collapsible=offcanvas]:-right-2 group-data-[side=right]:group-data-[collapsible=offcanvas]:-left-2",
     header: "flex flex-col gap-2 p-2",
     footer: "flex flex-col gap-2 p-2",
-    separator: "mx-2 w-auto bg-border",
+    separator: "mx-2 w-auto",
     content:
       "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
     group: "relative flex w-full min-w-0 flex-col p-2",
     groupLabel:
-      "flex h-8 shrink-0 items-center rounded-md px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 font-sans text-xs tracking-normal",
+      "flex h-8 shrink-0 items-center rounded-md px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear motion-reduce:transition-none group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 font-sans text-xs tracking-normal",
     groupAction:
       "absolute top-3.5 right-3 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0 after:absolute after:-inset-2 md:after:hidden group-data-[collapsible=icon]:hidden",
     groupContent: "w-full text-sm",
@@ -345,7 +345,6 @@ interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
 const SidebarTrigger = ({
   onPress,
-  className,
   children,
   ...props
 }: SidebarTriggerProps) => {
@@ -356,7 +355,6 @@ const SidebarTrigger = ({
       size="sm"
       isIconOnly
       aria-label="Toggle Sidebar"
-      className={cn("size-7", className)}
       onPress={(event) => {
         onPress?.(event);
         toggleSidebar();
@@ -607,7 +605,6 @@ const SidebarMenuButton = ({
   }
 
   const tooltipContentProps: TooltipContentProps =
-    tooltip != null &&
     typeof tooltip === "object" &&
     !React.isValidElement(tooltip) &&
     !Array.isArray(tooltip)

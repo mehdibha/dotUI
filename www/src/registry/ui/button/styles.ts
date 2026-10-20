@@ -357,7 +357,7 @@ export const BUTTON_DENSITY = {
     },
   },
   default: {
-    base: "text-sm *:[svg]:not-with-[size]:size-4",
+    base: "text-sm",
     variants: {
       size: {
         xs: "h-6 gap-1 px-2 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 data-icon-only:size-6 **:[svg]:not-with-[size]:size-3",

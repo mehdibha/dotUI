@@ -49,7 +49,7 @@ describe("homes", () => {
       rendered(pageRows(page.id)),
     ]),
     ...COMPONENTS.map((component): [string, string[]] => [
-      isSingle(component) ? component.chapter : component.id,
+      isSingle(component) ? "components" : component.id,
       keysOf(component).filter((key) => !component.hosts?.includes(key)),
     ]),
   ]
@@ -68,7 +68,7 @@ describe("homes", () => {
     const hosted = COMPONENTS.flatMap((c) =>
       (c.hosts ?? []).map((key) => `${c.id}:${key}`),
     )
-    expect(hosted).toEqual(["radio:checkboxMotion", "menu:popoverMotion"])
+    expect(hosted).toEqual(["menu:popoverMotion", "radio:checkboxMotion"])
     expect(where("popoverMotion")).toBe("popover")
     expect(where("checkboxMotion")).toBe("checkbox")
   })
@@ -133,7 +133,7 @@ describe("deep links", () => {
       states: { page: "focus" },
       interaction: { page: "focus" },
       color: { page: "surfaces" },
-      motion: { key: "motion" },
+      motion: { page: "motion" },
     }
     for (const [hash, target] of Object.entries(old))
       expect(linkTarget(hash), hash).toEqual(target)

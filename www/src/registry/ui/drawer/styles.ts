@@ -3,11 +3,11 @@ import { createStyles } from "@/lib/styles"
 import drawerMeta from "./meta"
 
 const duration =
-  "duration-(--studio-drawer-enter-duration) data-ending-style:duration-[calc(var(--studio-drawer-exit-duration)*var(--drawer-swipe-strength,1))]"
+  "duration-(--studio-drawer-enter-duration) data-ending-style:duration-[calc(var(--studio-drawer-exit-duration)*var(--drawer-swipe-strength,1))] motion-reduce:transition-none"
 const ease =
   "ease-(--studio-drawer-ease) data-ending-style:ease-(--studio-drawer-exit-ease)"
 const behind =
-  "duration-(--studio-drawer-enter-duration) ease-(--studio-drawer-ease) data-inactive:duration-(--studio-drawer-exit-duration) data-inactive:ease-(--studio-drawer-exit-ease)"
+  "duration-(--studio-drawer-enter-duration) ease-(--studio-drawer-ease) data-inactive:duration-(--studio-drawer-exit-duration) data-inactive:ease-(--studio-drawer-exit-ease) motion-reduce:transition-none"
 
 const { useStyles } = createStyles(drawerMeta, {
   base: {

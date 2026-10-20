@@ -38,7 +38,7 @@ const { useStyles, styles } = createStyles(groupMeta, {
       root: [
         "flex w-fit items-stretch",
         "has-data-group:gap-2",
-        "*:hover:z-1 *:focus:z-3 *:focus-visible:z-3 *:has-[input]:z-2 *:[input]:z-2",
+        "*:hover:z-1 *:focus:z-3 *:has-[input]:z-2 *:[input]:z-2",
         "*:data-label:shrink-0 *:data-label:rounded-(--studio-group-radius) *:data-label:border-(length:--studio-control-stroke) *:data-label:bg-card *:data-label:px-4",
       ],
       text: "flex items-center gap-2 rounded-(--studio-group-radius) border-(length:--studio-control-stroke) bg-card px-4 text-sm font-(--studio-font-weight-label) shadow-xs **:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4",

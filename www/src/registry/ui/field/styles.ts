@@ -7,12 +7,13 @@ const { useStyles, styles } = createStyles(fieldMeta, {
     slots: {
       fieldset: "",
       legend: "",
-      fieldGroup: "@container/field-group flex w-full flex-col",
+      fieldGroup:
+        "group/field-group @container/field-group flex w-full flex-col",
       field:
         "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
       fieldContent: "flex flex-col gap-1",
       label: [
-        "inline-flex items-center gap-px select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3",
+        "inline-flex items-center gap-px select-ui [&_svg]:size-3",
         "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
         "in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor)",
         "in-data-invalid:text-fg-danger",
