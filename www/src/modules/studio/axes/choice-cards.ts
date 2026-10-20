@@ -1,5 +1,5 @@
 /* Choice cards — the card mode of checkbox, radio-group and switch: one
-   `card-selected` param written to all three (the recipe's single source is
+   `cardSelected` param written to all three (the recipe's single source is
    CHOICE_CARD in the checkbox styles). Every card paints with the selection
    tokens; where a control's own fill differs from the card's, the card
    re-declares them as a `choice-card` recipe scope, so the control inside
@@ -29,7 +29,7 @@ export const chapter = defineChapter({
     cardColor: oneOf(SOURCE_VALUES),
   },
   resolve(state: Effective): Resolved {
-    const card = { "card-selected": state.cardSelected }
+    const card = { cardSelected: state.cardSelected }
     const fill = state.cardColor
     const fills = [state.checkboxColor, state.radioColor, state.switchColor]
     return {

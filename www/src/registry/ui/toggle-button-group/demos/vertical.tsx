@@ -1,8 +1,4 @@
-import {
-  LayoutGridIcon,
-  ListIcon,
-  TableIcon,
-} from "@/registry/__generated__/icons"
+import { LayoutGridIcon, ListIcon, TableIcon } from "@/registry/icons"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 

@@ -271,7 +271,7 @@ export const BUTTON_CASE = {
   // UPPERCASE behind a guard (static for Tailwind; parity-tested): a select
   // trigger shows a value, not a label, so it keeps its case.
   uppercase: {
-    base: "not-has-data-[slot=select-value]:tracking-wider not-has-data-[slot=select-value]:uppercase",
+    base: "not-has-data-select-value:tracking-wider not-has-data-select-value:uppercase",
   },
 }
 
@@ -408,7 +408,7 @@ const { useStyles, styles } = createStyles(buttonMeta, {
       "group/button",
       BUTTON_BASE,
       // Pending keeps the face; the spinner takes the label's ink.
-      "pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
+      "pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-spinner:not-in-data-spinner:opacity-0",
       "disabled:cursor-disabled",
       "invalid:border-fg-danger invalid:not-focus-visible:invalid-ring",
     ],

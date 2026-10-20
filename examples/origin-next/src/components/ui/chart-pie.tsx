@@ -208,12 +208,16 @@ const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
   };
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type PieChartProps<TDatum extends object> = ChartComponentProps<
   PieChartSpecOptions<TDatum>,
   PieSlice<TDatum>
 >;
 
-export function PieChart<TDatum extends object>(props: PieChartProps<TDatum>) {
+export const PieChart = <TDatum extends object>(
+  props: PieChartProps<TDatum>,
+) => {
   const { definition, host, children } = useChartDefinition<
     PieSlice<TDatum>,
     PieChartSpecOptions<TDatum>
@@ -228,4 +232,4 @@ export function PieChart<TDatum extends object>(props: PieChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

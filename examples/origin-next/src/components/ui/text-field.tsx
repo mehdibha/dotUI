@@ -1,22 +1,23 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as TextFieldPrimitive from "react-aria-components/TextField";
+import * as TextFieldPrimitives from "react-aria-components/TextField";
 
 import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
 
-interface TextFieldProps extends TextFieldPrimitive.TextFieldProps {}
+interface TextFieldProps extends TextFieldPrimitives.TextFieldProps {}
 
 const TextField = ({ className, ...props }: TextFieldProps) => {
+  const { field } = fieldStyles();
   return (
-    <TextFieldPrimitive.TextField
+    <TextFieldPrimitives.TextField
       data-field=""
       data-textfield=""
-      data-slot="text-field"
+      data-text-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        field({ className }),
       )}
       {...props}
     />

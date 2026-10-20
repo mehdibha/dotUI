@@ -1,6 +1,4 @@
-"use client"
-
-import React from "react"
+import { useEffect, useRef, useState } from "react"
 
 import {
   ArchiveIcon,
@@ -31,6 +29,7 @@ import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import { Button } from "@/registry/ui/button"
+import { Card } from "@/registry/ui/card"
 import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
 import { Kbd } from "@/registry/ui/kbd"
 import { Loader } from "@/registry/ui/loader"
@@ -227,16 +226,16 @@ function AssistantAvatar() {
 }
 
 function CodeBlock({ file, source }: { file: string; source: string }) {
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!copied) return
     const timer = setTimeout(() => setCopied(false), 1600)
     return () => clearTimeout(timer)
   }, [copied])
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border bg-card">
+    <Card className="w-full gap-0 overflow-hidden py-0">
       <div className="flex items-center gap-2 border-b px-3 py-1.5">
         <FileCodeIcon className="size-3.5 shrink-0 text-fg-muted" />
         <span className="truncate font-mono text-xs text-fg-muted">{file}</span>
@@ -256,7 +255,7 @@ function CodeBlock({ file, source }: { file: string; source: string }) {
       <pre className="overflow-x-auto bg-muted p-3 font-mono text-xs leading-relaxed">
         <code>{source}</code>
       </pre>
-    </div>
+    </Card>
   )
 }
 
@@ -323,7 +322,7 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
         )}
 
         {message.chart && (
-          <div className="w-full max-w-sm overflow-hidden rounded-lg border">
+          <Card className="w-full max-w-sm gap-0 overflow-hidden py-0">
             <div className="flex aspect-video items-center justify-center bg-muted text-fg-muted">
               <ChartLineIcon className="size-8" />
             </div>
@@ -340,7 +339,7 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
                 Open
               </Button>
             </div>
-          </div>
+          </Card>
         )}
 
         {message.code && <CodeBlock {...message.code} />}
@@ -367,23 +366,23 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
 }
 
 export default function AiChatBlock() {
-  const [messages, setMessages] = React.useState(INITIAL_THREAD)
-  const [draft, setDraft] = React.useState("")
-  const [isThinking, setThinking] = React.useState(false)
-  const [model, setModel] = React.useState("fable")
-  const [webSearch, setWebSearch] = React.useState(true)
-  const [replyCount, setReplyCount] = React.useState(0)
-  const [activeChat, setActiveChat] = React.useState(
+  const [messages, setMessages] = useState(INITIAL_THREAD)
+  const [draft, setDraft] = useState("")
+  const [isThinking, setThinking] = useState(false)
+  const [model, setModel] = useState("fable")
+  const [webSearch, setWebSearch] = useState(true)
+  const [replyCount, setReplyCount] = useState(0)
+  const [activeChat, setActiveChat] = useState(
     "Trial-to-paid drop after pricing release",
   )
-  const scrollRef = React.useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
   }, [messages, isThinking])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isThinking) return
     const timer = setTimeout(() => {
       const reply = replyCount % 2 === 0 ? FOLLOW_UP_DATA : FOLLOW_UP_PLAN

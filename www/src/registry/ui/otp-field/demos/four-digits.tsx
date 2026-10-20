@@ -2,7 +2,7 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field"
 
-export default function FourDigits() {
+export default function Demo() {
   return (
     <OTPField length={4}>
       <Label>PIN</Label>

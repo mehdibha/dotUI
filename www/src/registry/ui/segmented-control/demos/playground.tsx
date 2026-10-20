@@ -1,7 +1,6 @@
 "use client"
 
-import { LayoutGridIcon, ListIcon, TableIcon } from "lucide-react"
-
+import { LayoutGridIcon, ListIcon, TableIcon } from "@/registry/icons"
 import {
   SegmentedControl,
   SegmentedControlItem,

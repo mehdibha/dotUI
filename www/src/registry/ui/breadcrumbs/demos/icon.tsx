@@ -1,4 +1,4 @@
-import { HomeIcon } from "@/registry/__generated__/icons"
+import { HomeIcon } from "@/registry/icons"
 import {
   BreadcrumbItem,
   BreadcrumbLink,

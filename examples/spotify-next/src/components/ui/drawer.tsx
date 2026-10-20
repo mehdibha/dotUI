@@ -100,13 +100,13 @@ function resolveClassName<TState>(
 }
 
 // Dialog semantics belong to the <Dialog> rendered inside, so the popup drops its own.
-function DrawerPopupElement({
+const DrawerPopupElement = ({
   "aria-describedby": _ariaDescribedBy,
   "aria-labelledby": _ariaLabelledBy,
   role: _role,
   swiping,
   ...props
-}: DrawerPopupRenderProps & { swiping: boolean }) {
+}: DrawerPopupRenderProps & { swiping: boolean }) => {
   // Base UI arms a swipe on every touchstart, so cancel in-flight react-aria presses only once the finger actually drags.
   React.useEffect(() => {
     if (!swiping) return;
@@ -130,7 +130,7 @@ function DrawerPopupElement({
   }, [swiping]);
 
   return <div {...props} />;
-}
+};
 
 function getInitialFocusTarget(popupElement: HTMLDivElement | null) {
   return (
@@ -153,7 +153,7 @@ interface DrawerProps {
   children?: React.ReactNode;
 }
 
-function Drawer({
+const Drawer = ({
   children,
   className,
   defaultOpen,
@@ -164,7 +164,7 @@ function Drawer({
   placement = "bottom",
   swipeToDismiss = true,
   style,
-}: DrawerProps) {
+}: DrawerProps) => {
   const isHidden = useIsHidden();
   const popupRef = React.useRef<HTMLDivElement>(null);
   const [layer, setLayer] = React.useState<HTMLDivElement | null>(null);
@@ -258,13 +258,13 @@ function Drawer({
       </DrawerPrimitive.Root>
     </DrawerPlacementContext.Provider>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
-function DrawerHandle({ className, ...props }: DrawerHandleProps) {
+const DrawerHandle = ({ className, ...props }: DrawerHandleProps) => {
   const placement = React.useContext(DrawerPlacementContext);
   const orientation =
     placement === "top" || placement === "bottom" ? "horizontal" : "vertical";
@@ -275,18 +275,18 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
       aria-hidden="true"
       data-orientation={orientation}
       data-placement={placement}
-      data-slot="drawer-handle"
+      data-drawer-handle=""
       className={handle({ className })}
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
-function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
+const DrawerSwipeArea = ({ className, ...props }: DrawerSwipeAreaProps) => {
   const placement = React.useContext(DrawerPlacementContext);
 
   return (
@@ -294,25 +294,25 @@ function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
       className={(state) =>
         swipeArea({ placement, className: resolveClassName(className, state) })
       }
-      data-slot="drawer-swipe-area"
+      data-drawer-swipe-area=""
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
-function DrawerProvider(props: DrawerProviderProps) {
+const DrawerProvider = (props: DrawerProviderProps) => {
   return <DrawerPrimitive.Provider {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
-function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+const DrawerIndent = ({ className, ...props }: DrawerIndentProps) => {
   return (
     <DrawerPrimitive.Indent
       className={(state) =>
@@ -321,17 +321,17 @@ function DrawerIndent({ className, ...props }: DrawerIndentProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DrawerIndentBackgroundProps
   extends DrawerPrimitive.IndentBackground.Props {}
 
-function DrawerIndentBackground({
+const DrawerIndentBackground = ({
   className,
   ...props
-}: DrawerIndentBackgroundProps) {
+}: DrawerIndentBackgroundProps) => {
   return (
     <DrawerPrimitive.IndentBackground
       className={(state) =>
@@ -340,7 +340,9 @@ function DrawerIndentBackground({
       {...props}
     />
   );
-}
+};
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   DrawerHandleProps,

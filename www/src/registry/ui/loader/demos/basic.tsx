@@ -1,5 +1,5 @@
 import { Loader } from "@/registry/ui/loader"
 
-export default function Basic() {
+export default function Demo() {
   return <Loader />
 }

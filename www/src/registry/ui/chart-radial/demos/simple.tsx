@@ -18,7 +18,7 @@ const labels = {
   other: "Other",
 }
 
-export default function ChartRadialSimple() {
+export default function Demo() {
   return (
     <RadialBarChart
       data={data}

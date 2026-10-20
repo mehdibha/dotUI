@@ -56,7 +56,7 @@ const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
   return (
-    <span data-slot="glyph" className="size-4 shrink-0 *:size-full">
+    <span data-glyph="" className="size-4 shrink-0 *:size-full">
       {children}
     </span>
   )
@@ -478,7 +478,7 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 h-px shrink-0 bg-fg/8" />
 }
 
 /* DialKit's slider: the row is the track, the fill follows the pointer

@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import * as React from "react"
 import { ButtonContext } from "react-aria-components/Button"
 import * as ColorPickerPrimitives from "react-aria-components/ColorPicker"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
@@ -37,7 +37,7 @@ const ColorPicker = ({
 }
 
 const ColorPickerInner = ({ children }: { children: React.ReactNode }) => {
-  const buttonContext = use(ButtonContext)
+  const buttonContext = React.useContext(ButtonContext)
   return (
     <Provider
       values={[
@@ -58,6 +58,8 @@ const ColorPickerInner = ({ children }: { children: React.ReactNode }) => {
     </Provider>
   )
 }
+
+// MARK: Separator
 
 export type { ColorPickerProps }
 export { ColorPicker }

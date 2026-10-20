@@ -24,5 +24,7 @@ const Link = ({ variant, ...props }: LinkProps) => {
   )
 }
 
+// MARK: Separator
+
 export type { LinkProps }
 export { Link }

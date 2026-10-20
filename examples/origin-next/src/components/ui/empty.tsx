@@ -36,7 +36,7 @@ const { base, header, title, description, content, media } = emptyVariants();
 interface EmptyProps extends React.ComponentProps<"div"> {}
 
 const Empty = ({ className, ...props }: EmptyProps) => {
-  return <div data-slot="empty" className={base({ className })} {...props} />;
+  return <div data-empty="" className={base({ className })} {...props} />;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -45,11 +45,7 @@ interface EmptyHeaderProps extends React.ComponentProps<"div"> {}
 
 const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
   return (
-    <div
-      data-slot="empty-header"
-      className={header({ className })}
-      {...props}
-    />
+    <div data-empty-header="" className={header({ className })} {...props} />
   );
 };
 
@@ -59,7 +55,7 @@ interface EmptyTitleProps extends React.ComponentProps<"div"> {}
 
 const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
   return (
-    <div data-slot="empty-title" className={title({ className })} {...props} />
+    <div data-empty-title="" className={title({ className })} {...props} />
   );
 };
 
@@ -70,7 +66,7 @@ interface EmptyDescriptionProps extends React.ComponentProps<"div"> {}
 const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
   return (
     <div
-      data-slot="empty-description"
+      data-empty-description=""
       className={description({ className })}
       {...props}
     />
@@ -83,11 +79,7 @@ interface EmptyContentProps extends React.ComponentProps<"div"> {}
 
 const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
   return (
-    <div
-      data-slot="empty-content"
-      className={content({ className })}
-      {...props}
-    />
+    <div data-empty-content="" className={content({ className })} {...props} />
   );
 };
 
@@ -98,7 +90,7 @@ interface EmptyMediaProps
 const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
   return (
     <div
-      data-slot="empty-media"
+      data-empty-media=""
       className={media({ variant, className })}
       {...props}
     />

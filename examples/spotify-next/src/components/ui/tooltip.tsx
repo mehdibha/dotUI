@@ -39,15 +39,15 @@ interface TooltipContentProps
   hideArrow?: boolean;
 }
 
-function TooltipContent({
+const TooltipContent = ({
   offset = 10,
   hideArrow = false,
   className,
   ...props
-}: TooltipContentProps) {
+}: TooltipContentProps) => {
   return (
     <TooltipPrimitives.Tooltip
-      data-slot="tooltip"
+      data-tooltip=""
       offset={offset}
       className={composeRenderProps(className, (className) =>
         content({ className }),
@@ -62,18 +62,18 @@ function TooltipContent({
       ))}
     </TooltipPrimitives.Tooltip>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
-function TooltipArrow({ className }: TooltipArrowProps) {
+const TooltipArrow = ({ className }: TooltipArrowProps) => {
   return (
     <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
       <svg
         aria-hidden="true"
-        data-slot="tooltip-arrow"
+        data-tooltip-arrow=""
         width={8}
         height={8}
         viewBox="0 0 8 8"
@@ -82,7 +82,7 @@ function TooltipArrow({ className }: TooltipArrowProps) {
       </svg>
     </PopoverPrimitives.OverlayArrow>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

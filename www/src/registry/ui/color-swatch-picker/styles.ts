@@ -9,7 +9,7 @@ const { useStyles } = createStyles(colorSwatchPickerMeta, {
       item: [
         "relative rounded-(--studio-color-swatch-picker-item-radius) transition-shadow focus:z-10",
         "focus-reset focus-visible:focus-ring-outside",
-        "disabled:cursor-disabled disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
+        "disabled:cursor-disabled disabled:*:data-color-swatch:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
         "before:absolute before:inset-0 before:scale-90 before:rounded-[inherit] before:bg-(--surface-bg,var(--color-bg)) before:opacity-0 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:duration-(--studio-color-swatch-picker-state-duration) before:ease-(--studio-color-swatch-picker-state-ease) before:content-[''] selected:before:scale-100 selected:before:opacity-100",
       ],
     },

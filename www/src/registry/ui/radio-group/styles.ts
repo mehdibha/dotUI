@@ -73,8 +73,8 @@ const { useStyles } = createStyles(radioGroupMeta, {
         },
       },
     },
-    "card-selected": CHOICE_CARD,
-    "card-press": CHOICE_CARD_PRESS,
+    cardSelected: CHOICE_CARD,
+    cardPress: CHOICE_CARD_PRESS,
   },
 })
 

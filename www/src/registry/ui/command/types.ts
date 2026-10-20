@@ -1,4 +1,4 @@
-import type * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import type * as AutocompletePrimitives from "react-aria-components/Autocomplete"
 
 import type { ListBoxProps } from "@/registry/ui/list-box"
 import type { SearchFieldProps } from "@/registry/ui/search-field"
@@ -9,7 +9,7 @@ import type { SearchFieldProps } from "@/registry/ui/search-field"
  */
 export interface CommandProps<T extends object>
   extends
-    Omit<AutocompletePrimitive.AutocompleteProps<T>, "children" | "filter">,
+    Omit<AutocompletePrimitives.AutocompleteProps<T>, "children" | "filter">,
     Omit<React.ComponentProps<"div">, "slot"> {
   /**
    * Collator options used to match items against the query as the user types.

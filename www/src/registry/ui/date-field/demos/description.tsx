@@ -6,7 +6,7 @@ import { DateInput } from "@/registry/ui/input"
 
 export default function Demo() {
   return (
-    <DateField className="max-w-xs" aria-label="Appointment date">
+    <DateField className="max-w-xs">
       <Label>Appointment date</Label>
       <DateInput />
       <Description>Please select a date.</Description>

@@ -24,7 +24,7 @@ interface CardProps extends React.ComponentProps<"div"> {
   size?: "sm" | "default";
 }
 
-function Card({ className, size = "default", ...props }: CardProps) {
+const Card = ({ className, size = "default", ...props }: CardProps) => {
   return (
     <div
       data-card=""
@@ -33,31 +33,31 @@ function Card({ className, size = "default", ...props }: CardProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
-function CardHeader({ className, ...props }: CardHeaderProps) {
+const CardHeader = ({ className, ...props }: CardHeaderProps) => {
   return (
     <div data-card-header="" className={header({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
-function CardTitle({ className, ...props }: CardTitleProps) {
+const CardTitle = ({ className, ...props }: CardTitleProps) => {
   return <div data-card-title="" className={title({ className })} {...props} />;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
-function CardDescription({ className, ...props }: CardDescriptionProps) {
+const CardDescription = ({ className, ...props }: CardDescriptionProps) => {
   return (
     <div
       data-card-description=""
@@ -65,37 +65,37 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
-function CardAction({ className, ...props }: CardActionProps) {
+const CardAction = ({ className, ...props }: CardActionProps) => {
   return (
     <div data-card-action="" className={action({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
-function CardContent({ className, ...props }: CardContentProps) {
+const CardContent = ({ className, ...props }: CardContentProps) => {
   return (
     <div data-card-content="" className={content({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
-function CardFooter({ className, ...props }: CardFooterProps) {
+const CardFooter = ({ className, ...props }: CardFooterProps) => {
   return (
     <div data-card-footer="" className={footer({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

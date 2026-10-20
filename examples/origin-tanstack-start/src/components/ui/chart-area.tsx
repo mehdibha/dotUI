@@ -146,12 +146,14 @@ export function areaChartSpec<TDatum>(
   };
 }
 
+/* -------------------------------------------------------------------------- */
+
 export type AreaChartProps<TDatum> = ChartComponentProps<
   AreaChartSpecOptions<TDatum>,
   TDatum
 >;
 
-export function AreaChart<TDatum>(props: AreaChartProps<TDatum>) {
+export const AreaChart = <TDatum,>(props: AreaChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     AreaChartSpecOptions<TDatum>
@@ -161,4 +163,4 @@ export function AreaChart<TDatum>(props: AreaChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

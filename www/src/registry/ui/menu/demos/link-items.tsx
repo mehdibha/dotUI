@@ -1,8 +1,4 @@
-import {
-  FileTextIcon,
-  CodeIcon,
-  MessageSquareIcon,
-} from "@/registry/__generated__/icons"
+import { CodeIcon, FileTextIcon, MessageSquareIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"

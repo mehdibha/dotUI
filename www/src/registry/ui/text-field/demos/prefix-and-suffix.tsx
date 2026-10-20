@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { XCircleIcon } from "@/registry/__generated__/icons"
+import { XCircleIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
