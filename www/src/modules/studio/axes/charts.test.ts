@@ -7,8 +7,7 @@ import chartMeta from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { designSystemOf } from "../resolve"
-import { MOTION_OPTIONS } from "./charts.meta"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** What the chart container ships under the studio state. */
@@ -63,38 +62,55 @@ describe("charts axes", () => {
   })
 })
 
-/* The transition each option ships, as `ui/chart/base.tsx` writes it. */
+/* The transition each chart param value ships, as `ui/chart/base.tsx` writes it. */
 const TRANSITIONS: Record<string, string> = {
   spring: `{ type: "spring", stiffness: 170, damping: 26 }`,
   ease: `{ type: "tween", duration: 400, easing: "ease" }`,
+  bouncy: `{ type: "spring", stiffness: 170, damping: 16 }`,
   none: "false",
 }
 
+/* The chart param each tempo picks. */
+const PARAM: Record<string, string> = {
+  none: "none",
+  standard: "spring",
+  smooth: "ease",
+  expressive: "bouncy",
+}
+
 describe("chart motion", () => {
-  it("the options are the chart's motion param", () => {
-    expect(MOTION_OPTIONS.map((o) => o.value)).toEqual([
-      ...chartMeta.params.motion.values,
-    ])
-    expect(DEFAULTS.chartMotion).toBe(chartMeta.params.motion.default)
+  it("every param value is the chart's own", () => {
+    expect(Object.keys(TRANSITIONS).sort()).toEqual(
+      [...chartMeta.params.motion.values].sort(),
+    )
+    expect(PARAM.standard).toBe(chartMeta.params.motion.default)
     const base = readFileSync(
       new URL("../../../registry/ui/chart/base.tsx", import.meta.url),
       "utf8",
     )
-    for (const option of MOTION_OPTIONS)
-      expect(base).toContain(`${option.value}: ${TRANSITIONS[option.value]},`)
+    for (const [value, transition] of Object.entries(TRANSITIONS))
+      expect(base).toContain(`${value}: ${transition},`)
   })
 
-  it("a pick is a chart param, never a token", () => {
-    const ds = designSystemOf(parseState({ chartMotion: "ease" }))
-    expect(ds.componentParams.chart).toEqual({ grid: "solid", motion: "ease" })
-    expect(ds.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
+  it("follows the global Motion, else its own pick, as a chart param", () => {
+    for (const [tempo, param] of Object.entries(PARAM)) {
+      for (const state of [{ motion: tempo }, { chartMotion: tempo }]) {
+        const ds = designSystemOf(parseState(state))
+        expect(ds.componentParams.chart).toEqual({
+          grid: "solid",
+          motion: param,
+        })
+      }
+    }
+    const own = designSystemOf(parseState({ chartMotion: "smooth" }))
+    expect(own.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
   })
 
   it("ships the selected transition as a literal", async () => {
-    for (const option of MOTION_OPTIONS) {
-      const content = await shipped(parseState({ chartMotion: option.value }))
+    for (const [tempo, param] of Object.entries(PARAM)) {
+      const content = await shipped(parseState({ chartMotion: tempo }))
       expect(content).toContain(
-        `const systemMotion: Exclude<ChartAnimate, true> = ${TRANSITIONS[option.value]}`,
+        `const systemMotion: Exclude<ChartAnimate, true> = ${TRANSITIONS[param]}`,
       )
       expect(content).not.toContain("createParamValue")
       expect(content).not.toContain("--studio-")

@@ -645,6 +645,7 @@ const useChartMotion = createParamValue<Exclude<ChartAnimate, true>>({
   values: {
     spring: { type: "spring", stiffness: 170, damping: 26 },
     ease: { type: "tween", duration: 400, easing: "ease" },
+    bouncy: { type: "spring", stiffness: 170, damping: 16 },
     none: false,
   },
 })

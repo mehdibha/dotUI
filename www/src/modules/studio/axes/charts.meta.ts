@@ -1,5 +1,6 @@
-import { GRID_VALUES, MOTION_VALUES, PALETTE_VALUES } from "./charts"
+import { GRID_VALUES, PALETTE_VALUES } from "./charts"
 import { options } from "./core/meta"
+import { MOTION_OPTIONS } from "./motion.meta"
 
 export const PALETTE_OPTIONS = options(PALETTE_VALUES, {
   mono: {
@@ -23,16 +24,6 @@ export const GRID_OPTIONS = options(GRID_VALUES, {
   solid: { label: "Solid", description: "Solid gridlines behind the plot" },
   dashed: { label: "Dashed", description: "Dashed gridlines behind the plot" },
   none: { label: "None", description: "No gridlines" },
-})
-
-export const MOTION_OPTIONS = options(MOTION_VALUES, {
-  spring: { label: "Spring", description: "Marks spring into place" },
-  ease: {
-    label: "Ease",
-    description: "Marks glide in over 400ms",
-    credits: ["shadcn"],
-  },
-  none: { label: "None", description: "Data appears without animation" },
 })
 
 export const OPTIONS = {
