@@ -2,11 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode, Ref } from "react"
-import {
-  MoreHorizontalIcon,
-  PlusIcon,
-  SearchIcon,
-} from "lucide-react"
+import { MoreHorizontalIcon, PlusIcon, SearchIcon } from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
 import { MenuContext } from "react-aria-components/Menu"
