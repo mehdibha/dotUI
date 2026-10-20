@@ -15,6 +15,8 @@
     "@remotion/renderer": "4.0.529",
     "@tailwindcss/webpack": "4.3.0",
     "css-loader": "7.1.4",
+    "hast-util-to-jsx-runtime": "^2.3.6",
+    "lucide-react": "^1.16.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "remotion": "4.0.529",
