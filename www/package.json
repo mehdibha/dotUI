@@ -90,6 +90,8 @@
     "@vitejs/plugin-react": "catalog:",
     "mdast-util-mdx-jsx": "^3.2.0",
     "nitro": "catalog:",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
     "puppeteer": "^25.0.2",
     "react-grab": "^0.1.48",
     "rimraf": "^6.0.1",

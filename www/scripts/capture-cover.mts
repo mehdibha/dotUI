@@ -5,12 +5,15 @@
  *   pnpm build:cover [--port 5173]
  *
  * Starts its own dev server unless --port points at one already running.
- * Writes public/brand/cover/{github,og}.png. Run from www/.
+ * Writes public/brand/cover/{github,og}.png, skipping any image whose render
+ * matches the committed one. Run from www/.
  */
 import { spawn } from "node:child_process"
-import { mkdir } from "node:fs/promises"
+import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { parseArgs } from "node:util"
+import pixelmatch from "pixelmatch"
+import { PNG } from "pngjs"
 import puppeteer from "puppeteer"
 
 const { values: args } = parseArgs({
@@ -46,6 +49,20 @@ async function waitForServer() {
   throw new Error(`dev server never answered on ${url}`)
 }
 
+// Repeat renders differ by a few antialiased pixels; pixelmatch's defaults
+// ignore those, so CI only commits a cover that visibly changed.
+async function changed(path: string, png: Uint8Array) {
+  let prev: PNG
+  try {
+    prev = PNG.sync.read(await readFile(path))
+  } catch {
+    return true
+  }
+  const next = PNG.sync.read(Buffer.from(png))
+  if (prev.width !== next.width || prev.height !== next.height) return true
+  return pixelmatch(prev.data, next.data, null, next.width, next.height) > 0
+}
+
 await mkdir(OUT, { recursive: true })
 const browser = await puppeteer.launch({
   headless: "shell",
@@ -74,8 +91,13 @@ try {
     await page.waitForSelector("html[data-cover-ready]", { timeout: 60000 })
     await page.addStyleTag({ content: FREEZE_CSS })
     const path = resolve(OUT, `${size.name}.png`)
-    await page.screenshot({ path })
-    console.log(`  ok   ${path}`)
+    const png = await page.screenshot()
+    if (await changed(path, png)) {
+      await writeFile(path, png)
+      console.log(`  ok   ${path}`)
+    } else {
+      console.log(`  unchanged ${path}`)
+    }
     for (const error of errors) console.warn(`       pageerror: ${error}`)
     await page.close()
   }
