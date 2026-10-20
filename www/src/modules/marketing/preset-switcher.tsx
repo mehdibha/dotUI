@@ -1,6 +1,7 @@
 import type * as React from "react"
 import type { Selection } from "react-aria-components"
 
+import { cn } from "@/registry/lib/utils"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -10,6 +11,7 @@ import {
   usePresetLabelFonts,
 } from "@/modules/marketing/preset-fonts"
 import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
+import { useTweak } from "@/dev/tweaker"
 
 // The landing showcase's design-system selector: a segmented control over the cards.
 // Picking a preset re-skins the scoped grid below instantly (no tween — repainting
@@ -27,6 +29,21 @@ export function PresetSwitcher({
 
   usePresetLabelFonts()
 
+  const inactiveOpacity = useTweak("Inactive tab opacity", {
+    type: "number",
+    min: 0.2,
+    max: 1,
+    step: 0.05,
+    default: 1,
+    group: "Preset tabs",
+  })
+  const inactiveSwatch = useTweak("Inactive swatch", {
+    type: "select",
+    options: ["color", "grey", "faded"],
+    default: "color",
+    group: "Preset tabs",
+  })
+
   const handleChange = (keys: Selection) => {
     if (keys === "all") return
     const id = [...keys][0]
@@ -42,6 +59,7 @@ export function PresetSwitcher({
     "--indicator-bg": active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
       : "var(--color-selected)",
+    "--inactive-opacity": inactiveOpacity,
   } as React.CSSProperties
 
   return (
@@ -59,11 +77,17 @@ export function PresetSwitcher({
           <SegmentedControlItem
             key={preset.id}
             id={preset.id}
+            className="group/tab opacity-(--inactive-opacity) transition-[color,opacity] data-focus-visible:opacity-100 data-hovered:opacity-100 data-selected:opacity-100"
             style={{ fontFamily: presetLabelStack(preset.id) }}
           >
             <span
               aria-hidden="true"
-              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset"
+              className={cn(
+                "size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset motion-safe:transition-[filter,opacity]",
+                inactiveSwatch === "grey" && "grayscale",
+                inactiveSwatch === "faded" && "opacity-40",
+                "group-data-focus-visible/tab:opacity-100 group-data-focus-visible/tab:grayscale-0 group-data-hovered/tab:opacity-100 group-data-hovered/tab:grayscale-0 group-data-selected/tab:opacity-100 group-data-selected/tab:grayscale-0",
+              )}
               style={{ background: preset.swatch }}
             />
             {preset.name}
