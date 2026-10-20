@@ -1,17 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { tv } from "tailwind-variants"
 import { encode } from "uqr"
 
-const qrCodeStyles = tv({
-  slots: {
-    root: "relative inline-flex size-32 shrink-0 items-center justify-center rounded-(--studio-radius-card) bg-(--surface-bg,var(--color-bg)) p-2 text-fg",
-    logo: "absolute flex size-1/5 items-center justify-center *:size-full",
-  },
-})
+import { useStyles } from "./styles"
 
-const { root, logo } = qrCodeStyles()
+// MARK: qrCodeStyles
 
 const R = 0.5
 
@@ -41,19 +35,22 @@ function modulePath(
   )
 }
 
+// MARK: Separator
+
 interface QRCodeProps extends React.ComponentProps<"div"> {
   value: string
   errorCorrection?: "L" | "M" | "Q" | "H"
 }
 
-function QRCode({
+const QRCode = ({
   value,
   errorCorrection,
   className,
   children,
   "aria-label": ariaLabel = "QR code",
   ...props
-}: QRCodeProps) {
+}: QRCodeProps) => {
+  const { root, logo } = useStyles()()
   const hasLogo = !!children
 
   const { size, path } = React.useMemo(() => {
@@ -113,6 +110,8 @@ function QRCode({
     </div>
   )
 }
+
+// MARK: Separator
 
 export type { QRCodeProps }
 export { QRCode }

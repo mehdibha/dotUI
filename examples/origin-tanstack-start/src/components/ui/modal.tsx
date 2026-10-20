@@ -94,12 +94,14 @@ interface ModalViewportProps extends React.ComponentProps<"div"> {}
 const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
   return (
     <div
-      data-slot="modal-viewport"
+      data-modal-viewport=""
       className={viewport({ className })}
       {...props}
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   ModalBackdropProps,

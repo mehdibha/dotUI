@@ -40,7 +40,7 @@ const { root, title, description, action } = alertVariants();
 interface AlertProps
   extends React.ComponentProps<"div">, VariantProps<typeof alertVariants> {}
 
-function Alert({ className, variant, ...props }: AlertProps) {
+const Alert = ({ className, variant, ...props }: AlertProps) => {
   return (
     <div
       data-alert=""
@@ -49,23 +49,23 @@ function Alert({ className, variant, ...props }: AlertProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
-function AlertTitle({ className, ...props }: AlertTitleProps) {
+const AlertTitle = ({ className, ...props }: AlertTitleProps) => {
   return (
     <div data-alert-title="" className={title({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
-function AlertDescription({ className, ...props }: AlertDescriptionProps) {
+const AlertDescription = ({ className, ...props }: AlertDescriptionProps) => {
   return (
     <div
       data-alert-description=""
@@ -73,17 +73,17 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
-function AlertAction({ className, ...props }: AlertActionProps) {
+const AlertAction = ({ className, ...props }: AlertActionProps) => {
   return (
     <div data-alert-action="" className={action({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

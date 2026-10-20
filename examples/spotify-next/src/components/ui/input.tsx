@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useCallback } from "react";
+import * as React from "react";
 import { chain } from "react-aria";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DateFieldPrimitive from "react-aria-components/DateField";
-import * as GroupPrimitive from "react-aria-components/Group";
-import * as InputPrimitive from "react-aria-components/Input";
-import * as TextAreaPrimitive from "react-aria-components/TextArea";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
+import * as GroupPrimitives from "react-aria-components/Group";
+import * as InputPrimitives from "react-aria-components/Input";
+import * as TextAreaPrimitives from "react-aria-components/TextArea";
 import { mergeRefs } from "react-aria/mergeRefs";
 import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions";
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
@@ -88,7 +88,7 @@ export { inputVariants as inputStyles };
 type InputSize = Pick<VariantProps<typeof inputVariants>, "size">;
 
 interface InputGroupProps
-  extends React.ComponentProps<typeof GroupPrimitive.Group>, InputSize {}
+  extends React.ComponentProps<typeof GroupPrimitives.Group>, InputSize {}
 
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']";
 
@@ -104,7 +104,7 @@ const InputGroup = ({
   ...props
 }: InputGroupProps) => {
   return (
-    <GroupPrimitive.Group
+    <GroupPrimitives.Group
       data-input-group=""
       data-size={size}
       onPointerDown={(e) => {
@@ -136,12 +136,12 @@ const InputGroup = ({
 
 interface InputProps
   extends
-    Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
+    Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size">,
     InputSize {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
   return (
-    <InputPrimitive.Input
+    <InputPrimitives.Input
       data-input=""
       data-size={size}
       data-input-control=""
@@ -156,7 +156,7 @@ const Input = ({ className, size, ...props }: InputProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface TextAreaProps extends React.ComponentProps<
-  typeof TextAreaPrimitive.TextArea
+  typeof TextAreaPrimitives.TextArea
 > {}
 
 const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
@@ -167,7 +167,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   );
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const onHeightChange = useCallback(() => {
+  const onHeightChange = React.useCallback(() => {
     if (inputRef.current) {
       const input = inputRef.current;
       const prevAlignment = input.style.alignSelf;
@@ -195,7 +195,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   }, [onHeightChange, inputValue, inputRef]);
 
   return (
-    <TextAreaPrimitive.TextArea
+    <TextAreaPrimitives.TextArea
       ref={mergeRefs(
         inputRef,
         ref as React.RefObject<HTMLTextAreaElement | null>,
@@ -218,11 +218,11 @@ interface InputGroupAddonProps
     React.ComponentProps<"div">,
     Pick<VariantProps<typeof inputVariants>, "variant"> {}
 
-function InputGroupAddon({
+const InputGroupAddon = ({
   className,
   variant,
   ...props
-}: InputGroupAddonProps) {
+}: InputGroupAddonProps) => {
   return (
     <div
       data-input-group-addon=""
@@ -230,18 +230,18 @@ function InputGroupAddon({
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface DateInputProps
-  extends Omit<DateFieldPrimitive.DateInputProps, "children">, InputSize {
-  children?: DateFieldPrimitive.DateInputProps["children"];
+  extends Omit<DateFieldPrimitives.DateInputProps, "children">, InputSize {
+  children?: DateFieldPrimitives.DateInputProps["children"];
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
   return (
-    <DateFieldPrimitive.DateInput
+    <DateFieldPrimitives.DateInput
       data-input=""
       data-date-input=""
       data-input-control=""
@@ -252,14 +252,14 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
       {...props}
     >
       {(segment) => <DateSegment segment={segment} />}
-    </DateFieldPrimitive.DateInput>
+    </DateFieldPrimitives.DateInput>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface DateSegmentProps extends React.ComponentProps<
-  typeof DateFieldPrimitive.DateSegment
+  typeof DateFieldPrimitives.DateSegment
 > {}
 
 // Intl's separator whitespace (U+202F, U+2009) differs between Node and the browser; folding it to a plain space avoids hydration mismatches.
@@ -268,14 +268,14 @@ const normalizeSegmentWhitespace = (text: string) =>
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
   return (
-    <DateFieldPrimitive.DateSegment
+    <DateFieldPrimitives.DateSegment
       className={composeRenderProps(className, (className) =>
         dateInputSegment({ className }),
       )}
       {...props}
     >
       {({ text }) => normalizeSegmentWhitespace(text)}
-    </DateFieldPrimitive.DateSegment>
+    </DateFieldPrimitives.DateSegment>
   );
 };
 

@@ -25,7 +25,7 @@ const dots = data.map((row) =>
   }),
 )
 
-export default function ChartLineDotsColors() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

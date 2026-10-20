@@ -4,7 +4,7 @@ import * as CheckboxGroupPrimitives from "react-aria-components/CheckboxGroup";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { tv } from "tailwind-variants";
 
-const checkboxGroupStyles = tv({
+const checkboxGroupVariants = tv({
   base: "flex flex-col gap-3",
 });
 
@@ -16,7 +16,7 @@ const CheckboxGroup = ({
     <CheckboxGroupPrimitives.CheckboxGroup
       data-field=""
       className={composeRenderProps(className, (className) =>
-        checkboxGroupStyles({ className }),
+        checkboxGroupVariants({ className }),
       )}
       {...props}
     />
@@ -24,6 +24,8 @@ const CheckboxGroup = ({
 };
 
 type CheckboxGroupProps = CheckboxGroupPrimitives.CheckboxGroupProps;
+
+/* -------------------------------------------------------------------------- */
 
 export type { CheckboxGroupProps };
 export { CheckboxGroup };

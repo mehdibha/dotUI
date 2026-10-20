@@ -1,6 +1,8 @@
-/** Rewrite registry import paths to where a shadcn install puts them. */
+/** Rewrite registry import paths to where a shadcn install puts them. Registry
+ *  icon names are lucide's, the default library. */
 export function toInstalledPaths(code: string): string {
   return code
+    .replace(/@\/registry\/icons(?=["'])/g, "lucide-react")
     .replace(/@\/registry\/ui\//g, "@/components/ui/")
     .replace(/@\/registry\//g, "@/")
 }

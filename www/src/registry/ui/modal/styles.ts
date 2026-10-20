@@ -95,7 +95,7 @@ const { useStyles } = createStyles(modalMeta, {
         slots: {
           viewport: "max-md:pt-0",
           modal:
-            "max-md:min-h-(--visual-viewport-height) max-md:min-w-full max-md:rounded-none max-md:border-0 max-md:pb-[env(safe-area-inset-bottom)] max-md:[--surface-radius:0px] max-md:*:max-h-none max-md:*:flex-1 max-md:**:data-[slot=dialog-footer]:mt-auto",
+            "max-md:min-h-(--visual-viewport-height) max-md:min-w-full max-md:rounded-none max-md:border-0 max-md:pb-[env(safe-area-inset-bottom)] max-md:[--surface-radius:0px] max-md:*:max-h-none max-md:*:flex-1 max-md:**:data-dialog-footer:mt-auto",
         },
       },
     },

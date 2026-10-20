@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as PopoverPrimitives from "react-aria-components/Popover"
 
@@ -13,12 +13,12 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({
+const Popover = ({
   className,
   showArrow = true,
   placement,
   ...props
-}: PopoverProps) {
+}: PopoverProps) => {
   const { popover } = useStyles()()
   return (
     <PopoverPrimitives.Popover
@@ -40,11 +40,11 @@ function Popover({
 }
 
 interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
-function PopoverArrow({ className, ...props }: PopoverArrowProps) {
+const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   const { arrow } = useStyles()()
   return (
     <PopoverPrimitives.OverlayArrow
-      data-slot="popover-arrow"
+      data-popover-arrow=""
       className={arrow({ className })}
     >
       <svg
@@ -59,6 +59,8 @@ function PopoverArrow({ className, ...props }: PopoverArrowProps) {
     </PopoverPrimitives.OverlayArrow>
   )
 }
+
+// MARK: Separator
 
 export type { PopoverProps }
 export { Popover }

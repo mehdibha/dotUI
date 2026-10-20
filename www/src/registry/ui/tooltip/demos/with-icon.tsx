@@ -1,4 +1,4 @@
-import { InfoIcon } from "@/registry/__generated__/icons"
+import { InfoIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 

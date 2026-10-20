@@ -10,7 +10,6 @@ const tabsMeta = {
       target: "ui/tabs.tsx",
     },
   ],
-  registryDependencies: ["context"],
   params: {
     style: {
       default: "segmented",

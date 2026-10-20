@@ -1,5 +1,4 @@
-import { GlobeIcon } from "lucide-react"
-
+import { GlobeIcon } from "@/registry/icons"
 import { Combobox } from "@/registry/ui/combobox"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {

@@ -214,7 +214,6 @@ export function StudioPanel({ className }: { className?: string }) {
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
         onCreate={canSave ? () => askNew("current", "") : undefined}
-        withPreview
         onPreview={previewSelection}
         renderItemMenu={(item) => renderItemMenu(item.id)}
       >

@@ -2,7 +2,7 @@
 
 import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton";
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { createVariantsContext } from "@/lib/context";
@@ -54,15 +54,15 @@ type ToggleButtonVariants = VariantProps<typeof toggleButtonVariants>;
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
   ToggleButtonVariants,
-  React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+  React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
   HTMLButtonElement
->(ToggleButtonPrimitive.ToggleButtonContext);
+>(ToggleButtonPrimitives.ToggleButtonContext);
 
 /* -------------------------------------------------------------------------- */
 
 interface ToggleButtonProps
   extends
-    React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+    React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
     ToggleButtonVariants {
   isIconOnly?: boolean;
 }
@@ -78,16 +78,16 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   } = useContextProps(localProps);
 
   return (
-    <ToggleButtonPrimitive.ToggleButton
+    <ToggleButtonPrimitives.ToggleButton
       data-button=""
       data-variant={variant}
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
+      className={composeRenderProps(className, (className) =>
         toggleButtonVariants({
           variant,
           size,
           isIconOnly,
-          className: cn,
+          className,
         }),
       )}
       {...props}
@@ -99,7 +99,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
           children
         ),
       )}
-    </ToggleButtonPrimitive.ToggleButton>
+    </ToggleButtonPrimitives.ToggleButton>
   );
 };
 

@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 import {
   flexRender,
   getCoreRowModel,
@@ -19,15 +19,19 @@ import {
   type SortingState,
   type VisibilityState,
 } from "@tanstack/react-table"
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete"
+import type { Selection } from "react-aria-components/Table"
+import type { SortDescriptor } from "react-aria-components/Table"
+
 import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-  CheckCircleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
+  CircleCheckIcon,
   CircleIcon,
   CircleOffIcon,
   HelpCircleIcon,
@@ -36,11 +40,7 @@ import {
   Settings2Icon,
   TimerIcon,
   XIcon,
-} from "lucide-react"
-import type { Selection } from "react-aria-components"
-import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
-import type { SortDescriptor } from "react-aria-components/Table"
-
+} from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import { Input } from "@/registry/ui/input"
@@ -83,7 +83,7 @@ const statuses = [
     icon: TimerIcon,
     variant: "warning",
   },
-  { value: "done", label: "Done", icon: CheckCircleIcon, variant: "success" },
+  { value: "done", label: "Done", icon: CircleCheckIcon, variant: "success" },
   {
     value: "canceled",
     label: "Canceled",
@@ -484,7 +484,7 @@ const taskColumns: ColumnDef<Task>[] = [
 ]
 
 export default function Demo() {
-  const { contains } = AutocompletePrimitive.useFilter({
+  const { contains } = AutocompletePrimitives.useFilter({
     sensitivity: "base",
     ignorePunctuation: true,
   })

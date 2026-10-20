@@ -3,11 +3,11 @@
 import * as React from "react";
 import { OTPField as OTPFieldPrimitive } from "@base-ui/react/otp-field";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as FieldErrorPrimitive from "react-aria-components/FieldError";
-import * as InputPrimitive from "react-aria-components/Input";
-import * as LabelPrimitive from "react-aria-components/Label";
+import * as FieldErrorPrimitives from "react-aria-components/FieldError";
+import * as InputPrimitives from "react-aria-components/Input";
+import * as LabelPrimitives from "react-aria-components/Label";
 import { Provider } from "react-aria-components/slots";
-import * as TextPrimitive from "react-aria-components/Text";
+import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import { tv } from "tailwind-variants";
 
 const otpFieldVariants = tv({
   slots: {
-    root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 **:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums **:data-input:invalid:[--invalid-icon:none]",
+    root: "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2 **:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums **:data-input:invalid:[--invalid-icon:none]",
     group:
       "flex w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1 **:data-input:border **:data-input:not-invalid:not-focus:border-border-control",
   },
@@ -25,7 +25,7 @@ const { group, root } = otpFieldVariants();
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;
 type FieldValidationResult = NonNullable<
-  React.ContextType<typeof FieldErrorPrimitive.FieldErrorContext>
+  React.ContextType<typeof FieldErrorPrimitives.FieldErrorContext>
 >;
 
 interface OTPFieldProps extends Omit<
@@ -62,7 +62,9 @@ const VALID_VALIDITY_STATE: ValidityState = {
 const getAriaIds = (...ids: Array<string | undefined>) =>
   ids.filter(Boolean).join(" ") || undefined;
 
-function OTPField({
+/* -------------------------------------------------------------------------- */
+
+const OTPField = ({
   children,
   className,
   id: idProp,
@@ -75,7 +77,7 @@ function OTPField({
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
   ...props
-}: OTPFieldProps) {
+}: OTPFieldProps) => {
   const generatedId = React.useId();
   const id = idProp ?? generatedId;
   const labelId = useSlotId();
@@ -93,9 +95,9 @@ function OTPField({
   return (
     <Provider
       values={[
-        [LabelPrimitive.LabelContext, { id: labelId, htmlFor: id }],
+        [LabelPrimitives.LabelContext, { id: labelId, htmlFor: id }],
         [
-          TextPrimitive.TextContext,
+          TextPrimitives.TextContext,
           {
             slots: {
               description: { id: descriptionId },
@@ -103,15 +105,15 @@ function OTPField({
             },
           },
         ],
-        [FieldErrorPrimitive.FieldErrorContext, validation],
+        [FieldErrorPrimitives.FieldErrorContext, validation],
         [
-          InputPrimitive.InputContext,
+          InputPrimitives.InputContext,
           {
             "aria-invalid": isInvalid || undefined,
             render: (inputProps) => (
               <OTPFieldPrimitive.Input
                 {...inputProps}
-                data-slot="otp-field-input"
+                data-otp-field-input=""
               />
             ),
             disabled: isDisabled,
@@ -155,23 +157,23 @@ function OTPField({
       </OTPFieldPrimitive.Root>
     </Provider>
   );
-}
+};
 
-function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
-  return (
-    <div
-      data-slot="otp-field-group"
-      className={group({ className })}
-      {...props}
-    />
-  );
-}
+/* -------------------------------------------------------------------------- */
 
-function OTPFieldSeparator(props: OTPFieldSeparatorProps) {
+const OTPFieldGroup = ({ className, ...props }: OTPFieldGroupProps) => {
   return (
-    <OTPFieldPrimitive.Separator data-slot="otp-field-separator" {...props} />
+    <div data-otp-field-group="" className={group({ className })} {...props} />
   );
-}
+};
+
+/* -------------------------------------------------------------------------- */
+
+const OTPFieldSeparator = (props: OTPFieldSeparatorProps) => {
+  return <OTPFieldPrimitive.Separator data-otp-field-separator="" {...props} />;
+};
+
+/* -------------------------------------------------------------------------- */
 
 export type { OTPFieldGroupProps, OTPFieldProps, OTPFieldSeparatorProps };
 export { OTPField, OTPFieldGroup, OTPFieldSeparator };

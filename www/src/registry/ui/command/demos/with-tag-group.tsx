@@ -1,7 +1,6 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
-
+import { SearchIcon } from "@/registry/icons"
 import { Command } from "@/registry/ui/command"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { SearchField } from "@/registry/ui/search-field"
@@ -10,7 +9,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 export default function Demo() {
   return (
     <Command aria-label="Command menu" className="gap-2">
-      <SearchField aria-label="Search" autoFocus>
+      <SearchField aria-label="Search">
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />

@@ -64,7 +64,6 @@ const MenuItem = <T extends object>({
 
   return (
     <MenuPrimitives.MenuItem
-      data-slot="menu-item"
       data-menu-item=""
       data-variant={variant}
       textValue={textValue}

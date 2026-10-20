@@ -181,7 +181,7 @@ describe("dialogs axes", () => {
       "max-md:min-h-(--visual-viewport-height)",
       "max-md:*:max-h-none",
       "max-md:*:flex-1",
-      "max-md:**:data-[slot=dialog-footer]:mt-auto",
+      "max-md:**:data-dialog-footer:mt-auto",
     ])
       expect(code).toContain(cls)
     expect(code).toContain("max-md:pb-[env(safe-area-inset-bottom)]")

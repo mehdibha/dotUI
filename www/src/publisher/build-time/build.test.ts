@@ -149,7 +149,7 @@ describe("extractStylesConfig", () => {
     )
     // Same default-composed field slot the app renders (no className arg).
     expect(cfg.base.slots?.root).toBe(
-      "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
+      "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2",
     )
   })
 })
@@ -170,7 +170,7 @@ describe("transformBase", () => {
     expect(template).not.toContain("useStyles")
     expect(template).not.toContain("const styles =")
     expect(template).toContain(
-      "buttonVariants({ variant, size, isIconOnly, className: cn })",
+      "buttonVariants({ variant, size, isIconOnly, className })",
     )
     // VariantProps reference is rewritten.
     expect(template).not.toContain("VariantProps<ButtonStyles>")
@@ -229,7 +229,7 @@ describe("transformBase", () => {
     )
     expect(template).not.toContain("useStyles")
     expect(template).not.toContain("const fieldStyles =")
-    expect(template).toContain("fieldStyles().field({")
+    expect(template).toContain("const { field } = fieldStyles()")
   })
 
   test("number-field: a component and its styles import merge into one", () => {

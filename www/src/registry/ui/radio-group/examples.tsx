@@ -15,7 +15,7 @@ export default function RadioGroupExamples() {
       <Example title="Default">
         <Default />
       </Example>
-      <Example title="With Description">
+      <Example title="With description">
         <Description />
       </Example>
       <Example title="Error message">

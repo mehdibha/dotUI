@@ -1,11 +1,10 @@
 "use client"
 
-import { createContext, useContext, useId } from "react"
-import type * as React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { LabelContext } from "react-aria-components/Label"
 import { Provider, useSlottedContext } from "react-aria-components/slots"
-import * as SwitchPrimitive from "react-aria-components/Switch"
+import * as SwitchPrimitives from "react-aria-components/Switch"
 import { useSlotId } from "react-aria/private/utils/useId"
 import type { VariantProps } from "tailwind-variants"
 
@@ -16,13 +15,13 @@ import type { SwitchStyles } from "./styles"
 
 // MARK: switchStyles
 
-const SwitchStyleContext = createContext<VariantProps<SwitchStyles>>({})
-const InternalSwitchContext = createContext<
-  (SwitchPrimitive.SwitchButtonRenderProps & VariantProps<SwitchStyles>) | null
+const SwitchStyleContext = React.createContext<VariantProps<SwitchStyles>>({})
+const InternalSwitchContext = React.createContext<
+  (SwitchPrimitives.SwitchButtonRenderProps & VariantProps<SwitchStyles>) | null
 >(null)
 
 const stateAttributes = (
-  ctx: SwitchPrimitive.SwitchButtonRenderProps | null,
+  ctx: SwitchPrimitives.SwitchButtonRenderProps | null,
 ) => ({
   "data-rac": "",
   "data-selected": ctx?.isSelected || undefined,
@@ -40,18 +39,18 @@ const stateAttributes = (
 
 interface SwitchProps
   extends
-    React.ComponentProps<typeof SwitchPrimitive.SwitchField>,
+    React.ComponentProps<typeof SwitchPrimitives.SwitchField>,
     VariantProps<SwitchStyles> {}
 
 const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
   const { root } = useStyles()()
-  const autoId = useId()
+  const autoId = React.useId()
   const id = idProp ?? autoId
   const labelId = useSlotId()
 
   return (
     <SwitchStyleContext.Provider value={{ size }}>
-      <SwitchPrimitive.SwitchField
+      <SwitchPrimitives.SwitchField
         data-switch=""
         id={id}
         aria-labelledby={labelId}
@@ -76,7 +75,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
             <SwitchControl />
           )
         })}
-      </SwitchPrimitive.SwitchField>
+      </SwitchPrimitives.SwitchField>
     </SwitchStyleContext.Provider>
   )
 }
@@ -85,7 +84,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
 
 interface SwitchControlProps
   extends
-    React.ComponentProps<typeof SwitchPrimitive.SwitchButton>,
+    React.ComponentProps<typeof SwitchPrimitives.SwitchButton>,
     VariantProps<SwitchStyles> {}
 
 const SwitchControl = ({
@@ -95,12 +94,12 @@ const SwitchControl = ({
 }: SwitchControlProps) => {
   const { control } = useStyles()()
   const labelContext = useSlottedContext(LabelContext)
-  const styleContext = useContext(SwitchStyleContext)
+  const styleContext = React.useContext(SwitchStyleContext)
   const { id: labelId } = labelContext ?? {}
   const size = sizeProp ?? styleContext.size
 
   return (
-    <SwitchPrimitive.SwitchButton
+    <SwitchPrimitives.SwitchButton
       data-switch-control=""
       className={composeRenderProps(className, (className) =>
         control({ size, className }),
@@ -118,7 +117,7 @@ const SwitchControl = ({
           </InternalSwitchContext.Provider>
         )
       })}
-    </SwitchPrimitive.SwitchButton>
+    </SwitchPrimitives.SwitchButton>
   )
 }
 
@@ -128,7 +127,7 @@ interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
   const { indicator } = useStyles()()
-  const ctx = useContext(InternalSwitchContext)
+  const ctx = React.useContext(InternalSwitchContext)
 
   if (!ctx) {
     return (
@@ -156,7 +155,7 @@ interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
   const { thumb } = useStyles()()
-  const ctx = useContext(InternalSwitchContext)
+  const ctx = React.useContext(InternalSwitchContext)
 
   return (
     <span

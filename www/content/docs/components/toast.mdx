@@ -4,6 +4,42 @@ description: A toast displays a brief, temporary notification.
 wip: true
 ---
 
+<InteractiveDemo
+  name="toast"
+  controls={[
+    {
+      name: "title",
+      type: "string",
+      defaultValue: "Changes saved",
+      alwaysShow: true,
+    },
+    {
+      name: "description",
+      type: "string",
+      defaultValue: "Your update is live.",
+      alwaysShow: true,
+    },
+    {
+      name: "type",
+      type: "enum",
+      options: ["neutral", "success", "error", "warning", "info", "loading"],
+    },
+    {
+      name: "position",
+      type: "enum",
+      options: [
+        "top-left",
+        "top-center",
+        "top-right",
+        "bottom-left",
+        "bottom-center",
+        "bottom-right",
+      ],
+    },
+    { name: "action", type: "boolean" },
+  ]}
+/>
+
 ## Installation
 
 ```npm

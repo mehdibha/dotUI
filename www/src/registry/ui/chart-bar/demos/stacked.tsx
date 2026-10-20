@@ -11,7 +11,7 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, tablet: 85 },
 ]
 
-export default function ChartBarStacked() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

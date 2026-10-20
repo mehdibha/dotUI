@@ -1,5 +1,6 @@
 "use client"
 
+import type * as React from "react"
 import * as ButtonPrimitives from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DisclosurePrimitives from "react-aria-components/Disclosure"
@@ -14,12 +15,14 @@ interface CollapsibleProps extends React.ComponentProps<
   typeof DisclosurePrimitives.Disclosure
 > {}
 
-function Collapsible({ className, ...props }: CollapsibleProps) {
+const Collapsible = ({ className, ...props }: CollapsibleProps) => {
   const { root } = useStyles()()
   return (
     <DisclosurePrimitives.Disclosure
       data-collapsible=""
-      className={composeRenderProps(className, (c) => root({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       {...props}
     />
   )
@@ -31,14 +34,17 @@ interface CollapsibleTriggerProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
 
-function CollapsibleTrigger({ className, ...props }: CollapsibleTriggerProps) {
+const CollapsibleTrigger = ({
+  className,
+  ...props
+}: CollapsibleTriggerProps) => {
   const { trigger } = useStyles()()
   return (
     <ButtonPrimitives.Button
       slot="trigger"
       data-collapsible-trigger=""
-      className={composeRenderProps(className, (c) =>
-        trigger({ className: c }),
+      className={composeRenderProps(className, (className) =>
+        trigger({ className }),
       )}
       {...props}
     />
@@ -51,12 +57,14 @@ interface CollapsiblePanelProps extends React.ComponentProps<
   typeof DisclosurePrimitives.DisclosurePanel
 > {}
 
-function CollapsiblePanel({ className, ...props }: CollapsiblePanelProps) {
+const CollapsiblePanel = ({ className, ...props }: CollapsiblePanelProps) => {
   const { panel } = useStyles()()
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-collapsible-panel=""
-      className={composeRenderProps(className, (c) => panel({ className: c }))}
+      className={composeRenderProps(className, (className) =>
+        panel({ className }),
+      )}
       {...props}
     />
   )

@@ -1,15 +1,15 @@
 "use client"
 
-import { type ComponentProps, createContext, use } from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as ProgressBarPrimitive from "react-aria-components/ProgressBar"
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar"
 
 import { useStyles } from "./styles"
 
 const ProgressBarContext =
-  createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null)
+  React.createContext<ProgressBarPrimitives.ProgressBarRenderProps | null>(null)
 const useProgressBarContext = (componentName: string) => {
-  const context = use(ProgressBarContext)
+  const context = React.useContext(ProgressBarContext)
   if (!context) {
     throw new Error(`${componentName} must be used within a ProgressBar`)
   }
@@ -18,13 +18,13 @@ const useProgressBarContext = (componentName: string) => {
 
 // MARK: Separator
 
-interface ProgressBarProps extends ComponentProps<
-  typeof ProgressBarPrimitive.ProgressBar
+interface ProgressBarProps extends React.ComponentProps<
+  typeof ProgressBarPrimitives.ProgressBar
 > {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   const { root } = useStyles()()
   return (
-    <ProgressBarPrimitive.ProgressBar
+    <ProgressBarPrimitives.ProgressBar
       data-field=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
@@ -36,7 +36,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
           {children ?? <ProgressBarTrack />}
         </ProgressBarContext>
       ))}
-    </ProgressBarPrimitive.ProgressBar>
+    </ProgressBarPrimitives.ProgressBar>
   )
 }
 

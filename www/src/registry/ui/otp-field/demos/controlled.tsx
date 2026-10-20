@@ -6,7 +6,7 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field"
 
-export default function Controlled() {
+export default function Demo() {
   const [value, setValue] = React.useState("123")
 
   return (

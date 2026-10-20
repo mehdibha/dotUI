@@ -82,12 +82,14 @@ export function barChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type BarChartProps<TDatum> = ChartComponentProps<
   BarChartSpecOptions<TDatum>,
   TDatum
 >
 
-export function BarChart<TDatum>(props: BarChartProps<TDatum>) {
+export const BarChart = <TDatum,>(props: BarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     BarChartSpecOptions<TDatum>

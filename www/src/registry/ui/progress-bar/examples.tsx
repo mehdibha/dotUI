@@ -10,10 +10,10 @@ import WithLabelDemo from "./demos/with-label"
 export default function ProgressBarExamples() {
   return (
     <Examples className="lg:grid-cols-2">
-      <Example title="Progress Bar">
+      <Example title="Progress bar">
         <ProgressValuesDemo />
       </Example>
-      <Example title="With Label">
+      <Example title="With label">
         <WithLabelDemo />
       </Example>
       <Example title="Indeterminate">
@@ -22,7 +22,7 @@ export default function ProgressBarExamples() {
       <Example title="Controlled">
         <ControlledDemo />
       </Example>
-      <Example title="File Upload List">
+      <Example title="File upload list">
         <FileUploadListDemo />
       </Example>
     </Examples>

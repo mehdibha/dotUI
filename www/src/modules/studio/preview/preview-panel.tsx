@@ -452,7 +452,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   // The desktop popover's and the mobile drawer's: only the list's sizing
   // differs. Selection comes from the wrapping Select.
   const renderPicker = (listClassName: string) => (
-    <Command className="min-h-0 flex-1">
+    <Command className="min-h-0 flex-1 gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)]">
       <SearchField autoFocus aria-label="Search previews">
         <Input placeholder="Search previews…" />
       </SearchField>

@@ -17,7 +17,7 @@ const data = [
   { month: "Jun", channel: "paid_social", visitors: 140 },
 ]
 
-export default function ChartAreaLabels() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

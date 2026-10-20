@@ -1,6 +1,6 @@
 "use client"
 
-import type * as CalendarPrimitive from "react-aria-components/Calendar"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { useComponentParams } from "@/lib/styles"
@@ -54,7 +54,7 @@ const CalendarGrid = ({ children, ...props }: CalendarGridProps) => {
   )
 }
 
-const Calendar = <T extends CalendarPrimitive.DateValue>(
+const Calendar = <T extends CalendarPrimitives.DateValue>(
   props: CalendarProps<T>,
 ) => {
   return (
@@ -73,7 +73,7 @@ const Calendar = <T extends CalendarPrimitive.DateValue>(
   )
 }
 
-const RangeCalendar = <T extends CalendarPrimitive.DateValue>(
+const RangeCalendar = <T extends CalendarPrimitives.DateValue>(
   props: RangeCalendarProps<T>,
 ) => {
   return (

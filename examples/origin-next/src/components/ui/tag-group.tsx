@@ -46,7 +46,7 @@ interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
   size?: "sm" | "md" | "lg";
 }
 
-function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
+const TagGroup = ({ className, size = "md", ...props }: TagGroupProps) => {
   return (
     <TagGroupPrimitives.TagGroup
       data-tag-group=""
@@ -55,30 +55,33 @@ function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
-function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
+const TagList = <T extends object>({
+  className,
+  ...props
+}: TagListProps<T>) => {
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
-      className={composeRenderProps(className, (cn) =>
-        tagList({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        tagList({ className }),
       )}
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface TagProps
   extends TagGroupPrimitives.TagProps, VariantProps<typeof tagGroupVariants> {}
 
-function Tag({ className, appearance, ...props }: TagProps) {
+const Tag = ({ className, appearance, ...props }: TagProps) => {
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
 
@@ -103,7 +106,7 @@ function Tag({ className, appearance, ...props }: TagProps) {
       ))}
     </TagGroupPrimitives.Tag>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
