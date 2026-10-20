@@ -138,7 +138,8 @@ async function run(options: RunOptions) {
   }
 
   if (errorCount > 0) {
-    console.log(`⚠️  ${errorCount} files had parsing issues (non-fatal)`)
+    console.error(`\n⛔ ${errorCount} errors above; references are incomplete`)
+    process.exitCode = 1
   }
 }
 

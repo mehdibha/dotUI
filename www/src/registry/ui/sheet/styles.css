@@ -3,7 +3,6 @@
   --studio-sheet-handle-radius: var(--studio-radius-pill);
 }
 
-/* Both run on the sheet's swipe progress, not on time. */
 @keyframes sheet-backdrop {
   from {
     opacity: 0;

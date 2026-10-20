@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { type ReactNode, useState } from "react"
 
 import {
   ActivityIcon,
@@ -30,6 +30,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
+import { Card } from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import {
@@ -219,8 +220,6 @@ const SESSIONS = [
   },
 ]
 
-/* ------------------------------ Row primitives ---------------------------- */
-
 // A titled group of hairline-separated rows — the flat, card-less shape
 // desktop-app settings use. `action` sits on the title's right (e.g. a badge
 // or a group-wide button).
@@ -231,21 +230,14 @@ function SettingsGroup({
   children,
 }: {
   title: string
-  action?: React.ReactNode
+  action?: ReactNode
   danger?: boolean
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <section className="flex flex-col">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2
-          className={cn(
-            "font-heading text-lg font-semibold tracking-tight",
-            danger && "text-fg-danger",
-          )}
-        >
-          {title}
-        </h2>
+        <h2 className={cn("text-lg", danger && "text-fg-danger")}>{title}</h2>
         {action}
       </div>
       <div className="flex flex-col divide-y divide-border">{children}</div>
@@ -265,7 +257,7 @@ function SettingsRow({
   label: string
   description?: string
   stacked?: boolean
-  children?: React.ReactNode
+  children?: ReactNode
 }) {
   return (
     <div
@@ -312,8 +304,6 @@ function SwitchRow({
     </SettingsRow>
   )
 }
-
-/* -------------------------------- Sections -------------------------------- */
 
 function AccountSection() {
   const [photo, setPhoto] = useState<string | null>(null)
@@ -905,8 +895,6 @@ function SecuritySection() {
   )
 }
 
-/* --------------------------------- Block ---------------------------------- */
-
 function SettingsSidebar({
   section,
   onSectionChange,
@@ -968,14 +956,18 @@ function SettingsSidebar({
 export default function SettingsBlock() {
   const [section, setSection] = useState("account")
   const [isDirty, setIsDirty] = useState(false)
-  const { backdrop } = useModalStyles()()
+  const { backdrop, modal } = useModalStyles()()
 
   return (
-    // Looks like an opened settings modal but is a plain card — the backdrop
-    // and card reuse the Modal styles so the fake tracks the axis.
+    // A fake open modal: the shell reuses the Modal slots so it tracks the axes.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
       <div className={backdrop()} />
-      <SidebarProvider className="relative h-full max-h-184 min-h-0 w-full max-w-5xl overflow-hidden rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--studio-modal-background)]">
+      <SidebarProvider
+        className={modal({
+          className:
+            "h-full max-h-184 min-h-0 max-w-5xl flex-row overflow-hidden sm:max-h-184 sm:max-w-5xl",
+        })}
+      >
         <SettingsSidebar section={section} onSectionChange={setSection} />
         <Tooltip>
           <Button
@@ -991,7 +983,7 @@ export default function SettingsBlock() {
         </Tooltip>
         <SidebarInset className="min-w-0 overflow-y-auto bg-transparent">
           {/* Mobile only — the sidebar is a sheet there and needs its trigger. */}
-          <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-2 border-b bg-(--studio-modal-background) px-3 md:hidden">
+          <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-2 border-b bg-popover px-3 md:hidden">
             <SidebarTrigger />
             <span className="font-medium">Settings</span>
           </header>
@@ -1013,7 +1005,7 @@ export default function SettingsBlock() {
                   isDirty ? "opacity-100" : "pointer-events-none opacity-0",
                 )}
               >
-                <div className="flex items-center justify-between gap-3 rounded-xl border bg-card p-3 shadow-lg">
+                <Card className="flex-row items-center justify-between gap-3 p-3">
                   <span className="min-w-0 truncate text-sm text-fg-muted">
                     You have unsaved changes.
                   </span>
@@ -1029,7 +1021,7 @@ export default function SettingsBlock() {
                       Save changes
                     </Button>
                   </div>
-                </div>
+                </Card>
               </div>
             </div>
           </div>

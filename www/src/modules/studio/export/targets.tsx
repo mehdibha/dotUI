@@ -1,5 +1,5 @@
 import type { ComponentType, SVGProps } from "react"
-import { compressToEncodedURIComponent } from "lz-string"
+import LZString from "lz-string"
 
 import { BoltIcon } from "@/components/icons/bolt"
 import { FigmaIcon } from "@/components/icons/figma"
@@ -10,14 +10,14 @@ import { ReplitIcon } from "@/components/icons/replit"
 import { V0Icon } from "@/components/icons/v0"
 
 import { buildPrompt } from "./prompt"
-import type { ExportUrl } from "./types"
+import type { ExportUrl } from "./use-export-url"
 
 /**
  * An AI builder that starts a new project from the design system. Every tool
  * but v0 opens with a prompt that installs the registry. These only work from
  * the deployed origin: the tools fetch the registry server-side.
  */
-export interface OpenInTarget {
+interface OpenInTarget {
   id: string
   name: string
   icon: ComponentType<SVGProps<SVGSVGElement>>
@@ -29,7 +29,7 @@ export interface OpenInTarget {
 }
 
 const uri = (prompt: string) => encodeURIComponent(prompt)
-const lz = (prompt: string) => compressToEncodedURIComponent(prompt)
+const lz = (prompt: string) => LZString.compressToEncodedURIComponent(prompt)
 
 /** ChatGPT Work builds and hosts the app through its Sites plugin. */
 const sites = (mention: string, url: ExportUrl) =>

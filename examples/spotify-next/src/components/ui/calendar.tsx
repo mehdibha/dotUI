@@ -1,9 +1,9 @@
 "use client";
 
-import type React from "react";
-import * as CalendarPrimitive from "react-aria-components/Calendar";
+import * as React from "react";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
+import * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,14 +13,30 @@ const calendarVariants = tv({
   slots: {
     root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--radius-full)] [--cell-size:--spacing(8)]",
     header: "flex items-center gap-2",
-    heading: "flex-1 text-center text-sm font-medium",
+    heading: "flex-1 text-center font-sans text-sm font-medium tracking-normal",
     grid: "grid grid-cols-7 gap-y-2",
     gridHeader: "contents *:[tr]:contents",
     gridHeaderCell: "text-xs font-normal text-fg-muted",
     gridBody: "contents *:[tr]:contents",
-    cell: "relative flex aspect-square size-full items-center justify-center text-center text-sm font-medium no-highlight min-w-(--cell-size) cursor-interactive disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled in-data-range-calendar:not-outside-month:selected:bg-accent-muted focus-reset transition-shadow in-data-calendar:hover:bg-accent-muted in-data-calendar:focus-visible:focus-ring in-data-calendar:selected:not-outside-month:bg-accent in-data-calendar:selected:not-outside-month:text-fg-on-accent outside-month:pointer-events-none in-data-calendar:not-outside-month:invalid:selected:bg-danger in-data-calendar:not-outside-month:invalid:selected:text-fg-on-danger in-data-calendar:rounded-(--cell-radius) selection-start:rounded-l-(--cell-radius) selection-end:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
+    cell: "relative flex aspect-square size-full min-w-(--cell-size) items-center justify-center text-center text-sm font-medium no-highlight cursor-interactive focus-reset transition-shadow disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:pointer-events-none outside-month:text-fg-disabled in-data-calendar:rounded-(--cell-radius) selection-start:rounded-l-(--cell-radius) selection-end:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius) in-data-calendar:data-today:not-selected:not-hover:bg-muted",
     cellInner:
-      "flex size-full items-center justify-center focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit]",
+      "rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit] in-data-range-calendar:in-data-today:not-in-selected:not-hover:bg-muted",
+  },
+  variants: {
+    range: {
+      false: {
+        cell: "not-selected:hover:bg-selection-muted selected:bg-selection selected:text-fg-on-selection focus-visible:focus-ring invalid:selected:bg-danger invalid:selected:text-fg-on-danger",
+        cellInner: "contents",
+      },
+      true: {
+        cell: "selected:bg-selection-muted",
+        cellInner:
+          "relative flex size-full items-center justify-center focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-focus-visible:focus-ring in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
+      },
+    },
+  },
+  defaultVariants: {
+    range: false,
   },
 });
 
@@ -39,78 +55,62 @@ const {
 /* -------------------------------------------------------------------------- */
 
 interface CalendarProps<
-  T extends CalendarPrimitive.DateValue,
-> extends CalendarPrimitive.CalendarProps<T> {}
-const Calendar = <T extends CalendarPrimitive.DateValue>({
+  T extends CalendarPrimitives.DateValue,
+> extends CalendarPrimitives.CalendarProps<T> {}
+const Calendar = <T extends CalendarPrimitives.DateValue>({
   className,
   ...props
 }: CalendarProps<T>) => {
   return (
-    <CalendarPrimitive.Calendar
+    <CalendarPrimitives.Calendar
       data-calendar=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {children ?? (
+      {composeRenderProps(
+        props.children,
+        (children) =>
+          children ?? (
             <>
-              <CalendarHeader>
-                <Button slot="previous" variant="quiet" isIconOnly>
-                  <ChevronLeftIcon />
-                </Button>
-                <CalendarHeading />
-                <Button slot="next" variant="quiet" isIconOnly>
-                  <ChevronRightIcon />
-                </Button>
-              </CalendarHeader>
+              <CalendarHeader />
               <CalendarGrid />
             </>
-          )}
-        </>
-      ))}
-    </CalendarPrimitive.Calendar>
+          ),
+      )}
+    </CalendarPrimitives.Calendar>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface RangeCalendarProps<
-  T extends CalendarPrimitive.DateValue,
-> extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
-const RangeCalendar = <T extends CalendarPrimitive.DateValue>({
+  T extends CalendarPrimitives.DateValue,
+> extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
+const RangeCalendar = <T extends CalendarPrimitives.DateValue>({
   className,
   ...props
 }: RangeCalendarProps<T>) => {
   return (
-    <RangeCalendarPrimitive.RangeCalendar
+    <RangeCalendarPrimitives.RangeCalendar
       data-range-calendar=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {children ?? (
+      {composeRenderProps(
+        props.children,
+        (children) =>
+          children ?? (
             <>
-              <CalendarHeader>
-                <Button slot="previous" variant="quiet" isIconOnly>
-                  <ChevronLeftIcon />
-                </Button>
-                <CalendarHeading />
-                <Button slot="next" variant="quiet" isIconOnly>
-                  <ChevronRightIcon />
-                </Button>
-              </CalendarHeader>
+              <CalendarHeader />
               <CalendarGrid />
             </>
-          )}
-        </>
-      ))}
-    </RangeCalendarPrimitive.RangeCalendar>
+          ),
+      )}
+    </RangeCalendarPrimitives.RangeCalendar>
   );
 };
 
@@ -142,14 +142,12 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface CalendarHeadingProps extends React.ComponentProps<
-  typeof CalendarPrimitive.Heading
+  typeof CalendarPrimitives.Heading
 > {}
 const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
-  // The heading text (e.g. a "June – July 2026" range) is formatted with `Intl`, whose separator
-  // whitespace differs between the Node SSR runtime and the browser, causing a hydration mismatch.
-  // The difference is an invisible space-variant, so suppress the otherwise-harmless warning.
+  // Intl's separator whitespace differs between Node and the browser, so the heading text can hydrate-mismatch.
   return (
-    <CalendarPrimitive.Heading
+    <CalendarPrimitives.Heading
       data-calendar-heading=""
       suppressHydrationWarning
       className={heading({ className })}
@@ -161,7 +159,7 @@ const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface CalendarGridProps extends React.ComponentProps<
-  typeof CalendarPrimitive.CalendarGrid
+  typeof CalendarPrimitives.CalendarGrid
 > {}
 const CalendarGrid = ({
   className,
@@ -170,7 +168,7 @@ const CalendarGrid = ({
   ...props
 }: CalendarGridProps) => {
   return (
-    <CalendarPrimitive.CalendarGrid
+    <CalendarPrimitives.CalendarGrid
       data-calendar-grid=""
       className={grid({ className })}
       weekdayStyle={weekdayStyle}
@@ -186,14 +184,14 @@ const CalendarGrid = ({
           </CalendarGridBody>
         </>
       )}
-    </CalendarPrimitive.CalendarGrid>
+    </CalendarPrimitives.CalendarGrid>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface CalendarGridHeaderProps extends React.ComponentProps<
-  typeof CalendarPrimitive.CalendarGridHeader
+  typeof CalendarPrimitives.CalendarGridHeader
 > {}
 const CalendarGridHeader = ({
   className,
@@ -201,27 +199,27 @@ const CalendarGridHeader = ({
   ...props
 }: CalendarGridHeaderProps) => {
   return (
-    <CalendarPrimitive.CalendarGridHeader
+    <CalendarPrimitives.CalendarGridHeader
       data-calendar-grid-header=""
       className={gridHeader({ className })}
       {...props}
     >
       {children}
-    </CalendarPrimitive.CalendarGridHeader>
+    </CalendarPrimitives.CalendarGridHeader>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 interface CalendarHeaderCellProps extends React.ComponentProps<
-  typeof CalendarPrimitive.CalendarHeaderCell
+  typeof CalendarPrimitives.CalendarHeaderCell
 > {}
 const CalendarHeaderCell = ({
   className,
   ...props
 }: CalendarHeaderCellProps) => {
   return (
-    <CalendarPrimitive.CalendarHeaderCell
+    <CalendarPrimitives.CalendarHeaderCell
       data-calendar-header-cell=""
       className={gridHeaderCell({ className })}
       {...props}
@@ -232,11 +230,11 @@ const CalendarHeaderCell = ({
 /* -------------------------------------------------------------------------- */
 
 interface CalendarGridBodyProps extends React.ComponentProps<
-  typeof CalendarPrimitive.CalendarGridBody
+  typeof CalendarPrimitives.CalendarGridBody
 > {}
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
   return (
-    <CalendarPrimitive.CalendarGridBody
+    <CalendarPrimitives.CalendarGridBody
       data-calendar-grid-body=""
       className={gridBody({ className })}
       {...props}
@@ -247,25 +245,26 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
 /* -------------------------------------------------------------------------- */
 
 interface CalendarCellProps extends React.ComponentProps<
-  typeof CalendarPrimitive.CalendarCell
+  typeof CalendarPrimitives.CalendarCell
 > {}
 const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
+  const range =
+    React.useContext(RangeCalendarPrimitives.RangeCalendarStateContext) !==
+    null;
   return (
-    <CalendarPrimitive.CalendarCell
+    <CalendarPrimitives.CalendarCell
       data-calendar-cell=""
       className={composeRenderProps(className, (className) =>
-        cell({
-          className,
-        }),
+        cell({ range, className }),
       )}
       {...props}
     >
       {composeRenderProps(props.children, (children, { formattedDate }) => (
-        <span data-cell-inner="" className={cellInner()}>
+        <span data-cell-inner="" className={cellInner({ range })}>
           {children ?? formattedDate}
         </span>
       ))}
-    </CalendarPrimitive.CalendarCell>
+    </CalendarPrimitives.CalendarCell>
   );
 };
 

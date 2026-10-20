@@ -4,7 +4,26 @@ description: A file attached to a message or composer — preview, metadata, act
 wip: true
 ---
 
-<Demo name="attachment/demos/attachment" />
+<InteractiveDemo
+  name="attachment"
+  controls={[
+    {
+      name: "title",
+      type: "string",
+      defaultValue: "quarterly-report.pdf",
+      alwaysShow: true,
+    },
+    {
+      name: "description",
+      type: "string",
+      defaultValue: "1.2 MB · PDF",
+      alwaysShow: true,
+    },
+    "state",
+    "size",
+    "orientation",
+  ]}
+/>
 
 ## Installation
 

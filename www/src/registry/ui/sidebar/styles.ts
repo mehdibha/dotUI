@@ -1,25 +1,80 @@
 import { createStyles } from "@/lib/styles"
 
+import { CAPS } from "../badge/styles"
+import { UPPERCASE } from "../button/styles"
+import { MONO_CAPS } from "../list-box/styles"
 import sidebarMeta from "./meta"
 
-/* Collapse and expand timing is the studio's (styles.css). */
 const collapse =
   "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
 
-const { useStyles, styles } = createStyles(sidebarMeta, {
+/* The current item's marker, on menu and sub-menu buttons alike. Each marker
+   owns its hover; a marker with its own fill or ink keeps it under the pointer. */
+const wash = "hover:bg-muted hover:text-fg pressed:bg-muted"
+const restWash =
+  "not-data-active:hover:bg-muted not-data-active:hover:text-fg not-data-active:pressed:bg-muted"
+const fill = "data-active:bg-muted data-active:text-fg"
+const tint = "data-active:bg-accent-muted data-active:text-fg-accent"
+const bar =
+  "data-active:before:absolute data-active:before:inset-y-2 data-active:before:inset-s-0 data-active:before:rounded-full"
+// shadcn: a wash, neutral or brand-tinted. Material 3's pill is the same wash
+// on a stadium item (meta.ts rounds it through the item var).
+const FILL = [wash, fill]
+const FILL_ACCENT = [restWash, tint]
+// Polaris: a page-toned chip on a recessed sidebar; hover sits between.
+const SURFACE = [
+  "not-data-active:hover:bg-bg/40 hover:text-fg pressed:bg-bg data-active:bg-bg data-active:text-fg",
+]
+// Catalyst, Fluent 2: a bar at the start edge, no fill.
+const BAR = [
+  wash,
+  bar,
+  "data-active:text-fg data-active:before:w-0.5 data-active:before:bg-fg",
+]
+const BAR_ACCENT = [
+  wash,
+  bar,
+  "data-active:text-fg data-active:before:w-0.5 data-active:before:bg-accent",
+]
+// Primer, Carbon: a neutral wash and a wider bar.
+const FILL_BAR = [
+  wash,
+  fill,
+  bar,
+  "data-active:before:w-1 data-active:before:bg-fg",
+]
+const FILL_BAR_ACCENT = [
+  wash,
+  fill,
+  bar,
+  "data-active:before:w-1 data-active:before:bg-accent",
+]
+// Stripe: the label and icon alone, a brand wash on hover. Sub-item icons
+// rest muted, so the current one takes the ink.
+const INK = [wash, "data-active:text-fg"]
+const INK_ACCENT = [
+  "hover:bg-accent-muted not-data-active:hover:text-fg pressed:bg-accent-muted data-active:text-fg-accent",
+]
+const INK_ICON = "data-active:[&>svg]:text-current"
+// Duolingo: the wash inside a 2px ring.
+const OUTLINE = [
+  wash,
+  fill,
+  "data-active:inset-ring-2 data-active:inset-ring-border-control",
+]
+const OUTLINE_ACCENT = [
+  restWash,
+  tint,
+  "data-active:inset-ring-2 data-active:inset-ring-border-accent",
+]
+
+const { useStyles } = createStyles(sidebarMeta, {
   base: {
     slots: {
-      // The element that establishes the sidebar layout: a flex row whose first
-      // (or last, for `side="right"`) child reserves the sidebar's width and
-      // whose remaining space is taken by `SidebarInset`. `relative` makes it the
-      // positioning context for `Sidebar` (which is `absolute`), so the whole
-      // thing is self-contained and works embedded in a page, not only full-screen.
+      // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
       wrapper:
         "group/sidebar-wrapper relative isolate flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-      // The off-screen state machine: every collapsible/variant/side decision is a
-      // data-attribute on this element, read by descendants via `group-data-*`.
-      root: "group peer hidden text-fg md:block",
-      // In-flow spacer that reserves the sidebar's width in the layout row.
+      root: "group peer hidden text-fg data-[side=right]:order-last md:block",
       gap: [
         "relative w-(--sidebar-width) bg-transparent transition-[width]",
         collapse,
@@ -29,8 +84,6 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "group-data-[variant=floating]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
         "group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]",
       ],
-      // The painted panel. Absolutely positioned over the gap so content reflows
-      // around the gap while the panel can slide/resize independently.
       container: [
         "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex",
         collapse,
@@ -46,17 +99,14 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)]",
         "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
-      // Mobile panel content (rendered inside a Sheet at < md).
       mobile:
         "flex h-full w-full flex-col bg-sidebar text-fg [--surface-bg:var(--color-sidebar)]",
-      // The main content area beside the sidebar.
       inset: [
         "relative flex w-full flex-1 flex-col bg-bg [--surface-bg:var(--color-bg)]",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius) md:peer-data-[variant=inset]:shadow-sm",
+        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius)",
         "md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=left]:peer-data-[state=collapsed]:ml-2",
         "md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:peer-data-[side=right]:peer-data-[state=collapsed]:mr-2",
       ],
-      // The thin draggable strip on the inner edge that toggles the sidebar.
       rail: [
         "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-(--studio-sidebar-state-ease) group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
         "after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control",
@@ -71,7 +121,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",
       groupLabel: [
-        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0",
         collapse,
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
       ],
@@ -84,14 +134,13 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menu: "flex w-full min-w-0 flex-col gap-1",
       menuItem: "group/menu-item relative",
       menuButton: [
-        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
-        "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "data-active:bg-muted data-active:font-medium data-active:text-fg",
+        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-button-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
+        "focus-visible:focus-ring",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
         "group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
-        "group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8",
+        "group-has-data-sidebar-menu-action/menu-item:pr-8",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
       ],
       menuAction: [
@@ -116,23 +165,99 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       menuSubItem: "group/menu-sub-item relative",
       menuSubButton: [
-        "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
-        "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "data-active:bg-muted data-active:font-medium data-active:text-fg",
+        "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-button-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
+        "focus-visible:focus-ring",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
         "group-data-[collapsible=icon]:hidden",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted",
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
+  params: {
+    labels: {
+      sentence: { slots: { groupLabel: "font-sans text-xs tracking-normal" } },
+      caps: { slots: { groupLabel: ["font-sans", CAPS] } },
+      "mono-caps": { slots: { groupLabel: MONO_CAPS } },
+    },
+    shell: {
+      subtle: { slots: { inset: "md:peer-data-[variant=inset]:shadow-sm" } },
+      page: { slots: { inset: "md:peer-data-[variant=inset]:shadow-sm" } },
+      // The inset panel wears the card's edge and shadow (Linear's hairline).
+      recessed: {
+        slots: {
+          inset:
+            "md:peer-data-[variant=inset]:border-(length:--studio-card-stroke) md:peer-data-[variant=inset]:border-(--card-border) md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)",
+        },
+      },
+    },
+    marker: {
+      fill: { slots: { menuButton: FILL, menuSubButton: FILL } },
+      "fill-accent": {
+        slots: { menuButton: FILL_ACCENT, menuSubButton: FILL_ACCENT },
+      },
+      surface: { slots: { menuButton: SURFACE, menuSubButton: SURFACE } },
+      bar: { slots: { menuButton: BAR, menuSubButton: BAR } },
+      "bar-accent": {
+        slots: { menuButton: BAR_ACCENT, menuSubButton: BAR_ACCENT },
+      },
+      "fill-bar": { slots: { menuButton: FILL_BAR, menuSubButton: FILL_BAR } },
+      "fill-bar-accent": {
+        slots: { menuButton: FILL_BAR_ACCENT, menuSubButton: FILL_BAR_ACCENT },
+      },
+      ink: { slots: { menuButton: INK, menuSubButton: [INK, INK_ICON] } },
+      "ink-accent": {
+        slots: {
+          menuButton: INK_ACCENT,
+          menuSubButton: [INK_ACCENT, INK_ICON],
+        },
+      },
+      outline: { slots: { menuButton: OUTLINE, menuSubButton: OUTLINE } },
+      "outline-accent": {
+        slots: { menuButton: OUTLINE_ACCENT, menuSubButton: OUTLINE_ACCENT },
+      },
+      pill: { slots: { menuButton: FILL, menuSubButton: FILL } },
+      "pill-accent": {
+        slots: { menuButton: FILL_ACCENT, menuSubButton: FILL_ACCENT },
+      },
+    },
+    // Item weight at rest, then current.
+    weight: {
+      regular: {
+        slots: { menuButton: "font-normal", menuSubButton: "font-normal" },
+      },
+      "regular-medium": {
+        slots: {
+          menuButton: "font-normal data-active:font-medium",
+          menuSubButton: "font-normal data-active:font-medium",
+        },
+      },
+      "regular-semibold": {
+        slots: {
+          menuButton: "font-normal data-active:font-semibold",
+          menuSubButton: "font-normal data-active:font-semibold",
+        },
+      },
+      medium: {
+        slots: { menuButton: "font-medium", menuSubButton: "font-medium" },
+      },
+      "medium-semibold": {
+        slots: {
+          menuButton: "font-medium data-active:font-semibold",
+          menuSubButton: "font-medium data-active:font-semibold",
+        },
+      },
+      semibold: {
+        slots: { menuButton: "font-semibold", menuSubButton: "font-semibold" },
+      },
+      bold: {
+        slots: { menuButton: "font-bold", menuSubButton: "font-bold" },
+      },
+    },
+    case: {
+      uppercase: { slots: { menuButton: UPPERCASE, menuSubButton: UPPERCASE } },
+    },
   },
 })
-
-export type SidebarStyles = typeof styles
 
 export { useStyles }

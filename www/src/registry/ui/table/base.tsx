@@ -55,11 +55,7 @@ interface TableVirtualizerProps<T extends object> extends Omit<
   headingHeight?: number
 }
 
-const TABLE_VIRTUALIZER_HEIGHTS = {
-  compact: 32,
-  default: 40,
-  comfortable: 48,
-} as const
+const DEFAULT_ROW_HEIGHT = 40
 
 const TableVirtualizer = <T extends object>({
   headingHeight,
@@ -67,7 +63,6 @@ const TableVirtualizer = <T extends object>({
   rowHeight,
   ...props
 }: TableVirtualizerProps<T>) => {
-  const densityHeight = TABLE_VIRTUALIZER_HEIGHTS.default
   const tableLayoutOptions = layoutOptions as
     | { rowHeight?: number; headingHeight?: number }
     | undefined
@@ -77,9 +72,12 @@ const TableVirtualizer = <T extends object>({
       layout={TableLayout}
       layoutOptions={{
         ...layoutOptions,
-        rowHeight: rowHeight ?? tableLayoutOptions?.rowHeight ?? densityHeight,
+        rowHeight:
+          rowHeight ?? tableLayoutOptions?.rowHeight ?? DEFAULT_ROW_HEIGHT,
         headingHeight:
-          headingHeight ?? tableLayoutOptions?.headingHeight ?? densityHeight,
+          headingHeight ??
+          tableLayoutOptions?.headingHeight ??
+          DEFAULT_ROW_HEIGHT,
       }}
       {...props}
     />
@@ -119,7 +117,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
       return (
         <TableContainerContext.Provider value={context}>
           <TablePrimitives.ResizableTableContainer
-            data-slot="table-container"
+            data-table-container=""
             className={classNames}
             ref={ref}
             onResize={onResize}
@@ -135,7 +133,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
     return (
       <TableContainerContext.Provider value={context}>
         <div
-          data-slot="table-container"
+          data-table-container=""
           className={classNames}
           ref={ref}
           {...props}
@@ -150,16 +148,19 @@ TableContainer.displayName = "TableContainer"
 
 interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
-> {}
+> {
+  striped?: boolean
+}
 
-const Table = ({ className, ...props }: TableProps) => {
+const Table = ({ className, striped, ...props }: TableProps) => {
   const { table } = useStyles()()
 
   return (
     <TablePrimitives.Table
-      data-slot="table"
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
+      data-table=""
+      data-striped={striped || undefined}
+      className={composeRenderProps(className, (className) =>
+        table({ className }),
       )}
       {...props}
     />
@@ -190,9 +191,9 @@ const TableHeader = <T extends object>({
 
   return (
     <TablePrimitives.TableHeader
-      data-slot="table-header"
-      className={composeRenderProps(className, (cn) =>
-        header({ className: cn }),
+      data-table-header=""
+      className={composeRenderProps(className, (className) =>
+        header({ className }),
       )}
       dependencies={dependencies}
       {...props}
@@ -232,9 +233,9 @@ const TableChromeColumn = ({
   const { chromeColumn } = useStyles()()
   return (
     <TablePrimitives.Column
-      data-slot="table-chrome-column"
-      className={composeRenderProps(className, (cn) =>
-        chromeColumn({ className: cn }),
+      data-table-chrome-column=""
+      className={composeRenderProps(className, (className) =>
+        chromeColumn({ className }),
       )}
       {...props}
     >
@@ -262,9 +263,9 @@ const TableColumn = ({
   const { resizable } = React.useContext(TableContainerContext)
   return (
     <TablePrimitives.Column
-      data-slot="table-column"
-      className={composeRenderProps(className, (cn) =>
-        column({ className: cn }),
+      data-table-column=""
+      className={composeRenderProps(className, (className) =>
+        column({ className }),
       )}
       {...props}
     >
@@ -354,7 +355,7 @@ const TableFooter = <T extends object>({
   const { footer } = useStyles()()
   return (
     <TablePrimitives.TableFooter
-      data-slot="table-footer"
+      data-table-footer=""
       className={footer({ className })}
       dependencies={dependencies}
       {...props}
@@ -373,20 +374,20 @@ const TableFooter = <T extends object>({
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
-function TableRow<T extends object>({
+const TableRow = <T extends object>({
   columns,
   children,
   className,
   dependencies,
   ...props
-}: TableRowProps<T>) {
+}: TableRowProps<T>) => {
   const { dragButton, dragCell, row, selectionCell } = useStyles()()
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions()
 
   return (
     <TablePrimitives.Row
-      data-slot="table-row"
+      data-table-row=""
       className={composeRenderProps(
         className,
         (className, { isFocusVisibleWithin }) =>
@@ -394,7 +395,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                "bg-accent-muted/70 hover:bg-accent-muted/70 selected:bg-accent-muted",
+                "bg-selected/30 hover:bg-selected/30 selected:bg-selected/70",
             ),
           }),
       )}
@@ -438,8 +439,10 @@ const TableCell = ({
   const { cell, expandButton, expandIcon } = useStyles()()
   return (
     <TablePrimitives.Cell
-      data-slot="table-cell"
-      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
+      data-table-cell=""
+      className={composeRenderProps(className, (className) =>
+        cell({ className }),
+      )}
       style={composeRenderProps(
         style,
         (style, { hasChildItems, isTreeColumn, level }) => ({
@@ -453,14 +456,12 @@ const TableCell = ({
     >
       {composeRenderProps(
         children,
-        (children, { hasChildItems, isDisabled, isExpanded, isTreeColumn }) => (
+        (children, { hasChildItems, isExpanded, isTreeColumn }) => (
           <>
             {hasChildItems && isTreeColumn && (
               <ButtonPrimitives.Button
                 slot="chevron"
-                className={expandButton({
-                  className: isDisabled ? "opacity-50" : undefined,
-                })}
+                className={expandButton()}
               >
                 <ChevronRightIcon
                   aria-hidden
@@ -490,8 +491,8 @@ const TableDropIndicator = ({
 
   return (
     <DragAndDropPrimitives.DropIndicator
-      className={composeRenderProps(className, (cn) =>
-        dropIndicator({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        dropIndicator({ className }),
       )}
       {...props}
     >

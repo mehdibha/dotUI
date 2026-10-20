@@ -1,6 +1,6 @@
 "use client"
 
-import type * as CalendarPrimitive from "react-aria-components/Calendar"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { useComponentParams } from "@/lib/styles"
@@ -22,9 +22,7 @@ import type {
   RangeCalendarProps,
 } from "./base"
 
-// The `weekdays` param is source the shipped file carries (meta.ts `source`);
-// here it rides the design-system context, so every default composition
-// below has to reach these wrappers, not base's.
+// `weekdays` rides the design-system context here, so every default composition below must use these wrappers, not base's.
 const CalendarGridHeader = ({
   children,
   ...props
@@ -56,7 +54,7 @@ const CalendarGrid = ({ children, ...props }: CalendarGridProps) => {
   )
 }
 
-const Calendar = <T extends CalendarPrimitive.DateValue>(
+const Calendar = <T extends CalendarPrimitives.DateValue>(
   props: CalendarProps<T>,
 ) => {
   return (
@@ -75,7 +73,7 @@ const Calendar = <T extends CalendarPrimitive.DateValue>(
   )
 }
 
-const RangeCalendar = <T extends CalendarPrimitive.DateValue>(
+const RangeCalendar = <T extends CalendarPrimitives.DateValue>(
   props: RangeCalendarProps<T>,
 ) => {
   return (

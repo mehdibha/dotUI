@@ -1,8 +1,8 @@
 "use client";
 
-import * as ButtonPrimitive from "react-aria-components/Button";
+import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as TreePrimitive from "react-aria-components/Tree";
+import * as TreePrimitives from "react-aria-components/Tree";
 
 import { ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const treeVariants = tv({
   slots: {
     root: "flex max-h-[inherit] flex-col gap-px overflow-auto outline-hidden [--tree-indent:--spacing(4)] data-empty:items-center data-empty:justify-center text-sm",
-    item: "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:outline-(length:--focus-ring-width) focus-visible:-outline-offset-(--focus-ring-width) focus-visible:outline-(--focus-ring-color) focus-visible:outline-solid selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover drop-target:bg-accent-muted drop-target:text-fg dragging:opacity-60 disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-8 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+    item: "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:focus-ring-inside selected:bg-selected/50 selected:text-fg-on-selected selected:hover:bg-selected/70 drop-target:bg-selected/30 drop-target:text-fg dragging:opacity-60 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-8 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
     itemContent:
       "flex min-w-0 flex-1 items-center gap-1.5 ps-[calc((var(--tree-item-level)-1)*var(--tree-indent))]",
     chevron:
@@ -37,13 +37,15 @@ const { root, item, itemContent, chevron, chevronPlaceholder, label } =
 
 /* -------------------------------------------------------------------------- */
 
-interface TreeProps<T> extends TreePrimitive.TreeProps<T> {}
+interface TreeProps<T> extends TreePrimitives.TreeProps<T> {}
 
 const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
   return (
-    <TreePrimitive.Tree
+    <TreePrimitives.Tree
       data-tree=""
-      className={composeRenderProps(className, (cn) => root({ className: cn }))}
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
       {...props}
     />
   );
@@ -51,18 +53,18 @@ const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
 
 /* -------------------------------------------------------------------------- */
 
-interface TreeItemProps<T> extends TreePrimitive.TreeItemProps<T> {}
+interface TreeItemProps<T> extends TreePrimitives.TreeItemProps<T> {}
 
 const TreeItem = <T extends object>({
   className,
   ...props
 }: TreeItemProps<T>) => {
   return (
-    <TreePrimitive.TreeItem
+    <TreePrimitives.TreeItem
       data-tree-item=""
-      className={composeRenderProps(className, (cn, renderProps) =>
+      className={composeRenderProps(className, (className, renderProps) =>
         item({
-          className: cn,
+          className,
           interactive:
             !renderProps.isDisabled &&
             (renderProps.selectionMode !== "none" || renderProps.hasChildItems),
@@ -75,17 +77,15 @@ const TreeItem = <T extends object>({
 
 /* -------------------------------------------------------------------------- */
 
-interface TreeItemContentProps extends TreePrimitive.TreeItemContentProps {}
+interface TreeItemContentProps extends TreePrimitives.TreeItemContentProps {}
 
 const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
   return (
-    <TreePrimitive.TreeItemContent {...props}>
+    <TreePrimitives.TreeItemContent {...props}>
       {(renderProps) => {
         const hasSelectionCheckbox =
           renderProps.selectionBehavior === "toggle" &&
           renderProps.selectionMode !== "none";
-        // With no selection checkbox, pressing the row toggles the item's
-        // expansion — a parent opens on click, not only via the chevron.
         const toggleExpandOnPress =
           renderProps.hasChildItems && !hasSelectionCheckbox
             ? () => renderProps.state.toggleKey(renderProps.id)
@@ -93,18 +93,18 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
         return (
           <div data-tree-item-content="" className={itemContent()}>
             {renderProps.allowsDragging && (
-              <ButtonPrimitive.Button slot="drag" className={chevron()}>
+              <ButtonPrimitives.Button slot="drag" className={chevron()}>
                 <GripVerticalIcon aria-hidden />
-              </ButtonPrimitive.Button>
+              </ButtonPrimitives.Button>
             )}
             {hasSelectionCheckbox && <Checkbox slot="selection" />}
             {renderProps.hasChildItems ? (
-              <ButtonPrimitive.Button slot="chevron" className={chevron()}>
+              <ButtonPrimitives.Button slot="chevron" className={chevron()}>
                 <ChevronRightIcon
                   aria-hidden
                   className="transition-transform duration-200 group-data-expanded/tree-item:rotate-90"
                 />
-              </ButtonPrimitive.Button>
+              </ButtonPrimitives.Button>
             ) : (
               <span aria-hidden="true" className={chevronPlaceholder()} />
             )}
@@ -116,7 +116,7 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
           </div>
         );
       }}
-    </TreePrimitive.TreeItemContent>
+    </TreePrimitives.TreeItemContent>
   );
 };
 

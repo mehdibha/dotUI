@@ -63,7 +63,6 @@ export function barChartSpec<TDatum>(
   };
   return {
     ...chartFrame(
-      // The category axis is the one to show.
       {
         ...options,
         axes: options.axes ?? (horizontal ? "y" : chartDefaults.axes),
@@ -83,18 +82,19 @@ export function barChartSpec<TDatum>(
   };
 }
 
+/* -------------------------------------------------------------------------- */
+
 export type BarChartProps<TDatum> = ChartComponentProps<
   BarChartSpecOptions<TDatum>,
   TDatum
 >;
 
-export function BarChart<TDatum>(props: BarChartProps<TDatum>) {
+export const BarChart = <TDatum,>(props: BarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     BarChartSpecOptions<TDatum>
   >(props, barChartSpec, {
-    // `group-x` groups points sharing a scene x — the value axis when the
-    // bars run horizontally.
+    // `group-x` groups by scene x, which is the value axis on horizontal bars.
     focus: props.horizontal ? "group-y" : undefined,
   });
   return (
@@ -102,4 +102,4 @@ export function BarChart<TDatum>(props: BarChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

@@ -5,7 +5,7 @@ import { getLocalTimeZone, parseDate } from "@internationalized/date"
 import { useDateFormatter } from "react-aria"
 import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar"
 
-import { CalendarIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { RangeCalendar } from "@/registry/ui/calendar"
 import { DateRangePicker } from "@/registry/ui/date-picker"
@@ -45,10 +45,7 @@ export default function Demo() {
       <p className="text-sm text-fg-muted">
         selected range:{" "}
         {value
-          ? // Format each end separately: Intl's formatRange output differs between
-            // Node and the browser (thin-space vs space around the dash), which
-            // breaks SSR hydration of this text.
-            `${formatter.format(value.start.toDate(getLocalTimeZone()))} – ${formatter.format(value.end.toDate(getLocalTimeZone()))}`
+          ? `${formatter.format(value.start.toDate(getLocalTimeZone()))} – ${formatter.format(value.end.toDate(getLocalTimeZone()))}`
           : "--"}
       </p>
     </div>

@@ -15,8 +15,6 @@ const data = [
   { browser: "Other", visitors: 90, color: "var(--chart-5)" },
 ]
 
-/* `dot.fill` is a constant, so per-point color means one mark per color. Each
-   reuses the line's `z` so grouped focus still shows a single tooltip row. */
 const dots = data.map((row) =>
   dot([row], {
     x: "browser",
@@ -27,7 +25,7 @@ const dots = data.map((row) =>
   }),
 )
 
-export default function ChartLineDotsColors() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

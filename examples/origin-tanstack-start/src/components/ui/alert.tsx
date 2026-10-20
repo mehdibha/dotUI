@@ -3,7 +3,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 const alertVariants = tv({
   slots: {
-    root: "relative grid w-full items-start px-4 py-3 text-sm rounded-lg has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto] *:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current border bg-card [--surface-bg:var(--color-card)]",
+    root: "relative grid w-full items-start px-4 py-3 text-sm rounded-lg has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto] *:[svg]:size-4 *:[svg]:translate-y-0.5 border bg-card [--surface-bg:var(--color-card)]",
     title: "font-medium tracking-tight [svg~&]:col-start-2",
     description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
     action:
@@ -40,7 +40,7 @@ const { root, title, description, action } = alertVariants();
 interface AlertProps
   extends React.ComponentProps<"div">, VariantProps<typeof alertVariants> {}
 
-function Alert({ className, variant, ...props }: AlertProps) {
+const Alert = ({ className, variant, ...props }: AlertProps) => {
   return (
     <div
       data-alert=""
@@ -49,23 +49,23 @@ function Alert({ className, variant, ...props }: AlertProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
-function AlertTitle({ className, ...props }: AlertTitleProps) {
+const AlertTitle = ({ className, ...props }: AlertTitleProps) => {
   return (
     <div data-alert-title="" className={title({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
-function AlertDescription({ className, ...props }: AlertDescriptionProps) {
+const AlertDescription = ({ className, ...props }: AlertDescriptionProps) => {
   return (
     <div
       data-alert-description=""
@@ -73,17 +73,17 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
       {...props}
     />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
-function AlertAction({ className, ...props }: AlertActionProps) {
+const AlertAction = ({ className, ...props }: AlertActionProps) => {
   return (
     <div data-alert-action="" className={action({ className })} {...props} />
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

@@ -2,14 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import paginationMeta from "./meta"
 
-const { useStyles, styles } = createStyles(paginationMeta, {
+const { useStyles } = createStyles(paginationMeta, {
   base: {
     slots: {
       root: "mx-auto flex w-full justify-center",
       list: "flex flex-row items-center gap-1",
       item: "",
-      // Sized to match an icon-only page button at the default `md` size, so the
-      // ellipsis lines up with the page cells around it.
+      // Matches an icon-only page button at `md` so the ellipsis lines up with the page cells.
       ellipsis:
         "flex size-8 items-center justify-center text-fg-muted [&_svg]:size-4",
     },
@@ -27,9 +26,17 @@ const { useStyles, styles } = createStyles(paginationMeta, {
         ellipsis: "size-9",
       },
     },
+    spacious: {
+      slots: {
+        ellipsis: "size-10",
+      },
+    },
+    touch: {
+      slots: {
+        ellipsis: "size-12",
+      },
+    },
   },
 })
-
-export type PaginationStyles = typeof styles
 
 export { useStyles }

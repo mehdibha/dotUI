@@ -54,10 +54,4 @@ export interface CalendarGridBodyProps extends React.ComponentProps<
  */
 export interface CalendarCellProps extends React.ComponentProps<
   typeof CalendarPrimitives.CalendarCell
-> {
-  /**
-   * The color variant of the selected cell.
-   * @default 'accent'
-   */
-  variant?: "primary" | "accent"
-}
+> {}

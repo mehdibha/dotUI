@@ -1,273 +1,177 @@
 "use client"
 
-/* Navigation — how a link announces itself, the selected-tab signature, the
-   breadcrumb trail and the current page. Link and tab colors are leaves of
-   Color's Primary; pagination's cells wear Buttons' look. */
+/* Navigation: how the current location is marked in tabs, the sidebar,
+   links and breadcrumbs. */
 
-import { cn } from "@/registry/lib/utils"
-
-import { SEPARATOR_OPTIONS, TONE_OPTIONS } from "../axes/breadcrumbs"
-import { UNDERLINE_OPTIONS } from "../axes/links"
-import { CURRENT_OPTIONS } from "../axes/pagination"
-import { TAB_STYLE_OPTIONS } from "../axes/tabs"
+import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
+import { UNDERLINE_OPTIONS } from "../axes/links.meta"
 import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialTrigger,
-  optionLabel,
-} from "../dial"
-import type { Studio, StudioState } from "../state"
+  CASE_OPTIONS,
+  INDICATOR_OPTIONS,
+  ITEM_WEIGHT_OPTIONS,
+  MARKER_OPTIONS,
+  PILL_OPTIONS,
+  TAB_STYLE_OPTIONS,
+  WEIGHT_OPTIONS,
+} from "../axes/navigation.meta"
+import { DialGlyph, DialSelect } from "../dial"
+import type { RowMap } from "../row-host"
 
-/* -------------------------------- Specimens -------------------------------- */
-
-function LinkGlyph({ underline }: { underline: string }) {
-  return (
-    <span
-      className={cn(
-        "shrink-0 text-[11px] font-medium text-fg/80 underline-offset-2",
-        underline === "always" && "underline",
-        underline === "hover" && "underline decoration-fg/30",
-      )}
-    >
-      Link
-    </span>
-  )
-}
-
-function TabGlyph({ style }: { style: string }) {
-  if (style === "segmented")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="3"
-          y="7.5"
-          width="18"
-          height="9"
-          rx="3"
-          fill="currentColor"
-          opacity=".2"
-        />
-        <rect
-          x="4.5"
-          y="9"
-          width="7.5"
-          height="6"
-          rx="2"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
-  if (style === "line")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="7.5"
-          y="8.5"
-          width="9"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".5"
-        />
-        <path
-          d="M3 16h18"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity=".3"
-        />
-        <path
-          d="M6.5 16h11"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    )
-  if (style === "pill")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="4.5"
-          y="7.5"
-          width="15"
-          height="9"
-          rx="4.5"
-          fill="currentColor"
-          opacity=".25"
-        />
-        <rect
-          x="8"
-          y="10.75"
-          width="8"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M3 16.5h3.5v-5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5H21"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <rect
-        x="9.5"
-        y="11.5"
-        width="5"
-        height="2.5"
-        rx="1.25"
-        fill="currentColor"
-        opacity=".5"
-      />
-    </svg>
-  )
-}
-
-function SeparatorGlyph({ separator }: { separator: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M2.5 12h4M17.5 12h4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity=".35"
-      />
-      {separator === "slash" ? (
-        <path
-          d="M13.75 6.5 10.25 17.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      ) : (
-        <path
-          d="m10.5 7.5 4.5 4.5-4.5 4.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-    </svg>
-  )
-}
-
-function CurrentGlyph({ current }: { current: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      {current === "filled" ? (
-        <rect
-          x="7.5"
-          y="7.5"
-          width="9"
-          height="9"
-          rx="2.5"
-          fill="currentColor"
-        />
-      ) : (
-        <rect
-          x="8.25"
-          y="8.25"
-          width="7.5"
-          height="7.5"
-          rx="2.25"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      )}
-    </svg>
-  )
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function NavigationPreview({ state }: { state: StudioState }) {
+/** The row's tabs: a chip on a track, an underline, or a lone pill. */
+function TabStyleGlyph({ style }: { style: string }) {
   return (
     <DialGlyph>
-      <TabGlyph style={state.tabStyle} />
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+        {style === "segmented" && (
+          <>
+            <rect
+              x="2"
+              y="6.5"
+              width="20"
+              height="11"
+              rx="3"
+              fill="currentColor"
+              fillOpacity=".15"
+            />
+            <rect
+              x="3.5"
+              y="8"
+              width="9"
+              height="8"
+              rx="2"
+              fill="currentColor"
+              fillOpacity=".7"
+            />
+          </>
+        )}
+        {style === "line" && (
+          <>
+            <path d="M2 18.5h20" stroke="currentColor" opacity=".3" />
+            <path d="M3 18.25h9" stroke="currentColor" strokeWidth="2" />
+            <path
+              d="M4.5 12h6M14 12h6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity=".6"
+            />
+          </>
+        )}
+        {style === "pill" && (
+          <>
+            <rect
+              x="2"
+              y="7"
+              width="11"
+              height="10"
+              rx="5"
+              fill="currentColor"
+              fillOpacity=".7"
+            />
+            <path
+              d="M16 12h5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity=".5"
+            />
+          </>
+        )}
+      </svg>
     </DialGlyph>
   )
 }
 
-export function NavigationSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+const TAB_STYLE_ROW = TAB_STYLE_OPTIONS.map((option) => ({
+  ...option,
+  glyph: <TabStyleGlyph style={option.value} />,
+}))
+
+function TabStyleRow() {
+  return <DialSelect axis="tabStyle" label="Tabs" options={TAB_STYLE_ROW} />
+}
+
+function NavMarkerRow() {
   return (
-    <>
-      <DialList
-        label="Tabs"
-        value={state.tabStyle}
-        onChange={set("tabStyle")}
-        options={TAB_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <TabGlyph style={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialGap />
-      <DialSelect
-        label="Links"
-        value={state.linkUnderline}
-        onChange={set("linkUnderline")}
-        options={UNDERLINE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <LinkGlyph underline={option.value} />,
-        }))}
-      />
-      <DialTrigger
-        label="Breadcrumbs"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(SEPARATOR_OPTIONS, state.breadcrumbSeparator)}
-            </span>
-            <DialGlyph>
-              <SeparatorGlyph separator={state.breadcrumbSeparator} />
-            </DialGlyph>
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSegmented
-            label="Separator"
-            value={state.breadcrumbSeparator}
-            onChange={set("breadcrumbSeparator")}
-            options={SEPARATOR_OPTIONS}
-          />
-          <DialSegmented
-            label="Crumbs"
-            value={state.breadcrumbTone}
-            onChange={set("breadcrumbTone")}
-            options={TONE_OPTIONS}
-          />
-        </DialPopover>
-      </DialTrigger>
-      <DialSelect
-        label="Pagination"
-        value={state.paginationCurrent}
-        onChange={set("paginationCurrent")}
-        options={CURRENT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CurrentGlyph current={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-    </>
+    <DialSelect
+      axis="navMarker"
+      label="Current item"
+      options={MARKER_OPTIONS}
+    />
   )
+}
+
+function TabIndicatorRow() {
+  return (
+    <DialSelect
+      axis="tabIndicator"
+      label="Line indicator"
+      options={INDICATOR_OPTIONS}
+    />
+  )
+}
+
+function NavWeightRow() {
+  return <DialSelect axis="navWeight" label="Weight" options={WEIGHT_OPTIONS} />
+}
+
+function NavItemWeightRow() {
+  return (
+    <DialSelect
+      axis="navItemWeight"
+      label="Sidebar weight"
+      options={ITEM_WEIGHT_OPTIONS}
+    />
+  )
+}
+
+function NavCaseRow() {
+  return <DialSelect axis="navCase" label="Case" options={CASE_OPTIONS} />
+}
+
+function TabsPillRow() {
+  return <DialSelect axis="tabsPill" label="Pill fill" options={PILL_OPTIONS} />
+}
+
+function LinkUnderlineRow() {
+  return (
+    <DialSelect
+      axis="linkUnderline"
+      label="Underline"
+      options={UNDERLINE_OPTIONS}
+    />
+  )
+}
+
+function BreadcrumbSeparatorRow() {
+  return (
+    <DialSelect
+      axis="breadcrumbSeparator"
+      label="Separator"
+      options={SEPARATOR_OPTIONS}
+    />
+  )
+}
+
+function BreadcrumbToneRow() {
+  return (
+    <DialSelect
+      axis="breadcrumbTone"
+      label="Ancestors"
+      options={ANCESTOR_OPTIONS}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  tabStyle: TabStyleRow,
+  navMarker: NavMarkerRow,
+  tabIndicator: TabIndicatorRow,
+  navWeight: NavWeightRow,
+  navItemWeight: NavItemWeightRow,
+  navCase: NavCaseRow,
+  tabsPill: TabsPillRow,
+  linkUnderline: LinkUnderlineRow,
+  breadcrumbSeparator: BreadcrumbSeparatorRow,
+  breadcrumbTone: BreadcrumbToneRow,
 }

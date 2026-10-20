@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "@/registry/__generated__/icons"
+import { ChevronDownIcon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import {
   Collapsible,

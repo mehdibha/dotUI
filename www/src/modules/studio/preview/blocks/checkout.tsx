@@ -1,6 +1,4 @@
-"use client"
-
-import { useState } from "react"
+import { type ReactNode, useState } from "react"
 
 import {
   BoxIcon,
@@ -78,12 +76,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-const currency = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-})
-
-const money = (value: number) => currency.format(value)
+import { formatMoney } from "./shared"
 
 const LINE_ITEMS = [
   {
@@ -153,7 +146,62 @@ const PROMO_CODE = "TRAILHEAD15"
 const PROMO_RATE = 0.15
 const TAX_RATE = 0.0875
 
-export default function Checkout() {
+function Section({
+  step,
+  title,
+  description,
+  action,
+  children,
+}: {
+  step: string
+  title: string
+  description: string
+  action?: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <section className="space-y-5">
+      <div className="flex items-start gap-3">
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-neutral text-xs font-medium text-fg-on-neutral tabular-nums">
+          {step}
+        </span>
+        <div className="min-w-0 flex-1">
+          <h2 className="font-heading text-base font-medium">{title}</h2>
+          <p className="text-sm text-fg-muted">{description}</p>
+        </div>
+        {action}
+      </div>
+      <div className="space-y-4">{children}</div>
+    </section>
+  )
+}
+
+function SummaryRow({
+  label,
+  value,
+  tone,
+}: {
+  label: string
+  value: string
+  tone?: "success"
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-3">
+      <dt className="min-w-0 truncate text-fg-muted">{label}</dt>
+      <dd
+        className={
+          tone === "success"
+            ? "shrink-0 font-medium text-fg-success tabular-nums"
+            : "shrink-0 font-medium tabular-nums"
+        }
+      >
+        {value}
+      </dd>
+    </div>
+  )
+}
+
+export default function CheckoutBlock() {
   const [quantities, setQuantities] = useState<Record<string, number>>(() =>
     Object.fromEntries(LINE_ITEMS.map((item) => [item.id, item.quantity])),
   )
@@ -380,7 +428,9 @@ export default function Checkout() {
                             <Description>{method.eta}</Description>
                           </FieldContent>
                           <span className="ml-auto self-center text-sm font-medium tabular-nums">
-                            {method.price === 0 ? "Free" : money(method.price)}
+                            {method.price === 0
+                              ? "Free"
+                              : formatMoney(method.price)}
                           </span>
                         </RadioControl>
                       </Radio>
@@ -535,7 +585,9 @@ export default function Checkout() {
                               </p>
                             </div>
                             <span className="shrink-0 text-sm font-medium tabular-nums">
-                              {money(item.price * (quantities[item.id] ?? 0))}
+                              {formatMoney(
+                                item.price * (quantities[item.id] ?? 0),
+                              )}
                             </span>
                           </div>
                           <NumberField
@@ -554,13 +606,10 @@ export default function Checkout() {
                             maxValue={9}
                             className="w-fit"
                           >
-                            <NumberFieldGroup>
-                              <NumberFieldDecrement size="sm" />
-                              <Input
-                                size="sm"
-                                className="w-9 text-center tabular-nums"
-                              />
-                              <NumberFieldIncrement size="sm" />
+                            <NumberFieldGroup size="sm">
+                              <NumberFieldDecrement />
+                              <Input className="w-9 text-center tabular-nums" />
+                              <NumberFieldIncrement />
                             </NumberFieldGroup>
                           </NumberField>
                         </div>
@@ -615,11 +664,14 @@ export default function Checkout() {
                   <Separator />
 
                   <dl className="space-y-2 text-sm">
-                    <SummaryRow label="Subtotal" value={money(subtotal)} />
+                    <SummaryRow
+                      label="Subtotal"
+                      value={formatMoney(subtotal)}
+                    />
                     {appliedPromo && (
                       <SummaryRow
                         label="Discount"
-                        value={`−${money(discount)}`}
+                        value={`−${formatMoney(discount)}`}
                         tone="success"
                       />
                     )}
@@ -628,10 +680,13 @@ export default function Checkout() {
                       value={
                         shippingMethod.price === 0
                           ? "Free"
-                          : money(shippingMethod.price)
+                          : formatMoney(shippingMethod.price)
                       }
                     />
-                    <SummaryRow label="Estimated tax" value={money(tax)} />
+                    <SummaryRow
+                      label="Estimated tax"
+                      value={formatMoney(tax)}
+                    />
                   </dl>
 
                   <Separator />
@@ -643,7 +698,7 @@ export default function Checkout() {
                     <span className="flex items-baseline gap-1.5">
                       <span className="text-xs text-fg-muted">USD</span>
                       <span className="font-heading text-xl font-semibold tabular-nums">
-                        {money(total)}
+                        {formatMoney(total)}
                       </span>
                     </span>
                   </div>
@@ -661,8 +716,8 @@ export default function Checkout() {
                           </span>
                           <DialogTitle>Order confirmed</DialogTitle>
                           <DialogDescription>
-                            Order #HS-48127 for {money(total)} is on its way to
-                            Boulder, CO.
+                            Order #HS-48127 for {formatMoney(total)} is on its
+                            way to Boulder, CO.
                           </DialogDescription>
                         </DialogHeader>
                         <DialogBody>
@@ -702,61 +757,6 @@ export default function Checkout() {
           </div>
         </div>
       </main>
-    </div>
-  )
-}
-
-function Section({
-  step,
-  title,
-  description,
-  action,
-  children,
-}: {
-  step: string
-  title: string
-  description: string
-  action?: React.ReactNode
-  children: React.ReactNode
-}) {
-  return (
-    <section className="space-y-5">
-      <div className="flex items-start gap-3">
-        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-neutral text-xs font-medium text-fg-on-neutral tabular-nums">
-          {step}
-        </span>
-        <div className="min-w-0 flex-1">
-          <h2 className="font-heading text-base font-medium">{title}</h2>
-          <p className="text-sm text-fg-muted">{description}</p>
-        </div>
-        {action}
-      </div>
-      <div className="space-y-4">{children}</div>
-    </section>
-  )
-}
-
-function SummaryRow({
-  label,
-  value,
-  tone,
-}: {
-  label: string
-  value: string
-  tone?: "success"
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-3">
-      <dt className="min-w-0 truncate text-fg-muted">{label}</dt>
-      <dd
-        className={
-          tone === "success"
-            ? "shrink-0 font-medium text-fg-success tabular-nums"
-            : "shrink-0 font-medium tabular-nums"
-        }
-      >
-        {value}
-      </dd>
     </div>
   )
 }

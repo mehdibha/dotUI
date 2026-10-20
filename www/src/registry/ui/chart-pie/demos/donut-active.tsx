@@ -18,7 +18,7 @@ const labels = {
   other: "Other",
 }
 
-export default function ChartPieDonutActive() {
+export default function Demo() {
   return (
     <PieChart
       data={data}
@@ -27,7 +27,6 @@ export default function ChartPieDonutActive() {
       labels={labels}
       innerRadius={0.55}
       outerRadius={0.88}
-      // Static, so the highlighted slice reads without hovering.
       activeIndex={0}
       activeOffset={0.12}
       ariaLabel="Visitors by browser, with Chrome highlighted"

@@ -1,4 +1,4 @@
-import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { PenSquareIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import {

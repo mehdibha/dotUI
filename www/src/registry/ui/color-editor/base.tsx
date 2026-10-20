@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import * as React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 import * as ColorPickerPrimitives from "react-aria-components/ColorPicker"
 import { useControlledState } from "react-stately/useControlledState"
@@ -48,7 +48,7 @@ const ColorEditor = ({
   children,
   ...props
 }: ColorEditorProps) => {
-  const state = React.use(ColorPickerPrimitives.ColorPickerStateContext)
+  const state = React.useContext(ColorPickerPrimitives.ColorPickerStateContext)
   const { root } = useStyles()()
   const content = (
     <div className={root({ className })} {...props}>
@@ -63,8 +63,6 @@ const ColorEditor = ({
       )}
     </div>
   )
-  // Inside a ColorPicker, adopt its state: the color parts consume the ambient
-  // contexts, and value/defaultValue/onChange belong to the picker.
   if (state) return content
   return (
     <ColorPickerPrimitives.ColorPicker
@@ -93,8 +91,7 @@ const ColorEditorArea = ({
     <div className={area({ className })} {...props}>
       {props.children ?? (
         <>
-          {/* grow (not flex-1): keep the density width as flex basis so the
-					    editor hugs it by default and stretches when given a wider root. */}
+          {/* grow, not flex-1: keeps the density width as the flex basis. */}
           <ColorArea
             aria-label="Color"
             colorSpace="hsb"
@@ -102,8 +99,7 @@ const ColorEditorArea = ({
             yChannel="brightness"
             className="grow"
           />
-          {/* h-auto self-stretch: track the ColorArea's height (aspect-square, density-sized)
-					    rather than the slider's fixed default, so the two stay equal at any density/width. */}
+          {/* h-auto self-stretch: tracks the ColorArea's height instead of the slider's fixed default. */}
           <ColorSlider
             orientation="vertical"
             colorSpace="hsb"

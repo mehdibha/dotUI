@@ -4,11 +4,10 @@ import { RadialBarChart } from "@/registry/ui/chart-radial"
 
 const data = [{ month: "january", desktop: 1260, mobile: 570 }]
 
-export default function ChartRadialStacked() {
+export default function Demo() {
   return (
     <RadialBarChart
       data={data}
-      // An array of fields stacks one ring, cumulative from `startAngle`.
       value={["desktop", "mobile"]}
       name="month"
       labels={{ desktop: "Desktop", mobile: "Mobile" }}

@@ -3,8 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const sheetMeta = {
   name: "sheet",
   type: "registry:ui",
-  group: "overlays",
-  // The first releases with Sheet.
   dependencies: ["react-aria-components@^1.22.0", "react-aria@^3.53.0"],
   files: [
     {
@@ -14,11 +12,11 @@ const sheetMeta = {
     },
   ],
   params: {
-    backdrop: {
-      kind: "enum",
-      default: "dim",
-      values: ["dim", "blur", "none"] as const,
-      description: "How the page reads under the open sheet.",
+    edge: {
+      default: "docked",
+      values: ["docked", "detached"] as const,
+      description:
+        "How the sheet meets the screen: flush to its edge, or a card inset from it.",
     },
   },
 } satisfies RegistryItem

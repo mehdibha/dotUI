@@ -22,7 +22,7 @@ interface SheetProps
   children?: React.ReactNode
 }
 
-function Sheet({ children, className, style, ...props }: SheetProps) {
+const Sheet = ({ children, className, style, ...props }: SheetProps) => {
   const isHidden = useIsHidden()
   const { overlay, backdrop, sheet, content } = useStyles()()
 
@@ -32,7 +32,6 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
 
   return (
     <SheetPrimitives.SheetOverlay className={overlay()} {...props}>
-      {/* With snap points, the page dims only past the last one. */}
       <SheetPrimitives.SheetBackdrop
         swipeAnimation="sheet-backdrop"
         swipeAnimationRange={
@@ -58,10 +57,6 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
               : "y"
           const viewport = axis === "y" ? "100dvh" : "100dvw"
           return (
-            // react-aria's SheetContent minus the dialog role: the dialog, menu
-            // or listbox inside brings its own. The sheet watches this element
-            // to close once swiped off screen, and its view timeline drives
-            // the backdrop and stack animations.
             <div
               data-sheet-content=""
               className={content({ position })}
@@ -89,7 +84,7 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
 
 interface SheetHandleProps extends React.ComponentProps<"div"> {}
 
-function SheetHandle({ className, ...props }: SheetHandleProps) {
+const SheetHandle = ({ className, ...props }: SheetHandleProps) => {
   const { handle } = useStyles()()
   const axis = React.useContext(SheetAxisContext)
 
@@ -97,12 +92,14 @@ function SheetHandle({ className, ...props }: SheetHandleProps) {
     <div
       aria-hidden="true"
       data-orientation={axis === "y" ? "horizontal" : "vertical"}
-      data-slot="sheet-handle"
+      data-sheet-handle=""
       className={handle({ className })}
       {...props}
     />
   )
 }
+
+// MARK: Separator
 
 export type { SheetHandleProps, SheetProps }
 export { Sheet, SheetHandle }

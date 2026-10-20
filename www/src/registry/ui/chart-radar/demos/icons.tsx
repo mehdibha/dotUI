@@ -1,7 +1,6 @@
 "use client"
 
-import { MonitorIcon, SmartphoneIcon } from "lucide-react"
-
+import { MonitorIcon, SmartphoneIcon } from "@/registry/icons"
 import { RadarChart } from "@/registry/ui/chart-radar"
 
 const data = [
@@ -15,9 +14,7 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
-/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
-   draws color swatches. */
-export default function ChartRadarIcons() {
+export default function Demo() {
   return (
     <div>
       <RadarChart

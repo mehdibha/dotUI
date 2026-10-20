@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React from "react"
 
 import { Input } from "@/registry/ui/input"
 import { SearchField } from "@/registry/ui/search-field"
@@ -14,7 +14,7 @@ const members = [
 ]
 
 export default function Demo() {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = React.useState("")
 
   const results = members.filter((member) =>
     `${member.name} ${member.email}`

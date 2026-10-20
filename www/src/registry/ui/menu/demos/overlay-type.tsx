@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { MenuIcon } from "@/registry/__generated__/icons"
+import { MenuIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import { FieldGroup, Label } from "@/registry/ui/field"

@@ -1,6 +1,6 @@
 import { type ReactNode, use, useMemo } from "react"
 
-import { STEPS, type Theme } from "@dotui/colors"
+import { STEPS, type Theme, toHex, toOklch } from "@dotui/colors"
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -28,6 +28,7 @@ import { IconLibraryContext } from "@/registry/icons/create-icon"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
 import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from "@/registry/theme"
+import type { Density } from "@/registry/types"
 // Live component atoms — reuse the real demos so the gallery always mirrors the
 // shipped components (and their live params / density / radius), never a stale copy.
 import AvatarDemo from "@/registry/ui/avatar/demos/group"
@@ -43,46 +44,42 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
-import { DEFAULT_STATE } from "@/modules/studio/axes"
+import { DEFAULT_EFFECTIVE, parseState } from "@/modules/studio/axes"
+import type { OptionMeta } from "@/modules/studio/axes/core/meta"
 import {
-  resolveShape,
+  SHAPES,
   ROLE_VARS,
-  SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
   shapeVars,
 } from "@/modules/studio/axes/shape"
-import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
-import type { DesignSystem } from "@/modules/studio/preset"
+import { SHAPE_OPTIONS } from "@/modules/studio/axes/shape.meta"
+import { DENSITY_OPTIONS } from "@/modules/studio/axes/space.meta"
+import {
+  postToParent,
+  useIsEmbeddedPreview,
+} from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+import { designSystemOf } from "@/modules/studio/resolve"
 
-/* ---------------------------------------------------------------------------
- * The preset overview — a style guide the way a senior designer would present a
- * brand system: an editorial spec sheet walking through every axis of the live
- * design system (color, type, icons, shape, density, elevation, components).
- *
- * Rendered inside the /create preview iframe under `DesignSystemProvider`, so
- * every swatch, ramp and component below is the live, edited system — themed by
- * CSS variables that flip with light / dark and update on every edit.
- * ------------------------------------------------------------------------- */
+/* The preset overview: an editorial spec sheet walking through every axis of
+   the live design system. Rendered in the preview iframe under
+   `DesignSystemProvider`, so every swatch and component below is the edited
+   system, in light and dark. */
 
-const DENSITY_LABEL: Record<string, string> = {
-  compact: "Compact",
-  default: "Default",
-  comfortable: "Comfortable",
-}
+const DENSITY = Object.fromEntries<OptionMeta>(
+  DENSITY_OPTIONS.map((option) => [option.value, option]),
+) as Record<Density, OptionMeta>
 
-const DENSITY_DESCRIPTION: Record<string, string> = {
-  compact: "Tight control heights and padding for dense, information-rich UIs.",
-  default: "Balanced spacing — the everyday baseline.",
-  comfortable:
-    "Generous padding and breathing room for a relaxed, spacious feel.",
-}
-
-/** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */
-function hexToHsl(hex: string): { h: number; s: number; l: number } | null {
-  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim())
-  if (!m?.[1]) return null
-  const int = Number.parseInt(m[1], 16)
+/** Any CSS color in HSL, so the brand seed can be given a human name. */
+function toHsl(color: string): { h: number; s: number; l: number } | null {
+  let hex: string
+  try {
+    hex = toHex(toOklch(color))
+  } catch {
+    return null
+  }
+  const int = Number.parseInt(hex.slice(1), 16)
   const r = ((int >> 16) & 255) / 255
   const g = ((int >> 8) & 255) / 255
   const b = (int & 255) / 255
@@ -115,14 +112,12 @@ const HUE_NAMES: { max: number; name: string }[] = [
 ]
 
 /** A friendly editorial name for the brand seed — the headline of the cover. */
-function describeAccent(hex: string): string {
-  const hsl = hexToHsl(hex)
+function describeAccent(color: string): string {
+  const hsl = toHsl(color)
   if (!hsl) return "Signature"
   if (hsl.s < 0.12) return hsl.l < 0.5 ? "Graphite" : "Monochrome"
   return HUE_NAMES.find((r) => hsl.h < r.max)?.name ?? "Signature"
 }
-
-/* ------------------------------- Primitives ------------------------------- */
 
 function SectionHeader({
   index,
@@ -145,11 +140,13 @@ function SectionHeader({
         <span className="font-mono text-xs tracking-widest uppercase">
           {index} — {title}
         </span>
-        {/* Embedded only: hop to this chapter's controls in the /create panel. */}
+        {/* Embedded only: hop to this chapter's controls in the /studio panel. */}
         {embedded && panelId && (
           <button
             type="button"
-            onClick={() => sendInspect(panelId)}
+            onClick={() =>
+              postToParent({ type: "preview-inspect", panel: panelId })
+            }
             className="ml-auto flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs opacity-0 transition-opacity group-hover/section:opacity-100 hover:bg-neutral hover:text-fg focus-visible:opacity-100"
           >
             <Settings2Icon className="size-3" />
@@ -169,8 +166,6 @@ function Label({ children }: { children: ReactNode }) {
     </span>
   )
 }
-
-/* --------------------------------- Cover ---------------------------------- */
 
 function Cover({
   name,
@@ -245,8 +240,6 @@ function Cover({
     </header>
   )
 }
-
-/* --------------------------------- Color ---------------------------------- */
 
 function RampRow({
   palette,
@@ -370,8 +363,6 @@ function ColorSection({ resolved }: { resolved: Theme }) {
   )
 }
 
-/* ------------------------------- Typography ------------------------------- */
-
 const TYPE_SCALE: { label: string; className: string; size: string }[] = [
   {
     label: "Display",
@@ -488,8 +479,6 @@ function TypographySection({
   )
 }
 
-/* --------------------------------- Icons ---------------------------------- */
-
 const ICON_ENTRIES = Object.entries(icons)
   .sort(([a], [b]) => a.localeCompare(b))
   .slice(0, 60)
@@ -527,8 +516,6 @@ function IconSection() {
   )
 }
 
-/* --------------------------------- Shape ---------------------------------- */
-
 const RADII: { token: string; className: string }[] = [
   { token: "sm", className: "rounded-sm" },
   { token: "md", className: "rounded-md" },
@@ -538,17 +525,18 @@ const RADII: { token: string; className: string }[] = [
   { token: "3xl", className: "rounded-3xl" },
 ]
 
-/** The character whose role tokens the design system carries, or Custom. */
-function shapeCharacter(tokens: Record<string, string>): string {
-  const radiusVars = (t: Record<string, string>) =>
+const CORNER_TOKEN =
+  /^--(radius|studio-radius-|studio-btn(-xs)?-radius|studio-badge-radius)/
+
+/** The shape whose corner tokens the design system carries, or Custom. */
+function shapeLabel(tokens: Record<string, string>): string {
+  const corners = (t: Record<string, string>) =>
     Object.fromEntries(
-      Object.entries(t).filter(([name]) => name.startsWith("--studio-radius-")),
+      Object.entries(t).filter(([name]) => CORNER_TOKEN.test(name)),
     )
-  const actual = radiusVars(tokens)
-  const match = SHAPE_CHARACTERS.find((character) => {
-    const expected = radiusVars(
-      resolveShape({ ...DEFAULT_STATE, ...character.vector }).tokens ?? {},
-    )
+  const actual = corners(tokens)
+  const match = SHAPE_OPTIONS.find(({ value }) => {
+    const expected = corners(designSystemOf(parseState(SHAPES[value])).tokens)
     const names = new Set([...Object.keys(expected), ...Object.keys(actual)])
     return [...names].every((name) => expected[name] === actual[name])
   })
@@ -562,7 +550,7 @@ function ShapeSection({
   radiusPx: number
   tokens: Record<string, string>
 }) {
-  const defaults = shapeVars(DEFAULT_STATE)
+  const defaults = shapeVars(DEFAULT_EFFECTIVE)
   const roles = SHAPE_ROLES.map(({ key, label }) => {
     const name = ROLE_VARS[key]
     const rung = SHAPE_RUNGS.find(
@@ -586,7 +574,7 @@ function ShapeSection({
           <span className="text-fg-muted">base radius</span>
         </div>
         <Badge variant="accent" size="lg">
-          {shapeCharacter(tokens)}
+          {shapeLabel(tokens)}
         </Badge>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
@@ -622,8 +610,6 @@ function ShapeSection({
   )
 }
 
-/* ------------------------------ Density / Space --------------------------- */
-
 const SPACING_STEPS = [
   { label: "1", px: "4", className: "h-1" },
   { label: "2", px: "8", className: "h-2" },
@@ -633,18 +619,18 @@ const SPACING_STEPS = [
   { label: "8", px: "32", className: "h-8" },
 ]
 
-function DensitySection({ density }: { density: string }) {
+function DensitySection({ density }: { density: Density }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr] lg:items-start">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-3">
           <span className="text-3xl font-semibold tracking-tight">
-            {DENSITY_LABEL[density] ?? density}
+            {DENSITY[density].label}
           </span>
           <Badge size="lg">density</Badge>
         </div>
         <p className="max-w-sm text-pretty text-fg-muted">
-          {DENSITY_DESCRIPTION[density]}
+          {DENSITY[density].description}
         </p>
         {/* Live proof — these controls adopt the density above automatically. */}
         <div className="flex flex-wrap items-center gap-3 rounded-(--studio-radius-card) border bg-card p-5">
@@ -677,8 +663,6 @@ function DensitySection({ density }: { density: string }) {
   )
 }
 
-/* ------------------------------- Elevation -------------------------------- */
-
 const SURFACE_LAYERS: { token: string; label: string }[] = [
   { token: "--color-bg", label: "Page" },
   { token: "--color-card", label: "Card" },
@@ -690,17 +674,17 @@ const SURFACE_LAYERS: { token: string; label: string }[] = [
 const SHADOWS: { className: string; label: string }[] = [
   {
     className:
-      "rounded-(--studio-radius-card) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
+      "rounded-(--studio-radius-card) border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
     label: "Card",
   },
   {
     className:
-      "rounded-(--studio-radius-surface) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
+      "rounded-(--studio-radius-surface) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
     label: "Popover",
   },
   {
     className:
-      "rounded-(--studio-radius-panel) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
+      "rounded-(--studio-radius-panel) border border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
     label: "Dialog",
   },
 ]
@@ -738,7 +722,7 @@ function ElevationSection() {
           {SHADOWS.map((s) => (
             <div
               key={s.label}
-              className={cn("flex h-24 items-end border p-3", s.className)}
+              className={cn("flex h-24 items-end p-3", s.className)}
             >
               <span className="text-xs font-medium text-fg-muted">
                 {s.label}
@@ -750,8 +734,6 @@ function ElevationSection() {
     </div>
   )
 }
-
-/* ------------------------------- Components -------------------------------- */
 
 function Atom({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -825,8 +807,6 @@ function ComponentsSection() {
   )
 }
 
-/* ------------------------------ Interactivity ----------------------------- */
-
 function InteractivitySection({
   interactive,
   disabled,
@@ -861,8 +841,6 @@ function InteractivitySection({
   )
 }
 
-/* --------------------------------- Shell ---------------------------------- */
-
 function Section({
   index,
   icon,
@@ -875,7 +853,7 @@ function Section({
   icon: typeof PaletteIcon
   title: string
   description: string
-  /** The /create panel chapter these values are edited in (embedded inspect). */
+  /** The /studio panel chapter these values are edited in (embedded inspect). */
   panelId?: string
   children: ReactNode
 }) {
@@ -896,7 +874,7 @@ function Section({
 export function PresetOverview({
   designSystem,
 }: {
-  designSystem: DesignSystem
+  designSystem: Pick<DesignSystem, "color" | "tokens" | "density">
 }) {
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const seeds = config.seeds
@@ -941,9 +919,9 @@ export function PresetOverview({
     },
     {
       label: "Density",
-      value: DENSITY_LABEL[designSystem.density] ?? "Default",
+      value: DENSITY[designSystem.density].label,
     },
-    { label: "Shape", value: shapeCharacter(designSystem.tokens) },
+    { label: "Shape", value: shapeLabel(designSystem.tokens) },
     {
       label: "Type",
       value:
@@ -998,7 +976,7 @@ export function PresetOverview({
           panelId="shape"
           icon={ShapesIcon}
           title="Shape"
-          description="A base radius scales the corner ramp; the character decides which rung each kind of component wears."
+          description="A base radius scales the corner ramp; the shape decides which rung each kind of component wears."
         >
           <ShapeSection radiusPx={numericRadius} tokens={designSystem.tokens} />
         </Section>
@@ -1052,7 +1030,7 @@ export function PresetOverview({
             <span className="text-sm">Built with dotUI</span>
           </div>
           <span className="font-mono text-xs tracking-widest uppercase">
-            {name} · {DENSITY_LABEL[designSystem.density] ?? "Default"}
+            {name} · {DENSITY[designSystem.density].label}
           </span>
         </footer>
       </div>

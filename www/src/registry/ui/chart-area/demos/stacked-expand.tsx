@@ -16,9 +16,7 @@ const data = [
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 const formatPercent = (value: ChartValue) => percent.format(Number(value))
 
-/* `"normalize"` divides each band by its x-group total, so the stack fills
-   the plot and reads as share rather than volume. */
-export default function ChartAreaStackedExpand() {
+export default function Demo() {
   return (
     <AreaChart
       data={data}

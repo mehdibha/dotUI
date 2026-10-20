@@ -8,23 +8,18 @@
  *
  * Merge order matches `createStyles` runtime composition:
  *   base ← density[selectedDensity] ← params[name][selectedValue]  (in meta order)
- *
- * `vars` keys on override layers are dropped — they're a runtime concern
- * (applied to `:root` by the dotui provider) and have no place in a published
- * component file.
  */
 
-import type { Density, EnumParamDef, RegistryItem } from "@/registry/types"
+import { cn } from "tailwind-variants"
+
+import type { Density, RegistryItem } from "@/registry/types"
 
 import type {
   ClassValue,
-  OverrideLayer,
   StylesConfig,
   TvLayer,
   VariantSliceValue,
 } from "./types"
-
-/* -------------------------------- class merge -------------------------------- */
 
 function toClassArray(value: ClassValue | undefined): string[] {
   if (value == null || value === false) return []
@@ -42,6 +37,86 @@ function mergeClass(
   if (combined.length === 0) return undefined
   if (combined.length === 1) return combined[0]
   return combined
+}
+
+/** Drops each class a later one overrides, as tv's merge would at runtime,
+ *  keeping the value's array groups. */
+function dropOverriddenClasses(value: ClassValue): ClassValue {
+  const groups = toClassArray(value)
+  const tokens = groups.flatMap((group, at) =>
+    group
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((token) => ({ at, token })),
+  )
+  const kept = (cn(tokens.map((t) => t.token).join(" ")) ?? "")
+    .split(" ")
+    .filter(Boolean)
+  if (kept.length === tokens.length) return value
+  // The survivors keep their order, so match them from the end.
+  const survives = new Set<number>()
+  for (let i = tokens.length - 1, j = kept.length - 1; i >= 0 && j >= 0; i--)
+    if (tokens[i]!.token === kept[j]) {
+      survives.add(i)
+      j--
+    }
+  const out = groups
+    .map((_, at) =>
+      tokens
+        .filter((t, i) => t.at === at && survives.has(i))
+        .map((t) => t.token)
+        .join(" "),
+    )
+    .filter(Boolean)
+  return Array.isArray(value) ? out : out.join(" ")
+}
+
+const dropOverriddenSlice = (value: VariantSliceValue): VariantSliceValue =>
+  isSlotMap(value)
+    ? Object.fromEntries(
+        Object.entries(value).map(([k, v]) => [k, dropOverriddenClasses(v)]),
+      )
+    : dropOverriddenClasses(value)
+
+/** Exported code never carries two conflicting classes in one value: the
+ *  density and param layers concatenate onto the base. */
+export function dropOverridden(layer: TvLayer): TvLayer {
+  return {
+    ...layer,
+    ...(layer.base !== undefined && {
+      base: dropOverriddenClasses(layer.base),
+    }),
+    ...(layer.slots && {
+      slots: Object.fromEntries(
+        Object.entries(layer.slots).map(([k, v]) => [
+          k,
+          dropOverriddenClasses(v),
+        ]),
+      ),
+    }),
+    ...(layer.variants && {
+      variants: Object.fromEntries(
+        Object.entries(layer.variants).map(([name, values]) => [
+          name,
+          Object.fromEntries(
+            Object.entries(values).map(([k, v]) => [k, dropOverriddenSlice(v)]),
+          ),
+        ]),
+      ),
+    }),
+    ...(layer.compoundVariants && {
+      compoundVariants: layer.compoundVariants.map((cv) =>
+        Object.fromEntries(
+          Object.entries(cv).map(([k, v]) => [
+            k,
+            k === "class" || k === "className"
+              ? dropOverriddenClasses(v as ClassValue)
+              : v,
+          ]),
+        ),
+      ),
+    }),
+  }
 }
 
 function isSlotMap(
@@ -86,8 +161,6 @@ function mergeVariantSlice(
   }
   return result
 }
-
-/* --------------------------------- merge tv --------------------------------- */
 
 function mergeSlots(
   a: Record<string, ClassValue> | undefined,
@@ -165,14 +238,7 @@ function mergeLayer(a: TvLayer, b: TvLayer): TvLayer {
   return merged
 }
 
-/* --------------------------------- entry --------------------------------- */
-
-function stripVars(layer: OverrideLayer): TvLayer {
-  const { vars: _vars, ...rest } = layer
-  return rest
-}
-
-export interface FlattenInput {
+interface FlattenInput {
   stylesConfig: StylesConfig
   meta: RegistryItem
   density: Density
@@ -195,20 +261,15 @@ export function flatten({
 
   const densityLayer = stylesConfig.density?.[density]
   if (densityLayer) {
-    current = mergeLayer(current, stripVars(densityLayer))
+    current = mergeLayer(current, densityLayer)
   }
 
-  // Apply enum params in meta declaration order.
-  const params = (meta.params ?? {}) as Record<
-    string,
-    EnumParamDef | { kind: string; default: string }
-  >
-  for (const [paramName, def] of Object.entries(params)) {
-    if (def.kind !== "enum") continue
+  // Apply params in meta declaration order.
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
     const selectedValue = paramSelections[paramName] ?? def.default
     const overrideLayer = stylesConfig.params?.[paramName]?.[selectedValue]
     if (!overrideLayer) continue
-    const { vars: _vars, density: byDensity, ...layer } = overrideLayer
+    const { density: byDensity, ...layer } = overrideLayer
     for (const l of [layer, byDensity?.[density]]) {
       if (!l || Object.keys(l).length === 0) continue
       current = mergeLayer(current, l)

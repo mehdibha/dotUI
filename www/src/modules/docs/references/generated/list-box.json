@@ -8,7 +8,28 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the list box is in a loading state. Renders a `ListBoxLoader` strip\ndirectly after the items."
+      "description": "Whether more items are loading. Shows a loader after the items when `onLoadMore` is set."
+    },
+    "onLoadMore": {
+      "type": "(() => any)",
+      "detailedType": "(() => any) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "any"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler called when the user scrolls near the end of the list. Setting it renders the loader row."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",

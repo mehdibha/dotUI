@@ -1,8 +1,8 @@
 "use client"
 
-import { FileIcon, TerminalIcon } from "lucide-react"
 import { TokenFieldValue } from "react-aria-components/TokenField"
 
+import { FileIcon, TerminalIcon } from "@/registry/icons"
 import { Mention } from "@/registry/ui/mention"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
@@ -28,8 +28,6 @@ const commands: Suggestion[] = [
   { id: "commit", description: "Commit staged changes" },
 ]
 
-// A regex trigger matches several characters; the render-function children
-// receive the active trigger, so the suggestions depend on which one was typed.
 export default function Demo() {
   return (
     <Mention

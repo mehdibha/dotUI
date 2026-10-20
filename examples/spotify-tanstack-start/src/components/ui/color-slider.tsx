@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import * as ColorSliderPrimitives from "react-aria-components/ColorSlider";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SliderPrimitives from "react-aria-components/Slider";
@@ -15,7 +16,7 @@ const colorSliderVariants = tv({
     root: "flex flex-col gap-2",
     output: "text-sm text-fg-muted tabular-nums",
     track:
-      "relative rounded-full disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-[slot=color-thumb]:top-1/2 orientation-vertical:**:data-[slot=color-thumb]:left-1/2",
+      "relative rounded-sm disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-color-thumb:top-1/2 orientation-vertical:**:data-color-thumb:left-1/2",
   },
   variants: {
     orientation: {
@@ -54,8 +55,8 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
       ]}
     >
       <ColorSliderPrimitives.ColorSlider
-        className={composeRenderProps(className, (cn, { orientation }) =>
-          root({ orientation, className: cn }),
+        className={composeRenderProps(className, (className, { orientation }) =>
+          root({ orientation, className }),
         )}
         aria-describedby={descriptionId}
         {...props}
@@ -79,9 +80,9 @@ const ColorSliderControl = ({
 }: ColorSliderControlProps) => {
   return (
     <SliderPrimitives.SliderTrack
-      data-slot="color-slider-control"
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        track({ orientation, className: cn }),
+      data-color-slider-control=""
+      className={composeRenderProps(className, (className, { orientation }) =>
+        track({ orientation, className }),
       )}
       style={composeRenderProps(style, (style, { defaultStyle }) => ({
         ...defaultStyle,

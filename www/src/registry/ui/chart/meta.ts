@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const chartMeta = {
   name: "chart",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",
@@ -15,15 +14,13 @@ const chartMeta = {
   devDependencies: ["@types/d3-scale", "@types/d3-shape"],
   params: {
     grid: {
-      kind: "enum",
       default: "solid",
       values: ["solid", "dashed", "none"] as const,
       description: "The gridline treatment behind the plot.",
     },
     motion: {
-      kind: "enum",
       default: "spring",
-      values: ["spring", "stiff", "wobbly", "slow", "ease", "none"] as const,
+      values: ["spring", "ease", "none"] as const,
       description:
         "How marks enter and move between data states, unless a chart's `animate` prop overrides it.",
     },

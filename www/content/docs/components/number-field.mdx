@@ -3,7 +3,7 @@ title: Number Field
 description: A number field allows a user to enter a number value with a keyboard or increment/decrement with step buttons.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/NumberField.html
+    href: https://react-aria.adobe.com/NumberField
 wip: true
 ---
 
@@ -14,6 +14,18 @@ wip: true
       type: "string",
       name: "label",
       defaultValue: "Quantity",
+    },
+    {
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
     },
     {
       type: "boolean",
@@ -30,6 +42,11 @@ wip: true
       name: "isInvalid",
       defaultValue: false,
     },
+    {
+      type: "boolean",
+      name: "isRequired",
+      defaultValue: false,
+    },
   ]}
 />
 
@@ -40,8 +57,6 @@ npx shadcn@latest add @dotui/number-field
 ```
 
 ## Usage
-
-Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
 
 ```tsx
 import { NumberField } from "@/components/ui/number-field"
@@ -95,7 +110,7 @@ const [value, setValue] = React.useState(69)
 </NumberField>
 ```
 
-## Format options
+## Value formatting
 
 Pass `formatOptions` (an `Intl.NumberFormat` options object) to format the value as a decimal, percent, currency, or unit.
 
@@ -131,10 +146,7 @@ Mark the field with `isRequired`, drive the invalid state with `isInvalid`, and 
 
 <Examples className="sm:grid-cols-2">
   <Example name="number-field/demos/basic" title="Basic" />
-  <Example
-    name="number-field/demos/with-input-group"
-    title="With Input Group"
-  />
+  <Example name="number-field/demos/sizes" title="Sizes" />
   <Example
     name="number-field/demos/format-options"
     title="Format Options"

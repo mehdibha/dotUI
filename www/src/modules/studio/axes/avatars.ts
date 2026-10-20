@@ -1,52 +1,29 @@
-/* Avatars — two axes. Shape: circle is the people-first default (GitHub,
-   Slack DMs, Material), the rounded square marks entities (Slack workspaces,
-   GitHub orgs, Notion, Linear). Fallback: what initials sit on when no
-   image loads — one uniform gray (Geist, shadcn — dotUI's current look) or
-   a per-entity tinted wash (Radix Themes, Ant, Atlassian) that tells
-   stacked strangers apart.
+/* Avatars — a circle or a rounded square (each size on a corner rung, so a
+   square character squares them), and what initials sit on. */
 
-   Engine: shape rides on the `--studio-avatar-radius` surface var, resolved to a
-   plain `rounded-*` on export; `fallback` is an enum param on `avatar`,
-   painting by the `data-tint` index the fallback hashes from its text. */
-
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
 
-export const AVATAR_DEFAULTS = {
-  avatarShape: "circle",
-  avatarFallback: "neutral",
-}
+export const SHAPE_VALUES = ["circle", "rounded"] as const
 
-export const SHAPE_OPTIONS = [
-  { value: "circle", label: "Circle" },
-  { value: "rounded", label: "Rounded" },
-]
+export const FALLBACK_VALUES = ["neutral", "accent"] as const
 
-export const FALLBACK_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "tinted", label: "Tinted" },
-]
-
-const SHAPE_TOKENS: Record<string, string> = {
-  rounded: "var(--radius-lg)",
-}
-
-export const AVATAR_SCHEMA: ChapterSchema<typeof AVATAR_DEFAULTS> = {
-  avatarShape: oneOf(SHAPE_OPTIONS),
-  avatarFallback: oneOf(FALLBACK_OPTIONS),
-}
-
-export function resolveAvatars(state: StudioState): Resolved {
-  const tokens: Record<string, string> = {}
-  const radius = SHAPE_TOKENS[state.avatarShape]
-  if (radius) tokens["--studio-avatar-radius"] = radius
-  return {
-    tokens,
-    params: {
-      avatar: {
-        fallback: state.avatarFallback,
+export const chapter = defineChapter({
+  id: "avatars",
+  defaults: {
+    avatarShape: "circle",
+    avatarFallback: "neutral",
+  },
+  schema: {
+    avatarShape: oneOf(SHAPE_VALUES),
+    avatarFallback: oneOf(FALLBACK_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    return {
+      params: {
+        avatar: { shape: state.avatarShape, fallback: state.avatarFallback },
       },
-    },
-  }
-}
+    }
+  },
+})

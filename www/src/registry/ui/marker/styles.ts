@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import markerMeta from "./meta"
 
-const { useStyles, styles } = createStyles(markerMeta, {
+const { useStyles } = createStyles(markerMeta, {
   base: {
     slots: {
       root: [
@@ -64,9 +64,29 @@ const { useStyles, styles } = createStyles(markerMeta, {
         },
       },
     },
+    spacious: {
+      slots: {
+        root: "min-h-4 gap-2.5 text-sm **:[svg]:not-with-[size]:size-4",
+        icon: "size-4",
+      },
+      variants: {
+        variant: {
+          border: { root: "pb-2.5" },
+        },
+      },
+    },
+    touch: {
+      slots: {
+        root: "min-h-4 gap-2.5 text-sm **:[svg]:not-with-[size]:size-4",
+        icon: "size-4",
+      },
+      variants: {
+        variant: {
+          border: { root: "pb-2.5" },
+        },
+      },
+    },
   },
 })
-
-export type MarkerStyles = typeof styles
 
 export { useStyles }

@@ -6,6 +6,8 @@ import { cn } from "@/registry/lib/utils"
 
 import { useStyles } from "./styles"
 
+// MARK: skeletonStyles
+
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   isLoading?: boolean
 }
@@ -17,8 +19,7 @@ const isSkeletonLoop = (animation: Animation) =>
   animation instanceof CSSAnimation &&
   animation.animationName.startsWith("skeleton-")
 
-/* CSS runs the loop; this pins every placeholder's to one phase, so ones
-   that mount later don't pulse out of step. */
+/* Pins every placeholder's CSS loop to one phase so later mounts don't pulse out of step. */
 function useSyncedSkeletonAnimation(
   ref: React.RefObject<HTMLElement | null>,
   isLoading: boolean,
@@ -41,12 +42,14 @@ function useSyncedSkeletonAnimation(
   }, [className, isLoading, ref])
 }
 
-export function Skeleton({
+// MARK: Separator
+
+export const Skeleton = ({
   className,
   children,
   isLoading,
   ...props
-}: SkeletonProps) {
+}: SkeletonProps) => {
   const { root } = useStyles()()
   const ref = React.useRef<HTMLDivElement>(null)
   const hasChildren = children != null

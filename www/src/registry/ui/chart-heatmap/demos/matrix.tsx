@@ -2,7 +2,6 @@
 
 import { HeatmapChart } from "@/registry/ui/chart-heatmap"
 
-/* Sessions per weekday and hour: a daily shape scaled by how busy the day is. */
 const hours = [
   { hour: "08", base: 14 },
   { hour: "09", base: 32 },
@@ -34,7 +33,7 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-export default function ChartHeatmapMatrix() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

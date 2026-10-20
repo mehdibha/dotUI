@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import separatorMeta from "./meta"
 
-const { useStyles, styles } = createStyles(separatorMeta, {
+const { useStyles } = createStyles(separatorMeta, {
   base: {
     base: "shrink-0 border-0 bg-border",
     variants: {
@@ -15,13 +15,6 @@ const { useStyles, styles } = createStyles(separatorMeta, {
       orientation: "horizontal",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-  },
 })
-
-export type SeparatorStyles = typeof styles
 
 export { useStyles }

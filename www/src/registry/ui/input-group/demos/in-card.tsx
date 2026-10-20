@@ -1,6 +1,6 @@
 "use client"
 
-import { ExternalLinkIcon, MailIcon } from "@/registry/__generated__/icons"
+import { ExternalLinkIcon, MailIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
   Card,

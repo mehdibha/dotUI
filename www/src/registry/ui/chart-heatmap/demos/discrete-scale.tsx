@@ -2,8 +2,6 @@
 
 import { heatmapColors, HeatmapChart } from "@/registry/ui/chart-heatmap"
 
-/* Incidents per service and week. The cuts are a policy, not an extent: one
-   incident is already worth seeing, ten is an outage week. */
 const services = [
   { service: "api", counts: [0, 1, 0, 3, 12, 4, 1, 0] },
   { service: "auth", counts: [1, 0, 0, 0, 2, 1, 0, 0] },
@@ -20,7 +18,7 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
-export default function ChartHeatmapDiscreteScale() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

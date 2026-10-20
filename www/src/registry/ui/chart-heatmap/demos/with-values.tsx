@@ -4,7 +4,6 @@ import type { ChartValue } from "@tanstack/charts"
 
 import { HeatmapChart } from "@/registry/ui/chart-heatmap"
 
-/* Few, large cells — the only shape where in-cell numbers stay legible. */
 const regions = [
   { region: "Americas", quarters: [0.42, 0.48, 0.51, 0.57] },
   { region: "EMEA", quarters: [0.31, 0.29, 0.36, 0.44] },
@@ -25,7 +24,7 @@ const data = regions.flatMap(({ region, quarters }) =>
   })),
 )
 
-export default function ChartHeatmapWithValues() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

@@ -16,7 +16,7 @@ import type { RegistryItem } from "@/registry/types"
 import { createStyles } from "./styles"
 
 /* -------------------------------------------------------------------------- *
- * Fixture: a meta with both enum and scalar params, plus base with slots
+ * Fixture: a meta with two params, plus base with slots
  * and variants. Used as the reference shape for all the failure cases below.
  * -------------------------------------------------------------------------- */
 
@@ -26,13 +26,11 @@ const fixtureMeta = {
   files: [{ type: "registry:ui", path: "fake.tsx", target: "fake.tsx" }],
   params: {
     style: {
-      kind: "enum",
       default: "default",
       values: ["default", "alt"] as const,
       vars: { alt: { "--fixture-bg": "var(--neutral-100)" } },
     },
     highlight: {
-      kind: "enum",
       default: "subtle",
       values: ["subtle", "accent"] as const,
     },
@@ -73,6 +71,8 @@ createStyles(fixtureMeta, {
     comfortable: {
       slots: { root: "text-sm" },
     },
+    spacious: {},
+    touch: {},
   },
   params: {
     style: {
@@ -102,6 +102,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -115,6 +117,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -130,6 +134,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -143,6 +149,8 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
@@ -158,16 +166,20 @@ createStyles(fixtureMeta, {
     },
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 
-/* 6) Density: missing one of the three densities */
+/* 6) Density: missing one of the tiers */
 createStyles(fixtureMeta, {
   base: baseConfig.base,
-  // @ts-expect-error — "comfortable" key missing
+  // @ts-expect-error — "touch" key missing
   density: {
     compact: {},
     default: {},
+    comfortable: {},
+    spacious: {},
   },
 })
 
@@ -269,14 +281,14 @@ createStyles(fixtureMeta, {
  * Meta-shape tests — RegistryItem-level
  * -------------------------------------------------------------------------- */
 
-/* 15) Enum param missing required `values` */
+/* 15) Param missing required `values` */
 const _missingValues = {
   name: "x",
   type: "registry:ui",
   files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
   params: {
-    // @ts-expect-error — values is required for enum params
-    style: { kind: "enum", default: "default" },
+    // @ts-expect-error — values is required
+    style: { default: "default" },
   },
 } satisfies RegistryItem
 

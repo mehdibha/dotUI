@@ -4,7 +4,7 @@ import React from "react"
 import { getLocalTimeZone, today } from "@internationalized/date"
 import type * as CalendarPrimitives from "react-aria-components/Calendar"
 
-import { PlusIcon, Trash2Icon } from "@/registry/__generated__/icons"
+import { PlusIcon, Trash2Icon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
@@ -17,14 +17,8 @@ import {
   CalendarHeaderCell,
 } from "@/registry/ui/calendar"
 import { Card, CardContent } from "@/registry/ui/card"
-import { ColorPicker } from "@/registry/ui/color-picker"
-import { ColorSwatch } from "@/registry/ui/color-swatch"
-import {
-  ColorSwatchPicker,
-  ColorSwatchPickerItem,
-} from "@/registry/ui/color-swatch-picker"
-import { DialogContent } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { TextField } from "@/registry/ui/text-field"
 
@@ -36,12 +30,12 @@ type ScheduleEvent = {
   variant: EventVariant
 }
 
-const EVENT_DOT_CLASS: Record<EventVariant, string> = {
-  accent: "bg-accent",
-  info: "bg-info",
-  success: "bg-success",
-  warning: "bg-warning",
-  danger: "bg-danger",
+const EVENT_VARIANTS: Record<EventVariant, { label: string; dot: string }> = {
+  accent: { label: "Accent", dot: "bg-accent" },
+  info: { label: "Info", dot: "bg-info" },
+  success: { label: "Success", dot: "bg-success" },
+  warning: { label: "Warning", dot: "bg-warning" },
+  danger: { label: "Danger", dot: "bg-danger" },
 }
 
 const INITIAL_EVENTS = (now: CalendarPrimitives.DateValue): ScheduleEvent[] => [
@@ -96,7 +90,7 @@ export default function Demo() {
   const [selectedDate, setSelectedDate] =
     React.useState<CalendarPrimitives.DateValue>(now)
   const [newTitle, setNewTitle] = React.useState("")
-  const [newVariant] = React.useState<EventVariant>("accent")
+  const [newVariant, setNewVariant] = React.useState<EventVariant>("accent")
   const idCounter = React.useRef(events.length + 1)
 
   const eventsByDay = React.useMemo(() => {
@@ -214,7 +208,7 @@ export default function Demo() {
                   className="flex items-center gap-2 rounded-md border p-2"
                 >
                   <span
-                    className={`size-2 shrink-0 rounded-full ${EVENT_DOT_CLASS[e.variant]}`}
+                    className={`size-2 shrink-0 rounded-full ${EVENT_VARIANTS[e.variant].dot}`}
                   />
                   <span className="flex-1 truncate text-sm">{e.title}</span>
                   <Button
@@ -244,26 +238,48 @@ export default function Demo() {
                 aria-label="Event title"
                 value={newTitle}
                 onChange={setNewTitle}
-                className="w-auto flex-1"
+                className="w-auto min-w-0 flex-1"
               >
                 <InputGroup>
                   <InputGroupAddon>
-                    <ColorPicker>
-                      <Button>
-                        <ColorSwatch />
+                    <Menu>
+                      <Button
+                        variant="quiet"
+                        size="sm"
+                        isIconOnly
+                        aria-label={`Event color: ${EVENT_VARIANTS[newVariant].label}`}
+                      >
+                        <span
+                          className={`size-2.5 rounded-full ${EVENT_VARIANTS[newVariant].dot}`}
+                        />
                       </Button>
                       <Popover>
-                        <DialogContent>
-                          <ColorSwatchPicker>
-                            {[""].map((v) => (
-                              <ColorSwatchPickerItem key={v} color={v} />
-                            ))}
-                          </ColorSwatchPicker>
-                        </DialogContent>
+                        <MenuContent
+                          aria-label="Event color"
+                          selectionMode="single"
+                          disallowEmptySelection
+                          selectedKeys={[newVariant]}
+                        >
+                          {(Object.keys(EVENT_VARIANTS) as EventVariant[]).map(
+                            (variant) => (
+                              <MenuItem
+                                key={variant}
+                                id={variant}
+                                textValue={EVENT_VARIANTS[variant].label}
+                                onAction={() => setNewVariant(variant)}
+                              >
+                                <span
+                                  className={`size-2 shrink-0 rounded-full ${EVENT_VARIANTS[variant].dot}`}
+                                />
+                                {EVENT_VARIANTS[variant].label}
+                              </MenuItem>
+                            ),
+                          )}
+                        </MenuContent>
                       </Popover>
-                    </ColorPicker>
+                    </Menu>
                   </InputGroupAddon>
-                  <Input placeholder="New event…" className="w-auto" />
+                  <Input placeholder="New event…" className="min-w-0" />
                 </InputGroup>
               </TextField>
               <Button type="submit" isDisabled={newTitle.trim().length === 0}>

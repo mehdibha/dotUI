@@ -35,8 +35,6 @@ const FONT_DEPENDENCIES = [
   "@fontsource/geist-mono",
 ]
 
-/* ------------------------------ css rendering ------------------------------ */
-
 function renderCssEntries(record: CssRecord, indent: string): string[] {
   const lines: string[] = []
   for (const [key, value] of Object.entries(record)) {
@@ -101,7 +99,7 @@ export function renderStylesheet(
  * The v0 bundle's `globals.css`: the init fields plus every shipped
  * component's `css` block, with the Geist faces from @fontsource.
  */
-export function renderGlobalsCss(fields: RegistryCssFields): string {
+function renderGlobalsCss(fields: RegistryCssFields): string {
   return renderStylesheet(fields, {
     imports: [
       '@import "@fontsource-variable/geist";',
@@ -140,28 +138,12 @@ export function mergeComponentCss(
   }
 }
 
-/* ------------------------------- source files ------------------------------ */
-
-/**
- * Registry-internal import prefixes → the consumer aliases published files
- * use. Support files shipped straight from registry source (`?raw`) get the
- * same rewrite the build-time publisher applies to component templates.
- */
-export function rewriteRegistryImports(content: string): string {
-  return content
-    .replaceAll("@/registry/ui/", "@/components/ui/")
-    .replaceAll("@/registry/hooks/", "@/hooks/")
-    .replaceAll("@/registry/lib/", "@/lib/")
-}
-
 /** `ui/button.tsx` → `components/ui/button.tsx`; lib/hooks pass through. */
 function projectTarget(target: string): string {
   return target.startsWith("ui/") ? `components/${target}` : target
 }
 
-/* -------------------------------- assembly -------------------------------- */
-
-export interface V0File {
+interface V0File {
   type: string
   path: string
   target: string
@@ -172,42 +154,15 @@ function v0File(type: string, target: string, content: string): V0File {
   return { type, path: target, target, content }
 }
 
-export interface BuildV0ItemInput {
+interface BuildV0ItemInput {
   /** Preset-published items, one per publishable component. */
   items: RegistryItem[]
   /** Init CSS fields already merged with the preset (`mergePresetCssFields`). */
   cssFields: RegistryCssFields
-  /** Support sources shipped verbatim (already import-rewritten), by target. */
-  supportFiles: Record<string, string>
-}
-
-/**
- * Drop items whose published files import a `@/components/ui/*` module no
- * shipped item provides (a few components aren't publishable yet), iterating
- * so dependents of dropped items are dropped too.
- */
-function satisfiableItems(items: RegistryItem[]): RegistryItem[] {
-  const available = new Map(items.map((item) => [item.name, item]))
-  for (;;) {
-    let dropped = false
-    for (const [name, item] of available) {
-      const contents = (item.files ?? []).map((f) => f.content ?? "")
-      const missing = contents.some((content) =>
-        [...content.matchAll(/@\/components\/ui\/([a-z0-9-]+)/g)].some(
-          (m) => !available.has(m[1]!),
-        ),
-      )
-      if (missing) {
-        available.delete(name)
-        dropped = true
-      }
-    }
-    if (!dropped) return [...available.values()]
-  }
 }
 
 export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
-  const items = satisfiableItems(input.items)
+  const { items } = input
 
   // Merge every shipped component's css block (skeleton utilities, the field rules) into the
   // theme fields before rendering — v0 would strip them as structured fields.
@@ -234,11 +189,6 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
       if (!file.content) continue
       add(v0File(fileType(file), projectTarget(file.path), file.content))
     }
-  }
-
-  // Fill support-module gaps (hooks, lib helpers) not shipped by any item.
-  for (const [target, content] of Object.entries(input.supportFiles)) {
-    add(v0File("registry:lib", target, content))
   }
 
   // Same base deps `shadcn init` would install, since there's no init step
@@ -274,8 +224,6 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 function fileType(file: RegistryItemFile): string {
   return file.type === "registry:ui" ? "registry:ui" : "registry:lib"
 }
-
-/* ------------------------------ project shell ------------------------------ */
 
 const V0_LAYOUT_TSX = `import type { ReactNode } from "react";
 

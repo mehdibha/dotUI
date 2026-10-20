@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 import { TokenFieldValue } from "react-aria-components/TokenField"
 
 import { Label } from "@/registry/ui/field"
@@ -16,8 +16,6 @@ const people = [
   { id: "emmawatson" },
 ]
 
-// The value is a TokenFieldValue of text and token segments; toString() joins
-// the segments back into plain text.
 export default function Demo() {
   const [value, setValue] = React.useState(
     () => new TokenFieldValue([{ type: "text", text: "Hey " }]),

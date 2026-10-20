@@ -12,11 +12,18 @@ import {
 } from "@/registry/ui/dialog"
 import { Sheet, type SheetProps } from "@/registry/ui/sheet"
 
-export default function Demo({ position = "bottom" }: SheetProps = {}) {
+export default function Demo({
+  position = "bottom",
+  preventDismissal = false,
+}: SheetProps = {}) {
   return (
     <Dialog>
       <Button>Open Sheet</Button>
-      <Sheet data-control-target position={position}>
+      <Sheet
+        data-control-target
+        position={position}
+        preventDismissal={preventDismissal}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Sheet Title</DialogTitle>

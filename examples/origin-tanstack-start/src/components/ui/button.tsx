@@ -1,24 +1,24 @@
 "use client";
 
 import type * as React from "react";
-import * as ButtonPrimitive from "react-aria-components/Button";
+import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as LinkPrimitive from "react-aria-components/Link";
+import * as LinkPrimitives from "react-aria-components/Link";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { Loader } from "@/components/ui/loader";
 
 const buttonVariants = tv({
-  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted disabled:cursor-disabled text-sm *:[svg]:not-with-[size]:size-4",
+  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-spinner:not-in-data-spinner:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-sm *:[svg]:not-with-[size]:size-4",
   variants: {
     variant: {
       primary:
         "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active",
       secondary:
-        "text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border border border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
-      link: "text-fg underline-offset-4 hover:underline disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+      link: "disabled:text-(--disabled-fg,var(--color-fg)) text-fg-accent",
       warning:
         "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
       danger:
@@ -44,10 +44,17 @@ export { buttonVariants as buttonStyles };
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
+const truncateLabel = (children: React.ReactNode) =>
+  typeof children === "string" ? (
+    <span className="truncate">{children}</span>
+  ) : (
+    children
+  );
+
 /* -------------------------------------------------------------------------- */
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
+  extends React.ComponentProps<typeof ButtonPrimitives.Button>, ButtonVariants {
   isIconOnly?: boolean;
 }
 
@@ -65,31 +72,25 @@ const Button = ({
       <>
         {isPending && (
           <Loader
-            data-slot="spinner"
+            data-spinner=""
             aria-label="loading"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {typeof children === "string" ? (
-          <span className="truncate">{children}</span>
-        ) : (
-          children
-        )}
+        {truncateLabel(children)}
       </>
     ),
   );
 
   return (
-    <ButtonPrimitive.Button
+    <ButtonPrimitives.Button
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        buttonVariants({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        buttonVariants({ variant, size, isIconOnly, className }),
       )}
       {...props}
-      // Only wrap provided children: passing a render function when `children`
-      // is undefined would override context-injected children (e.g. the
-      // ColorPicker trigger's default swatch) in RAC's context merge.
+      // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
       children={children === undefined ? undefined : renderChildren}
     />
   );
@@ -99,7 +100,7 @@ const Button = ({
 
 interface LinkButtonProps
   extends
-    React.ComponentProps<typeof LinkPrimitive.Link>,
+    React.ComponentProps<typeof LinkPrimitives.Link>,
     VariantProps<typeof buttonVariants> {
   isIconOnly?: boolean;
 }
@@ -113,24 +114,16 @@ const LinkButton = ({
   ...props
 }: LinkButtonProps) => {
   return (
-    <LinkPrimitive.Link
+    <LinkPrimitives.Link
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        buttonVariants({ variant, size, isIconOnly, className: cn }),
+      className={composeRenderProps(className, (className) =>
+        buttonVariants({ variant, size, isIconOnly, className }),
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
-    </LinkPrimitive.Link>
+      {composeRenderProps(children, truncateLabel)}
+    </LinkPrimitives.Link>
   );
 };
 

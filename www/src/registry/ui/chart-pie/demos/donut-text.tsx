@@ -20,7 +20,7 @@ const labels = {
 
 const total = data.reduce((sum, row) => sum + row.visitors, 0)
 
-export default function ChartPieDonutText() {
+export default function Demo() {
   return (
     <PieChart
       data={data}
@@ -30,8 +30,6 @@ export default function ChartPieDonutText() {
       innerRadius={0.6}
       ariaLabel="Visitors by browser, with the total in the centre"
     >
-      {/* The hole is an HTML overlay, so the total is real text, not a label
-          mark competing for focus. */}
       <div className="flex h-full flex-col items-center justify-center">
         <span className="text-3xl font-bold">{total}</span>
         <span className="text-sm text-fg-muted">Visitors</span>

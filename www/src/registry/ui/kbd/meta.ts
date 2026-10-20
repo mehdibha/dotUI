@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const kbdMeta = {
   name: "kbd",
   type: "registry:ui",
-  group: "tags",
   files: [
     {
       type: "registry:ui",
@@ -12,10 +11,9 @@ const kbdMeta = {
     },
   ],
   params: {
-    treatment: {
-      kind: "enum",
+    style: {
       default: "chip",
-      values: ["text", "chip", "keycap"] as const,
+      values: ["chip", "outline", "keycap"] as const,
       description: "The chrome a keyboard key wears.",
     },
   },

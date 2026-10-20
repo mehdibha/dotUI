@@ -37,13 +37,11 @@ import {
   useChartDefinition,
 } from "@/registry/ui/chart"
 
-// A radar reads as a shape: heavier fill, lighter outline than a cartesian area.
 const radarDefaults = {
   radiusRatio: 0.78,
   fill: 0.6,
   strokeWidth: 1.5,
   gridTicks: 4,
-  /** Half the gap between the two lines of a detailed circumference label. */
   labelLine: 7,
 } as const
 
@@ -112,8 +110,6 @@ function gridFillPath(
   return `${path}Z`
 }
 
-// Labels beside or below the circle need a nudge away from it; `extra` opens
-// the gap for a second line.
 function labelDy(extra: number) {
   return ({ y }: PolarGuideLabelContext) =>
     (y < -1 ? -2 : y > 1 ? 2 : 0) + extra
@@ -140,8 +136,6 @@ export function radarChartSpec<TDatum>(
 
   const grid = options.grid ?? chartDefaults.grid
   const spokes = options.spokes ?? grid
-  // One label ring, so the per-axis values mean "on". On by default: the
-  // ring labels are the categories, not axis chrome.
   const axes = (options.axes ?? true) !== false
   const shape = options.gridShape ?? "polygon"
   const ticks = options.gridTicks ?? radarDefaults.gridTicks
@@ -238,7 +232,6 @@ export function radarChartSpec<TDatum>(
           },
           radius: {
             scale: scaleLinear().domain([0, options.max ?? observed]),
-            // An explicit max is the domain, not a suggestion.
             nice: options.max === undefined && ticks,
           },
         },
@@ -268,12 +261,14 @@ const radarTooltip: ChartTooltipContentOf<RadarChartSpecOptions<any>> = (
   }
 }
 
+// MARK: Separator
+
 export type RadarChartProps<TDatum> = ChartComponentProps<
   RadarChartSpecOptions<TDatum>,
   TDatum
 >
 
-export function RadarChart<TDatum>(props: RadarChartProps<TDatum>) {
+export const RadarChart = <TDatum,>(props: RadarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     RadarChartSpecOptions<TDatum>

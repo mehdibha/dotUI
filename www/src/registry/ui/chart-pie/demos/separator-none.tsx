@@ -18,8 +18,7 @@ const labels = {
   other: "Other",
 }
 
-// No separator stroke: the slices meet edge to edge.
-export default function ChartPieSeparatorNone() {
+export default function Demo() {
   return (
     <PieChart
       data={data}

@@ -1,4 +1,4 @@
-import { MoreHorizontalIcon } from "@/registry/__generated__/icons"
+import { MoreHorizontalIcon } from "@/registry/icons"
 import {
   BreadcrumbItem,
   BreadcrumbLink,

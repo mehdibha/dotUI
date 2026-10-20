@@ -1,50 +1,42 @@
 import { createDynamicComponent } from "@/lib/styles"
-import type { ButtonProps } from "@/registry/ui/button"
 
-import * as right from "./base.right"
-import type { NumberFieldGroupProps, NumberFieldProps } from "./base.right"
+import * as rightCells from "./base.right-cells"
+import type {
+  NumberFieldGroupProps,
+  NumberFieldProps,
+  NumberFieldStepperProps,
+} from "./base.right-cells"
 import * as split from "./base.split"
-import * as stacked from "./base.stacked"
+import * as stackedCells from "./base.stacked-cells"
+import * as stackedInset from "./base.stacked-inset"
+import meta from "./meta"
 
-type Steppers = "right" | "split" | "stacked"
+type Steppers = (typeof meta.params.steppers.values)[number]
+type Part = keyof typeof rightCells
 
-const dynamic = <Props extends object>(
-  displayName: keyof typeof right,
-  components: Record<Steppers, React.ComponentType<Props>>,
-) =>
-  createDynamicComponent<Props, Steppers>({
-    componentName: "number-field",
+const dynamic = <Props extends object>(part: Part) =>
+  createDynamicComponent({
+    meta,
     paramName: "steppers",
-    defaultValue: "right",
-    components,
-    displayName,
+    components: {
+      "right-cells": rightCells[part],
+      "stacked-cells": stackedCells[part],
+      "stacked-inset": stackedInset[part],
+      split: split[part],
+    } as Record<Steppers, React.ComponentType<Props>>,
+    displayName: part,
   })
 
-const NumberField = dynamic<NumberFieldProps>("NumberField", {
-  right: right.NumberField,
-  split: split.NumberField,
-  stacked: stacked.NumberField,
-})
+const NumberField = dynamic<NumberFieldProps>("NumberField")
+const NumberFieldGroup = dynamic<NumberFieldGroupProps>("NumberFieldGroup")
+const NumberFieldDecrement = dynamic<NumberFieldStepperProps>(
+  "NumberFieldDecrement",
+)
+const NumberFieldIncrement = dynamic<NumberFieldStepperProps>(
+  "NumberFieldIncrement",
+)
 
-const NumberFieldGroup = dynamic<NumberFieldGroupProps>("NumberFieldGroup", {
-  right: right.NumberFieldGroup,
-  split: split.NumberFieldGroup,
-  stacked: stacked.NumberFieldGroup,
-})
-
-const NumberFieldDecrement = dynamic<ButtonProps>("NumberFieldDecrement", {
-  right: right.NumberFieldDecrement,
-  split: split.NumberFieldDecrement,
-  stacked: stacked.NumberFieldDecrement,
-})
-
-const NumberFieldIncrement = dynamic<ButtonProps>("NumberFieldIncrement", {
-  right: right.NumberFieldIncrement,
-  split: split.NumberFieldIncrement,
-  stacked: stacked.NumberFieldIncrement,
-})
-
-export type { NumberFieldGroupProps, NumberFieldProps }
+export type { NumberFieldGroupProps, NumberFieldProps, NumberFieldStepperProps }
 export {
   NumberField,
   NumberFieldDecrement,

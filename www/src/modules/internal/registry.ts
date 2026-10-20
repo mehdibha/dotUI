@@ -1,7 +1,7 @@
 /* The internal tools index — what /internal lists. Dev-only scratch surfaces
    (labs, playgrounds, demos); nothing here ships or is linked from the site. */
 
-export interface InternalTool {
+interface InternalTool {
   href: string
   label: string
   description: string
@@ -15,10 +15,10 @@ export const INTERNAL_TOOLS: InternalTool[] = [
       "The color engine measured against reference systems: ramps, contrast meters, CVD checks.",
   },
   {
-    href: "/internal/preset-lab",
-    label: "Preset Lab",
+    href: "/internal/specimens",
+    label: "Specimens",
     description:
-      "Preset fidelity — how close each preset lands to the system it recreates.",
+      "Every preset on fixed component sheets, captured to compare against the system it recreates.",
   },
   {
     href: "/internal/blur-reveal",

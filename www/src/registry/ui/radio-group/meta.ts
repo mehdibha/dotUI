@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const radioGroupMeta = {
   name: "radio-group",
   type: "registry:ui",
-  group: "selection-controls",
   files: [
     {
       type: "registry:ui",
@@ -11,19 +10,22 @@ const radioGroupMeta = {
       target: "ui/radio-group.tsx",
     },
   ],
-  registryDependencies: ["focus-styles", "field"],
+  registryDependencies: ["field"],
   params: {
-    "card-selected": {
-      kind: "enum",
+    mark: {
+      default: "dot",
+      values: ["dot", "ring"] as const,
+      description: "The selected mark: a filled disc, or a ring around a dot.",
+    },
+    cardSelected: {
       default: "tint",
-      values: ["outline", "tint", "outline-tint"] as const,
+      values: ["tint", "outline-tint", "outline"] as const,
       description: "What marks the selected card.",
     },
-    "card-control": {
-      kind: "enum",
-      default: "start",
-      values: ["start", "end", "hidden"] as const,
-      description: "Where the control sits in a card.",
+    cardPress: {
+      default: "none",
+      values: ["none", "sink"] as const,
+      description: "Whether a pressed or disabled card sinks into its lip.",
     },
   },
 } satisfies RegistryItem

@@ -2,19 +2,14 @@ import { createStyles } from "@/lib/styles"
 
 import sheetMeta from "./meta"
 
-const { useStyles, styles } = createStyles(sheetMeta, {
+const { useStyles } = createStyles(sheetMeta, {
   base: {
     slots: {
-      // A leaving sheet lets the next tap through to the page.
       overlay: "isolate z-50 exiting:pointer-events-none",
-      backdrop: "",
-      /* Content-box, so the overscroll padding react-aria adds past the swipe
-         edge stays out of the sheet's size. */
+      backdrop:
+        "data-[stack-index=0]:bg-scrim data-[stack-index=0]:backdrop-blur-(--studio-scrim-blur)",
       sheet:
-        "relative box-content flex min-h-0 min-w-0 flex-col overflow-clip border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) outline-none [--surface-bg:var(--color-popover)]",
-      /* A dialog shrinks to fit and scrolls its body; a menu or listbox
-         overflows and this scrolls, only once fully revealed so a partly
-         open sheet swipes as one. */
+        "relative box-content flex min-h-0 min-w-0 flex-col text-fg outline-none [--surface-bg:var(--color-popover)]",
       content:
         "flex min-h-0 flex-1 flex-col overflow-hidden pb-(--sheet-scroll-padding-y) outline-none in-data-expanded:overflow-y-auto",
       handle:
@@ -55,26 +50,22 @@ const { useStyles, styles } = createStyles(sheetMeta, {
       position: "bottom",
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-  },
   params: {
-    // Only the bottom-most sheet of a stack dims the page.
-    backdrop: {
-      dim: { slots: { backdrop: "data-[stack-index=0]:bg-overlay/70" } },
-      blur: {
+    edge: {
+      docked: {
         slots: {
-          backdrop:
-            "data-[stack-index=0]:bg-overlay/50 data-[stack-index=0]:backdrop-blur-sm",
+          sheet:
+            "overflow-clip border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
         },
       },
-      none: {},
+      detached: {
+        slots: {
+          content:
+            "m-2 rounded-(--studio-sheet-radius) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg)) [--surface-radius:var(--studio-sheet-radius)]",
+        },
+      },
     },
   },
 })
-
-export type SheetStyles = typeof styles
 
 export { useStyles }

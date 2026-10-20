@@ -6,14 +6,14 @@ import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
 import chartMeta from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
-import { resolveDesignSystem } from "../resolve"
-import { MOTION_OPTIONS } from "./charts"
+import { designSystemOf } from "../resolve"
+import { MOTION_OPTIONS } from "./charts.meta"
 import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** What the chart container ships under the studio state. */
 async function shipped(state: StudioState = DEFAULT_STATE) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -30,7 +30,7 @@ async function shipped(state: StudioState = DEFAULT_STATE) {
 
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and the grid solid", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
     expect(ds.componentParams.chart).toEqual({
       grid: "solid",
@@ -42,7 +42,7 @@ describe("charts axes", () => {
   })
 
   it("a hue-spread palette rides on the color recipe, completed from the default", () => {
-    const { color } = resolveDesignSystem(parseState({ chartPalette: "vivid" }))
+    const { color } = designSystemOf(parseState({ chartPalette: "vivid" }))
     expect(color).toEqual({ ...DEFAULT_COLOR_CONFIG, chartPalette: "vivid" })
     if (!color) throw new Error("unreachable")
     const vivid = resolveColorConfig(color).charts
@@ -53,7 +53,7 @@ describe("charts axes", () => {
 
   it("the grid is a param on the chart container", () => {
     for (const chartGrid of ["dashed", "none"]) {
-      const ds = resolveDesignSystem(parseState({ chartGrid }))
+      const ds = designSystemOf(parseState({ chartGrid }))
       expect(ds.componentParams.chart).toEqual({
         grid: chartGrid,
         motion: "spring",
@@ -64,16 +64,14 @@ describe("charts axes", () => {
 })
 
 /* The transition each option ships, as `ui/chart/base.tsx` writes it. */
-function transitionSource(option: (typeof MOTION_OPTIONS)[number]): string {
-  const { curve } = option
-  if (!curve) return "false"
-  if (curve.type === "physics")
-    return `{ type: "spring", stiffness: ${curve.stiffness}, damping: ${curve.damping} }`
-  return `{ type: "tween", duration: 400, easing: "ease" }`
+const TRANSITIONS: Record<string, string> = {
+  spring: `{ type: "spring", stiffness: 170, damping: 26 }`,
+  ease: `{ type: "tween", duration: 400, easing: "ease" }`,
+  none: "false",
 }
 
 describe("chart motion", () => {
-  it("the options are the chart's motion param, specimens included", () => {
+  it("the options are the chart's motion param", () => {
     expect(MOTION_OPTIONS.map((o) => o.value)).toEqual([
       ...chartMeta.params.motion.values,
     ])
@@ -83,23 +81,20 @@ describe("chart motion", () => {
       "utf8",
     )
     for (const option of MOTION_OPTIONS)
-      expect(base).toContain(`${option.value}: ${transitionSource(option)},`)
+      expect(base).toContain(`${option.value}: ${TRANSITIONS[option.value]},`)
   })
 
   it("a pick is a chart param, never a token", () => {
-    const ds = resolveDesignSystem(parseState({ chartMotion: "wobbly" }))
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "wobbly",
-    })
-    expect(ds.tokens).toEqual(resolveDesignSystem(DEFAULT_STATE).tokens)
+    const ds = designSystemOf(parseState({ chartMotion: "ease" }))
+    expect(ds.componentParams.chart).toEqual({ grid: "solid", motion: "ease" })
+    expect(ds.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
   })
 
   it("ships the selected transition as a literal", async () => {
     for (const option of MOTION_OPTIONS) {
       const content = await shipped(parseState({ chartMotion: option.value }))
       expect(content).toContain(
-        `const systemMotion: Exclude<ChartAnimate, true> = ${transitionSource(option)}`,
+        `const systemMotion: Exclude<ChartAnimate, true> = ${TRANSITIONS[option.value]}`,
       )
       expect(content).not.toContain("createParamValue")
       expect(content).not.toContain("--studio-")

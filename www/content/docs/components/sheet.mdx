@@ -16,6 +16,11 @@ wip: true
       options: ["bottom", "top", "start", "end"],
       defaultValue: "bottom",
     },
+    {
+      type: "boolean",
+      name: "preventDismissal",
+      defaultValue: false,
+    },
   ]}
 />
 
@@ -26,8 +31,6 @@ npx shadcn@latest add @dotui/sheet
 ```
 
 ## Usage
-
-Use sheets for touch-friendly trays: mobile sheets, navigation menus, notification banners.
 
 ```tsx
 import { Button } from "@/components/ui/button"

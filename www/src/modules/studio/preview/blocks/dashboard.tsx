@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useMemo, useState } from "react"
 
 import {
   BellIcon,
@@ -52,14 +52,6 @@ import {
   MenuSection,
   MenuSectionHeader,
 } from "@/registry/ui/menu"
-import {
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  PaginationList,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/registry/ui/pagination"
 import { Popover } from "@/registry/ui/popover"
 import { ProgressBar, ProgressBarControl } from "@/registry/ui/progress-bar"
 import { SearchField } from "@/registry/ui/search-field"
@@ -100,7 +92,7 @@ import {
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-/* ---------------------------------- Data ---------------------------------- */
+import { PagePicker, formatMoney } from "./shared"
 
 const MONTHLY = [
   { month: "September", revenue: 148_200, target: 140_000 },
@@ -391,17 +383,9 @@ const ACCOUNT_ITEMS = (
   </>
 )
 
-const currency = new Intl.NumberFormat("en-US", {
-  currency: "USD",
-  style: "currency",
-  maximumFractionDigits: 0,
-})
-
-/* -------------------------------- Sections -------------------------------- */
-
 function AppSidebar() {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -596,9 +580,7 @@ function KpiCards() {
         <Card key={kpi.label}>
           <CardHeader>
             <CardDescription>{kpi.label}</CardDescription>
-            <CardTitle className="text-2xl tracking-tight tabular-nums">
-              {kpi.value}
-            </CardTitle>
+            <CardTitle className="text-2xl tabular-nums">{kpi.value}</CardTitle>
             <CardAction>
               <div className="flex size-8 items-center justify-center rounded-md bg-muted text-fg-muted">
                 <kpi.icon className="size-4" />
@@ -621,14 +603,11 @@ function KpiCards() {
 }
 
 function RevenueChart() {
-  const [range, setRange] = React.useState<RangeId>("12m")
+  const [range, setRange] = useState<RangeId>("12m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
   // Charts compare data by identity, so the slice must be stable per range.
-  const data = React.useMemo(
-    () => MONTHLY.slice(MONTHLY.length - months),
-    [months],
-  )
+  const data = useMemo(() => MONTHLY.slice(MONTHLY.length - months), [months])
   const total = data.reduce((sum, d) => sum + d.revenue, 0)
   const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
   const overTarget = ((total - targetTotal) / targetTotal) * 100
@@ -660,7 +639,7 @@ function RevenueChart() {
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
-            {currency.format(total)}
+            {formatMoney(total, { digits: 0 })}
           </span>
           <Badge variant={overTarget >= 0 ? "success" : "warning"}>
             {overTarget >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
@@ -787,8 +766,8 @@ function OrdersTable({ rows }: { rows: Order[] }) {
 }
 
 function RecentOrders() {
-  const [tab, setTab] = React.useState<OrderTabId>("all")
-  const [page, setPage] = React.useState(1)
+  const [tab, setTab] = useState<OrderTabId>("all")
+  const [page, setPage] = useState(1)
 
   const filtered = ORDERS.filter(TAB_FILTER[tab])
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
@@ -840,39 +819,12 @@ function RecentOrders() {
                 <p className="text-sm text-fg-muted tabular-nums">
                   Page {current} of {totalPages}
                 </p>
-                <Pagination>
-                  <PaginationList>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        isIconOnly
-                        isDisabled={current === 1}
-                        onPress={() => setPage(Math.max(1, current - 1))}
-                      />
-                    </PaginationItem>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (p) => (
-                        <PaginationItem key={p}>
-                          <PaginationLink
-                            isActive={p === current}
-                            aria-label={`Page ${p}`}
-                            onPress={() => setPage(p)}
-                          >
-                            {p}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ),
-                    )}
-                    <PaginationItem>
-                      <PaginationNext
-                        isIconOnly
-                        isDisabled={current === totalPages}
-                        onPress={() =>
-                          setPage(Math.min(totalPages, current + 1))
-                        }
-                      />
-                    </PaginationItem>
-                  </PaginationList>
-                </Pagination>
+                <PagePicker
+                  page={current}
+                  pageCount={totalPages}
+                  onPageChange={setPage}
+                  isIconOnly
+                />
               </div>
             </TabPanel>
           ))}
@@ -881,8 +833,6 @@ function RecentOrders() {
     </Card>
   )
 }
-
-/* ---------------------------------- Page ---------------------------------- */
 
 export default function DashboardBlock() {
   return (
@@ -893,9 +843,7 @@ export default function DashboardBlock() {
         <main className="flex flex-1 flex-col gap-6 p-4 sm:p-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="flex flex-col gap-1">
-              <h1 className="font-heading text-2xl font-semibold tracking-tight">
-                Overview
-              </h1>
+              <h1 className="text-2xl">Overview</h1>
               <p className="text-sm text-fg-muted">
                 Store performance for August — updated 6 minutes ago.
               </p>

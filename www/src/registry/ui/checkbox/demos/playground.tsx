@@ -1,13 +1,15 @@
 "use client"
 
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { Label } from "@/registry/ui/field"
+import { Description, Label } from "@/registry/ui/field"
 
 export default function Demo({
   label = "Accept terms",
+  description = "",
   isDisabled = false,
   isReadOnly = false,
   isInvalid = false,
+  isRequired = false,
   isIndeterminate = false,
 } = {}) {
   return (
@@ -15,10 +17,14 @@ export default function Demo({
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       isInvalid={isInvalid}
+      isRequired={isRequired}
       isIndeterminate={isIndeterminate}
     >
       <CheckboxControl />
-      {label && <Label>{label}</Label>}
+      <div className="flex flex-col gap-1">
+        {label && <Label>{label}</Label>}
+        {description && <Description>{description}</Description>}
+      </div>
     </Checkbox>
   )
 }

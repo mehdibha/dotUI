@@ -2,27 +2,26 @@ import { createStyles } from "@/lib/styles"
 
 import modalMeta from "./meta"
 
-/* The entrance's timing is the studio's (styles.css); the backdrop fades on
-   the panel's. */
 const backdropFade =
   "transition-opacity duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) group-exiting/modal:duration-(--studio-modal-exit-duration) group-exiting/modal:ease-(--studio-modal-exit-ease) motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0"
 
 const entrance =
   "duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) exiting:duration-(--studio-modal-exit-duration) exiting:ease-(--studio-modal-exit-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(modalMeta, {
+const { useStyles } = createStyles(modalMeta, {
   base: {
     slots: {
-      // The sheets' layer, so the last opened sits on top: a select's
-      // sheet opens over its modal.
+      // Shares the sheets' layer so the last opened sits on top (a select's sheet over its modal).
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-50 h-(--page-height) w-full",
       ],
-      backdrop: ["absolute inset-0"],
+      backdrop: [
+        "absolute inset-0 bg-scrim backdrop-blur-(--studio-scrim-blur)",
+      ],
       viewport:
         "@container-size sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--studio-modal-background)] [--surface-radius:var(--studio-modal-radius)]",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--studio-modal-radius) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg)) [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-modal-radius)]",
       ],
     },
   },
@@ -30,13 +29,10 @@ const { useStyles, styles } = createStyles(modalMeta, {
     compact: { slots: { modal: "sm:max-w-sm" } },
     default: { slots: { modal: "sm:max-w-sm" } },
     comfortable: { slots: { modal: "sm:max-w-md" } },
+    spacious: { slots: { modal: "sm:max-w-md" } },
+    touch: { slots: { modal: "sm:max-w-md" } },
   },
   params: {
-    backdrop: {
-      dim: { slots: { backdrop: "bg-overlay/40 backdrop-blur-sm" } },
-      blur: { slots: { backdrop: "bg-overlay/20 backdrop-blur-lg" } },
-      none: {},
-    },
     position: {
       center: {
         slots: {
@@ -53,7 +49,6 @@ const { useStyles, styles } = createStyles(modalMeta, {
       },
     },
     motion: {
-      // shadcn's: fade and zoom from 95%, both ways.
       scale: {
         slots: {
           backdrop: backdropFade,
@@ -64,17 +59,8 @@ const { useStyles, styles } = createStyles(modalMeta, {
           ],
         },
       },
-      fade: {
-        slots: {
-          backdrop: backdropFade,
-          modal: [
-            "transition-opacity",
-            entrance,
-            "entering:opacity-0 exiting:opacity-0",
-          ],
-        },
-      },
-      slide: {
+      // Up from below (Spectrum 2, Polaris, Atlassian).
+      rise: {
         slots: {
           backdrop: backdropFade,
           modal: [
@@ -84,26 +70,36 @@ const { useStyles, styles } = createStyles(modalMeta, {
           ],
         },
       },
+      // Down from above (Carbon, Mantine).
+      drop: {
+        slots: {
+          backdrop: backdropFade,
+          modal: [
+            "transition-[opacity,translate]",
+            entrance,
+            "entering:-translate-y-2 entering:opacity-0 exiting:-translate-y-2 exiting:opacity-0",
+          ],
+        },
+      },
       none: {},
     },
-    /* Below the mobile line the sheet docks to the bottom edge of the visual
-       viewport (keyboard-aware) and rises in instead of scaling. It spans the
-       full width via min-width, which beats the density max-width. */
+    /* Below the mobile line. Sheet swaps the panel for a bottom sheet
+       (base.sheet.tsx); Fullscreen (base.fullscreen.tsx, which adds a close
+       button) fills the visual viewport, its min sizes beating the max sizes
+       the position and density set, and stretches the dialog so its footer
+       rests on the bottom edge, clear of the home indicator. */
     mobile: {
       center: {},
-      sheet: {
+      sheet: {},
+      fullscreen: {
         slots: {
-          viewport: "max-md:items-end",
-          modal: [
-            "max-md:min-w-full max-md:rounded-t-(--studio-modal-radius) max-md:rounded-b-none max-md:border-b-0 max-md:pb-[env(safe-area-inset-bottom)]",
-            "max-md:transition-[opacity,translate] max-md:entering:translate-y-4 max-md:entering:scale-100 max-md:exiting:translate-y-4 max-md:exiting:scale-100",
-          ],
+          viewport: "max-md:pt-0",
+          modal:
+            "max-md:min-h-(--visual-viewport-height) max-md:min-w-full max-md:rounded-none max-md:border-0 max-md:pb-[env(safe-area-inset-bottom)] max-md:[--surface-radius:0px] max-md:*:max-h-none max-md:*:flex-1 max-md:**:data-dialog-footer:mt-auto",
         },
       },
     },
   },
 })
-
-export type ModalStyles = typeof styles
 
 export { useStyles }

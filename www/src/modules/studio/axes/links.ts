@@ -1,51 +1,44 @@
-/* Links — how an inline link announces itself. Underline: `always` is the
-   prose-first camp (GOV.UK, Apple's HIG for web, most docs systems), `hover`
-   the GitHub/MDN middle ground, `never` app UIs (Linear, Figma) where color
-   or weight alone carries it. Color, a leaf of Color's Primary: `accent` is
-   the classic blue/brand link, `neutral` the Vercel/Linear move — the text's
-   own color, with weight and the underline axis doing the work.
+/* Links — the one link recipe: links, link buttons, and breadcrumb
+   ancestors drawn as links. Color is a leaf of Color's Primary (Same as ink
+   until Emphasis lands).
 
-   Engine: `underline` and `color` are enum params on `link`, shaping the
-   default variant; quiet keeps its own underlined, neutral look; the hover
-   color change rides the `--studio-link-state-*` vars. Defaults mirror the
-   registry: accent, no underline. */
+   `underline` and `color` are params on `link` (its default variant),
+   `linkUnderline` and `linkColor` on `button` and `toggle-button`
+   (their link variant); breadcrumbs fold both into `ancestors`. */
 
-import { SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
-import type { ChapterSchema } from "./schema"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 
-/* shadcn has no link; its breadcrumb link is `transition-colors` on
-   Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
+export const UNDERLINE_VALUES = ["always", "hover", "never"] as const
 
-export const LINK_DEFAULTS = {
-  linkUnderline: "never",
-  linkColor: "accent",
-  linkMotion: MOTION,
-}
+// Primer's, Duolingo's, Polaris' and Geist's blue links beside other fills
+// need their own ink (Emphasis).
+export const LINK_COLOR_VALUES = ["accent", "neutral"] as const
 
-export const UNDERLINE_OPTIONS = [
-  { value: "always", label: "Always" },
-  { value: "hover", label: "Hover" },
-  { value: "never", label: "Never" },
-]
-
-export const LINK_SCHEMA: ChapterSchema<typeof LINK_DEFAULTS> = {
-  linkUnderline: oneOf(UNDERLINE_OPTIONS),
-  linkColor: oneOf(SOURCE_OPTIONS),
-  linkMotion: STATE_CHANGE,
-}
-
-export function resolveLinks(state: StudioState): Resolved {
-  return {
-    tokens: resolveStateChange("link", state.linkMotion, MOTION),
-    params: {
-      link: {
-        underline: state.linkUnderline,
-        color: state.linkColor,
+export const chapter = defineChapter({
+  id: "links",
+  defaults: {
+    linkUnderline: "never",
+    linkColor: "accent",
+  },
+  schema: {
+    linkUnderline: oneOf(UNDERLINE_VALUES),
+    linkColor: oneOf(LINK_COLOR_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    return {
+      params: {
+        link: { underline: state.linkUnderline, color: state.linkColor },
+        button: {
+          linkUnderline: state.linkUnderline,
+          linkColor: state.linkColor,
+        },
+        "toggle-button": {
+          linkUnderline: state.linkUnderline,
+          linkColor: state.linkColor,
+        },
       },
-    },
-  }
-}
+    }
+  },
+})

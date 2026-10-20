@@ -1,5 +1,3 @@
-"use client"
-
 import { FileTextIcon, XIcon } from "@/registry/__generated__/icons"
 import {
   Attachment,

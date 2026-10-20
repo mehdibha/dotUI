@@ -1,27 +1,18 @@
 "use client"
 
 /* The panel's control language, after DialKit (dialkit.dev): 36px rows on a
-   5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 70%
-   foreground, mono values on the right; a slider is its whole row; folders
-   fold in place between hairlines. Alpha surfaces keep both themes in one
-   set of classes. Folds are instant — chrome, not content. */
+   5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 85%
+   foreground, values on the right at 60%; a slider is its whole row. Rows
+   that open a popover carry no chevron, rows that open a page do. Alpha
+   surfaces keep both themes in one set of classes. */
 
-import { useEffect, useRef, useState } from "react"
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  ChevronsUpDownIcon,
-} from "lucide-react"
+import { Children, useContext, useEffect, useRef, useState } from "react"
+import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
-  Disclosure,
-  DisclosurePanel,
-  Label as RacLabel,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
-  Select as RacSelect,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -29,78 +20,73 @@ import {
 
 import { toHex, toOklch } from "@dotui/colors"
 
+import { useMedia } from "@/hooks/use-media"
 import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxItemDescription,
-  ListBoxItemLabel,
-} from "@/registry/ui/list-box"
-import { Separator } from "@/registry/ui/separator"
 
+import { effective } from "./axes"
+import type { StudioState } from "./axes"
+import { COLUMNS } from "./axes/style"
+import type { StyleKey } from "./axes/style"
+import { FOLLOW_STYLE } from "./axes/style.meta"
+import { holdEditFocus } from "./focus"
+import { clearLive, previewNow } from "./live"
+import { useOptionPreview } from "./option-preview"
+import { RowLabel, useRowLabel } from "./row-host"
 import {
   ColorPickerPopover,
+  PanelNav,
   PanelPopover,
-  PanelPopoverBoundary,
   PanelPopoverTitle,
   useDraft,
-  useMedia,
 } from "./rows"
+import { useCurrent } from "./selection"
+import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
+import type { Axis, AxisKey } from "./use-axis"
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
-export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/70"
-export const DIAL_VALUE =
-  "truncate font-mono text-[13px] font-medium text-fg/70"
-export const DIAL_CHEVRON = "size-4 shrink-0 text-fg/60"
-
-/** The option's label, or the raw value when it is off the list. */
-export const optionLabel = (
-  options: { value: string; label: string }[],
-  value: string,
-) => options.find((o) => o.value === value)?.label ?? value
-
-/* ---------------------------------- Rows ---------------------------------- */
+export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
+const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
   return (
-    <span data-slot="glyph" className="size-4 shrink-0 *:size-full">
+    <span data-glyph="" className="size-4 shrink-0 *:size-full">
       {children}
     </span>
   )
 }
 
-/** The accent dot beside anything that leaves its defaults. */
-export function ModifiedDot() {
-  return (
-    <span
-      role="img"
-      aria-label="Modified"
-      className="size-1 shrink-0 rounded-full bg-accent"
-    />
-  )
-}
-
-/** Label left, control right. */
-export function DialRow({
+/** A row a rule holds: dimmed, its value set elsewhere, the cause beside it. */
+function PinnedRow({
+  axis,
   label,
+  cause,
   children,
-  className,
 }: {
+  axis?: string
   label: string
+  cause: string
   children: React.ReactNode
-  className?: string
 }) {
   return (
-    <div className={cn(DIAL_ROW, className)}>
-      <span className={DIAL_LABEL}>{label}</span>
-      {children}
+    <div data-axis={axis} aria-disabled className={DIAL_ROW}>
+      <span className={cn(DIAL_LABEL, "opacity-50")}>{label}</span>
+      <span className="flex min-w-0 items-center gap-2">
+        {/* Short of room, the value wraps past the spacer out of sight: the chip says why. */}
+        <span className="flex h-5 min-w-0 flex-wrap justify-end overflow-hidden">
+          <span className="h-5" />
+          <span className="text-[13px]/5 font-medium whitespace-nowrap text-fg/50">
+            {children}
+          </span>
+        </span>
+        <CauseChip cause={cause} />
+      </span>
     </div>
   )
 }
@@ -110,38 +96,75 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
-/** A row that opens something: label, its value, a chevron. Wraps the
- *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
- *  values that end in a swatch: the swatch is the affordance, inset like
- *  DialColor's. */
+/** A row that opens a popover: label, its value. Wraps the popover passed
+ *  as `children` in a Dialog trigger. `swatch` for values that end in one:
+ *  inset like DialColor's. `holds` names keys edited inside, so a reveal
+ *  lands here; `aside` (a cause chip) sits before the value, outside the
+ *  trigger. */
 export function DialTrigger({
-  label,
+  axis,
+  holds,
+  label: labelProp,
   value,
-  chevron = true,
+  aside,
+  swatch,
   children,
 }: {
+  axis?: string
+  holds?: readonly string[]
   label: string
   value: React.ReactNode
-  chevron?: boolean
+  aside?: React.ReactNode
+  swatch?: boolean
   children: React.ReactNode
 }) {
+  const label = useRowLabel(labelProp)
+  const row = {
+    "data-axis": axis,
+    "data-holds": holds?.join(" "),
+  }
+  const right = (
+    <span className="flex min-w-0 items-center gap-2">
+      {aside && <span className="pointer-events-auto flex">{aside}</span>}
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+        {value}
+      </span>
+    </span>
+  )
   return (
     <Dialog>
-      <RacButton className={cn(DIAL_ROW, DIAL_PRESS, !chevron && "pr-2.5")}>
-        <span className={DIAL_LABEL}>{label}</span>
-        <span className="flex min-w-0 items-center gap-2">
-          <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
-            {value}
+      {aside ? (
+        // A chip can't nest in the trigger: the trigger is laid under the row.
+        <div {...row} className={cn(DIAL_ROW, "relative", swatch && "pr-2.5")}>
+          <RacButton
+            aria-label={label}
+            className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
+          />
+          <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
+            {label}
           </span>
-          {chevron && <ChevronDownIcon className={DIAL_CHEVRON} />}
-        </span>
-      </RacButton>
+          <span className="pointer-events-none relative flex min-w-0">
+            {right}
+          </span>
+        </div>
+      ) : (
+        <RacButton
+          {...row}
+          className={cn(DIAL_ROW, DIAL_PRESS, swatch && "pr-2.5")}
+        >
+          <span className={DIAL_LABEL}>{label}</span>
+          {right}
+        </RacButton>
+      )}
       <PanelPopoverTitle.Provider value={label}>
-        {children}
+        <RowLabel.Provider value={undefined}>{children}</RowLabel.Provider>
       </PanelPopoverTitle.Provider>
     </Dialog>
   )
 }
+
+/** A pick list's popover: as wide as its longest option, not the row. */
+export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 
 /** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
 export function DialPopover({
@@ -153,7 +176,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}
       </DialogContent>
     </PanelPopover>
@@ -162,163 +185,230 @@ export function DialPopover({
 
 /** A row that opens a page in place of the panel: label, value, a chevron. */
 export function DialLink({
+  page,
   label,
   value,
-  onPress,
+  className,
 }: {
+  page: string
   label: string
   value: React.ReactNode
-  onPress: () => void
+  className?: string
 }) {
+  const open = useContext(PanelNav)
   return (
-    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS)}>
+    <RacButton
+      data-page-link={page}
+      onPress={() => open(page)}
+      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
+    >
       <span className={DIAL_LABEL}>{label}</span>
-      <span className="flex min-w-0 items-center gap-2">
-        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
-          {value}
-        </span>
-        <ChevronRightIcon className={DIAL_CHEVRON} />
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+        {value}
+        <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
       </span>
     </RacButton>
   )
 }
 
-/* --------------------------------- Select --------------------------------- */
-
 export interface DialSelectOption {
   value: string
   label: string
-  /** A line under the label, in the popover. */
+  /** What the option does: a line under the label, in the popover. */
   description?: string
-  /** A specimen beside the label — glyphs, a swatch. */
-  preview?: React.ReactNode
+  credits?: readonly string[]
+  /** A specimen beside the row's value. */
+  glyph?: React.ReactNode
+  /** Beside the label: a follow option's source chip. */
+  aside?: React.ReactNode
 }
 
-/** A pick from a short list: the row shows the choice (and its specimen,
- *  unless the chapter title already carries it), the popover lists every
- *  option in the registry's own ListBox. Picking keeps the popover up — the
+/** A pick from a short list: the row shows the choice (and its glyph), the
+ *  popover lists every option in the dial's pick list. Picking keeps the popover up — the
  *  choice is a comparison against the preview behind it. `children` are dial
  *  rows under the list, past a separator. */
 export function DialSelect({
-  label,
-  value,
-  onChange,
-  options,
-  rowPreview = true,
+  axis: key,
+  holds,
+  label: labelProp,
+  value: valueProp,
+  onChange: onChangeProp,
+  options: listed,
   children,
 }: {
+  /** The key the row edits: value, change, hide and exclusions follow it. */
+  axis?: AxisKey
+  /** Keys edited in the rows under the list, so a reveal lands here. */
+  holds?: readonly string[]
   label: string
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange?: (value: string) => void
   options: DialSelectOption[]
-  rowPreview?: boolean
   children?: React.ReactNode
 }) {
+  const label = useRowLabel(labelProp)
+  const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
+  const { state } = useCurrent()
+  if (hidden) return null
+  // A Style key's first option is the Style itself ("Style · Line"); a
+  // follow its column reads ("auto") would list the same pick twice.
+  const column =
+    key && Object.hasOwn(COLUMNS, key)
+      ? COLUMNS[key as StyleKey][state.style]
+      : undefined
+  const options: DialSelectOption[] =
+    axis?.follows.includes(FOLLOW_STYLE.value) &&
+    !listed.some((option) => option.value === FOLLOW_STYLE.value)
+      ? [
+          FOLLOW_STYLE,
+          ...listed.filter(
+            (option) =>
+              option.value !== column ||
+              !axis.follows.includes(column) ||
+              option.value === axis.saved,
+          ),
+        ]
+      : listed
+  // A key read through a follow keeps its follow option picked ("Auto · Tone").
+  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
+  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
+  const resolved = following
+    ? options.find((option) => option.value === String(axis?.effective))
+    : undefined
+  const shown = resolved ?? selected
+  if (pinned)
+    return (
+      <PinnedRow axis={key} label={label} cause={pinned}>
+        {selected?.label ?? value}
+      </PinnedRow>
+    )
   return (
     <DialTrigger
+      axis={key}
+      holds={holds}
       label={label}
+      aside={held && <CauseChip cause={held} />}
       value={
         <>
-          <span className="truncate">{selected?.label ?? value}</span>
-          {rowPreview && selected?.preview}
+          <span className="truncate">
+            {(resolved ?? selected)?.label ?? value}
+          </span>
+          {shown?.glyph}
         </>
       }
     >
-      <PanelPopover className="w-64 min-w-0">
-        <DialogContent className="flex min-h-0 flex-col gap-0 overflow-y-auto overscroll-contain p-0">
-          <ListBox
-            aria-label={label}
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={[value]}
-            onSelectionChange={(keys) => {
-              if (keys === "all") return
-              const next = keys.values().next().value
-              if (next) onChange(next as string)
-            }}
-          >
-            {options.map((option) => (
-              <ListBoxItem
-                key={option.value}
-                id={option.value}
-                textValue={option.label}
-              >
-                <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
-                {option.description && (
-                  <ListBoxItemDescription>
-                    {option.description}
-                  </ListBoxItemDescription>
-                )}
-                {option.preview && (
-                  <span className="ml-auto flex items-center gap-2">
-                    {option.preview}
-                  </span>
-                )}
-              </ListBoxItem>
-            ))}
-          </ListBox>
-          {children && (
-            <>
-              <Separator />
-              <div className="flex flex-col gap-1.5 p-2">{children}</div>
-            </>
-          )}
-        </DialogContent>
-      </PanelPopover>
+      <DialPopover className={PICK_POPOVER}>
+        <SelectOptions
+          axis={axis}
+          label={label}
+          value={value}
+          onChange={onChange}
+          options={options}
+          exclude={exclude}
+        />
+        {Children.toArray(children).length > 0 && (
+          <>
+            <DialSeparator />
+            {children}
+          </>
+        )}
+      </DialPopover>
     </DialTrigger>
   )
 }
 
-/* --------------------------------- Picks ---------------------------------- */
+/** The list; a follow option names and draws its target ("Same as motion · Standard"). */
+function SelectOptions({
+  axis,
+  label,
+  value,
+  onChange,
+  options,
+  exclude,
+}: {
+  axis: Axis | undefined
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: DialSelectOption[]
+  exclude: Axis["explain"]["exclude"]
+}) {
+  const { state } = useCurrent()
+  const target = (option: DialSelectOption) => {
+    if (!axis?.follows.includes(option.value)) return
+    const resolved =
+      option.value === axis.saved
+        ? axis.effective
+        : effective({ ...state, [axis.key]: option.value } as StudioState)
+            .values[axis.key]
+    return options.find((o) => o.value === String(resolved))
+  }
+  return (
+    <DialPickList
+      label={label}
+      value={value}
+      onChange={onChange}
+      disabledKeys={exclude?.options}
+      options={options.map((option) => {
+        const to = target(option)
+        const cause = exclude?.options?.includes(option.value)
+          ? exclude.cause
+          : undefined
+        return {
+          ...option,
+          label: to ? `${option.label} · ${to.label}` : option.label,
+          aside: (option.aside || cause) && (
+            <>
+              {option.aside}
+              {cause && <CauseChip cause={cause} />}
+            </>
+          ),
+        }
+      })}
+    />
+  )
+}
 
-export interface DialPickOption {
+interface DialPickOption {
   value: string
   label: string
   description?: string
-  disabled?: boolean
-  /** A muted aside on the label's line. */
-  note?: string
-  /** A specimen beside the label. */
-  visual?: React.ReactNode
+  credits?: readonly string[]
+  /** After the label: a follow's source chip, an exclusion's cause. */
+  aside?: React.ReactNode
 }
 
 const PICK_ITEM =
-  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-disabled disabled:opacity-40"
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
 function PickItem({
   option,
-  modified,
+  run,
 }: {
   option: DialPickOption
-  modified?: boolean
+  run: () => void
 }) {
+  const previewProps = useOptionPreview()
   return (
     <RacListBoxItem
       id={option.value}
       textValue={option.label}
       className={PICK_ITEM}
+      {...previewProps(run)}
     >
       {({ isSelected }) => (
         <>
-          <span className="flex min-w-0 items-center gap-3">
-            {option.visual}
-            <span className="flex min-w-0 flex-col gap-0.5">
-              <span className="flex items-center gap-1.5 text-[13px] font-medium text-fg/90">
-                {option.label}
-                {modified && <ModifiedDot />}
-                {option.note && (
-                  <span className="truncate text-xs font-normal text-fg/45">
-                    {option.note}
-                  </span>
-                )}
-              </span>
-              {option.description && (
-                <span className="text-xs leading-snug text-fg/55">
-                  {option.description}
-                </span>
-              )}
+          <span className="flex min-w-0 flex-col gap-0.5">
+            <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
+              {option.label}
+              {option.aside}
             </span>
+            {option.description && (
+              <span className="text-xs leading-snug text-fg/55">
+                {option.description}
+              </span>
+            )}
           </span>
           <CheckIcon
             className={cn("mt-px size-4 shrink-0", !isSelected && "invisible")}
@@ -329,157 +419,67 @@ function PickItem({
   )
 }
 
-/** Options laid out in place, each with what it means. `value` undefined
- *  selects nothing; `modified` marks the option the state was edited from. */
+/** Options laid out in place, each with what it means. */
 export function DialPickList({
   label,
   value,
   onChange,
   options,
-  modified,
+  disabledKeys,
 }: {
   label: string
-  value: string | undefined
+  value: string
   onChange: (value: string) => void
   options: DialPickOption[]
-  modified?: string
+  disabledKeys?: readonly string[]
 }) {
   return (
     <RacListBox
       aria-label={label}
       selectionMode="single"
-      selectedKeys={value ? [value] : []}
+      disallowEmptySelection
+      selectedKeys={[value]}
+      disabledKeys={disabledKeys}
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
-      className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
+      className="flex flex-col gap-0.5 outline-hidden"
     >
       {options.map((option) => (
         <PickItem
           key={option.value}
           option={option}
-          modified={option.value === modified}
+          run={() => onChange(option.value)}
         />
       ))}
     </RacListBox>
   )
 }
 
-/** A setting as a plain line, Linear's settings style: the label left, a
- *  compact picker right whose menu says what each option does. */
-export function DialPicker({
-  label,
-  value,
-  onChange,
-  options,
+/** A full-width action at a popover's foot ("Reset all"). */
+export function DialAction({
+  onPress,
+  children,
 }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  options: DialPickOption[]
+  onPress: () => void
+  children: React.ReactNode
 }) {
-  const selected = options.find((option) => option.value === value)
   return (
-    <RacSelect
-      selectedKey={value}
-      onSelectionChange={(key) => key !== null && onChange(String(key))}
-      disabledKeys={options.filter((o) => o.disabled).map((o) => o.value)}
-      className="flex h-9 w-full shrink-0 items-center justify-between gap-3 pr-1 pl-3"
+    <RacButton
+      onPress={onPress}
+      className={cn(DIAL_ROW, DIAL_PRESS, "justify-center")}
     >
-      <RacLabel className={DIAL_LABEL}>{label}</RacLabel>
-      <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
-        <span className="truncate">{selected?.label ?? value}</span>
-        <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
-      </RacButton>
-      <PanelPopoverBoundary.Provider value={null}>
-        <PanelPopoverTitle.Provider value={label}>
-          <PanelPopover
-            placement="bottom end"
-            offset={4}
-            showArrow={false}
-            className="w-64 min-w-0 overflow-y-auto p-1"
-          >
-            <RacListBox className="flex flex-col gap-0.5 outline-hidden">
-              {options.map((option) => (
-                <PickItem key={option.value} option={option} />
-              ))}
-            </RacListBox>
-          </PanelPopover>
-        </PanelPopoverTitle.Provider>
-      </PanelPopoverBoundary.Provider>
-    </RacSelect>
+      <span className={DIAL_LABEL}>{children}</span>
+    </RacButton>
   )
 }
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
+  return <div role="separator" className="-mx-1.5 my-1 h-px shrink-0 bg-fg/8" />
 }
-
-/** A page's main decision, every option in view: a titled list of rows, each
- *  a radio dot, the label and its specimen. */
-export function DialList({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  options: DialSelectOption[]
-}) {
-  return (
-    <div className="flex flex-col">
-      <span className="flex h-9 items-center px-1 text-xs font-medium text-fg/50">
-        {label}
-      </span>
-      <RacToggleButtonGroup
-        aria-label={label}
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={[value]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        orientation="vertical"
-        className="flex flex-col gap-1"
-      >
-        {options.map((option) => (
-          <RacToggleButton
-            key={option.value}
-            id={option.value}
-            className="group/option flex min-h-10 w-full cursor-interactive items-center justify-between gap-3 rounded-lg tint-5 py-2 pr-2 pl-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span className="size-3 shrink-0 rounded-full border border-fg/30 transition-[border-width] group-selected/option:border-4 group-selected/option:border-fg" />
-              <span className="flex min-w-0 flex-col">
-                <span className="truncate text-[13px] font-medium text-fg/85">
-                  {option.label}
-                </span>
-                {option.description && (
-                  <span className="truncate text-xs text-fg/50">
-                    {option.description}
-                  </span>
-                )}
-              </span>
-            </span>
-            {option.preview && (
-              <span className="flex shrink-0 items-center gap-1.5 **:data-[slot=glyph]:size-5">
-                {option.preview}
-              </span>
-            )}
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
-    </div>
-  )
-}
-
-/* --------------------------------- Slider --------------------------------- */
 
 /* DialKit's slider: the row is the track, the fill follows the pointer
    unstepped and springs to the nearest step on release. Hashmarks and a
@@ -508,8 +508,62 @@ function snapToDecile(raw: number, min: number, max: number) {
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
 }
 
-/** Drags through a draft and commits on release. */
-export function DialSlider({
+interface SliderProps {
+  label: string
+  minValue: number
+  maxValue: number
+  step: number
+  format: (value: number) => string
+}
+
+/** Drags through a draft and commits on release. With `axis`, the row edits
+ *  that key: hidden or held by a rule, an excluded range greyed, and a key
+ *  that follows another reads "Auto" until dragged (its chip goes back). */
+export function DialSlider(
+  row: SliderProps &
+    (
+      | { axis: AxisKey; value?: undefined; onChange?: undefined }
+      | { axis?: undefined; value: number; onChange: (value: number) => void }
+    ),
+) {
+  const label = useRowLabel(row.label)
+  const { axis, hidden, pinned, exclude, following } = useAxisGate(row.axis)
+  if (hidden) return null
+  if (row.axis === undefined) return <SliderRow {...row} label={label} />
+  const { axis: _, value: __, onChange: ___, ...rest } = row
+  const props = { ...rest, label }
+  if (!axis) return null
+  const current = Number(axis.effective)
+  if (pinned)
+    return (
+      <PinnedRow axis={axis.key} label={props.label} cause={pinned}>
+        {props.format(current)}
+      </PinnedRow>
+    )
+  const follow = axis.follows[0]
+  return (
+    <SliderRow
+      {...props}
+      axis={axis.key}
+      value={current}
+      onChange={axis.set}
+      following={following}
+      exclude={exclude}
+      aside={exclude && <CauseChip cause={exclude.cause} />}
+      reset={
+        follow &&
+        !following && (
+          <ChipButton onPress={() => axis.set(follow)}>
+            <span className="capitalize">{follow}</span>
+          </ChipButton>
+        )
+      }
+    />
+  )
+}
+
+function SliderRow({
+  axis,
   label,
   value,
   onChange,
@@ -517,14 +571,19 @@ export function DialSlider({
   maxValue,
   step,
   format,
-}: {
-  label: string
+  following,
+  exclude,
+  aside,
+  reset,
+}: SliderProps & {
+  axis?: string
   value: number
   onChange: (value: number) => void
-  minValue: number
-  maxValue: number
-  step: number
-  format: (value: number) => string
+  following?: string
+  exclude?: { above?: number; below?: number }
+  aside?: React.ReactNode
+  /** Back to the follow: after the value, while hovered or focused. */
+  reset?: React.ReactNode
 }) {
   const [draft, setDraft] = useDraft(value)
   const reducedMotion = useMedia("(prefers-reduced-motion: reduce)")
@@ -540,6 +599,10 @@ export function DialSlider({
     )
 
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const commit = (next: number) => {
+    if (axis) holdEditFocus(wrapperRef.current)
+    onChange(next)
+  }
   const trackRef = useRef<HTMLDivElement>(null)
   const fillRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
@@ -568,6 +631,13 @@ export function DialSlider({
   const isClick = useRef(true)
   const rect = useRef<DOMRect | null>(null)
   const committed = useRef(value)
+  // Unmounted mid-drag, nothing would commit or drop the drag's preview.
+  useEffect(
+    () => () => {
+      if (pointerDown.current) clearLive()
+    },
+    [],
+  )
 
   /* The fill and the handle move together, off React: written straight to
      style, with the snap transition only on release. */
@@ -602,7 +672,7 @@ export function DialSlider({
     committed.current = next
     paint(toPct(next), SNAP)
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   const valueAt = (clientX: number) => {
@@ -670,16 +740,12 @@ export function DialSlider({
       isClick.current = false
       setDragging(true)
     }
-    if (down.touch) {
-      const raw = touchValueAt(e.clientX)
-      paint(toPct(raw))
-      setDraft(round(raw))
-      return
-    }
-    stretchTo(stretchAt(e.clientX))
-    const raw = valueAt(e.clientX)
+    if (!down.touch) stretchTo(stretchAt(e.clientX))
+    const raw = down.touch ? touchValueAt(e.clientX) : valueAt(e.clientX)
     paint(toPct(raw))
-    setDraft(round(raw))
+    const next = round(raw)
+    setDraft(next)
+    previewNow(() => onChange(next))
   }
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -712,6 +778,7 @@ export function DialSlider({
 
   const onPointerCancel = () => {
     if (!interacting) return
+    clearLive()
     stretchTo(0)
     paint(toPct(value))
     setDraft(value)
@@ -746,7 +813,7 @@ export function DialSlider({
     committed.current = next
     paint(toPct(next))
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   // The handle: hidden at rest (half-strength on touch), half-strength on
@@ -796,8 +863,18 @@ export function DialSlider({
         )
       : Array.from({ length: 9 }, (_, i) => (i + 1) * 10)
 
+  const excluded = exclude && {
+    from: toPct(exclude.below ?? minValue),
+    to: toPct(exclude.above ?? maxValue),
+    above: exclude.above !== undefined,
+  }
+
   return (
-    <div ref={wrapperRef} className="relative h-9 w-full shrink-0">
+    <div
+      data-axis={axis}
+      ref={wrapperRef}
+      className="relative h-9 w-full shrink-0"
+    >
       <div
         ref={trackRef}
         role="slider"
@@ -814,10 +891,23 @@ export function DialSlider({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}
+        onLostPointerCapture={() => {
+          if (pointerDown.current) onPointerCancel()
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onKeyDown={onKeyDown}
       >
+        {excluded && (
+          <div
+            className="pointer-events-none absolute inset-y-0 bg-[repeating-linear-gradient(135deg,transparent_0_4px,color-mix(in_oklab,var(--color-fg)_8%,transparent)_4px_5px)]"
+            style={
+              excluded.above
+                ? { left: `${excluded.to}%`, right: 0 }
+                : { left: 0, width: `${excluded.from}%` }
+            }
+          />
+        )}
         <div className="pointer-events-none absolute inset-0">
           {marks.map((left) => (
             <span
@@ -857,28 +947,43 @@ export function DialSlider({
           ref={valueRef}
           className={cn(
             DIAL_VALUE,
-            "pointer-events-none absolute inset-y-0 right-3 flex items-center tabular-nums transition-colors duration-150 group-focus-visible:text-fg group-data-active:text-fg",
+            "pointer-events-none absolute inset-y-0 right-3 flex items-center gap-2 tabular-nums",
           )}
         >
+          {aside}
+          {following && !interacting && (
+            <span className="capitalize">{following} ·</span>
+          )}
           {format(draft)}
+          {reset && (
+            // Visually hidden, not display:none, so Tab can still land on it;
+            // it unmounts on reset, so focus goes back to the slider first.
+            <span
+              onClickCapture={() => trackRef.current?.focus()}
+              className="sr-only flex group-focus-visible:not-sr-only group-has-focus-visible:not-sr-only group-data-active:not-sr-only pointer-coarse:not-sr-only"
+            >
+              {reset}
+            </span>
+          )}
         </span>
       </div>
     </div>
   )
 }
 
-/* ---------------------------------- Color --------------------------------- */
-
 /** Label, hex, swatch; the row opens the picker. With `derived`, an empty
  *  value reads "Auto" on the engine's color. */
 export function DialColor({
-  label,
+  axis,
+  label: labelProp,
   value,
   derived,
   onChange,
   status,
   footer,
 }: {
+  /** The key the row edits, so a reveal lands on it. */
+  axis?: string
   label: string
   value: string
   /** The engine's derived color while `value` is '' (any CSS color). */
@@ -889,6 +994,7 @@ export function DialColor({
   /** Rows under the picker — settings that belong to this one color. */
   footer?: React.ReactNode
 }) {
+  const label = useRowLabel(labelProp)
   const auto = derived !== undefined && value === ""
   const [draft, setDraft] = useDraft<string | Color>(
     auto ? toHex(toOklch(derived)) : value,
@@ -898,7 +1004,7 @@ export function DialColor({
   return (
     <ColorPicker value={draft} onChange={setDraft}>
       {({ color }) => (
-        <div className={cn(DIAL_ROW, "relative pr-0")}>
+        <div data-axis={axis} className={cn(DIAL_ROW, "relative pr-0")}>
           {/* Explicit children: the ColorPicker hands childless buttons a swatch. */}
           <RacButton
             className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
@@ -918,7 +1024,9 @@ export function DialColor({
             <ColorSwatch className="size-4 rounded-full border border-fg/15" />
           </span>
           <PanelPopoverTitle.Provider value={label}>
-            <ColorPickerPopover commit={commit}>{footer}</ColorPickerPopover>
+            <ColorPickerPopover commit={commit}>
+              <RowLabel.Provider value={undefined}>{footer}</RowLabel.Provider>
+            </ColorPickerPopover>
           </PanelPopoverTitle.Provider>
         </div>
       )}
@@ -926,37 +1034,41 @@ export function DialColor({
   )
 }
 
-/* -------------------------------- Segmented -------------------------------- */
-
-export interface DialOption {
+interface DialOption {
   value: string
   label: React.ReactNode
 }
 
 /** The segmented choice itself; the moving pill is the only motion. `null`
  *  selects nothing — a view over values that disagree. */
-export function SegmentedGroup({
+function SegmentedGroup({
   label,
   value,
   onChange,
   options,
+  disabled,
   className,
 }: {
   label: string
   value: string | null
-  onChange: (value: string) => void
+  /** `row`: the row the group sits in. */
+  onChange: (value: string, row: Element | null) => void
   options: DialOption[]
+  disabled?: readonly string[]
   className?: string
 }) {
+  const ref = useRef<HTMLDivElement>(null)
   return (
     <RacToggleButtonGroup
+      ref={ref}
       aria-label={label}
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={value === null ? [] : [value]}
       onSelectionChange={(keys) => {
         const next = keys.values().next().value
-        if (next) onChange(next as string)
+        if (next)
+          onChange(next as string, ref.current?.closest("[data-axis]") ?? null)
       }}
       className={cn("relative flex shrink-0 p-0.5", className)}
     >
@@ -964,7 +1076,8 @@ export function SegmentedGroup({
         <RacToggleButton
           key={option.value}
           id={option.value}
-          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
+          isDisabled={disabled?.includes(option.value)}
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center gap-1.5">
@@ -978,81 +1091,71 @@ export function SegmentedGroup({
 
 /** Label left, a segmented choice right. */
 export function DialSegmented({
-  label,
-  value,
-  onChange,
+  axis: key,
+  label: labelProp,
+  value: valueProp,
+  onChange: onChangeProp,
   options,
 }: {
+  /** The key the row edits: value, change and hide follow it. */
+  axis?: AxisKey
   label: string
-  value: string | null
-  onChange: (value: string) => void
+  value?: string | null
+  onChange?: (value: string) => void
   options: DialOption[]
 }) {
+  const label = useRowLabel(labelProp)
+  const { axis, hidden, pinned, exclude: gate } = useAxisGate(key)
+  if (hidden) return null
+  // A row listing a subset (a Style's finishes) names a cause only for its own options.
+  const exclude = gate?.options?.some((o) => options.some((x) => x.value === o))
+    ? gate
+    : undefined
+  const value = valueProp !== undefined ? valueProp : String(axis?.effective)
+  const set = onChangeProp ?? ((v: string) => axis?.set(v))
+  if (pinned)
+    return (
+      <PinnedRow axis={key} label={label} cause={pinned}>
+        {options.find((o) => o.value === value)?.label ?? value}
+      </PinnedRow>
+    )
   // Two options sit beside the label; more stack under it, sharing the width.
   const stacked = options.length > 2
   const group = (
     <SegmentedGroup
       label={label}
       value={value}
-      onChange={onChange}
+      onChange={(next, row) => {
+        if (key) holdEditFocus(row)
+        set(next)
+      }}
       options={options}
+      disabled={exclude?.options}
       className={stacked ? "w-full" : undefined}
     />
+  )
+  // The cause sits by the label: the options' own width is spoken for.
+  const title = (
+    <span className="flex min-w-0 items-center gap-2">
+      <span className={DIAL_LABEL}>{label}</span>
+      {exclude && <CauseChip cause={exclude.cause} />}
+    </span>
   )
   if (stacked) {
     return (
       <div
+        data-axis={key}
         className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}
       >
-        <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
+        <span className="flex h-9 items-center">{title}</span>
         {group}
       </div>
     )
   }
   return (
-    <div className={cn(DIAL_ROW, "pr-1.5")}>
-      <span className={DIAL_LABEL}>{label}</span>
+    <div data-axis={key} className={cn(DIAL_ROW, "pr-1.5")}>
+      {title}
       {group}
-    </div>
-  )
-}
-
-/** A pick from short chips, three across under the label. Pressing the
- *  selected chip keeps it. */
-export function DialChips({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  value: string | undefined
-  onChange: (value: string) => void
-  options: DialOption[]
-}) {
-  return (
-    <div className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}>
-      <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
-      <RacToggleButtonGroup
-        aria-label={label}
-        selectionMode="single"
-        selectedKeys={value ? [value] : []}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="grid grid-cols-3 gap-1"
-      >
-        {options.map((option) => (
-          <RacToggleButton
-            key={option.value}
-            id={option.value}
-            className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:tint-15 selected:text-fg"
-          >
-            {option.label}
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
     </div>
   )
 }
@@ -1064,93 +1167,26 @@ const OFF_ON: DialOption[] = [
 
 /** A boolean as Off / On. */
 export function DialToggle({
+  axis: key,
   label,
   value,
   onChange,
 }: {
+  /** The key the row edits, when `value` and `onChange` aren't given. */
+  axis?: AxisKey
   label: string
-  value: boolean
-  onChange: (value: boolean) => void
+  value?: boolean
+  onChange?: (value: boolean) => void
 }) {
+  const axis = useAxis(key)
+  const on = value ?? axis?.effective === true
   return (
     <DialSegmented
+      axis={key}
       label={label}
-      value={value ? "on" : "off"}
-      onChange={(next) => onChange(next === "on")}
+      value={on ? "on" : "off"}
+      onChange={(next) => (onChange ?? axis?.set)?.(next === "on")}
       options={OFF_ON}
     />
-  )
-}
-
-/* --------------------------------- Folder --------------------------------- */
-
-/** A titled group that folds in place. `open` makes it controlled; `value`
- *  summarizes the contents beside the chevron while folded. */
-export function DialFolder({
-  title,
-  value,
-  defaultOpen = true,
-  open,
-  onOpenChange,
-  modified,
-  id,
-  children,
-}: {
-  title: string
-  value?: React.ReactNode
-  defaultOpen?: boolean
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  modified?: boolean
-  id?: string
-  children: React.ReactNode
-}) {
-  return (
-    <Disclosure
-      data-folder={id}
-      defaultExpanded={defaultOpen}
-      isExpanded={open}
-      onExpandedChange={onOpenChange}
-      className="flex w-full shrink-0 flex-col"
-    >
-      {({ isExpanded }) => (
-        <>
-          <RacButton
-            slot="trigger"
-            className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-1 text-left focus-reset focus-visible:focus-ring"
-          >
-            <span className="flex min-w-0 items-center gap-1.5">
-              <span className="truncate text-[13px] font-semibold text-fg/70">
-                {title}
-              </span>
-              {modified && <ModifiedDot />}
-            </span>
-            <span className="flex min-w-0 items-center gap-2">
-              {value && (
-                <span className="truncate text-[13px] font-medium text-fg/50">
-                  {value}
-                </span>
-              )}
-              <ChevronDownIcon
-                className={cn(
-                  DIAL_CHEVRON,
-                  "transition-transform duration-200",
-                  isExpanded && "rotate-180",
-                )}
-              />
-            </span>
-          </RacButton>
-          {/* Folders nest, so the state comes from the render prop, not a group. */}
-          <DisclosurePanel
-            className={cn(
-              "h-(--disclosure-panel-height) overflow-clip duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:transition-[height,opacity]",
-              isExpanded ? "opacity-100" : "opacity-0",
-            )}
-          >
-            <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
-          </DisclosurePanel>
-        </>
-      )}
-    </Disclosure>
   )
 }

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const alertMeta = {
   name: "alert",
   type: "registry:ui",
-  group: "feedback",
   files: [
     {
       type: "registry:ui",
@@ -11,6 +10,19 @@ const alertMeta = {
       target: "ui/alert.tsx",
     },
   ],
+  params: {
+    style: {
+      default: "neutral",
+      values: [
+        "neutral",
+        "soft",
+        "soft-outline",
+        "outline",
+        "inverse",
+      ] as const,
+      description: "The alert's fill, edge and status ink.",
+    },
+  },
 } satisfies RegistryItem
 
 export default alertMeta

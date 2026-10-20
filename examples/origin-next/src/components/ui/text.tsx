@@ -8,5 +8,7 @@ const Text = (props: TextProps) => {
   return <TextPrimitives.Text data-text="" {...props} />;
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type { TextProps };
 export { Text };

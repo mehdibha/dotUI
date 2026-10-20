@@ -2,20 +2,18 @@ import { createStyles } from "@/lib/styles"
 
 import skeletonMeta from "./meta"
 
-const { useStyles, styles } = createStyles(skeletonMeta, {
+const { useStyles } = createStyles(skeletonMeta, {
   base: {
     slots: {
       root: [
-        "group/skeleton pointer-events-none select-none",
+        "pointer-events-none select-none",
 
-        /* Explicit skeleton intents */
         "**:data-[skeleton=text]:rounded-(--studio-skeleton-radius) **:data-[skeleton=text]:text-transparent",
         "**:data-[skeleton=block]:skeleton **:data-[skeleton=text]:skeleton",
         "**:data-[skeleton=circle]:skeleton **:data-[skeleton=circle]:rounded-full",
         "**:data-[skeleton=control]:skeleton **:data-[skeleton=control]:border-transparent **:data-[skeleton=control]:text-transparent",
         "**:data-[skeleton=media]:skeleton",
 
-        /* Text-like dotUI anatomy */
         "**:data-text:skeleton **:data-text:rounded-(--studio-skeleton-radius) **:data-text:text-transparent",
         "**:data-label:skeleton **:data-label:rounded-(--studio-skeleton-radius) **:data-label:text-transparent",
         "**:data-description:skeleton **:data-description:rounded-(--studio-skeleton-radius) **:data-description:text-transparent",
@@ -26,7 +24,6 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
         "**:data-listbox-item-label:skeleton **:data-listbox-item-label:rounded-(--studio-skeleton-radius) **:data-listbox-item-label:text-transparent",
         "**:data-listbox-item-description:skeleton **:data-listbox-item-description:rounded-(--studio-skeleton-radius) **:data-listbox-item-description:text-transparent",
 
-        /* Native typography */
         "[&_h1]:skeleton [&_h1]:rounded-(--studio-skeleton-radius) [&_h1]:text-transparent",
         "[&_h2]:skeleton [&_h2]:rounded-(--studio-skeleton-radius) [&_h2]:text-transparent",
         "[&_h3]:skeleton [&_h3]:rounded-(--studio-skeleton-radius) [&_h3]:text-transparent",
@@ -43,7 +40,6 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
         "[&_figcaption]:skeleton [&_figcaption]:rounded-(--studio-skeleton-radius) [&_figcaption]:text-transparent",
         "[&_legend]:skeleton [&_legend]:rounded-(--studio-skeleton-radius) [&_legend]:text-transparent",
 
-        /* Controls and compact UI primitives */
         "**:data-button:skeleton **:data-button:border-transparent **:data-button:text-transparent **:data-button:shadow-none",
         "**:data-input-control:skeleton **:data-input-control:border-transparent **:data-input-control:text-transparent **:data-input-control:placeholder:text-transparent",
         "**:data-badge:skeleton **:data-badge:border-transparent **:data-badge:text-transparent",
@@ -51,11 +47,9 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
         "**:data-kbd:skeleton **:data-kbd:border-transparent **:data-kbd:text-transparent",
         "**:data-combobox-value:skeleton **:data-combobox-value:rounded-(--studio-skeleton-radius) **:data-combobox-value:text-transparent",
 
-        /* Media / identity */
         "**:data-avatar:skeleton **:data-avatar:text-transparent",
         "**:data-avatar-group-count:skeleton **:data-avatar-group-count:text-transparent",
 
-        /* Preserve geometry, hide real visuals. */
         "[&_[data-avatar-group-count]_*]:invisible [&_[data-avatar]_*]:invisible",
         "[&_[data-badge]_*]:invisible [&_[data-button]_*]:invisible [&_[data-kbd]_*]:invisible [&_[data-tag]_*]:invisible",
         "[&_[data-skeleton=circle]_*]:invisible [&_[data-skeleton=control]_*]:invisible [&_[data-skeleton=media]_*]:invisible",
@@ -83,6 +77,4 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
   },
 })
 
-export type SkeletonStyles = typeof styles
-
-export { styles as skeletonStyles, useStyles }
+export { useStyles }

@@ -7,10 +7,9 @@ const { useStyles, styles } = createStyles(fieldMeta, {
     slots: {
       fieldset: "",
       legend: "",
-      fieldGroup:
-        "group/field-group @container/field-group flex w-full flex-col",
+      fieldGroup: "@container/field-group flex w-full flex-col",
       field:
-        "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+        "flex w-full gap-2 invalid:has-data-field-error:**:data-description:hidden",
       fieldContent: "flex flex-col gap-1",
       label: [
         "inline-flex items-center gap-px select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3",
@@ -25,8 +24,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
     variants: {
       orientation: {
         horizontal: {
-          field:
-            "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+          field: "flex-row items-center gap-2 has-data-description:items-start",
         },
         vertical: {
           field: "w-full flex-col gap-2",
@@ -65,24 +63,50 @@ const { useStyles, styles } = createStyles(fieldMeta, {
           "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
       },
     },
+    spacious: {
+      slots: {
+        label: "text-sm",
+        description: "text-sm",
+        fieldError: "text-sm",
+        fieldGroup:
+          "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      },
+    },
+    touch: {
+      slots: {
+        label: "text-sm",
+        description: "text-sm",
+        fieldError: "text-sm",
+        fieldGroup:
+          "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      },
+    },
   },
-  /* Invalid treatment: the danger border alone (shadcn), an icon on the
-     message line (Material, Spectrum, Polaris), or GOV.UK's bar with the
-     message above the field. The bar itself is a styles.css rule on every
-     `data-field` root, driven by the value's vars. */
   params: {
+    // The error line: plain danger text (shadcn), or led by an icon (Polaris,
+    // Primer, Geist). The icon-in-field option draws on input instead.
     error: {
-      border: {},
-      message: {
+      plain: {},
+      "icon-message": {
         slots: {
           fieldError:
             "flex items-center gap-1 *:[svg]:size-[1em] *:[svg]:shrink-0",
         },
       },
-      bar: {
+    },
+    // Form-field labels only; a checkbox, radio or switch keeps its own.
+    label: {
+      regular: {},
+      medium: {
         slots: {
-          label: "order-first",
-          fieldError: "order-first font-semibold",
+          label:
+            "not-in-data-checkbox:not-in-data-radio:not-in-data-switch:font-medium",
+        },
+      },
+      semibold: {
+        slots: {
+          label:
+            "not-in-data-checkbox:not-in-data-radio:not-in-data-switch:font-semibold",
         },
       },
     },

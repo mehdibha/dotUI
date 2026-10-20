@@ -9,7 +9,7 @@
 
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
-import type { Density, RegistryItem, RegistryItemFile } from "@/registry/types"
+import type { Density, RegistryItem } from "@/registry/types"
 
 import type { CodeOptions } from "./code-options"
 
@@ -38,20 +38,15 @@ export interface TvLayer {
   compoundVariants?: CompoundVariant[]
 }
 
-/** An override layer additionally carries `vars`, which are dropped at publish. */
-export interface OverrideLayer extends TvLayer {
-  vars?: Record<string, string>
-}
-
 /** A param value's layer may also carry per-density classes, applied after its own. */
-export interface ParamValueLayer extends OverrideLayer {
+export interface ParamValueLayer extends TvLayer {
   density?: Partial<Record<Density, TvLayer>>
 }
 
 /** The plain-JSON extract of a component's `styles.ts` config. */
 export interface StylesConfig {
   base: TvLayer
-  density?: Partial<Record<Density, OverrideLayer>>
+  density?: Partial<Record<Density, TvLayer>>
   params?: Record<string, Record<string, ParamValueLayer>>
 }
 
@@ -94,6 +89,3 @@ export interface PublishPreset {
   /** Icon library shipped files import from. When omitted, lucide. */
   icons?: IconLibraryName
 }
-
-/** Subset of `RegistryItemFile` we emit. */
-export type EmittedFile = RegistryItemFile

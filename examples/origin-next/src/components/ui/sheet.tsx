@@ -9,9 +9,10 @@ import { tv } from "tailwind-variants";
 const sheetVariants = tv({
   slots: {
     overlay: "isolate z-50 exiting:pointer-events-none",
-    backdrop: "data-[stack-index=0]:bg-overlay/70",
+    backdrop:
+      "data-[stack-index=0]:bg-scrim data-[stack-index=0]:backdrop-blur-sm",
     sheet:
-      "relative box-content flex min-h-0 min-w-0 flex-col overflow-clip border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) outline-none [--surface-bg:var(--color-popover)]",
+      "relative box-content flex min-h-0 min-w-0 flex-col text-fg outline-none [--surface-bg:var(--color-popover)] overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
     content:
       "flex min-h-0 flex-1 flex-col overflow-hidden pb-(--sheet-scroll-padding-y) outline-none in-data-expanded:overflow-y-auto",
     handle:
@@ -68,7 +69,7 @@ interface SheetProps
   children?: React.ReactNode;
 }
 
-function Sheet({ children, className, style, ...props }: SheetProps) {
+const Sheet = ({ children, className, style, ...props }: SheetProps) => {
   const isHidden = useIsHidden();
   if (isHidden) {
     return <>{children}</>;
@@ -76,7 +77,6 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
 
   return (
     <SheetPrimitives.SheetOverlay className={overlay()} {...props}>
-      {/* With snap points, the page dims only past the last one. */}
       <SheetPrimitives.SheetBackdrop
         swipeAnimation="sheet-backdrop"
         swipeAnimationRange={
@@ -102,10 +102,6 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
               : "y";
           const viewport = axis === "y" ? "100dvh" : "100dvw";
           return (
-            // react-aria's SheetContent minus the dialog role: the dialog, menu
-            // or listbox inside brings its own. The sheet watches this element
-            // to close once swiped off screen, and its view timeline drives
-            // the backdrop and stack animations.
             <div
               data-sheet-content=""
               className={content({ position })}
@@ -127,25 +123,27 @@ function Sheet({ children, className, style, ...props }: SheetProps) {
       </SheetPrimitives.Sheet>
     </SheetPrimitives.SheetOverlay>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface SheetHandleProps extends React.ComponentProps<"div"> {}
 
-function SheetHandle({ className, ...props }: SheetHandleProps) {
+const SheetHandle = ({ className, ...props }: SheetHandleProps) => {
   const axis = React.useContext(SheetAxisContext);
 
   return (
     <div
       aria-hidden="true"
       data-orientation={axis === "y" ? "horizontal" : "vertical"}
-      data-slot="sheet-handle"
+      data-sheet-handle=""
       className={handle({ className })}
       {...props}
     />
   );
-}
+};
+
+/* -------------------------------------------------------------------------- */
 
 export type { SheetHandleProps, SheetProps };
 export { Sheet, SheetHandle };

@@ -3,7 +3,7 @@ import {
   CopyIcon,
   ScissorsIcon,
   TrashIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import {

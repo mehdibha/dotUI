@@ -4,7 +4,7 @@ import {
   CreditCardIcon,
   LogOutIcon,
   UserIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem, MenuSection } from "@/registry/ui/menu"

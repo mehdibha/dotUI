@@ -14,8 +14,6 @@ const people = [
   { id: "ellagreen" },
 ]
 
-// Without `allowsNewlines` the field stays single-line: Enter is ignored and
-// pasted line breaks collapse to spaces.
 export default function Demo() {
   return (
     <Mention className="w-[320px]">

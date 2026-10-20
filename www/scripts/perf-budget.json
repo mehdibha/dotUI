@@ -4,8 +4,18 @@
   "exclude": ["/internal/**"],
   "rules": [
     { "match": "/", "firstLoadGzKB": 645, "preloads": 40 },
-    { "match": "/docs/**", "firstLoadGzKB": 535, "preloads": 32 },
-    { "match": "/studio", "firstLoadGzKB": 585, "preloads": 75 }
+    {
+      "match": "/docs/**",
+      "firstLoadGzKB": 560,
+      "preloads": 32,
+      "reason": "Axis engine rebuild (#889), +13 KB gz on /docs and / (532.5 → 545.7): the family modules, rules and 16 presets ride the docs closure; option labels and credits stay panel-only in axes/*.meta.ts."
+    },
+    {
+      "match": "/studio",
+      "firstLoadGzKB": 600,
+      "preloads": 87,
+      "reason": "Axis engine rebuild (#889), +29 KB gz (555.9 → 585.2): the panel sections import registry styles.ts and meta.ts modules for their glyphs, each its own chunk."
+    }
   ],
   "default": { "firstLoadGzKB": 250, "preloads": 16 }
 }

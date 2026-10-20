@@ -18,14 +18,13 @@ const labels = {
   other: "Other",
 }
 
-export default function ChartRadialLabel() {
+export default function Demo() {
   return (
     <RadialBarChart
       data={data}
       value="visitors"
       name="browser"
       labels={labels}
-      // The sweep starts at the top, so the labels stack down the rings.
       innerRadius={0.25}
       radiusRatio={0.95}
       track

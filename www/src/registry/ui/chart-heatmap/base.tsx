@@ -25,9 +25,6 @@ import {
   useChartDefinition,
 } from "@/registry/ui/chart"
 
-/* A sequential ramp mixed from one palette slot: the low half fades into the
-   surface, the high half toward the foreground, so luminance stays monotone
-   in light and dark. */
 export function heatmapColors(
   color: string = paletteColor(0),
   steps: number = 5,
@@ -44,13 +41,12 @@ export function heatmapColors(
 
 const HEATMAP_COLORS = /* @__PURE__ */ heatmapColors()
 
-// Black or white ink from the cell's own lightness; the 0.58 crossover
-// measures ≥ 4.9:1 across the default ramp.
+// The 0.58 lightness crossover measures ≥ 4.9:1 contrast across the default
+// ramp.
 function contrastInk(color: string): string {
   return `oklch(from ${color} calc((0.58 - l) * 100) 0 0)`
 }
 
-/* The cell edges are the grid, so `grid` is dropped rather than ignored. */
 export interface HeatmapChartSpecOptions<TDatum> extends Omit<
   ChartBaseSpecOptions<TDatum>,
   "grid"
@@ -76,9 +72,8 @@ export interface HeatmapChartSpecOptions<TDatum> extends Omit<
   labelY?: string
 }
 
-/* Which ramp step a value lands on: the chart's own color scale rebuilt over
-   step indices, nicened domain included, so a label never disagrees with the
-   cell under it. */
+/* Mirrors the chart's color scale, nicened domain included, so a label's ink
+   never disagrees with the cell under it. */
 function binner<TDatum>(
   options: HeatmapChartSpecOptions<TDatum>,
   read: (row: TDatum) => number | null,
@@ -143,8 +138,6 @@ export function heatmapChartSpec<TDatum>(
     }),
   )
   return {
-    // Axes and legend on by default: the labels are the cells' identity and
-    // the ramp is the only key to the color.
     ...chartFrame(
       {
         ...options,
@@ -179,17 +172,18 @@ export function heatmapChartSpec<TDatum>(
   }
 }
 
+// MARK: Separator
+
 export type HeatmapChartProps<TDatum> = ChartComponentProps<
   HeatmapChartSpecOptions<TDatum>,
   TDatum
 >
 
-export function HeatmapChart<TDatum>(props: HeatmapChartProps<TDatum>) {
+export const HeatmapChart = <TDatum,>(props: HeatmapChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     HeatmapChartSpecOptions<TDatum>
   >(props, heatmapChartSpec, {
-    // A cell is read on its own, not against its column.
     focus: "nearest",
     tooltipAnchor: "point",
   })

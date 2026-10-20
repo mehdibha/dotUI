@@ -5,8 +5,7 @@ import {
   FolderIcon,
   FolderOpenIcon,
   ImageIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 export default function Demo() {

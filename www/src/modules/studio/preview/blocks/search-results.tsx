@@ -1,6 +1,4 @@
-"use client"
-
-import { useMemo, useState } from "react"
+import { type ReactNode, useMemo, useState } from "react"
 
 import {
   BellIcon,
@@ -58,14 +56,6 @@ import {
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Kbd, KbdGroup } from "@/registry/ui/kbd"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import {
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  PaginationList,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/registry/ui/pagination"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
@@ -83,6 +73,8 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+
+import { PagePicker, initials } from "./shared"
 
 type ResultType = "package" | "template" | "guide"
 
@@ -356,14 +348,6 @@ function updatedLabel(days: number) {
   return `${Math.round(days / 365)} years ago`
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-}
-
 interface FilterState {
   categories: string[]
   licenses: string[]
@@ -420,7 +404,7 @@ function matchesFilters(result: Result, filters: FilterState) {
   return true
 }
 
-function FacetCount({ children }: { children: React.ReactNode }) {
+function FacetCount({ children }: { children: ReactNode }) {
   return (
     <span className="ml-auto pl-3 font-mono text-xs text-fg-muted tabular-nums">
       {children}
@@ -790,36 +774,11 @@ export default function SearchResultsBlock() {
             <p className="text-xs text-fg-muted tabular-nums">
               Page {currentPage} of {totalPages}
             </p>
-            <Pagination>
-              <PaginationList>
-                <PaginationItem>
-                  <PaginationPrevious
-                    isDisabled={currentPage === 1}
-                    onPress={() => setPage(currentPage - 1)}
-                  />
-                </PaginationItem>
-                {Array.from(
-                  { length: totalPages },
-                  (_, index) => index + 1,
-                ).map((pageNumber) => (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      isActive={pageNumber === currentPage}
-                      aria-label={`Page ${pageNumber}`}
-                      onPress={() => setPage(pageNumber)}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    isDisabled={currentPage === totalPages}
-                    onPress={() => setPage(currentPage + 1)}
-                  />
-                </PaginationItem>
-              </PaginationList>
-            </Pagination>
+            <PagePicker
+              page={currentPage}
+              pageCount={totalPages}
+              onPageChange={setPage}
+            />
           </div>
         </>
       )}
@@ -874,7 +833,7 @@ export default function SearchResultsBlock() {
 
       <section className="border-b bg-muted/20">
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-          <h1 className="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+          <h1 className="text-2xl text-balance sm:text-3xl">
             Search the registry
           </h1>
           <p className="mt-1.5 text-sm text-fg-muted">

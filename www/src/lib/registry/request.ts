@@ -10,15 +10,15 @@ import {
 import type { CodeOptions } from "@/publisher/code-options"
 import { getPreset, ORIGIN, resolvePreset } from "@/modules/presets"
 import type { DesignSystem } from "@/modules/studio/preset/types"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 import { notFound, registryError } from "./response"
 
-export type RegistrySource =
+type RegistrySource =
   | { kind: "preset"; id: string }
   | { kind: "snapshot"; id: string }
 
-export interface RegistryRequest {
+interface RegistryRequest {
   /** The file without `.json`: `button`, `init`, `registry`, `all`, `v0`, `font-inter`. */
   name: string
   source: RegistrySource
@@ -29,9 +29,7 @@ export interface RegistryRequest {
   studioUrl: string
 }
 
-export type Result<T> =
-  | { ok: true; value: T }
-  | { ok: false; response: Response }
+type Result<T> = { ok: true; value: T } | { ok: false; response: Response }
 
 // `/r/<name>.json` (Origin), `/r/p/<preset>/<name>.json`, `/r/s/<id>/<name>.json`.
 const PATH = /^\/r\/(?:([ps])\/([^/]+)\/)?([^/]+)\.json$/
@@ -98,9 +96,6 @@ export async function resolveSource(
   }
   const snapshot = await loadSnapshot(source.id, store)
   return snapshot
-    ? {
-        name: snapshot.name,
-        designSystem: resolveDesignSystem(snapshot.state),
-      }
+    ? { name: snapshot.name, designSystem: designSystemOf(snapshot.state) }
     : undefined
 }

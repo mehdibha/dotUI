@@ -1,8 +1,7 @@
-import { parseState } from "@/modules/studio/axes"
+import { effective, parseState } from "@/modules/studio/axes"
 import type { PanelSystem } from "@/modules/studio/panel"
 import type { Studio } from "@/modules/studio/use-studio"
 
-import { designSystem } from "./theme"
 import type { State } from "./theme"
 
 /* The real /studio panel takes a `Studio` and a `PanelSystem`; here they're
@@ -13,7 +12,7 @@ export function studioAt(partial: State): Studio {
   const noop = () => {}
   return {
     state,
-    designSystem: designSystem(partial),
+    effective: effective(state).values,
     set: () => noop,
     setState: noop,
   }

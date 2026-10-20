@@ -1,5 +1,4 @@
 :root {
-  --studio-calendar-cell-radius: var(--studio-radius-control);
   --studio-calendar-state-duration: 150ms;
   --studio-calendar-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

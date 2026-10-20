@@ -1,6 +1,8 @@
 import { memo } from "react"
 
+import { useDensity } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import type { Density } from "@/registry/types"
 import { AccountMenu } from "@/components/showcase/account-menu"
 import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
@@ -32,7 +34,7 @@ import { UploadAvatar } from "@/components/showcase/upload-avatar"
 import { UsageCredits } from "@/components/showcase/usage-credits"
 
 // Every showcase card in one place — the single source of truth for what the
-// landing grid and the /create preview masonry render.
+// landing grid and the /studio preview masonry render.
 const CARDS = {
   accountMenu: <AccountMenu />,
   agentTasks: <AgentTasks />,
@@ -161,11 +163,12 @@ export const CardsGrid = memo(function CardsGrid({
   )
 })
 
-// The /create preview canvas — the shadcn-create shape: a fixed-pixel,
+// The /studio preview canvas — the shadcn-create shape: a fixed-pixel,
 // horizontally scrollable life-size surface rather than a fluid grid, so card
 // size comes from the ~340px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col
-// sub-grid. `content-visibility` keeps off-screen columns free to lay out.
+// sub-grid. `content-visibility` skips the off-screen columns and cards, so a
+// theme change restyles only what's on screen.
 const CANVAS_1: CardKey[] = [
   "controls",
   "twoFactor",
@@ -207,6 +210,10 @@ const CANVAS_6: CardKey[] = [
   "teamName",
 ]
 
+// content-visibility clips at the padding box: padding no wider than the gap,
+// and deeper below, holds the cards' shadows; the margins take it back.
+const SHADOW_ROOM = "-mx-4 -mt-4 -mb-8 px-4 pt-4 pb-8 [content-visibility:auto]"
+
 function CanvasColumn({
   cards,
   className,
@@ -217,39 +224,66 @@ function CanvasColumn({
   return (
     <div
       className={cn(
-        "flex flex-col gap-(--gap) p-px [contain-intrinsic-size:340px_1200px] [content-visibility:auto]",
+        "flex flex-col gap-(--gap) [contain-intrinsic-size:var(--col)_1200px]",
+        SHADOW_ROOM,
         className,
       )}
     >
       {cards.map((key) => (
-        <div key={key}>{CARDS[key]}</div>
+        <CanvasCard key={key} card={key} />
       ))}
     </div>
   )
 }
 
-export function CardsCanvas() {
+function CanvasCard({ card }: { card: CardKey }) {
   return (
-    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]">
+    <div className={cn("[contain-intrinsic-size:auto_320px]", SHADOW_ROOM)}>
+      {CARDS[card]}
+    </div>
+  )
+}
+
+// Card width per density: denser controls fit narrower cards, roomier ones
+// need wider cards to keep the same content per row.
+const COLUMN_WIDTH: Record<Density, number> = {
+  compact: 300,
+  default: 340,
+  comfortable: 360,
+  spacious: 380,
+  touch: 420,
+}
+
+export function CardsCanvas() {
+  const density = useDensity()
+  return (
+    <div
+      style={{ "--col": `${COLUMN_WIDTH[density]}px` } as React.CSSProperties}
+      className="no-scrollbar min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]"
+    >
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
       <div className="flex w-full min-w-max justify-center">
-        {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
-            so tightening --gap keeps cards life-size instead of growing them. */}
-        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2208px]">
+        {/* 6 columns + 5 gaps + 2 edge paddings. */}
+        <div className="grid w-[calc(var(--col)*6+var(--gap)*7)] grid-cols-6 items-start gap-(--gap) p-(--gap)">
           <CanvasColumn cards={CANVAS_1} />
           <CanvasColumn cards={CANVAS_2} />
-          <div className="col-span-2 flex flex-col gap-(--gap) p-px [contain-intrinsic-size:790px_1200px] [content-visibility:auto]">
+          <div
+            className={cn(
+              "col-span-2 flex flex-col gap-(--gap) [contain-intrinsic-size:calc(var(--col)*2+var(--gap))_1200px]",
+              SHADOW_ROOM,
+            )}
+          >
             <AiPrompt />
             <div className="grid grid-cols-2 items-start gap-(--gap)">
               <div className="flex flex-col gap-(--gap)">
                 {CANVAS_WIDE_LEFT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
+                  <CanvasCard key={key} card={key} />
                 ))}
               </div>
               <div className="flex flex-col gap-(--gap)">
                 {CANVAS_WIDE_RIGHT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
+                  <CanvasCard key={key} card={key} />
                 ))}
               </div>
             </div>

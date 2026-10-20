@@ -1,6 +1,6 @@
 "use client"
 
-import { HeartIcon } from "@/registry/__generated__/icons"
+import { HeartIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Group } from "@/registry/ui/group"
 

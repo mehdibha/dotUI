@@ -8,7 +8,6 @@ import type {
   ClassValue,
   TVReturnType,
   TVReturnTypeLike,
-  VariantProps,
 } from "tailwind-variants"
 
 import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
@@ -22,6 +21,7 @@ import {
 } from "@/lib/root-closure"
 import type { RootClosure } from "@/lib/root-closure"
 import serverRootClosure from "@/lib/root-closure-data"
+import { themeCss } from "@/lib/theme-css"
 import {
   IconLibraryContext,
   IconWeightContext,
@@ -33,37 +33,73 @@ import {
   emitDarkOverridesCss,
   emitPrimitivesCss,
   scopedSemantics,
-  semanticDelta,
   semanticsFor,
   SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
-import type {
-  Density,
-  EnumParamDef,
-  ParamDef,
-  RegistryItem,
-} from "@/registry/types"
+import { DENSITIES } from "@/registry/types"
+import type { Density, ParamDef, RegistryItem } from "@/registry/types"
 
 /* --------------------------------- Types --------------------------------- */
 
 type ParamSelections = Record<string, Record<string, string>>
 type GlobalTokenSelections = Record<string, string>
 
-// Only what consumers (useStyles / useComponentParams) actually read. Tokens and
-// color deliberately stay OUT of the context: they apply as CSS vars / stylesheets
-// from the provider, so a palette/radius-only preset swap re-renders zero consumers.
-interface DesignSystemContextValue {
-  params: ParamSelections
-  density: Density
-}
-
 /* -------------------------------- Context -------------------------------- */
 
-const DesignSystemContext = React.createContext<DesignSystemContextValue>({
-  params: {},
-  density: "default",
-})
+// One context per component's selection, so a change re-renders only that
+// component's consumers. Slots are a fixed set claimed by name on first use:
+// a provider's shape can't change without remounting its subtree.
+type ParamSlot = React.Context<Record<string, string>>
+
+const emptyParamSelections: Record<string, string> = {}
+const noParams: ParamSelections = {}
+const slots: ParamSlot[] = Array.from({ length: 64 }, () =>
+  React.createContext(emptyParamSelections),
+)
+const slotByName = new Map<string, ParamSlot>()
+function slotOf(name: string): ParamSlot | undefined {
+  let slot = slotByName.get(name)
+  if (!slot) {
+    slot = slots[slotByName.size]
+    if (slot) slotByName.set(name, slot)
+  }
+  return slot
+}
+// Names past the last slot read the whole map.
+const ParamsContext = React.createContext(noParams)
+const DensityContext = React.createContext<Density>("default")
+
+/** The nearest provider's density. */
+function useDensity() {
+  return React.use(DensityContext)
+}
+
+/** Param selections and density: all that `useStyles` consumers read. */
+function ComponentParamsProvider({
+  params = noParams,
+  density = "default",
+  children,
+}: {
+  params?: ParamSelections
+  density?: Density
+  children: React.ReactNode
+}) {
+  // Every name in `params` claims its slot now, so a slot left empty here
+  // really has no selection.
+  const values = React.useMemo(() => {
+    const bySlot = new Map<ParamSlot, Record<string, string>>()
+    for (const [name, selection] of Object.entries(params)) {
+      const slot = slotOf(name)
+      if (slot) bySlot.set(slot, selection)
+    }
+    return bySlot
+  }, [params])
+  let tree = <DensityContext value={density}>{children}</DensityContext>
+  for (const Slot of slots)
+    tree = <Slot value={values.get(Slot) ?? emptyParamSelections}>{tree}</Slot>
+  return <ParamsContext value={params}>{tree}</ParamsContext>
+}
 
 /* -------------------------------- Provider ------------------------------- */
 
@@ -353,21 +389,23 @@ interface DesignSystemProviderProps {
    * the registry's dark custom-variant honors for raw `dark:` utilities.
    */
   forcedMode?: "light" | "dark"
+  /** `themeCss(color)`, when the caller already has it (the studio preview
+   *  computes it off the main thread). */
+  themeCss?: string
   children: React.ReactNode
 }
 
 function DesignSystemProvider({
-  params = {},
+  params,
   tokens = {},
-  density = "default",
+  density,
   color,
   icons = "lucide",
   scoped = false,
   forcedMode,
+  themeCss: precomputedThemeCss,
   children,
 }: DesignSystemProviderProps) {
-  const value = React.useMemo(() => ({ params, density }), [params, density])
-
   const cssVars = React.useMemo(() => {
     const vars: Record<string, string> = {}
 
@@ -440,27 +478,11 @@ function DesignSystemProvider({
   // provider renders no <style> and SSR/first paint stay byte-identical to the bare
   // children. A plain <style> (no `precedence`) renders in place — fine, its rules are
   // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
-  const themeCss = React.useMemo(() => {
-    if (scoped || !color) return null
-    const primitives = emitPrimitivesCss(resolveColorConfigCached(color))
-    // Tokens the config re-points (primary source, per-token overrides)
-    // re-declare on plain `:root` (beats the layered `@theme` declarations),
-    // plus their per-mode re-points on `.dark`.
-    const delta = semanticDelta(color)
-    const forks = Object.entries(scopedSemantics(color))
-      .map(([selector, vocab]) => emitCss(vocab, { selector }))
-      .join("")
-    if (Object.keys(delta).length === 0) return primitives + forks
-    return (
-      primitives +
-      emitCss(delta, { selector: ":root" }) +
-      emitDarkOverridesCss(delta, { selector: ".dark" }) +
-      forks
-    )
-  }, [scoped, color])
-  const themeStyle = themeCss ? (
-    <style data-dotui-color>{themeCss}</style>
-  ) : null
+  const css = React.useMemo(
+    () => (scoped || !color ? null : (precomputedThemeCss ?? themeCss(color))),
+    [scoped, color, precomputedThemeCss],
+  )
+  const themeStyle = css ? <style data-dotui-color>{css}</style> : null
 
   // The weight axis rides in tokens (so it round-trips the preset URL like any
   // global token) but reaches icons as a component prop, hence the context.
@@ -469,13 +491,13 @@ function DesignSystemProvider({
   )
 
   const tree = (
-    <DesignSystemContext.Provider value={value}>
+    <ComponentParamsProvider params={params} density={density}>
       <IconLibraryContext.Provider value={icons}>
         <IconWeightContext.Provider value={iconWeight}>
           {children}
         </IconWeightContext.Provider>
       </IconLibraryContext.Provider>
-    </DesignSystemContext.Provider>
+    </ComponentParamsProvider>
   )
 
   if (!scoped)
@@ -536,40 +558,48 @@ function DesignSystemProvider({
   )
 }
 
-const emptyParamSelections: Record<string, string> = {}
+/** Every component's selections under the nearest provider. */
+function useParamSelections(): ParamSelections {
+  return React.use(ParamsContext)
+}
 
 function useComponentParams(componentName: string): Record<string, string> {
-  const { params } = React.useContext(DesignSystemContext)
-  return params[componentName] ?? {}
+  const slot = slotOf(componentName)
+  if (slot) return React.use(slot)
+  return React.use(ParamsContext)[componentName] ?? emptyParamSelections
 }
 
-interface DynamicComponentConfig<Props extends object, Value extends string> {
-  componentName: string
-  paramName: string
-  defaultValue: Value
-  components: Record<Value, React.ComponentType<Props>>
-  displayName?: string
-}
+type DynamicComponents<M, P extends PropertyKey> = Record<
+  ParamValuesOf<M, P>,
+  // oxlint-disable-next-line typescript/no-explicit-any
+  React.ComponentType<any>
+>
 
+/** One component per value of an enum param: the keys are exactly the meta's values. */
 function createDynamicComponent<
-  Props extends object,
-  const Value extends string,
+  const M extends RegistryItem,
+  const P extends ParamNamesOf<M> & string,
+  const C extends DynamicComponents<M, P>,
 >({
-  componentName,
+  meta,
   paramName,
-  defaultValue,
   components,
   displayName,
-}: DynamicComponentConfig<Props, Value>) {
-  function DynamicComponent(props: Props) {
-    const componentParams = useComponentParams(componentName)
-    const selectedValue = componentParams[paramName]
-    const Component =
-      selectedValue && Object.hasOwn(components, selectedValue)
-        ? components[selectedValue as Value]
-        : components[defaultValue]
+}: {
+  meta: M
+  paramName: P
+  components: C & Record<Exclude<keyof C, ParamValuesOf<M, P>>, never>
+  displayName?: string
+}) {
+  type Props = React.ComponentProps<C[ParamValuesOf<M, P>]>
+  const componentName = meta.name
+  const defaultValue = (meta.params as Record<P, ParamDef>)[paramName].default
 
-    return React.createElement(Component, props)
+  function DynamicComponent(props: Props) {
+    const selected = useComponentParams(componentName)[paramName]
+    const key =
+      selected && Object.hasOwn(components, selected) ? selected : defaultValue
+    return React.createElement(components[key as ParamValuesOf<M, P>], props)
   }
 
   DynamicComponent.displayName =
@@ -681,22 +711,22 @@ type CompoundVariantsOverride<Base> =
       }
     : { compoundVariants?: never }
 
-export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
+type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
   VariantsOverride<Base> &
   CompoundVariantsOverride<Base>
 
 /* ----- Meta-driven param shape inference ----- */
 
-type EnumParamNamesOf<M> = M extends { params: infer P }
+type ParamNamesOf<M> = M extends { params: infer P }
   ? P extends Record<string, ParamDef>
-    ? { [K in keyof P]: P[K] extends EnumParamDef ? K : never }[keyof P]
+    ? keyof P
     : never
   : never
 
-type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
+type ParamValuesOf<M, K extends PropertyKey> = M extends {
   params: { [P in K]: infer Def }
 }
-  ? Def extends EnumParamDef
+  ? Def extends ParamDef
     ? Def["values"][number]
     : never
   : never
@@ -706,12 +736,12 @@ type ParamValueTv<Base> = ExtendingTv<Base> & {
   density?: Partial<Record<Density, ExtendingTv<Base>>>
 }
 
-type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
+type ParamsConfig<M, Base> = [ParamNamesOf<M>] extends [never]
   ? { params?: never }
   : {
       params?: {
-        [K in EnumParamNamesOf<M>]?: {
-          [V in EnumParamValuesOf<M, K> & string]?: ParamValueTv<Base>
+        [K in ParamNamesOf<M>]?: {
+          [V in ParamValuesOf<M, K> & string]?: ParamValueTv<Base>
         }
       }
     }
@@ -740,7 +770,7 @@ type InferTv<Base> = TVReturnType<
 type CreateStylesConfig<M, Base> = {
   base: Base
   density?: Record<Density, ExtendingTv<Base>>
-} & EnumParamsConfig<M, Base>
+} & ParamsConfig<M, Base>
 
 function createStyles<const M extends RegistryItem, const Base>(
   meta: M,
@@ -756,20 +786,18 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 
   const metaParams = (meta.params ?? {}) as Record<string, ParamDef>
-  const enumParamNames: string[] = []
+  const paramNames = Object.keys(metaParams)
   const paramDefaults: Record<string, string> = {}
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
-    if (def.kind === "enum") enumParamNames.push(paramName)
   }
 
   /* ----- Build per-density tv functions ----- */
   type AnyTv = ReturnType<typeof tv>
   const baseTv = tv(base as Parameters<typeof tv>[0]) as unknown as AnyTv
 
-  const densities: Density[] = ["compact", "default", "comfortable"]
   const densityTvs: Record<string, AnyTv> = {}
-  for (const d of densities) {
+  for (const d of DENSITIES) {
     const densityConfig = density?.[d]
     densityTvs[d] = densityConfig
       ? (tv({
@@ -786,7 +814,7 @@ function createStyles<const M extends RegistryItem, const Base>(
   ): ReturnType<typeof tv> {
     const defaultTv = densityTvs.default ?? baseTv
     let current: ReturnType<typeof tv> = densityTvs[d] ?? defaultTv
-    for (const paramName of enumParamNames) {
+    for (const paramName of paramNames) {
       const selectedValue =
         paramSelection[paramName] ?? paramDefaults[paramName]
       if (!selectedValue) continue
@@ -828,11 +856,16 @@ function createStyles<const M extends RegistryItem, const Base>(
     return composed
   }
 
+  // A component without params never reads (or re-renders on) params.
+  const useSelection = paramNames.length
+    ? () => useComponentParams(meta.name)
+    : () => emptyParamSelections
+
   function useStyles() {
-    const { params: paramSelections, density } =
-      React.useContext(DesignSystemContext)
-    const componentParams = paramSelections[meta.name] ?? emptyParamSelections
-    return composeCached(density, componentParams) as InferTv<Base>
+    return composeCached(
+      React.use(DensityContext),
+      useSelection(),
+    ) as InferTv<Base>
   }
 
   return {
@@ -841,12 +874,13 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 }
 
-export type { VariantProps }
 export {
+  ComponentParamsProvider,
   createDynamicComponent,
   createParamValue,
   createStyles,
-  DesignSystemContext,
   DesignSystemProvider,
   useComponentParams,
+  useDensity,
+  useParamSelections,
 }

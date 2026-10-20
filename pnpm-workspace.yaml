@@ -10,7 +10,6 @@ catalog:
   "@tailwindcss/vite": ^4.3.0
   "@tanstack/react-router": ^1.170.1
   "@tanstack/react-start": ^1.168.2
-  "@tanstack/router-plugin": ^1.168.2
   "@types/node": ^24.12.4
   "@types/react": ^19.2.2
   "@types/react-dom": ^19.2.1
@@ -46,21 +45,8 @@ overrides:
   "@types/react": 19.2.2
   "@types/react-dom": 19.2.1
 
-# @hookform/resolvers/zod imports zod/v4/core but doesn't declare zod as a
-# peer, so pnpm never links zod into its instance; the import only survives
-# via hoist fallback, which rolldown's strict resolution rejects on Vercel.
-packageExtensions:
-  "@hookform/resolvers":
-    peerDependencies:
-      zod: "*"
-    peerDependenciesMeta:
-      zod:
-        optional: true
-
 minimumReleaseAgeExclude:
-  - cnfast@0.0.8
   - starter-themes@0.0.2
-  - tailwindcss-autocontrast@0.0.4
   - tailwindcss-with@0.0.2
   - "@react-types/shared@3.37.0"
   - "@internationalized/date@3.12.4"
@@ -92,5 +78,3 @@ minimumReleaseAgeExclude:
   - "@typescript/typescript-win32-arm64@7.0.2"
   - "@typescript/typescript-win32-x64@7.0.2"
   - typescript@7.0.2
-  - "@tanstack/charts@0.7.2"
-  - "@tanstack/react-charts@0.7.2"

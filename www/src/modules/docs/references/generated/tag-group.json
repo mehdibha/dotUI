@@ -2,6 +2,29 @@
   "name": "TagGroupProps",
   "description": "A tag group is a focusable list of labels, categories, keywords, filters, or other items,\nwith support for keyboard navigation, selection, and removal.",
   "props": {
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\"",
+      "detailedType": "'lg' | 'md' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of the tags.",
+      "default": "'md'"
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",

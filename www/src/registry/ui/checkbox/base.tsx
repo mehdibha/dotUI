@@ -1,8 +1,7 @@
 "use client"
 
-import { createContext, useContext, useId } from "react"
-import type * as React from "react"
-import * as CheckboxPrimitive from "react-aria-components/Checkbox"
+import * as React from "react"
+import * as CheckboxPrimitives from "react-aria-components/Checkbox"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import { LabelContext } from "react-aria-components/Label"
 import { Provider, useSlottedContext } from "react-aria-components/slots"
@@ -16,22 +15,22 @@ import { useStyles } from "./styles"
 // MARK: checkboxStyles
 
 const InternalCheckboxContext =
-  createContext<CheckboxPrimitive.CheckboxButtonRenderProps | null>(null)
+  React.createContext<CheckboxPrimitives.CheckboxButtonRenderProps | null>(null)
 
 // MARK: Separator
 
 interface CheckboxProps extends React.ComponentProps<
-  typeof CheckboxPrimitive.CheckboxField
+  typeof CheckboxPrimitives.CheckboxField
 > {}
 
 const Checkbox = ({ id: idProp, className, ...props }: CheckboxProps) => {
   const { root } = useStyles()()
-  const autoId = useId()
+  const autoId = React.useId()
   const id = idProp ?? autoId
   const labelId = useSlotId()
 
   return (
-    <CheckboxPrimitive.CheckboxField
+    <CheckboxPrimitives.CheckboxField
       data-checkbox=""
       id={id}
       aria-labelledby={labelId}
@@ -56,12 +55,12 @@ const Checkbox = ({ id: idProp, className, ...props }: CheckboxProps) => {
           <CheckboxControl />
         )
       })}
-    </CheckboxPrimitive.CheckboxField>
+    </CheckboxPrimitives.CheckboxField>
   )
 }
 
 interface CheckboxControlProps extends React.ComponentProps<
-  typeof CheckboxPrimitive.CheckboxButton
+  typeof CheckboxPrimitives.CheckboxButton
 > {}
 
 const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
@@ -69,7 +68,7 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
   const labelContext = useSlottedContext(LabelContext)
   const { id: labelId } = labelContext ?? {}
   return (
-    <CheckboxPrimitive.CheckboxButton
+    <CheckboxPrimitives.CheckboxButton
       data-checkbox-control=""
       className={composeRenderProps(className, (className) =>
         control({ className }),
@@ -88,7 +87,7 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
           </Provider>
         )
       })}
-    </CheckboxPrimitive.CheckboxButton>
+    </CheckboxPrimitives.CheckboxButton>
   )
 }
 
@@ -96,7 +95,7 @@ interface CheckboxIndicatorProps extends React.ComponentProps<"span"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
   const { indicator } = useStyles()()
-  const ctx = useContext(InternalCheckboxContext)
+  const ctx = React.useContext(InternalCheckboxContext)
   return (
     <span
       data-checkbox-indicator=""

@@ -29,40 +29,40 @@ export default function MenuExamples() {
       <Example title="Sides" className="md:col-span-2">
         <Sides />
       </Example>
-      <Example title="With Icons">
+      <Example title="With icons">
         <WithIcons />
       </Example>
-      <Example title="With Shortcuts">
+      <Example title="With shortcuts">
         <WithShortcuts />
       </Example>
-      <Example title="With Submenu">
+      <Example title="With submenu">
         <WithSubmenu />
       </Example>
       <Example title="Multiple selection">
         <MultipleSelection />
       </Example>
-      <Example title="Single selection with Icons">
+      <Example title="Single selection with icons">
         <SingleSelectionWithIcons />
       </Example>
       <Example title="Single selection">
         <SingleSelection />
       </Example>
-      <Example title="Radio with Icons">
+      <Example title="Radio with icons">
         <RadioWithIcons />
       </Example>
-      <Example title="With Destructive Items">
+      <Example title="With destructive items">
         <WithDestructive />
       </Example>
-      <Example title="With Avatar">
+      <Example title="With avatar">
         <WithAvatar />
       </Example>
-      <Example title="With Sheet">
+      <Example title="With sheet">
         <WithSheet />
       </Example>
-      <Example title="With Modal">
+      <Example title="With modal">
         <WithModal />
       </Example>
-      <Example title="In Dialog">
+      <Example title="In dialog">
         <InDialog />
       </Example>
     </Examples>

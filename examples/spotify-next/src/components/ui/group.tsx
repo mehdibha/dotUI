@@ -2,14 +2,14 @@
 
 import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as GroupPrimitive from "react-aria-components/Group";
-import * as TextPrimitive from "react-aria-components/Text";
+import * as GroupPrimitives from "react-aria-components/Group";
+import * as TextPrimitives from "react-aria-components/Text";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const groupVariants = tv({
   slots: {
-    root: "flex w-fit items-stretch has-data-[slot=group]:gap-2 *:hover:z-1 *:focus:z-3 *:focus-visible:z-3 *:has-[input]:z-2 *:[input]:z-2 *:data-button:shadow-none *:data-label:shrink-0 *:data-label:rounded-full *:data-label:border *:data-label:bg-card *:data-label:px-4",
-    text: "flex items-center gap-2 rounded-full border bg-card px-4 text-sm font-medium shadow-xs **:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4",
+    root: "flex w-fit items-stretch has-data-group:gap-2 *:hover:z-1 *:focus:z-3 *:focus-visible:z-3 *:has-[input]:z-2 *:[input]:z-2 *:data-label:shrink-0 *:data-label:rounded-sm *:data-label:border *:data-label:bg-card *:data-label:px-4 *:data-button:shadow-none",
+    text: "flex items-center gap-2 rounded-sm border bg-card px-4 text-sm font-bold shadow-xs **:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4",
   },
   variants: {
     orientation: {
@@ -17,7 +17,7 @@ const groupVariants = tv({
         root: "-space-x-px not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none not-has-data-group:*:not-last:data-select:*:data-button:rounded-r-none not-has-data-group:*:not-[:nth-child(2)]:data-select:*:data-button:rounded-l-none",
       },
       vertical: {
-        root: "flex-col not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
+        root: "flex-col -space-y-px not-has-data-group:*:not-first:rounded-t-none not-has-data-group:*:not-last:rounded-b-none",
       },
     },
   },
@@ -29,7 +29,7 @@ const { root, text } = groupVariants();
 
 interface GroupProps
   extends
-    React.ComponentProps<typeof GroupPrimitive.Group>,
+    React.ComponentProps<typeof GroupPrimitives.Group>,
     VariantProps<typeof groupVariants> {}
 
 const Group = ({
@@ -38,8 +38,7 @@ const Group = ({
   ...props
 }: GroupProps) => {
   return (
-    <GroupPrimitive.Group
-      data-slot="group"
+    <GroupPrimitives.Group
       data-group=""
       className={composeRenderProps(className, (className) =>
         root({ className, orientation }),
@@ -52,13 +51,12 @@ const Group = ({
 /* -------------------------------------------------------------------------- */
 
 interface GroupTextProps extends React.ComponentProps<
-  typeof TextPrimitive.Text
+  typeof TextPrimitives.Text
 > {}
 
 const GroupText = ({ className, ...props }: GroupTextProps) => {
   return (
-    <TextPrimitive.Text
-      data-slot="text"
+    <TextPrimitives.Text
       data-text=""
       className={text({ className })}
       {...props}

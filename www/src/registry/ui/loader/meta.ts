@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const loaderMeta = {
   name: "loader",
   type: "registry:ui",
-  group: "progress",
   files: [
     {
       type: "registry:ui",
@@ -13,14 +12,20 @@ const loaderMeta = {
   ],
   params: {
     style: {
-      kind: "enum",
       default: "ring",
-      values: ["ring", "blades", "dots"] as const,
+      values: ["ring", "ring-track", "blades", "dots"] as const,
       files: {
         ring: [
           {
             type: "registry:ui",
             path: "ui/loader/base.ring.tsx",
+            target: "ui/loader.tsx",
+          },
+        ],
+        "ring-track": [
+          {
+            type: "registry:ui",
+            path: "ui/loader/base.ring-track.tsx",
             target: "ui/loader.tsx",
           },
         ],

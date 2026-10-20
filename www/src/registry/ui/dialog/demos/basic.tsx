@@ -1,4 +1,4 @@
-import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { PenSquareIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import {
@@ -35,12 +35,8 @@ export default function Demo() {
                 <TextField aria-label="Title" autoFocus>
                   <Input placeholder="Title" className="w-full" />
                 </TextField>
-                <TextField aria-label="Title" autoFocus>
-                  <TextArea
-                    aria-label="Description"
-                    placeholder="description"
-                    className="w-full"
-                  />
+                <TextField aria-label="Description">
+                  <TextArea placeholder="Description" className="w-full" />
                 </TextField>
               </DialogBody>
               <DialogFooter>

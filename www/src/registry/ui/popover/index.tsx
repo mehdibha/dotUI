@@ -1,15 +1,15 @@
 import { createDynamicComponent } from "@/lib/styles"
 
+import { Popover as DrawerPopover } from "./base.drawer"
 import { type PopoverProps, Popover as PlainPopover } from "./base.popover"
-import { Popover as SheetPopover } from "./base.sheet"
+import meta from "./meta"
 
-const Popover = createDynamicComponent<PopoverProps, "sheet" | "popover">({
-  componentName: "popover",
+const Popover = createDynamicComponent({
+  meta,
   paramName: "mobile",
-  defaultValue: "sheet",
   components: {
-    sheet: SheetPopover,
-    popover: PlainPopover,
+    drawer: DrawerPopover,
+    anchored: PlainPopover,
   },
   displayName: "Popover",
 })

@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 import { TokenFieldValue } from "react-aria-components/TokenField"
 
 import { Label } from "@/registry/ui/field"

@@ -1,11 +1,14 @@
 "use client"
 
+import type * as React from "react"
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { ColorThumb } from "@/registry/ui/color-thumb"
 
 import { useStyles } from "./styles"
+
+// MARK: colorAreaStyles
 
 type ColorAreaProps = React.ComponentProps<typeof ColorAreaPrimitives.ColorArea>
 
@@ -22,6 +25,8 @@ const ColorArea = ({ className, ...props }: ColorAreaProps) => {
     </ColorAreaPrimitives.ColorArea>
   )
 }
+
+// MARK: Separator
 
 export type { ColorAreaProps }
 export { ColorArea }

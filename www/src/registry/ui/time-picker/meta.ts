@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const timePickerMeta = {
   name: "time-picker",
   type: "registry:ui",
-  group: "pickers",
   files: [
     {
       type: "registry:ui",
@@ -11,6 +10,7 @@ const timePickerMeta = {
       target: "ui/time-picker.tsx",
     },
   ],
+  dependencies: ["@internationalized/date"],
   registryDependencies: ["button", "dialog", "field", "input", "popover"],
 } satisfies RegistryItem
 

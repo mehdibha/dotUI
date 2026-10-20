@@ -1,7 +1,7 @@
 /**
  * Request-time orchestrator. Given a publishable (the build-time artifact
- * for one component) and a preset, return a shadcn registry item with one
- * inline file whose tv config is fully resolved against the preset.
+ * for one component) and a preset, return a shadcn registry item whose files
+ * carry a tv config fully resolved against the preset.
  *
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  *
@@ -12,8 +12,8 @@
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
  *
- * Step 6 (oxfmt) lives outside this module — callers feed the assembled
- * content through `oxfmt.format` since that's async and route-side.
+ * Formatting lives outside this module (`formatShippedFile` in serve.ts),
+ * since it's async and route-side.
  */
 
 import type { RegistryItem } from "@/registry/types"
@@ -26,8 +26,9 @@ import {
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from "./code-options"
-import { flatten } from "./flatten"
+import { dropOverridden, flatten } from "./flatten"
 import {
+  assertNoRampVars,
   assertNoStudioVars,
   paramVars,
   resolveClasses,
@@ -37,7 +38,7 @@ import {
 } from "./resolve-classes"
 import { resolveIconImports } from "./resolve-icons"
 import { serializeTvConfig } from "./serialize"
-import type { Publishable, PublishPreset } from "./types"
+import type { ClassValue, Publishable, PublishPreset, TvLayer } from "./types"
 
 export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%"
 
@@ -47,10 +48,6 @@ export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%"
  * `registryDependencies` so shadcn doesn't 404 looking for them.
  */
 export const BUNDLED_INTO_INIT = new Set([
-  // focus-ring / focus-reset / focus-input utilities ship in base.css.
-  "focus-styles",
-  // The @theme vocabulary ships in the init item's cssVars.
-  "theme",
   // cn() helper ships as `lib/utils.ts` in the init item.
   "utils",
 ])
@@ -59,7 +56,7 @@ export const BUNDLED_INTO_INIT = new Set([
  * Rewrites bare dotui dep names (`"loader"`) to absolute URLs so `shadcn add`
  * can follow them without a registry mapping in the consumer's components.json.
  */
-export interface DepResolver {
+interface DepResolver {
   /** Where a dep is served, e.g. `https://dotui.org/r/p/linear/loader.json`. */
   url: (name: string) => string
   /** Names with a publishable; anything else passes through bare. */
@@ -87,6 +84,8 @@ const FILE_IMPORT_NPM_DEPS = [
   "@hugeicons/react",
   "@hugeicons/core-free-icons",
   "@phosphor-icons/react",
+  "@nine-thirty-five/material-symbols-react",
+  "@primer/octicons-react",
   "@internationalized/date",
 ]
 
@@ -109,7 +108,7 @@ export function depsFromFileImports(
 
 /**
  * The registry deps an item ships: its own plus those of the selected value
- * of every enum param that declares some (`selections` omitted → every value,
+ * of every param that declares some (`selections` omitted → every value,
  * for build-time guards).
  */
 export function registryDepsFor(
@@ -118,7 +117,7 @@ export function registryDepsFor(
 ): string[] {
   const deps = [...(meta.registryDependencies ?? [])]
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.registryDependencies) continue
+    if (!def.registryDependencies) continue
     const values = selections
       ? [selections[paramName] ?? def.default]
       : Object.keys(def.registryDependencies)
@@ -128,7 +127,7 @@ export function registryDepsFor(
   return [...new Set(deps)]
 }
 
-export interface PublishableModule {
+interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
   /** Folded `createParamValue` templates keyed `param=value[&…]`. */
@@ -137,7 +136,7 @@ export interface PublishableModule {
 
 /**
  * Pick the publishable variant the preset selects. Components with an
- * enum-with-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
+ * per-value-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
  * generate one publishable per file; those with `createParamValue` hooks one
  * per param selection. The user's choice points at one of them.
  */
@@ -163,7 +162,7 @@ export function selectPublishable(
 
   if (!mod.publishableByPath) return mod.publishable
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.files) continue
+    if (!def.files) continue
     const value = selections[paramName] ?? def.default
     const filesForValue = def.files[value]
     const targetFile = filesForValue?.[0]
@@ -180,7 +179,6 @@ function applySourceSubstitutions(
   selections: Record<string, string>,
 ): string {
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum") continue
     const swaps = def.source?.[selections[paramName] ?? def.default]
     for (const [from, to] of Object.entries(swaps ?? {})) {
       content = content.replaceAll(from, to)
@@ -189,14 +187,14 @@ function applySourceSubstitutions(
   return content
 }
 
-export interface PublishedItem {
+interface PublishedItem {
   /** Shadcn-shaped registry item ready to JSON.stringify. */
   item: RegistryItem
   /** The pre-format component source — caller passes this through oxfmt. */
   rawContent: string
 }
 
-export interface PublishInput {
+interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
   /**
@@ -206,6 +204,53 @@ export interface PublishInput {
   styleVarDefaults?: Record<string, string>
   /** Omitted → registry deps ship as bare names. */
   deps?: DepResolver
+}
+
+/** The slots the shipped file reads, when only its `const { … } =
+ *  xVariants()` reads them; a shared recipe's other slots ship dead. */
+function destructuredSlots(template: string): Set<string> | undefined {
+  const hoisted = [
+    ...template.matchAll(/const \{([^}]*)\} = (\w+Variants)\(\);/g),
+  ]
+  const ident = hoisted[0]?.[2]
+  if (!ident || hoisted.some(([, , other]) => other !== ident)) return
+  // Called elsewhere, or exported for other components' slots.
+  if (template.split(ident).length - 1 !== hoisted.length + 1) return
+  return new Set(
+    hoisted.flatMap(([, names = ""]) =>
+      names.split(",").map((name) => name.split(":")[0]!.trim()),
+    ),
+  )
+}
+
+function pruneSlots(layer: TvLayer, used: Set<string>): TvLayer {
+  if (!layer.slots) return layer
+  const keep = <T>(slots: Record<string, T>) =>
+    Object.fromEntries(Object.entries(slots).filter(([k]) => used.has(k)))
+  const isMap = (v: unknown): v is Record<string, ClassValue> =>
+    typeof v === "object" && v !== null && !Array.isArray(v)
+  return {
+    ...layer,
+    slots: keep(layer.slots),
+    variants:
+      layer.variants &&
+      Object.fromEntries(
+        Object.entries(layer.variants).map(([name, values]) => [
+          name,
+          Object.fromEntries(
+            Object.entries(values).map(([k, v]) => [k, isMap(v) ? keep(v) : v]),
+          ),
+        ]),
+      ),
+    compoundVariants: layer.compoundVariants?.map((cv) =>
+      Object.fromEntries(
+        Object.entries(cv).map(([k, v]) => [
+          k,
+          (k === "class" || k === "className") && isMap(v) ? keep(v) : v,
+        ]),
+      ),
+    ),
+  }
 }
 
 export function publish({
@@ -219,12 +264,15 @@ export function publish({
   const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
 
   // 1. Flatten base + density + param layers.
-  const flat = flatten({
+  const flattened = flatten({
     stylesConfig,
     meta,
     density: preset.density,
     paramSelections,
   })
+
+  const used = destructuredSlots(template)
+  const flat = used ? pruneSlots(flattened, used) : flattened
 
   // 2. Resolve studio vars (the builder's live-tweak indirection) to what the
   // preset lands on: styles.css defaults ← the selected params' vars ← the
@@ -235,7 +283,7 @@ export function publish({
     ...paramVars(meta, paramSelections),
     ...preset.tokens,
   })
-  let resolved = resolveClasses(flat, studioVars)
+  let resolved = dropOverridden(resolveClasses(flat, studioVars))
 
   // 2b. Code-style: collapse grouped class arrays to a single string per
   // slot/variant when the user prefers one-line-per-slot tv configs.
@@ -248,7 +296,7 @@ export function publish({
   let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
 
   // 4a. Param values that rewrite source text — an icon identifier, a prop
-  // default (see `EnumParamDef.source`).
+  // default (see `ParamDef.source`).
   content = applySourceSubstitutions(content, meta, paramSelections)
 
   // 4b. Resolve the source's `// MARK:` markers: always drop the internal
@@ -265,7 +313,7 @@ export function publish({
   // config (e.g. color-swatch's `rounded-(--studio-color-swatch-radius)`).
   content = rewriteClassString(content, studioVars)
 
-  // 5. Assemble shadcn item — drop dotui-only fields (params, group).
+  // 5. Assemble shadcn item — drop dotui-only fields (params).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
   // object and cast at the boundary.
@@ -294,14 +342,17 @@ export function publish({
   // ship. Nothing studio-prefixed may survive into the item.
   const css = resolveCssFields(meta.css, studioVars)
   const cssVars = resolveCssFields(meta.cssVars, studioVars)
-  for (const file of files) assertNoStudioVars(file.content ?? "", file.path)
+  for (const file of files) {
+    assertNoStudioVars(file.content ?? "", file.path)
+    assertNoRampVars(file.content ?? "", file.path)
+  }
   assertNoStudioVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
+  assertNoRampVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
 
   const registryDependencies = rewriteDeps(
     registryDepsFor(meta, paramSelections),
     deps,
   )
-  // A declared range (`pkg@^1.2`) wins over the bare name an import implies.
   const declared = meta.dependencies ?? []
   const dependencies = [
     ...new Set([

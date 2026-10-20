@@ -35,7 +35,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Sheet } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
-import type { DesignSystem } from "@/modules/studio/preset"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
 interface PresetPickerItem {
   id: string
@@ -72,6 +72,9 @@ interface PresetPickerProps {
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
+  /** Called with the row the pointer or an arrow-moved highlight rests on
+   *  (desktop), then null once none does or the picker closes. */
+  onPreview?: (id: string | null) => void
   /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
    *  search never filters it. */
   renderItemMenu?: (item: PresetPickerItem) => ReactNode
@@ -80,7 +83,7 @@ interface PresetPickerProps {
 }
 
 /**
- * The one preset picker, used by both the docs preview toolbar and the /create
+ * The one preset picker, used by both the docs preview toolbar and the /studio
  * panel: a searchable list of plain rows — a swatch dot and the preset's name.
  * Popover on desktop, sheet on mobile.
  *
@@ -159,6 +162,7 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
+  onPreview,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "sheet"
@@ -203,6 +207,9 @@ function PresetPickerContent({
   // collection may highlight a row on open, and until then the flyout should
   // show the current selection, not the first row.
   const navigatedRef = useRef(false)
+  // The design preview follows the highlight only once up/down arrows move
+  // it: typing moves it too, onto a first match the user never pointed at.
+  const arrowedRef = useRef(false)
   const [previewId, setPreviewId] = useState<string | null>(selectedId ?? null)
   // The flyout lives and dies with the hover: it opens on a tooltip-style
   // delay — passing over a row on the way to a click shouldn't flash a panel —
@@ -216,10 +223,16 @@ function PresetPickerContent({
   // flyout if no successor has claimed it since (effect order between the two
   // rows isn't guaranteed).
   const activeRowRef = useRef<string | null>(null)
+  // The rows' handlers are stable, so they read the latest callback.
+  const onPreviewRef = useRef(onPreview)
+  useEffect(() => {
+    onPreviewRef.current = onPreview
+  }, [onPreview])
   useEffect(
     () => () => {
       if (openTimerRef.current != null) clearTimeout(openTimerRef.current)
       if (closeTimerRef.current != null) clearTimeout(closeTimerRef.current)
+      onPreviewRef.current?.(null)
     },
     [],
   )
@@ -227,6 +240,7 @@ function PresetPickerContent({
     if (via === "focus" && !navigatedRef.current) return
     activeRowRef.current = id
     setPreviewId(id)
+    onPreviewRef.current?.(via === "hover" || arrowedRef.current ? id : null)
     if (closeTimerRef.current != null) {
       clearTimeout(closeTimerRef.current)
       closeTimerRef.current = null
@@ -247,6 +261,7 @@ function PresetPickerContent({
       }
       activeRowRef.current = null
       setEngaged(false)
+      onPreviewRef.current?.(null)
     }, 150)
   }, [])
 
@@ -265,6 +280,13 @@ function PresetPickerContent({
   const menuItem = menu ? allItems.find((item) => item.id === menu) : undefined
   const rowIds = visible.flatMap((section) => section.items.map((i) => i.id))
   const menuContent = menuItem && renderItemMenu?.(menuItem)
+
+  // A row the search filtered out unmounts without letting go of the preview.
+  useEffect(() => {
+    const active = activeRowRef.current
+    if (active && closeTimerRef.current == null && !rowIds.includes(active))
+      hidePreview(active)
+  })
 
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -314,6 +336,7 @@ function PresetPickerContent({
                 // Typing moves the highlight to the first match, so from here on
                 // the pane follows it.
                 navigatedRef.current = true
+                arrowedRef.current = false
               }}
             />
           </InputGroup>
@@ -423,6 +446,11 @@ function PresetPickerContent({
         className="max-h-[inherit] w-65 overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
+          if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return
+          // The arrow takes over the typed highlight, even where it can't move.
+          if (!arrowedRef.current && activeRowRef.current)
+            onPreviewRef.current?.(activeRowRef.current)
+          arrowedRef.current = true
         }}
       >
         {list}
@@ -578,11 +606,20 @@ function PresetPreviewFlyout({
   forcedMode?: "light" | "dark"
 }) {
   const designSystem = useMemo(() => item.resolve(), [item])
+  // Desktop-only, so the mobile swap is pinned: swapping it would remount a
+  // Select's hidden popover arrow into the picker's arrow context.
+  const params = useMemo(
+    () => ({
+      ...designSystem.componentParams,
+      popover: { ...designSystem.componentParams.popover, mobile: "drawer" },
+    }),
+    [designSystem],
+  )
 
   return (
     <DesignSystemProvider
       scoped
-      params={designSystem.componentParams}
+      params={params}
       tokens={designSystem.tokens}
       density={designSystem.density}
       color={designSystem.color}
@@ -638,4 +675,4 @@ function Swatch({ ref, color }: { ref?: Ref<HTMLSpanElement>; color: string }) {
   )
 }
 
-export type { PresetPickerItem, PresetPickerSection }
+export type { PresetPickerSection }

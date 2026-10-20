@@ -10,13 +10,12 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-export default function ChartBarMixed() {
+export default function Demo() {
   return (
     <BarChart
       data={data}
       x="browser"
       y="visitors"
-      // One series per category: every bar lands on its own palette slot.
       series="browser"
       labels={{
         chrome: "Chrome",

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const avatarMeta = {
   name: "avatar",
   type: "registry:ui",
-  group: "containers",
   files: [
     {
       type: "registry:ui",
@@ -11,12 +10,16 @@ const avatarMeta = {
       target: "ui/avatar.tsx",
     },
   ],
-  registryDependencies: ["context", "use-image-loading-status"],
+  registryDependencies: ["use-image-loading-status"],
   params: {
+    shape: {
+      default: "circle",
+      values: ["circle", "rounded"] as const,
+      description: "A circle, or a rounded square on the corner rungs.",
+    },
     fallback: {
-      kind: "enum",
       default: "neutral",
-      values: ["neutral", "tinted"] as const,
+      values: ["neutral", "accent"] as const,
       description: "What initials sit on when no image loads.",
     },
   },

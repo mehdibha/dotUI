@@ -2,11 +2,13 @@
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as TagGroupPrimitives from "react-aria-components/TagGroup"
+import type { VariantProps } from "tailwind-variants"
 
 import { XIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 
 import { useStyles } from "./styles"
+import type { TagGroupStyles } from "./styles"
 
 // MARK: Separator
 
@@ -14,7 +16,7 @@ interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
   size?: "sm" | "md" | "lg"
 }
 
-function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
+const TagGroup = ({ className, size = "md", ...props }: TagGroupProps) => {
   const { tagGroup } = useStyles()()
   return (
     <TagGroupPrimitives.TagGroup
@@ -30,13 +32,16 @@ function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
-function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
+const TagList = <T extends object>({
+  className,
+  ...props
+}: TagListProps<T>) => {
   const { tagList } = useStyles()()
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
-      className={composeRenderProps(className, (cn) =>
-        tagList({ className: cn }),
+      className={composeRenderProps(className, (className) =>
+        tagList({ className }),
       )}
       {...props}
     />
@@ -45,9 +50,10 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 
 // MARK: Separator
 
-interface TagProps extends TagGroupPrimitives.TagProps {}
+interface TagProps
+  extends TagGroupPrimitives.TagProps, VariantProps<TagGroupStyles> {}
 
-function Tag({ className, ...props }: TagProps) {
+const Tag = ({ className, appearance, ...props }: TagProps) => {
   const { tag } = useStyles()()
   const textValue =
     typeof props.children === "string" ? props.children : undefined
@@ -57,7 +63,7 @@ function Tag({ className, ...props }: TagProps) {
       data-tag=""
       textValue={textValue}
       className={composeRenderProps(className, (className) =>
-        tag({ className }),
+        tag({ appearance, className }),
       )}
       {...props}
     >
@@ -75,7 +81,7 @@ function Tag({ className, ...props }: TagProps) {
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TagGroupProps, TagListProps, TagProps }
 export { Tag, TagGroup, TagList }

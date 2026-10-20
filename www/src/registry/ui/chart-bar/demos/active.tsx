@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import React from "react"
 import { barY } from "@tanstack/charts/bar"
 
 import { chartDefaults } from "@/registry/ui/chart"
@@ -24,12 +24,10 @@ const LABELS: Record<string, string> = {
 
 const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
 
-export default function ChartBarActive() {
-  const [active, setActive] = useState<string | null>(null)
+export default function Demo() {
+  const [active, setActive] = React.useState<string | null>(null)
 
-  /* The focused bar is repainted by a second layer at full opacity: `marks` is
-     identity-compared, so a new array is what rebuilds the chart. */
-  const highlight = useMemo(
+  const highlight = React.useMemo(
     () =>
       active === null
         ? []

@@ -11,10 +11,6 @@ import {
 } from "@/registry/ui/dialog"
 import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
-/**
- * Controlled sheet via `isOpen` / `onOpenChange`. Useful when an outside event
- * (effect, message, parent state) needs to open or close the sheet.
- */
 export default function Demo() {
   const [open, setOpen] = React.useState(false)
   return (

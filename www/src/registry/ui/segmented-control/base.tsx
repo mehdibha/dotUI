@@ -21,7 +21,7 @@ const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
   const { root } = useStyles()()
   return (
     <ToggleButtonGroupPrimitives.ToggleButtonGroup
-      data-slot="segmented-control"
+      data-segmented-control=""
       selectionMode="single"
       disallowEmptySelection
       className={composeRenderProps(className, (className) =>
@@ -46,7 +46,7 @@ const SegmentedControlItem = ({
   const { item, indicator, itemContent } = useStyles()()
   return (
     <ToggleButtonPrimitives.ToggleButton
-      data-slot="segmented-control-item"
+      data-segmented-control-item=""
       className={composeRenderProps(className, (className) =>
         item({ className }),
       )}
@@ -54,8 +54,6 @@ const SegmentedControlItem = ({
     >
       {composeRenderProps(children, (children) => (
         <>
-          {/* React Aria's SelectionIndicator: it tracks the selected item and
-              animates its translate/width/height, so the pill slides smoothly. */}
           <SelectionIndicatorPrimitives.SelectionIndicator
             data-segmented-control-indicator=""
             className={indicator()}
