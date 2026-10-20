@@ -4,8 +4,8 @@ import { Composition, registerRoot, useCurrentFrame } from "remotion"
 
 import { Film } from "../film"
 import { FPS } from "../lib/timing"
-import { Catalog, CATALOG_FRAMES } from "./catalog"
 import { Agent, AGENT_FRAMES } from "./agent"
+import { Catalog, CATALOG_FRAMES } from "./catalog"
 import { Demos, DEMOS_FRAMES } from "./demos"
 import { Export, EXPORT_FRAMES } from "./export"
 import { GRID_FRAMES, GridStep } from "./grid"
@@ -77,12 +77,10 @@ const scenes = [
 ] as const
 const filmedScenes = [
   ...scenes,
-  ...SCENES.filter(({ id }) => id === "Create" || id === "End").map(
+  ...SCENES.map(
     ({ id, Scene, frames }) => [`Story${id}`, Scene, frames] as const,
   ),
-].map(
-  ([id, Scene, frames]) => [id, filmed(Scene), frames] as const,
-)
+].map(([id, Scene, frames]) => [id, filmed(Scene), frames] as const)
 
 registerRoot(() => (
   <>

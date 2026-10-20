@@ -5,17 +5,13 @@
 
    Scenes already rendered are kept; delete a .mov to redo it. */
 
-import fs from "node:fs"
 import { execFileSync } from "node:child_process"
+import fs from "node:fs"
 import { createRequire } from "node:module"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { bundle } from "@remotion/bundler"
-import {
-  openBrowser,
-  renderMedia,
-  selectComposition,
-} from "@remotion/renderer"
+import { openBrowser, renderMedia, selectComposition } from "@remotion/renderer"
 
 import { makeWebpackOverride } from "../webpack.ts"
 
@@ -23,7 +19,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const out = path.resolve(process.argv[2] ?? "out/story")
 const flag = (name: string) =>
   process.argv.find((a) => a.startsWith(`--${name}=`))?.split("=")[1]
-const ORDER = ["StoryCreate", "Catalog", "Demos", "Export", "Agent", "StoryEnd"]
+const ORDER = ["Create", "Catalog", "Demos", "Export", "Agent", "End"].map(
+  (id) => `Story${id}`,
+)
 const only = flag("scenes")?.split(",")
 fs.mkdirSync(out, { recursive: true })
 
@@ -78,7 +76,9 @@ for (const id of ORDER) {
       await browser.close({ silent: true })
       break
     } catch (error) {
-      console.log(`${id} attempt ${attempt} failed: ${String(error).slice(0, 200)}`)
+      console.log(
+        `${id} attempt ${attempt} failed: ${String(error).slice(0, 200)}`,
+      )
       if (attempt >= 3) throw error
     }
   }
@@ -92,8 +92,18 @@ fs.writeFileSync(
 )
 if (ORDER.every((id) => fs.existsSync(path.join(out, `${id}.mov`)))) {
   execFileSync("ffmpeg", [
-    "-loglevel", "error", "-y", "-f", "concat", "-safe", "0",
-    "-i", list, "-c", "copy", path.join(out, "story.mov"),
+    "-loglevel",
+    "error",
+    "-y",
+    "-f",
+    "concat",
+    "-safe",
+    "0",
+    "-i",
+    list,
+    "-c",
+    "copy",
+    path.join(out, "story.mov"),
   ])
   console.log(path.join(out, "story.mov"))
 }
