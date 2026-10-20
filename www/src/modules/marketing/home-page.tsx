@@ -52,12 +52,14 @@ export function HomePage() {
           <Cards />
         </section>
 
-        <div className="mt-16 md:mt-20">
-          <CtaSection />
-        </div>
-
-        <div className="mt-16 md:mt-20">
-          <Footer />
+        {/* On mobile, CTA + footer fill the last screen so the page ends on them alone. */}
+        <div className="flex flex-col max-md:min-h-[calc(100svh-var(--header-height))] md:mt-20">
+          <div className="flex flex-1 flex-col justify-center">
+            <CtaSection />
+          </div>
+          <div className="md:mt-20">
+            <Footer />
+          </div>
         </div>
       </div>
     </div>
