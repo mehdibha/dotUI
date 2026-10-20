@@ -1,16 +1,16 @@
-import { ease, lerp, progress } from "../lib/motion"
+import { BEAT } from "../lib/timing"
 import { STEPS_SIZE } from "./steps"
 
 /* What the scenes after Create share: the look the viewer made (Create's
    hard stop lands on the first preset), the 1200×675 frame, and the line on
-   screen, its words arriving like the end screens'. */
+   screen, its words cutting in like the end screens'. */
 
 export const YOURS = "origin"
 
 export const { width: W, height: H } = STEPS_SIZE
 
-const WORD_EVERY = 6
-const WORD_FOR = 18
+/** Words cut in one by one, on every half beat. */
+const WORD_EVERY = BEAT / 2
 
 /** One line, word by word from `frame` 0. */
 export function Words({
@@ -27,23 +27,18 @@ export function Words({
       className="font-semibold whitespace-nowrap text-fg"
       style={{ fontSize: size, letterSpacing: "-0.035em", lineHeight: 1.1 }}
     >
-      {text.split(" ").map((word, i) => {
-        const p = progress(frame, i * WORD_EVERY, WORD_FOR, ease.out)
-        return (
-          <span
-            key={i}
-            style={{
-              display: "inline-block",
-              marginRight: "0.25em",
-              opacity: p,
-              transform: `translateY(${lerp(0.3, 0, p)}em)`,
-              filter: `blur(${lerp(12, 0, p)}px)`,
-            }}
-          >
-            {word}
-          </span>
-        )
-      })}
+      {text.split(" ").map((word, i) => (
+        <span
+          key={i}
+          style={{
+            display: "inline-block",
+            marginRight: "0.25em",
+            opacity: frame >= i * WORD_EVERY ? 1 : 0,
+          }}
+        >
+          {word}
+        </span>
+      ))}
     </div>
   )
 }
@@ -66,7 +61,7 @@ export function Caption({
         className="absolute inset-x-0 bottom-0"
         style={{
           height: 300,
-          opacity: progress(frame, first, WORD_FOR, ease.out),
+          opacity: frame >= first ? 1 : 0,
           background:
             "linear-gradient(to bottom, transparent, var(--color-bg) 62%)",
         }}

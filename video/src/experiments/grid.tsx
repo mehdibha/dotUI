@@ -60,11 +60,11 @@ import {
 /* The Controls card morphing through the presets, then the studio around
    it. At 7 s, in one move, the camera pulls back from Controls into the
    studio's "cards" canvas (Controls to its top left) while the other cards
-   arrive, the frame closes in to the preview's rounded border, and the
-   panel slides in from the left beside it. The cards arrive slowly, one
-   after another, the last as Controls lands. The look holds from 9 s until
-   the studio is in place, then the presets run on at the same pace; then a
-   pause and the end screens. */
+   slide in from the right and bottom, the frame closes in to the preview's
+   rounded border, and the panel slides in from the left beside it. The
+   cards arrive slowly, one after another, the last as Controls lands. The
+   look holds from 9 s until the studio is in place, then the presets run on
+   at the same pace; then a pause and the end screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
@@ -362,10 +362,11 @@ function draw(
   for (const [key, pa] of a.cards) {
     const pb = b.cards.get(key)
     if (!pb) continue
-    let [dx, dy, alpha] = [0, 0, 1]
+    let x = ox + lerp(pa.x, pb.x, t) * scale
+    let y = oy + lerp(pa.y, pb.y, t) * scale
     if (key !== "controls") {
-      // Each card comes in from further out along the line from Controls,
-      // the nearest first.
+      // Each card slides in from the frame's right edge, or its bottom one
+      // when it sits more below Controls than beside it; the nearest first.
       const c = centerOf(pa, pb, t)
       const [vx, vy] = [c.x - home.x, c.y - home.y]
       const start =
@@ -373,18 +374,15 @@ function draw(
         Math.min(Math.hypot(vx, vy) / ARRIVE_REACH, 1) * ARRIVE_SPREAD
       const q = progress(frame, start, ARRIVE_FOR, ease.soft)
       if (q <= 0) continue
-      ;[dx, dy, alpha] = [vx * 0.3 * (1 - q), vy * 0.3 * (1 - q), q]
+      if (vy > vx) y = lerp(Math.max(y, Math.min(H, bottom)), y, q)
+      else x = lerp(Math.max(x, Math.min(W, right)), x, q)
     }
-    const x = ox + (lerp(pa.x, pb.x, t) + dx) * scale
-    const y = oy + (lerp(pa.y, pb.y, t) + dy) * scale
     const w = lerp(pa.look.card.width, pb.look.card.width, t) * scale
     const h = lerp(pa.look.card.height, pb.look.card.height, t) * scale
     if (x > Math.min(W, right) || y > Math.min(H, bottom) || x + w < 0) continue
     if (y + h < 0) continue
-    ctx.globalAlpha = alpha
     paintCard(ctx, pa.look, pb.look, t, x, y, scale, rand)
   }
-  ctx.globalAlpha = 1
 
   // The site's chrome around the preview, with its hairline.
   if (edges > 0 && chrome) {
