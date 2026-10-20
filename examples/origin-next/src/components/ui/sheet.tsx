@@ -14,7 +14,7 @@ const sheetVariants = tv({
     sheet:
       "relative box-content flex min-h-0 min-w-0 flex-col text-fg outline-none [--surface-bg:var(--color-popover)] overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
     content:
-      "flex min-h-0 flex-1 flex-col overflow-hidden pb-(--sheet-scroll-padding-y) outline-none in-data-expanded:overflow-y-auto",
+      "flex min-h-0 flex-1 flex-col overflow-hidden overscroll-auto pb-(--sheet-scroll-padding-y) outline-none in-data-expanded:overflow-y-auto [:where(&_*)]:overscroll-auto",
     handle:
       "mx-auto my-2 shrink-0 rounded-full bg-fg/20 orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
   },
