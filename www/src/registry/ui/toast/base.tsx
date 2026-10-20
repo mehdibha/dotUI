@@ -102,13 +102,12 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 const ToastProvider = ({
   children,
   limit = 3,
-  position,
+  position = "bottom-right",
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
 }: ToastProviderProps) => {
-  const { defaultVariants } = useStyles()
   return (
     <ToastPrimitive.Provider
       limit={limit}
@@ -117,10 +116,7 @@ const ToastProvider = ({
       {...props}
     >
       {children}
-      <ToastList
-        position={position ?? defaultVariants.position ?? "bottom-right"}
-        portalProps={portalProps}
-      />
+      <ToastList position={position} portalProps={portalProps} />
     </ToastPrimitive.Provider>
   )
 }
@@ -139,7 +135,7 @@ const ToastList = ({ position, portalProps }: ToastListProps) => {
       <ToastPrimitive.Viewport
         data-toast-viewport=""
         data-position={position}
-        className={viewport({ position })}
+        className={viewport()}
       >
         {toasts.map((toastItem) => (
           <ToastItem key={toastItem.id} position={position} toast={toastItem} />
@@ -184,7 +180,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
       data-toast=""
       swipeDirection={getSwipeDirection(position)}
       toast={toastItem}
-      className={toastStyle({ position, variant })}
+      className={toastStyle({ variant })}
     >
       <ToastPrimitive.Content className={content()}>
         <div className={body()}>
@@ -194,10 +190,7 @@ const ToastItem = ({ position, toast: toastItem }: ToastItemProps) => {
             </div>
           ) : null}
           <div data-toast-message="" className={message()}>
-            <ToastPrimitive.Title
-              data-toast-title=""
-              className={title({ variant })}
-            />
+            <ToastPrimitive.Title data-toast-title="" className={title()} />
             <ToastPrimitive.Description
               data-toast-description=""
               className={description({ variant })}

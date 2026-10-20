@@ -54,7 +54,7 @@ const { useStyles } = createStyles(segmentedControlMeta, {
       item: [
         "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--studio-segmented-control-radius)-3px)] border border-transparent whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring-outside",
         "text-fg-muted hover:text-fg",
-        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor)",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
       // `isolate` on the item keeps the pill behind the `z-10` content.

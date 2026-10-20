@@ -4,13 +4,13 @@ import * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
 import * as TabsPrimitives from "react-aria-components/Tabs";
-import { tv } from "tailwind-variants";
+import { type VariantProps, tv } from "tailwind-variants";
 
 const tabsVariants = tv({
   slots: {
     root: "flex gap-2 [--tabs-list-height:2rem]",
     list: "inline-flex w-fit items-center justify-center text-fg-muted",
-    item: "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-1.5 px-1.5 py-0.5 text-sm has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 **:[svg]:not-with-[size]:size-4 font-medium",
+    item: "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-1.5 px-1.5 py-0.5 text-sm has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 **:[svg]:not-with-[size]:size-4 font-medium",
     indicator:
       "pointer-events-none absolute transition-[translate,width,height] motion-reduce:transition-none",
     panel: "flex-1 outline-none data-[inert=true]:hidden text-sm",
@@ -60,7 +60,7 @@ const tabsVariants = tv({
 
 const { root, list, item, indicator, panel } = tabsVariants();
 
-type TabsVariant = "segmented" | "line" | "pill" | "enclosed";
+type TabsVariant = VariantProps<typeof tabsVariants>["variant"];
 
 /* -------------------------------------------------------------------------- */
 

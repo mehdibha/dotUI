@@ -18,7 +18,7 @@
  *      rewriter didn't recognize it and shadcn would resolve it against its
  *      default registry — exactly the #477 failure mode.
  *   4. Shape spot-check on /r/field.json: every slot the code destructures from
- *      fieldVariants() must be declared in the tv() slots:{} block. Cheap,
+ *      fieldStyles() must be declared in the tv() slots:{} block. Cheap,
  *      regex-level — catches a publish that emits code referencing a slot the
  *      styles no longer define.
  *
@@ -160,7 +160,7 @@ function checkDeps(
 }
 
 /**
- * Shape spot-check on /r/field.json: every slot destructured from fieldVariants()
+ * Shape spot-check on /r/field.json: every slot destructured from fieldStyles()
  * must be declared in the tv() slots:{} block of the emitted source.
  */
 function checkFieldShape(origin: string, item: unknown): Failure[] {
@@ -187,7 +187,7 @@ function checkFieldShape(origin: string, item: unknown): Failure[] {
 
   // Keys only: `a: b` renames and `a = x` defaults resolve to `a`; rest elements drop out.
   const destructured = [
-    ...content.matchAll(/const\s*\{([^}]*)\}\s*=\s*fieldVariants\(/g),
+    ...content.matchAll(/const\s*\{([^}]*)\}\s*=\s*fieldStyles\(/g),
   ].flatMap((m) =>
     m[1]!
       .split(",")
@@ -196,9 +196,7 @@ function checkFieldShape(origin: string, item: unknown): Failure[] {
   )
 
   if (destructured.length === 0) {
-    return [
-      { name: "field", url, reason: "no fieldVariants() slot usage found" },
-    ]
+    return [{ name: "field", url, reason: "no fieldStyles() slot usage found" }]
   }
 
   const undeclared = destructured.filter((s) => !declared.has(s))

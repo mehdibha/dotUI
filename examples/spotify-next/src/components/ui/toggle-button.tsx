@@ -7,8 +7,8 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { createVariantsContext } from "@/lib/context";
 
-const toggleButtonVariants = tv({
-  base: "relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-base *:[svg]:not-with-[size]:size-5",
+const toggleButtonStyles = tv({
+  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-base *:[svg]:not-with-[size]:size-5",
   variants: {
     variant: {
       primary:
@@ -46,9 +46,7 @@ const toggleButtonVariants = tv({
   ],
 });
 
-export { toggleButtonVariants as toggleButtonStyles };
-
-type ToggleButtonVariants = VariantProps<typeof toggleButtonVariants>;
+type ToggleButtonVariants = VariantProps<typeof toggleButtonStyles>;
 
 /* -------------------------------------------------------------------------- */
 
@@ -63,9 +61,7 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 interface ToggleButtonProps
   extends
     React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
-    ToggleButtonVariants {
-  isIconOnly?: boolean;
-}
+    ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const {
@@ -83,7 +79,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
       data-variant={variant}
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (className) =>
-        toggleButtonVariants({
+        toggleButtonStyles({
           variant,
           size,
           isIconOnly,
@@ -106,4 +102,4 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 /* -------------------------------------------------------------------------- */
 
 export type { ToggleButtonProps };
-export { ToggleButton, ToggleButtonProvider };
+export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };

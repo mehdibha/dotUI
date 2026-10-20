@@ -12,8 +12,6 @@ const { useStyles } = createStyles(progressBarMeta, {
       fill: "h-full w-full bg-(--studio-progress-fill-color) transition-all duration-(--studio-progress-state-duration) ease-(--studio-progress-state-ease) data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide motion-reduce:transition-none",
       output: "ml-auto text-fg-muted tabular-nums",
     },
-    variants: {},
-    defaultVariants: {},
   },
   density: {
     compact: {

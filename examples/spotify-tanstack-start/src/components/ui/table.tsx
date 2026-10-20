@@ -35,8 +35,8 @@ const tableVariants = tv({
       "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
     body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
     footer: "border-t bg-muted/50 font-medium",
-    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 data-[state=selected]:bg-selected/50 data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
-    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-md data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-[''] h-14 px-4 leading-5",
+    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-14 px-4 leading-5",
     selectionCell:
       "w-10 min-w-10 [div]:h-[calc(100%-1px)] [div]:justify-start px-4",
     dragCell:
@@ -50,7 +50,7 @@ const tableVariants = tv({
       "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-xs text-fg-muted focus-reset focus-visible:focus-ring group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
     expandIcon: "size-3.5 transition-transform",
     loadMore:
-      "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
+      "relative h-7 **:data-loader:absolute **:data-loader:top-0 **:data-loader:left-1/2 **:data-loader:-translate-x-1/2",
   },
 });
 
@@ -146,58 +146,42 @@ const TableContainerContext = React.createContext({ resizable: false });
 
 /* -------------------------------------------------------------------------- */
 
-interface TableContainerProps extends React.ComponentPropsWithoutRef<
+interface TableContainerProps extends React.ComponentProps<
   typeof TablePrimitives.ResizableTableContainer
 > {
   resizable?: boolean;
 }
 
-const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
-  (
-    {
-      className,
-      onResize,
-      onResizeEnd,
-      onResizeStart,
-      render,
-      resizable = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const classNames = container({ className });
-    const context = React.useMemo(() => ({ resizable }), [resizable]);
+const TableContainer = ({
+  className,
+  onResize,
+  onResizeEnd,
+  onResizeStart,
+  render,
+  resizable = false,
+  ...props
+}: TableContainerProps) => {
+  const classNames = container({ className });
+  const context = React.useMemo(() => ({ resizable }), [resizable]);
 
-    if (resizable) {
-      return (
-        <TableContainerContext.Provider value={context}>
-          <TablePrimitives.ResizableTableContainer
-            data-table-container=""
-            className={classNames}
-            ref={ref}
-            onResize={onResize}
-            onResizeEnd={onResizeEnd}
-            onResizeStart={onResizeStart}
-            render={render}
-            {...props}
-          />
-        </TableContainerContext.Provider>
-      );
-    }
-
-    return (
-      <TableContainerContext.Provider value={context}>
-        <div
+  return (
+    <TableContainerContext value={context}>
+      {resizable ? (
+        <TablePrimitives.ResizableTableContainer
           data-table-container=""
           className={classNames}
-          ref={ref}
+          onResize={onResize}
+          onResizeEnd={onResizeEnd}
+          onResizeStart={onResizeStart}
+          render={render}
           {...props}
         />
-      </TableContainerContext.Provider>
-    );
-  },
-);
-TableContainer.displayName = "TableContainer";
+      ) : (
+        <div data-table-container="" className={classNames} {...props} />
+      )}
+    </TableContainerContext>
+  );
+};
 
 /* -------------------------------------------------------------------------- */
 

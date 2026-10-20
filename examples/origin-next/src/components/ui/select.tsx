@@ -98,9 +98,8 @@ const SelectValue = <T extends object>({
     >
       {composeRenderProps(
         props.children,
-        (children, { selectedText, defaultChildren }) => {
-          return <>{children || selectedText || defaultChildren}</>;
-        },
+        (children, { selectedText, defaultChildren }) =>
+          children || selectedText || defaultChildren,
       )}
     </SelectPrimitives.SelectValue>
   );

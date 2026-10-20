@@ -220,8 +220,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   const hourOptions: TimeColumnOption[] = use12Hour
     ? range(12, 1).map((h) => ({ id: String(h), label: String(h) }))
     : range(24).map((h) => ({ id: String(h), label: pad(h) }))
-  const minuteOptions = range(60).map((m) => ({ id: String(m), label: pad(m) }))
-  const secondOptions = range(60).map((s) => ({ id: String(s), label: pad(s) }))
+  const sixtyOptions = range(60).map((n) => ({ id: String(n), label: pad(n) }))
 
   return (
     <div
@@ -245,7 +244,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
       {showMinutes && (
         <TimeColumn
           label="Minute"
-          options={minuteOptions}
+          options={sixtyOptions}
           selectedKey={time && String(time.minute)}
           onSelect={(id) => update({ minute: Number(id) })}
         />
@@ -253,7 +252,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
       {showSeconds && (
         <TimeColumn
           label="Second"
-          options={secondOptions}
+          options={sixtyOptions}
           selectedKey={time && String(time.second)}
           onSelect={(id) => update({ second: Number(id) })}
         />
