@@ -54,7 +54,11 @@ export function getExamplesPromise(slug: string) {
       (slug === "cards" ? loadCards : undefined) ??
       ExamplesIndex[slug]
     if (!load) return null
-    promise = load()
+    // A failed chunk (a network error, a deploy since) is retried next time.
+    promise = load().catch((error: unknown) => {
+      promiseCache.delete(slug)
+      throw error
+    })
     promiseCache.set(slug, promise)
   }
   return promise
@@ -200,7 +204,7 @@ export function PreviewPage() {
     })
   })
   useMessage("preview-prefetch", ({ slug: next }) => {
-    void getExamplesPromise(next)
+    void getExamplesPromise(next)?.catch(() => {})
   })
 
   // The board the panel is editing, over the user's preview. The preview stays
@@ -233,10 +237,17 @@ export function PreviewPage() {
     const promise = getExamplesPromise(next)
     if (!promise) return show(null)
     setBoardLoading(true)
-    void promise.then((mod) => {
-      if (requested.current === next)
-        show({ slug: next, Examples: mod.default })
-    })
+    void promise.then(
+      (mod) => {
+        if (requested.current === next)
+          show({ slug: next, Examples: mod.default })
+      },
+      () => {
+        if (requested.current !== next) return
+        requested.current = null
+        show(null)
+      },
+    )
   })
 
   // The route loader resolved the example chunk before this render, so this
