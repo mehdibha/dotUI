@@ -45,7 +45,7 @@ const SLOTS: {
     scroll: [0, 182],
   },
   {
-    preset: "spotify",
+    preset: "carbon",
     inset: {
       bottom: BLEED,
       right: BLEED,
@@ -54,14 +54,14 @@ const SLOTS: {
     },
   },
   {
-    preset: "airbnb",
+    preset: "claude",
     inset: {
       bottom: BLEED,
       left: BLEED,
       right: fromCenter(GUTTER - HALF_W),
       top: fromCenter(HALF_H),
     },
-    scroll: [60, 0],
+    scroll: [46, 0],
   },
 ]
 
