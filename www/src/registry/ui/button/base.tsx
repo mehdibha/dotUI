@@ -27,9 +27,9 @@ const truncateLabel = (children: React.ReactNode) =>
 // MARK: Separator
 
 interface ButtonProps
-  extends React.ComponentProps<typeof ButtonPrimitives.Button>, ButtonVariants {
-  isIconOnly?: boolean
-}
+  extends
+    React.ComponentProps<typeof ButtonPrimitives.Button>,
+    ButtonVariants {}
 
 const Button = ({
   variant,
@@ -74,11 +74,7 @@ const Button = ({
 // MARK: Separator
 
 interface LinkButtonProps
-  extends
-    React.ComponentProps<typeof LinkPrimitives.Link>,
-    VariantProps<ButtonStyles> {
-  isIconOnly?: boolean
-}
+  extends React.ComponentProps<typeof LinkPrimitives.Link>, ButtonVariants {}
 
 const LinkButton = ({
   variant,

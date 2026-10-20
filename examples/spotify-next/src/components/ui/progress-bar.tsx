@@ -13,8 +13,6 @@ const progressBarVariants = tv({
     fill: "h-full w-full bg-primary transition-all data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide motion-reduce:transition-none",
     output: "ml-auto text-fg-muted tabular-nums text-sm",
   },
-  variants: {},
-  defaultVariants: {},
 });
 
 const { root, track, fill, output } = progressBarVariants();
@@ -80,7 +78,7 @@ const ProgressBarFill = ({
   ...props
 }: ProgressBarFillProps) => {
   const { isIndeterminate, percentage } =
-    useProgressBarContext("ProgressBarControl");
+    useProgressBarContext("ProgressBarFill");
 
   return (
     <div

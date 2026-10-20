@@ -38,7 +38,7 @@ const sidebarVariants = tv({
     rail: "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[side=left]:group-data-[collapsible=offcanvas]:-right-2 group-data-[side=right]:group-data-[collapsible=offcanvas]:-left-2",
     header: "flex flex-col gap-2 p-2",
     footer: "flex flex-col gap-2 p-2",
-    separator: "mx-2 w-auto bg-border",
+    separator: "mx-2 w-auto",
     content:
       "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
     group: "relative flex w-full min-w-0 flex-col p-2",
@@ -345,7 +345,6 @@ interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
 const SidebarTrigger = ({
   onPress,
-  className,
   children,
   ...props
 }: SidebarTriggerProps) => {
@@ -356,7 +355,6 @@ const SidebarTrigger = ({
       size="sm"
       isIconOnly
       aria-label="Toggle Sidebar"
-      className={cn("size-7", className)}
       onPress={(event) => {
         onPress?.(event);
         toggleSidebar();
@@ -607,7 +605,6 @@ const SidebarMenuButton = ({
   }
 
   const tooltipContentProps: TooltipContentProps =
-    tooltip != null &&
     typeof tooltip === "object" &&
     !React.isValidElement(tooltip) &&
     !Array.isArray(tooltip)

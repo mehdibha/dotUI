@@ -7,8 +7,8 @@ export interface PopoverProps extends React.ComponentProps<
   typeof PopoverPrimitives.Popover
 > {
   /**
-   * Whether to show an arrow pointing to the trigger.
-   * @default true
+   * Whether to show an arrow pointing to the trigger. Defaults to the design
+   * system's tip setting.
    */
   showArrow?: boolean
 }

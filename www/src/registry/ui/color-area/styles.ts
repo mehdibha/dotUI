@@ -8,7 +8,7 @@ const roomy = {
 
 const { useStyles } = createStyles(colorAreaMeta, {
   base: {
-    base: "block aspect-square min-w-20 rounded-(--studio-color-area-radius) disabled:[background:var(--color-disabled)]! in-data-dialog:w-full",
+    base: "block aspect-square min-w-20 rounded-(--studio-color-area-radius) disabled:[background:var(--color-disabled)]!",
   },
   density: {
     compact: {

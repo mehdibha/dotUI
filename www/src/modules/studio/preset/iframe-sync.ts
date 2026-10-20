@@ -48,6 +48,8 @@ export type ParentToIframeMessage =
   | { type: "inspector-mode"; enabled: boolean }
   | ({ type: "preview-warm" } & PreviewAssets)
   | ({ type: "preview-focus" } & PreviewFocus)
+  // The board over the user's preview; null shows the preview again.
+  | { type: "preview-board"; slug: string | null }
 
 type IframeToParentMessage =
   | { type: "preview-ready" }

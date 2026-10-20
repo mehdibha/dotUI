@@ -42,7 +42,7 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { usePreviewFocus } from "@/modules/studio/focus"
+import { KEY_BOARDS, pageBoard, usePreviewFocus } from "@/modules/studio/focus"
 import {
   clearSettled,
   isDragPreview,
@@ -106,10 +106,21 @@ const cueStore = createPersistedStore("dotui:preview-follow-cues", 0, {
 })
 const CUE_LIMIT = 3
 const CUE_MS = 2400
-// A board outlives its focus so hopping between popovers never flashes the user's preview.
-const FOCUS_RELEASE_MS = 200
-// Panel popovers are modal: a click dismisses one, a second opens the next.
-const CLICK_RELEASE_MS = 800
+// A board outlives its focus by a beat, so a popover handing over to a page
+// (or another popover) never flashes the user's preview.
+const FOCUS_RELEASE_MS = 50
+// Panel popovers are modal: a click on another board's row only dismisses the
+// open one, and a second click opens the next. The board waits that long.
+const HOP_RELEASE_MS = 800
+
+/** The board a panel row or page link shows, if any. */
+function boardOfElement(element: Element) {
+  const link = element
+    .closest("[data-page-link]")
+    ?.getAttribute("data-page-link")
+  const axis = element.closest("[data-axis]")?.getAttribute("data-axis")
+  return pageBoard(link) ?? (axis ? KEY_BOARDS[axis] : undefined)
+}
 
 // CSS `zoom`: magnifies without the reflow a device size causes.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
@@ -264,6 +275,12 @@ export function PreviewPanel({ className }: { className?: string }) {
   const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
+
+  // The focus that last held the board: a popover's or a page's.
+  const lastFocus = useRef(focus)
+  useEffect(() => {
+    if (focus) lastFocus.current = focus
+  }, [focus])
   const takenOver = board !== null
   const [cueing, setCueing] = useState(false)
   useEffect(() => {
@@ -276,32 +293,54 @@ export function PreviewPanel({ className }: { className?: string }) {
       setCueing(false)
     }
   }, [takenOver])
-  const lastPress = useRef(-Infinity)
+  const lastHop = useRef({ at: -Infinity, board: "" })
   useEffect(() => {
-    // A press that dismisses a popover; by rect, as the underlay covers the preview.
+    // A press that dismisses a popover on another board's row: the user is
+    // hopping to it. By rect, as the popover's underlay covers the row.
     const onPress = ({ clientX: x, clientY: y }: PointerEvent) => {
       if (!document.querySelector("[data-panel-popover]")) return
-      const rect = panelRef.current?.getBoundingClientRect()
-      const inPreview =
-        rect &&
-        x >= rect.left &&
-        x <= rect.right &&
-        y >= rect.top &&
-        y <= rect.bottom
-      if (!inPreview) lastPress.current = performance.now()
+      const row = [
+        ...document.querySelectorAll("[data-axis], [data-page-link]"),
+      ].find((element) => {
+        const rect = element.getBoundingClientRect()
+        return (
+          x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+        )
+      })
+      const hop = row && boardOfElement(row)
+      if (hop) lastHop.current = { at: performance.now(), board: hop }
     }
     document.addEventListener("pointerdown", onPress, true)
     return () => document.removeEventListener("pointerdown", onPress, true)
   }, [])
   useEffect(() => {
     if (target || !following) return setBoard(target)
-    const clicked = performance.now() - lastPress.current < CLICK_RELEASE_MS
+    const from = lastFocus.current
+    const hopping =
+      from?.popover &&
+      lastHop.current.board !== from.board &&
+      performance.now() - lastHop.current.at < HOP_RELEASE_MS
     const timer = setTimeout(
       () => setBoard(null),
-      clicked ? CLICK_RELEASE_MS : FOCUS_RELEASE_MS,
+      hopping ? HOP_RELEASE_MS : FOCUS_RELEASE_MS,
     )
     return () => clearTimeout(timer)
   }, [target, following])
+
+  // A hovered page link or board row loads its board's chunk, so the switch is instant.
+  useEffect(() => {
+    const onOver = (event: PointerEvent) => {
+      if (!(event.target instanceof Element)) return
+      const next = boardOfElement(event.target)
+      if (next)
+        postToIframe(iframeRef.current, {
+          type: "preview-prefetch",
+          slug: BOARD_SLUG_PREFIX + next,
+        })
+    }
+    document.addEventListener("pointerover", onOver)
+    return () => document.removeEventListener("pointerover", onOver)
+  }, [])
 
   const effectivePreview = board ? BOARD_SLUG_PREFIX + board : preview
   const constrained = size !== "desktop"
@@ -318,7 +357,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // Fixed at mount: everything after goes over postMessage, so the iframe
   // never reloads.
-  const [iframeSrc] = useState(() => `/preview/${effectivePreview}`)
+  const [iframeSrc] = useState(() => `/preview/${preview}`)
 
   // The skeleton stays until the preview reports it rendered (`load` fires
   // before the SPA paints). Its first report is often lost to hydration, so
@@ -346,9 +385,11 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // Switches navigate the iframe's own router: no remount, and revisited
   // previews come from its module cache.
+  // The board goes over the user's preview, which stays on the iframe's route.
+  usePreviewSync(iframeRef, { type: "preview-navigate", slug: preview })
   usePreviewSync(iframeRef, {
-    type: "preview-navigate",
-    slug: effectivePreview,
+    type: "preview-board",
+    slug: board && BOARD_SLUG_PREFIX + board,
   })
   usePreviewSync(iframeRef, { type: "preview-mode", mode: previewMode })
   const sentFocus = following ? focus : null

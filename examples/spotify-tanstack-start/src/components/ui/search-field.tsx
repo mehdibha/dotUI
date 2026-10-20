@@ -30,12 +30,12 @@ const SearchField = ({
       className={composeRenderProps(className, (className) =>
         cn(
           field({ className }),
-          "empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
+          "group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
         ),
       )}
       {...props}
     >
-      {props?.children ?? (
+      {props.children ?? (
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />

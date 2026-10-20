@@ -3,6 +3,7 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TextFieldPrimitives from "react-aria-components/TextField";
 
+import { cn } from "@/lib/utils";
 import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
@@ -17,7 +18,7 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
       data-textfield=""
       data-text-field=""
       className={composeRenderProps(className, (className) =>
-        field({ className }),
+        field({ className: cn("group/text-field", className) }),
       )}
       {...props}
     />

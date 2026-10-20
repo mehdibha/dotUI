@@ -43,6 +43,7 @@ const popoverMeta = {
     tip: {
       default: "none",
       values: ["none", "tip"] as const,
+      source: { tip: { "showArrow = false": "showArrow = true" } },
       description: "Whether the panel points at its trigger.",
     },
   },

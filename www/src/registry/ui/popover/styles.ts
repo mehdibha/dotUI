@@ -47,10 +47,6 @@ const { useStyles } = createStyles(popoverMeta, {
       slide: { slots: { popover: [entrance, OVERLAY_SLIDE] } },
       none: {},
     },
-    tip: {
-      none: { slots: { arrow: "hidden" } },
-      tip: {},
-    },
   },
 })
 

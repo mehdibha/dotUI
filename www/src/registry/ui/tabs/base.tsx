@@ -4,12 +4,14 @@ import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
 import * as TabsPrimitives from "react-aria-components/Tabs"
+import type { VariantProps } from "tailwind-variants"
 
 import { useStyles } from "./styles"
+import type { TabsStyles } from "./styles"
 
 // MARK: tabsStyles
 
-type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
+type TabsVariant = VariantProps<TabsStyles>["variant"]
 
 // MARK: Separator
 

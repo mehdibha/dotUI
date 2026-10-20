@@ -116,8 +116,8 @@ const SliderFill = ({ className, ...props }: SliderFillProps) => {
   return (
     <SliderPrimitives.SliderFill
       data-slider-fill=""
-      className={composeRenderProps(className, (className, { orientation }) =>
-        fill({ orientation, className }),
+      className={composeRenderProps(className, (className) =>
+        fill({ className }),
       )}
       {...props}
     />
