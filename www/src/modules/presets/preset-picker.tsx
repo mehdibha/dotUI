@@ -259,7 +259,7 @@ export function PresetPicker({
     <>
       {/* The search row drops the Command's hairline and sits on the same
           inset as the rows below; the New button, when any, shares it. */}
-      <div className="mx-(--command-inset) flex items-center gap-2">
+      <div className="mx-(--command-inset) flex items-center gap-1.5">
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === "popover"}
@@ -383,7 +383,8 @@ export function PresetPicker({
                 className="transition-none will-change-auto"
               >
                 <Command
-                  className="max-h-[inherit] w-65 overflow-hidden"
+                  // The studio pickers' 6px padding and gaps.
+                  className="max-h-[inherit] w-65 gap-1.5 overflow-hidden in-data-popover:[--command-inset:--spacing(1.5)]"
                   onKeyDownCapture={(e) => {
                     if (e.key.startsWith("Arrow")) navigatedRef.current = true
                     if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return
