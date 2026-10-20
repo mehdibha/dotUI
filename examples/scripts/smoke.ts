@@ -463,9 +463,10 @@ function dependencyNames(packageJson: string): Set<string> {
  * `pnpm add` (which the CLI runs for each item's npm dependencies) re-resolves
  * ranges to whatever is latest today, so a byte-for-byte `package.json` would
  * drift with every upstream release. Keep the committed file unless the SET of
- * dependencies changed — that is the signal worth seeing in a diff.
+ * dependencies changed — that is the signal worth seeing in a diff. Returns
+ * whether it restored the file, which leaves the lockfile out of date.
  */
-function stabilizePackageJson(cwd: string, before: string): void {
+function stabilizePackageJson(cwd: string, before: string): boolean {
   const file = path.join(cwd, "package.json")
   const after = readFileSync(file, "utf8")
   const was = dependencyNames(before)
@@ -473,14 +474,16 @@ function stabilizePackageJson(cwd: string, before: string): void {
   const added = [...now].filter((name) => !was.has(name))
   const removed = [...was].filter((name) => !now.has(name))
   if (added.length === 0 && removed.length === 0) {
+    if (after === before) return false
     writeFileSync(file, before)
-    return
+    return true
   }
   console.log(
     `package.json dependencies changed` +
       (added.length ? ` +${added.join(" +")}` : "") +
       (removed.length ? ` -${removed.join(" -")}` : ""),
   )
+  return false
 }
 
 /* ---------------------------------- per template ---------------------------- */
@@ -528,7 +531,9 @@ async function regenerate(
     shadcnEnv,
   )
   canonicalizeOrigin(cwd, origin)
-  stabilizePackageJson(cwd, packageJsonBefore)
+  if (stabilizePackageJson(cwd, packageJsonBefore)) {
+    await run(cwd, "pnpm", ["install", "--no-frozen-lockfile"])
+  }
   if (!build) return
 
   // Build first: it generates what typecheck needs (TanStack's routeTree.gen.ts,
