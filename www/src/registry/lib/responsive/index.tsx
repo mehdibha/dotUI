@@ -17,7 +17,7 @@ export interface ResponsiveProps {
  *
  * ```tsx
  * <Responsive
- *   render={(isMobile) => (isMobile ? <Drawer>…</Drawer> : <Modal>…</Modal>)}
+ *   render={(isMobile) => (isMobile ? <Sheet>…</Sheet> : <Modal>…</Modal>)}
  * />
  * ```
  */

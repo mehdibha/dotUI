@@ -19,7 +19,7 @@
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg).
    - Translucent overlays: popovers, tooltips and toasts at 70% over a
-     blurred backdrop; dialogs and drawers sit on a scrim and stay solid.
+     blurred backdrop; dialogs and sheets sit on a scrim and stay solid.
      Every material ships it (Catalyst, Notion, Radix, shadcn), so it is
      its own row, not a Style.
    - App shell: the sidebar and the frame around an inset content panel.

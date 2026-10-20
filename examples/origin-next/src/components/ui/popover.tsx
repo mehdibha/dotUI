@@ -6,7 +6,7 @@ import * as PopoverPrimitives from "react-aria-components/Popover";
 import { useSlottedContext } from "react-aria-components/slots";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerHandle } from "@/components/ui/drawer";
+import { Sheet, SheetHandle } from "@/components/ui/sheet";
 import { tv } from "tailwind-variants";
 
 const popoverVariants = tv({
@@ -38,14 +38,14 @@ const Popover = ({ className, showArrow = false, ...props }: PopoverProps) => {
     typeof props.children !== "function"
   ) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
       >
-        <DrawerHandle />
+        <SheetHandle />
         {props.children}
-      </Drawer>
+      </Sheet>
     );
   }
 

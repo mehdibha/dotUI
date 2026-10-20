@@ -24,7 +24,6 @@ import { ComboboxDemo } from "./combobox"
 import { CommandDemo } from "./command"
 import { DateFieldDemo } from "./date-field"
 import { DatePickerDemo } from "./date-picker"
-import { DrawerDemo } from "./drawer"
 import { DropZoneDemo } from "./drop-zone"
 import { EmptyDemo } from "./empty"
 import { FieldDemo } from "./field"
@@ -55,6 +54,7 @@ import { SearchFieldDemo } from "./search-field"
 import { SegmentedControlDemo } from "./segmented-control"
 import { SelectDemo } from "./select"
 import { SeparatorDemo } from "./separator"
+import { SheetDemo } from "./sheet"
 import { SidebarDemo } from "./sidebar"
 import { SkeletonDemo } from "./skeleton"
 import { SliderDemo } from "./slider"
@@ -105,7 +105,7 @@ export const componentDemos: Record<string, ComponentType> = {
   command: CommandDemo,
   "date-field": DateFieldDemo,
   "date-picker": DatePickerDemo,
-  drawer: DrawerDemo,
+  sheet: SheetDemo,
   "drop-zone": DropZoneDemo,
   empty: EmptyDemo,
   field: FieldDemo,

@@ -25,7 +25,7 @@ const modalMeta = {
       default: "center",
       values: ["center", "sheet", "fullscreen"] as const,
       registryDependencies: {
-        sheet: ["drawer", "use-mobile"],
+        sheet: ["sheet", "use-mobile"],
         fullscreen: ["button"],
       },
       files: {
@@ -52,7 +52,7 @@ const modalMeta = {
         ],
       },
       description:
-        "What the modal becomes below the mobile line: centered, a bottom drawer, or the whole screen.",
+        "What the modal becomes below the mobile line: centered, a bottom sheet, or the whole screen.",
     },
   },
 } satisfies RegistryItem

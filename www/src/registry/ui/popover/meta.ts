@@ -20,7 +20,7 @@ const popoverMeta = {
     mobile: {
       default: "drawer",
       values: ["drawer", "anchored"] as const,
-      registryDependencies: { drawer: ["drawer", "use-mobile"] },
+      registryDependencies: { drawer: ["sheet", "use-mobile"] },
       files: {
         drawer: [
           {
@@ -38,7 +38,7 @@ const popoverMeta = {
         ],
       },
       description:
-        "What pickers and menus become below the mobile line: a bottom drawer, or the popover kept anchored.",
+        "What pickers and menus become below the mobile line: a bottom sheet, or the popover kept anchored.",
     },
     tip: {
       default: "none",

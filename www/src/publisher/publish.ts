@@ -354,8 +354,14 @@ export function publish({
     registryDepsFor(meta, paramSelections),
     deps,
   )
+  const declared = meta.dependencies ?? []
   const dependencies = [
-    ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
+    ...new Set([
+      ...declared,
+      ...depsFromFileImports(files).filter(
+        (dep) => !declared.some((spec) => spec.startsWith(`${dep}@`)),
+      ),
+    ]),
   ]
 
   const itemShape = {

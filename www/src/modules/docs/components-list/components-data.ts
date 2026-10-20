@@ -152,7 +152,7 @@ export const componentsData: ComponentCategory[] = [
     components: [
       { name: "Modal", slug: "modal", fill: true },
       { name: "Popover", slug: "popover" },
-      { name: "Drawer", slug: "drawer", fill: true },
+      { name: "Sheet", slug: "sheet", fill: true },
       { name: "Tooltip", slug: "tooltip" },
     ],
   },

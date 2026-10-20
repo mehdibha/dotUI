@@ -827,6 +827,26 @@ describe("publish", () => {
     expect(plain.item.registryDependencies).toBeUndefined()
   })
 
+  test("a declared version range replaces the bare dependency its import implies", () => {
+    const { item } = publish({
+      publishable: {
+        template: `import * as SheetPrimitives from "react-aria-components/Sheet"\nimport { useIsHidden } from "react-aria/private/collections/Hidden"\nconst s = ${TV_CONFIG_PLACEHOLDER};`,
+        stylesConfig: { base: {} },
+        meta: {
+          name: "sheet",
+          type: "registry:ui",
+          dependencies: ["react-aria-components@^1.22.0"],
+          files: [{ type: "registry:ui", path: "ui/sheet/base.tsx" }],
+        },
+      },
+      preset: { density: "default", componentParams: {} },
+    })
+    expect(item.dependencies).toEqual([
+      "react-aria-components@^1.22.0",
+      "react-aria",
+    ])
+  })
+
   test("alert: rewrites the surface var when the preset retargets its role", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,

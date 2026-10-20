@@ -11,7 +11,7 @@ describe("overlays chapters", () => {
       position: "center",
       mobile: "center",
     })
-    expect(ds.componentParams.drawer).toMatchObject({ edge: "docked" })
+    expect(ds.componentParams.sheet).toMatchObject({ edge: "docked" })
     expect(ds.componentParams.popover).toMatchObject({ tip: "none" })
     expect(ds.componentParams.tooltip).toMatchObject({ style: "inverted" })
   })

@@ -7,7 +7,6 @@ import { useComponentParams } from "@/lib/styles"
 import { CheckIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
 import { FieldError, Label } from "@/registry/ui/field"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { useStyles as useListStyles } from "@/registry/ui/list-box/styles"
@@ -18,6 +17,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
+import { useStyles as useSheetStyles } from "@/registry/ui/sheet/styles"
 
 import { Board, BoardSection, useBoardFocus } from "./board"
 import { ROW, STAGE, Tip } from "./menus-parts"
@@ -149,7 +149,7 @@ function SortRows() {
   )
 }
 
-/** A phone-wide page with its picker open, as a drawer or anchored. */
+/** A phone-wide page with its picker open, as a sheet or anchored. */
 function Phone() {
   const mobile = useComponentParams("popover").mobile ?? "drawer"
   const { popover, arrow } = usePopoverStyles()()
@@ -157,8 +157,8 @@ function Phone() {
   const picker = useRef<HTMLDivElement>(null)
   const height =
     useRowHeight(list, picker, ORDER_ROW, mobile === "anchored") ?? ORDER_ROW
-  const { overlay, backdrop, popup, handle } = useDrawerStyles()({
-    placement: "bottom",
+  const { overlay, backdrop, sheet, content, handle } = useSheetStyles()({
+    position: "bottom",
   })
   return (
     <div
@@ -206,18 +206,22 @@ function Phone() {
         )}
       </div>
       {mobile === "drawer" && (
-        <div className={overlay({ className: "absolute z-10" })}>
+        <div className={overlay({ className: "absolute inset-0 z-10" })}>
           {/* Its blur escapes the box's clip unless it carries the box's radius. */}
           <div
+            data-stack-index={0}
             className={backdrop({
-              className: "rounded-[calc(var(--studio-radius-panel)-1px)]",
+              className:
+                "absolute inset-0 rounded-[calc(var(--studio-radius-panel)-1px)]",
             })}
           />
           <div className="absolute inset-x-0 bottom-0 flex flex-col">
-            <div data-drawer="" className={popup()}>
-              <div data-orientation="horizontal" className={handle()} />
-              <SortRows />
-              <div className="h-3 shrink-0" />
+            <div data-sheet="" className={sheet()}>
+              <div data-sheet-content="" className={content()}>
+                <div data-orientation="horizontal" className={handle()} />
+                <SortRows />
+                <div className="h-3 shrink-0" />
+              </div>
             </div>
           </div>
         </div>

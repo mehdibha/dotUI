@@ -19,12 +19,12 @@ import {
   CommandSection,
   CommandSectionHeader,
 } from "@/registry/ui/command"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Select } from "@/registry/ui/select"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
 import type { DesignSystem } from "@/modules/studio/preset/types"
@@ -77,7 +77,7 @@ interface PresetPickerProps {
 /**
  * The one preset picker, used by both the docs preview toolbar and the /studio
  * panel: a Select whose list is searchable, with plain rows — a swatch dot and
- * the preset's name. Popover on desktop, drawer on mobile.
+ * the preset's name. Popover on desktop, sheet on mobile.
  *
  * `withPreview` adds a detached flyout card — a big tooltip in the previewed
  * preset's own surface — that opens beside the popover after a short hover
@@ -126,13 +126,13 @@ export function PresetPicker({
     setMenu(null)
     // Two frames: after the popover's own focus restore. Focus must never be
     // lost to the body, or the picker closes: back to the search, or to the
-    // drawer itself.
+    // sheet itself.
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         const active = document.activeElement
         if (active && active !== document.body) return
-        if (search?.closest("[data-drawer]"))
-          search.closest<HTMLElement>("[data-drawer]")?.focus()
+        if (search?.closest("[data-sheet]"))
+          search.closest<HTMLElement>("[data-sheet]")?.focus()
         else search?.focus()
       }),
     )
@@ -255,7 +255,7 @@ export function PresetPicker({
     swallowDoubleClick()
   }
 
-  const list = (surface: "popover" | "drawer") => (
+  const list = (surface: "popover" | "sheet") => (
     <>
       {/* The search row drops the Command's hairline and sits on the same
           inset as the rows below; the New button, when any, shares it. */}
@@ -369,11 +369,10 @@ export function PresetPicker({
         <Responsive
           render={(isMobile) =>
             isMobile ? (
-              // Instant too: an exiting drawer would cover the page and eat
-              // the next tap.
-              <Drawer className="transition-none!">
-                <Command>{list("drawer")}</Command>
-              </Drawer>
+              <Sheet>
+                <SheetHandle />
+                <Command>{list("sheet")}</Command>
+              </Sheet>
             ) : (
               // The popover always sizes to the list column — the preview,
               // when on, floats outside it as a detached flyout.

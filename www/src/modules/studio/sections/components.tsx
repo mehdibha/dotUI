@@ -319,10 +319,7 @@ export const COMPONENTS: Component[] = [
   {
     id: "sheet",
     label: "Sheet",
-    rows: [
-      ["drawerEdge", "Edge"],
-      ["sheetMotion", "Motion"],
-    ],
+    rows: [["drawerEdge", "Edge"]],
     aliases: ["Drawer"],
   },
   {

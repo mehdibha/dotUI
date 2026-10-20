@@ -14,8 +14,8 @@ import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { PanelLeftIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { Drawer } from "@/registry/ui/drawer"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import { Skeleton } from "@/registry/ui/skeleton"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import type { TooltipContentProps } from "@/registry/ui/tooltip"
@@ -208,10 +208,10 @@ const Sidebar = ({
 
   if (isMobile) {
     return (
-      <Drawer
+      <Sheet
         isOpen={openMobile}
         onOpenChange={setOpenMobile}
-        placement={side}
+        position={side}
         className="w-(--sidebar-width) max-w-(--sidebar-width) border-0"
         style={
           { "--sidebar-width": SIDEBAR_WIDTH_MOBILE } as React.CSSProperties
@@ -228,7 +228,7 @@ const Sidebar = ({
             {children}
           </SidebarNav>
         </nav>
-      </Drawer>
+      </Sheet>
     )
   }
 

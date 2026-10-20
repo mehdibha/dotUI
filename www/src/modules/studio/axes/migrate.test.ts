@@ -109,6 +109,7 @@ const DROPPED_KEYS = [
   "colorSwatchPickerMotion",
   "cursorDragging",
   "cursorPending",
+  "drawerMotion",
   "focusGap",
   "focusInputStrength",
   "loaderMotion",
@@ -449,7 +450,6 @@ describe("main → v3", () => {
     expect(motion("expressive")).toMatchObject({
       motion: "expressive",
       buttonMotion: "same",
-      sheetMotion: "same",
     })
     const off = motion("off")
     expect(off.motion).toBe("standard")

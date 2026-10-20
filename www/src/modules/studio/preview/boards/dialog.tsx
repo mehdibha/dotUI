@@ -21,7 +21,7 @@ import { TextField } from "@/registry/ui/text-field"
 
 import { Board, BoardSection, RAC_STATE } from "./board"
 import type { Phase } from "./board"
-import { DrawerLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
+import { SheetLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
 
 const MOTION = ["dialogMotion", "dialogEntrance"]
 
@@ -181,9 +181,9 @@ function PhoneStage() {
     <div className="w-68 overflow-hidden rounded-[2.5rem] border">
       <Screen ref={ref} height={HEIGHT} live={live}>
         {mobile === "sheet" ? (
-          <DrawerLayer placement="bottom" phase={phase}>
+          <SheetLayer position="bottom" phase={phase}>
             <InviteDialog phone />
-          </DrawerLayer>
+          </SheetLayer>
         ) : (
           <ModalLayer
             phase={phase}

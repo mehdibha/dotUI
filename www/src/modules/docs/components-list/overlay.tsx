@@ -1,9 +1,9 @@
 import type { ReactNode } from "react"
 
 import { cn } from "@/registry/lib/utils"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
 import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
+import { useStyles as useSheetStyles } from "@/registry/ui/sheet/styles"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
 /**
@@ -52,7 +52,7 @@ export function Surface({
   )
 }
 
-/** A page mock (header + text and card blocks) for modal and drawer scenes, so
+/** A page mock (header + text and card blocks) for modal and sheet scenes, so
  *  the overlay reads as opened over real content. */
 export function PageMock() {
   return (
@@ -72,17 +72,23 @@ export function PageMock() {
   )
 }
 
-/** A bottom drawer over a page mock, built from the real drawer slots so its
+/** A bottom sheet over a page mock, built from the real sheet slots so its
  *  edge, radius and surface follow the design system. */
-export function DrawerPreview({ children }: { children: ReactNode }) {
-  const { overlay, backdrop, viewport, popup } = useDrawerStyles()()
+export function SheetPreview({ children }: { children: ReactNode }) {
+  const { overlay, backdrop, sheet, content } = useSheetStyles()()
   return (
-    <div className={overlay({ className: "absolute z-0" })}>
+    <div className={overlay({ className: "absolute inset-0 z-0" })}>
       <PageMock />
-      <div aria-hidden className={backdrop()} />
-      <div className={viewport({ placement: "bottom", className: "absolute" })}>
-        <div data-drawer="" className={popup({ placement: "bottom" })}>
-          <div className="p-4 text-sm">{children}</div>
+      <div
+        aria-hidden
+        data-stack-index={0}
+        className={backdrop({ className: "absolute inset-0" })}
+      />
+      <div className="absolute inset-x-0 bottom-0 flex flex-col">
+        <div data-sheet="" className={sheet()}>
+          <div data-sheet-content="" className={content()}>
+            <div className="p-4 text-sm">{children}</div>
+          </div>
         </div>
       </div>
     </div>

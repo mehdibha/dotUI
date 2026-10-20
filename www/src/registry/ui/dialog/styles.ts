@@ -24,7 +24,7 @@ const { useStyles } = createStyles(dialogMeta, {
   base: {
     slots: {
       content:
-        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-drawer:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
+        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-sheet:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
       header: "flex flex-col",
       title: "font-heading",
       description: "text-fg-muted",

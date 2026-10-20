@@ -4,9 +4,9 @@ import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import { Card, CardContent } from "@/registry/ui/card"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
+import { useStyles as useSheetStyles } from "@/registry/ui/sheet/styles"
 
-import { BASE_STATE, usePresence, useReplay } from "./board"
+import { usePresence, useReplay } from "./board"
 import type { Phase } from "./board"
 
 /** Open and live at rest; opens and closes on a loop while the panel edits one of `keys`. */
@@ -124,35 +124,41 @@ export function Screen({
   )
 }
 
-/** The registry drawer's layers, held inside a Screen. */
-export function DrawerLayer({
-  placement,
+/** The registry sheet's layers, held inside a Screen. */
+export function SheetLayer({
+  position,
   phase = "open",
   className,
   children,
 }: {
-  placement: "bottom" | "right"
+  position: "bottom" | "right"
   phase?: Phase
   className?: string
   children: React.ReactNode
 }) {
-  const { overlay, backdrop, viewport, popup, handle } = useDrawerStyles()({
-    placement,
+  const { overlay, backdrop, sheet, content, handle } = useSheetStyles()({
+    position,
   })
   if (phase === "closed") return null
   return (
-    <div className={overlay({ className: "absolute" })}>
-      <div {...BASE_STATE[phase]} className={backdrop()} />
-      <div className={viewport({ className: "absolute" })}>
-        <div
-          data-drawer=""
-          {...BASE_STATE[phase]}
-          className={popup({ className })}
-        >
-          {placement === "bottom" && (
-            <div data-orientation="horizontal" className={handle()} />
-          )}
-          {children}
+    <div className={overlay({ className: "absolute inset-0" })}>
+      <div
+        data-stack-index={0}
+        className={backdrop({ className: "absolute inset-0" })}
+      />
+      <div
+        className={cn(
+          "absolute inset-0 flex",
+          position === "bottom" ? "flex-col justify-end" : "justify-end",
+        )}
+      >
+        <div data-sheet="" className={sheet({ className })}>
+          <div data-sheet-content="" className={content()}>
+            {position === "bottom" && (
+              <div data-orientation="horizontal" className={handle()} />
+            )}
+            {children}
+          </div>
         </div>
       </div>
     </div>

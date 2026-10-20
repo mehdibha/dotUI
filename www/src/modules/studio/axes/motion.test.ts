@@ -196,7 +196,6 @@ describe("per-component motion", () => {
     popoverMotion: ["popover"],
     tooltipMotion: ["tooltip"],
     dialogMotion: ["modal"],
-    sheetMotion: ["drawer"],
     tabsMotion: ["tabs"],
     sidebarMotion: ["sidebar"],
     linkMotion: ["breadcrumbs", "link"],
@@ -350,12 +349,6 @@ describe("shipped motion", () => {
     expect(shipped.modal).toContain(
       "transition-opacity duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none",
     )
-    expect(shipped.drawer).toContain(
-      "duration-450 ease-[cubic-bezier(0.22,1,0.36,1)]",
-    )
-    expect(shipped.drawer).toContain(
-      "data-ending-style:duration-[calc(400ms*var(--drawer-swipe-strength,1))]",
-    )
     expect(shipped.sidebar).toContain(
       "transition-[width] duration-200 ease-linear",
     )
@@ -390,7 +383,6 @@ describe("shipped motion", () => {
       "popover",
       "tooltip",
       "modal",
-      "drawer",
       "toast",
       "accordion",
       "collapsible",

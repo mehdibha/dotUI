@@ -7,7 +7,7 @@ src/registry/base/base.css: /* Identical to shadcn's default so `shadcn init` de
 src/registry/base/base.css: /* Invalid at rest: a danger halo, 0 wide unless the system draws one.
 src/registry/base/base.css: /* Invalid fill: a danger wash laid over whatever the field paints,
 src/registry/base/base.css: /* Only the outermost disabled element dims, so nested opacity doesn't
-src/registry/base/base.css: /* Scrim axis: what every modal layer (modal, drawer, sheets) lays over the
+src/registry/base/base.css: /* Scrim axis: what every modal layer (modal, sheet) lays over the
 src/registry/base/base.css: /* The field focus inks and invalid fill: per-mode, so on :root. */
 src/registry/base/base.css: /* The ring inside a row or cell, where an outside ring would clip. */
 src/registry/base/base.css: /* The ring outside a control whose own part covers its box (a checkbox's
@@ -25,7 +25,7 @@ src/registry/lib/responsive/index.tsx: /**
 src/registry/lib/utils/index.ts: // Narrowed to `string`: React Aria className render props reject `undefined`.
 src/registry/roles.css: /* Action labels only (Button, ToggleButton, GroupText). */
 src/registry/roles.css: /* Every control edge: field shells, checks, secondary buttons, seams. */
-src/registry/roles.css: /* Every scrim's frost (modal, drawer). */
+src/registry/roles.css: /* Every scrim's frost (modal, sheet). */
 src/registry/roles.css: /* Radius roles (#579): retargeted by studio axes/shape.ts and resolved to
 src/registry/roles.css: /* Surface edges (studio Surfaces › Edge): cards, choice tiles, popovers. */
 src/registry/roles.css: /* The ledge lip a pressed or disabled choice card sinks into. */
@@ -292,15 +292,6 @@ src/registry/ui/dialog/styles.ts: // layers snap up to a device pixel inward, so
 src/registry/ui/dialog/styles.ts: // past them, drawn by background-attachment so nothing listens. Local
 src/registry/ui/dialog/styles.ts: // shadcn luma, rhea, sera: the quiet button on the secondary fill.
 src/registry/ui/dialog/styles.ts: // the covers overshoot them.
-src/registry/ui/drawer/base.tsx: // Base UI arms a swipe on every touchstart, so cancel in-flight react-aria presses only once the finger actually drags.
-src/registry/ui/drawer/base.tsx: // Dialog semantics belong to the <Dialog> rendered inside, so the popup drops its own.
-src/registry/ui/drawer/base.tsx: // Joins react-aria's overlay stack so an outside tap dismisses only the topmost layer.
-src/registry/ui/drawer/base.tsx: // Like its popovers: opened from a modal, the drawer isn't made inert by it, and makes what's under it inert instead.
-src/registry/ui/drawer/styles.ts: // Flush to the screen edge, bleeding past it for the overscroll. The
-src/registry/ui/drawer/styles.ts: // card's border.
-src/registry/ui/drawer/styles.ts: // clip keeps a dialog's header band inside the rounded corners.
-src/registry/ui/drawer/styles.ts: // shadcn mira, luma: a card inset 8px inside a bare sheet, so the
-src/registry/ui/drawer/styles.ts: // sheet's own slide still clears the screen. Content sits inside the
 src/registry/ui/field/base.message.tsx: /* The `error: icon-message` build of field: identical to base.tsx except that
 src/registry/ui/field/styles.ts: // Form-field labels only; a checkbox, radio or switch keeps its own.
 src/registry/ui/field/styles.ts: // Primer, Geist). The icon-in-field option draws on input instead.
@@ -396,11 +387,11 @@ src/registry/ui/mention/base.tsx: // The `g` flag is dropped so `exec` stays sta
 src/registry/ui/mention/base.tsx: // TokenField only applies the stored caret position while focused, so refocus first.
 src/registry/ui/message/styles.ts: // Incoming prose reads in the reading face; controls stay in the body.
 src/registry/ui/modal/base.fullscreen.tsx: /* No backdrop to tap below the mobile line: bring a close. */
-src/registry/ui/modal/base.sheet.tsx: // Below the mobile line the dialog slides up in a bottom drawer; an alert
+src/registry/ui/modal/base.sheet.tsx: // Below the mobile line the dialog slides up in a bottom sheet; an alert
 src/registry/ui/modal/base.sheet.tsx: // dialog stays centered, and only a dismissable one swipes away.
-src/registry/ui/modal/styles.ts: /* Below the mobile line. Sheet swaps the panel for a Drawer
+src/registry/ui/modal/styles.ts: /* Below the mobile line. Sheet swaps the panel for a bottom sheet
 src/registry/ui/modal/styles.ts: // Down from above (Carbon, Mantine).
-src/registry/ui/modal/styles.ts: // Shares the drawers' layer so the last opened sits on top (a select's drawer over its modal).
+src/registry/ui/modal/styles.ts: // Shares the sheets' layer so the last opened sits on top (a select's sheet over its modal).
 src/registry/ui/modal/styles.ts: // Up from below (Spectrum 2, Polaris, Atlassian).
 src/registry/ui/number-field/base.right-cells.tsx: // Stepper cells at the end of the shell; parts are placed by slot.
 src/registry/ui/number-field/base.split.tsx: // Minus at the start, plus at the end; parts are placed by slot.

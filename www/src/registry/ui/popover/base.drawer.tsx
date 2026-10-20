@@ -6,7 +6,7 @@ import * as PopoverPrimitives from "react-aria-components/Popover"
 import { useSlottedContext } from "react-aria-components/slots"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
 import { useStyles } from "./styles"
 
@@ -31,14 +31,14 @@ const Popover = ({ className, showArrow = false, ...props }: PopoverProps) => {
     typeof props.children !== "function"
   ) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
       >
-        <DrawerHandle />
+        <SheetHandle />
         {props.children}
-      </Drawer>
+      </Sheet>
     )
   }
 

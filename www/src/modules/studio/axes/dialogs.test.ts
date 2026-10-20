@@ -75,7 +75,7 @@ describe("dialogs axes", () => {
     })
   })
 
-  it("modal and drawer ship the same scrim", async () => {
+  it("modal and sheet ship the same scrim", async () => {
     const cases: [Record<string, string>, string[]][] = [
       [{}, ["bg-scrim", "backdrop-blur-sm"]],
       [
@@ -85,9 +85,12 @@ describe("dialogs axes", () => {
       [{ "--studio-scrim-blur": "0" }, ["bg-scrim"]],
     ]
     for (const [tokens, scrim] of cases)
-      for (const name of ["modal", "drawer"]) {
+      for (const name of ["modal", "sheet"]) {
         const code = await content(name, tokens)
-        const backdrop = /backdrop: "([^"]+)"/.exec(code)?.[1]?.split(" ") ?? []
+        // The sheet dims only from the bottom of a stack.
+        const backdrop = (
+          /backdrop: "([^"]+)"/.exec(code)?.[1]?.split(" ") ?? []
+        ).map((c) => c.replace(/^data-\[stack-index=0\]:/, ""))
         expect(
           backdrop.filter((c) => /^(bg-scrim|backdrop-blur)/.test(c)).sort(),
           `${name} ${scrim}`,
@@ -130,7 +133,7 @@ describe("dialogs axes", () => {
                   ...raw,
                 }),
               )
-              for (const name of ["dialog", "modal", "drawer"])
+              for (const name of ["dialog", "modal", "sheet"])
                 (reachable[name] ??= new Set()).add(
                   JSON.stringify(ds.componentParams[name]),
                 )
@@ -158,20 +161,20 @@ describe("dialogs axes", () => {
     }
   })
 
-  it("Sheet swaps the modal for a drawer below md; Center and Fullscreen don't", async () => {
+  it("Sheet swaps the modal for a sheet below md; Center and Fullscreen don't", async () => {
     const params = (mobile: string, position = "center") => ({
       modal: { mobile, position },
     })
     const sheet = await shipped("modal", {}, params("sheet", "top"))
-    expect(sheet.files?.[0]?.content).toContain("<Drawer")
-    expect(JSON.stringify(sheet.registryDependencies)).toContain("drawer")
+    expect(sheet.files?.[0]?.content).toContain("<Sheet")
+    expect(JSON.stringify(sheet.registryDependencies)).toContain("sheet")
     for (const mobile of ["center", "fullscreen"]) {
       const item = await shipped("modal", {}, params(mobile))
-      expect(item.files?.[0]?.content, mobile).not.toContain("<Drawer")
+      expect(item.files?.[0]?.content, mobile).not.toContain("<Sheet")
       expect(
         JSON.stringify(item.registryDependencies ?? []),
         mobile,
-      ).not.toContain("drawer")
+      ).not.toContain("sheet")
     }
   })
 
@@ -195,8 +198,8 @@ describe("dialogs axes", () => {
     expect(origin.registryDependencies ?? []).not.toContain("button")
   })
 
-  it("a dialog fills its drawer, so the footer docks to the bottom edge", async () => {
-    expect(await content("dialog")).toContain("in-data-drawer:flex-1")
+  it("a dialog fills its sheet, so the footer docks to the bottom edge", async () => {
+    expect(await content("dialog")).toContain("in-data-sheet:flex-1")
   })
 
   it("On scroll covers overshoot the inset rules, so nothing draws at rest", async () => {

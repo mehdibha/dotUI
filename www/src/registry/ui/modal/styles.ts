@@ -11,7 +11,7 @@ const entrance =
 const { useStyles } = createStyles(modalMeta, {
   base: {
     slots: {
-      // Shares the drawers' layer so the last opened sits on top (a select's drawer over its modal).
+      // Shares the sheets' layer so the last opened sits on top (a select's sheet over its modal).
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-50 h-(--page-height) w-full",
       ],
@@ -83,7 +83,7 @@ const { useStyles } = createStyles(modalMeta, {
       },
       none: {},
     },
-    /* Below the mobile line. Sheet swaps the panel for a Drawer
+    /* Below the mobile line. Sheet swaps the panel for a bottom sheet
        (base.sheet.tsx); Fullscreen (base.fullscreen.tsx, which adds a close
        button) fills the visual viewport, its min sizes beating the max sizes
        the position and density set, and stretches the dialog so its footer

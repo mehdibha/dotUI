@@ -61,7 +61,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
@@ -86,6 +85,7 @@ import {
   SelectTrigger,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -1066,11 +1066,7 @@ function TransferDialog({
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

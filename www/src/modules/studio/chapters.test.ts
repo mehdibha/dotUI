@@ -121,7 +121,7 @@ describe("deep links", () => {
       menus: { page: "menu" },
       "menus/tooltip": { page: "tooltip" },
       dialogs: { page: "dialog" },
-      "dialogs/drawer": { page: "sheet" },
+      "dialogs/drawer": { key: "drawerEdge" },
       nav: { page: "tabs" },
       "nav/link": { page: "link" },
       dates: { page: "calendar" },

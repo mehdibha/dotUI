@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 const dialogVariants = tv({
   slots: {
     content:
-      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-drawer:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
+      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-sheet:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
     header:
       "flex flex-col gap-2 in-data-popover:gap-1 not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:border-b not-in-data-popover:px-(--dialog-padding) not-in-data-popover:pb-4",
     title:

@@ -17,21 +17,20 @@ import { Input, TextArea } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
 import { Board, BoardSection } from "./board"
-import { DrawerLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
+import { SheetLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
 
-const MOTION = ["sheetMotion"]
 // The dialog page's frame height.
 const HEIGHT = "35rem"
 const FRAME = "overflow-hidden p-0 max-sm:p-0"
 
 function SideStage() {
   const ref = useRef<HTMLDivElement>(null)
-  const { phase, live } = useEditedPresence(ref, MOTION)
+  const { phase, live } = useEditedPresence(ref, [])
   const { content } = useDialogStyles()()
   return (
     <Screen ref={ref} height={HEIGHT} live={live}>
-      <DrawerLayer
-        placement="right"
+      <SheetLayer
+        position="right"
         phase={phase}
         className="w-80 max-w-[calc(100%-3rem)]"
       >
@@ -69,18 +68,18 @@ function SideStage() {
             <Button variant="primary">Save</Button>
           </DialogFooter>
         </div>
-      </DrawerLayer>
+      </SheetLayer>
     </Screen>
   )
 }
 
 function BottomStage() {
   const ref = useRef<HTMLDivElement>(null)
-  const { phase, live } = useEditedPresence(ref, MOTION)
+  const { phase, live } = useEditedPresence(ref, [])
   const { content } = useDialogStyles()()
   return (
     <Screen ref={ref} height={HEIGHT} live={live}>
-      <DrawerLayer placement="bottom" phase={phase}>
+      <SheetLayer position="bottom" phase={phase}>
         <div className={content()}>
           <DialogHeader>
             <DialogTitle>Share Acme Web</DialogTitle>
@@ -101,7 +100,7 @@ function BottomStage() {
             <People count={3} />
           </div>
         </div>
-      </DrawerLayer>
+      </SheetLayer>
     </Screen>
   )
 }

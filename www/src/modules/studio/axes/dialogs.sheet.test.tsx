@@ -4,15 +4,15 @@ import { describe, expect, it, vi } from "vitest"
 import { Modal } from "@/registry/ui/modal/base.sheet"
 
 vi.mock("@/registry/hooks/use-mobile", () => ({ useIsMobile: () => true }))
-vi.mock("@/registry/ui/drawer", () => ({
-  Drawer: (props: {
-    swipeToDismiss?: boolean
+vi.mock("@/registry/ui/sheet", () => ({
+  Sheet: (props: {
+    preventDismissal?: boolean
     className?: string
     children?: React.ReactNode
   }) => (
     <div
-      data-drawer=""
-      data-swipe={String(props.swipeToDismiss)}
+      data-sheet=""
+      data-prevent-dismissal={String(props.preventDismissal)}
       className={props.className}
     >
       {props.children}
@@ -26,10 +26,10 @@ const sheet = (props: React.ComponentProps<typeof Modal>) =>
 describe("modal Sheet below the mobile line", () => {
   it("swipes away only when dismissable, and draws no handle", () => {
     const open = sheet({ children: <div role="dialog" /> })
-    expect(open).toContain('data-swipe="true"')
-    expect(open).not.toContain("drawer-handle")
+    expect(open).toContain('data-prevent-dismissal="false"')
+    expect(open).not.toContain("sheet-handle")
     expect(sheet({ isDismissable: false, children: <div /> })).toContain(
-      'data-swipe="false"',
+      'data-prevent-dismissal="true"',
     )
   })
 
@@ -41,7 +41,7 @@ describe("modal Sheet below the mobile line", () => {
 
   it("keeps an alert dialog centered", () => {
     expect(sheet({ children: <div role="alertdialog" /> })).not.toContain(
-      "data-drawer",
+      "data-sheet",
     )
   })
 })

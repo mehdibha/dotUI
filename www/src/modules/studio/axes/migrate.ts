@@ -133,10 +133,6 @@ const MOTION: Record<string, [source: string, timings: readonly string[]]> = {
   popoverMotion: ["popoverMotion", ["100 ease", "120 snappy", "200 fluid"]],
   tooltipMotion: ["tooltipMotion", ["150 ease", "100 snappy", "200 fluid"]],
   dialogMotion: ["modalMotion", ["100 ease", "150 snappy", "300 fluid"]],
-  sheetMotion: [
-    "drawerMotion",
-    ["450 0.22,1,0.36,1", "300 fluid", "500 fluid"],
-  ],
   tabsMotion: ["tabsMotion", ["150 ease-in-out", ...MOVING]],
   sidebarMotion: ["sidebarMotion", ["200 linear", ...MOVING]],
   linkMotion: ["linkMotion", COLOR],

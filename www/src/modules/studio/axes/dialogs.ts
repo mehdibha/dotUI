@@ -1,10 +1,10 @@
 /* Dialogs — how a modal layer meets the page and how its panel is built.
-   Members: dialog (the panel's parts), modal, drawer; sheets, alert dialogs
+   Members: dialog (the panel's parts), modal, sheet; alert dialogs
    and the command palette shell ride on them.
 
    One scrim for every modal layer — `--color-scrim` (the overlay, or
    the page a step darker for Wash, at the strength's alpha) and `--studio-scrim-blur`,
-   both read by modal and drawer. Sections and Actions fold into one
+   both read by modal and sheet. Sections and Actions fold into one
    composite `dialog.footer` param, so no slot takes classes from two
    params. */
 
@@ -119,7 +119,7 @@ export const chapter = defineChapter({
           motion: state.dialogMotion === "none" ? "none" : state.dialogEntrance,
           mobile: state.mobileDialogs,
         },
-        drawer: { edge: state.drawerEdge },
+        sheet: { edge: state.drawerEdge },
       },
     }
   },

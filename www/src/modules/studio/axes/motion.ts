@@ -106,7 +106,6 @@ type Role =
   | "anchored" // popover, menu, select, combobox
   | "hint" // tooltip
   | "modal"
-  | "sheet" // the drawer
   | "disclosure" // accordion, collapsible
   | "notification" // toast, jump-to-latest
   | "swipe" // a swiped toast finishing its throw
@@ -135,7 +134,7 @@ const TAILWIND_OUT: Bezier = [0, 0, 0.2, 1]
 const LINEAR: Bezier = [0, 0, 1, 1]
 const EXPO_OUT: Bezier = [0.16, 1, 0.3, 1]
 
-// shadcn (style-nova, Base UI drawer, Sonner).
+// shadcn (style-nova, Sonner).
 const STANDARD: MotionTable = {
   micro: { enter: easing(150, TAILWIND) },
   travel: { enter: easing(150, TAILWIND) },
@@ -143,10 +142,6 @@ const STANDARD: MotionTable = {
   anchored: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
   hint: { enter: easing(150, CSS_EASE), exit: { ms: 150, ease: CSS_EASE } },
   modal: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
-  sheet: {
-    enter: easing(450, [0.22, 1, 0.36, 1]),
-    exit: { ms: 400, ease: [0.22, 1, 0.36, 1] },
-  },
   disclosure: { enter: easing(200, CSS_EASE_OUT) },
   notification: {
     enter: easing(400, CSS_EASE),
@@ -155,7 +150,7 @@ const STANDARD: MotionTable = {
   swipe: { enter: easing(200, TAILWIND_OUT) },
 }
 
-// Radix Themes; accordion and toast from Radix Primitives' docs, the sheet from Vaul.
+// Radix Themes; accordion and toast from Radix Primitives' docs.
 const SMOOTH: MotionTable = {
   micro: { enter: easing(120, CSS_EASE) },
   travel: { enter: easing(140, [0.45, 0.05, 0.55, 0.95]) },
@@ -163,10 +158,6 @@ const SMOOTH: MotionTable = {
   anchored: { enter: easing(160, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
   hint: { enter: easing(140, EXPO_OUT), exit: { ms: 0, ease: EXPO_OUT } },
   modal: { enter: easing(200, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
-  sheet: {
-    enter: easing(500, [0.32, 0.72, 0, 1]),
-    exit: { ms: 500, ease: [0.32, 0.72, 0, 1] },
-  },
   disclosure: { enter: easing(300, [0.87, 0, 0.13, 1]) },
   notification: {
     enter: easing(150, EXPO_OUT),
@@ -184,7 +175,6 @@ const EXPRESSIVE: MotionTable = {
   anchored: { enter: spring(380, 0.8), exit: M3_EXIT },
   hint: { enter: spring(380, 0.8), exit: M3_EXIT },
   modal: { enter: spring(380, 0.8), exit: M3_EXIT },
-  sheet: { enter: spring(200, 0.8), exit: M3_EXIT },
   disclosure: { enter: spring(1600, 1) },
   notification: { enter: spring(380, 0.8), exit: M3_EXIT },
   swipe: { enter: easing(200, [0.05, 0.7, 0.1, 1]) },
@@ -239,7 +229,6 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   popover: { role: "anchored", exit: true },
   tooltip: { role: "hint", exit: true },
   modal: { role: "modal", exit: true },
-  drawer: { role: "sheet", exit: true },
   accordion: { role: "disclosure", exit: false },
   toast: { role: "notification", exit: true },
   "message-scroller": { role: "notification", exit: true },
@@ -309,7 +298,6 @@ const COMPONENTS = {
   popoverMotion: ["popover"],
   tooltipMotion: ["tooltip"],
   dialogMotion: ["modal"],
-  sheetMotion: ["drawer"],
   tabsMotion: ["tabs"],
   sidebarMotion: ["sidebar"],
   linkMotion: ["link", "breadcrumbs"],

@@ -14,28 +14,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { Radio, RadioGroup } from "@/registry/ui/radio-group"
+import { Sheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
-type Type = "modal" | "drawer" | "popover"
+type Type = "modal" | "sheet" | "popover"
 
 const OVERLAYS: Record<
   Type,
   React.ComponentType<{ children?: React.ReactNode }>
 > = {
   modal: Modal,
-  drawer: Drawer,
+  sheet: Sheet,
   popover: Popover,
 }
 
 export default function Demo() {
   const [type, setType] = React.useState<Type>("modal")
-  const [mobileType, setMobileType] = React.useState<Type>("drawer")
+  const [mobileType, setMobileType] = React.useState<Type>("sheet")
   return (
     <div className="flex w-full items-center gap-8">
       <Dialog>
@@ -80,7 +80,7 @@ export default function Demo() {
         <Label>Type</Label>
         <FieldGroup>
           <Radio value="modal">Modal</Radio>
-          <Radio value="drawer">Drawer</Radio>
+          <Radio value="sheet">Sheet</Radio>
           <Radio value="popover">Popover</Radio>
         </FieldGroup>
       </RadioGroup>
@@ -91,7 +91,7 @@ export default function Demo() {
         <Label>Mobile type</Label>
         <FieldGroup>
           <Radio value="modal">Modal</Radio>
-          <Radio value="drawer">Drawer</Radio>
+          <Radio value="sheet">Sheet</Radio>
           <Radio value="popover">Popover</Radio>
         </FieldGroup>
       </RadioGroup>
