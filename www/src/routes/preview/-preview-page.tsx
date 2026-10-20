@@ -18,10 +18,7 @@ import {
   useAppliedDesignSystem,
   useMessage,
 } from "@/modules/studio/preset/iframe-sync"
-import type {
-  PrepareDesignSystem,
-  PreviewBoard,
-} from "@/modules/studio/preset/iframe-sync"
+import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
 import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
@@ -69,69 +66,29 @@ export function getExamplesPromise(slug: string) {
 // Overscroll bounces the preview itself, not the whole studio.
 // Live previews (drags, hovers) skip transitions, or the preview trails them.
 // Rows docked to the viewport bottom clear the studio's floating toolbar.
+// A board crossfades over the user's preview (swapBoard).
 const EMBEDDED_CSS = `
 html { scrollbar-width: none; overscroll-behavior: contain; }
 html::-webkit-scrollbar { display: none; }
 [data-studio-live] *, [data-studio-live] *::before, [data-studio-live] *::after { transition: none !important; }
 [data-toolbar-clearance] { padding-bottom: 4rem; }
-`
-
-// Dev tweaker exploration (the board's swap): trim to the pick once Mehdi
-// chooses. "slide" is the panel's drill-in: the old view goes at once and the
-// new one fades in from 24px off, so it animates the new content alone.
-// "slide-fade" and "crossfade" also fade the old view out, which takes a view
-// transition: its capture restyles the whole preview before anything moves.
-const slideFrom = (x: number) => [
-  { opacity: 0, transform: `translateX(${x}px)` },
-  { opacity: 1, transform: "none" },
-]
-
-// The site keeps :root out of view transitions (styles.css), so the stage
-// takes part under its own name. Its animations go in CSS: Chrome ends a
-// transition whose pseudo-elements only have script animations still pending.
-// Their own <style>, as a variable on <html> would restyle the whole preview.
-let swapStyle: HTMLStyleElement | undefined
-const SWAP_KEYFRAMES = `
 @keyframes board-fade-out { to { opacity: 0; } }
 @keyframes board-fade-in { from { opacity: 0; } }
-@keyframes board-from-right { from { opacity: 0; transform: translateX(24px); } }
-@keyframes board-from-left { from { opacity: 0; transform: translateX(-24px); } }
+::view-transition-group(board-stage) { animation: none; }
+::view-transition-old(board-stage) { animation: board-fade-out 125ms ease-out both; }
+::view-transition-new(board-stage) { animation: board-fade-in 125ms ease-out both; }
 `
 
-/** Runs `update`, then animates `stage` (the preview's content) into it. */
-function swapBoard(
-  update: () => void,
-  stage: HTMLElement | null,
-  { transition, duration, popover }: PreviewBoard,
-  direction: "in" | "out" | "swap",
-) {
+// Crossfades the stage (the preview's content) into `update`. The site keeps
+// :root out of view transitions (styles.css), so the stage takes part under
+// its own name; its animations live in EMBEDDED_CSS.
+function swapBoard(update: () => void, stage: HTMLElement | null) {
   if (
-    transition === "none" ||
+    !stage ||
+    !document.startViewTransition ||
     matchMedia("(prefers-reduced-motion: reduce)").matches
   )
     return flushSync(update)
-  // A popover's takeover and a board-to-board hop don't drill: they fade.
-  const slide = !popover && direction !== "swap" && transition !== "crossfade"
-  if (transition === "slide" || !document.startViewTransition || !stage) {
-    flushSync(update)
-    stage?.animate(
-      slide
-        ? slideFrom(direction === "in" ? 24 : -24)
-        : [{ opacity: 0 }, { opacity: 1 }],
-      { duration, easing: "ease-out" },
-    )
-    return
-  }
-  const next = !slide
-    ? "board-fade-in"
-    : direction === "in"
-      ? "board-from-right"
-      : "board-from-left"
-  swapStyle ??= document.head.appendChild(document.createElement("style"))
-  swapStyle.textContent = `${SWAP_KEYFRAMES}
-::view-transition-group(board-stage) { animation: none; }
-::view-transition-old(board-stage) { animation: board-fade-out ${duration}ms ease-out both; }
-::view-transition-new(board-stage) { animation: ${next} ${duration}ms ease-out both; }`
   stage.style.viewTransitionName = "board-stage"
   const run = document.startViewTransition(() => flushSync(update))
   void run.finished.finally(() => {
@@ -246,22 +203,19 @@ export function PreviewPage() {
     void getExamplesPromise(next)
   })
 
-  // The board the panel is editing, over the user's preview. Kept alive, the
-  // preview stays mounted under it (hidden, updating at idle priority), so
-  // coming back doesn't render it from scratch.
+  // The board the panel is editing, over the user's preview. The preview stays
+  // mounted under it (hidden, updating at idle priority), so coming back
+  // doesn't render it from scratch.
   const [board, setBoard] = useState<{
     slug: string
     Examples: React.ComponentType
   } | null>(null)
   const [boardLoading, setBoardLoading] = useState(false)
-  const [keepAlive, setKeepAlive] = useState(false)
   const requested = useRef<string | null>(null)
   const shownBoard = useRef<string | null>(null)
   const previewScroll = useRef(0)
   const stage = useRef<HTMLDivElement>(null)
-  useMessage("preview-board", (message) => {
-    const next = message.slug
-    setKeepAlive(message.keepAlive)
+  useMessage("preview-board", ({ slug: next }) => {
     if (next === requested.current) return
     requested.current = next
     const show = (view: typeof board) => {
@@ -269,17 +223,11 @@ export function PreviewPage() {
       const from = shownBoard.current
       if ((view?.slug ?? null) === from) return
       shownBoard.current = view?.slug ?? null
-      const direction = !from ? "in" : !view ? "out" : "swap"
       if (!from) previewScroll.current = window.scrollY
-      swapBoard(
-        () => {
-          setBoard(view)
-          window.scrollTo(0, view ? 0 : previewScroll.current)
-        },
-        stage.current,
-        message,
-        direction,
-      )
+      swapBoard(() => {
+        setBoard(view)
+        window.scrollTo(0, view ? 0 : previewScroll.current)
+      }, stage.current)
     }
     if (!next) return show(null)
     const promise = getExamplesPromise(next)
@@ -342,14 +290,6 @@ export function PreviewPage() {
     () => board && <board.Examples key={board.slug} />,
     [board],
   )
-  const content = keepAlive ? (
-    <>
-      <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
-      {boardContent}
-    </>
-  ) : (
-    (boardContent ?? preview)
-  )
   if (!preview && !boardContent) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -369,7 +309,10 @@ export function PreviewPage() {
     >
       {chrome}
       <BoardFocusProvider>
-        <div ref={stage}>{content}</div>
+        <div ref={stage}>
+          <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+          {boardContent}
+        </div>
       </BoardFocusProvider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
       <PendingOverlay loading={boardLoading} />

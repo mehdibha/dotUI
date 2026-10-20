@@ -63,7 +63,6 @@ import type { BoardId } from "@/modules/studio/preview/boards/titles"
 import { designSystemOf } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
 import { useCurrent } from "@/modules/studio/selection"
-import { useTweak } from "@/dev/tweaker"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
 
@@ -277,27 +276,6 @@ export function PreviewPanel({ className }: { className?: string }) {
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
 
-  // Dev tweaker exploration: remove once Mehdi picks.
-  const group = "Follow the panel"
-  const transition = useTweak("Transition", {
-    type: "select",
-    options: ["none", "slide", "slide-fade", "crossfade"],
-    default: "none",
-    group,
-  })
-  const duration = useTweak("Duration (ms)", {
-    type: "number",
-    min: 100,
-    max: 400,
-    step: 25,
-    default: 200,
-    group,
-  })
-  const keepAlive = useTweak("Keep preview alive", {
-    type: "boolean",
-    default: false,
-    group,
-  })
   // The focus that last held the board: a popover's or a page's.
   const lastFocus = useRef(focus)
   useEffect(() => {
@@ -412,10 +390,6 @@ export function PreviewPanel({ className }: { className?: string }) {
   usePreviewSync(iframeRef, {
     type: "preview-board",
     slug: board && BOARD_SLUG_PREFIX + board,
-    popover: !!lastFocus.current?.popover,
-    transition,
-    duration,
-    keepAlive,
   })
   usePreviewSync(iframeRef, { type: "preview-mode", mode: previewMode })
   const sentFocus = following ? focus : null
