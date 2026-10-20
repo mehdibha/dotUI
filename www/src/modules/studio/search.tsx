@@ -218,7 +218,7 @@ export const PanelSearch = memo(function PanelSearch({
         <PanelPopover placement="bottom end" className="max-lg:h-72">
           <Command
             aria-label="Search"
-            className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1 max-lg:flex-col-reverse"
+            className="w-56 gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:w-auto max-lg:flex-1 max-lg:flex-col-reverse"
           >
             {/* Both chain with the Autocomplete's own field props. */}
             <SearchField
