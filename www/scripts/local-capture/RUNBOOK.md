@@ -22,12 +22,11 @@ cd ~/Desktop/dotUI
 git fetch origin claude/project-thread-ac25vf
 git worktree add --detach ../dotUI-capture origin/claude/project-thread-ac25vf
 cd ../dotUI-capture && PUPPETEER_SKIP_DOWNLOAD=1 pnpm install
-export OUT=~/Desktop/dotUI/www/.scratch-refs DATE=$(date +%F)
-mkdir -p $OUT/_run
-cd www && pnpm -s exec tsx scripts/local-capture/kit.mts > $OUT/_run/kit.js
+mkdir -p ~/Desktop/dotUI/www/.scratch-refs/_run
+cd www && pnpm -s exec tsx scripts/local-capture/kit.mts > ~/Desktop/dotUI/www/.scratch-refs/_run/kit.js
 ```
 
-Run every `kit.mts` command from `~/Desktop/dotUI-capture/www`. The worktree is `feat/preset-workflow` (probe 8eb9b12) plus this folder.
+In this file `$OUT` is `~/Desktop/dotUI/www/.scratch-refs` (in the main checkout, gitignored, where the cloud threads read) and `$DATE` the day the run starts (`date +%F`, written in PROGRESS.md). Shell variables don't persist between your commands: spell both out in each one. Run every `kit.mts` command from `~/Desktop/dotUI-capture/www`. The worktree is `feat/preset-workflow` (probe 8eb9b12) plus this folder.
 
 1. **Progress file.** Create `$OUT/_run/PROGRESS.md`: the Mac's original appearance, the javascript tool's output limit, then one line per product as you go (`stripe: light 8/10 pages, dark 0/10`). Update it after every page.
 2. **Mac appearance.** Record it: `osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode'`. Switch with `... to set dark mode to true` (or `false`). macOS may ask once to let the terminal control System Events: ask Mehdi to click OK.
