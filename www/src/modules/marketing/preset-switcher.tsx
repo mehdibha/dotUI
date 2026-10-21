@@ -28,10 +28,9 @@ export function PresetSwitcher({ selected }: { selected: number }) {
   } as React.CSSProperties
 
   return (
-    // The scroller spans the viewport so tabs scroll out at the screen edge. Its
-    // padding matches the container's gutters: below 1440px the row starts at the
-    // container's edge; wider screens center it when it fits.
-    <div className="mx-[calc(50%-50vw)] mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:px-6 lg:px-10">
+    // Negative margins cancel the landing container's padding so the row still
+    // scrolls edge-to-edge on small screens; lg fits without overflowing.
+    <div className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
       <TabList
         aria-label="Preview design system"
         variant="segmented"
