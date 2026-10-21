@@ -33,7 +33,7 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 
 1. Search the catalog first: most gaps turn out to be an existing key set wrong.
 2. Use the closest value with a `// Stand-in: …` comment.
-3. Add a row (or a system to an existing row) in the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020).
+3. Comment on the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020): one look per comment, or your system added to an existing row. Comments get folded into its table; never edit the body, since other reviews write at the same time.
 4. Never add a token, an override or an axis inside a preset PR. A row becomes an axis proposal, in its own issue, once three systems need it, or two including a north-star system (Material, Geist, Linear). Adding an axis is Mehdi's call (CLAUDE.md).
 5. Component bugs found along the way get their own issue.
 
@@ -53,4 +53,5 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 - The reference pack is committed and covers the parts the product shows.
 - `pnpm --filter www presets:measure --preset <id>` shows nothing off that a preset value could fix; whatever remains has a stand-in comment or a ledger row.
 - All 12 sheets are captured in both modes and compared; the review artifact and the tracker row are updated.
+- `pnpm build:registry` ran after the last preset edit and its `presets/__generated__/catalog.ts` is committed (CI's registry-drift job checks it).
 - Origin and Spotify have example templates: after changing either, run `pnpm smoke:examples` and commit `examples/`. CI regenerates the cover for any preset.
