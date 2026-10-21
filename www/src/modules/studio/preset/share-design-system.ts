@@ -62,7 +62,8 @@ export function shareDesignSystem(
     tokens === prev.tokens &&
     color === prev.color &&
     next.density === prev.density &&
-    next.icons === prev.icons
+    next.icons === prev.icons &&
+    next.assets === prev.assets
   )
     return prev
   return { ...next, componentParams, tokens, color }

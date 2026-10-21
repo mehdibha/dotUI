@@ -12,6 +12,7 @@ import { cn } from "@/registry/lib/utils"
 import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
 import { ExamplesIndex } from "@/modules/studio/__generated__/examples"
+import { BrandContext } from "@/modules/studio/assets/brand"
 import {
   isInIframe,
   useAnnouncePreviewReady,
@@ -319,12 +320,14 @@ export function PreviewPage() {
       icons={designSystem.icons}
     >
       {chrome}
-      <BoardFocusProvider>
-        <div ref={stage}>
-          <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
-          {boardContent}
-        </div>
-      </BoardFocusProvider>
+      <BrandContext.Provider value={designSystem.assets}>
+        <BoardFocusProvider>
+          <div ref={stage}>
+            <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+            {boardContent}
+          </div>
+        </BoardFocusProvider>
+      </BrandContext.Provider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
       <PendingOverlay loading={boardLoading} />
     </DesignSystemProvider>

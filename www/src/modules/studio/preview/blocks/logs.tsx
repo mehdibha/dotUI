@@ -88,6 +88,7 @@ import {
 } from "@/registry/ui/table"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 import { PagePicker } from "./shared"
 
@@ -917,12 +918,14 @@ export default function LogsBlock() {
     <div className="min-h-screen bg-bg text-fg">
       <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-            <ActivityIcon className="size-4" />
-          </div>
+          <BrandMark className="size-8">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+              <ActivityIcon className="size-4" />
+            </div>
+          </BrandMark>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">
-              Meridian Observability
+              <BrandName>Meridian Observability</BrandName>
             </p>
             <Breadcrumbs className="hidden sm:flex">
               <BreadcrumbItem>

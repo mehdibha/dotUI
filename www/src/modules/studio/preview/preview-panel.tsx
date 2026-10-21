@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import {
   ChevronDownIcon,
@@ -139,6 +146,56 @@ function PillTooltipContent({ children }: { children: React.ReactNode }) {
   )
 }
 
+type Size = { width: number; height: number }
+
+// Tailwind's ease-out, as the pill's own transitions.
+const GLIDE = { duration: 200, easing: "cubic-bezier(0, 0, 0.2, 1)" }
+
+/** Glides an element from its last laid-out size to its new one when `key`
+ *  changes: CSS can't transition to or from `auto`. */
+function useSizeGlide<T extends HTMLElement>(
+  key: unknown,
+  axes: "width" | "both" = "width",
+) {
+  const node = useRef<T | null>(null)
+  const size = useRef<Size | null>(null)
+  const glide = useRef<Animation | null>(null)
+  const ref = useCallback((element: T) => {
+    node.current = element
+    const observer = new ResizeObserver(() => {
+      const { width, height } = element.getBoundingClientRect()
+      size.current = { width, height }
+    })
+    observer.observe(element)
+    return () => {
+      observer.disconnect()
+      node.current = size.current = null
+    }
+  }, [])
+  useLayoutEffect(() => {
+    glide.current?.cancel()
+    const element = node.current
+    const from = size.current
+    if (
+      !element ||
+      !from ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return
+    const to = element.getBoundingClientRect()
+    const both = axes === "both"
+    if (to.width === from.width && (!both || to.height === from.height)) return
+    const frame = ({ width, height }: Size) => ({
+      width: `${width}px`,
+      ...(both && { height: `${height}px` }),
+      // Cut text reads as a wipe; an ellipsis would crawl along the edge.
+      textOverflow: "clip",
+    })
+    glide.current = element.animate([frame(from), frame(to)], GLIDE)
+  }, [key, axes])
+  return ref
+}
+
 type IframeRef = React.RefObject<HTMLIFrameElement | null>
 
 /** Posts `message` whenever `key` changes, and again on each iframe load and
@@ -246,27 +303,9 @@ export function PreviewPanel({ className }: { className?: string }) {
   // Docked, the tools sit in the site header: a pill would cover the small
   // preview, and stacked its bottom edge moves with every chapter.
   const docked = useDocked()
-
-  // The tools collapse by animating the wrapper to 0×0 — a `0fr` grid track
-  // (react-grab's trick) resolves to content size here because the
-  // shrink-to-fit pill gives the grid no definite width. The content keeps
-  // its natural size (w-max) inside, so it slides out instead of reflowing.
-  const toolsRef = useRef<HTMLDivElement>(null)
-  const [toolsSize, setToolsSize] = useState<{ w: number; h: number } | null>(
-    null,
-  )
-  useEffect(() => {
-    const el = toolsRef.current
-    if (!el) return
-    const measure = () => {
-      const rect = el.getBoundingClientRect()
-      setToolsSize({ w: rect.width, h: rect.height })
-    }
-    const observer = new ResizeObserver(measure)
-    observer.observe(el)
-    measure()
-    return () => observer.disconnect()
-  }, [docked])
+  // Sized by a glide, not a `0fr` grid track: the shrink-to-fit pill gives
+  // the grid no definite width, so the track resolves to content size.
+  const toolsRef = useSizeGlide<HTMLDivElement>(toolbarHidden, "both")
   const isMobile = useIsMobile()
 
   // While following, the panel's focus takes the preview over with its board.
@@ -423,6 +462,10 @@ export function PreviewPanel({ className }: { className?: string }) {
   const prefetchPreview = (slug: string) =>
     postToIframe(iframeRef.current, { type: "preview-prefetch", slug })
 
+  const pickerLabel = board ? BOARD_TITLES[board] : previewName(preview)
+  const pickerLabelRef = useSizeGlide<HTMLSpanElement>(pickerLabel)
+  const cueRef = useSizeGlide<HTMLSpanElement>(cueing)
+
   // The desktop popover's and the mobile sheet's: only the list's sizing
   // differs. Selection comes from the wrapping Select.
   const renderPicker = (listClassName: string) => (
@@ -493,7 +536,9 @@ export function PreviewPanel({ className }: { className?: string }) {
             space to grow into inside the pill's shrink-to-fit box and
             collapses the value to a sliver. */}
         <SelectValue className="min-w-0 flex-initial max-sm:sr-only">
-          {board ? BOARD_TITLES[board] : previewName(preview)}
+          <span ref={pickerLabelRef} className="block truncate">
+            {pickerLabel}
+          </span>
         </SelectValue>
         <ChevronsUpDownIcon data-icon="inline-end" className="max-sm:hidden" />
         <PanelsTopLeftIcon className="sm:hidden" />
@@ -541,13 +586,14 @@ export function PreviewPanel({ className }: { className?: string }) {
       >
         {following ? <LocateFixedIcon /> : <LocateOffIcon />}
         <span
+          ref={cueRef}
           aria-hidden
           className={cn(
-            "overflow-hidden whitespace-nowrap transition-[max-width,opacity,padding] duration-300 ease-out motion-reduce:transition-none",
-            cueing ? "max-w-40 pl-1.5 opacity-100" : "max-w-0 opacity-0",
+            "overflow-hidden whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none",
+            cueing ? "opacity-100" : "w-0 opacity-0",
           )}
         >
-          Following the panel
+          <span className="pl-1.5">Following the panel</span>
         </span>
       </Button>
       <PillTooltipContent>
@@ -717,22 +763,17 @@ export function PreviewPanel({ className }: { className?: string }) {
           )}
         >
           {/* Collapsible content — slides shut toward the chevron, react-grab
-            style, leaving the pill as a lone show/hide button. */}
+            style, leaving the pill as a lone show/hide button the chevron's
+            height. The content keeps its natural size (w-max), so it slides
+            out instead of reflowing. */}
           <div
+            ref={toolsRef}
             className={cn(
-              "overflow-hidden transition-[width,height] duration-200 ease-out",
-              toolbarHidden && "pointer-events-none",
+              "overflow-hidden",
+              toolbarHidden && "pointer-events-none h-5 w-0",
             )}
-            style={{
-              width: toolbarHidden ? 0 : (toolsSize?.w ?? "auto"),
-              // Shrink to the collapsed button's height so the tab is exactly
-              // the chevron — the wrapper's clipped content otherwise props the
-              // pill open at the expanded height.
-              height: toolbarHidden ? 20 : (toolsSize?.h ?? "auto"),
-            }}
           >
             <div
-              ref={toolsRef}
               className={cn(
                 "flex w-max items-center gap-1 transition-opacity duration-150",
                 toolbarHidden ? "opacity-0" : "opacity-100",

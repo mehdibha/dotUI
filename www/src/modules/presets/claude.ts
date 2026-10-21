@@ -7,6 +7,9 @@ export const claude = definePreset({
   swatch: "#d97757",
   inspiredBy: "Claude",
   diff: {
+    // Assets
+    brandAssets: "claude",
+
     // Color
     // CDS role-accent #2a78d6 paints checks, links, focus and accent badges;
     // clay lives only in the logo, so in the swatch. Actions are #0b0b0b ink.

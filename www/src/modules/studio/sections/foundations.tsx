@@ -31,8 +31,9 @@ type FoundationRow = [AxisKey | React.ComponentType, string, string[]?]
 const MAIN_GROUPS: { rows?: FoundationRow[]; pages?: string[] }[] = [
   {
     rows: [
+      ["brandAssets", "Brand assets", ["Logo", "Wordmark", "Identity"]],
       ["style", "Style"],
-      ["brand", "Brand"],
+      ["brand", "Theme", ["Brand", "Accent"]],
       ["neutralHue", "Neutral"],
       [PrimaryRow, "Primary"],
       [SurfacesRow, "Surfaces"],
@@ -75,6 +76,7 @@ export const FOUNDATION_KEYS = [
   "iconStroke",
   "iconWeight",
   "motion",
+  "brandAssets",
 ]
 
 /** Each page's rows, in groups. */

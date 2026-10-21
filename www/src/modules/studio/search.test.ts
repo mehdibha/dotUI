@@ -73,8 +73,8 @@ describe("panel search", () => {
   })
 
   it("reaches rows a popover holds, through the row that opens it", () => {
-    expect(search("Vividness")).toContain("Foundations › Brand › Vividness")
-    expect(search("Keep exact")).toContain("Foundations › Brand › Keep exact")
+    expect(search("Vividness")).toContain("Foundations › Theme › Vividness")
+    expect(search("Keep exact")).toContain("Foundations › Theme › Keep exact")
     expect(search("stroke")).toContain("Foundations › Icons › Stroke")
     expect(search("glass")).toContain("Foundations › Surfaces › Overlays")
     expect(search("Frost")).toContain("Components › Dialog › Backdrop › Frost")

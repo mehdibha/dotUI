@@ -1,6 +1,7 @@
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
+import type { BrandName } from "@/modules/studio/axes/assets"
 
 /**
  * The engine's view of a design system — what the provider renders and the
@@ -17,4 +18,7 @@ export type DesignSystem = {
   color?: ColorConfig
   /** Icon library; `undefined` means the default (lucide). */
   icons?: IconLibraryName
+  /** The brand the preview wears; `undefined` shows placeholder marks.
+   *  Preview-only: the publisher never reads it. */
+  assets?: BrandName
 }

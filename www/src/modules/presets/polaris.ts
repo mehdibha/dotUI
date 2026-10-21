@@ -7,6 +7,9 @@ export const polaris = definePreset({
   swatch: "#303030",
   inspiredBy: "Shopify Polaris",
   diff: {
+    // Assets
+    brandAssets: "shopify",
+
     // Style
     style: "tactile",
 

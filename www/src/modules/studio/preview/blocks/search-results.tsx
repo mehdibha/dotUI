@@ -73,6 +73,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 import { PagePicker, initials } from "./shared"
 
@@ -790,11 +791,13 @@ export default function SearchResultsBlock() {
       <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-              <BoxIcon className="size-4" />
-            </div>
+            <BrandMark className="size-7">
+              <div className="flex size-7 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                <BoxIcon className="size-4" />
+              </div>
+            </BrandMark>
             <span className="font-heading text-sm font-semibold tracking-tight">
-              Orbit Registry
+              <BrandName>Orbit Registry</BrandName>
             </span>
           </div>
           <Separator orientation="vertical" className="h-5 max-sm:hidden" />
