@@ -14,6 +14,10 @@
       "button.focus": {
         "selector": ".preview button[class~=\"bg-primary-solid\"]",
         "focus": true
+      },
+      "button.icon": {
+        "selector": ".preview button[aria-label=\"More actions\"]",
+        "skip": ["borderRadius"]
       }
     }
   },
@@ -36,32 +40,28 @@
       },
       "link": {
         "selector": ".preview a",
-        "text": "email settings",
-        "skip": ["height"]
+        "text": "email settings"
       }
     }
   },
   "https://supabase.com/design-system/docs/components/checkbox": {
     "parts": {
       "checkbox": {
-        "selector": ".preview button[role=checkbox][data-state=unchecked]",
-        "skip": ["color", "fontSize", "fontWeight"]
+        "selector": ".preview button[role=checkbox][data-state=unchecked]"
       },
       "checkbox.checked": {
         "selector": ".preview button[role=checkbox][data-state=checked]",
-        "skip": ["color", "edge", "fontSize", "fontWeight"]
+        "skip": ["edge"]
       }
     }
   },
   "https://supabase.com/design-system/docs/components/switch": {
     "parts": {
       "switch.off": {
-        "selector": ".preview button[role=switch][data-state=unchecked]",
-        "skip": ["color", "fontSize", "fontWeight"]
+        "selector": ".preview button[role=switch][data-state=unchecked]"
       },
       "switch.on": {
-        "selector": ".preview button[role=switch][data-state=checked]",
-        "skip": ["color", "fontSize", "fontWeight"]
+        "selector": ".preview button[role=switch][data-state=checked]"
       }
     }
   },
@@ -80,12 +80,10 @@
   "https://supabase.com/design-system/docs/components/sidebar": {
     "parts": {
       "shell": {
-        "selector": ".preview [data-sidebar=sidebar]",
-        "skip": ["color", "fontSize", "fontWeight", "height"]
+        "selector": ".preview [data-sidebar=sidebar]"
       },
       "panel": {
-        "selector": ".preview main",
-        "skip": ["color", "fontSize", "fontWeight", "height"]
+        "selector": ".preview main"
       },
       "nav.item": {
         "selector": ".preview [data-sidebar=menu-button][data-active=false]"
@@ -105,7 +103,7 @@
             "click": ".preview button::-p-text(Open)"
           }
         ],
-        "skip": ["color", "fontSize", "fontWeight", "height", "paddingInline"]
+        "skip": ["color"]
       },
       "menu.item": {
         "selector": "[role=menu] [role=menuitem]",
@@ -142,7 +140,7 @@
             "click": ".preview button::-p-text(Edit profile)"
           }
         ],
-        "skip": ["color", "fontSize", "fontWeight", "height"]
+        "skip": ["color"]
       }
     }
   },
@@ -156,7 +154,7 @@
             "click": ".preview button::-p-text(Open command menu)"
           }
         ],
-        "skip": ["color", "fontSize", "fontWeight", "height"]
+        "skip": ["color"]
       },
       "command.item": {
         "selector": "[role=dialog] [role=option]",
@@ -182,11 +180,91 @@
       }
     }
   },
+  "https://supabase.com/design-system/docs/components/toggle": {
+    "parts": {
+      "toggle": {
+        "selector": ".preview button[aria-label=\"Toggle bold\"]"
+      },
+      "toggle.on": {
+        "selector": ".preview button[data-state=on]",
+        "before": [
+          {
+            "click": ".preview button[aria-label=\"Toggle bold\"]"
+          },
+          {
+            "hover": "main h1"
+          }
+        ]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/toggle-group": {
+    "parts": {
+      "segmented": {
+        "selector": "[aria-label=\"Filter keys by status (tiny)\"]"
+      },
+      "segmented.item": {
+        "within": "[aria-label=\"Filter keys by status (tiny)\"]",
+        "selector": "[role=radio][data-state=off]"
+      },
+      "segmented.selected": {
+        "selector": "[aria-label=\"Filter keys by status (tiny)\"]",
+        "box": "[data-segment-indicator]",
+        "ink": "[role=radio][data-state=on]",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/radio-group": {
+    "parts": {
+      "radio": {
+        "selector": ".preview button[role=radio][data-state=unchecked]"
+      },
+      "radio.checked": {
+        "selector": ".preview button[role=radio][data-state=checked]"
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/progress": {
+    "parts": {
+      "progress": {
+        "selector": ".preview [role=progressbar]"
+      },
+      "progress.fill": {
+        "selector": ".preview [role=progressbar] > div",
+        "skip": ["borderRadius"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/alert": {
+    "parts": {
+      "alert": {
+        "selector": ".preview [role=alert]"
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/calendar": {
+    "parts": {
+      "calendar.day": {
+        "selector": ".preview td[data-day]:not([data-outside], [data-today], [data-selected], [data-disabled]) button"
+      },
+      "calendar.selected": {
+        "selector": ".preview td[data-selected]:not([data-today])"
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/form": {
+    "parts": {
+      "field.label": {
+        "selector": ".preview label"
+      }
+    }
+  },
   "https://supabase.com/design-system/docs/fragments/metric-card": {
     "parts": {
       "card": {
         "selector": ".preview div[class~=\"bg-surface-100\"]",
-        "skip": ["color", "fontSize", "fontWeight", "height"]
+        "skip": ["color"]
       }
     }
   },
@@ -194,11 +272,11 @@
     "parts": {
       "heading.1": {
         "selector": "main h1",
-        "skip": ["fontSize", "height"]
+        "skip": ["fontSize"]
       },
       "text": {
         "selector": "main .mdx p",
-        "skip": ["fontSize", "height"]
+        "skip": ["fontSize"]
       }
     }
   }
