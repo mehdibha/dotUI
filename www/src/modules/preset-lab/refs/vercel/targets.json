@@ -1,0 +1,387 @@
+{
+  "https://vercel.com/geist/button": {
+    "parts": {
+      "button.primary": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(1)",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      },
+      "button.secondary": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(4)",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      },
+      "button.quiet": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(5)",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      },
+      "button.focus": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(1)",
+        "focus": true,
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://vercel.com/geist/input": {
+    "parts": {
+      "input": {
+        "selector": "[data-geist-input-wrapper]",
+        "nth": 1,
+        "ink": "input",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "borderRadius",
+          "paddingInline",
+          "color"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/select": {
+    "parts": {
+      "select.trigger": {
+        "selector": "[data-geist-select] select",
+        "nth": 1,
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://vercel.com/geist/checkbox": {
+    "parts": {
+      "checkbox": {
+        "selector": "main label[for^=checkbox] input + span",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "main label[for^=checkbox] input + span",
+        "before": [
+          {
+            "click": "main label[for^=checkbox]"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/toggle": {
+    "parts": {
+      "switch.off": {
+        "selector": "input[data-testid='toggle/input'] + span",
+        "nth": 0,
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "switch.on": {
+        "selector": "input[data-testid='toggle/input'] + span",
+        "nth": 1,
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/tabs": {
+    "parts": {
+      "tab": {
+        "selector": "[data-geist-tab][aria-selected=false]",
+        "skip": ["borderColor", "borderWidth", "boxShadow", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "[data-geist-tab][aria-selected=true]",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "borderRadius",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/menu": {
+    "parts": {
+      "menu": {
+        "selector": "[data-geist-menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "menu.item": {
+        "selector": "[data-geist-menu-item][role=menuitem]",
+        "nth": 1,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://vercel.com/geist/tooltip": {
+    "parts": {
+      "tooltip": {
+        "selector": "[role=tooltip]",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[data-testid='legacy/tooltip-trigger']"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "borderRadius"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/command-menu": {
+    "parts": {
+      "command": {
+        "selector": "[cmdk-dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/keyboard-input": {
+    "parts": {
+      "kbd": {
+        "selector": "[data-geist-kbd]",
+        "skip": ["borderColor", "borderWidth", "boxShadow", "fontFamily"]
+      }
+    }
+  },
+  "https://vercel.com/geist/modal": {
+    "parts": {
+      "dialog": {
+        "selector": "[data-geist-modal]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/badge": {
+    "parts": {
+      "badge": {
+        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://vercel.com/geist/materials": {
+    "parts": {
+      "card": {
+        "selector": "main .material-base",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "color",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/typography": {
+    "parts": {
+      "heading.1": {
+        "selector": "main .text-heading-40",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "fontSize",
+          "letterSpacing",
+          "fontFamily",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge"
+        ]
+      },
+      "heading.2": {
+        "selector": "main .text-heading-32",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "fontSize",
+          "letterSpacing",
+          "fontFamily",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge"
+        ]
+      },
+      "heading.3": {
+        "selector": "main .text-heading-24",
+        "nth": 1,
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "fontFamily",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge"
+        ]
+      },
+      "heading.4": {
+        "selector": "main .text-heading-20",
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "fontFamily",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge"
+        ]
+      },
+      "text": {
+        "selector": "main .text-copy-16",
+        "nth": 1,
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "color",
+          "fontFamily",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/command-menu#item": {
+    "parts": {
+      "command.item": {
+        "selector": "[cmdk-item]:not([aria-selected=true])",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://vercel.com/geist/modal#subtitle": {
+    "parts": {
+      "text.muted": {
+        "selector": "[data-geist-modal-subtitle]",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "boxShadow",
+          "height",
+          "backgroundColor",
+          "borderRadius",
+          "paddingInline",
+          "edge",
+          "fontFamily"
+        ]
+      }
+    }
+  }
+}

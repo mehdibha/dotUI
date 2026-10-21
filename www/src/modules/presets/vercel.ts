@@ -12,6 +12,7 @@ export const vercel = definePreset({
 
     // Color
     // Geist blue-700 inks links, focus, switch, slider and choice cards; solids stay ink.
+    // Stand-in: dark mode keeps it; Geist lifts focus and links to #52a8ff.
     brand: "#0072f5",
     preserveSeed: true,
     buttonColor: "neutral",
@@ -22,19 +23,18 @@ export const vercel = definePreset({
     warningSeed: "#ffb224",
     // red-800, the fill Geist paints error buttons and toasts with.
     dangerSeed: "#da2f35",
+    // Stand-in: the engine's ink and muted text sit a step lighter than
+    // gray-1000 #171717 / #ededed and gray-900 #4d4d4d / #a1a1a1.
     neutralTint: 0,
     // background-200: #fafafa page, #000 in dark.
     lightBg: 98.5,
     darkBg: 0,
-    // Fields and outline buttons wear the gray-alpha-400 hairline.
+    // Fields and outline buttons wear the gray-alpha-400 hairline (#ebebeb / #2e2e2e).
     controlEdge: "soft",
 
-    // Surfaces
-    // White background-100 cards on the #fafafa shell.
-    surfaceLayers: "grouped",
-    shellTone: "page",
-
     // Typography
+    // Headings 600 with negative tracking. Stand-in: Geist tightens more as
+    // size grows (heading-24 is -0.96px; ours -0.6px).
     titleStyle: "tight",
 
     // Icons
@@ -49,11 +49,17 @@ export const vercel = definePreset({
     roleCard: "md",
 
     // Space
-    // 32/36/40 controls.
+    // 32/36/40 controls, 36px menu rows.
     density: "comfortable",
 
+    // Surfaces
+    // White background-100 cards on the #fafafa shell. Stand-in: in dark,
+    // menus, dialogs and ⌘K sit a step above Geist's #0a0a0a.
+    surfaceLayers: "grouped",
+    shellTone: "page",
+
     // States
-    // Fields focus with a neutral 4px halo under the blue ring.
+    // Fields focus with a 1px edge at 34% black and a 4px halo at 16%.
     focusInputWeight: "thick",
     focusInputColor: "neutral",
     invalidStyle: "halo",
@@ -64,6 +70,8 @@ export const vercel = definePreset({
     tooltipEntrance: "fade",
 
     // Buttons
+    // Stand-in: Geist fills secondary buttons, fields, checks and kbd with
+    // background-100 (#fff / #0a0a0a); ours stay clear over the page.
     buttonSecondary: "outline",
     segmentedTrack: "outline",
 
@@ -77,6 +85,7 @@ export const vercel = definePreset({
     cardSelected: "outline-tint",
     cardColor: "accent",
     sliderTrack: "medium",
+    // Stand-in: switches keep our 24px track; Geist's is 28×14.
 
     // Inputs
     inputHover: "edge",
@@ -86,7 +95,9 @@ export const vercel = definePreset({
     // Menus & popovers
     menuRows: "match",
     // The command input is bare text over a hairline, no magnifier.
+    // Stand-in: Geist's ⌘K is 640px wide with an 18px prompt.
     menuSearch: "prompt",
+    // Stand-in: tooltips keep our 12px text and 12px padding; Geist's are 13px and 8px.
 
     // Dialogs
     // #f2f2f2 at 80%, no blur.
@@ -97,6 +108,7 @@ export const vercel = definePreset({
     mobileDialogs: "sheet",
 
     // Navigation
+    // Stand-in: Geist's tabs are 50px tall with 2px side padding; ours 35px and 8px.
     tabStyle: "line",
     // Tabs and sidebar items stay 400 at rest and when current.
     navWeight: "regular",
@@ -107,8 +119,11 @@ export const vercel = definePreset({
     toastStatus: "bold",
     spinnerStyle: "blades",
     progressTrack: "thick",
+    // Stand-in: badges stay 20px; Geist's are 24px with 12px padding, and its
+    // gray badge is solid #4d4d4d with white text.
 
     // Data display
+    // Stand-in: Geist keys are 400 on a filled plate; ours 500, clear.
     kbdTreatment: "outline",
     cardFooter: "band",
   },
