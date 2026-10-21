@@ -645,6 +645,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   return (
     <div
       ref={panelRef}
+      data-preview-loaded={isLoaded || undefined}
       className={cn(
         "relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-bg shadow-xs max-lg:rounded-[14px] max-lg:shadow-none",
         className,

@@ -1,7 +1,7 @@
-# The social cover (www/public/brand/cover/*.png) renders real components under
-# several presets, so it goes stale whenever a preset or a component it shows
-# changes. On a PR that touches either, this regenerates it with
-# `pnpm build:cover` and commits the result to the PR branch.
+# The social cover (www/public/brand/cover/*.png) renders the real studio on
+# the Origin preset, so it goes stale whenever the studio, the preset or a
+# component it shows changes. On a PR that touches any, this regenerates it
+# with `pnpm build:cover` and commits the result to the PR branch.
 
 name: Cover
 
@@ -12,6 +12,9 @@ on:
       - "www/src/registry/**"
       - "www/src/lib/styles.tsx"
       - "www/src/components/showcase/**"
+      - "www/src/components/layout/**"
+      - "www/src/modules/studio/**"
+      - "www/src/routes/_app/studio.tsx"
       - "www/src/modules/marketing/cover.tsx"
       - "www/scripts/capture-cover.mts"
       - "www/public/brand/**"

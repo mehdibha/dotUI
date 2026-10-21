@@ -1,5 +1,5 @@
 /**
- * Renders /internal/cover (real components under several presets) into every
+ * Renders /internal/cover (the real studio under the logo) into every
  * size the cover ships in: the GitHub social preview and the site's share image.
  *
  *   pnpm build:cover [--port 5173]
