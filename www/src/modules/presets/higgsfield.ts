@@ -59,6 +59,7 @@ export const higgsfield = definePreset({
 
     // States
     // An inset 1.5px lime line, no ring.
+    // Stand-in: the thin edge is 1px, the thick one 2px.
     focusInputStyle: "border",
     disabledTreatment: "fade",
 
