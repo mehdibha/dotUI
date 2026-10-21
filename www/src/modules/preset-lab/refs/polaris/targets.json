@@ -417,5 +417,144 @@
         "selector": "[data-part=switch] s-switch >>> input"
       }
     }
+  },
+  "https://admin.shopify.com/products": {
+    "mode": "light",
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "button.Polaris-Button--variantPrimary",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "button.secondary": {
+        "selector": "button.Polaris-Button--variantSecondary",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "tab": {
+        "selector": ".Polaris-Tabs__Tab:not(.Polaris-Tabs__Tab--active)",
+        "ink": ".Polaris-Text--root",
+        "only": [
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "tab.selected": {
+        "selector": ".Polaris-Tabs__Tab--active",
+        "ink": ".Polaris-Text--root",
+        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
+      },
+      "badge": {
+        "selector": ".Polaris-Badge:not([class*=Badge--tone])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing", "boxShadow"]
+      },
+      "shell": {
+        "selector": ".Polaris-Navigation"
+      },
+      "nav.item": {
+        "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
+        "ink": ".Polaris-Text--root",
+        "skip": ["paddingInline"]
+      },
+      "nav.item.active": {
+        "selector": ".Polaris-Navigation__ItemInnerWrapper--selected",
+        "ink": ".Polaris-Text--root",
+        "skip": ["paddingInline"]
+      },
+      "card": {
+        "selector": ".Polaris-ShadowBevel",
+        "box": "::before",
+        "skip": ["backgroundColor", "color"]
+      },
+      "menu": {
+        "selector": ".Polaris-Popover__ContentContainer",
+        "surface": true,
+        "skip": ["color", "boxShadow"],
+        "before": [
+          {
+            "click": "button::-p-text(More actions)"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": ".Polaris-ActionList__Item",
+        "ink": ".Polaris-Text--root",
+        "skip": ["backgroundColor", "paddingInline"],
+        "before": [
+          {
+            "click": "button::-p-text(More actions)"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": ".Polaris-Modal-Dialog__Modal",
+        "skip": ["color", "boxShadow"],
+        "before": [
+          {
+            "click": "button::-p-text(Export)"
+          }
+        ]
+      }
+    }
+  },
+  "https://admin.shopify.com/products/new": {
+    "mode": "light",
+    "signedIn": true,
+    "parts": {
+      "input": {
+        "selector": ".Polaris-TextField",
+        "box": ".Polaris-TextField__Backdrop",
+        "ink": "input",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "input.focus": {
+        "selector": ".Polaris-TextField",
+        "box": ".Polaris-TextField__Backdrop",
+        "ink": "input",
+        "focus": true,
+        "only": ["backgroundColor", "edge", "ring"]
+      },
+      "select.trigger": {
+        "selector": ".Polaris-Select",
+        "box": ".Polaris-Select__Backdrop",
+        "ink": ".Polaris-Select__SelectedOption",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "field.label": {
+        "selector": ".Polaris-Label__Text .Polaris-Text--root"
+      },
+      "checkbox": {
+        "selector": ".Polaris-Checkbox__Input:not(:checked) ~ .Polaris-Checkbox__Backdrop"
+      },
+      "checkbox.checked": {
+        "selector": ".Polaris-Checkbox__Input:checked ~ .Polaris-Checkbox__Backdrop"
+      }
+    }
   }
 }
