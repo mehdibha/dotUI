@@ -156,6 +156,23 @@
             "hover": "::-p-text(Used for targeted advertising.)"
           }
         ]
+      },
+      "button.icon": {
+        "selector": "[aria-label='More actions']",
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814?p=400efdeead058118956eeb6ff4af160f&pm=c": {
+    "steps": [
+      {
+        "wait": ".notion-peek-renderer .notion-scroller"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "selector": ".notion-peek-renderer .notion-scroller",
+        "surface": true
       }
     }
   },
