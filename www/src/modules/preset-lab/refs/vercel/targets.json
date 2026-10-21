@@ -252,5 +252,26 @@
         "skip": ["color"]
       }
     }
+  },
+  "https://vercel.com/dashboard": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "shell": {
+        "selector": "aside",
+        "surface": true
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "nav.item": {
+        "selector": "nav a[href]:not([aria-current]):not([data-active=true])"
+      },
+      "nav.item.active": {
+        "selector": "nav a[aria-current=page], nav a[data-active=true]"
+      }
+    }
   }
 }
