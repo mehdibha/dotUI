@@ -233,6 +233,13 @@ async function pool<T, R>(items: T[], run: (item: T) => Promise<R>) {
 
 const pause = (ms: number) => new Promise((done) => setTimeout(done, ms))
 
+/** Pages run side by side; each acts as the focused tab, as :focus-visible
+ *  needs. */
+async function focusable(page: Page) {
+  const cdp = await page.createCDPSession()
+  await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+}
+
 async function runSteps(page: Page, steps: Step[]) {
   for (const step of steps) {
     if ("press" in step) {
@@ -365,10 +372,7 @@ async function measurePage(
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: mode },
     ])
-    // Pages run side by side; each acts as the focused tab, as :focus-visible
-    // needs.
-    const cdp = await page.createCDPSession()
-    await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+    await focusable(page)
     // Some sites turn away a "HeadlessChrome" user agent (Notion).
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
@@ -572,6 +576,7 @@ try {
   const results = await pool(jobs, async ({ mode, sheet, targets }) => {
     const page = await browser.newPage()
     try {
+      await focusable(page)
       await page.setViewport({ width: 1280, height: 900 })
       await page.emulateMediaFeatures([
         { name: "prefers-color-scheme", value: mode },
