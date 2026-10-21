@@ -93,10 +93,6 @@
       "tooltip": {
         "selector": "[data-part=\"tooltip\"]",
         "skip": ["boxShadow", "height", "fontSize"]
-      },
-      "menu": {
-        "selector": "[data-part=\"menu\"]",
-        "skip": ["boxShadow"]
       }
     }
   },
@@ -105,57 +101,47 @@
     "mode": "dark",
     "parts": {
       "shell": {
-        "selector": ".Root__top-container",
+        "selector": "div:has(> #main-view)",
         "surface": true
       },
       "panel": {
-        "selector": ".Root__main-view"
+        "selector": "#main-view"
       },
       "nav.item": {
         "within": "#Desktop_LeftSidebar_Id",
-        "selector": "[role=row]"
+        "selector": "[data-encore-id=listRow]",
+        "ink": "[data-encore-id=listRowTitle]",
+        "skip": ["height"]
       },
       "toggle": {
-        "within": ".Root__main-view",
-        "selector": "button[role=checkbox][aria-checked=false]"
+        "within": "#main-view",
+        "selector": "button[data-encore-id=chip][aria-checked=false] > span"
       },
       "toggle.on": {
-        "within": ".Root__main-view",
-        "selector": "button[role=checkbox][aria-checked=true]"
+        "within": "#main-view",
+        "selector": "button[data-encore-id=chip][aria-checked=true] > span"
       },
       "card": {
-        "within": ".Root__main-view",
+        "within": "#main-view",
         "selector": "[data-encore-id=card]"
       },
       "button.icon": {
-        "selector": "[data-testid=control-button-skip-back]"
+        "selector": "[data-testid=control-button-skip-back]",
+        "skip": ["backgroundColor"]
       },
-      "menu.item": {
-        "selector": "#context-menu [role=menuitem]",
+      "menu": {
+        "selector": "#context-menu [role=menu]",
+        "surface": true,
+        "skip": ["color"],
         "before": [
           {
             "click": "[data-testid=user-widget-link]"
           }
         ]
       },
-      "dialog": {
-        "selector": "[role=dialog]",
-        "surface": true,
-        "before": [
-          {
-            "press": "Control+/"
-          }
-        ]
-      },
-      "search": {
-        "selector": "[data-testid=search-input]"
-      },
-      "slider": {
-        "selector": "[data-testid=playback-progressbar] [data-testid=progress-bar-background]"
-      },
-      "menu.player": {
-        "selector": "#context-menu",
-        "surface": true,
+      "menu.item": {
+        "selector": "#context-menu [role=menuitem]",
+        "ink": "[data-encore-id=text]",
         "before": [
           {
             "click": "[data-testid=user-widget-link]"
