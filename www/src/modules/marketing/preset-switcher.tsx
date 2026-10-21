@@ -34,7 +34,7 @@ export function PresetSwitcher({ selected }: { selected: number }) {
       <TabList
         aria-label="Preview design system"
         variant="segmented"
-        className="mx-auto h-auto bg-transparent p-0 **:data-tab-indicator:rounded-(--indicator-radius) **:data-tab-indicator:bg-(--indicator-bg) **:data-tab-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
+        className="mx-auto h-auto gap-2 bg-transparent p-0 **:data-tab-indicator:rounded-(--indicator-radius) **:data-tab-indicator:bg-(--indicator-bg) **:data-tab-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
         style={indicatorStyle}
       >
         {PRESET_CATALOG.map((preset) => (
