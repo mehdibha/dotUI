@@ -45,13 +45,12 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
       "popover",
       "listbox",
       "tooltip",
-      "command",
-      "palette",
       "contextmenu",
       "overlays",
       "menus",
     ],
   ],
+  ["command", ["command", "palette", "cmdk", "spotlight"]],
   [
     "feedback",
     [
@@ -174,9 +173,16 @@ function match(file: string) {
     .toLowerCase()
     .split(/[^a-z0-9]+/)
   const mode = tokens.includes("dark") ? "dark" : "light"
-  const sheet =
-    KEYWORDS.find(([name]) => tokens.includes(name))?.[0] ??
-    KEYWORDS.find(([, words]) => words.some((w) => tokens.includes(w)))?.[0]
+  /* The first word that names a sheet wins: `segmented-display-popover` is
+     a segmented control, not a display sheet. */
+  const sheet = tokens
+    .map(
+      (token) =>
+        KEYWORDS.find(
+          ([name, words]) => name === token || words.includes(token),
+        )?.[0],
+    )
+    .find(Boolean)
   return { file, sheet, mode }
 }
 

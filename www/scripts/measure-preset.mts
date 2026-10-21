@@ -177,6 +177,7 @@ const reference: ReferenceTokens = JSON.parse(
   await readFile(tokensFile, "utf8"),
 )
 let failing = 0
+const missing = new Set<string>()
 for (const mode of MODES) {
   const rows = compareMeasures(reference[mode] ?? {}, measured[mode] ?? {})
   if (rows.length === 0) continue
@@ -184,6 +185,10 @@ for (const mode of MODES) {
   console.log("| part | prop | reference | preset | delta | |")
   console.log("| --- | --- | --- | --- | --- | --- |")
   for (const row of rows) {
+    if (row.missing) {
+      missing.add(row.part)
+      continue
+    }
     if (!row.ok) failing++
     console.log(
       `| ${row.part} | ${row.prop} | ${row.reference} | ${row.preset} | ${row.delta} | ${row.ok ? "ok" : "**off**"} |`,
@@ -191,3 +196,7 @@ for (const mode of MODES) {
   }
 }
 console.log(`\n${failing} propert${failing === 1 ? "y" : "ies"} off`)
+if (missing.size)
+  console.log(
+    `Not on the specimens (no SPECIMEN_TARGETS entry, or the sheet doesn't render it): ${[...missing].join(", ")}`,
+  )

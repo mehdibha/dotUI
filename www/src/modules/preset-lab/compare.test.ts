@@ -21,6 +21,36 @@ describe("compareMeasures", () => {
     expect(row("9999px", "3.40282e+38px")).toMatchObject({ ok: true })
   })
 
+  it("treats a radius past half the height as full", () => {
+    const [radius] = compareMeasures(
+      { switch: { borderRadius: "72px", height: "20px" } },
+      { switch: { borderRadius: "10px", height: "20px" } },
+    )
+    expect(radius).toMatchObject({ prop: "borderRadius", ok: true })
+  })
+
+  it("compares edges by width and color, wherever they are drawn", () => {
+    const ring = "0.5px rgba(0, 0, 0, 0.1)"
+    expect(row(ring, "0.5px rgba(0, 0, 0, 0.1)", "edge").ok).toBe(true)
+    expect(row(ring, "1px rgba(0, 0, 0, 0.1)", "edge")).toMatchObject({
+      ok: false,
+      delta: "+0.5px",
+    })
+    expect(row(ring, "none", "edge")).toMatchObject({
+      ok: false,
+      delta: "edge → none",
+    })
+  })
+
+  it("compares focus rings by width, offset and color", () => {
+    const ring = "2px rgb(94, 106, 210) +2px"
+    expect(row(ring, "2px rgb(94, 106, 210) +2px", "ring").ok).toBe(true)
+    expect(row(ring, "2px rgb(94, 106, 210) +0px", "ring")).toMatchObject({
+      ok: false,
+      delta: "offset -2px",
+    })
+  })
+
   it("compares colors in OKLab", () => {
     const same = row("rgb(94, 106, 210)", "rgb(95, 106, 210)", "color")
     expect(same.ok).toBe(true)
@@ -61,9 +91,9 @@ describe("compareMeasures", () => {
     expect(row("none", padded, "boxShadow").ok).toBe(true)
   })
 
-  it("marks a part the preset does not show", () => {
+  it("marks a part the specimens do not show as missing", () => {
     expect(
       compareMeasures({ badge: { height: "20px" } }, { badge: null })[0],
-    ).toMatchObject({ preset: "—", ok: false })
+    ).toMatchObject({ preset: "—", ok: false, missing: true })
   })
 })
