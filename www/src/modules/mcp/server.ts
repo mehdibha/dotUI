@@ -304,10 +304,13 @@ function createServer(origin: string) {
       const result = await mintDesignSystem(input, getSnapshotStore(), origin)
       if (!result.ok) return failure(result.problems)
       const { diff: _, ...summary } = result.value
-      return card(JSON.stringify(summary), {
-        card: "ready",
-        ...result.value,
-      })
+      return card(
+        `${SHOWN} the install card for ${summary.name}: the command per package manager, Open in studio and Open in v0. Don't repeat the command; if you can run commands, run it, otherwise offer the next step in a sentence. ${JSON.stringify(summary)}`,
+        {
+          card: "ready",
+          ...result.value,
+        },
+      )
     },
   )
 

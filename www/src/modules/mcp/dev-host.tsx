@@ -65,6 +65,7 @@ const SAMPLES: Record<string, Record<string, unknown>> = {
     sample: "Get paid on time, without chasing anyone.",
     pairings: [
       { name: "Editorial", heading: "Fraunces", body: "Inter" },
+      { name: "Ledger", heading: "Inter", body: "Inter" },
       { name: "Humanist", heading: "Instrument Sans", body: "Instrument Sans" },
       {
         name: "Technical",

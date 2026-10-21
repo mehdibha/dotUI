@@ -86,6 +86,34 @@ type Result<T> = { ok: true; value: T } | { ok: false; problems: string[] }
 
 const failure = (problems: string[]) => ({ ok: false as const, problems })
 
+const FONT_KEYS = new Set([
+  "headingFont",
+  "bodyFont",
+  "monoFont",
+  "readingFont",
+])
+
+/** Catalog families like `wanted` — sharing a word with it — so a refused
+ *  font comes back with what to use instead. */
+function nearFonts(key: string, wanted: unknown): string[] {
+  const pool = FONT_CATALOG.filter(
+    (font) => key !== "monoFont" || font.category === "mono",
+  ).map((font) => font.family)
+  const words = String(wanted)
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word) => word.length > 2)
+  const near = pool.filter((family) =>
+    words.some((word) => family.toLowerCase().includes(word)),
+  )
+  return (near.length > 0 ? near : pool).slice(0, 8)
+}
+
+const explain = (key: string, problem: string, value: unknown) =>
+  FONT_KEYS.has(key) && problem.includes("font catalog")
+    ? `${problem}; closest: ${nearFonts(key, value).join(", ")}`
+    : problem
+
 /** The preset's diff, the shape, then `axes`, validated. */
 export function resolveDesign({
   preset,
@@ -101,11 +129,14 @@ export function resolveDesign({
     return failure([
       `shape: unknown "${shape}", expected one of ${SHAPE_VALUES.join(", ")}`,
     ])
-  const diff = { ...base?.diff, ...(shape && SHAPES[shape]), ...axes }
+  const diff: Diff = { ...base?.diff, ...(shape && SHAPES[shape]), ...axes }
   const result = validate(diff)
   if (!result.ok)
     return failure(
-      result.issues.map(({ key, problem }) => `${key || "axes"}: ${problem}`),
+      result.issues.map(
+        ({ key, problem }) =>
+          `${key || "axes"}: ${explain(key, problem, diff[key])}`,
+      ),
     )
   return { ok: true, value: diff }
 }
@@ -147,7 +178,11 @@ export function resolvePairings(pairings: Pairing[]): Result<Pairing[]> {
     ).flatMap(([key, family]) => {
       if (family === undefined) return []
       const problem = checkKey(key, family)
-      return problem ? [`pairings[${i}].${key} "${family}": ${problem}`] : []
+      return problem
+        ? [
+            `pairings[${i}].${key} "${family}": ${explain(key, problem, family)}`,
+          ]
+        : []
     }),
   )
   return problems.length > 0 ? failure(problems) : { ok: true, value: pairings }

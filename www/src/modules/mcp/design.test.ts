@@ -84,6 +84,16 @@ describe("resolveSwatches", () => {
 })
 
 describe("pairings", () => {
+  it("suggests catalog families for a refused font", () => {
+    const result = resolveDesign({ axes: { monoFont: "IBM Plex Mono" } })
+    expect(result).toMatchObject({
+      ok: false,
+      problems: [
+        expect.stringMatching(/monoFont: .*closest: .*JetBrains Mono/),
+      ],
+    })
+  })
+
   it("checks every family against the font catalog", () => {
     expect(
       resolvePairings([{ heading: "Fraunces", body: "Not A Font" }]),

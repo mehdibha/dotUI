@@ -2,6 +2,11 @@ import { useState } from "react"
 
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
+import { Controls } from "@/components/showcase/controls"
 
 import type { Change, Diff } from "../design"
 import {
@@ -23,6 +28,8 @@ export interface ComparePayload {
   changes: Change[]
 }
 
+type Side = "current" | "proposed"
+
 const SHOWN = 8
 
 // `roleControl` → "Role control".
@@ -31,6 +38,8 @@ const humanize = (key: string) => {
   return words.charAt(0).toUpperCase() + words.slice(1)
 }
 
+/** One preview flipped between the two designs in place: a 4px radius or a
+ *  tint step is invisible side by side and obvious when it flips. */
 export function CompareCard({
   product,
   label,
@@ -39,8 +48,8 @@ export function CompareCard({
   changes,
 }: ComparePayload) {
   const { app } = useCard()
-  const before = useSystem(current)
-  const after = useSystem(proposed)
+  const systems = { current: useSystem(current), proposed: useSystem(proposed) }
+  const [side, setSide] = useState<Side>("proposed")
   const [answer, setAnswer] = useState<"kept" | "accepted">()
 
   async function answerWith(accepted: boolean) {
@@ -55,21 +64,35 @@ export function CompareCard({
   return (
     <div className="flex flex-col gap-4">
       <CardHeader title={label} />
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-1.5">
-          <span className="text-xs text-fg-muted">Current</span>
-          <Themed system={before}>
-            <Specimen product={product} />
-          </Themed>
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <span className="text-xs text-fg-accent">Proposed</span>
-          <div className="rounded-lg ring-2 ring-primary">
-            <Themed system={after}>
-              <Specimen product={product} />
+      <SegmentedControl
+        aria-label="Design shown"
+        selectedKeys={[side]}
+        onSelectionChange={(keys) => {
+          const next = [...keys][0]
+          if (next === "current" || next === "proposed") setSide(next)
+        }}
+        className="self-start"
+      >
+        <SegmentedControlItem id="current">Current</SegmentedControlItem>
+        <SegmentedControlItem id="proposed">Proposed</SegmentedControlItem>
+      </SegmentedControl>
+      {/* Both stay mounted in one cell, so a flip swaps pixels, not layout. */}
+      <div className="grid">
+        {(["current", "proposed"] as const).map((each) => (
+          <div
+            key={each}
+            inert
+            className="col-start-1 row-start-1"
+            style={{ visibility: each === side ? "visible" : "hidden" }}
+          >
+            <Themed system={systems[each]}>
+              <div className="grid gap-3 rounded-xl bg-bg p-3 sm:grid-cols-[1fr_1.35fr]">
+                <Specimen product={product} />
+                <Controls />
+              </div>
             </Themed>
           </div>
-        </div>
+        ))}
       </div>
       <div className="flex flex-wrap gap-1.5">
         {changes.length === 0 && (

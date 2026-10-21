@@ -1,7 +1,14 @@
 /* What every card shares: the host connection, the preview mode, scoped
    themes and the way a pick goes back to the model. */
 
-import { createContext, use, useEffect, useMemo, useState } from "react"
+import {
+  Children,
+  createContext,
+  use,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { applyDocumentTheme } from "@modelcontextprotocol/ext-apps"
 import type { App, McpUiHostContext } from "@modelcontextprotocol/ext-apps"
 import { useApp } from "@modelcontextprotocol/ext-apps/react"
@@ -204,7 +211,12 @@ export function Tiles({
       value={String(value)}
       onChange={(next) => onChange(Number(next))}
       isDisabled={isDisabled}
-      className="grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-3"
+      // Four sit two by two: a lone fourth tile reads as an afterthought.
+      className={
+        Children.count(children) === 4
+          ? "grid gap-3 sm:grid-cols-2"
+          : "grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-3"
+      }
     >
       {children}
     </RadioGroup>
@@ -227,7 +239,8 @@ export function Tile({
       value={String(index)}
       className="flex cursor-pointer flex-col gap-2 rounded-xl border p-1.5 outline-none data-focus-visible:ring-2 data-focus-visible:ring-primary data-selected:border-primary data-selected:ring-1 data-selected:ring-primary"
     >
-      {children}
+      {/* Stretches, so titles line up across tiles of different heights. */}
+      <div className="grid flex-1">{children}</div>
       <span className="flex flex-col gap-0.5 px-1.5 pb-1">
         <span className="text-sm font-medium">{title}</span>
         {description && (
