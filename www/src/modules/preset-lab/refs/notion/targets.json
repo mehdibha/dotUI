@@ -203,5 +203,71 @@
         "only": ["backgroundColor", "borderRadius"]
       }
     }
+  },
+  "https://app.notion.com/": {
+    "signedIn": true,
+    "parts": {
+      "dialog": {
+        "selector": ".notion-overlay-container [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[role=button] ::-p-text(Settings)"
+          }
+        ]
+      },
+      "select.trigger": {
+        "selector": ".notion-overlay-container [role=dialog] [role=button]",
+        "text": "Use system setting",
+        "before": [
+          {
+            "click": "[role=button] ::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab] ::-p-text(Preferences)"
+          }
+        ]
+      },
+      "input": {
+        "selector": ".notion-overlay-container div:has(> input[type=text])",
+        "before": [
+          {
+            "click": ".notion-topbar-share-menu"
+          }
+        ]
+      },
+      "command": {
+        "selector": "[role=dialog][aria-label='Search Notion']",
+        "before": [
+          {
+            "press": "Meta+P"
+          }
+        ]
+      },
+      "calendar.day": {
+        "selector": ".notion-overlay-container .DayPicker-Day:not(.DayPicker-Day--today):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside)",
+        "before": [
+          {
+            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+          }
+        ]
+      },
+      "calendar.today": {
+        "selector": ".notion-overlay-container .DayPicker-Day--today",
+        "before": [
+          {
+            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+          }
+        ]
+      },
+      "calendar.selected": {
+        "selector": ".notion-overlay-container .DayPicker-Day--selected",
+        "before": [
+          {
+            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+          }
+        ]
+      }
+    }
   }
 }

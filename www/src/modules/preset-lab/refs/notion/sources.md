@@ -28,4 +28,6 @@ Mapping notes:
 - `text.muted` and `link` keep only their color. The muted sample is the search palette's "Pages" section label (12/500). The links on the Thesis page are bolded by its author (600); in Notion's own Habit tracker template a link takes the text's weight (400), its ink at 70% opacity, underlined (`linkColor: neutral`, `linkUnderline: always`).
 - `input.focus` is left out: the login field draws a 1px inset ring plus a 1px outer ring in blue, against the specimen's 2px border; the two sides draw it in different places.
 
+Signed-in (`https://app.notion.com/`, `signedIn` in `targets.json`): the Settings dialog, its Appearance select, the Share invite field, the ⌘P palette and the date picker on a scratch page's `@tomorrow` mention. Theme: Settings › Preferences › Appearance, restored after. Its selectors are unverified until the first signed-in run.
+
 Not measured (needs the signed-in app): in-app fields and selects, dialogs (radius, scrim, padding), the date picker, the ⌘P backdrop in the app, Settings segmented controls and the in-app secondary button size.
