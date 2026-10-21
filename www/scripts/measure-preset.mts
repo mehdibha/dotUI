@@ -302,6 +302,8 @@ async function shoot(page: Page, part: string, mode: Mode) {
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
     clip: { x, y, width: box.width + 32, height: box.height + 32 },
+    // Capturing beyond the viewport resizes it, which closes hover overlays.
+    captureBeyondViewport: false,
   })
 }
 
