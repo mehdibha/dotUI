@@ -2,28 +2,21 @@
   "https://www.duolingo.com/log-in": {
     "parts": {
       "button.secondary": {
-        "selector": "[data-test=login-with-apple]",
-        "skip": ["fontFamily"]
+        "selector": "[data-test=login-with-apple]"
       },
       "input": {
         "selector": "div:has(> [data-test=email-input])",
         "ink": "input",
-        "skip": ["fontFamily", "paddingInline"]
+        "skip": ["paddingInline"]
       },
       "input.focus": {
         "selector": "div:has(> [data-test=email-input])",
         "ink": "input",
-        "before": [
-          {
-            "click": "[data-test=email-input]"
-          }
-        ],
-        "skip": ["fontFamily", "paddingInline"]
+        "focus": true
       },
       "heading.3": {
         "selector": "h1",
-        "text": "Log in",
-        "skip": ["fontFamily", "height", "borderColor"]
+        "text": "Log in"
       }
     }
   },
@@ -32,12 +25,11 @@
     "parts": {
       "link": {
         "selector": "a",
-        "text": "research shows that it works",
-        "skip": ["fontFamily", "fontSize", "height", "borderColor"]
+        "text": "research shows that it works"
       },
       "text.muted": {
         "selector": "p",
-        "skip": ["fontFamily", "height", "borderColor", "fontSize"]
+        "skip": ["fontSize"]
       }
     }
   },
@@ -46,51 +38,213 @@
     "parts": {
       "card": {
         "selector": "[data-test~=language-card]",
-        "skip": ["fontFamily", "fontSize", "height", "paddingInline", "color"]
+        "skip": ["color"]
       }
     }
   },
-  "https://www.duolingo.com/lesson (guest: /register, Spanish, Continue through onboarding; first challenge)": {
-    "signedIn": true,
+  "https://www.duolingo.com/register#lesson": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      }
+    ],
     "parts": {
       "page": {
         "selector": "[data-test=challenge-header]",
         "surface": true,
-        "skip": ["fontFamily", "height", "borderColor"]
+        "skip": ["fontFamily"]
       },
       "heading.2": {
-        "selector": "[data-test=challenge-header]",
-        "skip": ["fontFamily", "height", "borderColor"]
+        "selector": "[data-test=challenge-header]"
       },
       "kbd": {
         "selector": "[data-test=challenge-choice] > div:nth-child(2) > span:last-child",
         "nth": 1,
-        "skip": ["fontFamily", "paddingInline"]
+        "skip": ["paddingInline"]
+      },
+      "progress": {
+        "selector": "[role=progressbar] > div"
       }
     }
   },
-  "https://www.duolingo.com/lesson (guest, a wrong tile selected, before Check)": {
-    "signedIn": true,
+  "https://www.duolingo.com/register#check": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      },
+      {
+        "click": "::-p-xpath(//*[@data-test=\"challenge-choice\"][not(contains(., \"gato\"))])"
+      }
+    ],
     "parts": {
       "button.primary": {
-        "selector": "[data-test=player-next]",
-        "skip": ["fontFamily", "borderColor"]
+        "selector": "[data-test=player-next]"
       }
     }
   },
-  "https://www.duolingo.com/lesson (guest, after Check on the wrong tile: the hearts modal)": {
-    "signedIn": true,
+  "https://www.duolingo.com/register#hearts": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      },
+      {
+        "click": "::-p-xpath(//*[@data-test=\"challenge-choice\"][not(contains(., \"gato\"))])"
+      },
+      {
+        "click": "[data-test=player-next]"
+      },
+      {
+        "wait": "::-p-text(Each mistake costs 1 heart!)"
+      }
+    ],
     "parts": {
       "dialog": {
         "text": "Each mistake costs 1 heart!",
-        "surface": true,
-        "skip": [
-          "fontFamily",
-          "fontSize",
-          "height",
-          "borderColor",
-          "paddingInline"
-        ]
+        "surface": true
       }
     }
   }
