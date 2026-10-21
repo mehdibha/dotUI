@@ -3,40 +3,19 @@
     "mode": "light",
     "parts": {
       "page": {
-        "selector": "body",
-        "only": ["backgroundColor", "color", "fontFamily"]
+        "selector": "body"
       },
       "button.primary": {
         "within": "[data-part=button-primary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "boxShadow",
-          "edge"
-        ]
+        "skip": ["fontFamily", "letterSpacing"]
       },
       "button.secondary": {
         "within": "[data-part=button-secondary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "boxShadow",
-          "edge"
-        ]
+        "skip": ["fontFamily", "letterSpacing"]
       },
       "button.quiet": {
         "within": "[data-part=button-quiet]",
@@ -61,16 +40,7 @@
       "kbd": {
         "within": "[data-part=kbd-small]",
         "selector": ".Polaris-KeyboardKey",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
       }
     }
   },
@@ -94,7 +64,8 @@
       },
       "input.focus": {
         "selector": "[data-specimen-focus]",
-        "only": ["backgroundColor", "edge", "ring"]
+        "only": ["backgroundColor", "edge", "ring"],
+        "focus": true
       },
       "select.trigger": {
         "within": "[data-part=select]",
@@ -118,13 +89,12 @@
     "parts": {
       "checkbox": {
         "within": "[data-part=checkbox]",
-        "selector": ".Polaris-Checkbox__Backdrop",
-        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+        "selector": ".Polaris-Checkbox__Backdrop"
       },
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "only": ["backgroundColor", "borderRadius", "height"]
+        "skip": ["edge"]
       }
     }
   },
@@ -149,55 +119,29 @@
         "within": ".Polaris-Tabs__Wrapper",
         "selector": ".Polaris-Tabs__Tab--active",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
       },
       "link": {
         "within": "[data-part=link]",
-        "selector": "a",
-        "only": ["color", "fontWeight"]
+        "selector": "a"
       },
       "shell": {
         "selector": ".Polaris-Navigation",
-        "only": ["backgroundColor"]
+        "skip": ["edge"]
       },
       "panel": {
         "selector": ".Polaris-Frame",
-        "only": ["backgroundColor"]
+        "skip": ["edge"]
       },
       "nav.item": {
         "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["paddingInline"]
       },
       "nav.item.active": {
         "selector": ".Polaris-Navigation__ItemInnerWrapper--selected",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["paddingInline"]
       }
     }
   },
@@ -207,26 +151,17 @@
       "menu": {
         "selector": ".Polaris-Popover__ContentContainer",
         "surface": true,
-        "only": ["backgroundColor", "borderRadius", "edge"]
+        "skip": ["color", "boxShadow"]
       },
       "menu.item": {
         "selector": ".Polaris-ActionList__Item",
         "ink": ".Polaris-Text--root",
-        "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
+        "skip": ["backgroundColor", "paddingInline"]
       },
       "tooltip": {
         "selector": ".Polaris-Tooltip-TooltipOverlay__Content",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["boxShadow"]
       }
     }
   },
@@ -235,7 +170,7 @@
     "parts": {
       "dialog": {
         "selector": ".Polaris-Modal-Dialog__Modal",
-        "only": ["backgroundColor", "borderRadius", "edge"]
+        "skip": ["color", "boxShadow"]
       }
     }
   },
@@ -246,7 +181,7 @@
         "within": "[data-part=card]",
         "selector": ".Polaris-ShadowBevel",
         "box": "::before",
-        "only": ["borderRadius", "boxShadow", "edge"]
+        "skip": ["backgroundColor", "color"]
       }
     }
   },
@@ -257,16 +192,7 @@
         "within": "[data-part=badge]",
         "selector": ".Polaris-Badge",
         "ink": ".Polaris-Text--root",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
+        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
       }
     }
   },
@@ -276,27 +202,27 @@
       "heading.1": {
         "within": "[data-part=heading-3xl]",
         "selector": "h1",
-        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
+        "skip": ["fontFamily"]
       },
       "heading.2": {
         "within": "[data-part=heading-2xl]",
         "selector": "h1",
-        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
+        "skip": ["fontFamily"]
       },
       "heading.3": {
         "within": "[data-part=heading-xl]",
         "selector": "h2",
-        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
+        "skip": ["fontFamily"]
       },
       "heading.4": {
         "within": "[data-part=heading-lg]",
         "selector": "h3",
-        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
+        "skip": ["fontFamily"]
       },
       "text": {
         "within": "[data-part=text]",
         "selector": "p",
-        "only": ["color", "fontWeight"]
+        "skip": ["fontFamily", "fontSize", "letterSpacing"]
       },
       "text.muted": {
         "within": "[data-part=text-muted]",
@@ -310,7 +236,7 @@
     "parts": {
       "page": {
         "selector": "body",
-        "only": ["backgroundColor", "color"]
+        "skip": ["fontFamily"]
       },
       "button.primary": {
         "within": "[data-part=button-primary]",
@@ -338,7 +264,7 @@
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "only": ["backgroundColor"]
+        "skip": ["borderRadius", "height", "edge"]
       }
     }
   },
@@ -426,12 +352,10 @@
     "mode": "light",
     "parts": {
       "switch.on": {
-        "selector": "[data-part=switch-on] s-switch >>> input",
-        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+        "selector": "[data-part=switch-on] s-switch >>> input"
       },
       "switch.off": {
-        "selector": "[data-part=switch] s-switch >>> input",
-        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+        "selector": "[data-part=switch] s-switch >>> input"
       }
     }
   }
