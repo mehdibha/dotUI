@@ -93,7 +93,11 @@ function CopyPrompt({ frame }: { frame: number }) {
         }}
       >
         <div ref={surface} style={{ position: "absolute", left: ox, top: oy }}>
-          <ExportSurface copied={false} promptCopied={frame >= COPY_AT} refs={{ prompt }} />
+          <ExportSurface
+            copied={false}
+            promptCopied={frame >= COPY_AT}
+            refs={{ prompt }}
+          />
         </div>
         {promptBox && (
           <Cursor
@@ -162,10 +166,14 @@ export function Agent() {
                 <TextPage
                   url="dotui.org/docs/components/button.md"
                   text={BUTTON_MD}
-                  scroll={keys(frame, [
-                    [WIPE_AT + WIPE_FOR, 0],
-                    [BAR, 120],
-                  ], ease.linear)}
+                  scroll={keys(
+                    frame,
+                    [
+                      [WIPE_AT + WIPE_FOR, 0],
+                      [BAR, 120],
+                    ],
+                    ease.linear,
+                  )}
                 />
               </div>
             </>

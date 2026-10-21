@@ -12,7 +12,10 @@ import {
 import { Button } from "@/registry/ui/button"
 import ButtonPlayground from "@/registry/ui/button/demos/playground"
 import { CodeBlock, Pre } from "@/modules/docs/code-block"
-import { renderCode, type CodeTemplate } from "@/modules/docs/codegen/code-template"
+import {
+  renderCode,
+  type CodeTemplate,
+} from "@/modules/docs/codegen/code-template"
 import { highlightTsx } from "@/modules/docs/highlight"
 import { Controls } from "@/modules/docs/interactive-demo/controls"
 import type {
@@ -54,7 +57,9 @@ export function valuesAt(frame: number): ControlValues {
   const typed = Math.max(0, Math.floor((frame - TYPE_AT) / TYPE_EVERY) + 1)
   return {
     children:
-      frame < BEAT * 4 ? "Button" : TYPED.slice(0, Math.min(typed, TYPED.length)),
+      frame < BEAT * 4
+        ? "Button"
+        : TYPED.slice(0, Math.min(typed, TYPED.length)),
     variant: frame < BEAT * 2 ? "secondary" : "primary",
     size: frame < BEAT * 3 ? "md" : "lg",
     isDisabled: false,
@@ -71,18 +76,20 @@ const SWAPS = [
   [BAR * 2 + BEAT * 3, "stripe"],
   [BAR * 3, YOURS],
 ] as const
-const lookAt = (frame: number) =>
-  SWAPS.filter(([at]) => frame >= at).at(-1)![1]
+const lookAt = (frame: number) => SWAPS.filter(([at]) => frame >= at).at(-1)![1]
 
 function Code({ values }: { values: ControlValues }) {
-  return toJsxRuntime(highlightTsx(renderCode(TEMPLATE, values, { expanded: false })), {
-    Fragment,
-    jsx,
-    jsxs,
-    components: {
-      pre: (props: React.ComponentProps<"pre">) => <Pre {...props} />,
+  return toJsxRuntime(
+    highlightTsx(renderCode(TEMPLATE, values, { expanded: false })),
+    {
+      Fragment,
+      jsx,
+      jsxs,
+      components: {
+        pre: (props: React.ComponentProps<"pre">) => <Pre {...props} />,
+      },
     },
-  })
+  )
 }
 
 /** The Button docs page's head and its interactive demo, open. */
@@ -225,7 +232,9 @@ export function Demos() {
 
   const at = (i: number) => {
     const b = targets?.controls[i]
-    return b ? ([ox + b.x + b.w * 0.6, oy + b.y + b.h / 2] as const) : ([0, 0] as const)
+    return b
+      ? ([ox + b.x + b.w * 0.6, oy + b.y + b.h / 2] as const)
+      : ([0, 0] as const)
   }
   const path: CursorKey[] = targets
     ? [

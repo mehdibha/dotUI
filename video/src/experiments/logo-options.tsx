@@ -349,7 +349,9 @@ function DotRefined({ frame }: { frame: number }) {
   const x1 = lerp(86, 100, grow)
   // Opens as soon as the square has room around it, never touching an edge.
   const hole =
-    frame < 30 ? 0 : Math.min(11, x1 - 75 - 4) * progress(frame, 33, 24, ease.out)
+    frame < 30
+      ? 0
+      : Math.min(11, x1 - 75 - 4) * progress(frame, 33, 24, ease.out)
 
   const move = progress(frame, 90, 60, glide)
   const x = lerp(W / 2 - 75 * K, LEFT, move)
@@ -398,13 +400,7 @@ export const OPTIONS = [
   ["dot-refined", DotRefined],
 ] as const
 
-export function LogoOption({
-  index,
-  frame,
-}: {
-  index: number
-  frame: number
-}) {
+export function LogoOption({ index, frame }: { index: number; frame: number }) {
   const Option = OPTIONS[index]![1]
   return (
     <Theme mode="dark">

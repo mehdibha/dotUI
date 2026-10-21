@@ -265,7 +265,12 @@ export function Logo({ frame }: { frame: number }) {
                     key={i}
                     style={{
                       transform: `translateX(${lerp(-56, 0, p)}px)`,
-                      opacity: progress(frame, SLIDE + 4 + i * 4, 18, ease.soft),
+                      opacity: progress(
+                        frame,
+                        SLIDE + 4 + i * 4,
+                        18,
+                        ease.soft,
+                      ),
                     }}
                   >
                     <path d={d} fill="url(#logo-ink)" />
@@ -280,7 +285,11 @@ export function Logo({ frame }: { frame: number }) {
           </svg>
           <div
             className="absolute flex w-full justify-center font-mono text-fg-muted"
-            style={{ top: CY + SIZE / 2 + 30, fontSize: 22, letterSpacing: "0.02em" }}
+            style={{
+              top: CY + SIZE / 2 + 30,
+              fontSize: 22,
+              letterSpacing: "0.02em",
+            }}
           >
             {address.split("").map((ch, i) => {
               const p = progress(frame, ADDRESS + i * 2, 16, ease.out)

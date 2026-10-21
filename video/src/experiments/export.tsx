@@ -134,7 +134,7 @@ export function ExportSurface({
             </Button>
           </div>
           <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-            <code className="min-w-0 flex-1 overflow-hidden font-mono text-xs whitespace-nowrap text-fg [mask-image:linear-gradient(to_right,black_85%,transparent)]">
+            <code className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,black_85%,transparent)] font-mono text-xs whitespace-nowrap text-fg">
               {command}
             </code>
             <Button variant="quiet" size="xs" isIconOnly aria-label="Copy">
@@ -243,8 +243,7 @@ export function Export() {
   const cmd = boxes ? boxes.copy.y - 24 : s.h * 0.6
   const fy = oy + (1 - down) * cmd + down * (b.y + b.h / 2)
   const zoom =
-    (1.35 + down * 0.25) *
-    (1 + punches(frame, [COPY_AT, OPEN_AT], 0.012))
+    (1.35 + down * 0.25) * (1 + punches(frame, [COPY_AT, OPEN_AT], 0.012))
 
   const builder = (i: number) =>
     clamp01((frame - (BUILDERS_AT + i * BUILDER_EVERY)) / 6)

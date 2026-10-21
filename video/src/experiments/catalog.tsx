@@ -1,8 +1,8 @@
 import { AbsoluteFill, Easing, useCurrentFrame } from "remotion"
 
 import { cn } from "@/registry/lib/utils"
-import { componentDemos } from "@/modules/docs/components-list/demos"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { componentDemos } from "@/modules/docs/components-list/demos"
 
 import { ease, keys, lerp, progress } from "../lib/motion"
 import { preset, Theme, WarmIcons } from "../lib/theme"
