@@ -1,0 +1,115 @@
+{
+  "https://www.radix-ui.com/themes/docs/components/button": {
+    "page": {
+      "selector": "[data-is-root-theme=true]"
+    },
+    "button.primary": {
+      "selector": ".rt-Button.rt-r-size-2.rt-variant-solid"
+    },
+    "button.quiet": {
+      "selector": ".rt-Button.rt-r-size-2.rt-variant-ghost"
+    },
+    "button.focus": {
+      "selector": ".rt-Button:focus-visible"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/text-field": {
+    "input": {
+      "selector": ".rt-TextFieldRoot.rt-r-size-2.rt-variant-surface"
+    },
+    "input.focus": {
+      "selector": ".rt-TextFieldRoot:focus-within"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/select": {
+    "select.trigger": {
+      "selector": ".rt-SelectTrigger.rt-r-size-2.rt-variant-surface"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/checkbox": {
+    "checkbox": {
+      "selector": ".rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]"
+    },
+    "checkbox.checked": {
+      "selector": ".rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=checked]"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/switch": {
+    "switch.on": {
+      "selector": ".rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=checked]"
+    },
+    "switch.off": {
+      "selector": ".rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/tabs": {
+    "tab": {
+      "selector": ".rt-TabsTrigger[data-state=inactive]"
+    },
+    "tab.selected": {
+      "selector": ".rt-TabsTrigger[data-state=active]"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/link": {
+    "link": {
+      "text": "Sign up"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/dropdown-menu": {
+    "menu": {
+      "selector": ".rt-DropdownMenuContent"
+    },
+    "menu.item": {
+      "selector": ".rt-DropdownMenuItem"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/tooltip": {
+    "tooltip": {
+      "selector": ".rt-TooltipContent"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/dialog": {
+    "dialog": {
+      "selector": ".rt-DialogContent"
+    },
+    "button.secondary": {
+      "within": ".rt-DialogContent",
+      "text": "Cancel"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/card": {
+    "card": {
+      "selector": ".rt-Card.rt-variant-surface"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/badge": {
+    "badge": {
+      "selector": ".rt-Badge.rt-r-size-1.rt-variant-soft",
+      "nth": 3
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/kbd": {
+    "kbd": {
+      "selector": ".radix-themes-default-fonts .rt-Kbd"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/heading": {
+    "heading.1": {
+      "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-8"
+    },
+    "heading.2": {
+      "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-7"
+    },
+    "heading.3": {
+      "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-6"
+    },
+    "heading.4": {
+      "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-5"
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/text": {
+    "text": {
+      "selector": ".radix-themes-default-fonts .rt-Text.rt-r-size-3"
+    }
+  }
+}
