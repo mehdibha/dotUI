@@ -22,6 +22,14 @@ describe("compareMeasures", () => {
     expect(row("9999px", "3.40282e+38px")).toMatchObject({ ok: true })
   })
 
+  it("compares a pill against a rounded box at half its height", () => {
+    const [radius] = compareMeasures(
+      { badge: { borderRadius: "8px", height: "20px" } },
+      { badge: { borderRadius: "3.35544e+07px", height: "20px" } },
+    )
+    expect(radius).toMatchObject({ ok: false, delta: "+2px", distance: 2 })
+  })
+
   it("treats a radius past half the height as full", () => {
     const [radius] = compareMeasures(
       { switch: { borderRadius: "72px", height: "20px" } },
@@ -101,6 +109,22 @@ describe("compareMeasures", () => {
       row("ui-sans-serif, sans-serif", "-apple-system, Segoe UI", "fontFamily")
         .ok,
     ).toBe(true)
+  })
+
+  it("passes a font the pack names as the preset's stand-in", () => {
+    const fonts = { "din-round": "Nunito" }
+    const [standIn] = compareMeasures(
+      { text: { fontFamily: '"din-round", sans-serif' } },
+      { text: { fontFamily: "Nunito Variable, sans-serif" } },
+      fonts,
+    )
+    expect(standIn).toMatchObject({ ok: true, delta: "stand-in" })
+    const [other] = compareMeasures(
+      { text: { fontFamily: "din-round" } },
+      { text: { fontFamily: "Inter" } },
+      fonts,
+    )
+    expect(other?.ok).toBe(false)
   })
 
   it("tolerates in-between variable weights", () => {

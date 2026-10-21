@@ -153,19 +153,27 @@ function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
 const full = (radius: number, height: string | undefined) =>
   radius >= PILL ||
   (height !== undefined && radius >= Number.parseFloat(height) / 2 - 0.5)
+/** A radius as it draws: no rounder than half the box. */
+const drawn = (radius: number, height: string | undefined) =>
+  Math.min(radius, height === undefined ? PILL : Number.parseFloat(height) / 2)
 
 function diff(
   prop: Prop,
   reference: string,
   preset: string,
   parts: { reference: Measure; preset: Measure },
+  fonts: Record<string, string>,
 ) {
   if (COLORS.has(prop)) return colorDelta(reference, preset)
   if (prop === "edge" || prop === "ring")
     return lineDelta(prop, reference, preset)
   if (prop === "fontFamily") {
-    const ok = firstFamily(reference) === firstFamily(preset)
-    return { delta: "", ok }
+    const [a, b] = [firstFamily(reference), firstFamily(preset)]
+    if (a === b) return { delta: "", ok: true }
+    const standIn = Object.entries(fonts).some(
+      ([from, to]) => firstFamily(from) === a && firstFamily(to) === b,
+    )
+    return { delta: standIn ? "stand-in" : "", ok: standIn }
   }
   if (prop === "boxShadow") {
     const [a, b] = [shadowLayers(reference), shadowLayers(preset)]
@@ -175,12 +183,17 @@ function diff(
     value === "normal" ? 0 : Number.parseFloat(value)
   const [a, b] = [number(reference), number(preset)]
   if (Number.isNaN(a) || Number.isNaN(b)) return { delta: "", ok: false }
-  if (
-    prop === "borderRadius" &&
-    full(a, parts.reference.height) &&
-    full(b, parts.preset.height)
-  )
-    return { delta: "", distance: 0, ok: true }
+  if (prop === "borderRadius") {
+    if (full(a, parts.reference.height) && full(b, parts.preset.height))
+      return { delta: "", distance: 0, ok: true }
+    const delta =
+      drawn(b, parts.preset.height) - drawn(a, parts.reference.height)
+    return {
+      delta: `${delta > 0 ? "+" : ""}${Math.round(delta * 10) / 10}px`,
+      distance: Math.abs(delta),
+      ok: Math.abs(delta) <= (PX_TOLERANCE.borderRadius ?? 0),
+    }
+  }
   const delta = b - a
   const tolerance =
     prop === "fontWeight" ? WEIGHT_TOLERANCE : (PX_TOLERANCE[prop] ?? 0)
@@ -192,8 +205,13 @@ function diff(
   }
 }
 
-/** Every property the reference measured, against the preset's value. */
-export function compareMeasures(reference: Measures, preset: Measures): Row[] {
+/** Every property the reference measured, against the preset's value.
+ *  `fonts` maps reference families to the preset's stand-ins for them. */
+export function compareMeasures(
+  reference: Measures,
+  preset: Measures,
+  fonts: Record<string, string> = {},
+): Row[] {
   const rows: Row[] = []
   for (const [part, measure] of Object.entries(reference)) {
     if (!measure) continue
@@ -217,10 +235,13 @@ export function compareMeasures(reference: Measures, preset: Measures): Row[] {
       }
       let result: Pick<Row, "delta" | "distance" | "ok">
       try {
-        result = diff(prop, value, ours, {
-          reference: measure,
-          preset: specimen,
-        })
+        result = diff(
+          prop,
+          value,
+          ours,
+          { reference: measure, preset: specimen },
+          fonts,
+        )
       } catch {
         // A hand-written value the parsers don't read (a token table's).
         result = { delta: "unparsable", ok: false }
