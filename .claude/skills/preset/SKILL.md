@@ -35,7 +35,7 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 - Sort every property that is off into one of five buckets:
   1. **Preset value:** fix it, with the measured value in a comment.
   2. **Stand-in:** the closest value, with a `// Stand-in: …` comment.
-  3. **Missing axis:** a comment on the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020), one look per comment (`Look | Systems that need it | Stand-in today`, with measured values), or naming an existing row to add your system to it. Read the table in the issue body first, and the color engine ledger it links to; comments without a 👍 aren't folded in yet (page them with `per_page=100`). Never edit the issue body: other preset threads write at the same time.
+  3. **Missing axis:** a comment on the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020), one look per comment (`Look | Systems that need it | Stand-in today`, with measured values), or naming an existing row to add your system to it. Read the table in the issue body first, and the ledgers it links to (controls, color engine); comments without a 👍 aren't folded in yet (page them with `per_page=100`). Never edit the issue body: other preset threads write at the same time.
   4. **Component bug:** its own issue.
   5. **Color engine:** a ledger comment starting `Color engine:`, folded into the color engine ledger; the engine is queued for a rewrite, so don't work around it.
 - Never add a token, axis, variant or override in this work, and don't touch other presets or component styles.
