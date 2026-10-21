@@ -115,8 +115,9 @@ export const radix = definePreset({
     // 6px rounded squares in soft accent.
     avatarShape: "rounded",
     avatarFallback: "accent",
-    // Keycaps at 0.35em corners (4px at 12px); ours read the small control
-    // rung, 2px here.
+    // Keycaps at 0.35em corners (4px at 12px) in full ink, raised by inset
+    // shadows on a 0.6px ring. Stand-in: Keycap draws a 2px bottom edge in
+    // muted ink, at the small control rung (2px here).
     kbdTreatment: "keycap",
   },
 })

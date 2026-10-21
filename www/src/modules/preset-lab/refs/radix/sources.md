@@ -26,27 +26,24 @@ Sizes at the default size 2: buttons, fields, selects and menu rows 32px; tabs 4
 
 ## Measured pages
 
-The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts; each part is the page's first example at the default size and variant.
+The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts, scoped to the demo previews (`.radix-themes-default-fonts`) so they skip the docs chrome; each part is the page's first example at the default size and variant. `pnpm --filter www presets:measure --pack radix` re-measures them all into `tokens.json` (probe 44f1c5f).
 
-The probe reads a part as-is, and four parts need a step first, so these were measured with a scratch script around the same probe:
+- `button.focus` tabs to the solid button. The dropdown menu opens from its first button ("Options"), the dialog from "Edit profile", and the tooltip shows on hovering the first icon button.
+- `button.secondary` is the dialog's "Cancel", Radix's `variant="soft" color="gray"`.
+- `badge` is the gray soft badge, `badge.accent` the indigo one, both size 1. `kbd` is the standalone keycap.
 
-- `dropdown-menu`: click the first button below the header ("Options"), then measure `menu` and `menu.item`.
-- `dialog`: click "Edit profile", then measure `dialog` and its "Cancel" (`button.secondary`, Radix's `variant="soft" color="gray"`).
-- `tooltip`: hover the first example's trigger.
-- `button` and `text-field`: focus the second example control, so `button.focus` and `input.focus` read a focused one while the first stays at rest.
+Where the two sides draw a property in different places, the part skips it (`skip` in `targets.json`):
 
-How the values were normalized into `tokens.json`:
+- Radix draws every edge as an inset ring, so `borderColor` and `borderWidth` are skipped throughout, and `boxShadow` where the only shadow is that ring (fields, checkbox, switch). `edge` carries them.
+- Checkbox, switch and card boxes are read from `::before` (`box`). The card's `::before` sits 1px inside its 8px corners, so it reads 7px. The switch's on track is a gradient stop over gray-a3, so `switch.on` skips its fill: per `switch.css` it is accent-9, #3e63dd in both modes.
+- Tabs read their label (`.rt-TabsTriggerInner`), which turns 500 when active while the trigger stays 400. The trigger's radius is skipped, since Radix rounds only the label's hover fill.
+- Menu, dialog and card skip content heights, ink and inline padding. Radix pads the menu inside its viewport (8px), and the dialog (24px at size 3) and card (12px) on boxes dotUI pads elsewhere. The menu also skips `ring`: its content takes focus on open, so its edge ring reads as a focus ring.
+- The text field skips `paddingInline`: the root pads 1px and the input slot 7px, an 8px text inset in all.
+- `button.focus` skips `boxShadow`, since dotUI draws its ring there and Radix in an outline. `ring` compares both.
+- `page` is the demo preview, its fill, ink and type only. The docs site sets its own font (Untitled Sans) on its chrome.
+- Type parts keep their ink. `text` and `text.muted` skip heights (the paragraphs wrap), and `link` skips its size, inherited from the text around it.
 
-- Radix paints with alpha colors (slate-a7, black 25%…). Each is composited over the color under the part, since the specimens report opaque colors.
-- Checkbox and switch boxes are drawn on `::before`, the card's fill on `::before`: their background, radius and height come from there. The switch's on-track is a gradient stop (`--accent-track`) over slate-a3.
-- Ring layers that draw an edge are left out of `boxShadow`; `edge` has them.
-- `input.focus`: a 2px indigo-8 outline at -1px offset, covering the 1px edge. Only the ring is recorded, since the edge under it doesn't show.
-- `tab.selected` weight is its label's: the trigger stays 400 and its inner label turns 500 when active (`tabs.css`).
-- `page` font is left out: the docs site sets its own (Untitled Sans) on the page, while every component uses Themes' system stack.
-- `button.quiet` is the default ghost: accent text, regular weight, trimmed to 28px with negative margins.
-- `badge` keeps its shape and type only: the docs badges are accent or named colors, the specimen's first badge is neutral.
-- `kbd` keeps its shape and size only: the specimen's is a shortcut in a command row, stripped to text, while the docs show a standalone keycap. Radix menus show shortcuts as bare text too.
-- Type parts come from the demo previews (`.radix-themes-default-fonts`), not the docs' own headings.
+`input.focus` is kept by hand from `text-field.css`, since the probe reads a ring on the focused element and Radix draws it on the root through `:focus-within`: a 2px outline on `--focus-8` (#8da4ef / #435db1) at -1px, covering the 1px edge.
 
 ## Not in Radix Themes
 
