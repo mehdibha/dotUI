@@ -53,6 +53,8 @@
       "menu.item": {
         "selector": "[role=listbox] [role=option]",
         "nth": 1,
+        "box": "::before",
+        "ink": ":scope > span",
         "skip": ["paddingInline"],
         "before": [
           {
@@ -103,16 +105,17 @@
     "signedIn": true,
     "parts": {
       "nav.item": {
-        "selector": "a[href*=\"/my-issues\"]",
-        "ink": "span"
+        "selector": "a[href*=\"/my-issues\"] > span"
       },
       "nav.item.active": {
-        "selector": "a[data-active=true]",
-        "ink": "span"
+        "selector": "a[data-active=true] > span",
+        "ink": ":scope > div > span"
       },
       "tooltip": {
         "text": "Create new issue",
         "surface": true,
+        "ink": ":scope > div > div",
+        "skip": ["paddingInline"],
         "before": [
           {
             "hover": "[aria-label=\"Create new issue\"]"
@@ -139,6 +142,8 @@
       },
       "command.item": {
         "selector": "[role=listbox] [role=option][data-focused=false]",
+        "box": "::before",
+        "ink": ":scope > div > div > span",
         "before": [
           {
             "press": "Meta+k"
