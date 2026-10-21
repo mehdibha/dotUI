@@ -30,6 +30,9 @@ export const supabase = definePreset({
     monoFont: "Source Code Pro",
     // Manrope 600 at -0.025em.
     titleStyle: "tight",
+    // Fields, labels and tabs set 13px; buttons, menu rows and tooltips set
+    // 12px (stand-in: one UI size).
+    uiTextSize: "13",
     sectionLabels: "mono-caps",
 
     // Icons
@@ -37,15 +40,15 @@ export const supabase = definePreset({
     iconStroke: 1.5,
 
     // Shape
-    // Tailwind's radii: 6px controls, 4px menu rows, 8px cards and dialogs.
-    radiusPx: 8,
+    // The dashboard scales Tailwind's radii by 4/3: 8px controls and nav rows,
+    // 10.67px cards and dialogs.
+    radiusPx: 10.5,
     roleSurface: "md",
     rolePanel: "lg",
     roleCard: "lg",
 
     // Space
-    // 26px buttons, 34px fields. Compact's 12px text matches buttons, menu
-    // rows and tooltips; fields and tabs set 13px (stand-in: one UI size).
+    // 26px buttons, 34px fields.
     density: "compact",
     inputHeight: "step",
 
@@ -90,8 +93,9 @@ export const supabase = definePreset({
     dialogSections: "divided",
     tooltipStyle: "surface",
     tabStyle: "line",
+    // Tabs keep their weight; the product menu's current row goes semibold.
     navWeight: "regular",
-    navItemWeight: "regular-medium",
+    navItemWeight: "regular-semibold",
     linkUnderline: "always",
     linkColor: "neutral",
     alertStyle: "soft-outline",
