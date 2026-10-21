@@ -12,8 +12,10 @@ import type { SheetName } from "./sheets"
 export interface Target {
   selector?: string
   text?: string
-  /** Search only inside the first match of this selector. */
+  /** Search only inside one match of this selector: the first, or the
+   *  `withinNth` (from 0), for a page with several demo blocks. */
   within?: string
+  withinNth?: number
   /** Which match, from 0. */
   nth?: number
   surface?: boolean
@@ -24,11 +26,13 @@ export interface Target {
   /** Read color and type from this descendant (a nav row's label span). */
   ink?: string
   /** A focus part: focus it (or the first control inside it) from the
-   *  keyboard before measuring (`--pack`), and read its `ring`. */
+   *  keyboard before measuring (`--pack`), and read its `ring`. A required
+   *  field turns :invalid when focused empty in some systems: measure one
+   *  that isn't required. */
   focus?: boolean
-  /** Steps run before measuring (`--pack`), undone with Escape after: open
-   *  a menu, hover a tooltip trigger. Puppeteer selectors, so
-   *  `::-p-text(Options)` matches by text. */
+  /** Steps run before measuring (`--pack`): open a menu, hover a tooltip
+   *  trigger. The page reloads before the next part with steps. Puppeteer
+   *  selectors, so `::-p-text(Options)` matches by text. */
   before?: Step[]
   /** The props this page writes to `tokens.json` for the part, in place of
    *  the part's own list in SPECIMEN_TARGETS. */
@@ -38,7 +42,14 @@ export interface Target {
   skip?: Prop[]
 }
 
-export type Step = { click: string } | { hover: string } | { press: string }
+/** Each step but `press` first waits up to 15s for its selector to show.
+ *  `focus` focuses without a pointer, which opens React Aria tooltips. */
+export type Step =
+  | { click: string }
+  | { hover: string }
+  | { focus: string }
+  | { press: string }
+  | { wait: string }
 
 export const PROPS = [
   "backgroundColor",
@@ -66,6 +77,10 @@ export interface ReferenceTokens {
   light?: Measures
   dark?: Measures
   probe?: string
+  /** The family the preset stands in for each reference family it can't
+   *  ship (proprietary, or renamed like GeistSans), lowercase:
+   *  `{ "din-round": "nunito" }`. Those rows read as stand-ins, not off. */
+  fonts?: Record<string, string>
 }
 
 /** A reference pack's `targets.json`: its pages by URL. */
@@ -80,6 +95,15 @@ export interface Page {
   /** The localStorage key the site reads its theme from (next-themes'
    *  "theme"): `--pack` sets it to "light" or "dark" before load. */
   storage?: string
+  /** Steps that walk to the page's state after each load, before any part
+   *  is read (a lesson reached through onboarding). */
+  steps?: Step[]
+  /** How long to wait after load before the steps, in ms (1500 by default):
+   *  longer for an app that ignores clicks until it hydrates. */
+  settle?: number
+  /** The viewport width, 1440 by default: pin it where the product's type
+   *  scale changes at a breakpoint. */
+  width?: number
   /** Measured in a signed-in tab with `--snippet`, then `--merge`d; `--pack`
    *  skips it. */
   signedIn?: boolean
@@ -90,8 +114,9 @@ export interface Page {
    string (see `snippet`). */
 function probe(
   targets: Record<string, Target>,
-  props: readonly string[],
+  props: Record<string, readonly string[]>,
   focus: boolean,
+  mark: boolean,
 ): Measures {
   const CONTROL =
     "button,a,input,select,textarea,[role=button],[role=tab],[role=menuitem],[role=option],[role=checkbox],[role=switch],[role=radio]"
@@ -173,17 +198,26 @@ function probe(
         : []
     })
   /* The hairline that outlines a box, wherever it is drawn: a border, a ring
-     up to 1.5px, or either on ::before or ::after. A border on some sides
-     only names them ("1px <color> bottom"). */
-  /* `under` is what the box sits on: its parent, or the element for a
-     pseudo-element. Borders and inset rings show over the box's own fill. */
-  const edgeOf = (style: CSSStyleDeclaration, under: Element | null) => {
+     up to 1.5px, an outline on or inside the edge (not on focus parts, where
+     outlines are the ring), or any of them on ::before or ::after. A border
+     on some sides only names them ("1px <color> bottom"). `under` is what
+     the box sits on: its parent, or the element for a pseudo-element.
+     Borders and inset lines show over the box's own fill, and a line in the
+     fill's color doesn't show (Sail rings solid buttons in their fill). */
+  const edgeOf = (
+    style: CSSStyleDeclaration,
+    under: Element | null,
+    outlines = true,
+  ) => {
     const fill = style.backgroundColor
+    const shown = seen(fill, under)
     const sides = (["top", "right", "bottom", "left"] as const).filter(
       (side) =>
         style.getPropertyValue(`border-${side}-style`) !== "none" &&
         Number.parseFloat(style.getPropertyValue(`border-${side}-width`)) > 0 &&
-        alpha(style.getPropertyValue(`border-${side}-color`)) > 0,
+        alpha(style.getPropertyValue(`border-${side}-color`)) > 0 &&
+        seen(style.getPropertyValue(`border-${side}-color`), under, fill) !==
+          shown,
     )
     const [first] = sides
     if (first) {
@@ -193,18 +227,39 @@ function probe(
       const line = `${width}px ${seen(style.getPropertyValue(`border-${first}-color`), under, fill)}`
       return sides.length === 4 ? line : `${line} ${sides.join("+")}`
     }
-    const hairline = rings(style).find(
+    // Rings of one width stack: Supabase draws two faint inset ones.
+    const [hairline] = rings(style).filter(
       (ring) => ring.spread > 0 && ring.spread <= 1.5,
     )
-    return hairline
-      ? `${hairline.spread}px ${seen(hairline.color, under, hairline.inset ? fill : undefined)}`
+    const color = rings(style)
+      .filter(
+        (ring) =>
+          ring.spread === hairline?.spread && ring.inset === hairline.inset,
+      )
+      .reduceRight<string | undefined>(
+        (below, ring) =>
+          seen(ring.color, under, below ?? (ring.inset ? fill : undefined)),
+        undefined,
+      )
+    if (hairline && color !== shown) return `${hairline.spread}px ${color}`
+    const width = Number.parseFloat(style.outlineWidth)
+    const offset = Number.parseFloat(style.outlineOffset)
+    return outlines &&
+      style.outlineStyle !== "none" &&
+      width > 0 &&
+      offset <= 0 &&
+      alpha(style.outlineColor) > 0
+      ? `${width}px ${seen(style.outlineColor, under, offset < 0 ? fill : undefined)}`
       : null
   }
-  const edge = (el: Element) => {
+  /* A rotated or moved ::before / ::after is a mark (a check drawn as two
+     borders), not the box's line. */
+  const edge = (el: Element, outlines = true) => {
     for (const pseudo of [null, "::before", "::after"]) {
       const style = getComputedStyle(el, pseudo)
-      if (pseudo && style.content === "none") continue
-      const found = edgeOf(style, pseudo ? el : parent(el))
+      if (pseudo && (style.content === "none" || style.transform !== "none"))
+        continue
+      const found = edgeOf(style, pseudo ? el : parent(el), outlines)
       if (found) return found
     }
     return "none"
@@ -248,7 +303,7 @@ function probe(
   }
   const find = (target: Target): Element | null => {
     const root = target.within
-      ? (query(document, target.within)[0] ?? null)
+      ? (query(document, target.within)[target.withinNth ?? 0] ?? null)
       : document
     if (!root) return null
     let found = query(root, target.selector ?? "*").filter(visible)
@@ -301,18 +356,22 @@ function probe(
     return [el, pseudo ?? null]
   }
   const px = (n: number) => `${Math.round(n * 10) / 10}px`
-  const read = (el: Element, target: Target) => {
+  const read = (el: Element, target: Target, keep: readonly string[]) => {
     const style = getComputedStyle(el)
     const [box, pseudo] = boxOf(el, target)
     const paint = getComputedStyle(box, pseudo)
     const inkEl = target.ink ? (query(el, target.ink)[0] ?? el) : el
     const ink = getComputedStyle(inkEl)
-    // A focus line drawn inset and flush with the box's outer edge (Linear's
-    // outline at -1px, Carbon's 2px inset) shows as the edge changing color.
+    // A focus line drawn inside the box from its outer edge, or up to 1px
+    // further in (Linear's outline at -1px, Carbon's 2px inset), shows as
+    // the edge changing color.
     const focusRing = target.focus ? ring(el) : undefined
     const flush = focusRing && /^([\d.]+)px (.+) -([\d.]+)px$/.exec(focusRing)
+    const depth = flush ? Number(flush[3]) - Number(flush[1]) : -1
     const inset =
-      flush && flush[1] === flush[3] ? `${flush[1]}px ${flush[2]}` : null
+      flush && depth >= 0 && depth <= 1 ? `${flush[1]}px ${flush[2]}` : null
+    const outlines = !target.focus
+    const own = edge(el, outlines)
     const all: Record<string, string | undefined> = {
       backgroundColor: seen(paint.backgroundColor, pseudo ? el : parent(box)),
       color: seen(ink.color, inkEl),
@@ -329,14 +388,14 @@ function probe(
       edge:
         inset ??
         (pseudo
-          ? (edgeOf(paint, el) ?? edge(el))
-          : target.box || edge(el) === "none"
-            ? edge(box)
-            : edge(el)),
+          ? (edgeOf(paint, el, outlines) ?? own)
+          : target.box || own === "none"
+            ? edge(box, outlines)
+            : own),
       ring: inset ? "none" : focusRing,
     }
     return Object.fromEntries(
-      props
+      keep
         .filter((prop) => all[prop] !== undefined)
         .map((prop) => [prop, all[prop]]),
     )
@@ -344,26 +403,43 @@ function probe(
   return Object.fromEntries(
     Object.entries(targets).map(([part, target]) => {
       const el = find(target)
+      if (el && mark) el.setAttribute("data-probe-part", part)
       if (el && focus)
         (
           (el.matches(CONTROL)
             ? el
             : (el.querySelector(CONTROL) ?? el)) as HTMLElement
         ).focus()
-      return [part, el ? read(el, target) : null]
+      return [part, el ? read(el, target, props[part] ?? []) : null]
     }),
   )
 }
 
+/** The props a reference page writes for a part: its kind's (or the
+ *  target's `only`), less its `skip`. */
+export const ownedProps = (part: string, target: Target) =>
+  (target.only ?? SPECIMEN_TARGETS[part]?.props ?? PROPS).filter(
+    (prop) => !target.skip?.includes(prop),
+  )
+
 /** A JavaScript expression that returns the measures of `targets` on the
  *  current page: for `page.evaluate`, and for a tab driven by Claude in
- *  Chrome (its JavaScript tool). `focus` also focuses each match. The
+ *  Chrome (its JavaScript tool). `focus` also focuses each match, `mark`
+ *  tags it `data-probe-part` (for `--shots`), and `owned` reads only each
+ *  part's `ownedProps` (a reference page; specimens read every prop). The
  *  `__name` shim covers the helper tsx compiles into `probe`. */
 export const snippet = (
   targets: Record<string, Target>,
-  { focus = false } = {},
-) =>
-  `(() => { const __name = (fn) => fn; return (${probe.toString()})(${JSON.stringify(targets)}, ${JSON.stringify(PROPS)}, ${focus}) })()`
+  { focus = false, mark = false, owned = false } = {},
+) => {
+  const props = Object.fromEntries(
+    Object.entries(targets).map(([part, target]) => [
+      part,
+      owned ? ownedProps(part, target) : PROPS,
+    ]),
+  )
+  return `(() => { const __name = (fn) => fn; return (${probe.toString()})(${JSON.stringify(targets)}, ${JSON.stringify(props)}, ${focus}, ${mark}) })()`
+}
 
 const cell = (label: string) => `[data-cell="${label}"]`
 
@@ -403,6 +479,14 @@ const TOOLTIP: Prop[] = [
   "fontWeight",
 ]
 const FOCUS: Prop[] = ["edge", "ring"]
+const DAY: Prop[] = [
+  "backgroundColor",
+  "color",
+  "borderRadius",
+  "height",
+  "fontSize",
+  "fontWeight",
+]
 
 /** The parts a reference pack measures, as the specimen sheets show them, and
  *  the props each kind is compared on (`--pack` writes only those unless a
@@ -432,6 +516,84 @@ export const SPECIMEN_TARGETS: Record<
     props: CONTROL,
     target: { within: cell("button · md"), text: "Quiet" },
   },
+  "button.icon": {
+    sheet: "actions",
+    props: BOX,
+    target: { within: cell("button · md"), selector: "[aria-label=More]" },
+  },
+  toggle: {
+    sheet: "actions",
+    props: CONTROL,
+    target: {
+      within: cell("toggle · off / on / icon on"),
+      selector: "[aria-pressed=false]",
+    },
+  },
+  "toggle.on": {
+    sheet: "actions",
+    props: CONTROL,
+    target: {
+      within: cell("toggle · off / on / icon on"),
+      selector: "[data-selected]",
+    },
+  },
+  segmented: {
+    sheet: "actions",
+    props: BOX,
+    target: {
+      within: cell("segmented control"),
+      selector: "[data-segmented-control]",
+    },
+  },
+  "segmented.item": {
+    sheet: "actions",
+    props: CONTROL,
+    target: {
+      within: cell("segmented control"),
+      selector: "[data-segmented-control-item]:not([data-selected])",
+    },
+  },
+  "pagination.current": {
+    sheet: "actions",
+    props: CONTROL,
+    target: {
+      within: cell("pagination"),
+      selector: "[data-pagination-link][data-current]",
+    },
+  },
+  "segmented.selected": {
+    sheet: "actions",
+    props: CONTROL,
+    target: {
+      within: cell("segmented control"),
+      selector: "[data-segmented-control-item][data-selected]",
+    },
+  },
+  "calendar.day": {
+    sheet: "dates",
+    props: DAY,
+    target: {
+      within: cell("calendar · today, selected day"),
+      selector:
+        "[data-calendar-cell]:not([data-selected], [data-today], [data-outside-month])",
+    },
+  },
+  "calendar.today": {
+    sheet: "dates",
+    props: DAY,
+    target: {
+      within: cell("calendar · today, selected day"),
+      selector: "[data-calendar-cell][data-today]",
+    },
+  },
+  "calendar.selected": {
+    sheet: "dates",
+    props: DAY,
+    target: {
+      within: cell("calendar · today, selected day"),
+      selector: "[data-calendar-cell][data-selected]",
+    },
+  },
   input: {
     sheet: "fields",
     props: CONTROL,
@@ -447,6 +609,14 @@ export const SPECIMEN_TARGETS: Record<
     props: CONTROL,
     target: { within: cell("select · trigger"), selector: "button" },
   },
+  "field.label": {
+    sheet: "fields",
+    props: TYPE,
+    target: {
+      within: cell("text field · description"),
+      selector: "[data-label]",
+    },
+  },
   "input.focus": {
     sheet: "fields",
     props: FOCUS,
@@ -461,6 +631,16 @@ export const SPECIMEN_TARGETS: Record<
     sheet: "selection",
     props: BOX,
     target: { selector: "[data-checkbox-indicator][data-selected]" },
+  },
+  radio: {
+    sheet: "selection",
+    props: BOX,
+    target: { selector: "[data-radio-indicator]:not([data-selected])" },
+  },
+  "radio.checked": {
+    sheet: "selection",
+    props: BOX,
+    target: { selector: "[data-radio-indicator][data-selected]" },
   },
   "switch.on": {
     sheet: "selection",
@@ -493,9 +673,10 @@ export const SPECIMEN_TARGETS: Record<
     props: LINK,
     target: { within: cell("links in text"), selector: "a" },
   },
+  // The page behind the panel; its edge would be the specimen cell's.
   shell: {
     sheet: "navigation",
-    props: LAYOUT,
+    props: ["backgroundColor"],
     target: { selector: "[data-sidebar-wrapper]", surface: true },
   },
   panel: {
@@ -552,6 +733,24 @@ export const SPECIMEN_TARGETS: Record<
     sheet: "display",
     props: SURFACE,
     target: { selector: "[data-card]" },
+  },
+  alert: {
+    sheet: "feedback",
+    props: SURFACE,
+    target: { within: cell("alert"), selector: "[data-alert]" },
+  },
+  progress: {
+    sheet: "feedback",
+    props: BOX,
+    target: {
+      within: cell("progress"),
+      selector: "[role=progressbar] > div:last-child",
+    },
+  },
+  "progress.fill": {
+    sheet: "feedback",
+    props: ["backgroundColor", "borderRadius"],
+    target: { within: cell("progress"), selector: "[style*=width]" },
   },
   badge: {
     sheet: "feedback",

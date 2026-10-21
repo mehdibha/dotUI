@@ -16,6 +16,8 @@ import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
 import puppeteer from "puppeteer"
 
+import { executablePath } from "./chromium"
+
 const { values: args } = parseArgs({
   options: {
     preset: { type: "string" },
@@ -47,7 +49,6 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
       "tooltip",
       "contextmenu",
       "overlays",
-      "menus",
     ],
   ],
   ["command", ["command", "palette", "cmdk", "spotlight"]],
@@ -55,10 +56,8 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
     "feedback",
     [
       "badge",
-      "badges",
       "alert",
       "banner",
-      "banners",
       "toast",
       "progress",
       "spinner",
@@ -68,11 +67,8 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
       "notification",
       "callout",
       "tag",
-      "tags",
       "chip",
-      "chips",
       "label",
-      "labels",
     ],
   ],
   [
@@ -92,9 +88,7 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
     "fields",
     [
       "input",
-      "inputs",
       "field",
-      "fields",
       "textfield",
       "form",
       "login",
@@ -110,15 +104,12 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
   [
     "navigation",
     [
-      "tabs",
       "tab",
       "nav",
       "navigation",
       "sidebar",
-      "breadcrumbs",
       "breadcrumb",
       "link",
-      "links",
       "appshell",
       "shell",
       "app",
@@ -129,42 +120,19 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
     "display",
     [
       "card",
-      "cards",
       "table",
       "accordion",
       "avatar",
-      "avatars",
       "kbd",
       "list",
       "collection",
       "tile",
     ],
   ],
-  [
-    "actions",
-    [
-      "button",
-      "buttons",
-      "segmented",
-      "pagination",
-      "group",
-      "cta",
-      "actions",
-      "groups",
-    ],
-  ],
+  ["actions", ["button", "segmented", "pagination", "group", "cta", "actions"]],
   [
     "type",
-    [
-      "type",
-      "typography",
-      "heading",
-      "headings",
-      "text",
-      "hero",
-      "relnotes",
-      "home",
-    ],
+    ["type", "typography", "heading", "text", "hero", "relnotes", "home"],
   ],
 ]
 
@@ -176,6 +144,7 @@ function match(file: string) {
   /* The first word that names a sheet wins: `segmented-display-popover` is
      a segmented control, not a display sheet. */
   const sheet = tokens
+    .flatMap((token) => [token, token.replace(/(?<=x|ch|sh|ss)es$|s$/, "")])
     .map(
       (token) =>
         KEYWORDS.find(
@@ -229,6 +198,7 @@ function page(title: string, specimens: string[], refFiles: string[]) {
 await mkdir(outDir, { recursive: true })
 const browser = await puppeteer.launch({
   headless: "shell",
+  executablePath,
   // Cloud containers run as root, where Chrome's sandbox refuses to start.
   args: process.getuid?.() === 0 ? ["--no-sandbox"] : [],
 })
