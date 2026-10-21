@@ -42,15 +42,12 @@ export function Specimen({ product }: { product: string }) {
           <Input placeholder="Search" />
         </InputGroup>
       </SearchField>
-      <div className="flex gap-2">
-        <Button
-          variant="primary"
-          className="min-w-0 flex-1"
-          data-contrast="Button"
-        >
+      {/* Roomy designs stack the buttons rather than cut their labels. */}
+      <div className="flex flex-wrap gap-2">
+        <Button variant="primary" className="grow" data-contrast="Button">
           Create
         </Button>
-        <Button className="min-w-0 flex-1">Export</Button>
+        <Button className="grow">Export</Button>
       </div>
       <div className="flex items-center justify-between gap-2 text-sm">
         <span data-contrast="Text">Notifications</span>
