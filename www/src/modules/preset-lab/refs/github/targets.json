@@ -310,15 +310,6 @@
       }
     }
   },
-  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-pagination--default": {
-    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-pagination--default",
-    "parts": {
-      "pagination.current": {
-        "selector": "[aria-current=page]",
-        "skip": ["boxShadow", "letterSpacing", "paddingInline"]
-      }
-    }
-  },
   "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-iconbutton--default": {
     "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-iconbutton--default",
     "parts": {
@@ -366,6 +357,14 @@
           }
         ],
         "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
+      }
+    }
+  },
+  "https://github.com/search?q=design+system&type=repositories": {
+    "parts": {
+      "pagination.current": {
+        "selector": "[data-component='Pagination.Page'][aria-current]",
+        "skip": ["boxShadow", "letterSpacing", "paddingInline"]
       }
     }
   }
