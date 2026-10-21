@@ -26,3 +26,7 @@ Untitled UI React is open source (React Aria Components + Tailwind v4), so its t
   - Command palette r12 with no edge and shadow-xl; rows 40px r8 at 14/500; shortcut keys 24px r4 at 14/500 on neutral-50 with a neutral-200 ring.
   - Modal r16, no edge, shadow-xl, on the page tone; the scrim is neutral-950 at 70% with a 6px blur in light, neutral-800 at 70% in dark.
   - Sidebar rows 36px r6, 14/600 neutral-700 at rest; the current row neutral-50 with neutral-800 ink.
+- **Full-site pass, both themes**: every untitledui.com React page (125: components, marketing, docs), their 690 previews, the 161 full-screen demos and 19 pages of the main site, screenshotted, with every theme token resolved per mode and a computed-style survey of about 43k elements. Files and scripts are in the project files under `presets/untitled/2026-10-21/explore/`.
+  - It backs the pack's choices: sm 36px buttons lead in the app screens (40px md next), 40px fields with 16px values, 12px cards and 16px modals, tabs of every type 36px at 14/600, and every dark surface on the page tone.
+  - The main site outside `/react` is a separate Webflow build with no dark mode; it isn't measured.
+  - Looks the pack doesn't measure, logged on the ledger: the raised neutral badge (`badge-modern`: white, neutral-300 ring, shadow-xs, r6) that app screens use far more than the gray pill; tables with 24px cell insets, 72px rows under a 44px header and 12/600 neutral-500 header labels; utility icon buttons in `fg-quaternary` (neutral-400 / neutral-600).
