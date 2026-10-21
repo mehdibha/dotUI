@@ -100,7 +100,8 @@ function probe(
     }
     return "none"
   }
-  /* The focus ring, "<width>px <color> +<offset>px", from an outline or from
+  const signed = (px: number) => `${px < 0 ? "" : "+"}${px}px`
+  /* The focus ring, "<width>px <color> <±offset>px", from an outline or from
      the outermost ring (the one inside it sets the offset). Focused parts
      only. */
   const ring = (el: Element) => {
@@ -111,14 +112,14 @@ function probe(
     const style = getComputedStyle(el)
     const width = Number.parseFloat(style.outlineWidth)
     if (style.outlineStyle !== "none" && width > 0)
-      return `${width}px ${style.outlineColor} +${Number.parseFloat(style.outlineOffset)}px`
+      return `${width}px ${style.outlineColor} ${signed(Number.parseFloat(style.outlineOffset))}`
     const outer = rings(style)
       .filter((ring) => !ring.inset && ring.spread > 0)
       .sort((a, b) => a.spread - b.spread)
     const last = outer.at(-1)
     if (!last) return "none"
     const offset = outer.at(-2)?.spread ?? 0
-    return `${last.spread - offset}px ${last.color} +${offset}px`
+    return `${last.spread - offset}px ${last.color} ${signed(offset)}`
   }
   const find = (target: Target): Element | null => {
     const root = target.within
@@ -144,22 +145,44 @@ function probe(
     }
     return el
   }
+  /* An unpainted box filled by a child that covers it (a selected tab's
+     indicator): its paint is that child's. */
+  const fillOf = (el: Element) => {
+    if (painted(el)) return el
+    const box = el.getBoundingClientRect()
+    const covers = (child: Element) => {
+      const rect = child.getBoundingClientRect()
+      return (
+        Math.abs(rect.left - box.left) <= 1 &&
+        Math.abs(rect.right - box.right) <= 1 &&
+        Math.abs(rect.top - box.top) <= 1 &&
+        Math.abs(rect.bottom - box.bottom) <= 1
+      )
+    }
+    return (
+      [...el.querySelectorAll("*")].find(
+        (child) => painted(child) && covers(child),
+      ) ?? el
+    )
+  }
   const read = (el: Element) => {
     const style = getComputedStyle(el)
+    const fill = fillOf(el)
+    const paint = getComputedStyle(fill)
     const all: Record<string, string> = {
-      backgroundColor: style.backgroundColor,
+      backgroundColor: paint.backgroundColor,
       color: style.color,
-      borderColor: style.borderTopColor,
-      borderWidth: style.borderTopWidth,
-      borderRadius: style.borderTopLeftRadius,
+      borderColor: paint.borderTopColor,
+      borderWidth: paint.borderTopWidth,
+      borderRadius: paint.borderTopLeftRadius,
       height: `${Math.round(el.getBoundingClientRect().height * 10) / 10}px`,
       paddingInline: style.paddingLeft,
       fontFamily: style.fontFamily,
       fontSize: style.fontSize,
       fontWeight: style.fontWeight,
       letterSpacing: style.letterSpacing,
-      boxShadow: style.boxShadow,
-      edge: edge(el),
+      boxShadow: paint.boxShadow,
+      edge: edge(el) === "none" ? edge(fill) : edge(el),
       ring: ring(el),
     }
     return Object.fromEntries(props.map((prop) => [prop, all[prop]]))
@@ -305,10 +328,13 @@ export const SPECIMEN_TARGETS: Record<
   },
   text: {
     sheet: "type",
-    target: { within: cell("body · text-base"), selector: "p" },
+    target: { within: cell("body · text-base"), selector: ":scope > div > p" },
   },
   "text.muted": {
     sheet: "type",
-    target: { within: cell("muted · text-sm text-fg-muted"), selector: "p" },
+    target: {
+      within: cell("muted · text-sm text-fg-muted"),
+      selector: ":scope > div > p",
+    },
   },
 }
