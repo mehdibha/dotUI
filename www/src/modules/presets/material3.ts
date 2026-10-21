@@ -11,7 +11,8 @@ export const material3 = definePreset({
     brandAssets: "material",
 
     // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
-    // Fields draw M3's outline #79747e.
+    // Control edges at the darkest step, for M3's #79747e outline and the
+    // #49454f field and check lines.
     style: "tonal",
     controlEdge: "strong",
 
