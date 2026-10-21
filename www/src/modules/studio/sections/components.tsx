@@ -1,6 +1,7 @@
 "use client"
 
-/* Components — one row per component, A to Z. A component with one key is
+/* Components — the few that shape a design system most, then All
+   components: one row per component, A to Z. A component with one key is
    that key's row; the others open a page of their rows. */
 
 import type { Chapter, ChapterPage } from "../chapters"
@@ -462,11 +463,23 @@ const pageOf = (component: Component): ChapterPage => ({
   },
 })
 
+/** On the chapter itself, by the name its family goes by. */
+const FEATURED: [id: string, label: string][] = [
+  ["button", "Buttons"],
+  ["field", "Inputs"],
+  ["card", "Cards"],
+  ["menu", "Menus"],
+  ["tabs", "Tabs"],
+]
+
+const featured = (component: Component) =>
+  FEATURED.some(([id]) => id === component.id)
+
 const singles = COMPONENTS.filter(isSingle)
 
-export const COMPONENTS_CHAPTER: Chapter = {
+const ALL_COMPONENTS: ChapterPage = {
   id: "components",
-  label: "Components",
+  label: "All components",
   owners: singles.flatMap(homeKeys),
   // A one-row component is its row: search knows it by the row's name too.
   rows: singles.map(({ label, aliases = [], rows }) => ({
@@ -474,10 +487,47 @@ export const COMPONENTS_CHAPTER: Chapter = {
     key: rows[0]?.[0],
     aliases: [...aliases, ...rows.map(([, name]) => name)],
   })),
-  Body: function ComponentRows({ studio }: { studio: Studio }) {
+  Body: function AllComponents({ studio }: { studio: Studio }) {
     return COMPONENTS.map((component) => (
       <ComponentRow key={component.id} component={component} studio={studio} />
     ))
   },
-  pages: COMPONENTS.filter((component) => !isSingle(component)).map(pageOf),
+}
+
+export const COMPONENTS_CHAPTER: Chapter = {
+  id: "components",
+  label: "Components",
+  Body: function FeaturedComponents({ studio }: { studio: Studio }) {
+    return (
+      <>
+        {FEATURED.map(([id, label]) => {
+          const component = COMPONENTS.find((c) => c.id === id)
+          return (
+            component && (
+              <ComponentRow
+                key={id}
+                component={{ ...component, label }}
+                studio={studio}
+              />
+            )
+          )
+        })}
+        <DialLink
+          page={ALL_COMPONENTS.id}
+          label={ALL_COMPONENTS.label}
+          value={COMPONENTS.length}
+        />
+      </>
+    )
+  },
+  pages: [
+    ALL_COMPONENTS,
+    ...COMPONENTS.filter((component) => !isSingle(component)).map(
+      (component) => ({
+        ...pageOf(component),
+        // Back from a page All components lists leads there.
+        parent: featured(component) ? undefined : ALL_COMPONENTS.id,
+      }),
+    ),
+  ],
 }

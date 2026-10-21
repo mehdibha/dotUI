@@ -1,7 +1,8 @@
 "use client"
 
-/* Foundations — the decisions every component reads, then the pages that
-   refine them. Shape, Surfaces and Motion open from their picker's Custom. */
+/* Foundations — the decisions every component reads, in groups, with the
+   pages that refine them. Shape, Surfaces and Motion open from their
+   picker's Custom. */
 
 import { Fragment } from "react"
 
@@ -26,18 +27,36 @@ import { TypePreview } from "./type"
  *  with no key of its own. */
 type FoundationRow = [AxisKey | React.ComponentType, string, string[]?]
 
-export const MAIN_ROWS: FoundationRow[] = [
-  ["style", "Style"],
-  ["brand", "Brand"],
-  ["neutralHue", "Neutral"],
-  [PrimaryRow, "Primary"],
-  [SurfacesRow, "Surfaces"],
-  ["bodyFont", "Font"],
-  [ShapeRow, "Radius"],
-  ["density", "Density"],
-  ["iconLibrary", "Icons"],
-  ["motion", "Motion"],
+/** The main page's groups: rows, then the pages listed under them. */
+const MAIN_GROUPS: { rows?: FoundationRow[]; pages?: string[] }[] = [
+  {
+    rows: [
+      ["style", "Style"],
+      ["brand", "Brand"],
+      ["neutralHue", "Neutral"],
+      [PrimaryRow, "Primary"],
+      [SurfacesRow, "Surfaces"],
+    ],
+  },
+  {
+    rows: [
+      ["bodyFont", "Font"],
+      ["monoFont", "Mono"],
+    ],
+    pages: ["typography"],
+  },
+  {
+    rows: [
+      [ShapeRow, "Radius"],
+      ["density", "Density"],
+      ["iconLibrary", "Icons"],
+      ["motion", "Motion"],
+    ],
+  },
+  { pages: ["focus", "disabled", "cursor", "text-selection"] },
 ]
+
+export const MAIN_ROWS = MAIN_GROUPS.flatMap(({ rows = [] }) => rows)
 
 /** The keys whose rows sit on the main page, in or under its rows. */
 export const FOUNDATION_KEYS = [
@@ -49,6 +68,7 @@ export const FOUNDATION_KEYS = [
   "neutralHue",
   "neutralTint",
   "bodyFont",
+  "monoFont",
   "density",
   "uiTextSize",
   "iconLibrary",
@@ -59,12 +79,7 @@ export const FOUNDATION_KEYS = [
 
 /** Each page's rows, in groups. */
 export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
-  typography: [
-    [
-      ["headingFont", "Heading"],
-      ["monoFont", "Mono"],
-    ],
-  ],
+  typography: [[["headingFont", "Heading"]]],
   focus: [
     [
       ["focusStyle", "Focus ring"],
@@ -154,7 +169,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "typography",
     label: "Typography",
-    owners: ["headingFont", "monoFont"],
+    owners: ["headingFont"],
     aliases: ["Fonts"],
     Preview: TypePreview,
   }),
@@ -213,19 +228,15 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   }),
 ]
 
-/** The pages listed under the main page's rows; the rest open from a
- *  picker's Custom. */
-const LISTED = ["typography", "focus", "disabled", "cursor", "text-selection"]
-
 /** The main page's rows, for search. */
 export const FOUNDATION_ROWS = MAIN_ROWS.map(searchRow)
 
 export function FoundationsSection({ studio }: { studio: Studio }) {
-  return (
-    <>
-      <Rows rows={MAIN_ROWS} />
-      <DialGap />
-      {FOUNDATION_PAGES.filter(({ id }) => LISTED.includes(id)).map(
+  return MAIN_GROUPS.map(({ rows = [], pages = [] }, i) => (
+    <Fragment key={i}>
+      {i > 0 && <DialGap />}
+      <Rows rows={rows} />
+      {FOUNDATION_PAGES.filter(({ id }) => pages.includes(id)).map(
         ({ id, label, Preview }) => (
           <DialLink
             key={id}
@@ -235,6 +246,6 @@ export function FoundationsSection({ studio }: { studio: Studio }) {
           />
         ),
       )}
-    </>
-  )
+    </Fragment>
+  ))
 }
