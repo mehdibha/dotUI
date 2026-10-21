@@ -387,11 +387,7 @@ function Header() {
     <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
-          <BrandMark className="size-8">
-            <span className="flex size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-              <WalletIcon className="size-4" />
-            </span>
-          </BrandMark>
+          <BrandMark className="size-8" />
           <span className="font-heading text-base font-semibold tracking-tight">
             <BrandName>Meridian</BrandName>
           </span>

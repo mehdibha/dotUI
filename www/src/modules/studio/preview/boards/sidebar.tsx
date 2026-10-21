@@ -8,7 +8,6 @@ import {
   HomeIcon,
   InboxIcon,
   PlusIcon,
-  SparklesIcon,
 } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import {
@@ -63,11 +62,7 @@ function SidebarItems() {
               size="lg"
               className="group-data-[collapsible=icon]:p-0!"
             >
-              <BrandMark className="size-8">
-                <span className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                  <SparklesIcon className="size-4" />
-                </span>
-              </BrandMark>
+              <BrandMark className="size-8" />
               <span className="flex flex-col gap-0.5 leading-none">
                 <span className="font-medium text-fg">
                   <BrandName>Acme</BrandName>

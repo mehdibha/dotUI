@@ -936,11 +936,7 @@ export default function FileManagerBlock() {
     <div className="min-h-screen bg-bg text-fg">
       <header className="sticky top-0 z-20 border-b bg-bg/90 backdrop-blur">
         <div className="mx-auto flex h-14 w-full max-w-400 items-center gap-3 px-4 sm:px-6">
-          <BrandMark className="size-7">
-            <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-              <FolderIcon className="size-4" />
-            </div>
-          </BrandMark>
+          <BrandMark className="size-7" />
           <span className="truncate font-semibold">
             <BrandName>Meridian Drive</BrandName>
           </span>

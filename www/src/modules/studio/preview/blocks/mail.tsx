@@ -561,11 +561,7 @@ export default function MailBlock() {
         <Sidebar collapsible="offcanvas">
           <SidebarHeader className="gap-3">
             <div className="flex items-center gap-2 px-1 pt-1">
-              <BrandMark className="size-6">
-                <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                  <MailIcon className="size-3.5" />
-                </div>
-              </BrandMark>
+              <BrandMark className="size-6" />
               <span className="truncate text-sm font-semibold">
                 <BrandName>Sable Mail</BrandName>
               </span>

@@ -1,18 +1,20 @@
 "use client"
 
 /* Brand assets — the brand's logo and wordmark, each in its light and dark
-   variant. A preset shows its product's; the user's own system shows empty
-   drop zones until uploads land. Read-only either way. */
+   variant. A preset shows its product's; Origin and the user's own system
+   show the generic mark in the theme's accent until uploads land.
+   Read-only either way. */
 
 import { ImageUpIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
-import { AssetImage } from "../assets/brand"
+import { AssetImage, GenericMark } from "../assets/brand"
 import { BRANDS } from "../assets/brands"
 import type { Asset } from "../assets/brands"
 import type { BrandName } from "../axes/assets"
 import { DialGlyph, DialPopover, DialTrigger } from "../dial"
+import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
 import { useAxis } from "../use-axis"
 
@@ -21,26 +23,28 @@ const MODES = [
   { mode: "dark", label: "Dark", tile: "bg-neutral-950" },
 ] as const
 
-/** One variant: the asset on its own mode's ground, or an empty drop zone. */
+type Mode = (typeof MODES)[number]["mode"]
+
+/** One variant on its own mode's ground, or an empty drop zone. */
 function Tile({
-  src,
   label,
   tile,
+  children,
 }: {
-  src?: string
   label: string
   tile: string
+  children?: React.ReactNode
 }) {
   return (
     <figure className="flex flex-1 flex-col gap-1">
-      {src ? (
+      {children ? (
         <div
           className={cn(
             "flex h-16 items-center justify-center rounded-lg p-3 ring-1 ring-fg/10",
             tile,
           )}
         >
-          <img src={src} alt="" className="max-h-full max-w-full" />
+          {children}
         </div>
       ) : (
         <div
@@ -58,52 +62,95 @@ function Tile({
   )
 }
 
-function Slot({ label, asset }: { label: string; asset?: Asset }) {
+function Slot({
+  label,
+  render,
+}: {
+  label: string
+  render: (mode: Mode) => React.ReactNode
+}) {
   return (
     <div className="flex flex-col gap-1.5 px-1.5 pt-1">
       <span className="text-[13px] font-medium text-fg/85">{label}</span>
       <div className="flex gap-2">
         {MODES.map(({ mode, label, tile }) => (
-          <Tile
-            key={mode}
-            label={label}
-            tile={tile}
-            src={
-              asset &&
-              (mode === "dark" ? (asset.dark ?? asset.light) : asset.light)
-            }
-          />
+          <Tile key={mode} label={label} tile={tile}>
+            {render(mode)}
+          </Tile>
         ))}
       </div>
     </div>
   )
 }
 
+const image = (asset?: Asset) => (mode: Mode) =>
+  asset && (
+    <img
+      src={mode === "dark" ? (asset.dark ?? asset.light) : asset.light}
+      alt=""
+      className="max-h-full max-w-full"
+    />
+  )
+
 function AssetsRow() {
   const value = useAxis("brandAssets").effective
   const brand = value === "none" ? undefined : BRANDS[value as BrandName]
+  const { theme, m } = usePanelMode()
+  const accent = (mode: Mode) => theme[mode].scales.accent?.["700"]
   return (
     <DialTrigger
       axis="brandAssets"
       label="Brand assets"
       value={
-        brand ? (
-          <DialGlyph>
+        <DialGlyph>
+          {brand ? (
             <AssetImage asset={brand.logo} />
-            <span className="sr-only">{brand.name}</span>
-          </DialGlyph>
-        ) : (
-          "None"
-        )
+          ) : (
+            <GenericMark style={{ color: m.scales.accent?.["700"] }} />
+          )}
+          <span className="sr-only">{brand?.name ?? "Generic"}</span>
+        </DialGlyph>
       }
     >
       <DialPopover className="w-72">
-        <Slot label="Logo" asset={brand?.logo} />
-        <Slot label="Wordmark" asset={brand?.wordmark} />
+        <Slot
+          label="Logo"
+          render={
+            brand
+              ? image(brand.logo)
+              : (mode) => (
+                  <GenericMark
+                    className="size-8"
+                    style={{ color: accent(mode) }}
+                  />
+                )
+          }
+        />
+        <Slot
+          label="Wordmark"
+          render={
+            brand
+              ? image(brand.wordmark)
+              : (mode) => (
+                  <span
+                    className={cn(
+                      "flex items-center gap-1.5 text-lg font-semibold tracking-tight",
+                      mode === "dark" ? "text-white" : "text-neutral-950",
+                    )}
+                  >
+                    <GenericMark
+                      className="size-5"
+                      style={{ color: accent(mode) }}
+                    />
+                    Acme
+                  </span>
+                )
+          }
+        />
         <p className="px-1.5 pt-1 pb-0.5 text-xs text-fg/50">
           {brand
             ? `${brand.name}'s own assets, shown across the preview.`
-            : "Uploading your logo and wordmark is coming soon."}
+            : "A generic mark in your theme color. Uploading your own logo and wordmark is coming soon."}
         </p>
       </DialPopover>
     </DialTrigger>

@@ -392,11 +392,7 @@ function AppSidebar() {
           <SidebarMenuItem>
             <Menu>
               <SidebarMenuButton size="lg" tooltip="Northwind Supply">
-                <BrandMark className="size-8">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                    <SparklesIcon className="size-4" />
-                  </div>
-                </BrandMark>
+                <BrandMark className="size-8" />
                 <div className="flex min-w-0 flex-col gap-0.5 leading-none">
                   <span className="truncate font-medium text-fg">
                     <BrandName>Northwind Supply</BrandName>

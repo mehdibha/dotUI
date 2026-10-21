@@ -791,11 +791,7 @@ export default function SearchResultsBlock() {
       <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
-            <BrandMark className="size-7">
-              <div className="flex size-7 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                <BoxIcon className="size-4" />
-              </div>
-            </BrandMark>
+            <BrandMark className="size-7" />
             <span className="font-heading text-sm font-semibold tracking-tight">
               <BrandName>Orbit Registry</BrandName>
             </span>

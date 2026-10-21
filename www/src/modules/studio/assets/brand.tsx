@@ -1,8 +1,8 @@
 "use client"
 
-/* What the preview blocks draw for the system's brand: its logo in place of
-   the placeholder mark, its name in place of the made-up product's. Without
-   a brand both render the block's own placeholder. */
+/* What the preview blocks draw for the system's brand: its logo, and its
+   name in place of the made-up product's. Without a brand, the generic mark
+   in the theme's accent and the block's own name. */
 
 import { createContext, useContext } from "react"
 
@@ -41,21 +41,30 @@ export function AssetImage({
   )
 }
 
-/** The brand's logo in a `className`-sized box, else the placeholder. */
-export function BrandMark({
-  className,
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
+/** The default brand's mark: a pinwheel in `currentColor`. */
+export function GenericMark(props: React.ComponentProps<"svg">) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M12 2a6 6 0 0 1 6 6v4h-6zM22 12a6 6 0 0 1-6 6h-4v-6zM12 22a6 6 0 0 1-6-6v-4h6zM2 12a6 6 0 0 1 6-6h4v6z" />
+    </svg>
+  )
+}
+
+/** The brand's logo in a `className`-sized box, else the generic mark. */
+export function BrandMark({ className }: { className?: string }) {
   const brand = useBrand()
-  if (!brand) return children
   return (
     <span
-      className={cn("flex shrink-0 items-center justify-center p-1", className)}
+      className={cn(
+        "flex shrink-0 items-center justify-center p-1 text-accent",
+        className,
+      )}
     >
-      <AssetImage asset={brand.logo} className="size-full" />
+      {brand ? (
+        <AssetImage asset={brand.logo} className="size-full" />
+      ) : (
+        <GenericMark className="size-full" />
+      )}
     </span>
   )
 }

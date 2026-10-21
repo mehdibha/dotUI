@@ -416,11 +416,7 @@ export default function AiChatBlock() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
-                  <BrandMark className="size-8">
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                      <SparklesIcon className="size-4" />
-                    </div>
-                  </BrandMark>
+                  <BrandMark className="size-8" />
                   <div className="flex flex-col gap-0.5 leading-none">
                     <span className="font-medium text-fg">
                       <BrandName>Lumen</BrandName>

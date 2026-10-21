@@ -2,7 +2,10 @@ import { BRAND_VALUES } from "./assets"
 import { options } from "./core/meta"
 
 export const BRAND_OPTIONS = options(BRAND_VALUES, {
-  none: { label: "None", description: "A placeholder mark on primary" },
+  none: {
+    label: "Generic",
+    description: "A generic mark in the theme's accent",
+  },
   airbnb: { label: "Airbnb" },
   claude: { label: "Claude" },
   duolingo: { label: "Duolingo" },
