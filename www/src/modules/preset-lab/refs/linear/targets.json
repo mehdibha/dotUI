@@ -1,0 +1,121 @@
+{
+  "https://linear.app/login": {
+    "button.primary": {
+      "text": "Continue with Google"
+    },
+    "button.secondary": {
+      "text": "Continue with email"
+    }
+  },
+  "https://linear.app/<ws>/settings/account/preferences": {
+    "page": {
+      "selector": "main"
+    },
+    "shell": {
+      "selector": "html"
+    },
+    "heading": {
+      "selector": "main span",
+      "text": "Preferences"
+    },
+    "text.muted": {
+      "selector": "main section li span",
+      "nth": 1
+    },
+    "select.trigger": {
+      "selector": "main button[role=combobox][data-select-variant=default]"
+    },
+    "switch.on": {
+      "selector": "main input[type=checkbox]",
+      "nth": 0
+    },
+    "switch.off": {
+      "selector": "main input[type=checkbox]",
+      "nth": 1
+    },
+    "card": {
+      "selector": "main section"
+    },
+    "button.quiet": {
+      "selector": "main button[aria-label=\"Customize sidebar\"]"
+    }
+  },
+  "https://linear.app/<ws>/settings/account/preferences (open the display names select)": {
+    "menu": {
+      "selector": "[role=listbox]",
+      "surface": true
+    },
+    "menu.item": {
+      "selector": "[role=listbox] [role=option]",
+      "nth": 1
+    }
+  },
+  "https://linear.app/<ws>/settings/account/profile": {
+    "input": {
+      "selector": "main input#title"
+    }
+  },
+  "https://linear.app/<ws>/settings/security": {
+    "button.secondary": {
+      "selector": "main button",
+      "text": "Copy"
+    },
+    "link": {
+      "selector": "main a[href^=\"http\"]",
+      "text": "Docs"
+    }
+  },
+  "https://linear.app/<ws>/settings/issue-labels": {
+    "button.primary": {
+      "selector": "main button",
+      "text": "New label"
+    }
+  },
+  "https://linear.app/<ws>/inbox": {
+    "nav.item": {
+      "selector": "a[href$=\"/my-issues\"]"
+    },
+    "nav.item.selected": {
+      "selector": "a[data-active=true]"
+    }
+  },
+  "https://linear.app/<ws>/inbox (hover the sidebar's Create new issue button)": {
+    "tooltip": {
+      "text": "Create new issue",
+      "surface": true
+    }
+  },
+  "https://linear.app/<ws>/inbox (press C: the Create issue dialog)": {
+    "dialog": {
+      "selector": "[role=dialog][aria-label=\"Create issue\"] div",
+      "surface": true
+    }
+  },
+  "https://linear.app/<ws>/inbox (press Cmd+K)": {
+    "command": {
+      "selector": "input[aria-label=\"Command menu\"]",
+      "surface": true
+    },
+    "command.item": {
+      "selector": "[role=listbox] [role=option][data-focused=false]"
+    },
+    "kbd": {
+      "selector": "[role=listbox] [role=option] kbd"
+    }
+  },
+  "https://linear.app/<ws>/my-issues/assigned": {
+    "tab": {
+      "selector": "main a",
+      "text": "Created"
+    },
+    "tab.selected": {
+      "selector": "main a",
+      "text": "Assigned"
+    }
+  },
+  "https://linear.app/<ws>/my-issues/created (hover a row)": {
+    "checkbox": {
+      "selector": "main input[type=checkbox]"
+    }
+  }
+}
