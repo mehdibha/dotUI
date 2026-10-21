@@ -99,5 +99,69 @@
         "skip": ["boxShadow"]
       }
     }
+  },
+  "https://open.spotify.com/": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {
+      "shell": {
+        "selector": ".Root__top-container",
+        "surface": true
+      },
+      "panel": {
+        "selector": ".Root__main-view"
+      },
+      "nav.item": {
+        "within": "#Desktop_LeftSidebar_Id",
+        "selector": "[role=row]"
+      },
+      "toggle": {
+        "within": ".Root__main-view",
+        "selector": "button[role=checkbox][aria-checked=false]"
+      },
+      "toggle.on": {
+        "within": ".Root__main-view",
+        "selector": "button[role=checkbox][aria-checked=true]"
+      },
+      "card": {
+        "within": ".Root__main-view",
+        "selector": "[data-encore-id=card]"
+      },
+      "button.icon": {
+        "selector": "[data-testid=control-button-skip-back]"
+      },
+      "menu.item": {
+        "selector": "#context-menu [role=menuitem]",
+        "before": [
+          {
+            "click": "[data-testid=user-widget-link]"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "press": "Control+/"
+          }
+        ]
+      },
+      "search": {
+        "selector": "[data-testid=search-input]"
+      },
+      "slider": {
+        "selector": "[data-testid=playback-progressbar] [data-testid=progress-bar-background]"
+      },
+      "menu.player": {
+        "selector": "#context-menu",
+        "surface": true,
+        "before": [
+          {
+            "click": "[data-testid=user-widget-link]"
+          }
+        ]
+      }
+    }
   }
 }
