@@ -31,12 +31,12 @@ Polaris publishes its tokens as code, so colors come from the packages first.
 
 ## Measured pages
 
-The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirects to shopify.dev, which documents the web components; storybook.polaris.shopify.com doesn't answer), so the pack measures a local harness: one page per sheet rendering the real `@shopify/polaris` components with its own `styles.css`, the theme set by `AppProvider theme`. The harness source lives in the project files (`presets/polaris/2026-10-21/harness/`), not in git.
+The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirects to shopify.dev, which documents the web components; storybook.polaris.shopify.com doesn't answer), so the pack measures two harness pages in this folder that load the published packages from CDNs (esm.sh, jsdelivr, cdn.shopify.com). `pnpm presets:measure --pack polaris` opens them as files; nothing to install or serve.
 
-- `react.html?sheet=<sheet>&theme=light|dark`: Polaris React 13.9.5, every component at its default size. `targets.json` lists the dark pages only for the parts `dark-experimental` themes.
-- `web.html`: Polaris web components (`https://cdn.shopify.com/shopifycloud/polaris.js`), light only, for the switch: Polaris React has no switch. Its parts live in shadow roots; the page copies them into the light DOM (`window.__deep`) before it sets `data-specimen-ready`, since the probe doesn't pierce shadow DOM.
-- To re-measure: `npm install` in the harness, `npx esbuild app.jsx --bundle --outfile=app.js`, serve it on `127.0.0.1:3390` (`python3 -m http.server 3390 --bind 127.0.0.1`), then `pnpm presets:measure --pack polaris`.
-- The harness marks `button.focus` and `input.focus` with `data-specimen-focus` and focuses the button, since Polaris doesn't forward data attributes.
+- `react.html?sheet=<sheet>&theme=light|dark`: Polaris React 13.9.5 with its own `styles.css`, every component at its default size, the theme set by `AppProvider theme`. `targets.json` lists the dark pages only for the parts `dark-experimental` themes, each with `only` the props it owns.
+- `web.html`: Polaris web components (`polaris.js`), light only, for the switch: Polaris React has no switch. The switch's input sits in the `s-switch` shadow root (`s-switch >>> input`).
+- `react.html` marks `button.focus` and `input.focus` with `data-specimen-focus` and focuses the button, since Polaris doesn't forward data attributes.
+- `button.quiet` and `tab` leave their fill out: both sides are clear, and Polaris shows the white card behind them where the specimens show the page.
 - `card` probes `.Polaris-ShadowBevel::before`, which draws the bevel and the 12px corners; the fill comes from a child Box.
 - Buttons, tabs, nav rows and badges take type from their `.Polaris-Text--root` label (`ink`).
 - `tokens.json` keeps, per part, only the properties both sides draw in the same place.

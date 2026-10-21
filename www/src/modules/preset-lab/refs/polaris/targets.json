@@ -1,95 +1,80 @@
 {
-  "http://localhost:3390/react.html?sheet=actions&theme=light": {
+  "react.html?sheet=actions&theme=light": {
     "mode": "light",
     "parts": {
       "page": {
         "selector": "body",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color", "fontFamily"]
       },
       "button.primary": {
         "within": "[data-part=button-primary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "boxShadow",
+          "edge"
         ]
       },
       "button.secondary": {
         "within": "[data-part=button-secondary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "boxShadow",
+          "edge"
         ]
       },
       "button.quiet": {
         "within": "[data-part=button-quiet]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       },
       "button.focus": {
         "within": "[data-part=button-focus]",
         "selector": "button",
         "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
+        "only": ["ring"]
       },
       "kbd": {
         "within": "[data-part=kbd-small]",
         "selector": ".Polaris-KeyboardKey",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=fields&theme=light": {
+  "react.html?sheet=fields&theme=light": {
     "mode": "light",
     "parts": {
       "input": {
@@ -97,785 +82,356 @@
         "selector": ".Polaris-TextField",
         "box": ".Polaris-TextField__Backdrop",
         "ink": "input",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       },
       "input.focus": {
         "selector": "[data-specimen-focus]",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow"
-        ]
+        "only": ["backgroundColor", "edge", "ring"]
       },
       "select.trigger": {
         "within": "[data-part=select]",
         "selector": ".Polaris-Select",
         "box": ".Polaris-Select__Backdrop",
         "ink": ".Polaris-Select__SelectedOption",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=selection&theme=light": {
+  "react.html?sheet=selection&theme=light": {
     "mode": "light",
     "parts": {
       "checkbox": {
         "within": "[data-part=checkbox]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
       },
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "borderRadius", "height"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=navigation&theme=light": {
+  "react.html?sheet=navigation&theme=light": {
     "mode": "light",
     "parts": {
       "tab": {
         "within": ".Polaris-Tabs__Wrapper",
         "selector": ".Polaris-Tabs__Tab:not(.Polaris-Tabs__Tab--active)",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       },
       "tab.selected": {
         "within": ".Polaris-Tabs__Wrapper",
         "selector": ".Polaris-Tabs__Tab--active",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       },
       "link": {
         "within": "[data-part=link]",
         "selector": "a",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontWeight"]
       },
       "shell": {
         "selector": ".Polaris-Navigation",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       },
       "panel": {
         "selector": ".Polaris-Frame",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       },
       "nav.item": {
         "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       },
       "nav.item.active": {
         "selector": ".Polaris-Navigation__ItemInnerWrapper--selected",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=menu&theme=light": {
+  "react.html?sheet=menu&theme=light": {
     "mode": "light",
     "parts": {
       "menu": {
         "selector": ".Polaris-Popover__ContentContainer",
         "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "only": ["backgroundColor", "borderRadius", "edge"]
       },
       "menu.item": {
         "selector": ".Polaris-ActionList__Item",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
       },
       "tooltip": {
         "selector": ".Polaris-Tooltip-TooltipOverlay__Content",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=dialog&theme=light": {
+  "react.html?sheet=dialog&theme=light": {
     "mode": "light",
     "parts": {
       "dialog": {
         "selector": ".Polaris-Modal-Dialog__Modal",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "only": ["backgroundColor", "borderRadius", "edge"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=display&theme=light": {
+  "react.html?sheet=display&theme=light": {
     "mode": "light",
     "parts": {
       "card": {
         "within": "[data-part=card]",
         "selector": ".Polaris-ShadowBevel",
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ],
-        "box": "::before"
+        "box": "::before",
+        "only": ["borderRadius", "boxShadow", "edge"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=feedback&theme=light": {
+  "react.html?sheet=feedback&theme=light": {
     "mode": "light",
     "parts": {
       "badge": {
         "within": "[data-part=badge]",
         "selector": ".Polaris-Badge",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
         ]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=type&theme=light": {
+  "react.html?sheet=type&theme=light": {
     "mode": "light",
     "parts": {
       "heading.1": {
         "within": "[data-part=heading-3xl]",
         "selector": "h1",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
       },
       "heading.2": {
         "within": "[data-part=heading-2xl]",
         "selector": "h1",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
       },
       "heading.3": {
         "within": "[data-part=heading-xl]",
         "selector": "h2",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
       },
       "heading.4": {
         "within": "[data-part=heading-lg]",
         "selector": "h3",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontSize", "fontWeight", "letterSpacing"]
       },
       "text": {
         "within": "[data-part=text]",
         "selector": "p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color", "fontWeight"]
       },
       "text.muted": {
         "within": "[data-part=text-muted]",
         "selector": "p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=actions&theme=dark": {
+  "react.html?sheet=actions&theme=dark": {
     "mode": "dark",
     "parts": {
       "page": {
         "selector": "body",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color"]
       },
       "button.primary": {
         "within": "[data-part=button-primary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color"]
       },
       "button.secondary": {
         "within": "[data-part=button-secondary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color"]
       },
       "button.quiet": {
         "within": "[data-part=button-quiet]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=selection&theme=dark": {
+  "react.html?sheet=selection&theme=dark": {
     "mode": "dark",
     "parts": {
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=navigation&theme=dark": {
+  "react.html?sheet=navigation&theme=dark": {
     "mode": "dark",
     "parts": {
       "tab.selected": {
         "within": ".Polaris-Tabs__Wrapper",
         "selector": ".Polaris-Tabs__Tab--active",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=menu&theme=dark": {
+  "react.html?sheet=menu&theme=dark": {
     "mode": "dark",
     "parts": {
       "menu": {
         "selector": ".Polaris-Popover__ContentContainer",
         "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       },
       "tooltip": {
         "selector": ".Polaris-Tooltip-TooltipOverlay__Content",
         "ink": ".Polaris-Text--root",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor", "color"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=dialog&theme=dark": {
+  "react.html?sheet=dialog&theme=dark": {
     "mode": "dark",
     "parts": {
       "dialog": {
         "selector": ".Polaris-Modal-Dialog__Modal",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=display&theme=dark": {
+  "react.html?sheet=display&theme=dark": {
     "mode": "dark",
     "parts": {
       "card": {
         "within": "[data-part=card]",
         "selector": ".Polaris-ShadowBevel",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["backgroundColor"]
       }
     }
   },
-  "http://localhost:3390/react.html?sheet=type&theme=dark": {
+  "react.html?sheet=type&theme=dark": {
     "mode": "dark",
     "parts": {
       "heading.1": {
         "within": "[data-part=heading-3xl]",
         "selector": "h1",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       },
       "heading.2": {
         "within": "[data-part=heading-2xl]",
         "selector": "h1",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       },
       "heading.3": {
         "within": "[data-part=heading-xl]",
         "selector": "h2",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       },
       "heading.4": {
         "within": "[data-part=heading-lg]",
         "selector": "h3",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       },
       "text": {
         "within": "[data-part=text]",
         "selector": "p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       },
       "text.muted": {
         "within": "[data-part=text-muted]",
         "selector": "p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "only": ["color"]
       }
     }
   },
-  "http://localhost:3390/web.html": {
+  "web.html": {
     "mode": "light",
     "parts": {
       "switch.on": {
-        "within": "[data-part=switch-on]",
-        "selector": "input",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": "[data-part=switch-on] s-switch >>> input",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
       },
       "switch.off": {
-        "within": "[data-part=switch]",
-        "selector": "input",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": "[data-part=switch] s-switch >>> input",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
       }
     }
   }
