@@ -1,0 +1,334 @@
+{
+  "https://github.com/mehdibha/dotUI": {
+    "parts": {
+      "page": {
+        "selector": "body",
+        "only": ["backgroundColor", "color"]
+      },
+      "button.primary": {
+        "selector": "button[data-component=Button][data-variant=primary]",
+        "skip": ["fontFamily", "letterSpacing", "ring"]
+      },
+      "button.secondary": {
+        "selector": "button[data-component=Button][data-variant=default]",
+        "skip": ["fontFamily", "letterSpacing", "ring"]
+      },
+      "input": {
+        "selector": "[data-component=TextInput]",
+        "skip": ["fontFamily", "letterSpacing", "paddingInline", "ring"]
+      },
+      "tab": {
+        "selector": "nav[aria-label=Repository] a:not([aria-current=page])",
+        "ink": "[data-component=text]",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "backgroundColor"
+        ]
+      },
+      "tab.selected": {
+        "selector": "nav[aria-label=Repository] a[aria-current=page]",
+        "ink": "[data-component=text]",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "backgroundColor"
+        ]
+      },
+      "link": {
+        "selector": "article.markdown-body p a[href]",
+        "only": ["color", "fontWeight"]
+      },
+      "heading.1": {
+        "selector": "article.markdown-body h1",
+        "only": ["color", "fontWeight"]
+      },
+      "heading.2": {
+        "selector": "article.markdown-body h2",
+        "only": ["color", "fontWeight"]
+      },
+      "text": {
+        "selector": "article.markdown-body > p",
+        "only": ["color", "fontSize", "fontWeight"]
+      },
+      "text.muted": {
+        "selector": "[data-testid=latest-commit-html]",
+        "only": ["color", "fontWeight"]
+      },
+      "menu": {
+        "selector": "[data-component='ActionMenu.Overlay']",
+        "before": [
+          {
+            "click": "button[data-component='ActionMenu.Button']"
+          }
+        ],
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "boxShadow",
+          "edge"
+        ]
+      },
+      "menu.item": {
+        "selector": "[data-component='ActionMenu.Overlay'] li",
+        "nth": 1,
+        "before": [
+          {
+            "click": "button[data-component='ActionMenu.Button']"
+          }
+        ],
+        "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
+      }
+    }
+  },
+  "https://github.com/mehdibha/dotUI/issues": {
+    "parts": {
+      "nav.item": {
+        "selector": "li[data-component='ActionList.Item'][data-has-description=false]:not([data-active])",
+        "ink": "[data-component='ActionList.Item.Label']",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "paddingInline",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "nav.item.active": {
+        "selector": "li[data-component='ActionList.Item'][data-active=true]",
+        "ink": "[data-component='ActionList.Item.Label']",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "paddingInline",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "heading.4": {
+        "selector": "h1[data-testid=header-title]",
+        "only": ["color", "fontSize", "fontWeight"]
+      },
+      "shell": {
+        "selector": "body",
+        "only": ["backgroundColor"]
+      },
+      "panel": {
+        "selector": "body",
+        "only": ["backgroundColor"]
+      }
+    }
+  },
+  "https://github.com/mehdibha/dotUI/pulse": {
+    "parts": {
+      "card": {
+        "selector": ".Box",
+        "only": ["backgroundColor", "borderRadius", "boxShadow", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-button-features--invisible": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-button-features--invisible",
+    "parts": {
+      "button.quiet": {
+        "selector": "button[data-component=Button]",
+        "skip": ["fontFamily", "letterSpacing", "ring", "edge", "boxShadow"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-button-features--primary": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-button-features--primary",
+    "parts": {
+      "button.focus": {
+        "selector": "button[data-component=Button]",
+        "focus": true,
+        "only": ["ring", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-textinput--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-textinput--default",
+    "parts": {
+      "input.focus": {
+        "selector": "[data-component=TextInput]",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "label",
+        "only": ["color", "fontSize", "fontWeight"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-select--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-select--default",
+    "parts": {
+      "select.trigger": {
+        "selector": "[data-component=TextInput]",
+        "skip": ["fontFamily", "letterSpacing", "paddingInline", "ring"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-checkbox--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-checkbox--default",
+    "parts": {
+      "checkbox": {
+        "selector": "input[type=checkbox]",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      },
+      "checkbox.checked": {
+        "selector": "input[type=checkbox]",
+        "before": [
+          {
+            "click": "input[type=checkbox]"
+          }
+        ],
+        "only": ["backgroundColor", "borderRadius", "height"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-toggleswitch--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-toggleswitch--default",
+    "parts": {
+      "switch.off": {
+        "selector": "button[aria-pressed]",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-toggleswitch-features--checked": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-toggleswitch-features--checked",
+    "parts": {
+      "switch.on": {
+        "selector": "button[aria-pressed]",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-tooltipv2--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-tooltipv2--default",
+    "parts": {
+      "tooltip": {
+        "selector": "[popover]",
+        "before": [
+          {
+            "hover": "button[data-component=Button]"
+          }
+        ],
+        "skip": ["fontFamily", "letterSpacing", "boxShadow", "edge", "ring"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-dialog--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-dialog--default",
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "::-p-text(Show dialog)"
+          }
+        ],
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "boxShadow",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-button-features--keybinding-hint-basic": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-button-features--keybinding-hint-basic",
+    "parts": {
+      "kbd": {
+        "selector": "[data-kbd-chord]",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "paddingInline",
+          "boxShadow",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-label--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-label--default",
+    "parts": {
+      "badge": {
+        "selector": "[data-component=Label]",
+        "skip": ["fontFamily", "letterSpacing", "boxShadow", "ring"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-label-features--accent": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-label-features--accent",
+    "parts": {
+      "badge.accent": {
+        "selector": "[data-component=Label]",
+        "skip": ["fontFamily", "letterSpacing", "boxShadow", "ring"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-radiogroup--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-radiogroup--default",
+    "parts": {
+      "radio": {
+        "selector": "input[type=radio]",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-segmentedcontrol--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-segmentedcontrol--default",
+    "parts": {
+      "segmented": {
+        "selector": "[data-component=SegmentedControl]",
+        "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-progressbar--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-progressbar--default",
+    "parts": {
+      "progress": {
+        "selector": "[data-component=ProgressBar]",
+        "only": ["backgroundColor", "borderRadius", "height"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-banner-features--warning": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-banner-features--warning",
+    "parts": {
+      "alert": {
+        "selector": "section",
+        "skip": [
+          "fontFamily",
+          "letterSpacing",
+          "height",
+          "paddingInline",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-pagination--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-pagination--default",
+    "parts": {
+      "pagination.current": {
+        "selector": "[aria-current=page]",
+        "skip": ["fontFamily", "letterSpacing", "boxShadow", "edge", "ring"]
+      }
+    }
+  }
+}
