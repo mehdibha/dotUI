@@ -6,6 +6,7 @@ import { carbon } from "./carbon"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
+import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
@@ -36,6 +37,7 @@ export const PRESETS: Preset[] = [
   radix,
   untitled,
   carbon,
+  higgsfield,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */

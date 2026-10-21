@@ -1,0 +1,162 @@
+{
+  "q.html": {
+    "mode": "dark",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "[data-part=\"button.primary\"]"
+      },
+      "button.secondary": {
+        "selector": "[data-part=\"button.secondary\"]"
+      },
+      "button.quiet": {
+        "selector": "[data-part=\"button.quiet\"]"
+      },
+      "button.icon": {
+        "selector": "[data-part=\"button.icon\"]"
+      },
+      "button.focus": {
+        "selector": "[data-part=\"button.focus\"]",
+        "focus": true
+      },
+      "toggle": {
+        "selector": "[data-part=\"toggle\"]"
+      },
+      "toggle.on": {
+        "selector": "[data-part=\"toggle.on\"]"
+      },
+      "segmented": {
+        "selector": "[data-part=\"segmented\"]"
+      },
+      "segmented.item": {
+        "selector": "[data-part=\"segmented.item\"]"
+      },
+      "segmented.selected": {
+        "selector": "[data-part=\"segmented.selected\"]",
+        "only": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "edge",
+          "boxShadow"
+        ]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]"
+      },
+      "tab.selected": {
+        "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["backgroundColor", "edge"]
+      },
+      "checkbox": {
+        "selector": "[data-part=\"checkbox\"]"
+      },
+      "checkbox.checked": {
+        "selector": "[data-part=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-part=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-part=\"radio.checked\"]"
+      },
+      "switch.off": {
+        "selector": "[data-part=\"switch.off\"]"
+      },
+      "switch.on": {
+        "selector": "[data-part=\"switch.on\"]"
+      },
+      "field.label": {
+        "selector": "[data-part=\"field.label\"]"
+      },
+      "input": {
+        "selector": "[data-part=\"input\"]",
+        "ink": "input"
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "focus": true
+      },
+      "select.trigger": {
+        "selector": "[data-part=\"select.trigger\"]"
+      },
+      "tooltip": {
+        "selector": "[data-part=\"tooltip\"]"
+      },
+      "progress": {
+        "selector": "[data-part=\"progress\"]"
+      },
+      "progress.fill": {
+        "selector": "[data-part=\"progress.fill\"]"
+      },
+      "dialog": {
+        "selector": "[data-part=\"dialog\"]"
+      }
+    }
+  },
+  "https://higgsfield.ai/ai/image": {
+    "mode": "dark",
+    "settle": 15000,
+    "parts": {
+      "menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "button::-p-text(Auto)"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitemcheckbox]",
+        "nth": 1,
+        "skip": ["paddingInline"],
+        "before": [
+          {
+            "click": "button::-p-text(Auto)"
+          }
+        ]
+      }
+    }
+  },
+  "https://higgsfield.ai/": {
+    "mode": "dark",
+    "settle": 5000,
+    "parts": {
+      "shell": {
+        "selector": "#header-visual"
+      },
+      "nav.item": {
+        "selector": "nav[aria-label=Main] a[data-nav-id=\"AI Influencer\"]"
+      },
+      "nav.item.active": {
+        "selector": "nav[aria-label=Main] a[data-status=active]"
+      },
+      "badge.accent": {
+        "selector": "nav[aria-label=Main] a[data-nav-id=Katana] span"
+      },
+      "card": {
+        "selector": "p",
+        "text": "The most advanced video model",
+        "box": ":scope > div"
+      },
+      "text.muted": {
+        "selector": "main section header p"
+      }
+    }
+  },
+  "https://higgsfield.ai/pricing": {
+    "mode": "dark",
+    "settle": 10000,
+    "parts": {
+      "heading.1": {
+        "selector": "main h2"
+      },
+      "heading.3": {
+        "selector": "main h3",
+        "text": "For teams"
+      }
+    }
+  }
+}

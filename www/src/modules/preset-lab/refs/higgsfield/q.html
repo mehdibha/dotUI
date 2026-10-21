@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Q harness</title>
+    <!-- Higgsfield's Q design system as higgsfield.ai ships it (--hf-* tokens,
+         .q-* components, fonts); see sources.md. The app is dark only. -->
+    <link
+      rel="stylesheet"
+      href="https://assets.higgsfield.ai/tanstack/assets/2feeef17-rOu4aQ4aBDawgJec.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://assets.higgsfield.ai/tanstack/assets/2feeef17-zKId3gDbV_o61ByP.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://assets.higgsfield.ai/tanstack/assets/2feeef17-jR28g5ewL6SfHlYp.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://assets.higgsfield.ai/tanstack/assets/2feeef17-hMa2Ild8dwt-6F-H.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 32px 40px;
+        background: var(--hf-color-background-primary);
+        color: var(--hf-color-text-primary);
+        font-family: var(--hf-type-family-secondary);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px 40px;
+        align-content: start;
+      }
+      h6 {
+        all: unset;
+        display: block;
+        font:
+          11px/1.2 ui-monospace,
+          monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--hf-color-text-tertiary);
+        margin-bottom: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      /* Overlays sit in the flow here instead of their portal. */
+      .static {
+        position: relative !important;
+        inset: auto !important;
+        transform: none !important;
+        translate: none !important;
+      }
+    </style>
+  </head>
+  <body data-part="page">
+    <section style="grid-column: span 2">
+      <h6>Button · sm (40) / md (48)</h6>
+      <div class="col">
+        <div class="row">
+          <button
+            data-part="button.primary"
+            class="q-button q-button-sm q-button-primary"
+          >
+            Generate
+          </button>
+          <button
+            data-part="button.inverse"
+            class="q-button q-button-sm q-button-secondary"
+          >
+            Secondary
+          </button>
+          <button
+            data-part="button.secondary"
+            class="q-button q-button-sm q-button-tertiary"
+          >
+            Tertiary
+          </button>
+          <button
+            data-part="button.quiet"
+            class="q-button q-button-sm q-button-ghost"
+          >
+            Ghost
+          </button>
+          <button
+            data-part="button.outline"
+            class="q-button q-button-sm q-button-outline"
+          >
+            Outline
+          </button>
+          <button
+            data-part="button.soft"
+            class="q-button q-button-sm q-button-brand-soft"
+          >
+            Brand soft
+          </button>
+          <button
+            data-part="button.icon"
+            aria-label="More"
+            class="q-button q-button-sm q-button-tertiary q-button-icon-only"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <circle cx="3" cy="8" r="1.5" />
+              <circle cx="8" cy="8" r="1.5" />
+              <circle cx="13" cy="8" r="1.5" />
+            </svg>
+          </button>
+        </div>
+        <div class="row">
+          <button class="q-button q-button-md q-button-primary">
+            Generate
+          </button>
+          <button class="q-button q-button-md q-button-secondary">
+            Secondary
+          </button>
+          <button class="q-button q-button-md q-button-tertiary">
+            Tertiary
+          </button>
+          <button
+            data-part="button.focus"
+            class="q-button q-button-sm q-button-primary"
+          >
+            Focused
+          </button>
+          <button disabled class="q-button q-button-sm q-button-primary">
+            Disabled
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>Toggle · off / on</h6>
+      <div class="row" style="--q-tint: var(--hf-color-brand-primary)">
+        <button data-part="toggle" class="q-toggle q-toggle-md">Bold</button>
+        <button
+          data-part="toggle.on"
+          class="q-toggle q-toggle-md"
+          data-pressed
+          aria-pressed="true"
+        >
+          Italic
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h6>Tabs · segmented, default tone</h6>
+      <div class="q-tabs q-tabs-segmented q-tabs-tone-default">
+        <div data-part="segmented" class="q-tabs-list" role="tablist">
+          <span data-part="segmented.selected" class="q-tabs-indicator"></span>
+          <button
+            class="q-tabs-tab"
+            role="tab"
+            data-active
+            aria-selected="true"
+          >
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">Image</span></span
+            >
+          </button>
+          <button
+            data-part="segmented.item"
+            class="q-tabs-tab"
+            role="tab"
+            aria-selected="false"
+          >
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">Video</span></span
+            >
+          </button>
+          <button class="q-tabs-tab" role="tab" aria-selected="false">
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">Audio</span></span
+            >
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>Tabs · underline</h6>
+      <div class="q-tabs q-tabs-underline">
+        <div class="q-tabs-list" role="tablist">
+          <span class="q-tabs-indicator"></span>
+          <button
+            data-part="tab.selected"
+            class="q-tabs-tab"
+            role="tab"
+            data-active
+            aria-selected="true"
+          >
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">Overview</span></span
+            >
+          </button>
+          <button
+            data-part="tab"
+            class="q-tabs-tab"
+            role="tab"
+            aria-selected="false"
+          >
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">History</span></span
+            >
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>Tabs · soft</h6>
+      <div class="q-tabs q-tabs-soft">
+        <div class="q-tabs-list" role="tablist">
+          <span class="q-tabs-indicator"></span>
+          <button
+            class="q-tabs-tab"
+            role="tab"
+            data-active
+            aria-selected="true"
+          >
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">All</span></span
+            >
+          </button>
+          <button class="q-tabs-tab" role="tab" aria-selected="false">
+            <span class="q-tabs-tab-content"
+              ><span class="q-tabs-tab-text">Liked</span></span
+            >
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>Checkbox · radio · switch</h6>
+      <div class="row">
+        <span
+          class="q-checkbox q-checkbox-md"
+          role="checkbox"
+          aria-checked="false"
+        >
+          <span data-part="checkbox" class="q-checkbox-box"></span>
+        </span>
+        <span
+          class="q-checkbox q-checkbox-md"
+          role="checkbox"
+          aria-checked="true"
+          data-checked
+        >
+          <span data-part="checkbox.checked" class="q-checkbox-box">
+            <span class="q-checkbox-indicator">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 8.5 6.5 12 13 4.5" />
+              </svg>
+            </span>
+          </span>
+        </span>
+        <span class="q-radio q-radio-md" role="radio" aria-checked="false">
+          <span data-part="radio" class="q-radio-box"></span>
+        </span>
+        <span
+          class="q-radio q-radio-md"
+          role="radio"
+          aria-checked="true"
+          data-checked
+        >
+          <span data-part="radio.checked" class="q-radio-box">
+            <span class="q-radio-indicator"
+              ><span class="q-radio-dot"></span
+            ></span>
+          </span>
+        </span>
+        <button
+          data-part="switch.off"
+          class="q-switch"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="q-switch-thumb"></span>
+        </button>
+        <button
+          data-part="switch.on"
+          class="q-switch"
+          role="switch"
+          aria-checked="true"
+          data-checked
+        >
+          <span class="q-switch-thumb"></span>
+        </button>
+        <button class="q-chip">Chip</button>
+        <button class="q-chip" data-selected>Selected</button>
+      </div>
+    </section>
+
+    <section>
+      <h6>Field · select</h6>
+      <div class="col">
+        <div class="q-field">
+          <label data-part="field.label" class="q-field-label" for="prompt"
+            >Prompt</label
+          >
+          <div data-part="input" class="q-field-control">
+            <input
+              id="prompt"
+              class="q-field-input"
+              value="A neon city at dusk"
+            />
+          </div>
+        </div>
+        <div class="q-field">
+          <label class="q-field-label" for="focused">Focused</label>
+          <div data-part="input.focus" class="q-field-control">
+            <input
+              id="focused"
+              class="q-field-input"
+              placeholder="Describe the scene"
+            />
+          </div>
+        </div>
+        <button
+          data-part="select.trigger"
+          class="q-field-control q-select-trigger"
+        >
+          <span class="q-select-value">16:9</span>
+          <span class="q-select-icon">
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="m4 6 4 4 4-4" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h6>Dropdown · glass</h6>
+      <div
+        data-part="menu"
+        class="q-dropdown-content static"
+        style="
+          width: 220px;
+          padding: 4px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        "
+      >
+        <div class="q-menu-item" data-checked>
+          <span class="q-menu-item-label"
+            ><span class="q-menu-item-title">Auto</span></span
+          >
+        </div>
+        <div data-part="menu.item" class="q-menu-item" data-highlighted>
+          <span class="q-menu-item-label"
+            ><span class="q-menu-item-title">16:9</span></span
+          >
+        </div>
+        <div class="q-menu-item">
+          <span class="q-menu-item-label"
+            ><span class="q-menu-item-title">9:16</span></span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>Tooltip</h6>
+      <div data-part="tooltip" class="q-tooltip static">Upscale to 4K</div>
+    </section>
+
+    <section>
+      <h6>Progress</h6>
+      <div
+        data-part="progress"
+        class="q-progress"
+        style="--q-progress-h: 4px; --q-tint: var(--hf-color-brand-primary)"
+      >
+        <div
+          data-part="progress.fill"
+          class="q-progress-fill"
+          style="width: 60%"
+        ></div>
+      </div>
+    </section>
+
+    <section style="grid-column: span 2">
+      <h6>Modal</h6>
+      <div
+        data-part="dialog"
+        class="q-modal static"
+        style="--q-modal-width: 28rem"
+      >
+        <div class="q-modal-header">
+          <h2 class="q-modal-title">Delete generation?</h2>
+        </div>
+        <p class="q-modal-description">
+          This removes the video from your library.
+        </p>
+        <div class="q-modal-actions">
+          <button class="q-button q-button-sm q-button-tertiary">Cancel</button>
+          <button class="q-button q-button-sm q-button-primary">Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // The app positions tab indicators from JS: do the same once laid out.
+      for (const list of document.querySelectorAll(".q-tabs-list")) {
+        const tab = list.querySelector("[data-active]")
+        if (!tab) continue
+        const a = list.getBoundingClientRect()
+        const b = tab.getBoundingClientRect()
+        list.style.setProperty(
+          "--active-tab-left",
+          `${b.left - a.left - list.clientLeft}px`,
+        )
+        list.style.setProperty(
+          "--active-tab-top",
+          `${b.top - a.top - list.clientTop}px`,
+        )
+        list.style.setProperty("--active-tab-width", `${b.width}px`)
+        list.style.setProperty("--active-tab-height", `${b.height}px`)
+      }
+    </script>
+  </body>
+</html>
