@@ -26,23 +26,22 @@ Sizes at the default size 2: buttons, fields, selects and menu rows 32px; tabs 4
 
 ## Measured pages
 
-The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts, scoped to the demo previews (`.radix-themes-default-fonts`) so they skip the docs chrome; each part is the page's first example at the default size and variant. `pnpm --filter www presets:measure --pack radix` re-measures them all into `tokens.json` (probe 227b008).
+The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts, scoped to the demo previews (`.radix-themes-default-fonts`) so they skip the docs chrome; each part is the page's first example at the default size and variant. `pnpm --filter www presets:measure --pack radix` re-measures them all into `tokens.json` (probe 8eb9b12).
 
-- `button.focus` tabs to the solid button. The dropdown menu opens from its first button ("Options"), the dialog from "Edit profile", and the tooltip shows on hovering the first icon button.
-- `button.secondary` is the dialog's "Cancel", Radix's `variant="soft" color="gray"`.
-- `badge` is the gray soft badge, `badge.accent` the indigo one, both size 1. `kbd` is the standalone keycap.
-- Checkbox, switch and card boxes are read from `::before` (`box`). The card's `::before` sits 1px inside its 8px corners, so it reads 7px.
+- `page` is the demo preview. The docs site sets its own font (Untitled Sans) on its chrome.
+- `button.focus` and `input.focus` focus the solid button and the text field's input from the keyboard. The field's ring is read on its root, which Radix outlines through `:focus-within`.
+- The dropdown menu opens from its first button ("Options"), the dialog from "Edit profile", and the tooltip shows on hovering the first icon button.
+- `button.secondary` is the dialog's "Cancel", Radix's `variant="soft" color="gray"`. `button.icon` is the gray soft icon button.
+- `badge` is the gray soft badge, `badge.accent` the indigo one, both size 1. `kbd` is the standalone keycap. `alert` is the gray soft callout.
+- `progress` is the size 2 surface bar while loading, `progress.fill` its indicator.
+- Checkbox, radio, switch and card boxes are read from `::before` (`box`). The card's `::before` sits 1px inside its 8px corners, so it reads 7px.
 
-Where the two sides draw a property in different places, the part skips it (`skip` in `targets.json`):
+Where the two sides draw a property in different places, the part skips it (`skip` or `only` in `targets.json`):
 
 - The switch's on track is a gradient stop over gray-a3, so `switch.on` skips its fill. Per `switch.css` it is accent-9, #3e63dd in both modes.
+- The segmented control paints its track as a gray-a3 `background-image` over the surface (#f0f0f3 in light), which the probe doesn't read, so `segmented` skips its fill. `segmented.item` reads only the inactive label's ink, type and the item's height, since the label carries the 12px inline padding. `segmented.selected` is the sliding indicator's `::before`, its box only; the active label turns 500.
 - Tabs read their label (`.rt-TabsTriggerInner`), which turns 500 when active while the trigger stays 400. The trigger's radius is skipped, since Radix rounds only the label's hover fill.
-- Menu, dialog and card skip content heights, ink and inline padding. Radix pads the menu inside its viewport (8px), and the dialog (24px at size 3) and card (12px) on boxes dotUI pads elsewhere. The menu also skips `ring`: its content takes focus on open, so its edge ring reads as a focus ring.
 - The text field skips `paddingInline`: the root pads 1px and the input slot 7px, an 8px text inset in all.
-- `page` is the demo preview, its fill, ink and type only. The docs site sets its own font (Untitled Sans) on its chrome.
-- Type parts keep their ink. `text` and `text.muted` skip heights (the paragraphs wrap), and `link` skips its size, inherited from the text around it.
-
-`input.focus` is kept by hand from `text-field.css`, since the probe reads a ring on the focused element and Radix draws it on the root through `:focus-within`: a 2px outline on `--focus-8` (#8da4ef / #435db1) at -1px, covering the 1px edge.
 
 ## Not in Radix Themes
 
