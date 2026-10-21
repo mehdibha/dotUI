@@ -23,6 +23,6 @@ export default defineConfig({
     outDir: path.join(src, "modules/mcp/__generated__"),
     emptyOutDir: true,
     assetsDir: "",
-    rollupOptions: { input: path.join(app, "directions.html") },
+    rollupOptions: { input: path.join(app, "card.html") },
   },
 })

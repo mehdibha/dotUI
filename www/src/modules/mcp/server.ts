@@ -1,4 +1,4 @@
-/* dotUI's MCP server: the brand interview, run by the agent, picked by the
+/* dotUI's MCP server: the brand interview, run by the agent, decided by the
    user in MCP App cards. Stateless — one server per request; the design
    travels in tool arguments until the pick is minted as a snapshot. */
 
@@ -15,35 +15,44 @@ import { getSnapshotStore } from "@/lib/snapshots/store"
 
 import { cardHtml } from "./cards"
 import {
+  compareDesigns,
   identityCatalog,
   mintDesignSystem,
+  pairingAxes,
+  resolveDesign,
   resolveDirections,
-} from "./directions"
+  resolvePairings,
+  resolveSwatches,
+  SHAPE_VALUES,
+} from "./design"
+import type { DesignInput } from "./design"
 
-const DIRECTIONS_URI = "ui://dotui/directions.html"
+const CARD_URI = "ui://dotui/card.html"
 
 const INSTRUCTIONS = `dotUI builds a complete design system (color, type, icons, shape, density, surfaces, motion and per-component styles) on accessible React Aria components, and installs it as code the user owns with the shadcn CLI.
 
-You run a short brand interview; the user makes the taste calls by looking at live previews.
-1. Ask what they're building and for whom, and which products feel close. Skip what the conversation already answers.
-2. get_design_axes once: the presets and the identity axes you compose from.
-3. propose_directions: three distinct, complete directions for their brand, each a preset plus a few axes. Make them genuinely different (style, shape, color strategy, type), each a coherent point of view. The user sees them rendered live with real dotUI components and picks one in the card; their pick arrives as their next message. Don't describe the directions again in text.
-4. Adjust the picked direction if they ask (call propose_directions again with variations), then create_design_system with that direction's preset and axes.
-5. If you can run commands, set the project up with the install command it returns; otherwise share the studio link and the command.`
+You run a short brand interview; the user makes the taste calls by looking at live previews in cards. Ask in words only for facts (what the product is, who it's for, how it should feel, products they like); infer whatever the conversation, an attached logo or a link already tells you.
+1. get_design_axes once: the presets, the shapes and the identity axes.
+2. propose_directions: three distinct, complete directions, each a preset, optionally a shape, and at most six axes. Make them genuinely different points of view.
+3. After the pick: ask_color unless the brand color is already known (pass colors from their logo or site as candidates), then ask_type unless the fonts are known. Pass the picked design along.
+4. Any change they ask for ("warmer", "sharper corners"): refine with the current design and the changes, and carry the proposed design forward only if they accept.
+5. create_design_system with the final design: it shows the install card. If you can run commands, set the project up with it.
 
-const direction = z.object({
-  name: z
-    .string()
-    .min(1)
-    .max(40)
-    .describe("Two or three words, e.g. Warm studio"),
-  summary: z.string().min(1).max(120).describe("One line on the point of view"),
+Every design argument is the whole design so far: { preset, shape, axes }. Picks arrive as the user's next message, and the exact axes the card chose arrive in your context: merge those axes into the design before the next call. Don't restate in text what a card shows.`
+
+const designShape = {
   preset: z.string().optional().describe("A preset id from get_design_axes"),
+  shape: z
+    .enum(SHAPE_VALUES)
+    .optional()
+    .describe("A corner look: sets the radius and every role together"),
   axes: z
     .record(z.string(), z.unknown())
     .optional()
-    .describe("Axis values over the preset, keyed as in get_design_axes"),
-})
+    .describe("Axis values on top, keyed as in get_design_axes"),
+}
+const design = z.object(designShape)
+const product = z.string().min(1).max(40).describe("The product's name")
 
 const json = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value) }],
@@ -59,9 +68,16 @@ const failure = (problems: string[]) => ({
   isError: true,
 })
 
+const card = (text: string, structuredContent: Record<string, unknown>) => ({
+  content: [{ type: "text" as const, text }],
+  structuredContent,
+})
+
+const ui = { ui: { resourceUri: CARD_URI } }
+
 function createServer(origin: string) {
   const server = new McpServer(
-    { name: "dotui", title: "dotUI", version: "0.1.0" },
+    { name: "dotui", title: "dotUI", version: "0.2.0" },
     { instructions: INSTRUCTIONS },
   )
 
@@ -70,7 +86,7 @@ function createServer(origin: string) {
     {
       title: "Get design axes",
       description:
-        "The built-in presets and the identity axes (style, color, type, icons, shape, space, surfaces, motion) with their accepted values and defaults.",
+        "The built-in presets, the corner shapes and the identity axes (style, color, type, icons, shape, space, surfaces, motion) with their accepted values and defaults.",
       annotations: { readOnlyHint: true },
     },
     () => json(identityCatalog()),
@@ -82,13 +98,30 @@ function createServer(origin: string) {
     {
       title: "Propose directions",
       description:
-        "Shows the user two or three complete design-system directions as live previews built from real dotUI components. The user picks one in the card.",
+        "Shows two or three complete design-system directions as live previews built from real dotUI components. The user picks one in the card.",
       inputSchema: {
-        product: z.string().min(1).max(40).describe("The product's name"),
-        directions: z.array(direction).min(2).max(3),
+        product,
+        directions: z
+          .array(
+            z.object({
+              name: z
+                .string()
+                .min(1)
+                .max(40)
+                .describe("Two or three words, e.g. Warm studio"),
+              summary: z
+                .string()
+                .min(1)
+                .max(120)
+                .describe("One line on the point of view"),
+              ...designShape,
+            }),
+          )
+          .min(2)
+          .max(3),
       },
       annotations: { readOnlyHint: true },
-      _meta: { ui: { resourceUri: DIRECTIONS_URI } },
+      _meta: ui,
     },
     ({ product, directions }) => {
       const result = resolveDirections(directions)
@@ -96,48 +129,194 @@ function createServer(origin: string) {
       const list = result.value
         .map((d) => `- ${d.name}: ${d.summary}`)
         .join("\n")
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: `Showing ${result.value.length} live directions for ${product}:\n${list}\nThe user picks one in the card; wait for their message.`,
-          },
-        ],
-        structuredContent: { product, directions: result.value },
-      }
+      return card(
+        `Showing ${result.value.length} live directions for ${product}:\n${list}\nThe user picks one in the card; wait for their message.`,
+        { card: "directions", product, directions: result.value },
+      )
     },
   )
 
-  server.registerTool(
+  registerAppTool(
+    server,
+    "ask_color",
+    {
+      title: "Ask color",
+      description:
+        "Shows the brand color card: candidate swatches, a color picker, brand or ink buttons and the neutral tint, previewed live in light and dark with measured contrast.",
+      inputSchema: {
+        product,
+        design: design.describe("The design so far"),
+        candidates: z
+          .array(
+            z.object({
+              color: z.string().describe("Any CSS color"),
+              label: z.string().max(30).optional(),
+            }),
+          )
+          .max(6)
+          .optional()
+          .describe("Colors from their logo, site or brief"),
+      },
+      annotations: { readOnlyHint: true },
+      _meta: ui,
+    },
+    ({ product, design: input, candidates = [] }) => {
+      const resolved = resolveDesign(input)
+      const swatches = resolveSwatches(candidates)
+      const problems = [
+        ...(resolved.ok ? [] : resolved.problems),
+        ...(swatches.ok ? [] : swatches.problems),
+      ]
+      if (!resolved.ok || !swatches.ok) return failure(problems)
+      return card(
+        `Showing the color card for ${product}. The user picks in the card; wait for their message.`,
+        {
+          card: "color",
+          product,
+          design: resolved.value,
+          candidates: swatches.value,
+        },
+      )
+    },
+  )
+
+  registerAppTool(
+    server,
+    "ask_type",
+    {
+      title: "Ask type",
+      description:
+        "Shows two to four type pairings set in the product's own copy with the design's components. The user picks one in the card.",
+      inputSchema: {
+        product,
+        design: design.describe("The design so far"),
+        pairings: z
+          .array(
+            z.object({
+              name: z.string().max(30).optional(),
+              heading: z.string().describe("A Google Fonts family"),
+              body: z.string().describe("A Google Fonts family"),
+              mono: z.string().optional().describe("A Google Fonts family"),
+            }),
+          )
+          .min(2)
+          .max(4),
+        sample: z
+          .string()
+          .max(140)
+          .optional()
+          .describe("A sentence in the product's voice"),
+      },
+      annotations: { readOnlyHint: true },
+      _meta: ui,
+    },
+    ({ product, design: input, pairings, sample }) => {
+      const resolved = resolveDesign(input)
+      const fonts = resolvePairings(pairings)
+      if (!resolved.ok || !fonts.ok)
+        return failure([
+          ...(resolved.ok ? [] : resolved.problems),
+          ...(fonts.ok ? [] : fonts.problems),
+        ])
+      return card(
+        `Showing ${pairings.length} type pairings for ${product}. The user picks in the card; wait for their message.`,
+        {
+          card: "type",
+          product,
+          sample,
+          design: resolved.value,
+          pairings: fonts.value.map((pairing) => ({
+            ...pairing,
+            axes: pairingAxes(pairing),
+          })),
+        },
+      )
+    },
+  )
+
+  registerAppTool(
+    server,
+    "refine",
+    {
+      title: "Refine",
+      description:
+        "Shows the current design and a proposed change side by side, with what changes listed. The user accepts or keeps the current one.",
+      inputSchema: {
+        product,
+        label: z
+          .string()
+          .min(1)
+          .max(40)
+          .describe("The change in a few words, e.g. Sharper corners"),
+        current: design.describe("The design so far"),
+        changes: design.describe(
+          "What to change: a new preset or shape, and axes merged over the current ones",
+        ),
+      },
+      annotations: { readOnlyHint: true },
+      _meta: ui,
+    },
+    ({ product, label, current, changes }) => {
+      const proposedInput: DesignInput = {
+        preset: changes.preset ?? current.preset,
+        shape: changes.shape ?? current.shape,
+        axes: { ...current.axes, ...changes.axes },
+      }
+      const from = resolveDesign(current)
+      const to = resolveDesign(proposedInput)
+      if (!from.ok || !to.ok)
+        return failure([
+          ...(from.ok ? [] : from.problems.map((p) => `current → ${p}`)),
+          ...(to.ok ? [] : to.problems.map((p) => `proposed → ${p}`)),
+        ])
+      const changed = compareDesigns(from.value, to.value)
+      return card(
+        `Comparing "${label}" (${changed.length} axes change). If the user accepts, the proposed design is ${JSON.stringify(proposedInput)}.`,
+        {
+          card: "compare",
+          product,
+          label,
+          current: from.value,
+          proposed: to.value,
+          changes: changed,
+        },
+      )
+    },
+  )
+
+  registerAppTool(
+    server,
     "create_design_system",
     {
       title: "Create design system",
       description:
-        "Saves a design system (a preset plus axes) and returns its id, the studio link to refine it, and the shadcn command that installs it.",
-      inputSchema: {
-        name: z.string().min(1).max(64),
-        preset: z.string().optional(),
-        axes: z.record(z.string(), z.unknown()).optional(),
-      },
+        "Saves the design system and shows the install card: the shadcn command, the studio link to refine it, and Open in v0.",
+      inputSchema: { name: z.string().min(1).max(64), ...designShape },
       annotations: { readOnlyHint: false, destructiveHint: false },
+      _meta: ui,
     },
     async (input) => {
       const result = await mintDesignSystem(input, getSnapshotStore(), origin)
-      return result.ok ? json(result.value) : failure(result.problems)
+      if (!result.ok) return failure(result.problems)
+      const { diff: _, ...summary } = result.value
+      return card(JSON.stringify(summary), {
+        card: "ready",
+        ...result.value,
+      })
     },
   )
 
   registerAppResource(
     server,
-    "Directions",
-    DIRECTIONS_URI,
-    { description: "Live design-system directions to pick from" },
+    "dotUI card",
+    CARD_URI,
+    { description: "Live design-system cards" },
     () => ({
       contents: [
         {
-          uri: DIRECTIONS_URI,
+          uri: CARD_URI,
           mimeType: RESOURCE_MIME_TYPE,
-          text: cardHtml("directions", origin),
+          text: cardHtml("card", origin),
           _meta: {
             ui: {
               csp: {
@@ -147,6 +326,7 @@ function createServer(origin: string) {
                   "https://fonts.gstatic.com",
                 ],
               },
+              permissions: { clipboardWrite: {} },
               prefersBorder: false,
             },
           },

@@ -5,46 +5,88 @@
 import { useEffect, useRef, useState } from "react"
 import {
   AppBridge,
+  buildAllowAttribute,
+  getToolUiResourceUri,
   PostMessageTransport,
 } from "@modelcontextprotocol/ext-apps/app-bridge"
-import type { McpUiResourceCsp } from "@modelcontextprotocol/ext-apps/app-bridge"
+import type { McpUiResourceMeta } from "@modelcontextprotocol/ext-apps/app-bridge"
 import { Client } from "@modelcontextprotocol/sdk/client/index.js"
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js"
 
 import { Button } from "@/registry/ui/button"
 
-const SAMPLE = {
-  product: "Lumen",
-  directions: [
-    {
-      name: "Quiet ledger",
-      summary: "Flat and crisp, black buttons, teal accents",
-      preset: "vercel",
-      axes: { brand: "#0f766e" },
-    },
-    {
-      name: "Warm studio",
-      summary: "Tonal surfaces, soft corners, serif headings",
-      preset: "claude",
-      axes: { brand: "#e8590c", headingFont: "Fraunces", style: "tonal" },
-    },
-    {
-      name: "Precise tool",
-      summary: "Tactile controls, sharp corners, compact",
-      preset: "linear",
-      axes: {
-        style: "tactile",
-        radiusPx: 4,
-        density: "compact",
-        bodyFont: "IBM Plex Sans",
-        iconLibrary: "phosphor",
-      },
-    },
-  ],
+const WARM = {
+  preset: "claude",
+  axes: { brand: "#e8590c", headingFont: "Fraunces", style: "tonal" },
 }
 
+const SAMPLES: Record<string, Record<string, unknown>> = {
+  propose_directions: {
+    product: "Lumen",
+    directions: [
+      {
+        name: "Quiet ledger",
+        summary: "Flat and crisp, black buttons, teal accents",
+        preset: "vercel",
+        axes: { brand: "#0f766e" },
+      },
+      {
+        name: "Warm studio",
+        summary: "Tonal surfaces, soft corners, serif headings",
+        ...WARM,
+      },
+      {
+        name: "Precise tool",
+        summary: "Tactile controls, sharp corners, compact",
+        preset: "linear",
+        shape: "sharp",
+        axes: {
+          style: "tactile",
+          density: "compact",
+          bodyFont: "IBM Plex Sans",
+          iconLibrary: "phosphor",
+        },
+      },
+    ],
+  },
+  ask_color: {
+    product: "Lumen",
+    design: WARM,
+    candidates: [
+      { color: "#e8590c", label: "Logo orange" },
+      { color: "#b5451b", label: "Rust" },
+      { color: "#2f6f5e", label: "Ledger green" },
+      { color: "oklch(0.55 0.2 265)", label: "Indigo" },
+    ],
+  },
+  ask_type: {
+    product: "Lumen",
+    design: WARM,
+    sample: "Get paid on time, without chasing anyone.",
+    pairings: [
+      { name: "Editorial", heading: "Fraunces", body: "Inter" },
+      { name: "Humanist", heading: "Instrument Sans", body: "Instrument Sans" },
+      {
+        name: "Technical",
+        heading: "IBM Plex Sans",
+        body: "IBM Plex Sans",
+        mono: "JetBrains Mono",
+      },
+    ],
+  },
+  refine: {
+    product: "Lumen",
+    label: "Sharper corners",
+    current: WARM,
+    changes: { shape: "sharp" },
+  },
+  create_design_system: { name: "Lumen", ...WARM },
+}
+
+const TOOLS = Object.keys(SAMPLES)
+
 // The spec's default policy, opened to the declared domains.
-function withCsp(html: string, csp: McpUiResourceCsp = {}) {
+function withCsp(html: string, csp: McpUiResourceMeta["csp"] = {}) {
   const resources = (csp.resourceDomains ?? []).join(" ")
   const connect = (csp.connectDomains ?? []).join(" ")
   const policy = [
@@ -75,7 +117,8 @@ const DEVICES = {
 } as const
 
 export function DevHost() {
-  const [args, setArgs] = useState(JSON.stringify(SAMPLE, null, 2))
+  const [tool, setTool] = useState("propose_directions")
+  const [args, setArgs] = useState(JSON.stringify(SAMPLES[tool], null, 2))
   const [theme, setTheme] = useState<"light" | "dark">("light")
   const [device, setDevice] = useState<keyof typeof DEVICES>("desktop")
   const [fullscreen, setFullscreen] = useState(false)
@@ -106,18 +149,15 @@ export function DevHost() {
         new StreamableHTTPClientTransport(new URL("/mcp", location.origin)),
       )
       const toolArgs = JSON.parse(args) as Record<string, unknown>
-      const result = await client.callTool({
-        name: "propose_directions",
-        arguments: toolArgs,
-      })
+      const { tools } = await client.listTools()
+      const uri = getToolUiResourceUri(tools.find((t) => t.name === tool) ?? {})
+      const result = await client.callTool({ name: tool, arguments: toolArgs })
       push("tool result", JSON.stringify(result.content))
-      if (result.isError || cancelled) return
-      const resource = await client.readResource({
-        uri: "ui://dotui/directions.html",
-      })
+      if (result.isError || cancelled || !uri) return
+      const resource = await client.readResource({ uri })
       const content = resource.contents[0] as {
         text: string
-        _meta?: { ui?: { csp?: McpUiResourceCsp } }
+        _meta?: { ui?: McpUiResourceMeta }
       }
       const host = new AppBridge(
         client,
@@ -166,6 +206,7 @@ export function DevHost() {
       }
       bridge.current = host
       await host.connect(new PostMessageTransport(view, view))
+      iframe.allow = buildAllowAttribute(content._meta?.ui?.permissions)
       iframe.srcdoc = withCsp(content.text, content._meta?.ui?.csp)
     })().catch((error: unknown) => push("error", String(error)))
     return () => {
@@ -173,15 +214,28 @@ export function DevHost() {
       void bridge.current?.close()
       bridge.current = null
     }
-    // oxlint-disable-next-line react/exhaustive-deps -- a run reads the arguments as they are when Run is pressed
+    // oxlint-disable-next-line react/exhaustive-deps -- a run reads the tool and arguments as they are when Run is pressed
   }, [run])
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 p-6 lg:flex-row">
       <div className="flex w-full flex-col gap-3 lg:w-80 lg:shrink-0">
         <h1 className="text-lg font-semibold">MCP App dev host</h1>
+        <select
+          aria-label="Tool"
+          value={tool}
+          onChange={(e) => {
+            setTool(e.target.value)
+            setArgs(JSON.stringify(SAMPLES[e.target.value], null, 2))
+          }}
+          className="h-9 rounded-md border bg-card px-2 text-sm"
+        >
+          {TOOLS.map((name) => (
+            <option key={name}>{name}</option>
+          ))}
+        </select>
         <textarea
-          aria-label="propose_directions arguments"
+          aria-label="Tool arguments"
           value={args}
           onChange={(e) => setArgs(e.target.value)}
           spellCheck={false}
@@ -195,7 +249,7 @@ export function DevHost() {
               setRun((n) => n + 1)
             }}
           >
-            Run propose_directions
+            Run
           </Button>
           <Button
             onPress={() => setTheme(theme === "light" ? "dark" : "light")}
