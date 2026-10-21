@@ -3,8 +3,7 @@
     "signedIn": true,
     "parts": {
       "page": {
-        "selector": "main",
-        "skip": ["borderRadius", "edge", "height"]
+        "selector": "main"
       },
       "panel": {
         "selector": "main"
@@ -68,6 +67,13 @@
     "parts": {
       "input": {
         "selector": "main input#title"
+      },
+      "input.focus": {
+        "selector": "main input#title",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "main label"
       }
     }
   },
@@ -80,8 +86,7 @@
       },
       "link": {
         "selector": "main a[href^=\"http\"]",
-        "text": "Docs",
-        "skip": ["fontSize"]
+        "text": "Docs"
       }
     }
   },
@@ -147,6 +152,9 @@
             "press": "Meta+k"
           }
         ]
+      },
+      "button.icon": {
+        "selector": "[aria-label=\"Create new issue\"]"
       }
     }
   },
