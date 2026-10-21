@@ -27,8 +27,9 @@ import { TypePreview } from "./type"
 type FoundationRow = [AxisKey | React.ComponentType, string, string[]?]
 
 export const MAIN_ROWS: FoundationRow[] = [
+  ["brandAssets", "Brand assets", ["Logo", "Wordmark", "Identity"]],
   ["style", "Style"],
-  ["brand", "Brand"],
+  ["brand", "Theme", ["Brand", "Accent"]],
   ["neutralHue", "Neutral"],
   [PrimaryRow, "Primary"],
   [SurfacesRow, "Surfaces"],
@@ -37,7 +38,6 @@ export const MAIN_ROWS: FoundationRow[] = [
   ["density", "Density"],
   ["iconLibrary", "Icons"],
   ["motion", "Motion"],
-  ["brandAssets", "Identity", ["Logo", "Wordmark", "Assets"]],
 ]
 
 /** The keys whose rows sit on the main page, in or under its rows. */

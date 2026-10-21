@@ -1,6 +1,6 @@
 "use client"
 
-/* Identity — the brand's logo and wordmark, each in its light and dark
+/* Brand assets — the brand's logo and wordmark, each in its light and dark
    variant. A preset shows its product's; the user's own system shows empty
    drop zones until uploads land. Read-only either way. */
 
@@ -85,7 +85,7 @@ function AssetsRow() {
   return (
     <DialTrigger
       axis="brandAssets"
-      label="Identity"
+      label="Brand assets"
       value={
         <>
           <span className="truncate">{brand?.name ?? "None"}</span>
