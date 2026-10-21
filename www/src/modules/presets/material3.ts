@@ -96,8 +96,10 @@ export const material3 = definePreset({
     menuIndicator: "none",
     menuRows: "step",
     mobilePickers: "anchored",
-    // The docked search view: a bare input over a divider.
+    // The docked search view: a bare input over a divider, 16px query and
+    // rows (body-large).
     menuSearch: "bar",
+    menuScale: "large",
 
     // Dialogs: a 32% black scrim; dividers only while scrolling.
     dialogBackdrop: "scrim",
