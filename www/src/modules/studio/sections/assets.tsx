@@ -87,14 +87,14 @@ function AssetsRow() {
       axis="brandAssets"
       label="Brand assets"
       value={
-        <>
-          <span className="truncate">{brand?.name ?? "None"}</span>
-          {brand && (
-            <DialGlyph>
-              <AssetImage asset={brand.logo} />
-            </DialGlyph>
-          )}
-        </>
+        brand ? (
+          <DialGlyph>
+            <AssetImage asset={brand.logo} />
+            <span className="sr-only">{brand.name}</span>
+          </DialGlyph>
+        ) : (
+          "None"
+        )
       }
     >
       <DialPopover className="w-72">
