@@ -6,7 +6,9 @@ import type { SheetName } from "./sheets"
 
 /** Where a part sits on a page. `text` matches an element's own trimmed text
  *  and climbs to its control; `surface` climbs to the first box painted at
- *  more than 10% alpha. */
+ *  more than 10% alpha. In `selector`, `within`, `box` and `ink`, `a >>> b`
+ *  matches b inside the shadow roots of a's matches, and a leading `>>>`
+ *  searches the part's own shadow root (web components). */
 export interface Target {
   selector?: string
   text?: string
@@ -21,14 +23,18 @@ export interface Target {
   box?: string
   /** Read color and type from this descendant (a nav row's label span). */
   ink?: string
-  /** Focus from the keyboard before measuring (`--pack`). */
+  /** A focus part: focus it (or the first control inside it) from the
+   *  keyboard before measuring (`--pack`), and read its `ring`. */
   focus?: boolean
   /** Steps run before measuring (`--pack`), undone with Escape after: open
    *  a menu, hover a tooltip trigger. Puppeteer selectors, so
    *  `::-p-text(Options)` matches by text. */
   before?: Step[]
-  /** Props left out of `tokens.json` for this part (`--pack`), where the
-   *  two sides draw them in different places. */
+  /** The props this page writes to `tokens.json` for the part, in place of
+   *  the part's own list in SPECIMEN_TARGETS. */
+  only?: Prop[]
+  /** Props this page leaves out of `tokens.json` for the part, where the two
+   *  sides draw them in different places. */
   skip?: Prop[]
 }
 
@@ -37,8 +43,6 @@ export type Step = { click: string } | { hover: string } | { press: string }
 export const PROPS = [
   "backgroundColor",
   "color",
-  "borderColor",
-  "borderWidth",
   "borderRadius",
   "height",
   "paddingInline",
@@ -56,7 +60,8 @@ export type Measure = Partial<Record<Prop, string>>
 /** One mode's measures, by part; `null` when the target matched nothing. */
 export type Measures = Record<string, Measure | null>
 /** A reference pack's `tokens.json`: what the real product measures, and the
- *  probe commit that measured it. */
+ *  probe commit that measured it ("tokens" when the values come from the
+ *  system's published token tables instead). */
 export interface ReferenceTokens {
   light?: Measures
   dark?: Measures
@@ -69,6 +74,12 @@ export interface Page {
   /** The mode the page shows. Without it, `--pack` measures the page in both
    *  modes through `prefers-color-scheme`. */
   mode?: "light" | "dark"
+  /** The URL that shows this page in dark (a Storybook theme global): the
+   *  page's own URL is then measured in light only. */
+  dark?: string
+  /** The localStorage key the site reads its theme from (next-themes'
+   *  "theme"): `--pack` sets it to "light" or "dark" before load. */
+  storage?: string
   /** Measured in a signed-in tab with `--snippet`, then `--merge`d; `--pack`
    *  skips it. */
   signedIn?: boolean
@@ -94,17 +105,42 @@ function probe(
     if (!match || (color.startsWith("rgb(") && !color.includes("/"))) return 1
     return Number(match[1]) / (match[2] ? 100 : 1)
   }
-  /* A translucent color as it shows: composited over the backgrounds under
+  /* Matches across shadow roots: see Target. */
+  const query = (root: ParentNode, selector: string): Element[] => {
+    const parts = selector.split(">>>").map((part) => part.trim())
+    let nodes: ParentNode[] = [root]
+    for (const [i, part] of parts.entries()) {
+      const found = nodes.flatMap((node) =>
+        part
+          ? [...node.querySelectorAll(part)]
+          : node instanceof Element
+            ? [node]
+            : [],
+      )
+      if (i === parts.length - 1) return found
+      nodes = found.flatMap((el) => el.shadowRoot ?? [])
+    }
+    return []
+  }
+  const parent = (el: Element) =>
+    el.parentElement ?? (el.getRootNode() as ShadowRoot).host ?? null
+  /* A translucent or clear color as it shows: composited over `own` (the
+     fill a line sits on, when it isn't `under`'s) and the backgrounds under
      it (from `under` up to the first opaque one, white below), as rgb().
-     Clear and opaque colors pass through. */
+     Opaque colors pass through. */
   const canvas = document
     .createElement("canvas")
     .getContext("2d", { willReadFrequently: true })
-  const seen = (color: string, under: Element | null) => {
+  const seen = (color: string, under: Element | null, own?: string) => {
     const a = alpha(color)
-    if (!canvas || a === 0 || a >= 1) return color
+    if (!canvas || a >= 1) return color
     const layers = [color]
-    for (let node = under; node; node = node.parentElement) {
+    if (own && alpha(own) > 0) layers.push(own)
+    for (
+      let node = own && alpha(own) >= 1 ? null : under;
+      node;
+      node = parent(node)
+    ) {
       const bg = getComputedStyle(node).backgroundColor
       if (alpha(bg) > 0) layers.push(bg)
       if (alpha(bg) >= 1) break
@@ -139,7 +175,10 @@ function probe(
   /* The hairline that outlines a box, wherever it is drawn: a border, a ring
      up to 1.5px, or either on ::before or ::after. A border on some sides
      only names them ("1px <color> bottom"). */
-  const edgeOf = (style: CSSStyleDeclaration, under: Element) => {
+  /* `under` is what the box sits on: its parent, or the element for a
+     pseudo-element. Borders and inset rings show over the box's own fill. */
+  const edgeOf = (style: CSSStyleDeclaration, under: Element | null) => {
+    const fill = style.backgroundColor
     const sides = (["top", "right", "bottom", "left"] as const).filter(
       (side) =>
         style.getPropertyValue(`border-${side}-style`) !== "none" &&
@@ -151,21 +190,21 @@ function probe(
       const width = Number.parseFloat(
         style.getPropertyValue(`border-${first}-width`),
       )
-      const line = `${width}px ${seen(style.getPropertyValue(`border-${first}-color`), under)}`
+      const line = `${width}px ${seen(style.getPropertyValue(`border-${first}-color`), under, fill)}`
       return sides.length === 4 ? line : `${line} ${sides.join("+")}`
     }
     const hairline = rings(style).find(
       (ring) => ring.spread > 0 && ring.spread <= 1.5,
     )
     return hairline
-      ? `${hairline.spread}px ${seen(hairline.color, under)}`
+      ? `${hairline.spread}px ${seen(hairline.color, under, hairline.inset ? fill : undefined)}`
       : null
   }
   const edge = (el: Element) => {
     for (const pseudo of [null, "::before", "::after"]) {
       const style = getComputedStyle(el, pseudo)
       if (pseudo && style.content === "none") continue
-      const found = edgeOf(style, el)
+      const found = edgeOf(style, pseudo ? el : parent(el))
       if (found) return found
     }
     return "none"
@@ -174,16 +213,24 @@ function probe(
   /* The focus ring, "<width>px <color> <±offset>px", from an outline, the
      outermost ring (the one inside it sets the offset), or the topmost inset
      ring, which sits inside the border and merges with a border of its
-     color. Focused parts only. */
+     color. Focused parts only; `read` turns one flush with the outer edge
+     into the edge. */
   const ring = (el: Element) => {
     if (
-      !el.matches(":focus-visible, [data-focus-visible], [data-specimen-focus]")
+      !el.matches(
+        ":focus-visible, :focus-within, [data-focus-visible], [data-specimen-focus]",
+      )
     )
       return "none"
     const style = getComputedStyle(el)
     const width = Number.parseFloat(style.outlineWidth)
-    if (style.outlineStyle !== "none" && width > 0)
-      return `${width}px ${seen(style.outlineColor, el.parentElement)} ${signed(Number.parseFloat(style.outlineOffset))}`
+    // Some systems keep a transparent outline for forced colors (Stripe).
+    if (
+      style.outlineStyle !== "none" &&
+      width > 0 &&
+      alpha(style.outlineColor) > 0
+    )
+      return `${width}px ${seen(style.outlineColor, parent(el))} ${signed(Number.parseFloat(style.outlineOffset))}`
     const all = rings(style).filter((ring) => ring.spread > 0)
     const outer = all
       .filter((ring) => !ring.inset)
@@ -191,7 +238,7 @@ function probe(
     const last = outer.at(-1)
     if (last) {
       const offset = outer.at(-2)?.spread ?? 0
-      return `${last.spread - offset}px ${seen(last.color, el.parentElement)} ${signed(offset)}`
+      return `${last.spread - offset}px ${seen(last.color, parent(el))} ${signed(offset)}`
     }
     const inset = all.find((ring) => ring.inset)
     if (!inset) return "none"
@@ -201,12 +248,10 @@ function probe(
   }
   const find = (target: Target): Element | null => {
     const root = target.within
-      ? document.querySelector(target.within)
+      ? (query(document, target.within)[0] ?? null)
       : document
     if (!root) return null
-    let found = [...root.querySelectorAll(target.selector ?? "*")].filter(
-      visible,
-    )
+    let found = query(root, target.selector ?? "*").filter(visible)
     if (target.text !== undefined) {
       const text = found.filter((el) => el.textContent?.trim() === target.text)
       found = text
@@ -218,7 +263,7 @@ function probe(
     let el: Element | null = found[target.nth ?? 0] ?? null
     if (el && target.surface) {
       let box: Element | null = el
-      while (box && !painted(box)) box = box.parentElement
+      while (box && !painted(box)) box = parent(box)
       el = box ?? el
     }
     return el
@@ -228,7 +273,7 @@ function probe(
      ::after that covers most of it (Duolingo's buttons; not a badge dot). */
   const boxOf = (el: Element, target: Target): [Element, string | null] => {
     if (target.box?.startsWith("::")) return [el, target.box]
-    if (target.box) return [el.querySelector(target.box) ?? el, null]
+    if (target.box) return [query(el, target.box)[0] ?? el, null]
     if (painted(el)) return [el, null]
     const box = el.getBoundingClientRect()
     const covers = (child: Element) => {
@@ -240,9 +285,10 @@ function probe(
         Math.abs(rect.bottom - box.bottom) <= 1
       )
     }
-    const child = [...el.querySelectorAll("*")].find(
-      (child) => painted(child) && covers(child),
-    )
+    const child = [
+      ...el.querySelectorAll("*"),
+      ...(el.shadowRoot?.querySelectorAll("*") ?? []),
+    ].find((child) => painted(child) && covers(child))
     if (child) return [child, null]
     const pseudo = ["::before", "::after"].find((pseudo) => {
       const style = getComputedStyle(el, pseudo)
@@ -259,16 +305,17 @@ function probe(
     const style = getComputedStyle(el)
     const [box, pseudo] = boxOf(el, target)
     const paint = getComputedStyle(box, pseudo)
-    const inkEl = target.ink ? (el.querySelector(target.ink) ?? el) : el
+    const inkEl = target.ink ? (query(el, target.ink)[0] ?? el) : el
     const ink = getComputedStyle(inkEl)
-    const all: Record<string, string> = {
-      backgroundColor: seen(
-        paint.backgroundColor,
-        pseudo ? el : box.parentElement,
-      ),
+    // A focus line drawn inset and flush with the box's outer edge (Linear's
+    // outline at -1px, Carbon's 2px inset) shows as the edge changing color.
+    const focusRing = target.focus ? ring(el) : undefined
+    const flush = focusRing && /^([\d.]+)px (.+) -([\d.]+)px$/.exec(focusRing)
+    const inset =
+      flush && flush[1] === flush[3] ? `${flush[1]}px ${flush[2]}` : null
+    const all: Record<string, string | undefined> = {
+      backgroundColor: seen(paint.backgroundColor, pseudo ? el : parent(box)),
       color: seen(ink.color, inkEl),
-      borderColor: seen(paint.borderTopColor, pseudo ? el : box),
-      borderWidth: paint.borderTopWidth,
       borderRadius: paint.borderTopLeftRadius,
       height: pseudo
         ? px(Number.parseFloat(paint.height))
@@ -279,19 +326,30 @@ function probe(
       fontWeight: ink.fontWeight,
       letterSpacing: ink.letterSpacing,
       boxShadow: paint.boxShadow,
-      edge: pseudo
-        ? (edgeOf(paint, el) ?? edge(el))
-        : target.box || edge(el) === "none"
-          ? edge(box)
-          : edge(el),
-      ring: ring(el),
+      edge:
+        inset ??
+        (pseudo
+          ? (edgeOf(paint, el) ?? edge(el))
+          : target.box || edge(el) === "none"
+            ? edge(box)
+            : edge(el)),
+      ring: inset ? "none" : focusRing,
     }
-    return Object.fromEntries(props.map((prop) => [prop, all[prop]]))
+    return Object.fromEntries(
+      props
+        .filter((prop) => all[prop] !== undefined)
+        .map((prop) => [prop, all[prop]]),
+    )
   }
   return Object.fromEntries(
     Object.entries(targets).map(([part, target]) => {
       const el = find(target)
-      if (el && focus) (el as HTMLElement).focus()
+      if (el && focus)
+        (
+          (el.matches(CONTROL)
+            ? el
+            : (el.querySelector(CONTROL) ?? el)) as HTMLElement
+        ).focus()
       return [part, el ? read(el, target) : null]
     }),
   )
@@ -309,59 +367,114 @@ export const snippet = (
 
 const cell = (label: string) => `[data-cell="${label}"]`
 
-/** The parts a reference pack measures, as the specimen sheets show them. A
- *  pack names the same parts with its product's own targets. */
+const CONTROL = PROPS.filter((prop) => prop !== "ring")
+const TYPE: Prop[] = [
+  "color",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "letterSpacing",
+]
+const BOX: Prop[] = ["backgroundColor", "borderRadius", "height", "edge"]
+const SURFACE: Prop[] = [
+  "backgroundColor",
+  "color",
+  "borderRadius",
+  "boxShadow",
+  "edge",
+]
+const ROW: Prop[] = [
+  "backgroundColor",
+  "color",
+  "borderRadius",
+  "height",
+  "paddingInline",
+  "fontSize",
+  "fontWeight",
+]
+const PAGE: Prop[] = ["backgroundColor", "color", "fontFamily"]
+const LAYOUT: Prop[] = ["backgroundColor", "edge"]
+const LINK: Prop[] = ["color", "fontWeight"]
+const TOOLTIP: Prop[] = [
+  ...SURFACE,
+  "height",
+  "paddingInline",
+  "fontSize",
+  "fontWeight",
+]
+const FOCUS: Prop[] = ["edge", "ring"]
+
+/** The parts a reference pack measures, as the specimen sheets show them, and
+ *  the props each kind is compared on (`--pack` writes only those unless a
+ *  target sets `only`). A pack names the same parts with its product's own
+ *  targets. */
 export const SPECIMEN_TARGETS: Record<
   string,
-  { sheet: SheetName; target: Target }
+  { sheet: SheetName; props: readonly Prop[]; target: Target }
 > = {
-  page: { sheet: "actions", target: { selector: "[data-specimen]" } },
+  page: {
+    sheet: "actions",
+    props: PAGE,
+    target: { selector: "[data-specimen]" },
+  },
   "button.primary": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Primary" },
   },
   "button.secondary": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Secondary" },
   },
   "button.quiet": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Quiet" },
   },
   input: {
     sheet: "fields",
+    props: CONTROL,
     target: { within: cell("text field · description"), selector: "input" },
   },
   "button.focus": {
     sheet: "actions",
-    target: { selector: "[data-specimen-focus]" },
+    props: FOCUS,
+    target: { selector: "[data-specimen-focus]", focus: true },
   },
   "select.trigger": {
     sheet: "fields",
+    props: CONTROL,
     target: { within: cell("select · trigger"), selector: "button" },
   },
   "input.focus": {
     sheet: "fields",
-    target: { selector: "[data-specimen-focus]" },
+    props: FOCUS,
+    target: { selector: "[data-specimen-focus]", focus: true },
   },
   checkbox: {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-checkbox-indicator]:not([data-selected])" },
   },
   "checkbox.checked": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-checkbox-indicator][data-selected]" },
   },
   "switch.on": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-switch-indicator][data-selected]" },
   },
   "switch.off": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-switch-indicator]:not([data-selected])" },
   },
   tab: {
     sheet: "navigation",
+    props: CONTROL,
     target: {
       within: cell("tabs · preset default"),
       selector: "[data-tab]:not([data-selected]):not([data-disabled])",
@@ -369,6 +482,7 @@ export const SPECIMEN_TARGETS: Record<
   },
   "tab.selected": {
     sheet: "navigation",
+    props: CONTROL,
     target: {
       within: cell("tabs · preset default"),
       selector: "[data-tab][data-selected]",
@@ -376,49 +490,72 @@ export const SPECIMEN_TARGETS: Record<
   },
   link: {
     sheet: "navigation",
+    props: LINK,
     target: { within: cell("links in text"), selector: "a" },
   },
   shell: {
     sheet: "navigation",
+    props: LAYOUT,
     target: { selector: "[data-sidebar-wrapper]", surface: true },
   },
-  panel: { sheet: "navigation", target: { selector: "[data-sidebar-inset]" } },
+  panel: {
+    sheet: "navigation",
+    props: LAYOUT,
+    target: { selector: "[data-sidebar-inset]" },
+  },
   "nav.item": {
     sheet: "navigation",
+    props: ROW,
     target: { selector: "[data-sidebar-menu-button]:not([data-active])" },
   },
   "nav.item.active": {
     sheet: "navigation",
+    props: ROW,
     target: { selector: "[data-sidebar-menu-button][data-active]" },
   },
   menu: {
     sheet: "menu",
+    props: SURFACE,
     target: { selector: "[data-menu-content]", surface: true },
   },
-  "menu.item": { sheet: "menu", target: { selector: "[data-menu-item]" } },
+  "menu.item": {
+    sheet: "menu",
+    props: ROW,
+    target: { selector: "[data-menu-item]" },
+  },
   tooltip: {
     sheet: "menu",
+    props: TOOLTIP,
     target: { selector: "[data-tooltip]", surface: true },
   },
   command: {
     sheet: "command",
+    props: SURFACE,
     target: { selector: "[data-command]", surface: true },
   },
   "command.item": {
     sheet: "command",
+    props: ROW,
     target: { within: "[data-command]", selector: "[data-listbox-item]" },
   },
   kbd: {
     sheet: "display",
+    props: CONTROL,
     target: { within: cell("avatars · kbd"), selector: "[data-kbd]" },
   },
   dialog: {
     sheet: "dialog",
+    props: SURFACE,
     target: { selector: "[data-dialog-content]", surface: true },
   },
-  card: { sheet: "display", target: { selector: "[data-card]" } },
+  card: {
+    sheet: "display",
+    props: SURFACE,
+    target: { selector: "[data-card]" },
+  },
   badge: {
     sheet: "feedback",
+    props: CONTROL,
     target: {
       within: cell("badge · preset default"),
       selector: "[data-badge]",
@@ -427,6 +564,7 @@ export const SPECIMEN_TARGETS: Record<
   },
   "badge.accent": {
     sheet: "feedback",
+    props: CONTROL,
     target: {
       within: cell("badge · preset default"),
       selector: "[data-badge]",
@@ -435,26 +573,32 @@ export const SPECIMEN_TARGETS: Record<
   },
   "heading.1": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h1 · text-4xl"), selector: "h1" },
   },
   "heading.2": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h2 · text-3xl"), selector: "h2" },
   },
   "heading.3": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h3 · text-2xl"), selector: "h3" },
   },
   "heading.4": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h4 · text-xl"), selector: "h4" },
   },
   text: {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("body · text-base"), selector: ":scope > div > p" },
   },
   "text.muted": {
     sheet: "type",
+    props: TYPE,
     target: {
       within: cell("muted · text-sm text-fg-muted"),
       selector: ":scope > div > p",
