@@ -7,39 +7,25 @@
       },
       "button.primary": {
         "selector": "button[data-component=Button][data-variant=primary]",
-        "skip": ["fontFamily", "letterSpacing", "ring"]
+        "skip": ["letterSpacing"]
       },
       "button.secondary": {
         "selector": "button[data-component=Button][data-variant=default]",
-        "skip": ["fontFamily", "letterSpacing", "ring"]
+        "skip": ["letterSpacing"]
       },
       "input": {
         "selector": "[data-component=TextInput]",
-        "skip": ["fontFamily", "letterSpacing", "paddingInline", "ring"]
+        "skip": ["letterSpacing", "paddingInline"]
       },
       "tab": {
         "selector": "nav[aria-label=Repository] a:not([aria-current=page])",
         "ink": "[data-component=text]",
-        "skip": [
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "backgroundColor"
-        ]
+        "skip": ["letterSpacing", "boxShadow", "edge", "backgroundColor"]
       },
       "tab.selected": {
         "selector": "nav[aria-label=Repository] a[aria-current=page]",
         "ink": "[data-component=text]",
-        "skip": [
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "backgroundColor"
-        ]
+        "skip": ["letterSpacing", "boxShadow", "edge", "backgroundColor"]
       },
       "link": {
         "selector": "article.markdown-body p a[href]",
@@ -93,26 +79,12 @@
       "nav.item": {
         "selector": "li[data-component='ActionList.Item'][data-has-description=false]:not([data-active])",
         "ink": "[data-component='ActionList.Item.Label']",
-        "skip": [
-          "fontFamily",
-          "letterSpacing",
-          "paddingInline",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["letterSpacing", "paddingInline", "boxShadow", "edge"]
       },
       "nav.item.active": {
         "selector": "li[data-component='ActionList.Item'][data-active=true]",
         "ink": "[data-component='ActionList.Item.Label']",
-        "skip": [
-          "fontFamily",
-          "letterSpacing",
-          "paddingInline",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["letterSpacing", "paddingInline", "boxShadow", "edge"]
       },
       "heading.4": {
         "selector": "h1[data-testid=header-title]",
@@ -141,7 +113,7 @@
     "parts": {
       "button.quiet": {
         "selector": "button[data-component=Button]",
-        "skip": ["fontFamily", "letterSpacing", "ring", "edge", "boxShadow"]
+        "skip": ["letterSpacing", "boxShadow"]
       }
     }
   },
@@ -173,7 +145,7 @@
     "parts": {
       "select.trigger": {
         "selector": "[data-component=TextInput]",
-        "skip": ["fontFamily", "letterSpacing", "paddingInline", "ring"]
+        "skip": ["letterSpacing", "paddingInline"]
       }
     }
   },
@@ -223,7 +195,7 @@
             "hover": "button[data-component=Button]"
           }
         ],
-        "skip": ["fontFamily", "letterSpacing", "boxShadow", "edge", "ring"]
+        "skip": ["letterSpacing", "boxShadow"]
       }
     }
   },
@@ -252,13 +224,7 @@
     "parts": {
       "kbd": {
         "selector": "[data-kbd-chord]",
-        "skip": [
-          "fontFamily",
-          "letterSpacing",
-          "paddingInline",
-          "boxShadow",
-          "ring"
-        ]
+        "skip": ["letterSpacing", "paddingInline", "boxShadow"]
       }
     }
   },
@@ -267,7 +233,7 @@
     "parts": {
       "badge": {
         "selector": "[data-component=Label]",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow", "ring"]
+        "skip": ["letterSpacing", "boxShadow"]
       }
     }
   },
@@ -276,7 +242,7 @@
     "parts": {
       "badge.accent": {
         "selector": "[data-component=Label]",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow", "ring"]
+        "skip": ["letterSpacing", "boxShadow"]
       }
     }
   },
@@ -284,8 +250,12 @@
     "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-radiogroup--default",
     "parts": {
       "radio": {
-        "selector": "input[type=radio]",
+        "selector": "input[type=radio]:not(:checked)",
         "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      },
+      "radio.checked": {
+        "selector": "input[type=radio]:checked",
+        "only": ["borderRadius", "height"]
       }
     }
   },
@@ -295,6 +265,24 @@
       "segmented": {
         "selector": "[data-component=SegmentedControl]",
         "only": ["backgroundColor", "borderRadius", "height", "edge"]
+      },
+      "segmented.item": {
+        "selector": "[data-component=SegmentedControl] li:not([data-selected]) button",
+        "skip": ["paddingInline"]
+      },
+      "segmented.selected": {
+        "selector": "[data-component=SegmentedControl]",
+        "box": "::before",
+        "ink": "li[data-selected] .segmentedControl-text",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
       }
     }
   },
@@ -313,11 +301,11 @@
       "alert": {
         "selector": "section",
         "skip": [
-          "fontFamily",
-          "letterSpacing",
+          "backgroundColor",
+          "edge",
           "height",
-          "paddingInline",
-          "ring"
+          "letterSpacing",
+          "paddingInline"
         ]
       }
     }
@@ -327,7 +315,23 @@
     "parts": {
       "pagination.current": {
         "selector": "[aria-current=page]",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow", "edge", "ring"]
+        "skip": ["boxShadow", "letterSpacing", "paddingInline"]
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-iconbutton--default": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-iconbutton--default",
+    "parts": {
+      "button.icon": {
+        "selector": "button[data-component=IconButton]"
+      }
+    }
+  },
+  "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:light&id=components-progressbar-features--progress-half": {
+    "dark": "https://primer.style/react/storybook/iframe.html?viewMode=story&globals=colorScheme:dark&id=components-progressbar-features--progress-half",
+    "parts": {
+      "progress.fill": {
+        "selector": "[data-component='ProgressBar.Item']"
       }
     }
   }

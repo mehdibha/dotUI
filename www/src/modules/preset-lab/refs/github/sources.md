@@ -12,8 +12,13 @@ All pages public and headless (`presets:measure --pack github`), 1440×900, sign
   - Raw extras the parts don't carry: UnderlineNav's current tab has a 2px coral underline on `::after` (#fd8c73 / #f78166, `underlineNav-borderColor-active`); the current NavList row has a 4×24px bar 8px out from the row, r6, in #0969da / #1f6feb; link underlines sit 3.2px under the text.
 - **Primer React Storybook** (`primer.style/react/storybook`), the theme set by the `globals=colorScheme:light|dark` URL global (each page's `dark` URL). Stories: Button (invisible, primary focused), TextInput, Select, Checkbox, ToggleSwitch (default and checked), TooltipV2, Dialog, KeybindingHint, Label (default and accent), RadioGroup, SegmentedControl, ProgressBar, Banner (warning) and Pagination.
   - Dialog: header and footer split by rules, 640px wide by default, a 32×32 invisible close button. Backdrop #c8d1da66 / #21283066, no blur.
+  - SegmentedControl paints the selected knob on the control's `::before` (white in a #d1d9e0 edge, 30px plus its border), so `segmented.selected` reads that box with the selected label as its ink.
+  - RadioGroup: Primer draws the checked radio as a 4px #0969da border around the white center, so `radio.checked` compares only its shape; the fill and edge would read the ring as the edge.
+  - Banner: the warning story is the reference, and the specimen's first alert is neutral, so `alert` leaves out the fill and edge and compares the shape and ink.
+  - ProgressBar: `progress.fill` is the success item of the half-filled story; the track clips it, so the item itself has no radius.
+  - Pagination: the current page is a 32px #0969da square holding the number at 16px, 400.
   - ToggleSwitch: a 64×32 track, r6, with a 31×28 knob, r4. TooltipV2: 12px text, 4px 8px padding. KeybindingHint: a 20px chip, r6.
   - `button.focus` is a 2px outline at -2px: flush with the outer edge, so the probe reads it as the edge.
   - `input.focus` is the TextInput wrapper: Primer draws the focus on it with `:focus-within`, a 2px outline at -1px over the 1px accent border.
-- **Fonts**: Primer's stack starts with "Mona Sans VF", but github.com serves no face for it, so it renders the system stack (`-apple-system`, `Segoe UI`, …). Mono: `ui-monospace`, SFMono-Regular, …
+- **Fonts**: Primer's stack starts with "Mona Sans VF", but github.com serves no face for it, so it renders the system stack (`-apple-system`, `Segoe UI`, …). `tokens.json` maps "Mona Sans VF" to `-apple-system` in `fonts`. Mono: `ui-monospace`, SFMono-Regular, …
 - **No date picker** in Primer React or on public pages: the dates sheet has no reference.
