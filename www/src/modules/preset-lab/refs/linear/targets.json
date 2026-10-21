@@ -103,7 +103,7 @@
     "signedIn": true,
     "parts": {
       "nav.item": {
-        "selector": "a[href$=\"/my-issues\"]",
+        "selector": "a[href*=\"/my-issues\"]",
         "ink": "span"
       },
       "nav.item.active": {
