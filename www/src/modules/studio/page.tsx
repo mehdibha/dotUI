@@ -86,7 +86,7 @@ const ChapterBlock = memo(function ChapterBlock({
       <h2
         id={`chapter-${chapter.id}`}
         className={cn(
-          "truncate px-1 text-xs/9 font-medium text-fg/50 max-lg:sr-only",
+          "truncate px-3 text-xs/9 font-medium text-fg/50 max-lg:sr-only",
           chapter.untitled && "sr-only",
         )}
       >
