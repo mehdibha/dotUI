@@ -91,7 +91,8 @@ export const stripe = definePreset({
     dialogSections: "on-scroll",
     mobileDialogs: "sheet",
     tooltipStyle: "surface",
-    // Banners: status fill, edge and text; the neutral one stays white.
+    // Banners: a status tint inside a status edge. Stand-in: Sail sets the
+    // text in the status ink and keeps the neutral banner white.
     alertStyle: "soft-outline",
     // Slate-800 toasts; only errors go solid red (Bold would paint every status).
     toastStyle: "inverse",

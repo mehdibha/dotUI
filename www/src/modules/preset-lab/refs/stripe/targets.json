@@ -4,8 +4,7 @@
     "parts": {
       "button.primary": {
         "selector": "[data-testid=stripe-app-example-renderer] a",
-        "text": "Primary",
-        "skip": ["edge"]
+        "text": "Primary"
       },
       "button.secondary": {
         "selector": "[data-testid=stripe-app-example-renderer] a",
@@ -14,8 +13,7 @@
       "button.focus": {
         "selector": "[data-testid=stripe-app-example-renderer] a",
         "text": "Primary",
-        "focus": true,
-        "skip": ["edge"]
+        "focus": true
       }
     }
   },
@@ -24,6 +22,10 @@
     "parts": {
       "input": {
         "selector": "[data-testid=stripe-app-example-renderer] input[type=text]"
+      },
+      "field.label": {
+        "selector": "[data-testid=stripe-app-example-renderer] label",
+        "text": "Business name"
       }
     }
   },
@@ -42,8 +44,7 @@
         "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:not(:checked)"
       },
       "checkbox.checked": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:checked",
-        "skip": ["edge"]
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:checked"
       }
     }
   },
@@ -129,6 +130,46 @@
           }
         ],
         "skip": ["fontSize"]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/radio": {
+    "mode": "light",
+    "parts": {
+      "radio": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=radio]:not(:checked):not(:disabled)"
+      },
+      "radio.checked": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=radio]:checked:not(:disabled)",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] label::-p-text(This is a Radio.)"
+          }
+        ],
+        "box": "::before",
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/banner": {
+    "mode": "light",
+    "parts": {
+      "alert": {
+        "selector": "[data-testid=stripe-app-example-renderer] span",
+        "text": "Neutral title",
+        "surface": true
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/tabs": {
+    "mode": "light",
+    "parts": {
+      "tab": {
+        "selector": "[data-testid=stripe-app-example-renderer] [role=tab]:not([aria-selected=true])"
+      },
+      "tab.selected": {
+        "selector": "[data-testid=stripe-app-example-renderer] [role=tab][aria-selected=true]",
+        "skip": ["color"]
       }
     }
   }
