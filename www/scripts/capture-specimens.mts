@@ -11,6 +11,8 @@ import { resolve } from "node:path"
 import { parseArgs } from "node:util"
 import puppeteer, { type Browser } from "puppeteer"
 
+import { executablePath } from "./chromium"
+
 const { values: args } = parseArgs({
   options: {
     preset: { type: "string", default: "all" },
@@ -95,6 +97,7 @@ async function capture(
 
 const browser = await puppeteer.launch({
   headless: "shell",
+  executablePath,
   protocolTimeout: 120000,
   args: [
     "--hide-scrollbars",
