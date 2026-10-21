@@ -233,6 +233,13 @@ async function pool<T, R>(items: T[], run: (item: T) => Promise<R>) {
 
 const pause = (ms: number) => new Promise((done) => setTimeout(done, ms))
 
+/** Pages run side by side; each acts as the focused tab, as :focus-visible
+ *  needs. */
+async function focusable(page: Page) {
+  const cdp = await page.createCDPSession()
+  await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+}
+
 async function runSteps(page: Page, steps: Step[]) {
   for (const step of steps) {
     if ("press" in step) {
@@ -247,7 +254,13 @@ async function runSteps(page: Page, steps: Step[]) {
           : "focus" in step
             ? step.focus
             : step.wait
-    await page.waitForSelector(selector, { visible: true, timeout: 15000 })
+    await page
+      .waitForSelector(selector, { visible: true, timeout: 15000 })
+      .catch(async (error) => {
+        if (await page.$(selector))
+          throw new Error(`step ${JSON.stringify(step)}: found, but hidden`)
+        throw error
+      })
     if ("click" in step) await page.click(selector)
     else if ("hover" in step) await page.hover(selector)
     else if ("focus" in step) await page.focus(selector)
@@ -259,8 +272,11 @@ async function runSteps(page: Page, steps: Step[]) {
 async function shoot(page: Page, part: string, mode: Mode) {
   if (!args.shots) return
   const el = await page.$(`>>> [data-probe-part="${part}"]`)
-  const box = await el?.boundingBox()
-  if (!box) return
+  if (!el) return
+  // Parts below the fold or inside a scrolled panel crop blank otherwise.
+  await el.evaluate((node) =>
+    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
+  )
   await page
     .waitForFunction(
       () =>
@@ -274,12 +290,20 @@ async function shoot(page: Page, part: string, mode: Mode) {
       { timeout: 3000 },
     )
     .catch(() => {})
-  const x = Math.max(0, box.x - 16)
-  const y = Math.max(0, box.y - 16)
+  const box = await el.boundingBox()
+  if (!box) return
+  const [left, top] = await page.evaluate(() => [
+    window.scrollX,
+    window.scrollY,
+  ])
+  const x = Math.max(0, box.x + left - 16)
+  const y = Math.max(0, box.y + top - 16)
   await mkdir(args.shots, { recursive: true })
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
     clip: { x, y, width: box.width + 32, height: box.height + 32 },
+    // Capturing beyond the viewport resizes it, which closes hover overlays.
+    captureBeyondViewport: false,
   })
 }
 
@@ -350,10 +374,7 @@ async function measurePage(
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: mode },
     ])
-    // Pages run side by side; each acts as the focused tab, as :focus-visible
-    // needs.
-    const cdp = await page.createCDPSession()
-    await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+    await focusable(page)
     // Some sites turn away a "HeadlessChrome" user agent (Notion).
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
@@ -380,13 +401,30 @@ async function measurePage(
       snippet(plain, { mark: true, owned: true }),
     )
     for (const part of Object.keys(plain)) await shoot(page, part, mode)
+    // The probe skips hidden elements; say so rather than a bare "no match".
+    for (const [part, { selector, within }] of Object.entries(plain)) {
+      const chain = [within, selector].filter(Boolean).join(" ")
+      if (measures[part] || !chain) continue
+      const hidden = (await page.$$(chain)).length
+      if (hidden)
+        console.warn(
+          `${part} on ${url} (${mode}): "${chain}" matches ${hidden} element(s), none visible at ${width}px`,
+        )
+    }
     // A closed overlay can leave the page changed (a dialog that remounts
     // its trigger), so a part after one starts from a fresh load.
     let opened = false
     for (const [part, target] of Object.entries(targets)) {
       if (!stepped(target)) continue
-      if (opened) await load()
-      Object.assign(measures, await measureStepped(page, mode, part, target))
+      // One part failing (a walk that won't repeat) keeps the page's others.
+      try {
+        if (opened) await load()
+        Object.assign(measures, await measureStepped(page, mode, part, target))
+      } catch (error) {
+        console.warn(
+          `${part} on ${url} (${mode}) failed after a reload; page steps must replay the same walk on every load: ${(error as Error).message}`,
+        )
+      }
       opened = !!target.before?.length
     }
     return owned(measures, targets)
@@ -540,6 +578,7 @@ try {
   const results = await pool(jobs, async ({ mode, sheet, targets }) => {
     const page = await browser.newPage()
     try {
+      await focusable(page)
       await page.setViewport({ width: 1280, height: 900 })
       await page.emulateMediaFeatures([
         { name: "prefers-color-scheme", value: mode },
