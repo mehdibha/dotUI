@@ -1,6 +1,9 @@
 import { startTransition, useCallback, useState } from "react"
+import type { Key } from "react-aria-components"
+import { TabPanel } from "react-aria-components/Tabs"
 
 import { DesignSystemProvider } from "@/lib/styles"
+import { Tabs } from "@/registry/ui/tabs"
 import { CardsGrid } from "@/components/showcase/cards-grid"
 import { PresetSwitcher } from "@/modules/marketing/preset-switcher"
 import { SkeletonRail } from "@/modules/marketing/skeleton-cards"
@@ -8,16 +11,22 @@ import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
 export function Cards() {
   const [selected, setSelected] = useState(0)
-  const preset = (PRESET_CATALOG[selected] ?? PRESET_CATALOG[0]!).designSystem
+  const entry = PRESET_CATALOG[selected] ?? PRESET_CATALOG[0]!
+  const preset = entry.designSystem
 
   // Re-theming the grid re-renders every styled component in it; as a transition
   // that render is interruptible and doesn't block the click.
-  const handleSelect = useCallback((index: number) => {
-    startTransition(() => setSelected(index))
+  const handleSelect = useCallback((key: Key) => {
+    const index = PRESET_CATALOG.findIndex((p) => p.id === key)
+    if (index >= 0) startTransition(() => setSelected(index))
   }, [])
 
   return (
-    <div className="relative flex flex-col [--rail-gap:--spacing(5)]">
+    <Tabs
+      selectedKey={entry.id}
+      onSelectionChange={handleSelect}
+      className="relative gap-0 [--rail-gap:--spacing(5)]"
+    >
       {/* Preset wash: the whole section sits on the selected preset's own
           background — the resolved --color-bg from the shared scoped
           stylesheet, per light/dark mode — spanning the full viewport width
@@ -33,7 +42,7 @@ export function Cards() {
           <div className="size-full bg-(--preset-wash-bg) mask-[linear-gradient(to_bottom,black_calc(100%-24rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
         </div>
       </DesignSystemProvider>
-      <PresetSwitcher selected={selected} onSelect={handleSelect} />
+      <PresetSwitcher selected={selected} />
       {/* Below lg (no rails) the grid left-aligns to the container padding
           (--crop-pl mirrors it for the crop mask math) and crops only on the
           right; on lg it fills the container and the rails hang off its sides,
@@ -45,7 +54,13 @@ export function Cards() {
           of the container padding for the same reason: the grid overflows to
           the viewport edge there, and a container-width mask would crop it
           short of its own right-edge fade. */}
-      <div className="relative -mx-4 pl-(--crop-pl) [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] sm:-mx-6 sm:[--crop-pl:--spacing(6)] lg:mx-0 lg:pl-0">
+      {/* One panel for every tab: its id follows the selection, so it stays
+          mounted while the preset re-skins it. The bare primitive — the
+          registry panel's text size would leak into the cards. */}
+      <TabPanel
+        id={entry.id}
+        className="relative -mx-4 pl-(--crop-pl) [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] sm:-mx-6 sm:[--crop-pl:--spacing(6)] lg:mx-0 lg:pl-0"
+      >
         <SkeletonRail side="left" />
         <div className="mask-[linear-gradient(to_bottom,black_calc(100%-var(--mask-solid)),transparent_calc(100%-var(--mask-clear)))]">
           <DesignSystemProvider
@@ -60,7 +75,7 @@ export function Cards() {
           </DesignSystemProvider>
         </div>
         <SkeletonRail side="right" />
-      </div>
-    </div>
+      </TabPanel>
+    </Tabs>
   )
 }
