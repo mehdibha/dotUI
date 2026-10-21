@@ -158,7 +158,7 @@ function createServer(origin: string) {
       if (!result.ok) return failure(result.problems)
       const names = result.value.map((d) => d.name).join(", ")
       return card(
-        `${SHOWN} ${result.value.length} directions for ${product} (${names}). They pick, customize and save in the card; what they save reaches you with their next message.`,
+        `${SHOWN} ${result.value.length} directions for ${product} (${names}). They pick, customize and save in the card; what they save reaches you with their next message. Reply in one or two sentences, and don't describe the directions: they're on screen.`,
         { card: "directions", product, directions: result.value },
       )
     },

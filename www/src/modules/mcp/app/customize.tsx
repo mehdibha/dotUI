@@ -25,8 +25,8 @@ import {
 } from "@/registry/ui/segmented-control"
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
 import { Controls } from "@/components/showcase/controls"
-import { DEFAULTS } from "@/modules/studio/axes"
-import { SHAPES } from "@/modules/studio/axes/shape"
+import { DEFAULTS, salvageState } from "@/modules/studio/axes"
+import { SHAPES, shapeOf } from "@/modules/studio/axes/shape"
 import type { ShapeId } from "@/modules/studio/axes/shape"
 
 import type { Direction, MintedDesignSystem } from "../design"
@@ -125,8 +125,13 @@ export function Customize({
     setButtons(diff.buttonColor === "neutral" ? "neutral" : "accent")
     setTint(typeof diff.neutralTint === "number" ? diff.neutralTint : 1)
     setPairing(0)
-    setShape(undefined)
-    setDensity(undefined)
+    // Show the design's own corners and density as picked; a custom mix
+    // shows none until the user picks one.
+    const own = salvageState(diff)
+    setShape(shapeOf(own))
+    setDensity(
+      own.density in DENSITY_LABELS ? (own.density as DensityId) : undefined,
+    )
   }, [direction])
 
   // Pairing names render in their own heading face.
@@ -167,8 +172,8 @@ export function Customize({
   }
 
   const fullscreen = host.displayMode === "fullscreen"
-  // The composer floats over the bottom edge in fullscreen.
-  const bottom = (host.safeAreaInsets?.bottom ?? 0) + 16
+  // Claude's composer floats over the bottom edge in fullscreen.
+  const bottom = Math.max(host.safeAreaInsets?.bottom ?? 0, 88) + 16
 
   const controls = (
     <div className="flex flex-col gap-6">
@@ -345,24 +350,29 @@ export function Customize({
       </div>
     )
 
+  // Each column scrolls under a fixed head, so Save never scrolls away.
   return (
     <div className="grid h-dvh grid-cols-[24rem_1fr]">
-      <aside
-        className="overflow-y-auto border-e p-5"
-        style={{ paddingBottom: bottom }}
-      >
-        <p className="mb-5 text-sm font-medium">{product}</p>
-        {controls}
+      <aside className="flex min-h-0 flex-col border-e">
+        <p className="shrink-0 px-5 pt-5 pb-4 text-sm font-medium">{product}</p>
+        <div
+          className="min-h-0 flex-1 overflow-y-auto px-5"
+          style={{ paddingBottom: bottom }}
+        >
+          {controls}
+        </div>
       </aside>
-      <main
-        className="flex flex-col gap-4 overflow-y-auto p-5"
-        style={{ paddingBottom: bottom }}
-      >
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <main className="flex min-h-0 flex-col">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 px-5 pt-5 pb-4">
           <CardHeader title={direction.name} />
           {actions}
         </div>
-        {stage}
+        <div
+          className="min-h-0 flex-1 overflow-y-auto px-5"
+          style={{ paddingBottom: bottom }}
+        >
+          {stage}
+        </div>
       </main>
     </div>
   )
