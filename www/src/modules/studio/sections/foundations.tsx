@@ -37,7 +37,7 @@ export const MAIN_ROWS: FoundationRow[] = [
   ["density", "Density"],
   ["iconLibrary", "Icons"],
   ["motion", "Motion"],
-  ["brandAssets", "Assets", ["Logo", "Wordmark"]],
+  ["brandAssets", "Identity", ["Logo", "Wordmark", "Assets"]],
 ]
 
 /** The keys whose rows sit on the main page, in or under its rows. */
