@@ -1,49 +1,36 @@
 {
   "https://www.airbnb.com/": {
     "mode": "light",
+    "settle": 4000,
     "parts": {
       "page": {
-        "selector": "body",
-        "skip": ["borderColor", "height", "fontSize", "fontFamily"]
+        "selector": "body"
       },
       "tab": {
         "selector": "a[role=tab][aria-selected=false] span[data-tab-label]",
-        "skip": [
-          "borderColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily"
-        ]
+        "skip": ["borderRadius", "height", "paddingInline"]
       },
       "tab.selected": {
         "selector": "a[role=tab][aria-selected=true] span[data-tab-label]",
-        "skip": [
-          "borderColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily"
-        ]
+        "skip": ["borderRadius", "height", "paddingInline"]
       },
       "button.quiet": {
         "text": "Become a host",
-        "skip": ["borderColor", "borderRadius", "fontFamily"]
+        "skip": ["borderRadius"]
+      },
+      "button.icon": {
+        "selector": "button[data-testid=cypress-headernav-profile]"
       },
       "menu": {
         "selector": "[data-testid=guest-header-dropdownmenu]",
         "surface": true,
         "before": [
           {
-            "click": "button[data-testid=cypress-headernav-profile]"
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
           }
-        ],
-        "skip": [
-          "borderColor",
-          "height",
-          "borderWidth",
-          "fontSize",
-          "fontFamily"
         ]
       },
       "menu.item": {
@@ -51,136 +38,158 @@
         "text": "Help Center",
         "before": [
           {
-            "click": "button[data-testid=cypress-headernav-profile]"
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
           }
-        ],
-        "skip": ["borderColor", "fontFamily"]
+        ]
       },
       "input": {
         "selector": "[role=dialog] div:has(> label input)",
         "ink": "input",
         "before": [
           {
-            "click": "button[aria-label='Log in or sign up']"
+            "focus": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "press": "Enter"
           }
         ],
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow"
-        ]
+        "skip": ["paddingInline", "boxShadow"]
       },
       "input.focus": {
         "selector": "[role=dialog] div:has(> label input)",
-        "ink": "input",
         "before": [
           {
-            "click": "button[aria-label='Log in or sign up']"
+            "focus": "button[aria-label='Log in or sign up']"
           },
           {
-            "click": "[role=dialog] input"
+            "press": "Enter"
+          },
+          {
+            "focus": "[role=dialog] input"
           }
-        ],
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "boxShadow"
         ]
       },
-      "text.muted": {
-        "selector": "main h2 + div",
-        "skip": ["borderColor", "height", "fontFamily"]
+      "segmented": {
+        "selector": "div:has(> [role=tablist] > [data-testid=expanded-searchbar-dates-calendar-tab])",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
+      },
+      "segmented.item": {
+        "selector": "[data-testid=expanded-searchbar-dates-flexible-tab]",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
+      },
+      "segmented.selected": {
+        "selector": "[data-testid=expanded-searchbar-dates-calendar-tab]",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
       }
     }
   },
   "https://www.airbnb.com/s/Paris/homes": {
     "mode": "light",
+    "settle": 4000,
     "parts": {
+      "pagination.current": {
+        "selector": "nav[aria-label='Search results pagination'] [aria-current=page]"
+      },
       "button.primary": {
         "within": "[role=dialog][aria-label=Filters]",
         "selector": "a",
         "text": "Show 1,000+ places",
         "before": [
           {
-            "click": "button[aria-label=Filters]"
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
           }
-        ],
-        "skip": ["borderColor", "fontFamily"]
+        ]
       },
       "dialog": {
         "selector": "[role=dialog][aria-label=Filters]",
         "surface": true,
         "before": [
           {
-            "click": "button[aria-label=Filters]"
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
           }
         ],
-        "skip": [
-          "borderColor",
-          "height",
-          "borderWidth",
-          "fontSize",
-          "edge",
-          "ring",
-          "fontFamily"
+        "skip": ["edge"]
+      },
+      "toggle": {
+        "selector": "[role=dialog][aria-label=Filters] #filter-item-amenities-4",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "toggle.on": {
+        "selector": "[role=dialog][aria-label=Filters] #filter-item-amenities-4[aria-pressed=true]",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          },
+          {
+            "click": "#filter-item-amenities-4"
+          }
         ]
       }
     }
   },
   "https://www.airbnb.com/rooms/47803806": {
     "mode": "light",
+    "settle": 4000,
     "parts": {
       "button.secondary": {
         "text": "Show all 50 amenities",
-        "skip": [
-          "borderColor",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontFamily"
-        ]
+        "skip": ["height", "paddingInline", "fontSize"]
       },
       "button.focus": {
         "text": "Show all 50 amenities",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "boxShadow",
-          "edge",
-          "fontFamily"
-        ]
+        "focus": true
       },
       "card": {
         "selector": "aside:has([data-testid=book-it-default])",
-        "skip": [
-          "backgroundColor",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontFamily"
-        ]
+        "skip": ["backgroundColor"]
+      },
+      "calendar.day": {
+        "selector": "[data-testid^=calendar-day-][data-is-day-blocked=false]"
       },
       "heading.3": {
         "selector": "main h1",
-        "skip": ["borderColor", "height", "fontFamily", "fontSize"]
+        "skip": ["fontSize"]
       },
       "heading.4": {
         "text": "What this place offers",
-        "skip": ["borderColor", "height", "fontFamily", "fontSize"]
+        "skip": ["fontSize"]
       },
       "text": {
-        "selector": "[data-section-id=DESCRIPTION_DEFAULT] span > span",
-        "skip": ["borderColor", "height", "fontFamily"]
+        "selector": "[data-section-id=DESCRIPTION_DEFAULT] span > span"
+      },
+      "text.muted": {
+        "text": "Add your travel dates for exact pricing"
       }
     }
   }

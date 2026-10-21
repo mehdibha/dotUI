@@ -12,9 +12,10 @@ export const airbnb = definePreset({
 
     // Style
     // Popovers drop 0 2px 16px .12 while bordered tiles stay hairline. The
-    // Dates | Flexible pill is a white chip on an #ebebeb track.
+    // Dates | Flexible pill is a white chip on a hairline, no shadow, on an
+    // #ebebeb track.
     surfaceShadow: "low",
-    segmentedSelected: "raised",
+    segmentedSelected: "ring",
 
     // Color
     // The CTA gradient's midpoint and the price bars, #e31c5f (Rausch #ff385c
