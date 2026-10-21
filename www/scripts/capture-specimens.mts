@@ -96,7 +96,12 @@ async function capture(
 const browser = await puppeteer.launch({
   headless: "shell",
   protocolTimeout: 120000,
-  args: ["--hide-scrollbars", "--font-render-hinting=none"],
+  args: [
+    "--hide-scrollbars",
+    "--font-render-hinting=none",
+    // Cloud containers run as root, where Chrome's sandbox refuses to start.
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),
+  ],
 })
 const failures: string[] = []
 try {

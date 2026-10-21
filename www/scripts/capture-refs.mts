@@ -3,7 +3,7 @@
  *
  * Manifest-driven: each entry names a live design-system doc page + a selector for its
  * primary component showcase. Every entry is captured in light AND dark and written to
- *   src/modules/preset-lab/refs/<system>/<component>-<light|dark>.png
+ *   .scratch-refs/<system>/<component>-<light|dark>.png (gitignored: images stay out of git)
  * `scripts/compose-refs.mts` pairs these with specimen captures (see preset-lab/README.md).
  *
  * Usage:  tsx scripts/capture-refs.mts [system] [component]   (run from www/; args filter)
@@ -29,7 +29,7 @@ type RefEntry = {
 
 const REFS_DIR = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../src/modules/preset-lab/refs",
+  "../.scratch-refs",
 )
 const VIEWPORT = { width: 1280, height: 900, deviceScaleFactor: 2 }
 
@@ -155,6 +155,8 @@ const browser = await puppeteer.launch({
     "--disable-gpu",
     "--hide-scrollbars",
     "--run-all-compositor-stages-before-draw",
+    // Cloud containers run as root, where Chrome's sandbox refuses to start.
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),
   ],
 })
 const failures: string[] = []

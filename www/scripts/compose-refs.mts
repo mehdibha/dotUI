@@ -221,7 +221,11 @@ function page(title: string, specimens: string[], refFiles: string[]) {
 }
 
 await mkdir(outDir, { recursive: true })
-const browser = await puppeteer.launch({ headless: "shell" })
+const browser = await puppeteer.launch({
+  headless: "shell",
+  // Cloud containers run as root, where Chrome's sandbox refuses to start.
+  args: process.getuid?.() === 0 ? ["--no-sandbox"] : [],
+})
 try {
   const tab = await browser.newPage()
   await tab.setViewport({ width: 2000, height: 1000 })
