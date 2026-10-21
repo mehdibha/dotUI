@@ -81,15 +81,12 @@ const ChapterBlock = memo(function ChapterBlock({
       )}
     >
       {!first && (
-        <div
-          role="separator"
-          className="mx-3 mt-2.5 h-px bg-fg/8 max-lg:hidden"
-        />
+        <div role="separator" className="my-4 h-px bg-fg/8 max-lg:hidden" />
       )}
       <h2
         id={`chapter-${chapter.id}`}
         className={cn(
-          "truncate px-3 text-xs/9 font-medium text-fg/50 max-lg:sr-only",
+          "truncate px-3 pb-2 text-xs/4 font-medium text-fg/50 max-lg:sr-only",
           chapter.untitled && "sr-only",
         )}
       >

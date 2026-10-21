@@ -97,7 +97,7 @@ export function PanelChrome({
       )}
       <div
         ref={scrollRef}
-        className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0"
+        className="no-scrollbar flex min-h-0 grow scroll-pt-4 flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0"
       >
         {children}
       </div>
