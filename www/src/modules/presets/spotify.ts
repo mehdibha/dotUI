@@ -36,7 +36,7 @@ export const spotify = definePreset({
     // Stand-in: Spotify Mix is proprietary; Figtree is the closest free geometric grotesk.
     bodyFont: "Figtree",
     titleStyle: "bold",
-    // Buttons, chips and tabs are 700.
+    // Buttons and tabs are 700; filter chips are 14/400.
     labelWeight: "bold",
 
     // Icons
@@ -48,6 +48,9 @@ export const spotify = definePreset({
     radiusPx: 8,
     roleControl: "sm",
     rolePanel: "lg",
+    // Menus, tooltips and banners are 4px, menu rows 2px.
+    // Stand-in: Library rows are 6px; they follow the menu rows.
+    roleSurface: "sm",
 
     // Space
     // Controls 32 / 48 / 56px with 16px labels and field values.
@@ -56,15 +59,15 @@ export const spotify = definePreset({
     // Surfaces
     // A #000 frame around 8px-rounded #121212 panels.
     shellTone: "recessed",
+    // Cards carry no shadow.
+    surfaceShadow: "flat",
 
     // Browser
     selectionHighlight: "browser",
 
     // States
-    // A 2px white (dark) or black (light) ring drawn inside, never green.
-    // Stand-in: on the green primary it is black and 4px in.
+    // A 2px white (dark) or black (light) ring 2px outside, never green.
     focusColor: "neutral",
-    focusStyle: "inset",
     focusInputStyle: "border",
     focusInputWeight: "thick",
     // Stand-in: Encore fades disabled controls to 30%.
@@ -128,6 +131,8 @@ export const spotify = definePreset({
     // Current sidebar items read in ink, no slab (green: the marker shares the tabs color key).
     navMarker: "ink",
     navWeight: "bold",
+    // Library rows are 16/400; only tabs are bold.
+    navItemWeight: "regular",
 
     // Feedback
     toastStyle: "inverse",
@@ -138,5 +143,7 @@ export const spotify = definePreset({
     progressColor: "same-checks",
     // Stand-in: tags are 24px at 4px corners; rounded is 20px at 2px.
     badgeShape: "rounded",
+    // Shortcut keys are a 1px #7c7c7c outline with no fill.
+    kbdTreatment: "outline",
   },
 })

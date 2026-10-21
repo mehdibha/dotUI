@@ -499,7 +499,7 @@ const TOOLTIP_SURFACE_CLASS = [
   "[backdrop-filter:var(--popover-backdrop-filter)]",
   "[--ts-chart-tooltip-color:var(--color-fg)]",
   "[--ts-chart-tooltip-border:1px_solid_var(--overlay-border)]",
-  "[--ts-chart-tooltip-border-radius:var(--radius-lg)]",
+  "[--ts-chart-tooltip-border-radius:var(--radius-sm)]",
   "[--ts-chart-tooltip-shadow:var(--shadow-popover,var(--shadow-md))]",
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ");

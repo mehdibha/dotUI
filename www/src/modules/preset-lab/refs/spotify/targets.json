@@ -1,11 +1,12 @@
 {
   "encore.html": {
+    "mode": "light",
     "parts": {
       "page": {
         "selector": "body"
       },
       "button.primary": {
-        "selector": "[data-part=\"button.primary\"]"
+        "selector": "[data-part=\"button.primary\"] > span"
       },
       "button.secondary": {
         "selector": "[data-part=\"button.secondary\"]"
@@ -89,15 +90,106 @@
       "text.muted": {
         "selector": "[data-part=\"text.muted\"]",
         "skip": ["fontSize"]
+      }
+    }
+  },
+  "encore.html#dark": {
+    "mode": "dark",
+    "parts": {
+      "checkbox": {
+        "selector": "[data-part=\"checkbox\"]"
       },
-      "tooltip": {
-        "selector": "[data-part=\"tooltip\"]",
-        "skip": ["boxShadow", "height", "fontSize"]
+      "checkbox.checked": {
+        "selector": "[data-part=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-part=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-part=\"radio.checked\"]"
+      },
+      "switch.off": {
+        "selector": "[data-part=\"switch.off\"]"
+      },
+      "switch.on": {
+        "selector": "[data-part=\"switch.on\"]"
+      },
+      "tab.selected": {
+        "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "alert": {
+        "selector": "[data-part=\"alert\"]"
+      },
+      "badge": {
+        "selector": "[data-part=\"badge\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "badge.accent": {
+        "selector": "[data-part=\"badge.accent\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "progress": {
+        "selector": "[data-part=\"progress\"]"
+      },
+      "progress.fill": {
+        "selector": "[data-part=\"progress.fill\"]"
+      },
+      "text": {
+        "selector": "[data-part=\"text\"]"
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://accounts.spotify.com/en/login": {
+    "mode": "dark",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "[data-testid=login-button] > span"
+      },
+      "button.secondary": {
+        "selector": "[data-encore-id=buttonSecondary]",
+        "skip": ["paddingInline"]
+      },
+      "button.quiet": {
+        "selector": "[data-testid=signup-btn-link]"
+      },
+      "button.focus": {
+        "selector": "[data-testid=login-button]",
+        "focus": true,
+        "skip": ["edge"]
+      },
+      "input": {
+        "selector": "#username",
+        "skip": ["boxShadow"]
+      },
+      "field.label": {
+        "selector": "label[for=username]"
+      },
+      "heading.1": {
+        "selector": "h1"
+      },
+      "text.muted": {
+        "selector": "p[data-encore-id=text]",
+        "skip": ["fontSize"]
+      },
+      "link": {
+        "selector": "[data-encore-id=textLink]",
+        "skip": ["color"]
       }
     }
   },
   "https://open.spotify.com/": {
-    "signedIn": true,
     "mode": "dark",
     "parts": {
       "shell": {
@@ -107,12 +199,77 @@
       "panel": {
         "selector": "#main-view"
       },
-      "nav.item": {
-        "within": "#Desktop_LeftSidebar_Id",
-        "selector": "[data-encore-id=listRow]",
-        "ink": "[data-encore-id=listRowTitle]",
-        "skip": ["height"]
+      "card": {
+        "within": "#main-view",
+        "selector": "[data-encore-id=card]"
       },
+      "heading.3": {
+        "within": "#main-view",
+        "selector": "h2[data-encore-id=listRowTitle]"
+      },
+      "kbd": {
+        "selector": "[data-encore-id=formInputIcon] kbd",
+        "skip": ["backgroundColor"],
+        "before": [
+          {
+            "hover": "[data-testid=search-input]"
+          }
+        ]
+      },
+      "tooltip": {
+        "selector": "div:has(> #hover-or-focus-tooltip)",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[data-encore-id=buttonTertiary][aria-label=Home]"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": "[data-testid=language-selection-modal] [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[data-testid=language-selection-button]"
+          }
+        ],
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa": {
+    "mode": "dark",
+    "parts": {
+      "menu": {
+        "selector": "#context-menu [role=menu]",
+        "surface": true,
+        "skip": ["color"],
+        "before": [
+          {
+            "hover": "[data-testid=tracklist-row]"
+          },
+          {
+            "click": "[data-testid=tracklist-row] [data-testid=more-button]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "#context-menu [role=menuitem]",
+        "ink": "span",
+        "before": [
+          {
+            "hover": "[data-testid=tracklist-row]"
+          },
+          {
+            "click": "[data-testid=tracklist-row] [data-testid=more-button]"
+          }
+        ]
+      }
+    }
+  },
+  "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi": {
+    "mode": "dark",
+    "parts": {
       "toggle": {
         "within": "#main-view",
         "selector": "button[data-encore-id=chip][aria-checked=false] > span"
@@ -120,33 +277,18 @@
       "toggle.on": {
         "within": "#main-view",
         "selector": "button[data-encore-id=chip][aria-checked=true] > span"
-      },
-      "card": {
-        "within": "#main-view",
-        "selector": "[data-encore-id=card]"
-      },
-      "button.icon": {
-        "selector": "[data-testid=control-button-skip-back]",
-        "skip": ["backgroundColor"]
-      },
-      "menu": {
-        "selector": "#context-menu [role=menu]",
-        "surface": true,
-        "skip": ["color"],
-        "before": [
-          {
-            "click": "[data-testid=user-widget-link]"
-          }
-        ]
-      },
-      "menu.item": {
-        "selector": "#context-menu [role=menuitem]",
-        "ink": "[data-encore-id=text]",
-        "before": [
-          {
-            "click": "[data-testid=user-widget-link]"
-          }
-        ]
+      }
+    }
+  },
+  "https://open.spotify.com/#signed-in": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {
+      "nav.item": {
+        "within": "#Desktop_LeftSidebar_Id",
+        "selector": "[data-encore-id=listRow]",
+        "ink": "[data-encore-id=listRowTitle]",
+        "skip": ["height"]
       }
     }
   }

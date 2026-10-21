@@ -62,6 +62,31 @@
   <body data-part="page">
     <section data-board="buttons" style="grid-column: span 2">
       <h6>Button · small / medium / large</h6>
+      <p>
+        Shipped: the login page and web player use Encore's legacy buttons,
+        copied here with the login page's classes.
+      </p>
+      <div class="row">
+        <button
+          data-part="button.primary"
+          class="encore-text-body-medium-bold e-10830-focus-border e-10830-legacy-button-primary e-10830-legacy-button"
+        >
+          <span
+            class="e-10830-overflow-wrap-anywhere e-10830-button-primary__inner encore-bright-accent-set e-10830-legacy-button--medium"
+            >Primary</span
+          >
+        </button>
+        <a
+          data-part="button.secondary"
+          class="encore-text-body-medium-bold e-10830-focus-border e-10830-legacy-button--medium e-10830-legacy-button-secondary--text-base encore-internal-color-text-base e-10830-legacy-button e-10830-legacy-button-secondary e-10830-overflow-wrap-anywhere"
+          >Secondary</a
+        >
+        <a
+          data-part="button.quiet"
+          class="encore-text-body-medium-bold e-10830-focus-border e-10830-legacy-button--medium e-10830-button-tertiary--medium encore-internal-color-text-base e-10830-legacy-button e-10830-legacy-button-tertiary e-10830-overflow-wrap-anywhere"
+          >Tertiary</a
+        >
+      </div>
       <div class="col">
         <div class="row">
           <button
@@ -91,7 +116,6 @@
         </div>
         <div class="row">
           <button
-            data-part="button.primary"
             class="e-10830-button e-10830-button--primary e-10830-button--medium encore-text-body-medium-bold encore-bright-accent-set"
             style="color: var(--text-base)"
           >
@@ -104,14 +128,12 @@
             <span class="e-10830-button__children">Secondary</span>
           </button>
           <button
-            data-part="button.secondary"
             class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--medium encore-text-body-medium-bold"
             style="color: var(--text-base)"
           >
             <span class="e-10830-button__children">Bordered</span>
           </button>
           <button
-            data-part="button.quiet"
             class="e-10830-button e-10830-button--tertiary e-10830-button--medium encore-text-body-medium-bold"
             style="color: var(--text-base)"
           >
@@ -161,11 +183,12 @@
           </button>
           <button
             data-part="button.focus"
-            data-focus-visible="true"
-            class="e-10830-button e-10830-button--primary e-10830-button--medium encore-text-body-medium-bold encore-bright-accent-set"
-            style="color: var(--text-base)"
+            class="encore-text-body-medium-bold e-10830-focus-border e-10830-legacy-button-primary e-10830-legacy-button"
           >
-            <span class="e-10830-button__children">Focused</span>
+            <span
+              class="e-10830-overflow-wrap-anywhere e-10830-button-primary__inner encore-bright-accent-set e-10830-legacy-button--medium"
+              >Focused</span
+            >
           </button>
           <button
             data-focus-visible="true"
