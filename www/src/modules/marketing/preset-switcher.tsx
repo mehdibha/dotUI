@@ -41,12 +41,12 @@ export function PresetSwitcher({ selected }: { selected: number }) {
           <Tab
             key={preset.id}
             id={preset.id}
-            className="flex-none px-2.5 py-1 opacity-40 transition-[color,opacity] data-focus-visible:opacity-100 data-hovered:opacity-100 orientation-horizontal:h-auto data-selected:opacity-100"
+            className="group/tab flex-none px-2.5 py-1 opacity-50 transition-[color,opacity] data-focus-visible:opacity-100 data-hovered:opacity-100 orientation-horizontal:h-auto data-selected:opacity-100"
             style={{ fontFamily: presetLabelStack(preset.id) }}
           >
             <span
               aria-hidden="true"
-              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset"
+              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 grayscale transition-[filter] ring-inset group-data-focus-visible/tab:grayscale-0 group-data-hovered/tab:grayscale-0 group-data-selected/tab:grayscale-0"
               style={{ background: preset.swatch }}
             />
             {preset.name}
