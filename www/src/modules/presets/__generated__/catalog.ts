@@ -2458,7 +2458,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				kbd: { style: "chip" },
 				link: { underline: "hover", color: "accent" },
 				"list-box": {
-					indicator: "check-start",
+					indicator: "check-end",
 					highlight: "neutral",
 					inset: "full-bleed",
 					selected: "tint",
@@ -2467,7 +2467,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				},
 				loader: { style: "ring" },
 				menu: {
-					indicator: "check-start",
+					indicator: "check-end",
 					highlight: "neutral",
 					inset: "full-bleed",
 					selected: "tint",

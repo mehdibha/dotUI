@@ -41,6 +41,7 @@ export const carbon = definePreset({
     labelWeight: "normal",
 
     // Icons
+    // Stand-in: Carbon's own icons aren't in the catalog; Lucide at 1.5.
     iconStroke: 1.5,
 
     // Shape: Square; the checkbox keeps its 2px corner.
@@ -83,8 +84,9 @@ export const carbon = definePreset({
 
     // Menus & popovers: a tip on tooltips only; Menu and Dropdown draw none.
     menuInset: "full-bleed",
+    // Dropdown's selected option: a #e0e0e0 row, its check at the end.
+    // Stand-in: Menu's selectable items put the check at the start.
     menuSelectedRow: "tint",
-    menuIndicator: "check-start",
     // Dropdown options are 40px, the field height.
     menuRows: "match",
     mobilePickers: "anchored",
