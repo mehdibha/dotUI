@@ -80,8 +80,10 @@ const firstFamily = (value: string) =>
 const signed = (n: number) =>
   `${n > 0 ? "+" : ""}${Math.round(n * 100) / 100}px`
 
-/** `edge` is "<width>px <color>", `ring` "<width>px <color> <±offset>px", or
- *  "none". Width within 0.25px, offset within 1px, color as colors. */
+/** `edge` is "<width>px <color>" (plus its sides when not all four, as
+ *  "bottom" or "top+bottom"), `ring` "<width>px <color> <±offset>px", or
+ *  "none". Same sides, width within 0.25px, offset within 1px, color as
+ *  colors. */
 function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
   if (reference === "none" || preset === "none") {
     const same = reference === preset
@@ -93,6 +95,7 @@ function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
   }
   const parse = (line: string) => {
     const [width = "", ...rest] = line.split(" ")
+    const sides = /^[a-z+]+$/.test(rest.at(-1) ?? "") ? rest.pop() : "all"
     const offset = /^[+-][\d.]+px$/.test(rest.at(-1) ?? "")
       ? rest.pop()
       : undefined
@@ -100,23 +103,26 @@ function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
       width: Number.parseFloat(width),
       offset: offset ? Number.parseFloat(offset) : 0,
       color: rest.join(" "),
+      sides,
     }
   }
   const [a, b] = [parse(reference), parse(preset)]
   const width = b.width - a.width
   const offset = b.offset - a.offset
   const color = colorDelta(a.color, b.color)
+  const sidesOk = a.sides === b.sides
   const widthOk = Math.abs(width) <= (PX_TOLERANCE.borderWidth ?? 0)
   const offsetOk = Math.abs(offset) <= 1
   return {
     delta: [
+      sidesOk ? "" : `${a.sides} → ${b.sides}`,
       widthOk ? "" : signed(width),
       offsetOk ? "" : `offset ${signed(offset)}`,
       color.ok ? "" : color.delta,
     ]
       .filter(Boolean)
       .join(", "),
-    ok: widthOk && offsetOk && color.ok,
+    ok: sidesOk && widthOk && offsetOk && color.ok,
   }
 }
 

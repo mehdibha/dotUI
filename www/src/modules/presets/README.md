@@ -53,4 +53,5 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 - The reference pack is committed and covers the parts the product shows.
 - `pnpm --filter www presets:measure --preset <id>` shows nothing off that a preset value could fix; whatever remains has a stand-in comment or a ledger row.
 - All 12 sheets are captured in both modes and compared; the review artifact and the tracker row are updated.
+- `pnpm build:registry` ran after the last preset edit and its `presets/__generated__/catalog.ts` is committed (CI's registry-drift job checks it).
 - Origin and Spotify have example templates: after changing either, run `pnpm smoke:examples` and commit `examples/`. CI regenerates the cover for any preset.
