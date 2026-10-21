@@ -49,6 +49,11 @@ describe("compareMeasures", () => {
       ok: false,
       delta: "offset -2px",
     })
+    const inset = "1px rgb(94, 106, 210) -1px"
+    expect(row(inset, inset, "ring").ok).toBe(true)
+    expect(row(inset, "1px rgb(94, 106, 210) +1px", "ring").delta).toBe(
+      "offset +2px",
+    )
   })
 
   it("compares colors in OKLab", () => {
