@@ -334,5 +334,39 @@
         "selector": "[data-component='ProgressBar.Item']"
       }
     }
+  },
+  "https://github.com/mehdibha/dotUI/pulls": {
+    "parts": {
+      "command": {
+        "selector": "[role=dialog]:has([data-testid=quick-search-suggestion])",
+        "before": [
+          {
+            "click": "button[aria-label^='Search or jump to']"
+          },
+          {
+            "wait": "[data-testid=quick-search-suggestion]"
+          }
+        ],
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "boxShadow",
+          "edge"
+        ]
+      },
+      "command.item": {
+        "selector": "[role=dialog] li[data-component='ActionList.Item']:has([data-testid=quick-search-suggestion])",
+        "before": [
+          {
+            "click": "button[aria-label^='Search or jump to']"
+          },
+          {
+            "wait": "[data-testid=quick-search-suggestion]"
+          }
+        ],
+        "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
+      }
+    }
   }
 }
