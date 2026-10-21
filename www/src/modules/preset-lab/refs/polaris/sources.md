@@ -1,0 +1,63 @@
+# Polaris reference pack
+
+Measured 2026-10-21. Light is Polaris's only production theme. Dark is `dark-experimental`, a partial theme Shopify ships behind a flag: it recolors the page, surfaces, fills and text, and leaves fields, navigation, badges and banners on their light values. The Shopify admin has no dark mode.
+
+## Official tokens
+
+Polaris publishes its tokens as code, so colors come from the packages first.
+
+- [`@shopify/polaris-tokens`](https://github.com/Shopify/polaris/tree/main/polaris-tokens) 9.4.2: the light theme and `dark-experimental`.
+- [`@shopify/polaris`](https://github.com/Shopify/polaris/tree/main/polaris-react) 13.9.5: component CSS (`build/esm/styles.css`, tokens included as `--p-*`).
+
+| Token                                       | Light              | dark-experimental  |
+| ------------------------------------------- | ------------------ | ------------------ |
+| `color-bg` (page)                           | #f1f1f1            | #1a1a1a            |
+| `color-bg-surface` (cards, menus, modals)   | #ffffff            | #303030            |
+| `color-bg-surface-secondary` (modal header) | #f7f7f7            | not themed         |
+| `color-nav-bg` / `-surface-selected`        | #ebebeb / #fafafa  | not themed         |
+| `color-bg-fill` (secondary button)          | #ffffff            | #303030            |
+| `color-bg-fill-brand` (primary button)      | #303030            | #ffffff            |
+| `color-text-brand-on-bg-fill`               | #ffffff            | #303030            |
+| `color-bg-fill-tertiary` (badge, track)     | #e3e3e3            | #303030            |
+| `color-text` / `color-text-secondary`       | #303030 / #616161  | #e3e3e3 / #b5b5b5  |
+| `color-text-link`, `color-border-focus`     | #005bd3            | not themed         |
+| `color-input-bg-surface`                    | #fdfdfd            | not themed         |
+| `color-input-border`                        | #8a8a8a            | not themed         |
+| `color-bg-fill-critical` / `-success`       | #c70a24 / #047b5d  | not themed         |
+| `color-bg-fill-warning` / `-caution`        | #ffb800 / #ffe600  | not themed         |
+| `color-bg-fill-info` (ProgressBar)          | #91d0ff            | not themed         |
+| `color-bg-inverse` (toast)                  | #1a1a1a            | not themed         |
+| Backdrop (`.Polaris-Backdrop`)              | rgba(0, 0, 0, 0.5) | rgba(0, 0, 0, 0.5) |
+
+## Measured pages
+
+The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirects to shopify.dev, which documents the web components; storybook.polaris.shopify.com doesn't answer), so the pack measures a local harness: one page per sheet rendering the real `@shopify/polaris` components with its own `styles.css`, the theme set by `AppProvider theme`. The harness source lives in the project files (`presets/polaris/2026-10-21/harness/`), not in git.
+
+- `react.html?sheet=<sheet>&theme=light|dark`: Polaris React 13.9.5, every component at its default size. `targets.json` lists the dark pages only for the parts `dark-experimental` themes.
+- `web.html`: Polaris web components (`https://cdn.shopify.com/shopifycloud/polaris.js`), light only, for the switch: Polaris React has no switch. Its parts live in shadow roots; the page copies them into the light DOM (`window.__deep`) before it sets `data-specimen-ready`, since the probe doesn't pierce shadow DOM.
+- To re-measure: `npm install` in the harness, `npx esbuild app.jsx --bundle --outfile=app.js`, serve it on `127.0.0.1:3390` (`python3 -m http.server 3390 --bind 127.0.0.1`), then `pnpm presets:measure --pack polaris`.
+- The harness marks `button.focus` and `input.focus` with `data-specimen-focus` and focuses the button, since Polaris doesn't forward data attributes.
+- `card` probes `.Polaris-ShadowBevel::before`, which draws the bevel and the 12px corners; the fill comes from a child Box.
+- Buttons, tabs, nav rows and badges take type from their `.Polaris-Text--root` label (`ink`).
+- `tokens.json` keeps, per part, only the properties both sides draw in the same place.
+- Measured at DPR 1, where Polaris's 0.66px checkbox edge (`border-width-0165`) stays 0.66px; fields draw the same width but Chrome rounds their border to 1px.
+
+## Read by hand (no probe part)
+
+From the harness, `getComputedStyle` with overlays open:
+
+- Buttons: 28px, 12px inline padding, 12px/550, `ShadowBevel` (inset bottom shade, 0.5px top highlight).
+- Text fields and select: 32px, 13px/450 values on #fdfdfd behind a 0.66px #8a8a8a edge (top #898f94). Focus: the edge turns #1a1a1a over #f7f7f7 and a 2px #005bd3 ring sits 1px outside. Invalid: #fee8eb fill, #8e0b21 edge, a 13px #8e0b21 message with an icon; the label keeps its ink.
+- Checkbox and radio: 16px on #ffffff; checked #303030, the radio as a #303030 disc around a white center.
+- Switch (web components): 32×16 track; off #fdfdfd with a 1px #8a8a8a edge, on #303030.
+- Tabs: pill buttons at button size, 28px, 12px padding, idle #4a4a4a, selected rgba(0, 0, 0, 0.08) over the card.
+- Navigation: 28px rows, 13px, full ink at 550; the current row is #fafafa at 650 on the #ebebeb sidebar.
+- Menu (ActionList): #ffffff, 12px corners; 32px rows, 13px/450, 8px row radius.
+- Tooltip: white surface, 28px, 8px padding, 13px/450, 8px corners, a tail.
+- Modal: 620px wide, 16px corners; a #f3f3f3 header band with a hairline, 14px/650 title; footer with a top hairline. Backdrop 50% black.
+- Badge: 20px, 8px padding, 8px corners, 12px/450; neutral 6% black (#f0f0f0 on white) with #616161 text; success #affebf / #014b40, attention #ffeb78 / #4f4700, critical #fed1d7 / #8e0b21, info #d5ebff / #003a5a.
+- Banner: a solid status header strip (warning #ffb800, info #91d0ff) over a white body; inside a card, a compact tinted row with an icon.
+- ProgressBar: 16px bar with 4px corners, #91d0ff fill on #e3e3e3.
+- Type: Inter; headings 3xl/2xl/xl 700 with -0.54 / -0.3 / -0.2px tracking, lg 650; card titles stay 13px/650; body 13px/450, secondary #616161.
+- Avatar: initials on a palette color picked from the name (#52f490 with #014b40 text for "MB"), 28px with 6px corners.
+- KeyboardKey: 20px, 4px corners, #f3f3f3, 12px/550 #616161.

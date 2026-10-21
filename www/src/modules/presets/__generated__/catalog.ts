@@ -1807,8 +1807,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
 				"--font-mono": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
 				"--font-weight-heading": "var(--font-weight-semibold)",
-				"--text-xs": "0.8125rem",
-				"--text-xs--line-height": "calc(16 / 13)",
 				"--icon-stroke-width": "1.75",
 				"--radius": "0.5rem",
 				"--studio-radius-panel": "var(--radius-2xl)",
@@ -1844,7 +1842,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
 				"--studio-list-box-selected-highlight": "var(--color-selected)",
 				"--studio-scrim-blur": "0",
-				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
 			density: "compact",
 			color: {

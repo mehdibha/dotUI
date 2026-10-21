@@ -27,7 +27,7 @@ export const polaris = definePreset({
     warningSeed: "#ffb800",
     dangerSeed: "#c70a24",
     neutralTint: 0,
-    // Polaris status tints are pastels: Paid #cdfed4, Pending #ffd6a4, critical #fee8eb.
+    // Polaris status badges are pastels: #affebf, #ffeb78, #fed1d7.
     vividness: 1.2,
     // The #f1f1f1 page is L* 95.
     lightBg: 95,
@@ -39,7 +39,6 @@ export const polaris = definePreset({
     // Typography
     bodyFont: "Inter",
     monoFont: "System Mono",
-    uiTextSize: "13",
     titleStyle: "compact",
 
     // Icons
@@ -52,6 +51,8 @@ export const polaris = definePreset({
     roleControl: "lg",
     roleSurface: "xl",
     rolePanel: "2xl",
+    // Compact's 12px control text matches buttons, tabs and badges.
+    // Stand-in: fields, menu rows and tooltips are 13px in Polaris.
     density: "compact",
 
     // Surfaces
@@ -112,12 +113,12 @@ export const polaris = definePreset({
     // Feedback
     // The in-card banner; the page banner's solid header strip has no option.
     alertStyle: "soft",
+    // Stand-in: Origin's pill for 8px corners on a 20px badge.
     badgeStyle: "soft",
-    badgeShape: "rounded",
     // Black toasts; only the error toast turns solid red, so status stays an icon.
     toastStyle: "inverse",
     progressTrack: "x-heavy",
-    // ProgressBar is info-blue by default, not charcoal.
+    // Stand-in: ProgressBar fills info blue #91d0ff, lighter than the brand.
     progressColor: "accent",
     skeletonAnimation: "none",
 
