@@ -11,7 +11,7 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 
 ## 1. Set up
 
-- Start a dev server in the background: `pnpm dev:www --port <free port>` from the repo root.
+- Start a dev server as a background task: `pnpm dev:www --port <free port>` from the repo root (in Claude Code, Bash with `run_in_background`; a `nohup … &` server dies between turns).
 - In a cloud container, install with `PUPPETEER_SKIP_DOWNLOAD=1 pnpm install` and `export PUPPETEER_EXECUTABLE_PATH=$(ls -d /opt/pw-browsers/chromium_headless_shell-*/chrome-linux/headless_shell | head -1)`.
 - Write the axis catalog to a scratch file and read it: `pnpm --filter www presets:catalog --preset <id>` (no `--preset` when creating). It lists every key, its options and the systems each comes from, and where the preset's value comes from today.
 
@@ -22,10 +22,10 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 - **Official tokens first.** If the system publishes tokens as code, read values from there and cite it in `sources.md`.
 - **Measure the product, not its marketing.** App screens and controls at their default size; docs showcases are second best; landing pages run larger.
 - **Public pages:** `pnpm --filter www presets:measure --url <url> --targets <file> --mode light|dark`. A cloud network policy may block the host; then use the user's Chrome.
-- **Signed-in or blocked pages, through the user's Chrome.** Locally with Claude in Chrome, do it directly. In a Claude project thread, start a Remote Control session in the user's local dotUI checkout (`list_devices` lists it); that session has Claude in Chrome. Give it each URL with its probe, from `pnpm --filter www presets:measure --snippet --targets <file> --url <url>`, and ask it to: open each URL in a new tab, wait for the page to settle, run the probe with its JavaScript tool in each mode the product offers, close only its own tabs, and report the JSON. Stop the session when done.
+- **Signed-in or blocked pages, through the user's Chrome.** Locally with Claude in Chrome, do it directly. In a Claude project thread, start a Remote Control session in the user's local dotUI checkout (`list_devices` lists it); that session has Claude in Chrome. It starts only from a message the user wrote in your thread, and its safety checks also want the user's own words before it opens a signed-in workspace or changes a setting such as the theme: ask once, naming all three (start the session, open <app> signed in, switch its theme and back). Give it each URL with its probe, from `pnpm --filter www presets:measure --snippet --targets <file> --url <url>`, and ask it to: open each URL in a new tab, wait for the page to settle, run the probe with its JavaScript tool in each mode the product offers, close only its own tabs, and report the JSON. The window may keep its own size: record the real viewport in `sources.md`. Stop the session when done.
 - **Privacy.** Signed-in apps open the user's real workspace. Probe UI chrome only (controls, menus, surfaces); never read, store or screenshot workspace content such as names, titles or messages. Prefer a demo workspace.
-- Merge the results into `tokens.json` by mode and part, using the part names from `SPECIMEN_TARGETS` in `probe.ts`. Commit `targets.json` so the next review re-measures in one pass.
-- **Reference images** for the review page: public screens via headless capture; signed-in screens as the Remote Control session can save them (or ask the user to drop screenshots in the thread). They go to the project's shared files under `presets/<id>/<date>/refs/`, named `<component>-<mode>.png`, never to git.
+- Merge the results into `tokens.json` by mode and part, using the part names from `SPECIMEN_TARGETS` in `probe.ts`. Commit `targets.json` so the next review re-measures in one pass. Leave out a property the two sides put in different places (where padding sits, say). A part the product shows but the specimens don't is listed apart by `presets:measure`: add it to `SPECIMEN_TARGETS` (and to its sheet) instead of leaving it unmeasured.
+- **Reference images** for the review page: public screens via headless capture; signed-in screens saved by the Remote Control session into the checkout's `www/.scratch-refs/`, then brought over with `connect_device` and `device_stage_files` (or ask the user to drop screenshots in the thread). They go to the project's shared files under `presets/<id>/<date>/refs/`, named `<component>-<mode>.png`, never to git.
 
 ## 3. Author or fix the preset
 
@@ -43,12 +43,13 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 
 - `pnpm --filter www presets:capture --preset <id> --mode both --sheet all --port <port>`, then `presets:compare --preset <id> --refs <reference image dir>`. Read every `compare-*.png`, and the full sheet when a detail matters.
 - Score each sheet 0–2 on silhouette, surface, color, typography, states and spacing. A sheet passes at 9/12 with no zero.
+- A sheet the product never shows has no reference: score it for coherence with the rest of the preset and mark it inferred on the review page.
 
 ## 5. Publish the review
 
 In a Claude project:
 
-- Publish or update the "<Name> fidelity" artifact. For each sheet, show the reference next to the specimen in light and dark, then the measured diff with off rows first, the score, and open gaps linking ledger rows. Images go in the artifact's asset store.
+- Publish or update the "<Name> fidelity" artifact. For each sheet, show the reference next to the specimen in light and dark, then the measured diff with off rows first, the score, and open gaps linking ledger rows. Images go in the artifact's asset store; a batch upload takes only files inside the working directory, so copy them to `www/.scratch-*/` first.
 - Update the preset's row in the project's preset tracker: status, sheets passing, properties off, gaps, date, links. Write only that row; the tracker's link and update steps are in project memory.
 
 Outside a project, put the compare images and the diff summary in the PR description instead.

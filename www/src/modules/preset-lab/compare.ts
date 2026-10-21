@@ -2,7 +2,7 @@
 
 import { toOklch } from "@dotui/colors"
 
-import type { Measures, Prop } from "./probe"
+import type { Measure, Measures, Prop } from "./probe"
 
 export interface Row {
   part: string
@@ -12,13 +12,16 @@ export interface Row {
   /** How far apart, in the property's unit; empty when not comparable. */
   delta: string
   ok: boolean
+  /** The specimens don't show this part: a coverage gap, not a preset value. */
+  missing?: boolean
 }
 
 const COLORS = new Set<Prop>(["backgroundColor", "color", "borderColor"])
 
 /* What a look tolerates before it reads differently. */
 const PX_TOLERANCE: Partial<Record<Prop, number>> = {
-  borderWidth: 0.5,
+  /* Tight enough to tell a 0.5px hairline from 1px. */
+  borderWidth: 0.25,
   borderRadius: 1,
   height: 2,
   paddingInline: 2,
@@ -29,7 +32,7 @@ const PX_TOLERANCE: Partial<Record<Prop, number>> = {
 const COLOR_TOLERANCE = 0.02
 /** Variable fonts land on in-between weights (Linear's 510). */
 const WEIGHT_TOLERANCE = 30
-/** Radii past this are pills. */
+/** Radii past this are pills, whatever the height. */
 const PILL = 999
 
 /** A computed color's alpha: `rgba(…, a)`, `oklch(… / a)`, else 1. */
@@ -74,8 +77,61 @@ const firstFamily = (value: string) =>
     .trim()
     .toLowerCase()
 
-function diff(prop: Prop, reference: string, preset: string) {
+const signed = (n: number) =>
+  `${n > 0 ? "+" : ""}${Math.round(n * 100) / 100}px`
+
+/** `edge` is "<width>px <color>", `ring` "<width>px <color> +<offset>px", or
+ *  "none". Width within 0.25px, offset within 1px, color as colors. */
+function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
+  if (reference === "none" || preset === "none") {
+    const same = reference === preset
+    const name = (line: string) => (line === "none" ? "none" : prop)
+    return {
+      delta: same ? "" : `${name(reference)} → ${name(preset)}`,
+      ok: same,
+    }
+  }
+  const parse = (line: string) => {
+    const [width = "", ...rest] = line.split(" ")
+    const offset = rest.at(-1)?.startsWith("+") ? rest.pop() : undefined
+    return {
+      width: Number.parseFloat(width),
+      offset: offset ? Number.parseFloat(offset) : 0,
+      color: rest.join(" "),
+    }
+  }
+  const [a, b] = [parse(reference), parse(preset)]
+  const width = b.width - a.width
+  const offset = b.offset - a.offset
+  const color = colorDelta(a.color, b.color)
+  const widthOk = Math.abs(width) <= (PX_TOLERANCE.borderWidth ?? 0)
+  const offsetOk = Math.abs(offset) <= 1
+  return {
+    delta: [
+      widthOk ? "" : signed(width),
+      offsetOk ? "" : `offset ${signed(offset)}`,
+      color.ok ? "" : color.delta,
+    ]
+      .filter(Boolean)
+      .join(", "),
+    ok: widthOk && offsetOk && color.ok,
+  }
+}
+
+/** A radius that rounds the whole end of its box. */
+const full = (radius: number, height: string | undefined) =>
+  radius >= PILL ||
+  (height !== undefined && radius >= Number.parseFloat(height) / 2 - 0.5)
+
+function diff(
+  prop: Prop,
+  reference: string,
+  preset: string,
+  parts: { reference: Measure; preset: Measure },
+) {
   if (COLORS.has(prop)) return colorDelta(reference, preset)
+  if (prop === "edge" || prop === "ring")
+    return lineDelta(prop, reference, preset)
   if (prop === "fontFamily") {
     const ok = firstFamily(reference) === firstFamily(preset)
     return { delta: "", ok }
@@ -88,7 +144,11 @@ function diff(prop: Prop, reference: string, preset: string) {
     value === "normal" ? 0 : Number.parseFloat(value)
   const [a, b] = [number(reference), number(preset)]
   if (Number.isNaN(a) || Number.isNaN(b)) return { delta: "", ok: false }
-  if (prop === "borderRadius" && a >= PILL && b >= PILL)
+  if (
+    prop === "borderRadius" &&
+    full(a, parts.reference.height) &&
+    full(b, parts.preset.height)
+  )
     return { delta: "", ok: true }
   const delta = b - a
   const tolerance =
@@ -105,10 +165,11 @@ export function compareMeasures(reference: Measures, preset: Measures): Row[] {
   const rows: Row[] = []
   for (const [part, measure] of Object.entries(reference)) {
     if (!measure) continue
+    const specimen = preset[part]
     for (const [prop, value] of Object.entries(measure) as [Prop, string][]) {
-      const ours = preset[part]?.[prop]
       if (value === undefined) continue
-      if (ours === undefined) {
+      const ours = specimen?.[prop]
+      if (!specimen || ours === undefined) {
         rows.push({
           part,
           prop,
@@ -116,6 +177,7 @@ export function compareMeasures(reference: Measures, preset: Measures): Row[] {
           preset: "—",
           delta: "",
           ok: false,
+          missing: !specimen,
         })
         continue
       }
@@ -124,7 +186,7 @@ export function compareMeasures(reference: Measures, preset: Measures): Row[] {
         prop,
         reference: value,
         preset: ours,
-        ...diff(prop, value, ours),
+        ...diff(prop, value, ours, { reference: measure, preset: specimen }),
       })
     }
   }

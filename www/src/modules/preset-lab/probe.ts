@@ -5,7 +5,8 @@
 import type { SheetName } from "./sheets"
 
 /** Where a part sits on a page. `text` matches an element's own trimmed text
- *  and climbs to its control; `surface` climbs to the first painted box. */
+ *  and climbs to its control; `surface` climbs to the first box painted at
+ *  more than 10% alpha. */
 export interface Target {
   selector?: string
   text?: string
@@ -29,6 +30,8 @@ export const PROPS = [
   "fontWeight",
   "letterSpacing",
   "boxShadow",
+  "edge",
+  "ring",
 ] as const
 
 export type Prop = (typeof PROPS)[number]
@@ -50,12 +53,72 @@ function probe(
     const rect = el.getBoundingClientRect()
     return rect.width > 0 && rect.height > 0
   }
+  const alpha = (color: string) => {
+    if (color === "transparent") return 0
+    const match = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(color)
+    if (!match || (color.startsWith("rgb(") && !color.includes("/"))) return 1
+    return Number(match[1]) / (match[2] ? 100 : 1)
+  }
   const painted = (el: Element) => {
     const style = getComputedStyle(el)
     return (
-      !/^(transparent|rgba\(0, 0, 0, 0\))$/.test(style.backgroundColor) ||
-      style.backgroundImage !== "none"
+      alpha(style.backgroundColor) > 0.1 || style.backgroundImage !== "none"
     )
+  }
+  /* Box-shadow layers with spread and no offset or blur: rings. */
+  const rings = (style: CSSStyleDeclaration) =>
+    style.boxShadow.split(/,(?![^(]*\))/).flatMap((layer) => {
+      const ring =
+        /^\s*([a-z]+\([^)]*\))\s+0px\s+0px\s+0px\s+([\d.]+)px(\s+inset)?/.exec(
+          layer,
+        )
+      return ring?.[1] && ring[2] && alpha(ring[1]) > 0
+        ? [{ color: ring[1], spread: Number(ring[2]), inset: !!ring[3] }]
+        : []
+    })
+  /* The hairline that outlines a box, wherever it is drawn: a border, a ring
+     up to 1.5px, or either on ::before or ::after. */
+  const edgeOf = (style: CSSStyleDeclaration) => {
+    const width = Number.parseFloat(style.borderTopWidth)
+    if (
+      style.borderTopStyle !== "none" &&
+      width > 0 &&
+      alpha(style.borderTopColor) > 0
+    )
+      return `${width}px ${style.borderTopColor}`
+    const hairline = rings(style).find(
+      (ring) => ring.spread > 0 && ring.spread <= 1.5,
+    )
+    return hairline ? `${hairline.spread}px ${hairline.color}` : null
+  }
+  const edge = (el: Element) => {
+    for (const pseudo of [null, "::before", "::after"]) {
+      const style = getComputedStyle(el, pseudo)
+      if (pseudo && style.content === "none") continue
+      const found = edgeOf(style)
+      if (found) return found
+    }
+    return "none"
+  }
+  /* The focus ring, "<width>px <color> +<offset>px", from an outline or from
+     the outermost ring (the one inside it sets the offset). Focused parts
+     only. */
+  const ring = (el: Element) => {
+    if (
+      !el.matches(":focus-visible, [data-focus-visible], [data-specimen-focus]")
+    )
+      return "none"
+    const style = getComputedStyle(el)
+    const width = Number.parseFloat(style.outlineWidth)
+    if (style.outlineStyle !== "none" && width > 0)
+      return `${width}px ${style.outlineColor} +${Number.parseFloat(style.outlineOffset)}px`
+    const outer = rings(style)
+      .filter((ring) => !ring.inset && ring.spread > 0)
+      .sort((a, b) => a.spread - b.spread)
+    const last = outer.at(-1)
+    if (!last) return "none"
+    const offset = outer.at(-2)?.spread ?? 0
+    return `${last.spread - offset}px ${last.color} +${offset}px`
   }
   const find = (target: Target): Element | null => {
     const root = target.within
@@ -96,6 +159,8 @@ function probe(
       fontWeight: style.fontWeight,
       letterSpacing: style.letterSpacing,
       boxShadow: style.boxShadow,
+      edge: edge(el),
+      ring: ring(el),
     }
     return Object.fromEntries(props.map((prop) => [prop, all[prop]]))
   }
@@ -139,9 +204,17 @@ export const SPECIMEN_TARGETS: Record<
     sheet: "fields",
     target: { within: cell("text field · description"), selector: "input" },
   },
+  "button.focus": {
+    sheet: "actions",
+    target: { selector: "[data-specimen-focus]" },
+  },
   "select.trigger": {
     sheet: "fields",
     target: { within: cell("select · trigger"), selector: "button" },
+  },
+  "input.focus": {
+    sheet: "fields",
+    target: { selector: "[data-specimen-focus]" },
   },
   checkbox: {
     sheet: "selection",
@@ -155,9 +228,40 @@ export const SPECIMEN_TARGETS: Record<
     sheet: "selection",
     target: { selector: "[data-switch-indicator][data-selected]" },
   },
+  "switch.off": {
+    sheet: "selection",
+    target: { selector: "[data-switch-indicator]:not([data-selected])" },
+  },
+  tab: {
+    sheet: "navigation",
+    target: {
+      within: cell("tabs · preset default"),
+      selector: "[data-tab]:not([data-selected]):not([data-disabled])",
+    },
+  },
   "tab.selected": {
     sheet: "navigation",
-    target: { selector: "[data-tab][data-selected]" },
+    target: {
+      within: cell("tabs · preset default"),
+      selector: "[data-tab][data-selected]",
+    },
+  },
+  link: {
+    sheet: "navigation",
+    target: { within: cell("links in text"), selector: "a" },
+  },
+  shell: {
+    sheet: "navigation",
+    target: { selector: "[data-sidebar-wrapper]", surface: true },
+  },
+  panel: { sheet: "navigation", target: { selector: "[data-sidebar-inset]" } },
+  "nav.item": {
+    sheet: "navigation",
+    target: { selector: "[data-sidebar-menu-button]:not([data-active])" },
+  },
+  "nav.item.active": {
+    sheet: "navigation",
+    target: { selector: "[data-sidebar-menu-button][data-active]" },
   },
   menu: {
     sheet: "menu",
@@ -168,10 +272,43 @@ export const SPECIMEN_TARGETS: Record<
     sheet: "menu",
     target: { selector: "[data-tooltip]", surface: true },
   },
+  command: {
+    sheet: "command",
+    target: { selector: "[data-command]", surface: true },
+  },
+  "command.item": {
+    sheet: "command",
+    target: { within: "[data-command]", selector: "[data-listbox-item]" },
+  },
+  kbd: { sheet: "command", target: { selector: "[data-kbd]" } },
   dialog: {
     sheet: "dialog",
     target: { selector: "[data-dialog-content]", surface: true },
   },
   card: { sheet: "display", target: { selector: "[data-card]" } },
   badge: { sheet: "feedback", target: { selector: "[data-badge]" } },
+  "heading.1": {
+    sheet: "type",
+    target: { within: cell("h1 · text-4xl"), selector: "h1" },
+  },
+  "heading.2": {
+    sheet: "type",
+    target: { within: cell("h2 · text-3xl"), selector: "h2" },
+  },
+  "heading.3": {
+    sheet: "type",
+    target: { within: cell("h3 · text-2xl"), selector: "h3" },
+  },
+  "heading.4": {
+    sheet: "type",
+    target: { within: cell("h4 · text-xl"), selector: "h4" },
+  },
+  text: {
+    sheet: "type",
+    target: { within: cell("body · text-base"), selector: "p" },
+  },
+  "text.muted": {
+    sheet: "type",
+    target: { within: cell("muted · text-sm text-fg-muted"), selector: "p" },
+  },
 }
