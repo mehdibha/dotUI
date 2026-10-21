@@ -14,7 +14,7 @@ The three lesson keys are separate pages, not parts with `before` steps on one p
 
 Survey, 2026-10-21 19:20: 19 public pages screenshotted in both themes (project files, `presets/duolingo/2026-10-21/public/`). `/courses`, `/efficacy`, `/help`, `/guidelines`, `/mobile`, `/math`, `/chess` and `/forgot_password` follow the theme, like log-in and the lesson; the home, `/register`, course, `/super`, `/gift` and `/business` pages stay light. Nothing else there maps to a part: `/courses`' "I speak" picker is a text trigger, not a field; `/help`'s FAQ boxes are 2px swan, radius 16, like the course cards; `/math` and `/chess` use macaw for their primary buttons.
 
-At 19:10 that day guest sign-up failed (`POST /2023-05-23/users` 500, "Upload to Auth Failed"), so the lesson walk stalls after the course pick until Duolingo recovers.
+Guest sign-up can fail on Duolingo's side (`POST /2023-05-23/users` 500, "Upload to Auth Failed"; 19:10 to at least 19:40 that day, fine again by 21:40). The lesson walk then stalls after the course pick: retry later.
 
 ## Palette, as measured
 
