@@ -91,6 +91,9 @@
       "progress.fill": {
         "selector": "[data-part=\"progress.fill\"]"
       },
+      "link": {
+        "selector": "[data-part=\"link\"]"
+      },
       "dialog": {
         "selector": "[data-part=\"dialog\"]"
       }

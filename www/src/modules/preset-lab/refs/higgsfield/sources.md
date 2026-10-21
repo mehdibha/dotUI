@@ -10,11 +10,11 @@ Higgsfield publishes no token docs. Its design system, Q, ships with every higgs
 
 The file names are build hashes: when Higgsfield redeploys, take the new ones from any page's `<link rel="stylesheet">` tags.
 
-The app is dark only. Its light rules cover code blocks and the separate Supercomputer builder, not the studio, so light mode is derived (see the preset).
+The app is dark only. Its light rules cover code blocks and the separate Supercomputer builder, not the studio, so light mode is derived (see the preset). A crawl of 237 public pages (every English sitemap page plus the studio, apps, blog and creator-hub pages) under both OS schemes found no light theme: some pages set `data-theme="default-light"` under a light scheme and still render dark.
 
 ## Pages
 
-- `q.html`: a harness that loads the four stylesheets and lays out Q's own components with Q's classes on `--hf-color-background-primary`: buttons (sm 40px: primary, secondary, tertiary, ghost, outline, brand-soft, icon; md 48px), focus, disabled, toggles, segmented tabs (`q-tabs-segmented`, default tone), underline tabs, checkbox, radio, switch, field and select, tooltip, progress and modal. Its only styles of its own are layout, section labels, `.static` (which un-fixes the tooltip and modal so they sit in the page) and a script that sets the `--active-tab-*` variables Q's tab indicator reads (the app sets them from JS).
+- `q.html`: a harness that loads the four stylesheets and lays out Q's own components with Q's classes on `--hf-color-background-primary`: buttons (sm 40px: primary, secondary, tertiary, ghost, outline, brand-soft, icon; md 48px), focus, disabled, toggles, segmented tabs (`q-tabs-segmented`, default tone), underline tabs, checkbox, radio, switch, field and select, tooltip, progress, a text link (Q's `[&_a]:text-q-text-link`, the lime `--hf-color-text-link`) and modal. Its only styles of its own are layout, section labels, `.static` (which un-fixes the tooltip and modal so they sit in the page) and a script that sets the `--active-tab-*` variables Q's tab indicator reads (the app sets them from JS).
 - `https://higgsfield.ai/ai/image`: the aspect-ratio dropdown (the `Auto` button), a live glass `q-dropdown-content` with `q-menu-item` rows. The page needs about 15 s to render.
 - `https://higgsfield.ai/`: the header (`shell`, its nav links, the `New` badge), a model card and the section subtitle.
 - `https://higgsfield.ai/pricing`: titles. `heading.1` is the promo banner's h2 (36px); the copy changes, so re-check it on a re-measure. `heading.3` is the "For teams" plan title (24px).
@@ -32,6 +32,11 @@ Q maps to the specimens this way: Q's `secondary` button is white (inverse), so 
 - Header nav buttons are 36px; the cookie banner's buttons 40px at 10px corners.
 - The sign-up dialog: #131517 at 24px corners inside a 1px rgba(217,217,217,.04) edge, a 52px email field at 12px corners on a 1px edge, story bars 4px white 20% with a white fill.
 - An older `.button` system still renders on some pages: 40px at 10px corners, 14/600, a 3px focus ring, hover at brightness 80%, disabled on #292b2c.
+- Marketing CTAs are 48px at 12px corners, 16/600 (the md size); the studio's buttons stay 40px at 10px, 14/500.
+- Fields across the site are 40–44px on white 5% at 10–12px corners.
+- Blog prose links don't use the link token: they keep the paragraph's white 80% at 400, underlined at a 0.2em offset (`.content-html p a[href]`). Footer and header links are muted ink, no underline.
+- Titles are Space Grotesk 700 uppercase everywhere, with tracking from normal to -1.2px depending on the page. Page grounds vary: #0b0b0b on marketing pages, #131416 in the studio.
+- `/academy` uses `q-accordion`; `q-tabs` also come as pill and glass variants on marketing pages.
 - The signature CTAs (GENERATE, Get Plus) add a gloss gradient, drop shadows and a 3px inset ledge in #829b19 to the lime fill.
 
 ## Q values worth knowing
