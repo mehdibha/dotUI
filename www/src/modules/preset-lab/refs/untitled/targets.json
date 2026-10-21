@@ -4,37 +4,30 @@
     "parts": {
       "button.primary": {
         "selector": "main button",
-        "text": "Button sm",
-        "skip": ["borderColor", "borderWidth"]
+        "text": "Button sm"
       },
       "button.secondary": {
         "selector": "main button",
         "text": "Button sm",
-        "nth": 1,
-        "skip": ["borderColor", "borderWidth"]
+        "nth": 1
       },
       "button.quiet": {
         "selector": "main button",
         "text": "Button sm",
-        "nth": 2,
-        "skip": ["borderColor", "borderWidth"]
+        "nth": 2
       },
       "button.focus": {
         "selector": "main button",
         "text": "Button sm",
-        "focus": true,
-        "skip": ["borderColor", "borderWidth"]
+        "focus": true
       },
       "link": {
         "selector": "main a[class*='text-brand-secondary']",
-        "text": "Button sm",
-        "skip": [
-          "borderColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize"
-        ]
+        "text": "Button sm"
+      },
+      "button.icon": {
+        "selector": "#icon-only-buttons-example button[data-icon-only][class*='ring-primary']",
+        "nth": 1
       }
     }
   },
@@ -44,11 +37,14 @@
       "input": {
         "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
         "ink": "input",
-        "skip": ["borderColor", "borderWidth", "paddingInline"]
+        "skip": ["paddingInline"]
       },
       "input.focus": {
         "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
         "focus": true
+      },
+      "field.label": {
+        "selector": "main label[data-label]"
       }
     }
   },
@@ -59,7 +55,7 @@
         "selector": "main button[aria-haspopup=listbox]",
         "text": "Select team member",
         "ink": "p",
-        "skip": ["color", "borderColor", "borderWidth", "paddingInline"]
+        "skip": ["color", "paddingInline"]
       },
       "select.item": {
         "selector": "[role=listbox] [role=option] > div",
@@ -69,8 +65,7 @@
           {
             "click": "main button[aria-haspopup=listbox]"
           }
-        ],
-        "skip": ["borderColor", "borderWidth"]
+        ]
       }
     }
   },
@@ -79,17 +74,7 @@
     "parts": {
       "checkbox": {
         "selector": "main label[data-rac]:not([data-selected]) div[class~='size-4']",
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow"
-        ]
+        "skip": ["backgroundColor"]
       },
       "checkbox.checked": {
         "selector": "main label[data-rac][data-selected] div[class~='size-4']",
@@ -100,17 +85,6 @@
           {
             "hover": "main h3"
           }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
         ]
       }
     }
@@ -119,18 +93,7 @@
     "storage": "theme",
     "parts": {
       "switch.off": {
-        "selector": "main label[data-rac]:not([data-selected]) div[class~='bg-tertiary']",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow"
-        ]
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='bg-tertiary']"
       },
       "switch.on": {
         "selector": "main label[data-rac][data-selected] div[class~='rounded-full'][class*='bg-brand-solid']",
@@ -141,18 +104,6 @@
           {
             "hover": "main h3"
           }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
         ]
       }
     }
@@ -162,11 +113,20 @@
     "parts": {
       "tab": {
         "selector": "main [role=tab][class*='bg-brand-primary_alt'] ~ [role=tab]",
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "skip": ["boxShadow"]
       },
       "tab.selected": {
         "selector": "main [role=tab][class*='bg-brand-primary_alt']",
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "skip": ["boxShadow"]
+      },
+      "segmented": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1']"
+      },
+      "segmented.item": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1'] [role=tab]:not([aria-selected=true])"
+      },
+      "segmented.selected": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1'] [role=tab][aria-selected=true]"
       }
     }
   },
@@ -181,16 +141,7 @@
             "click": "main button[aria-haspopup]::-p-text(Account)"
           }
         ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing"
-        ]
+        "skip": ["color"]
       },
       "menu.item": {
         "selector": "[role=menu] [role=menuitem] > div",
@@ -200,8 +151,7 @@
           {
             "click": "main button[aria-haspopup]::-p-text(Account)"
           }
-        ],
-        "skip": ["borderColor", "borderWidth"]
+        ]
       }
     }
   },
@@ -213,22 +163,12 @@
         "ink": "span",
         "before": [
           {
-            "click": "main h3::-p-text(Tooltip example)"
+            "focus": "main button[class*=text-fg-quaternary]:not([aria-label])"
           },
           {
-            "press": "Tab"
-          },
-          {
-            "press": "Tab"
-          },
-          {
-            "press": "Tab"
-          },
-          {
-            "press": "Tab"
+            "wait": "[role=tooltip]"
           }
-        ],
-        "skip": ["borderColor", "borderWidth"]
+        ]
       }
     }
   },
@@ -238,26 +178,16 @@
       "command": {
         "selector": "[role=dialog]",
         "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing"
-        ]
+        "skip": ["color"]
       },
       "command.item": {
         "selector": "[role=option] > div",
         "nth": 1,
-        "ink": "[slot=label]",
-        "skip": ["borderColor", "borderWidth"]
+        "ink": "[slot=label]"
       },
       "kbd": {
         "selector": "[role=option] div[class*='ring-1']",
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "skip": ["boxShadow"]
       }
     }
   },
@@ -267,16 +197,7 @@
       "dialog": {
         "selector": "[role=dialog]",
         "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing"
-        ]
+        "skip": ["color"]
       }
     }
   },
@@ -285,17 +206,7 @@
     "parts": {
       "card": {
         "selector": "main div[class*='rounded-xl'][class*='ring-secondary']",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing"
-        ]
+        "skip": ["color"]
       }
     }
   },
@@ -306,7 +217,13 @@
         "selector": "main span[class*='rounded-full'][class*='utility-neutral']",
         "text": "Label",
         "nth": 1,
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "skip": ["boxShadow"]
+      },
+      "badge.accent": {
+        "selector": "main span[class*='rounded-full'][class*='utility-brand']",
+        "text": "Label",
+        "nth": 1,
+        "skip": ["boxShadow"]
       }
     }
   },
@@ -314,28 +231,13 @@
     "storage": "theme",
     "parts": {
       "shell": {
-        "selector": "aside",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": "aside"
       },
       "nav.item": {
         "selector": "aside summary",
         "nth": 1,
         "ink": "span[class*='font-semibold']",
-        "skip": ["backgroundColor", "borderColor", "borderWidth"]
+        "skip": ["backgroundColor"]
       }
     }
   },
@@ -345,7 +247,7 @@
       "nav.item.active": {
         "selector": "[aria-current=page]",
         "ink": "span[class*='font-semibold']",
-        "skip": ["borderColor", "borderWidth", "paddingInline"]
+        "skip": ["paddingInline"]
       }
     }
   },
@@ -354,38 +256,11 @@
     "parts": {
       "page": {
         "selector": "main",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["color"]
       },
       "panel": {
         "selector": "main",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["edge"]
       }
     }
   },
@@ -393,32 +268,10 @@
     "storage": "theme",
     "parts": {
       "heading.4": {
-        "selector": "h1",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": "h1"
       },
       "text": {
-        "selector": "h1 + p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": "h1 + p"
       }
     }
   },
@@ -426,18 +279,72 @@
     "storage": "theme",
     "parts": {
       "text.muted": {
-        "selector": "h2 + p",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "boxShadow",
-          "edge",
-          "ring"
+        "selector": "h2 + p"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/pagination": {
+    "storage": "theme",
+    "parts": {
+      "pagination.current": {
+        "selector": "main button[aria-current=page]",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/radio-buttons": {
+    "storage": "theme",
+    "parts": {
+      "radio": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='size-4']"
+      },
+      "radio.checked": {
+        "selector": "main label[data-rac][data-selected] div[class~='size-4']"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/progress-indicators": {
+    "storage": "theme",
+    "parts": {
+      "progress": {
+        "selector": "main [role=progressbar]"
+      },
+      "progress.fill": {
+        "selector": "main [role=progressbar] > div"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/calendars": {
+    "storage": "theme",
+    "parts": {
+      "calendar.day": {
+        "selector": "[role=gridcell] > [data-rac]:not([data-outside-month], [data-selected], [data-today]) > div",
+        "within": "#calendar-day-view"
+      },
+      "calendar.selected": {
+        "selector": "[role=gridcell] > [data-selected] > div",
+        "within": "#calendar-day-view"
+      },
+      "calendar.today": {
+        "selector": "[role=gridcell] > [data-today] > div",
+        "within": "#calendar-day-view",
+        "before": [
+          {
+            "click": "#calendar-day-view [role=gridcell] > [data-rac]:not([data-outside-month], [data-today])"
+          },
+          {
+            "hover": "main h3"
+          }
         ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/alerts/alert-floating-default-demo": {
+    "storage": "theme",
+    "parts": {
+      "alert": {
+        "selector": "div[class*='rounded-xl'][class*='border-primary']",
+        "ink": "p"
       }
     }
   }
