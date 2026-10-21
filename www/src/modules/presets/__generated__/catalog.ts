@@ -1659,7 +1659,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--icon-stroke-width": "3",
 				"--radius": "1rem",
 				"--studio-radius-panel": "var(--radius-lg)",
-				"--studio-radius-card": "var(--radius-md)",
 				"--studio-radius-item": "var(--radius-sm)",
 				"--studio-control-stroke": "2px",
 				"--studio-card-stroke": "2px 2px 4px",

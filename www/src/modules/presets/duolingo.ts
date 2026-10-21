@@ -33,7 +33,7 @@ export const duolingo = definePreset({
     controlEdge: "soft",
 
     // Typography
-    // Duolingo Sans is proprietary; the brand guidelines name Nunito as its substitute.
+    // Stand-in: Duolingo Sans is proprietary; Nunito keeps its rounded terminals.
     bodyFont: "Nunito",
     titleStyle: "bold",
     labelWeight: "bold",
@@ -44,12 +44,16 @@ export const duolingo = definePreset({
     iconStroke: 3,
 
     // Shape
-    // Fields, tiles and web-ui buttons 12px; popovers, cards and modals 16px; menu rows 7px.
+    // Fields, choice tiles and web-ui buttons 12px; popovers, cards and modals 16px; menu rows 7px.
+    // Stand-in: lesson and log-in buttons are 16px, but a larger control radius also rounds fields past 12px.
     radiusPx: 16,
     roleItem: "sm",
     rolePanel: "lg",
+    // Course tiles 16px, like the modal.
+    roleCard: "lg",
     controlStroke: "bold",
-    // Buttons 50px, fields 48px, small 32px.
+    // Buttons 50px with the lip, fields 48px, small 32px.
+    // Stand-in: touch pads buttons 24px and sets 16px labels; Duolingo pads 16px, labels 15px (17px in lessons).
     density: "touch",
 
     // Surfaces: cards and choice tiles stand on a 2px lip.
@@ -83,7 +87,8 @@ export const duolingo = definePreset({
     // No check on the current item; the row tint marks it.
     menuIndicator: "none",
 
-    // Dialogs
+    // Dialogs: the Ledge stroke is a stand-in, Duolingo's modal has no edge.
+    // Black at 30–40%, no blur.
     dialogBackdrop: "scrim",
     dialogActions: "stack",
     dialogClose: "filled",

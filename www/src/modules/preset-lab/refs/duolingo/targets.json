@@ -1,0 +1,97 @@
+{
+  "https://www.duolingo.com/log-in": {
+    "parts": {
+      "button.secondary": {
+        "selector": "[data-test=login-with-apple]",
+        "skip": ["fontFamily"]
+      },
+      "input": {
+        "selector": "div:has(> [data-test=email-input])",
+        "ink": "input",
+        "skip": ["fontFamily", "paddingInline"]
+      },
+      "input.focus": {
+        "selector": "div:has(> [data-test=email-input])",
+        "ink": "input",
+        "before": [
+          {
+            "click": "[data-test=email-input]"
+          }
+        ],
+        "skip": ["fontFamily", "paddingInline"]
+      },
+      "heading.3": {
+        "selector": "h1",
+        "text": "Log in",
+        "skip": ["fontFamily", "height", "borderColor"]
+      }
+    }
+  },
+  "https://www.duolingo.com/": {
+    "mode": "light",
+    "parts": {
+      "link": {
+        "selector": "a",
+        "text": "research shows that it works",
+        "skip": ["fontFamily", "fontSize", "height", "borderColor"]
+      },
+      "text.muted": {
+        "selector": "p",
+        "skip": ["fontFamily", "height", "borderColor", "fontSize"]
+      }
+    }
+  },
+  "https://www.duolingo.com/register": {
+    "mode": "light",
+    "parts": {
+      "card": {
+        "selector": "[data-test~=language-card]",
+        "skip": ["fontFamily", "fontSize", "height", "paddingInline", "color"]
+      }
+    }
+  },
+  "https://www.duolingo.com/lesson (guest: /register, Spanish, Continue through onboarding; first challenge)": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "[data-test=challenge-header]",
+        "surface": true,
+        "skip": ["fontFamily", "height", "borderColor"]
+      },
+      "heading.2": {
+        "selector": "[data-test=challenge-header]",
+        "skip": ["fontFamily", "height", "borderColor"]
+      },
+      "kbd": {
+        "selector": "[data-test=challenge-choice] > div:nth-child(2) > span:last-child",
+        "nth": 1,
+        "skip": ["fontFamily", "paddingInline"]
+      }
+    }
+  },
+  "https://www.duolingo.com/lesson (guest, a wrong tile selected, before Check)": {
+    "signedIn": true,
+    "parts": {
+      "button.primary": {
+        "selector": "[data-test=player-next]",
+        "skip": ["fontFamily", "borderColor"]
+      }
+    }
+  },
+  "https://www.duolingo.com/lesson (guest, after Check on the wrong tile: the hearts modal)": {
+    "signedIn": true,
+    "parts": {
+      "dialog": {
+        "text": "Each mistake costs 1 heart!",
+        "surface": true,
+        "skip": [
+          "fontFamily",
+          "fontSize",
+          "height",
+          "borderColor",
+          "paddingInline"
+        ]
+      }
+    }
+  }
+}
