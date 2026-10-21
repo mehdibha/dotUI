@@ -26,10 +26,10 @@ export function Specimen({ product }: { product: string }) {
       <Card>
         <CardContent className="flex flex-col gap-1">
           <span className="text-xs text-fg-muted" data-contrast="Muted">
-            This month
+            This week
           </span>
           <div className="flex items-center justify-between gap-2">
-            <span className="font-heading text-xl font-semibold">$4,280</span>
+            <span className="font-heading text-xl font-semibold">1,284</span>
             <Badge variant="accent">+12%</Badge>
           </div>
         </CardContent>
@@ -53,15 +53,15 @@ export function Specimen({ product }: { product: string }) {
         <Button className="min-w-0 flex-1">Export</Button>
       </div>
       <div className="flex items-center justify-between gap-2 text-sm">
-        <span data-contrast="Text">Reminders</span>
-        <Switch aria-label="Reminders" defaultSelected />
+        <span data-contrast="Text">Notifications</span>
+        <Switch aria-label="Notifications" defaultSelected />
       </div>
     </div>
   )
 }
 
-const DEFAULT_SAMPLE =
-  "Send invoices, track what's paid, and see what's coming in this month."
+// Product-neutral, so a card never reads as one domain.
+const DEFAULT_SAMPLE = "Everything your team needs, in one calm place."
 
 /** Type set in the product's own words: a heading, body, figures and
  *  controls. `large` is the live detail under the tiles. */
@@ -85,7 +85,7 @@ export function TypeSpecimen({
         </span>
         <p className="line-clamp-3 text-sm text-fg-muted">{sample}</p>
         <span className="font-mono text-xs tabular-nums">
-          $4,280.00 · 12 invoices
+          1,284 · +12% this week
         </span>
         <Button variant="primary" className="w-full">
           Get started
@@ -98,25 +98,25 @@ export function TypeSpecimen({
         <h1 className="text-3xl leading-tight">{product}</h1>
         <p className="text-base text-fg-muted">{sample}</p>
       </div>
-      <h2 className="text-lg">This month</h2>
+      <h2 className="text-lg">This week</h2>
       <div className="grid grid-cols-3 gap-3 font-mono text-sm tabular-nums">
         <span>
-          <span className="block text-xs text-fg-muted">Paid</span>$4,280.00
+          <span className="block text-xs text-fg-muted">Active</span>1,284
         </span>
         <span>
-          <span className="block text-xs text-fg-muted">Due</span>$1,120.50
+          <span className="block text-xs text-fg-muted">New</span>312
         </span>
         <span>
-          <span className="block text-xs text-fg-muted">Late</span>$310.00
+          <span className="block text-xs text-fg-muted">Returning</span>972
         </span>
       </div>
       <Card>
         <CardContent className="flex items-end gap-2">
           <TextField className="min-w-0 flex-1">
-            <Label>Client email</Label>
-            <Input placeholder="ana@studio.com" />
+            <Label>Email</Label>
+            <Input placeholder="ana@example.com" />
           </TextField>
-          <Button variant="primary">Send invoice</Button>
+          <Button variant="primary">Invite</Button>
         </CardContent>
       </Card>
     </div>

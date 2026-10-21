@@ -204,6 +204,51 @@ ramp previews. Claude never sees them.
 - **Change is cheap.** Compare, then Update, with a file diff.
 - **Works where they already are:** Claude, ChatGPT, Cursor, VS Code.
 
+## Tested in claude.ai (Oct 21, three rounds)
+
+Two full runs, Lumen (fintech) and Kiln (pottery marketplace): directions →
+color → type → save → refine → re-save. Opus 5.5, dark theme.
+
+**Works:**
+
+- Every card renders and reacts live in Claude's sandbox: fonts, light and
+  dark, dragging the color area, measured contrast, clipboard copy.
+- Claude carries the whole design `{ preset, shape, axes }` across five
+  steps and folds each pick's axes in.
+- Claude reaches for `shape` on its own for corner requests, and re-saves
+  on Accept.
+- Its replies stay at one or two sentences, and it offers the first screen
+  as the next step.
+
+**Fixed between rounds:**
+
+- A renamed `ui://` URI broke cards for anyone with a cached tool list.
+  URIs are now only added, never renamed.
+- Result texts listed every direction, so Claude restated them. They now
+  say "the user is looking at a live card".
+- `IBM Plex Mono` (not in the catalog) cost a retry. Refused fonts now come
+  back with the closest families.
+- Side by side, a 6→10px radius was invisible. Compare now flips one
+  preview in place.
+- Four pairings left one tile alone; they now sit 2×2.
+- Tile titles didn't line up; they do now.
+- The specimens' invoice copy looked wrong for non-fintech products; it's
+  product-neutral now.
+
+**Host constraints (claude.ai, not fixable from the server):**
+
+- **Approvals.** Every card tool asks "Allow once / Always allow" on first
+  use, five prompts in a first run. Users can pick Always allow; fewer
+  tools would mean fewer prompts.
+- **Picks are pre-filled, not sent.** The card's pick lands in the composer
+  under a red "Use caution before running this prompt" banner, and the
+  user presses Enter. The text is short and plain, so it reads fine, but
+  it's an extra step on every card.
+- **Tool list cache.** New tools need Settings → Connectors → dotUI →
+  ⋮ → Refresh tools list.
+- **Pace.** The first directions card takes about 30–40 s (catalog plus
+  composing three systems); later cards take about 10 s.
+
 ## Non-goals (for now)
 
 - A full studio inside chat. Deep work belongs to the studio, one click
