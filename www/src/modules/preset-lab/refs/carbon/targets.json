@@ -1,156 +1,72 @@
 {
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:g100",
     "parts": {
       "page": {
-        "selector": "body",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": "body"
       },
       "button.primary": {
-        "selector": ".cds--btn--primary",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": ".cds--btn--primary"
       },
       "button.focus": {
         "selector": ".cds--btn--primary",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
+        "focus": true
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:g100",
     "parts": {
       "button.secondary": {
-        "selector": ".cds--btn--secondary",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": ".cds--btn--secondary"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:g100",
     "parts": {
       "button.quiet": {
-        "selector": ".cds--btn--ghost",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": ".cds--btn--ghost"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:white&args=kind:secondary": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:g100&args=kind:secondary",
+    "parts": {
+      "button.icon": {
+        "selector": ".cds--btn"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:g100",
     "parts": {
       "input": {
-        "selector": ".cds--text-input",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": ".cds--text-input"
       },
       "input.focus": {
         "selector": ".cds--text-input",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
+        "focus": true
+      },
+      "field.label": {
+        "selector": ".cds--label"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:g100",
     "parts": {
       "select.trigger": {
-        "selector": ".cds--select-input",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": ".cds--select-input"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:g100",
     "parts": {
       "checkbox": {
         "selector": ".cds--checkbox-label",
-        "box": "::before",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "box": "::before"
       },
       "checkbox.checked": {
         "selector": ".cds--checkbox:checked + .cds--checkbox-label",
@@ -159,41 +75,27 @@
           {
             "click": ".cds--checkbox-label"
           }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
         ]
       }
     }
   },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:g100",
+    "parts": {
+      "radio": {
+        "selector": ".cds--radio-button:not(:checked) + label .cds--radio-button__appearance"
+      },
+      "radio.checked": {
+        "selector": ".cds--radio-button:checked + label .cds--radio-button__appearance",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:g100",
     "parts": {
       "switch.on": {
-        "selector": ".cds--toggle__switch--checked",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--toggle__switch--checked"
       },
       "switch.off": {
         "selector": ".cds--toggle__switch",
@@ -201,734 +103,163 @@
           {
             "click": ".cds--toggle__button"
           }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
         ]
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:g100",
     "parts": {
       "tab.selected": {
         "selector": ".cds--tabs__nav-item--selected",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["edge"]
       },
       "tab": {
         "selector": ".cds--tabs__nav-item:not(.cds--tabs__nav-item--selected):not(.cds--tabs__nav-item--disabled)",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:g100",
+    "parts": {
+      "segmented": {
+        "selector": ".cds--content-switcher"
+      },
+      "segmented.item": {
+        "selector": ".cds--content-switcher-btn:not(.cds--content-switcher--selected)",
+        "skip": ["backgroundColor", "edge"]
+      },
+      "segmented.selected": {
+        "selector": ".cds--content-switcher--selected"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:g100",
     "parts": {
       "link": {
-        "selector": ".cds--link",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--link"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:g100",
     "parts": {
       "shell": {
-        "selector": ".cds--side-nav__navigation",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--side-nav__navigation"
       },
       "panel": {
         "selector": ".cds--content",
-        "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "surface": true
       },
       "nav.item": {
         "selector": ".cds--side-nav__link:not([aria-current=page])",
         "ink": ".cds--side-nav__link-text",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["paddingInline"]
       },
       "nav.item.active": {
         "selector": ".cds--side-nav__link[aria-current=page]",
         "ink": ".cds--side-nav__link-text",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["paddingInline"]
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:white&args=size:md": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:g100&args=size:md",
     "parts": {
       "menu": {
-        "selector": ".cds--menu",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": ".cds--menu"
       },
       "menu.item": {
-        "selector": ".cds--menu-item",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--menu-item"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:white&args=defaultOpen:!true": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:g100&args=defaultOpen:!true",
     "parts": {
       "tooltip": {
         "selector": ".cds--tooltip .cds--popover-content",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["height"]
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:g100",
     "parts": {
       "dialog": {
-        "selector": ".cds--modal-container",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": ".cds--modal-container"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:g100",
     "parts": {
       "card": {
-        "selector": ".cds--tile",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": ".cds--tile"
       }
     }
   },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:white": {
-    "mode": "light",
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:g100",
     "parts": {
       "badge": {
-        "selector": ".cds--tag--gray",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--tag--gray"
       },
       "badge.accent": {
-        "selector": ".cds--tag--blue",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": ".cds--tag--blue"
       }
     }
   },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:g100",
     "parts": {
-      "page": {
-        "selector": "body",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+      "alert": {
+        "selector": ".cds--inline-notification"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:g100",
+    "parts": {
+      "progress": {
+        "selector": ".cds--progress-bar__track"
       },
-      "button.primary": {
-        "selector": ".cds--btn--primary",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+      "progress.fill": {
+        "selector": ".cds--progress-bar__bar"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:g100",
+    "steps": [
+      {
+        "click": ".cds--date-picker__input"
       },
-      "button.focus": {
-        "selector": ".cds--btn--primary",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
+      {
+        "wait": ".flatpickr-calendar.open"
       }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:g100": {
-    "mode": "dark",
+    ],
     "parts": {
-      "button.secondary": {
-        "selector": ".cds--btn--secondary",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "button.quiet": {
-        "selector": ".cds--btn--ghost",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "input": {
-        "selector": ".cds--text-input",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+      "calendar.day": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day:not(.prevMonthDay):not(.nextMonthDay):not(.today):not(.selected)"
       },
-      "input.focus": {
-        "selector": ".cds--text-input",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "select.trigger": {
-        "selector": ".cds--select-input",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "checkbox": {
-        "selector": ".cds--checkbox-label",
-        "box": "::before",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+      "calendar.today": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day.today"
       },
-      "checkbox.checked": {
-        "selector": ".cds--checkbox:checked + .cds--checkbox-label",
-        "box": "::before",
+      "calendar.selected": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day.selected",
         "before": [
           {
-            "click": ".cds--checkbox-label"
-          }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "switch.on": {
-        "selector": ".cds--toggle__switch--checked",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "switch.off": {
-        "selector": ".cds--toggle__switch",
-        "before": [
+            "click": ".flatpickr-calendar.open .flatpickr-day:not(.prevMonthDay):not(.nextMonthDay):not(.today)"
+          },
           {
-            "click": ".cds--toggle__button"
+            "click": ".cds--date-picker__input"
+          },
+          {
+            "wait": ".flatpickr-calendar.open .flatpickr-day.selected"
           }
-        ],
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "tab.selected": {
-        "selector": ".cds--tabs__nav-item--selected",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "tab": {
-        "selector": ".cds--tabs__nav-item:not(.cds--tabs__nav-item--selected):not(.cds--tabs__nav-item--disabled)",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "link": {
-        "selector": ".cds--link",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "shell": {
-        "selector": ".cds--side-nav__navigation",
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "panel": {
-        "selector": ".cds--content",
-        "surface": true,
-        "skip": [
-          "color",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "nav.item": {
-        "selector": ".cds--side-nav__link:not([aria-current=page])",
-        "ink": ".cds--side-nav__link-text",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "nav.item.active": {
-        "selector": ".cds--side-nav__link[aria-current=page]",
-        "ink": ".cds--side-nav__link-text",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:g100&args=size:md": {
-    "mode": "dark",
-    "parts": {
-      "menu": {
-        "selector": ".cds--menu",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
-      },
-      "menu.item": {
-        "selector": ".cds--menu-item",
-        "skip": [
-          "backgroundColor",
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:g100&args=defaultOpen:!true": {
-    "mode": "dark",
-    "parts": {
-      "tooltip": {
-        "selector": ".cds--tooltip .cds--popover-content",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "dialog": {
-        "selector": ".cds--modal-container",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "card": {
-        "selector": ".cds--tile",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
-      }
-    }
-  },
-  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:g100": {
-    "mode": "dark",
-    "parts": {
-      "badge": {
-        "selector": ".cds--tag--gray",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "fontFamily",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "badge.accent": {
-        "selector": ".cds--tag--blue",
-        "skip": [
-          "borderColor",
-          "borderWidth",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
         ]
       }
     }

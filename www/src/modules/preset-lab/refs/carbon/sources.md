@@ -31,16 +31,16 @@ Carbon publishes its tokens as code, so colors come from the packages first.
 
 ## Measured pages
 
-The [Carbon React Storybook](https://react.carbondesignsystem.com) renders the real components at their default size. Each story is opened headless as `iframe.html?viewMode=story&id=<story>`. The theme is a URL global (`&globals=backgrounds.value:white` or `:g100`), so `targets.json` lists every page once per theme with its `mode`.
+The [Carbon React Storybook](https://react.carbondesignsystem.com) renders the real components at their default size. Each story is opened headless as `iframe.html?viewMode=story&id=<story>`. The theme is a URL global: each page in `targets.json` is the `backgrounds.value:white` URL, with its `dark` set to the `g100` one.
 
-- Re-measure: `pnpm presets:measure --pack carbon` (all 30 pages, probe 44f1c5f or later), or `--url '<page>'` for one.
-- Each part `skip`s the properties the two sides draw in different places: `borderColor`/`borderWidth` (`edge` covers hairlines), content-sized heights, card padding (Carbon pads the tile, dotUI the card's sections), and the tab lines (Carbon draws a 2px bottom border on every tab; dotUI draws a 1px rule on the list plus an indicator child, logged in the ledger).
-- `button.focus` and `input.focus` tab to the control first; `checkbox.checked` clicks the first checkbox and `switch.off` clicks the toggle, which the story renders on.
+- Re-measure: `pnpm presets:measure --pack carbon` (21 stories, probe 8eb9b12 or later).
+- Parts measure their kind's default properties. `skip` leaves out what the two sides draw in different places: the tab lines (Carbon draws a 2px bottom border on every tab; dotUI a 1px rule on the list plus an indicator child, logged in the ledger), side nav padding (Carbon pads the link, dotUI the row), tooltip height (Carbon's bubble wraps its text), content-switcher item edges (Carbon outlines each item, dotUI the track, which is compared), and the radio dot and content-switcher fills, which Carbon scales with a transform the probe reads as a solid fill.
+- `button.focus` and `input.focus` are `focus` parts: Carbon's inset focus reads as an `edge` of 2px `focus` with no `ring`. `checkbox.checked` clicks the first checkbox, `switch.off` clicks the toggle (the story renders on), and the calendar parts open the date picker; `calendar.selected` clicks the first day of the month that isn't today.
 - `menu` and `menu.item` use `&args=size:md`, the 40px rows Dropdown and OverflowMenu default to. The default Menu story is `sm` (32px).
-- Buttons are the default `lg` (48px): the Button story ignores a `size` arg. Carbon's `md` is 40px, the field height.
-- `badge` is the gray read-only Tag (`.cds--tag--gray`).
+- Buttons are the default `lg` (48px): the Button story ignores a `size` arg. Carbon's `md` is 40px, the field height. `button.icon` is the IconButton story with `&args=kind:secondary`, the kind dotUI's specimen icon button maps to.
+- `badge` is the gray read-only Tag (`.cds--tag--gray`), `badge.accent` the blue one. `alert` is the default inline notification.
 - `checkbox` reads its box from the label's `::before` (`box`); `nav.item` and `nav.item.active` read color and type from `.cds--side-nav__link-text` (`ink`), since the anchor computes link blue. `panel` is the page background: the UI Shell content area paints nothing.
-- `heading.1`–`heading.4`, `text` and `text.muted` are written by hand from `@carbon/type` and the theme tokens: productive headings at 400 in `text-primary`, body in `text-primary`, secondary text in `text-secondary`. Sizes are left out: the specimen's scale and Carbon's don't map one to one.
+- `heading.1`–`heading.4`, `text` and `text.muted` are written by hand from `@carbon/type` and the theme tokens: productive headings at 400 in `text-primary`, body in `text-primary`, secondary text in `text-secondary`. Sizes are left out: the specimen's scale and Carbon's don't map one to one. `--pack` keeps them.
 
 ## Read by hand (no probe part)
 
