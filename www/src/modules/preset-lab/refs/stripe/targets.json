@@ -15,19 +15,7 @@
         "selector": "[data-testid=stripe-app-example-renderer] a",
         "text": "Primary",
         "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge"
-        ]
+        "skip": ["edge"]
       }
     }
   },
@@ -51,30 +39,11 @@
     "mode": "light",
     "parts": {
       "checkbox": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:not(:checked)",
-        "skip": [
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:not(:checked)"
       },
       "checkbox.checked": {
         "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:checked",
-        "skip": [
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["edge"]
       }
     }
   },
@@ -82,33 +51,11 @@
     "mode": "light",
     "parts": {
       "switch.off": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:not(:checked)",
-        "skip": [
-          "color",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "ring"
-        ]
+        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:not(:checked)"
       },
       "switch.on": {
         "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:checked",
-        "skip": [
-          "color",
-          "borderRadius",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["edge"]
       }
     }
   },
@@ -127,17 +74,7 @@
       "text.muted": {
         "selector": "[data-testid=stripe-app-example-renderer] div",
         "text": "customer@test.com",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["fontSize"]
       }
     }
   },
@@ -146,19 +83,7 @@
     "parts": {
       "input.focus": {
         "selector": "input[type=email]",
-        "focus": true,
-        "skip": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "boxShadow"
-        ]
+        "focus": true
       }
     }
   },
@@ -172,7 +97,7 @@
             "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
           }
         ],
-        "skip": ["color", "height", "fontSize", "fontWeight"]
+        "skip": ["color"]
       },
       "menu.item": {
         "selector": ".__sail-layer-containers [role=menuitem]",
@@ -203,17 +128,7 @@
             "hover": "[data-testid=stripe-app-example-renderer] a::-p-text(Pay out to bank)"
           }
         ],
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "skip": ["fontSize"]
       }
     }
   }
