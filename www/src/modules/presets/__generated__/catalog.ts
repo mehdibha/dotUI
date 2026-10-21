@@ -499,7 +499,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				field: { error: "icon-message", label: "semibold" },
 				group: { segments: "attached", separator: "shared-edge" },
 				input: { style: "outline", hover: "edge", height: "controls", text: "same", errorIcon: "none" },
-				kbd: { style: "outline" },
+				kbd: { style: "chip" },
 				link: { underline: "never", color: "accent" },
 				"list-box": {
 					indicator: "check-end",

@@ -22,7 +22,8 @@ export const stripe = definePreset({
     warningSeed: "#cc4b00",
     dangerSeed: "#e61947",
     lightBg: 100,
-    // Dark page #14171d.
+    // The Dashboard has no dark mode. Derived from Sail's dark palette in the
+    // login bundle: page #14171d.
     darkBg: 7.5,
 
     // Surfaces
@@ -106,7 +107,6 @@ export const stripe = definePreset({
     breadcrumbTone: "link",
     badgeStyle: "soft-outline",
     badgeShape: "rounded",
-    kbdTreatment: "outline",
     avatarShape: "rounded",
     tableHeaderLabel: "strong",
     // Sail's categorical series: #9966FF, #0055BC, #00A1C2, #ED6804…
