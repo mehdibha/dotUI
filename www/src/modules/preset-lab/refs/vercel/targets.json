@@ -203,6 +203,10 @@
     "parts": {
       "badge": {
         "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex"
+      },
+      "badge.accent": {
+        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
+        "nth": 2
       }
     }
   },
