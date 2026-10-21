@@ -9,13 +9,13 @@
         "within": "[data-part=button-primary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": ["fontFamily", "letterSpacing"]
+        "skip": ["letterSpacing"]
       },
       "button.secondary": {
         "within": "[data-part=button-secondary]",
         "selector": "button",
         "ink": ".Polaris-Text--root",
-        "skip": ["fontFamily", "letterSpacing"]
+        "skip": ["letterSpacing"]
       },
       "button.quiet": {
         "within": "[data-part=button-quiet]",
@@ -40,7 +40,28 @@
       "kbd": {
         "within": "[data-part=kbd-small]",
         "selector": ".Polaris-KeyboardKey",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
+        "skip": ["letterSpacing", "boxShadow"]
+      },
+      "button.icon": {
+        "within": "[data-part=button-icon]",
+        "selector": "button"
+      },
+      "segmented": {
+        "within": "[data-part=segmented]",
+        "selector": ".Polaris-ButtonGroup",
+        "skip": ["borderRadius"]
+      },
+      "segmented.item": {
+        "within": "[data-part=segmented]",
+        "selector": "button:not([aria-pressed=true])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "segmented.selected": {
+        "within": "[data-part=segmented]",
+        "selector": "button[aria-pressed=true]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
       }
     }
   },
@@ -81,6 +102,10 @@
           "fontWeight",
           "edge"
         ]
+      },
+      "field.label": {
+        "within": "[data-part=input]",
+        "selector": ".Polaris-Label__Text .Polaris-Text--root"
       }
     }
   },
@@ -93,8 +118,15 @@
       },
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
-        "selector": ".Polaris-Checkbox__Backdrop",
-        "skip": ["edge"]
+        "selector": ".Polaris-Checkbox__Backdrop"
+      },
+      "radio": {
+        "within": "[data-part=radio]",
+        "selector": ".Polaris-RadioButton__Backdrop"
+      },
+      "radio.checked": {
+        "within": "[data-part=radio-checked]",
+        "selector": ".Polaris-RadioButton__Backdrop"
       }
     }
   },
@@ -126,12 +158,10 @@
         "selector": "a"
       },
       "shell": {
-        "selector": ".Polaris-Navigation",
-        "skip": ["edge"]
+        "selector": ".Polaris-Navigation"
       },
       "panel": {
-        "selector": ".Polaris-Frame",
-        "skip": ["edge"]
+        "selector": ".Polaris-Frame"
       },
       "nav.item": {
         "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
@@ -185,6 +215,28 @@
       }
     }
   },
+  "react.html?sheet=dates&theme=light": {
+    "mode": "light",
+    "parts": {
+      "calendar.day": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day:not(.Polaris-DatePicker__Day--selected):not([aria-label^=Today])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["backgroundColor"]
+      },
+      "calendar.today": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day[aria-label^=Today]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["backgroundColor"]
+      },
+      "calendar.selected": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day--selected",
+        "ink": ".Polaris-Text--root"
+      }
+    }
+  },
   "react.html?sheet=feedback&theme=light": {
     "mode": "light",
     "parts": {
@@ -192,7 +244,19 @@
         "within": "[data-part=badge]",
         "selector": ".Polaris-Badge",
         "ink": ".Polaris-Text--root",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
+        "skip": ["letterSpacing", "boxShadow"]
+      },
+      "alert": {
+        "within": "[data-part=banner-info]",
+        "selector": ".Polaris-Banner"
+      },
+      "progress": {
+        "within": "[data-part=progress]",
+        "selector": ".Polaris-ProgressBar"
+      },
+      "progress.fill": {
+        "within": "[data-part=progress]",
+        "selector": ".Polaris-ProgressBar__Indicator"
       }
     }
   },
@@ -201,28 +265,24 @@
     "parts": {
       "heading.1": {
         "within": "[data-part=heading-3xl]",
-        "selector": "h1",
-        "skip": ["fontFamily"]
+        "selector": "h1"
       },
       "heading.2": {
         "within": "[data-part=heading-2xl]",
-        "selector": "h1",
-        "skip": ["fontFamily"]
+        "selector": "h1"
       },
       "heading.3": {
         "within": "[data-part=heading-xl]",
-        "selector": "h2",
-        "skip": ["fontFamily"]
+        "selector": "h2"
       },
       "heading.4": {
         "within": "[data-part=heading-lg]",
-        "selector": "h3",
-        "skip": ["fontFamily"]
+        "selector": "h3"
       },
       "text": {
         "within": "[data-part=text]",
         "selector": "p",
-        "skip": ["fontFamily", "fontSize", "letterSpacing"]
+        "skip": ["fontSize", "letterSpacing"]
       },
       "text.muted": {
         "within": "[data-part=text-muted]",
@@ -235,8 +295,7 @@
     "mode": "dark",
     "parts": {
       "page": {
-        "selector": "body",
-        "skip": ["fontFamily"]
+        "selector": "body"
       },
       "button.primary": {
         "within": "[data-part=button-primary]",
@@ -264,7 +323,7 @@
       "checkbox.checked": {
         "within": "[data-part=checkbox-checked]",
         "selector": ".Polaris-Checkbox__Backdrop",
-        "skip": ["borderRadius", "height", "edge"]
+        "skip": ["borderRadius", "height"]
       }
     }
   },

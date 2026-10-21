@@ -36,9 +36,11 @@ The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirec
 - `react.html?sheet=<sheet>&theme=light|dark`: Polaris React 13.9.5 with its own `styles.css`, every component at its default size, the theme set by `AppProvider theme`. `targets.json` lists the dark pages only for the parts `dark-experimental` themes, each with `only` the props it owns.
 - `web.html`: Polaris web components (`polaris.js`), light only, for the switch: Polaris React has no switch. The switch's input sits in the `s-switch` shadow root (`s-switch >>> input`).
 - `react.html` marks `button.focus` and `input.focus` with `data-specimen-focus` and focuses the button, since Polaris doesn't forward data attributes.
-- `button.quiet` and `tab` leave their fill out: both sides are clear, and Polaris shows the white card behind them where the specimens show the page.
+- The Dates page shows the current month, so Polaris marks today (bold, no fill).
+- Polaris has no segmented control: `ButtonGroup variant="segmented"` stands in. The group paints nothing of its own; its corners are its end buttons' 8px, so `segmented` leaves its radius out.
+- `button.quiet`, `tab`, `calendar.day` and `calendar.today` leave their fill out: both sides are clear, and Polaris shows the white card behind them where the specimens show the page.
 - `card` probes `.Polaris-ShadowBevel::before`, which draws the bevel and the 12px corners; the fill comes from a child Box.
-- Buttons, tabs, nav rows and badges take type from their `.Polaris-Text--root` label (`ink`).
+- Buttons, tabs, nav rows, badges and calendar days take type from their `.Polaris-Text--root` label (`ink`).
 - `tokens.json` keeps, per part, only the properties both sides draw in the same place.
 - Measured at DPR 1, where Polaris's 0.66px checkbox edge (`border-width-0165`) stays 0.66px; fields draw the same width but Chrome rounds their border to 1px.
 
@@ -57,7 +59,6 @@ From the harness, `getComputedStyle` with overlays open:
 - Modal: 620px wide, 16px corners; a #f3f3f3 header band with a hairline, 14px/650 title; footer with a top hairline. Backdrop 50% black.
 - Badge: 20px, 8px padding, 8px corners, 12px/450; neutral 6% black (#f0f0f0 on white) with #616161 text; success #affebf / #014b40, attention #ffeb78 / #4f4700, critical #fed1d7 / #8e0b21, info #d5ebff / #003a5a.
 - Banner: a solid status header strip (warning #ffb800, info #91d0ff) over a white body; inside a card, a compact tinted row with an icon.
-- ProgressBar: 16px bar with 4px corners, #91d0ff fill on #e3e3e3.
 - Type: Inter; headings 3xl/2xl/xl 700 with -0.54 / -0.3 / -0.2px tracking, lg 650; card titles stay 13px/650; body 13px/450, secondary #616161.
 - Avatar: initials on a palette color picked from the name (#52f490 with #014b40 text for "MB"), 28px with 6px corners.
 - KeyboardKey: 20px, 4px corners, #f3f3f3, 12px/550 #616161.

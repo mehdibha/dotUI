@@ -55,6 +55,7 @@
       } from "https://esm.sh/@shopify/polaris@13.9.5?deps=react@18.3.1,react-dom@18.3.1"
       import {
         HomeIcon,
+        MenuHorizontalIcon,
         OrderIcon,
         PersonIcon,
         ProductIcon,
@@ -93,6 +94,9 @@
             <${Part} name="button-critical"
               ><${Button} variant="primary" tone="critical">Delete<//><//
             >
+            <${Part} name="button-icon"
+              ><${Button} icon=${MenuHorizontalIcon} accessibilityLabel="More"
+            /><//>
             <${Part} name="button-focus"><${Button}>Focused<//><//>
             <${Part} name="segmented">
               <${ButtonGroup} variant="segmented">
@@ -365,14 +369,20 @@
           <//>
         <//>`
 
+      // This month, so Polaris marks today.
+      const now = new Date()
       const Dates = () =>
         html` <${Page} title="Dates">
           <${Card}>
             <div data-part="calendar">
               <${DatePicker}
-                month=${9}
-                year=${2026}
-                selected=${new Date(2026, 9, 14)}
+                month=${now.getMonth()}
+                year=${now.getFullYear()}
+                selected=${new Date(
+                  now.getFullYear(),
+                  now.getMonth(),
+                  now.getDate() === 14 ? 15 : 14,
+                )}
                 onChange=${none}
                 onMonthChange=${none}
               />
