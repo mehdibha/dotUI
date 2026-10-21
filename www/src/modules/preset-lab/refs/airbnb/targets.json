@@ -155,6 +155,9 @@
             "click": "#filter-item-amenities-4"
           }
         ]
+      },
+      "badge": {
+        "text": "Free cancellation"
       }
     }
   },
@@ -190,6 +193,16 @@
       },
       "text.muted": {
         "text": "Add your travel dates for exact pricing"
+      }
+    }
+  },
+  "https://www.airbnb.com/host/homes": {
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "link": {
+        "selector": "a",
+        "text": "Learn more"
       }
     }
   }
