@@ -6,7 +6,9 @@ import type { SheetName } from "./sheets"
 
 /** Where a part sits on a page. `text` matches an element's own trimmed text
  *  and climbs to its control; `surface` climbs to the first box painted at
- *  more than 10% alpha. */
+ *  more than 10% alpha. In `selector`, `within`, `box` and `ink`, `a >>> b`
+ *  matches b inside the shadow roots of a's matches, and a leading `>>>`
+ *  searches the part's own shadow root (web components). */
 export interface Target {
   selector?: string
   text?: string
@@ -27,8 +29,10 @@ export interface Target {
    *  a menu, hover a tooltip trigger. Puppeteer selectors, so
    *  `::-p-text(Options)` matches by text. */
   before?: Step[]
-  /** Props left out of `tokens.json` for this part (`--pack`), where the
-   *  two sides draw them in different places. */
+  /** The only props this page writes to `tokens.json` for the part. */
+  only?: Prop[]
+  /** Props this page leaves out of `tokens.json` for the part, where the two
+   *  sides draw them in different places. */
   skip?: Prop[]
 }
 
@@ -54,7 +58,8 @@ export type Measure = Partial<Record<Prop, string>>
 /** One mode's measures, by part; `null` when the target matched nothing. */
 export type Measures = Record<string, Measure | null>
 /** A reference pack's `tokens.json`: what the real product measures, and the
- *  probe commit that measured it. */
+ *  probe commit that measured it ("tokens" when the values come from the
+ *  system's published token tables instead). */
 export interface ReferenceTokens {
   light?: Measures
   dark?: Measures
@@ -67,6 +72,9 @@ export interface Page {
   /** The mode the page shows. Without it, `--pack` measures the page in both
    *  modes through `prefers-color-scheme`. */
   mode?: "light" | "dark"
+  /** The URL that shows this page in dark (a Storybook theme global): the
+   *  page's own URL is then measured in light only. */
+  dark?: string
   /** The localStorage key the site reads its theme from (next-themes'
    *  "theme"): `--pack` sets it to "light" or "dark" before load. */
   storage?: string
@@ -95,6 +103,25 @@ function probe(
     if (!match || (color.startsWith("rgb(") && !color.includes("/"))) return 1
     return Number(match[1]) / (match[2] ? 100 : 1)
   }
+  /* Matches across shadow roots: see Target. */
+  const query = (root: ParentNode, selector: string): Element[] => {
+    const parts = selector.split(">>>").map((part) => part.trim())
+    let nodes: ParentNode[] = [root]
+    for (const [i, part] of parts.entries()) {
+      const found = nodes.flatMap((node) =>
+        part
+          ? [...node.querySelectorAll(part)]
+          : node instanceof Element
+            ? [node]
+            : [],
+      )
+      if (i === parts.length - 1) return found
+      nodes = found.flatMap((el) => el.shadowRoot ?? [])
+    }
+    return []
+  }
+  const parent = (el: Element) =>
+    el.parentElement ?? (el.getRootNode() as ShadowRoot).host ?? null
   /* A translucent or clear color as it shows: composited over the
      backgrounds under it (from `under` up to the first opaque one, white
      below), as rgb(). Opaque colors pass through. */
@@ -105,7 +132,7 @@ function probe(
     const a = alpha(color)
     if (!canvas || a >= 1) return color
     const layers = [color]
-    for (let node = under; node; node = node.parentElement) {
+    for (let node = under; node; node = parent(node)) {
       const bg = getComputedStyle(node).backgroundColor
       if (alpha(bg) > 0) layers.push(bg)
       if (alpha(bg) >= 1) break
@@ -175,7 +202,8 @@ function probe(
   /* The focus ring, "<width>px <color> <±offset>px", from an outline, the
      outermost ring (the one inside it sets the offset), or the topmost inset
      ring, which sits inside the border and merges with a border of its
-     color. Focused parts only. */
+     color. Focused parts only; `read` turns one flush with the outer edge
+     into the edge. */
   const ring = (el: Element) => {
     if (
       !el.matches(":focus-visible, [data-focus-visible], [data-specimen-focus]")
@@ -189,7 +217,7 @@ function probe(
       width > 0 &&
       alpha(style.outlineColor) > 0
     )
-      return `${width}px ${seen(style.outlineColor, el.parentElement)} ${signed(Number.parseFloat(style.outlineOffset))}`
+      return `${width}px ${seen(style.outlineColor, parent(el))} ${signed(Number.parseFloat(style.outlineOffset))}`
     const all = rings(style).filter((ring) => ring.spread > 0)
     const outer = all
       .filter((ring) => !ring.inset)
@@ -197,7 +225,7 @@ function probe(
     const last = outer.at(-1)
     if (last) {
       const offset = outer.at(-2)?.spread ?? 0
-      return `${last.spread - offset}px ${seen(last.color, el.parentElement)} ${signed(offset)}`
+      return `${last.spread - offset}px ${seen(last.color, parent(el))} ${signed(offset)}`
     }
     const inset = all.find((ring) => ring.inset)
     if (!inset) return "none"
@@ -207,12 +235,10 @@ function probe(
   }
   const find = (target: Target): Element | null => {
     const root = target.within
-      ? document.querySelector(target.within)
+      ? (query(document, target.within)[0] ?? null)
       : document
     if (!root) return null
-    let found = [...root.querySelectorAll(target.selector ?? "*")].filter(
-      visible,
-    )
+    let found = query(root, target.selector ?? "*").filter(visible)
     if (target.text !== undefined) {
       const text = found.filter((el) => el.textContent?.trim() === target.text)
       found = text
@@ -224,7 +250,7 @@ function probe(
     let el: Element | null = found[target.nth ?? 0] ?? null
     if (el && target.surface) {
       let box: Element | null = el
-      while (box && !painted(box)) box = box.parentElement
+      while (box && !painted(box)) box = parent(box)
       el = box ?? el
     }
     return el
@@ -234,7 +260,7 @@ function probe(
      ::after that covers most of it (Duolingo's buttons; not a badge dot). */
   const boxOf = (el: Element, target: Target): [Element, string | null] => {
     if (target.box?.startsWith("::")) return [el, target.box]
-    if (target.box) return [el.querySelector(target.box) ?? el, null]
+    if (target.box) return [query(el, target.box)[0] ?? el, null]
     if (painted(el)) return [el, null]
     const box = el.getBoundingClientRect()
     const covers = (child: Element) => {
@@ -246,9 +272,10 @@ function probe(
         Math.abs(rect.bottom - box.bottom) <= 1
       )
     }
-    const child = [...el.querySelectorAll("*")].find(
-      (child) => painted(child) && covers(child),
-    )
+    const child = [
+      ...el.querySelectorAll("*"),
+      ...(el.shadowRoot?.querySelectorAll("*") ?? []),
+    ].find((child) => painted(child) && covers(child))
     if (child) return [child, null]
     const pseudo = ["::before", "::after"].find((pseudo) => {
       const style = getComputedStyle(el, pseudo)
@@ -265,13 +292,16 @@ function probe(
     const style = getComputedStyle(el)
     const [box, pseudo] = boxOf(el, target)
     const paint = getComputedStyle(box, pseudo)
-    const inkEl = target.ink ? (el.querySelector(target.ink) ?? el) : el
+    const inkEl = target.ink ? (query(el, target.ink)[0] ?? el) : el
     const ink = getComputedStyle(inkEl)
+    // A focus line drawn inset and flush with the box's outer edge (Linear's
+    // outline at -1px, Carbon's 2px inset) shows as the edge changing color.
+    const focusRing = ring(el)
+    const flush = /^([\d.]+)px (.+) -([\d.]+)px$/.exec(focusRing)
+    const inset =
+      flush && flush[1] === flush[3] ? `${flush[1]}px ${flush[2]}` : null
     const all: Record<string, string> = {
-      backgroundColor: seen(
-        paint.backgroundColor,
-        pseudo ? el : box.parentElement,
-      ),
+      backgroundColor: seen(paint.backgroundColor, pseudo ? el : parent(box)),
       color: seen(ink.color, inkEl),
       borderRadius: paint.borderTopLeftRadius,
       height: pseudo
@@ -283,12 +313,14 @@ function probe(
       fontWeight: ink.fontWeight,
       letterSpacing: ink.letterSpacing,
       boxShadow: paint.boxShadow,
-      edge: pseudo
-        ? (edgeOf(paint, el) ?? edge(el))
-        : target.box || edge(el) === "none"
-          ? edge(box)
-          : edge(el),
-      ring: ring(el),
+      edge:
+        inset ??
+        (pseudo
+          ? (edgeOf(paint, el) ?? edge(el))
+          : target.box || edge(el) === "none"
+            ? edge(box)
+            : edge(el)),
+      ring: inset ? "none" : focusRing,
     }
     return Object.fromEntries(props.map((prop) => [prop, all[prop]]))
   }

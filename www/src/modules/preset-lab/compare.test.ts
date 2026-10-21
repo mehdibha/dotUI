@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { compareMeasures } from "./compare"
+import { compareMeasures, compareRuns } from "./compare"
 import type { Measure } from "./probe"
 
 function row(reference: string, preset: string, prop = "borderRadius") {
@@ -61,6 +61,16 @@ describe("compareMeasures", () => {
     expect(row(inset, "1px rgb(94, 106, 210) +1px", "ring").delta).toBe(
       "offset +2px",
     )
+    expect(
+      row("3px rgb(0, 0, 0) 2px", "3px rgb(0, 0, 0) +2px", "ring").ok,
+    ).toBe(true)
+  })
+
+  it("reports a value it can't parse instead of throwing", () => {
+    expect(row("2px banana", "2px rgb(0, 0, 0)", "edge")).toMatchObject({
+      ok: false,
+      delta: "unparsable",
+    })
   })
 
   it("compares colors in OKLab", () => {
@@ -86,6 +96,10 @@ describe("compareMeasures", () => {
   it("compares the first font family, ignoring quotes and Variable", () => {
     expect(
       row('"Inter Variable", system-ui', "Inter, sans-serif", "fontFamily").ok,
+    ).toBe(true)
+    expect(
+      row("ui-sans-serif, sans-serif", "-apple-system, Segoe UI", "fontFamily")
+        .ok,
     ).toBe(true)
   })
 
@@ -119,5 +133,38 @@ describe("compareMeasures", () => {
     expect(
       compareMeasures({ badge: { height: "20px" } }, { badge: null })[0],
     ).toMatchObject({ preset: "—", ok: false, missing: true })
+  })
+})
+
+describe("compareRuns", () => {
+  const run = (radius: string, height: string, edge = "1px rgb(0, 0, 0)") =>
+    compareMeasures(
+      {
+        button: {
+          borderRadius: "8px",
+          height: "32px",
+          edge: "1px rgb(0, 0, 0)",
+        },
+      },
+      { button: { borderRadius: radius, height, edge } },
+    )
+
+  it("names what changed between two runs", () => {
+    const changes = compareRuns(
+      run("2px", "36px", "none"),
+      run("8px", "40px", "2px rgb(0, 0, 0)"),
+    )
+    expect(changes.map((c) => [c.prop, c.kind])).toEqual([
+      ["borderRadius", "fixed"],
+      ["height", "further"],
+      ["edge", "changed"],
+    ])
+    expect(
+      compareRuns(run("8px", "40px"), run("4px", "36px")).map((c) => c.kind),
+    ).toEqual(["broke", "closer"])
+  })
+
+  it("leaves out rows that didn't move", () => {
+    expect(compareRuns(run("2px", "32px"), run("2px", "32.5px"))).toEqual([])
   })
 })
