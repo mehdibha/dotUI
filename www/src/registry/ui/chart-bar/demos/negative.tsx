@@ -15,7 +15,7 @@ const data = [
 
 const baseline = [ruleY([0], { stroke: "var(--color-border)" })]
 
-export default function ChartBarNegative() {
+export default function Demo() {
   return (
     <BarChart
       data={data}

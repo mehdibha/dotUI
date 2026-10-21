@@ -5,7 +5,7 @@ import commandMeta from "./meta"
 const HAIRLINE_FIELD =
   "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0 **:data-search-field:border-b"
 
-const { useStyles, styles } = createStyles(commandMeta, {
+const { useStyles } = createStyles(commandMeta, {
   base: {
     base: [
       "group/command flex w-full flex-col gap-1 text-fg",
@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
       "**:data-listbox:min-h-0 **:data-listbox:overflow-y-auto",
       "in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2",
       "in-data-modal:**:data-listbox-item:rounded-(--studio-radius-inline-item) in-data-modal:**:data-menu-item:rounded-(--studio-radius-inline-item)",
-      "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
+      "in-data-sheet:**:data-listbox-item:py-2 in-data-sheet:**:data-menu-item:py-2",
       "not-in-data-popover:**:data-listbox-item:py-1.5 **:data-listbox-section-header:py-1.5 **:data-listbox-section-header:font-medium",
     ],
   },
@@ -55,7 +55,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
           HAIRLINE_FIELD,
           // Padding matches the items' text inset (list gutter + item padding).
           "**:[[data-search-field]_[data-input-group-addon]:first-child]:hidden",
-          "**:[[data-search-field]_[data-input]]:pl-3 in-data-drawer:**:[[data-search-field]_[data-input]]:pl-3.5 in-data-modal:**:[[data-search-field]_[data-input]]:pl-4",
+          "**:[[data-search-field]_[data-input]]:pl-3 in-data-modal:**:[[data-search-field]_[data-input]]:pl-4 in-data-sheet:**:[[data-search-field]_[data-input]]:pl-3.5",
         ],
       },
     },
@@ -64,13 +64,13 @@ const { useStyles, styles } = createStyles(commandMeta, {
         base: [
           "**:data-listbox:px-(--command-inset) **:data-listbox:**:data-separator:-mx-(--command-inset)",
           "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2",
-          "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",
+          "in-data-sheet:**:data-listbox-item:px-2 in-data-sheet:**:data-menu-item:px-2",
         ],
       },
       "full-bleed": {
         base: [
           "in-data-modal:**:data-listbox-item:px-4 in-data-modal:**:data-menu-item:px-4",
-          "in-data-drawer:**:data-listbox-item:px-3.5 in-data-drawer:**:data-menu-item:px-3.5",
+          "in-data-sheet:**:data-listbox-item:px-3.5 in-data-sheet:**:data-menu-item:px-3.5",
         ],
       },
     },
@@ -87,7 +87,5 @@ const { useStyles, styles } = createStyles(commandMeta, {
     },
   },
 })
-
-export type CommandStyles = typeof styles
 
 export { useStyles }

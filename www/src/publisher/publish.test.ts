@@ -35,10 +35,6 @@ import {
 import { serializeTvConfig } from "./serialize"
 import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
 
-/* ============================================================ */
-/* flatten                                                       */
-/* ============================================================ */
-
 describe("flatten", () => {
   test("button: base + density 'compact' merges per-variant classes", () => {
     const layer = flatten({
@@ -197,10 +193,6 @@ describe("flatten", () => {
     expect(compact.slots?.root).toEqual(def.slots?.root)
   })
 })
-
-/* ============================================================ */
-/* resolve-classes                                               */
-/* ============================================================ */
 
 describe("resolve-classes", () => {
   test("resolveStudioVars follows chains and normalizes bare token names", () => {
@@ -555,10 +547,6 @@ describe("resolve-classes", () => {
   })
 })
 
-/* ============================================================ */
-/* resolveCssFields                                              */
-/* ============================================================ */
-
 describe("resolveCssFields", () => {
   test("drops studio defaults and the selector they emptied", () => {
     const out = resolveCssFields(
@@ -636,10 +624,6 @@ describe("resolveCssFields", () => {
   })
 })
 
-/* ============================================================ */
-/* serialize                                                     */
-/* ============================================================ */
-
 describe("serialize", () => {
   test("emits unquoted identifier keys", () => {
     const out = serializeTvConfig({ variant: { primary: "bg-primary" } })
@@ -659,10 +643,6 @@ describe("serialize", () => {
     expect(out).not.toContain("extra")
   })
 })
-
-/* ============================================================ */
-/* publish (end-to-end)                                          */
-/* ============================================================ */
 
 describe("publish", () => {
   test("button: substitutes resolved config into template", () => {
@@ -845,6 +825,26 @@ describe("publish", () => {
       deps,
     })
     expect(plain.item.registryDependencies).toBeUndefined()
+  })
+
+  test("a declared version range replaces the bare dependency its import implies", () => {
+    const { item } = publish({
+      publishable: {
+        template: `import * as SheetPrimitives from "react-aria-components/Sheet"\nimport { useIsHidden } from "react-aria/private/collections/Hidden"\nconst s = ${TV_CONFIG_PLACEHOLDER};`,
+        stylesConfig: { base: {} },
+        meta: {
+          name: "sheet",
+          type: "registry:ui",
+          dependencies: ["react-aria-components@^1.22.0"],
+          files: [{ type: "registry:ui", path: "ui/sheet/base.tsx" }],
+        },
+      },
+      preset: { density: "default", componentParams: {} },
+    })
+    expect(item.dependencies).toEqual([
+      "react-aria-components@^1.22.0",
+      "react-aria",
+    ])
   })
 
   test("alert: rewrites the surface var when the preset retargets its role", () => {
@@ -1097,10 +1097,6 @@ describe("publish", () => {
     expect(hook?.content).not.toContain("export function Thing()")
   })
 })
-
-/* ============================================================ */
-/* depsFromFileImports                                           */
-/* ============================================================ */
 
 describe("depsFromFileImports", () => {
   const deps = (content: string) => depsFromFileImports([{ content }])

@@ -29,7 +29,8 @@ interface Trigger {
   } | null
 }
 
-/** Component pages and Interaction show their own board; other pages keep the user's preview. */
+/** Component pages and the state pages (Focus, Disabled, Cursor, Text
+ *  selection) show their own board; other pages keep the user's preview. */
 export const pageBoard = (page: string | null | undefined) =>
   page && Object.hasOwn(BOARD_TITLES, page) ? (page as BoardId) : undefined
 

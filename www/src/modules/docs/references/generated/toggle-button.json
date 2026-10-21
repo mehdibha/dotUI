@@ -3,11 +3,19 @@
   "description": "A toggle button allows a user to toggle a selection on or off, for example switching between two states or modes.",
   "props": {
     "variant": {
-      "type": "\"primary\" | \"quiet\" | \"secondary\"",
-      "detailedType": "'primary' | 'quiet' | 'secondary' | undefined",
+      "type": "\"danger\" | \"link\" | \"primary\" | \"quiet\" | \"secondary\" | \"warning\"",
+      "detailedType": "| 'danger'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'secondary'\n| 'warning'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "link"
+          },
           {
             "type": "stringLiteral",
             "value": "primary"
@@ -19,6 +27,10 @@
           {
             "type": "stringLiteral",
             "value": "secondary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
           }
         ]
       },
@@ -833,6 +845,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     }
   },
   "renderProps": {

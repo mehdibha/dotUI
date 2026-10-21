@@ -8,7 +8,9 @@ interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
 const blades = Array.from({ length: 8 }, (_, i) => i)
 
-function Loader({ className, ...props }: LoaderProps) {
+// MARK: Separator
+
+const Loader = ({ className, ...props }: LoaderProps) => {
   return (
     <ProgressBarPrimitives.ProgressBar
       data-loader=""
@@ -16,13 +18,12 @@ function Loader({ className, ...props }: LoaderProps) {
         "inline-flex size-4 shrink-0 items-center justify-center",
         className,
       )}
-      aria-label="loading..."
+      aria-label="Loading"
       {...props}
       isIndeterminate
     >
       <svg
-        role="status"
-        aria-label="Loading"
+        aria-hidden
         viewBox="0 0 24 24"
         fill="none"
         className="size-full animate-loader-blades"
@@ -44,6 +45,8 @@ function Loader({ className, ...props }: LoaderProps) {
     </ProgressBarPrimitives.ProgressBar>
   )
 }
+
+// MARK: Separator
 
 export type { LoaderProps }
 export { Loader }

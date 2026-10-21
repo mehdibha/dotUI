@@ -8,7 +8,28 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the list box is in a loading state. Renders a `ListBoxLoader` strip\ndirectly after the items."
+      "description": "Whether more items are loading. Shows a loader after the items when `onLoadMore` is set."
+    },
+    "onLoadMore": {
+      "type": "(() => any)",
+      "detailedType": "(() => any) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "any"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler called when the user scrolls near the end of the list. Setting it renders the loader row."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -738,6 +759,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     }
   },
   "renderProps": {

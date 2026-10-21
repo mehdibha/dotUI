@@ -3,7 +3,7 @@ title: Form
 description: A form wraps a group of form elements and handles form submission.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Form.html
+    href: https://react-aria.adobe.com/Form
 wip: true
 ---
 
@@ -11,16 +11,16 @@ wip: true
 
 ## Installation
 
-<Alert>
-  `Form` isn't published as a standalone item yet — it's on the way.
-</Alert>
+`Form` is React Aria's unstyled `Form`, imported straight from `react-aria-components` — there's nothing to install from dotUI. Add the field components you put inside it.
+
+```npm
+npx shadcn@latest add @dotui/button @dotui/text-field
+```
 
 ## Usage
 
-Use forms to wrap groups of form elements and handle form submission with validation.
-
 ```tsx
-import { Form } from "@/components/ui/form"
+import { Form } from "react-aria-components"
 import { Button } from "@/components/ui/button"
 import { TextField } from "@/components/ui/text-field"
 import { Label } from "@/components/ui/field"

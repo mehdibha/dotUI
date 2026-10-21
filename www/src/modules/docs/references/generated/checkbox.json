@@ -463,13 +463,57 @@
       "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "inputRef": {
-      "type": "RefObject<HTMLInputElement | null>",
-      "detailedType": "RefObject<HTMLInputElement | null> | undefined",
+      "type": "Ref<HTMLInputElement | null>",
+      "detailedType": "Ref<HTMLInputElement | null> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
+            "type": "null"
+          },
+          {
             "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "instance",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "HTMLInputElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "void"
+                },
+                {
+                  "type": "function",
+                  "parameters": [],
+                  "return": {
+                    "type": "identifier",
+                    "name": "VoidOrUndefinedOnly"
+                  },
+                  "typeParameters": []
+                }
+              ]
+            },
+            "typeParameters": []
           },
           {
             "type": "application",
@@ -661,6 +705,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     },
     "validate": {
       "type": "((value: boolean) => true | ValidationError | null | undefined)",

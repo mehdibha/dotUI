@@ -33,5 +33,7 @@ const Link = ({ variant, ...props }: LinkProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type { LinkProps };
 export { Link };

@@ -15,10 +15,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet as RegistrySheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
 import { Sheet } from "./layout"
@@ -91,11 +91,11 @@ export function DrawerSheet() {
   return (
     <>
       <Backdrop />
-      <Drawer isOpen placement="right" className="w-[420px]">
+      <RegistrySheet isOpen position="right" className="w-[420px]">
         <DialogContent showCloseButton>
           <Form />
         </DialogContent>
-      </Drawer>
+      </RegistrySheet>
     </>
   )
 }

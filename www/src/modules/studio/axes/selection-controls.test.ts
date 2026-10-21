@@ -73,18 +73,18 @@ describe("selection controls", () => {
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toBeUndefined()
     expect(ds.componentParams.checkbox).toEqual({
-      "card-selected": "tint",
-      "card-press": "none",
+      cardSelected: "tint",
+      cardPress: "none",
     })
     expect(ds.componentParams["radio-group"]).toEqual({
       mark: "dot",
-      "card-selected": "tint",
-      "card-press": "none",
+      cardSelected: "tint",
+      cardPress: "none",
     })
     expect(ds.componentParams.switch).toEqual({
       style: "inset",
-      "card-selected": "tint",
-      "card-press": "none",
+      cardSelected: "tint",
+      cardPress: "none",
     })
     expect(ds.componentParams.slider).toEqual({ thumb: "knob", track: "thin" })
   })
@@ -255,14 +255,14 @@ describe("selection controls", () => {
   it("one Selected value reaches all three cards", () => {
     const ds = designSystemOf(parseState({ cardSelected: "outline" }))
     for (const name of CARDS)
-      expect(ds.componentParams[name]?.["card-selected"], name).toBe("outline")
+      expect(ds.componentParams[name]?.cardSelected, name).toBe("outline")
   })
 
   it("the three cards ship one recipe", async () => {
     const recipes = await Promise.all(
       CARDS.map(async (name) => {
         const mod = await publishables[name]?.()
-        return mod?.publishable.stylesConfig.params?.["card-selected"]
+        return mod?.publishable.stylesConfig.params?.cardSelected
       }),
     )
     for (const recipe of recipes) expect(recipe).toEqual(recipes[0])
@@ -372,7 +372,7 @@ describe("selection controls", () => {
       ]),
       ...SELECTED_OPTIONS.map(({ value }): [string, Record<string, string>] => [
         "checkbox",
-        { "card-selected": value },
+        { cardSelected: value },
       ]),
     ]
     for (const thumb of ["knob", "ring", "solid", "handle"])

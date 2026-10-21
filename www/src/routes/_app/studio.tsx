@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
-import { StudioHeaderActions } from "@/modules/studio/export"
+import { StudioHeaderActions } from "@/modules/studio/export/header-action"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select } from "@/modules/studio/selection"
@@ -19,14 +19,12 @@ export function createSearchSchema(
   search: {
     panel?: string
     preview?: string
-    gallery?: boolean
     s?: string
     preset?: string
   } & SearchSchemaInput,
 ): {
   panel?: string
   preview: string
-  gallery?: boolean
   s?: string
   preset?: string
 } {
@@ -36,9 +34,6 @@ export function createSearchSchema(
   return {
     panel: text(search.panel),
     preview: text(search.preview) ?? "cards",
-    // Opens the design-system switcher — set by the /presets redirect.
-    // Coerced boolean: the search parser reads bare `1`/`true` as non-strings.
-    gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
     // A link to open: a shared snapshot, or a preset.
     s: text(search.s),
     preset: text(search.preset),
@@ -53,7 +48,7 @@ export const Route = createFileRoute("/_app/studio")({
     middlewares: [stripSearchParams(searchDefaults)],
   },
   head: () => {
-    const title = `${siteConfig.name} Studio - Build your design system`
+    const title = `${siteConfig.name} Studio`
     const description =
       "Compose colors, typography, icons, density, radius and per-component styles, preview every change on real components, then export code you own."
     const url = `${siteConfig.url}/studio`
@@ -189,13 +184,13 @@ function StudioPage() {
   )
 }
 
-// Live and on top of modal overlays, the picker's drawer included. On phones
-// they sit at the top, clear of the drawers and below the header's Share and
+// Live and on top of modal overlays, the picker's sheet included. On phones
+// they sit at the top, clear of the sheets and below the header's Share and
 // Export.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
   // Portaled out of the layout's --header-height: 14 plus a gap.
-  className: "relative z-60 max-md:*:data-[slot=toast-viewport]:top-16!",
+  className: "relative z-60 max-md:*:data-toast-viewport:top-16!",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {

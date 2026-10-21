@@ -1,6 +1,5 @@
-"use client"
-
-import { type ComponentProps, type ReactNode, useEffect, useState } from "react"
+import { type ReactNode, useEffect, useState } from "react"
+import * as FormPrimitives from "react-aria-components/Form"
 
 import {
   ArrowLeftIcon,
@@ -11,6 +10,7 @@ import {
   LinkIcon,
   MoreHorizontalIcon,
   PenSquareIcon,
+  PrinterIcon,
   SendIcon,
   Trash2Icon,
   WalletIcon,
@@ -37,13 +37,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -55,6 +55,8 @@ import {
   TableRow,
 } from "@/registry/ui/table"
 import { TextField } from "@/registry/ui/text-field"
+
+import { formatMoney } from "./shared"
 
 const INVOICE_NUMBER = "INV-2048"
 const CLIENT_EMAIL = "marta.lindqvist@heliosrobotics.de"
@@ -108,12 +110,118 @@ const VAT_RATE = 0.19
 const VAT = (SUBTOTAL + DISCOUNT) * VAT_RATE
 const TOTAL = SUBTOTAL + DISCOUNT + VAT
 
-const currency = new Intl.NumberFormat("en-IE", {
-  currency: "EUR",
-  style: "currency",
-})
+const formatCurrency = (amount: number) =>
+  formatMoney(amount, { currency: "EUR" })
 
-const formatCurrency = (amount: number) => currency.format(amount)
+function StatusBadge({ isPaid }: { isPaid: boolean }) {
+  return (
+    <Badge variant={isPaid ? "success" : "warning"} size="lg">
+      <span aria-hidden className="size-1.5 rounded-full bg-current" />
+      {isPaid ? "Paid" : "Due"}
+    </Badge>
+  )
+}
+
+function SectionLabel({
+  as: As = "span",
+  children,
+}: {
+  as?: "span" | "h2"
+  children: ReactNode
+}) {
+  return (
+    <As className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
+      {children}
+    </As>
+  )
+}
+
+function MetaItem({
+  label,
+  value,
+  emphasis,
+}: {
+  label: string
+  value: string
+  emphasis?: boolean
+}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <SectionLabel>{label}</SectionLabel>
+      <span
+        className={cn(
+          "text-sm tabular-nums",
+          emphasis ? "font-semibold" : "font-medium",
+        )}
+      >
+        {value}
+      </span>
+    </div>
+  )
+}
+
+function SendInvoiceDialog({
+  isOpen,
+  onOpenChange,
+  onSent,
+}: {
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+  onSent: (email: string) => void
+}) {
+  const [email, setEmail] = useState(CLIENT_EMAIL)
+
+  const content = (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Send invoice</DialogTitle>
+        <DialogDescription>
+          {INVOICE_NUMBER} · {formatCurrency(TOTAL)} to Helios Robotics GmbH
+        </DialogDescription>
+      </DialogHeader>
+      <FormPrimitives.Form
+        className="contents"
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSent(email)
+        }}
+      >
+        <DialogBody>
+          <TextField value={email} onChange={setEmail} type="email" isRequired>
+            <Label>Recipient</Label>
+            <Input placeholder="name@company.com" />
+            <Description>A PDF copy is attached to the email.</Description>
+          </TextField>
+          <TextField defaultValue="Hi Marta — invoice for the August sprint work is attached. Shout if anything needs splitting across cost centres.">
+            <Label>Message</Label>
+            <TextArea rows={4} />
+          </TextField>
+        </DialogBody>
+        <DialogFooter>
+          <Button slot="close">Cancel</Button>
+          <Button variant="primary" type="submit">
+            <SendIcon />
+            Send invoice
+          </Button>
+        </DialogFooter>
+      </FormPrimitives.Form>
+    </DialogContent>
+  )
+
+  return (
+    <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Button variant="primary">
+        <SendIcon />
+        Send
+      </Button>
+      <Responsive
+        render={(isMobile) =>
+          isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
+        }
+      />
+    </Dialog>
+  )
+}
 
 export default function InvoiceBlock() {
   const [isPaid, setIsPaid] = useState(false)
@@ -440,127 +548,5 @@ export default function InvoiceBlock() {
         </main>
       </div>
     </div>
-  )
-}
-
-function StatusBadge({ isPaid }: { isPaid: boolean }) {
-  return (
-    <Badge variant={isPaid ? "success" : "warning"} size="lg">
-      <span aria-hidden className="size-1.5 rounded-full bg-current" />
-      {isPaid ? "Paid" : "Due"}
-    </Badge>
-  )
-}
-
-function SectionLabel({
-  as: As = "span",
-  children,
-}: {
-  as?: "span" | "h2"
-  children: ReactNode
-}) {
-  return (
-    <As className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
-      {children}
-    </As>
-  )
-}
-
-function MetaItem({
-  label,
-  value,
-  emphasis,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="flex flex-col gap-1">
-      <SectionLabel>{label}</SectionLabel>
-      <span
-        className={cn(
-          "text-sm tabular-nums",
-          emphasis ? "font-semibold" : "font-medium",
-        )}
-      >
-        {value}
-      </span>
-    </div>
-  )
-}
-
-function SendInvoiceDialog({
-  isOpen,
-  onOpenChange,
-  onSent,
-}: {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  onSent: (email: string) => void
-}) {
-  const [email, setEmail] = useState(CLIENT_EMAIL)
-
-  const content = (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Send invoice</DialogTitle>
-        <DialogDescription>
-          {INVOICE_NUMBER} · {formatCurrency(TOTAL)} to Helios Robotics GmbH
-        </DialogDescription>
-      </DialogHeader>
-      <DialogBody>
-        <TextField value={email} onChange={setEmail} type="email">
-          <Label>Recipient</Label>
-          <Input placeholder="name@company.com" />
-          <Description>A PDF copy is attached to the email.</Description>
-        </TextField>
-        <TextField defaultValue="Hi Marta — invoice for the August sprint work is attached. Shout if anything needs splitting across cost centres.">
-          <Label>Message</Label>
-          <TextArea rows={4} />
-        </TextField>
-      </DialogBody>
-      <DialogFooter>
-        <Button slot="close">Cancel</Button>
-        <Button variant="primary" onPress={() => onSent(email)}>
-          <SendIcon />
-          Send invoice
-        </Button>
-      </DialogFooter>
-    </DialogContent>
-  )
-
-  return (
-    <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Button variant="primary">
-        <SendIcon />
-        Send
-      </Button>
-      <Responsive
-        render={(isMobile) =>
-          isMobile ? <Drawer>{content}</Drawer> : <Modal>{content}</Modal>
-        }
-      />
-    </Dialog>
-  )
-}
-
-// No printer glyph in the registry icon set.
-function PrinterIcon(props: ComponentProps<"svg">) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      <path d="M6 9V3h12v6" />
-      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-      <path d="M6 14h12v7H6z" />
-    </svg>
   )
 }

@@ -3,41 +3,6 @@ import { mergeProps } from "react-aria";
 import { useSlottedContext } from "react-aria-components/slots";
 import type { ContextValue, SlotProps } from "react-aria-components/slots";
 
-export interface CreateContextOptions {
-  strict?: boolean;
-  name?: string;
-}
-
-export type CreateContextReturn<T> = [
-  React.Context<T>,
-  (consumerName: string) => T,
-];
-
-export function createContext<ContextType>(options: CreateContextOptions = {}) {
-  const { name, strict = true } = options;
-
-  const Context = React.createContext<ContextType | undefined>(undefined);
-
-  Context.displayName = name;
-
-  function useContext(consumerName?: string) {
-    const context = React.useContext(Context);
-
-    if (!context && strict) {
-      const error = new Error(
-        `\`${consumerName}\` must be used within \`${name}\``,
-      );
-
-      error.name = "ContextError";
-      throw error;
-    }
-
-    return context;
-  }
-
-  return [Context, useContext] as CreateContextReturn<ContextType>;
-}
-
 export function createVariantsContext<
   TVariants extends object,
   TAriaProps extends SlotProps,

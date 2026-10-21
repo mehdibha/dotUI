@@ -22,10 +22,6 @@ const REGISTRY_UI = path.resolve(__dirname, "../../registry/ui")
 // Composing `fieldStyles()` needs field's param defaults.
 const METAS = { metas: new Map([["field", fieldMeta]]) }
 
-/* ============================================================ */
-/* extract-config                                                */
-/* ============================================================ */
-
 describe("extractStylesConfig", () => {
   test("button: extracts base and density layers", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "button/styles.ts"))
@@ -143,9 +139,9 @@ describe("extractStylesConfig", () => {
     )
     const root = cfg.base.slots?.root as string[]
     expect(Array.isArray(root)).toBe(true)
+    expect(root[0]).toContain("w-full flex-col gap-2")
     // The composed field slot classes + the passed className, all merged by tv.
     expect(root[0]).toContain("group/otp-field")
-    expect(root[0]).toContain("w-full flex-col gap-2")
   })
 
   test("slider: composes field styles via fieldStyles().field()", () => {
@@ -155,49 +151,45 @@ describe("extractStylesConfig", () => {
     )
     // Same default-composed field slot the app renders (no className arg).
     expect(cfg.base.slots?.root).toBe(
-      "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
+      "flex invalid:has-data-field-error:**:data-description:hidden w-full flex-col gap-2",
     )
   })
 })
 
-/* ============================================================ */
-/* transform-base                                                */
-/* ============================================================ */
-
 describe("transformBase", () => {
-  test("button: strips ./styles import, inserts tv-variants decl, leaves placeholder", () => {
-    const { template, variantIdent } = transformBase({
+  test("button: strips ./styles import, inserts tv decl, leaves placeholder", () => {
+    const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "button/base.tsx"),
       componentName: "button",
     })
 
-    expect(variantIdent).toBe("buttonVariants")
     expect(template).not.toMatch(/from\s+["']\.\/styles["']/)
     expect(template).toContain(
-      `const buttonVariants = tv(${TV_CONFIG_PLACEHOLDER});`,
+      `const buttonStyles = tv(${TV_CONFIG_PLACEHOLDER});`,
     )
+    expect(template).toContain("export { Button, LinkButton, buttonStyles }")
+    expect(template).not.toContain(" as buttonStyles")
     // `useStyles()` is gone; the local `styles` alias is inlined as
-    // `buttonVariants` at every use.
+    // `buttonStyles` at every use.
     expect(template).not.toContain("useStyles")
     expect(template).not.toContain("const styles =")
     expect(template).toContain(
-      "buttonVariants({ variant, size, isIconOnly, className: cn })",
+      "buttonStyles({ variant, size, isIconOnly, className })",
     )
     // VariantProps reference is rewritten.
     expect(template).not.toContain("VariantProps<ButtonStyles>")
-    expect(template).toContain("VariantProps<typeof buttonVariants>")
+    expect(template).toContain("VariantProps<typeof buttonStyles>")
     // Loader import path rewritten.
     expect(template).toContain("@/components/ui/loader")
     expect(template).not.toContain("@/registry/ui/loader")
   })
 
   test("alert: handles `useStyles()()` double-call shape (slotted variant)", () => {
-    const { template, variantIdent } = transformBase({
+    const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "alert/base.tsx"),
       componentName: "alert",
     })
 
-    expect(variantIdent).toBe("alertVariants")
     expect(template).not.toContain("useStyles")
     // Per-component `const { root } = useStyles()()` destructures are hoisted
     // into one module-level destructure right after the tv() declaration.
@@ -241,7 +233,7 @@ describe("transformBase", () => {
     )
     expect(template).not.toContain("useStyles")
     expect(template).not.toContain("const fieldStyles =")
-    expect(template).toContain("fieldStyles().field({")
+    expect(template).toContain("const { field } = fieldStyles()")
   })
 
   test("number-field: a component and its styles import merge into one", () => {
@@ -262,6 +254,32 @@ describe("transformBase", () => {
     })
     expect(template).toMatch(
       /^const \{ .*toast: toastStyle.* \} = toastVariants\(\);$/m,
+    )
+  })
+
+  test("repo lint directives don't ship", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "transform-"))
+    const file = path.join(dir, "base.tsx")
+    fs.writeFileSync(
+      file,
+      [
+        "// oxlint-disable-next-line no-explicit-any",
+        "type A = any",
+        "function f() {",
+        "  /* oxlint-disable no-console */",
+        "  return 1 // oxlint-disable-line",
+        "}",
+        "",
+      ].join("\n"),
+    )
+    const { template } = transformBase({
+      baseTsxPath: file,
+      componentName: "x",
+      hasStylesConfig: false,
+    })
+    fs.rmSync(dir, { recursive: true })
+    expect(template).toBe(
+      "type A = any\nfunction f() {\n  return 1 // oxlint-disable-line\n}\n",
     )
   })
 
@@ -291,10 +309,6 @@ describe("transformBase", () => {
     expect(template).not.toContain("useStyles")
   })
 })
-
-/* ============================================================ */
-/* end-to-end: extract + transform → publish                     */
-/* ============================================================ */
 
 describe("end-to-end (extract + transform → publish)", () => {
   test("button: published content includes expected class for `default` density default variant", () => {
@@ -390,10 +404,6 @@ describe("end-to-end (extract + transform → publish)", () => {
   })
 })
 
-/* ============================================================ */
-/* fold-param-values                                             */
-/* ============================================================ */
-
 describe("createParamValue folds", () => {
   const accordion = path.join(REGISTRY_UI, "accordion/base.tsx")
 
@@ -403,7 +413,10 @@ describe("createParamValue folds", () => {
       componentName: "accordion",
       paramSelection: { marker: "trailing-chevron" },
     }).template
-    expect(chevron).toContain("const glyph = <ChevronDownIcon />")
+    // The single-use `const glyph` inlines as a JSX child.
+    expect(chevron).not.toContain("const glyph")
+    expect(chevron).not.toContain("{<ChevronDownIcon />}")
+    expect(chevron).toMatch(/^\s*<ChevronDownIcon \/>$/m)
     expect(chevron).not.toContain("ChevronRightIcon")
     expect(chevron).not.toContain("createParamValue")
     expect(chevron).not.toContain("@/lib/styles")
@@ -413,7 +426,7 @@ describe("createParamValue folds", () => {
       componentName: "accordion",
       paramSelection: { marker: "leading-caret" },
     }).template
-    expect(caret).toContain("const glyph = <ChevronRightIcon />")
+    expect(caret).toMatch(/^\s*<ChevronRightIcon \/>$/m)
     expect(caret).not.toContain("ChevronDownIcon")
     expect(caret).not.toContain("useMarker")
   })
@@ -424,7 +437,7 @@ describe("createParamValue folds", () => {
       componentName: "breadcrumbs",
       paramSelection: { separator: "slash" },
     }).template
-    expect(slash).toContain('const glyph = "/"')
+    expect(slash).toContain('{children ?? "/"}')
     expect(slash).not.toContain("ChevronRightIcon")
     expect(slash).not.toContain("@/components/icons")
   })
@@ -435,8 +448,21 @@ describe("createParamValue folds", () => {
       componentName: "pagination",
       paramSelection: { current: "selected" },
     }).template
-    expect(selected).toContain('const activeVariant = "quiet"')
+    expect(selected).toContain('isActive ? "quiet" : "quiet"')
+    expect(selected).not.toContain("activeVariant")
     expect(selected).not.toContain("createParamValue")
+  })
+
+  test("toast: a folded hook takes its leading comment along", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "toast/base.tsx"),
+      componentName: "toast",
+      paramSelection: { surface: "surface", status: "icon" },
+    })
+    expect(template).not.toContain("useSolidStatus")
+    expect(template).not.toContain("Whether a status toast")
+    // Non-literal/JSX values stay named.
+    expect(template).toContain("const inverseSurface = false")
   })
 
   test("hooks stay in place without a selection", () => {

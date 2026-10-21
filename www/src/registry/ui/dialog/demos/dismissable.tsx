@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { PenSquareIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import {
@@ -14,9 +14,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet } from "@/registry/ui/sheet"
 import { Switch } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
 
@@ -57,7 +57,7 @@ export default function Demo() {
               </DialogContent>
             )
             return isMobile ? (
-              <Drawer isDismissable={isDismissable}>{content}</Drawer>
+              <Sheet preventDismissal={!isDismissable}>{content}</Sheet>
             ) : (
               <Modal isDismissable={isDismissable}>{content}</Modal>
             )

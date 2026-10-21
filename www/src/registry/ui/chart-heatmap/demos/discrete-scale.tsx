@@ -18,7 +18,7 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
-export default function ChartHeatmapDiscreteScale() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

@@ -1,18 +1,12 @@
 "use client"
 
-/* Charts: palette, grid and transition. */
+/* Charts: palette and grid; the chart's Motion row is Motion's. */
 
 import { cn } from "@/registry/lib/utils"
 
-import {
-  GRID_OPTIONS,
-  MOTION_OPTIONS,
-  PALETTE_OPTIONS,
-} from "../axes/charts.meta"
+import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import type { RowMap } from "../family-page"
-
-/* -------------------------------- Specimens -------------------------------- */
+import type { RowMap } from "../row-host"
 
 /* Mono rides the real accent; vivid and muted spread fixed hues at high and
    low chroma, the strategy rather than the engine's exact output. */
@@ -64,8 +58,6 @@ function GridGlyph({ grid }: { grid: string }) {
   )
 }
 
-/* ---------------------------------- Rows ---------------------------------- */
-
 function PaletteRow() {
   return (
     <DialSelect
@@ -96,18 +88,7 @@ function GridRow() {
   )
 }
 
-function ChartMotionRow() {
-  return (
-    <DialSelect
-      axis="chartMotion"
-      label="Chart transition"
-      options={MOTION_OPTIONS}
-    />
-  )
-}
-
 export const ROWS: RowMap = {
   chartPalette: PaletteRow,
   chartGrid: GridRow,
-  chartMotion: ChartMotionRow,
 }

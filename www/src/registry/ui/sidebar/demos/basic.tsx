@@ -6,7 +6,7 @@ import {
   SearchIcon,
   SettingsIcon,
   SparklesIcon,
-} from "@/registry/__generated__/icons"
+} from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import {
   Sidebar,

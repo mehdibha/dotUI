@@ -116,7 +116,7 @@ function AppShell() {
     useLoop(running, 1600, true),
     true,
   )
-  // Phones get the sidebar as their drawer shows it: no shell, no collapse.
+  // Phones get the sidebar as their sheet shows it: no shell, no collapse.
   if (useIsMobile()) {
     return (
       <SidebarProvider className="min-h-0">

@@ -14,21 +14,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   const [isPending, setIsPending] = React.useState(false)
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsPending(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsPending(false)
-  }
 
   return (
     <Dialog>
@@ -47,8 +40,14 @@ export default function Demo() {
                   </DialogHeader>
                   <DialogBody>
                     <FormPrimitives.Form
-                      onSubmit={(e) => {
-                        handleSubmit(e)
+                      id="edit-username-form"
+                      onSubmit={async (e) => {
+                        e.preventDefault()
+                        setIsPending(true)
+                        await new Promise((resolve) =>
+                          setTimeout(resolve, 1000),
+                        )
+                        setIsPending(false)
                         close()
                       }}
                     >
@@ -64,6 +63,7 @@ export default function Demo() {
                     </Button>
                     <Button
                       type="submit"
+                      form="edit-username-form"
                       isPending={isPending}
                       variant="primary"
                     >
@@ -74,11 +74,7 @@ export default function Demo() {
               )}
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

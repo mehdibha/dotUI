@@ -7,8 +7,6 @@ import {
   ChevronDownIcon,
   CopyIcon,
   CreditCardIcon,
-  FileTextIcon,
-  ImageIcon,
   PencilIcon,
   ShareIcon,
   TrashIcon,
@@ -30,10 +28,7 @@ import {
   DialogTitle,
 } from "@/registry/ui/dialog"
 import { useStyles as useDialogStyles } from "@/registry/ui/dialog/styles"
-import { DrawerHandle } from "@/registry/ui/drawer"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
 import { Label } from "@/registry/ui/field"
-import { Input } from "@/registry/ui/input"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
@@ -51,7 +46,6 @@ import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
 import {
-  BASE_STATE,
   Board,
   BoardSection,
   RAC_STATE,
@@ -78,18 +72,6 @@ function useInView(ref: React.RefObject<HTMLElement | null>) {
   }, [ref])
   return inView
 }
-
-/** True after `ms`, so loops sharing a period run out of phase. */
-function useStarted(ms: number) {
-  const [started, setStarted] = useState(ms === 0)
-  useEffect(() => {
-    const timer = setTimeout(() => setStarted(true), ms)
-    return () => clearTimeout(timer)
-  }, [ms])
-  return started
-}
-
-/* --------------------------------- Layout ---------------------------------- */
 
 const STAGE = "relative min-h-60 overflow-hidden p-0 max-sm:p-0"
 
@@ -157,40 +139,6 @@ function Members() {
   )
 }
 
-function Files() {
-  return (
-    <List title="Shared files">
-      <Item
-        lead={
-          <Glyph>
-            <FileTextIcon />
-          </Glyph>
-        }
-        name="Q3 roadmap.pdf"
-        meta="2.4 MB"
-      />
-      <Item
-        lead={
-          <Glyph>
-            <FileTextIcon />
-          </Glyph>
-        }
-        name="Launch brief.doc"
-        meta="840 KB"
-      />
-      <Item
-        lead={
-          <Glyph>
-            <ImageIcon />
-          </Glyph>
-        }
-        name="Hero shot.png"
-        meta="4.1 MB"
-      />
-    </List>
-  )
-}
-
 function Invoices() {
   return (
     <List title="Invoices">
@@ -209,8 +157,6 @@ function Invoices() {
     </List>
   )
 }
-
-/* -------------------------------- Controls --------------------------------- */
 
 const RANGES = ["Day", "Week", "Month"]
 const PROGRESS = [12, 38, 64, 87, 100]
@@ -266,8 +212,6 @@ function Controls({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* -------------------------------- Popovers --------------------------------- */
 
 // One presence for both, so they open and close together and never meet.
 function Popovers({ replay }: { replay: number }) {
@@ -351,8 +295,6 @@ function Popovers({ replay }: { replay: number }) {
   )
 }
 
-/* ------------------------------- Accordion --------------------------------- */
-
 const FAQ = [
   {
     id: "plan",
@@ -390,8 +332,6 @@ function Disclosure({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* --------------------------------- Dialogs --------------------------------- */
 
 const OVERLAY = { open: 2000, closed: 1200 }
 
@@ -438,55 +378,6 @@ function Modal({ replay }: { replay: number }) {
   )
 }
 
-function Sheet({ replay }: { replay: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref)
-  // Half a beat behind the dialog beside it.
-  const started = useStarted(1600)
-  const phase = usePresence(
-    ref,
-    { replay, running: inView && started },
-    OVERLAY,
-  )
-  const { overlay, backdrop, viewport, popup } = useDrawerStyles()()
-  const { content } = useDialogStyles()()
-  return (
-    <div ref={ref} inert className={FRAME}>
-      <Files />
-      {phase !== "closed" && (
-        <div className={overlay()}>
-          <div className={backdrop()} {...BASE_STATE[phase]} />
-          <div className={viewport({ placement: "bottom" })}>
-            <div
-              data-drawer=""
-              {...BASE_STATE[phase]}
-              className={popup({ placement: "bottom" })}
-            >
-              <DrawerHandle />
-              <div className={content()}>
-                <DialogHeader>
-                  <DialogTitle>Share Q3 roadmap</DialogTitle>
-                </DialogHeader>
-                <div className="flex gap-2">
-                  <Input
-                    aria-label="Share link"
-                    readOnly
-                    value="acme.com/f/q3-roadmap"
-                    className="min-w-0 flex-1"
-                  />
-                  <Button variant="primary">Copy</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* --------------------------------- Toasts ---------------------------------- */
-
 const TOASTS = [
   { title: "Invoice paid", type: "success" },
   { title: "Receipt sent", description: "Copied to billing@acme.com." },
@@ -527,7 +418,7 @@ function Toasts({ replay }: { replay: number }) {
       <Invoices />
       <div
         ref={setFrame}
-        className="absolute inset-0 **:data-[slot=toast-viewport]:w-[calc(100%-2*var(--toast-inset))]"
+        className="absolute inset-0 **:data-toast-viewport:w-[calc(100%-2*var(--toast-inset))]"
       >
         {frame && (
           <ToastProvider
@@ -540,8 +431,6 @@ function Toasts({ replay }: { replay: number }) {
     </div>
   )
 }
-
-/* ---------------------------------- Board ---------------------------------- */
 
 export default function MotionBoard() {
   const { replay } = useReplay()
@@ -559,9 +448,6 @@ export default function MotionBoard() {
         </BoardSection>
         <BoardSection title="Dialog" className={STAGE}>
           <Modal replay={replay} />
-        </BoardSection>
-        <BoardSection title="Sheet" className={STAGE}>
-          <Sheet replay={replay} />
         </BoardSection>
         <BoardSection title="Toast" className={STAGE}>
           <Toasts replay={replay} />

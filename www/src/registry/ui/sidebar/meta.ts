@@ -12,8 +12,7 @@ const sidebarMeta = {
   ],
   registryDependencies: [
     "button",
-    "context",
-    "drawer",
+    "sheet",
     "separator",
     "skeleton",
     "tooltip",

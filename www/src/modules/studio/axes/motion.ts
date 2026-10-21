@@ -4,15 +4,13 @@ import { defineChapter } from "./core/types"
 import type { Follow } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { AxisSchema, ChapterSchema } from "./schema"
+import type { AxisSchema } from "./schema"
 
 type Bezier = [number, number, number, number]
 
 type Curve =
   | { type: "easing"; ease: Bezier }
   | { type: "physics"; stiffness: number; damping: number; mass: number }
-
-/* --------------------------------- Springs -------------------------------- */
 
 type Spring = Extract<Curve, { type: "physics" }>
 
@@ -40,7 +38,7 @@ export function springProgress(
 }
 
 /** Milliseconds until the spring stays within 0.1% of rest, to 10ms. */
-export function springSettleMs(spring: Spring): number {
+function springSettleMs(spring: Spring): number {
   let last = 0
   for (let ms = 0; ms <= 5000; ms += 5)
     if (Math.abs(1 - springProgress(ms / 1000, spring)) > 0.001) last = ms
@@ -78,8 +76,6 @@ function springLinear(spring: Spring, ms: number): string {
   return `linear(${["0", ...stops, "1"].join(", ")})`
 }
 
-/* ---------------------------------- CSS ----------------------------------- */
-
 export function bezierCss([x1, y1, x2, y2]: Bezier): string {
   return x1 === 0 && y1 === 0 && x2 === 1 && y2 === 1
     ? "linear"
@@ -92,8 +88,6 @@ export function legTiming({ ms, curve }: Leg) {
   const settle = springSettleMs(curve)
   return { ease: springLinear(curve, settle), ms: settle }
 }
-
-/* ---------------------------------- Roles ---------------------------------- */
 
 interface Leg {
   ms: number
@@ -112,7 +106,6 @@ type Role =
   | "anchored" // popover, menu, select, combobox
   | "hint" // tooltip
   | "modal"
-  | "sheet" // the drawer
   | "disclosure" // accordion, collapsible
   | "notification" // toast, jump-to-latest
   | "swipe" // a swiped toast finishing its throw
@@ -141,7 +134,7 @@ const TAILWIND_OUT: Bezier = [0, 0, 0.2, 1]
 const LINEAR: Bezier = [0, 0, 1, 1]
 const EXPO_OUT: Bezier = [0.16, 1, 0.3, 1]
 
-// shadcn (style-nova, Base UI drawer, Sonner).
+// shadcn (style-nova, Sonner).
 const STANDARD: MotionTable = {
   micro: { enter: easing(150, TAILWIND) },
   travel: { enter: easing(150, TAILWIND) },
@@ -149,10 +142,6 @@ const STANDARD: MotionTable = {
   anchored: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
   hint: { enter: easing(150, CSS_EASE), exit: { ms: 150, ease: CSS_EASE } },
   modal: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
-  sheet: {
-    enter: easing(450, [0.22, 1, 0.36, 1]),
-    exit: { ms: 400, ease: [0.22, 1, 0.36, 1] },
-  },
   disclosure: { enter: easing(200, CSS_EASE_OUT) },
   notification: {
     enter: easing(400, CSS_EASE),
@@ -161,7 +150,7 @@ const STANDARD: MotionTable = {
   swipe: { enter: easing(200, TAILWIND_OUT) },
 }
 
-// Radix Themes; accordion and toast from Radix Primitives' docs, the sheet from Vaul.
+// Radix Themes; accordion and toast from Radix Primitives' docs.
 const SMOOTH: MotionTable = {
   micro: { enter: easing(120, CSS_EASE) },
   travel: { enter: easing(140, [0.45, 0.05, 0.55, 0.95]) },
@@ -169,10 +158,6 @@ const SMOOTH: MotionTable = {
   anchored: { enter: easing(160, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
   hint: { enter: easing(140, EXPO_OUT), exit: { ms: 0, ease: EXPO_OUT } },
   modal: { enter: easing(200, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
-  sheet: {
-    enter: easing(500, [0.32, 0.72, 0, 1]),
-    exit: { ms: 500, ease: [0.32, 0.72, 0, 1] },
-  },
   disclosure: { enter: easing(300, [0.87, 0, 0.13, 1]) },
   notification: {
     enter: easing(150, EXPO_OUT),
@@ -190,7 +175,6 @@ const EXPRESSIVE: MotionTable = {
   anchored: { enter: spring(380, 0.8), exit: M3_EXIT },
   hint: { enter: spring(380, 0.8), exit: M3_EXIT },
   modal: { enter: spring(380, 0.8), exit: M3_EXIT },
-  sheet: { enter: spring(200, 0.8), exit: M3_EXIT },
   disclosure: { enter: spring(1600, 1) },
   notification: { enter: spring(380, 0.8), exit: M3_EXIT },
   swipe: { enter: easing(200, [0.05, 0.7, 0.1, 1]) },
@@ -214,8 +198,6 @@ const TABLES: Record<string, MotionTable> = {
 }
 
 export const tableOf = (motion: string) => TABLES[motion] ?? STANDARD
-
-/* ---------------------------------- Members -------------------------------- */
 
 // `--studio-<id>-state-*`; radio rides checkbox's, toggle-button button's, token-field input's.
 const STATE_MEMBERS: Record<string, Role> = {
@@ -247,46 +229,52 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   popover: { role: "anchored", exit: true },
   tooltip: { role: "hint", exit: true },
   modal: { role: "modal", exit: true },
-  drawer: { role: "sheet", exit: true },
   accordion: { role: "disclosure", exit: false },
   toast: { role: "notification", exit: true },
   "message-scroller": { role: "notification", exit: true },
 }
 
-/** Each member's vars, timed by its own table. */
+/** Each member's vars, timed by its own table and stretched by `speed`. */
 export function motionVars(
   tableFor: (member: string) => MotionTable,
+  speed = 1,
 ): Record<string, string> {
   const vars: Record<string, string> = {}
+  const duration = (ms: number) => `${Math.round((ms * speed) / 10) * 10}ms`
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
     const { ms, ease } = legTiming(tableFor(id)[role].enter)
-    vars[`--studio-${id}-state-duration`] = `${ms}ms`
+    vars[`--studio-${id}-state-duration`] = duration(ms)
     vars[`--studio-${id}-state-ease`] = ease
   }
   for (const id of COLOR_MEMBERS) {
     const color = legTiming(tableFor(id).micro.enter)
-    vars[`--studio-${id}-color-duration`] = `${color.ms}ms`
+    vars[`--studio-${id}-color-duration`] = duration(color.ms)
     vars[`--studio-${id}-color-ease`] = color.ease
   }
   for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
     const { enter, exit } = tableFor(id)[member.role]
     const { ms, ease } = legTiming(enter)
-    vars[`--studio-${id}-enter-duration`] = `${ms}ms`
+    vars[`--studio-${id}-enter-duration`] = duration(ms)
     vars[`--studio-${id}-ease`] = ease
     if (member.exit && exit) {
-      vars[`--studio-${id}-exit-duration`] = `${exit.ms}ms`
+      vars[`--studio-${id}-exit-duration`] = duration(exit.ms)
       vars[`--studio-${id}-exit-ease`] = bezierCss(exit.ease)
     }
   }
   return vars
 }
 
-/* ---------------------------------- Chapter -------------------------------- */
+export const MOTION_VALUES = [
+  "none",
+  "standard",
+  "smooth",
+  "expressive",
+] as const
 
-export const MOTION_VALUES = ["standard", "smooth", "expressive"] as const
+export const SPEED_VALUES = ["faster", "default", "slower"] as const
 
-/** A component's own Motion can also stop it. */
-export const COMPONENT_MOTION_VALUES = ["none", ...MOTION_VALUES] as const
+/** What Speed multiplies every duration by. */
+const SPEED: Record<string, number> = { faster: 0.75, default: 1, slower: 1.5 }
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
@@ -310,7 +298,6 @@ const COMPONENTS = {
   popoverMotion: ["popover"],
   tooltipMotion: ["tooltip"],
   dialogMotion: ["modal"],
-  sheetMotion: ["drawer"],
   tabsMotion: ["tabs"],
   sidebarMotion: ["sidebar"],
   linkMotion: ["link", "breadcrumbs"],
@@ -333,58 +320,57 @@ const KEY_OF: Record<string, ComponentMotionKey> = Object.fromEntries(
   ),
 )
 
-export const MOTION_DEFAULTS = {
-  motion: "standard",
-  popoverEntrance: "zoom",
-  tooltipEntrance: "zoom",
-  ...(Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
-  ) as Record<ComponentMotionKey, string>),
-}
-
-export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
-  motion: oneOf(MOTION_VALUES),
-  popoverEntrance: oneOf(ENTRANCE_VALUES),
-  tooltipEntrance: oneOf(ENTRANCE_VALUES),
-  ...(Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(COMPONENT_MOTION_VALUES)]),
-  ) as Record<ComponentMotionKey, AxisSchema>),
-}
-
-const SAME_AS_MOTION: readonly Follow[] = [
+export const FOLLOWS_MOTION: readonly Follow[] = [
   { kind: "same", id: "same", from: "motion" },
 ]
 
 const STANDARD_VARS = motionVars(() => STANDARD)
 
-export function resolveMotion(state: Effective): Resolved {
-  const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
-  const vars = motionVars((member) => tableOf(motionOf(member)))
-  const off = (member: string) => motionOf(member) === "none"
-  const entrance = (member: string, value: string) =>
-    off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
-  return {
-    // Only what leaves Standard: Origin writes nothing.
-    tokens: Object.fromEntries(
-      Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
-    ),
-    params: {
-      popover: { motion: entrance("popover", state.popoverEntrance) },
-      tooltip: { motion: entrance("tooltip", state.tooltipEntrance) },
-      toast: { motion: off("toast") ? "none" : "slide" },
-      accordion: { motion: off("accordion") ? "none" : "expand" },
-      collapsible: { motion: off("collapsible") ? "none" : "expand" },
-    },
-  }
-}
-
 export const chapter = defineChapter({
   id: "motion",
-  defaults: MOTION_DEFAULTS,
-  schema: MOTION_SCHEMA,
-  resolve: resolveMotion,
+  defaults: {
+    motion: "standard",
+    motionSpeed: "default",
+    popoverEntrance: "zoom",
+    tooltipEntrance: "zoom",
+    ...(Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
+    ) as Record<ComponentMotionKey, string>),
+  },
+  schema: {
+    motion: oneOf(MOTION_VALUES),
+    motionSpeed: oneOf(SPEED_VALUES),
+    popoverEntrance: oneOf(ENTRANCE_VALUES),
+    tooltipEntrance: oneOf(ENTRANCE_VALUES),
+    ...(Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(MOTION_VALUES)]),
+    ) as Record<ComponentMotionKey, AxisSchema>),
+  },
+  resolve(state: Effective): Resolved {
+    const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
+    const vars = motionVars(
+      (member) => tableOf(motionOf(member)),
+      SPEED[state.motionSpeed],
+    )
+    const off = (member: string) => motionOf(member) === "none"
+    const entrance = (member: string, value: string) =>
+      off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
+    return {
+      // Only what leaves Standard: Origin writes nothing.
+      tokens: Object.fromEntries(
+        Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
+      ),
+      params: {
+        popover: { motion: entrance("popover", state.popoverEntrance) },
+        tooltip: { motion: entrance("tooltip", state.tooltipEntrance) },
+        toast: { motion: off("toast") ? "none" : "slide" },
+        accordion: { motion: off("accordion") ? "none" : "expand" },
+        collapsible: { motion: off("collapsible") ? "none" : "expand" },
+      },
+    }
+  },
   follows: Object.fromEntries(
-    COMPONENT_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
+    COMPONENT_MOTION_KEYS.map((key) => [key, FOLLOWS_MOTION]),
   ),
   rules: [
     {

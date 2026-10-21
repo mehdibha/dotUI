@@ -14,11 +14,11 @@ import { designSystemOf } from "@/modules/studio/resolve"
 
 import { notFound, registryError } from "./response"
 
-export type RegistrySource =
+type RegistrySource =
   | { kind: "preset"; id: string }
   | { kind: "snapshot"; id: string }
 
-export interface RegistryRequest {
+interface RegistryRequest {
   /** The file without `.json`: `button`, `init`, `registry`, `all`, `v0`, `font-inter`. */
   name: string
   source: RegistrySource
@@ -29,9 +29,7 @@ export interface RegistryRequest {
   studioUrl: string
 }
 
-export type Result<T> =
-  | { ok: true; value: T }
-  | { ok: false; response: Response }
+type Result<T> = { ok: true; value: T } | { ok: false; response: Response }
 
 // `/r/<name>.json` (Origin), `/r/p/<preset>/<name>.json`, `/r/s/<id>/<name>.json`.
 const PATH = /^\/r\/(?:([ps])\/([^/]+)\/)?([^/]+)\.json$/

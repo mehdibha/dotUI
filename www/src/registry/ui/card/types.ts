@@ -1,7 +1,13 @@
 /**
  * A card groups related content and actions into a single container.
  */
-export interface CardProps extends React.ComponentProps<"div"> {}
+export interface CardProps extends React.ComponentProps<"div"> {
+  /**
+   * The size of the card.
+   * @default 'default'
+   */
+  size?: "sm" | "default"
+}
 
 /**
  * The header of the card. Contains the title, description, and an optional action.

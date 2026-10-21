@@ -21,7 +21,7 @@ import { TextField } from "@/registry/ui/text-field"
 
 import { Board, BoardSection, RAC_STATE } from "./board"
 import type { Phase } from "./board"
-import { DrawerLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
+import { SheetLayer, People, Screen, useEditedPresence } from "./dialogs-parts"
 
 const MOTION = ["dialogMotion", "dialogEntrance"]
 
@@ -170,7 +170,7 @@ function DesktopStage() {
 
 // The fullscreen pick's max-md classes, unprefixed: the phone is narrower than the board.
 const FULLSCREEN =
-  "min-h-full min-w-full rounded-none border-0 [--surface-radius:0px] *:max-h-none *:flex-1 **:data-[slot=dialog-footer]:mt-auto"
+  "min-h-full min-w-full rounded-none border-0 [--surface-radius:0px] *:max-h-none *:flex-1 **:data-dialog-footer:mt-auto"
 
 /** The dialog on a phone: centered, a bottom sheet, or the whole screen. */
 function PhoneStage() {
@@ -181,9 +181,9 @@ function PhoneStage() {
     <div className="w-68 overflow-hidden rounded-[2.5rem] border">
       <Screen ref={ref} height={HEIGHT} live={live}>
         {mobile === "sheet" ? (
-          <DrawerLayer placement="bottom" phase={phase}>
+          <SheetLayer position="bottom" phase={phase}>
             <InviteDialog phone />
-          </DrawerLayer>
+          </SheetLayer>
         ) : (
           <ModalLayer
             phase={phase}

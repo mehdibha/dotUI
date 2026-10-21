@@ -1,6 +1,6 @@
 # Dev tweaker
 
-A **dev-only** floating panel (also enabled on Vercel previews) for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (docked bottom-center, Vercel-toolbar style) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
+A **dev-only** floating panel (also enabled on Vercel previews) for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (a trigger docked to a screen edge, centre-right by default) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
 
 It is **not** a product feature and **not** a `/studio` design-system axis. It's throwaway scaffolding for one exploration. Adding a real axis/variant/token is still a product decision (propose-and-approve — see the root `CLAUDE.md`).
 
@@ -104,7 +104,7 @@ A small **trigger** is always docked to a screen edge (default: centre-right; a 
 
 - **Click the trigger** → opens the panel as a popover beside it (the trigger stays put).
 - **Close** (×) or press **Escape** → closes the popover. Clicking the page does NOT close it — the page stays interactive while you tweak.
-- **Works inside overlays.** Tweaking a feature that lives in a popover, drawer or modal means clicking the panel while that overlay is open. The trigger and panel carry `data-react-aria-top-layer` (react-aria's own escape hatch, the one their toast region uses), so `useInteractOutside` skips them — nothing dismisses — `FocusScope` treats them as inside the scope, so a modal won't yank focus back, and `ariaHideOutside` leaves them visible to assistive tech. Every registry overlay dismisses through `useInteractOutside`, the base-ui Drawer included, so **overlays need no opt-in of their own**.
+- **Works inside overlays.** Tweaking a feature that lives in a popover, sheet or modal means clicking the panel while that overlay is open. The trigger and panel carry `data-react-aria-top-layer` (react-aria's own escape hatch, the one their toast region uses), so `useInteractOutside` skips them — nothing dismisses — `FocusScope` treats them as inside the scope, so a modal won't yank focus back, and `ariaHideOutside` leaves them visible to assistive tech. Every registry overlay dismisses through `useInteractOutside`, so **overlays need no opt-in of their own**.
 - **Minimize** (⌄⌃) → collapses the panel to its header bar; expand the same way.
 - **⌘ .** (or **Ctrl .**) → toggles the popover from anywhere.
 - **Reset** (↺) → all controls back to their defaults.
@@ -114,10 +114,11 @@ State (open, side, vertical position, control values + order) persists in `local
 
 ## How it stays out of production
 
-`useTweak` is gated on `import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'` (see `use-tweak.ts`) — both build-time constants (`VERCEL_ENV` is inlined via Vite `define`). In a real production build the condition is constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. The panel is `lazy()`-imported behind the same condition (plus a `!SSR` guard, so prerendering never evaluates the chunk) in `__root.tsx`. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
+`useTweak` is gated on `import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'` (see `use-tweak.ts`) — both build-time constants (`VERCEL_ENV` is inlined via Vite `define`). In a real production build the condition is constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. `__root.tsx` `lazy()`-imports the devtools hub (`src/dev/devtools/hub.tsx`) behind the same condition (plus a `!SSR` guard, so prerendering never evaluates the chunk); the hub lazy-loads the panel only while its Tweaker switch is on (the default). **⌘⇧D** opens the hub to toggle the tweaker, React Grab and TanStack Devtools. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
 
 ## Files
 
+- `index.ts` — public surface: `useTweak`, `setTweak`, `DevTweaker`.
 - `use-tweak.ts` — the `useTweak` hook (dev/no-op split).
 - `store.ts` — framework-free singleton (values vs. controls, persistence, coercion). Unit-tested in `store.test.ts`.
 - `controls.tsx` — one control row per type.

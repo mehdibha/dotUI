@@ -1,6 +1,4 @@
-"use client"
-
-import * as React from "react"
+import { useMemo, useState } from "react"
 
 import {
   Building2Icon,
@@ -42,19 +40,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
-import {
-  Pagination,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationList,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/registry/ui/pagination"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
@@ -64,6 +52,7 @@ import {
   SelectTrigger,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -75,7 +64,7 @@ import {
 } from "@/registry/ui/table"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
-/* --------------------------------- Data ---------------------------------- */
+import { PagePicker, formatMoney, initials } from "./shared"
 
 type Status = "active" | "trial" | "past-due" | "churned"
 type Plan = "Starter" | "Growth" | "Scale" | "Enterprise"
@@ -516,39 +505,11 @@ const SORT_VALUE: Record<string, (c: Customer) => string | number> = {
   lastActive: (c) => c.lastActiveMinutes,
 }
 
-/* -------------------------------- Helpers -------------------------------- */
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-}
-
-function formatMoney(value: number) {
-  return `$${value.toLocaleString("en-US")}`
-}
-
 function formatLastActive(minutes: number) {
   if (minutes < 60) return `${minutes}m ago`
   if (minutes < 1440) return `${Math.round(minutes / 60)}h ago`
   return `${Math.round(minutes / 1440)}d ago`
 }
-
-function pageWindow(page: number, total: number): (number | "gap")[] {
-  if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1)
-  const items: (number | "gap")[] = [1]
-  const start = Math.max(2, page - 1)
-  const end = Math.min(total - 1, page + 1)
-  if (start > 2) items.push("gap")
-  for (let i = start; i <= end; i++) items.push(i)
-  if (end < total - 1) items.push("gap")
-  items.push(total)
-  return items
-}
-
-/* ------------------------------- Fragments -------------------------------- */
 
 function Stat({
   label,
@@ -674,38 +635,36 @@ function RowMenu({ customer }: { customer: Customer }) {
   )
 }
 
-/* --------------------------------- Page ----------------------------------- */
-
 export default function CustomersBlock() {
-  const [rows, setRows] = React.useState(CUSTOMERS)
-  const [query, setQuery] = React.useState("")
-  const [statusFilter, setStatusFilter] = React.useState<Set<string>>(new Set())
-  const [planFilter, setPlanFilter] = React.useState<Set<string>>(new Set())
-  const [region, setRegion] = React.useState("all")
-  const [hiddenColumns, setHiddenColumns] = React.useState<Set<string>>(
+  const [rows, setRows] = useState(CUSTOMERS)
+  const [query, setQuery] = useState("")
+  const [statusFilter, setStatusFilter] = useState<Set<string>>(new Set())
+  const [planFilter, setPlanFilter] = useState<Set<string>>(new Set())
+  const [region, setRegion] = useState("all")
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set(["region"]),
   )
-  const [sort, setSort] = React.useState<{
+  const [sort, setSort] = useState<{
     column: string
     direction: "ascending" | "descending"
   }>({ column: "mrr", direction: "descending" })
-  const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set())
-  const [page, setPage] = React.useState(1)
-  const [pageSize, setPageSize] = React.useState(8)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(8)
 
-  const statusCounts = React.useMemo(() => {
+  const statusCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     for (const row of rows) counts[row.status] = (counts[row.status] ?? 0) + 1
     return counts
   }, [rows])
 
-  const planCounts = React.useMemo(() => {
+  const planCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     for (const row of rows) counts[row.plan] = (counts[row.plan] ?? 0) + 1
     return counts
   }, [rows])
 
-  const filtered = React.useMemo(() => {
+  const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return rows.filter((row) => {
       if (
@@ -720,7 +679,7 @@ export default function CustomersBlock() {
     })
   }, [rows, query, statusFilter, planFilter, region])
 
-  const sorted = React.useMemo(() => {
+  const sorted = useMemo(() => {
     const read = SORT_VALUE[sort.column]
     if (!read) return filtered
     const factor = sort.direction === "descending" ? -1 : 1
@@ -742,14 +701,14 @@ export default function CustomersBlock() {
     currentPage * pageSize,
   )
 
-  const visibleColumns = React.useMemo(
+  const visibleColumns = useMemo(
     () => COLUMNS.filter((column) => !hiddenColumns.has(column.id)),
     [hiddenColumns],
   )
   const columnKey = visibleColumns.map((column) => column.id).join(":")
-  const columnDeps = React.useMemo(() => [columnKey], [columnKey])
+  const columnDeps = useMemo(() => [columnKey], [columnKey])
 
-  const activeFilters = React.useMemo(() => {
+  const activeFilters = useMemo(() => {
     const tags: { id: string; label: string }[] = []
     if (query.trim()) tags.push({ id: "query", label: `“${query.trim()}”` })
     for (const status of statusFilter)
@@ -858,7 +817,7 @@ export default function CustomersBlock() {
         return customer.mrr === 0 ? (
           <span className="text-fg-muted">—</span>
         ) : (
-          formatMoney(customer.mrr)
+          formatMoney(customer.mrr, { digits: 0 })
         )
       case "seats":
         return customer.seats
@@ -886,9 +845,7 @@ export default function CustomersBlock() {
     <div className="min-h-screen bg-bg text-fg">
       <main className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 pb-28 sm:px-6">
         <div className="space-y-1">
-          <h1 className="font-heading text-2xl font-semibold tracking-tight">
-            Customers
-          </h1>
+          <h1 className="text-2xl">Customers</h1>
           <p className="text-sm text-fg-muted">
             {rows.length} accounts across {REGIONS.length} regions — synced 6
             minutes ago.
@@ -897,7 +854,7 @@ export default function CustomersBlock() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label="Active MRR"
-            value={formatMoney(activeMrr)}
+            value={formatMoney(activeMrr, { digits: 0 })}
             note="8.4% vs last month"
             trend="up"
           />
@@ -916,7 +873,7 @@ export default function CustomersBlock() {
           <Stat
             label="Past due"
             value={String(statusCounts["past-due"] ?? 0)}
-            note={`${formatMoney(pastDueMrr)} at risk`}
+            note={`${formatMoney(pastDueMrr, { digits: 0 })} at risk`}
             trend="down"
           />
         </div>
@@ -1140,50 +1097,19 @@ export default function CustomersBlock() {
             <span className="whitespace-nowrap text-fg-muted tabular-nums">
               Page {currentPage} of {pageCount}
             </span>
-            <Pagination>
-              <PaginationList>
-                <PaginationItem>
-                  <PaginationPrevious
-                    isIconOnly
-                    isDisabled={currentPage === 1}
-                    onPress={() => setPage(Math.max(1, currentPage - 1))}
-                  />
-                </PaginationItem>
-                {pageWindow(currentPage, pageCount).map((item, index) =>
-                  item === "gap" ? (
-                    <PaginationItem key={`gap-${index}`}>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  ) : (
-                    <PaginationItem key={item}>
-                      <PaginationLink
-                        aria-label={`Page ${item}`}
-                        isActive={item === currentPage}
-                        onPress={() => setPage(item)}
-                      >
-                        {item}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ),
-                )}
-                <PaginationItem>
-                  <PaginationNext
-                    isIconOnly
-                    isDisabled={currentPage === pageCount}
-                    onPress={() =>
-                      setPage(Math.min(pageCount, currentPage + 1))
-                    }
-                  />
-                </PaginationItem>
-              </PaginationList>
-            </Pagination>
+            <PagePicker
+              page={currentPage}
+              pageCount={pageCount}
+              onPageChange={setPage}
+              isIconOnly
+            />
           </div>
         </div>
       </main>
 
       {selectedCount > 0 && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center p-4">
-          <div className="pointer-events-auto flex max-w-full items-center gap-2 overflow-x-auto rounded-lg border bg-card p-1.5 pl-3 shadow-lg">
+          <Card className="pointer-events-auto max-w-full flex-row items-center gap-2 overflow-x-auto p-1.5 pl-3">
             <span className="text-sm font-medium whitespace-nowrap tabular-nums">
               {selectedCount} selected
             </span>
@@ -1234,7 +1160,7 @@ export default function CustomersBlock() {
                     </DialogContent>
                   )
                   return isMobile ? (
-                    <Drawer>{content}</Drawer>
+                    <Sheet>{content}</Sheet>
                   ) : (
                     <Modal>{content}</Modal>
                   )
@@ -1251,7 +1177,7 @@ export default function CustomersBlock() {
             >
               <XIcon />
             </Button>
-          </div>
+          </Card>
         </div>
       )}
     </div>

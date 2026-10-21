@@ -5,11 +5,10 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { useImageLoadingStatus } from "@/hooks/use-image-loading-status";
 import type { ImageLoadingStatus } from "@/hooks/use-image-loading-status";
-import { createContext } from "@/lib/context";
 
 const avatarVariants = tv({
   slots: {
-    root: "group/avatar relative inline-flex size-8 shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0 rounded-full",
+    root: "group/avatar relative inline-flex shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0 rounded-full",
     image: "aspect-square size-full rounded-[inherit] object-cover",
     fallback:
       "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem] bg-muted",
@@ -43,20 +42,24 @@ const avatarVariants = tv({
 
 const { root, image, fallback, badge, group, groupCount } = avatarVariants();
 
-const [AvatarContext, useAvatarContext] = createContext<{
+const AvatarContext = React.createContext<{
   status: ImageLoadingStatus;
   setStatus: (status: ImageLoadingStatus) => void;
-}>({
-  name: "Avatar",
-  strict: true,
-});
+} | null>(null);
+const useAvatarContext = (componentName: string) => {
+  const context = React.useContext(AvatarContext);
+  if (!context) {
+    throw new Error(`${componentName} must be used within an Avatar`);
+  }
+  return context;
+};
 
 /* -------------------------------------------------------------------------- */
 
 interface AvatarProps
   extends React.ComponentProps<"span">, VariantProps<typeof avatarVariants> {}
 
-function Avatar({ className, size = "md", ...props }: AvatarProps) {
+const Avatar = ({ className, size = "md", ...props }: AvatarProps) => {
   const [status, setStatus] = React.useState<ImageLoadingStatus>("idle");
   return (
     <AvatarContext value={{ status, setStatus }}>
@@ -68,7 +71,7 @@ function Avatar({ className, size = "md", ...props }: AvatarProps) {
       />
     </AvatarContext>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
@@ -76,14 +79,14 @@ interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
   src?: string;
 }
 
-function AvatarImage({
+const AvatarImage = ({
   src,
   alt,
   className,
   referrerPolicy,
   crossOrigin,
   ...props
-}: AvatarImageProps) {
+}: AvatarImageProps) => {
   const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin });
   const { setStatus } = useAvatarContext("AvatarImage");
   React.useLayoutEffect(() => {
@@ -102,7 +105,7 @@ function AvatarImage({
     );
 
   return null;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

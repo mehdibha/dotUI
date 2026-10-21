@@ -1,9 +1,16 @@
 ---
 title: Sidebar
-description: A composable, collapsible sidebar for application shells — with a mobile drawer, icon mode, and keyboard toggle.
+description: A composable, collapsible sidebar for application shells — with a mobile sheet, icon mode, and keyboard toggle.
 ---
 
-<Demo name="sidebar/demos/basic" />
+<InteractiveDemo
+  name="sidebar"
+  controls={[
+    "side",
+    { name: "variant", options: ["sidebar", "floating", "inset"] },
+    "collapsible",
+  ]}
+/>
 
 ## Installation
 
@@ -11,9 +18,7 @@ description: A composable, collapsible sidebar for application shells — with a
 npx shadcn@latest add @dotui/sidebar
 ```
 
-## Anatomy
-
-A sidebar is built from a `SidebarProvider` wrapping the `Sidebar` and a `SidebarInset` (the main content). Inside the sidebar, compose a header, scrollable content split into groups of menus, and a footer.
+## Usage
 
 ```tsx
 import {
@@ -32,31 +37,6 @@ import {
 } from "@/components/ui/sidebar"
 ```
 
-```tsx
-<SidebarProvider>
-  <Sidebar>
-    <SidebarHeader />
-    <SidebarContent>
-      <SidebarGroup>
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>Dashboard</SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarGroup>
-    </SidebarContent>
-    <SidebarFooter />
-  </Sidebar>
-  <SidebarInset>
-    <SidebarTrigger />
-    {/* page content */}
-  </SidebarInset>
-</SidebarProvider>
-```
-
-## Usage
-
 The `Sidebar` positions itself relative to the `SidebarProvider`, so the whole shell is self-contained. For a full-screen app, give the provider the viewport height and let the content scroll inside the inset:
 
 ```tsx
@@ -66,7 +46,7 @@ The `Sidebar` positions itself relative to the `SidebarProvider`, so the whole s
 </SidebarProvider>
 ```
 
-Below the `md` breakpoint the sidebar renders as an off-canvas drawer, toggled by the same `SidebarTrigger`. The sidebar can also be toggled from anywhere with <kbd>⌘</kbd>+<kbd>B</kbd> (<kbd>Ctrl</kbd>+<kbd>B</kbd>).
+Below the `md` breakpoint the sidebar renders as an off-canvas sheet, toggled by the same `SidebarTrigger`. The sidebar can also be toggled from anywhere with <kbd>⌘</kbd>+<kbd>B</kbd> (<kbd>Ctrl</kbd>+<kbd>B</kbd>).
 
 ### Links
 
@@ -98,6 +78,33 @@ const {
 ### Controlled state
 
 Drive the open state yourself with `isOpen` and `onOpenChange` on `SidebarProvider` — useful for persisting it (e.g. in a cookie or `localStorage`).
+
+## Anatomy
+
+A sidebar is built from a `SidebarProvider` wrapping the `Sidebar` and a `SidebarInset` (the main content). Inside the sidebar, compose a header, scrollable content split into groups of menus, and a footer.
+
+```tsx
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>Dashboard</SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarFooter />
+  </Sidebar>
+  <SidebarInset>
+    <SidebarTrigger />
+    {/* page content */}
+  </SidebarInset>
+</SidebarProvider>
+```
 
 ## Examples
 

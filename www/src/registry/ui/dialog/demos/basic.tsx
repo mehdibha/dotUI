@@ -1,4 +1,4 @@
-import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { PenSquareIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import {
@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Input, TextArea } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet } from "@/registry/ui/sheet"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
@@ -35,12 +35,8 @@ export default function Demo() {
                 <TextField aria-label="Title" autoFocus>
                   <Input placeholder="Title" className="w-full" />
                 </TextField>
-                <TextField aria-label="Title" autoFocus>
-                  <TextArea
-                    aria-label="Description"
-                    placeholder="description"
-                    className="w-full"
-                  />
+                <TextField aria-label="Description">
+                  <TextArea placeholder="Description" className="w-full" />
                 </TextField>
               </DialogBody>
               <DialogFooter>
@@ -51,11 +47,7 @@ export default function Demo() {
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

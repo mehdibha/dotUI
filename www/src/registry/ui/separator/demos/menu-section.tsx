@@ -5,8 +5,7 @@ import {
   MessageSquareIcon,
   SettingsIcon,
   UserIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"

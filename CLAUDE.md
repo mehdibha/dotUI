@@ -40,7 +40,9 @@ An honest snapshot (August 2026) to calibrate against. Task-level work is tracke
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /studio builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
-- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www).
+- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/ts-config` — shared TypeScript configs.
+- `examples/` — consumer templates with the registry's resolved output committed (see Registry changes).
+- `video/` — the launch film (Remotion), rendering the real registry components and /studio panel from `www/src`.
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 
 ## Registry
@@ -67,7 +69,8 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 - `pnpm dev:www` — dev server. Like `build` and `typecheck`, it builds the registry first (~2s), so fresh clones, worktrees, and branch switches always serve current output.
 - `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix. `check:fix` also rewrites Tailwind classes to their canonical spelling (IntelliSense's `suggestCanonicalClasses`); not enforced in CI.
-- `pnpm typecheck` · `pnpm test` — vitest, covers `packages/colors`.
+- `pnpm typecheck` — tsc across the workspace.
+- `pnpm test` — vitest, every `*.test.ts(x)` in the repo (`packages/colors`, the publisher, the studio axes, …).
 
 ### Registry changes
 
@@ -75,10 +78,12 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 
 `examples/` holds consumer templates with the registry's resolved output committed (styles collapsed to the preset, icons swapped, params inlined) — generated output, like `__generated__/*`. Touched the registry, the publisher, presets, or `/r/*`? Run `pnpm smoke:examples` (offline, ~5 min for all four; `--example <name>` for one) and commit `examples/` — the diff is the consumer-facing change, review it. CI regenerates every template with the real shadcn CLI, builds, type-checks, and fails on drift. Never hand-edit `examples/`; on a conflict, regenerate. To watch real consumer files change as you work, `pnpm examples:preview --example <name> --watch` with that template's dev server running. See `examples/README.md`.
 
+The social cover (`www/public/brand/cover/*.png`: the GitHub social preview and the site's share image) renders real components under several presets. CI's Cover workflow regenerates it on any PR touching presets or the registry and commits the result to the branch; `pnpm build:cover` does the same locally. Don't hand-edit it.
+
 ### Before committing
 
 - `pnpm check` — CI fails on formatting and import order.
-- `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
+- `pnpm typecheck` · `pnpm test`.
 - Touched the registry, publisher, presets, or `/r/*`? Regenerate first (see Registry changes), `examples/` included.
 
 ## Dev tweaker (design exploration)

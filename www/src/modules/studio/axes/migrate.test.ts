@@ -109,6 +109,7 @@ const DROPPED_KEYS = [
   "colorSwatchPickerMotion",
   "cursorDragging",
   "cursorPending",
+  "drawerMotion",
   "focusGap",
   "focusInputStrength",
   "loaderMotion",
@@ -261,6 +262,25 @@ describe("migrate", () => {
       surfaceShadow: "low",
       buttonSecondary: "outline",
       segmentedSelected: "raised",
+    })
+  })
+
+  it("reads the chart's own transition as a tempo, following Motion where it matches", () => {
+    const v4 = (picks: Record<string, unknown>) =>
+      migrate({ version: 4, ...DEFAULT_STATE, ...picks })
+    expect(v4({ chartMotion: "spring" })).toEqual(DEFAULT_STATE)
+    expect(v4({ chartMotion: "ease" })).toEqual({
+      ...DEFAULT_STATE,
+      chartMotion: "smooth",
+    })
+    expect(v4({ chartMotion: "none" })).toEqual({
+      ...DEFAULT_STATE,
+      chartMotion: "none",
+    })
+    expect(v4({ motion: "smooth", chartMotion: "spring" })).toEqual({
+      ...DEFAULT_STATE,
+      motion: "smooth",
+      chartMotion: "standard",
     })
   })
 
@@ -430,7 +450,6 @@ describe("main → v3", () => {
     expect(motion("expressive")).toMatchObject({
       motion: "expressive",
       buttonMotion: "same",
-      sheetMotion: "same",
     })
     const off = motion("off")
     expect(off.motion).toBe("standard")

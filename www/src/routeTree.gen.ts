@@ -18,10 +18,7 @@ import { Route as OgRouteImport } from './routes/og'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as AppChartsRouteImport } from './routes/_app/charts'
-import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
-import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppStudioRouteImport } from './routes/_app/studio'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as ApiSnapshotsRouteImport } from './routes/api/snapshots'
@@ -30,7 +27,7 @@ import { Route as InternalIndexRouteImport } from './routes/internal.index'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalCompositionAnimationRouteImport } from './routes/internal.composition-animation'
-import { Route as InternalHighlightCompareRouteImport } from './routes/internal.highlight-compare'
+import { Route as InternalCoverRouteImport } from './routes/internal.cover'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalSpecimensRouteImport } from './routes/internal.specimens'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
@@ -83,24 +80,9 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppChartsRoute = AppChartsRouteImport.update({
-  id: '/charts',
-  path: '/charts',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppComponentsRoute = AppComponentsRouteImport.update({
-  id: '/components',
-  path: '/components',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   id: '/docs',
   path: '/docs',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppPresetsRoute = AppPresetsRouteImport.update({
-  id: '/presets',
-  path: '/presets',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppStudioRoute = AppStudioRouteImport.update({
@@ -144,12 +126,11 @@ const InternalCompositionAnimationRoute =
     path: '/composition-animation',
     getParentRoute: () => InternalRoute,
   } as any)
-const InternalHighlightCompareRoute =
-  InternalHighlightCompareRouteImport.update({
-    id: '/highlight-compare',
-    path: '/highlight-compare',
-    getParentRoute: () => InternalRoute,
-  } as any)
+const InternalCoverRoute = InternalCoverRouteImport.update({
+  id: '/cover',
+  path: '/cover',
+  getParentRoute: () => InternalRoute,
+} as any)
 const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
   id: '/registries',
   path: '/registries',
@@ -197,9 +178,6 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
-  '/charts': typeof AppChartsRoute
-  '/components': typeof AppComponentsRoute
-  '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -207,7 +185,7 @@ export interface FileRoutesByFullPath {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
-  '/internal/highlight-compare': typeof InternalHighlightCompareRoute
+  '/internal/cover': typeof InternalCoverRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -225,9 +203,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
-  '/charts': typeof AppChartsRoute
-  '/components': typeof AppComponentsRoute
-  '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -235,7 +210,7 @@ export interface FileRoutesByTo {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
-  '/internal/highlight-compare': typeof InternalHighlightCompareRoute
+  '/internal/cover': typeof InternalCoverRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -257,9 +232,6 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
-  '/_app/charts': typeof AppChartsRoute
-  '/_app/components': typeof AppComponentsRoute
-  '/_app/presets': typeof AppPresetsRoute
   '/_app/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -267,7 +239,7 @@ export interface FileRoutesById {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
-  '/internal/highlight-compare': typeof InternalHighlightCompareRoute
+  '/internal/cover': typeof InternalCoverRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -290,9 +262,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
-    | '/charts'
-    | '/components'
-    | '/presets'
     | '/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -300,7 +269,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/composition-animation'
-    | '/internal/highlight-compare'
+    | '/internal/cover'
     | '/internal/registries'
     | '/internal/specimens'
     | '/preview/$slug'
@@ -318,9 +287,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
-    | '/charts'
-    | '/components'
-    | '/presets'
     | '/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -328,7 +294,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/composition-animation'
-    | '/internal/highlight-compare'
+    | '/internal/cover'
     | '/internal/registries'
     | '/internal/specimens'
     | '/preview/$slug'
@@ -349,9 +315,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_app/docs'
     | '/.well-known/api-catalog'
-    | '/_app/charts'
-    | '/_app/components'
-    | '/_app/presets'
     | '/_app/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -359,7 +322,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/composition-animation'
-    | '/internal/highlight-compare'
+    | '/internal/cover'
     | '/internal/registries'
     | '/internal/specimens'
     | '/preview/$slug'
@@ -452,32 +415,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/charts': {
-      id: '/_app/charts'
-      path: '/charts'
-      fullPath: '/charts'
-      preLoaderRoute: typeof AppChartsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/components': {
-      id: '/_app/components'
-      path: '/components'
-      fullPath: '/components'
-      preLoaderRoute: typeof AppComponentsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/docs': {
       id: '/_app/docs'
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof AppDocsRouteRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/presets': {
-      id: '/_app/presets'
-      path: '/presets'
-      fullPath: '/presets'
-      preLoaderRoute: typeof AppPresetsRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/studio': {
@@ -536,11 +478,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InternalCompositionAnimationRouteImport
       parentRoute: typeof InternalRoute
     }
-    '/internal/highlight-compare': {
-      id: '/internal/highlight-compare'
-      path: '/highlight-compare'
-      fullPath: '/internal/highlight-compare'
-      preLoaderRoute: typeof InternalHighlightCompareRouteImport
+    '/internal/cover': {
+      id: '/internal/cover'
+      path: '/cover'
+      fullPath: '/internal/cover'
+      preLoaderRoute: typeof InternalCoverRouteImport
       parentRoute: typeof InternalRoute
     }
     '/internal/registries': {
@@ -611,18 +553,12 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
 
 interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
-  AppChartsRoute: typeof AppChartsRoute
-  AppComponentsRoute: typeof AppComponentsRoute
-  AppPresetsRoute: typeof AppPresetsRoute
   AppStudioRoute: typeof AppStudioRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
-  AppChartsRoute: AppChartsRoute,
-  AppComponentsRoute: AppComponentsRoute,
-  AppPresetsRoute: AppPresetsRoute,
   AppStudioRoute: AppStudioRoute,
   AppIndexRoute: AppIndexRoute,
 }
@@ -635,7 +571,7 @@ interface InternalRouteChildren {
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
-  InternalHighlightCompareRoute: typeof InternalHighlightCompareRoute
+  InternalCoverRoute: typeof InternalCoverRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
   InternalSpecimensRoute: typeof InternalSpecimensRoute
   InternalIndexRoute: typeof InternalIndexRoute
@@ -645,7 +581,7 @@ const InternalRouteChildren: InternalRouteChildren = {
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
   InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
-  InternalHighlightCompareRoute: InternalHighlightCompareRoute,
+  InternalCoverRoute: InternalCoverRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,
   InternalSpecimensRoute: InternalSpecimensRoute,
   InternalIndexRoute: InternalIndexRoute,

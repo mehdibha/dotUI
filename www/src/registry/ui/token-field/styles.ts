@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import tokenFieldMeta from "./meta"
 
-const { useStyles, styles } = createStyles(tokenFieldMeta, {
+const { useStyles } = createStyles(tokenFieldMeta, {
   base: {
     slots: {
       root: ["group/token-field flex w-full flex-col gap-1.5"],
@@ -15,15 +15,6 @@ const { useStyles, styles } = createStyles(tokenFieldMeta, {
       ],
     },
   },
-  density: {
-    compact: {},
-    default: {},
-    comfortable: {},
-    spacious: {},
-    touch: {},
-  },
 })
-
-export type TokenFieldStyles = typeof styles
 
 export { useStyles }

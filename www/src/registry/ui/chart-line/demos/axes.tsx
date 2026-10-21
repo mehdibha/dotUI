@@ -17,7 +17,7 @@ const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 const formatCompact = (value: ChartValue) => compact.format(Number(value))
 
-export default function ChartLineAxes() {
+export default function Demo() {
   return (
     <LineChart
       data={data}

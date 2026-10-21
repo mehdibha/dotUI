@@ -12,7 +12,7 @@ export function CtaSection() {
         href="/studio"
         variant="primary"
         size="lg"
-        className="mt-8 px-4"
+        className="mt-10 px-4 md:mt-8"
       >
         Build yours
       </LinkButton>

@@ -57,7 +57,7 @@ unchanged; 80 components consume them. Changes:
 - **Muted tint surfaces become real tokens** (`color-primary-muted` etc.
   re-derived from subtle-bg jobs); the ad-hoc `color-mix(...)` recipes in
   checkbox/radio/calendar moved onto them.
-- **New tokens**: `color-overlay` (modal/drawer scrim) and `color-thumb`
+- **New tokens**: `color-overlay` (modal/sheet scrim) and `color-thumb`
   (switch thumb). 🟡 `color-fg-on-overlay` is not added yet.
 - **Broken/dead cleanup**: `fg-onMutedDanger` (broken camelCase class) fixed
   to a real token; `--shadow-shine`/`--color-shine` dead pair removed;

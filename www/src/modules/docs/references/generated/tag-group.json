@@ -2,6 +2,29 @@
   "name": "TagGroupProps",
   "description": "A tag group is a focusable list of labels, categories, keywords, filters, or other items,\nwith support for keyboard navigation, selection, and removal.",
   "props": {
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\"",
+      "detailedType": "'lg' | 'md' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of the tags.",
+      "default": "'md'"
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -373,6 +396,14 @@
         "name": "CSSProperties"
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     }
   }
 }

@@ -3,8 +3,7 @@ import {
   CreditCardIcon,
   LogOutIcon,
   SettingsIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"

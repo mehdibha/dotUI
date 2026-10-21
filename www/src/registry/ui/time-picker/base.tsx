@@ -1,7 +1,12 @@
 "use client"
 
-import React from "react"
-import type { Time } from "@internationalized/date"
+import * as React from "react"
+import {
+  fromDate,
+  getLocalTimeZone,
+  toCalendarDateTime,
+  type CalendarDateTime,
+} from "@internationalized/date"
 import { ButtonContext } from "react-aria-components/Button"
 import {
   DialogContext,
@@ -12,12 +17,12 @@ import { GroupContext } from "react-aria-components/Group"
 import { useLocale } from "react-aria-components/I18nProvider"
 import { InputContext } from "react-aria-components/Input"
 import { LabelContext } from "react-aria-components/Label"
-import * as ListBoxPrimitive from "react-aria-components/ListBox"
+import * as ListBoxPrimitives from "react-aria-components/ListBox"
 import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
 import { TextContext } from "react-aria-components/Text"
 import { TimeFieldStateContext } from "react-aria-components/TimeField"
-import type * as TimeFieldPrimitive from "react-aria-components/TimeField"
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField"
 import { useFocusRing } from "react-aria/useFocusRing"
 import { useOverlayTrigger } from "react-aria/useOverlayTrigger"
 import { useTimeField } from "react-aria/useTimeField"
@@ -29,8 +34,8 @@ import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 import { useStyles } from "./styles"
 
 /** A TimeField with a scrollable time-column popover. */
-interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
-  TimeFieldPrimitive.TimeFieldProps<T>,
+interface TimePickerProps<T extends TimeFieldPrimitives.TimeValue> extends Omit<
+  TimeFieldPrimitives.TimeFieldProps<T>,
   "className" | "children"
 > {
   className?: string
@@ -59,10 +64,10 @@ const useSlot = (
   return [ref, hasSlot]
 }
 
-// MARK: TimePicker
+// MARK: Separator
 
 // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
-const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
+const TimePicker = <T extends TimeFieldPrimitives.TimeValue>({
   className,
   children,
   isOpen,
@@ -70,7 +75,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   onOpenChange,
   ...props
 }: TimePickerProps<T>) => {
-  const fieldStyles = useFieldStyles()
+  const { field } = useFieldStyles()()
   const { locale } = useLocale()
 
   const state = useTimeFieldState<T>({ ...props, locale })
@@ -162,7 +167,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
         data-invalid={state.isInvalid || undefined}
         data-readonly={state.isReadOnly || undefined}
         data-required={state.isRequired || undefined}
-        className={fieldStyles().field({ className })}
+        className={field({ className })}
       >
         {children}
       </div>
@@ -170,7 +175,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   )
 }
 
-// MARK: TimePickerColumns
+// MARK: Separator
 
 interface TimeColumnOption {
   id: string
@@ -194,6 +199,11 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     state.granularity === "minute" || state.granularity === "second"
   const showSeconds = state.granularity === "second"
 
+  const base = (state.value ??
+    toCalendarDateTime(
+      fromDate(state.dateValue, getLocalTimeZone()),
+    )) as CalendarDateTime
+
   const isImmutable = state.isDisabled || state.isReadOnly
   const update = (fields: {
     hour?: number
@@ -201,19 +211,16 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     second?: number
   }) => {
     if (isImmutable) return
-    // Every TimeValue member implements `.set`; the cast only satisfies the union-method call.
-    const base = (state.value ?? state.timeValue) as Time
-    state.setValue(base.set(fields) as never)
+    state.setValue(base.set(fields))
   }
 
-  const period = time.hour >= 12 ? "PM" : "AM"
-  const displayHour = time.hour % 12 === 0 ? 12 : time.hour % 12
+  const period = base.hour >= 12 ? "PM" : "AM"
+  const displayHour = base.hour % 12 === 0 ? 12 : base.hour % 12
 
   const hourOptions: TimeColumnOption[] = use12Hour
     ? range(12, 1).map((h) => ({ id: String(h), label: String(h) }))
     : range(24).map((h) => ({ id: String(h), label: pad(h) }))
-  const minuteOptions = range(60).map((m) => ({ id: String(m), label: pad(m) }))
-  const secondOptions = range(60).map((s) => ({ id: String(s), label: pad(s) }))
+  const sixtyOptions = range(60).map((n) => ({ id: String(n), label: pad(n) }))
 
   return (
     <div
@@ -224,7 +231,9 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
       <TimeColumn
         label="Hour"
         options={hourOptions}
-        selectedKey={use12Hour ? String(displayHour) : String(time.hour)}
+        selectedKey={
+          time && (use12Hour ? String(displayHour) : String(time.hour))
+        }
         onSelect={(id) => {
           const value = Number(id)
           update({
@@ -235,16 +244,16 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
       {showMinutes && (
         <TimeColumn
           label="Minute"
-          options={minuteOptions}
-          selectedKey={String(time.minute)}
+          options={sixtyOptions}
+          selectedKey={time && String(time.minute)}
           onSelect={(id) => update({ minute: Number(id) })}
         />
       )}
       {showSeconds && (
         <TimeColumn
           label="Second"
-          options={secondOptions}
-          selectedKey={String(time.second)}
+          options={sixtyOptions}
+          selectedKey={time && String(time.second)}
           onSelect={(id) => update({ second: Number(id) })}
         />
       )}
@@ -255,10 +264,10 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
             { id: "AM", label: "AM" },
             { id: "PM", label: "PM" },
           ]}
-          selectedKey={period}
+          selectedKey={time && period}
           onSelect={(id) => {
-            if (id === "AM" && time.hour >= 12) update({ hour: time.hour - 12 })
-            if (id === "PM" && time.hour < 12) update({ hour: time.hour + 12 })
+            if (id === "AM" && base.hour >= 12) update({ hour: base.hour - 12 })
+            if (id === "PM" && base.hour < 12) update({ hour: base.hour + 12 })
           }}
         />
       )}
@@ -266,12 +275,12 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   )
 }
 
-// MARK: TimeColumn
+// MARK: Separator
 
 interface TimeColumnProps {
   label: string
   options: TimeColumnOption[]
-  selectedKey: string
+  selectedKey: string | null
   onSelect: (id: string) => void
 }
 
@@ -299,7 +308,7 @@ const TimeColumn = ({
   }, [])
 
   return (
-    <ListBoxPrimitive.ListBox
+    <ListBoxPrimitives.ListBox
       ref={ref}
       data-time-picker-column=""
       aria-label={label}
@@ -308,7 +317,7 @@ const TimeColumn = ({
       selectionBehavior="replace"
       disallowEmptySelection
       shouldFocusWrap
-      selectedKeys={[selectedKey]}
+      selectedKeys={selectedKey === null ? [] : [selectedKey]}
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const id = [...keys][0]
@@ -316,7 +325,7 @@ const TimeColumn = ({
       }}
     >
       {options.map((option) => (
-        <ListBoxPrimitive.ListBoxItem
+        <ListBoxPrimitives.ListBoxItem
           key={option.id}
           id={option.id}
           data-time-picker-item=""
@@ -324,13 +333,13 @@ const TimeColumn = ({
           className={item()}
         >
           {option.label}
-        </ListBoxPrimitive.ListBoxItem>
+        </ListBoxPrimitives.ListBoxItem>
       ))}
-    </ListBoxPrimitive.ListBox>
+    </ListBoxPrimitives.ListBox>
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { TimePickerColumnsProps, TimePickerProps }
 export { TimePicker, TimePickerColumns }

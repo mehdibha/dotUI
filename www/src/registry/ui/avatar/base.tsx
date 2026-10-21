@@ -5,27 +5,30 @@ import type { VariantProps } from "tailwind-variants"
 
 import { useImageLoadingStatus } from "@/registry/hooks/use-image-loading-status"
 import type { ImageLoadingStatus } from "@/registry/hooks/use-image-loading-status"
-import { createContext } from "@/registry/lib/context"
 
 import { useStyles } from "./styles"
 import type { AvatarStyles } from "./styles"
 
 // MARK: avatarStyles
 
-const [AvatarContext, useAvatarContext] = createContext<{
+const AvatarContext = React.createContext<{
   status: ImageLoadingStatus
   setStatus: (status: ImageLoadingStatus) => void
-}>({
-  name: "Avatar",
-  strict: true,
-})
+} | null>(null)
+const useAvatarContext = (componentName: string) => {
+  const context = React.useContext(AvatarContext)
+  if (!context) {
+    throw new Error(`${componentName} must be used within an Avatar`)
+  }
+  return context
+}
 
 // MARK: Separator
 
 interface AvatarProps
   extends React.ComponentProps<"span">, VariantProps<AvatarStyles> {}
 
-function Avatar({ className, size = "md", ...props }: AvatarProps) {
+const Avatar = ({ className, size = "md", ...props }: AvatarProps) => {
   const [status, setStatus] = React.useState<ImageLoadingStatus>("idle")
   const { root } = useStyles()()
 
@@ -47,14 +50,14 @@ interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
   src?: string
 }
 
-function AvatarImage({
+const AvatarImage = ({
   src,
   alt,
   className,
   referrerPolicy,
   crossOrigin,
   ...props
-}: AvatarImageProps) {
+}: AvatarImageProps) => {
   const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin })
   const { setStatus } = useAvatarContext("AvatarImage")
   const { image } = useStyles()()

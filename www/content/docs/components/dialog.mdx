@@ -3,7 +3,7 @@ title: Dialog
 description: A dialog is an overlay shown above other content in an application.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+    href: https://react-aria.adobe.com/Modal
 wip: true
 ---
 
@@ -72,7 +72,7 @@ import { Modal } from "@/components/ui/modal"
 
 ## Anatomy
 
-The trigger `Button` and the overlay are siblings inside `Dialog`. The overlay (`Modal`, `Drawer`, or `Popover`) is a separate component the dialog does not ship, and `DialogContent` renders inside it. Pass `showCloseButton` to `DialogContent` for a built-in close button.
+The trigger `Button` and the overlay are siblings inside `Dialog`. The overlay (`Modal`, `Sheet`, or `Popover`) is a separate component the dialog does not ship, and `DialogContent` renders inside it. Pass `showCloseButton` to `DialogContent` for a built-in close button.
 
 ```tsx
 <Dialog>

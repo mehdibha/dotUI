@@ -424,7 +424,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         // control keeps flex-1, so the slack sits before the trailing addon
         // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
         "**:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none",
-        "**:data-date-input:px-0 **:data-input:px-0",
+        "**:data-input:px-0",
         "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
         "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
         "has-data-textarea:px-0",

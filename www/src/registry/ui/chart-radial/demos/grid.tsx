@@ -18,7 +18,7 @@ const labels = {
   other: "Other",
 }
 
-export default function ChartRadialGrid() {
+export default function Demo() {
   return (
     <RadialBarChart
       data={data}

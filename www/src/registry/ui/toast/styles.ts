@@ -7,16 +7,16 @@ const toastTransition =
 const contentTransition =
   "transition-opacity duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) motion-reduce:transition-none"
 
-const { useStyles, styles } = createStyles(toastMeta, {
+const { useStyles } = createStyles(toastMeta, {
   base: {
     slots: {
       viewport: [
-        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset outline-none [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
+        "fixed z-50 mx-auto flex w-[calc(100vw-(var(--toast-inset)*2))] max-w-96 focus-reset [--toast-inset:--spacing(4)] sm:[--toast-inset:--spacing(6)]",
         "data-[position*=bottom]:bottom-(--toast-inset) data-[position*=top]:top-(--toast-inset)",
         "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
       ],
       toast: [
-        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset outline-none select-none focus-visible:focus-ring",
+        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-(--shadow-modal,var(--shadow-lg)) focus-reset select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
         "after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full",
         "data-ending-style:opacity-0 data-limited:opacity-0",
@@ -58,26 +58,16 @@ const { useStyles, styles } = createStyles(toastMeta, {
           action: "text-current hover:bg-current/10 pressed:bg-current/20",
         },
       },
-      position: {
-        "top-left": {},
-        "top-center": {},
-        "top-right": {},
-        "bottom-left": {},
-        "bottom-center": {},
-        "bottom-right": {},
-      },
       variant: {
         neutral: {},
         success: {},
         warning: {},
         danger: {},
-        error: {},
         info: {},
         loading: {},
       },
     },
     defaultVariants: {
-      position: "bottom-right",
       variant: "neutral",
     },
   },
@@ -163,7 +153,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
             success: { icon: "text-fg-success" },
             warning: { icon: "text-fg-warning" },
             danger: { icon: "text-fg-danger" },
-            error: { icon: "text-fg-danger" },
             info: { icon: "text-fg-info" },
           },
         },
@@ -176,7 +165,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
             success: { icon: "text-success" },
             warning: { icon: "text-warning" },
             danger: { icon: "text-danger" },
-            error: { icon: "text-danger" },
             info: { icon: "text-info" },
           },
         },
@@ -197,11 +185,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
               description: "text-fg-on-warning",
             },
             danger: {
-              toast: "border-transparent bg-danger text-fg-on-danger",
-              content: "[--surface-bg:var(--color-danger)]",
-              description: "text-fg-on-danger",
-            },
-            error: {
               toast: "border-transparent bg-danger text-fg-on-danger",
               content: "[--surface-bg:var(--color-danger)]",
               description: "text-fg-on-danger",
@@ -234,11 +217,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
               content: "[--surface-bg:var(--color-danger-muted)]",
               description: "text-fg-danger",
             },
-            error: {
-              toast: "border-border-danger bg-danger-muted text-fg-danger",
-              content: "[--surface-bg:var(--color-danger-muted)]",
-              description: "text-fg-danger",
-            },
             info: {
               toast: "border-border-info bg-info-muted text-fg-info",
               content: "[--surface-bg:var(--color-info-muted)]",
@@ -250,7 +228,5 @@ const { useStyles, styles } = createStyles(toastMeta, {
     },
   },
 })
-
-export type ToastStyles = typeof styles
 
 export { useStyles }

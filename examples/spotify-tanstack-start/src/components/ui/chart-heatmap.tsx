@@ -173,12 +173,14 @@ export function heatmapChartSpec<TDatum>(
   };
 }
 
+/* -------------------------------------------------------------------------- */
+
 export type HeatmapChartProps<TDatum> = ChartComponentProps<
   HeatmapChartSpecOptions<TDatum>,
   TDatum
 >;
 
-export function HeatmapChart<TDatum>(props: HeatmapChartProps<TDatum>) {
+export const HeatmapChart = <TDatum,>(props: HeatmapChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     HeatmapChartSpecOptions<TDatum>
@@ -191,4 +193,4 @@ export function HeatmapChart<TDatum>(props: HeatmapChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

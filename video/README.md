@@ -32,7 +32,7 @@ The full film to `out/launch.mp4`: each scene renders in chunks, each chunk in i
 - `src/scenes/*.tsx` — one file per scene; every frame is a pure function of `useCurrentFrame()`. `placeholder.tsx` stands in for scenes not made yet.
 - `src/lib/set.tsx` — `StudioSet`: /studio at 1920×1080, the real `PanelPage` beside a preview of showcase cards, all driven by one state.
 - `src/lib/studio.ts` — `studioAt(state)` and `panelSystem(name, swatch)`: the props the real `PanelPage` takes, with inert setters.
-- `src/lib/theme.tsx` — `<Theme state mode>`: partial studio state → `resolveDesignSystem` → a scoped `DesignSystemProvider`. `preset(id)` gives a preset's state. The frame holds until font tokens load; `facesReady()` resolves once they have (for scenes that measure text); `<WarmIcons />` preloads the lazy icon libraries.
+- `src/lib/theme.tsx` — `<Theme state mode>`: partial studio state → `designSystemOf` → a scoped `DesignSystemProvider`. `preset(id)` gives a preset's state. The frame holds until font tokens load; `facesReady()` resolves once they have (for scenes that measure text); `<WarmIcons />` preloads the lazy icon libraries.
 - `src/lib/timing.ts` — the 120 BPM grid (`BEAT`, `BAR`, `at(bar, beat)`).
 - `src/lib/motion.ts` — easings, `progress`, `keys`, `hold`, springs, the beat accent `punch`, deterministic `random`.
 - `src/lib/cursor.tsx` — a keyframed pointer with click ripples; `src/lib/measure.ts` reads element boxes for it to aim at.

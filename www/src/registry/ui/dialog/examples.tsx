@@ -8,10 +8,10 @@ import Composition from "./demos/composition"
 import Controlled from "./demos/controlled"
 import Description from "./demos/description"
 import Dismissable from "./demos/dismissable"
-import Drawer from "./demos/drawer"
 import InsetContent from "./demos/inset-content"
 import Nested from "./demos/nested"
 import Popover from "./demos/popover"
+import Sheet from "./demos/sheet"
 import Title from "./demos/title"
 import Types from "./demos/types"
 
@@ -39,8 +39,8 @@ export default function DialogExamples() {
       <Example title="dismissable">
         <Dismissable />
       </Example>
-      <Example title="drawer">
-        <Drawer />
+      <Example title="sheet">
+        <Sheet />
       </Example>
       <Example title="inset content">
         <InsetContent />

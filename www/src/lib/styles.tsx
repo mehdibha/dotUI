@@ -8,7 +8,6 @@ import type {
   ClassValue,
   TVReturnType,
   TVReturnTypeLike,
-  VariantProps,
 } from "tailwind-variants"
 
 import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
@@ -536,7 +535,7 @@ function DesignSystemProvider({
     <div
       data-dotui-scope={scopeToken}
       data-mode={forcedMode}
-      style={{ display: "contents", ...scopeStyle }}
+      style={{ display: "contents", colorScheme: forcedMode, ...scopeStyle }}
     >
       {scopeSheet}
       <UNSAFE_PortalProvider
@@ -551,7 +550,7 @@ function DesignSystemProvider({
               id={portalDomId}
               data-dotui-scope={scopeToken}
               data-mode={forcedMode}
-              style={scopeStyle}
+              style={{ colorScheme: forcedMode, ...scopeStyle }}
             />,
             document.body,
           )}
@@ -712,7 +711,7 @@ type CompoundVariantsOverride<Base> =
       }
     : { compoundVariants?: never }
 
-export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
+type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
   VariantsOverride<Base> &
   CompoundVariantsOverride<Base>
 
@@ -875,7 +874,6 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 }
 
-export type { VariantProps }
 export {
   ComponentParamsProvider,
   createDynamicComponent,

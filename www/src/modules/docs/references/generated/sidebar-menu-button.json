@@ -1008,6 +1008,14 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
+    },
     "type": {
       "type": "\"button\" | \"reset\" | \"submit\"",
       "detailedType": "'button' | 'reset' | 'submit' | undefined",
@@ -1504,61 +1512,6 @@
                   "name": "HTMLDivElement"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "VariantProps"
-          },
-          "typeParameters": [
-            {
-              "type": "function",
-              "parameters": [
-                {
-                  "type": "parameter",
-                  "name": "props",
-                  "value": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "identifier",
-                        "name": "{} & { class?: ClassNameValue; className?: undefined; }"
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "{} & { class?: undefined; className?: ClassNameValue; }"
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "undefined"
-                      }
-                    ]
-                  },
-                  "optional": true,
-                  "rest": false
-                }
-              ],
-              "return": {
-                "type": "intersection",
-                "types": [
-                  {
-                    "type": "identifier",
-                    "name": "{}"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "{ readonly content: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; readonly arrow: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "{ base: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
-                  }
-                ]
-              },
-              "typeParameters": []
             }
           ]
         }
@@ -4077,6 +4030,24 @@
           "optional": true,
           "readonly": false,
           "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+        },
+        "suppressHydrationWarning": {
+          "type": "property",
+          "name": "suppressHydrationWarning",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
         },
         "translate": {
           "type": "property",

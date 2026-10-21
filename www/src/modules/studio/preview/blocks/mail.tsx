@@ -1,6 +1,4 @@
-"use client"
-
-import * as React from "react"
+import { type CSSProperties, type Key, useState } from "react"
 
 import {
   AlertCircleIcon,
@@ -10,6 +8,7 @@ import {
   ChevronsUpDownIcon,
   ClockIcon,
   FileTextIcon,
+  ForwardIcon,
   ImageIcon,
   InboxIcon,
   ListFilterIcon,
@@ -19,6 +18,8 @@ import {
   MoreHorizontalIcon,
   PaperclipIcon,
   PinIcon,
+  ReplyAllIcon,
+  ReplyIcon,
   SendIcon,
   SettingsIcon,
   SquarePenIcon,
@@ -62,53 +63,6 @@ import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-
-type IconProps = React.ComponentProps<"svg">
-
-// The curated icon set has no reply/forward glyphs, so these three are inline.
-// Same geometry and stroke as the rest of the set, sized by the button's rules.
-function StrokeIcon({ paths, ...props }: { paths: string[] } & IconProps) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      {paths.map((d) => (
-        <path key={d} d={d} />
-      ))}
-    </svg>
-  )
-}
-
-const ReplyIcon = (props: IconProps) => (
-  <StrokeIcon
-    paths={["m9 17-5-5 5-5", "M20 18v-2a4 4 0 0 0-4-4H4"]}
-    {...props}
-  />
-)
-
-const ReplyAllIcon = (props: IconProps) => (
-  <StrokeIcon
-    paths={["m7 17-5-5 5-5", "m12 17-5-5 5-5", "M22 18v-2a4 4 0 0 0-4-4H7"]}
-    {...props}
-  />
-)
-
-const ForwardIcon = (props: IconProps) => (
-  <StrokeIcon
-    paths={["m15 17 5-5-5-5", "M4 18v-2a4 4 0 0 1 4-4h12"]}
-    {...props}
-  />
-)
 
 interface ThreadEntry {
   author: string
@@ -379,7 +333,7 @@ const MESSAGES: Message[] = [
         time: "Aug 17, 3:12 PM",
         paragraphs: [
           "We're at nine open AA issues, down from thirty-four in June. Seven are contrast on disabled controls — our disabled foreground sits at 3.1:1 against the muted surface and needs 4.5:1. Fixing it in the token layer clears all seven at once.",
-          "The other two are focus traps: the command palette doesn't return focus to its trigger, and the drawer lets Tab escape behind the overlay.",
+          "The other two are focus traps: the command palette doesn't return focus to its trigger, and the sheet lets Tab escape behind the overlay.",
         ],
       },
     ],
@@ -545,17 +499,17 @@ function ThreadMessage({ entry, to }: { entry: ThreadEntry; to: string }) {
 }
 
 export default function MailBlock() {
-  const [folder, setFolder] = React.useState("inbox")
-  const [filter, setFilter] = React.useState<"all" | "unread">("all")
-  const [query, setQuery] = React.useState("")
-  const [selectedId, setSelectedId] = React.useState("tokens-freeze")
-  const [pane, setPane] = React.useState<"list" | "message">("list")
-  const [starred, setStarred] = React.useState<string[]>([
+  const [folder, setFolder] = useState("inbox")
+  const [filter, setFilter] = useState<"all" | "unread">("all")
+  const [query, setQuery] = useState("")
+  const [selectedId, setSelectedId] = useState("tokens-freeze")
+  const [pane, setPane] = useState<"list" | "message">("list")
+  const [starred, setStarred] = useState<string[]>([
     "tokens-freeze",
     "offer-letter",
   ])
-  const [reply, setReply] = React.useState("")
-  const [sent, setSent] = React.useState<ThreadEntry[]>([])
+  const [reply, setReply] = useState("")
+  const [sent, setSent] = useState<ThreadEntry[]>([])
 
   const visible = MESSAGES.filter((message) => {
     if (filter === "unread" && !message.unread) return false
@@ -601,7 +555,7 @@ export default function MailBlock() {
     <div className="min-h-screen bg-bg text-fg">
       <SidebarProvider
         className="h-screen min-h-0 overflow-hidden"
-        style={{ "--sidebar-width": "13.5rem" } as React.CSSProperties}
+        style={{ "--sidebar-width": "13.5rem" } as CSSProperties}
       >
         <Sidebar collapsible="offcanvas">
           <SidebarHeader className="gap-3">
@@ -731,9 +685,7 @@ export default function MailBlock() {
                 </Menu>
               </div>
               <div className="flex min-w-0 items-baseline gap-2 px-1">
-                <h1 className="truncate font-heading text-xl font-bold tracking-tight">
-                  {folderName}
-                </h1>
+                <h1 className="truncate text-xl">{folderName}</h1>
                 <span className="shrink-0 text-sm text-fg-muted tabular-nums">
                   {visible.length}
                 </span>
@@ -783,7 +735,7 @@ export default function MailBlock() {
                 disallowEmptySelection
                 selectedKeys={selected ? [selected.id] : []}
                 onSelectionChange={(keys) => {
-                  const [first] = [...(keys as Set<React.Key>)]
+                  const [first] = [...(keys as Set<Key>)]
                   if (first != null) openMessage(String(first))
                 }}
                 onAction={(key) => openMessage(String(key))}
@@ -806,7 +758,6 @@ export default function MailBlock() {
             )}
           </div>
 
-          {/* Reading pane */}
           <div
             className={cn(
               "min-w-0 flex-1 flex-col md:flex",
@@ -934,7 +885,7 @@ export default function MailBlock() {
                 <div className="min-h-0 flex-1 overflow-y-auto">
                   <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-5 sm:px-6 sm:py-6">
                     <div className="flex flex-col gap-2.5">
-                      <h2 className="font-heading text-xl font-bold tracking-tight text-balance sm:text-2xl">
+                      <h2 className="text-xl text-balance sm:text-2xl">
                         {selected.subject}
                       </h2>
                       <div className="flex flex-wrap items-center gap-1.5">

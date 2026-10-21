@@ -1,12 +1,12 @@
 "use client";
 
-import type React from "react";
+import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import { useSlottedContext } from "react-aria-components/slots";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerHandle } from "@/components/ui/drawer";
+import { Sheet, SheetHandle } from "@/components/ui/sheet";
 import { tv } from "tailwind-variants";
 
 const popoverVariants = tv({
@@ -14,7 +14,7 @@ const popoverVariants = tv({
     popover:
       "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-lg border border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--radius-lg)] has-[[role=menu],[role=listbox]]:min-w-min transition-[transform,opacity,scale] duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[transform,opacity,scale] motion-reduce:transition-none entering:opacity-0 exiting:opacity-0 [--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset) placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]",
     arrow:
-      "[&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-1 [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 hidden",
+      "[&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-1 [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
   },
 });
 
@@ -25,32 +25,27 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean;
 }
-function Popover({
-  className,
-  showArrow = true,
-  placement,
-  ...props
-}: PopoverProps) {
+const Popover = ({ className, showArrow = false, ...props }: PopoverProps) => {
   const context = useSlottedContext(PopoverPrimitives.PopoverContext);
   const isMobile = useIsMobile();
 
-  // Render-prop children read placement and entering state, which only the popover can provide.
   const isNonModal = props.isNonModal ?? context?.isNonModal;
   const isSubmenu = context?.trigger === "SubmenuTrigger";
+  // Render-prop children read placement and entering state, which only the popover can provide.
   if (
     isMobile &&
     (!isNonModal || isSubmenu) &&
     typeof props.children !== "function"
   ) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
       >
-        <DrawerHandle />
+        <SheetHandle />
         {props.children}
-      </Drawer>
+      </Sheet>
     );
   }
 
@@ -60,7 +55,6 @@ function Popover({
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}
-      placement={placement}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (
@@ -71,13 +65,13 @@ function Popover({
       ))}
     </PopoverPrimitives.Popover>
   );
-}
+};
 
 interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
-function PopoverArrow({ className, ...props }: PopoverArrowProps) {
+const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   return (
     <PopoverPrimitives.OverlayArrow
-      data-slot="popover-arrow"
+      data-popover-arrow=""
       className={arrow({ className })}
     >
       <svg
@@ -91,7 +85,9 @@ function PopoverArrow({ className, ...props }: PopoverArrowProps) {
       </svg>
     </PopoverPrimitives.OverlayArrow>
   );
-}
+};
+
+/* -------------------------------------------------------------------------- */
 
 export type { PopoverProps };
 export { Popover };

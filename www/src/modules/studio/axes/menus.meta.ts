@@ -111,7 +111,7 @@ export const ROWS_OPTIONS = options(ROWS_VALUES, {
 
 export const PICKER_OPTIONS = options(PICKER_VALUES, {
   drawer: {
-    label: "Drawer",
+    label: "Sheet",
     description: "Pickers open as a bottom sheet on phones",
     credits: ["Geist", "Notion", "Stripe"],
   },

@@ -1,0 +1,503 @@
+src/registry/base/base.css: /* Cursor axes: what the pointer becomes over enabled and disabled controls.
+src/registry/base/base.css: /* Disabled axis: what a disabled control recolors to. Every site reads one
+src/registry/base/base.css: /* Field focus, one per shell shape. A box draws the layer around itself and
+src/registry/base/base.css: /* Focus axes: the ring controls wear (color, width, the gap in bg, an inner
+src/registry/base/base.css: /* Hugeicons paths carry their own stroke-width attribute, so the rule must
+src/registry/base/base.css: /* Identical to shadcn's default so `shadcn init` dedupes it instead of
+src/registry/base/base.css: /* Invalid at rest: a danger halo, 0 wide unless the system draws one.
+src/registry/base/base.css: /* Invalid fill: a danger wash laid over whatever the field paints,
+src/registry/base/base.css: /* Only the outermost disabled element dims, so nested opacity doesn't
+src/registry/base/base.css: /* Scrim axis: what every modal layer (modal, sheet) lays over the
+src/registry/base/base.css: /* The field focus inks and invalid fill: per-mode, so on :root. */
+src/registry/base/base.css: /* The ring inside a row or cell, where an outside ring would clip. */
+src/registry/base/base.css: /* The ring outside a control whose own part covers its box (a checkbox's
+src/registry/base/base.css: /* The strokes ride in `--tw-ring-shadow` so `ring-0` still silences them;
+src/registry/base/colors.css: /* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */
+src/registry/base/colors.css: /* Primitive ramps generated from SITE_COLOR_CONFIG (see @/registry/theme). */
+src/registry/base/colors.css: /* Semantic tokens over the ramps above. */
+src/registry/icons/create-icon-loader.tsx: // The module promise must be stable across renders for `use()` to resolve.
+src/registry/icons/create-icon.tsx: /**
+src/registry/icons/create-icon.tsx: /**
+src/registry/icons/create-icon.tsx: /** `name` is the registry name; each library module exports its glyph under it. */
+src/registry/icons/create-icon.tsx: // `weight` is not a DOM attribute; only phosphor accepts it.
+src/registry/lib/responsive/index.tsx: /**
+src/registry/lib/responsive/index.tsx: /**
+src/registry/lib/utils/index.ts: // Narrowed to `string`: React Aria className render props reject `undefined`.
+src/registry/roles.css: /* Action labels only (Button, ToggleButton, GroupText). */
+src/registry/roles.css: /* Every control edge: field shells, checks, secondary buttons, seams. */
+src/registry/roles.css: /* Every scrim's frost (modal, sheet). */
+src/registry/roles.css: /* Radius roles (#579): retargeted by studio axes/shape.ts and resolved to
+src/registry/roles.css: /* Surface edges (studio Surfaces › Edge): cards, choice tiles, popovers. */
+src/registry/roles.css: /* The ledge lip a pressed or disabled choice card sinks into. */
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /**
+src/registry/theme/color-config.ts: /** Absent → auto-tinted from the accent hue. */
+src/registry/theme/color-config.ts: /** App-background lightness per mode (L*: light 90–100, dark 0–20); dark accepts OLED black. */
+src/registry/theme/color-config.ts: /** OKLCH hue the neutral tint leans toward (absent = follow the accent). */
+src/registry/theme/color-config.ts: /** Pin the accent verbatim at the solid step. */
+src/registry/theme/color-config.ts: /** Scalar on the hue-band bend table, 0–3 (1.6 ≈ Tailwind warm bends). */
+src/registry/theme/color-config.ts: /** Scales the fitted chroma curve, 0–2 (1 ≈ Radix, ~1.33 ≈ Tailwind). */
+src/registry/theme/color-config.ts: /** Scales the neutral whisper tint, 0–4 (0 = pure gray). */
+src/registry/theme/color-config.ts: /** Splits selection controls + focus onto their own ramp (else = primary). */
+src/registry/theme/color-config.ts: /** With `preserveSeed`: white labels on the light solid whatever their
+src/registry/theme/emit-css.ts: /**
+src/registry/theme/emit-css.ts: /**
+src/registry/theme/emit-css.ts: /**
+src/registry/theme/emit-css.ts: /** Emit `vocab` as a single declaration block (Tailwind's `@theme` by default). */
+src/registry/theme/emit-css.ts: /** Indentation unit (default one tab). */
+src/registry/theme/emit-css.ts: /** Resolve a {@link SemanticTarget} to a literal color for one engine mode. */
+src/registry/theme/palettes.ts: /** Every palette dotUI generates, in emission and display order. */
+src/registry/theme/primitives.ts: /**
+src/registry/theme/primitives.ts: /**
+src/registry/theme/primitives.ts: /** Base radius length; presets override it through `tokens["--radius"]`. */
+src/registry/theme/primitives.ts: /** Emit `--chart-N` categorical tokens per mode (default true). */
+src/registry/theme/primitives.ts: /** Render an engine theme as the `base/colors.css` content. */
+src/registry/theme/primitives.ts: /** Selector for the dark-mode block (default `.dark`). */
+src/registry/theme/semantics.ts: /**
+src/registry/theme/semantics.ts: /**
+src/registry/theme/semantics.ts: /**
+src/registry/theme/semantics.ts: /**
+src/registry/theme/semantics.ts: /**
+src/registry/theme/semantics.ts: /** The resolver every emitter goes through: sources + overrides. */
+src/registry/theme/semantics.ts: /** The vocabulary `base/colors.css` declares. */
+src/registry/theme/semantics.ts: /** `choice-card`: a checkbox, radio or switch control in card mode (it holds
+src/registry/theme/semantics.ts: // ---- borders ----
+src/registry/theme/semantics.ts: // Solid, not alpha: an alpha hairline composites over each surface, so it
+src/registry/theme/semantics.ts: // reads brighter on elevated ones.
+src/registry/theme/types.ts: // a literal CSS value
+src/registry/theme/types.ts: // → color-mix(in oklab, a <n>%, b)
+src/registry/theme/types.ts: // → var(--<palette>-<step>)
+src/registry/theme/types.ts: // → var(--on-<palette>-<step>)
+src/registry/ui/accordion/meta.ts: // The collapsible rides on the accordion's motion.
+src/registry/ui/accordion/styles.ts: // HeroUI splitted: a box per item, no open fill.
+src/registry/ui/accordion/styles.ts: // The tree's expander: a caret that turns a quarter.
+src/registry/ui/accordion/styles.ts: // The trigger spans the box, so its ring is drawn inside.
+src/registry/ui/accordion/styles.ts: // shadcn mira, maia, luma, rhea: one box, the open item filled.
+src/registry/ui/alert/styles.ts: /* Each style is a system's recipe, copied whole: fill, edge and inks per
+src/registry/ui/alert/styles.ts: // Carbon (InlineNotification, high contrast): the inverse surface,
+src/registry/ui/alert/styles.ts: // Geist (Note): no fill, the status edge
+src/registry/ui/alert/styles.ts: // Primer (Banner), Ant Design, Fluent 2, Supabase: the wash inside a
+src/registry/ui/alert/styles.ts: // Radix Themes (Callout soft): the status wash, no edge, tinted ink.
+src/registry/ui/alert/styles.ts: // and ink.
+src/registry/ui/alert/styles.ts: // inverse text, the status in a solid icon.
+src/registry/ui/alert/styles.ts: // shadcn, HeroUI: the card, its hairline, the status in the ink.
+src/registry/ui/alert/styles.ts: // status edge; the text stays default, the icon carries the status.
+src/registry/ui/avatar/styles.ts: // Each size takes a rung: sm the small control's, md the item's, lg
+src/registry/ui/avatar/styles.ts: // In a group the next avatar and its ring cover each one's end, so its
+src/registry/ui/avatar/styles.ts: // Radix Themes soft: the accent's muted fill and ink.
+src/registry/ui/avatar/styles.ts: // initials center on what stays visible (overlap + 2px ring).
+src/registry/ui/avatar/styles.ts: // the control's; a group sizes (and rounds) its avatars itself.
+src/registry/ui/badge/styles.ts: /* Caps, one size down, tracked: Supabase, Mantine, Atlassian (v15). */
+src/registry/ui/badge/styles.ts: /* The chips recipe, shared with tag-group: a palette sets the --chip-* vars,
+src/registry/ui/badge/styles.ts: // Ant Design (Tag), Untitled UI, Supabase.
+src/registry/ui/badge/styles.ts: // Half-strength wash: the neutral fill is already the wash tone; its dot
+src/registry/ui/badge/styles.ts: // Linear (labels).
+src/registry/ui/badge/styles.ts: // Neutral hairline pill; the status rides a leading dot (Linear labels).
+src/registry/ui/badge/styles.ts: // Primer (Label).
+src/registry/ui/badge/styles.ts: // Radix Themes, Polaris, Chakra (subtle), Carbon, Atlassian, HeroUI.
+src/registry/ui/badge/styles.ts: // shadcn, Geist, Spectrum 2 (bold), Mantine (filled), Fluent 2.
+src/registry/ui/badge/styles.ts: // takes the muted ink, the fill being too light to read.
+src/registry/ui/breadcrumbs/styles.ts: /* Ancestors are muted labels that sharpen on hover, or the link recipe in
+src/registry/ui/breadcrumbs/styles.ts: // The current crumb drops the weight too, or it reads as an ancestor.
+src/registry/ui/button/base.tsx: // Wrapping undefined children would override context-injected children (e.g. ColorPicker's swatch) in RAC's context merge.
+src/registry/ui/button/styles.ts: /* A quiet toggle's selected fill and ink per look, apart: pill tabs put the
+src/registry/ui/button/styles.ts: /* A selected toggle's look; a current pagination page can wear it too. */
+src/registry/ui/button/styles.ts: /* Duolingo: 0.8px tracking on 15px labels. Navigation puts the same case
+src/registry/ui/button/styles.ts: /* Each style is a real system's recipe, copied whole: its fills, edges,
+src/registry/ui/button/styles.ts: /* Press on the open styles; the closed ones draw their own. Menu triggers
+src/registry/ui/button/styles.ts: /* The link variant wears the link recipe; the button keeps its label weight. */
+src/registry/ui/button/styles.ts: /* The recipe tables below are the single source for Button and
+src/registry/ui/button/styles.ts: /* The secondary button: each style's own, then the ones an open style can
+src/registry/ui/button/styles.ts: // (#393939 → #474747 → #6f6f6f); dark lifts it to #6f6f6f and darkens.
+src/registry/ui/button/styles.ts: // 2px lip in the edge color under eel ink.
+src/registry/ui/button/styles.ts: // Atlassian, Ant, Duolingo, Claude: the selection's muted wash, as on a
+src/registry/ui/button/styles.ts: // Carbon: a dark gray under white ink that lightens on hover and press
+src/registry/ui/button/styles.ts: // Clerk: a same-color ring, two tight drops, a top sheen that fades on
+src/registry/ui/button/styles.ts: // Duolingo's stroke button: the control stroke (Duolingo sets 2px) and a
+src/registry/ui/button/styles.ts: // Duolingo: a 4px lip a shade under the fill (2px on xs, standing in for
+src/registry/ui/button/styles.ts: // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
+src/registry/ui/button/styles.ts: // M3, Spectrum 2: the selection fill. A primary toggle already wears a
+src/registry/ui/button/styles.ts: // Material 3's filled tonal: the brand's muted tint under its ink.
+src/registry/ui/button/styles.ts: // One neutral step down (shadcn, Fluent, Polaris, Untitled UI).
+src/registry/ui/button/styles.ts: // Pending keeps the face; the spinner takes the label's ink.
+src/registry/ui/button/styles.ts: // Polaris: a white card plate (it holds on a grouped page) with a gray
+src/registry/ui/button/styles.ts: // Radix (soft gray), Airbnb, Spectrum 2: a gray fill, no edge.
+src/registry/ui/button/styles.ts: // Shopify Polaris: a deep inset rim and a bottom sheen; press inverts
+src/registry/ui/button/styles.ts: // Snaps to full contrast. Primary already wears the inverse color, so it
+src/registry/ui/button/styles.ts: // Supabase, Claude, shadcn vega: a card plate on an edge and an xs drop;
+src/registry/ui/button/styles.ts: // Supabase: shrinks to 97%.
+src/registry/ui/button/styles.ts: // The mode swap rides local vars so disabled and selected still win.
+src/registry/ui/button/styles.ts: // UPPERCASE behind a guard (static for Tailwind; parity-tested): a select
+src/registry/ui/button/styles.ts: // Untitled UI: an inner dark ring, a white top rim fading downward, an
+src/registry/ui/button/styles.ts: // an inset top line on press. The rim lightens in dark.
+src/registry/ui/button/styles.ts: // and disabled still win in dark.
+src/registry/ui/button/styles.ts: // bottom lip; hover #fafafa sits between it and the #f7f7f7 press.
+src/registry/ui/button/styles.ts: // choice card.
+src/registry/ui/button/styles.ts: // dark lifts the plate instead. The plate rides a local var so selected
+src/registry/ui/button/styles.ts: // disabled sink into it; hover is a brightness filter; nothing eases.
+src/registry/ui/button/styles.ts: // dotUI's own: solid fills.
+src/registry/ui/button/styles.ts: // fill, so it keeps the tone.
+src/registry/ui/button/styles.ts: // flips the other way: a page chip inside an inverse hairline (shadow-none
+src/registry/ui/button/styles.ts: // hover (the fill lightens) and returns on press.
+src/registry/ui/button/styles.ts: // its 26px pill size): the
+src/registry/ui/button/styles.ts: // keeps the ring composite valid on flat styles).
+src/registry/ui/button/styles.ts: // ramp's pressed step in light, which flips lighter in dark. Press and
+src/registry/ui/button/styles.ts: // shadcn, Geist, Notion, Stripe: an edge on no fill.
+src/registry/ui/button/styles.ts: // shadcn, Mantine: down a pixel.
+src/registry/ui/button/styles.ts: // the bevel and drops the label 1px.
+src/registry/ui/button/styles.ts: // trigger shows a value, not a label, so it keeps its case.
+src/registry/ui/button/styles.ts: // xs drop. No press.
+src/registry/ui/calendar/base.tsx: // Intl's separator whitespace differs between Node and the browser, so the heading text can hydrate-mismatch.
+src/registry/ui/calendar/index.tsx: // `weekdays` rides the design-system context here, so every default composition below must use these wrappers, not base's.
+src/registry/ui/calendar/meta.ts: // Intl has no two-letter weekday form, so `double` slices the short one.
+src/registry/ui/calendar/styles.ts: /* The row-edge rounding is spelled out twice because the publisher's extractor reads literals only. */
+src/registry/ui/calendar/styles.ts: /** Date cells: a day or time cell that is itself selected paints the checks
+src/registry/ui/calendar/styles.ts: // Neutral markers, then the `-selection` ones in the checks fill.
+src/registry/ui/card/styles.ts: /** The container surface: cards, accordion boxes, attachments. Each reader
+src/registry/ui/card/styles.ts: // The band runs to the card's top edge, so the card drops its top inset
+src/registry/ui/card/styles.ts: // and the header carries it.
+src/registry/ui/chart-area/base.tsx: /* An area's stroke would outline the whole polygon, so the edge is a separate
+src/registry/ui/chart-area/base.tsx: /** A vertical fade from `color` down to near-transparent. */
+src/registry/ui/chart-area/base.tsx: /** Draw a dot at every point. */
+src/registry/ui/chart-area/base.tsx: /** Fill opacity, or `"gradient"` to fade the fill out toward the baseline. */
+src/registry/ui/chart-area/base.tsx: /** Path interpolation between points. */
+src/registry/ui/chart-area/base.tsx: /** Series stacked on one another; `"normalize"` for a 100% stack. */
+src/registry/ui/chart-area/base.tsx: // An explicit baseline opts out of the library's implicit stacking.
+src/registry/ui/chart-area/base.tsx: // The host scopes every declared id with its instance prefix, so two charts
+src/registry/ui/chart-area/base.tsx: // on a page cannot collide.
+src/registry/ui/chart-bar/base.tsx: /** Bar fill opacity. */
+src/registry/ui/chart-bar/base.tsx: /** Categories down the y axis, values along x. */
+src/registry/ui/chart-bar/base.tsx: /** Corner radius in pixels. */
+src/registry/ui/chart-bar/base.tsx: /** Pixels trimmed from both categorical edges of every bar. */
+src/registry/ui/chart-bar/base.tsx: /** Series stacked in each band; `"normalize"` for a 100% stack. */
+src/registry/ui/chart-bar/base.tsx: /** Side-by-side series inside each category band. */
+src/registry/ui/chart-bar/base.tsx: // `group-x` groups by scene x, which is the value axis on horizontal bars.
+src/registry/ui/chart-heatmap/base.tsx: /* Mirrors the chart's color scale, nicened domain included, so a label's ink
+src/registry/ui/chart-heatmap/base.tsx: /** Axis titles. They also name the two coordinates in the tooltip. */
+src/registry/ui/chart-heatmap/base.tsx: /** Draw each value inside its cell. */
+src/registry/ui/chart-heatmap/base.tsx: /** Explicit cuts between bins — one fewer than `colors`. */
+src/registry/ui/chart-heatmap/base.tsx: /** Field holding the column category. */
+src/registry/ui/chart-heatmap/base.tsx: /** Field holding the row category. */
+src/registry/ui/chart-heatmap/base.tsx: /** Formats values in the legend, the tooltip, and the cells. */
+src/registry/ui/chart-heatmap/base.tsx: /** Numeric field the color scale reads. */
+src/registry/ui/chart-heatmap/base.tsx: /** Ramp from low to high. The number of colors is the number of bins. */
+src/registry/ui/chart-heatmap/base.tsx: /** What the value means — the legend title and the tooltip label. */
+src/registry/ui/chart-heatmap/base.tsx: // The 0.58 lightness crossover measures ≥ 4.9:1 contrast across the default
+src/registry/ui/chart-heatmap/base.tsx: // The tooltip titles a point with its group; a cell's group is its value.
+src/registry/ui/chart-heatmap/base.tsx: // ramp.
+src/registry/ui/chart-line/base.tsx: /** Draw a dot at every point. */
+src/registry/ui/chart-line/base.tsx: /** Path interpolation between points. */
+src/registry/ui/chart-pie/base.tsx: /** Extra polar mark layers painted over the ring. */
+src/registry/ui/chart-pie/base.tsx: /** Field holding the slice key. */
+src/registry/ui/chart-pie/base.tsx: /** Field holding the slice magnitude. */
+src/registry/ui/chart-pie/base.tsx: /** Index of the slice pushed out of the ring. */
+src/registry/ui/chart-pie/base.tsx: /** Leading slice order — drives color-slot assignment and the legend. */
+src/registry/ui/chart-pie/base.tsx: /** One concentric ring: its arcs, the pushed-out active slice, and its labels. */
+src/registry/ui/chart-pie/base.tsx: /** Pixel inset applied before `radiusRatio`. */
+src/registry/ui/chart-pie/base.tsx: /** Scopes the ring's mark ids — unique per ring. */
+src/registry/ui/chart-pie/base.tsx: /** Share of the available radius the ring may use. */
+src/registry/ui/chart-pie/base.tsx: /** Stroke painted between slices; the page background by default. */
+src/registry/ui/chart-pie/base.tsx: /** What the arcs are laid out from, and what a focus point's `datum` is. */
+src/registry/ui/chart-pie/base.tsx: // A slice's x value is its mid-angle, so only nearest focus reads right.
+src/registry/ui/chart-pie/base.tsx: // Slice labels map through the container scales; bare arcs bind none.
+src/registry/ui/chart-radar/base.tsx: /* `radialGrid` reads its rings from the nicened radius scale, so the filled
+src/registry/ui/chart-radar/base.tsx: /** A second, muted label line above each category label. */
+src/registry/ui/chart-radar/base.tsx: /** Draw a dot at every point. */
+src/registry/ui/chart-radar/base.tsx: /** Draw the spokes running out to each category. */
+src/registry/ui/chart-radar/base.tsx: /** Extra polar mark layers painted over the series. */
+src/registry/ui/chart-radar/base.tsx: /** Fill opacity of the area inside the outer ring. */
+src/registry/ui/chart-radar/base.tsx: /** Fraction of the available radius the chart fills. */
+src/registry/ui/chart-radar/base.tsx: /** Number of rings. */
+src/registry/ui/chart-radar/base.tsx: /** Outer value of the radius scale. */
+src/registry/ui/chart-radar/base.tsx: /** Series fill opacity — `0` draws outlines only. */
+src/registry/ui/chart-radar/base.tsx: // Spokes and circumference labels are one guide.
+src/registry/ui/chart-radar/base.tsx: // Two spokes can share a scene x; group by the nearest angular ray instead.
+src/registry/ui/chart-radial/base.tsx: /** A stacked segment: what the arcs and focus points carry in stacked mode. */
+src/registry/ui/chart-radial/base.tsx: /** Angular sweep in radians. Defaults to a full turn. */
+src/registry/ui/chart-radial/base.tsx: /** Concentric rings behind the bars. */
+src/registry/ui/chart-radial/base.tsx: /** Display names for ring keys. */
+src/registry/ui/chart-radial/base.tsx: /** Draw an unfilled arc behind every ring. */
+src/registry/ui/chart-radial/base.tsx: /** Extra polar mark layers painted over the bars. */
+src/registry/ui/chart-radial/base.tsx: /** Extra polar mark layers painted under the bars. */
+src/registry/ui/chart-radial/base.tsx: /** Field naming each ring. */
+src/registry/ui/chart-radial/base.tsx: /** Gap between rings, as a share of a ring's thickness. */
+src/registry/ui/chart-radial/base.tsx: /** One field draws a ring per row; an array stacks the first row's fields into one ring. */
+src/registry/ui/chart-radial/base.tsx: /** Pixel inset applied before `radiusRatio`. */
+src/registry/ui/chart-radial/base.tsx: /** Print each ring's name at the start of its arc. */
+src/registry/ui/chart-radial/base.tsx: /** Ratios of the resolved layout radius. */
+src/registry/ui/chart-radial/base.tsx: /** Shrinks the circle inside its box. */
+src/registry/ui/chart-radial/base.tsx: /** Value that fills the whole sweep. Defaults to the largest value. */
+src/registry/ui/chart-radial/base.tsx: // A named radius scale gets no default pixel range.
+src/registry/ui/chart-radial/base.tsx: // An arc's x value is an angle, so only nearest focus reads right.
+src/registry/ui/chart-radial/base.tsx: // Band centers as radius ratios, for the linear `label` scale below.
+src/registry/ui/chart/base.tsx: /* A configured polar scale that no mark binds is rejected at runtime. */
+src/registry/ui/chart/base.tsx: /* A renderer identity change remounts the surface. `initial: "always"`
+src/registry/ui/chart/base.tsx: /* Function easing is excluded: an inline easing would defeat the definition
+src/registry/ui/chart/base.tsx: /* The library's own `decorative` works through `postDomain`, which the polar
+src/registry/ui/chart/base.tsx: /* The vars sit on the tooltip element itself because the portal detaches it
+src/registry/ui/chart/base.tsx: /* Tracks `RendererChartCommonProps` minus `renderer`/`measureText`. */
+src/registry/ui/chart/base.tsx: /**
+src/registry/ui/chart/base.tsx: /** Axis carrying the grid. */
+src/registry/ui/chart/base.tsx: /** Axis options merged over the computed axis; `label` is the axis title. */
+src/registry/ui/chart/base.tsx: /** Both axes, neither, or just one. */
+src/registry/ui/chart/base.tsx: /** Color-scale domain and legend order — usually `planChart().order`. */
+src/registry/ui/chart/base.tsx: /** Display names for series keys. */
+src/registry/ui/chart/base.tsx: /** Field holding the category / time value. */
+src/registry/ui/chart/base.tsx: /** Field splitting rows into series — the long-format alternative to `y`. */
+src/registry/ui/chart/base.tsx: /** Leading series order — drives color-slot assignment and the legend. */
+src/registry/ui/chart/base.tsx: /** Mark layers painted over the built-ins. */
+src/registry/ui/chart/base.tsx: /** Mark layers painted under the built-ins. */
+src/registry/ui/chart/base.tsx: /** Mark layers spliced inside a polar container — cartesian marks would land outside it. */
+src/registry/ui/chart/base.tsx: /** Merged over the categorical default — a sequential scale goes here. */
+src/registry/ui/chart/base.tsx: /** One field per series (wide rows), or a single field with `series`. */
+src/registry/ui/chart/base.tsx: /** Pixel radius beyond which a pointer stops matching a point. */
+src/registry/ui/chart/base.tsx: /** Reads a row's series label — the `z` and color channel. */
+src/registry/ui/chart/base.tsx: /** Replaces the library's tooltip rows — polar families, whose scale values are angles. */
+src/registry/ui/chart/base.tsx: /** Series labels, in color-slot and legend order. */
+src/registry/ui/chart/base.tsx: /** Several `y` fields were folded into one series per field. */
+src/registry/ui/chart/base.tsx: /** Stable row identity, so sorted or filtered data is retained, not respawned. */
+src/registry/ui/chart/base.tsx: /** The full prop surface of a family component, from its spec options. */
+src/registry/ui/chart/base.tsx: /** The rows the mark reads: the input, or one row per series when `y` lists several fields. */
+src/registry/ui/chart/base.tsx: /** The value when it is a finite number, `null` otherwise — a gap, not a zero. */
+src/registry/ui/chart/base.tsx: // The library paints the grid at 11% opacity; the border token is already
+src/registry/ui/chart/base.tsx: // The scene compiler re-collects points by walking the nodes, so the metadata
+src/registry/ui/chart/base.tsx: // a hairline.
+src/registry/ui/chart/base.tsx: // has to go at every depth.
+src/registry/ui/chart/base.tsx: // react-spring's default config, recharts' tween on CSS `ease` (what
+src/registry/ui/chart/base.tsx: // shadcn's charts ride), or none.
+src/registry/ui/checkbox/styles.ts: /* Duolingo's ledge: a pressed or disabled card sinks into its lip. */
+src/registry/ui/checkbox/styles.ts: /* The choice card's shell (its edge is Surfaces' tile stroke) and its
+src/registry/ui/color-editor/base.tsx: /* grow, not flex-1: keeps the density width as the flex basis. */
+src/registry/ui/color-editor/base.tsx: /* h-auto self-stretch: tracks the ColorArea's height instead of the slider's fixed default. */
+src/registry/ui/command/styles.ts: // --surface-radius is set by whichever rounded surface contains the command (popover, modal, card).
+src/registry/ui/command/styles.ts: // A picker's search matches its rows, not a form field (shadcn vega).
+src/registry/ui/command/styles.ts: // A picker's search matches its rows, not a form field (shadcn vega).
+src/registry/ui/command/styles.ts: // Padding matches the items' text inset (list gutter + item padding).
+src/registry/ui/command/styles.ts: // The inset lives on the field and list, never the root, so the scrollbar sits flush with the surface edge.
+src/registry/ui/command/styles.ts: // The list owns all the overflow so the collection's scroll-into-view works.
+src/registry/ui/dialog/styles.ts: /* Footer actions. End stacks full width below sm (shadcn); Spread stays a
+src/registry/ui/dialog/styles.ts: /* Popover-hosted dialogs keep their own header. */
+src/registry/ui/dialog/styles.ts: /* The footer's edge: a full-bleed rule above it (Supabase, Polaris), or a
+src/registry/ui/dialog/styles.ts: // Material 3, Stripe: rules at the body's edges only while it scrolls
+src/registry/ui/dialog/styles.ts: // Polaris: a tinted header band over a rule.
+src/registry/ui/dialog/styles.ts: // Supabase: a full-bleed rule under the header.
+src/registry/ui/dialog/styles.ts: // Supabase: faint until hovered or focused.
+src/registry/ui/dialog/styles.ts: // layers snap up to a device pixel inward, so the rules sit 1px in and
+src/registry/ui/dialog/styles.ts: // past them, drawn by background-attachment so nothing listens. Local
+src/registry/ui/dialog/styles.ts: // shadcn luma, rhea, sera: the quiet button on the secondary fill.
+src/registry/ui/dialog/styles.ts: // the covers overshoot them.
+src/registry/ui/field/base.message.tsx: /* The `error: icon-message` build of field: identical to base.tsx except that
+src/registry/ui/field/styles.ts: // Form-field labels only; a checkbox, radio or switch keeps its own.
+src/registry/ui/field/styles.ts: // Primer, Geist). The icon-in-field option draws on input instead.
+src/registry/ui/field/styles.ts: // The error line: plain danger text (shadcn), or led by an icon (Polaris,
+src/registry/ui/group/styles.ts: /* How two attached buttons meet; toggle-button-group imports it. Shared edge
+src/registry/ui/group/styles.ts: // Gapped: Duolingo never attaches; its slab would be drawn twice.
+src/registry/ui/input/base.tsx: // Intl's separator whitespace (U+202F, U+2009) differs between Node and the browser; folding it to a plain space avoids hydration mismatches.
+src/registry/ui/input/meta.ts: // NumberField, OTP cells and the field-style select trigger render through
+src/registry/ui/input/meta.ts: // Shared by every field: TextArea, SearchField, Combobox, DateField,
+src/registry/ui/input/meta.ts: // these slots.
+src/registry/ui/input/styles.ts: /* ----------------------------- Addon helpers ----------------------------- */
+src/registry/ui/input/styles.ts: /* ----------------------------- Field shells ----------------------------- */
+src/registry/ui/input/styles.ts: /* ----------------------------- Recipe table ----------------------------- */
+src/registry/ui/input/styles.ts: /* -------------------------------- Tokens -------------------------------- */
+src/registry/ui/input/styles.ts: /* --------------------------------- Hover --------------------------------- */
+src/registry/ui/input/styles.ts: /* A cell addon (Bootstrap input-group, Ant addonBefore, Geist prefix): a
+src/registry/ui/input/styles.ts: /* An error icon drawn inside the control (Carbon, Material 3): a danger disc
+src/registry/ui/input/styles.ts: /** Every shell, one per Inputs › Style. Each slice dresses every field slot,
+src/registry/ui/input/styles.ts: // 16px below sm, so iOS never zooms a focused field.
+src/registry/ui/input/styles.ts: // A select trigger drawn by Button: it only borrows the field height.
+src/registry/ui/input/styles.ts: // A select trigger worn as a field (Inputs › Select trigger: Field).
+src/registry/ui/input/styles.ts: // Boxed shells: the addon owns asymmetric inline padding.
+src/registry/ui/input/styles.ts: // Every focus and invalid layer draws under the rule.
+src/registry/ui/input/styles.ts: // GitHub Primer: a page-white box on the control edge, recessed by a 1px
+src/registry/ui/input/styles.ts: // Material 3 filled, Carbon: the well over a bottom indicator. It ends in a
+src/registry/ui/input/styles.ts: // One height rung on every slot that starts a field.
+src/registry/ui/input/styles.ts: // One text step on every slot that starts a field.
+src/registry/ui/input/styles.ts: // Past the control ladder, a Button select trigger takes the field height.
+src/registry/ui/input/styles.ts: // Per-height token sets (tuned from shadcn mira/nova/vega; 6, 10 and up
+src/registry/ui/input/styles.ts: // Range compositions (start input, separator, end input): only the last
+src/registry/ui/input/styles.ts: // The caret sits at the visual inset, after the shell's padding.
+src/registry/ui/input/styles.ts: // The color of a divider between shell parts (stepper cells): the shell's
+src/registry/ui/input/styles.ts: // The field's own pointer state: it yields to invalid, disabled and the
+src/registry/ui/input/styles.ts: // The fill of a segment inside the shell (stacked inset steppers): Polaris's
+src/registry/ui/input/styles.ts: // The inner control sheds its shell; `!` outranks the shell's state
+src/registry/ui/input/styles.ts: // The size tokens per density: the control ladder, one rung (4px) above
+src/registry/ui/input/styles.ts: // The value text: the density's control rung, or one above it (Untitled
+src/registry/ui/input/styles.ts: // UI, Material 3: 16px fields beside 14px controls).
+src/registry/ui/input/styles.ts: // Underline: symmetric inline padding (no fill or side edge to yield to).
+src/registry/ui/input/styles.ts: // Untitled UI: a page-white box on the control edge with an xs drop.
+src/registry/ui/input/styles.ts: // `focus`: inputs react to their own `:focus`, a group to its focused
+src/registry/ui/input/styles.ts: // and dark fills, which out-specify a plain descendant reset.
+src/registry/ui/input/styles.ts: // control keeps flex-1, so the slack sits before the trailing addon
+src/registry/ui/input/styles.ts: // control, a trigger (a button) to keyboard focus only. Unfocused, an
+src/registry/ui/input/styles.ts: // edge, or nothing on shells without a side edge.
+src/registry/ui/input/styles.ts: // extrapolated, 14 matching Material 3's 56dp field).
+src/registry/ui/input/styles.ts: // focus its slot shows (RAC marks focus-within on groups only).
+src/registry/ui/input/styles.ts: // goes around the box (Carbon); a border focus thickens the rule (M3). The
+src/registry/ui/input/styles.ts: // inner top shadow.
+src/registry/ui/input/styles.ts: // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
+src/registry/ui/input/styles.ts: // invalid field wears the invalid halo instead.
+src/registry/ui/input/styles.ts: // it, or four (16px).
+src/registry/ui/input/styles.ts: // rule is the field's only edge, so it never draws weaker than Strong.
+src/registry/ui/input/styles.ts: // shadcn luma: the field well with no visible edge.
+src/registry/ui/input/styles.ts: // shadcn mira, Supabase: the field well on the control edge.
+src/registry/ui/input/styles.ts: // shadcn nova: a clear box on the control edge, tinted in dark.
+src/registry/ui/input/styles.ts: // shadcn sera: a bottom rule only, no fill, no inline padding, no corners.
+src/registry/ui/input/styles.ts: // straight rule, so only its top corners round, and small. A ring or halo
+src/registry/ui/input/styles.ts: // tertiary fill, or the page on shells already filled with the field well.
+src/registry/ui/kbd/styles.ts: /* The base is the key's layout only; each style ships its own chrome and
+src/registry/ui/kbd/styles.ts: // Claude, Linear, Untitled UI: a hairline, no fill.
+src/registry/ui/kbd/styles.ts: // Radix Themes: sans at 12px, so ⌘ and ⇧ stay legible (a mono
+src/registry/ui/kbd/styles.ts: // fallback like Menlo draws them tiny).
+src/registry/ui/link/styles.ts: /* The link recipe; link buttons and breadcrumb ancestors import it. The
+src/registry/ui/link/styles.ts: // Weight is the only resting cue a neutral link gets (Supabase, Geist); a
+src/registry/ui/link/styles.ts: // link button keeps its label weight instead.
+src/registry/ui/list-box/meta.ts: /* The list-rows params; menu ships the same recipe (./styles LIST_ROWS). */
+src/registry/ui/list-box/styles.ts: /* List rows: one recipe for list-box, menu (imports it) and command. One row
+src/registry/ui/list-box/styles.ts: /* Supabase's heading-meta; sidebar group labels share it. */
+src/registry/ui/list-box/styles.ts: // (Radix Themes, Linear), or one step above it (Polaris, Stripe). Those
+src/registry/ui/list-box/styles.ts: // A floating list sets its popover's width (popover/styles.ts): at
+src/registry/ui/list-box/styles.ts: // Clipped sideways only, so descenders stay whole.
+src/registry/ui/list-box/styles.ts: // Material 3, Carbon, Polaris: the selected row keeps the selected wash,
+src/registry/ui/list-box/styles.ts: // Radix Themes, macOS: a solid fill every descendant inks on.
+src/registry/ui/list-box/styles.ts: // Row height: the density's own rows (shadcn), the control height
+src/registry/ui/list-box/styles.ts: // Square rows; the block padding clears half the surface's corner.
+src/registry/ui/list-box/styles.ts: // The check takes the icon column, so check and icon rows share one
+src/registry/ui/list-box/styles.ts: // hold under any text size; a row with a description still grows.
+src/registry/ui/list-box/styles.ts: // hovered or focused too, under either highlight.
+src/registry/ui/list-box/styles.ts: // label edge.
+src/registry/ui/list-box/styles.ts: // least the trigger's, at most the viewport's; past that, labels truncate.
+src/registry/ui/list-box/styles.ts: // shadcn, Geist, Linear: a neutral wash; danger rows keep their ink.
+src/registry/ui/loader/styles.css: /* One second times every style: the ring's turn (`animate-spin`), the
+src/registry/ui/mention/base.tsx: /** Maps a selected item's key to the text inserted after the trigger. @default String(key) */
+src/registry/ui/mention/base.tsx: /** Opens the suggestions: a string, or a RegExp matching several triggers (e.g. `/[@/]/`). @default "@" */
+src/registry/ui/mention/base.tsx: /** The input and suggestions; a function receives the active trigger and query. */
+src/registry/ui/mention/base.tsx: /** The text typed after the trigger. */
+src/registry/ui/mention/base.tsx: /** The trigger text that opened the suggestions (e.g. `"@"` or `"/"`), or null while closed. */
+src/registry/ui/mention/base.tsx: /** Typing a trigger opens a caret-anchored `Menu` of suggestions; selecting one inserts it as an inline token. */
+src/registry/ui/mention/base.tsx: /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
+src/registry/ui/mention/base.tsx: // Anchored to the caret, so drop the field's width as the popover's minimum.
+src/registry/ui/mention/base.tsx: // The `g` flag is dropped so `exec` stays stateless.
+src/registry/ui/mention/base.tsx: // TokenField only applies the stored caret position while focused, so refocus first.
+src/registry/ui/message/styles.ts: // Incoming prose reads in the reading face; controls stay in the body.
+src/registry/ui/modal/base.fullscreen.tsx: /* No backdrop to tap below the mobile line: bring a close. */
+src/registry/ui/modal/base.sheet.tsx: // Below the mobile line the dialog slides up in a bottom sheet; an alert
+src/registry/ui/modal/base.sheet.tsx: // dialog stays centered, and only a dismissable one swipes away.
+src/registry/ui/modal/styles.ts: /* Below the mobile line. Sheet swaps the panel for a bottom sheet
+src/registry/ui/modal/styles.ts: // Down from above (Carbon, Mantine).
+src/registry/ui/modal/styles.ts: // Shares the sheets' layer so the last opened sits on top (a select's sheet over its modal).
+src/registry/ui/modal/styles.ts: // Up from below (Spectrum 2, Polaris, Atlassian).
+src/registry/ui/number-field/base.right-cells.tsx: // Stepper cells at the end of the shell; parts are placed by slot.
+src/registry/ui/number-field/base.split.tsx: // Minus at the start, plus at the end; parts are placed by slot.
+src/registry/ui/number-field/base.stacked-cells.tsx: // A chevron column at the end; parts are placed by slot.
+src/registry/ui/number-field/base.stacked-inset.tsx: // Two inset segments stacked at the end; parts are placed by slot.
+src/registry/ui/otp-field/styles.ts: // Ant, Mantine, Clerk: gapped cells, each the field shell itself.
+src/registry/ui/otp-field/styles.ts: // on edgeless shells.
+src/registry/ui/otp-field/styles.ts: // shadcn: one row sharing edges; the cells keep the control edge even
+src/registry/ui/pagination/styles.ts: // Matches an icon-only page button at `md` so the ellipsis lines up with the page cells.
+src/registry/ui/popover/base.drawer.tsx: // Render-prop children read placement and entering state, which only the popover can provide.
+src/registry/ui/popover/meta.ts: // Menus, selects and pickers ride on the popover's motion.
+src/registry/ui/popover/styles.ts: /* A stroked tip (popover, surface tooltip): sized with the overlay stroke
+src/registry/ui/popover/styles.ts: // Menus and pickers size to their rows; the list inside sets the
+src/registry/ui/popover/styles.ts: // floor and the cap (list-box/styles.ts).
+src/registry/ui/progress-bar/styles.css: /* -100% hides the 40%-wide segment left; 250% of its own width puts its leading edge past the track's end. */
+src/registry/ui/progress-bar/styles.ts: /* Material 3: the fill draws the inactive track on both sides of
+src/registry/ui/progress-bar/styles.ts: // Material 3 (4dp), shadcn nova/mira/lyra.
+src/registry/ui/progress-bar/styles.ts: // Polaris, Duolingo: 16px.
+src/registry/ui/progress-bar/styles.ts: // Primer, Carbon, Ant Design, Mantine, HeroUI: 8px.
+src/registry/ui/progress-bar/styles.ts: // Radix Themes (surface): an inset hairline drawn over the fill.
+src/registry/ui/progress-bar/styles.ts: // Spectrum 2 (6px), Radix Themes (size 2), shadcn vega.
+src/registry/ui/qr-code/base.dots.tsx: // Scanners require solid finder patterns, so the corner markers are rounded squares, not dots.
+src/registry/ui/questionnaire/styles.ts: // The shell is input's; this adds the questionnaire's own invalid
+src/registry/ui/questionnaire/styles.ts: // state, which it marks with aria-invalid.
+src/registry/ui/search-field/demos/with-suggestions.tsx: // Moving through suggestions blurs the input virtually, toward the popover.
+src/registry/ui/segmented-control/styles.ts: /* Item weight at rest, then selected. */
+src/registry/ui/segmented-control/styles.ts: /* The selection bar, shared with tabs' segmented variant (tabs imports
+src/registry/ui/segmented-control/styles.ts: // Outline trades a padding pixel for the hairline so the box stays put.
+src/registry/ui/segmented-control/styles.ts: // `isolate` on the item keeps the pill behind the `z-10` content.
+src/registry/ui/select/base.field.tsx: // React Aria marks the Select invalid, not its button.
+src/registry/ui/select/base.tsx: // React Aria marks the Select invalid, not its button.
+src/registry/ui/select/index.tsx: /* base.field.tsx is base.tsx with a field-shell SelectTrigger; keep the two
+src/registry/ui/sidebar/base.tsx: /** Access the sidebar's open/collapsed state and toggles from any descendant. */
+src/registry/ui/sidebar/base.tsx: /** Control font size. @default 'md' */
+src/registry/ui/sidebar/base.tsx: /** Control height/font. @default 'md' */
+src/registry/ui/sidebar/base.tsx: /** Escape hatch to render the link with a custom element (e.g. a router link). */
+src/registry/ui/sidebar/base.tsx: /** Escape hatch to render the link with a custom element (e.g. a router link). */
+src/registry/ui/sidebar/base.tsx: /** Label shown in a tooltip when the sidebar is collapsed to icons. */
+src/registry/ui/sidebar/base.tsx: /** Marks the item as the active page (highlighted, `aria-current` on links). */
+src/registry/ui/sidebar/base.tsx: /** Marks the item as the active page (highlighted, `aria-current` on links). */
+src/registry/ui/sidebar/base.tsx: /** Render a leading icon-sized placeholder. */
+src/registry/ui/sidebar/base.tsx: /** Render as a link to this destination instead of a button. */
+src/registry/ui/sidebar/base.tsx: /** Render as a link to this destination instead of a button. */
+src/registry/ui/sidebar/base.tsx: /** Reveal the action only on hover/focus of the menu item (always shown on touch). */
+src/registry/ui/sidebar/base.tsx: /** Visual style. @default 'default' */
+src/registry/ui/sidebar/base.tsx: /** `inset` is designed for `side="left"`. @default 'sidebar' */
+src/registry/ui/sidebar/base.tsx: // Derived from the React id, not Math.random(), so SSR and client widths match.
+src/registry/ui/sidebar/base.tsx: // Lets a header `<Heading>` label the nav landmark; content/footer reset the id so their headings don't claim it.
+src/registry/ui/sidebar/styles.ts: /* The current item's marker, on menu and sub-menu buttons alike. Each marker
+src/registry/ui/sidebar/styles.ts: // Catalyst, Fluent 2: a bar at the start edge, no fill.
+src/registry/ui/sidebar/styles.ts: // Duolingo: the wash inside a 2px ring.
+src/registry/ui/sidebar/styles.ts: // Item weight at rest, then current.
+src/registry/ui/sidebar/styles.ts: // Polaris: a page-toned chip on a recessed sidebar; hover sits between.
+src/registry/ui/sidebar/styles.ts: // Primer, Carbon: a neutral wash and a wider bar.
+src/registry/ui/sidebar/styles.ts: // Stripe: the label and icon alone, a brand wash on hover. Sub-item icons
+src/registry/ui/sidebar/styles.ts: // The inset panel wears the card's edge and shadow (Linear's hairline).
+src/registry/ui/sidebar/styles.ts: // `order-last` keeps a right sidebar on the right wherever it sits in the JSX.
+src/registry/ui/sidebar/styles.ts: // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
+src/registry/ui/sidebar/styles.ts: // on a stadium item (meta.ts rounds it through the item var).
+src/registry/ui/sidebar/styles.ts: // rest muted, so the current one takes the ink.
+src/registry/ui/sidebar/styles.ts: // shadcn: a wash, neutral or brand-tinted. Material 3's pill is the same wash
+src/registry/ui/skeleton/base.tsx: /* Pins every placeholder's CSS loop to one phase so later mounts don't pulse out of step. */
+src/registry/ui/skeleton/styles.css: /* Declared here because the painter reaches its loop through a var, and Tailwind drops a theme keyframe no used `--animate-*` names. */
+src/registry/ui/skeleton/styles.css: /* Modifiers always set the image and loop vars so a nested skeleton never inherits an outer one's. */
+src/registry/ui/slider/styles.ts: // A bar in the fill color, a gap cut from the track, a stop dot; the
+src/registry/ui/slider/styles.ts: // control reserves the bar's 44px reach (Material 3's container).
+src/registry/ui/table/styles.ts: /* The plain header blurs the rows scrolling under it; filled is opaque,
+src/registry/ui/table/styles.ts: // Blur lives on the cells, not the thead: a backdrop-filter escapes the scroll container's rounded clip in Chromium.
+src/registry/ui/tabs/styles.ts: /* The `variant` prop is per-instance API; the `style` param sets its default
+src/registry/ui/tabs/styles.ts: // A quiet toggle's selected ink and fill; the fill rides the indicator,
+src/registry/ui/tabs/styles.ts: // The line indicator across the tab, or hugging its label: 3px with a
+src/registry/ui/tabs/styles.ts: // The selected tab steps one pixel onto the list's edge and paints
+src/registry/ui/tabs/styles.ts: // over it, so tab and content read as one surface.
+src/registry/ui/tabs/styles.ts: // rounded top (Material 3), inset by the tab's padding.
+src/registry/ui/tabs/styles.ts: // so the tab's hover and press reach it through the group.
+src/registry/ui/tag-group/styles.ts: /* Badge's chips recipe, imported: a tag is a neutral chip that can also be
+src/registry/ui/tag-group/styles.ts: // palette, selected and disabled
+src/registry/ui/time-picker/base.tsx: /** A TimeField with a scrollable time-column popover. */
+src/registry/ui/time-picker/base.tsx: /** Handler that is called when the popover's open state changes. */
+src/registry/ui/time-picker/base.tsx: /** The time columns inside a TimePicker popover; reads and writes the enclosing TimePicker's value. */
+src/registry/ui/time-picker/base.tsx: /** Whether the popover is open (controlled). */
+src/registry/ui/time-picker/base.tsx: /** Whether the popover is open by default (uncontrolled). */
+src/registry/ui/time-picker/base.tsx: // Every TimeValue member implements `.set`; the cast only satisfies the union-method call.
+src/registry/ui/time-picker/base.tsx: // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
+src/registry/ui/time-picker/base.tsx: // Trigger contexts that must not leak into the popover content.
+src/registry/ui/toast/base.tsx: // Whether a status toast's own fill is solid; undefined sits on the surface.
+src/registry/ui/toast/styles.ts: // Base UI's title is an <h2>; keep the body face, not the heading's.
+src/registry/ui/toast/styles.ts: // Carbon (inverse): the solid status color, to read on an inverse
+src/registry/ui/toast/styles.ts: // Material 3 (snackbar), Polaris, Spectrum 2, Carbon: opaque inverse.
+src/registry/ui/toast/styles.ts: // On a solid fill the action is the quiet button in the toast's ink.
+src/registry/ui/toast/styles.ts: // Sonner (richColors), Carbon (low contrast): the status wash inside
+src/registry/ui/toast/styles.ts: // Sonner (shadcn), Atlassian, Fluent 2, Ant, HeroUI, Chakra, Mantine:
+src/registry/ui/toast/styles.ts: // Sonner (shadcn), Fluent 2, Ant, HeroUI, Mantine, Carbon: only the
+src/registry/ui/toast/styles.ts: // Spectrum 2, Polaris (critical), Chakra, Atlassian (bold): the solid
+src/registry/ui/toast/styles.ts: // a status edge, tinted ink.
+src/registry/ui/toast/styles.ts: // icon carries the status.
+src/registry/ui/toast/styles.ts: // status fill.
+src/registry/ui/toast/styles.ts: // surface.
+src/registry/ui/toast/styles.ts: // the overlay surface, glass included.
+src/registry/ui/toggle-button-group/styles.ts: /* Group's seams, imported; segments attach or sit apart as on Group. */
+src/registry/ui/toggle-button/base.tsx: // A group attaches its secondary segments by data-variant.
+src/registry/ui/toggle-button/styles.ts: /* Button's recipe tables, imported: the toggle adds only its selected look. */
+src/registry/ui/token-field/base.tsx: /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
+src/registry/ui/token-field/base.tsx: /** An inline token within a `TokenInput`. */
+src/registry/ui/token-field/base.tsx: /** Renders each inline token. @default a `Token` with the segment's text */
+src/registry/ui/token-field/base.tsx: /** Text shown while the field is empty. */
+src/registry/ui/token-field/base.tsx: /** The content-editable area of a `TokenField`. */
+src/registry/ui/token-field/styles.ts: // The shell is input's text area; this adds the empty placeholder.
+src/registry/ui/tooltip/styles.ts: // The 10px offset clears a tip; without one the gap closes to 4px.

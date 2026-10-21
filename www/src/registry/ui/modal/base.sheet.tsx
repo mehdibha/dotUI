@@ -6,7 +6,7 @@ import * as ModalPrimitives from "react-aria-components/Modal"
 import { useIsHidden } from "react-aria/private/collections/Hidden"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
-import { Drawer } from "@/registry/ui/drawer"
+import { Sheet } from "@/registry/ui/sheet"
 
 import { useStyles } from "./styles"
 
@@ -24,21 +24,19 @@ const Modal = ({ children, className, ...props }: ModalProps) => {
     return <>{children}</>
   }
 
-  // Below the mobile line the dialog slides up in a bottom drawer; an alert
+  // Below the mobile line the dialog slides up in a bottom sheet; an alert
   // dialog stays centered, and only a dismissable one swipes away.
   if (isMobile && typeof children !== "function" && !isAlertDialog(children)) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
-        isDismissable={props.isDismissable}
-        isKeyboardDismissDisabled={props.isKeyboardDismissDisabled}
-        swipeToDismiss={props.isDismissable !== false}
+        preventDismissal={props.isDismissable === false}
         className={typeof className === "string" ? className : undefined}
       >
         {children}
-      </Drawer>
+      </Sheet>
     )
   }
 
@@ -112,12 +110,14 @@ const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
   const { viewport } = useStyles()()
   return (
     <div
-      data-slot="modal-viewport"
+      data-modal-viewport=""
       className={viewport({ className })}
       {...props}
     />
   )
 }
+
+// MARK: Separator
 
 export type {
   ModalBackdropProps,

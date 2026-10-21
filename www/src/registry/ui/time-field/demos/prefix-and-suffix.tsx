@@ -1,4 +1,4 @@
-import { TimerIcon } from "@/registry/__generated__/icons"
+import { TimerIcon } from "@/registry/icons"
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { TimeField } from "@/registry/ui/time-field"
 

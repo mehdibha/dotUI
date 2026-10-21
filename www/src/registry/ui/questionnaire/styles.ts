@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import questionnaireMeta from "./meta"
 
-const { useStyles, styles } = createStyles(questionnaireMeta, {
+const { useStyles } = createStyles(questionnaireMeta, {
   base: {
     slots: {
       root: "flex w-full min-w-0 flex-col",
@@ -210,7 +210,5 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
     },
   },
 })
-
-export type QuestionnaireStyles = typeof styles
 
 export { useStyles }

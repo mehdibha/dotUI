@@ -1,21 +1,13 @@
 /* Progress: the linear bar's thickness, how its track sits around the fill,
    and which control's fill it shares. End caps ride Shape's tracks.
 
-   Engine: `track` and `trackStyle` are enum params on `progress-bar`; the
-   fill rides `--studio-progress-fill-color` (the primary tokens), re-pointed
+   The fill rides `--studio-progress-fill-color` (the primary tokens), re-pointed
    only when the bar reads another source than the buttons. */
 
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
-
-export const PROGRESS_DEFAULTS = {
-  progressTrack: "thin",
-  progressTrackStyle: "plain",
-  progressColor: "same-buttons",
-}
 
 export const TRACK_VALUES = ["thin", "medium", "thick", "x-heavy"] as const
 
@@ -31,12 +23,6 @@ const FILL_TOKENS: Record<string, string> = {
   accent: "var(--color-accent)",
 }
 
-export const PROGRESS_SCHEMA: ChapterSchema<typeof PROGRESS_DEFAULTS> = {
-  progressTrack: oneOf(TRACK_VALUES),
-  progressTrackStyle: oneOf(TRACK_STYLE_VALUES),
-  progressColor: oneOf(FILL_VALUES),
-}
-
 /** The fill as a token, undefined where it is the buttons' own. */
 function fillToken(state: Effective): string | undefined {
   const source = (value: string) =>
@@ -50,24 +36,30 @@ function fillToken(state: Effective): string | undefined {
     : undefined
 }
 
-export function resolveProgress(state: Effective): Resolved {
-  const fill = fillToken(state)
-  return {
-    params: {
-      "progress-bar": {
-        track: state.progressTrack,
-        trackStyle: state.progressTrackStyle,
-      },
-    },
-    tokens: fill ? { "--studio-progress-fill-color": fill } : {},
-  }
-}
-
 export const chapter = defineChapter({
   id: "progress",
-  defaults: PROGRESS_DEFAULTS,
-  schema: PROGRESS_SCHEMA,
-  resolve: resolveProgress,
+  defaults: {
+    progressTrack: "thin",
+    progressTrackStyle: "plain",
+    progressColor: "same-buttons",
+  },
+  schema: {
+    progressTrack: oneOf(TRACK_VALUES),
+    progressTrackStyle: oneOf(TRACK_STYLE_VALUES),
+    progressColor: oneOf(FILL_VALUES),
+  },
+  resolve(state: Effective): Resolved {
+    const fill = fillToken(state)
+    return {
+      params: {
+        "progress-bar": {
+          track: state.progressTrack,
+          trackStyle: state.progressTrackStyle,
+        },
+      },
+      tokens: fill ? { "--studio-progress-fill-color": fill } : {},
+    }
+  },
   follows: {
     progressColor: [
       { kind: "same", id: "same-buttons", from: "buttonColor" },

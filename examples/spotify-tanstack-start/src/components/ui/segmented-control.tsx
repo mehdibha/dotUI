@@ -9,8 +9,8 @@ import { tv } from "tailwind-variants";
 
 const segmentedControlVariants = tv({
   slots: {
-    root: "inline-flex w-fit items-center justify-center rounded-lg text-fg-muted bg-muted p-[3px]",
-    item: "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--radius-lg)-3px)] border border-transparent whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-2 px-4 py-2.5 text-base has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5 **:[svg]:not-with-[size]:size-5 selected:text-fg-inverse font-bold",
+    root: "inline-flex w-fit items-center justify-center rounded-lg text-fg-muted orientation-vertical:flex-col orientation-vertical:items-stretch bg-muted p-[3px]",
+    item: "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--radius-lg)-3px)] border border-transparent whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-2 px-4 py-2.5 text-base has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5 **:[svg]:not-with-[size]:size-5 selected:text-fg-inverse font-bold",
     indicator:
       "pointer-events-none absolute inset-0 rounded-[calc(var(--radius-lg)-3px)] transition-[translate,width,height] motion-reduce:transition-none bg-inverse",
     itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
@@ -29,7 +29,7 @@ interface SegmentedControlProps extends Omit<
 const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
   return (
     <ToggleButtonGroupPrimitives.ToggleButtonGroup
-      data-slot="segmented-control"
+      data-segmented-control=""
       selectionMode="single"
       disallowEmptySelection
       className={composeRenderProps(className, (className) =>
@@ -53,7 +53,7 @@ const SegmentedControlItem = ({
 }: SegmentedControlItemProps) => {
   return (
     <ToggleButtonPrimitives.ToggleButton
-      data-slot="segmented-control-item"
+      data-segmented-control-item=""
       className={composeRenderProps(className, (className) =>
         item({ className }),
       )}

@@ -4,30 +4,30 @@ import type * as React from "react"
 import * as ColorFieldPrimitives from "react-aria-components/ColorField"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
-import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 
 // MARK: colorFieldStyles
 
-// MARK: ColorField
+// MARK: Separator
 
 interface ColorFieldProps extends React.ComponentProps<
   typeof ColorFieldPrimitives.ColorField
 > {}
 
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
-  const fieldStyles = useStyles()
+  const { field } = useFieldStyles()()
   return (
     <ColorFieldPrimitives.ColorField
       data-field=""
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ orientation: "vertical", className }),
+        field({ className }),
       )}
       {...props}
     />
   )
 }
 
-// MARK: exports
+// MARK: Separator
 
 export type { ColorFieldProps }
 export { ColorField }

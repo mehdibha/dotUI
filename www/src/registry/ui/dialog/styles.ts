@@ -20,11 +20,11 @@ const rule = "-mx-(--dialog-padding) border-t px-(--dialog-padding) pt-4"
 const band =
   "-mx-(--dialog-padding) -mb-(--dialog-padding) rounded-b-[calc(var(--surface-radius)-1px)] border-t bg-fg/2 p-(--dialog-padding) dark:bg-fg/4"
 
-const { useStyles, styles } = createStyles(dialogMeta, {
+const { useStyles } = createStyles(dialogMeta, {
   base: {
     slots: {
       content:
-        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-drawer:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
+        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-sheet:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
       header: "flex flex-col",
       title: "font-heading",
       description: "text-fg-muted",
@@ -333,7 +333,5 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     },
   },
 })
-
-export type DialogStyles = typeof styles
 
 export { useStyles }

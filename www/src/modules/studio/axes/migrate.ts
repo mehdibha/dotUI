@@ -5,13 +5,11 @@
 
 import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
+import { isRecord } from "./schema"
 import { COLUMNS, excludedUnder, STYLE_KEYS, STYLE_VALUES } from "./style"
 import { STATE_VERSION } from "./version"
 
 type Raw = Record<string, unknown>
-
-const isRecord = (value: unknown): value is Raw =>
-  typeof value === "object" && value !== null && !Array.isArray(value)
 
 /** A stored state at `STATE_VERSION`, its stamp removed. Anything but an
  *  object is returned as is, for validation to refuse. */
@@ -36,8 +34,6 @@ const isMain = (state: Raw) =>
       GONE.has(key) || (MAIN_MOTION.has(key) && isRecord(value)),
   )
 
-/* ------------------------------ main → v3 ------------------------------ */
-
 /* Main's values that read differently now; null takes today's default (a
    main default drawn the same, or a value with no home). */
 const VALUES: Record<string, Record<string, unknown>> = {
@@ -48,7 +44,13 @@ const VALUES: Record<string, Record<string, unknown>> = {
   buttonRadius: { auto: null, sharp: null, round: null },
   calendarDayShape: { rounded: null, square: null },
   calendarToday: { none: null },
-  chartMotion: { stiff: "spring", wobbly: "spring", slow: "ease" },
+  chartMotion: {
+    spring: "standard",
+    stiff: "standard",
+    wobbly: "standard",
+    slow: "smooth",
+    ease: "smooth",
+  },
   checkCorner: { rounded: null, square: "sharp", circle: null },
   dialogBackdrop: { dim: null, blur: null, none: "wash" },
   disabledTreatment: { alpha: "fade" },
@@ -131,10 +133,6 @@ const MOTION: Record<string, [source: string, timings: readonly string[]]> = {
   popoverMotion: ["popoverMotion", ["100 ease", "120 snappy", "200 fluid"]],
   tooltipMotion: ["tooltipMotion", ["150 ease", "100 snappy", "200 fluid"]],
   dialogMotion: ["modalMotion", ["100 ease", "150 snappy", "300 fluid"]],
-  sheetMotion: [
-    "drawerMotion",
-    ["450 0.22,1,0.36,1", "300 fluid", "500 fluid"],
-  ],
   tabsMotion: ["tabsMotion", ["150 ease-in-out", ...MOVING]],
   sidebarMotion: ["sidebarMotion", ["200 linear", ...MOVING]],
   linkMotion: ["linkMotion", COLOR],
@@ -290,8 +288,6 @@ function fromMain(main: Raw): Raw {
   return settle(state)
 }
 
-/* ------------------------------- v3 → v4 ------------------------------- */
-
 /* Soft was Flat with these three columns; its finishes were Edge values. */
 const SOFT: Raw = {
   surfaceShadow: "low",
@@ -307,5 +303,20 @@ function fromSoft(state: Raw): Raw {
   return next
 }
 
+/* Chart motion was the chart's own transition; it is now a tempo that
+   follows Motion. */
+const CHART_TEMPO: Raw = { spring: "standard", ease: "smooth", none: "none" }
+
+function fromChartTransition(state: Raw): Raw {
+  const tempo = CHART_TEMPO[String(state.chartMotion)]
+  if (tempo === undefined) return state
+  const same = tempo === (state.motion ?? "standard")
+  return { ...state, chartMotion: same ? "same" : tempo }
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
-const STEPS: Record<number, (state: Raw) => Raw> = { 2: fromMain, 3: fromSoft }
+const STEPS: Record<number, (state: Raw) => Raw> = {
+  2: fromMain,
+  3: fromSoft,
+  4: fromChartTransition,
+}

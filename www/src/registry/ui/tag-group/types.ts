@@ -7,7 +7,13 @@ import type { TagGroupStyles } from "./styles"
  * A tag group is a focusable list of labels, categories, keywords, filters, or other items,
  * with support for keyboard navigation, selection, and removal.
  */
-export interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {}
+export interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
+  /**
+   * The size of the tags.
+   * @default 'md'
+   */
+  size?: "sm" | "md" | "lg"
+}
 
 /**
  * A tag list is a container for tags within a TagGroup.

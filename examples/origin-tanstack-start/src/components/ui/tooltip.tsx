@@ -4,7 +4,7 @@ import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import * as TooltipPrimitives from "react-aria-components/Tooltip";
-import { type VariantProps, tv } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tooltipVariants = tv({
   slots: {
@@ -32,22 +32,21 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 
 /* -------------------------------------------------------------------------- */
 
-interface TooltipContentProps
-  extends
-    React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
-    VariantProps<typeof tooltipVariants> {
+interface TooltipContentProps extends React.ComponentProps<
+  typeof TooltipPrimitives.Tooltip
+> {
   hideArrow?: boolean;
 }
 
-function TooltipContent({
+const TooltipContent = ({
   offset = 10,
   hideArrow = false,
   className,
   ...props
-}: TooltipContentProps) {
+}: TooltipContentProps) => {
   return (
     <TooltipPrimitives.Tooltip
-      data-slot="tooltip"
+      data-tooltip=""
       offset={offset}
       className={composeRenderProps(className, (className) =>
         content({ className }),
@@ -62,18 +61,16 @@ function TooltipContent({
       ))}
     </TooltipPrimitives.Tooltip>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 
-interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
-
-function TooltipArrow({ className }: TooltipArrowProps) {
+const TooltipArrow = () => {
   return (
-    <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
+    <PopoverPrimitives.OverlayArrow className={arrow()}>
       <svg
         aria-hidden="true"
-        data-slot="tooltip-arrow"
+        data-tooltip-arrow=""
         width={8}
         height={8}
         viewBox="0 0 8 8"
@@ -82,7 +79,7 @@ function TooltipArrow({ className }: TooltipArrowProps) {
       </svg>
     </PopoverPrimitives.OverlayArrow>
   );
-}
+};
 
 /* -------------------------------------------------------------------------- */
 

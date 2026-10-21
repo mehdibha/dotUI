@@ -17,11 +17,11 @@ const { useStyles, styles } = createStyles(switchMeta, {
         CHOICE_CARD_SHELL,
       ],
       indicator: [
-        "inline-flex shrink-0 cursor-pointer items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
+        "inline-flex shrink-0 cursor-interactive items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
         "invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
       ],
       thumb:
-        "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
+        "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) motion-reduce:transition-none",
     },
     variants: {
       size: {
@@ -132,8 +132,8 @@ const { useStyles, styles } = createStyles(switchMeta, {
         },
       },
     },
-    "card-selected": CHOICE_CARD,
-    "card-press": CHOICE_CARD_PRESS,
+    cardSelected: CHOICE_CARD,
+    cardPress: CHOICE_CARD_PRESS,
   },
 })
 

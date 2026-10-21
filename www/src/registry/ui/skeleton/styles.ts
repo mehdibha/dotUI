@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import skeletonMeta from "./meta"
 
-const { useStyles, styles } = createStyles(skeletonMeta, {
+const { useStyles } = createStyles(skeletonMeta, {
   base: {
     slots: {
       root: [
@@ -77,6 +77,4 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
   },
 })
 
-export type SkeletonStyles = typeof styles
-
-export { styles as skeletonStyles, useStyles }
+export { useStyles }

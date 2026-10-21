@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { AlertCircleIcon } from "lucide-react"
+import React from "react"
 
+import { AlertCircleIcon } from "@/registry/icons"
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/field"
@@ -10,8 +10,8 @@ import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
-  const [email, setEmail] = useState("")
-  const [error, setError] = useState(true)
+  const [email, setEmail] = React.useState("")
+  const [error, setError] = React.useState(true)
 
   return (
     <form

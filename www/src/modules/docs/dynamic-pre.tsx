@@ -7,8 +7,7 @@ import { cn } from "@/registry/lib/utils"
 import { Pre } from "./code-block"
 import { highlightTsx } from "./highlight"
 
-export interface DynamicPreProps {
-  lang: "tsx"
+interface DynamicPreProps {
   children: string
   className?: string
 }

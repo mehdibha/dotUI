@@ -1,5 +1,3 @@
-"use client"
-
 import { type CSSProperties, type ReactNode, useMemo, useState } from "react"
 
 import {
@@ -63,7 +61,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
@@ -88,6 +85,7 @@ import {
   SelectTrigger,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
+import { Sheet } from "@/registry/ui/sheet"
 import {
   Table,
   TableBody,
@@ -102,7 +100,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-/* --------------------------------- Data ---------------------------------- */
+import { formatMoney } from "./shared"
 
 const ACCOUNTS = [
   {
@@ -377,21 +375,11 @@ const TABS = [
   { id: "pending", label: "Pending" },
 ] as const
 
-const currency = (value: number, fractionDigits = 2) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
-  }).format(value)
-
 const statusVariant = {
   Posted: "neutral",
   Pending: "warning",
   Declined: "danger",
 } as const
-
-/* -------------------------------- Sections -------------------------------- */
 
 function Header() {
   return (
@@ -509,12 +497,12 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-sm font-medium text-fg-muted">
+        <CardDescription className="flex items-center gap-2">
           <span className="flex size-7 items-center justify-center rounded-md bg-muted text-fg">
             <Icon className="size-3.5" />
           </span>
           {account.name}
-        </CardTitle>
+        </CardDescription>
         <CardAction>
           <Badge variant={isGood ? "success" : "danger"} size="sm">
             {isUp ? (
@@ -530,7 +518,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
       <CardContent className="space-y-3">
         <div>
           <p className="text-2xl font-semibold tracking-tight tabular-nums">
-            {currency(account.balance)}
+            {formatMoney(account.balance)}
           </p>
           <p className="text-xs text-fg-muted">{account.mask}</p>
         </div>
@@ -547,7 +535,8 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
           >
             <ProgressBarControl />
             <p className="text-xs text-fg-muted">
-              {utilization.toFixed(0)}% of {currency(limit, 0)} limit used
+              {utilization.toFixed(0)}% of {formatMoney(limit, { digits: 0 })}{" "}
+              limit used
             </p>
           </ProgressBar>
         )}
@@ -605,7 +594,6 @@ function CashflowCard() {
   const [range, setRange] = useState<string>("6m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? 6
-  // Charts compare data by identity, so the slice must be stable per range.
   const data = useMemo(() => CASHFLOW.slice(CASHFLOW.length - months), [months])
   const spent = data.reduce((sum, row) => sum + row.spending, 0)
   const earned = data.reduce((sum, row) => sum + row.income, 0)
@@ -637,19 +625,19 @@ function CashflowCard() {
           <div>
             <p className="text-xs tracking-wide text-fg-muted uppercase">In</p>
             <p className="text-xl font-semibold tabular-nums">
-              {currency(earned, 0)}
+              {formatMoney(earned, { digits: 0 })}
             </p>
           </div>
           <div>
             <p className="text-xs tracking-wide text-fg-muted uppercase">Out</p>
             <p className="text-xl font-semibold tabular-nums">
-              {currency(spent, 0)}
+              {formatMoney(spent, { digits: 0 })}
             </p>
           </div>
           <div>
             <p className="text-xs tracking-wide text-fg-muted uppercase">Net</p>
             <p className="text-xl font-semibold text-fg-success tabular-nums">
-              +{currency(earned - spent, 0)}
+              +{formatMoney(earned - spent, { digits: 0 })}
             </p>
           </div>
         </div>
@@ -689,7 +677,7 @@ function CategoriesCard() {
           >
             <div className="flex h-full flex-col items-center justify-center">
               <span className="text-xl font-semibold">
-                {currency(CATEGORY_TOTAL, 0)}
+                {formatMoney(CATEGORY_TOTAL, { digits: 0 })}
               </span>
               <span className="text-xs text-fg-muted">spent</span>
             </div>
@@ -707,7 +695,7 @@ function CategoriesCard() {
                 {categoryLabels[row.category as keyof typeof categoryLabels]}
               </span>
               <span className="ml-auto shrink-0 text-fg-muted tabular-nums">
-                {currency(row.amount, 0)}
+                {formatMoney(row.amount, { digits: 0 })}
               </span>
             </li>
           ))}
@@ -785,7 +773,7 @@ function TransactionsTable({ rows }: { rows: Transaction[] }) {
                   )}
                 >
                   {isCredit ? "+" : ""}
-                  {currency(row.amount)}
+                  {formatMoney(row.amount)}
                 </TableCell>
               </TableRow>
             )
@@ -909,7 +897,7 @@ function UpcomingCard() {
               <p className="truncate text-xs text-fg-muted">{item.detail}</p>
             </div>
             <span className="shrink-0 text-sm font-medium tabular-nums">
-              {currency(item.amount)}
+              {formatMoney(item.amount)}
             </span>
           </div>
         ))}
@@ -927,8 +915,6 @@ function UpcomingCard() {
     </Card>
   )
 }
-
-/* ----------------------------- Transfer dialog ---------------------------- */
 
 const TRANSFER_ACCOUNTS = [
   {
@@ -974,7 +960,7 @@ function TransferDialog({
   const target = TRANSFER_ACCOUNTS.find((a) => a.id === to)
 
   const submit = () => {
-    onDone(`${currency(amount)} to ${target?.name ?? "your account"}`)
+    onDone(`${formatMoney(amount)} to ${target?.name ?? "your account"}`)
     setOpen(false)
   }
 
@@ -1041,7 +1027,7 @@ function TransferDialog({
                     <NumberFieldIncrement />
                   </NumberFieldGroup>
                   <Description>
-                    {source?.name} has {currency(source?.available ?? 0)}{" "}
+                    {source?.name} has {formatMoney(source?.available ?? 0)}{" "}
                     available.
                   </Description>
                 </NumberField>
@@ -1075,23 +1061,17 @@ function TransferDialog({
                 <Button slot="close">Cancel</Button>
                 <Button variant="primary" onPress={submit}>
                   <SendIcon />
-                  Transfer {currency(amount, 0)}
+                  Transfer {formatMoney(amount, { digits: 0 })}
                 </Button>
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>
   )
 }
-
-/* ---------------------------------- Page ---------------------------------- */
 
 export default function BankingBlock() {
   const [receipt, setReceipt] = useState<string | null>(null)
@@ -1125,8 +1105,8 @@ export default function BankingBlock() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm text-fg-muted">Good morning, Amelia</p>
-            <h1 className="font-heading text-3xl font-semibold tracking-tight tabular-nums sm:text-4xl">
-              {currency(total)}
+            <h1 className="text-3xl tabular-nums sm:text-4xl">
+              {formatMoney(total)}
             </h1>
             <p className="pt-1 text-sm text-fg-muted">
               Net worth across 3 accounts · updated 2 minutes ago

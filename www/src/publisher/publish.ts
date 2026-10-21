@@ -1,7 +1,7 @@
 /**
  * Request-time orchestrator. Given a publishable (the build-time artifact
- * for one component) and a preset, return a shadcn registry item with one
- * inline file whose tv config is fully resolved against the preset.
+ * for one component) and a preset, return a shadcn registry item whose files
+ * carry a tv config fully resolved against the preset.
  *
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  *
@@ -12,8 +12,8 @@
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
  *
- * Step 6 (oxfmt) lives outside this module — callers feed the assembled
- * content through `oxfmt.format` since that's async and route-side.
+ * Formatting lives outside this module (`formatShippedFile` in serve.ts),
+ * since it's async and route-side.
  */
 
 import type { RegistryItem } from "@/registry/types"
@@ -56,7 +56,7 @@ export const BUNDLED_INTO_INIT = new Set([
  * Rewrites bare dotui dep names (`"loader"`) to absolute URLs so `shadcn add`
  * can follow them without a registry mapping in the consumer's components.json.
  */
-export interface DepResolver {
+interface DepResolver {
   /** Where a dep is served, e.g. `https://dotui.org/r/p/linear/loader.json`. */
   url: (name: string) => string
   /** Names with a publishable; anything else passes through bare. */
@@ -127,7 +127,7 @@ export function registryDepsFor(
   return [...new Set(deps)]
 }
 
-export interface PublishableModule {
+interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
   /** Folded `createParamValue` templates keyed `param=value[&…]`. */
@@ -187,14 +187,14 @@ function applySourceSubstitutions(
   return content
 }
 
-export interface PublishedItem {
+interface PublishedItem {
   /** Shadcn-shaped registry item ready to JSON.stringify. */
   item: RegistryItem
   /** The pre-format component source — caller passes this through oxfmt. */
   rawContent: string
 }
 
-export interface PublishInput {
+interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
   /**
@@ -207,7 +207,8 @@ export interface PublishInput {
 }
 
 /** The slots the shipped file reads, when only its `const { … } =
- *  xVariants()` reads them; a shared recipe's other slots ship dead. */
+ *  xVariants()` reads them; a shared recipe's other slots ship dead. Exported
+ *  styles (`xStyles`) never match: other components read their slots. */
 function destructuredSlots(template: string): Set<string> | undefined {
   const hoisted = [
     ...template.matchAll(/const \{([^}]*)\} = (\w+Variants)\(\);/g),
@@ -353,8 +354,14 @@ export function publish({
     registryDepsFor(meta, paramSelections),
     deps,
   )
+  const declared = meta.dependencies ?? []
   const dependencies = [
-    ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
+    ...new Set([
+      ...declared,
+      ...depsFromFileImports(files).filter(
+        (dep) => !declared.some((spec) => spec.startsWith(`${dep}@`)),
+      ),
+    ]),
   ]
 
   const itemShape = {

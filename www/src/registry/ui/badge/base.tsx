@@ -26,5 +26,7 @@ const Badge = ({
   )
 }
 
+// MARK: Separator
+
 export type { BadgeProps }
 export { Badge }

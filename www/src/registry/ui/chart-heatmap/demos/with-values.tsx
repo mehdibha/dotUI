@@ -24,7 +24,7 @@ const data = regions.flatMap(({ region, quarters }) =>
   })),
 )
 
-export default function ChartHeatmapWithValues() {
+export default function Demo() {
   return (
     <HeatmapChart
       data={data}

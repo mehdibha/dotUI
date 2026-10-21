@@ -13,7 +13,7 @@
 import { execFileSync } from "node:child_process"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
-import { expect, test } from "vitest"
+import { test } from "vitest"
 
 import {
   publishables,
@@ -59,9 +59,6 @@ async function buildFixture(): Promise<void> {
 
   // Init-bundled cn helper (ships in the registry:base item, not per-component).
   writeFixtureFile("src/lib/utils.ts", CN_UTILS_TS)
-  // `@/components/icons` is resolved to a real library at publish; type it away
-  // in case any emitted file still references the marker.
-  writeFixtureFile("src/env.d.ts", `declare module "@/components/icons";\n`)
 
   // Aliases mirror the consumer's components.json. `@/components/ui/*` MUST hit
   // the emitted fixture files (cross-component type-checking); lib/hook deps not
@@ -92,23 +89,7 @@ async function buildFixture(): Promise<void> {
   writeFixtureFile("tsconfig.json", JSON.stringify(tsconfig, null, 2))
 }
 
-/**
- * Publishables whose EMITTED code has a known pre-existing type error, name →
- * reason. All are publisher/packaging bugs unrelated to #477's fix; the
- * publisher is queued for a rewrite, so they are tolerated here (never
- * deepened) rather than blocking the guard. A NEW break in any other component
- * fails the test; an allowlisted component that starts compiling is stale and
- * also fails, forcing the entry's removal once the bug is fixed.
- */
-const KNOWN_BROKEN = new Map<string, string>([])
-
 const DIAGNOSTIC_RE = /^(src\/.+?)\((\d+),\d+\): error TS/
-
-/** Component slug that owns an errored diagnostic line, e.g. `…/time-picker.tsx(9,…)` → `time-picker`. */
-function ownerOf(line: string): string | undefined {
-  const filePath = line.match(DIAGNOSTIC_RE)?.[1]
-  return filePath ? path.basename(filePath).replace(/\.tsx?$/, "") : undefined
-}
 
 /** Run tsc over the fixture; returns diagnostic lines (only `path(line,col): error …`). */
 function runTsc(): string[] {
@@ -133,34 +114,14 @@ test(
     await buildFixture()
     const diagnostics = runTsc()
 
-    const unexpected: string[] = []
-    const brokenSeen = new Set<string>()
-    for (const line of diagnostics) {
-      const owner = ownerOf(line)
-      if (owner && KNOWN_BROKEN.has(owner)) brokenSeen.add(owner)
-      else unexpected.push(line)
-    }
-
-    const stale = [...KNOWN_BROKEN.keys()].filter((n) => !brokenSeen.has(n))
-
-    if (unexpected.length > 0) {
-      const shown = unexpected.slice(0, 40).join("\n")
+    if (diagnostics.length > 0) {
+      const shown = diagnostics.slice(0, 40).join("\n")
       throw new Error(
-        `Emitted publishable code failed to type-check (${unexpected.length} error(s) in ` +
-          `non-allowlisted components). A component ships broken code — e.g. a base file ` +
-          `destructures a tv slot the emitted config dropped (the #477 field-slot regression). ` +
-          `Fix the component's source/styles, or (only if it is a known publisher-rewrite bug) ` +
-          `add it to KNOWN_BROKEN in publish-smoke.test.ts. First errors:\n\n${shown}`,
+        `Emitted publishable code failed to type-check (${diagnostics.length} error(s)). ` +
+          `A component ships broken code — e.g. a base file destructures a tv slot the ` +
+          `emitted config dropped (the #477 field-slot regression). First errors:\n\n${shown}`,
       )
     }
-    if (stale.length > 0) {
-      throw new Error(
-        `Stale KNOWN_BROKEN entr${stale.length === 1 ? "y" : "ies"} — now compiles clean: ` +
-          `${stale.join(", ")}. Remove from KNOWN_BROKEN in publish-smoke.test.ts.`,
-      )
-    }
-
-    expect(unexpected).toEqual([])
     if (!process.env.KEEP_SMOKE_FIXTURE) {
       rmSync(FIXTURE_DIR, { recursive: true, force: true })
     }

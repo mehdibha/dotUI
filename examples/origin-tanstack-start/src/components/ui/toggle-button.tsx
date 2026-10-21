@@ -2,13 +2,13 @@
 
 import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton";
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { createVariantsContext } from "@/lib/context";
 
-const toggleButtonVariants = tv({
-  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm *:[svg]:not-with-[size]:size-4 selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active selected:text-fg-on-selected",
+const toggleButtonStyles = tv({
+  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active selected:text-fg-on-selected",
   variants: {
     variant: {
       primary:
@@ -46,31 +46,27 @@ const toggleButtonVariants = tv({
   ],
 });
 
-export { toggleButtonVariants as toggleButtonStyles };
-
-type ToggleButtonVariants = VariantProps<typeof toggleButtonVariants>;
+type ToggleButtonVariants = VariantProps<typeof toggleButtonStyles>;
 
 /* -------------------------------------------------------------------------- */
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
   ToggleButtonVariants,
-  React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+  React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
   HTMLButtonElement
->(ToggleButtonPrimitive.ToggleButtonContext);
+>(ToggleButtonPrimitives.ToggleButtonContext);
 
 /* -------------------------------------------------------------------------- */
 
 interface ToggleButtonProps
   extends
-    React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
-    ToggleButtonVariants {
-  isIconOnly?: boolean;
-}
+    React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
+    ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const {
     variant = "secondary",
-    size = "md",
+    size,
     isIconOnly,
     className,
     children,
@@ -78,36 +74,32 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
   } = useContextProps(localProps);
 
   return (
-    <ToggleButtonPrimitive.ToggleButton
+    <ToggleButtonPrimitives.ToggleButton
       data-button=""
-      data-toggle-button=""
       data-variant={variant}
-      data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
-      className={composeRenderProps(className, (cn) =>
-        toggleButtonVariants({
+      className={composeRenderProps(className, (className) =>
+        toggleButtonStyles({
           variant,
           size,
           isIconOnly,
-          className: cn,
+          className,
         }),
       )}
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          {typeof children === "string" ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
-    </ToggleButtonPrimitive.ToggleButton>
+      {composeRenderProps(children, (children) =>
+        typeof children === "string" ? (
+          <span className="truncate">{children}</span>
+        ) : (
+          children
+        ),
+      )}
+    </ToggleButtonPrimitives.ToggleButton>
   );
 };
 
 /* -------------------------------------------------------------------------- */
 
 export type { ToggleButtonProps };
-export { ToggleButton, ToggleButtonProvider };
+export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };

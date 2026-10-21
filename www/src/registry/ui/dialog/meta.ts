@@ -10,13 +10,13 @@ const dialogMeta = {
       target: "ui/dialog.tsx",
     },
   ],
-  registryDependencies: ["responsive", "modal", "drawer", "popover", "button"],
+  registryDependencies: ["responsive", "modal", "sheet", "popover", "button"],
   params: {
     sections: {
       default: "open",
       values: ["open", "on-scroll", "divided", "header-band"] as const,
       description:
-        "How the header and body divide in a modal or drawer: open, a rule while the body scrolls, a header rule, or a tinted header band.",
+        "How the header and body divide in a modal or sheet: open, a rule while the body scrolls, a header rule, or a tinted header band.",
     },
     footer: {
       default: "end",

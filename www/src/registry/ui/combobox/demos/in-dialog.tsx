@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from "lucide-react"
-
+import { ChevronDownIcon } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import { Combobox } from "@/registry/ui/combobox"
@@ -12,12 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
+import { Sheet } from "@/registry/ui/sheet"
 
 export default function Demo() {
   return (
@@ -63,11 +62,7 @@ export default function Demo() {
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

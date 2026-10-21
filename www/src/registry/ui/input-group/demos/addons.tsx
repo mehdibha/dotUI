@@ -6,8 +6,7 @@ import {
   RadioIcon,
   SearchIcon,
   StarIcon,
-} from "lucide-react"
-
+} from "@/registry/icons"
 import { Description, Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"

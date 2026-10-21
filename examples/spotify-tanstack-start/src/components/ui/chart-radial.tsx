@@ -25,10 +25,10 @@ import {
   chartLegend,
   decorative,
   finiteOrNull,
+  rowLabel,
+  TAU,
   useChartDefinition,
 } from "@/components/ui/chart";
-
-const TAU = Math.PI * 2;
 
 const radialDefaults = {
   innerRadius: 0.35,
@@ -87,16 +87,6 @@ export interface RadialSegment {
   end: number;
 }
 
-function ringName(
-  name: string,
-  labels: Readonly<Record<string, string>> | undefined,
-) {
-  return (row: unknown) => {
-    const key = String((row as Record<string, unknown>)[name]);
-    return labels?.[key] ?? key;
-  };
-}
-
 function read(row: unknown, field: string): number {
   return finiteOrNull((row as Record<string, unknown>)[field]) ?? 0;
 }
@@ -105,7 +95,7 @@ export function radialBarChartSpec<TDatum>(
   options: RadialBarChartSpecOptions<TDatum>,
   _ctx: ChartBuildContext,
 ): ChartSpec<TDatum> {
-  const nameOf = ringName(options.name, options.labels);
+  const nameOf = rowLabel(options.name, options.labels);
   const start = options.startAngle ?? 0;
   const end = options.endAngle ?? TAU;
   const inner = options.innerRadius ?? radialDefaults.innerRadius;
@@ -255,13 +245,12 @@ export function radialBarChartSpec<TDatum>(
   };
 }
 
-// oxlint-disable-next-line no-explicit-any
 const radialTooltip: ChartTooltipContentOf<RadialBarChartSpecOptions<any>> = (
   points,
   _context,
   options,
 ) => {
-  const nameOf = ringName(options.name, options.labels);
+  const nameOf = rowLabel(options.name, options.labels);
   return {
     rows: points.map((point) => {
       const [label, value] = Array.isArray(options.value)
@@ -275,12 +264,14 @@ const radialTooltip: ChartTooltipContentOf<RadialBarChartSpecOptions<any>> = (
   };
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type RadialBarChartProps<TDatum> = ChartComponentProps<
   RadialBarChartSpecOptions<TDatum>,
   TDatum
 >;
 
-export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
+export const RadialBarChart = <TDatum,>(props: RadialBarChartProps<TDatum>) => {
   const { definition, host, children } = useChartDefinition<
     TDatum,
     RadialBarChartSpecOptions<TDatum>
@@ -295,4 +286,4 @@ export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

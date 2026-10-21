@@ -1,7 +1,7 @@
 import { LinkButton } from "@/registry/ui/button"
 import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
-import Cards from "@/modules/marketing/cards"
+import { Cards } from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { HeroStack } from "@/modules/marketing/hero-stack"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
@@ -52,11 +52,11 @@ export function HomePage() {
           <Cards />
         </section>
 
-        <div className="mt-16 md:mt-20">
+        <div className="mt-53 md:mt-20">
           <CtaSection />
         </div>
 
-        <div className="mt-16 md:mt-20">
+        <div className="mt-53 md:mt-20">
           <Footer />
         </div>
       </div>

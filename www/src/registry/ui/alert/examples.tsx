@@ -110,7 +110,7 @@ function AlertExample2() {
 
 function AlertExample3() {
   return (
-    <Example title="With Icons">
+    <Example title="With icons">
       <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
         <Alert>
           <CircleAlertIcon />
@@ -172,13 +172,13 @@ function AlertExample3() {
 
 function AlertExample4() {
   return (
-    <Example title="With Actions">
+    <Example title="With actions">
       <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
         <Alert>
           <CircleAlertIcon />
           <AlertTitle>The selected emails have been marked as spam.</AlertTitle>
           <AlertAction>
-            <Button variant="primary" size="xs" className="h-6">
+            <Button variant="primary" size="xs">
               Undo
             </Button>
           </AlertAction>
@@ -201,7 +201,7 @@ function AlertExample4() {
 
 function AlertExample5() {
   return (
-    <Example title="Inside Card">
+    <Example title="Inside card">
       <Card className="mx-auto w-full max-w-lg">
         <CardHeader>
           <CardTitle>Create project</CardTitle>
@@ -228,20 +228,18 @@ function AlertExample5() {
             <Label>Name</Label>
             <Input placeholder="My project" />
           </TextField>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="project-framework">Framework</Label>
-            <Select placeholder="Select a framework" className="w-full">
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem id="next">Next.js</SelectItem>
-                <SelectItem id="remix">Remix</SelectItem>
-                <SelectItem id="astro">Astro</SelectItem>
-                <SelectItem id="nuxt">Nuxt</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select placeholder="Select a framework" className="w-full">
+            <Label>Framework</Label>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem id="next">Next.js</SelectItem>
+              <SelectItem id="remix">Remix</SelectItem>
+              <SelectItem id="astro">Astro</SelectItem>
+              <SelectItem id="nuxt">Nuxt</SelectItem>
+            </SelectContent>
+          </Select>
         </CardContent>
         <CardFooter>
           <Button variant="primary" className="w-full">

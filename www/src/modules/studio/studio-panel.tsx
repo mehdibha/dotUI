@@ -2,11 +2,10 @@
 
 /* The studio panel mounted in /studio's slot: the panel page over the current
    design system, its chrome wired to the workspace. The picker lists the
-   user's systems and the presets, and opens at ?gallery=. */
+   user's systems and the presets. */
 
 import { useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { getRouteApi } from "@tanstack/react-router"
 import { RotateCcwIcon, SaveIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
@@ -16,13 +15,14 @@ import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
+import { ALL_ROWS, CHAPTERS } from "./chapters"
 import { DeleteDialog } from "./delete-dialog"
-import { RowsContext } from "./family-page"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
+import { RowsContext } from "./row-host"
 import {
   createFrom,
   keySelection,
@@ -33,7 +33,6 @@ import {
   UNSAVED_NOTE,
   useCurrent,
 } from "./selection"
-import { ALL_ROWS, CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import {
   copyName,
@@ -43,8 +42,6 @@ import {
   useWorkspace,
 } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
-
-const routeApi = getRouteApi("/_app/studio")
 
 // Touch-sized rows on phones.
 const MENU_ROW = "pointer-coarse:min-h-11"
@@ -79,20 +76,12 @@ export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const current = useCurrent()
   const workspace = useWorkspace()
-  const { gallery } = routeApi.useSearch()
-  const navigate = routeApi.useNavigate()
+  const [galleryOpen, setGalleryOpen] = useState(false)
   const [naming, setNaming] = useState<NameRequest>()
   const [deleting, setDeleting] = useState<DesignSystemDoc>()
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const sections = useMemo(() => pickerSections(workspace), [workspace])
-
-  function setGalleryOpen(isOpen: boolean) {
-    navigate({
-      search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
-      replace: true,
-    })
-  }
 
   /** Closes the picker for a dialog, which opens once focus is back on the
    *  picker's trigger, to return there. */
@@ -208,13 +197,12 @@ export function StudioPanel({ className }: { className?: string }) {
     triggerRef,
     renderSwitcher: (trigger) => (
       <PresetPicker
-        isOpen={gallery === true}
+        isOpen={galleryOpen}
         onOpenChange={setGalleryOpen}
         sections={sections}
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
         onCreate={canSave ? () => askNew("current", "") : undefined}
-        withPreview
         onPreview={previewSelection}
         renderItemMenu={(item) => renderItemMenu(item.id)}
       >

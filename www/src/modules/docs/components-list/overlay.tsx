@@ -1,27 +1,18 @@
 import type { ReactNode } from "react"
 
 import { cn } from "@/registry/lib/utils"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
 import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
+import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
+import { useStyles as useSheetStyles } from "@/registry/ui/sheet/styles"
+import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
 /**
- * Frozen-open overlay compositions for the preview cards. The trigger is a real
- * component and the surface uses the real token classes, but the open state is
- * static so nothing portals out of the card or touches focus.
+ * Frozen-open overlay compositions for the preview cards. Triggers and surfaces
+ * use the real components' styles, but the open state is static so nothing
+ * portals out of the card or touches focus.
  */
 
-export type SurfaceVariant = "popover" | "menu" | "modal" | "drawer" | "tooltip"
-
-const SURFACE_FRAME: Record<SurfaceVariant, string> = {
-  popover:
-    "rounded-(--studio-popover-radius) border bg-popover p-2.5 text-xs/relaxed shadow-md",
-  menu: "rounded-(--studio-popover-radius) border bg-popover p-1 shadow-md",
-  modal:
-    "rounded-(--studio-modal-radius) border bg-popover p-4 text-sm shadow-lg",
-  drawer: "rounded-t-xl border-t bg-bg p-4 text-sm shadow-lg",
-  tooltip:
-    "rounded-(--studio-tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
-}
+export type SurfaceVariant = "popover" | "menu" | "modal" | "tooltip"
 
 // The ancestor data attribute the real Dialog* sub-components key their
 // in-context padding on (`in-data-popover:` / `in-data-modal:`).
@@ -29,6 +20,13 @@ const SURFACE_DATA: Partial<Record<SurfaceVariant, Record<string, string>>> = {
   popover: { "data-popover": "" },
   menu: { "data-popover": "" },
   modal: { "data-modal": "" },
+}
+
+const SURFACE_EXTRA: Record<SurfaceVariant, string> = {
+  popover: "p-2.5 text-xs/relaxed",
+  menu: "p-1",
+  modal: "p-4 text-sm",
+  tooltip: "",
 }
 
 export function Surface({
@@ -40,17 +38,21 @@ export function Surface({
   className?: string
   children: ReactNode
 }) {
+  const { popover } = usePopoverStyles()()
+  const { modal } = useModalStyles()()
+  const { content: tooltip } = useTooltipStyles()()
+  const frame = { popover, menu: popover, modal, tooltip }[variant]
   return (
     <div
       {...SURFACE_DATA[variant]}
-      className={cn(SURFACE_FRAME[variant], className)}
+      className={frame({ className: cn(SURFACE_EXTRA[variant], className) })}
     >
       {children}
     </div>
   )
 }
 
-/** A page mock (header + text and card blocks) for modal and drawer scenes, so
+/** A page mock (header + text and card blocks) for modal and sheet scenes, so
  *  the overlay reads as opened over real content. */
 export function PageMock() {
   return (
@@ -70,68 +72,66 @@ export function PageMock() {
   )
 }
 
+/** A bottom sheet over a page mock, built from the real sheet slots so its
+ *  edge, radius and surface follow the design system. */
+export function SheetPreview({ children }: { children: ReactNode }) {
+  const { overlay, backdrop, sheet, content } = useSheetStyles()()
+  return (
+    <div className={overlay({ className: "absolute inset-0 z-0" })}>
+      <PageMock />
+      <div
+        aria-hidden
+        data-stack-index={0}
+        className={backdrop({ className: "absolute inset-0" })}
+      />
+      <div className="absolute inset-x-0 bottom-0 flex flex-col">
+        <div data-sheet="" className={sheet()}>
+          <div data-sheet-content="" className={content()}>
+            <div className="p-4 text-sm">{children}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /**
  * Trigger + open surface, filling the card (`fill` demos). Anchored surfaces
- * hang below a top-aligned trigger (`align` picks centered or bottom-left) and crop at the card's bottom edge; modal
- * and drawer float over a dimmed backdrop.
+ * hang below a top-aligned trigger (`align` picks centered or bottom-left) and
+ * crop at the card's bottom edge; a modal floats over a dimmed page.
  */
 export function OverlayPreview({
   variant,
   trigger,
   align = "center",
-  page,
   className,
   surfaceClassName,
   children,
 }: {
-  variant: SurfaceVariant
+  variant: Exclude<SurfaceVariant, "tooltip">
   trigger?: ReactNode
-  /** Modal/drawer: a page mock rendered behind the backdrop instead of a lone
-   *  trigger, so the overlay reads as opened over real content. */
-  page?: ReactNode
   /** Extra classes for the anchored scene, e.g. a roomier inset. */
   className?: string
-  /** Where the surface sits relative to the trigger: centered under it, or
-   *  flush with its left edge (bottom-left placement). */
   align?: "start" | "center"
   surfaceClassName?: string
   children: ReactNode
 }) {
-  const modalBackdrop = useModalStyles()().backdrop
-  const drawerBackdrop = useDrawerStyles()().backdrop
-  if (variant === "modal" || variant === "drawer") {
+  const { backdrop } = useModalStyles()()
+  if (variant === "modal") {
     return (
       <div className="absolute inset-0">
-        {page ?? (
-          <div className="absolute inset-x-0 top-4 flex justify-center">
-            {trigger}
-          </div>
-        )}
-        <div
-          aria-hidden
-          className={cn(
-            "absolute inset-0",
-            variant === "modal" ? modalBackdrop() : drawerBackdrop(),
-          )}
-        />
-        {variant === "modal" ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-            {/* A real-width modal (the default density max-w-sm) scaled down,
-                so it reads as a dialog over a page rather than a card. */}
-            <Surface
-              variant="modal"
-              className={cn("w-96 shrink-0 scale-[0.55]", surfaceClassName)}
-            >
-              {children}
-            </Surface>
-          </div>
-        ) : (
-          <div className="absolute inset-x-3 bottom-0">
-            <Surface variant="drawer" className={surfaceClassName}>
-              {children}
-            </Surface>
-          </div>
-        )}
+        <PageMock />
+        <div aria-hidden className={backdrop()} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* A real-width modal scaled down, so it reads as a dialog over a
+              page rather than a card. */}
+          <Surface
+            variant="modal"
+            className={cn("w-96 shrink-0 scale-[0.55]", surfaceClassName)}
+          >
+            {children}
+          </Surface>
+        </div>
       </div>
     )
   }

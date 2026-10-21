@@ -22,10 +22,10 @@ import {
   decorative,
   orderSeries,
   polarMarksBindScales,
+  rowLabel,
+  TAU,
   useChartDefinition,
 } from "@/components/ui/chart";
-
-const TAU = Math.PI * 2;
 
 const pieDefaults = {
   radiusRatio: 0.9,
@@ -67,16 +67,6 @@ export interface PieRingOptions<TDatum extends object> {
   sliceLabelFontSize?: number;
 }
 
-function sliceName(
-  name: string,
-  labels: Readonly<Record<string, string>> | undefined,
-) {
-  return (slice: object) => {
-    const key = String((slice as Record<string, unknown>)[name]);
-    return labels?.[key] ?? key;
-  };
-}
-
 /** One concentric ring: its arcs, the pushed-out active slice, and its labels. */
 export function pieRing<TDatum extends object>(
   options: PieRingOptions<TDatum>,
@@ -87,7 +77,7 @@ export function pieRing<TDatum extends object>(
     endAngle: options.endAngle ?? TAU,
     gapAngle: options.padAngle,
   });
-  const nameOf = sliceName(options.name, options.labels);
+  const nameOf = rowLabel(options.name, options.labels);
   const inner = options.innerRadius ?? pieDefaults.innerRadius;
   const outer = options.outerRadius ?? pieDefaults.outerRadius;
   const arc = {
@@ -159,7 +149,7 @@ export function pieChartSpec<TDatum extends object>(
   options: PieChartSpecOptions<TDatum>,
   _ctx: ChartBuildContext,
 ): ChartSpec<PieSlice<TDatum>> {
-  const nameOf = sliceName(options.name, options.labels);
+  const nameOf = rowLabel(options.name, options.labels);
   const order = orderSeries(
     options.seriesOrder?.map((key) => options.labels?.[key] ?? key) ?? [],
     options.data.map(nameOf),
@@ -199,13 +189,12 @@ export function pieChartSpec<TDatum extends object>(
   };
 }
 
-// oxlint-disable-next-line no-explicit-any
 const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
   points,
   _context,
   options,
 ) => {
-  const nameOf = sliceName(options.name, options.labels);
+  const nameOf = rowLabel(options.name, options.labels);
   return {
     rows: points.map((point) => {
       const slice = point.datum as PieSlice<object>;
@@ -218,12 +207,16 @@ const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
   };
 };
 
+/* -------------------------------------------------------------------------- */
+
 export type PieChartProps<TDatum extends object> = ChartComponentProps<
   PieChartSpecOptions<TDatum>,
   PieSlice<TDatum>
 >;
 
-export function PieChart<TDatum extends object>(props: PieChartProps<TDatum>) {
+export const PieChart = <TDatum extends object>(
+  props: PieChartProps<TDatum>,
+) => {
   const { definition, host, children } = useChartDefinition<
     PieSlice<TDatum>,
     PieChartSpecOptions<TDatum>
@@ -238,4 +231,4 @@ export function PieChart<TDatum extends object>(props: PieChartProps<TDatum>) {
       {children}
     </Chart>
   );
-}
+};

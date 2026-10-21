@@ -14,7 +14,6 @@ import {
 	ArrowUpIcon as LucideArrowUpIcon,
 	ArrowUpRightIcon as LucideArrowUpRightIcon,
 	AudioLinesIcon as LucideAudioLinesIcon,
-	BadgeCheck as LucideBadgeCheck,
 	BadgeCheckIcon as LucideBadgeCheckIcon,
 	BellIcon as LucideBellIcon,
 	BitcoinIcon as LucideBitcoinIcon,
@@ -22,7 +21,6 @@ import {
 	BoldIcon as LucideBoldIcon,
 	BookIcon as LucideBookIcon,
 	BookmarkIcon as LucideBookmarkIcon,
-	BookOpen as LucideBookOpen,
 	BookOpenIcon as LucideBookOpenIcon,
 	BotIcon as LucideBotIcon,
 	BoxesIcon as LucideBoxesIcon,
@@ -38,14 +36,19 @@ import {
 	ChevronDownIcon as LucideChevronDownIcon,
 	ChevronLeftIcon as LucideChevronLeftIcon,
 	ChevronRightIcon as LucideChevronRightIcon,
+	ChevronsLeftIcon as LucideChevronsLeftIcon,
+	ChevronsRightIcon as LucideChevronsRightIcon,
 	ChevronsUpDownIcon as LucideChevronsUpDownIcon,
 	ChevronUpIcon as LucideChevronUpIcon,
 	CircleAlertIcon as LucideCircleAlertIcon,
 	CircleCheckIcon as LucideCircleCheckIcon,
 	CircleDashedIcon as LucideCircleDashedIcon,
 	CircleDollarSignIcon as LucideCircleDollarSignIcon,
+	CircleDotDashedIcon as LucideCircleDotDashedIcon,
 	CircleDotIcon as LucideCircleDotIcon,
 	CircleIcon as LucideCircleIcon,
+	CircleOffIcon as LucideCircleOffIcon,
+	ClipboardIcon as LucideClipboardIcon,
 	ClipboardPasteIcon as LucideClipboardPasteIcon,
 	ClockIcon as LucideClockIcon,
 	CodeIcon as LucideCodeIcon,
@@ -59,12 +62,15 @@ import {
 	FileCodeIcon as LucideFileCodeIcon,
 	FileIcon as LucideFileIcon,
 	FileTextIcon as LucideFileTextIcon,
+	FlameIcon as LucideFlameIcon,
 	FlipHorizontalIcon as LucideFlipHorizontalIcon,
 	FlipVerticalIcon as LucideFlipVerticalIcon,
+	FolderCodeIcon as LucideFolderCodeIcon,
 	FolderIcon as LucideFolderIcon,
 	FolderOpenIcon as LucideFolderOpenIcon,
 	FolderPlusIcon as LucideFolderPlusIcon,
 	FolderSearchIcon as LucideFolderSearchIcon,
+	ForwardIcon as LucideForwardIcon,
 	FrameIcon as LucideFrameIcon,
 	GitBranchIcon as LucideGitBranchIcon,
 	GlobeIcon as LucideGlobeIcon,
@@ -82,11 +88,10 @@ import {
 	LanguagesIcon as LucideLanguagesIcon,
 	LayersIcon as LucideLayersIcon,
 	LayoutGridIcon as LucideLayoutGridIcon,
-	LifeBuoy as LucideLifeBuoy,
+	LifeBuoyIcon as LucideLifeBuoyIcon,
 	LinkIcon as LucideLinkIcon,
 	ListFilterIcon as LucideListFilterIcon,
 	ListIcon as LucideListIcon,
-	Loader2Icon as LucideLoader2Icon,
 	LoaderCircleIcon as LucideLoaderCircleIcon,
 	LogOutIcon as LucideLogOutIcon,
 	MailCheckIcon as LucideMailCheckIcon,
@@ -104,27 +109,35 @@ import {
 	MoreHorizontalIcon as LucideMoreHorizontalIcon,
 	MoreVerticalIcon as LucideMoreVerticalIcon,
 	MousePointer2Icon as LucideMousePointer2Icon,
+	MusicIcon as LucideMusicIcon,
 	OctagonXIcon as LucideOctagonXIcon,
 	PaletteIcon as LucidePaletteIcon,
 	PanelLeftIcon as LucidePanelLeftIcon,
 	PaperclipIcon as LucidePaperclipIcon,
+	PauseIcon as LucidePauseIcon,
 	PencilIcon as LucidePencilIcon,
 	PenSquareIcon as LucidePenSquareIcon,
 	PenToolIcon as LucidePenToolIcon,
 	PinIcon as LucidePinIcon,
+	PlayIcon as LucidePlayIcon,
 	PlugIcon as LucidePlugIcon,
 	PlusCircleIcon as LucidePlusCircleIcon,
 	PlusIcon as LucidePlusIcon,
 	PlusSquareIcon as LucidePlusSquareIcon,
+	PrinterIcon as LucidePrinterIcon,
 	RadioIcon as LucideRadioIcon,
 	RefreshCwIcon as LucideRefreshCwIcon,
+	Repeat1Icon as LucideRepeat1Icon,
+	RepeatIcon as LucideRepeatIcon,
+	ReplyAllIcon as LucideReplyAllIcon,
+	ReplyIcon as LucideReplyIcon,
+	RotateCcwIcon as LucideRotateCcwIcon,
 	RotateCwIcon as LucideRotateCwIcon,
+	RowsIcon as LucideRowsIcon,
 	RulerIcon as LucideRulerIcon,
 	SaveIcon as LucideSaveIcon,
 	ScissorsIcon as LucideScissorsIcon,
-	Search as LucideSearch,
 	SearchIcon as LucideSearchIcon,
-	Send as LucideSend,
 	SendIcon as LucideSendIcon,
 	ServerIcon as LucideServerIcon,
 	Settings2Icon as LucideSettings2Icon,
@@ -135,8 +148,13 @@ import {
 	ShieldIcon as LucideShieldIcon,
 	ShoppingBagIcon as LucideShoppingBagIcon,
 	ShoppingCartIcon as LucideShoppingCartIcon,
+	ShuffleIcon as LucideShuffleIcon,
 	SignalHighIcon as LucideSignalHighIcon,
+	SignalIcon as LucideSignalIcon,
+	SkipBackIcon as LucideSkipBackIcon,
+	SkipForwardIcon as LucideSkipForwardIcon,
 	SlashSquareIcon as LucideSlashSquareIcon,
+	SmartphoneIcon as LucideSmartphoneIcon,
 	SmileIcon as LucideSmileIcon,
 	SparklesIcon as LucideSparklesIcon,
 	SquarePenIcon as LucideSquarePenIcon,
@@ -162,8 +180,8 @@ import {
 	Volume1Icon as LucideVolume1Icon,
 	Volume2Icon as LucideVolume2Icon,
 	VolumeOffIcon as LucideVolumeOffIcon,
-	VolumeX as LucideVolumeX,
 	WalletIcon as LucideWalletIcon,
+	WifiIcon as LucideWifiIcon,
 	XCircleIcon as LucideXCircleIcon,
 	XIcon as LucideXIcon,
 	ZapIcon as LucideZapIcon,
@@ -223,7 +241,6 @@ export const ListFilterIcon = createIcon(LucideListFilterIcon, "ListFilterIcon")
 export const TagIcon = createIcon(LucideTagIcon, "TagIcon");
 export const Trash2Icon = createIcon(LucideTrash2Icon, "Trash2Icon");
 export const ArrowRightIcon = createIcon(LucideArrowRightIcon, "ArrowRightIcon");
-export const VolumeX = createIcon(LucideVolumeX, "VolumeX");
 export const CheckIcon = createIcon(LucideCheckIcon, "CheckIcon");
 export const UserRoundXIcon = createIcon(LucideUserRoundXIcon, "UserRoundXIcon");
 export const AlertTriangleIcon = createIcon(LucideAlertTriangleIcon, "AlertTriangleIcon");
@@ -241,11 +258,9 @@ export const MoonIcon = createIcon(LucideMoonIcon, "MoonIcon");
 export const HelpCircleIcon = createIcon(LucideHelpCircleIcon, "HelpCircleIcon");
 export const FileTextIcon = createIcon(LucideFileTextIcon, "FileTextIcon");
 export const CalendarIcon = createIcon(LucideCalendarIcon, "CalendarIcon");
-export const Search = createIcon(LucideSearch, "Search");
 export const CheckCircle2Icon = createIcon(LucideCheckCircle2Icon, "CheckCircle2Icon");
 export const CircleDollarSignIcon = createIcon(LucideCircleDollarSignIcon, "CircleDollarSignIcon");
 export const ArrowUpRightIcon = createIcon(LucideArrowUpRightIcon, "ArrowUpRightIcon");
-export const BadgeCheck = createIcon(LucideBadgeCheck, "BadgeCheck");
 export const FlipHorizontalIcon = createIcon(LucideFlipHorizontalIcon, "FlipHorizontalIcon");
 export const FlipVerticalIcon = createIcon(LucideFlipVerticalIcon, "FlipVerticalIcon");
 export const RotateCwIcon = createIcon(LucideRotateCwIcon, "RotateCwIcon");
@@ -288,20 +303,16 @@ export const ItalicIcon = createIcon(LucideItalicIcon, "ItalicIcon");
 export const UnderlineIcon = createIcon(LucideUnderlineIcon, "UnderlineIcon");
 export const TableIcon = createIcon(LucideTableIcon, "TableIcon");
 export const ChartLineIcon = createIcon(LucideChartLineIcon, "ChartLineIcon");
-export const BookOpen = createIcon(LucideBookOpen, "BookOpen");
 export const Settings2Icon = createIcon(LucideSettings2Icon, "Settings2Icon");
 export const FrameIcon = createIcon(LucideFrameIcon, "FrameIcon");
 export const MapIcon = createIcon(LucideMapIcon, "MapIcon");
 export const ShoppingCartIcon = createIcon(LucideShoppingCartIcon, "ShoppingCartIcon");
-export const LifeBuoy = createIcon(LucideLifeBuoy, "LifeBuoy");
-export const Send = createIcon(LucideSend, "Send");
 export const AppWindowIcon = createIcon(LucideAppWindowIcon, "AppWindowIcon");
 export const BookmarkIcon = createIcon(LucideBookmarkIcon, "BookmarkIcon");
 export const ChevronUpIcon = createIcon(LucideChevronUpIcon, "ChevronUpIcon");
 export const ChevronLeftIcon = createIcon(LucideChevronLeftIcon, "ChevronLeftIcon");
 export const TriangleAlertIcon = createIcon(LucideTriangleAlertIcon, "TriangleAlertIcon");
 export const OctagonXIcon = createIcon(LucideOctagonXIcon, "OctagonXIcon");
-export const Loader2Icon = createIcon(LucideLoader2Icon, "Loader2Icon");
 export const VolumeOffIcon = createIcon(LucideVolumeOffIcon, "VolumeOffIcon");
 export const AlertCircleIcon = createIcon(LucideAlertCircleIcon, "AlertCircleIcon");
 export const User2Icon = createIcon(LucideUser2Icon, "User2Icon");
@@ -339,3 +350,28 @@ export const MousePointer2Icon = createIcon(LucideMousePointer2Icon, "MousePoint
 export const RulerIcon = createIcon(LucideRulerIcon, "RulerIcon");
 export const ShapesIcon = createIcon(LucideShapesIcon, "ShapesIcon");
 export const TypeIcon = createIcon(LucideTypeIcon, "TypeIcon");
+export const PlayIcon = createIcon(LucidePlayIcon, "PlayIcon");
+export const PauseIcon = createIcon(LucidePauseIcon, "PauseIcon");
+export const SkipBackIcon = createIcon(LucideSkipBackIcon, "SkipBackIcon");
+export const SkipForwardIcon = createIcon(LucideSkipForwardIcon, "SkipForwardIcon");
+export const ShuffleIcon = createIcon(LucideShuffleIcon, "ShuffleIcon");
+export const RepeatIcon = createIcon(LucideRepeatIcon, "RepeatIcon");
+export const Repeat1Icon = createIcon(LucideRepeat1Icon, "Repeat1Icon");
+export const MusicIcon = createIcon(LucideMusicIcon, "MusicIcon");
+export const ReplyIcon = createIcon(LucideReplyIcon, "ReplyIcon");
+export const ReplyAllIcon = createIcon(LucideReplyAllIcon, "ReplyAllIcon");
+export const ForwardIcon = createIcon(LucideForwardIcon, "ForwardIcon");
+export const PrinterIcon = createIcon(LucidePrinterIcon, "PrinterIcon");
+export const ChevronsLeftIcon = createIcon(LucideChevronsLeftIcon, "ChevronsLeftIcon");
+export const ChevronsRightIcon = createIcon(LucideChevronsRightIcon, "ChevronsRightIcon");
+export const CircleDotDashedIcon = createIcon(LucideCircleDotDashedIcon, "CircleDotDashedIcon");
+export const CircleOffIcon = createIcon(LucideCircleOffIcon, "CircleOffIcon");
+export const ClipboardIcon = createIcon(LucideClipboardIcon, "ClipboardIcon");
+export const FlameIcon = createIcon(LucideFlameIcon, "FlameIcon");
+export const FolderCodeIcon = createIcon(LucideFolderCodeIcon, "FolderCodeIcon");
+export const LifeBuoyIcon = createIcon(LucideLifeBuoyIcon, "LifeBuoyIcon");
+export const RotateCcwIcon = createIcon(LucideRotateCcwIcon, "RotateCcwIcon");
+export const RowsIcon = createIcon(LucideRowsIcon, "RowsIcon");
+export const SignalIcon = createIcon(LucideSignalIcon, "SignalIcon");
+export const SmartphoneIcon = createIcon(LucideSmartphoneIcon, "SmartphoneIcon");
+export const WifiIcon = createIcon(LucideWifiIcon, "WifiIcon");

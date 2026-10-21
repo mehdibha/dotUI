@@ -1,8 +1,8 @@
 "use client"
 
-import { useContext } from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import * as SliderPrimitive from "react-aria-components/Slider"
+import * as SliderPrimitives from "react-aria-components/Slider"
 import { Provider } from "react-aria-components/slots"
 import * as TextPrimitives from "react-aria-components/Text"
 import { useSlotId } from "react-aria/private/utils/useId"
@@ -14,18 +14,18 @@ import { useStyles } from "./styles"
 // MARK: Separator
 
 interface SliderProps extends React.ComponentProps<
-  typeof SliderPrimitive.Slider
+  typeof SliderPrimitives.Slider
 > {}
 
 const Slider = ({ className, children, ...props }: SliderProps) => {
   const { root } = useStyles()()
   const descriptionId = useSlotId()
   return (
-    <SliderPrimitive.Slider
+    <SliderPrimitives.Slider
       data-slider=""
       data-field=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        root({ className: cn, orientation }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        root({ className, orientation }),
       )}
       aria-describedby={descriptionId}
       {...props}
@@ -42,14 +42,14 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
           {children}
         </Provider>
       ))}
-    </SliderPrimitive.Slider>
+    </SliderPrimitives.Slider>
   )
 }
 
 // MARK: Separator
 
 interface SliderControlProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderTrack
+  typeof SliderPrimitives.SliderTrack
 > {}
 
 const SliderControl = ({
@@ -59,10 +59,10 @@ const SliderControl = ({
 }: SliderControlProps) => {
   const { control } = useStyles()()
   return (
-    <SliderPrimitive.SliderTrack
+    <SliderPrimitives.SliderTrack
       data-slider-control=""
-      className={composeRenderProps(className, (cn, { orientation }) =>
-        control({ orientation, className: cn }),
+      className={composeRenderProps(className, (className, { orientation }) =>
+        control({ orientation, className }),
       )}
       {...props}
     >
@@ -80,7 +80,7 @@ const SliderControl = ({
             </>
           ),
       )}
-    </SliderPrimitive.SliderTrack>
+    </SliderPrimitives.SliderTrack>
   )
 }
 
@@ -90,7 +90,7 @@ interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { track } = useStyles()()
-  const state = useContext(SliderPrimitive.SliderStateContext)
+  const state = React.useContext(SliderPrimitives.SliderStateContext)
 
   return (
     <div
@@ -107,17 +107,17 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
 // MARK: Separator
 
 interface SliderFillProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderFill
+  typeof SliderPrimitives.SliderFill
 > {}
 
 const SliderFill = ({ className, ...props }: SliderFillProps) => {
   const { fill } = useStyles()()
 
   return (
-    <SliderPrimitive.SliderFill
+    <SliderPrimitives.SliderFill
       data-slider-fill=""
-      className={composeRenderProps(className, (className, { orientation }) =>
-        fill({ orientation, className }),
+      className={composeRenderProps(className, (className) =>
+        fill({ className }),
       )}
       {...props}
     />
@@ -127,14 +127,14 @@ const SliderFill = ({ className, ...props }: SliderFillProps) => {
 // MARK: Separator
 
 interface SliderThumbProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderThumb
+  typeof SliderPrimitives.SliderThumb
 > {}
 
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   const { thumb } = useStyles()()
 
   return (
-    <SliderPrimitive.SliderThumb
+    <SliderPrimitives.SliderThumb
       data-slider-thumb=""
       className={composeRenderProps(
         className,
@@ -149,13 +149,13 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 // MARK: Separator
 
 interface SliderOutputProps extends React.ComponentProps<
-  typeof SliderPrimitive.SliderOutput
+  typeof SliderPrimitives.SliderOutput
 > {}
 
 const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
   const { output } = useStyles()()
   return (
-    <SliderPrimitive.SliderOutput
+    <SliderPrimitives.SliderOutput
       data-slider-output=""
       className={composeRenderProps(className, (className) =>
         output({ className }),
@@ -168,7 +168,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
           children ??
           state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
       )}
-    </SliderPrimitive.SliderOutput>
+    </SliderPrimitives.SliderOutput>
   )
 }
 

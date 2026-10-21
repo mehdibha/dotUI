@@ -1,12 +1,12 @@
 "use client"
 
-import type React from "react"
+import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as PopoverPrimitives from "react-aria-components/Popover"
 import { useSlottedContext } from "react-aria-components/slots"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
 import { useStyles } from "./styles"
 
@@ -17,33 +17,28 @@ interface PopoverProps extends React.ComponentProps<
 > {
   showArrow?: boolean
 }
-function Popover({
-  className,
-  showArrow = true,
-  placement,
-  ...props
-}: PopoverProps) {
+const Popover = ({ className, showArrow = false, ...props }: PopoverProps) => {
   const { popover } = useStyles()()
   const context = useSlottedContext(PopoverPrimitives.PopoverContext)
   const isMobile = useIsMobile()
 
-  // Render-prop children read placement and entering state, which only the popover can provide.
   const isNonModal = props.isNonModal ?? context?.isNonModal
   const isSubmenu = context?.trigger === "SubmenuTrigger"
+  // Render-prop children read placement and entering state, which only the popover can provide.
   if (
     isMobile &&
     (!isNonModal || isSubmenu) &&
     typeof props.children !== "function"
   ) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
       >
-        <DrawerHandle />
+        <SheetHandle />
         {props.children}
-      </Drawer>
+      </Sheet>
     )
   }
 
@@ -53,7 +48,6 @@ function Popover({
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}
-      placement={placement}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (
@@ -67,11 +61,11 @@ function Popover({
 }
 
 interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
-function PopoverArrow({ className, ...props }: PopoverArrowProps) {
+const PopoverArrow = ({ className, ...props }: PopoverArrowProps) => {
   const { arrow } = useStyles()()
   return (
     <PopoverPrimitives.OverlayArrow
-      data-slot="popover-arrow"
+      data-popover-arrow=""
       className={arrow({ className })}
     >
       <svg
@@ -86,6 +80,8 @@ function PopoverArrow({ className, ...props }: PopoverArrowProps) {
     </PopoverPrimitives.OverlayArrow>
   )
 }
+
+// MARK: Separator
 
 export type { PopoverProps }
 export { Popover }

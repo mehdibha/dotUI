@@ -2,7 +2,7 @@ import { createStyles } from "@/lib/styles"
 
 import messageScrollerMeta from "./meta"
 
-const { useStyles, styles } = createStyles(messageScrollerMeta, {
+const { useStyles } = createStyles(messageScrollerMeta, {
   base: {
     slots: {
       root: "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
       item: "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
       button: [
         "absolute inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2",
-        "transition-[translate,scale,opacity] duration-(--studio-message-scroller-enter-duration) ease-(--studio-message-scroller-ease) data-[active=false]:duration-(--studio-message-scroller-exit-duration) data-[active=false]:ease-(--studio-message-scroller-exit-ease)",
+        "transition-[translate,scale,opacity] duration-(--studio-message-scroller-enter-duration) ease-(--studio-message-scroller-ease) data-[active=false]:duration-(--studio-message-scroller-exit-duration) data-[active=false]:ease-(--studio-message-scroller-exit-ease) motion-reduce:transition-none",
         "data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0",
         "data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100",
         "data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full",
@@ -48,7 +48,5 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
     },
   },
 })
-
-export type MessageScrollerStyles = typeof styles
 
 export { useStyles }

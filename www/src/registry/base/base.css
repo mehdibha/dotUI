@@ -199,7 +199,7 @@
   --cursor-dragging: var(--cursor-interactive);
 }
 
-/* Scrim axis: what every modal layer (modal, drawer, sheets) lays over the
+/* Scrim axis: what every modal layer (modal, sheet) lays over the
    page — the overlay or the page tone at the backdrop's strength. */
 @theme {
   --color-scrim: color-mix(in oklab, var(--color-overlay) 40%, transparent);

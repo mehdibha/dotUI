@@ -35,8 +35,6 @@ const FONT_DEPENDENCIES = [
   "@fontsource/geist-mono",
 ]
 
-/* ------------------------------ css rendering ------------------------------ */
-
 function renderCssEntries(record: CssRecord, indent: string): string[] {
   const lines: string[] = []
   for (const [key, value] of Object.entries(record)) {
@@ -101,7 +99,7 @@ export function renderStylesheet(
  * The v0 bundle's `globals.css`: the init fields plus every shipped
  * component's `css` block, with the Geist faces from @fontsource.
  */
-export function renderGlobalsCss(fields: RegistryCssFields): string {
+function renderGlobalsCss(fields: RegistryCssFields): string {
   return renderStylesheet(fields, {
     imports: [
       '@import "@fontsource-variable/geist";',
@@ -140,16 +138,12 @@ export function mergeComponentCss(
   }
 }
 
-/* ------------------------------- source files ------------------------------ */
-
 /** `ui/button.tsx` → `components/ui/button.tsx`; lib/hooks pass through. */
 function projectTarget(target: string): string {
   return target.startsWith("ui/") ? `components/${target}` : target
 }
 
-/* -------------------------------- assembly -------------------------------- */
-
-export interface V0File {
+interface V0File {
   type: string
   path: string
   target: string
@@ -160,7 +154,7 @@ function v0File(type: string, target: string, content: string): V0File {
   return { type, path: target, target, content }
 }
 
-export interface BuildV0ItemInput {
+interface BuildV0ItemInput {
   /** Preset-published items, one per publishable component. */
   items: RegistryItem[]
   /** Init CSS fields already merged with the preset (`mergePresetCssFields`). */
@@ -230,8 +224,6 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 function fileType(file: RegistryItemFile): string {
   return file.type === "registry:ui" ? "registry:ui" : "registry:lib"
 }
-
-/* ------------------------------ project shell ------------------------------ */
 
 const V0_LAYOUT_TSX = `import type { ReactNode } from "react";
 

@@ -1,7 +1,7 @@
-import { FOOTER_VALUES, HEADER_VALUES } from "./card"
+import { EDGE_VALUES } from "./card"
 import { options } from "./core/meta"
 
-export const CARD_HEADER_OPTIONS = options(HEADER_VALUES, {
+export const CARD_HEADER_OPTIONS = options(EDGE_VALUES, {
   none: {
     label: "None",
     description: "Header flows into the content",
@@ -19,7 +19,7 @@ export const CARD_HEADER_OPTIONS = options(HEADER_VALUES, {
   },
 })
 
-export const FOOTER_OPTIONS = options(FOOTER_VALUES, {
+export const FOOTER_OPTIONS = options(EDGE_VALUES, {
   none: {
     label: "None",
     description: "Footer flows from the content",

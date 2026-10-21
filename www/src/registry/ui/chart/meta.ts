@@ -20,7 +20,7 @@ const chartMeta = {
     },
     motion: {
       default: "spring",
-      values: ["spring", "ease", "none"] as const,
+      values: ["spring", "ease", "bouncy", "none"] as const,
       description:
         "How marks enter and move between data states, unless a chart's `animate` prop overrides it.",
     },

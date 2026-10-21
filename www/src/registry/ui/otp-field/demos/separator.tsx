@@ -6,7 +6,7 @@ import {
   OTPFieldSeparator,
 } from "@/registry/ui/otp-field"
 
-export default function Separator() {
+export default function Demo() {
   return (
     <OTPField length={6}>
       <Label>Verification code</Label>

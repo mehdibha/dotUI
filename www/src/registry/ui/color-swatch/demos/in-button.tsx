@@ -1,5 +1,4 @@
-import { ChevronDown } from "lucide-react"
-
+import { ChevronDownIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 
@@ -10,7 +9,7 @@ export default function Demo() {
         <ColorSwatch color="#8b5cf6" className="size-4" />
         Violet
       </span>
-      <ChevronDown className="text-fg-muted" />
+      <ChevronDownIcon className="text-fg-muted" />
     </Button>
   )
 }

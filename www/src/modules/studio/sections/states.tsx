@@ -1,11 +1,12 @@
 "use client"
 
-/* Interaction — focus, field focus, invalid and disabled on every control,
-   then the cursors and text selection. Specimens draw each recipe with the
-   panel's own inks at its real geometry. */
+/* Focus, Disabled, Cursor and Text selection — each a Foundations page —
+   plus Invalid, hosted on the Field page. Specimens draw each recipe with
+   the panel's own inks at its real geometry. */
 
 import { cn } from "@/registry/lib/utils"
 
+import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import {
   AUTO_STRENGTH,
@@ -27,12 +28,10 @@ import {
   WIDTH_OPTIONS,
 } from "../axes/states.meta"
 import { DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
-import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import { Row } from "../row-host"
+import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-/* -------------------------------- Specimens -------------------------------- */
+import { ArrowCursor, HandCursor } from "./cursors"
 
 const INK = "var(--color-border-focus)"
 const MUTED = "var(--color-border-focus-muted)"
@@ -154,8 +153,6 @@ const ringOf = (state: Effective): Ring => ({
   width: state.focusWidth,
 })
 
-/* --------------------------------- Glyphs --------------------------------- */
-
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default. */
 const HIGHLIGHT_CHIPS: Record<string, string> = {
@@ -171,10 +168,26 @@ function HighlightChip({ value }: { value: string }) {
   )
 }
 
-/* ---------------------------------- Rows ----------------------------------- */
-
-export function InteractionPreview({ state }: { state: Effective }) {
+export function FocusPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} />
+}
+
+export function DisabledPreview({ state }: { state: Effective }) {
+  return <DisabledSpecimen treatment={state.disabledTreatment} />
+}
+
+/** The cursor over a control. */
+export function CursorPreview({ state }: { state: Effective }) {
+  const Glyph = state.cursorControls === "pointer" ? HandCursor : ArrowCursor
+  return (
+    <span className="block size-5 shrink-0 *:size-full">
+      <Glyph />
+    </span>
+  )
+}
+
+export function TextSelectionPreview({ state }: { state: Effective }) {
+  return <HighlightChip value={state.selectionHighlight} />
 }
 
 const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
@@ -315,7 +328,7 @@ const InvalidRow = () => (
 const CursorControlsRow = () => (
   <DialSelect
     axis="cursorControls"
-    label="Control cursor"
+    label="Controls"
     options={CURSOR_CONTROL_OPTIONS}
   />
 )
@@ -323,7 +336,7 @@ const CursorControlsRow = () => (
 const CursorDisabledRow = () => (
   <DialSelect
     axis="cursorDisabled"
-    label="Disabled cursor"
+    label="Disabled"
     options={CURSOR_DISABLED_OPTIONS}
   />
 )
@@ -344,12 +357,9 @@ const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
 const HighlightRow = () => (
   <DialSelect
     axis="selectionHighlight"
-    holds={["selectionUiText"]}
-    label="Text selection"
+    label="Highlight"
     options={HIGHLIGHT_ROW_OPTIONS}
-  >
-    <Row axis="selectionUiText" />
-  </DialSelect>
+  />
 )
 
 export const ROWS: RowMap = {

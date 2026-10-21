@@ -6,6 +6,8 @@ import { cn } from "@/registry/lib/utils"
 
 import { useStyles } from "./styles"
 
+// MARK: skeletonStyles
+
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   isLoading?: boolean
 }
@@ -40,12 +42,14 @@ function useSyncedSkeletonAnimation(
   }, [className, isLoading, ref])
 }
 
-export function Skeleton({
+// MARK: Separator
+
+export const Skeleton = ({
   className,
   children,
   isLoading,
   ...props
-}: SkeletonProps) {
+}: SkeletonProps) => {
   const { root } = useStyles()()
   const ref = React.useRef<HTMLDivElement>(null)
   const hasChildren = children != null

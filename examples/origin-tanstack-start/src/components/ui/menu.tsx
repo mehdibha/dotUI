@@ -86,7 +86,6 @@ const MenuItem = <T extends object>({
 
   return (
     <MenuPrimitives.MenuItem
-      data-slot="menu-item"
       data-menu-item=""
       data-variant={variant}
       textValue={textValue}
@@ -160,7 +159,6 @@ const MenuItemDescription = ({
 
 interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({
-  children,
   className,
   ...props
 }: MenuSectionProps<T>) => {
@@ -169,9 +167,7 @@ const MenuSection = <T extends object>({
       data-menu-section=""
       className={section({ className })}
       {...props}
-    >
-      {children}
-    </MenuPrimitives.MenuSection>
+    />
   );
 };
 

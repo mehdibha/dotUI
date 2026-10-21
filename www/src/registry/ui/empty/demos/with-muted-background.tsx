@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon } from "@/registry/__generated__/icons"
+import { ArrowUpRightIcon } from "@/registry/icons"
 import { Button, LinkButton } from "@/registry/ui/button"
 import {
   Empty,

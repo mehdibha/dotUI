@@ -5,6 +5,7 @@ import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
 import { SearchIcon } from "@/registry/icons"
 import { IconLibraryContext } from "@/registry/icons/create-icon"
+import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { getPreset, PRESETS } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
@@ -154,24 +155,28 @@ export async function facesReady(state: State | string[]) {
    show lucide meanwhile — which a still would catch. Mount <WarmIcons /> once
    in a scene that shows other libraries: it starts every loader and holds the
    first frame until the chunks are in. */
-const LAZY_LIBRARIES: IconLibraryName[] = [
-  "phosphor",
-  "hugeicons",
-  "tabler",
-  "remix",
-]
+const LIBRARY_CHUNKS = {
+  remix: () => import("@/registry/__generated__/__remix__"),
+  tabler: () => import("@/registry/__generated__/__tabler__"),
+  hugeicons: () => import("@/registry/__generated__/__hugeicons__"),
+  phosphor: () => import("@/registry/__generated__/__phosphor__"),
+  "material-symbols": () =>
+    import("@/registry/__generated__/__material-symbols__"),
+  octicons: () => import("@/registry/__generated__/__octicons__"),
+} satisfies Record<Exclude<IconLibraryName, "lucide">, () => Promise<unknown>>
+
+const LAZY_LIBRARIES = iconLibraries
+  .map((library) => library.name)
+  .filter((name) => name !== "lucide")
 
 export function WarmIcons() {
   useState(() => {
     const handle = delayRender("icon libraries", {
       timeoutInMilliseconds: 60_000,
     })
-    void Promise.all([
-      import("@/registry/__generated__/__phosphor__"),
-      import("@/registry/__generated__/__hugeicons__"),
-      import("@/registry/__generated__/__tabler__"),
-      import("@/registry/__generated__/__remix__"),
-    ]).then(() => setTimeout(() => continueRender(handle), 120))
+    void Promise.all(Object.values(LIBRARY_CHUNKS).map((load) => load())).then(
+      () => setTimeout(() => continueRender(handle), 120),
+    )
     return null
   })
   return (
