@@ -7,6 +7,9 @@ export const notion = definePreset({
   swatch: "#8e8b86",
   inspiredBy: "Notion",
   diff: {
+    // Assets
+    brandAssets: "notion",
+
     // Style: low drops; settings switches are a white chip on a gray track.
     surfaceShadow: "low",
     segmentedSelected: "raised",

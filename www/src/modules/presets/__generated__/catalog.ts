@@ -314,6 +314,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				scopes: { slider: "neutral" },
 			},
 			icons: "phosphor",
+			assets: "claude",
 		},
 	},
 	{
@@ -461,6 +462,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					slider: "neutral",
 				},
 			},
+			assets: "supabase",
 		},
 	},
 	{
@@ -672,6 +674,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				chartPalette: "vivid",
 				scopes: { slider: "accent" },
 			},
+			assets: "stripe",
 		},
 	},
 	{
@@ -816,6 +819,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				neutralTint: 0.2,
 				primary: "accent",
 			},
+			assets: "linear",
 		},
 	},
 	{
@@ -946,6 +950,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				preserveSeed: true,
 				scopes: { switch: "accent", "choice-card": "accent", slider: "accent" },
 			},
+			assets: "vercel",
 		},
 	},
 	{
@@ -1093,6 +1098,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 				},
 			},
+			assets: "airbnb",
 		},
 	},
 	{
@@ -1233,6 +1239,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				scopes: { slider: "accent" },
 			},
 			icons: "octicons",
+			assets: "github",
 		},
 	},
 	{
@@ -1382,6 +1389,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				solidInk: "white",
 				primary: "accent",
 			},
+			assets: "notion",
 		},
 	},
 	{
@@ -1545,6 +1553,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				},
 				scopes: { slider: "neutral" },
 			},
+			assets: "spotify",
 		},
 	},
 	{
@@ -1689,6 +1698,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				primary: "accent",
 				scopes: { slider: "accent" },
 			},
+			assets: "duolingo",
 		},
 	},
 	{
@@ -1845,6 +1855,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				neutralTint: 0,
 				preserveSeed: true,
 			},
+			assets: "shopify",
 		},
 	},
 	{
@@ -2080,6 +2091,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				primary: "accent",
 			},
 			icons: "material-symbols",
+			assets: "material",
 		},
 	},
 	{
@@ -2272,6 +2284,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				preserveSeed: true,
 				primary: "accent",
 			},
+			assets: "radix",
 		},
 	},
 	{

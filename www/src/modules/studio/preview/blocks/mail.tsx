@@ -63,6 +63,7 @@ import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 interface ThreadEntry {
   author: string
@@ -560,10 +561,14 @@ export default function MailBlock() {
         <Sidebar collapsible="offcanvas">
           <SidebarHeader className="gap-3">
             <div className="flex items-center gap-2 px-1 pt-1">
-              <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                <MailIcon className="size-3.5" />
-              </div>
-              <span className="truncate text-sm font-semibold">Sable Mail</span>
+              <BrandMark className="size-6">
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                  <MailIcon className="size-3.5" />
+                </div>
+              </BrandMark>
+              <span className="truncate text-sm font-semibold">
+                <BrandName>Sable Mail</BrandName>
+              </span>
             </div>
             <Button variant="primary" className="w-full">
               <SquarePenIcon />

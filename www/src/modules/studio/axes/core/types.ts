@@ -6,6 +6,7 @@ import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
 
+import type { BrandName } from "../assets"
 import type { AxisSchema } from "../schema"
 
 /** One chapter's contribution to the resolved design system. */
@@ -19,6 +20,8 @@ export interface Resolved {
    *  chapter adds token overrides or a control's fill scope on top. */
   color?: Partial<ColorConfig>
   icons?: IconLibraryName
+  /** The brand the preview wears; preview-only, never exported. */
+  assets?: BrandName
 }
 
 /** Saved sentinels a follow resolves; never reach a resolver. */

@@ -7,6 +7,9 @@ export const spotify = definePreset({
   swatch: "#1ed760",
   inspiredBy: "Spotify",
   diff: {
+    // Assets
+    brandAssets: "spotify",
+
     // Style
     // Containers step up one gray (#1f1f1f on #121212), no borders, soft drops.
     // Field, checkbox and radio edges are #7c7c7c, far above the #292929 dividers.

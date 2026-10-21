@@ -7,6 +7,9 @@ export const material3 = definePreset({
   swatch: "#6750a4",
   inspiredBy: "Material 3",
   diff: {
+    // Assets
+    brandAssets: "material",
+
     // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
     // outline #79747e on fields and buttons, #49454f on checks.
     style: "tonal",

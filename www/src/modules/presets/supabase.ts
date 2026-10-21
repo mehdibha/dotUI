@@ -7,6 +7,9 @@ export const supabase = definePreset({
   swatch: "#3ecf8e",
   inspiredBy: "Supabase",
   diff: {
+    // Assets
+    brandAssets: "supabase",
+
     // Color
     // The 2026 plate is a deep emerald with light ink (#0e7e4e), not the mint.
     brand: "#0e7e4e",

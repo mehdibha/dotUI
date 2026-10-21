@@ -7,6 +7,9 @@ export const github = definePreset({
   swatch: "#1f883d",
   inspiredBy: "GitHub",
   diff: {
+    // Assets
+    brandAssets: "github",
+
     // Color
     brand: "#1f883d",
     preserveSeed: true,

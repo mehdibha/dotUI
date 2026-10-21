@@ -37,6 +37,7 @@ export const MAIN_ROWS: FoundationRow[] = [
   ["density", "Density"],
   ["iconLibrary", "Icons"],
   ["motion", "Motion"],
+  ["brandAssets", "Assets", ["Logo", "Wordmark"]],
 ]
 
 /** The keys whose rows sit on the main page, in or under its rows. */
@@ -55,6 +56,7 @@ export const FOUNDATION_KEYS = [
   "iconStroke",
   "iconWeight",
   "motion",
+  "brandAssets",
 ]
 
 /** Each page's rows, in groups. */
