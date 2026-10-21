@@ -23,18 +23,29 @@
   "https://www.duolingo.com/": {
     "mode": "light",
     "parts": {
-      "link": {
-        "selector": "a",
-        "text": "research shows that it works"
-      },
       "text.muted": {
         "selector": "p",
         "skip": ["fontSize"]
       }
     }
   },
-  "https://www.duolingo.com/register": {
-    "mode": "light",
+  "https://www.duolingo.com/efficacy": {
+    "parts": {
+      "link": {
+        "selector": "a",
+        "text": "teaching method"
+      },
+      "tab": {
+        "selector": "a[href=\"/efficacy/method\"]",
+        "skip": ["height", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "a[aria-current=page]",
+        "skip": ["height", "borderRadius"]
+      }
+    }
+  },
+  "https://www.duolingo.com/courses": {
     "parts": {
       "card": {
         "selector": "[data-test~=language-card]",

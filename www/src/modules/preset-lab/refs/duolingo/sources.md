@@ -5,10 +5,16 @@ Measured 2026-10-21 from the public web app, headless Chromium at 1440×900, pro
 ## Pages
 
 - `/log-in`: buttons, the email field and its focus state. Follows `prefers-color-scheme`.
-- `/` and `/register` (course picker): link, muted text, course cards. Both always render light.
+- `/`: muted text. Always renders light.
+- `/courses`: course cards, in both themes (`/register` shows the same cards but always light).
+- `/efficacy`: the section's top bar of line tabs (`tab`, `tab.selected`) and links, in both themes. Tabs skip height (they fill a 70px bar) and borderRadius (neither side paints the tab box).
 - `/register#lesson`, `#check` and `#hearts`: the guest lesson, reached by page `steps` that walk the onboarding from the course picker (Spanish, then one answer and Continue per screen) to the first challenge, "Which one of these is “cat”?". The tiles change between runs but the answer is always `gato`, so `#check` and `#hearts` pick the first tile without it. `#lesson` reads the page, heading, keycaps and progress track; `#check` the Check button with a wrong tile picked; `#hearts` the modal after Check. They follow `prefers-color-scheme`.
 
 The three lesson keys are separate pages, not parts with `before` steps on one page: a reload after the walk lands the guest elsewhere, so a second walk in the same browser context fails. Each page gets its own context.
+
+Survey, 2026-10-21 19:20: 19 public pages screenshotted in both themes (project files, `presets/duolingo/2026-10-21/public/`). `/courses`, `/efficacy`, `/help`, `/guidelines`, `/mobile`, `/math`, `/chess` and `/forgot_password` follow the theme, like log-in and the lesson; the home, `/register`, course, `/super`, `/gift` and `/business` pages stay light. Nothing else there maps to a part: `/courses`' "I speak" picker is a text trigger, not a field; `/help`'s FAQ boxes are 2px swan, radius 16, like the course cards; `/math` and `/chess` use macaw for their primary buttons.
+
+At 19:10 that day guest sign-up failed (`POST /2023-05-23/users` 500, "Upload to Auth Failed"), so the lesson walk stalls after the course pick until Duolingo recovers.
 
 ## Palette, as measured
 
@@ -36,6 +42,7 @@ Dark mode shifts the brand (owl and macaw get lighter) and tints the neutrals sl
 - Buttons: 12px in the web UI, 16px on log-in and in lessons; labels 15px uppercase 700 with 0.8px tracking, 17px in lessons. No focus ring on buttons (`outline: none` site-wide); dotUI keeps one on purpose.
 - Fields: 48px, radius 12, 2px swan edge on polar, 20px text; focus turns the border macaw, with no ring.
 - Body 17px, headings 32px and 26px.
+- Line tabs (efficacy bar): 15/700 uppercase, 1px tracking, 10px inline padding; idle hare (#afafaf / #52656d), current macaw with a 4px macaw bar as wide as the label, overlapping the bar's 2px swan rule (`::after`, bottom -2px; the probe doesn't read it).
 - Progress track: 16px, fully rounded, in swan (#e5e5e5 / #37464f), the edge gray rather than a muted fill.
 - Keycaps (lesson tile numbers): 30px tall, 2px swan edge, radius 8, hare 15px bold labels.
 - Modal: radius 16, no edge or shadow, page-colored in both modes, content centered; black scrim at 30–40%.
