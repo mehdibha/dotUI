@@ -49,7 +49,7 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 In a Claude project:
 
 - Publish or update the "<Name> fidelity" artifact. For each sheet, show the reference next to the specimen in light and dark, then the measured diff with off rows first, the score, and open gaps linking ledger rows. Images go in the artifact's asset store.
-- Update the preset's row in the project's preset tracker: status, score, date, artifact link. Write only that row.
+- Update the preset's row in the project's preset tracker: status, sheets passing, properties off, gaps, date, links. Write only that row; the tracker's link and update steps are in project memory.
 
 Outside a project, put the compare images and the diff summary in the PR description instead.
 
