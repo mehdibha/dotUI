@@ -114,6 +114,7 @@ export const vercel = definePreset({
     // Stand-in: Geist's tabs are 50px tall with 2px side padding; ours 35px and 8px.
     tabStyle: "line",
     // Tabs and sidebar items stay 400 at rest and when current.
+    // Stand-in: Geist's sidebar rows are 36px; ours 32px.
     navWeight: "regular",
     linkUnderline: "hover",
 

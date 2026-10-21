@@ -260,17 +260,19 @@
         "selector": "body"
       },
       "shell": {
-        "selector": "aside",
+        "selector": ".dashboard-layout-container > div:has(> .dash-sidebar)",
         "surface": true
       },
       "panel": {
-        "selector": "main"
+        "selector": "main section.dashboard-section"
       },
       "nav.item": {
-        "selector": "nav a[href]:not([aria-current]):not([data-active=true])"
+        "selector": "nav a[data-sidebar-link-key][data-active=false]",
+        "skip": ["paddingInline"]
       },
       "nav.item.active": {
-        "selector": "nav a[aria-current=page], nav a[data-active=true]"
+        "selector": "nav a[data-sidebar-link-key][data-active=true]",
+        "skip": ["paddingInline"]
       }
     }
   }
