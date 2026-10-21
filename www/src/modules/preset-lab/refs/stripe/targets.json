@@ -69,16 +69,6 @@
       }
     }
   },
-  "https://docs.stripe.com/stripe-apps/components/list": {
-    "mode": "light",
-    "parts": {
-      "text.muted": {
-        "selector": "[data-testid=stripe-app-example-renderer] div",
-        "text": "customer@test.com",
-        "skip": ["fontSize"]
-      }
-    }
-  },
   "https://dashboard.stripe.com/login": {
     "mode": "light",
     "parts": {
@@ -121,15 +111,6 @@
           }
         ],
         "skip": ["height"]
-      },
-      "text": {
-        "selector": ".__sail-layer-containers [role=tooltip]",
-        "before": [
-          {
-            "hover": "[data-testid=stripe-app-example-renderer] a::-p-text(Pay out to bank)"
-          }
-        ],
-        "skip": ["fontSize"]
       }
     }
   },
@@ -161,15 +142,76 @@
       }
     }
   },
-  "https://docs.stripe.com/stripe-apps/components/tabs": {
-    "mode": "light",
+  "https://dashboard.stripe.com/test/dashboard": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "main",
+        "skip": ["color"]
+      },
+      "shell": {
+        "selector": "[data-testid=primary-nav]",
+        "surface": true
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "nav.item": {
+        "selector": "[data-testid=primary-nav-item-link-balances]"
+      },
+      "nav.item.active": {
+        "selector": "[data-testid=primary-nav] a[aria-current=page]"
+      },
+      "button.icon": {
+        "selector": "[data-testid=sigma-explore-button]"
+      },
+      "link": {
+        "selector": "[data-testid=view-detail-link]"
+      },
+      "text": {
+        "selector": "[data-testid='setup-guide-verify_business.verify_email-task-label']"
+      },
+      "text.muted": {
+        "selector": "[data-testid=today-view-time]",
+        "skip": ["fontSize"]
+      },
+      "command": {
+        "selector": "[data-testid=popover-layer]:has([data-testid=SpotlightContent])",
+        "before": [
+          {
+            "click": "[data-testid=suggestion-input]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "command.item": {
+        "selector": "[data-testid=spotlight-search-result]",
+        "nth": 1,
+        "before": [
+          {
+            "click": "[data-testid=suggestion-input]"
+          }
+        ],
+        "skip": ["color", "paddingInline"]
+      },
+      "kbd": {
+        "selector": "[data-testid=shortcuts-help-drawer] kbd",
+        "before": [
+          {
+            "press": "?"
+          }
+        ]
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/settings/communication-preferences": {
+    "signedIn": true,
     "parts": {
       "tab": {
-        "selector": "[data-testid=stripe-app-example-renderer] [role=tab]:not([aria-selected=true])"
+        "selector": "main [role=tab]:not([aria-selected=true])"
       },
       "tab.selected": {
-        "selector": "[data-testid=stripe-app-example-renderer] [role=tab][aria-selected=true]",
-        "skip": ["color"]
+        "selector": "main [role=tab][aria-selected=true]"
       }
     }
   }
