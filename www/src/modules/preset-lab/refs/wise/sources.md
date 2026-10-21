@@ -38,6 +38,18 @@ Neptune publishes its tokens and components on npm (Apache-2.0):
 - Parts and their Neptune components: `button.*` Button v2 (primary, secondary, tertiary for quiet), `button.icon` IconButton secondary, `toggle` / `toggle.on` Chips (filter chips), `segmented` SegmentedControl, `select.trigger` SelectInput, `menu` / `menu.item` the SelectInput list, `command` a filterable SelectInput (Neptune has no command palette; its popover radius is left out), `tooltip` Tooltip (`.np-panel__content`, height left out since it wraps), `dialog` Modal, `tab` Tabs, `alert` InfoPrompt (the login page's Alert is deprecated), `badge` neutral Tag, `badge.accent` the success Tag (the proposition Tag is teal, not brand), `card` BaseCard (`.np-Card`: `background-neutral` in light, `background-elevated` in dark, 32px corners, 24px padding, no edge or shadow), `calendar.*` DateLookup, `heading.1`–`.4` the Title screen / section / subsection / body styles (size and tracking left out: Neptune's titles step 30 / 26 / 22 / 18px at -0.021 to -0.014em, where the specimens use the dotUI scale), `text` Body large, `text.muted` Body in secondary ink.
 - `progress` and `progress.fill` are entered by hand from neptune-css (`.progress` track `background-neutral`, 8px, 10px corners; fill `interactive-primary` with the same corners): the native `<progress>` fill can't be probed.
 
+## Cross-checks on wise.com
+
+Twelve public pages surveyed headless on 2026-10-21 (home, send money, pricing, currency converter, card, account, business, help centre and an article, login, register, compare), light only: the public site has no dark theme and ignores `prefers-color-scheme`. Production agrees with the harness wherever both show a component, so these pages stay out of `targets.json`:
+
+- Send money's currency picker opens the same SelectInput popover: white, 10px corners, `0 0 40px rgba(69, 71, 69, .2)`, 8px list padding, 48px rows padded 16px at 16/400 in forest, a 1px #868685 ring on the keyboard-active row, and a search field whose focus is a 3px forest inset edge.
+- Info tooltips: white `np-panel__content`, 16px corners and padding, 14/400 #0e0f0c, the same 40px shadow; the fee popover is the same panel.
+- The converter's range Chips: 32px pills padded 16px at 600, outlined at rest, forest under a bright green label when selected.
+- Prompts (`wds-info-prompt`): 16px corners, 12px padding, the sentiment's secondary fill (#e2f6d5 under #054d28 for success).
+- Buttons: the calculator's `wds-Button` primary is 48px with 16px padding; legacy `np-btn` buttons on marketing and help pages pad 24px at 48px. Currency pickers are `secondary-neutral` pills on #16330014.
+- Help centre: the article search is a 48px pill (24px corners) with the 3px focus edge, while form fields stay 10px boxes; topic tiles are links on `background-neutral` with 16px corners and 24px padding.
+- Titles: screen 30/600, subsection 22/600, body 18/600 in #0e0f0c; body copy 14/400 in #454745; links 600 underlined in forest.
+
 ## Not measured
 
 The app shell and sidebar nav rows (`shell`, `panel`, `nav.item`, `nav.item.active`) live only in the signed-in web app, and Neptune publishes no sidebar component. A signed-in pass was tried on 2026-10-21 and stopped before reading anything: the device's permission check refuses signed-in banking pages.
