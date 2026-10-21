@@ -1,7 +1,8 @@
 /**
  * Prints every studio axis as Markdown: what it accepts (labels and the
  * systems each option is copied from), Origin's value, and its follows.
- * With --preset, also where each of that preset's values comes from.
+ * With --preset, also where each of that preset's values comes from, and
+ * the options a rule overrides on that preset (presets.test rejects them).
  * Run from www/.
  *
  *   tsx scripts/presets-catalog.ts [--preset <id>] [--chapter <id>]
@@ -37,6 +38,14 @@ if (args.preset && !preset) {
 const show = (value: unknown) =>
   value === "" || value === null ? "auto" : JSON.stringify(value)
 
+/* The rule that overrides `value` for `key` on the preset, if one does. */
+function pinnedBy(key: string, value: unknown) {
+  if (!preset) return
+  const tried = effective({ ...preset.state, [key]: value })
+  if (tried.values[key as keyof typeof tried.values] === value) return
+  return tried.explain[key as keyof typeof tried.explain]?.rule ?? "a rule"
+}
+
 function accepts(key: string): string[] {
   const kind = SCHEMA[key as keyof typeof SCHEMA].value
   if (kind.type === "number")
@@ -50,6 +59,8 @@ function accepts(key: string): string[] {
     const parts = [`\`${value}\` ${label}`]
     if (description) parts.push(`— ${description}`)
     if (credits?.length) parts.push(`(${credits.join(", ")})`)
+    const rule = pinnedBy(key, value)
+    if (rule) parts.push(`· **pinned by ${rule} here**`)
     return parts.join(" ")
   })
 }

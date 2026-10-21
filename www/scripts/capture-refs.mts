@@ -13,6 +13,8 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type Page } from "puppeteer"
 
+import { executablePath } from "./chromium"
+
 type Theme = "light" | "dark"
 type RefEntry = {
   system: string
@@ -150,6 +152,7 @@ const entries = manifest.filter(
 // vercel.com's continuously-animated background (Page.captureScreenshot never returns).
 const browser = await puppeteer.launch({
   headless: "shell",
+  executablePath,
   protocolTimeout: 60000,
   args: [
     "--disable-gpu",
