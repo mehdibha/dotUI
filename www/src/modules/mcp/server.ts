@@ -28,6 +28,9 @@ import {
 import type { DesignInput } from "./design"
 
 const CARD_URI = "ui://dotui/card.html"
+// Hosts cache a tool's resourceUri with its tool list: a card URI is never
+// renamed, only added to. v0.1's still resolves to the same card.
+const CARD_URIS = [CARD_URI, "ui://dotui/directions.html"]
 
 const INSTRUCTIONS = `dotUI builds a complete design system (color, type, icons, shape, density, surfaces, motion and per-component styles) on accessible React Aria components, and installs it as code the user owns with the shadcn CLI.
 
@@ -38,7 +41,7 @@ You run a short brand interview; the user makes the taste calls by looking at li
 4. Any change they ask for ("warmer", "sharper corners"): refine with the current design and the changes, and carry the proposed design forward only if they accept.
 5. create_design_system with the final design: it shows the install card. If you can run commands, set the project up with it.
 
-Every design argument is the whole design so far: { preset, shape, axes }. Picks arrive as the user's next message, and the exact axes the card chose arrive in your context: merge those axes into the design before the next call. Don't restate in text what a card shows.`
+Every design argument is the whole design so far: { preset, shape, axes }. Picks arrive as the user's next message, and the exact axes the card chose arrive in your context: merge those axes into the design before the next call. After a card, reply in one or two sentences: the user is looking at it, so never list or describe what it shows.`
 
 const designShape = {
   preset: z.string().optional().describe("A preset id from get_design_axes"),
@@ -74,6 +77,10 @@ const card = (text: string, structuredContent: Record<string, unknown>) => ({
 })
 
 const ui = { ui: { resourceUri: CARD_URI } }
+
+// What a card result tells the model: the user sees it already, so prose
+// only points at it, and their answer comes back as their next message.
+const SHOWN = "The user is looking at a live card:"
 
 function createServer(origin: string) {
   const server = new McpServer(
@@ -126,11 +133,9 @@ function createServer(origin: string) {
     ({ product, directions }) => {
       const result = resolveDirections(directions)
       if (!result.ok) return failure(result.problems)
-      const list = result.value
-        .map((d) => `- ${d.name}: ${d.summary}`)
-        .join("\n")
+      const names = result.value.map((d) => d.name).join(", ")
       return card(
-        `Showing ${result.value.length} live directions for ${product}:\n${list}\nThe user picks one in the card; wait for their message.`,
+        `${SHOWN} ${result.value.length} directions for ${product} (${names}), rendered live. Ask them to pick one in the card, in a sentence.`,
         { card: "directions", product, directions: result.value },
       )
     },
@@ -169,7 +174,7 @@ function createServer(origin: string) {
       ]
       if (!resolved.ok || !swatches.ok) return failure(problems)
       return card(
-        `Showing the color card for ${product}. The user picks in the card; wait for their message.`,
+        `${SHOWN} the brand color card for ${product}. Ask them to pick in the card, in a sentence.`,
         {
           card: "color",
           product,
@@ -219,7 +224,7 @@ function createServer(origin: string) {
           ...(fonts.ok ? [] : fonts.problems),
         ])
       return card(
-        `Showing ${pairings.length} type pairings for ${product}. The user picks in the card; wait for their message.`,
+        `${SHOWN} ${pairings.length} type pairings for ${product}. Ask them to pick one in the card, in a sentence.`,
         {
           card: "type",
           product,
@@ -271,7 +276,7 @@ function createServer(origin: string) {
         ])
       const changed = compareDesigns(from.value, to.value)
       return card(
-        `Comparing "${label}" (${changed.length} axes change). If the user accepts, the proposed design is ${JSON.stringify(proposedInput)}.`,
+        `${SHOWN} "${label}": current vs proposed, ${changed.length} axes change. If they accept, the design becomes ${JSON.stringify(proposedInput)}.`,
         {
           card: "compare",
           product,
@@ -306,34 +311,35 @@ function createServer(origin: string) {
     },
   )
 
-  registerAppResource(
-    server,
-    "dotUI card",
-    CARD_URI,
-    { description: "Live design-system cards" },
-    () => ({
-      contents: [
-        {
-          uri: CARD_URI,
-          mimeType: RESOURCE_MIME_TYPE,
-          text: cardHtml("card", origin),
-          _meta: {
-            ui: {
-              csp: {
-                resourceDomains: [
-                  origin,
-                  "https://fonts.googleapis.com",
-                  "https://fonts.gstatic.com",
-                ],
+  for (const uri of CARD_URIS)
+    registerAppResource(
+      server,
+      uri === CARD_URI ? "dotUI card" : "dotUI card (v0.1)",
+      uri,
+      { description: "Live design-system cards" },
+      () => ({
+        contents: [
+          {
+            uri,
+            mimeType: RESOURCE_MIME_TYPE,
+            text: cardHtml("card", origin),
+            _meta: {
+              ui: {
+                csp: {
+                  resourceDomains: [
+                    origin,
+                    "https://fonts.googleapis.com",
+                    "https://fonts.gstatic.com",
+                  ],
+                },
+                permissions: { clipboardWrite: {} },
+                prefersBorder: false,
               },
-              permissions: { clipboardWrite: {} },
-              prefersBorder: false,
             },
           },
-        },
-      ],
-    }),
-  )
+        ],
+      }),
+    )
 
   return server
 }
