@@ -48,6 +48,16 @@ describe("panel search", () => {
     expect(search("Corner")).toContain("Components › Checkbox › Corner")
   })
 
+  it("finds a featured component by its family name", () => {
+    for (const [query, page] of [
+      ["Buttons", "Button"],
+      ["Inputs", "Field"],
+      ["Cards", "Card"],
+      ["Menus", "Menu"],
+    ] as const)
+      expect(search(query), query).toContain(`Components › ${page}`)
+  })
+
   it("reads every component row as Page › Row", () => {
     for (const component of COMPONENTS)
       expect(search(component.label), component.label).toContain(

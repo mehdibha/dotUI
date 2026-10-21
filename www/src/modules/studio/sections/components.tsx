@@ -125,6 +125,7 @@ export const COMPONENTS: Component[] = [
       ["cardFooter", "Footer"],
       ["titleStyle", "Titles"],
     ],
+    aliases: ["Cards"],
   },
   {
     id: "chart",
