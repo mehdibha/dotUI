@@ -23,7 +23,7 @@ import { salvageState } from "@/modules/studio/axes"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
-import type { Diff } from "../design"
+import type { Diff, MintedDesignSystem } from "../design"
 
 export type Mode = "light" | "dark"
 
@@ -149,14 +149,48 @@ export function Themed({
   )
 }
 
-/** Sends a pick: the exact axes as context, a short line as the user's. */
-export async function sendPick(
+/** Keeps Claude current without a message: the host hands the latest
+ *  context to Claude with the user's next one. Hosts that refuse it lose
+ *  nothing the card needs. */
+export function tell(
   app: App,
   text: string,
-  context: Record<string, unknown>,
+  structuredContent: Record<string, unknown>,
 ) {
-  await app.updateModelContext({ structuredContent: context }).catch(() => {})
-  await app.sendMessage({ role: "user", content: [{ type: "text", text }] })
+  return app
+    .updateModelContext({
+      content: [{ type: "text", text }],
+      structuredContent,
+    })
+    .catch(() => {})
+}
+
+/** Saves a design through the server's app-only tool and tells Claude what
+ *  was saved. Throws when the server refuses it. */
+export async function saveDesign(
+  app: App,
+  name: string,
+  diff: Diff,
+): Promise<MintedDesignSystem> {
+  const result = await app.callServerTool({
+    name: "save_design",
+    arguments: { name, axes: diff },
+  })
+  const saved = result.structuredContent as
+    | (MintedDesignSystem & { card: "ready" })
+    | undefined
+  if (result.isError || !saved?.id) {
+    const reason = result.content?.[0]
+    throw new Error(
+      reason?.type === "text" ? reason.text : "The design wasn't saved",
+    )
+  }
+  void tell(
+    app,
+    `The user saved "${saved.name}" as ${saved.id}. Its design, as axes over the defaults: ${JSON.stringify(diff)}. Install: ${saved.commands.npm}. Studio: ${saved.studioUrl}.`,
+    { saved: saved.id, name: saved.name, design: { axes: diff } },
+  )
+  return saved
 }
 
 export function CardHeader({

@@ -29,11 +29,33 @@ const SAMPLES: Record<string, Record<string, unknown>> = {
         summary: "Flat and crisp, black buttons, teal accents",
         preset: "vercel",
         axes: { brand: "#0f766e" },
+        colors: [
+          { color: "#0f766e", label: "Teal" },
+          { color: "#1e3a5f", label: "Navy" },
+          { color: "#2f6f5e", label: "Ledger green" },
+        ],
+        pairings: [
+          { name: "Swiss", heading: "Inter", body: "Inter" },
+          { name: "Grotesk", heading: "Hanken Grotesk", body: "Inter" },
+        ],
       },
       {
         name: "Warm studio",
         summary: "Tonal surfaces, soft corners, serif headings",
         ...WARM,
+        colors: [
+          { color: "#e8590c", label: "Logo orange" },
+          { color: "#b5451b", label: "Rust" },
+          { color: "oklch(0.55 0.2 265)", label: "Indigo" },
+        ],
+        pairings: [
+          { name: "Editorial", heading: "Fraunces", body: "Inter" },
+          {
+            name: "Humanist",
+            heading: "Instrument Sans",
+            body: "Instrument Sans",
+          },
+        ],
       },
       {
         name: "Precise tool",
@@ -46,40 +68,23 @@ const SAMPLES: Record<string, Record<string, unknown>> = {
           bodyFont: "IBM Plex Sans",
           iconLibrary: "phosphor",
         },
-      },
-    ],
-  },
-  ask_color: {
-    product: "Lumen",
-    design: WARM,
-    candidates: [
-      { color: "#e8590c", label: "Logo orange" },
-      { color: "#b5451b", label: "Rust" },
-      { color: "#2f6f5e", label: "Ledger green" },
-      { color: "oklch(0.55 0.2 265)", label: "Indigo" },
-    ],
-  },
-  ask_type: {
-    product: "Lumen",
-    design: WARM,
-    sample: "Get paid on time, without chasing anyone.",
-    pairings: [
-      { name: "Editorial", heading: "Fraunces", body: "Inter" },
-      { name: "Ledger", heading: "Inter", body: "Inter" },
-      { name: "Humanist", heading: "Instrument Sans", body: "Instrument Sans" },
-      {
-        name: "Technical",
-        heading: "IBM Plex Sans",
-        body: "IBM Plex Sans",
-        mono: "JetBrains Mono",
+        colors: [{ color: "#5e6ad2", label: "Indigo" }],
+        pairings: [
+          {
+            name: "Technical",
+            heading: "IBM Plex Sans",
+            body: "IBM Plex Sans",
+            mono: "JetBrains Mono",
+          },
+        ],
       },
     ],
   },
   refine: {
     product: "Lumen",
-    label: "Sharper corners",
+    label: "Rounder and more playful",
     current: WARM,
-    changes: { shape: "sharp" },
+    changes: { shape: "round", axes: { motion: "expressive" } },
   },
   create_design_system: { name: "Lumen", ...WARM },
 }
@@ -198,6 +203,18 @@ export function DevHost() {
         window.open(url, "_blank", "noopener")
         return {}
       }
+      // The card's own calls (Save) go to the server through the host.
+      host.oncalltool = async (params) => {
+        push(
+          "card → tool",
+          `${params.name} ${JSON.stringify(params.arguments).slice(0, 160)}`,
+        )
+        const response = await client.callTool(params)
+        push("tool → card", JSON.stringify(response.content).slice(0, 200))
+        return response as Awaited<
+          ReturnType<NonNullable<AppBridge["oncalltool"]>>
+        >
+      }
       host.oninitialized = () => {
         push("initialized", "")
         void host.sendToolInput({ arguments: toolArgs })
@@ -296,7 +313,7 @@ export function DevHost() {
           // at all (Chrome's Local Network Access), so share ours.
           sandbox="allow-scripts allow-same-origin"
           className="w-full"
-          style={{ height }}
+          style={{ height: fullscreen ? "calc(100dvh - 3rem)" : height }}
         />
       </div>
     </div>

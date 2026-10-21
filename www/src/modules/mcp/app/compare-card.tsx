@@ -8,12 +8,14 @@ import {
 } from "@/registry/ui/segmented-control"
 import { Controls } from "@/components/showcase/controls"
 
-import type { Change, Diff } from "../design"
+import type { Change, Diff, MintedDesignSystem } from "../design"
+import { ReadyCard } from "./ready-card"
 import {
   CardActions,
   CardHeader,
-  sendPick,
+  saveDesign,
   Themed,
+  tell,
   useCard,
   useSystem,
 } from "./shell"
@@ -50,16 +52,32 @@ export function CompareCard({
   const { app } = useCard()
   const systems = { current: useSystem(current), proposed: useSystem(proposed) }
   const [side, setSide] = useState<Side>("proposed")
-  const [answer, setAnswer] = useState<"kept" | "accepted">()
+  const [kept, setKept] = useState(false)
+  const [saved, setSaved] = useState<MintedDesignSystem>()
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string>()
 
-  async function answerWith(accepted: boolean) {
-    await sendPick(
-      app,
-      accepted ? `Accept "${label}".` : `Keep the current design.`,
-      { refine: label, accepted },
-    )
-    setAnswer(accepted ? "accepted" : "kept")
+  // Accepting saves the proposal as a new version, right here.
+  async function accept() {
+    setSaving(true)
+    setError(undefined)
+    try {
+      setSaved(await saveDesign(app, product, proposed))
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : String(cause))
+    }
+    setSaving(false)
   }
+
+  function keep() {
+    setKept(true)
+    void tell(app, `The user kept the current design rather than "${label}".`, {
+      refine: label,
+      accepted: false,
+    })
+  }
+
+  if (saved) return <ReadyCard card="ready" {...saved} />
 
   return (
     <div className="flex flex-col gap-4">
@@ -108,15 +126,17 @@ export function CompareCard({
         )}
       </div>
       <CardActions>
-        <Button isDisabled={!!answer} onPress={() => answerWith(false)}>
-          {answer === "kept" ? "Kept current" : "Keep current"}
+        {error && <span className="text-xs text-fg-danger">{error}</span>}
+        <Button isDisabled={kept || saving} onPress={keep}>
+          {kept ? "Kept current" : "Keep current"}
         </Button>
         <Button
           variant="primary"
-          isDisabled={!!answer}
-          onPress={() => answerWith(true)}
+          isDisabled={kept}
+          isPending={saving}
+          onPress={accept}
         >
-          {answer === "accepted" ? "Accepted" : "Accept"}
+          Accept and save
         </Button>
       </CardActions>
     </div>

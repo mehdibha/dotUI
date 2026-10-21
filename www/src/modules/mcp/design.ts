@@ -56,12 +56,18 @@ export interface DesignInput {
 export interface DirectionInput extends DesignInput {
   name: string
   summary: string
+  /** Brand colors to offer when customizing this direction. */
+  colors?: Swatch[]
+  /** Type pairings to offer when customizing this direction. */
+  pairings?: Pairing[]
 }
 
 export interface Direction {
   name: string
   summary: string
   diff: Diff
+  colors: Swatch[]
+  pairings: Array<Pairing & { axes: Diff }>
 }
 
 export interface Swatch {
@@ -141,16 +147,54 @@ export function resolveDesign({
   return { ok: true, value: diff }
 }
 
-/** Every direction validated; problems are prefixed with the direction. */
+/** Every direction validated, with what Customize offers for it: Claude's
+ *  colors and pairings, the direction's own first. Problems are prefixed
+ *  with the direction. */
 export function resolveDirections(
   inputs: DirectionInput[],
 ): Result<Direction[]> {
   const directions: Direction[] = []
   const problems: string[] = []
-  for (const { name, summary, ...design } of inputs) {
-    const result = resolveDesign(design)
-    if (result.ok) directions.push({ name, summary, diff: result.value })
-    else problems.push(...result.problems.map((p) => `${name} → ${p}`))
+  for (const {
+    name,
+    summary,
+    colors = [],
+    pairings = [],
+    ...design
+  } of inputs) {
+    const resolved = resolveDesign(design)
+    const swatches = resolveSwatches(colors)
+    const fonts = resolvePairings(pairings)
+    if (!resolved.ok || !swatches.ok || !fonts.ok) {
+      for (const result of [resolved, swatches, fonts])
+        if (!result.ok)
+          problems.push(...result.problems.map((p) => `${name} → ${p}`))
+      continue
+    }
+    const state = validate(resolved.value)
+    const own = state.ok ? state.state : undefined
+    const ownColor = String(own?.brand ?? DEFAULTS.brand)
+    const ownFonts: Pairing = {
+      name: "As designed",
+      heading: String(
+        own?.headingFont === "same" ? own.bodyFont : own?.headingFont,
+      ),
+      body: String(own?.bodyFont),
+      mono: String(own?.monoFont),
+    }
+    directions.push({
+      name,
+      summary,
+      diff: resolved.value,
+      colors: [
+        { color: ownColor, label: "As designed" },
+        ...swatches.value.filter((s) => s.color !== ownColor),
+      ],
+      pairings: [ownFonts, ...fonts.value].map((pairing) => ({
+        ...pairing,
+        axes: pairingAxes(pairing),
+      })),
+    })
   }
   return problems.length > 0
     ? failure(problems)

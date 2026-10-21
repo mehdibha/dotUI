@@ -5,11 +5,13 @@ import { Controls } from "@/components/showcase/controls"
 import { salvageState } from "@/modules/studio/axes"
 import { designSystemOf } from "@/modules/studio/resolve"
 
-import type { Direction } from "../design"
+import type { Direction, MintedDesignSystem } from "../design"
+import { Customize } from "./customize"
+import { ReadyCard } from "./ready-card"
 import {
   CardActions,
   CardHeader,
-  sendPick,
+  saveDesign,
   Themed,
   Tile,
   Tiles,
@@ -23,6 +25,8 @@ export interface DirectionsPayload {
   directions: Direction[]
 }
 
+/** Pick a direction, customize it, save it — all in this one card, so the
+ *  chat stays for what needs words. */
 export function DirectionsCard({ product, directions }: DirectionsPayload) {
   const { app, host } = useCard()
   const entries = useMemo(
@@ -34,32 +38,56 @@ export function DirectionsCard({ product, directions }: DirectionsPayload) {
     [directions],
   )
   const [picked, setPicked] = useState(0)
-  const [sent, setSent] = useState<string>()
+  const [view, setView] = useState<"pick" | "customize">("pick")
+  const [saved, setSaved] = useState<MintedDesignSystem>()
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string>()
   const chosen = entries[picked] ?? entries[0]
   if (!chosen) return null
 
-  const fullscreen = host.displayMode === "fullscreen"
   const canFullscreen = host.availableDisplayModes?.includes("fullscreen")
-
-  async function confirm() {
-    if (!chosen) return
-    const { name, diff } = chosen.direction
-    await sendPick(app, `Let's go with "${name}".`, {
-      picked: name,
-      axes: diff,
-    })
-    setSent(name)
+  const display = (mode: "inline" | "fullscreen") => {
+    if (canFullscreen) void app.requestDisplayMode({ mode })
   }
+
+  function finish(next: MintedDesignSystem) {
+    setSaved(next)
+    setView("pick")
+    display("inline")
+  }
+
+  async function save() {
+    if (!chosen) return
+    setSaving(true)
+    setError(undefined)
+    try {
+      finish(await saveDesign(app, product, chosen.direction.diff))
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : String(cause))
+    }
+    setSaving(false)
+  }
+
+  if (saved) return <ReadyCard card="ready" {...saved} />
+
+  if (view === "customize")
+    return (
+      <Customize
+        product={product}
+        directions={directions}
+        start={picked}
+        onBack={() => {
+          setView("pick")
+          display("inline")
+        }}
+        onSaved={finish}
+      />
+    )
 
   return (
     <div className="flex flex-col gap-4">
       <CardHeader title={`${directions.length} directions for ${product}`} />
-      <Tiles
-        label="Directions"
-        value={picked}
-        onChange={setPicked}
-        isDisabled={!!sent}
-      >
+      <Tiles label="Directions" value={picked} onChange={setPicked}>
         {entries.map(({ direction, system }, i) => (
           <Tile
             key={direction.name}
@@ -84,20 +112,18 @@ export function DirectionsCard({ product, directions }: DirectionsPayload) {
         </Themed>
       </div>
       <CardActions>
-        {canFullscreen && (
-          <Button
-            variant="quiet"
-            onPress={() =>
-              app.requestDisplayMode({
-                mode: fullscreen ? "inline" : "fullscreen",
-              })
-            }
-          >
-            {fullscreen ? "Exit full screen" : "Full screen"}
-          </Button>
-        )}
-        <Button variant="primary" isDisabled={!!sent} onPress={confirm}>
-          {sent ? `Picked ${sent}` : `Continue with ${chosen.direction.name}`}
+        {error && <span className="text-xs text-fg-danger">{error}</span>}
+        <Button
+          isDisabled={saving}
+          onPress={() => {
+            setView("customize")
+            display("fullscreen")
+          }}
+        >
+          Customize
+        </Button>
+        <Button variant="primary" onPress={save} isPending={saving}>
+          Save {chosen.direction.name}
         </Button>
       </CardActions>
     </div>

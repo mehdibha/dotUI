@@ -68,7 +68,10 @@ export function ReadyCard({
       <div className="flex min-w-0 flex-col gap-3">
         <div className="flex flex-col gap-0.5">
           <p className="text-base font-medium">{name} is ready</p>
-          <p className="text-xs text-fg-muted">Saved as {id}</p>
+          <p className="text-xs text-fg-muted">
+            Saved as {id}. Ask Claude to set up your project or build a first
+            screen.
+          </p>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {facts.map((fact) => (

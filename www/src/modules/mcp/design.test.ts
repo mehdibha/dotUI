@@ -59,6 +59,52 @@ describe("resolveDesign", () => {
 })
 
 describe("resolveDirections", () => {
+  it("offers the direction's own color and fonts first, then Claude's", () => {
+    const result = resolveDirections([
+      {
+        name: "Warm",
+        summary: "warm",
+        preset: "claude",
+        axes: { brand: "#e8590c" },
+        colors: [{ color: "#e8590c" }, { color: "#2f6f5e", label: "Green" }],
+        pairings: [{ heading: "Fraunces", body: "Inter" }],
+      },
+    ])
+    if (!result.ok) throw new Error(result.problems.join())
+    const [warm] = result.value
+    expect(warm?.colors).toEqual([
+      { color: "#e8590c", label: "As designed" },
+      { color: "#2f6f5e", label: "Green" },
+    ])
+    expect(warm?.pairings.map((p) => p.name ?? p.heading)).toEqual([
+      "As designed",
+      "Fraunces",
+    ])
+    expect(warm?.pairings[1]?.axes).toEqual({
+      headingFont: "Fraunces",
+      bodyFont: "Inter",
+    })
+  })
+
+  it("prefixes a bad color or font with the direction", () => {
+    expect(
+      resolveDirections([
+        { name: "A", summary: "a", colors: [{ color: "nope" }] },
+        {
+          name: "B",
+          summary: "b",
+          pairings: [{ heading: "X", body: "Inter" }],
+        },
+      ]),
+    ).toMatchObject({
+      ok: false,
+      problems: [
+        expect.stringMatching(/^A → candidates\[0\]/),
+        expect.stringMatching(/^B → pairings\[0\]\.headingFont/),
+      ],
+    })
+  })
+
   it("prefixes problems with the direction", () => {
     const result = resolveDirections([
       { name: "A", summary: "fine", preset: "vercel" },

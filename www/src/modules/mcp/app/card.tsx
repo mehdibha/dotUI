@@ -5,8 +5,6 @@ import { Loader } from "@/registry/ui/loader"
 import { DEFAULT_STATE } from "@/modules/studio/axes"
 import { designSystemOf } from "@/modules/studio/resolve"
 
-import { ColorCard } from "./color-card"
-import type { ColorPayload } from "./color-card"
 import { CompareCard } from "./compare-card"
 import type { ComparePayload } from "./compare-card"
 import { DirectionsCard } from "./directions-card"
@@ -14,17 +12,10 @@ import type { DirectionsPayload } from "./directions-card"
 import { ReadyCard } from "./ready-card"
 import type { ReadyPayload } from "./ready-card"
 import { CardProvider, useHost } from "./shell"
-import { TypeCard } from "./type-card"
-import type { TypePayload } from "./type-card"
 
-type Payload =
-  | DirectionsPayload
-  | ColorPayload
-  | TypePayload
-  | ComparePayload
-  | ReadyPayload
+type Payload = DirectionsPayload | ComparePayload | ReadyPayload
 
-const CARDS = new Set(["directions", "color", "type", "compare", "ready"])
+const CARDS = new Set(["directions", "compare", "ready"])
 
 const isPayload = (value: unknown): value is Payload =>
   typeof value === "object" &&
@@ -37,10 +28,6 @@ function Body({ payload }: { payload: Payload }) {
   switch (payload.card) {
     case "directions":
       return <DirectionsCard {...payload} />
-    case "color":
-      return <ColorCard {...payload} />
-    case "type":
-      return <TypeCard {...payload} />
     case "compare":
       return <CompareCard {...payload} />
     case "ready":
