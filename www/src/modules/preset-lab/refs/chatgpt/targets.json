@@ -1,0 +1,247 @@
+{
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-button--colors&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-button--colors&globals=theme:dark",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "button[data-color=primary][data-variant=solid]",
+        "box": "::before"
+      },
+      "button.secondary": {
+        "selector": "button[data-color=primary][data-variant=outline]",
+        "box": "::before"
+      },
+      "button.quiet": {
+        "selector": "button[data-color=primary][data-variant=ghost]",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-input--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-input--base&globals=theme:dark",
+    "parts": {
+      "input": {
+        "selector": "[class*=_Container_][data-variant=outline]",
+        "ink": "input",
+        "skip": ["paddingInline"]
+      },
+      "input.focus": {
+        "selector": "[class*=_Container_][data-variant=outline]",
+        "focus": true
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-slider--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-slider--base&globals=theme:dark",
+    "parts": {
+      "field.label": {
+        "selector": "[class*=_SliderLabel_] label"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:dark",
+    "parts": {
+      "checkbox": {
+        "selector": "button[role=checkbox]"
+      },
+      "checkbox.checked": {
+        "selector": "button[role=checkbox]",
+        "before": [
+          {
+            "click": "button[role=checkbox]"
+          }
+        ]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:dark",
+    "parts": {
+      "radio": {
+        "selector": "button[role=radio][aria-checked=false]"
+      },
+      "radio.checked": {
+        "selector": "button[role=radio][aria-checked=true] [class*=_RadioIndicator_]",
+        "box": "::before"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--base&globals=theme:dark",
+    "parts": {
+      "switch.off": {
+        "selector": "button[role=switch]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--default-checked&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--default-checked&globals=theme:dark",
+    "parts": {
+      "switch.on": {
+        "selector": "button[role=switch]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-segmentedcontrol--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-segmentedcontrol--base&globals=theme:dark",
+    "parts": {
+      "segmented": {
+        "selector": "[role=group]"
+      },
+      "segmented.item": {
+        "selector": "button[data-state=off]",
+        "skip": ["backgroundColor", "height"]
+      },
+      "segmented.selected": {
+        "selector": "[class*=SegmentedControlThumb]",
+        "only": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "edge",
+          "boxShadow"
+        ]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-menu--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-menu--base&globals=theme:dark",
+    "parts": {
+      "menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "button[aria-haspopup=menu]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menuitem]",
+        "before": [
+          {
+            "click": "button[aria-haspopup=menu]"
+          }
+        ],
+        "skip": ["borderRadius"]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-tooltip--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-tooltip--base&globals=theme:dark",
+    "parts": {
+      "tooltip": {
+        "selector": "[class*=_Tooltip_]",
+        "before": [
+          {
+            "hover": "[class*=_TriggerDecorator_]"
+          }
+        ],
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-badge--colors&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-badge--colors&globals=theme:dark",
+    "parts": {
+      "badge": {
+        "selector": "[data-color=secondary][data-variant=soft][data-size=md]"
+      },
+      "badge.accent": {
+        "selector": "[data-color=info][data-variant=soft][data-size=md]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-alert--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-alert--base&globals=theme:dark",
+    "parts": {
+      "alert": {
+        "selector": "[class*=_Alert_]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-textlink--primary&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-textlink--primary&globals=theme:dark",
+    "parts": {
+      "link": {
+        "selector": "a[data-primary]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-datepicker--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-datepicker--base&globals=theme:dark",
+    "parts": {
+      "calendar.day": {
+        "selector": "[class*=_InteractiveDay_]:not(:has([class*=_TodayDot_]))",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "calendar.today": {
+        "selector": "[class*=_InteractiveDay_]:has([class*=_TodayDot_])",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "calendar.selected": {
+        "selector": "[class*=_Day_][data-is-selected] [class*=_InteractiveDay_]",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          },
+          {
+            "click": "[class*=_InteractiveDay_]::-p-text(15)"
+          },
+          {
+            "wait": "[aria-haspopup=dialog][data-selected=true]"
+          },
+          {
+            "click": "[aria-haspopup=dialog]"
+          },
+          {
+            "wait": "[data-is-selected]"
+          }
+        ]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--sizes&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--sizes&globals=theme:dark",
+    "parts": {
+      "heading.2": {
+        "selector": "h2.heading-xl",
+        "skip": ["fontSize"]
+      },
+      "text": {
+        "selector": "p.text-md"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--colors&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--colors&globals=theme:dark",
+    "parts": {
+      "text.muted": {
+        "selector": "p.text-secondary",
+        "skip": ["fontSize"]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-selectcontrol--variants&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-selectcontrol--variants&globals=theme:dark",
+    "parts": {
+      "select.trigger": {
+        "selector": "[class*=_SelectControl_][data-variant=outline][data-selected=true]",
+        "box": "::before",
+        "ink": "[class*=_TriggerText_]"
+      }
+    }
+  }
+}
