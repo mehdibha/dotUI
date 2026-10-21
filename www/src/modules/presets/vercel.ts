@@ -73,6 +73,8 @@ export const vercel = definePreset({
     // Stand-in: Geist fills secondary buttons, fields, checks and kbd with
     // background-100 (#fff / #0a0a0a); ours stay clear over the page.
     buttonSecondary: "outline",
+    // Stand-in: Geist's segmented switch is 36px with 28px items at 500 and a
+    // flat gray-100 chip; ours follows the density, the tab weight and a shadowed chip.
     segmentedTrack: "outline",
 
     // Selection
@@ -91,6 +93,7 @@ export const vercel = definePreset({
     inputHover: "edge",
     inputError: "icon-message",
     selectTrigger: "field",
+    // Stand-in: Geist labels are 13px in gray-900; ours 14px in ink.
 
     // Menus & popovers
     menuRows: "match",
@@ -115,9 +118,12 @@ export const vercel = definePreset({
     linkUnderline: "hover",
 
     // Feedback
+    // Stand-in: Geist notes and segmented tracks take the 6px control radius
+    // and notes set muted text; ours take the 12px container radius and ink.
     alertStyle: "outline",
     toastStatus: "bold",
     spinnerStyle: "blades",
+    // Stand-in: Geist's bar is 10px with a rounded fill end; ours 8px, cut square.
     progressTrack: "thick",
     // Stand-in: badges stay 20px; Geist's are 24px with 12px padding, and its
     // gray badge is solid #4d4d4d with white text.
