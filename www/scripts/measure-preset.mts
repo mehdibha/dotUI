@@ -10,12 +10,13 @@
  *   tsx scripts/measure-preset.mts --url <url> --targets <file> [--mode light|dark]
  *     Measures a public page headless and prints its measures as JSON.
  *
- *   tsx scripts/measure-preset.mts --snippet --targets <file>
+ *   tsx scripts/measure-preset.mts --snippet --targets <file> [--url <url>]
  *     Prints the probe as one JavaScript expression, for a signed-in tab
  *     driven by Claude in Chrome.
  *
  * A targets file maps part names (see SPECIMEN_TARGETS) to { selector, text,
- * within, nth, surface }.
+ * within, nth, surface }. A pack's refs/<id>/targets.json maps page URLs to
+ * such maps; --url picks the page.
  */
 import { existsSync } from "node:fs"
 import { mkdir, readFile, writeFile } from "node:fs/promises"
@@ -58,12 +59,33 @@ if (!MODES.every((m) => m === "light" || m === "dark")) {
   process.exit(1)
 }
 
+const TARGET_KEYS = new Set(["selector", "text", "within", "nth", "surface"])
+const isTargets = (value: unknown): value is Record<string, Target> =>
+  typeof value === "object" &&
+  value !== null &&
+  Object.values(value).every(
+    (target) =>
+      typeof target === "object" &&
+      target !== null &&
+      Object.keys(target).every((key) => TARGET_KEYS.has(key)),
+  )
+
 const readTargets = async (): Promise<Record<string, Target>> => {
   if (!args.targets) {
     console.error("--targets <file> is required with --url and --snippet")
     process.exit(1)
   }
-  return JSON.parse(await readFile(args.targets, "utf8"))
+  const file: Record<string, unknown> = JSON.parse(
+    await readFile(args.targets, "utf8"),
+  )
+  const targets = isTargets(file) ? file : file[args.url ?? ""]
+  if (!isTargets(targets)) {
+    console.error(
+      `${args.targets}: expected { "<part>": Target }, or a pack's { "<url>": { "<part>": Target } } with --url naming one of its pages`,
+    )
+    process.exit(1)
+  }
+  return targets
 }
 
 if (args.snippet) {

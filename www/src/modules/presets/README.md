@@ -27,7 +27,7 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 3. **Type:** fonts, UI text size, title style, label weight.
 4. **Shape and density:** base radius, role radii, density.
 5. **Surfaces and states:** layers, edges, shadows, focus, disabled.
-6. **Components**, chapter by chapter. `pnpm presets:catalog --preset <id>` lists every key with its options (and the systems each option comes from) and where the preset's value comes from. Keys still at `default` need an explicit look, not an assumption.
+6. **Components**, chapter by chapter. `pnpm --filter www presets:catalog --preset <id>` lists every key with its options (and the systems each option comes from) and where the preset's value comes from. Keys still at `default` need an explicit look, not an assumption.
 
 ## When no axis fits
 
@@ -51,6 +51,6 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 
 - `pnpm test`, `pnpm typecheck` and `pnpm check` pass.
 - The reference pack is committed and covers the parts the product shows.
-- `pnpm presets:measure --preset <id>` shows nothing off that a preset value could fix; whatever remains has a stand-in comment or a ledger row.
+- `pnpm --filter www presets:measure --preset <id>` shows nothing off that a preset value could fix; whatever remains has a stand-in comment or a ledger row.
 - All 12 sheets are captured in both modes and compared; the review artifact and the tracker row are updated.
 - Origin and Spotify have example templates: after changing either, run `pnpm smoke:examples` and commit `examples/`. CI regenerates the cover for any preset.

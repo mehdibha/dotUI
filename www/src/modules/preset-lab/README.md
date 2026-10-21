@@ -36,10 +36,10 @@ pnpm presets:compare --preset linear --refs <dir of reference pngs>
 pnpm presets:measure --preset linear --port <port>
 
 # The probe as one JS expression, for a signed-in tab driven by Claude in Chrome
-pnpm presets:measure --snippet --targets <targets file>
+pnpm presets:measure --snippet --targets src/modules/preset-lab/refs/linear/targets.json --url <page>
 
 # Measure a public page headless (no sign-in)
-pnpm presets:measure --url <url> --targets <targets file> --mode dark
+pnpm presets:measure --url <page> --targets src/modules/preset-lab/refs/linear/targets.json --mode dark
 
 # Every axis, and where each of the preset's values comes from
 pnpm presets:catalog --preset linear [--chapter buttons]
