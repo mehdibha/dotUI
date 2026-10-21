@@ -34,7 +34,7 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 - Sort every property that is off into one of five buckets:
   1. **Preset value:** fix it, with the measured value in a comment.
   2. **Stand-in:** the closest value, with a `// Stand-in: …` comment.
-  3. **Missing axis:** a row, or a system added to a row, in the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020).
+  3. **Missing axis:** a comment on the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020), one look per comment (`Look | Systems that need it | Stand-in today`, with measured values), or naming an existing row to add your system to it. Never edit the issue body: other preset threads write at the same time.
   4. **Component bug:** its own issue.
   5. **Color engine:** a ledger row marked "color engine"; the engine is queued for a rewrite, so don't work around it.
 - Never add a token, axis, variant or override in this work, and don't touch other presets or component styles.
@@ -61,6 +61,6 @@ Outside a project, put the compare images and the diff summary in the PR descrip
 - The PR body covers:
   - the changes by group, with their evidence;
   - the measure summary, before → after;
-  - ledger rows added;
+  - ledger comments posted;
   - the review artifact link.
 - Cover and examples outputs can conflict between preset PRs: rebase and regenerate, never hand-merge them.
