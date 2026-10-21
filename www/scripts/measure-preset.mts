@@ -462,8 +462,10 @@ async function mergeTokens(
 
 if (args.pack && args.merge) {
   const page = ((await readJson(packFile(args.pack))) as Pack)[args.url ?? ""]
-  const mode = page?.mode ?? MODES[0]
-  if (!page || (!page.mode && MODES.length > 1)) {
+  // An explicit --mode wins: a page pinned to one theme in its public pass
+  // can still be measured signed in, in both.
+  const mode = MODES.length === 1 ? MODES[0] : page?.mode
+  if (!page || !mode) {
     console.error(
       "--merge needs --url naming a page of the pack, and --mode unless the page sets one",
     )
