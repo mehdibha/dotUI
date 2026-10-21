@@ -19,8 +19,8 @@ import {
 import { highlightTsx } from "@/modules/docs/highlight"
 import { Controls } from "@/modules/docs/interactive-demo/controls"
 import type {
+  Control,
   ControlValues,
-  SerializableControl,
 } from "@/modules/docs/interactive-demo/types"
 
 import { Cursor, type CursorKey } from "../lib/cursor"
@@ -41,7 +41,7 @@ import { Caption, H, W, YOURS } from "./shared"
 
 export const DEMOS_FRAMES = BAR * 4
 
-const CONTROLS = playground.controls as SerializableControl[]
+const CONTROLS = playground.controls as Control[]
 const TEMPLATE = playground.codeTemplate as unknown as CodeTemplate
 
 /** Page width at true size, and the zoom it's filmed at. */
@@ -145,7 +145,6 @@ export function ButtonDocs({
                   controls={CONTROLS}
                   values={values}
                   onChange={() => {}}
-                  layout="horizontal"
                 />
               </div>
             </div>
