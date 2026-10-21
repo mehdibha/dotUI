@@ -247,7 +247,13 @@ async function runSteps(page: Page, steps: Step[]) {
           : "focus" in step
             ? step.focus
             : step.wait
-    await page.waitForSelector(selector, { visible: true, timeout: 15000 })
+    await page
+      .waitForSelector(selector, { visible: true, timeout: 15000 })
+      .catch(async (error) => {
+        if (await page.$(selector))
+          throw new Error(`step ${JSON.stringify(step)}: found, but hidden`)
+        throw error
+      })
     if ("click" in step) await page.click(selector)
     else if ("hover" in step) await page.hover(selector)
     else if ("focus" in step) await page.focus(selector)
@@ -259,8 +265,11 @@ async function runSteps(page: Page, steps: Step[]) {
 async function shoot(page: Page, part: string, mode: Mode) {
   if (!args.shots) return
   const el = await page.$(`>>> [data-probe-part="${part}"]`)
-  const box = await el?.boundingBox()
-  if (!box) return
+  if (!el) return
+  // Parts below the fold or inside a scrolled panel crop blank otherwise.
+  await el.evaluate((node) =>
+    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
+  )
   await page
     .waitForFunction(
       () =>
@@ -274,8 +283,14 @@ async function shoot(page: Page, part: string, mode: Mode) {
       { timeout: 3000 },
     )
     .catch(() => {})
-  const x = Math.max(0, box.x - 16)
-  const y = Math.max(0, box.y - 16)
+  const box = await el.boundingBox()
+  if (!box) return
+  const [left, top] = await page.evaluate(() => [
+    window.scrollX,
+    window.scrollY,
+  ])
+  const x = Math.max(0, box.x + left - 16)
+  const y = Math.max(0, box.y + top - 16)
   await mkdir(args.shots, { recursive: true })
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
@@ -380,6 +395,16 @@ async function measurePage(
       snippet(plain, { mark: true, owned: true }),
     )
     for (const part of Object.keys(plain)) await shoot(page, part, mode)
+    // The probe skips hidden elements; say so rather than a bare "no match".
+    for (const [part, { selector, within }] of Object.entries(plain)) {
+      const chain = [within, selector].filter(Boolean).join(" ")
+      if (measures[part] || !chain) continue
+      const hidden = (await page.$$(chain)).length
+      if (hidden)
+        console.warn(
+          `${part} on ${url} (${mode}): "${chain}" matches ${hidden} element(s), none visible at ${width}px`,
+        )
+    }
     // A closed overlay can leave the page changed (a dialog that remounts
     // its trigger), so a part after one starts from a fresh load.
     let opened = false
