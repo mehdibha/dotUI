@@ -39,11 +39,13 @@ export const wise = definePreset({
     labelWeight: "semibold",
 
     // Shape
-    // Fields and menus 10px, prompts and tooltips 16, dialogs 32, tags 6.
+    // Fields and menus 10px, prompts and tooltips 16, dialogs and cards 32,
+    // tags 6.
     radiusPx: 10.5,
     roleControl: "lg",
     roleItem: "lg",
     rolePanel: "3xl",
+    roleCard: "3xl",
 
     // Space
     // Buttons, fields and menu rows 48px with 16px text; buttons pad 16, not 24.

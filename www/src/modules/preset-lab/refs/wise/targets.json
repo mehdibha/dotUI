@@ -257,6 +257,20 @@
       }
     }
   },
+  "react.html?sheet=display&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "card": {
+        "within": "[data-part=card]",
+        "selector": ".np-Card"
+      }
+    }
+  },
   "react.html?sheet=dates&theme=light": {
     "mode": "light",
     "steps": [
@@ -569,6 +583,20 @@
       "badge.accent": {
         "within": "[data-part=tag-success]",
         "selector": ".wds-tag"
+      }
+    }
+  },
+  "react.html?sheet=display&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "card": {
+        "within": "[data-part=card]",
+        "selector": ".np-Card"
       }
     }
   },

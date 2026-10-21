@@ -43,6 +43,7 @@
       import { Menu, More, Plus } from "@transferwise/icons"
       import {
         AvatarView,
+        BaseCard,
         Body,
         Button,
         Calendar,
@@ -378,6 +379,12 @@
 
       const DisplaySheet = () =>
         html`<div style=${{ width: 560 }}>
+          <${Part} name="card" block>
+            <${BaseCard}>
+              <${Title} as="h3" type="title-body">Get paid like a local<//>
+              <${Body} as="p">Account details for 10 currencies.<//>
+            <//>
+          <//>
           <${Part} name="avatar"
             ><${AvatarView} profileName="Mehdi Ben" size=${48}
           /><//>

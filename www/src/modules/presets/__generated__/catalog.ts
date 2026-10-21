@@ -2691,7 +2691,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-font-weight-label": "var(--font-weight-semibold)",
 				"--radius": "0.65625rem",
 				"--studio-radius-panel": "var(--radius-3xl)",
-				"--studio-radius-card": "var(--radius-2xl)",
+				"--studio-radius-card": "var(--radius-3xl)",
 				"--studio-radius-control": "var(--radius-lg)",
 				"--studio-radius-item": "var(--radius-lg)",
 				"--studio-radius-control-sm": "var(--radius-md)",
