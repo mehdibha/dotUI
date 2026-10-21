@@ -30,6 +30,14 @@
       }
     }
   },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:g100",
+    "parts": {
+      "pagination.current": {
+        "selector": ".cds--pagination-nav__page--active"
+      }
+    }
+  },
   "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:white&args=kind:secondary": {
     "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:g100&args=kind:secondary",
     "parts": {

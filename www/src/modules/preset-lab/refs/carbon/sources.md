@@ -33,11 +33,11 @@ Carbon publishes its tokens as code, so colors come from the packages first.
 
 The [Carbon React Storybook](https://react.carbondesignsystem.com) renders the real components at their default size. Each story is opened headless as `iframe.html?viewMode=story&id=<story>`. The theme is a URL global: each page in `targets.json` is the `backgrounds.value:white` URL, with its `dark` set to the `g100` one.
 
-- Re-measure: `pnpm presets:measure --pack carbon` (21 stories, probe 8eb9b12 or later).
+- Re-measure: `pnpm presets:measure --pack carbon` (22 stories, probe 8eb9b12 or later).
 - Parts measure their kind's default properties. `skip` leaves out what the two sides draw in different places: the tab lines (Carbon draws a 2px bottom border on every tab; dotUI a 1px rule on the list plus an indicator child, logged in the ledger), side nav padding (Carbon pads the link, dotUI the row), tooltip height (Carbon's bubble wraps its text), content-switcher item edges (Carbon outlines each item, dotUI the track, which is compared), and the radio dot and content-switcher fills, which Carbon scales with a transform the probe reads as a solid fill.
 - `button.focus` and `input.focus` are `focus` parts: Carbon's inset focus reads as an `edge` of 2px `focus` with no `ring`. `checkbox.checked` clicks the first checkbox, `switch.off` clicks the toggle (the story renders on), and the calendar parts open the date picker; `calendar.selected` clicks the first day of the month that isn't today.
 - `menu` and `menu.item` use `&args=size:md`, the 40px rows Dropdown and OverflowMenu default to. The default Menu story is `sm` (32px).
-- Buttons are the default `lg` (48px): the Button story ignores a `size` arg. Carbon's `md` is 40px, the field height. `button.icon` is the IconButton story with `&args=kind:secondary`, the kind dotUI's specimen icon button maps to.
+- Buttons are the default `lg` (48px): the Button story ignores a `size` arg. Carbon's `md` is 40px, the field height. `button.icon` is the IconButton story with `&args=kind:secondary`, the kind dotUI's specimen icon button maps to. `pagination.current` is PaginationNav's active page.
 - `badge` is the gray read-only Tag (`.cds--tag--gray`), `badge.accent` the blue one. `alert` is the default inline notification.
 - `checkbox` reads its box from the label's `::before` (`box`); `nav.item` and `nav.item.active` read color and type from `.cds--side-nav__link-text` (`ink`), since the anchor computes link blue. `panel` is the page background: the UI Shell content area paints nothing.
 - `heading.1`–`heading.4`, `text` and `text.muted` are written by hand from `@carbon/type` and the theme tokens: productive headings at 400 in `text-primary`, body in `text-primary`, secondary text in `text-secondary`. Sizes are left out: the specimen's scale and Carbon's don't map one to one. `--pack` keeps them.
@@ -59,10 +59,13 @@ From the same stories, both themes, with `getComputedStyle` (pseudo-elements and
 - Modal: `layer-01` with a 1px `border-subtle-01` edge, no shadow, 60% black overlay, 20px/400 title, 64px full-bleed footer buttons, fields inside on `field-02`.
 - Tile: `layer-01`, 16px padding, square. Selected radio tile: 1px `layer-selected-inverse` edge and a filled check.
 - Tag: pill, 24px, 12px/400, letter-spacing 0.32px, 8px padding.
-- Inline and toast notifications (default, high contrast): `background-inverse`, a 3px status stripe at the start, a filled status icon, 14px/600 title.
-- Data table: header `layer-accent` (#e0e0e0 / #393939) 14px/600, rows 48px, cells `text-secondary`.
+- Inline and toast notifications (default, high contrast): `background-inverse`, a 3px status stripe at the start, a filled status icon, 14px/600 title. Toasts are 288px wide.
+- Data table: header band `layer-accent` (#e0e0e0 / #393939) with labels at 14px/600, a 1px `border-subtle` hairline under each row and no frame around the table, rows 48px.
+- Accordion: 40px rows under 1px `border-subtle` hairlines, titles 14px/400, title and panel text inset 16px, panel text in `text-primary`.
 - Progress bar: 8px, `layer-accent` track, `interactive` fill. Slider: 2px track, 14px `icon-primary` thumb.
 - Date picker: 40px day cells; today in `link-primary` 600 with a dot under it; the selected day fills with `button-primary`.
 - Side nav: `background` fill, 32px items; the current one on `background-selected` (#8d8d8d at 20%) with a 3px `border-interactive` bar at the start, text 600.
+- UI Shell header: 48px, `background` with a 1px `border-subtle` bottom hairline, product name 14px/600, menu items in `text-secondary`, 48px icon actions.
+- PaginationNav: 48px page buttons; the current page stays unfilled at 14px/600 over a 16×4px `border-interactive` bar.
 
-Reference images (both themes) are in the project files under `presets/carbon/2026-10-21/refs/`.
+Reference images (both themes) are in the project files under `presets/carbon/2026-10-21/refs/`. A wider crawl sits next to them in `explore/`: every Storybook story in White and G100 (screenshots and the computed styles of each `cds--` element), the carbondesignsystem.com pages (light only), and all four `@carbon/themes` token sets.
