@@ -1,0 +1,257 @@
+{
+  "https://accounts.spotify.com/en/login": {
+    "mode": "dark",
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": [
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize",
+          "fontWeight"
+        ]
+      },
+      "button.secondary": {
+        "text": "Continue with Google",
+        "skip": ["boxShadow", "paddingInline", "ring"]
+      },
+      "input": {
+        "selector": "[data-testid=login-username]",
+        "skip": ["boxShadow", "ring"]
+      },
+      "text": {
+        "text": "or",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "text.muted": {
+        "text": "Don't have an account?",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      }
+    }
+  },
+  "https://accounts.spotify.com/en/login (Encore light theme)": {
+    "mode": "light",
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": [
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize",
+          "fontWeight"
+        ]
+      },
+      "button.secondary": {
+        "text": "Continue with Google",
+        "skip": ["boxShadow", "paddingInline", "ring"]
+      },
+      "input": {
+        "selector": "[data-testid=login-username]",
+        "skip": ["boxShadow", "ring"]
+      },
+      "text": {
+        "text": "or",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "text.muted": {
+        "text": "Don't have an account?",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      }
+    }
+  },
+  "https://accounts.spotify.com/en/login (Encore board)": {
+    "signedIn": true,
+    "parts": {
+      "button.primary": {
+        "selector": "[data-part=\"button.primary\"]",
+        "skip": ["boxShadow", "ring"]
+      },
+      "button.quiet": {
+        "selector": "[data-part=\"button.quiet\"]",
+        "skip": ["boxShadow", "ring"]
+      },
+      "button.focus": {
+        "selector": "[data-part=\"button.focus\"]",
+        "skip": [
+          "boxShadow",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "edge"
+        ]
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "skip": ["boxShadow", "edge"]
+      },
+      "checkbox": {
+        "selector": "[data-part=\"checkbox\"]",
+        "skip": [
+          "boxShadow",
+          "backgroundColor",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring"
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "[data-part=\"checkbox.checked\"]",
+        "skip": [
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring",
+          "edge"
+        ]
+      },
+      "switch.on": {
+        "selector": "[data-part=\"switch.on\"]",
+        "skip": [
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring"
+        ]
+      },
+      "switch.off": {
+        "selector": "[data-part=\"switch.off\"]",
+        "skip": [
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring"
+        ]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]",
+        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+      },
+      "link": {
+        "selector": "[data-part=\"link\"]",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      },
+      "tooltip": {
+        "selector": "[data-part=\"tooltip\"]",
+        "skip": ["boxShadow", "height", "fontSize", "ring"]
+      },
+      "menu": {
+        "selector": "[data-part=\"menu\"]",
+        "skip": ["boxShadow", "height", "paddingInline", "fontSize", "ring"]
+      },
+      "badge": {
+        "selector": "[data-part=\"badge\"]",
+        "skip": ["boxShadow", "fontSize", "fontWeight", "ring"]
+      },
+      "heading.1": {
+        "selector": "[data-part=\"heading.1\"]",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      },
+      "heading.3": {
+        "selector": "[data-part=\"heading.3\"]",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      }
+    }
+  }
+}

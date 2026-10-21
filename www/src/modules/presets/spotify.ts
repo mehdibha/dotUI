@@ -19,6 +19,7 @@ export const spotify = definePreset({
 
     // Color
     // Bright-accent #1ed760 under black ink, verbatim in both themes.
+    // Stand-in: the label ink is a dark green, and light-mode checks are #159542.
     brand: "#1ed760",
     preserveSeed: true,
     // Encore's light positive; #1ed760 sat at 1.6:1 as an icon on the white dark-mode toast.
@@ -32,7 +33,7 @@ export const spotify = definePreset({
     darkBg: 5.5,
 
     // Typography
-    // Spotify Mix is proprietary; Figtree is the closest free geometric grotesk.
+    // Stand-in: Spotify Mix is proprietary; Figtree is the closest free geometric grotesk.
     bodyFont: "Figtree",
     titleStyle: "bold",
     // Buttons, chips and tabs are 700.
@@ -61,10 +62,12 @@ export const spotify = definePreset({
 
     // States
     // A 2px white (dark) or black (light) ring drawn inside, never green.
+    // Stand-in: on the green primary it is black and 4px in.
     focusColor: "neutral",
     focusStyle: "inset",
     focusInputStyle: "border",
     focusInputWeight: "thick",
+    // Stand-in: Encore fades disabled controls to 30%.
     disabledTreatment: "fade",
 
     // Motion
@@ -89,7 +92,7 @@ export const spotify = definePreset({
     inputStyle: "inset",
     // Hover turns the #7c7c7c edge to text-base.
     inputHover: "edge",
-    // Labels are 14/700.
+    // Stand-in: labels are 14/700; semibold is the heaviest label.
     fieldLabel: "semibold",
     selectTrigger: "field",
 
@@ -133,7 +136,7 @@ export const spotify = definePreset({
     // ProgressBar is 6px in essential-bright-accent, the check color.
     progressTrack: "medium",
     progressColor: "same-checks",
-    // Tags are 4px; status tags (New, Beta) are solid.
+    // Stand-in: tags are 16px (24px large) at 4px corners; rounded is 20px at 2px.
     badgeShape: "rounded",
   },
 })
