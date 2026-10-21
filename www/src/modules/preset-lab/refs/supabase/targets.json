@@ -1,0 +1,205 @@
+{
+  "https://supabase.com/design-system/docs/components/button": {
+    "parts": {
+      "button.primary": {
+        "selector": ".preview button[class~=\"bg-primary-solid\"]"
+      },
+      "button.secondary": {
+        "selector": ".preview button",
+        "text": "Button rest"
+      },
+      "button.quiet": {
+        "selector": ".preview button[class~=\"hover:bg-accent\"]"
+      },
+      "button.focus": {
+        "selector": ".preview button[class~=\"bg-primary-solid\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/input": {
+    "parts": {
+      "input": {
+        "selector": ".preview input[type=email]"
+      },
+      "input.focus": {
+        "selector": ".preview input[type=email]",
+        "focus": true
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/select": {
+    "parts": {
+      "select.trigger": {
+        "selector": ".preview button[role=combobox]",
+        "skip": ["color"]
+      },
+      "link": {
+        "selector": ".preview a",
+        "text": "email settings",
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/checkbox": {
+    "parts": {
+      "checkbox": {
+        "selector": ".preview button[role=checkbox][data-state=unchecked]",
+        "skip": ["color", "fontSize", "fontWeight"]
+      },
+      "checkbox.checked": {
+        "selector": ".preview button[role=checkbox][data-state=checked]",
+        "skip": ["color", "edge", "fontSize", "fontWeight"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/switch": {
+    "parts": {
+      "switch.off": {
+        "selector": ".preview button[role=switch][data-state=unchecked]",
+        "skip": ["color", "fontSize", "fontWeight"]
+      },
+      "switch.on": {
+        "selector": ".preview button[role=switch][data-state=checked]",
+        "skip": ["color", "fontSize", "fontWeight"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/tabs": {
+    "parts": {
+      "tab": {
+        "selector": ".preview [role=tab][data-state=inactive]",
+        "skip": ["borderRadius", "boxShadow", "paddingInline"]
+      },
+      "tab.selected": {
+        "selector": ".preview [role=tab][data-state=active]",
+        "skip": ["borderRadius", "boxShadow", "paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/sidebar": {
+    "parts": {
+      "shell": {
+        "selector": ".preview [data-sidebar=sidebar]",
+        "skip": ["color", "fontSize", "fontWeight", "height"]
+      },
+      "panel": {
+        "selector": ".preview main",
+        "skip": ["color", "fontSize", "fontWeight", "height"]
+      },
+      "nav.item": {
+        "selector": ".preview [data-sidebar=menu-button][data-active=false]"
+      },
+      "nav.item.active": {
+        "selector": ".preview [data-sidebar=menu-button][data-active=true]"
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/dropdown-menu": {
+    "parts": {
+      "menu": {
+        "selector": "[role=menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": ".preview button::-p-text(Open)"
+          }
+        ],
+        "skip": ["color", "fontSize", "fontWeight", "height", "paddingInline"]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitem]",
+        "nth": 1,
+        "before": [
+          {
+            "click": ".preview button::-p-text(Open)"
+          }
+        ],
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/tooltip": {
+    "parts": {
+      "tooltip": {
+        "selector": "[data-radix-popper-content-wrapper] > *",
+        "surface": true,
+        "before": [
+          {
+            "hover": ".preview button::-p-text(Hover)"
+          }
+        ]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/dialog": {
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": ".preview button::-p-text(Edit profile)"
+          }
+        ],
+        "skip": ["color", "fontSize", "fontWeight", "height"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/commandmenu": {
+    "parts": {
+      "command": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": ".preview button::-p-text(Open command menu)"
+          }
+        ],
+        "skip": ["color", "fontSize", "fontWeight", "height"]
+      },
+      "command.item": {
+        "selector": "[role=dialog] [role=option]",
+        "nth": 1,
+        "before": [
+          {
+            "click": ".preview button::-p-text(Open command menu)"
+          }
+        ],
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/components/badge": {
+    "parts": {
+      "badge": {
+        "selector": ".preview > div",
+        "text": "Default"
+      },
+      "badge.accent": {
+        "selector": ".preview div",
+        "text": "Success"
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/fragments/metric-card": {
+    "parts": {
+      "card": {
+        "selector": ".preview div[class~=\"bg-surface-100\"]",
+        "skip": ["color", "fontSize", "fontWeight", "height"]
+      }
+    }
+  },
+  "https://supabase.com/design-system/docs/typography": {
+    "parts": {
+      "heading.1": {
+        "selector": "main h1",
+        "skip": ["fontSize", "height"]
+      },
+      "text": {
+        "selector": "main .mdx p",
+        "skip": ["fontSize", "height"]
+      }
+    }
+  }
+}
