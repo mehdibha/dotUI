@@ -33,8 +33,9 @@ export const stripe = definePreset({
     // Sail's base stack is the OS face.
     bodyFont: "System",
     monoFont: "Source Code Pro",
-    // Visual Refresh 13px; 14 would also lift the 12px badge/caption tier.
-    uiTextSize: "13",
+    // Sail's control text is 14/20. Stand-in: compact's caption rung moves
+    // with it, so 12px badges and helper text render at 14.
+    uiTextSize: "14",
     labelWeight: "semibold",
     titleStyle: "bold",
 
@@ -58,10 +59,11 @@ export const stripe = definePreset({
     cursorDisabled: "default",
 
     // States
-    // 0 0 0 4px at 36%.
+    // 3px past the 1px edge, at 36%. Stand-in: the ring is the brand, Sail's is
+    // sky blue on buttons (rgba(1,150,237,.36)).
     focusStyle: "halo",
     focusStrength: "faint",
-    focusWidth: 4,
+    focusWidth: 3,
     focusInputStyle: "ring",
     disabledTreatment: "fade",
 
@@ -89,6 +91,8 @@ export const stripe = definePreset({
     dialogSections: "on-scroll",
     mobileDialogs: "sheet",
     tooltipStyle: "surface",
+    // Banners: status fill, edge and text; the neutral one stays white.
+    alertStyle: "soft-outline",
     // Slate-800 toasts; only errors go solid red (Bold would paint every status).
     toastStyle: "inverse",
     tabStyle: "line",

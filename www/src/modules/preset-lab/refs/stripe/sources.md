@@ -1,0 +1,20 @@
+# Stripe: sources
+
+Stripe's design system is Sail. It publishes no tokens as code, but the Dashboard's public bundles carry Sail's palettes and token mapping, and the Stripe Apps docs render Sail's own components. Values come from those computed styles.
+
+## 2026-10-21
+
+`tokens.json` and `targets.json` come from public pages, light only. Crops of every docs preview and the raw dumps are in the project files under `presets/stripe/2026-10-21/`.
+
+- **Stripe Apps docs** (`docs.stripe.com/stripe-apps/components/*`), public, headless at 1440×900 (`presets:measure --pack stripe`). Each page renders the real Sail components (`[data-testid=stripe-app-example-renderer]`) at Dashboard size; overlays open into `.__sail-layer-containers`. The pages ignore `prefers-color-scheme`, so every page sets `"mode": "light"`.
+  - Sizes: buttons, fields and select triggers 28px, 8px padding, 6px corners, 14/20 at 600 (buttons) or 400 (fields); checkbox and radio 14px (checkbox corners 4px); switch 34×18; badges 20px, 12/16 at 400, 6px padding, 4px corners; menus 8px corners, 4px block padding, 32px rows at 14/400 with 10px padding; tooltips a white bubble at 16px padding, 8px corners, 14/20; line tabs 52px at 14/600 with a 2px indicator; table headers 12/700, rows 36–40px with slate-50 hairlines; banners 16px padding, 6px corners, titles 16/700.
+  - Edges are box-shadow rings outside the box: `0 0 0 1px` slate-100 #D4DEE9 on secondary buttons, fields, select triggers and checkboxes, and in the fill color on primary buttons. `button.primary` leaves `edge` out, since a ring in the fill color draws no line.
+  - Shadows: none on buttons and text fields; select triggers and switches `0 1px 1px` rgba(16,17,26,.16); checkboxes and tooltips `0 1px 1px` black 12% + `0 2px 5px` rgba(48,49,61,.08); menus `0 5px 15px` black 12% + `0 15px 35px` rgba(48,49,61,.08).
+  - Focus on buttons: `0 0 0 4px` rgba(1,150,237,.36) over the 1px edge ring, so 3px of sky blue past the visible edge.
+  - Ink: labels, menu rows and tooltip text in slate-900 #1A2C44 (`text` reads the tooltip, whose text is Sail's `color.text`); button, field and select ink in slate-800 #273951; secondary text and the neutral badge in slate-600 #50617A.
+  - Caveats: the renderer's root sets #414552 as its own text color, so plain text without a Sail token (List rows) reads in that gray, not Sail's ink. Links and the selected tab compute #5469D4, a docs-only override of the link color; the Dashboard uses the blurple. `menu` leaves out color, height and font, which belong to its content.
+- **dashboard.stripe.com/login**, public, headless at 1440×900. The login form ships the Dashboard's Sail field.
+  - `input.focus`: a focused field draws a 1px blurple-300 ring (#a497fc) and a `0 0 0 4px` blurple-100 halo (#e0d9fb), both opaque.
+  - The login bundle (`login.*.js`) holds Sail's palettes. Light slate: 0 #ffffff, 25 #F4F7FA, 50 #ECF1F6, 100 #D4DEE9, 200 #BAC8DA, 600 #50617A, 700 #3C4F69, 800 #273951, 900 #1A2C44. Light blurple: 100 #e0d9fb, 300 #a497fc, 500 #675dff, 600 #533afd. Dark slate: 0 #14171d, 25 #1b1e25, 50 #21252c, 100 #2b3039, 700 #a9b2c2, 800 #c9ced8, 900 #eceef1. Dark blurple: 400 #5f4cfe, 500 #746cff, 600 #9289fe.
+  - Token mapping (same file): `color.border` slate-100; `color.background.surface` slate-0, `offset` slate-25; `color.text` slate-900; secondary action text slate-800; primary action fill blurple-600; form accent (checks, radios, switches) blurple-500; backdrop slate-200 at 70%.
+- **Dark mode** is not measured yet: public pages render light only. Against the dark palette, the preset's page (#14171d), text and muted text land within ΔE 0.025; control edges sit a step lighter than slate-100. The signed-in Dashboard pass is pending.

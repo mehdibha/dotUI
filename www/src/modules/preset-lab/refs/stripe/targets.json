@@ -1,0 +1,220 @@
+{
+  "https://docs.stripe.com/stripe-apps/components/button": {
+    "mode": "light",
+    "parts": {
+      "button.primary": {
+        "selector": "[data-testid=stripe-app-example-renderer] a",
+        "text": "Primary",
+        "skip": ["edge"]
+      },
+      "button.secondary": {
+        "selector": "[data-testid=stripe-app-example-renderer] a",
+        "text": "Secondary"
+      },
+      "button.focus": {
+        "selector": "[data-testid=stripe-app-example-renderer] a",
+        "text": "Primary",
+        "focus": true,
+        "skip": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/textfield": {
+    "mode": "light",
+    "parts": {
+      "input": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=text]"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/select": {
+    "mode": "light",
+    "parts": {
+      "select.trigger": {
+        "selector": "[data-testid=stripe-app-example-renderer] select"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/checkbox": {
+    "mode": "light",
+    "parts": {
+      "checkbox": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:not(:checked)",
+        "skip": [
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring"
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:checked",
+        "skip": [
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/switch": {
+    "mode": "light",
+    "parts": {
+      "switch.off": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:not(:checked)",
+        "skip": [
+          "color",
+          "borderRadius",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "ring"
+        ]
+      },
+      "switch.on": {
+        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:checked",
+        "skip": [
+          "color",
+          "borderRadius",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/badge": {
+    "mode": "light",
+    "parts": {
+      "badge": {
+        "selector": "[data-testid=stripe-app-example-renderer] span",
+        "text": "Neutral"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/list": {
+    "mode": "light",
+    "parts": {
+      "text.muted": {
+        "selector": "[data-testid=stripe-app-example-renderer] div",
+        "text": "customer@test.com",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://dashboard.stripe.com/login": {
+    "mode": "light",
+    "parts": {
+      "input.focus": {
+        "selector": "input[type=email]",
+        "focus": true,
+        "skip": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow"
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/menu": {
+    "mode": "light",
+    "parts": {
+      "menu": {
+        "selector": ".__sail-layer-containers [data-testid=popover-layer]",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+          }
+        ],
+        "skip": ["color", "height", "fontSize", "fontWeight"]
+      },
+      "menu.item": {
+        "selector": ".__sail-layer-containers [role=menuitem]",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+          }
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/tooltip": {
+    "mode": "light",
+    "parts": {
+      "tooltip": {
+        "selector": ".__sail-layer-containers [role=tooltip]",
+        "before": [
+          {
+            "hover": "[data-testid=stripe-app-example-renderer] a::-p-text(Pay out to bank)"
+          }
+        ],
+        "skip": ["height"]
+      },
+      "text": {
+        "selector": ".__sail-layer-containers [role=tooltip]",
+        "before": [
+          {
+            "hover": "[data-testid=stripe-app-example-renderer] a::-p-text(Pay out to bank)"
+          }
+        ],
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  }
+}
