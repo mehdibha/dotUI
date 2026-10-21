@@ -1,0 +1,483 @@
+<!doctype html>
+<!-- Neptune Web (@transferwise/components, the library the Wise app renders)
+     at its default sizes, one page per specimen sheet:
+     react.html?sheet=<sheet>&theme=light|dark (personal / personal--dark). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neptune Web</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@transferwise/neptune-css@14.29.6/dist/css/neptune.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@transferwise/components@46.165.5/build/main.css"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.3.1",
+          "react/": "https://esm.sh/react@18.3.1/",
+          "react-dom": "https://esm.sh/react-dom@18.3.1",
+          "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+          "react-intl": "https://esm.sh/react-intl@6.8.9?external=react",
+          "@wise/components-theming": "https://esm.sh/@wise/components-theming@1.10.3?external=react",
+          "@transferwise/icons": "https://esm.sh/@transferwise/icons@4.7.0?bundle&external=react",
+          "@transferwise/components": "https://esm.sh/@transferwise/components@46.165.5?bundle&external=react,react-dom,react-intl,@wise/components-theming,@transferwise/icons"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React, { useEffect } from "react"
+      import { createRoot } from "react-dom/client"
+      import htm from "https://esm.sh/htm@3.1.1"
+      import { ThemeProvider } from "@wise/components-theming"
+      import { Menu, More, Plus } from "@transferwise/icons"
+      import {
+        AvatarView,
+        Body,
+        Button,
+        Calendar,
+        Checkbox,
+        Chips,
+        Display,
+        Drawer,
+        Field,
+        IconButton,
+        InfoPrompt,
+        InlinePrompt,
+        Input,
+        Link,
+        ListItem,
+        Loader,
+        Modal,
+        Progress,
+        Provider,
+        Radio,
+        SegmentedControl,
+        SelectInput,
+        Switch,
+        Tabs,
+        Tag,
+        Title,
+        Tooltip,
+      } from "@transferwise/components"
+
+      const html = htm.bind(React.createElement)
+      const en = await fetch(
+        "https://unpkg.com/@transferwise/components@46.165.5/build/i18n/en.json",
+      ).then((response) => response.json())
+      const params = new URLSearchParams(location.search)
+      const screenMode = params.get("theme") === "dark" ? "dark" : "light"
+      const none = () => {}
+
+      const Part = ({ name, children, block }) =>
+        html`<div
+          data-part=${name}
+          style=${{
+            display: block ? "block" : "inline-block",
+            margin: 8,
+            verticalAlign: "top",
+          }}
+        >
+          ${children}
+        </div>`
+
+      const Actions = () =>
+        html`<div>
+          <${Part} name="button-primary"
+            ><${Button} v2 priority="primary">Primary<//><//
+          >
+          <${Part} name="button-secondary"
+            ><${Button} v2 priority="secondary">Secondary<//><//
+          >
+          <${Part} name="button-secondary-neutral"
+            ><${Button} v2 priority="secondary-neutral">Neutral<//><//
+          >
+          <${Part} name="button-tertiary"
+            ><${Button} v2 priority="tertiary">Tertiary<//><//
+          >
+          <${Part} name="button-negative"
+            ><${Button} v2 priority="primary" sentiment="negative">Delete<//><//
+          >
+          <${Part} name="button-sm"
+            ><${Button} v2 priority="primary" size="sm">Small<//><//
+          >
+          <${Part} name="button-md"
+            ><${Button} v2 priority="primary" size="md">Medium<//><//
+          >
+          <${Part} name="button-disabled"
+            ><${Button} v2 priority="primary" disabled>Disabled<//><//
+          >
+          <${Part} name="button-icon"
+            ><${IconButton} aria-label="More" priority="secondary"
+              ><${More} /><//
+          ><//>
+          <${Part} name="button-icon-tertiary"
+            ><${IconButton} aria-label="Add" priority="tertiary"><${Plus} /><//
+          ><//>
+          <${Part} name="button-icon-minimal"
+            ><${IconButton} aria-label="Menu" priority="minimal"><${Menu} /><//
+          ><//>
+          <${Part} name="button-focus"
+            ><${Button} v2 priority="secondary">Focused<//><//
+          >
+          <${Part} name="chips" block>
+            <${Chips}
+              aria-label="Currency"
+              chips=${[
+                { value: "all", label: "All" },
+                { value: "gbp", label: "GBP" },
+                { value: "eur", label: "EUR" },
+              ]}
+              selected="all"
+              onChange=${none}
+            />
+          <//>
+          <${Part} name="segmented" block>
+            <div style=${{ width: 360 }}>
+              <${SegmentedControl}
+                name="period"
+                mode="input"
+                value="day"
+                onChange=${none}
+                segments=${[
+                  { id: "day", label: "Day", value: "day" },
+                  { id: "week", label: "Week", value: "week" },
+                  { id: "month", label: "Month", value: "month" },
+                ]}
+              />
+            </div>
+          <//>
+        </div>`
+
+      const currencies = [
+        { type: "option", value: "GBP" },
+        { type: "option", value: "EUR" },
+        { type: "option", value: "USD" },
+        { type: "option", value: "JPY" },
+      ]
+      const Fields = () =>
+        html`<div style=${{ width: 480 }}>
+          <${Part} name="input" block>
+            <${Field}
+              label="Your email address"
+              description="We'll send a receipt"
+            >
+              <${Input} value="mehdi@example.com" onChange=${none} />
+            <//>
+          <//>
+          <${Part} name="input-empty" block>
+            <${Field} label="Recipient name">
+              <${Input} value="" placeholder="Full name" onChange=${none} />
+            <//>
+          <//>
+          <${Part} name="input-focus" block>
+            <${Field} label="Focused">
+              <${Input} value="Focused" onChange=${none} />
+            <//>
+          <//>
+          <${Part} name="input-error" block>
+            <${Field}
+              label="Amount"
+              sentiment="negative"
+              message="Enter a number"
+            >
+              <${Input} value="abc" aria-invalid onChange=${none} />
+            <//>
+          <//>
+          <${Part} name="input-disabled" block>
+            <${Field} label="Disabled">
+              <${Input} value="Locked" disabled onChange=${none} />
+            <//>
+          <//>
+          <${Part} name="select" block>
+            <${Field} label="Currency">
+              <${SelectInput}
+                items=${currencies}
+                value="GBP"
+                renderValue=${(value) => value}
+                onChange=${none}
+              />
+            <//>
+          <//>
+        </div>`
+
+      const Selection = () =>
+        html`<div style=${{ width: 480 }}>
+          <${Part} name="checkbox" block
+            ><${Checkbox} label="Unchecked" onChange=${none}
+          /><//>
+          <${Part} name="checkbox-checked" block
+            ><${Checkbox} label="Checked" checked onChange=${none}
+          /><//>
+          <${Part} name="radio" block
+            ><${Radio} name="r" value="a" label="Unchecked" onChange=${none}
+          /><//>
+          <${Part} name="radio-checked" block
+            ><${Radio}
+              name="r"
+              value="b"
+              label="Checked"
+              checked
+              onChange=${none}
+          /><//>
+          <${Part} name="switch-on"
+            ><${Switch} checked aria-label="On" onClick=${none}
+          /><//>
+          <${Part} name="switch-off"
+            ><${Switch} aria-label="Off" onClick=${none}
+          /><//>
+        </div>`
+
+      const Menu_ = () =>
+        html`<div style=${{ width: 480, minHeight: 600 }}>
+          <${Part} name="select" block>
+            <${SelectInput}
+              items=${currencies}
+              value="GBP"
+              renderValue=${(value) => value}
+              onChange=${none}
+            />
+          <//>
+          <${Part} name="tooltip" block>
+            <div style=${{ paddingTop: 200, paddingLeft: 200 }}>
+              <${Tooltip} label="Fees are shown before you pay">
+                <${Button} v2 priority="tertiary" size="sm">Hover me<//>
+              <//>
+            </div>
+          <//>
+        </div>`
+
+      const Command = () =>
+        html`<div style=${{ width: 480, minHeight: 600 }}>
+          <${Part} name="command" block>
+            <${SelectInput}
+              items=${currencies}
+              value="GBP"
+              filterable
+              filterPlaceholder="Type a currency"
+              renderValue=${(value) => value}
+              onChange=${none}
+            />
+          <//>
+        </div>`
+
+      const Dialog = () =>
+        html`<${Modal}
+          open
+          title="Cancel this transfer?"
+          body=${html`<${Body}>We'll refund the money to your balance.<//>`}
+          footer=${html`<div style=${{ display: "flex", gap: 8 }}>
+            <${Button} v2 priority="secondary">Keep it<//>
+            <${Button} v2 priority="primary">Cancel transfer<//>
+          </div>`}
+          onClose=${none}
+        />`
+
+      const DrawerSheet = () =>
+        html`<${Drawer}
+          open
+          position="right"
+          headerTitle="Transfer details"
+          footerContent=${html`<${Button} v2 block priority="primary">Done<//>`}
+          onClose=${none}
+        >
+          <${Body}>Arrives by Thursday.<//>
+        <//>`
+
+      const Navigation = () =>
+        html`<div style=${{ width: 640 }}>
+          <${Part} name="tabs" block>
+            <${Tabs}
+              name="tabs"
+              selected=${0}
+              onTabSelect=${none}
+              headerWidth="auto"
+              tabs=${[
+                { title: "Balances", content: html`<div />`, disabled: false },
+                { title: "Cards", content: html`<div />`, disabled: false },
+                {
+                  title: "Recipients",
+                  content: html`<div />`,
+                  disabled: false,
+                },
+              ]}
+            />
+          <//>
+          <${Part} name="link" block>
+            <${Body}>Read our <${Link} href="#">pricing page<//>.<//>
+          <//>
+          <${Part} name="list" block>
+            <ul style=${{ padding: 0, margin: 0 }}>
+              <${ListItem}
+                title="Home"
+                control=${html`<${ListItem.Navigation} href="#" />`}
+              />
+              <${ListItem}
+                title="Payments"
+                control=${html`<${ListItem.Navigation} href="#" />`}
+              />
+            </ul>
+          <//>
+        </div>`
+
+      const Feedback = () =>
+        html`<div style=${{ width: 560 }}>
+          <${Part} name="alert-neutral" block>
+            <${InfoPrompt}
+              sentiment="neutral"
+              title="Heads up"
+              description="Your card is on its way."
+            />
+          <//>
+          <${Part} name="alert-negative" block>
+            <${InfoPrompt}
+              sentiment="negative"
+              title="Something went wrong"
+              description="Try again in a few minutes."
+            />
+          <//>
+          <${Part} name="alert-success" block>
+            <${InfoPrompt}
+              sentiment="success"
+              description="Your transfer is complete."
+            />
+          <//>
+          <${Part} name="alert-warning" block>
+            <${InfoPrompt}
+              sentiment="warning"
+              description="This rate is guaranteed for 24 hours."
+            />
+          <//>
+          <${Part} name="inline-negative" block>
+            <${InlinePrompt} sentiment="negative">Enter a number<//>
+          <//>
+          <${Part} name="progress" block>
+            <${Progress} id="p" progress=${{ value: 40, max: 100 }} />
+          <//>
+          <${Part} name="tag-neutral"
+            ><${Tag} label="Neutral" sentiment="neutral"
+          /><//>
+          <${Part} name="tag-success"
+            ><${Tag} label="Complete" sentiment="success"
+          /><//>
+          <${Part} name="tag-proposition"
+            ><${Tag} label="New" sentiment="proposition"
+          /><//>
+          <${Part} name="loader"><${Loader} size="sm" displayInstantly /><//>
+        </div>`
+
+      const DisplaySheet = () =>
+        html`<div style=${{ width: 560 }}>
+          <${Part} name="avatar"
+            ><${AvatarView} profileName="Mehdi Ben" size=${48}
+          /><//>
+          <${Part} name="list-item" block>
+            <ul style=${{ padding: 0, margin: 0 }}>
+              <${ListItem}
+                title="British pound"
+                subtitle="GBP"
+                valueTitle="1,000.00"
+                media=${html`<${ListItem.AvatarView} profileName="GB" />`}
+              />
+            </ul>
+          <//>
+        </div>`
+
+      // This month, so Neptune marks today.
+      const now = new Date()
+      const DatesSheet = () =>
+        html`<div style=${{ width: 360 }}>
+          <${Part} name="calendar" block>
+            <${Calendar}
+              value=${new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate() === 14 ? 15 : 14,
+              )}
+              onChange=${none}
+            />
+          <//>
+        </div>`
+
+      const Type = () =>
+        html`<div style=${{ width: 720 }}>
+          <${Part} name="display-large" block
+            ><${Display} type="display-large">Display large<//><//
+          >
+          <${Part} name="display-small" block
+            ><${Display} type="display-small">Display small<//><//
+          >
+          <${Part} name="title-screen" block
+            ><${Title} as="h1" type="title-screen">Title screen<//><//
+          >
+          <${Part} name="title-section" block
+            ><${Title} as="h2" type="title-section">Title section<//><//
+          >
+          <${Part} name="title-subsection" block
+            ><${Title} as="h3" type="title-subsection">Title subsection<//><//
+          >
+          <${Part} name="title-body" block
+            ><${Title} as="h4" type="title-body">Title body<//><//
+          >
+          <${Part} name="title-group" block
+            ><${Title} as="h5" type="title-group">Title group<//><//
+          >
+          <${Part} name="body-default" block
+            ><${Body} as="p" type="body-default">Body default text<//><//
+          >
+          <${Part} name="body-large" block
+            ><${Body} as="p" type="body-large">Body large text<//><//
+          >
+          <${Part} name="body-muted" block
+            ><${Body} as="p" className="text-secondary">Secondary text<//><//
+          >
+        </div>`
+
+      const SHEETS = {
+        actions: Actions,
+        fields: Fields,
+        selection: Selection,
+        menu: Menu_,
+        command: Command,
+        dialog: Dialog,
+        drawer: DrawerSheet,
+        navigation: Navigation,
+        feedback: Feedback,
+        display: DisplaySheet,
+        dates: DatesSheet,
+        type: Type,
+      }
+      const Sheet = SHEETS[params.get("sheet")] ?? Actions
+      function App() {
+        useEffect(() => {
+          const timer = setTimeout(() => {
+            document
+              .querySelector("[data-part=input-focus] input")
+              ?.setAttribute("data-specimen-focus", "")
+            document
+              .querySelector("[data-part=button-focus] button")
+              ?.setAttribute("data-specimen-focus", "")
+            document.documentElement.setAttribute("data-specimen-ready", "")
+          }, 300)
+          return () => clearTimeout(timer)
+        }, [])
+        return html`<${Provider} i18n=${{ locale: "en-GB", messages: en }}>
+          <${ThemeProvider} theme="personal" screenMode=${screenMode}>
+            <main style=${{ padding: 24 }}><${Sheet} /></main>
+          <//>
+        <//>`
+      }
+      createRoot(document.getElementById("root")).render(html`<${App} />`)
+    </script>
+  </body>
+</html>

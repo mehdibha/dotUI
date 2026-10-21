@@ -18,6 +18,7 @@ import { stripe } from "./stripe"
 import { supabase } from "./supabase"
 import { untitled } from "./untitled"
 import { vercel } from "./vercel"
+import { wise } from "./wise"
 
 export const PRESETS: Preset[] = [
   origin,
@@ -36,6 +37,7 @@ export const PRESETS: Preset[] = [
   radix,
   untitled,
   carbon,
+  wise,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
