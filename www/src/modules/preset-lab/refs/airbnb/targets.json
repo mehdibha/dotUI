@@ -1,0 +1,187 @@
+{
+  "https://www.airbnb.com/": {
+    "mode": "light",
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": ["borderColor", "height", "fontSize", "fontFamily"]
+      },
+      "tab": {
+        "selector": "a[role=tab][aria-selected=false] span[data-tab-label]",
+        "skip": [
+          "borderColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily"
+        ]
+      },
+      "tab.selected": {
+        "selector": "a[role=tab][aria-selected=true] span[data-tab-label]",
+        "skip": [
+          "borderColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily"
+        ]
+      },
+      "button.quiet": {
+        "text": "Become a host",
+        "skip": ["borderColor", "borderRadius", "fontFamily"]
+      },
+      "menu": {
+        "selector": "[data-testid=guest-header-dropdownmenu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "button[data-testid=cypress-headernav-profile]"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "height",
+          "borderWidth",
+          "fontSize",
+          "fontFamily"
+        ]
+      },
+      "menu.item": {
+        "within": "[data-testid=guest-header-dropdownmenu]",
+        "text": "Help Center",
+        "before": [
+          {
+            "click": "button[data-testid=cypress-headernav-profile]"
+          }
+        ],
+        "skip": ["borderColor", "fontFamily"]
+      },
+      "input": {
+        "selector": "[role=dialog] div:has(> label input)",
+        "ink": "input",
+        "before": [
+          {
+            "click": "button[aria-label='Log in or sign up']"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "paddingInline",
+          "fontFamily",
+          "boxShadow"
+        ]
+      },
+      "input.focus": {
+        "selector": "[role=dialog] div:has(> label input)",
+        "ink": "input",
+        "before": [
+          {
+            "click": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "click": "[role=dialog] input"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "borderWidth",
+          "paddingInline",
+          "fontFamily",
+          "boxShadow"
+        ]
+      },
+      "text.muted": {
+        "selector": "main h2 + div",
+        "skip": ["borderColor", "height", "fontFamily"]
+      }
+    }
+  },
+  "https://www.airbnb.com/s/Paris/homes": {
+    "mode": "light",
+    "parts": {
+      "button.primary": {
+        "within": "[role=dialog][aria-label=Filters]",
+        "selector": "a",
+        "text": "Show 1,000+ places",
+        "before": [
+          {
+            "click": "button[aria-label=Filters]"
+          }
+        ],
+        "skip": ["borderColor", "fontFamily"]
+      },
+      "dialog": {
+        "selector": "[role=dialog][aria-label=Filters]",
+        "surface": true,
+        "before": [
+          {
+            "click": "button[aria-label=Filters]"
+          }
+        ],
+        "skip": [
+          "borderColor",
+          "height",
+          "borderWidth",
+          "fontSize",
+          "edge",
+          "ring",
+          "fontFamily"
+        ]
+      }
+    }
+  },
+  "https://www.airbnb.com/rooms/47803806": {
+    "mode": "light",
+    "parts": {
+      "button.secondary": {
+        "text": "Show all 50 amenities",
+        "skip": [
+          "borderColor",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontFamily"
+        ]
+      },
+      "button.focus": {
+        "text": "Show all 50 amenities",
+        "focus": true,
+        "skip": [
+          "backgroundColor",
+          "color",
+          "borderColor",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "boxShadow",
+          "edge",
+          "fontFamily"
+        ]
+      },
+      "card": {
+        "selector": "aside:has([data-testid=book-it-default])",
+        "skip": [
+          "backgroundColor",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontFamily"
+        ]
+      },
+      "heading.3": {
+        "selector": "main h1",
+        "skip": ["borderColor", "height", "fontFamily", "fontSize"]
+      },
+      "heading.4": {
+        "text": "What this place offers",
+        "skip": ["borderColor", "height", "fontFamily", "fontSize"]
+      },
+      "text": {
+        "selector": "[data-section-id=DESCRIPTION_DEFAULT] span > span",
+        "skip": ["borderColor", "height", "fontFamily"]
+      }
+    }
+  }
+}

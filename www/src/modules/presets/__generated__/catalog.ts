@@ -1026,7 +1026,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				tabs: {
 					style: "line",
 					color: "neutral",
-					indicator: "full",
+					indicator: "label",
 					chip: "raised",
 					track: "filled",
 					pill: "inverse",
@@ -1087,7 +1087,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			density: "spacious",
 			color: {
 				v: 2,
-				seeds: { accent: "#ff385c", success: "#038026", warning: "#eb6100", danger: "#c13515" },
+				seeds: { accent: "#e31c5f", success: "#038026", warning: "#eb6100", danger: "#c13515" },
 				background: { light: 100, dark: 5 },
 				neutralTint: 0,
 				preserveSeed: true,
@@ -1097,6 +1097,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"color-border-focus": { palette: "neutral", job: "text" },
 					"color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 				},
+				scopes: { slider: "accent" },
 			},
 			assets: "airbnb",
 		},
