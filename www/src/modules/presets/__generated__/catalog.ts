@@ -2358,7 +2358,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				switch: { style: "inset", cardSelected: "outline", cardPress: "none" },
 				table: { header: "filled", headerLabel: "muted" },
 				tabs: {
-					style: "segmented",
+					style: "pill",
 					color: "neutral",
 					indicator: "full",
 					chip: "raised",

@@ -1,0 +1,440 @@
+{
+  "https://www.untitledui.com/react/components/buttons": {
+    "storage": "theme",
+    "parts": {
+      "button.primary": {
+        "selector": "main button",
+        "text": "Button sm",
+        "skip": ["borderColor", "borderWidth"]
+      },
+      "button.secondary": {
+        "selector": "main button",
+        "text": "Button sm",
+        "nth": 1,
+        "skip": ["borderColor", "borderWidth"]
+      },
+      "button.quiet": {
+        "selector": "main button",
+        "text": "Button sm",
+        "nth": 2,
+        "skip": ["borderColor", "borderWidth"]
+      },
+      "button.focus": {
+        "selector": "main button",
+        "text": "Button sm",
+        "focus": true,
+        "skip": ["borderColor", "borderWidth"]
+      },
+      "link": {
+        "selector": "main a[class*='text-brand-secondary']",
+        "text": "Button sm",
+        "skip": [
+          "borderColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/inputs": {
+    "storage": "theme",
+    "parts": {
+      "input": {
+        "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
+        "ink": "input",
+        "skip": ["borderColor", "borderWidth", "paddingInline"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/select": {
+    "storage": "theme",
+    "parts": {
+      "select.trigger": {
+        "selector": "main button[aria-haspopup=listbox]",
+        "text": "Select team member",
+        "ink": "p",
+        "skip": ["color", "borderColor", "borderWidth", "paddingInline"]
+      },
+      "select.item": {
+        "selector": "[role=listbox] [role=option] > div",
+        "nth": 1,
+        "ink": "[slot=label]",
+        "before": [
+          {
+            "click": "main button[aria-haspopup=listbox]"
+          }
+        ],
+        "skip": ["borderColor", "borderWidth"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/checkboxes": {
+    "storage": "theme",
+    "parts": {
+      "checkbox": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='size-4']",
+        "skip": [
+          "backgroundColor",
+          "color",
+          "borderColor",
+          "borderWidth",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow"
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "main label[data-rac][data-selected] div[class~='size-4']",
+        "before": [
+          {
+            "click": "main label[data-rac]"
+          },
+          {
+            "hover": "main h3"
+          }
+        ],
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/toggles": {
+    "storage": "theme",
+    "parts": {
+      "switch.off": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='bg-tertiary']",
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow"
+        ]
+      },
+      "switch.on": {
+        "selector": "main label[data-rac][data-selected] div[class~='rounded-full'][class*='bg-brand-solid']",
+        "before": [
+          {
+            "click": "main label[data-rac]"
+          },
+          {
+            "hover": "main h3"
+          }
+        ],
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tabs": {
+    "storage": "theme",
+    "parts": {
+      "tab": {
+        "selector": "main [role=tab][class*='bg-brand-primary_alt'] ~ [role=tab]",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      },
+      "tab.selected": {
+        "selector": "main [role=tab][class*='bg-brand-primary_alt']",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/dropdowns": {
+    "storage": "theme",
+    "parts": {
+      "menu": {
+        "selector": "[role=menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "main button[aria-haspopup]::-p-text(Account)"
+          }
+        ],
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "height",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitem] > div",
+        "nth": 1,
+        "ink": "span[class*='font-semibold']",
+        "before": [
+          {
+            "click": "main button[aria-haspopup]::-p-text(Account)"
+          }
+        ],
+        "skip": ["borderColor", "borderWidth"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tooltips": {
+    "storage": "theme",
+    "parts": {
+      "tooltip": {
+        "selector": "[role=tooltip] > div",
+        "ink": "span",
+        "before": [
+          {
+            "click": "main h3::-p-text(Tooltip example)"
+          },
+          {
+            "press": "Tab"
+          },
+          {
+            "press": "Tab"
+          },
+          {
+            "press": "Tab"
+          },
+          {
+            "press": "Tab"
+          }
+        ],
+        "skip": ["borderColor", "borderWidth"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/command-menus/command-menu-actions": {
+    "storage": "theme",
+    "parts": {
+      "command": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "height",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "command.item": {
+        "selector": "[role=option] > div",
+        "nth": 1,
+        "ink": "[slot=label]",
+        "skip": ["borderColor", "borderWidth"]
+      },
+      "kbd": {
+        "selector": "[role=option] div[class*='ring-1']",
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal": {
+    "storage": "theme",
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "height",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tables": {
+    "storage": "theme",
+    "parts": {
+      "card": {
+        "selector": "main div[class*='rounded-xl'][class*='ring-secondary']",
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/badges": {
+    "storage": "theme",
+    "parts": {
+      "badge": {
+        "selector": "main span[class*='rounded-full'][class*='utility-neutral']",
+        "text": "Label",
+        "nth": 1,
+        "skip": ["borderColor", "borderWidth", "boxShadow"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-navigation-simple-demo": {
+    "storage": "theme",
+    "parts": {
+      "shell": {
+        "selector": "aside",
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "nav.item": {
+        "selector": "aside summary",
+        "nth": 1,
+        "ink": "span[class*='font-semibold']",
+        "skip": ["backgroundColor", "borderColor", "borderWidth"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo": {
+    "storage": "theme",
+    "parts": {
+      "nav.item.active": {
+        "selector": "[aria-current=page]",
+        "ink": "span[class*='font-semibold']",
+        "skip": ["borderColor", "borderWidth", "paddingInline"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/dashboards/dashboard-01": {
+    "storage": "theme",
+    "parts": {
+      "page": {
+        "selector": "main",
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "panel": {
+        "selector": "main",
+        "skip": [
+          "color",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/page-headers/page-header-simple": {
+    "storage": "theme",
+    "parts": {
+      "heading.4": {
+        "selector": "h1",
+        "skip": [
+          "backgroundColor",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "text": {
+        "selector": "h1 + p",
+        "skip": [
+          "backgroundColor",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons": {
+    "storage": "theme",
+    "parts": {
+      "text.muted": {
+        "selector": "h2 + p",
+        "skip": [
+          "backgroundColor",
+          "borderColor",
+          "borderWidth",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      }
+    }
+  }
+}
