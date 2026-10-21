@@ -1,0 +1,207 @@
+{
+  "https://www.notion.so/login": {
+    "mode": "light",
+    "parts": {
+      "input": {
+        "selector": "main div:has(> input[type=email])",
+        "before": [
+          {
+            "click": "h1"
+          }
+        ],
+        "only": ["backgroundColor", "edge"]
+      }
+    }
+  },
+  "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814": {
+    "parts": {
+      "page": {
+        "selector": ".notion-page-content",
+        "surface": true
+      },
+      "button.primary": {
+        "text": "Start with this template"
+      },
+      "button.secondary": {
+        "text": "Ran today",
+        "skip": ["height", "paddingInline"]
+      },
+      "button.quiet": {
+        "selector": ".notion-topbar [role=button]",
+        "text": "Search"
+      },
+      "tab": {
+        "selector": "[role=tab][aria-selected=false]"
+      },
+      "tab.selected": {
+        "selector": "[role=tab][aria-selected=true]"
+      },
+      "checkbox": {
+        "selector": ".notion-collection-item div:has(> input[type=checkbox])",
+        "skip": ["backgroundColor"]
+      },
+      "card": {
+        "selector": ".notion-collection-item > div[role=presentation]"
+      },
+      "heading.1": {
+        "selector": ".notion-page-block h1"
+      },
+      "text.muted": {
+        "text": "Pages",
+        "within": "[role=dialog][aria-label='Search Notion']",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ],
+        "only": ["color"]
+      },
+      "menu": {
+        "selector": "[role=menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menuitem]",
+        "nth": 1,
+        "ink": "[role=presentation]",
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          }
+        ],
+        "skip": ["paddingInline"]
+      },
+      "tooltip": {
+        "selector": ".notion-overlay-container [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[aria-label=Filter]"
+          }
+        ]
+      },
+      "command": {
+        "selector": "[role=dialog][aria-label='Search Notion']",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[role=dialog][aria-label='Search Notion'] [role=option]",
+        "ink": "[role=presentation] div",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "shell": {
+        "selector": "nav[aria-label=Sidebar]",
+        "before": [
+          {
+            "click": "[aria-label='Lock sidebar open']"
+          }
+        ]
+      },
+      "nav.item.active": {
+        "selector": "nav [role=treeitem][aria-current=page]",
+        "box": "[data-inp-target=sidebar-page-item]",
+        "ink": ".notranslate",
+        "skip": ["paddingInline"]
+      },
+      "nav.item": {
+        "selector": "nav [role=treeitem]:not([aria-current])",
+        "box": "[data-inp-target=sidebar-page-item]",
+        "ink": ".notranslate",
+        "skip": ["paddingInline"]
+      },
+      "button.focus": {
+        "text": "Start with this template",
+        "focus": true
+      },
+      "switch.on": {
+        "selector": "div:has(> input[role=switch]) > div",
+        "nth": 1,
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          },
+          {
+            "click": "[role=menuitem] ::-p-text(Cookie settings)"
+          }
+        ]
+      },
+      "switch.off": {
+        "selector": "div:has(> input[role=switch]) > div",
+        "nth": 3,
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          },
+          {
+            "click": "[role=menuitem] ::-p-text(Cookie settings)"
+          },
+          {
+            "click": "::-p-xpath((//input[@role='switch'])[4])"
+          },
+          {
+            "hover": "::-p-text(Used for targeted advertising.)"
+          }
+        ]
+      }
+    }
+  },
+  "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f": {
+    "parts": {
+      "heading.2": {
+        "selector": ".notion-header-block h2"
+      },
+      "heading.3": {
+        "selector": ".notion-sub_header-block h3"
+      },
+      "text": {
+        "selector": ".notion-text-block [data-content-editable-leaf]"
+      },
+      "badge": {
+        "selector": ".notion-gallery-view div:has(> div > span)",
+        "nth": 1
+      },
+      "badge.accent": {
+        "selector": ".notion-gallery-view div:has(> div > span)",
+        "nth": 2
+      }
+    }
+  },
+  "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c": {
+    "parts": {
+      "checkbox.checked": {
+        "selector": "div:has(> input[type=checkbox]:checked)"
+      }
+    }
+  },
+  "https://elemental-accordion-08e.notion.site/Thesis-Dissertation-Planner-cb6edf44cfc582acb707017e69c2ca1b": {
+    "parts": {
+      "link": {
+        "selector": "a.notion-link-token",
+        "ink": "span",
+        "only": ["color"]
+      }
+    }
+  },
+  "https://notion.notion.site/986388bef53c485a8ad1efe1022a650d?v=4757818278d74a99a8a40fa12d906ab8": {
+    "parts": {
+      "calendar.today": {
+        "selector": ".notion-calendar-view-day[style*=background]",
+        "only": ["backgroundColor", "borderRadius"]
+      }
+    }
+  }
+}
