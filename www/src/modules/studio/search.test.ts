@@ -48,9 +48,23 @@ describe("panel search", () => {
     expect(search("Corner")).toContain("Components › Checkbox › Corner")
   })
 
+  it("finds a featured component by its family name", () => {
+    for (const [query, page] of [
+      ["Buttons", "Button"],
+      ["Inputs", "Field"],
+      ["Cards", "Card"],
+      ["Menus", "Menu"],
+    ] as const)
+      expect(search(query), query).toContain(`Components › ${page}`)
+  })
+
   it("reads every component row as Page › Row", () => {
-    for (const { label } of COMPONENTS)
-      expect(search(label), label).toContain(`Components › ${label}`)
+    for (const component of COMPONENTS)
+      expect(search(component.label), component.label).toContain(
+        isSingle(component)
+          ? `Components › All components › ${component.label}`
+          : `Components › ${component.label}`,
+      )
     for (const { label, rows } of COMPONENTS.filter(
       (component) => !isSingle(component),
     ))
@@ -80,7 +94,9 @@ describe("panel search", () => {
   })
 
   it("finds a one-row component by its row's name", () => {
-    expect(search("Steppers")).toContain("Components › Number field")
+    expect(search("Steppers")).toContain(
+      "Components › All components › Number field",
+    )
   })
 
   it("reaches every styled component by name", () => {
