@@ -81,7 +81,10 @@ const ChapterBlock = memo(function ChapterBlock({
       )}
     >
       {!first && (
-        <div role="separator" className="mx-3 h-px bg-fg/8 max-lg:hidden" />
+        <div
+          role="separator"
+          className="mx-3 mt-2.5 h-px bg-fg/8 max-lg:hidden"
+        />
       )}
       <h2
         id={`chapter-${chapter.id}`}
@@ -92,7 +95,7 @@ const ChapterBlock = memo(function ChapterBlock({
       >
         {chapter.label}
       </h2>
-      <div className="flex flex-col gap-1.5 pb-2.5 max-lg:py-2">
+      <div className="flex flex-col gap-1.5 max-lg:py-2">
         <Body studio={studio} />
       </div>
     </section>
@@ -475,7 +478,7 @@ export function PanelPage({
                   data-page={page.id}
                   aria-label={page.label}
                   className={cn(
-                    "flex w-full shrink-0 flex-col gap-1.5 pb-2.5 max-lg:py-2",
+                    "flex w-full shrink-0 flex-col gap-1.5 max-lg:py-2",
                     !open && "max-lg:hidden",
                     drill && DRILL[drill],
                   )}
