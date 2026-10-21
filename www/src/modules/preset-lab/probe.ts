@@ -37,8 +37,6 @@ export type Step = { click: string } | { hover: string } | { press: string }
 export const PROPS = [
   "backgroundColor",
   "color",
-  "borderColor",
-  "borderWidth",
   "borderRadius",
   "height",
   "paddingInline",
@@ -69,6 +67,9 @@ export interface Page {
   /** The mode the page shows. Without it, `--pack` measures the page in both
    *  modes through `prefers-color-scheme`. */
   mode?: "light" | "dark"
+  /** The localStorage key the site reads its theme from (next-themes'
+   *  "theme"): `--pack` sets it to "light" or "dark" before load. */
+  storage?: string
   /** Measured in a signed-in tab with `--snippet`, then `--merge`d; `--pack`
    *  skips it. */
   signedIn?: boolean
@@ -94,15 +95,15 @@ function probe(
     if (!match || (color.startsWith("rgb(") && !color.includes("/"))) return 1
     return Number(match[1]) / (match[2] ? 100 : 1)
   }
-  /* A translucent color as it shows: composited over the backgrounds under
-     it (from `under` up to the first opaque one, white below), as rgb().
-     Clear and opaque colors pass through. */
+  /* A translucent or clear color as it shows: composited over the
+     backgrounds under it (from `under` up to the first opaque one, white
+     below), as rgb(). Opaque colors pass through. */
   const canvas = document
     .createElement("canvas")
     .getContext("2d", { willReadFrequently: true })
   const seen = (color: string, under: Element | null) => {
     const a = alpha(color)
-    if (!canvas || a === 0 || a >= 1) return color
+    if (!canvas || a >= 1) return color
     const layers = [color]
     for (let node = under; node; node = node.parentElement) {
       const bg = getComputedStyle(node).backgroundColor
@@ -182,7 +183,12 @@ function probe(
       return "none"
     const style = getComputedStyle(el)
     const width = Number.parseFloat(style.outlineWidth)
-    if (style.outlineStyle !== "none" && width > 0)
+    // Some systems keep a transparent outline for forced colors (Stripe).
+    if (
+      style.outlineStyle !== "none" &&
+      width > 0 &&
+      alpha(style.outlineColor) > 0
+    )
       return `${width}px ${seen(style.outlineColor, el.parentElement)} ${signed(Number.parseFloat(style.outlineOffset))}`
     const all = rings(style).filter((ring) => ring.spread > 0)
     const outer = all
@@ -267,8 +273,6 @@ function probe(
         pseudo ? el : box.parentElement,
       ),
       color: seen(ink.color, inkEl),
-      borderColor: seen(paint.borderTopColor, pseudo ? el : box),
-      borderWidth: paint.borderTopWidth,
       borderRadius: paint.borderTopLeftRadius,
       height: pseudo
         ? px(Number.parseFloat(paint.height))
