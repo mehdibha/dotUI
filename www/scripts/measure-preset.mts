@@ -233,6 +233,13 @@ async function pool<T, R>(items: T[], run: (item: T) => Promise<R>) {
 
 const pause = (ms: number) => new Promise((done) => setTimeout(done, ms))
 
+/** Pages run side by side; each acts as the focused tab, as :focus-visible
+ *  needs. */
+async function focusable(page: Page) {
+  const cdp = await page.createCDPSession()
+  await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+}
+
 async function runSteps(page: Page, steps: Step[]) {
   for (const step of steps) {
     if ("press" in step) {
@@ -295,6 +302,8 @@ async function shoot(page: Page, part: string, mode: Mode) {
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
     clip: { x, y, width: box.width + 32, height: box.height + 32 },
+    // Capturing beyond the viewport resizes it, which closes hover overlays.
+    captureBeyondViewport: false,
   })
 }
 
@@ -365,10 +374,7 @@ async function measurePage(
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: mode },
     ])
-    // Pages run side by side; each acts as the focused tab, as :focus-visible
-    // needs.
-    const cdp = await page.createCDPSession()
-    await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+    await focusable(page)
     // Some sites turn away a "HeadlessChrome" user agent (Notion).
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
@@ -410,8 +416,15 @@ async function measurePage(
     let opened = false
     for (const [part, target] of Object.entries(targets)) {
       if (!stepped(target)) continue
-      if (opened) await load()
-      Object.assign(measures, await measureStepped(page, mode, part, target))
+      // One part failing (a walk that won't repeat) keeps the page's others.
+      try {
+        if (opened) await load()
+        Object.assign(measures, await measureStepped(page, mode, part, target))
+      } catch (error) {
+        console.warn(
+          `${part} on ${url} (${mode}) failed after a reload; page steps must replay the same walk on every load: ${(error as Error).message}`,
+        )
+      }
       opened = !!target.before?.length
     }
     return owned(measures, targets)
@@ -565,6 +578,7 @@ try {
   const results = await pool(jobs, async ({ mode, sheet, targets }) => {
     const page = await browser.newPage()
     try {
+      await focusable(page)
       await page.setViewport({ width: 1280, height: 900 })
       await page.emulateMediaFeatures([
         { name: "prefers-color-scheme", value: mode },
