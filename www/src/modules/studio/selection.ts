@@ -247,7 +247,11 @@ export function createFrom(
       : from.view.kind === "preset"
         ? from.view.id
         : undefined,
-    state: from.state,
+    // A preset's brand stays the preset's: the user's own system starts bare.
+    state:
+      from.state.brandAssets && from.state.brandAssets !== "none"
+        ? { ...from.state, brandAssets: "none" }
+        : from.state,
   })
   if (doc) select({ kind: "system", id: doc.id })
   return doc
