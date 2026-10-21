@@ -40,6 +40,12 @@ describe("compareMeasures", () => {
       ok: false,
       delta: "edge → none",
     })
+    const underline = "1px rgb(141, 141, 141) bottom"
+    expect(row(underline, underline, "edge").ok).toBe(true)
+    expect(row(underline, "1px rgb(141, 141, 141)", "edge")).toMatchObject({
+      ok: false,
+      delta: "bottom → all",
+    })
   })
 
   it("compares focus rings by width, offset and color", () => {
