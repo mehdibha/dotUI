@@ -259,8 +259,11 @@ async function runSteps(page: Page, steps: Step[]) {
 async function shoot(page: Page, part: string, mode: Mode) {
   if (!args.shots) return
   const el = await page.$(`>>> [data-probe-part="${part}"]`)
-  const box = await el?.boundingBox()
-  if (!box) return
+  if (!el) return
+  // Parts below the fold or inside a scrolled panel crop blank otherwise.
+  await el.evaluate((node) =>
+    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
+  )
   await page
     .waitForFunction(
       () =>
@@ -274,8 +277,14 @@ async function shoot(page: Page, part: string, mode: Mode) {
       { timeout: 3000 },
     )
     .catch(() => {})
-  const x = Math.max(0, box.x - 16)
-  const y = Math.max(0, box.y - 16)
+  const box = await el.boundingBox()
+  if (!box) return
+  const [left, top] = await page.evaluate(() => [
+    window.scrollX,
+    window.scrollY,
+  ])
+  const x = Math.max(0, box.x + left - 16)
+  const y = Math.max(0, box.y + top - 16)
   await mkdir(args.shots, { recursive: true })
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
