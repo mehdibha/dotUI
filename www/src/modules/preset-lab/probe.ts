@@ -23,13 +23,15 @@ export interface Target {
   box?: string
   /** Read color and type from this descendant (a nav row's label span). */
   ink?: string
-  /** Focus from the keyboard before measuring (`--pack`). */
+  /** A focus part: focus it (or the first control inside it) from the
+   *  keyboard before measuring (`--pack`), and read its `ring`. */
   focus?: boolean
   /** Steps run before measuring (`--pack`), undone with Escape after: open
    *  a menu, hover a tooltip trigger. Puppeteer selectors, so
    *  `::-p-text(Options)` matches by text. */
   before?: Step[]
-  /** The only props this page writes to `tokens.json` for the part. */
+  /** The props this page writes to `tokens.json` for the part, in place of
+   *  the part's own list in SPECIMEN_TARGETS. */
   only?: Prop[]
   /** Props this page leaves out of `tokens.json` for the part, where the two
    *  sides draw them in different places. */
@@ -122,17 +124,23 @@ function probe(
   }
   const parent = (el: Element) =>
     el.parentElement ?? (el.getRootNode() as ShadowRoot).host ?? null
-  /* A translucent or clear color as it shows: composited over the
-     backgrounds under it (from `under` up to the first opaque one, white
-     below), as rgb(). Opaque colors pass through. */
+  /* A translucent or clear color as it shows: composited over `own` (the
+     fill a line sits on, when it isn't `under`'s) and the backgrounds under
+     it (from `under` up to the first opaque one, white below), as rgb().
+     Opaque colors pass through. */
   const canvas = document
     .createElement("canvas")
     .getContext("2d", { willReadFrequently: true })
-  const seen = (color: string, under: Element | null) => {
+  const seen = (color: string, under: Element | null, own?: string) => {
     const a = alpha(color)
     if (!canvas || a >= 1) return color
     const layers = [color]
-    for (let node = under; node; node = parent(node)) {
+    if (own && alpha(own) > 0) layers.push(own)
+    for (
+      let node = own && alpha(own) >= 1 ? null : under;
+      node;
+      node = parent(node)
+    ) {
       const bg = getComputedStyle(node).backgroundColor
       if (alpha(bg) > 0) layers.push(bg)
       if (alpha(bg) >= 1) break
@@ -167,7 +175,10 @@ function probe(
   /* The hairline that outlines a box, wherever it is drawn: a border, a ring
      up to 1.5px, or either on ::before or ::after. A border on some sides
      only names them ("1px <color> bottom"). */
-  const edgeOf = (style: CSSStyleDeclaration, under: Element) => {
+  /* `under` is what the box sits on: its parent, or the element for a
+     pseudo-element. Borders and inset rings show over the box's own fill. */
+  const edgeOf = (style: CSSStyleDeclaration, under: Element | null) => {
+    const fill = style.backgroundColor
     const sides = (["top", "right", "bottom", "left"] as const).filter(
       (side) =>
         style.getPropertyValue(`border-${side}-style`) !== "none" &&
@@ -179,21 +190,21 @@ function probe(
       const width = Number.parseFloat(
         style.getPropertyValue(`border-${first}-width`),
       )
-      const line = `${width}px ${seen(style.getPropertyValue(`border-${first}-color`), under)}`
+      const line = `${width}px ${seen(style.getPropertyValue(`border-${first}-color`), under, fill)}`
       return sides.length === 4 ? line : `${line} ${sides.join("+")}`
     }
     const hairline = rings(style).find(
       (ring) => ring.spread > 0 && ring.spread <= 1.5,
     )
     return hairline
-      ? `${hairline.spread}px ${seen(hairline.color, under)}`
+      ? `${hairline.spread}px ${seen(hairline.color, under, hairline.inset ? fill : undefined)}`
       : null
   }
   const edge = (el: Element) => {
     for (const pseudo of [null, "::before", "::after"]) {
       const style = getComputedStyle(el, pseudo)
       if (pseudo && style.content === "none") continue
-      const found = edgeOf(style, el)
+      const found = edgeOf(style, pseudo ? el : parent(el))
       if (found) return found
     }
     return "none"
@@ -206,7 +217,9 @@ function probe(
      into the edge. */
   const ring = (el: Element) => {
     if (
-      !el.matches(":focus-visible, [data-focus-visible], [data-specimen-focus]")
+      !el.matches(
+        ":focus-visible, :focus-within, [data-focus-visible], [data-specimen-focus]",
+      )
     )
       return "none"
     const style = getComputedStyle(el)
@@ -296,11 +309,11 @@ function probe(
     const ink = getComputedStyle(inkEl)
     // A focus line drawn inset and flush with the box's outer edge (Linear's
     // outline at -1px, Carbon's 2px inset) shows as the edge changing color.
-    const focusRing = ring(el)
-    const flush = /^([\d.]+)px (.+) -([\d.]+)px$/.exec(focusRing)
+    const focusRing = target.focus ? ring(el) : undefined
+    const flush = focusRing && /^([\d.]+)px (.+) -([\d.]+)px$/.exec(focusRing)
     const inset =
       flush && flush[1] === flush[3] ? `${flush[1]}px ${flush[2]}` : null
-    const all: Record<string, string> = {
+    const all: Record<string, string | undefined> = {
       backgroundColor: seen(paint.backgroundColor, pseudo ? el : parent(box)),
       color: seen(ink.color, inkEl),
       borderRadius: paint.borderTopLeftRadius,
@@ -322,12 +335,21 @@ function probe(
             : edge(el)),
       ring: inset ? "none" : focusRing,
     }
-    return Object.fromEntries(props.map((prop) => [prop, all[prop]]))
+    return Object.fromEntries(
+      props
+        .filter((prop) => all[prop] !== undefined)
+        .map((prop) => [prop, all[prop]]),
+    )
   }
   return Object.fromEntries(
     Object.entries(targets).map(([part, target]) => {
       const el = find(target)
-      if (el && focus) (el as HTMLElement).focus()
+      if (el && focus)
+        (
+          (el.matches(CONTROL)
+            ? el
+            : (el.querySelector(CONTROL) ?? el)) as HTMLElement
+        ).focus()
       return [part, el ? read(el, target) : null]
     }),
   )
@@ -345,59 +367,114 @@ export const snippet = (
 
 const cell = (label: string) => `[data-cell="${label}"]`
 
-/** The parts a reference pack measures, as the specimen sheets show them. A
- *  pack names the same parts with its product's own targets. */
+const CONTROL = PROPS.filter((prop) => prop !== "ring")
+const TYPE: Prop[] = [
+  "color",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "letterSpacing",
+]
+const BOX: Prop[] = ["backgroundColor", "borderRadius", "height", "edge"]
+const SURFACE: Prop[] = [
+  "backgroundColor",
+  "color",
+  "borderRadius",
+  "boxShadow",
+  "edge",
+]
+const ROW: Prop[] = [
+  "backgroundColor",
+  "color",
+  "borderRadius",
+  "height",
+  "paddingInline",
+  "fontSize",
+  "fontWeight",
+]
+const PAGE: Prop[] = ["backgroundColor", "color", "fontFamily"]
+const LAYOUT: Prop[] = ["backgroundColor", "edge"]
+const LINK: Prop[] = ["color", "fontWeight"]
+const TOOLTIP: Prop[] = [
+  ...SURFACE,
+  "height",
+  "paddingInline",
+  "fontSize",
+  "fontWeight",
+]
+const FOCUS: Prop[] = ["edge", "ring"]
+
+/** The parts a reference pack measures, as the specimen sheets show them, and
+ *  the props each kind is compared on (`--pack` writes only those unless a
+ *  target sets `only`). A pack names the same parts with its product's own
+ *  targets. */
 export const SPECIMEN_TARGETS: Record<
   string,
-  { sheet: SheetName; target: Target }
+  { sheet: SheetName; props: readonly Prop[]; target: Target }
 > = {
-  page: { sheet: "actions", target: { selector: "[data-specimen]" } },
+  page: {
+    sheet: "actions",
+    props: PAGE,
+    target: { selector: "[data-specimen]" },
+  },
   "button.primary": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Primary" },
   },
   "button.secondary": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Secondary" },
   },
   "button.quiet": {
     sheet: "actions",
+    props: CONTROL,
     target: { within: cell("button · md"), text: "Quiet" },
   },
   input: {
     sheet: "fields",
+    props: CONTROL,
     target: { within: cell("text field · description"), selector: "input" },
   },
   "button.focus": {
     sheet: "actions",
-    target: { selector: "[data-specimen-focus]" },
+    props: FOCUS,
+    target: { selector: "[data-specimen-focus]", focus: true },
   },
   "select.trigger": {
     sheet: "fields",
+    props: CONTROL,
     target: { within: cell("select · trigger"), selector: "button" },
   },
   "input.focus": {
     sheet: "fields",
-    target: { selector: "[data-specimen-focus]" },
+    props: FOCUS,
+    target: { selector: "[data-specimen-focus]", focus: true },
   },
   checkbox: {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-checkbox-indicator]:not([data-selected])" },
   },
   "checkbox.checked": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-checkbox-indicator][data-selected]" },
   },
   "switch.on": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-switch-indicator][data-selected]" },
   },
   "switch.off": {
     sheet: "selection",
+    props: BOX,
     target: { selector: "[data-switch-indicator]:not([data-selected])" },
   },
   tab: {
     sheet: "navigation",
+    props: CONTROL,
     target: {
       within: cell("tabs · preset default"),
       selector: "[data-tab]:not([data-selected]):not([data-disabled])",
@@ -405,6 +482,7 @@ export const SPECIMEN_TARGETS: Record<
   },
   "tab.selected": {
     sheet: "navigation",
+    props: CONTROL,
     target: {
       within: cell("tabs · preset default"),
       selector: "[data-tab][data-selected]",
@@ -412,49 +490,72 @@ export const SPECIMEN_TARGETS: Record<
   },
   link: {
     sheet: "navigation",
+    props: LINK,
     target: { within: cell("links in text"), selector: "a" },
   },
   shell: {
     sheet: "navigation",
+    props: LAYOUT,
     target: { selector: "[data-sidebar-wrapper]", surface: true },
   },
-  panel: { sheet: "navigation", target: { selector: "[data-sidebar-inset]" } },
+  panel: {
+    sheet: "navigation",
+    props: LAYOUT,
+    target: { selector: "[data-sidebar-inset]" },
+  },
   "nav.item": {
     sheet: "navigation",
+    props: ROW,
     target: { selector: "[data-sidebar-menu-button]:not([data-active])" },
   },
   "nav.item.active": {
     sheet: "navigation",
+    props: ROW,
     target: { selector: "[data-sidebar-menu-button][data-active]" },
   },
   menu: {
     sheet: "menu",
+    props: SURFACE,
     target: { selector: "[data-menu-content]", surface: true },
   },
-  "menu.item": { sheet: "menu", target: { selector: "[data-menu-item]" } },
+  "menu.item": {
+    sheet: "menu",
+    props: ROW,
+    target: { selector: "[data-menu-item]" },
+  },
   tooltip: {
     sheet: "menu",
+    props: TOOLTIP,
     target: { selector: "[data-tooltip]", surface: true },
   },
   command: {
     sheet: "command",
+    props: SURFACE,
     target: { selector: "[data-command]", surface: true },
   },
   "command.item": {
     sheet: "command",
+    props: ROW,
     target: { within: "[data-command]", selector: "[data-listbox-item]" },
   },
   kbd: {
     sheet: "display",
+    props: CONTROL,
     target: { within: cell("avatars · kbd"), selector: "[data-kbd]" },
   },
   dialog: {
     sheet: "dialog",
+    props: SURFACE,
     target: { selector: "[data-dialog-content]", surface: true },
   },
-  card: { sheet: "display", target: { selector: "[data-card]" } },
+  card: {
+    sheet: "display",
+    props: SURFACE,
+    target: { selector: "[data-card]" },
+  },
   badge: {
     sheet: "feedback",
+    props: CONTROL,
     target: {
       within: cell("badge · preset default"),
       selector: "[data-badge]",
@@ -463,6 +564,7 @@ export const SPECIMEN_TARGETS: Record<
   },
   "badge.accent": {
     sheet: "feedback",
+    props: CONTROL,
     target: {
       within: cell("badge · preset default"),
       selector: "[data-badge]",
@@ -471,26 +573,32 @@ export const SPECIMEN_TARGETS: Record<
   },
   "heading.1": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h1 · text-4xl"), selector: "h1" },
   },
   "heading.2": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h2 · text-3xl"), selector: "h2" },
   },
   "heading.3": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h3 · text-2xl"), selector: "h3" },
   },
   "heading.4": {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("h4 · text-xl"), selector: "h4" },
   },
   text: {
     sheet: "type",
+    props: TYPE,
     target: { within: cell("body · text-base"), selector: ":scope > div > p" },
   },
   "text.muted": {
     sheet: "type",
+    props: TYPE,
     target: {
       within: cell("muted · text-sm text-fg-muted"),
       selector: ":scope > div > p",

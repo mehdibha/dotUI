@@ -88,7 +88,8 @@ const PROBE = (() => {
   const files = [resolve(LAB, "probe.ts"), resolve(LAB, "compare.ts")]
   const git = (...cmd: string[]) =>
     execFileSync("git", [...cmd, "--", ...files], { encoding: "utf8" }).trim()
-  const sha = git("log", "-1", "--format=%h")
+  // Seven characters, as %h grows with the clone's object count.
+  const sha = git("log", "-1", "--format=%H").slice(0, 7)
   return git("status", "--porcelain") ? `${sha}+dirty` : sha
 })()
 
@@ -141,16 +142,15 @@ const readTargets = async (): Promise<Record<string, Target>> => {
 
 const stepped = (target: Target) => target.focus || target.before
 
-/** What a page writes for its parts: each part's `only` and `skip` applied. */
+/** What a page writes for its parts: the props each part's kind is compared
+ *  on (or the target's `only`), less its `skip`. */
 function owned(measures: Measures, targets: Record<string, Target>) {
   for (const [part, target] of Object.entries(targets)) {
     const measure = measures[part]
     if (!measure) continue
+    const keep = target.only ?? SPECIMEN_TARGETS[part]?.props
     for (const prop of Object.keys(measure) as Prop[])
-      if (
-        target.skip?.includes(prop) ||
-        (target.only && !target.only.includes(prop))
-      )
+      if (target.skip?.includes(prop) || (keep && !keep.includes(prop)))
         delete measure[prop]
   }
   return measures
