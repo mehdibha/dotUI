@@ -7,7 +7,7 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 ## The bar
 
 - **Recognizable at a glance** on every specimen sheet, in light and dark, next to the real product. High fidelity, not a pixel clone.
-- **Measured, not guessed.** Values come from the product's computed styles or its published tokens, recorded in `preset-lab/refs/<id>/`. Popular reputations mislead: "dense" Vercel, Linear and Notion all measure at our default density.
+- **Measured, not guessed.** Values come from the product's computed styles or its published tokens, recorded in `preset-lab/refs/<id>/`. Popular reputations mislead: "dense" Vercel and Linear both measure at our default density.
 - **Free stand-ins** for proprietary fonts and icon sets, named in a comment. No protected brand assets.
 - **No dark mode in the product:** derive one that keeps the light mode's character, and say so in a comment.
 

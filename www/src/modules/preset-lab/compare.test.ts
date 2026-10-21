@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { compareMeasures } from "./compare"
+import { compareMeasures, compareRuns } from "./compare"
 import type { Measure } from "./probe"
 
 function row(reference: string, preset: string, prop = "borderRadius") {
@@ -20,6 +20,14 @@ describe("compareMeasures", () => {
 
   it("treats any two pill radii as equal", () => {
     expect(row("9999px", "3.40282e+38px")).toMatchObject({ ok: true })
+  })
+
+  it("compares a pill against a rounded box at half its height", () => {
+    const [radius] = compareMeasures(
+      { badge: { borderRadius: "8px", height: "20px" } },
+      { badge: { borderRadius: "3.35544e+07px", height: "20px" } },
+    )
+    expect(radius).toMatchObject({ ok: false, delta: "+2px", distance: 2 })
   })
 
   it("treats a radius past half the height as full", () => {
@@ -61,6 +69,16 @@ describe("compareMeasures", () => {
     expect(row(inset, "1px rgb(94, 106, 210) +1px", "ring").delta).toBe(
       "offset +2px",
     )
+    expect(
+      row("3px rgb(0, 0, 0) 2px", "3px rgb(0, 0, 0) +2px", "ring").ok,
+    ).toBe(true)
+  })
+
+  it("reports a value it can't parse instead of throwing", () => {
+    expect(row("2px banana", "2px rgb(0, 0, 0)", "edge")).toMatchObject({
+      ok: false,
+      delta: "unparsable",
+    })
   })
 
   it("compares colors in OKLab", () => {
@@ -87,6 +105,26 @@ describe("compareMeasures", () => {
     expect(
       row('"Inter Variable", system-ui', "Inter, sans-serif", "fontFamily").ok,
     ).toBe(true)
+    expect(
+      row("ui-sans-serif, sans-serif", "-apple-system, Segoe UI", "fontFamily")
+        .ok,
+    ).toBe(true)
+  })
+
+  it("passes a font the pack names as the preset's stand-in", () => {
+    const fonts = { "din-round": "Nunito" }
+    const [standIn] = compareMeasures(
+      { text: { fontFamily: '"din-round", sans-serif' } },
+      { text: { fontFamily: "Nunito Variable, sans-serif" } },
+      fonts,
+    )
+    expect(standIn).toMatchObject({ ok: true, delta: "stand-in" })
+    const [other] = compareMeasures(
+      { text: { fontFamily: "din-round" } },
+      { text: { fontFamily: "Inter" } },
+      fonts,
+    )
+    expect(other?.ok).toBe(false)
   })
 
   it("tolerates in-between variable weights", () => {
@@ -119,5 +157,38 @@ describe("compareMeasures", () => {
     expect(
       compareMeasures({ badge: { height: "20px" } }, { badge: null })[0],
     ).toMatchObject({ preset: "—", ok: false, missing: true })
+  })
+})
+
+describe("compareRuns", () => {
+  const run = (radius: string, height: string, edge = "1px rgb(0, 0, 0)") =>
+    compareMeasures(
+      {
+        button: {
+          borderRadius: "8px",
+          height: "32px",
+          edge: "1px rgb(0, 0, 0)",
+        },
+      },
+      { button: { borderRadius: radius, height, edge } },
+    )
+
+  it("names what changed between two runs", () => {
+    const changes = compareRuns(
+      run("2px", "36px", "none"),
+      run("8px", "40px", "2px rgb(0, 0, 0)"),
+    )
+    expect(changes.map((c) => [c.prop, c.kind])).toEqual([
+      ["borderRadius", "fixed"],
+      ["height", "further"],
+      ["edge", "changed"],
+    ])
+    expect(
+      compareRuns(run("8px", "40px"), run("4px", "36px")).map((c) => c.kind),
+    ).toEqual(["broke", "closer"])
+  })
+
+  it("leaves out rows that didn't move", () => {
+    expect(compareRuns(run("2px", "32px"), run("2px", "32.5px"))).toEqual([])
   })
 })
