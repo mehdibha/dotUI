@@ -90,6 +90,7 @@ export const COMPONENTS: Component[] = [
       "Buttons",
       "Toggle button",
       "Button group",
+      "Group",
       "Toggle button group",
       "File trigger",
     ],
