@@ -45,6 +45,10 @@
         "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
         "ink": "input",
         "skip": ["borderColor", "borderWidth", "paddingInline"]
+      },
+      "input.focus": {
+        "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
+        "focus": true
       }
     }
   },

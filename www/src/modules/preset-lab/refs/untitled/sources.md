@@ -4,7 +4,7 @@ Untitled UI React is open source (React Aria Components + Tailwind v4), so its t
 
 ## 2026-10-21
 
-`tokens.json` was measured headless (`presets:measure --pack untitled --concurrency 1`, 1440×900) from the pages in `targets.json`, both themes. Reference shots, compare sheets and raw measures are in the project files under `presets/untitled/2026-10-21/`.
+`tokens.json` was measured headless (`presets:measure --pack untitled --concurrency 1`, 1440×900) from the pages in `targets.json`, both themes, and re-measured the same day on probe 89a5551. Reference shots, compare sheets and raw measures are in the project files under `presets/untitled/2026-10-21/`.
 
 - **untitleduico/react** at 1d410cb (2026-10-09), `styles/theme.css`: the semantic tokens behind every class the docs compute.
   - Grays are Tailwind neutral (chroma 0); the brand ramp is purple (brand-600 `#7f56d9` solid, brand-500 `#9e77ed` and brand-400 `#b692f6` focus rings, brand-700 `#6941c6` brand text, brand-50 `#f9f5ff` washes).
@@ -14,7 +14,7 @@ Untitled UI React is open source (React Aria Components + Tailwind v4), so its t
 - **untitledui.com/react/components/\***, the docs pages: their inline demos render the library's real components. Dark mode is next-themes (`localStorage.theme` → `.dark-mode`), so every page sets `"storage": "theme"`.
   - Pages share one origin, and next-themes syncs the theme across tabs: run `--pack` with `--concurrency 1` or light and dark mix.
   - Buttons default to size sm: 36px, 12px padding, 14/600, r8. The primary's edge is a 1px `rgba(0,0,0,0.18)` inner ring; the focus ring is 2px brand-500 (brand-400 dark) at +2px.
-  - Fields draw their box on a wrapper and their text on the `<input>`, so `input` measures the wrapper and reads its ink from the input (`ink`). `input.focus` is hand-entered: the 2px inset brand ring sits on the wrapper under `focus-within`, which the probe's focus step doesn't reach (`2px` brand-500 at `-2px`, read from the wrapper's computed `box-shadow`).
+  - Fields draw their box on a wrapper and their text on the `<input>`, so `input` measures the wrapper and reads its ink from the input (`ink`). On focus the wrapper draws a 2px brand-500 (brand-400 dark) inset ring under `focus-within`; it sits flush with the edge, so `input.focus` reads it as `edge`.
   - `tooltip` was measured outside `--pack` and merged with `--merge`: React Aria tooltips don't open on a Puppeteer hover, and they close when Tab moves past their trigger, so the scratch runner focused the trigger with one Tab and waited 800ms.
   - The default tab is the `button-brand` type (36px, px 10, r6, 14/600): brand-50 / brand-700 when selected in light, neutral-900 / neutral-300 in dark.
   - Badges are the gray pill at md (24px, px 10, 14/500). Menus: r8, ring black 10%, shadow-lg; dropdown rows 36px (38 with their gaps) at 14/600, select rows 40px at 16/500.
