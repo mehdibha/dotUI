@@ -1,38 +1,21 @@
 import type * as React from "react"
-import type { Selection } from "react-aria-components"
 
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
+import { Tab, TabList } from "@/registry/ui/tabs"
 import {
   presetLabelStack,
   usePresetLabelFonts,
 } from "@/modules/marketing/preset-fonts"
 import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
-// The landing showcase's design-system selector: a segmented control over the cards.
-// Picking a preset re-skins the scoped grid below instantly (no tween — repainting
-// the ~1k-node grid every frame for a morph costs more than it's worth). It lives
-// outside the scoped provider, so it always wears the site theme.
-export function PresetSwitcher({
-  selected,
-  onSelect,
-}: {
-  selected: number
-  onSelect: (index: number) => void
-}) {
+// The landing showcase's design-system selector: the tab list over the cards (the
+// panel, in `cards.tsx`). Picking a preset re-skins the scoped grid below instantly
+// (no tween — repainting the ~1k-node grid every frame for a morph costs more than
+// it's worth). It lives outside the scoped provider, so it always wears the site
+// theme.
+export function PresetSwitcher({ selected }: { selected: number }) {
   const active = PRESET_CATALOG[selected]
-  const activeId = active?.id
 
   usePresetLabelFonts()
-
-  const handleChange = (keys: Selection) => {
-    if (keys === "all") return
-    const id = [...keys][0]
-    const index = PRESET_CATALOG.findIndex((preset) => preset.id === id)
-    if (index >= 0) onSelect(index)
-  }
 
   // The indicator wears the selected preset: its control radius (md = 0.75 ×
   // the base) and a subtle wash of its accent over the neutral selected surface.
@@ -48,28 +31,28 @@ export function PresetSwitcher({
     // Negative margins cancel the landing container's padding so the row still
     // scrolls edge-to-edge on small screens; lg fits without overflowing.
     <div className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-      <SegmentedControl
+      <TabList
         aria-label="Preview design system"
-        className="mx-auto bg-transparent p-0 **:data-segmented-control-indicator:rounded-(--indicator-radius) **:data-segmented-control-indicator:bg-(--indicator-bg) **:data-segmented-control-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
+        variant="segmented"
+        className="mx-auto h-auto gap-2 bg-transparent p-0 **:data-tab-indicator:rounded-(--indicator-radius) **:data-tab-indicator:bg-(--indicator-bg) **:data-tab-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
         style={indicatorStyle}
-        selectedKeys={activeId ? [activeId] : []}
-        onSelectionChange={handleChange}
       >
         {PRESET_CATALOG.map((preset) => (
-          <SegmentedControlItem
+          <Tab
             key={preset.id}
             id={preset.id}
+            className="group/tab flex-none px-2.5 py-1 opacity-50 transition-[color,opacity] data-focus-visible:opacity-100 data-hovered:opacity-100 orientation-horizontal:h-auto data-selected:opacity-100"
             style={{ fontFamily: presetLabelStack(preset.id) }}
           >
             <span
               aria-hidden="true"
-              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 ring-inset"
+              className="size-2.5 shrink-0 rounded-full ring-1 ring-current/20 grayscale transition-[filter] ring-inset group-data-focus-visible/tab:grayscale-0 group-data-hovered/tab:grayscale-0 group-data-selected/tab:grayscale-0"
               style={{ background: preset.swatch }}
             />
             {preset.name}
-          </SegmentedControlItem>
+          </Tab>
         ))}
-      </SegmentedControl>
+      </TabList>
     </div>
   )
 }
