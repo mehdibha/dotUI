@@ -4,8 +4,6 @@
       "page": {
         "selector": ".radix-themes-default-fonts",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "borderRadius",
           "height",
           "paddingInline",
@@ -15,17 +13,14 @@
         ]
       },
       "button.primary": {
-        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid",
-        "skip": ["borderColor", "borderWidth"]
+        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid"
       },
       "button.quiet": {
-        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-ghost",
-        "skip": ["borderColor", "borderWidth"]
+        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-ghost"
       },
       "button.focus": {
         "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid",
-        "focus": true,
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "focus": true
       }
     }
   },
@@ -33,15 +28,14 @@
     "parts": {
       "input": {
         "selector": ".radix-themes-default-fonts .rt-TextFieldRoot.rt-r-size-2.rt-variant-surface",
-        "skip": ["borderColor", "borderWidth", "paddingInline", "boxShadow"]
+        "skip": ["paddingInline"]
       }
     }
   },
   "https://www.radix-ui.com/themes/docs/components/select": {
     "parts": {
       "select.trigger": {
-        "selector": ".radix-themes-default-fonts .rt-SelectTrigger.rt-r-size-2.rt-variant-surface",
-        "skip": ["borderColor", "borderWidth", "boxShadow"]
+        "selector": ".radix-themes-default-fonts .rt-SelectTrigger.rt-r-size-2.rt-variant-surface"
       }
     }
   },
@@ -51,30 +45,24 @@
         "selector": ".radix-themes-default-fonts .rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]",
         "box": "::before",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
           "fontWeight",
           "letterSpacing",
-          "paddingInline",
-          "boxShadow"
+          "paddingInline"
         ]
       },
       "checkbox.checked": {
         "selector": ".radix-themes-default-fonts .rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=checked]",
         "box": "::before",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
           "fontWeight",
           "letterSpacing",
-          "paddingInline",
-          "boxShadow"
+          "paddingInline"
         ]
       }
     }
@@ -85,15 +73,12 @@
         "selector": ".radix-themes-default-fonts .rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=checked]",
         "box": "::before",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
           "fontWeight",
           "letterSpacing",
           "paddingInline",
-          "boxShadow",
           "backgroundColor"
         ]
       },
@@ -101,15 +86,12 @@
         "selector": ".radix-themes-default-fonts .rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]",
         "box": "::before",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
           "fontWeight",
           "letterSpacing",
-          "paddingInline",
-          "boxShadow"
+          "paddingInline"
         ]
       }
     }
@@ -119,12 +101,12 @@
       "tab": {
         "selector": ".radix-themes-default-fonts .rt-TabsTrigger[data-state=inactive]",
         "ink": ".rt-TabsTriggerInner",
-        "skip": ["borderColor", "borderWidth", "borderRadius"]
+        "skip": ["borderRadius"]
       },
       "tab.selected": {
         "selector": ".radix-themes-default-fonts .rt-TabsTrigger[data-state=active]",
         "ink": ".rt-TabsTriggerInner",
-        "skip": ["borderColor", "borderWidth", "borderRadius"]
+        "skip": ["borderRadius"]
       }
     }
   },
@@ -134,8 +116,6 @@
         "within": ".radix-themes-default-fonts",
         "text": "Sign up",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "height",
@@ -158,8 +138,6 @@
           }
         ],
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
@@ -176,8 +154,7 @@
           {
             "click": ".radix-themes-default-fonts .rt-Button"
           }
-        ],
-        "skip": ["borderColor", "borderWidth"]
+        ]
       }
     }
   },
@@ -190,8 +167,7 @@
             "hover": ".radix-themes-default-fonts .rt-IconButton"
           }
         ],
-        "ink": ".rt-TooltipText",
-        "skip": ["borderColor", "borderWidth"]
+        "ink": ".rt-TooltipText"
       }
     }
   },
@@ -205,8 +181,6 @@
           }
         ],
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
@@ -223,8 +197,7 @@
           {
             "click": ".radix-themes-default-fonts .rt-Button"
           }
-        ],
-        "skip": ["borderColor", "borderWidth"]
+        ]
       }
     }
   },
@@ -234,8 +207,6 @@
         "selector": ".radix-themes-default-fonts .rt-Card.rt-variant-surface",
         "box": "::before",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "color",
           "fontFamily",
           "fontSize",
@@ -250,20 +221,17 @@
   "https://www.radix-ui.com/themes/docs/components/badge": {
     "parts": {
       "badge": {
-        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=gray]",
-        "skip": ["borderColor", "borderWidth"]
+        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=gray]"
       },
       "badge.accent": {
-        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=indigo]",
-        "skip": ["borderColor", "borderWidth"]
+        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=indigo]"
       }
     }
   },
   "https://www.radix-ui.com/themes/docs/components/kbd": {
     "parts": {
       "kbd": {
-        "selector": ".radix-themes-default-fonts .rt-Kbd",
-        "skip": ["borderColor", "borderWidth"]
+        "selector": ".radix-themes-default-fonts .rt-Kbd"
       }
     }
   },
@@ -272,8 +240,6 @@
       "heading.1": {
         "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-8",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "paddingInline",
@@ -285,8 +251,6 @@
       "heading.2": {
         "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-7",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "paddingInline",
@@ -298,8 +262,6 @@
       "heading.3": {
         "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-6",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "paddingInline",
@@ -311,8 +273,6 @@
       "heading.4": {
         "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-5",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "paddingInline",
@@ -328,8 +288,6 @@
       "text": {
         "selector": ".radix-themes-default-fonts .rt-Text.rt-r-size-3",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "height",
@@ -342,8 +300,6 @@
       "text.muted": {
         "selector": ".radix-themes-default-fonts .rt-Text.rt-r-size-2[data-accent-color=gray]",
         "skip": [
-          "borderColor",
-          "borderWidth",
           "backgroundColor",
           "borderRadius",
           "height",

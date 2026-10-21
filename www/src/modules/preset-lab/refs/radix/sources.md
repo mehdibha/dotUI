@@ -26,20 +26,19 @@ Sizes at the default size 2: buttons, fields, selects and menu rows 32px; tabs 4
 
 ## Measured pages
 
-The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts, scoped to the demo previews (`.radix-themes-default-fonts`) so they skip the docs chrome; each part is the page's first example at the default size and variant. `pnpm --filter www presets:measure --pack radix` re-measures them all into `tokens.json` (probe 44f1c5f).
+The component pages of the Radix Themes docs, headless at 1440×900, light and dark through `prefers-color-scheme`, 2026-10-21. `targets.json` lists each page's parts, scoped to the demo previews (`.radix-themes-default-fonts`) so they skip the docs chrome; each part is the page's first example at the default size and variant. `pnpm --filter www presets:measure --pack radix` re-measures them all into `tokens.json` (probe 227b008).
 
 - `button.focus` tabs to the solid button. The dropdown menu opens from its first button ("Options"), the dialog from "Edit profile", and the tooltip shows on hovering the first icon button.
 - `button.secondary` is the dialog's "Cancel", Radix's `variant="soft" color="gray"`.
 - `badge` is the gray soft badge, `badge.accent` the indigo one, both size 1. `kbd` is the standalone keycap.
+- Checkbox, switch and card boxes are read from `::before` (`box`). The card's `::before` sits 1px inside its 8px corners, so it reads 7px.
 
 Where the two sides draw a property in different places, the part skips it (`skip` in `targets.json`):
 
-- Radix draws every edge as an inset ring, so `borderColor` and `borderWidth` are skipped throughout, and `boxShadow` where the only shadow is that ring (fields, checkbox, switch). `edge` carries them.
-- Checkbox, switch and card boxes are read from `::before` (`box`). The card's `::before` sits 1px inside its 8px corners, so it reads 7px. The switch's on track is a gradient stop over gray-a3, so `switch.on` skips its fill: per `switch.css` it is accent-9, #3e63dd in both modes.
+- The switch's on track is a gradient stop over gray-a3, so `switch.on` skips its fill. Per `switch.css` it is accent-9, #3e63dd in both modes.
 - Tabs read their label (`.rt-TabsTriggerInner`), which turns 500 when active while the trigger stays 400. The trigger's radius is skipped, since Radix rounds only the label's hover fill.
 - Menu, dialog and card skip content heights, ink and inline padding. Radix pads the menu inside its viewport (8px), and the dialog (24px at size 3) and card (12px) on boxes dotUI pads elsewhere. The menu also skips `ring`: its content takes focus on open, so its edge ring reads as a focus ring.
 - The text field skips `paddingInline`: the root pads 1px and the input slot 7px, an 8px text inset in all.
-- `button.focus` skips `boxShadow`, since dotUI draws its ring there and Radix in an outline. `ring` compares both.
 - `page` is the demo preview, its fill, ink and type only. The docs site sets its own font (Untitled Sans) on its chrome.
 - Type parts keep their ink. `text` and `text.muted` skip heights (the paragraphs wrap), and `link` skips its size, inherited from the text around it.
 
