@@ -136,7 +136,7 @@ export const spotify = definePreset({
     // ProgressBar is 6px in essential-bright-accent, the check color.
     progressTrack: "medium",
     progressColor: "same-checks",
-    // Stand-in: tags are 16px (24px large) at 4px corners; rounded is 20px at 2px.
+    // Stand-in: tags are 24px at 4px corners; rounded is 20px at 2px.
     badgeShape: "rounded",
   },
 })

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en" class="encore-layout-themes encore-dark-theme">
+  <head>
+    <meta charset="utf-8" />
+    <title>Encore harness</title>
+    <!-- Encore as Spotify's login page ships it; see sources.md. -->
+    <link
+      rel="stylesheet"
+      href="https://accounts.scdn.co/authn-web/_next/static/css/7fcf1d993898f21f.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://accounts.scdn.co/authn-web/_next/static/css/c547cd707be00fc4.css"
+    />
+    <script>
+      // Encore themes by class: follow the color scheme the probe emulates.
+      if (!matchMedia("(prefers-color-scheme: dark)").matches)
+        document.documentElement.classList.replace(
+          "encore-dark-theme",
+          "encore-light-theme",
+        )
+    </script>
+    <style>
+      body {
+        margin: 0;
+        padding: 32px 40px;
+        background: var(--background-base);
+        color: var(--text-base);
+        font-family: var(--encore-body-font-stack);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px 40px;
+        align-content: start;
+      }
+      h6 {
+        all: unset;
+        display: block;
+        font:
+          11px/1.2 ui-monospace,
+          monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-subdued);
+        margin-bottom: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      button {
+        font-family: inherit;
+      }
+    </style>
+  </head>
+  <body data-part="page">
+    <section data-board="buttons" style="grid-column: span 2">
+      <h6>Button · small / medium / large</h6>
+      <div class="col">
+        <div class="row">
+          <button
+            class="e-10830-button e-10830-button--primary e-10830-button--small encore-text-body-small-bold encore-bright-accent-set"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Primary</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--secondary e-10830-button--small encore-text-body-small-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Secondary</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--small encore-text-body-small-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Bordered</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--tertiary e-10830-button--small encore-text-body-small-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Tertiary</span>
+          </button>
+        </div>
+        <div class="row">
+          <button
+            data-part="button.primary"
+            class="e-10830-button e-10830-button--primary e-10830-button--medium encore-text-body-medium-bold encore-bright-accent-set"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Primary</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--secondary e-10830-button--medium encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Secondary</span>
+          </button>
+          <button
+            data-part="button.secondary"
+            class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--medium encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Bordered</span>
+          </button>
+          <button
+            data-part="button.quiet"
+            class="e-10830-button e-10830-button--tertiary e-10830-button--medium encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Tertiary</span>
+          </button>
+        </div>
+        <div class="row">
+          <button
+            class="e-10830-button e-10830-button--primary e-10830-button--large encore-text-body-medium-bold encore-bright-accent-set"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Primary</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--secondary e-10830-button--large encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Secondary</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--large encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Bordered</span>
+          </button>
+          <button
+            class="e-10830-button e-10830-button--tertiary e-10830-button--large encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Tertiary</span>
+          </button>
+        </div>
+        <div class="row">
+          <button
+            disabled
+            class="e-10830-button e-10830-button--primary e-10830-button--medium encore-text-body-medium-bold encore-bright-accent-set"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Disabled</span>
+          </button>
+          <button
+            disabled
+            class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--medium encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Disabled</span>
+          </button>
+          <button
+            data-part="button.focus"
+            data-focus-visible="true"
+            class="e-10830-button e-10830-button--primary e-10830-button--medium encore-text-body-medium-bold encore-bright-accent-set"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Focused</span>
+          </button>
+          <button
+            data-focus-visible="true"
+            class="e-10830-button e-10830-button--secondary-bordered e-10830-button--secondary-bordered-text-base e-10830-button--medium encore-text-body-medium-bold"
+            style="color: var(--text-base)"
+          >
+            <span class="e-10830-button__children">Focused</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section data-board="selection">
+      <h6>Checkbox · radio · toggle</h6>
+      <div class="col">
+        <div class="e-10830-form-check e-10830-form-checkbox">
+          <input
+            id="c1"
+            type="checkbox"
+            class="e-10830-visually-hidden"
+          /><label for="c1" class="e-10830-form-checkbox__label"
+            ><span
+              data-part="checkbox"
+              class="e-10830-form-check-indicator e-10830-form-checkbox__indicator"
+            ></span
+            ><span class="e-10830-form-checkbox__text encore-text-body-medium"
+              >Unchecked</span
+            ></label
+          >
+        </div>
+        <div class="e-10830-form-check e-10830-form-checkbox">
+          <input
+            id="c2"
+            type="checkbox"
+            checked
+            class="e-10830-visually-hidden"
+          /><label for="c2" class="e-10830-form-checkbox__label"
+            ><span
+              data-part="checkbox.checked"
+              class="e-10830-form-check-indicator e-10830-form-checkbox__indicator"
+            ></span
+            ><span class="e-10830-form-checkbox__text encore-text-body-medium"
+              >Checked</span
+            ></label
+          >
+        </div>
+        <div class="e-10830-form-check e-10830-form-checkbox">
+          <input
+            id="c3"
+            type="checkbox"
+            checked
+            disabled
+            class="e-10830-visually-hidden"
+          /><label for="c3" class="e-10830-form-checkbox__label"
+            ><span
+              class="e-10830-form-check-indicator e-10830-form-checkbox__indicator"
+            ></span
+            ><span class="e-10830-form-checkbox__text encore-text-body-medium"
+              >Disabled checked</span
+            ></label
+          >
+        </div>
+        <div class="e-10830-form-radio">
+          <input
+            id="r1"
+            name="r"
+            type="radio"
+            class="e-10830-visually-hidden"
+          /><label for="r1" class="e-10830-form-radio__label"
+            ><span class="e-10830-form-radio__indicator"></span
+            ><span class="e-10830-form-radio__text encore-text-body-medium"
+              >Radio</span
+            ></label
+          >
+        </div>
+        <div class="e-10830-form-radio">
+          <input
+            id="r2"
+            name="r"
+            type="radio"
+            checked
+            class="e-10830-visually-hidden"
+          /><label for="r2" class="e-10830-form-radio__label"
+            ><span class="e-10830-form-radio__indicator"></span
+            ><span class="e-10830-form-radio__text encore-text-body-medium"
+              >Radio selected</span
+            ></label
+          >
+        </div>
+        <label class="e-10830-form-toggle"
+          ><input type="checkbox" class="e-10830-visually-hidden" /><span
+            data-part="switch.off"
+            class="e-10830-form-toggle__wrapper"
+            ><span class="e-10830-form-toggle__indicator"></span></span
+          ><span class="e-10830-form-toggle__label encore-text-body-medium"
+            >Toggle off</span
+          ></label
+        >
+        <label class="e-10830-form-toggle"
+          ><input
+            type="checkbox"
+            checked
+            class="e-10830-visually-hidden"
+          /><span data-part="switch.on" class="e-10830-form-toggle__wrapper"
+            ><span class="e-10830-form-toggle__indicator"></span></span
+          ><span class="e-10830-form-toggle__label encore-text-body-medium"
+            >Toggle on</span
+          ></label
+        >
+      </div>
+    </section>
+    <section data-board="fields" style="grid-column: span 2">
+      <h6>Input · focused · invalid · disabled · search</h6>
+      <div
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px"
+      >
+        <div>
+          <label
+            class="e-10830-form-group__label encore-text-body-small-bold"
+            style="display: block; padding-bottom: 8px"
+            >Email</label
+          ><input
+            data-part="input"
+            class="e-10830-input e-10830-input--medium encore-text-body-medium"
+            placeholder="you@example.com"
+          />
+          <div class="e-10830-form-help-text encore-text-body-small">
+            We'll never share your email.
+          </div>
+        </div>
+        <div>
+          <label
+            class="e-10830-form-group__label encore-text-body-small-bold"
+            style="display: block; padding-bottom: 8px"
+            >Company</label
+          ><input
+            data-part="input.focus"
+            data-focus-visible
+            class="e-10830-input e-10830-input--medium encore-text-body-medium"
+            value="Acme Inc."
+          />
+        </div>
+        <div>
+          <label
+            class="e-10830-form-group__label encore-text-body-small-bold"
+            style="display: block; padding-bottom: 8px"
+            >Email</label
+          ><input
+            aria-invalid="true"
+            class="e-10830-input e-10830-input--medium encore-text-body-medium"
+            value="hello@"
+          />
+          <div
+            class="e-10830-form-help-text e-10830-form-help-text--error encore-text-body-small"
+          >
+            Enter a valid email address.
+          </div>
+        </div>
+        <div>
+          <label
+            class="e-10830-form-group__label encore-text-body-small-bold"
+            style="display: block; padding-bottom: 8px"
+            >Disabled</label
+          ><input
+            disabled
+            class="e-10830-input e-10830-input--medium encore-text-body-medium"
+            value="read-only@acme.com"
+          />
+        </div>
+        <div
+          class="e-10830-search-field e-10830-search-field--medium encore-text-body-medium"
+        >
+          <svg
+            class="e-10830-icon e-10830-search-field__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M10.533 1.27893C5.35215 1.27893 1.12598 5.41887 1.12598 10.5579C1.12598 15.697 5.35215 19.8369 10.533 19.8369C12.767 19.8369 14.8235 19.0671 16.4402 17.7794L20.7929 22.132C21.1834 22.5226 21.8166 22.5226 22.2071 22.132C22.5976 21.7415 22.5976 21.1083 22.2071 20.7178L17.8634 16.3741C19.1616 14.7849 19.94 12.7634 19.94 10.5579C19.94 5.41887 15.7138 1.27893 10.533 1.27893ZM3.12598 10.5579C3.12598 6.55226 6.42768 3.27893 10.533 3.27893C14.6383 3.27893 17.94 6.55226 17.94 10.5579C17.94 14.5636 14.6383 17.8369 10.533 17.8369C6.42768 17.8369 3.12598 14.5636 3.12598 10.5579Z"
+            /></svg
+          ><input
+            class="e-10830-input"
+            placeholder="What do you want to play?"
+          />
+        </div>
+        <textarea
+          class="e-10830-text-area e-10830-text-area--medium encore-text-body-medium"
+        >
+Buttons lose their focus ring inside dialogs.</textarea
+        >
+      </div>
+    </section>
+    <section data-board="navigation">
+      <h6>Tabs · link · breadcrumbs</h6>
+      <div class="e-10830-tab-list" role="tablist" style="margin-bottom: 16px">
+        <button
+          role="tab"
+          aria-selected="false"
+          class="e-10830-tab-item encore-text-body-medium-bold"
+          style="background: none; border: 0"
+        >
+          Overview
+        </button>
+        <button
+          data-part="tab.selected"
+          role="tab"
+          aria-selected="true"
+          class="e-10830-tab-item encore-text-body-medium-bold"
+          style="background: none; border: 0"
+        >
+          Usage
+        </button>
+        <button
+          data-part="tab"
+          role="tab"
+          aria-selected="false"
+          class="e-10830-tab-item encore-text-body-medium-bold"
+          style="background: none; border: 0"
+        >
+          Settings
+        </button>
+      </div>
+      <p class="encore-text-body-medium" style="margin: 0 0 16px">
+        Built on
+        <a data-part="link" href="#" class="e-10830-text-link"
+          >React Aria Components</a
+        >
+        and styled with <a href="#" class="e-10830-text-link">Tailwind CSS</a>.
+      </p>
+    </section>
+    <section data-board="feedback" style="grid-column: span 2">
+      <h6>Banner · tag · progress</h6>
+      <div class="col">
+        <div
+          class="e-10830-banner e-10830-banner--contextual encore-text-body-small"
+        >
+          A new version is available.
+        </div>
+        <div
+          class="e-10830-banner e-10830-banner--contextual e-10830-banner--color-set encore-negative-subdued-set encore-text-body-small"
+          style="color: var(--text-base)"
+        >
+          Your payment failed.
+        </div>
+        <div
+          class="e-10830-banner e-10830-banner--contextual e-10830-banner--color-set encore-positive-subdued-set encore-text-body-small"
+          style="color: var(--text-base)"
+        >
+          Saved to your library.
+        </div>
+        <div
+          class="e-10830-banner e-10830-banner--contextual e-10830-banner--color-set encore-negative-set encore-text-body-small"
+          style="color: var(--text-base)"
+        >
+          Something went wrong.
+        </div>
+        <div class="row">
+          <span
+            class="e-10830-tag e-10830-tag--medium encore-text-marginal-bold"
+            >E</span
+          ><span
+            data-part="badge"
+            class="e-10830-tag e-10830-tag--large encore-text-body-small-bold"
+            >Podcast</span
+          ><span
+            data-part="badge.accent"
+            class="e-10830-tag e-10830-tag--large e-10830-tag--color-set encore-bright-accent-set encore-text-body-small-bold"
+            style="color: var(--text-base)"
+            >New</span
+          >
+        </div>
+        <div class="e-10830-progress-bar" style="width: 320px">
+          <div
+            class="e-10830-progress-bar__indicator"
+            style="
+              width: 60%;
+              --progress-bar-color: var(--essential-bright-accent);
+            "
+          ></div>
+        </div>
+      </div>
+    </section>
+    <section data-board="type">
+      <h6>Type · title-large · title-medium · body</h6>
+      <h1
+        data-part="heading.1"
+        class="encore-text-title-large"
+        style="margin: 0 0 8px"
+      >
+        Good evening
+      </h1>
+      <h3
+        data-part="heading.3"
+        class="encore-text-title-medium"
+        style="margin: 0 0 8px"
+      >
+        Popular
+      </h3>
+      <p data-part="text" class="encore-text-body-medium" style="margin: 0">
+        Body text at 16px.
+      </p>
+      <p
+        data-part="text.muted"
+        class="encore-text-body-small"
+        style="margin: 0; color: var(--text-subdued)"
+      >
+        Subdued text at 14px.
+      </p>
+    </section>
+    <section data-board="overlays">
+      <h6>Tooltip · overlay</h6>
+      <div class="row" style="align-items: flex-start; gap: 24px">
+        <div
+          data-part="tooltip"
+          class="e-10830-overlay e-10830-tooltip encore-text-body-small"
+          style="position: static"
+        >
+          Copy to clipboard
+        </div>
+        <div
+          data-part="menu"
+          class="e-10830-overlay e-10830-popover encore-text-body-small"
+          style="position: static; padding: 16px"
+        >
+          Popover surface
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

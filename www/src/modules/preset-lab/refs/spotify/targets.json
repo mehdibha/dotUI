@@ -1,6 +1,5 @@
 {
-  "https://accounts.spotify.com/en/login": {
-    "mode": "dark",
+  "encore.html": {
     "parts": {
       "page": {
         "selector": "body",
@@ -16,104 +15,13 @@
           "fontWeight"
         ]
       },
-      "button.secondary": {
-        "text": "Continue with Google",
-        "skip": ["boxShadow", "paddingInline", "ring"]
-      },
-      "input": {
-        "selector": "[data-testid=login-username]",
-        "skip": ["boxShadow", "ring"]
-      },
-      "text": {
-        "text": "or",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "text.muted": {
-        "text": "Don't have an account?",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
-      }
-    }
-  },
-  "https://accounts.spotify.com/en/login (Encore light theme)": {
-    "mode": "light",
-    "signedIn": true,
-    "parts": {
-      "page": {
-        "selector": "body",
-        "skip": [
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize",
-          "fontWeight"
-        ]
-      },
-      "button.secondary": {
-        "text": "Continue with Google",
-        "skip": ["boxShadow", "paddingInline", "ring"]
-      },
-      "input": {
-        "selector": "[data-testid=login-username]",
-        "skip": ["boxShadow", "ring"]
-      },
-      "text": {
-        "text": "or",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
-      },
-      "text.muted": {
-        "text": "Don't have an account?",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
-      }
-    }
-  },
-  "https://accounts.spotify.com/en/login (Encore board)": {
-    "signedIn": true,
-    "parts": {
       "button.primary": {
         "selector": "[data-part=\"button.primary\"]",
         "skip": ["boxShadow", "ring"]
+      },
+      "button.secondary": {
+        "selector": "[data-part=\"button.secondary\"]",
+        "skip": ["boxShadow", "ring", "edge"]
       },
       "button.quiet": {
         "selector": "[data-part=\"button.quiet\"]",
@@ -131,10 +39,6 @@
           "letterSpacing",
           "edge"
         ]
-      },
-      "input.focus": {
-        "selector": "[data-part=\"input.focus\"]",
-        "skip": ["boxShadow", "edge"]
       },
       "checkbox": {
         "selector": "[data-part=\"checkbox\"]",
@@ -164,19 +68,6 @@
           "edge"
         ]
       },
-      "switch.on": {
-        "selector": "[data-part=\"switch.on\"]",
-        "skip": [
-          "boxShadow",
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
-      },
       "switch.off": {
         "selector": "[data-part=\"switch.off\"]",
         "skip": [
@@ -190,12 +81,33 @@
           "ring"
         ]
       },
-      "tab": {
-        "selector": "[data-part=\"tab\"]",
-        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+      "switch.on": {
+        "selector": "[data-part=\"switch.on\"]",
+        "skip": [
+          "boxShadow",
+          "color",
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing",
+          "ring"
+        ]
+      },
+      "input": {
+        "selector": "[data-part=\"input\"]",
+        "skip": ["boxShadow", "ring"]
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "skip": ["boxShadow"]
       },
       "tab.selected": {
         "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]",
         "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
       },
       "link": {
@@ -212,16 +124,12 @@
           "fontSize"
         ]
       },
-      "tooltip": {
-        "selector": "[data-part=\"tooltip\"]",
-        "skip": ["boxShadow", "height", "fontSize", "ring"]
-      },
-      "menu": {
-        "selector": "[data-part=\"menu\"]",
-        "skip": ["boxShadow", "height", "paddingInline", "fontSize", "ring"]
-      },
       "badge": {
         "selector": "[data-part=\"badge\"]",
+        "skip": ["boxShadow", "fontSize", "fontWeight", "ring"]
+      },
+      "badge.accent": {
+        "selector": "[data-part=\"badge.accent\"]",
         "skip": ["boxShadow", "fontSize", "fontWeight", "ring"]
       },
       "heading.1": {
@@ -251,6 +159,41 @@
           "ring",
           "fontSize"
         ]
+      },
+      "text": {
+        "selector": "[data-part=\"text\"]",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring"
+        ]
+      },
+      "text.muted": {
+        "selector": "[data-part=\"text.muted\"]",
+        "skip": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "letterSpacing",
+          "boxShadow",
+          "edge",
+          "ring",
+          "fontSize"
+        ]
+      },
+      "tooltip": {
+        "selector": "[data-part=\"tooltip\"]",
+        "skip": ["boxShadow", "height", "fontSize", "ring"]
+      },
+      "menu": {
+        "selector": "[data-part=\"menu\"]",
+        "skip": ["boxShadow", "height", "paddingInline", "fontSize", "ring"]
       }
     }
   }
