@@ -16,18 +16,18 @@ export interface Row {
   missing?: boolean
 }
 
-const COLORS = new Set<Prop>(["backgroundColor", "color", "borderColor"])
+const COLORS = new Set<Prop>(["backgroundColor", "color"])
 
 /* What a look tolerates before it reads differently. */
 const PX_TOLERANCE: Partial<Record<Prop, number>> = {
-  /* Tight enough to tell a 0.5px hairline from 1px. */
-  borderWidth: 0.25,
   borderRadius: 1,
   height: 2,
   paddingInline: 2,
   fontSize: 0.5,
   letterSpacing: 0.2,
 }
+/** Edge and ring widths: tight enough to tell a 0.5px hairline from 1px. */
+const LINE_TOLERANCE = 0.25
 /** ΔE in OKLab (L from 0 to 1); about one just-noticeable step. */
 const COLOR_TOLERANCE = 0.02
 /** Variable fonts land on in-between weights (Linear's 510). */
@@ -59,7 +59,8 @@ function colorDelta(a: string, b: string) {
   return { delta: `ΔE ${delta.toFixed(3)}`, ok: delta <= COLOR_TOLERANCE }
 }
 
-/** Visible shadow layers: Tailwind pads with transparent ones. */
+/** Visible shadow layers: Tailwind pads with transparent ones, and rings
+ *  (spread only) count as `edge` and `ring` instead. */
 const shadowLayers = (value: string) =>
   value === "none"
     ? 0
@@ -67,7 +68,8 @@ const shadowLayers = (value: string) =>
         .split(/,(?![^(]*\))/)
         .filter(
           (layer) =>
-            alphaOf(/^\s*([a-z]+\([^)]*\))/.exec(layer)?.[1] ?? "") > 0,
+            alphaOf(/^\s*([a-z]+\([^)]*\))/.exec(layer)?.[1] ?? "") > 0 &&
+            !/\)\s+0px\s+0px\s+0px\s+[\d.]+px/.test(layer),
         ).length
 
 const firstFamily = (value: string) =>
@@ -111,7 +113,7 @@ function lineDelta(prop: "edge" | "ring", reference: string, preset: string) {
   const offset = b.offset - a.offset
   const color = colorDelta(a.color, b.color)
   const sidesOk = a.sides === b.sides
-  const widthOk = Math.abs(width) <= (PX_TOLERANCE.borderWidth ?? 0)
+  const widthOk = Math.abs(width) <= LINE_TOLERANCE
   const offsetOk = Math.abs(offset) <= 1
   return {
     delta: [
@@ -177,6 +179,8 @@ export function compareMeasures(reference: Measures, preset: Measures): Row[] {
     for (const [prop, value] of Object.entries(measure) as [Prop, string][]) {
       if (value === undefined) continue
       const ours = specimen?.[prop]
+      // A prop the probe no longer reads, from an older pack.
+      if (specimen && ours === undefined) continue
       if (!specimen || ours === undefined) {
         rows.push({
           part,

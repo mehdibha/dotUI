@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { compareMeasures } from "./compare"
+import type { Measure } from "./probe"
 
 function row(reference: string, preset: string, prop = "borderRadius") {
   const [first] = compareMeasures(
@@ -100,6 +101,18 @@ describe("compareMeasures", () => {
       row("rgba(0, 0, 0, 0.3) 0px 0.5px 1px 1px", padded, "boxShadow"),
     ).toMatchObject({ ok: false, delta: "1 → 0 layers" })
     expect(row("none", padded, "boxShadow").ok).toBe(true)
+    const ring =
+      "rgb(0, 0, 0) 0px 0px 0px 1px, rgb(0, 0, 0) 0px 0px 0px 1px inset"
+    expect(row("none", ring, "boxShadow").ok).toBe(true)
+  })
+
+  it("skips props the probe no longer reads", () => {
+    expect(
+      compareMeasures(
+        { input: { borderWidth: "1px", height: "32px" } as Measure },
+        { input: { height: "32px" } },
+      ).map((r) => r.prop),
+    ).toEqual(["height"])
   })
 
   it("marks a part the specimens do not show as missing", () => {
