@@ -82,8 +82,10 @@ rather than a generator: the system stays alive.
 3. **Whole system first, then dials.** Directions before details, because a
    coherent system beats a pile of good choices. Refinements inherit from
    the pick.
-4. **One decision per card.** At most two actions, no menus inline, and
-   fullscreen only for review. The chat is the timeline.
+4. **One card per decision, and the decision ends in the card.** Pick,
+   customize and save happen where the user is looking; the chat is for
+   what needs words. At most two actions inline; fullscreen for
+   customizing.
 5. **Real components, real engine.** Everything shown is what installs. No
    mockups, no "approximate preview".
 6. **Never trapped.** Any card can open the studio with the current system.
@@ -98,18 +100,16 @@ rather than a generator: the system stays alive.
 ```
 You: I'm building Lumen, budgeting for freelancers. Calm, warm, trustworthy.
 Claude: [reads attached logo → #e8590c]
-        ┌ Directions card ─ 3 live systems, light/dark ─ [Continue] ┐
-You:    picks "Warm studio"
-Claude: ┌ Color card ─ brand ramp from the logo, buttons brand vs ink ┐
-        ┌ Type card ─ 3 pairings set in Lumen's own screens          ┐
-        ┌ Review (fullscreen) ─ dashboard, settings, checkout, ✓ AA   ┐
-You:    "sharper corners"   →  ┌ Compare card ─ before / after ┐
-You:    [Create]           →  ┌ Ready card ─ install, studio, export ┐
+        ┌ Directions card ─ 3 live systems, light/dark ─ [Customize] [Save] ┐
+You:    [Customize] → fullscreen: color, type, corners, density, ✓ AA
+        [Save Lumen] → the same card becomes the Ready card
+You:    "sharper corners"   →  ┌ Compare card ─ flip current / proposed ┐
+        [Accept and save]   →  the Compare card becomes the Ready card
 ```
 
-Five cards and two sentences from the user. Claude skips any card the
-brief already settles, so a user who pasted their brand guide goes
-straight from directions to review.
+One card and one sentence from the user. The card writes nothing to the
+chat: what the user saves reaches Claude as model context with their next
+message.
 
 ### Act 2: Ship (the next ten minutes)
 
@@ -137,14 +137,12 @@ straight from directions to review.
 
 | Card | When | Shows | You do | Mode |
 | --- | --- | --- | --- | --- |
-| **Directions** (built) | Start, or "show me options" | 2–3 whole systems as mini screens, light/dark | Pick → Continue | inline |
-| **Color** | After the pick, if the brand color isn't given | Brand ramp, buttons brand vs ink, neutral tint warm ↔ cool, dark mode, contrast verdicts | Swatches from the logo/site, hex field, tint slider | inline |
-| **Type** | If fonts aren't given | 3–4 pairings set in the product's own copy (heading, body, numbers, UI) | Pick, or search (fullscreen) | inline |
-| **Shape & density** | Only if asked, or the brief implies it | 5 shapes × 3 densities as one control row each | Pick a cell | inline |
-| **Compare** | Any refinement | Current vs proposed, same screen side by side, with what changed listed | Accept / Keep current | inline |
+| **Directions** (built) | Start, or "show me options" | 2–3 whole systems as mini screens, light/dark | Pick → Save, or Customize | inline |
+| **Customize** (built, inside Directions) | The user wants to adjust | Brand color (Claude's swatches, area, hex), buttons brand vs ink, neutral tint, Claude's pairings, corners, density, measured contrast | Tweak → Save | fullscreen |
+| **Compare** (built) | Any refinement | Current vs proposed, flipped in place, with what changed listed | Accept and save / Keep current | inline |
 | **Review** | Before saving | The whole system on 3 real screens plus the component sampler, light/dark, desktop/phone width, contrast report | Tweak identity rows in a side panel, Save | fullscreen |
 | **Screen** | "Show me X in my system" | One of the 16 blocks, content written by Claude for the product | Open in studio, Export | inline → fullscreen |
-| **Ready** | After saving | Name and swatch, install command per package manager, studio link, what's included (83 components, tokens, agent docs), export buttons | Copy / Open in v0 | inline |
+| **Ready** (built) | After saving, in place of the card that saved | Name and swatch, install command per package manager, studio link, what's included (83 components, tokens, agent docs), export buttons | Copy / Open in v0 | inline |
 
 The cards are a decomposed studio. Each one is a studio row plus a preview
 scene, so build them from the same parts as the panel. One axis then
@@ -180,17 +178,17 @@ reads it, cards render it, the studio edits it and snapshots freeze it.
 | Tool | What it does |
 | --- | --- |
 | `get_design_axes` | Presets + identity axes; teaches shape roles (spike lesson) |
-| `propose_directions` | Directions card |
-| `ask_color` · `ask_type` · `ask_shape` | One card each, with Claude's candidates as input |
+| `propose_directions` | Directions card, with Claude's swatches and pairings for Customize |
 | `refine` | Current + delta → Compare card |
 | `review` | Fullscreen board + contrast report (from the closed `check` tool) |
 | `show_screen` | Screen card: block id + content |
-| `save` | Mints a version → Ready card (today: `create_design_system`) |
+| `create_design_system` | Mints a version → Ready card, for hosts that show no cards |
 | `open_studio` / `get_version` | Round-trip with the studio |
 | `install_steps` | Per host and package manager, new vs existing project |
 
-App-only tools (`visibility: ["app"]`) cover font search, `mint` and
-ramp previews. Claude never sees them.
+App-only tools (`visibility: ["app"]`) are what the cards call; Claude
+never sees them. `save_design` (built) mints from the card. Font search
+and ramp previews come later.
 
 ## Making life easier: the concrete wins
 
@@ -204,9 +202,9 @@ ramp previews. Claude never sees them.
 - **Change is cheap.** Compare, then Update, with a file diff.
 - **Works where they already are:** Claude, ChatGPT, Cursor, VS Code.
 
-## Tested in claude.ai (Oct 21, three rounds)
+## Tested in claude.ai (Oct 21, four rounds)
 
-Two full runs, Lumen (fintech) and Kiln (pottery marketplace): directions →
+Rounds one to three, Lumen (fintech) and Kiln (pottery marketplace), used a card per step: directions →
 color → type → save → refine → re-save. Opus 5.5, dark theme.
 
 **Works:**
@@ -235,15 +233,31 @@ color → type → save → refine → re-save. Opus 5.5, dark theme.
 - The specimens' invoice copy looked wrong for non-fintech products; it's
   product-neutral now.
 
+**Round four: one card (Mira).** Picks used to travel back as chat
+messages, which claude.ai pre-fills under a red "Use caution before
+running this prompt" banner, one per card. Nothing documents whether a
+directory listing lifts that banner, so the card stopped writing to the
+chat:
+
+- The pick, Customize and Save all happen in the Directions card;
+  Customize opens in Claude's fullscreen panel, and Save turns the card
+  into the Ready card.
+- Save calls the app-only `save_design`. claude.ai lists it under
+  "App-only tools" and asked for no approval and showed no banner.
+- The card reports the save with `updateModelContext`. On the user's next
+  message Claude knew the saved design exactly and refined from it.
+- Compare's Accept and save also saves in place, with no banner.
+- Fixed after the run: Save scrolled out of view in fullscreen and
+  Claude's composer covered the bottom controls (both columns now scroll
+  under fixed heads); corners and density started unselected; Claude
+  re-listed the directions once the result text lost its "reply in a
+  sentence" line.
+
 **Host constraints (claude.ai, not fixable from the server):**
 
-- **Approvals.** Every card tool asks "Allow once / Always allow" on first
-  use, five prompts in a first run. Users can pick Always allow; fewer
-  tools would mean fewer prompts.
-- **Picks are pre-filled, not sent.** The card's pick lands in the composer
-  under a red "Use caution before running this prompt" banner, and the
-  user presses Enter. The text is short and plain, so it reads fine, but
-  it's an extra step on every card.
+- **Approvals.** Each model-facing tool asks "Allow once / Always allow"
+  on first use: three prompts in a first run (`get_design_axes`,
+  `propose_directions`, `refine`), down from five.
 - **Tool list cache.** New tools need Settings → Connectors → dotUI →
   ⋮ → Refresh tools list.
 - **Pace.** The first directions card takes about 30–40 s (catalog plus
@@ -273,18 +287,18 @@ color → type → save → refine → re-save. Opus 5.5, dark theme.
 
 ## Roadmap
 
-1. **v0.2, the create loop (built Oct 21):** Color, Type and Compare cards;
-   `create_design_system` returns the Ready card; shape roles in the
-   catalog. Done when a founder goes from brief to install command in five
-   cards.
-   - **Tools:** `ask_color`, `ask_type`, `refine`, plus a UI on
+1. **v0.2, the create loop (built Oct 21):** one Directions card that
+   picks, customizes (fullscreen) and saves; Compare; the Ready card in
+   place; shape roles in the catalog. Done when a founder goes from brief
+   to install command in one card.
+   - **Tools:** `refine`, the app-only `save_design`, plus a UI on
      `create_design_system`.
    - **Designs:** every design is `{ preset, shape, axes }`, where `shape`
      is one of the panel's five corner looks.
    - **Catalog:** lists the shapes and the 540-font catalog the font axes
      actually accept.
-   - **Cards:** one bundle, routed by `structuredContent.card`. The Color
-     card measures contrast on the rendered components.
+   - **Cards:** one bundle, routed by `structuredContent.card`.
+     Customize measures contrast on the rendered components.
 2. **v0.3, see it real:** Review (fullscreen, blocks + contrast) and the
    Screen card.
 3. **v0.4, keep it alive:** versions, `refine` on a saved system, the
