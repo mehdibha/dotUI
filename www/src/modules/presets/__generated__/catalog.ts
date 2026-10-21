@@ -2585,6 +2585,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					slider: "neutral",
 				},
 			},
+			assets: "ibm",
 		},
 	},
 ];

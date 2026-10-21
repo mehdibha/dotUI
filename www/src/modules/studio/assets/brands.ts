@@ -1,8 +1,10 @@
-/* The built-in brands' assets: the real marks of the products the presets
-   recreate, from Simple Icons (CC0 path data; each mark stays its owner's
-   trademark). Single-color marks, so light and dark differ only where the
-   brand color would vanish on a dark page. No wordmarks yet: Simple Icons
-   ships marks only. */
+/* The built-in brands' assets: the real logos of the products the presets
+   recreate, each still its owner's trademark. Marks come from Simple Icons
+   (CC0 path data); single-color, so light and dark differ only where the
+   brand color would vanish on a dark page. Wordmarks are the brands' own
+   SVGs (press kits, or svgl.app where none is published), served from
+   `public/studio/wordmarks/`.
+   Notion and Material Design publish no wordmark. */
 
 import {
   siAirbnb,
@@ -44,6 +46,9 @@ const svg = (path: string, hex: string) =>
 const isNearBlack = (hex: string) =>
   [0, 2, 4].every((i) => parseInt(hex.slice(i, i + 2), 16) < 0x30)
 
+/** A wordmark served from `public/studio/wordmarks/`. */
+const wordmark = (file: string) => `/studio/wordmarks/${file}.svg`
+
 function mark({ title, path, hex }: SimpleIcon, color = hex): BrandAssets {
   return {
     name: title,
@@ -56,17 +61,48 @@ function mark({ title, path, hex }: SimpleIcon, color = hex): BrandAssets {
 
 export const BRANDS: Record<BrandName, BrandAssets> = {
   // Rausch as airbnb.com paints it today; Simple Icons keeps the 2014 #FF5A5F.
-  airbnb: mark(siAirbnb, "FF385C"),
-  claude: mark(siClaude),
-  duolingo: mark(siDuolingo),
-  github: mark(siGithub),
-  linear: mark(siLinear),
+  airbnb: {
+    ...mark(siAirbnb, "FF385C"),
+    wordmark: { light: wordmark("airbnb") },
+  },
+  claude: {
+    ...mark(siClaude),
+    wordmark: { light: wordmark("claude"), dark: wordmark("claude-dark") },
+  },
+  duolingo: { ...mark(siDuolingo), wordmark: { light: wordmark("duolingo") } },
+  github: {
+    ...mark(siGithub),
+    wordmark: { light: wordmark("github"), dark: wordmark("github-dark") },
+  },
+  // The 8-bar logo is IBM's only mark, a wordmark itself.
+  ibm: {
+    name: "IBM",
+    logo: { light: wordmark("ibm"), dark: wordmark("ibm-dark") },
+    wordmark: { light: wordmark("ibm"), dark: wordmark("ibm-dark") },
+  },
+  linear: {
+    ...mark(siLinear),
+    wordmark: { light: wordmark("linear"), dark: wordmark("linear-dark") },
+  },
   material: mark(siMaterialdesign),
   notion: mark(siNotion),
-  radix: { ...mark(siRadixui), name: "Radix" },
-  shopify: mark(siShopify),
-  spotify: mark(siSpotify),
-  stripe: mark(siStripe),
-  supabase: mark(siSupabase),
-  vercel: mark(siVercel),
+  radix: {
+    ...mark(siRadixui),
+    name: "Radix",
+    wordmark: { light: wordmark("radix"), dark: wordmark("radix-dark") },
+  },
+  shopify: {
+    ...mark(siShopify),
+    wordmark: { light: wordmark("shopify"), dark: wordmark("shopify-dark") },
+  },
+  spotify: { ...mark(siSpotify), wordmark: { light: wordmark("spotify") } },
+  stripe: { ...mark(siStripe), wordmark: { light: wordmark("stripe") } },
+  supabase: {
+    ...mark(siSupabase),
+    wordmark: { light: wordmark("supabase"), dark: wordmark("supabase-dark") },
+  },
+  vercel: {
+    ...mark(siVercel),
+    wordmark: { light: wordmark("vercel"), dark: wordmark("vercel-dark") },
+  },
 }

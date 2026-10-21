@@ -13,6 +13,7 @@ export const BRAND_VALUES = [
   "claude",
   "duolingo",
   "github",
+  "ibm",
   "linear",
   "material",
   "notion",

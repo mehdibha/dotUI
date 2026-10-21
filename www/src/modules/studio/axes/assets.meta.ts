@@ -7,6 +7,7 @@ export const BRAND_OPTIONS = options(BRAND_VALUES, {
   claude: { label: "Claude" },
   duolingo: { label: "Duolingo" },
   github: { label: "GitHub" },
+  ibm: { label: "IBM" },
   linear: { label: "Linear" },
   material: { label: "Material Design" },
   notion: { label: "Notion" },
