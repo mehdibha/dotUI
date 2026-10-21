@@ -69,6 +69,9 @@ export interface Page {
   /** The mode the page shows. Without it, `--pack` measures the page in both
    *  modes through `prefers-color-scheme`. */
   mode?: "light" | "dark"
+  /** The localStorage key the site reads its theme from (next-themes'
+   *  "theme"): `--pack` sets it to "light" or "dark" before load. */
+  storage?: string
   /** Measured in a signed-in tab with `--snippet`, then `--merge`d; `--pack`
    *  skips it. */
   signedIn?: boolean

@@ -203,6 +203,7 @@ async function measurePage(
   url: string,
   mode: Mode,
   targets: Record<string, Target>,
+  storage?: string,
 ): Promise<Measures> {
   const page = await browser.newPage()
   try {
@@ -214,11 +215,21 @@ async function measurePage(
     // needs.
     const cdp = await page.createCDPSession()
     await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
+    // Some sites turn away a "HeadlessChrome" user agent (Notion).
+    await page.setUserAgent(
+      (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
+    )
+    if (storage)
+      await page.evaluateOnNewDocument(
+        `localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)})`,
+      )
     await page.goto(url, { waitUntil: "load", timeout: 60000 })
-    // Docs sites keep connections open; a short quiet spell is enough.
+    // Docs sites keep connections open, so a short quiet spell is enough;
+    // apps still hydrate after it.
     await page
       .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
       .catch(() => {})
+    await pause(1500)
     const stepped = (target: Target) => target.focus || target.before
     const measures: Measures = await page.evaluate(
       snippet(
@@ -284,13 +295,20 @@ if (args.pack) {
         url,
         mode,
         targets: page.parts,
+        storage: page.storage,
       })),
     )
   const browser = await launch()
   try {
     const results = await pool(jobs, async (job) => ({
       ...job,
-      measures: await measurePage(browser, job.url, job.mode, job.targets),
+      measures: await measurePage(
+        browser,
+        job.url,
+        job.mode,
+        job.targets,
+        job.storage,
+      ),
     }))
     for (const [url, page] of Object.entries(pack)) {
       if (page.mode) continue
