@@ -1,6 +1,6 @@
 # Spotify reference pack
 
-Measured 2026-10-21 with probe `d3433f1`: `presets:measure --pack spotify`, headless Chromium at 1440×900, DPR 2, both modes.
+Measured 2026-10-21 with probe `8eb9b12`: `presets:measure --pack spotify`, headless Chromium at 1440×900, DPR 2, both modes.
 
 Spotify publishes no token docs. Encore, its design system, ships with the public login page (`https://accounts.spotify.com/en/login`) as two stylesheets:
 
@@ -13,16 +13,18 @@ The web player's stylesheets (`open.spotifycdn.com`) are blocked from cloud sess
 
 ## Pages
 
-- `encore.html`: a harness that loads both stylesheets and lays out Encore's own components with Encore's classes, in the theme that matches `prefers-color-scheme`. Its only styles of its own are layout and section labels, and focus states use Encore's `data-focus-visible`.
+- `encore.html`: a harness that loads both stylesheets and lays out Encore's own components with Encore's classes, in the theme that matches `prefers-color-scheme`. Its only styles of its own are layout and section labels. It covers buttons, focus, checkbox, radio, switch, field label, fields, tabs, link, banner, tags, progress, titles, body text, tooltip and popover.
 - Encore leaves the text size to the caller on tabs, tags, tooltips and popovers. The harness picks an Encore type class for them, so those parts skip `fontSize`. Titles are responsive: title-large, title-medium and title-small are 48, 32 and 24px from 768px up, and 32, 24 and 20px below. So the heading parts skip `fontSize` too.
 - Cross-check: the login page, measured headless in light (class swapped) and dark, reads the same page, field, text, tooltip and overlay values as the harness. Its buttons use Encore's older `legacy-button` styles, so they stay out of the pack.
 
+- `fonts` in `tokens.json` maps Spotify Mix (`SpotifyMixUI`, and `SpotifyMixUITitle` for titles) to Figtree, the preset's stand-in: Spotify Mix is proprietary.
+
 ## Skipped properties
 
-- `button.secondary` `edge`: Encore's bordered button draws its hairline as a 1px outline at -1px, and the probe reads outlines only on focus parts. The login page's legacy outlined button measures 1px #818181 / #7c7c7c, the field edge, and the preset matches it.
 - `button.focus` `edge`: the green primary has no edge. dotUI's flush inset ring reads as one, so only `ring` is compared.
-- `checkbox.checked` `edge`: Encore draws the check mark as the bottom and left border of a rotated box, which the probe reads as an edge.
 - `tab`, `tab.selected` `borderRadius`: Encore's tab is square, but its corners only show on a hover fill that dotUI's line tabs don't paint. Both round the focus ring (4px / 6px).
+- `input` `boxShadow`: Encore draws the field edge as a 1px inset ring, which the probe already reads as `edge`.
+- `tooltip`, `menu` `boxShadow`: the harness shows the bare overlay surface. The shadow comes with the web player's context menus, which aren't measured yet.
 
 ## Encore values worth knowing
 
@@ -34,7 +36,7 @@ The web player's stylesheets (`open.spotifycdn.com`) are blocked from cloud sess
 - Fields 48px, 4px corners, 1px inset edge. The search field is a 48px pill on a tint (black 8% / white 7%), 12px padding, no edge.
 - Switch 28×16 with a 12px knob in the page color; checkbox 16px at 3px corners.
 - Line tabs 48px, 12px padding, no rule under the list; a 2px accent bar under the label.
-- Tags 24px, 6px padding, 4px corners. The 16px square tag is the explicit-content marker.
+- Tags 24px, 6px padding, 4px corners. The 16px square tag is the explicit-content marker. Banners 4px corners on the same #ebebeb / #2a2a2a fill as tags; the progress track is 6px on that fill, under a pill indicator.
 - Dropdown rows 48px, 12px padding, 6px corners, in a 4px-padded overlay. Overlays round 8px, tooltips 6px.
 - Disabled controls at 30% opacity (`--encore-opacity-disabled`). The modal backdrop is black 50%.
 

@@ -2,198 +2,101 @@
   "encore.html": {
     "parts": {
       "page": {
-        "selector": "body",
-        "skip": [
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize",
-          "fontWeight"
-        ]
+        "selector": "body"
       },
       "button.primary": {
-        "selector": "[data-part=\"button.primary\"]",
-        "skip": ["boxShadow", "ring"]
+        "selector": "[data-part=\"button.primary\"]"
       },
       "button.secondary": {
-        "selector": "[data-part=\"button.secondary\"]",
-        "skip": ["boxShadow", "ring", "edge"]
+        "selector": "[data-part=\"button.secondary\"]"
       },
       "button.quiet": {
-        "selector": "[data-part=\"button.quiet\"]",
-        "skip": ["boxShadow", "ring"]
+        "selector": "[data-part=\"button.quiet\"]"
       },
       "button.focus": {
         "selector": "[data-part=\"button.focus\"]",
-        "skip": [
-          "boxShadow",
-          "height",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "edge"
-        ]
+        "focus": true,
+        "skip": ["edge"]
       },
       "checkbox": {
-        "selector": "[data-part=\"checkbox\"]",
-        "skip": [
-          "boxShadow",
-          "backgroundColor",
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": "[data-part=\"checkbox\"]"
       },
       "checkbox.checked": {
-        "selector": "[data-part=\"checkbox.checked\"]",
-        "skip": [
-          "boxShadow",
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring",
-          "edge"
-        ]
+        "selector": "[data-part=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-part=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-part=\"radio.checked\"]"
       },
       "switch.off": {
-        "selector": "[data-part=\"switch.off\"]",
-        "skip": [
-          "boxShadow",
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": "[data-part=\"switch.off\"]"
       },
       "switch.on": {
-        "selector": "[data-part=\"switch.on\"]",
-        "skip": [
-          "boxShadow",
-          "color",
-          "paddingInline",
-          "fontFamily",
-          "fontSize",
-          "fontWeight",
-          "letterSpacing",
-          "ring"
-        ]
+        "selector": "[data-part=\"switch.on\"]"
+      },
+      "field.label": {
+        "selector": "[data-part=\"field.label\"]"
       },
       "input": {
         "selector": "[data-part=\"input\"]",
-        "skip": ["boxShadow", "ring"]
+        "skip": ["boxShadow"]
       },
       "input.focus": {
         "selector": "[data-part=\"input.focus\"]",
-        "skip": ["boxShadow"]
+        "focus": true
       },
       "tab.selected": {
         "selector": "[data-part=\"tab.selected\"]",
-        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+        "skip": ["fontSize", "borderRadius"]
       },
       "tab": {
         "selector": "[data-part=\"tab\"]",
-        "skip": ["boxShadow", "fontSize", "ring", "borderRadius"]
+        "skip": ["fontSize", "borderRadius"]
       },
       "link": {
-        "selector": "[data-part=\"link\"]",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
+        "selector": "[data-part=\"link\"]"
+      },
+      "alert": {
+        "selector": "[data-part=\"alert\"]"
       },
       "badge": {
         "selector": "[data-part=\"badge\"]",
-        "skip": ["boxShadow", "fontSize", "fontWeight", "ring"]
+        "skip": ["fontSize", "fontWeight"]
       },
       "badge.accent": {
         "selector": "[data-part=\"badge.accent\"]",
-        "skip": ["boxShadow", "fontSize", "fontWeight", "ring"]
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "progress": {
+        "selector": "[data-part=\"progress\"]"
+      },
+      "progress.fill": {
+        "selector": "[data-part=\"progress.fill\"]"
       },
       "heading.1": {
         "selector": "[data-part=\"heading.1\"]",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
+        "skip": ["fontSize"]
       },
       "heading.3": {
         "selector": "[data-part=\"heading.3\"]",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
+        "skip": ["fontSize"]
       },
       "text": {
-        "selector": "[data-part=\"text\"]",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring"
-        ]
+        "selector": "[data-part=\"text\"]"
       },
       "text.muted": {
         "selector": "[data-part=\"text.muted\"]",
-        "skip": [
-          "backgroundColor",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "letterSpacing",
-          "boxShadow",
-          "edge",
-          "ring",
-          "fontSize"
-        ]
+        "skip": ["fontSize"]
       },
       "tooltip": {
         "selector": "[data-part=\"tooltip\"]",
-        "skip": ["boxShadow", "height", "fontSize", "ring"]
+        "skip": ["boxShadow", "height", "fontSize"]
       },
       "menu": {
         "selector": "[data-part=\"menu\"]",
-        "skip": ["boxShadow", "height", "paddingInline", "fontSize", "ring"]
+        "skip": ["boxShadow"]
       }
     }
   }

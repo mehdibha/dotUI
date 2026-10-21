@@ -234,7 +234,10 @@
             type="radio"
             class="e-10830-visually-hidden"
           /><label for="r1" class="e-10830-form-radio__label"
-            ><span class="e-10830-form-radio__indicator"></span
+            ><span
+              data-part="radio"
+              class="e-10830-form-radio__indicator"
+            ></span
             ><span class="e-10830-form-radio__text encore-text-body-medium"
               >Radio</span
             ></label
@@ -248,7 +251,10 @@
             checked
             class="e-10830-visually-hidden"
           /><label for="r2" class="e-10830-form-radio__label"
-            ><span class="e-10830-form-radio__indicator"></span
+            ><span
+              data-part="radio.checked"
+              class="e-10830-form-radio__indicator"
+            ></span
             ><span class="e-10830-form-radio__text encore-text-body-medium"
               >Radio selected</span
             ></label
@@ -283,6 +289,7 @@
       >
         <div>
           <label
+            data-part="field.label"
             class="e-10830-form-group__label encore-text-body-small-bold"
             style="display: block; padding-bottom: 8px"
             >Email</label
@@ -401,6 +408,7 @@ Buttons lose their focus ring inside dialogs.</textarea
       <h6>Banner · tag · progress</h6>
       <div class="col">
         <div
+          data-part="alert"
           class="e-10830-banner e-10830-banner--contextual encore-text-body-small"
         >
           A new version is available.
@@ -438,8 +446,13 @@ Buttons lose their focus ring inside dialogs.</textarea
             >New</span
           >
         </div>
-        <div class="e-10830-progress-bar" style="width: 320px">
+        <div
+          data-part="progress"
+          class="e-10830-progress-bar"
+          style="width: 320px"
+        >
           <div
+            data-part="progress.fill"
             class="e-10830-progress-bar__indicator"
             style="
               width: 60%;
