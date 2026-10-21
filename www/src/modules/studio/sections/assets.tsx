@@ -2,7 +2,8 @@
 
 /* Brand assets — the brand's logo and wordmark, each in its light and dark
    variant. A preset shows its product's; Origin and the user's own system
-   show the generic mark in the theme's accent until uploads land.
+   show the generic mark in the primary beside the system's name until
+   uploads land.
    Read-only either way. */
 
 import { ImageUpIcon } from "lucide-react"
@@ -16,6 +17,7 @@ import type { BrandName } from "../axes/assets"
 import { DialGlyph, DialPopover, DialTrigger } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
+import { systemName, useCurrent } from "../selection"
 import { useAxis } from "../use-axis"
 
 const MODES = [
@@ -95,8 +97,15 @@ const image = (asset?: Asset) => (mode: Mode) =>
 function AssetsRow() {
   const value = useAxis("brandAssets").effective
   const brand = value === "none" ? undefined : BRANDS[value as BrandName]
-  const { theme, m } = usePanelMode()
-  const accent = (mode: Mode) => theme[mode].scales.accent?.["700"]
+  const current = useCurrent()
+  const primary = useAxis("buttonColor").effective
+  const { theme, mode: panelMode } = usePanelMode()
+  // The generic mark paints in the primary, as the preview's `text-primary`.
+  const ink = (mode: Mode) =>
+    primary === "accent"
+      ? theme[mode].scales.accent?.["700"]
+      : theme[mode].scales.neutral?.["950"]
+  const name = systemName(current)
   return (
     <DialTrigger
       axis="brandAssets"
@@ -106,9 +115,9 @@ function AssetsRow() {
           {brand ? (
             <AssetImage asset={brand.logo} />
           ) : (
-            <GenericMark style={{ color: m.scales.accent?.["700"] }} />
+            <GenericMark style={{ color: ink(panelMode) }} />
           )}
-          <span className="sr-only">{brand?.name ?? "Generic"}</span>
+          <span className="sr-only">{brand?.name ?? name}</span>
         </DialGlyph>
       }
     >
@@ -121,7 +130,7 @@ function AssetsRow() {
               : (mode) => (
                   <GenericMark
                     className="size-8"
-                    style={{ color: accent(mode) }}
+                    style={{ color: ink(mode) }}
                   />
                 )
           }
@@ -134,15 +143,15 @@ function AssetsRow() {
               : (mode) => (
                   <span
                     className={cn(
-                      "flex items-center gap-1.5 text-lg font-semibold tracking-tight",
+                      "flex min-w-0 items-center gap-1.5 text-base font-semibold tracking-tight",
                       mode === "dark" ? "text-white" : "text-neutral-950",
                     )}
                   >
                     <GenericMark
-                      className="size-5"
-                      style={{ color: accent(mode) }}
+                      className="size-5 shrink-0"
+                      style={{ color: ink(mode) }}
                     />
-                    Acme
+                    <span className="truncate">{name}</span>
                   </span>
                 )
           }
@@ -150,7 +159,7 @@ function AssetsRow() {
         <p className="px-1.5 pt-1 pb-0.5 text-xs text-fg/50">
           {brand
             ? `${brand.name}'s own assets, shown across the preview.`
-            : "A generic mark in your theme color. Uploading your own logo and wordmark is coming soon."}
+            : "The generic mark in your primary color, beside your system's name. Uploading your own logo and wordmark is coming soon."}
         </p>
       </DialPopover>
     </DialTrigger>

@@ -12,7 +12,7 @@ import { cn } from "@/registry/lib/utils"
 import { Loader } from "@/registry/ui/loader"
 import { ToastProvider } from "@/registry/ui/toast"
 import { ExamplesIndex } from "@/modules/studio/__generated__/examples"
-import { BrandContext } from "@/modules/studio/assets/brand"
+import { BrandContext, SystemNameContext } from "@/modules/studio/assets/brand"
 import {
   isInIframe,
   useAnnouncePreviewReady,
@@ -30,7 +30,7 @@ import {
   themeCssNow,
 } from "@/modules/studio/preview/theme-css-worker"
 import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
-import { getCurrent } from "@/modules/studio/selection"
+import { getCurrent, systemName, useCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
 // this route's split chunk instead of the router's critical import graph.
@@ -157,6 +157,12 @@ function PendingOverlay({ loading }: { loading: boolean }) {
       {pending && <Loader className="size-5 text-fg-muted" />}
     </div>
   )
+}
+
+/** Subscribes on its own: an edit re-renders only the names that change. */
+function SystemNameProvider({ children }: { children: React.ReactNode }) {
+  const name = systemName(useCurrent())
+  return <SystemNameContext value={name}>{children}</SystemNameContext>
 }
 
 export function PreviewPage() {
@@ -321,12 +327,14 @@ export function PreviewPage() {
     >
       {chrome}
       <BrandContext.Provider value={designSystem.assets}>
-        <BoardFocusProvider>
-          <div ref={stage}>
-            <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
-            {boardContent}
-          </div>
-        </BoardFocusProvider>
+        <SystemNameProvider>
+          <BoardFocusProvider>
+            <div ref={stage}>
+              <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+              {boardContent}
+            </div>
+          </BoardFocusProvider>
+        </SystemNameProvider>
       </BrandContext.Provider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
       <PendingOverlay loading={boardLoading} />

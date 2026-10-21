@@ -4,7 +4,7 @@ import { options } from "./core/meta"
 export const BRAND_OPTIONS = options(BRAND_VALUES, {
   none: {
     label: "Generic",
-    description: "A generic mark in the theme's accent",
+    description: "The generic mark beside the system's name",
   },
   airbnb: { label: "Airbnb" },
   claude: { label: "Claude" },
