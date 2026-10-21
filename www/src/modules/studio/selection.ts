@@ -161,9 +161,11 @@ export function describe(sel: Selection, ws: Workspace): Current {
   }
 }
 
-/** The name the system goes by, without the unsaved slot's note. */
+/** The name the system goes by; the unsaved slot's, without its note. */
 export const systemName = (current: Current) =>
-  workspace.unedited(current.content?.name ?? current.name)
+  current.sel.kind === "unsaved"
+    ? workspace.unedited(current.content?.name ?? current.name)
+    : (current.content?.name ?? current.name)
 
 export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
