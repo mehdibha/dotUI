@@ -47,3 +47,6 @@ www/.data/
 
 # Publisher compile smoke-test fixture — emitted by publish-smoke.test.ts.
 www/.smoke-fixture/
+
+# MCP App cards — emitted by `pnpm build:mcp-app`.
+www/src/modules/mcp/__generated__/

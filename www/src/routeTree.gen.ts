@@ -14,6 +14,7 @@ import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as InternalRouteImport } from './routes/internal'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as OgRouteImport } from './routes/og'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
@@ -28,8 +29,10 @@ import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-r
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalCompositionAnimationRouteImport } from './routes/internal.composition-animation'
 import { Route as InternalCoverRouteImport } from './routes/internal.cover'
+import { Route as InternalMcpHostRouteImport } from './routes/internal.mcp-host'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalSpecimensRouteImport } from './routes/internal.specimens'
+import { Route as McpAppFileRouteImport } from './routes/mcp-app.$file'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as RSplatRouteImport } from './routes/r/$'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
@@ -58,6 +61,11 @@ const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   id: '/llms.txt',
   path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OgRoute = OgRouteImport.update({
@@ -131,6 +139,11 @@ const InternalCoverRoute = InternalCoverRouteImport.update({
   path: '/cover',
   getParentRoute: () => InternalRoute,
 } as any)
+const InternalMcpHostRoute = InternalMcpHostRouteImport.update({
+  id: '/mcp-host',
+  path: '/mcp-host',
+  getParentRoute: () => InternalRoute,
+} as any)
 const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
   id: '/registries',
   path: '/registries',
@@ -140,6 +153,11 @@ const InternalSpecimensRoute = InternalSpecimensRouteImport.update({
   id: '/specimens',
   path: '/specimens',
   getParentRoute: () => InternalRoute,
+} as any)
+const McpAppFileRoute = McpAppFileRouteImport.update({
+  id: '/mcp-app/$file',
+  path: '/mcp-app/$file',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
   id: '/preview/$slug',
@@ -174,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/internal': typeof InternalRouteWithChildren
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
@@ -186,8 +205,10 @@ export interface FileRoutesByFullPath {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/cover': typeof InternalCoverRoute
+  '/internal/mcp-host': typeof InternalMcpHostRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
+  '/mcp-app/$file': typeof McpAppFileRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/internal/': typeof InternalIndexRoute
@@ -199,6 +220,7 @@ export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
@@ -211,8 +233,10 @@ export interface FileRoutesByTo {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/cover': typeof InternalCoverRoute
+  '/internal/mcp-host': typeof InternalMcpHostRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
+  '/mcp-app/$file': typeof McpAppFileRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/': typeof AppIndexRoute
@@ -228,6 +252,7 @@ export interface FileRoutesById {
   '/internal': typeof InternalRouteWithChildren
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
@@ -240,8 +265,10 @@ export interface FileRoutesById {
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/cover': typeof InternalCoverRoute
+  '/internal/mcp-host': typeof InternalMcpHostRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/internal/specimens': typeof InternalSpecimensRoute
+  '/mcp-app/$file': typeof McpAppFileRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$': typeof RSplatRoute
   '/_app/': typeof AppIndexRoute
@@ -258,6 +285,7 @@ export interface FileRouteTypes {
     | '/internal'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/docs'
@@ -270,8 +298,10 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/cover'
+    | '/internal/mcp-host'
     | '/internal/registries'
     | '/internal/specimens'
+    | '/mcp-app/$file'
     | '/preview/$slug'
     | '/r/$'
     | '/internal/'
@@ -283,6 +313,7 @@ export interface FileRouteTypes {
     | '/home.md'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/docs'
@@ -295,8 +326,10 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/cover'
+    | '/internal/mcp-host'
     | '/internal/registries'
     | '/internal/specimens'
+    | '/mcp-app/$file'
     | '/preview/$slug'
     | '/r/$'
     | '/'
@@ -311,6 +344,7 @@ export interface FileRouteTypes {
     | '/internal'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/_app/docs'
@@ -323,8 +357,10 @@ export interface FileRouteTypes {
     | '/internal/color-lab'
     | '/internal/composition-animation'
     | '/internal/cover'
+    | '/internal/mcp-host'
     | '/internal/registries'
     | '/internal/specimens'
+    | '/mcp-app/$file'
     | '/preview/$slug'
     | '/r/$'
     | '/_app/'
@@ -340,12 +376,14 @@ export interface RootRouteChildren {
   InternalRoute: typeof InternalRouteWithChildren
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
+  McpRoute: typeof McpRoute
   OgRoute: typeof OgRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
   ApiSnapshotsRoute: typeof ApiSnapshotsRouteWithChildren
   DemosSlugRoute: typeof DemosSlugRoute
+  McpAppFileRoute: typeof McpAppFileRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RSplatRoute: typeof RSplatRoute
 }
@@ -385,6 +423,13 @@ declare module '@tanstack/react-router' {
       path: '/llms.txt'
       fullPath: '/llms.txt'
       preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/og': {
@@ -485,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InternalCoverRouteImport
       parentRoute: typeof InternalRoute
     }
+    '/internal/mcp-host': {
+      id: '/internal/mcp-host'
+      path: '/mcp-host'
+      fullPath: '/internal/mcp-host'
+      preLoaderRoute: typeof InternalMcpHostRouteImport
+      parentRoute: typeof InternalRoute
+    }
     '/internal/registries': {
       id: '/internal/registries'
       path: '/registries'
@@ -498,6 +550,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/internal/specimens'
       preLoaderRoute: typeof InternalSpecimensRouteImport
       parentRoute: typeof InternalRoute
+    }
+    '/mcp-app/$file': {
+      id: '/mcp-app/$file'
+      path: '/mcp-app/$file'
+      fullPath: '/mcp-app/$file'
+      preLoaderRoute: typeof McpAppFileRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/preview/$slug': {
       id: '/preview/$slug'
@@ -572,6 +631,7 @@ interface InternalRouteChildren {
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
   InternalCoverRoute: typeof InternalCoverRoute
+  InternalMcpHostRoute: typeof InternalMcpHostRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
   InternalSpecimensRoute: typeof InternalSpecimensRoute
   InternalIndexRoute: typeof InternalIndexRoute
@@ -582,6 +642,7 @@ const InternalRouteChildren: InternalRouteChildren = {
   InternalColorLabRoute: InternalColorLabRoute,
   InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
   InternalCoverRoute: InternalCoverRoute,
+  InternalMcpHostRoute: InternalMcpHostRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,
   InternalSpecimensRoute: InternalSpecimensRoute,
   InternalIndexRoute: InternalIndexRoute,
@@ -609,12 +670,14 @@ const rootRouteChildren: RootRouteChildren = {
   InternalRoute: InternalRouteWithChildren,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
+  McpRoute: McpRoute,
   OgRoute: OgRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
   ApiSnapshotsRoute: ApiSnapshotsRouteWithChildren,
   DemosSlugRoute: DemosSlugRoute,
+  McpAppFileRoute: McpAppFileRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RSplatRoute: RSplatRoute,
 }
