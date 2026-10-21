@@ -31,17 +31,16 @@ Carbon publishes its tokens as code, so colors come from the packages first.
 
 ## Measured pages
 
-The [Carbon React Storybook](https://react.carbondesignsystem.com) renders the real components at their default size. Each story is opened headless as `iframe.html?viewMode=story&id=<story>`; the theme is a URL global (`&globals=backgrounds.value:white` or `:g100`), so `targets.json` lists every page once per theme and `--mode` stays `light`.
+The [Carbon React Storybook](https://react.carbondesignsystem.com) renders the real components at their default size. Each story is opened headless as `iframe.html?viewMode=story&id=<story>`. The theme is a URL global (`&globals=backgrounds.value:white` or `:g100`), so `targets.json` lists every page once per theme with its `mode`.
 
-- Re-measure one page: `pnpm presets:measure --url '<url from targets.json>' --targets src/modules/preset-lab/refs/carbon/targets.json --mode light`, then merge the result into `tokens.json` under `light` (White) or `dark` (G100). A key's parenthesis names the interaction done before probing (`switch.off` clicks the toggle, which the story renders on).
-- `tokens.json` keeps, per part, only the properties both sides draw in the same place: no `borderColor`/`borderWidth` (`edge` covers hairlines), no content-sized heights.
+- Re-measure: `pnpm presets:measure --pack carbon` (all 30 pages, probe 44f1c5f or later), or `--url '<page>'` for one.
+- Each part `skip`s the properties the two sides draw in different places: `borderColor`/`borderWidth` (`edge` covers hairlines), content-sized heights, card padding (Carbon pads the tile, dotUI the card's sections), and the tab lines (Carbon draws a 2px bottom border on every tab; dotUI draws a 1px rule on the list plus an indicator child, logged in the ledger).
+- `button.focus` and `input.focus` tab to the control first; `checkbox.checked` clicks the first checkbox and `switch.off` clicks the toggle, which the story renders on.
 - `menu` and `menu.item` use `&args=size:md`, the 40px rows Dropdown and OverflowMenu default to. The default Menu story is `sm` (32px).
 - Buttons are the default `lg` (48px): the Button story ignores a `size` arg. Carbon's `md` is 40px, the field height.
 - `badge` is the gray read-only Tag (`.cds--tag--gray`).
-- `checkbox` probes the label, whose `::before` draws the box (`edge`); its 2px radius, 16px size and the `checkbox.checked` fill (`icon-primary`) are read by hand from that `::before`.
-- `nav.item` and `nav.item.active` take color from `.cds--side-nav__link-text` (the anchor itself computes link blue). `panel` is the page background: the UI Shell content area paints nothing.
-- `heading.1`–`heading.4`, `text` and `text.muted` come from `@carbon/type` and the theme tokens: productive headings at 400 in `text-primary`, body in `text-primary`, secondary text in `text-secondary`. Sizes are left out: the specimen's scale and Carbon's don't map one to one.
-- Left out: `button.focus` and `input.focus`. Both sides draw an inset focus, but Carbon uses an inset outline on fields and a border plus inset rings on buttons, while dotUI draws inset box-shadows, which the probe's `ring` skips. Card padding too: Carbon pads the tile, dotUI the card's sections.
+- `checkbox` reads its box from the label's `::before` (`box`); `nav.item` and `nav.item.active` read color and type from `.cds--side-nav__link-text` (`ink`), since the anchor computes link blue. `panel` is the page background: the UI Shell content area paints nothing.
+- `heading.1`–`heading.4`, `text` and `text.muted` are written by hand from `@carbon/type` and the theme tokens: productive headings at 400 in `text-primary`, body in `text-primary`, secondary text in `text-secondary`. Sizes are left out: the specimen's scale and Carbon's don't map one to one.
 
 ## Read by hand (no probe part)
 
