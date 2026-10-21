@@ -7,6 +7,9 @@ export const duolingo = definePreset({
   swatch: "#58cc02",
   inspiredBy: "Duolingo",
   diff: {
+    // Assets
+    brandAssets: "duolingo",
+
     // Style
     style: "chunky",
 

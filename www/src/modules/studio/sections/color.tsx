@@ -42,7 +42,7 @@ function BrandRow() {
   return (
     <DialColor
       axis="brand"
-      label="Brand"
+      label="Theme"
       value={state.brand}
       onChange={set("brand")}
       footer={

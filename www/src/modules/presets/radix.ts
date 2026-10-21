@@ -7,6 +7,9 @@ export const radix = definePreset({
   swatch: "#3e63dd",
   inspiredBy: "Radix Themes",
   diff: {
+    // Assets
+    brandAssets: "radix",
+
     // Color
     // indigo-9, the same solid in light and dark; slate pairs at tint 1.
     brand: "#3e63dd",

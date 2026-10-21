@@ -137,7 +137,7 @@ describe("unsaved slot", () => {
     edit(3)
     const doc = selection.createFrom("Mine", { kind: "preset", id: "stripe" })!
     expect(current().doc?.id).toBe(doc.id)
-    expect(doc.state).toEqual(STRIPE.state)
+    expect(doc.state).toEqual({ ...STRIPE.state, brandAssets: "none" })
     expect(ws.getWorkspace().unsaved).toBeUndefined()
   })
 
@@ -314,7 +314,7 @@ describe("start from", () => {
     const { selection, ws, current, edit } = await load()
     const linear = selection.createFrom("A", { kind: "preset", id: "linear" })!
     expect(linear).toMatchObject({ name: "A", from: "linear" })
-    expect(linear.state).toEqual(LINEAR.state)
+    expect(linear.state).toEqual({ ...LINEAR.state, brandAssets: "none" })
     expect(current().doc?.id).toBe(linear.id)
     const copy = selection.createFrom("B", { kind: "system", id: linear.id })!
     expect(copy).toMatchObject({ from: "linear", state: linear.state })

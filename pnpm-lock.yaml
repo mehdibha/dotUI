@@ -274,6 +274,9 @@ importers:
       shiki-magic-move:
         specifier: ^1.4.0
         version: 1.4.0(react@19.2.1)(shiki@4.0.2)(solid-js@1.9.10)
+      simple-icons:
+        specifier: ^16.35.0
+        version: 16.35.0
       starter-themes:
         specifier: ^0.0.2
         version: 0.0.2(@tanstack/react-router@1.170.41(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(@tanstack/react-start@1.168.60(crossws@0.4.5(srvx@0.11.15))(esbuild@0.28.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(rolldown@1.1.2)(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))(webpack@5.105.0(esbuild@0.28.1)(lightningcss@1.33.0)))(react@19.2.1)
@@ -6120,6 +6123,10 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  simple-icons@16.35.0:
+    resolution: {integrity: sha512-TCfl/2+GTrx0nCo4pEWGvxhOb8c6NsqOU1OpwjtF4lwJAthB8IYVD0fuIMjLMg6JFuG1YBO0t1iETQqJLqkoJA==}
+    engines: {node: '>=0.12.18'}
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
@@ -12878,6 +12885,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  simple-icons@16.35.0: {}
 
   sisteransi@1.0.5: {}
 

@@ -14,6 +14,8 @@ import type { Density } from "@/registry/types"
 
 import * as accordion from "./accordion"
 import * as alert from "./alert"
+import * as assets from "./assets"
+import type { BrandName } from "./assets"
 import * as avatars from "./avatars"
 import * as badges from "./badges"
 import * as breadcrumbs from "./breadcrumbs"
@@ -71,6 +73,7 @@ export const CHAPTERS = [
   color.chapter,
   type.chapter,
   icons.chapter,
+  assets.chapter,
   shape.chapter,
   space.chapter,
   surfaces.chapter,
@@ -320,6 +323,7 @@ export function resolveAll(state: Effective): ResolvedAll {
   let density: Density = "default"
   let color: Partial<ColorConfig> | undefined
   let icons: IconLibraryName | undefined
+  let brand: BrandName | undefined
   for (const resolve of RESOLVERS) {
     const part = resolve(state)
     Object.assign(tokens, part.tokens)
@@ -332,6 +336,7 @@ export function resolveAll(state: Effective): ResolvedAll {
     // owning the recipe.
     if (part.color) color = color ? mergeColor(color, part.color) : part.color
     if (part.icons) icons = part.icons
+    if (part.assets) brand = part.assets
   }
-  return { tokens, params, density, color, icons }
+  return { tokens, params, density, color, icons, assets: brand }
 }

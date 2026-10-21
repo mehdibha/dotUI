@@ -7,6 +7,9 @@ export const airbnb = definePreset({
   swatch: "#ff385c",
   inspiredBy: "Airbnb",
   diff: {
+    // Assets
+    brandAssets: "airbnb",
+
     // Style
     // Popovers drop 0 2px 16px .12 while bordered tiles stay hairline. The
     // Dates | Flexible pill is a white chip on an #ebebeb track.

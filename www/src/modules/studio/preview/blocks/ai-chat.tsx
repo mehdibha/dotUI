@@ -61,6 +61,7 @@ import {
 } from "@/registry/ui/sidebar"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 interface ChatMessage {
   id: string
@@ -415,11 +416,15 @@ export default function AiChatBlock() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                    <SparklesIcon className="size-4" />
-                  </div>
+                  <BrandMark className="size-8">
+                    <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                      <SparklesIcon className="size-4" />
+                    </div>
+                  </BrandMark>
                   <div className="flex flex-col gap-0.5 leading-none">
-                    <span className="font-medium text-fg">Lumen</span>
+                    <span className="font-medium text-fg">
+                      <BrandName>Lumen</BrandName>
+                    </span>
                     <span className="text-xs">Northwind workspace</span>
                   </div>
                   <ChevronsUpDownIcon className="ml-auto" />

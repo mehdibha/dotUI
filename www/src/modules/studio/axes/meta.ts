@@ -4,6 +4,7 @@
 
 import * as accordion from "./accordion.meta"
 import * as alert from "./alert.meta"
+import * as assets from "./assets.meta"
 import * as avatars from "./avatars.meta"
 import * as badges from "./badges.meta"
 import * as breadcrumbs from "./breadcrumbs.meta"
@@ -53,6 +54,7 @@ export const OPTIONS: Readonly<Partial<Record<string, readonly Option[]>>> =
     {},
     accordion.OPTIONS,
     alert.OPTIONS,
+    assets.OPTIONS,
     avatars.OPTIONS,
     badges.OPTIONS,
     breadcrumbs.OPTIONS,

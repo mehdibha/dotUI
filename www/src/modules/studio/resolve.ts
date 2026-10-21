@@ -90,6 +90,7 @@ export function resolveDesignSystem(state: Effective): DesignSystem {
     // palette, not Origin's.
     color: resolved.color as ColorConfig,
     icons: resolved.icons,
+    assets: resolved.assets,
   }
 }
 

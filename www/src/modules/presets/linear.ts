@@ -7,6 +7,9 @@ export const linear = definePreset({
   swatch: "#828fff",
   inspiredBy: "Linear",
   diff: {
+    // Assets
+    brandAssets: "linear",
+
     // Style: low drops on menus and dialogs; a near-white secondary with a ring.
     surfaceShadow: "low",
     buttonSecondary: "raised",

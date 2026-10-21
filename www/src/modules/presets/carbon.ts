@@ -7,6 +7,9 @@ export const carbon = definePreset({
   swatch: "#0f62fe",
   inspiredBy: "IBM Carbon",
   diff: {
+    // Assets
+    brandAssets: "ibm",
+
     // Style
     // #f4f4f4 layers on white, no edges; field bottom lines are #8d8d8d.
     // Toggles select solid: Inverse #1f1f1f barely parts from the #393939 secondary.

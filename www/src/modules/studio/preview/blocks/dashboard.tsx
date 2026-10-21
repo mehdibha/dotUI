@@ -91,6 +91,7 @@ import {
 } from "@/registry/ui/table"
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 import { PagePicker, formatMoney } from "./shared"
 
@@ -391,12 +392,14 @@ function AppSidebar() {
           <SidebarMenuItem>
             <Menu>
               <SidebarMenuButton size="lg" tooltip="Northwind Supply">
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                  <SparklesIcon className="size-4" />
-                </div>
+                <BrandMark className="size-8">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                    <SparklesIcon className="size-4" />
+                  </div>
+                </BrandMark>
                 <div className="flex min-w-0 flex-col gap-0.5 leading-none">
                   <span className="truncate font-medium text-fg">
-                    Northwind Supply
+                    <BrandName>Northwind Supply</BrandName>
                   </span>
                   <span className="truncate text-xs">Growth plan</span>
                 </div>

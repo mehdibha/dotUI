@@ -81,6 +81,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 interface Track {
   id: string
@@ -216,11 +217,15 @@ function LibrarySidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                <AudioLinesIcon className="size-4" />
-              </div>
+              <BrandMark className="size-8">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                  <AudioLinesIcon className="size-4" />
+                </div>
+              </BrandMark>
               <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium text-fg">Cadence</span>
+                <span className="font-medium text-fg">
+                  <BrandName>Cadence</BrandName>
+                </span>
                 <span className="text-xs">Premium</span>
               </div>
               <ChevronsUpDownIcon className="ml-auto" />

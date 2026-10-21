@@ -25,6 +25,7 @@ import {
   SidebarProvider,
 } from "@/registry/ui/sidebar"
 import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 import {
   Board,
@@ -62,11 +63,15 @@ function SidebarItems() {
               size="lg"
               className="group-data-[collapsible=icon]:p-0!"
             >
-              <span className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                <SparklesIcon className="size-4" />
-              </span>
+              <BrandMark className="size-8">
+                <span className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                  <SparklesIcon className="size-4" />
+                </span>
+              </BrandMark>
               <span className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium text-fg">Acme</span>
+                <span className="font-medium text-fg">
+                  <BrandName>Acme</BrandName>
+                </span>
                 <span className="text-xs font-normal">Pro plan</span>
               </span>
             </SidebarMenuButton>

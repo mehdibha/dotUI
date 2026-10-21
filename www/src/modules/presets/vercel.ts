@@ -7,6 +7,9 @@ export const vercel = definePreset({
   swatch: "#8f8f8f",
   inspiredBy: "Vercel",
   diff: {
+    // Assets
+    brandAssets: "vercel",
+
     // Color
     // Geist blue-700 inks links, focus, switch, slider and choice cards; solids stay ink.
     brand: "#0072f5",

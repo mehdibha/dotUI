@@ -7,6 +7,9 @@ export const stripe = definePreset({
   swatch: "#675dff",
   inspiredBy: "Stripe",
   diff: {
+    // Assets
+    brandAssets: "stripe",
+
     // Color
     brand: "#533afd",
     // Checks, radios and switches fill one step lighter (form accent).

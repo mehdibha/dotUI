@@ -99,6 +99,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
 import { formatMoney } from "./shared"
 
@@ -386,11 +387,13 @@ function Header() {
     <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-            <WalletIcon className="size-4" />
-          </span>
+          <BrandMark className="size-8">
+            <span className="flex size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+              <WalletIcon className="size-4" />
+            </span>
+          </BrandMark>
           <span className="font-heading text-base font-semibold tracking-tight">
-            Meridian
+            <BrandName>Meridian</BrandName>
           </span>
         </div>
 
