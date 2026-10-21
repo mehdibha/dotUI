@@ -410,8 +410,15 @@ async function measurePage(
     let opened = false
     for (const [part, target] of Object.entries(targets)) {
       if (!stepped(target)) continue
-      if (opened) await load()
-      Object.assign(measures, await measureStepped(page, mode, part, target))
+      // One part failing (a walk that won't repeat) keeps the page's others.
+      try {
+        if (opened) await load()
+        Object.assign(measures, await measureStepped(page, mode, part, target))
+      } catch (error) {
+        console.warn(
+          `${part} on ${url} (${mode}) failed after a reload; page steps must replay the same walk on every load: ${(error as Error).message}`,
+        )
+      }
       opened = !!target.before?.length
     }
     return owned(measures, targets)
