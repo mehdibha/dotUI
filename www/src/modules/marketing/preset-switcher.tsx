@@ -21,14 +21,18 @@ export function PresetSwitcher({ selected }: { selected: number }) {
   // the base), a subtle wash of its accent over the neutral selected surface,
   // and its accent as the focus ring. The ring rides the indicator (the tab's
   // own is dropped) so it glides with the selection, and keys off the whole
-  // list so it holds while the selection catches up with focus.
+  // list so it holds while the selection catches up with focus. Its lightness
+  // is capped per mode so pale (Wise, Higgsfield) and near-black (Polaris)
+  // accents keep 3:1 against the page.
+  const swatch = active?.swatch ?? "var(--focus-ring-color)"
   const radius = active?.designSystem.tokens["--radius"] ?? "0.625rem"
   const indicatorStyle = {
     "--indicator-radius": `calc(${radius} * 0.75)`,
     "--indicator-bg": active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
       : "var(--color-selected)",
-    "--indicator-ring": active?.swatch ?? "var(--focus-ring-color)",
+    "--indicator-ring": `oklch(from ${swatch} min(l, 0.6) c h)`,
+    "--indicator-ring-dark": `oklch(from ${swatch} max(l, 0.6) c h)`,
   } as React.CSSProperties
 
   return (
@@ -39,7 +43,7 @@ export function PresetSwitcher({ selected }: { selected: number }) {
       <TabList
         aria-label="Preview design system"
         variant="segmented"
-        className="mx-auto h-auto gap-2 bg-transparent p-0 **:data-tab-indicator:rounded-(--indicator-radius) **:data-tab-indicator:bg-(--indicator-bg) **:data-tab-indicator:outline-(--indicator-ring) has-data-focus-visible:**:data-tab-indicator:outline-2 has-data-focus-visible:**:data-tab-indicator:outline-offset-2 **:data-tab-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color,outline-color]"
+        className="mx-auto h-auto gap-2 bg-transparent p-0 **:data-tab-indicator:rounded-(--indicator-radius) **:data-tab-indicator:bg-(--indicator-bg) **:data-tab-indicator:outline-(--indicator-ring) has-data-focus-visible:**:data-tab-indicator:outline-2 has-data-focus-visible:**:data-tab-indicator:outline-offset-2 **:data-tab-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color,outline-color] dark:**:data-tab-indicator:outline-(--indicator-ring-dark)"
         style={indicatorStyle}
       >
         {PRESET_CATALOG.map((preset) => (
