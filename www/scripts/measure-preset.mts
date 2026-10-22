@@ -272,17 +272,10 @@ async function runSteps(page: Page, steps: Step[]) {
   }
 }
 
-/** A part as it shows, with a margin for rings and shadows, once its
- *  animations end (overlays fade in). */
-async function shoot(page: Page, part: string, mode: Mode) {
-  if (!args.shots) return
-  const el = await page.$(`>>> [data-probe-part="${part}"]`)
-  if (!el) return
-  // Parts below the fold or inside a scrolled panel crop blank otherwise.
-  await el.evaluate((node) =>
-    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
-  )
-  await page
+/** Waits for running animations and transitions to end (overlays fade in,
+ *  focus rings grow); endless ones like spinners don't count. */
+const settle = (page: Page) =>
+  page
     .waitForFunction(
       () =>
         document
@@ -295,6 +288,17 @@ async function shoot(page: Page, part: string, mode: Mode) {
       { timeout: 3000 },
     )
     .catch(() => {})
+
+/** A part as it shows, with a margin for rings and shadows, once it settles. */
+async function shoot(page: Page, part: string, mode: Mode) {
+  if (!args.shots) return
+  const el = await page.$(`>>> [data-probe-part="${part}"]`)
+  if (!el) return
+  // Parts below the fold or inside a scrolled panel crop blank otherwise.
+  await el.evaluate((node) =>
+    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
+  )
+  await settle(page)
   const box = await el.boundingBox()
   if (!box) return
   const [left, top] = await page.evaluate(() => [
@@ -641,6 +645,8 @@ try {
       await page.waitForSelector("html[data-specimen-ready]", {
         timeout: 30000,
       })
+      // Focus parts ease their ring in: a read mid-transition finds it half drawn.
+      await settle(page)
       return {
         mode,
         measures: (await page.evaluate(snippet(targets))) as Measures,
