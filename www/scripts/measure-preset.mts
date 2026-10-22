@@ -148,11 +148,16 @@ const readTargets = async (): Promise<Record<string, Target>> => {
 
 const stepped = (target: Target) => target.focus || target.before
 
-/** What a page writes for its parts (see `ownedProps`): also applied on
- *  `--merge`, to a snippet result. */
+/** What a page writes for its parts (see `ownedProps`), and only its parts:
+ *  also applied on `--merge`, to a snippet result that may carry others. */
 function owned(measures: Measures, targets: Record<string, Target>) {
-  for (const [part, target] of Object.entries(targets)) {
-    const measure = measures[part]
+  for (const [part, measure] of Object.entries(measures)) {
+    const target = targets[part]
+    if (!target) {
+      console.warn(`${part}: not a part of this page, dropped`)
+      delete measures[part]
+      continue
+    }
     if (!measure) continue
     const keep = ownedProps(part, target)
     for (const prop of Object.keys(measure) as Prop[])
@@ -307,6 +312,32 @@ async function shoot(page: Page, part: string, mode: Mode) {
   })
 }
 
+/** Says when a part was read where nothing shows: under opacity 0 or
+ *  `visibility: hidden` (a shortcut key revealed on hover), or, for a
+ *  `surface`, on the page itself (climbed from a transparent wrapper). */
+async function warnUnseen(
+  page: Page,
+  mode: Mode,
+  part: string,
+  target: Target,
+) {
+  const el = await page.$(`>>> [data-probe-part="${part}"]`)
+  if (!el) return
+  const [shown, root] = await el.evaluate((node) => [
+    node.checkVisibility({ opacityProperty: true, visibilityProperty: true }),
+    node === document.body || node === document.documentElement,
+  ])
+  const where = `${part} on ${page.url()} (${mode})`
+  if (!shown)
+    console.warn(
+      `${where}: read while invisible (opacity 0 or hidden); show it with a \`before\` step`,
+    )
+  if (target.surface && root)
+    console.warn(
+      `${where}: \`surface\` climbed to the page; select the painted child`,
+    )
+}
+
 /** One part after its focus and `before` steps, read once its transitions
  *  settle, then undone with Escape. */
 async function measureStepped(
@@ -339,6 +370,7 @@ async function measureStepped(
       last = read
     }
     measure = JSON.parse(last)
+    await warnUnseen(page, mode, part, target)
     await shoot(page, part, mode)
   } catch (error) {
     console.warn(`${page.url()} · ${part}: ${(error as Error).message}`)
@@ -400,7 +432,10 @@ async function measurePage(
     const measures: Measures = await page.evaluate(
       snippet(plain, { mark: true, owned: true }),
     )
-    for (const part of Object.keys(plain)) await shoot(page, part, mode)
+    for (const [part, target] of Object.entries(plain)) {
+      await warnUnseen(page, mode, part, target)
+      await shoot(page, part, mode)
+    }
     // The probe skips hidden elements; say so rather than a bare "no match".
     for (const [part, { selector, within }] of Object.entries(plain)) {
       const chain = [within, selector].filter(Boolean).join(" ")
@@ -478,6 +513,20 @@ if (args.pack && args.merge) {
 
 if (args.pack) {
   const pack: Pack = await readJson(packFile(args.pack))
+  // tokens.json keeps one value per part and mode, so of two pages that
+  // measure a part in the same mode, the one measured last wins.
+  const pages = new Map<string, string[]>()
+  for (const [url, page] of Object.entries(pack))
+    for (const mode of page.mode ? [page.mode] : ["light", "dark"])
+      for (const part of Object.keys(page.parts)) {
+        const key = `${part} (${mode})`
+        pages.set(key, [...(pages.get(key) ?? []), url])
+      }
+  for (const [key, urls] of pages)
+    if (urls.length > 1)
+      console.warn(
+        `${key} is on ${urls.join(" and ")}: list it on one page per mode, or the last one measured wins`,
+      )
   const folder = pathToFileURL(`${resolve(REFS, args.pack)}/`)
   const address = (key: string) => new URL(key, folder).href
   const jobs = Object.entries(pack)
