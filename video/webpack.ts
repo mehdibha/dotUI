@@ -40,7 +40,6 @@ export function makeWebpackOverride({
       ...config.resolve,
       alias: {
         ...config.resolve?.alias,
-        "@/dev/tweaker$": path.join(root, "src/shims/tweaker.ts"),
         "@": path.join(root, "../www/src"),
         "starter-themes": path.join(root, "src/shims/starter-themes.ts"),
       },

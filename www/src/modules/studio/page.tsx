@@ -13,6 +13,7 @@ import {
   useState,
 } from "react"
 import {
+  ChevronLeftIcon,
   ChevronRightIcon,
   PanelBottomCloseIcon,
   PanelBottomOpenIcon,
@@ -24,32 +25,17 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { getPreset, ORIGIN } from "@/modules/presets"
 
-import { DEFAULTS } from "./axes"
-import type { StudioState } from "./axes"
 import { linkTarget, placeOf } from "./chapters"
 import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
-import {
-  MergedTitle,
-  PageActions,
-  PageHeader,
-  PageSteps,
-  InlineTitle,
-  AttachedTitle,
-  usePageHeaderTweaks,
-} from "./page-header"
-import type { PageHeaderProps } from "./page-header"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { useMessage } from "./preset/iframe-sync"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import { describe, useCurrent } from "./selection"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 import type { Studio } from "./use-studio"
-import { getWorkspace } from "./workspace"
 
 /** The open page is the URL's hash, so a reload or a shared link reopens it. */
 function setHash(page: string | null) {
@@ -60,25 +46,6 @@ function setHash(page: string | null) {
 
 /* Drilling in slides the page in from the right; Back slides the chapters in
    from the left. A link opening a page, or a chapter switch, doesn't move. */
-/** The state the design system started from: its view, or a system's preset. */
-function useBase(): StudioState {
-  const current = useCurrent()
-  if (current.doc) return (getPreset(current.doc.from ?? "") ?? ORIGIN).state
-  return describe(current.view, getWorkspace()).state
-}
-
-/* Component pages whose docs page goes by another slug; Choice card has none. */
-const DOCS: Record<string, string | null> = {
-  chart: "/docs/charts",
-  "choice-card": null,
-  progress: "/docs/components/progress-bar",
-  radio: "/docs/components/radio-group",
-  spinner: "/docs/components/loader",
-}
-
-const docsOf = (id: string) =>
-  id in DOCS ? (DOCS[id] ?? undefined) : `/docs/components/${id}`
-
 const DRILL = {
   in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
   out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
@@ -255,8 +222,6 @@ export function PanelPage({
   const back = useRef<HTMLButtonElement>(null)
   // Set by a press that swaps pages: focus moves with it.
   const moveFocus = useRef(false)
-  // Set by a prev / next press: focus lands on the same step of the new page.
-  const stepFocus = useRef<"prev" | "next" | null>(null)
   const lastPage = useRef<string | null>(null)
   const pages = useMemo(
     () =>
@@ -270,41 +235,6 @@ export function PanelPage({
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
-
-  const tweaks = usePageHeaderTweaks()
-  const base = useBase()
-  const pageKeys = useMemo(
-    () =>
-      page
-        ? (Object.keys(DEFAULTS).filter(
-            (key) => placeOf(key)?.page?.id === page.id,
-          ) as (keyof StudioState & string)[])
-        : [],
-    [page],
-  )
-  const changed = pageKeys.some(
-    (key) => JSON.stringify(studio.state[key]) !== JSON.stringify(base[key]),
-  )
-  const siblings =
-    page && page.chapter.id === "components" && page.id !== "components"
-      ? pages.filter(
-          (p) => p.chapter.id === "components" && p.id !== "components",
-        )
-      : []
-  const at = siblings.findIndex((p) => p.id === page?.id)
-  const step = (offset: number) => {
-    const target = siblings[at + offset]
-    return (
-      target && {
-        label: target.label,
-        go: () => {
-          stepFocus.current = offset > 0 ? "next" : "prev"
-          openPage(target.id, trail)
-          setDrill(offset > 0 ? "in" : "out")
-        },
-      }
-    )
-  }
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -327,21 +257,6 @@ export function PanelPage({
   useEffect(() => {
     const left = lastPage.current
     lastPage.current = pageId
-    const stepped = stepFocus.current
-    stepFocus.current = null
-    if (stepped) {
-      // The pressed step may have remounted with the page, or be disabled at
-      // either end of the list: Back takes focus then.
-      untilMounted(() => {
-        const button = layer?.querySelector<HTMLElement>(
-          `[data-step="${stepped}"]:not([disabled])`,
-        )
-        if (button) button.focus()
-        else if (document.activeElement === document.body) back.current?.focus()
-        return true
-      })
-      return
-    }
     if (!moveFocus.current) return
     moveFocus.current = false
     if (drill !== "out") back.current?.focus()
@@ -481,34 +396,6 @@ export function PanelPage({
     land(panel.replace(/^component:/, "")),
   )
 
-  const header: PageHeaderProps | undefined = page && {
-    title: page.label,
-    parent:
-      behind?.label ?? (page.chapter.untitled ? "Back" : page.chapter.label),
-    backRef: back,
-    onBack: () => {
-      moveFocus.current = true
-      setDrill("out")
-      setTrail(trail.slice(0, -1))
-      setPageId(behind?.id ?? null)
-      setHash(behind?.id ?? null)
-    },
-    titleClass: drill ? DRILL[drill] : undefined,
-    steps:
-      tweaks.steps === "header" && siblings.length
-        ? { prev: step(-1), next: step(1) }
-        : undefined,
-    onReset:
-      tweaks.resetPage && changed
-        ? () =>
-            studio.setState({
-              ...studio.state,
-              ...Object.fromEntries(pageKeys.map((key) => [key, base[key]])),
-            })
-        : undefined,
-    docs: tweaks.docs && siblings.length ? docsOf(page.id) : undefined,
-  }
-
   return (
     <RevealAxis.Provider value={revealAxis}>
       <PanelNav.Provider value={navigate}>
@@ -523,9 +410,6 @@ export function PanelPage({
               system={system}
               actions={
                 <>
-                  {open && page && header && tweaks.layout === "merged" && (
-                    <PageActions {...header} />
-                  )}
                   <PanelSearch chapters={chapters} onOpenChapter={reveal} />
                   <Button
                     size="sm"
@@ -541,28 +425,51 @@ export function PanelPage({
                 </>
               }
               strip={
-                <>
-                  <ChapterStrip
-                    chapters={chapters}
-                    active={active}
-                    open={open}
-                    onChange={dock}
-                  />
-                  {open && header && tweaks.layout === "attached" && (
-                    <AttachedTitle {...header} />
-                  )}
-                </>
-              }
-              title={
-                open && page && header && tweaks.layout === "merged" ? (
-                  <MergedTitle {...header} />
-                ) : undefined
+                <ChapterStrip
+                  chapters={chapters}
+                  active={active}
+                  open={open}
+                  onChange={dock}
+                />
               }
               page={
                 open &&
-                page &&
-                header && <PageHeader layout={tweaks.layout} {...header} />
+                page && (
+                  <span className="flex min-w-0 items-center gap-0.5">
+                    <Button
+                      ref={back}
+                      size="sm"
+                      variant="quiet"
+                      isIconOnly
+                      aria-label={`Back to ${behind?.label ?? page.chapter.label}`}
+                      onPress={() => {
+                        moveFocus.current = true
+                        setDrill("out")
+                        setTrail(trail.slice(0, -1))
+                        setPageId(behind?.id ?? null)
+                        setHash(behind?.id ?? null)
+                      }}
+                      // Slides in with the first page, then stays put.
+                      className={cn(
+                        "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
+                        drill && DRILL.in,
+                      )}
+                    >
+                      <ChevronLeftIcon />
+                    </Button>
+                    <span
+                      key={page.id}
+                      className={cn(
+                        "min-w-0 truncate text-sm font-medium",
+                        drill && DRILL[drill],
+                      )}
+                    >
+                      {page.label}
+                    </span>
+                  </span>
+                )
               }
+              systemClassName={drill === "out" ? DRILL.out : undefined}
               scrollRef={scroller}
               className={
                 open
@@ -581,13 +488,7 @@ export function PanelPage({
                     drill && DRILL[drill],
                   )}
                 >
-                  {header && tweaks.layout === "inline" && (
-                    <InlineTitle {...header} />
-                  )}
                   <page.Body studio={studio} />
-                  {tweaks.steps === "footer" && siblings.length > 0 && (
-                    <PageSteps steps={{ prev: step(-1), next: step(1) }} />
-                  )}
                 </section>
               ) : (
                 <div
