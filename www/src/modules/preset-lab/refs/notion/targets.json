@@ -40,9 +40,6 @@
         "selector": ".notion-collection-item div:has(> input[type=checkbox])",
         "skip": ["backgroundColor"]
       },
-      "card": {
-        "selector": ".notion-collection-item > div[role=presentation]"
-      },
       "heading.1": {
         "selector": ".notion-page-block h1"
       },
@@ -126,53 +123,6 @@
       "button.focus": {
         "text": "Start with this template",
         "focus": true
-      },
-      "switch.on": {
-        "selector": "div:has(> input[role=switch]) > div",
-        "nth": 1,
-        "before": [
-          {
-            "click": "[aria-label='More actions']"
-          },
-          {
-            "click": "[role=menuitem] ::-p-text(Cookie settings)"
-          }
-        ]
-      },
-      "switch.off": {
-        "selector": "div:has(> input[role=switch]) > div",
-        "nth": 3,
-        "before": [
-          {
-            "click": "[aria-label='More actions']"
-          },
-          {
-            "click": "[role=menuitem] ::-p-text(Cookie settings)"
-          },
-          {
-            "click": "::-p-xpath((//input[@role='switch'])[4])"
-          },
-          {
-            "hover": "::-p-text(Used for targeted advertising.)"
-          }
-        ]
-      },
-      "button.icon": {
-        "selector": "[aria-label='More actions']",
-        "skip": ["edge"]
-      }
-    }
-  },
-  "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814?p=400efdeead058118956eeb6ff4af160f&pm=c": {
-    "steps": [
-      {
-        "wait": ".notion-peek-renderer .notion-scroller"
-      }
-    ],
-    "parts": {
-      "dialog": {
-        "selector": ".notion-peek-renderer .notion-scroller",
-        "surface": true
       }
     }
   },
@@ -204,86 +154,142 @@
       }
     }
   },
-  "https://elemental-accordion-08e.notion.site/Thesis-Dissertation-Planner-cb6edf44cfc582acb707017e69c2ca1b": {
-    "parts": {
-      "link": {
-        "selector": "a.notion-link-token",
-        "ink": "span",
-        "only": ["color"]
-      }
-    }
-  },
-  "https://notion.notion.site/986388bef53c485a8ad1efe1022a650d?v=4757818278d74a99a8a40fa12d906ab8": {
-    "parts": {
-      "calendar.today": {
-        "selector": ".notion-calendar-view-day[style*=background]",
-        "only": ["backgroundColor", "borderRadius"]
-      }
-    }
-  },
   "https://app.notion.com/": {
     "signedIn": true,
+    "settle": 2500,
     "parts": {
       "dialog": {
-        "selector": ".notion-overlay-container [role=dialog]",
+        "selector": "[role=dialog][aria-label='Settings & members']",
         "surface": true,
         "before": [
           {
-            "click": "[role=button] ::-p-text(Settings)"
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
           }
         ]
       },
       "select.trigger": {
-        "selector": ".notion-overlay-container [role=dialog] [role=button]",
+        "selector": "[role=dialog][aria-label='Settings & members'] [role=button]",
         "text": "Use system setting",
         "before": [
           {
-            "click": "[role=button] ::-p-text(Settings)"
+            "click": ".notion-sidebar-switcher"
           },
           {
-            "click": "[role=dialog] [role=tab] ::-p-text(Preferences)"
-          }
-        ]
-      },
-      "input": {
-        "selector": ".notion-overlay-container div:has(> input[type=text])",
-        "before": [
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
           {
-            "click": ".notion-topbar-share-menu"
-          }
-        ]
-      },
-      "command": {
-        "selector": "[role=dialog][aria-label='Search Notion']",
-        "before": [
-          {
-            "press": "Meta+P"
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
           }
         ]
       },
       "calendar.day": {
-        "selector": ".notion-overlay-container .DayPicker-Day:not(.DayPicker-Day--today):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside)",
+        "selector": ".notion-overlay-container .rdp-day:not(.rdp-day_today):not(.rdp-day_selected):not(.rdp-day_outside)",
         "before": [
           {
-            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
           }
         ]
       },
       "calendar.today": {
-        "selector": ".notion-overlay-container .DayPicker-Day--today",
+        "selector": ".notion-overlay-container .rdp-day_today",
         "before": [
           {
-            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
           }
         ]
       },
       "calendar.selected": {
-        "selector": ".notion-overlay-container .DayPicker-Day--selected",
+        "selector": ".notion-overlay-container .rdp-day_selected",
         "before": [
           {
-            "click": ".notion-page-content [role=button] ::-p-text(Tomorrow)"
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
           }
         ]
+      },
+      "alert": {
+        "selector": ".notion-callout-block [contenteditable]",
+        "surface": true
+      },
+      "heading.4": {
+        "selector": ".notion-sub_sub_header-block h4"
+      },
+      "link": {
+        "selector": ".notion-page-content a[href*='example.com']"
+      },
+      "button.icon": {
+        "selector": ".notion-topbar-more-button",
+        "skip": ["edge"]
+      },
+      "kbd": {
+        "selector": ".notion-sidebar [aria-label=\"Search or ask\"] span",
+        "nth": 1,
+        "box": ":scope > div",
+        "ink": ":scope > div > span",
+        "skip": [
+          "color",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "switch.on": {
+        "selector": "[role=dialog][aria-label='Settings & members'] div:has(> input[role=switch]:checked) > div",
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
+          }
+        ]
+      },
+      "switch.off": {
+        "selector": "[role=dialog][aria-label='Settings & members'] div:has(> input[role=switch]:not(:checked)) > div",
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
+          }
+        ]
+      }
+    }
+  },
+  "https://app.notion.com/#board-view": {
+    "signedIn": true,
+    "settle": 2500,
+    "steps": [
+      {
+        "click": ".notion-collection_view-block [role=tab]::-p-text(Table)"
+      },
+      {
+        "click": ".notion-collection_view-block [role=tab]::-p-text(Board)"
+      }
+    ],
+    "parts": {
+      "card": {
+        "selector": ".notion-board-view .notion-collection-item > [role=presentation]",
+        "nth": 1
       }
     }
   }

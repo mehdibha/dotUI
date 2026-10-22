@@ -1264,7 +1264,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					linkUnderline: "always",
 					linkColor: "neutral",
 				},
-				calendar: { dayShape: "circle", today: "fill", weekdays: "triple" },
+				calendar: { dayShape: "same", today: "fill", weekdays: "triple" },
 				card: { header: "none", footer: "none", titles: "compact" },
 				chart: { grid: "solid", motion: "spring" },
 				checkbox: { cardSelected: "outline", cardPress: "none" },

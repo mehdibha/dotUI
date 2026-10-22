@@ -101,7 +101,6 @@ export const notion = definePreset({
     // Display
     accordionContainer: "plain",
     accordionMarker: "leading-caret",
-    calendarDayShape: "circle",
     calendarWeekdays: "triple",
   },
 })
