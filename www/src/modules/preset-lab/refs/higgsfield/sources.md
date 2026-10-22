@@ -1,22 +1,22 @@
 # Higgsfield reference pack
 
-Measured 2026-10-21 with probe `8eb9b12`: `presets:measure --pack higgsfield`, headless Chromium at 1440×900, DPR 2, dark only. No sign-in.
+Measured 2026-10-21 and 2026-10-22 with probe `8eb9b12`: `presets:measure --pack higgsfield`, headless Chromium at 1440×900, DPR 2, dark only, no sign-in. A signed-in pass on 2026-10-22 cross-checks it (see Signed in).
 
 Higgsfield publishes no token docs. Its design system, Q, ships with every higgsfield.ai page as `--hf-*` tokens and `.q-*` component classes in four stylesheets:
 
-- `https://assets.higgsfield.ai/tanstack/assets/2feeef17-rOu4aQ4aBDawgJec.css`: fonts and the font variables.
-- `https://assets.higgsfield.ai/tanstack/assets/2feeef17-zKId3gDbV_o61ByP.css` (12 MB): the `--hf-*` tokens and most `.q-*` rules.
-- `https://assets.higgsfield.ai/tanstack/assets/2feeef17-jR28g5ewL6SfHlYp.css` and `…-hMa2Ild8dwt-6F-H.css`: the remaining `.q-*` rules.
+- `https://assets.higgsfield.ai/tanstack/assets/1a2c0e3d-rOu4aQ4aBDawgJec.css`: fonts and the font variables.
+- `https://assets.higgsfield.ai/tanstack/assets/1a2c0e3d-7obaU3v4WYgtXJbx.css` (12 MB): the `--hf-*` tokens and most `.q-*` rules.
+- `https://assets.higgsfield.ai/tanstack/assets/1a2c0e3d-QqV9Wy_5xROnvFyC.css` and `…-hMa2Ild8dwt-6F-H.css`: the remaining `.q-*` rules.
 
-The file names are build hashes: when Higgsfield redeploys, take the new ones from any page's `<link rel="stylesheet">` tags.
+The file names are build hashes: when Higgsfield redeploys, take the new ones from any page's `<link rel="stylesheet">` tags. The 2026-10-22 deploy (`1a2c0e3d-*`) measures the same on the harness as the 2026-10-21 one (`2feeef17-*`).
 
 The app is dark only. Its light rules cover code blocks and the separate Supercomputer builder, not the studio, so light mode is derived (see the preset). A crawl of 237 public pages (every English sitemap page plus the studio, apps, blog and creator-hub pages) under both OS schemes found no light theme: some pages set `data-theme="default-light"` under a light scheme and still render dark.
 
 ## Pages
 
 - `q.html`: a harness that loads the four stylesheets and lays out Q's own components with Q's classes on `--hf-color-background-primary`: buttons (sm 40px: primary, secondary, tertiary, ghost, outline, brand-soft, icon; md 48px), focus, disabled, toggles, segmented tabs (`q-tabs-segmented`, default tone), underline tabs, checkbox, radio, switch, field and select, tooltip, progress, a text link (Q's `[&_a]:text-q-text-link`, the lime `--hf-color-text-link`) and modal. Its only styles of its own are layout, section labels, `.static` (which un-fixes the tooltip and modal so they sit in the page) and a script that sets the `--active-tab-*` variables Q's tab indicator reads (the app sets them from JS).
-- `https://higgsfield.ai/ai/image`: the aspect-ratio dropdown (the `Auto` button), a live glass `q-dropdown-content` with `q-menu-item` rows. The page needs about 15 s to render.
-- `https://higgsfield.ai/`: the header (`shell`, its nav links, the `New` badge), a model card and the section subtitle.
+- `https://higgsfield.ai/ai/image`: the aspect-ratio dropdown (`button[aria-label="Aspect ratio"]`), a live glass `q-dropdown-content` with `q-menu-item` rows; the model picker (`command`, `command.item`): a search field over grouped rows, opened from the unlabelled model button. The page needs 8 to 15 s to render.
+- `https://higgsfield.ai/`: the header (`shell`, its nav links, the neutral `New` chip as `badge`), a model card and the section subtitle.
 - `https://higgsfield.ai/pricing`: titles. `heading.1` is the promo banner's h2 (36px); the copy changes, so re-check it on a re-measure. `heading.3` is the "For teams" plan title (24px).
 
 Q maps to the specimens this way: Q's `secondary` button is white (inverse), so `button.secondary` is Q's `tertiary` (white 10%), the gray fill the app uses beside the lime primary; `button.quiet` is `ghost`.
@@ -26,6 +26,7 @@ Q maps to the specimens this way: Q's `secondary` button is white (inverse), so 
 - `segmented.selected` compares only fill, corners, height, edge and shadow: Q's indicator is a separate span under the tab labels.
 - `tab.selected` `backgroundColor` and `edge`: the selected tab is clear; its indicator is a 2px bar the probe reads as the fill.
 - `menu.item` `paddingInline`: Q pads the row (8px), dotUI pads inside the item's inset.
+- `command.item` `height`: the model picker's rows are two lines (a 16px name over a 14px description beside a 40px icon tile, 52px); dotUI's command row is one line.
 
 ## Cross-checks (not in the pack)
 
@@ -58,6 +59,14 @@ Q maps to the specimens this way: Q's `secondary` button is white (inverse), so 
 - Badges uppercase 10/700; the nav `New` badge is lime 20% under lime ink, 16px tall at 6px corners. Skewed gradient badges (TOP, NEW) also appear.
 - Accordion rows divided by white 5% lines, chevron at the end. Toasts on glass at 16px corners, the action inverse.
 
-## Not measured yet
+## Signed in
 
-The signed-in app (sidebar, project and settings menus, dialogs, toasts). It would run in Mehdi's Chrome and merge into this pack.
+On 2026-10-22 Mehdi's local session captured 21 signed-in pages in his Chrome (dark, 1440×900 at DPR 2, free plan, UI chrome only): Explore (`/`), `/ai/image` with its toolbar menus and model picker, `/ai/video` with its pickers, account settings and its Sessions, Gift, Subscription, Usage and Promo pages, the Edit profile dialog, the asset library, the public profile, pricing, and the Audio, MCP, Genjutsu, Content factory, Katana, AI Influencer, Academy and Apps pages. The raw bundles and screenshots stay in the project files.
+
+- **Same as the pack:** `shell`, `nav.item`, `nav.item.active`, `card`, `text.muted`, `menu`, `menu.item`, `field.label`, `input.focus`, `heading.1`, `heading.3`, and `command` and `command.item` (also measured headless).
+- **`badge.accent` is entered by hand** from this pass: the signed-in header's `FREE` chip on Genjutsu, lime 24% (rgb(61, 73, 20)) under #d1fe17 at 10/700 caps, 16px, 6px corners. Since the 2026-10-22 deploy the public header's chips (`New` on Genjutsu, What If, Katana and Academy) are neutral (`badge`), so no public page shows a lime chip.
+- **Q classes in use:** `q-switch` (28×16, white 12px knob) on AI Influencer, `q-checkbox` (20px, 1.5px white 10% edge, 6px corners) on Sessions, `q-tabs` in segmented pill (Academy), fill (AI Influencer), underline (Content factory) and pill (MCP, the profile) forms, `q-accordion` on Academy and AI Influencer, `q-button-primary` at 40px and 10px corners, 14/500 (60 on Content factory).
+- **Looks apart from Q, kept out of the pack:** the settings switches are a second, larger switch (36×24, off #5e636e); the studio's Create / Edit / Motion tabs on `/ai/video` are 36px with a 2px white underline and #a0a1a2 labels; its References / Extend Video toggle is a 48px track with 40px items at 10px corners, 14/600, no edge; the Quality trigger's focus is a 2px lime border with no offset; the Edit profile dialog is #1c1e20 at 12px with no drop, and its field sets 16px text; the library's "search by date" hint is a dark popover (#1c1e20, white text, a drop), not Q's inverse tooltip.
+- **Other surfaces:** the header mega menu (`.hfnav-viewport`) is #1c1e20 at 24px inside a 1px edge with a deep drop, rows 64px at 16px corners; the avatar menu is #1c1e21 at 20px with a white 5% edge; the generate composer is #1c1e21 at 20px; settings cards are #1c1e20 at 20px; library sidebar rows are 36px at 12px corners, the current one on #1f2022.
+
+Not measured: toasts (nothing was submitted), an on switch in settings (nothing was toggled), and the API console (`open.higgsfield.ai`, a separate app, signed out).

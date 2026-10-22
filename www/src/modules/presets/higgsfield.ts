@@ -92,7 +92,8 @@ export const higgsfield = definePreset({
     navItemWeight: "medium",
 
     // Data display
-    // Lime 15–20% under lime 10/700 caps, 6px corners.
+    // The signed-in FREE chip: lime 24% under lime 10/700 caps, 6px corners.
+    // Stand-in: the neutral New chips stay sentence case at 500.
     badgeStyle: "soft",
     badgeShape: "rounded",
     badgeCase: "uppercase",

@@ -107,7 +107,7 @@
         "selector": "[role=menu]",
         "before": [
           {
-            "click": "button::-p-text(Auto)"
+            "click": "button[aria-label=\"Aspect ratio\"]"
           }
         ]
       },
@@ -117,7 +117,30 @@
         "skip": ["paddingInline"],
         "before": [
           {
-            "click": "button::-p-text(Auto)"
+            "click": "button[aria-label=\"Aspect ratio\"]"
+          }
+        ]
+      },
+      "command": {
+        "selector": "[role=dialog][class*=border-separator-card]",
+        "before": [
+          {
+            "click": "form#image-form button[type=button]:not([aria-label]):not([data-state])"
+          },
+          {
+            "wait": "[role=dialog][class*=border-separator-card]"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[role=dialog][class*=border-separator-card] button[class*=rounded-xl]",
+        "skip": ["height"],
+        "before": [
+          {
+            "click": "form#image-form button[type=button]:not([aria-label]):not([data-state])"
+          },
+          {
+            "wait": "[role=dialog][class*=border-separator-card]"
           }
         ]
       }
@@ -136,8 +159,8 @@
       "nav.item.active": {
         "selector": "nav[aria-label=Main] a[data-status=active]"
       },
-      "badge.accent": {
-        "selector": "nav[aria-label=Main] a[data-nav-id=Katana] span"
+      "badge": {
+        "selector": "nav[aria-label=Main] a[data-nav-id=Katana] span[class*=rounded-md]"
       },
       "card": {
         "selector": "p",
