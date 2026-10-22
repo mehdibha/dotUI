@@ -688,7 +688,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				accordion: { motion: "expand", layout: "divided", marker: "leading-caret" },
 				alert: { style: "soft-outline" },
 				avatar: { shape: "circle", fallback: "accent" },
-				badge: { style: "dot", case: "sentence" },
+				badge: { style: "soft", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
 					style: "flat",
@@ -699,7 +699,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					linkUnderline: "never",
 					linkColor: "neutral",
 				},
-				calendar: { dayShape: "circle", today: "ring", weekdays: "double" },
+				calendar: { dayShape: "circle", today: "fill", weekdays: "double" },
 				card: { header: "none", footer: "none", titles: "quiet" },
 				chart: { grid: "solid", motion: "spring" },
 				checkbox: { cardSelected: "tint", cardPress: "none" },
@@ -757,7 +757,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					weight: "medium",
 					case: "sentence",
 				},
-				"tag-group": { style: "dot" },
+				"tag-group": { style: "soft" },
 				toast: { motion: "slide", surface: "surface", status: "icon" },
 				"toggle-button": {
 					style: "flat",
@@ -812,6 +812,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--check-edge": "var(--neutral-700)",
 				"--studio-check-edge": "var(--check-edge)",
 				"--studio-scrim-blur": "0",
+				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
 			density: "default",
 			color: {

@@ -40,27 +40,6 @@
       "button.focus": {
         "selector": "main button[aria-label=\"Customize sidebar\"]",
         "focus": true
-      },
-      "menu": {
-        "selector": "[role=listbox]",
-        "surface": true,
-        "before": [
-          {
-            "click": "main button[role=combobox][data-select-variant=default]"
-          }
-        ]
-      },
-      "menu.item": {
-        "selector": "[role=listbox] [role=option]",
-        "nth": 1,
-        "box": "::before",
-        "ink": ":scope > span",
-        "skip": ["paddingInline"],
-        "before": [
-          {
-            "click": "main button[role=combobox][data-select-variant=default]"
-          }
-        ]
       }
     }
   },
@@ -186,6 +165,144 @@
             "hover": "main a[href*=\"/issue/\"]"
           }
         ]
+      }
+    }
+  },
+  "https://linear.app/<ws>/issue/<id>": {
+    "signedIn": true,
+    "parts": {
+      "calendar.day": {
+        "selector": "[role=grid] td[role=gridcell]:not([data-today]):not([data-hidden]) button",
+        "nth": 0,
+        "before": [
+          {
+            "press": "Shift+D"
+          },
+          {
+            "click": "li[role=option]::-p-text(Custom)"
+          },
+          {
+            "wait": "[role=grid] td[data-today=true] button"
+          }
+        ]
+      },
+      "calendar.today": {
+        "selector": "[role=grid] td[data-today=true] button",
+        "before": [
+          {
+            "press": "Shift+D"
+          },
+          {
+            "click": "li[role=option]::-p-text(Custom)"
+          },
+          {
+            "wait": "[role=grid] td[data-today=true] button"
+          }
+        ]
+      },
+      "menu": {
+        "selector": "[role=dialog][aria-label=Menu]",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Issue options\"]"
+          },
+          {
+            "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=dialog][aria-label=Menu] li[role=option][data-focused=true]",
+        "box": ":scope > div:first-child",
+        "ink": ":scope > div:nth-child(2) > div:nth-child(2) > span",
+        "skip": ["backgroundColor", "color", "paddingInline"],
+        "before": [
+          {
+            "click": "main button[aria-label=\"Issue options\"]"
+          },
+          {
+            "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+          },
+          {
+            "hover": "[role=dialog][aria-label=Menu] li[role=option][id$=\"add-document\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://linear.app/<ws>/team/<team>/all": {
+    "signedIn": true,
+    "parts": {
+      "segmented": {
+        "selector": "[data-animated-popover-container] [role=tablist]",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.item": {
+        "selector": "[data-animated-popover-container] [role=tablist] [role=tab][aria-selected=false]",
+        "ink": "span",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.selected": {
+        "selector": "[data-animated-popover-container] [role=tablist] [role=tab][aria-selected=true]",
+        "ink": "span",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "toggle": {
+        "selector": "[data-animated-popover-container] button:not([role]):not([data-active])",
+        "text": "Milestone",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ],
+        "skip": ["height", "fontSize"]
+      },
+      "toggle.on": {
+        "selector": "[data-animated-popover-container] button[data-active=true]:not([role])",
+        "text": "Status",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ],
+        "skip": ["height", "fontSize"]
+      }
+    }
+  },
+  "https://linear.app/<ws>/settings/members": {
+    "signedIn": true,
+    "parts": {
+      "badge.accent": {
+        "selector": "main [data-contextual-menu] [data-list-grid-column=status] div:has(> span)",
+        "nth": 0,
+        "ink": "span"
       }
     }
   }

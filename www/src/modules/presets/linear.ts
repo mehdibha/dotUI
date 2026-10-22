@@ -102,11 +102,13 @@ export const linear = definePreset({
     spinnerStyle: "dots",
 
     // Data display
-    badgeStyle: "dot",
+    // Role chips: an indigo wash, accent ink, 3px corners, no edge.
+    badgeStyle: "soft",
+    badgeShape: "rounded",
     kbdTreatment: "outline",
     avatarFallback: "accent",
+    // 26px circles; today is a grey disc (Origin's fill).
     calendarDayShape: "circle",
-    calendarToday: "ring",
     calendarWeekdays: "double",
   },
 })
