@@ -208,19 +208,19 @@ const outlineShell = tv({
   defaultVariants: { radius: "single" },
 })
 
-// Untitled UI: a page-white box on the control edge with an xs drop.
 const raisedShell = tv({
-  base: [boxed, "border-border-control bg-bg shadow-xs"],
+  base: [
+    boxed,
+    "border-border-control bg-(--surface-bg,var(--color-bg)) shadow-xs",
+  ],
   variants: { focus: shellFocus, radius: shellRadius },
   defaultVariants: { radius: "single" },
 })
 
-// GitHub Primer: a page-white box on the control edge, recessed by a 1px
-// inner top shadow.
 const insetShell = tv({
   base: [
     boxed,
-    "border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)]",
+    "border-border-control bg-(--surface-bg,var(--color-bg)) shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)]",
   ],
   variants: { focus: shellFocus, radius: shellRadius },
   defaultVariants: { radius: "single" },
