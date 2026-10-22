@@ -18,9 +18,9 @@
  *     Moves the newest dotui__<id>__<slug>__<mode>.json of each page from the
  *     downloads folder to <dir>/<slug>-<mode>.json.
  *
- *   tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <file> --out <dir> --mode <mode>
- *     Crops each part `__dotui.rects()` returned out of a viewport
- *     screenshot taken in the same state, as <dir>/<part>-<mode>.png.
+ *   tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <file> --out <dir> --mode <mode> [--parts a,b]
+ *     Crops each part `__dotui.rects()` returned (or only `--parts`) out of a
+ *     viewport screenshot taken in the same state, as <dir>/<part>-<mode>.png.
  */
 import { execFileSync } from "node:child_process"
 import {
@@ -55,6 +55,7 @@ const { values: args } = parseArgs({
     out: { type: "string" },
     mode: { type: "string" },
     pad: { type: "string", default: "8" },
+    parts: { type: "string" },
     collect: { type: "string" },
     downloads: { type: "string", default: resolve(homedir(), "Downloads") },
   },
@@ -90,6 +91,14 @@ const KIT = `(function kit() {
     save(all)
   }
   const visible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 }
+  // Marked parts, including those inside shadow roots (web components, targets with >>>).
+  const marked = (root = document, out = []) => {
+    for (const el of root.querySelectorAll("*")) {
+      if (el.hasAttribute("data-probe-part")) out.push(el)
+      if (el.shadowRoot) marked(el.shadowRoot, out)
+    }
+    return out
+  }
   const box = (cs) => {
     const o = {}
     const sides = ["Top", "Right", "Bottom", "Left"].map((s) => cs["border" + s + "Width"] + " " + cs["border" + s + "Style"] + " " + cs["border" + s + "Color"])
@@ -177,6 +186,9 @@ const KIT = `(function kit() {
       return { name, ...theme }
     },
     measure(targets, props, focus = false) {
+      // Read where transitions land, not mid-way: focus rings and overlays ease in.
+      for (const a of document.getAnimations())
+        if (a.effect?.getComputedTiming().iterations !== Infinity) try { a.finish() } catch {}
       const result = probe(targets, props, focus, true)
       update((b) => Object.assign(b.probe, result))
       return Object.fromEntries(Object.entries(result).map(([part, m]) => [part, m ? Object.keys(m).length + " props" : null]))
@@ -220,7 +232,7 @@ const KIT = `(function kit() {
     note(key, value) { update((b) => { b.notes = { ...b.notes, [key]: value } }); return "noted" },
     rects() {
       const parts = {}
-      for (const el of document.querySelectorAll("[data-probe-part]")) {
+      for (const el of marked()) {
         const r = el.getBoundingClientRect()
         if (r.width && r.height && r.bottom > 0 && r.top < innerHeight) parts[el.getAttribute("data-probe-part")] = [r.x, r.y, r.width, r.height].map(Math.round)
       }
@@ -241,7 +253,7 @@ const KIT = `(function kit() {
     read(offset = 0, length = 900) { return JSON.stringify(load()[current()]).slice(offset, offset + length) },
     reset() { for (const k of [KEY, CURRENT, "__dotui_kit"]) sessionStorage.removeItem(k); return "reset" },
   }
-  for (const el of document.querySelectorAll("[data-probe-part]")) el.removeAttribute("data-probe-part")
+  for (const el of marked()) el.removeAttribute("data-probe-part")
   return "dotui kit ready" + (current() ? ", bundle " + current() : "")
 })()`
 
@@ -312,8 +324,10 @@ if (args.crop) {
   )
   const scale = shot.width / rects.width
   const pad = Number(args.pad)
+  const only = args.parts?.split(",")
   await mkdir(resolve(args.out), { recursive: true })
   for (const [part, [x, y, w, h]] of Object.entries(rects.parts)) {
+    if (only && !only.includes(part)) continue
     const left = Math.max(0, Math.floor((x - pad) * scale))
     const top = Math.max(0, Math.floor((y - pad) * scale))
     const width = Math.min(shot.width - left, Math.ceil((w + 2 * pad) * scale))
@@ -322,8 +336,13 @@ if (args.crop) {
     const crop = new PNG({ width, height })
     PNG.bitblt(shot, crop, left, top, width, height, 0, 0)
     const out = resolve(args.out, `${part}-${args.mode}.png`)
+    // One crop per part and mode: a second page measuring the part replaces it.
+    const replaced = await stat(out).then(
+      () => true,
+      () => false,
+    )
     await writeFile(out, PNG.sync.write(crop))
-    console.log(out)
+    console.log(replaced ? `${out} (replaced an earlier crop)` : out)
   }
   process.exit(0)
 }
