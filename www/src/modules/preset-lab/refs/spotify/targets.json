@@ -31,12 +31,6 @@
       "radio.checked": {
         "selector": "[data-part=\"radio.checked\"]"
       },
-      "switch.off": {
-        "selector": "[data-part=\"switch.off\"]"
-      },
-      "switch.on": {
-        "selector": "[data-part=\"switch.on\"]"
-      },
       "field.label": {
         "selector": "[data-part=\"field.label\"]"
       },
@@ -107,12 +101,6 @@
       },
       "radio.checked": {
         "selector": "[data-part=\"radio.checked\"]"
-      },
-      "switch.off": {
-        "selector": "[data-part=\"switch.off\"]"
-      },
-      "switch.on": {
-        "selector": "[data-part=\"switch.on\"]"
       },
       "tab.selected": {
         "selector": "[data-part=\"tab.selected\"]",
@@ -198,10 +186,6 @@
       },
       "panel": {
         "selector": "#main-view"
-      },
-      "card": {
-        "within": "#main-view",
-        "selector": "[data-encore-id=card]"
       },
       "heading.3": {
         "within": "#main-view",
@@ -289,6 +273,40 @@
         "selector": "[data-encore-id=listRow]",
         "ink": "[data-encore-id=listRowTitle]",
         "skip": ["height"]
+      }
+    }
+  },
+  "https://open.spotify.com/preferences": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 4000,
+    "parts": {
+      "switch.on": {
+        "selector": "[data-testid=settings-page] label:has(> input[type=checkbox]:checked) > span"
+      },
+      "switch.off": {
+        "selector": "[data-testid=settings-page] label:has(> input[type=checkbox]:not(:checked)) > span"
+      }
+    }
+  },
+  "https://www.spotify.com/account/overview": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 5000,
+    "parts": {
+      "card": {
+        "selector": "[data-testid=menu-group-account]"
+      }
+    }
+  },
+  "https://www.spotify.com/account/profile": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 5000,
+    "parts": {
+      "select.trigger": {
+        "selector": "main [data-encore-id=formSelect] select",
+        "skip": ["boxShadow"]
       }
     }
   }
