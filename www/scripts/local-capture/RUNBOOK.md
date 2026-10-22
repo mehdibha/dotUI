@@ -127,16 +127,12 @@ git -C ~/Desktop/dotUI show origin/<branch>:www/src/modules/preset-lab/refs/<id>
 
 ### 1. Stripe (`stripe`, branch `claude/project-thread-g2lqs3`, PR #1033)
 
-Most wanted: dark mode (no public page renders Sail in dark), the app shell and sidebar, tables, dialog and command.
+The signed-in Dashboard pass already ran (commit 145a68f), and the Dashboard has no dark mode (no appearance setting, ignores the OS theme): **light only, short pass, only if time allows.** Stay in test mode / a sandbox.
 
-- **Before:** switch to test mode / a sandbox, and stay there. Chrome may not be signed in yet.
-- **Theme:** find the Dashboard appearance setting (profile menu top right, or Settings › Personal details). The path is unverified. Note the value, use Light then Dark, restore it. If none exists, light only.
-- **Pages (keys with `/test/`):** Home `/test/dashboard`; Balances; Payments; Customers; Product catalog `/test/products`; Billing › Subscriptions and Invoices; Reports; Connect; Workbench / Developers; Settings `/settings`, `/settings/user`, one form page (business details or branding).
-- **Probe parts:** Home: `page, shell, panel, nav.item, nav.item.active, text, text.muted, link, button.primary, button.secondary`. A settings form: `input, field.label, select.trigger, checkbox, switch.off, switch.on, tab, tab.selected, input.focus, button.focus` (`focus: true`). Overlays: `menu`, `menu.item` (account menu, `before` click), `tooltip` (`before` hover or focus), `dialog` (a Create dialog, closed with Escape), `command`, `command.item` (Dashboard search). Lists (Payments, Customers): table header and rows via `survey()`; `kbd` if shortcuts show.
+- **Pages:** one Payments or Customers table, one settings form (business details or branding), and a Create dialog opened and closed with nothing submitted.
+- **Probe parts:** the form: `input, field.label, select.trigger, checkbox, switch.off, switch.on, tab, tab.selected, input.focus, button.focus` (`focus: true`); the dialog: `dialog` (`before` click, closed with Escape). Table header and rows via `survey()`.
 - **Sail:** overlays mount in `.__sail-layer-containers`; edges are `0 0 0 1px` box-shadow rings. Keep `skip: ["edge"]` on `switch.on` and `radio.checked`.
-- **Survey:** every other page. Extra: `classes("sail-")` if Sail classes exist.
-- **Skip / privacy:** no account names, customers or amounts in crops. Screenshots of list pages stay in `shots/`.
-- An older worktree `~/Desktop/dotUI-stripe` may be reused for nothing here; see Cleanup.
+- **Skip / privacy:** no account names, customers or amounts in crops; table shots stay in `shots/`.
 
 ### 2. Wise (`wise`, branch `claude/project-thread-16ioqp`, PR #1039)
 
