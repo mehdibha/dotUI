@@ -52,8 +52,8 @@ export const chatgpt = definePreset({
     buttonSecondary: "soft",
     buttonRadius: "pill",
     buttonPress: "scale",
-    // A white thumb with a soft drop on a #ededed pill track.
-    segmentedSelected: "raised",
+    // Settings' segmented control picks with a flat gray chip.
+    segmentedSelected: "tone",
 
     // Selection
     checkboxColor: "neutral",
@@ -79,17 +79,19 @@ export const chatgpt = definePreset({
     // Stand-in: tooltips are a #0d0d0d chip in light but #303030 in dark.
 
     // Dialogs
-    // Black at 30%, 50% in dark, no blur.
+    // Black at 13% in both modes, no blur.
     dialogBackdrop: "scrim",
+    dialogBackdropStrength: "light",
 
     // Navigation
     navItemWeight: "regular",
+    // Stand-in: category tabs mark the current one by ink alone.
+    tabStyle: "pill",
     // The sidebar shares the page's tone in both modes.
     shellTone: "page",
 
     // Feedback
     alertStyle: "outline",
     badgeStyle: "soft",
-    badgeShape: "rounded",
   },
 })
