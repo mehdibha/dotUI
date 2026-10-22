@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- Polaris web components, light only: the switch, which Polaris React lacks. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Polaris web components</title>
+    <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #f1f1f1;
+        display: flex;
+        gap: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <span data-part="switch"><s-switch label="Off"></s-switch></span>
+    <span data-part="switch-on"><s-switch label="On" checked></s-switch></span>
+  </body>
+</html>

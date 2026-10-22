@@ -1,0 +1,466 @@
+<!doctype html>
+<!-- Polaris React at its default sizes, one page per specimen sheet:
+     react.html?sheet=<sheet>&theme=light|dark (dark is dark-experimental). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Polaris React</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.shopify.com/static/fonts/inter/v4/styles.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shopify/polaris@13.9.5/build/esm/styles.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React, { useEffect, useState } from "https://esm.sh/react@18.3.1"
+      import { createRoot } from "https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1"
+      import htm from "https://esm.sh/htm@3.1.1"
+      import {
+        ActionList,
+        AppProvider,
+        Avatar,
+        Badge,
+        Banner,
+        BlockStack,
+        Button,
+        ButtonGroup,
+        Card,
+        Checkbox,
+        DataTable,
+        DatePicker,
+        Frame,
+        KeyboardKey,
+        Link,
+        Modal,
+        Navigation,
+        Page,
+        Popover,
+        ProgressBar,
+        RadioButton,
+        RangeSlider,
+        Select,
+        SkeletonBodyText,
+        Spinner,
+        Tabs,
+        Tag,
+        Text,
+        TextField,
+        Toast,
+        Tooltip,
+      } from "https://esm.sh/@shopify/polaris@13.9.5?deps=react@18.3.1,react-dom@18.3.1"
+      import {
+        HomeIcon,
+        MenuHorizontalIcon,
+        OrderIcon,
+        PersonIcon,
+        ProductIcon,
+      } from "https://esm.sh/@shopify/polaris-icons@9.3.1?deps=react@18.3.1"
+
+      const html = htm.bind(React.createElement)
+      const en = await fetch(
+        "https://cdn.jsdelivr.net/npm/@shopify/polaris@13.9.5/locales/en.json",
+      ).then((response) => response.json())
+      const params = new URLSearchParams(location.search)
+      const theme =
+        params.get("theme") === "dark" ? "dark-experimental" : "light"
+      const none = () => {}
+
+      const Part = ({ name, children }) =>
+        html`<div
+          data-part=${name}
+          style=${{ display: "inline-block", margin: 8 }}
+        >
+          ${children}
+        </div>`
+
+      const Actions = () =>
+        html` <${Page} title="Actions">
+          <${Card}>
+            <${Part} name="button-primary"
+              ><${Button} variant="primary">Primary<//><//
+            >
+            <${Part} name="button-secondary"><${Button}>Secondary<//><//>
+            <${Part} name="button-quiet"
+              ><${Button} variant="tertiary">Quiet<//><//
+            >
+            <${Part} name="button-plain"
+              ><${Button} variant="plain">Plain<//><//
+            >
+            <${Part} name="button-critical"
+              ><${Button} variant="primary" tone="critical">Delete<//><//
+            >
+            <${Part} name="button-icon"
+              ><${Button} icon=${MenuHorizontalIcon} accessibilityLabel="More"
+            /><//>
+            <${Part} name="button-focus"><${Button}>Focused<//><//>
+            <${Part} name="segmented">
+              <${ButtonGroup} variant="segmented">
+                <${Button} pressed>Day<//><${Button}>Week<//
+                ><${Button}>Month<//>
+              <//>
+            <//>
+            <${Part} name="kbd"><${KeyboardKey}>⌘<//><${KeyboardKey}>K<//><//>
+            <${Part} name="kbd-small"><${KeyboardKey} size="small">K<//><//>
+          <//>
+        <//>`
+
+      const Fields = () =>
+        html` <${Page} title="Fields">
+          <${Card}>
+            <${BlockStack} gap="400">
+              <${Part} name="input">
+                <${TextField}
+                  label="Store name"
+                  value="Snowdevil"
+                  onChange=${none}
+                  helpText="Shown to customers"
+                  autoComplete="off"
+                />
+              <//>
+              <${Part} name="input-empty">
+                <${TextField}
+                  label="Email"
+                  value=""
+                  placeholder="you@example.com"
+                  onChange=${none}
+                  autoComplete="off"
+                />
+              <//>
+              <${Part} name="input-error">
+                <${TextField}
+                  label="Price"
+                  value="abc"
+                  onChange=${none}
+                  error="Enter a number"
+                  autoComplete="off"
+                />
+              <//>
+              <${Part} name="input-disabled">
+                <${TextField}
+                  label="Disabled"
+                  value="Locked"
+                  disabled
+                  onChange=${none}
+                  autoComplete="off"
+                />
+              <//>
+              <${Part} name="select">
+                <${Select}
+                  label="Country"
+                  options=${["Canada", "France"]}
+                  value="Canada"
+                  onChange=${none}
+                />
+              <//>
+              <${Part} name="input-focus">
+                <${TextField}
+                  label="Focused"
+                  value="Focused"
+                  onChange=${none}
+                  autoComplete="off"
+                  focused
+                />
+              <//>
+            <//>
+          <//>
+        <//>`
+
+      const Selection = () =>
+        html` <${Page} title="Selection">
+          <${Card}>
+            <${BlockStack} gap="300">
+              <${Part} name="checkbox"
+                ><${Checkbox} label="Off" checked=${false} onChange=${none}
+              /><//>
+              <${Part} name="checkbox-checked"
+                ><${Checkbox} label="On" checked onChange=${none}
+              /><//>
+              <${Part} name="radio"
+                ><${RadioButton} label="Off" checked=${false} onChange=${none}
+              /><//>
+              <${Part} name="radio-checked"
+                ><${RadioButton} label="On" checked onChange=${none}
+              /><//>
+              <${Part} name="slider">
+                <div style=${{ width: 240 }}>
+                  <${RangeSlider} label="Volume" value=${40} onChange=${none} />
+                </div>
+              <//>
+            <//>
+          <//>
+        <//>`
+
+      const Menu = () =>
+        html` <${Page} title="Menu">
+          <div style=${{ display: "flex", gap: 160 }}>
+            <${Popover}
+              active
+              preferredAlignment="left"
+              activator=${html`<${Button} disclosure>Actions<//>`}
+              onClose=${none}
+              autofocusTarget="none"
+            >
+              <${ActionList}
+                actionRole="menuitem"
+                sections=${[
+                  {
+                    items: [
+                      { content: "Profile" },
+                      { content: "Billing", active: true },
+                      { content: "Settings" },
+                    ],
+                  },
+                  { items: [{ content: "Delete", destructive: true }] },
+                ]}
+              />
+            <//>
+            <${Tooltip} active content="Save changes" preferredPosition="below"
+              ><${Button}>Hover<//><//
+            >
+          </div>
+        <//>`
+
+      const Dialog = () =>
+        html` <${Frame}>
+          <${Modal}
+            open
+            onClose=${none}
+            title="Delete product?"
+            primaryAction=${{ content: "Delete", destructive: true }}
+            secondaryActions=${[{ content: "Cancel" }]}
+          >
+            <${Modal.Section}><${Text} as="p">This can't be undone.<//><//>
+          <//>
+        <//>`
+
+      function NavigationSheet() {
+        const [tab, setTab] = useState(0)
+        const nav = html` <${Navigation} location="/orders">
+          <${Navigation.Section}
+            items=${[
+              { url: "/home", label: "Home", icon: HomeIcon },
+              {
+                url: "/orders",
+                label: "Orders",
+                icon: OrderIcon,
+                selected: true,
+              },
+              { url: "/products", label: "Products", icon: ProductIcon },
+              { url: "/customers", label: "Customers", icon: PersonIcon },
+            ]}
+          />
+        <//>`
+        return html` <${Frame} navigation=${nav} showMobileNavigation=${false}>
+          <${Page} title="Navigation">
+            <${Card}>
+              <${BlockStack} gap="400">
+                <${Part} name="tabs">
+                  <${Tabs}
+                    tabs=${[
+                      { id: "all", content: "All" },
+                      { id: "unfulfilled", content: "Unfulfilled" },
+                      { id: "unpaid", content: "Unpaid" },
+                    ]}
+                    selected=${tab}
+                    onSelect=${setTab}
+                  />
+                <//>
+                <${Part} name="link">
+                  <${Text} as="p"
+                    >Read the <${Link} url="#">shipping policy<//> before you
+                    ship.<//
+                  >
+                <//>
+                <${Part} name="link-monochrome">
+                  <${Text} as="p"
+                    >Or <${Link} url="#" monochrome>contact us<//>.<//
+                  >
+                <//>
+              <//>
+            <//>
+          <//>
+        <//>`
+      }
+
+      const Feedback = () =>
+        html` <${Frame}>
+          <${Page} title="Feedback">
+            <${BlockStack} gap="400">
+              <${Card}>
+                <${Part} name="badge"><${Badge}>Draft<//><//>
+                <${Part} name="badge-success"
+                  ><${Badge} tone="success">Paid<//><//
+                >
+                <${Part} name="badge-attention"
+                  ><${Badge} tone="attention">Pending<//><//
+                >
+                <${Part} name="badge-critical"
+                  ><${Badge} tone="critical">Overdue<//><//
+                >
+                <${Part} name="badge-info"><${Badge} tone="info">Info<//><//>
+                <${Part} name="tag"><${Tag}>Wholesale<//><//>
+                <${Part} name="spinner"><${Spinner} size="small" /><//>
+              <//>
+              <${Part} name="banner">
+                <${Banner} title="Shipping rates changed" tone="warning"
+                  ><p>Review your rates.</p><//
+                >
+              <//>
+              <${Part} name="banner-info">
+                <${Banner} title="Store is in test mode" tone="info"
+                  ><p>Orders won't be charged.</p><//
+                >
+              <//>
+              <${Card}>
+                <${Part} name="banner-incard"
+                  ><${Banner} tone="critical"><p>Payment failed.</p><//><//
+                >
+              <//>
+              <${Card}>
+                <div data-part="progress" style=${{ width: 300 }}>
+                  <${ProgressBar} progress=${60} />
+                </div>
+                <div
+                  data-part="skeleton"
+                  style=${{ width: 300, marginTop: 16 }}
+                >
+                  <${SkeletonBodyText} lines=${2} />
+                </div>
+              <//>
+            <//>
+            <${Toast}
+              content="Product saved"
+              onDismiss=${none}
+              duration=${1000000}
+            />
+          <//>
+        <//>`
+
+      const Display = () =>
+        html` <${Page} title="Display">
+          <${BlockStack} gap="400">
+            <${Part} name="card">
+              <${Card}>
+                <${BlockStack} gap="200">
+                  <${Text} as="h2" variant="headingSm">Card title<//>
+                  <${Text} as="p">Card body copy.<//>
+                <//>
+              <//>
+            <//>
+            <${Part} name="avatar"><${Avatar} initials="MB" size="md" /><//>
+            <${Part} name="avatar-customer"><${Avatar} customer size="md" /><//>
+            <${Card} padding="0">
+              <div data-part="table">
+                <${DataTable}
+                  columnContentTypes=${["text", "numeric"]}
+                  headings=${["Product", "Price"]}
+                  rows=${[
+                    ["Emerald silk gown", "$875.00"],
+                    ["Mauve cashmere scarf", "$230.00"],
+                  ]}
+                />
+              </div>
+            <//>
+          <//>
+        <//>`
+
+      // This month, so Polaris marks today.
+      const now = new Date()
+      const Dates = () =>
+        html` <${Page} title="Dates">
+          <${Card}>
+            <div data-part="calendar">
+              <${DatePicker}
+                month=${now.getMonth()}
+                year=${now.getFullYear()}
+                selected=${new Date(
+                  now.getFullYear(),
+                  now.getMonth(),
+                  now.getDate() === 14 ? 15 : 14,
+                )}
+                onChange=${none}
+                onMonthChange=${none}
+              />
+            </div>
+          <//>
+        <//>`
+
+      const Type = () =>
+        html` <${Page} title="Type">
+          <${Card}>
+            <${BlockStack} gap="300">
+              <div data-part="heading-3xl">
+                <${Text} as="h1" variant="heading3xl">Heading 3xl<//>
+              </div>
+              <div data-part="heading-2xl">
+                <${Text} as="h1" variant="heading2xl">Heading 2xl<//>
+              </div>
+              <div data-part="heading-xl">
+                <${Text} as="h2" variant="headingXl">Heading xl<//>
+              </div>
+              <div data-part="heading-lg">
+                <${Text} as="h3" variant="headingLg">Heading lg<//>
+              </div>
+              <div data-part="heading-md">
+                <${Text} as="h4" variant="headingMd">Heading md<//>
+              </div>
+              <div data-part="heading-sm">
+                <${Text} as="h5" variant="headingSm">Heading sm<//>
+              </div>
+              <div data-part="text">
+                <${Text} as="p" variant="bodyMd">Body md text<//>
+              </div>
+              <div data-part="text-lg">
+                <${Text} as="p" variant="bodyLg">Body lg text<//>
+              </div>
+              <div data-part="text-muted">
+                <${Text} as="p" tone="subdued">Subdued text<//>
+              </div>
+            <//>
+          <//>
+        <//>`
+
+      const SHEETS = {
+        actions: Actions,
+        fields: Fields,
+        selection: Selection,
+        menu: Menu,
+        dialog: Dialog,
+        navigation: NavigationSheet,
+        feedback: Feedback,
+        display: Display,
+        dates: Dates,
+        type: Type,
+      }
+      const Sheet = SHEETS[params.get("sheet")] ?? Actions
+
+      function App() {
+        useEffect(() => {
+          const timer = setTimeout(() => {
+            // Polaris doesn't forward data attributes: mark the focus parts by hand.
+            document
+              .querySelector(
+                "[data-part=input-focus] .Polaris-TextField__Backdrop",
+              )
+              ?.setAttribute("data-specimen-focus", "")
+            const button = document.querySelector(
+              "[data-part=button-focus] button",
+            )
+            button?.setAttribute("data-specimen-focus", "")
+            button?.focus()
+            document.documentElement.setAttribute("data-specimen-ready", "")
+          }, 300)
+          return () => clearTimeout(timer)
+        }, [])
+        return html`<${AppProvider} i18n=${en} theme=${theme}><${Sheet} /><//>`
+      }
+
+      createRoot(document.getElementById("root")).render(html`<${App} />`)
+    </script>
+  </body>
+</html>
