@@ -89,7 +89,7 @@ Calls, in order, for each page in each mode:
 4. Probe parts. Print the calls with `pnpm -s exec tsx scripts/local-capture/kit.mts --targets <targets file> --url "<key>"`. Paste each printed `__dotui.measure(…)` into the javascript tool:
    - the plain parts call as is;
    - a `before` part: do its steps with the Chrome tools first (click, hover; a `focus` step is a keyboard focus: `document.querySelector(sel).focus()`), run its call, then close the overlay with Escape (reload and re-run the kit only if the state stays);
-   - a focus part: run its call (it focuses the element), press Tab then Shift+Tab, run the call again.
+   - a focus part: run its call (it focuses the element), press Tab then Shift+Tab, wait about 300 ms for the ring's transition to finish, then run the call again.
      Each call answers with the number of props read per part, or `null` when the selector matched nothing. Fix a `null` or a suspicious reading (`__dotui.peek("<part>")` shows the values) by editing the target in `targets-signed-in.json`, reprinting and re-running that part.
 5. Screenshot: take one and save it to disk, then move it to `shots/`. A long page: scroll a viewport down and take `-2`, `-3` (three at most).
 6. Crops: right after a screenshot, run `__dotui.rects()`, write its answer to `rects/…json`, then `pnpm -s exec tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <rects file> --out $OUT/<id>/$DATE/crops --mode <mode>`. It writes one PNG per probed part in view (the part as last measured, so take the overlay crops while the overlay is open). Look at the crops and delete any with personal content.

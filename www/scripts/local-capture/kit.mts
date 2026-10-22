@@ -168,7 +168,11 @@ const KIT = `(function kit() {
       const theme = { prefersDark: matchMedia("(prefers-color-scheme: dark)").matches, colorScheme: getComputedStyle(html).colorScheme, bodyBg: getComputedStyle(document.body).backgroundColor }
       for (const el of [html, document.body])
         for (const a of el.attributes)
-          if (a.name === "class" || /theme|mode|scheme|dark|light|appearance/i.test(a.name)) theme[el.tagName.toLowerCase() + "." + a.name] = a.value.slice(0, 200)
+          if (a.name === "class" || /theme|mode|scheme|dark|light|appearance/i.test(a.name)) {
+            // Keep only theme words: these attributes can carry account ids.
+            const words = a.value.split(/\\s+/).filter((w) => w.length <= 40 && /dark|light|theme|mode|scheme|contrast|system|auto/i.test(w) && !/\\d{4}/.test(w))
+            if (words.length) theme[el.tagName.toLowerCase() + "." + a.name] = words.join(" ")
+          }
       update((b) => { b.theme = theme; b.viewport = { width: innerWidth, height: innerHeight, dpr: devicePixelRatio } })
       return { name, ...theme }
     },
