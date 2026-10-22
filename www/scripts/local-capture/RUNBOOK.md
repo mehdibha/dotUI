@@ -37,7 +37,7 @@ In this file `$OUT` is `~/Desktop/dotUI/www/.scratch-refs` (in the main checkout
 
 | Order | Preset id  | Start URL                                   | Theme switch                            |
 | ----- | ---------- | ------------------------------------------- | --------------------------------------- |
-| 1     | stripe     | https://dashboard.stripe.com/test/dashboard | product setting (find it)               |
+| 1     | stripe     | https://dashboard.stripe.com/test/dashboard | light only (no dark mode)               |
 | 2     | wise       | https://wise.com/home                       | product setting (find it)               |
 | 3     | notion     | https://app.notion.com/                     | Settings › Preferences › Appearance     |
 | 4     | supabase   | https://supabase.com/dashboard/projects     | System → Mac appearance                 |
