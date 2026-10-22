@@ -148,11 +148,16 @@ const readTargets = async (): Promise<Record<string, Target>> => {
 
 const stepped = (target: Target) => target.focus || target.before
 
-/** What a page writes for its parts (see `ownedProps`): also applied on
- *  `--merge`, to a snippet result. */
+/** What a page writes for its parts (see `ownedProps`), and only its parts:
+ *  also applied on `--merge`, to a snippet result that may carry others. */
 function owned(measures: Measures, targets: Record<string, Target>) {
-  for (const [part, target] of Object.entries(targets)) {
-    const measure = measures[part]
+  for (const [part, measure] of Object.entries(measures)) {
+    const target = targets[part]
+    if (!target) {
+      console.warn(`${part}: not a part of this page, dropped`)
+      delete measures[part]
+      continue
+    }
     if (!measure) continue
     const keep = ownedProps(part, target)
     for (const prop of Object.keys(measure) as Prop[])
@@ -267,17 +272,10 @@ async function runSteps(page: Page, steps: Step[]) {
   }
 }
 
-/** A part as it shows, with a margin for rings and shadows, once its
- *  animations end (overlays fade in). */
-async function shoot(page: Page, part: string, mode: Mode) {
-  if (!args.shots) return
-  const el = await page.$(`>>> [data-probe-part="${part}"]`)
-  if (!el) return
-  // Parts below the fold or inside a scrolled panel crop blank otherwise.
-  await el.evaluate((node) =>
-    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
-  )
-  await page
+/** Waits for running animations and transitions to end (overlays fade in,
+ *  focus rings grow); endless ones like spinners don't count. */
+const settle = (page: Page) =>
+  page
     .waitForFunction(
       () =>
         document
@@ -290,6 +288,17 @@ async function shoot(page: Page, part: string, mode: Mode) {
       { timeout: 3000 },
     )
     .catch(() => {})
+
+/** A part as it shows, with a margin for rings and shadows, once it settles. */
+async function shoot(page: Page, part: string, mode: Mode) {
+  if (!args.shots) return
+  const el = await page.$(`>>> [data-probe-part="${part}"]`)
+  if (!el) return
+  // Parts below the fold or inside a scrolled panel crop blank otherwise.
+  await el.evaluate((node) =>
+    node.scrollIntoView({ block: "nearest", inline: "nearest" }),
+  )
+  await settle(page)
   const box = await el.boundingBox()
   if (!box) return
   const [left, top] = await page.evaluate(() => [
@@ -508,6 +517,20 @@ if (args.pack && args.merge) {
 
 if (args.pack) {
   const pack: Pack = await readJson(packFile(args.pack))
+  // tokens.json keeps one value per part and mode, so of two pages that
+  // measure a part in the same mode, the one measured last wins.
+  const pages = new Map<string, string[]>()
+  for (const [url, page] of Object.entries(pack))
+    for (const mode of page.mode ? [page.mode] : ["light", "dark"])
+      for (const part of Object.keys(page.parts)) {
+        const key = `${part} (${mode})`
+        pages.set(key, [...(pages.get(key) ?? []), url])
+      }
+  for (const [key, urls] of pages)
+    if (urls.length > 1)
+      console.warn(
+        `${key} is on ${urls.join(" and ")}: list it on one page per mode, or the last one measured wins`,
+      )
   const folder = pathToFileURL(`${resolve(REFS, args.pack)}/`)
   const address = (key: string) => new URL(key, folder).href
   const jobs = Object.entries(pack)
@@ -622,6 +645,8 @@ try {
       await page.waitForSelector("html[data-specimen-ready]", {
         timeout: 30000,
       })
+      // Focus parts ease their ring in: a read mid-transition finds it half drawn.
+      await settle(page)
       return {
         mode,
         measures: (await page.evaluate(snippet(targets))) as Measures,
