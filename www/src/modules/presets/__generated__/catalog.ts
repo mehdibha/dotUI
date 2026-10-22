@@ -1429,7 +1429,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				field: { error: "plain", label: "semibold" },
 				group: { segments: "attached", separator: "shared-edge" },
 				input: { style: "inset", hover: "edge", height: "controls", text: "same", errorIcon: "none" },
-				kbd: { style: "chip" },
+				kbd: { style: "outline" },
 				link: { underline: "always", color: "neutral" },
 				"list-box": {
 					indicator: "check-end",
@@ -1460,7 +1460,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"segmented-control": { selected: "inverse", track: "filled", weight: "bold", case: "sentence" },
 				select: { trigger: "field", caret: "chevron" },
 				sheet: { edge: "docked" },
-				sidebar: { labels: "sentence", shell: "recessed", marker: "ink-accent", weight: "bold", case: "sentence" },
+				sidebar: { labels: "sentence", shell: "recessed", marker: "ink-accent", weight: "regular", case: "sentence" },
 				skeleton: { animation: "shimmer" },
 				slider: { thumb: "knob", track: "thin" },
 				switch: { style: "inset", cardSelected: "outline", cardPress: "none" },
@@ -1499,14 +1499,16 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--radius": "0.5rem",
 				"--studio-radius-panel": "var(--radius-lg)",
 				"--studio-radius-card": "var(--radius-md)",
+				"--studio-radius-surface": "var(--radius-sm)",
 				"--studio-radius-control": "var(--radius-sm)",
+				"--studio-radius-item": "var(--radius-xs)",
 				"--studio-radius-control-sm": "var(--radius-xs)",
 				"--studio-radius-detail": "var(--radius-xs)",
 				"--studio-radius-field": "var(--radius-sm)",
+				"--studio-radius-container": "var(--radius-md)",
+				"--studio-radius-inline-item": "var(--radius-sm)",
 				"--card-border": "transparent",
 				"--overlay-border": "transparent",
-				"--shadow-card":
-					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-popover":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-modal":
@@ -1517,9 +1519,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
 				"--color-sidebar":
 					"light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) 93%, oklch(0 0 0)))",
-				"--focus-ring-inset": "inset",
-				"--focus-ring-offset": "0px",
-				"--focus-ring-inner": "calc(var(--focus-ring-width) + 1px)",
 				"--focus-input-width": "0px",
 				"--focus-input-color": "var(--focus-input-border)",
 				"--focus-invalid-color": "var(--color-fg-danger)",
