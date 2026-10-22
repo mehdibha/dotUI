@@ -20,7 +20,7 @@ const escapeXml = (value: string) =>
 // /docs/components, /docs/charts and every component page come from the docs
 // source below, so they are not listed here. /components and /charts are
 // permanent redirects, so they are omitted.
-const STATIC_PATHS = ["/", "/studio"]
+const STATIC_PATHS = ["/", "/studio", "/showcase"]
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {

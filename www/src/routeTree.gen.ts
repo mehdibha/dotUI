@@ -19,6 +19,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
+import { Route as AppShowcaseRouteImport } from './routes/_app/showcase'
 import { Route as AppStudioRouteImport } from './routes/_app/studio'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as ApiSnapshotsRouteImport } from './routes/api/snapshots'
@@ -83,6 +84,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppShowcaseRoute = AppShowcaseRouteImport.update({
+  id: '/showcase',
+  path: '/showcase',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppStudioRoute = AppStudioRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/showcase': typeof AppShowcaseRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -203,6 +210,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/showcase': typeof AppShowcaseRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -232,6 +240,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/_app/showcase': typeof AppShowcaseRoute
   '/_app/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/showcase'
     | '/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/showcase'
     | '/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_app/docs'
     | '/.well-known/api-catalog'
+    | '/_app/showcase'
     | '/_app/studio'
     | '/api/search'
     | '/api/snapshots'
@@ -420,6 +432,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof AppDocsRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/showcase': {
+      id: '/_app/showcase'
+      path: '/showcase'
+      fullPath: '/showcase'
+      preLoaderRoute: typeof AppShowcaseRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/studio': {
@@ -553,12 +572,14 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
 
 interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
+  AppShowcaseRoute: typeof AppShowcaseRoute
   AppStudioRoute: typeof AppStudioRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
+  AppShowcaseRoute: AppShowcaseRoute,
   AppStudioRoute: AppStudioRoute,
   AppIndexRoute: AppIndexRoute,
 }
