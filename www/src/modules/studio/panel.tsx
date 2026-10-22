@@ -31,6 +31,7 @@ export function PanelChrome({
   actions,
   strip,
   page,
+  title,
   scrollRef,
   className,
   children,
@@ -42,6 +43,8 @@ export function PanelChrome({
   strip?: ReactNode
   /** An open page's header (back, title), pinned over the body. */
   page?: ReactNode
+  /** Takes the design-system picker's place. */
+  title?: ReactNode
   scrollRef?: Ref<HTMLDivElement>
   className?: string
   children: ReactNode
@@ -55,46 +58,63 @@ export function PanelChrome({
     >
       <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
         <div className="flex items-center justify-between gap-1">
-          {system.renderSwitcher(
-            <Tooltip>
-              <Button
-                ref={system.triggerRef}
-                variant="quiet"
-                size="sm"
-                aria-label={`Design system: ${system.name}. Change design system`}
-                className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
-              >
-                <span
-                  aria-hidden
-                  className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
-                  style={{ background: system.swatch }}
-                />
-                <span dir="auto" className="min-w-0 truncate">
-                  {system.note
-                    ? system.name.slice(0, -system.note.length).trimEnd()
-                    : system.name}
-                </span>
-                {system.note && <span className="shrink-0">{system.note}</span>}
-                <ChevronsUpDownIcon
-                  data-icon="inline-end"
-                  className="size-3 shrink-0 text-fg-muted"
-                />
-              </Button>
-              <TooltipContent>{system.name}</TooltipContent>
-            </Tooltip>,
-          )}
+          {title}
+          {!title &&
+            system.renderSwitcher(
+              <Tooltip>
+                <Button
+                  ref={system.triggerRef}
+                  variant="quiet"
+                  size="sm"
+                  aria-label={`Design system: ${system.name}. Change design system`}
+                  className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
+                >
+                  <span
+                    aria-hidden
+                    className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                    style={{ background: system.swatch }}
+                  />
+                  <span dir="auto" className="min-w-0 truncate">
+                    {system.note
+                      ? system.name.slice(0, -system.note.length).trimEnd()
+                      : system.name}
+                  </span>
+                  {system.note && (
+                    <span className="shrink-0">{system.note}</span>
+                  )}
+                  <ChevronsUpDownIcon
+                    data-icon="inline-end"
+                    className="size-3 shrink-0 text-fg-muted"
+                  />
+                </Button>
+                <TooltipContent>{system.name}</TooltipContent>
+              </Tooltip>,
+            )}
           <span className="flex shrink-0 items-center gap-1">
+            {title &&
+              system.renderSwitcher(
+                <Button
+                  ref={system.triggerRef}
+                  variant="quiet"
+                  size="sm"
+                  isIconOnly
+                  aria-label={`Design system: ${system.name}. Change design system`}
+                  className="data-icon-only:size-6"
+                >
+                  <span
+                    aria-hidden
+                    className="size-2 rounded-full ring-1 ring-fg/10 ring-inset"
+                    style={{ background: system.swatch }}
+                  />
+                </Button>,
+              )}
             {system.buttons}
             {actions}
           </span>
         </div>
         {strip}
       </div>
-      {page && (
-        <div className="flex h-11 shrink-0 items-center gap-1 border-b border-fg/6 px-2">
-          {page}
-        </div>
-      )}
+      {page}
       <div
         ref={scrollRef}
         className="no-scrollbar flex min-h-0 grow scroll-pt-4 flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0"

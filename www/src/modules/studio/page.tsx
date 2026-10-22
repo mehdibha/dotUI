@@ -13,7 +13,6 @@ import {
   useState,
 } from "react"
 import {
-  ChevronLeftIcon,
   ChevronRightIcon,
   PanelBottomCloseIcon,
   PanelBottomOpenIcon,
@@ -25,17 +24,32 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { getPreset, ORIGIN } from "@/modules/presets"
 
+import { DEFAULTS } from "./axes"
+import type { StudioState } from "./axes"
 import { linkTarget, placeOf } from "./chapters"
 import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
+import {
+  MergedTitle,
+  PageActions,
+  PageHeader,
+  PageSteps,
+  InlineTitle,
+  AttachedTitle,
+  usePageHeaderTweaks,
+} from "./page-header"
+import type { PageHeaderProps } from "./page-header"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { useMessage } from "./preset/iframe-sync"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
+import { describe, useCurrent } from "./selection"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 import type { Studio } from "./use-studio"
+import { getWorkspace } from "./workspace"
 
 /** The open page is the URL's hash, so a reload or a shared link reopens it. */
 function setHash(page: string | null) {
@@ -46,6 +60,13 @@ function setHash(page: string | null) {
 
 /* Drilling in slides the page in from the right; Back slides the chapters in
    from the left. A link opening a page, or a chapter switch, doesn't move. */
+/** The state the design system started from: its view, or a system's preset. */
+function useBase(): StudioState {
+  const current = useCurrent()
+  if (current.doc) return (getPreset(current.doc.from ?? "") ?? ORIGIN).state
+  return describe(current.view, getWorkspace()).state
+}
+
 const DRILL = {
   in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
   out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
@@ -236,6 +257,40 @@ export function PanelPage({
   const side = useDockSide()
   const open = !tucked || side
 
+  const tweaks = usePageHeaderTweaks()
+  const base = useBase()
+  const pageKeys = useMemo(
+    () =>
+      page
+        ? (Object.keys(DEFAULTS).filter(
+            (key) => placeOf(key)?.page?.id === page.id,
+          ) as (keyof StudioState & string)[])
+        : [],
+    [page],
+  )
+  const changed = pageKeys.some(
+    (key) => JSON.stringify(studio.state[key]) !== JSON.stringify(base[key]),
+  )
+  const siblings =
+    page && page.chapter.id === "components" && page.id !== "components"
+      ? pages.filter(
+          (p) => p.chapter.id === "components" && p.id !== "components",
+        )
+      : []
+  const at = siblings.findIndex((p) => p.id === page?.id)
+  const step = (offset: number) => {
+    const target = siblings[at + offset]
+    return (
+      target && {
+        label: target.label,
+        go: () => {
+          openPage(target.id, trail)
+          setDrill(offset > 0 ? "in" : "out")
+        },
+      }
+    )
+  }
+
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
     const header = layer?.firstElementChild?.firstElementChild
@@ -396,6 +451,37 @@ export function PanelPage({
     land(panel.replace(/^component:/, "")),
   )
 
+  const header: PageHeaderProps | undefined = page && {
+    title: page.label,
+    parent:
+      behind?.label ?? (page.chapter.untitled ? "Back" : page.chapter.label),
+    backRef: back,
+    onBack: () => {
+      moveFocus.current = true
+      setDrill("out")
+      setTrail(trail.slice(0, -1))
+      setPageId(behind?.id ?? null)
+      setHash(behind?.id ?? null)
+    },
+    titleClass: drill ? DRILL[drill] : undefined,
+    steps:
+      tweaks.steps === "header" && siblings.length
+        ? { prev: step(-1), next: step(1) }
+        : undefined,
+    onReset:
+      tweaks.resetPage && changed
+        ? () =>
+            studio.setState({
+              ...studio.state,
+              ...Object.fromEntries(pageKeys.map((key) => [key, base[key]])),
+            })
+        : undefined,
+    docs:
+      tweaks.docs && siblings.length
+        ? `/docs/components/${page.id}`
+        : undefined,
+  }
+
   return (
     <RevealAxis.Provider value={revealAxis}>
       <PanelNav.Provider value={navigate}>
@@ -410,6 +496,9 @@ export function PanelPage({
               system={system}
               actions={
                 <>
+                  {open && page && header && tweaks.layout === "merged" && (
+                    <PageActions {...header} />
+                  )}
                   <PanelSearch chapters={chapters} onOpenChapter={reveal} />
                   <Button
                     size="sm"
@@ -425,45 +514,27 @@ export function PanelPage({
                 </>
               }
               strip={
-                <ChapterStrip
-                  chapters={chapters}
-                  active={active}
-                  open={open}
-                  onChange={dock}
-                />
+                <>
+                  <ChapterStrip
+                    chapters={chapters}
+                    active={active}
+                    open={open}
+                    onChange={dock}
+                  />
+                  {open && header && tweaks.layout === "attached" && (
+                    <AttachedTitle {...header} />
+                  )}
+                </>
+              }
+              title={
+                open && page && header && tweaks.layout === "merged" ? (
+                  <MergedTitle {...header} />
+                ) : undefined
               }
               page={
                 open &&
-                page && (
-                  <>
-                    <Button
-                      ref={back}
-                      size="sm"
-                      variant="quiet"
-                      isIconOnly
-                      aria-label={`Back to ${behind?.label ?? page.chapter.label}`}
-                      onPress={() => {
-                        moveFocus.current = true
-                        setDrill("out")
-                        setTrail(trail.slice(0, -1))
-                        setPageId(behind?.id ?? null)
-                        setHash(behind?.id ?? null)
-                      }}
-                      className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
-                    >
-                      <ChevronLeftIcon />
-                    </Button>
-                    <span
-                      key={page.id}
-                      className={cn(
-                        "min-w-0 flex-1 truncate text-[13px] font-medium",
-                        drill && DRILL[drill],
-                      )}
-                    >
-                      {page.label}
-                    </span>
-                  </>
-                )
+                page &&
+                header && <PageHeader layout={tweaks.layout} {...header} />
               }
               scrollRef={scroller}
               className={
@@ -483,7 +554,13 @@ export function PanelPage({
                     drill && DRILL[drill],
                   )}
                 >
+                  {header && tweaks.layout === "inline" && (
+                    <InlineTitle {...header} />
+                  )}
                   <page.Body studio={studio} />
+                  {tweaks.steps === "footer" && siblings.length > 0 && (
+                    <PageSteps steps={{ prev: step(-1), next: step(1) }} />
+                  )}
                 </section>
               ) : (
                 <div
