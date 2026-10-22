@@ -1584,10 +1584,10 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				checkbox: { cardSelected: "outline-tint", cardPress: "sink" },
 				collapsible: { motion: "expand" },
 				"color-editor": { style: "default" },
-				command: { search: "field", inset: "inset", scale: "default" },
+				command: { search: "field", inset: "full-bleed", scale: "default" },
 				dialog: { sections: "open", footer: "stack", close: "filled", titles: "bold" },
 				empty: { titles: "bold" },
-				field: { error: "plain", label: "medium" },
+				field: { error: "plain", label: "semibold" },
 				group: { segments: "gapped", separator: "shared-edge" },
 				input: { style: "well", hover: "none", height: "controls", text: "same", errorIcon: "none" },
 				kbd: { style: "outline" },
@@ -1595,7 +1595,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"list-box": {
 					indicator: "none",
 					highlight: "neutral",
-					inset: "inset",
+					inset: "full-bleed",
 					selected: "tint",
 					rows: "auto",
 					labels: "caps",
@@ -1604,7 +1604,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				menu: {
 					indicator: "none",
 					highlight: "neutral",
-					inset: "inset",
+					inset: "full-bleed",
 					selected: "tint",
 					rows: "auto",
 					labels: "caps",
@@ -1629,7 +1629,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				tabs: {
 					style: "line",
 					color: "accent",
-					indicator: "label",
+					indicator: "full",
 					chip: "tone",
 					track: "filled",
 					pill: "tint",
@@ -1648,7 +1648,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					linkColor: "accent",
 				},
 				"toggle-button-group": { segments: "gapped", separator: "shared-edge" },
-				tooltip: { style: "inverted", tip: "tip", motion: "scale" },
+				tooltip: { style: "surface", tip: "tip", motion: "scale" },
 			},
 			tokens: {
 				"--color-border-control": "var(--color-border)",
@@ -1684,7 +1684,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-list-box-selected-highlight": "var(--color-selected)",
 				"--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
 				"--studio-scrim-blur": "0",
-				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
 			density: "touch",
 			color: {

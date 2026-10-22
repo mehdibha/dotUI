@@ -44,7 +44,7 @@ export const duolingo = definePreset({
     iconStroke: 3,
 
     // Shape
-    // Fields, choice tiles and web-ui buttons 12px; popovers, cards and modals 16px; menu rows 7px.
+    // Fields, choice tiles and web-ui buttons 12px; popovers, cards and modals 16px.
     // Stand-in: lesson and log-in buttons are 16px, but a larger control radius also rounds fields past 12px.
     radiusPx: 16,
     roleItem: "sm",
@@ -73,7 +73,8 @@ export const duolingo = definePreset({
 
     // Inputs: Ledge's Auto field is the polar well; no hover.
     inputHover: "none",
-    fieldLabel: "medium",
+    // Settings labels are 20px bold ("Dark mode"); semibold is the heaviest rung.
+    fieldLabel: "semibold",
 
     // Selection controls
     // A quarter of the box (8px on 32, 5px on 20): 4px on our 16px check, nearer Sharp than the 8px detail rung.
@@ -82,10 +83,14 @@ export const duolingo = definePreset({
     switchStyle: "slab",
 
     // Menus & popovers
+    // The More menu's rows span its width, square, 20px in from the edge.
+    menuInset: "full-bleed",
     menuSelectedRow: "tint",
     menuArrows: "both",
     // No check on the current item; the row tint marks it.
     menuIndicator: "none",
+    // The path's callouts: page fill, 2px swan edge, radius 10.
+    tooltipStyle: "surface",
 
     // Dialogs: the Ledge stroke is a stand-in, Duolingo's modal has no edge.
     // Black at 30–40%, no blur.
@@ -98,8 +103,6 @@ export const duolingo = definePreset({
     // Navigation
     tabStyle: "line",
     tabsColor: "accent",
-    // The COURSES bar spans the label, not the padded tab.
-    tabIndicator: "label",
     navMarker: "outline",
     navWeight: "bold",
 
@@ -107,7 +110,6 @@ export const duolingo = definePreset({
     // The lesson feedback sheet: sea-sponge #d7ffb8 under tree-frog ink.
     alertStyle: "soft",
     badgeStyle: "soft",
-    badgeShape: "rounded",
     badgeCase: "uppercase",
     spinnerStyle: "dots",
     // 16px track.

@@ -20,36 +20,11 @@
       }
     }
   },
-  "https://www.duolingo.com/": {
-    "mode": "light",
-    "parts": {
-      "text.muted": {
-        "selector": "p",
-        "skip": ["fontSize"]
-      }
-    }
-  },
   "https://www.duolingo.com/efficacy": {
     "parts": {
       "link": {
         "selector": "a",
         "text": "teaching method"
-      },
-      "tab": {
-        "selector": "a[href=\"/efficacy/method\"]",
-        "skip": ["height", "borderRadius"]
-      },
-      "tab.selected": {
-        "selector": "a[aria-current=page]",
-        "skip": ["height", "borderRadius"]
-      }
-    }
-  },
-  "https://www.duolingo.com/courses": {
-    "parts": {
-      "card": {
-        "selector": "[data-test~=language-card]",
-        "skip": ["color"]
       }
     }
   },
@@ -256,6 +231,111 @@
       "dialog": {
         "text": "Each mistake costs 1 heart!",
         "surface": true
+      }
+    }
+  },
+  "https://www.duolingo.com/learn": {
+    "signedIn": true,
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "shell": {
+        "selector": "div:has(> div > div > [data-test=home-nav])"
+      },
+      "nav.item": {
+        "selector": "[data-test=shop-nav] > span",
+        "ink": ":scope > span:last-child",
+        "skip": ["borderRadius"]
+      },
+      "nav.item.active": {
+        "selector": "[data-test=home-nav] > span",
+        "ink": ":scope > span:last-child"
+      },
+      "tooltip": {
+        "selector": "[data-test=skill-path-tooltip-unit-test] > div",
+        "skip": ["color"]
+      },
+      "menu": {
+        "selector": "[data-test=more-nav] div[style*=fixed] > div",
+        "before": [
+          {
+            "hover": "[data-test=more-nav]"
+          },
+          {
+            "wait": "[data-test=settings-button]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": "[data-test=settings-button]",
+        "ink": ":scope > span",
+        "before": [
+          {
+            "hover": "[data-test=more-nav]"
+          },
+          {
+            "wait": "[data-test=settings-button]"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.duolingo.com/settings/preferences": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "switch.on": {
+        "selector": "[data-test=enable-speaker] > span",
+        "skip": ["backgroundColor"]
+      },
+      "select.trigger": {
+        "selector": "div:has(> [data-test=dark-mode])",
+        "box": "::before",
+        "ink": ":scope > span"
+      },
+      "field.label": {
+        "selector": "li:has([data-test=dark-mode]) span[id]"
+      }
+    }
+  },
+  "https://www.duolingo.com/profile/<id>": {
+    "signedIn": true,
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "tab": {
+        "selector": "li:has([data-test=friend-followers-list]) > span",
+        "ink": "[data-test]",
+        "skip": ["paddingInline", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "li:has([data-test=friend-following-list]) > span",
+        "ink": "[data-test]",
+        "skip": ["paddingInline", "borderRadius", "edge"]
+      }
+    }
+  },
+  "https://www.duolingo.com/shop": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "card": {
+        "selector": "[class*=_2cnFr]"
+      },
+      "badge": {
+        "selector": "li:has(> [data-test=purchase-icon]) > div > div:nth-child(2)"
+      },
+      "text.muted": {
+        "selector": "li:has(> [data-test=purchase-icon]) > p"
       }
     }
   }
