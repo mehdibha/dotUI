@@ -116,6 +116,7 @@ export const vercel = definePreset({
     // Tabs and sidebar items stay 400 at rest and when current.
     // Stand-in: Geist's sidebar rows are 36px; ours 32px.
     navWeight: "regular",
+    // Dashboard links are blue with no underline; only links inside notes have one.
     linkUnderline: "hover",
 
     // Feedback
@@ -126,8 +127,9 @@ export const vercel = definePreset({
     spinnerStyle: "blades",
     // Stand-in: Geist's bar is 10px with a rounded fill end; ours 8px, cut square.
     progressTrack: "thick",
-    // Stand-in: badges stay 20px; Geist's are 24px with 12px padding, and its
-    // gray badge is solid #4d4d4d with white text.
+    // Dashboard badges are the subtle kind: a gray or blue tint with colored
+    // text. Stand-in: ours are 20px; Geist's are 24px with 12px padding.
+    badgeStyle: "soft",
 
     // Data display
     // Stand-in: Geist keys are 400 on a filled plate; ours 500, clear.

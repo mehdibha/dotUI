@@ -202,11 +202,12 @@
   "https://vercel.com/geist/badge": {
     "parts": {
       "badge": {
-        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex"
+        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
+        "nth": 1
       },
       "badge.accent": {
         "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
-        "nth": 2
+        "nth": 3
       }
     }
   },
@@ -277,6 +278,14 @@
       "nav.item.active": {
         "selector": "nav a[data-sidebar-link-key][data-active=true]",
         "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://vercel.com/<team>/<project>/settings/environment-variables": {
+    "signedIn": true,
+    "parts": {
+      "link": {
+        "selector": "main p.text-copy-14 > a[href^='/docs/']"
       }
     }
   }

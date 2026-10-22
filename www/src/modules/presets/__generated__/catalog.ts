@@ -833,7 +833,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				accordion: { motion: "expand", layout: "divided", marker: "trailing-chevron" },
 				alert: { style: "outline" },
 				avatar: { shape: "circle", fallback: "neutral" },
-				badge: { style: "solid", case: "sentence" },
+				badge: { style: "soft", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
 					style: "flat",
@@ -902,7 +902,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					weight: "regular",
 					case: "sentence",
 				},
-				"tag-group": { style: "solid" },
+				"tag-group": { style: "soft" },
 				toast: { motion: "slide", surface: "surface", status: "bold" },
 				"toggle-button": {
 					style: "flat",
