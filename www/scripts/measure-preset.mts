@@ -148,11 +148,16 @@ const readTargets = async (): Promise<Record<string, Target>> => {
 
 const stepped = (target: Target) => target.focus || target.before
 
-/** What a page writes for its parts (see `ownedProps`): also applied on
- *  `--merge`, to a snippet result. */
+/** What a page writes for its parts (see `ownedProps`), and only its parts:
+ *  also applied on `--merge`, to a snippet result that may carry others. */
 function owned(measures: Measures, targets: Record<string, Target>) {
-  for (const [part, target] of Object.entries(targets)) {
-    const measure = measures[part]
+  for (const [part, measure] of Object.entries(measures)) {
+    const target = targets[part]
+    if (!target) {
+      console.warn(`${part}: not a part of this page, dropped`)
+      delete measures[part]
+      continue
+    }
     if (!measure) continue
     const keep = ownedProps(part, target)
     for (const prop of Object.keys(measure) as Prop[])
@@ -508,6 +513,20 @@ if (args.pack && args.merge) {
 
 if (args.pack) {
   const pack: Pack = await readJson(packFile(args.pack))
+  // tokens.json keeps one value per part and mode, so of two pages that
+  // measure a part in the same mode, the one measured last wins.
+  const pages = new Map<string, string[]>()
+  for (const [url, page] of Object.entries(pack))
+    for (const mode of page.mode ? [page.mode] : ["light", "dark"])
+      for (const part of Object.keys(page.parts)) {
+        const key = `${part} (${mode})`
+        pages.set(key, [...(pages.get(key) ?? []), url])
+      }
+  for (const [key, urls] of pages)
+    if (urls.length > 1)
+      console.warn(
+        `${key} is on ${urls.join(" and ")}: list it on one page per mode, or the last one measured wins`,
+      )
   const folder = pathToFileURL(`${resolve(REFS, args.pack)}/`)
   const address = (key: string) => new URL(key, folder).href
   const jobs = Object.entries(pack)
