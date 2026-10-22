@@ -61,7 +61,8 @@ export const stripe = definePreset({
 
     // States
     // 3px past the 1px edge, at 36%. Stand-in: the ring is the brand, Sail's is
-    // sky blue on buttons (rgba(1,150,237,.36)).
+    // sky blue (rgba(1,150,237,.36)) on buttons and fields, and focused fields
+    // keep their slate edge.
     focusStyle: "halo",
     focusStrength: "faint",
     focusWidth: 3,

@@ -9,54 +9,15 @@
       "button.secondary": {
         "selector": "[data-testid=stripe-app-example-renderer] a",
         "text": "Secondary"
-      },
-      "button.focus": {
-        "selector": "[data-testid=stripe-app-example-renderer] a",
-        "text": "Primary",
-        "focus": true
       }
     }
   },
   "https://docs.stripe.com/stripe-apps/components/textfield": {
     "mode": "light",
     "parts": {
-      "input": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=text]"
-      },
       "field.label": {
         "selector": "[data-testid=stripe-app-example-renderer] label",
         "text": "Business name"
-      }
-    }
-  },
-  "https://docs.stripe.com/stripe-apps/components/select": {
-    "mode": "light",
-    "parts": {
-      "select.trigger": {
-        "selector": "[data-testid=stripe-app-example-renderer] select"
-      }
-    }
-  },
-  "https://docs.stripe.com/stripe-apps/components/checkbox": {
-    "mode": "light",
-    "parts": {
-      "checkbox": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:not(:checked)"
-      },
-      "checkbox.checked": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=checkbox]:checked"
-      }
-    }
-  },
-  "https://docs.stripe.com/stripe-apps/components/switch": {
-    "mode": "light",
-    "parts": {
-      "switch.off": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:not(:checked)"
-      },
-      "switch.on": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[role=switch]:checked",
-        "skip": ["edge"]
       }
     }
   },
@@ -66,15 +27,6 @@
       "badge": {
         "selector": "[data-testid=stripe-app-example-renderer] span",
         "text": "Neutral"
-      }
-    }
-  },
-  "https://dashboard.stripe.com/login": {
-    "mode": "light",
-    "parts": {
-      "input.focus": {
-        "selector": "input[type=email]",
-        "focus": true
       }
     }
   },
@@ -111,24 +63,6 @@
           }
         ],
         "skip": ["height"]
-      }
-    }
-  },
-  "https://docs.stripe.com/stripe-apps/components/radio": {
-    "mode": "light",
-    "parts": {
-      "radio": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=radio]:not(:checked):not(:disabled)"
-      },
-      "radio.checked": {
-        "selector": "[data-testid=stripe-app-example-renderer] input[type=radio]:checked:not(:disabled)",
-        "before": [
-          {
-            "click": "[data-testid=stripe-app-example-renderer] label::-p-text(This is a Radio.)"
-          }
-        ],
-        "box": "::before",
-        "skip": ["edge"]
       }
     }
   },
@@ -204,14 +138,90 @@
       }
     }
   },
-  "https://dashboard.stripe.com/test/settings/communication-preferences": {
+  "https://dashboard.stripe.com/test/settings/billing/invoices/general": {
     "signedIn": true,
+    "settle": 6000,
     "parts": {
       "tab": {
-        "selector": "main [role=tab]:not([aria-selected=true])"
+        "selector": "main [role=tab][aria-selected=false]"
       },
       "tab.selected": {
         "selector": "main [role=tab][aria-selected=true]"
+      },
+      "radio": {
+        "selector": "main input[type=radio]:not(:checked):not(:disabled)"
+      },
+      "radio.checked": {
+        "selector": "main input[type=radio]:checked:not(:disabled)",
+        "box": "::before",
+        "skip": ["edge"]
+      },
+      "switch.on": {
+        "selector": "main input[role=switch]:checked:not(:disabled)",
+        "skip": ["edge"]
+      },
+      "input.focus": {
+        "selector": "main input[name=days_until_due]",
+        "focus": true
+      },
+      "button.focus": {
+        "selector": "main a[role=button][aria-label=Edit]",
+        "focus": true,
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/settings/billing/invoices/general#payment-page": {
+    "signedIn": true,
+    "settle": 6000,
+    "steps": [
+      {
+        "press": "PageDown"
+      }
+    ],
+    "parts": {
+      "input": {
+        "selector": "main input[name=days_until_due]"
+      },
+      "select.trigger": {
+        "selector": "[data-testid=InvoiceSettings-itemPricesSelect]"
+      },
+      "checkbox.checked": {
+        "selector": "main input.sail-checkbox:checked:not(:disabled)"
+      },
+      "switch.off": {
+        "selector": "main input[role=switch]:not(:checked):not(:disabled)"
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/customers": {
+    "signedIn": true,
+    "settle": 4000,
+    "parts": {
+      "dialog": {
+        "selector": ".__sail-layer-containers [role=alertdialog]",
+        "before": [
+          {
+            "click": "[data-testid=listview-add-customer-button]"
+          },
+          {
+            "wait": ".__sail-layer-containers [role=alertdialog]"
+          }
+        ]
+      },
+      "checkbox": {
+        "selector": ".__sail-layer-containers [role=alertdialog] input.sail-checkbox:not(:checked):not(:disabled)",
+        "before": [
+          {
+            "click": "[data-testid=listview-add-customer-button]"
+          },
+          {
+            "wait": ".__sail-layer-containers [role=alertdialog]"
+          },
+          {
+            "click": ".__sail-layer-containers [role=alertdialog] a[role=button]::-p-text(Shipping information)"
+          }
+        ]
       }
     }
   }
