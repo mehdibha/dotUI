@@ -90,6 +90,8 @@ export const airbnb = definePreset({
     switchColor: "neutral",
     checkboxColor: "neutral",
     radioColor: "neutral",
+    // A 2px #222 ring around a #222 dot, on white.
+    radioMark: "ring",
     // A 6px corner on a 22px box; the 16px base's detail rung reads as a circle.
     checkCorner: "sharp",
     // The price range fills in the brand on a 2px track.

@@ -205,5 +205,91 @@
         "text": "Learn more"
       }
     }
+  },
+  "https://www.airbnb.com/account-settings": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "heading.1": {
+        "selector": "h1 > span",
+        "skip": ["fontSize"]
+      },
+      "badge.accent": {
+        "selector": "a[href='/account-settings/preferences'] span > div"
+      },
+      "nav.item": {
+        "selector": "a[href='/account-settings/login-and-security'] > div > div",
+        "skip": ["borderRadius"]
+      },
+      "nav.item.active": {
+        "selector": "div:has(> a[aria-current=page][href^='/account-settings'])",
+        "ink": "a > div > div",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://www.airbnb.com/account-settings/privacy-and-sharing": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "heading.2": {
+        "selector": "h3",
+        "skip": ["fontSize"]
+      },
+      "switch.on": {
+        "selector": "[role=switch][aria-checked=true]"
+      },
+      "radio": {
+        "selector": "[role=dialog] input[type=radio]:not(:checked)",
+        "before": [
+          {
+            "click": "button::-p-text(Choose who can see your profile)"
+          },
+          {
+            "wait": "[role=dialog] input[type=radio]"
+          }
+        ]
+      },
+      "radio.checked": {
+        "selector": "[role=dialog] input[type=radio]:checked",
+        "before": [
+          {
+            "click": "button::-p-text(Choose who can see your profile)"
+          },
+          {
+            "wait": "[role=dialog] input[type=radio]"
+          }
+        ],
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://www.airbnb.com/account-settings/notifications": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "switch.off": {
+        "selector": "[role=dialog] [role=switch][aria-checked=false]",
+        "before": [
+          {
+            "click": "button[aria-label='Edit Recognition and achievements']"
+          },
+          {
+            "wait": "[role=dialog] [role=switch]"
+          }
+        ]
+      },
+      "checkbox": {
+        "selector": "span:has(> input[type=checkbox]) > span"
+      }
+    }
   }
 }
