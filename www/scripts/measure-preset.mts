@@ -417,9 +417,12 @@ async function measurePage(
     )
     if (storage)
       await page.evaluateOnNewDocument(
-        `localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)})`,
+        `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
       )
     const load = async () => {
+      // A goto that changes only the hash keeps the document, so a
+      // hash-routed dialog would keep the last part's state.
+      if (page.url() !== "about:blank") await page.goto("about:blank")
       await page.goto(url, { waitUntil: "load", timeout: 60000 })
       // Docs sites keep connections open, so a short quiet spell is enough;
       // apps still hydrate after it.
@@ -491,6 +494,19 @@ async function mergeTokens(
     for (const measure of Object.values(measures ?? {}))
       for (const prop of Object.keys(measure ?? {}))
         if (!PROPS.includes(prop as Prop)) delete measure?.[prop as Prop]
+  const pack: Pack = await readJson(packFile(id))
+  const listed = new Set(
+    Object.values(pack).flatMap((page) => Object.keys(page.parts)),
+  )
+  const unlisted = [
+    ...new Set(
+      [tokens.light, tokens.dark].flatMap((m) => Object.keys(m ?? {})),
+    ),
+  ].filter((part) => !listed.has(part))
+  if (unlisted.length)
+    console.log(
+      `kept, on no page (entered by hand, or renamed: delete the old key): ${unlisted.join(", ")}`,
+    )
   const { fonts, light, dark } = tokens
   await writeFile(
     file,
