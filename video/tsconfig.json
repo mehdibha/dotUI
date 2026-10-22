@@ -5,6 +5,7 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "paths": {
+      "@/dev/tweaker": ["./src/shims/tweaker.ts"],
       "@/*": ["../www/src/*"]
     }
   }
