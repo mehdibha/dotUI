@@ -2,9 +2,6 @@
   "react.html?sheet=actions&theme=light": {
     "mode": "light",
     "parts": {
-      "page": {
-        "selector": "body"
-      },
       "button.primary": {
         "within": "[data-part=button-primary]",
         "selector": "button",
@@ -65,153 +62,24 @@
       }
     }
   },
-  "react.html?sheet=fields&theme=light": {
-    "mode": "light",
-    "parts": {
-      "input": {
-        "within": "[data-part=input]",
-        "selector": ".Polaris-TextField",
-        "box": ".Polaris-TextField__Backdrop",
-        "ink": "input",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
-      },
-      "input.focus": {
-        "selector": "[data-specimen-focus]",
-        "only": ["backgroundColor", "edge", "ring"],
-        "focus": true
-      },
-      "select.trigger": {
-        "within": "[data-part=select]",
-        "selector": ".Polaris-Select",
-        "box": ".Polaris-Select__Backdrop",
-        "ink": ".Polaris-Select__SelectedOption",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
-      },
-      "field.label": {
-        "within": "[data-part=input]",
-        "selector": ".Polaris-Label__Text .Polaris-Text--root"
-      }
-    }
-  },
   "react.html?sheet=selection&theme=light": {
     "mode": "light",
     "parts": {
       "checkbox": {
         "within": "[data-part=checkbox]",
         "selector": ".Polaris-Checkbox__Backdrop"
-      },
-      "checkbox.checked": {
-        "within": "[data-part=checkbox-checked]",
-        "selector": ".Polaris-Checkbox__Backdrop"
-      },
-      "radio": {
-        "within": "[data-part=radio]",
-        "selector": ".Polaris-RadioButton__Backdrop"
-      },
-      "radio.checked": {
-        "within": "[data-part=radio-checked]",
-        "selector": ".Polaris-RadioButton__Backdrop"
       }
     }
   },
   "react.html?sheet=navigation&theme=light": {
     "mode": "light",
     "parts": {
-      "tab": {
-        "within": ".Polaris-Tabs__Wrapper",
-        "selector": ".Polaris-Tabs__Tab:not(.Polaris-Tabs__Tab--active)",
-        "ink": ".Polaris-Text--root",
-        "only": [
-          "color",
-          "borderRadius",
-          "height",
-          "paddingInline",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
-      },
-      "tab.selected": {
-        "within": ".Polaris-Tabs__Wrapper",
-        "selector": ".Polaris-Tabs__Tab--active",
-        "ink": ".Polaris-Text--root",
-        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
-      },
       "link": {
         "within": "[data-part=link]",
         "selector": "a"
       },
-      "shell": {
-        "selector": ".Polaris-Navigation"
-      },
       "panel": {
         "selector": ".Polaris-Frame"
-      },
-      "nav.item": {
-        "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
-        "ink": ".Polaris-Text--root",
-        "skip": ["paddingInline"]
-      },
-      "nav.item.active": {
-        "selector": ".Polaris-Navigation__ItemInnerWrapper--selected",
-        "ink": ".Polaris-Text--root",
-        "skip": ["paddingInline"]
-      }
-    }
-  },
-  "react.html?sheet=menu&theme=light": {
-    "mode": "light",
-    "parts": {
-      "menu": {
-        "selector": ".Polaris-Popover__ContentContainer",
-        "surface": true,
-        "skip": ["color", "boxShadow"]
-      },
-      "menu.item": {
-        "selector": ".Polaris-ActionList__Item",
-        "ink": ".Polaris-Text--root",
-        "skip": ["backgroundColor", "paddingInline"]
-      },
-      "tooltip": {
-        "selector": ".Polaris-Tooltip-TooltipOverlay__Content",
-        "ink": ".Polaris-Text--root",
-        "skip": ["boxShadow"]
-      }
-    }
-  },
-  "react.html?sheet=dialog&theme=light": {
-    "mode": "light",
-    "parts": {
-      "dialog": {
-        "selector": ".Polaris-Modal-Dialog__Modal",
-        "skip": ["color", "boxShadow"]
-      }
-    }
-  },
-  "react.html?sheet=display&theme=light": {
-    "mode": "light",
-    "parts": {
-      "card": {
-        "within": "[data-part=card]",
-        "selector": ".Polaris-ShadowBevel",
-        "box": "::before",
-        "skip": ["backgroundColor", "color"]
       }
     }
   },
@@ -410,9 +278,6 @@
   "web.html": {
     "mode": "light",
     "parts": {
-      "switch.on": {
-        "selector": "[data-part=switch-on] s-switch >>> input"
-      },
       "switch.off": {
         "selector": "[data-part=switch] s-switch >>> input"
       }
@@ -421,20 +286,171 @@
   "https://admin.shopify.com/products": {
     "mode": "light",
     "signedIn": true,
+    "settle": 5000,
     "parts": {
       "page": {
         "selector": "body"
       },
-      "button.primary": {
-        "selector": "button.Polaris-Button--variantPrimary",
-        "ink": ".Polaris-Text--root",
-        "skip": ["letterSpacing"]
+      "shell": {
+        "selector": "#AppFrameNav nav"
       },
-      "button.secondary": {
-        "selector": "button.Polaris-Button--variantSecondary",
+      "nav.item": {
+        "selector": "#AppFrameNav [class*=_ItemInnerWrapper_]:not([class*=_ItemInnerWrapper-selected_])",
         "ink": ".Polaris-Text--root",
-        "skip": ["letterSpacing"]
+        "skip": ["paddingInline"]
       },
+      "nav.item.active": {
+        "selector": "#AppFrameNav [class*=_ItemInnerWrapper-selected_]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["paddingInline"]
+      },
+      "card": {
+        "selector": "s-internal-section >>> section"
+      }
+    }
+  },
+  "https://admin.shopify.com/products/new": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 6000,
+    "parts": {
+      "input": {
+        "selector": "s-internal-text-field[name=title] >>> .input-wrapper",
+        "ink": "input",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "input.focus": {
+        "selector": "s-internal-text-field[name=title] >>> .input-wrapper",
+        "ink": "input",
+        "focus": true,
+        "only": ["backgroundColor", "edge", "ring"]
+      },
+      "field.label": {
+        "selector": "s-internal-text-field[name=title] >>> label .label-content"
+      },
+      "select.trigger": {
+        "selector": "s-internal-single-picker-field[label=Status] >>> .field-container",
+        "ink": ".content",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "switch.on": {
+        "selector": "s-internal-switch[label='Inventory tracked'] >>> input"
+      },
+      "tooltip": {
+        "selector": "s-internal-tooltip >>> .tooltip:popover-open",
+        "before": [
+          {
+            "hover": "button[aria-label=Bold]"
+          },
+          {
+            "wait": "s-internal-tooltip .tooltip:visible"
+          }
+        ]
+      }
+    }
+  },
+  "https://admin.shopify.com/customers": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "dialog": {
+        "selector": "s-internal-modal >>> dialog[open]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "radio": {
+        "selector": "s-choice-list[label='File format'] >>> input[value=PLAIN_CSV]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "radio.checked": {
+        "selector": "s-choice-list[label='File format'] >>> input[value=EXCEL_CSV]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "s-checkbox[label='Customer tags'] >>> .checkbox",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      }
+    }
+  },
+  "https://admin.shopify.com/analytics": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 6000,
+    "parts": {
+      "menu": {
+        "selector": "s-internal-page >>> s-menu >>> .popover:popover-open",
+        "before": [
+          {
+            "click": "s-internal-page .actions button[aria-label='More actions']"
+          },
+          {
+            "wait": "s-menu [role=menuitem]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "s-internal-page >>> s-menu >>> .popover:popover-open .menu-item",
+        "before": [
+          {
+            "click": "s-internal-page .actions button[aria-label='More actions']"
+          },
+          {
+            "wait": "s-menu [role=menuitem]"
+          }
+        ],
+        "ink": "s-text >>> .text"
+      }
+    }
+  },
+  "https://admin.shopify.com/settings/locations": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
       "tab": {
         "selector": ".Polaris-Tabs__Tab:not(.Polaris-Tabs__Tab--active)",
         "ink": ".Polaris-Text--root",
@@ -452,108 +468,6 @@
         "selector": ".Polaris-Tabs__Tab--active",
         "ink": ".Polaris-Text--root",
         "skip": ["fontFamily", "letterSpacing", "boxShadow"]
-      },
-      "badge": {
-        "selector": ".Polaris-Badge:not([class*=Badge--tone])",
-        "ink": ".Polaris-Text--root",
-        "skip": ["letterSpacing", "boxShadow"]
-      },
-      "shell": {
-        "selector": ".Polaris-Navigation"
-      },
-      "nav.item": {
-        "selector": ".Polaris-Navigation__ItemInnerWrapper:not(.Polaris-Navigation__ItemInnerWrapper--selected)",
-        "ink": ".Polaris-Text--root",
-        "skip": ["paddingInline"]
-      },
-      "nav.item.active": {
-        "selector": ".Polaris-Navigation__ItemInnerWrapper--selected",
-        "ink": ".Polaris-Text--root",
-        "skip": ["paddingInline"]
-      },
-      "card": {
-        "selector": ".Polaris-ShadowBevel",
-        "box": "::before",
-        "skip": ["backgroundColor", "color"]
-      },
-      "menu": {
-        "selector": ".Polaris-Popover__ContentContainer",
-        "surface": true,
-        "skip": ["color", "boxShadow"],
-        "before": [
-          {
-            "click": "button::-p-text(More actions)"
-          }
-        ]
-      },
-      "menu.item": {
-        "selector": ".Polaris-ActionList__Item",
-        "ink": ".Polaris-Text--root",
-        "skip": ["backgroundColor", "paddingInline"],
-        "before": [
-          {
-            "click": "button::-p-text(More actions)"
-          }
-        ]
-      },
-      "dialog": {
-        "selector": ".Polaris-Modal-Dialog__Modal",
-        "skip": ["color", "boxShadow"],
-        "before": [
-          {
-            "click": "button::-p-text(Export)"
-          }
-        ]
-      }
-    }
-  },
-  "https://admin.shopify.com/products/new": {
-    "mode": "light",
-    "signedIn": true,
-    "parts": {
-      "input": {
-        "selector": ".Polaris-TextField",
-        "box": ".Polaris-TextField__Backdrop",
-        "ink": "input",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
-      },
-      "input.focus": {
-        "selector": ".Polaris-TextField",
-        "box": ".Polaris-TextField__Backdrop",
-        "ink": "input",
-        "focus": true,
-        "only": ["backgroundColor", "edge", "ring"]
-      },
-      "select.trigger": {
-        "selector": ".Polaris-Select",
-        "box": ".Polaris-Select__Backdrop",
-        "ink": ".Polaris-Select__SelectedOption",
-        "only": [
-          "backgroundColor",
-          "color",
-          "borderRadius",
-          "height",
-          "fontSize",
-          "fontWeight",
-          "edge"
-        ]
-      },
-      "field.label": {
-        "selector": ".Polaris-Label__Text .Polaris-Text--root"
-      },
-      "checkbox": {
-        "selector": ".Polaris-Checkbox__Input:not(:checked) ~ .Polaris-Checkbox__Backdrop"
-      },
-      "checkbox.checked": {
-        "selector": ".Polaris-Checkbox__Input:checked ~ .Polaris-Checkbox__Backdrop"
       }
     }
   }

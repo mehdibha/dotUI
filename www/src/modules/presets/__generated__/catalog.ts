@@ -1742,7 +1742,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					highlight: "neutral",
 					inset: "inset",
 					selected: "tint",
-					rows: "step",
+					rows: "match",
 					labels: "sentence",
 				},
 				loader: { style: "ring" },
@@ -1751,7 +1751,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					highlight: "neutral",
 					inset: "inset",
 					selected: "tint",
-					rows: "step",
+					rows: "match",
 					labels: "sentence",
 				},
 				modal: { position: "center", motion: "rise", mobile: "sheet" },
@@ -1818,14 +1818,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-field": "var(--radius-lg)",
 				"--studio-radius-container": "var(--radius-xl)",
 				"--studio-radius-inline-item": "var(--radius-lg)",
-				"--studio-card-stroke": "0px",
-				"--studio-overlay-stroke": "0px",
-				"--card-border": "transparent",
-				"--overlay-border": "transparent",
-				"--shadow-card":
-					"inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-				"--shadow-popover":
-					"inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+				"--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
 				"--color-card": "light-dark(oklch(1 0 0), var(--neutral-50))",
 				"--color-popover": "light-dark(oklch(1 0 0), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
 				"--color-sidebar":

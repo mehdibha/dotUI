@@ -56,8 +56,10 @@ export const polaris = definePreset({
     density: "compact",
 
     // Surfaces
-    // White cards on the gray page, rimmed by ShadowBevel instead of a border.
+    // White cards on the gray page. The Admin rims cards and overlays with a
+    // 1px ring (#e2e2e2 over the page) under soft shadows, not a bevel.
     surfaceLayers: "grouped",
+    surfaceEdge: "line",
     // The #ebebeb sidebar around the admin's page.
     shellTone: "recessed",
 
@@ -94,7 +96,8 @@ export const polaris = definePreset({
     // Menus & popovers
     menuSelectedRow: "tint",
     tooltipStyle: "surface",
-    menuRows: "step",
+    // 28px rows, as tall as buttons.
+    menuRows: "match",
     mobilePickers: "anchored",
 
     // Dialogs
@@ -106,7 +109,7 @@ export const polaris = definePreset({
     // Navigation
     tabStyle: "pill",
     navMarker: "surface",
-    // Tabs stay 550; sidebar items step 550 → 650 when current.
+    // Tabs stay 550; sidebar items step 550 → 600 when current.
     navItemWeight: "medium-semibold",
     linkUnderline: "always",
 
