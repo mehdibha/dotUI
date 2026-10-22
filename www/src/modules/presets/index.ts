@@ -3,6 +3,7 @@ import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
 import { carbon } from "./carbon"
+import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
@@ -22,6 +23,7 @@ import { vercel } from "./vercel"
 export const PRESETS: Preset[] = [
   origin,
   claude,
+  chatgpt,
   supabase,
   stripe,
   linear,

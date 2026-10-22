@@ -1,0 +1,314 @@
+{
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-input--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-input--base&globals=theme:dark",
+    "parts": {
+      "input": {
+        "selector": "[class*=_Container_][data-variant=outline]",
+        "ink": "input",
+        "skip": ["paddingInline", "backgroundColor"]
+      },
+      "input.focus": {
+        "selector": "[class*=_Container_][data-variant=outline]",
+        "focus": true
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-slider--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-slider--base&globals=theme:dark",
+    "parts": {
+      "field.label": {
+        "selector": "[class*=_SliderLabel_] label"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:dark",
+    "parts": {
+      "checkbox": {
+        "selector": "button[role=checkbox]",
+        "skip": ["backgroundColor"]
+      },
+      "checkbox.checked": {
+        "selector": "button[role=checkbox]",
+        "before": [
+          {
+            "click": "button[role=checkbox]"
+          }
+        ]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:dark",
+    "parts": {
+      "radio": {
+        "selector": "button[role=radio][aria-checked=false]",
+        "skip": ["backgroundColor"]
+      },
+      "radio.checked": {
+        "selector": "button[role=radio][aria-checked=true] [class*=_RadioIndicator_]",
+        "box": "::before"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-badge--colors&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-badge--colors&globals=theme:dark",
+    "parts": {
+      "badge": {
+        "selector": "[data-color=secondary][data-variant=soft][data-size=md]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-textlink--primary&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-textlink--primary&globals=theme:dark",
+    "parts": {
+      "link": {
+        "selector": "a[data-primary]"
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-datepicker--base&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-datepicker--base&globals=theme:dark",
+    "parts": {
+      "calendar.day": {
+        "selector": "[class*=_InteractiveDay_]:not(:has([class*=_TodayDot_]))",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "calendar.today": {
+        "selector": "[class*=_InteractiveDay_]:has([class*=_TodayDot_])",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "calendar.selected": {
+        "selector": "[class*=_Day_][data-is-selected] [class*=_InteractiveDay_]",
+        "before": [
+          {
+            "click": "[aria-haspopup=dialog]"
+          },
+          {
+            "click": "[class*=_InteractiveDay_]::-p-text(15)"
+          },
+          {
+            "wait": "[aria-haspopup=dialog][data-selected=true]"
+          },
+          {
+            "click": "[aria-haspopup=dialog]"
+          },
+          {
+            "wait": "[data-is-selected]"
+          }
+        ]
+      }
+    }
+  },
+  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--sizes&globals=theme:light": {
+    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--sizes&globals=theme:dark",
+    "parts": {
+      "heading.2": {
+        "selector": "h2.heading-xl",
+        "skip": ["fontSize"]
+      }
+    }
+  },
+  "https://chatgpt.com/": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "shell": {
+        "selector": "aside.app-shell-left-panel"
+      },
+      "nav.item": {
+        "selector": "#app-shell-sidebar nav button.sidebar-item:not([aria-current])",
+        "text": "Tasks",
+        "ink": ".text-fade-truncate"
+      },
+      "nav.item.active": {
+        "selector": "#app-shell-sidebar nav button.sidebar-item[aria-current=page]",
+        "ink": ".text-fade-truncate"
+      },
+      "button.icon": {
+        "selector": "form button[aria-label=Dictate]",
+        "skip": ["backgroundColor"]
+      },
+      "button.quiet": {
+        "selector": "header button",
+        "text": "Upgrade",
+        "skip": ["color"]
+      },
+      "tooltip": {
+        "selector": "[role=tooltip][class*=Tooltip-]",
+        "before": [
+          {
+            "hover": "[data-sidebar-navigation-root] button[data-app-shell-sidebar-trigger]"
+          },
+          {
+            "wait": "[role=tooltip][class*=Tooltip-]"
+          }
+        ]
+      },
+      "kbd": {
+        "selector": "[role=tooltip][class*=Tooltip-] kbd",
+        "before": [
+          {
+            "hover": "[data-sidebar-navigation-root] button[data-app-shell-sidebar-trigger]"
+          },
+          {
+            "wait": "[role=tooltip][class*=Tooltip-] kbd"
+          }
+        ],
+        "skip": ["backgroundColor", "color"]
+      },
+      "menu": {
+        "selector": "[role=menu][data-radix-menu-content]",
+        "before": [
+          {
+            "click": "button[aria-label=\"Filter chats and work\"]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitemradio][aria-checked=false]",
+        "before": [
+          {
+            "click": "button[aria-label=\"Filter chats and work\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://chatgpt.com/#shortcuts": {
+    "signedIn": true,
+    "settle": 3500,
+    "steps": [
+      {
+        "press": "Meta+/"
+      },
+      {
+        "wait": "[role=dialog]"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog].codex-dialog"
+      },
+      "heading.4": {
+        "selector": "[role=dialog] h2, [role=dialog] [id][class*=font-semibold]"
+      }
+    }
+  },
+  "https://chatgpt.com/gpts": {
+    "signedIn": true,
+    "settle": 4000,
+    "steps": [
+      {
+        "wait": "main [role=tablist] [role=tab]"
+      },
+      {
+        "wait": "main [role=button][class*=rounded-2xl]"
+      }
+    ],
+    "parts": {
+      "tab": {
+        "selector": "main [role=tablist] [role=tab][aria-selected=false]"
+      },
+      "tab.selected": {
+        "selector": "main [role=tablist] [role=tab][aria-selected=true]"
+      },
+      "alert": {
+        "selector": "main aside"
+      },
+      "heading.3": {
+        "selector": "main h1, main h2"
+      }
+    }
+  },
+  "https://chatgpt.com/#pricing": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "button.primary": {
+        "selector": "[data-testid=go-pricing-modal-column-top-half] button",
+        "skip": ["height", "paddingInline", "edge"]
+      },
+      "badge.accent": {
+        "selector": "[data-testid=pricing-column-badge]"
+      },
+      "heading.1": {
+        "selector": "[role=dialog] h2:not(.sr-only)"
+      }
+    }
+  },
+  "https://chatgpt.com/settings/general-settings": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "card": {
+        "selector": "main section > div"
+      },
+      "select.trigger": {
+        "selector": "main button[data-slot=popover-trigger]"
+      },
+      "text": {
+        "selector": "main section .text-default",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "text.muted": {
+        "selector": "main section .text-secondary",
+        "skip": ["fontSize"]
+      }
+    }
+  },
+  "https://chatgpt.com/settings/data-controls": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "switch.on": {
+        "selector": "main [role=switch][aria-checked=true] > span"
+      },
+      "button.secondary": {
+        "selector": "main button[aria-label=\"Manage shared links\"]"
+      }
+    }
+  },
+  "https://chatgpt.com/settings/appearance": {
+    "signedIn": true,
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "main button::-p-text(Advanced)"
+      },
+      {
+        "wait": "main [role=switch]"
+      }
+    ],
+    "parts": {
+      "segmented": {
+        "selector": "main [role=group]:has(> button[aria-label=On])"
+      },
+      "segmented.item": {
+        "selector": "main [role=group]:has(> button[aria-label=On]) > button[aria-pressed=false]"
+      },
+      "segmented.selected": {
+        "selector": "main [role=group]:has(> button[aria-label=On]) > button[aria-pressed=true]"
+      },
+      "switch.off": {
+        "selector": "main [role=switch][aria-checked=false] > span"
+      }
+    }
+  }
+}
