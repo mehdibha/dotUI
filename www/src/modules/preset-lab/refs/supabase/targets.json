@@ -40,23 +40,9 @@
   },
   "https://supabase.com/design-system/docs/components/checkbox": {
     "parts": {
-      "checkbox": {
-        "selector": ".preview button[role=checkbox][data-state=unchecked]",
-        "skip": ["borderRadius"]
-      },
       "checkbox.checked": {
         "selector": ".preview button[role=checkbox][data-state=checked]",
         "skip": ["edge", "borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/switch": {
-    "parts": {
-      "switch.off": {
-        "selector": ".preview button[role=switch][data-state=unchecked]"
-      },
-      "switch.on": {
-        "selector": ".preview button[role=switch][data-state=checked]"
       }
     }
   },
@@ -77,94 +63,6 @@
       "panel": {
         "selector": ".preview main",
         "skip": ["borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/dropdown-menu": {
-    "parts": {
-      "menu": {
-        "selector": "[role=menu]",
-        "surface": true,
-        "before": [
-          {
-            "click": ".preview button::-p-text(Open)"
-          }
-        ],
-        "skip": ["color", "borderRadius"]
-      },
-      "menu.item": {
-        "selector": "[role=menu] [role=menuitem]",
-        "nth": 1,
-        "before": [
-          {
-            "click": ".preview button::-p-text(Open)"
-          }
-        ],
-        "skip": ["paddingInline", "borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/tooltip": {
-    "parts": {
-      "tooltip": {
-        "selector": "[data-radix-popper-content-wrapper] > *",
-        "surface": true,
-        "before": [
-          {
-            "hover": ".preview button::-p-text(Hover)"
-          }
-        ],
-        "skip": ["borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/dialog": {
-    "parts": {
-      "dialog": {
-        "selector": "[role=dialog]",
-        "surface": true,
-        "before": [
-          {
-            "click": ".preview button::-p-text(Edit profile)"
-          }
-        ],
-        "skip": ["color", "borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/commandmenu": {
-    "parts": {
-      "command": {
-        "selector": "[role=dialog]",
-        "surface": true,
-        "before": [
-          {
-            "click": ".preview button::-p-text(Open command menu)"
-          }
-        ],
-        "skip": ["color", "borderRadius"]
-      },
-      "command.item": {
-        "selector": "[role=dialog] [role=option]",
-        "nth": 1,
-        "before": [
-          {
-            "click": ".preview button::-p-text(Open command menu)"
-          }
-        ],
-        "skip": ["paddingInline", "borderRadius"]
-      }
-    }
-  },
-  "https://supabase.com/design-system/docs/components/badge": {
-    "parts": {
-      "badge": {
-        "selector": ".preview > div",
-        "text": "Default"
-      },
-      "badge.accent": {
-        "selector": ".preview div",
-        "text": "Success"
       }
     }
   },
@@ -228,14 +126,6 @@
       }
     }
   },
-  "https://supabase.com/design-system/docs/components/alert": {
-    "parts": {
-      "alert": {
-        "selector": ".preview [role=alert]",
-        "skip": ["borderRadius"]
-      }
-    }
-  },
   "https://supabase.com/design-system/docs/components/calendar": {
     "parts": {
       "calendar.day": {
@@ -267,6 +157,7 @@
         "click": "a[href^=\"/dashboard/org/\"]"
       }
     ],
+    "settle": 4000,
     "parts": {
       "page": {
         "selector": "body"
@@ -274,11 +165,26 @@
       "button.primary": {
         "selector": "a",
         "text": "New project"
+      },
+      "badge": {
+        "selector": "header div[class*=rounded-full][class*=uppercase]"
+      },
+      "checkbox": {
+        "selector": "[data-radix-popper-content-wrapper] button[role=checkbox][data-state=unchecked]",
+        "before": [
+          {
+            "click": "main button[aria-haspopup=dialog]::-p-text(Status)"
+          },
+          {
+            "wait": "[data-radix-popper-content-wrapper] button[role=checkbox]"
+          }
+        ]
       }
     }
   },
   "https://supabase.com/dashboard/project/_/settings/general": {
     "signedIn": true,
+    "settle": 4500,
     "parts": {
       "shell": {
         "selector": "nav[aria-label=Sidebar]",
@@ -307,6 +213,134 @@
         "selector": "label",
         "text": "Project name",
         "surface": true
+      },
+      "kbd": {
+        "selector": "header .command-shortcut"
+      },
+      "badge.accent": {
+        "selector": "main button > div[class*=rounded-full][class*=uppercase]"
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/settings/general#command": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "command": {
+        "selector": "[role=dialog]:has([cmdk-root])",
+        "surface": true,
+        "before": [
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] [cmdk-item]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "command.item": {
+        "selector": "[role=dialog] [cmdk-item]",
+        "nth": 1,
+        "before": [
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] [cmdk-item]"
+          }
+        ],
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/settings/general#project-switcher": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "menu": {
+        "selector": "[data-radix-popper-content-wrapper] > [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "button[aria-label='Show organization projects']"
+          },
+          {
+            "wait": "[data-radix-popper-content-wrapper] [cmdk-item]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": "[data-radix-popper-content-wrapper] [cmdk-item][data-selected=false]",
+        "before": [
+          {
+            "click": "button[aria-label='Show organization projects']"
+          },
+          {
+            "wait": "[data-radix-popper-content-wrapper] [cmdk-item]"
+          }
+        ],
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/settings/general#transfer-dialog": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "main button[aria-haspopup=dialog]::-p-text(Transfer project)"
+          },
+          {
+            "wait": "[role=dialog]"
+          }
+        ],
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/settings/general#rail-tooltip": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "tooltip": {
+        "selector": "[data-radix-popper-content-wrapper] > div:has(> [role=tooltip])",
+        "surface": true,
+        "before": [
+          {
+            "hover": "nav:not([aria-label]) a[href$='/editor']"
+          },
+          {
+            "wait": "[role=tooltip]"
+          }
+        ],
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/auth/providers": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "switch.on": {
+        "selector": "main button[role=switch][data-state=checked]"
+      },
+      "switch.off": {
+        "selector": "main button[role=switch][data-state=unchecked]"
+      }
+    }
+  },
+  "https://supabase.com/dashboard/project/_/settings/infrastructure": {
+    "signedIn": true,
+    "settle": 4500,
+    "parts": {
+      "alert": {
+        "selector": "main [role=alert]"
       }
     }
   }
