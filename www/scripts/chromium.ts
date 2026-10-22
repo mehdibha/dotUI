@@ -12,5 +12,11 @@ export const executablePath = (() => {
   const shell = readdirSync(PLAYWRIGHT).find((dir) =>
     dir.startsWith("chromium_headless_shell-"),
   )
-  return shell && `${PLAYWRIGHT}/${shell}/chrome-linux/headless_shell`
+  if (!shell) return undefined
+  return [
+    "chrome-linux/headless_shell",
+    "chrome-headless-shell-linux64/chrome-headless-shell",
+  ]
+    .map((file) => `${PLAYWRIGHT}/${shell}/${file}`)
+    .find(existsSync)
 })()

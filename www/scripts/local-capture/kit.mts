@@ -330,8 +330,8 @@ if (args.crop) {
     if (only && !only.includes(part)) continue
     const left = Math.max(0, Math.floor((x - pad) * scale))
     const top = Math.max(0, Math.floor((y - pad) * scale))
-    const width = Math.min(shot.width - left, Math.ceil((w + 2 * pad) * scale))
-    const height = Math.min(shot.height - top, Math.ceil((h + 2 * pad) * scale))
+    const width = Math.min(shot.width, Math.ceil((x + w + pad) * scale)) - left
+    const height = Math.min(shot.height, Math.ceil((y + h + pad) * scale)) - top
     if (width <= 0 || height <= 0) continue
     const crop = new PNG({ width, height })
     PNG.bitblt(shot, crop, left, top, width, height, 0, 0)
