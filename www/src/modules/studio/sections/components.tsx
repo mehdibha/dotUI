@@ -137,7 +137,12 @@ export const COMPONENTS: Component[] = [
     },
     rows: [
       ["chartPalette", "Palette"],
+      ["chartAxes", "Axes"],
       ["chartGrid", "Gridlines"],
+      ["chartLines", "Lines"],
+      ["chartArea", "Area"],
+      ["chartBars", "Bars"],
+      ["chartLegend", "Legend"],
       ["chartMotion", "Motion"],
     ],
     aliases: ["Charts", "Area chart", "Bar chart", "Line chart", "Pie chart"],

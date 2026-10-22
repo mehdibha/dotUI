@@ -1,5 +1,6 @@
 {
   "pages": [
+    "chart",
     "chart-bar",
     "chart-line",
     "chart-area",

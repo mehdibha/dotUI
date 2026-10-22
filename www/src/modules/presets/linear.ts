@@ -110,5 +110,10 @@ export const linear = definePreset({
     // 26px circles; today is a grey disc (Origin's fill).
     calendarDayShape: "circle",
     calendarWeekdays: "double",
+
+    // Charts
+    chartAxes: "labeled",
+    chartGrid: "dashed",
+    chartBars: "slim",
   },
 })

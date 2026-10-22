@@ -314,9 +314,17 @@ function fromChartTransition(state: Raw): Raw {
   return { ...state, chartMotion: same ? "same" : tempo }
 }
 
+/* Solid gridlines are Lines now, and None is gone: the look draws a grid
+   wherever a chart asks for one. */
+function fromChartGrid(state: Raw): Raw {
+  if (state.chartGrid !== "solid" && state.chartGrid !== "none") return state
+  return { ...state, chartGrid: "lines" }
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
   3: fromSoft,
   4: fromChartTransition,
+  5: fromChartGrid,
 }

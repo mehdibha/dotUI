@@ -3,21 +3,24 @@ import type {
   ChartPoint,
   ChartRendererRenderContext,
   ChartValue,
+  DomChartDefinition,
 } from "@tanstack/charts"
 import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
-import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
-
-export type { ChartAnimate, ChartFocus, ChartTooltipAnchor }
+import type { ChartLook } from "./base"
 
 /**
- * Props every chart family component shares: the interaction and animation
- * behavior, and the host surface — sizing, callbacks, and the HTML overlay.
- * Family props interfaces extend this, so each family's API reference lists
- * them alongside its own options.
- * @ignore no page of its own — it renders inlined into every family reference
+ * Renders a TanStack Charts definition in the design system: the theme, the
+ * axis and grid look, focus, keyboard navigation, the tooltip, and motion.
+ * Anything the definition sets wins.
  */
-export interface ChartFamilyProps {
+export interface ChartProps {
+  /**
+   * What to draw, from `defineChart`. Keep its identity stable — define it at
+   * module scope, or memoize it over the values it captures.
+   */
+  definition: DomChartDefinition<unknown, ChartValue, ChartValue>
+
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
 
@@ -25,38 +28,10 @@ export interface ChartFamilyProps {
   ariaDescription?: string
 
   /**
-   * How pointer and keyboard resolve to points. Group modes highlight every
-   * series at the same position; `nearest` matches a single point.
-   * @default "group-x"
+   * The look the chart fills its gridlines, legend placement and motion from.
+   * @default chartLook
    */
-  focus?: ChartFocus
-
-  /** Pixel radius beyond which the pointer stops matching a point. */
-  maxFocusDistance?: number
-
-  /**
-   * Where the tooltip attaches: to the focused point, to the pointer, or to
-   * the center of the focused group.
-   * @default "group-center"
-   */
-  tooltipAnchor?: ChartTooltipAnchor
-
-  /**
-   * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
-   * but lose their live region, so screen readers get silent stops — keep the
-   * tooltip unless the chart is decorative.
-   * @default true
-   */
-  tooltip?: boolean
-
-  /**
-   * Animation between data states, and the entrance on first client paint:
-   * `false` to disable, a `{ type: "tween" }` with duration and easing, or a
-   * `{ type: "spring" }` with stiffness, damping, and mass. Charts above ~800
-   * points animate off automatically, and reduced motion is always respected.
-   * @default the design system's chart motion ({ type: "spring", stiffness: 170, damping: 26 })
-   */
-  animate?: ChartAnimate
+  look?: ChartLook
 
   /** Chart height in pixels. Without it the chart is 16:9 of its width. */
   height?: number
@@ -83,28 +58,22 @@ export interface ChartFamilyProps {
   idPrefix?: string
 
   /** Called when the focused point changes, by pointer or keyboard. */
-  onFocusChange?: (
-    point: ChartPoint<unknown, ChartValue, number> | null,
-  ) => void
+  onFocusChange?: (point: ChartPoint | null) => void
 
   /** Called when the focused group changes, in the group focus modes. */
-  onFocusGroupChange?: (
-    points: readonly ChartPoint<unknown, ChartValue, number>[],
-  ) => void
+  onFocusGroupChange?: (points: readonly ChartPoint[]) => void
 
   /** Called when a point is activated with Enter, Space, or a click. */
-  onSelect?: (point: ChartPoint<unknown, ChartValue, number> | null) => void
+  onSelect?: (point: ChartPoint | null) => void
 
   /** Called after every paint, with the container, SVG, and scene. */
-  onRender?: (
-    context: ChartRendererRenderContext<unknown, ChartValue, number>,
-  ) => void
+  onRender?: (context: ChartRendererRenderContext) => void
 
   /** Replaces the tooltip body. Receives the default body to wrap or discard. */
   renderTooltipBody?: (
-    context: ChartTooltipBodyRenderContext<unknown, ChartValue, number>,
+    context: ChartTooltipBodyRenderContext,
   ) => React.ReactNode
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
+  /** HTML laid over the chart, ignoring pointer events — a donut's total, a badge. */
   children?: React.ReactNode
 }

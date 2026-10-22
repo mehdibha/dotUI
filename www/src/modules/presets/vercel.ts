@@ -135,5 +135,10 @@ export const vercel = definePreset({
     // Stand-in: Geist keys are 400 on a filled plate; ours 500, clear.
     kbdTreatment: "outline",
     cardFooter: "band",
+
+    // Charts
+    chartAxes: "labeled",
+    chartLines: "straight",
+    chartLegend: "top",
   },
 })

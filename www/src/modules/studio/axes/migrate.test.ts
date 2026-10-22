@@ -131,6 +131,7 @@ const DROPPED_VALUES = [
   "buttonRadius=sharp",
   "calendarDayShape=square",
   "calendarToday=none",
+  "chartGrid=none",
   "chartMotion=stiff",
   "chartMotion=wobbly",
   "checkCorner=circle",
@@ -281,6 +282,17 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       motion: "smooth",
       chartMotion: "standard",
+    })
+  })
+
+  it("reads solid gridlines as Lines and drops None", () => {
+    const v5 = (picks: Record<string, unknown>) =>
+      migrate({ version: 5, ...DEFAULT_STATE, ...picks })
+    expect(v5({ chartGrid: "solid" })).toEqual(DEFAULT_STATE)
+    expect(v5({ chartGrid: "none" })).toEqual(DEFAULT_STATE)
+    expect(v5({ chartGrid: "dashed" })).toEqual({
+      ...DEFAULT_STATE,
+      chartGrid: "dashed",
     })
   })
 

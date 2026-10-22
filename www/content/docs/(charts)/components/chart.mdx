@@ -1,0 +1,154 @@
+---
+title: Chart
+description: Renders any TanStack Charts definition in your design system — colors, axes, tooltip, focus, and motion included.
+---
+
+<Demo name="chart/demos/composed" />
+
+dotUI charts are [TanStack Charts](https://tanstack.com/charts) definitions. You write them with the library's grammar — marks, scales, and channels — and `Chart` renders them in your design system, filling in whatever a definition leaves unset.
+
+There is no second chart vocabulary to learn: what TanStack Charts documents works here, and anything you set wins. Start from an example on the [chart pages](/docs/charts) and change what you need.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart
+```
+
+## Usage
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
+```
+
+Define the chart, then render it:
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+    }),
+  ],
+})
+
+export function Example() {
+  return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
+}
+```
+
+A definition is compared by identity. Define it at module scope, or memoize it over the values it captures — a fresh definition on every render rebuilds the chart instead of animating it:
+
+```tsx
+const chart = useMemo(
+  () => defineChart({ scales, marks: [barY(rows, { x: "month", y: metric })] }),
+  [rows, metric],
+)
+```
+
+## What Chart fills in
+
+`Chart` applies these to every definition. Each one only fills a gap:
+
+- **Theme** — series colors from `--chart-1` through `--chart-8`, muted text, and border-colored gridlines, in light and dark.
+- **Axes** — no domain line and no tick marks, labels clear of the plot. `axis: false` hides an axis.
+- **Gridlines** — `grid: true` draws your design system's gridlines.
+- **Tooltip** — your popover surface, titled by the category with a row per series. A stacked segment reports its own value, and values read the way the axes print them.
+- **Focus** — `group-x`: hovering a position reports every series there. Arrow keys move between positions.
+- **Motion** — marks move between data states, bars and slices enter in sequence, and reduced motion is respected.
+- **Size** — without a `height`, 16:9 of its width; square for charts without x and y scales, like pies, radars, and radial bars.
+
+`withChartLook(definition)` applies the same, to render a definition through another host — an SVG export, or another framework's adapter.
+
+## The look
+
+How charts look is your design system's: the studio writes it into `chartLook` at the top of `chart.tsx`.
+
+```tsx
+export const chartLook: ChartLook = {
+  curve: chartCurves.natural,
+  strokeWidth: 2,
+  areaOpacity: 0.4,
+  barRadius: 4,
+  barMaxThickness: undefined,
+  valueAxis: false,
+  grid: { strokeOpacity: 1 },
+  legend: "bottom",
+  motion: { type: "spring", stiffness: 170, damping: 26 },
+}
+```
+
+`Chart` reads `grid`, `legend`, and `motion` itself. Marks read the rest — the examples pass `chartLook.curve`, `chartLook.barRadius`, and the others to their marks — so editing a value here restyles every chart that does. A chart that sets its own value keeps it.
+
+| Field             | What it sets                                            |
+| ----------------- | ------------------------------------------------------- |
+| `curve`           | How lines and area edges travel between points          |
+| `strokeWidth`     | The width of lines and area edges                       |
+| `areaOpacity`     | How strongly areas are filled                           |
+| `barRadius`       | The corners of bars, radial bars, and heatmap cells     |
+| `barMaxThickness` | The widest a bar gets, in pixels                        |
+| `valueAxis`       | The value axis labels; `false` keeps only the gridlines |
+| `grid`            | The gridlines wherever a scale sets `grid: true`        |
+| `legend`          | Where `chartLegend` sits                                |
+| `motion`          | How marks move between data states; `false` jumps       |
+
+Pass `look` to one `Chart` to render it with another look — `Chart` applies its gridlines, legend placement, and motion.
+
+## Helpers
+
+- `chartColors` — the series colors, `var(--chart-1)` through `var(--chart-8)`.
+- `chartCurves` — `natural`, `monotone`, `step`, and `linear` interpolation for lines and areas.
+- `chartBand` — a band scale with room between and around the bands, for bars.
+- `chartLegend` — the color legend: `color: { legend: chartLegend }`.
+- `chartFades` — a fade toward the baseline per series color. Add them to `gradients` and fill an area with `url(#chart-fade-0)`.
+- `chartSliceTooltip(label, value)` — the tooltip for pies and radial bars, whose points are angles and radii: a row per slice, named and valued from its fields.
+- `chartAngleLabels` — nudges a radar's circumference labels clear of the circle: `angleGrid({ ...chartAngleLabels })`.
+- `polarDecorative(mark)` — paints a mark inside `polar()` without making it a focus stop.
+
+Annotations — labels, target rules, highlights — usually shouldn't be focus stops. Wrap them in `decorative()` from `@tanstack/charts/mark/decorative`, or `polarDecorative()` inside a polar chart, so arrow keys and the tooltip skip them.
+
+## Overlays
+
+`children` render as HTML over the chart, without catching the pointer — a donut's total, a badge, a status:
+
+```tsx
+<Chart definition={chart} ariaLabel="Visitors by browser">
+  <div className="flex h-full items-center justify-center text-3xl font-bold">
+    925
+  </div>
+</Chart>
+```
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- `tooltip: false` in a definition keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
+
+## API Reference
+
+### Chart
+
+<Reference name="chart" />

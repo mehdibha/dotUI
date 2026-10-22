@@ -65,7 +65,7 @@ export const POLAR_FAMILIES = new Set([
 ])
 
 export interface ChartFamily {
-  /** Registry item id, e.g. `chart-bar`. */
+  /** Demo folder, e.g. `chart-bar`. */
   id: string
   /** Family label, e.g. `Bar chart`. */
   name: string

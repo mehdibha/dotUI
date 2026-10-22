@@ -1,11 +1,35 @@
 "use client"
 
-import { createParamValue } from "@/lib/styles"
-import { AreaChart } from "@/registry/ui/chart-area"
-import { BarChart } from "@/registry/ui/chart-bar"
-import { LineChart } from "@/registry/ui/chart-line"
-import { PieChart } from "@/registry/ui/chart-pie"
-import { RadialBarChart } from "@/registry/ui/chart-radial"
+import { useMemo } from "react"
+import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import {
+  pie,
+  polar,
+  radialArc,
+  radialBarAngle,
+  radialGrid,
+} from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsY } from "@tanstack/charts/transform/stack"
+
+import {
+  Chart,
+  chartBand,
+  chartFades,
+  chartLegend,
+  chartSliceTooltip,
+  useChartLook,
+} from "@/registry/ui/chart"
+import type { ChartLook } from "@/registry/ui/chart"
 
 import { Board, BoardSection, useLoop, useReplay } from "./board"
 
@@ -13,13 +37,6 @@ import { Board, BoardSection, useLoop, useReplay } from "./board"
 const CARD =
   "flex-col flex-nowrap items-stretch justify-start p-6 pb-1 max-sm:p-4 max-sm:pb-0"
 const HEIGHT = 200
-
-const useChartMotion = createParamValue({
-  componentName: "chart",
-  paramName: "motion",
-  defaultValue: "spring",
-  values: { spring: "spring", ease: "ease", none: "none" },
-})
 
 const phases = <T,>(first: T[], second: T[]) => [first, second] as const
 
@@ -88,71 +105,225 @@ const LATENCY = phases(
   ],
 )
 
-const BROWSERS = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-}
-
 // Same total in both phases, so the centre label holds while the arcs move.
 const SHARE = phases(
   [
-    { browser: "chrome", visitors: 3400 },
-    { browser: "safari", visitors: 2600 },
-    { browser: "firefox", visitors: 1900 },
-    { browser: "edge", visitors: 1300 },
+    { browser: "Chrome", visitors: 3400 },
+    { browser: "Safari", visitors: 2600 },
+    { browser: "Firefox", visitors: 1900 },
+    { browser: "Edge", visitors: 1300 },
   ],
   [
-    { browser: "chrome", visitors: 2900 },
-    { browser: "safari", visitors: 3100 },
-    { browser: "firefox", visitors: 1500 },
-    { browser: "edge", visitors: 1700 },
+    { browser: "Chrome", visitors: 2900 },
+    { browser: "Safari", visitors: 3100 },
+    { browser: "Firefox", visitors: 1500 },
+    { browser: "Edge", visitors: 1700 },
   ],
 )
 
-const RESOURCES = { storage: "Storage", builds: "Builds", seats: "Seats" }
-
 const USAGE = phases(
   [
-    { resource: "storage", used: 72 },
-    { resource: "builds", used: 41 },
-    { resource: "seats", used: 86 },
+    { resource: "Storage", used: 72 },
+    { resource: "Builds", used: 41 },
+    { resource: "Seats", used: 86 },
   ],
   [
-    { resource: "storage", used: 64 },
-    { resource: "builds", used: 83 },
-    { resource: "seats", used: 52 },
+    { resource: "Storage", used: 64 },
+    { resource: "Builds", used: 83 },
+    { resource: "Seats", used: 52 },
   ],
 )
 
 const TOTAL = SHARE[0].reduce((sum, row) => sum + row.visitors, 0)
 
-const thousands = (value: unknown) =>
+const thousands = (value: ChartValue) =>
   typeof value === "number" && value >= 1000
     ? `${(value / 1000).toFixed(1)}k`
     : String(value)
 
+const DEVICE_KEYS = ["desktop", "mobile", "tablet"] as const
+
+function charts(look: ChartLook, phase: 0 | 1) {
+  const valueAxis = (format: (value: ChartValue) => string) =>
+    look.valueAxis && { ...look.valueAxis, ticks: { format } }
+
+  const visitors = stackRowsY(
+    fold(VISITORS[phase], {
+      fields: DEVICE_KEYS,
+      as: { key: "device", value: "visitors" },
+    }),
+    { x: "month", y: "visitors", z: "device" },
+  )
+  const device = {
+    x: "month",
+    color: (row: (typeof visitors)[number]) => DEVICES[row.device],
+    curve: look.curve,
+  } as const
+
+  const signups = fold(SIGNUPS[phase], {
+    fields: ["free", "pro", "team"],
+    as: { key: "plan", value: "signups" },
+  })
+
+  const latency = fold(LATENCY[phase], {
+    fields: ["p50", "p95", "p99"],
+    as: { key: "percentile", value: "ms" },
+  })
+
+  return {
+    area: defineChart({
+      scales: {
+        x: { scale: scalePoint },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: valueAxis(thousands),
+        },
+      },
+      color: { legend: chartLegend },
+      gradients: chartFades,
+      marks: [
+        // The fade is a decorative copy: the tooltip swatch reads the
+        // interactive area's fill, which must stay the series color.
+        decorative(
+          areaY(visitors, {
+            ...device,
+            y1: "y1",
+            y2: "y2",
+            fill: (row) =>
+              `url(#chart-fade-${DEVICE_KEYS.indexOf(row.device)})`,
+          }),
+        ),
+        areaY(visitors, { ...device, y1: "y1", y2: "y2", fillOpacity: 0 }),
+        decorative(
+          lineY(visitors, {
+            ...device,
+            y: "y2",
+            strokeWidth: look.strokeWidth,
+          }),
+        ),
+      ],
+    }),
+    donut: defineChart({
+      scales: { x: null, y: null },
+      color: { legend: chartLegend },
+      marks: [
+        polar({
+          scales: { angle: null, radius: null },
+          radiusRatio: 0.9,
+          marks: [
+            radialArc(pie(SHARE[phase], { value: "visitors" }), {
+              color: "browser",
+              innerRadius: ({ radius }) => radius * 0.62,
+              stroke: "var(--surface-bg,var(--color-bg))",
+              strokeWidth: 2,
+            }),
+          ],
+        }),
+      ],
+      focus: "nearest",
+      tooltip: chartSliceTooltip("browser", "visitors"),
+    }),
+    bar: defineChart({
+      scales: {
+        x: { scale: chartBand },
+        y: { scale: scaleLinear, nice: true, grid: true, axis: look.valueAxis },
+      },
+      color: { legend: chartLegend },
+      marks: [
+        barY(signups, {
+          x: "month",
+          y: "signups",
+          color: (row) => PLANS[row.plan],
+          layout: group({ padding: 0.15 }),
+          radius: look.barRadius,
+          maxThickness: look.barMaxThickness,
+        }),
+      ],
+    }),
+    line: defineChart({
+      scales: {
+        x: { scale: scalePoint },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: valueAxis((value) => `${String(value)}ms`),
+        },
+      },
+      color: { legend: chartLegend },
+      marks: [
+        lineY(latency, {
+          x: "day",
+          y: "ms",
+          color: (row) => PERCENTILES[row.percentile],
+          curve: look.curve,
+          strokeWidth: look.strokeWidth,
+          points: true,
+        }),
+      ],
+    }),
+    radial: defineChart({
+      scales: { x: null, y: null },
+      color: { legend: chartLegend },
+      marks: [
+        polar({
+          scales: {
+            angle: { scale: scaleLinear().domain([0, 100]) },
+            radius: {
+              scale: () => scaleBand().paddingInner(0.2),
+              range: [({ radius }) => radius * 0.3, ({ radius }) => radius],
+            },
+            // The gridlines step through the whole radius, not the rings.
+            grid: {
+              channel: "radius",
+              scale: scaleLinear().domain([0, 1]),
+              range: [0, ({ radius }) => radius],
+            },
+          },
+          radiusRatio: 0.95,
+          guides: [
+            radialGrid({
+              scale: "grid",
+              strokeDasharray: look.grid.strokeDasharray,
+            }),
+          ],
+          marks: [
+            radialBarAngle(USAGE[phase], {
+              angle: "used",
+              radius: "resource",
+              color: "resource",
+              cornerRadius: look.barRadius,
+            }),
+          ],
+        }),
+      ],
+      focus: "nearest",
+      tooltip: chartSliceTooltip("resource", "used", (value) => `${value}%`),
+    }),
+  }
+}
+
 export default function ChartBoard() {
   const phase = useLoop(useReplay("chartMotion").running, 1600) ? 1 : 0
-  // A new transition replays every chart's entrance.
-  const motion = useChartMotion()
+  const look = useChartLook()
+  const { area, donut, bar, line, radial } = useMemo(
+    () => charts(look, phase),
+    [look, phase],
+  )
 
   return (
     <Board id="chart">
-      <div key={motion} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
+      {/* A new transition replays every chart's entrance. */}
+      <div
+        key={JSON.stringify(look.motion)}
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-12"
+      >
         <div className="min-w-0 sm:col-span-2 lg:col-span-8">
           <BoardSection title="Area" className={CARD}>
-            <AreaChart
-              data={VISITORS[phase]}
-              x="month"
-              y={["desktop", "mobile", "tablet"]}
-              labels={DEVICES}
-              stacked
-              fill="gradient"
-              axes
-              formatY={thousands}
-              legend
+            <Chart
+              definition={area}
               height={HEIGHT}
               ariaLabel="Visitors by device, January through June"
             />
@@ -160,13 +331,8 @@ export default function ChartBoard() {
         </div>
         <div className="min-w-0 lg:col-span-4">
           <BoardSection title="Donut" className={CARD}>
-            <PieChart
-              data={SHARE[phase]}
-              value="visitors"
-              name="browser"
-              labels={BROWSERS}
-              innerRadius={0.62}
-              legend
+            <Chart
+              definition={donut}
               height={HEIGHT}
               ariaLabel="Visitors by browser"
             >
@@ -176,18 +342,13 @@ export default function ChartBoard() {
                 </span>
                 <span className="text-xs text-fg-muted">Visitors</span>
               </div>
-            </PieChart>
+            </Chart>
           </BoardSection>
         </div>
         <div className="min-w-0 lg:col-span-4">
           <BoardSection title="Bar" className={CARD}>
-            <BarChart
-              data={SIGNUPS[phase]}
-              x="month"
-              y={["free", "pro", "team"]}
-              labels={PLANS}
-              axes
-              legend
+            <Chart
+              definition={bar}
               height={HEIGHT}
               ariaLabel="Signups by plan, January through June"
             />
@@ -195,16 +356,8 @@ export default function ChartBoard() {
         </div>
         <div className="min-w-0 lg:col-span-4">
           <BoardSection title="Line" className={CARD}>
-            <LineChart
-              data={LATENCY[phase]}
-              x="day"
-              y={["p50", "p95", "p99"]}
-              labels={PERCENTILES}
-              curve="monotone"
-              points
-              axes
-              formatY={(value) => `${String(value)}ms`}
-              legend
+            <Chart
+              definition={line}
               height={HEIGHT}
               ariaLabel="API response time percentiles this week, in milliseconds"
             />
@@ -212,16 +365,8 @@ export default function ChartBoard() {
         </div>
         <div className="min-w-0 lg:col-span-4">
           <BoardSection title="Radial" className={CARD}>
-            <RadialBarChart
-              data={USAGE[phase]}
-              value="used"
-              name="resource"
-              labels={RESOURCES}
-              innerRadius={0.3}
-              radiusRatio={0.95}
-              max={100}
-              grid
-              legend
+            <Chart
+              definition={radial}
               height={HEIGHT}
               ariaLabel="Plan usage by resource, as a share of the quota"
             />

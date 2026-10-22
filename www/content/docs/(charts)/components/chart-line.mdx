@@ -5,129 +5,176 @@ description: Draws one line per series across an ordered domain, themed by your 
 
 <Demo name="chart-line/demos/multiple" />
 
-`LineChart` answers how a value changes across an ordered domain. Give it rows and the fields to read — it builds the scales, the axes, the legend, the tooltip, and the keyboard navigation for you, all colored from your palette.
+A line chart answers how a value changes across an ordered domain — months, days, versions. Reach for it when the trend is the point; when the area under the line carries meaning too, use the [area chart](/docs/components/chart-area).
+
+Line charts are [`lineY`](https://tanstack.com/charts/latest/docs/reference/marks/line-and-area) marks rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-line
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the `chart` core — the host, the palette, and the shared frame — along with it.
 
 ## Usage
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
+A point scale holds the categories, a linear scale the values. Point the line's `x` at the category field and `y` at the value field:
+
 ```tsx
-const chartData = [
+const data = [
   { month: "Jan", desktop: 186 },
   { month: "Feb", desktop: 305 },
   { month: "Mar", desktop: 237 },
 ]
 
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
+
 export function Example() {
-  return (
-    <LineChart
-      data={chartData}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      ariaLabel="Desktop visitors, January through March"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
 }
 ```
 
-`x` and `y` name fields on the row; `labels` gives each series a display name for the legend and the tooltip. `data` is compared by identity, so define it outside your component — or memoize it — and the chart rebuilds only when the rows actually change.
+`z` names the series in the tooltip. `curve`, `strokeWidth`, and the value axis come from [`chartLook`](/docs/components/chart#the-look), so the line follows your design system — set a value instead to fix one chart's look.
 
-## Wide and long data
+## Several series
 
-Two data shapes, one component. **Wide** rows carry one field per series:
-
-```tsx
-<LineChart
-  data={rows}
-  x="month"
-  y={["desktop", "mobile"]}
-  ariaLabel="Visitors by month"
-/>
-```
-
-**Long** rows repeat the x value and name their series in a field. Set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
+Rows with one column per series fold into one row per point. Give each its display name through `color`, which also draws one line per series; series take colors from `--chart-1` through `--chart-8` in the order they appear:
 
 ```tsx
-<LineChart
-  data={rows}
-  x="month"
-  y="visitors"
-  series="device"
-  seriesOrder={["desktop", "mobile"]}
-  ariaLabel="Visitors by month and device"
-/>
-```
+import { fold } from "@tanstack/charts/transform/fold"
 
-Either way, series are colored in order from `--chart-1` through `--chart-8`.
+const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-## Curve
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
 
-`curve` chooses the path between points: `natural` (the default), `monotone`, `step`, or `linear`.
-
-```tsx
-<LineChart
-  data={rows}
-  x="month"
-  y="desktop"
-  curve="step"
-  ariaLabel="Desktop visitors by month"
-/>
-```
-
-Interpolation only changes how the line travels between observations — it does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side.
-
-## Annotations
-
-`marks` paints extra layers over the lines, `marksBefore` under them. Both take marks straight from `@tanstack/charts`, so labels, reference rules, and custom dots compose with the same scales:
-
-```tsx
-import { text } from "@tanstack/charts/text"
-
-const labels = text(chartData, {
+lineY(rows, {
   x: "month",
-  y: "desktop",
-  text: "desktop",
-  z: () => "Desktop",
-  dy: -12,
+  y: "visitors",
+  color: (row) => devices[row.device],
+  curve: chartLook.curve,
+  strokeWidth: chartLook.strokeWidth,
 })
 ```
 
+Rows that already name their series in a field need no fold: write the display names in the data and point `color` at that field. Add `color: { legend: chartLegend }` to the definition for a color legend, placed where your design system puts it.
+
+## Curves and points
+
+`chartLook.curve` follows your design system. To fix one chart's curve, pick it from `chartCurves`: `natural`, `monotone`, `linear`, or `step`. `points: true` draws a dot at every point:
+
 ```tsx
-<LineChart
-  data={chartData}
-  x="month"
-  y="desktop"
-  marks={[labels]}
-  ariaLabel="Desktop visitors, with each point labelled"
-/>
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
+
+lineY(data, {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+  strokeWidth: chartLook.strokeWidth,
+  points: true,
+})
 ```
 
-Give an annotation the same `z` as the series it belongs to — the series' display name, or its field name when you pass no `labels`. That keeps it in one focus group with the line, so the tooltip stays a single row instead of growing one per layer. Build marks outside render: like `data`, they are compared by identity.
+Interpolation only changes how the line travels between observations. It does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side. The line follows the rows in the order you pass them, so sort them by `x` first.
+
+## Time
+
+When `x` holds `Date`s, put it on a time scale. `scaleUtc` from `d3-scale` comes with the chart; `nice` rounds the ends to tidy dates:
+
+```tsx
+import { scaleUtc } from "d3-scale"
+
+x: {
+  scale: scaleUtc,
+  nice: true,
+  axis: { ticks: { format: (value) => day.format(value as Date) } },
+}
+```
+
+## Axes and formatting
+
+Every axis gets the house look: no domain line, no tick marks, labels clear of the plot. `axis: false` hides one; an object shows it, and `ticks.format` formats its labels — and the tooltip values on that axis:
+
+```tsx
+scales: {
+  x: {
+    scale: scalePoint,
+    axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+  },
+  y: {
+    scale: scaleLinear,
+    nice: true,
+    grid: true,
+    axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+  },
+}
+```
+
+`grid: true` draws your design system's gridlines.
+
+## Annotations
+
+Labels, markers, and custom dots are marks too. Wrap them in `decorative` so they paint without becoming focus stops or tooltip rows; the line keeps both:
+
+```tsx
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { text } from "@tanstack/charts/text"
+
+marks: [
+  lineY(data, { x: "month", y: "desktop", z: () => "Desktop", points: true }),
+  decorative(
+    text(data, { x: "month", y: "desktop", text: "desktop", dy: -12 }),
+  ),
+]
+```
+
+A marker that stands in for the line's own point can join the line's focus group instead: give it the line's series name as `z`, as in the [Dot Colors](#examples) example.
+
+A line is a mark like any other, so it draws inside any chart — over bars, or on a second axis, as in the [`Chart`](/docs/components/chart) example.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
-- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it. Focus reads every series at that position at once.
+- Color alone never carries the distinction — name every series, and add `chartLegend` when a chart has more than one.
 - When exact values matter, put a real table or a short summary next to the chart — HTML the reader can select, translate, and print.
-- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 
 <Examples>
   <Example name="chart-line/demos/default" title="Default" />
   <Example name="chart-line/demos/multiple" title="Multiple Series" />
+  <Example name="chart-line/demos/legend" title="Legend" />
   <Example name="chart-line/demos/linear" title="Linear" />
   <Example name="chart-line/demos/step" title="Step" />
   <Example name="chart-line/demos/dots" title="Dots" />
@@ -138,9 +185,3 @@ Give an annotation the same `z` as the series it belongs to — the series' disp
   <Example name="chart-line/demos/interactive" title="Interactive" />
   <Example name="chart-line/demos/label-custom" title="Custom Labels" />
 </Examples>
-
-## API Reference
-
-### LineChart
-
-<Reference name="line-chart" />

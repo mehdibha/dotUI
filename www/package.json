@@ -39,7 +39,7 @@
     "@shadcn/react": "^0.3.0",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "catalog:",
-    "@tanstack/charts": "0.18.0",
+    "@tanstack/charts": "1.0.0",
     "@tanstack/react-devtools": "^0.10.5",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-router-devtools": "^1.167.0",

@@ -112,5 +112,9 @@ export const stripe = definePreset({
     tableHeaderLabel: "strong",
     // Sail's categorical series: #9966FF, #0055BC, #00A1C2, #ED6804…
     chartPalette: "vivid",
+    chartAxes: "labeled",
+    chartLines: "fine",
+    chartBars: "slim",
+    chartLegend: "top",
   },
 })

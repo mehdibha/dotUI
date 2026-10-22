@@ -1,8 +1,12 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -13,26 +17,41 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const labels = [
-  text(data, {
-    x: "month",
-    y: "desktop",
-    text: "desktop",
-    z: () => "Desktop",
-    fill: "var(--color-fg-muted)",
-    fontSize: 12,
-    dy: -10,
-  }),
-]
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+    decorative(
+      text(data, {
+        x: "month",
+        y: "desktop",
+        text: "desktop",
+        fill: "var(--color-fg-muted)",
+        fontSize: 12,
+        dy: -10,
+      }),
+    ),
+  ],
+})
 
 export default function Demo() {
   return (
-    <BarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      marks={labels}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors per month, labelled"
     />
   )

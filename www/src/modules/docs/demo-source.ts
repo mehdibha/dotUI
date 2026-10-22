@@ -17,16 +17,15 @@ export function toDisplaySource(raw: string): string {
 
 /**
  * Registry items to install for a demo: its page item (`button` for
- * `button/demos/basic`) plus every other registry UI component its raw source
- * imports. A chart family already pulls in the chart core and its siblings.
+ * `button/demos/basic`, the `chart` kit for a chart recipe) plus every other
+ * registry UI component its raw source imports.
  */
 export function demoInstallItems(demoKey: string, raw: string): string[] {
-  const page = demoKey.slice(0, demoKey.indexOf("/")) || demoKey
+  const folder = demoKey.slice(0, demoKey.indexOf("/")) || demoKey
+  const page = folder.startsWith("chart-") ? "chart" : folder
   const extras = new Set<string>()
   for (const [, name] of raw.matchAll(/@\/registry\/ui\/([a-z0-9-]+)/g)) {
-    if (!name || name === page) continue
-    if (page.startsWith("chart-") && name.startsWith("chart")) continue
-    extras.add(name)
+    if (name && name !== page) extras.add(name)
   }
   return [page, ...[...extras].sort()]
 }

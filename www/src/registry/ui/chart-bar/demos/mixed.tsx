@@ -1,31 +1,42 @@
 "use client"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+    y: { scale: chartBand },
+  },
+  marks: [
+    barX(data, {
+      x: "visitors",
+      y: "browser",
+      color: "browser",
+      z: "browser",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+  focus: "group-y",
+})
+
 export default function Demo() {
-  return (
-    <BarChart
-      data={data}
-      x="browser"
-      y="visitors"
-      series="browser"
-      labels={{
-        chrome: "Chrome",
-        safari: "Safari",
-        firefox: "Firefox",
-        edge: "Edge",
-        other: "Other",
-      }}
-      horizontal
-      ariaLabel="Visitors by browser"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }
