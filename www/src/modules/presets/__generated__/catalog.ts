@@ -1014,7 +1014,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"progress-bar": { track: "thin", trackStyle: "plain" },
 				"qr-code": { style: "squares" },
 				questionnaire: { titles: "tight" },
-				"radio-group": { mark: "dot", cardSelected: "outline", cardPress: "none" },
+				"radio-group": { mark: "ring", cardSelected: "outline", cardPress: "none" },
 				"segmented-control": { selected: "ring", track: "filled", weight: "medium", case: "sentence" },
 				select: { trigger: "field", caret: "chevron" },
 				sheet: { edge: "docked" },
