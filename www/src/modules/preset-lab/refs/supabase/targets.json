@@ -215,7 +215,8 @@
         "surface": true
       },
       "kbd": {
-        "selector": "header .command-shortcut"
+        "selector": "header .command-shortcut",
+        "skip": ["edge"]
       },
       "badge.accent": {
         "selector": "main button > div[class*=rounded-full][class*=uppercase]"
