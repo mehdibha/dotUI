@@ -7,6 +7,7 @@ import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
+import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
@@ -40,6 +41,7 @@ export const PRESETS: Preset[] = [
   untitled,
   carbon,
   wise,
+  higgsfield,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
