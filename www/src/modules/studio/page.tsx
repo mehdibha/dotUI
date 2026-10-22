@@ -433,8 +433,7 @@ export function PanelPage({
                 />
               }
               page={
-                open &&
-                page && (
+                open && page ? (
                   <span className="flex min-w-0 items-center gap-0.5">
                     <Button
                       ref={back}
@@ -467,7 +466,7 @@ export function PanelPage({
                       {page.label}
                     </span>
                   </span>
-                )
+                ) : undefined
               }
               systemClassName={drill === "out" ? DRILL.out : undefined}
               scrollRef={scroller}
