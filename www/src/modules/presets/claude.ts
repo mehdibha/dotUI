@@ -23,7 +23,7 @@ export const claude = definePreset({
     neutralTint: 0.7,
     // #151515 page in dark.
     darkBg: 7,
-    // The docs sidebar shares the #fcfcfb page behind a hairline.
+    // The sidebar shares the #fcfcfb page (#fbfbf9).
     shellTone: "page",
     // Fields and secondary buttons ring at 10% ink, 20% on hover.
     controlEdge: "soft",
@@ -51,10 +51,11 @@ export const claude = definePreset({
     roleCard: "xl",
 
     // States
-    // A 1px #2a78d6 ring hugging the edge, a page-colored line inside fills.
+    // Stand-in: a 1px #2a78d6 ring just outside the edge over a 1px
+    // page-colored inset line; inset draws the same pair 1px further in.
     focusStyle: "inset",
     focusWidth: 1,
-    // Fields: the 10% ring turns blue.
+    // Fields: the 10% ring turns #2a78d6, under a faint 6px #cde2fb glow.
     focusInputStyle: "border",
     disabledTreatment: "fade",
     cursorDisabled: "default",
@@ -75,7 +76,6 @@ export const claude = definePreset({
 
     // Inputs
     inputHover: "edge",
-    fieldLabel: "medium",
     inputError: "icon-message",
     otpStyle: "separate",
 
@@ -106,9 +106,8 @@ export const claude = definePreset({
     alertStyle: "soft-outline",
     toastStatus: "soft",
     spinnerStyle: "ring-track",
-    progressTrack: "medium",
     progressTrackStyle: "bordered",
-    // A 6px #2a78d6 fill.
+    // A 4px bar, its #2a78d6 fill the checks' blue.
     progressColor: "same-checks",
 
     // Data display
