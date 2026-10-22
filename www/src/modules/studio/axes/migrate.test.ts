@@ -249,8 +249,8 @@ describe("migrate", () => {
   })
 
   it("reads an object only on main's motion keys as main's", () => {
-    expect(migrate({ style: "tactile", radiusPx: {} })).toEqual({
-      style: "tactile",
+    expect(migrate({ style: "polished", radiusPx: {} })).toEqual({
+      style: "polished",
       radiusPx: {},
     })
   })
@@ -281,6 +281,14 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       motion: "smooth",
       chartMotion: "standard",
+    })
+  })
+
+  it("reads Tactile as Polished", () => {
+    const tactile = { ...DEFAULT_STATE, style: "tactile", buttonStyle: "gloss" }
+    expect(migrate({ version: 5, ...tactile })).toEqual({
+      ...tactile,
+      style: "polished",
     })
   })
 
@@ -431,12 +439,12 @@ describe("main → v3", () => {
     expect(spotify.menuInset).toBe("inset")
 
     const bevel = load(mainState({ buttonStyle: "bevel" }))
-    expect(bevel.style).toBe("tactile")
+    expect(bevel.style).toBe("polished")
     expect(bevel.buttonStyle).toBe("style")
     expect(bevel.surfaceEdge).toBe("line")
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
-    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("tactile")
+    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("polished")
     const { spotify: _, ...flat } = main.presets
     for (const diff of Object.values(flat))
       expect(load(mainState(diff)).style).toBe("flat")

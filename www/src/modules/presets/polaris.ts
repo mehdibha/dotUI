@@ -11,7 +11,7 @@ export const polaris = definePreset({
     brandAssets: "shopify",
 
     // Style
-    style: "tactile",
+    style: "polished",
 
     // Color
     // Blue #005bd3 is emphasis only: links and focus. Fills are charcoal.

@@ -1,10 +1,10 @@
 /* Style — the material, named by its light: how every surface and control
    draws depth. Flat has no light (lines), Tonal stands tone in for light,
-   Tactile lights controls from above, Chunky casts hard light onto solid
+   Polished lights controls from above, Chunky casts hard light onto solid
    ledges. Seven keys default to the "style" follow and read
    their column below; Flat's column is each key's own default, so Origin is
    untouched. An option that needs another light (Bevel buttons outside
-   Tactile) is excluded, falling back to the column. Color, type, radius,
+   Polished) is excluded, falling back to the column. Color, type, radius,
    density and motion never change with it. */
 
 import { defineChapter } from "./core/types"
@@ -12,7 +12,7 @@ import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
 
-export const STYLE_VALUES = ["flat", "tonal", "tactile", "chunky"] as const
+export const STYLE_VALUES = ["flat", "tonal", "polished", "chunky"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -22,44 +22,44 @@ export const COLUMNS = {
   surfaceLayers: {
     flat: "same",
     tonal: "tonal",
-    tactile: "same",
+    polished: "same",
     chunky: "same",
   },
-  // Tactile and Chunky draw the edge their button finish implies.
+  // Polished and Chunky draw the edge their button finish implies.
   surfaceEdge: {
     flat: "line",
     tonal: "none",
-    tactile: "auto",
+    polished: "auto",
     chunky: "auto",
   },
   surfaceShadow: {
     flat: "flat",
     tonal: "low",
-    tactile: "low",
+    polished: "low",
     chunky: "flat",
   },
   buttonStyle: {
     flat: "flat",
     tonal: "flat",
-    tactile: "bevel",
+    polished: "bevel",
     chunky: "ledge",
   },
   buttonSecondary: {
     flat: "as-style",
     tonal: "tonal",
-    tactile: "as-style",
+    polished: "as-style",
     chunky: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
     tonal: "inverse",
-    tactile: "auto",
+    polished: "auto",
     chunky: "auto",
   },
   inputStyle: {
     flat: "auto",
     tonal: "indicator",
-    tactile: "auto",
+    polished: "auto",
     chunky: "auto",
   },
 } satisfies Record<string, Record<Style, string>>
@@ -74,19 +74,19 @@ export const ALLOWED: Partial<
 > = {
   buttonStyle: {
     hairline: ["flat"],
-    "rim-light": ["tactile"],
-    gloss: ["tactile"],
-    bevel: ["tactile"],
+    "rim-light": ["polished"],
+    gloss: ["polished"],
+    bevel: ["polished"],
     ledge: ["chunky"],
   },
-  surfaceEdge: { bevel: ["tactile"], ledge: ["chunky"] },
+  surfaceEdge: { bevel: ["polished"], ledge: ["chunky"] },
   surfaceLayers: { tonal: ["tonal"] },
-  inputStyle: { well: ["tactile", "chunky"] },
+  inputStyle: { well: ["polished", "chunky"] },
 }
 
 /** The key each Style's finish lives in: a variation of its own light. */
 export const FINISH_KEYS: Partial<Record<Style, StyleKey>> = {
-  tactile: "buttonStyle",
+  polished: "buttonStyle",
   chunky: "buttonStyle",
 }
 

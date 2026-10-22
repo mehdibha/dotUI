@@ -50,7 +50,7 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 ## Style
 
 `../style.ts` owns `style` (the material, named by its light; `STYLE_VALUES`:
-Flat, Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
+Flat, Tonal, Polished, Chunky) and, from `../index.ts`, seven keys of other
 chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
 its column, whose Flat entry is the key's chapter default (Origin). An
 option that needs another light is an exclude rule with `cause: "style"` and

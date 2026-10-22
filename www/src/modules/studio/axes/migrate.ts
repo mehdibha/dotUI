@@ -314,9 +314,14 @@ function fromChartTransition(state: Raw): Raw {
   return { ...state, chartMotion: same ? "same" : tempo }
 }
 
+// Tactile was renamed Polished.
+const fromTactile = (state: Raw): Raw =>
+  state.style === "tactile" ? { ...state, style: "polished" } : state
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
   3: fromSoft,
   4: fromChartTransition,
+  5: fromTactile,
 }
