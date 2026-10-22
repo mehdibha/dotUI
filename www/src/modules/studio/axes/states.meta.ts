@@ -27,6 +27,7 @@ export const FOCUS_STYLE_OPTIONS = options(FOCUS_STYLE_VALUES, {
       "Linear",
       "Notion",
       "Airbnb",
+      "Spotify",
     ],
   },
   halo: {
@@ -37,7 +38,7 @@ export const FOCUS_STYLE_OPTIONS = options(FOCUS_STYLE_VALUES, {
   inset: {
     label: "Inset",
     description: "Ring drawn inside the control's edge",
-    credits: ["Primer", "Carbon", "Fluent 2", "Spotify", "Claude"],
+    credits: ["Primer", "Carbon", "Fluent 2", "Claude"],
   },
 })
 

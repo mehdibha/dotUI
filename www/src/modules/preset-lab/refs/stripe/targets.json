@@ -1,0 +1,228 @@
+{
+  "https://docs.stripe.com/stripe-apps/components/button": {
+    "mode": "light",
+    "parts": {
+      "button.primary": {
+        "selector": "[data-testid=stripe-app-example-renderer] a",
+        "text": "Primary"
+      },
+      "button.secondary": {
+        "selector": "[data-testid=stripe-app-example-renderer] a",
+        "text": "Secondary"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/textfield": {
+    "mode": "light",
+    "parts": {
+      "field.label": {
+        "selector": "[data-testid=stripe-app-example-renderer] label",
+        "text": "Business name"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/badge": {
+    "mode": "light",
+    "parts": {
+      "badge": {
+        "selector": "[data-testid=stripe-app-example-renderer] span",
+        "text": "Neutral"
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/menu": {
+    "mode": "light",
+    "parts": {
+      "menu": {
+        "selector": ".__sail-layer-containers [data-testid=popover-layer]",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": ".__sail-layer-containers [role=menuitem]",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+          }
+        ]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/tooltip": {
+    "mode": "light",
+    "parts": {
+      "tooltip": {
+        "selector": ".__sail-layer-containers [role=tooltip]",
+        "before": [
+          {
+            "hover": "[data-testid=stripe-app-example-renderer] a::-p-text(Pay out to bank)"
+          }
+        ],
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://docs.stripe.com/stripe-apps/components/banner": {
+    "mode": "light",
+    "parts": {
+      "alert": {
+        "selector": "[data-testid=stripe-app-example-renderer] span",
+        "text": "Neutral title",
+        "surface": true
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/dashboard": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "main",
+        "skip": ["color"]
+      },
+      "shell": {
+        "selector": "[data-testid=primary-nav]",
+        "surface": true
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "nav.item": {
+        "selector": "[data-testid=primary-nav-item-link-balances]"
+      },
+      "nav.item.active": {
+        "selector": "[data-testid=primary-nav] a[aria-current=page]"
+      },
+      "button.icon": {
+        "selector": "[data-testid=sigma-explore-button]"
+      },
+      "link": {
+        "selector": "[data-testid=view-detail-link]"
+      },
+      "text": {
+        "selector": "[data-testid='setup-guide-verify_business.verify_email-task-label']"
+      },
+      "text.muted": {
+        "selector": "[data-testid=today-view-time]",
+        "skip": ["fontSize"]
+      },
+      "command": {
+        "selector": "[data-testid=popover-layer]:has([data-testid=SpotlightContent])",
+        "before": [
+          {
+            "click": "[data-testid=suggestion-input]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "command.item": {
+        "selector": "[data-testid=spotlight-search-result]",
+        "nth": 1,
+        "before": [
+          {
+            "click": "[data-testid=suggestion-input]"
+          }
+        ],
+        "skip": ["color", "paddingInline"]
+      },
+      "kbd": {
+        "selector": "[data-testid=shortcuts-help-drawer] kbd",
+        "before": [
+          {
+            "press": "?"
+          }
+        ]
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/settings/billing/invoices/general": {
+    "signedIn": true,
+    "settle": 6000,
+    "parts": {
+      "tab": {
+        "selector": "main [role=tab][aria-selected=false]"
+      },
+      "tab.selected": {
+        "selector": "main [role=tab][aria-selected=true]"
+      },
+      "radio": {
+        "selector": "main input[type=radio]:not(:checked):not(:disabled)"
+      },
+      "radio.checked": {
+        "selector": "main input[type=radio]:checked:not(:disabled)",
+        "box": "::before",
+        "skip": ["edge"]
+      },
+      "switch.on": {
+        "selector": "main input[role=switch]:checked:not(:disabled)",
+        "skip": ["edge"]
+      },
+      "input.focus": {
+        "selector": "main input[name=days_until_due]",
+        "focus": true
+      },
+      "button.focus": {
+        "selector": "main a[role=button][aria-label=Edit]",
+        "focus": true,
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/settings/billing/invoices/general#payment-page": {
+    "signedIn": true,
+    "settle": 6000,
+    "steps": [
+      {
+        "press": "PageDown"
+      }
+    ],
+    "parts": {
+      "input": {
+        "selector": "main input[name=days_until_due]"
+      },
+      "select.trigger": {
+        "selector": "[data-testid=InvoiceSettings-itemPricesSelect]"
+      },
+      "checkbox.checked": {
+        "selector": "main input.sail-checkbox:checked:not(:disabled)"
+      },
+      "switch.off": {
+        "selector": "main input[role=switch]:not(:checked):not(:disabled)"
+      }
+    }
+  },
+  "https://dashboard.stripe.com/test/customers": {
+    "signedIn": true,
+    "settle": 4000,
+    "parts": {
+      "dialog": {
+        "selector": ".__sail-layer-containers [role=alertdialog]",
+        "before": [
+          {
+            "click": "[data-testid=listview-add-customer-button]"
+          },
+          {
+            "wait": ".__sail-layer-containers [role=alertdialog]"
+          }
+        ]
+      },
+      "checkbox": {
+        "selector": ".__sail-layer-containers [role=alertdialog] input.sail-checkbox:not(:checked):not(:disabled)",
+        "before": [
+          {
+            "click": "[data-testid=listview-add-customer-button]"
+          },
+          {
+            "wait": ".__sail-layer-containers [role=alertdialog]"
+          },
+          {
+            "click": ".__sail-layer-containers [role=alertdialog] a[role=button]::-p-text(Shipping information)"
+          }
+        ]
+      }
+    }
+  }
+}
