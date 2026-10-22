@@ -37,7 +37,7 @@ const timePickerVariants = tv({
     columns: "flex h-56 gap-1 p-1",
     column:
       "flex w-14 scroll-py-1 flex-col gap-0.5 overflow-y-auto outline-hidden scrollbar-none [&::-webkit-scrollbar]:hidden",
-    item: "flex h-8 w-full shrink-0 items-center justify-center rounded-md text-sm tabular-nums no-highlight cursor-interactive outline-hidden transition-colors not-selected:hover:bg-selection-muted selected:bg-selection selected:text-fg-on-selection focus-visible:focus-ring disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor)",
+    item: "flex h-8 w-full shrink-0 items-center justify-center rounded-xs text-sm tabular-nums no-highlight cursor-interactive outline-hidden transition-colors not-selected:hover:bg-selection-muted selected:bg-selection selected:text-fg-on-selection focus-visible:focus-ring disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor)",
   },
 });
 

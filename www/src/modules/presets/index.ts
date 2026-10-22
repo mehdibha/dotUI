@@ -3,9 +3,11 @@ import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
 import { carbon } from "./carbon"
+import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
+import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
@@ -18,10 +20,12 @@ import { stripe } from "./stripe"
 import { supabase } from "./supabase"
 import { untitled } from "./untitled"
 import { vercel } from "./vercel"
+import { wise } from "./wise"
 
 export const PRESETS: Preset[] = [
   origin,
   claude,
+  chatgpt,
   supabase,
   stripe,
   linear,
@@ -36,6 +40,8 @@ export const PRESETS: Preset[] = [
   radix,
   untitled,
   carbon,
+  wise,
+  higgsfield,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */

@@ -75,7 +75,7 @@ export const untitled = definePreset({
 
     // Menus & popovers
     menuArrows: "none",
-    // Dropdown rows 38px, select and palette rows 40px.
+    // Select and palette rows 40px. Stand-in: dropdown rows are 36px.
     menuRows: "step",
     menuSearch: "bar",
     mobilePickers: "anchored",
@@ -86,8 +86,11 @@ export const untitled = definePreset({
     dialogClose: "faint",
     mobileDialogs: "sheet",
 
-    // Navigation: tabs and nav items 600; the pill tab is brand-50 / brand-700.
+    // Navigation: tabs and nav items 600.
     navWeight: "semibold",
+    // The default tab is a 36px brand-50 pill. Stand-in: its brand-700 label
+    // and 6px corners.
+    tabStyle: "pill",
     tabsPill: "tint",
     linkUnderline: "hover",
 

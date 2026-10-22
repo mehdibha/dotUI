@@ -1,0 +1,313 @@
+{
+  "encore.html": {
+    "mode": "light",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "[data-part=\"button.primary\"] > span"
+      },
+      "button.secondary": {
+        "selector": "[data-part=\"button.secondary\"]"
+      },
+      "button.quiet": {
+        "selector": "[data-part=\"button.quiet\"]"
+      },
+      "button.focus": {
+        "selector": "[data-part=\"button.focus\"]",
+        "focus": true,
+        "skip": ["edge"]
+      },
+      "checkbox": {
+        "selector": "[data-part=\"checkbox\"]"
+      },
+      "checkbox.checked": {
+        "selector": "[data-part=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-part=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-part=\"radio.checked\"]"
+      },
+      "field.label": {
+        "selector": "[data-part=\"field.label\"]"
+      },
+      "input": {
+        "selector": "[data-part=\"input\"]",
+        "skip": ["boxShadow"]
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "focus": true
+      },
+      "tab.selected": {
+        "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "link": {
+        "selector": "[data-part=\"link\"]"
+      },
+      "alert": {
+        "selector": "[data-part=\"alert\"]"
+      },
+      "badge": {
+        "selector": "[data-part=\"badge\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "badge.accent": {
+        "selector": "[data-part=\"badge.accent\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "progress": {
+        "selector": "[data-part=\"progress\"]"
+      },
+      "progress.fill": {
+        "selector": "[data-part=\"progress.fill\"]"
+      },
+      "heading.1": {
+        "selector": "[data-part=\"heading.1\"]",
+        "skip": ["fontSize"]
+      },
+      "heading.3": {
+        "selector": "[data-part=\"heading.3\"]",
+        "skip": ["fontSize"]
+      },
+      "text": {
+        "selector": "[data-part=\"text\"]"
+      },
+      "text.muted": {
+        "selector": "[data-part=\"text.muted\"]",
+        "skip": ["fontSize"]
+      }
+    }
+  },
+  "encore.html#dark": {
+    "mode": "dark",
+    "parts": {
+      "checkbox": {
+        "selector": "[data-part=\"checkbox\"]"
+      },
+      "checkbox.checked": {
+        "selector": "[data-part=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-part=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-part=\"radio.checked\"]"
+      },
+      "tab.selected": {
+        "selector": "[data-part=\"tab.selected\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "tab": {
+        "selector": "[data-part=\"tab\"]",
+        "skip": ["fontSize", "borderRadius"]
+      },
+      "alert": {
+        "selector": "[data-part=\"alert\"]"
+      },
+      "badge": {
+        "selector": "[data-part=\"badge\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "badge.accent": {
+        "selector": "[data-part=\"badge.accent\"]",
+        "skip": ["fontSize", "fontWeight"]
+      },
+      "progress": {
+        "selector": "[data-part=\"progress\"]"
+      },
+      "progress.fill": {
+        "selector": "[data-part=\"progress.fill\"]"
+      },
+      "text": {
+        "selector": "[data-part=\"text\"]"
+      },
+      "input.focus": {
+        "selector": "[data-part=\"input.focus\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://accounts.spotify.com/en/login": {
+    "mode": "dark",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "[data-testid=login-button] > span"
+      },
+      "button.secondary": {
+        "selector": "[data-encore-id=buttonSecondary]",
+        "skip": ["paddingInline"]
+      },
+      "button.quiet": {
+        "selector": "[data-testid=signup-btn-link]"
+      },
+      "button.focus": {
+        "selector": "[data-testid=login-button]",
+        "focus": true,
+        "skip": ["edge"]
+      },
+      "input": {
+        "selector": "#username",
+        "skip": ["boxShadow"]
+      },
+      "field.label": {
+        "selector": "label[for=username]"
+      },
+      "heading.1": {
+        "selector": "h1"
+      },
+      "text.muted": {
+        "selector": "p[data-encore-id=text]",
+        "skip": ["fontSize"]
+      },
+      "link": {
+        "selector": "[data-encore-id=textLink]",
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://open.spotify.com/": {
+    "mode": "dark",
+    "parts": {
+      "shell": {
+        "selector": "div:has(> #main-view)",
+        "surface": true
+      },
+      "panel": {
+        "selector": "#main-view"
+      },
+      "heading.3": {
+        "within": "#main-view",
+        "selector": "h2[data-encore-id=listRowTitle]"
+      },
+      "kbd": {
+        "selector": "[data-encore-id=formInputIcon] kbd",
+        "skip": ["backgroundColor"],
+        "before": [
+          {
+            "hover": "[data-testid=search-input]"
+          }
+        ]
+      },
+      "tooltip": {
+        "selector": "div:has(> #hover-or-focus-tooltip)",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[data-encore-id=buttonTertiary][aria-label=Home]"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": "[data-testid=language-selection-modal] [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[data-testid=language-selection-button]"
+          }
+        ],
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa": {
+    "mode": "dark",
+    "parts": {
+      "menu": {
+        "selector": "#context-menu [role=menu]",
+        "surface": true,
+        "skip": ["color"],
+        "before": [
+          {
+            "hover": "[data-testid=tracklist-row]"
+          },
+          {
+            "click": "[data-testid=tracklist-row] [data-testid=more-button]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "#context-menu [role=menuitem]",
+        "ink": "span",
+        "before": [
+          {
+            "hover": "[data-testid=tracklist-row]"
+          },
+          {
+            "click": "[data-testid=tracklist-row] [data-testid=more-button]"
+          }
+        ]
+      }
+    }
+  },
+  "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi": {
+    "mode": "dark",
+    "parts": {
+      "toggle": {
+        "within": "#main-view",
+        "selector": "button[data-encore-id=chip][aria-checked=false] > span"
+      },
+      "toggle.on": {
+        "within": "#main-view",
+        "selector": "button[data-encore-id=chip][aria-checked=true] > span"
+      }
+    }
+  },
+  "https://open.spotify.com/#signed-in": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {
+      "nav.item": {
+        "within": "#Desktop_LeftSidebar_Id",
+        "selector": "[data-encore-id=listRow]",
+        "ink": "[data-encore-id=listRowTitle]",
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://open.spotify.com/preferences": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 4000,
+    "parts": {
+      "switch.on": {
+        "selector": "[data-testid=settings-page] label:has(> input[type=checkbox]:checked) > span"
+      },
+      "switch.off": {
+        "selector": "[data-testid=settings-page] label:has(> input[type=checkbox]:not(:checked)) > span"
+      }
+    }
+  },
+  "https://www.spotify.com/account/overview": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 5000,
+    "parts": {
+      "card": {
+        "selector": "[data-testid=menu-group-account]"
+      }
+    }
+  },
+  "https://www.spotify.com/account/profile": {
+    "signedIn": true,
+    "mode": "dark",
+    "settle": 5000,
+    "parts": {
+      "select.trigger": {
+        "selector": "main [data-encore-id=formSelect] select",
+        "skip": ["boxShadow"]
+      }
+    }
+  }
+}
