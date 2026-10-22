@@ -18,7 +18,7 @@
       "input": {
         "selector": "[class*=_Container_][data-variant=outline]",
         "ink": "input",
-        "skip": ["paddingInline"]
+        "skip": ["paddingInline", "backgroundColor"]
       },
       "input.focus": {
         "selector": "[class*=_Container_][data-variant=outline]",
@@ -38,7 +38,8 @@
     "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:dark",
     "parts": {
       "checkbox": {
-        "selector": "button[role=checkbox]"
+        "selector": "button[role=checkbox]",
+        "skip": ["backgroundColor"]
       },
       "checkbox.checked": {
         "selector": "button[role=checkbox]",
@@ -54,7 +55,8 @@
     "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:dark",
     "parts": {
       "radio": {
-        "selector": "button[role=radio][aria-checked=false]"
+        "selector": "button[role=radio][aria-checked=false]",
+        "skip": ["backgroundColor"]
       },
       "radio.checked": {
         "selector": "button[role=radio][aria-checked=true] [class*=_RadioIndicator_]",
@@ -107,7 +109,8 @@
     "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-alert--base&globals=theme:dark",
     "parts": {
       "alert": {
-        "selector": "[class*=_Alert_]"
+        "selector": "[class*=_Alert_]",
+        "skip": ["backgroundColor"]
       }
     }
   },
@@ -213,7 +216,8 @@
           {
             "hover": "[data-sidebar-navigation-root] button[data-app-shell-sidebar-trigger]"
           }
-        ]
+        ],
+        "skip": ["backgroundColor", "color"]
       },
       "menu": {
         "selector": "[role=menu][data-radix-menu-content]",

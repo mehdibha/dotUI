@@ -23,6 +23,8 @@ All in `targets.json`. The library styles through hashed CSS-module classes, so 
 - `calendar.*` are measured in the DatePicker popover; `calendar.day` and `calendar.today` skip `backgroundColor`, which is the popover's, not a day's. The selected day is picked by clicking 15.
 - `field.label` is the Slider's label, the only labelled field in the stories.
 - `heading.2` (`heading-xl`) skips `fontSize`, `text.muted` skips it too: the typography stories set their own sizes.
+- `input`, `checkbox`, `radio` and `alert` skip `backgroundColor`: they're clear, so they read the Storybook's own page (#212121 in dark), not the app's #000.
+- Library parts keep the library's sizes (32px buttons and fields at `md`, 16px button padding), while the app draws its controls at 36px with 12px padding.
 
 ## Hand entries
 
@@ -32,11 +34,11 @@ All in `targets.json`. The library styles through hashed CSS-module classes, so 
 
 Measured 2026-10-21 in Mehdi's Chrome, signed in, in a 1440px window (1512px for the dark home page, after the tab was reopened). Mode came from Settings › Appearance › Mode (System, Light, Dark tiles): set to Light, then Dark, then back to System, its original value. Theme "ChatGPT", accent "Default" (the account's defaults; Appearance lists background #000000 and foreground #EDEDED for dark). Each page was measured with the `--snippet` probe run in the tab and `--merge`d per mode. UI chrome only: no chat, Account or Personalization page was opened, and chat and project rows were hidden by a local style before any crop.
 
-- `https://chatgpt.com/` (new-chat home): `page`, `panel` (main, a 0.5px left hairline), `shell` (the left panel), `button.icon` (the composer's Dictate button; skips `backgroundColor`, it sits on the composer), `tooltip` and `kbd` (hover the sidebar toggle; its ⇧⌘S shortcut is the kbd), `menu` and `menu.item` (the sidebar's Filter chats menu, a Radix dropdown; its trigger stays clipped outside the sidebar until the section header is hovered, so the pass opened it with a pointerdown event; `menu.item` is an unchecked row).
+- `https://chatgpt.com/` (new-chat home): `page`, `panel` (main, a 0.5px left hairline), `shell` (the left panel), `button.icon` (the composer's Dictate button; skips `backgroundColor`, it sits on the composer), `tooltip` and `kbd` (hover the sidebar toggle; its ⇧⌘S shortcut is the kbd, which skips `backgroundColor` and `color`: it sits on the dark tooltip, not the page), `menu` and `menu.item` (the sidebar's Filter chats menu, a Radix dropdown; its trigger stays clipped outside the sidebar until the section header is hovered, so the pass opened it with a pointerdown event; `menu.item` is an unchecked row).
 - `https://chatgpt.com/settings/general-settings` (`#settings/General` redirects here; Settings is now a page, its nav in the app sidebar): `card` (the Language settings group), `select.trigger` (the Language picker, the same as Notifications' pickers), `nav.item` (Appearance) and `nav.item.active` (General).
 - `https://chatgpt.com/settings/data-controls`: `switch.on` and `button.secondary` (a "Manage" button: the settings secondary is soft-filled with no border). Read only, nothing clicked.
 
-Where the app parts from the library: the page is #fcfcfc light and #000 dark (library #fff and #212121) and the sidebar matches it in both; no web font loads, the stack leads with `-apple-system-body`; controls are 36px with 12px padding and weight 400; the light tooltip is inverted (#0d0d0d, weight 600, 16px radius); menus are 90% translucent with a 16px blur, a 0.5px ring and 16px radius, rows 36px at 12px radius; the switch is #3a83f7 in both modes (black in the library's light). The root variables add a theme layer shared with Codex (`--codex-base-accent`, `-surface`, `-ink`, `-contrast`).
+Where the app parts from the library: the page is #fcfcfc light and #000 dark (library #fff and #212121) and the sidebar matches it in both; no web font loads, the stack leads with `-apple-system-body` (Apple's system face at the body text style, so `fonts` maps it to `-apple-system`); controls are 36px with 12px padding and weight 400; the light tooltip is inverted (#0d0d0d, weight 600, 16px radius); menus are 90% translucent with a 16px blur, a 0.5px ring and 16px radius, rows 36px at 12px radius; the switch is #3a83f7 in both modes (black in the library's light). The root variables add a theme layer shared with Codex (`--codex-base-accent`, `-surface`, `-ink`, `-contrast`).
 
 Not measured in the app:
 

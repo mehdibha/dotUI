@@ -9,20 +9,18 @@ export const chatgpt = definePreset({
   inspiredBy: "ChatGPT",
   diff: {
     // Color
-    // blue-400 #0285ff marks focus, links, info and the dark-mode switch;
-    // actions and checks are ink.
+    // blue-400 #0285ff marks focus, links, info and switches (#3a83f7 in the
+    // app); actions and checks are ink.
     brand: "#0285ff",
     buttonColor: "neutral",
     selectionColor: "neutral",
     successSeed: "#00a240",
     warningSeed: "#e25507",
     dangerSeed: "#e02e2a",
-    // Grays carry no hue: #0d0d0d ink, #ededed and #f9f9f9 fills.
+    // Grays carry no hue: #0d0d0d ink, #f0f0f0 and #efefef fills.
     neutralTint: 0,
-    // #fff page. Stand-in: #1e1e1e in dark; #212121 (L* 12.75) puts dark
-    // edges too close to popovers for the legibility floor.
-    lightBg: 100,
-    darkBg: 11,
+    // #fcfcfc page, #000 in dark.
+    darkBg: 0,
 
     // Typography
     bodyFont: "System",
@@ -31,12 +29,17 @@ export const chatgpt = definePreset({
     titleStyle: "compact",
 
     // Shape
-    // 8px fields and tooltips, 6px menu rows inside 12px menus.
+    // 8px fields and rows, 16px menus and cards.
     radiusPx: 8,
     roleControl: "lg",
-    roleItem: "md",
-    roleSurface: "xl",
+    roleItem: "lg",
+    roleSurface: "2xl",
     rolePanel: "2xl",
+    roleCard: "2xl",
+
+    // Space
+    // 36px buttons, selects and menu rows.
+    density: "comfortable",
 
     // States
     // Fields: the 16% ring darkens to 50% ink, no halo.
@@ -44,8 +47,9 @@ export const chatgpt = definePreset({
     focusInputColor: "neutral",
 
     // Buttons
-    // Pills by default; outline buttons ring at 16% ink. Paint scales to .97.
-    buttonSecondary: "outline",
+    // Pills by default; secondary buttons are a gray fill with no edge.
+    // Paint scales to .97.
+    buttonSecondary: "soft",
     buttonRadius: "pill",
     buttonPress: "scale",
     // A white thumb with a soft drop on a #ededed pill track.
@@ -54,8 +58,6 @@ export const chatgpt = definePreset({
     // Selection
     checkboxColor: "neutral",
     radioColor: "neutral",
-    // Stand-in: switches are ink in light; dark mode turns them #0285ff.
-    switchColor: "neutral",
     // A white knob ringed in #767676 over a 4px track.
     sliderThumb: "ring",
     sliderColor: "neutral",
@@ -70,10 +72,11 @@ export const chatgpt = definePreset({
     calendarWeekdays: "double",
 
     // Menus & popovers
-    // 32px rows, as tall as controls.
+    // Rows as tall as controls; menus at 90% with a 16px blur.
     menuRows: "match",
+    translucentOverlays: true,
     menuArrows: "none",
-    tooltipStyle: "surface",
+    // Stand-in: tooltips are a #0d0d0d chip in light but #303030 in dark.
 
     // Dialogs
     // Black at 30%, 50% in dark, no blur.
@@ -81,8 +84,8 @@ export const chatgpt = definePreset({
 
     // Navigation
     navItemWeight: "regular",
-    // The sidebar sits below the page in both modes: #f9f9f9, #181818 in dark.
-    shellTone: "recessed",
+    // The sidebar shares the page's tone in both modes.
+    shellTone: "page",
 
     // Feedback
     alertStyle: "outline",
