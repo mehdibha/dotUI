@@ -307,6 +307,32 @@ async function shoot(page: Page, part: string, mode: Mode) {
   })
 }
 
+/** Says when a part was read where nothing shows: under opacity 0 or
+ *  `visibility: hidden` (a shortcut key revealed on hover), or, for a
+ *  `surface`, on the page itself (climbed from a transparent wrapper). */
+async function warnUnseen(
+  page: Page,
+  mode: Mode,
+  part: string,
+  target: Target,
+) {
+  const el = await page.$(`>>> [data-probe-part="${part}"]`)
+  if (!el) return
+  const [shown, root] = await el.evaluate((node) => [
+    node.checkVisibility({ opacityProperty: true, visibilityProperty: true }),
+    node === document.body || node === document.documentElement,
+  ])
+  const where = `${part} on ${page.url()} (${mode})`
+  if (!shown)
+    console.warn(
+      `${where}: read while invisible (opacity 0 or hidden); show it with a \`before\` step`,
+    )
+  if (target.surface && root)
+    console.warn(
+      `${where}: \`surface\` climbed to the page; select the painted child`,
+    )
+}
+
 /** One part after its focus and `before` steps, read once its transitions
  *  settle, then undone with Escape. */
 async function measureStepped(
@@ -339,6 +365,7 @@ async function measureStepped(
       last = read
     }
     measure = JSON.parse(last)
+    await warnUnseen(page, mode, part, target)
     await shoot(page, part, mode)
   } catch (error) {
     console.warn(`${page.url()} · ${part}: ${(error as Error).message}`)
@@ -400,7 +427,10 @@ async function measurePage(
     const measures: Measures = await page.evaluate(
       snippet(plain, { mark: true, owned: true }),
     )
-    for (const part of Object.keys(plain)) await shoot(page, part, mode)
+    for (const [part, target] of Object.entries(plain)) {
+      await warnUnseen(page, mode, part, target)
+      await shoot(page, part, mode)
+    }
     // The probe skips hidden elements; say so rather than a bare "no match".
     for (const [part, { selector, within }] of Object.entries(plain)) {
       const chain = [within, selector].filter(Boolean).join(" ")
