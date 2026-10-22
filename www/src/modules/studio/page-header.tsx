@@ -286,6 +286,7 @@ export function PageSteps({ steps }: Pick<PageHeaderProps, "steps">) {
         step ? (
           <Button
             key={i}
+            data-step={i === 0 ? "prev" : "next"}
             variant="quiet"
             size="sm"
             onPress={step.go}

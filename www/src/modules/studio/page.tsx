@@ -67,6 +67,18 @@ function useBase(): StudioState {
   return describe(current.view, getWorkspace()).state
 }
 
+/* Component pages whose docs page goes by another slug; Choice card has none. */
+const DOCS: Record<string, string | null> = {
+  chart: "/docs/charts",
+  "choice-card": null,
+  progress: "/docs/components/progress-bar",
+  radio: "/docs/components/radio-group",
+  spinner: "/docs/components/loader",
+}
+
+const docsOf = (id: string) =>
+  id in DOCS ? (DOCS[id] ?? undefined) : `/docs/components/${id}`
+
 const DRILL = {
   in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
   out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
@@ -243,6 +255,8 @@ export function PanelPage({
   const back = useRef<HTMLButtonElement>(null)
   // Set by a press that swaps pages: focus moves with it.
   const moveFocus = useRef(false)
+  // Set by a prev / next press: focus lands on the same step of the new page.
+  const stepFocus = useRef<"prev" | "next" | null>(null)
   const lastPage = useRef<string | null>(null)
   const pages = useMemo(
     () =>
@@ -284,6 +298,7 @@ export function PanelPage({
       target && {
         label: target.label,
         go: () => {
+          stepFocus.current = offset > 0 ? "next" : "prev"
           openPage(target.id, trail)
           setDrill(offset > 0 ? "in" : "out")
         },
@@ -312,6 +327,21 @@ export function PanelPage({
   useEffect(() => {
     const left = lastPage.current
     lastPage.current = pageId
+    const stepped = stepFocus.current
+    stepFocus.current = null
+    if (stepped) {
+      // The pressed step may have remounted with the page, or be disabled at
+      // either end of the list: Back takes focus then.
+      untilMounted(() => {
+        const button = layer?.querySelector<HTMLElement>(
+          `[data-step="${stepped}"]:not([disabled])`,
+        )
+        if (button) button.focus()
+        else if (document.activeElement === document.body) back.current?.focus()
+        return true
+      })
+      return
+    }
     if (!moveFocus.current) return
     moveFocus.current = false
     if (drill !== "out") back.current?.focus()
@@ -476,10 +506,7 @@ export function PanelPage({
               ...Object.fromEntries(pageKeys.map((key) => [key, base[key]])),
             })
         : undefined,
-    docs:
-      tweaks.docs && siblings.length
-        ? `/docs/components/${page.id}`
-        : undefined,
+    docs: tweaks.docs && siblings.length ? docsOf(page.id) : undefined,
   }
 
   return (
