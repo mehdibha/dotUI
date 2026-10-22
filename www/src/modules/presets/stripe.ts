@@ -45,11 +45,11 @@ export const stripe = definePreset({
     iconStroke: 2.25,
 
     // Shape
-    // Ladder at 8: badges 4, controls 6, popovers and dialogs 8.
+    // Ladder at 8: badges 4, controls and cards 6, popovers and dialogs 8.
     radiusPx: 8,
     roleItem: "sm",
     rolePanel: "lg",
-    roleCard: "lg",
+    roleCard: "md",
 
     // Space
     // 28px controls.

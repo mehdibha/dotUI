@@ -576,6 +576,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--icon-stroke-width": "2.25",
 				"--radius": "0.5rem",
 				"--studio-radius-panel": "var(--radius-lg)",
+				"--studio-radius-card": "var(--radius-md)",
 				"--studio-radius-item": "var(--radius-sm)",
 				"--color-sidebar": "var(--color-bg)",
 				"--focus-ring-width": "3px",
