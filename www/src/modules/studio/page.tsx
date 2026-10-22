@@ -433,9 +433,8 @@ export function PanelPage({
                 />
               }
               page={
-                open &&
-                page && (
-                  <>
+                open && page ? (
+                  <span className="flex min-w-0 items-center gap-0.5">
                     <Button
                       ref={back}
                       size="sm"
@@ -449,22 +448,27 @@ export function PanelPage({
                         setPageId(behind?.id ?? null)
                         setHash(behind?.id ?? null)
                       }}
-                      className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
+                      // Slides in with the first page, then stays put.
+                      className={cn(
+                        "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
+                        drill && DRILL.in,
+                      )}
                     >
                       <ChevronLeftIcon />
                     </Button>
                     <span
                       key={page.id}
                       className={cn(
-                        "min-w-0 flex-1 truncate text-[13px] font-medium",
+                        "min-w-0 truncate text-sm font-medium",
                         drill && DRILL[drill],
                       )}
                     >
                       {page.label}
                     </span>
-                  </>
-                )
+                  </span>
+                ) : undefined
               }
+              systemClassName={drill === "out" ? DRILL.out : undefined}
               scrollRef={scroller}
               className={
                 open
