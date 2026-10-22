@@ -2,15 +2,8 @@
   "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-button--colors&globals=theme:light": {
     "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-button--colors&globals=theme:dark",
     "parts": {
-      "page": {
-        "selector": "body"
-      },
       "button.primary": {
         "selector": "button[data-color=primary][data-variant=solid]",
-        "box": "::before"
-      },
-      "button.secondary": {
-        "selector": "button[data-color=primary][data-variant=outline]",
         "box": "::before"
       },
       "button.quiet": {
@@ -77,14 +70,6 @@
       }
     }
   },
-  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--default-checked&globals=theme:light": {
-    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-switch--default-checked&globals=theme:dark",
-    "parts": {
-      "switch.on": {
-        "selector": "button[role=switch]"
-      }
-    }
-  },
   "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-segmentedcontrol--base&globals=theme:light": {
     "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-segmentedcontrol--base&globals=theme:dark",
     "parts": {
@@ -104,42 +89,6 @@
           "edge",
           "boxShadow"
         ]
-      }
-    }
-  },
-  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-menu--base&globals=theme:light": {
-    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-menu--base&globals=theme:dark",
-    "parts": {
-      "menu": {
-        "selector": "[role=menu]",
-        "before": [
-          {
-            "click": "button[aria-haspopup=menu]"
-          }
-        ]
-      },
-      "menu.item": {
-        "selector": "[role=menuitem]",
-        "before": [
-          {
-            "click": "button[aria-haspopup=menu]"
-          }
-        ],
-        "skip": ["borderRadius"]
-      }
-    }
-  },
-  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-tooltip--base&globals=theme:light": {
-    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-tooltip--base&globals=theme:dark",
-    "parts": {
-      "tooltip": {
-        "selector": "[class*=_Tooltip_]",
-        "before": [
-          {
-            "hover": "[class*=_TriggerDecorator_]"
-          }
-        ],
-        "skip": ["height"]
       }
     }
   },
@@ -234,13 +183,83 @@
       }
     }
   },
-  "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-selectcontrol--variants&globals=theme:light": {
-    "dark": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-selectcontrol--variants&globals=theme:dark",
+  "https://chatgpt.com/": {
+    "signedIn": true,
     "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "shell": {
+        "selector": "aside.app-shell-left-panel"
+      },
+      "button.icon": {
+        "selector": "form button[aria-label=Dictate]",
+        "skip": ["backgroundColor"]
+      },
+      "tooltip": {
+        "selector": "[role=tooltip][class*=Tooltip-]",
+        "before": [
+          {
+            "hover": "[data-sidebar-navigation-root] button[data-app-shell-sidebar-trigger]"
+          }
+        ]
+      },
+      "kbd": {
+        "selector": "[role=tooltip][class*=Tooltip-] kbd",
+        "before": [
+          {
+            "hover": "[data-sidebar-navigation-root] button[data-app-shell-sidebar-trigger]"
+          }
+        ]
+      },
+      "menu": {
+        "selector": "[role=menu][data-radix-menu-content]",
+        "before": [
+          {
+            "click": "button[aria-label=\"Filter chats and work\"]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitemradio][aria-checked=false]",
+        "before": [
+          {
+            "click": "button[aria-label=\"Filter chats and work\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://chatgpt.com/settings/general-settings": {
+    "signedIn": true,
+    "parts": {
+      "card": {
+        "selector": "main section > div"
+      },
       "select.trigger": {
-        "selector": "[class*=_SelectControl_][data-variant=outline][data-selected=true]",
-        "box": "::before",
-        "ink": "[class*=_TriggerText_]"
+        "selector": "main button[data-slot=popover-trigger]"
+      },
+      "nav.item": {
+        "selector": "#app-shell-sidebar .sidebar-item[aria-label=Appearance]",
+        "ink": ".text-fade-truncate"
+      },
+      "nav.item.active": {
+        "selector": "#app-shell-sidebar .sidebar-item[aria-current=page]",
+        "ink": ".text-fade-truncate"
+      }
+    }
+  },
+  "https://chatgpt.com/settings/data-controls": {
+    "signedIn": true,
+    "parts": {
+      "switch.on": {
+        "selector": "main [role=switch][aria-checked=true]"
+      },
+      "button.secondary": {
+        "selector": "main button[aria-label=\"Manage shared links\"]"
       }
     }
   }
