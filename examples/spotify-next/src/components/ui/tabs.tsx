@@ -31,19 +31,20 @@ const tabsVariants = tv({
       segmented: {
         list: "rounded-md bg-muted p-[3px]",
         item: "rounded-[calc(var(--radius-md)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-inverse",
-        indicator: "inset-0 rounded-[calc(var(--radius-md)-3px)] bg-inverse",
+        indicator:
+          "top-0 left-0 size-full rounded-[calc(var(--radius-md)-3px)] bg-inverse",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
         item: "rounded-sm orientation-horizontal:h-full selected:text-fg",
         indicator:
-          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-accent orientation-horizontal:h-[3px] orientation-horizontal:rounded-t-[3px] orientation-horizontal:inset-x-4",
+          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-accent orientation-horizontal:h-[3px] orientation-horizontal:rounded-t-[3px] orientation-horizontal:left-4 orientation-horizontal:w-[calc(100%-var(--spacing)*8)]",
       },
       pill: {
         list: "gap-1",
         item: "group/tab rounded-sm orientation-horizontal:h-full selected:text-fg-inverse",
         indicator:
-          "inset-0 rounded-sm bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
+          "top-0 left-0 size-full rounded-sm bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",

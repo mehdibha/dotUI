@@ -59,7 +59,7 @@ const { useStyles } = createStyles(segmentedControlMeta, {
       ],
       // `isolate` on the item keeps the pill behind the `z-10` content.
       indicator:
-        "pointer-events-none absolute inset-0 rounded-[calc(var(--studio-segmented-control-radius)-3px)] transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
+        "pointer-events-none absolute top-0 left-0 size-full rounded-[calc(var(--studio-segmented-control-radius)-3px)] transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
       itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
     },
   },
