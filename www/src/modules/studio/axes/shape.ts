@@ -238,4 +238,14 @@ export const chapter = defineChapter({
       tokens["--studio-control-stroke"] = `${strokePx(state.controlStroke)}px`
     return { tokens }
   },
+  rules: [
+    {
+      // Brutal's ink edges are 2px.
+      id: "shape/brutal-draws-bold",
+      target: "controlStroke",
+      when: { key: "style", in: ["brutal"] },
+      effect: { kind: "pin", value: "bold" },
+      cause: "style",
+    },
+  ],
 })

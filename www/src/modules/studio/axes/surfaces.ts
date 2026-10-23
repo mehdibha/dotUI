@@ -14,7 +14,9 @@
      (Material 3's dark menus and dialogs draw no edge). Bevel draws Polaris's inset rim instead
      of a border; Ledge draws the control stroke with a bottom lip on cards
      and tiles, which a pressed or disabled tile sinks into, and no shadow
-     on popovers or dialogs (Duolingo).
+     on popovers or dialogs (Duolingo). Offset draws the control stroke in
+     the control edge's color over a hard shadow of it on cards, popovers
+     and dialogs alike, in place of the Shadow ladder (neobrutalism).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg).
@@ -42,14 +44,16 @@ const SURFACE_DEFAULTS = {
 
 export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
-export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
+export const EDGE_VALUES = ["line", "none", "bevel", "ledge", "offset"] as const
 
 /* Auto draws the card edge the button finish implies: Polaris bevels its
-   cards, Duolingo puts them on a lip; every other finish keeps the line. */
+   cards, Duolingo puts them on a lip, Offset buttons cast their shadow on
+   cards too; every other finish keeps the line. */
 const EDGE_AUTO: Record<string, string> = {
   ...Object.fromEntries(BUTTON_STYLES.map((value) => [value, "line"])),
   bevel: "bevel",
   ledge: "ledge",
+  offset: "offset",
 }
 
 export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
@@ -113,12 +117,13 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, white, the system's hairline, black at an alpha, Polaris's
- *  #ccc highlight at an alpha, or nothing. */
+ *  of two rungs, white, the system's hairline, the control edge, black at an
+ *  alpha, Polaris's #ccc highlight at an alpha, or nothing. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "white" }
   | { kind: "hairline" }
+  | { kind: "control" }
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
   | { kind: "shade"; alpha: number }
@@ -151,6 +156,7 @@ interface SurfaceRecipe {
 const NONE: SurfaceColor = { kind: "none" }
 const WHITE: SurfaceColor = { kind: "white" }
 const HAIRLINE: SurfaceColor = { kind: "hairline" }
+const CONTROL: SurfaceColor = { kind: "control" }
 const step = (step: string): SurfaceColor => ({ kind: "step", step })
 /** Halfway between the 50 and 100 rungs: the registry's dark popover. */
 const HALF: SurfaceColor = { kind: "mix", a: "50", b: "100", weight: 50 }
@@ -219,6 +225,9 @@ const BEVEL: ShadowLayer[] = [
 /** Duolingo's lip under cards and tiles. */
 const LEDGE_LIP = 2
 
+/* The neobrutalist shadow: the control edge cast down and right, no blur. */
+const OFFSET: ShadowLayer[] = [{ offset: "4px 4px 0 0", color: both(CONTROL) }]
+
 function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
   if (layers.length === 0) return []
@@ -240,6 +249,7 @@ function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
 export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
   const bevel = state.surfaceEdge === "bevel"
+  const offset = state.surfaceEdge === "offset"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
   const [card, ...floating] = ladder(state)
@@ -248,40 +258,48 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const [popover, modal] = state.surfaceEdge === "ledge" ? [0, 0] : floating
   const rimmed = (layers: ShadowLayer[]) =>
     bevel ? [...BEVEL, ...layers] : layers
+  const cast = (rung: number) =>
+    offset ? OFFSET : rimmed(shadowLayers(rung, edgeless))
   return {
     card: {
-      edge: both(edgeless || bevel ? NONE : HAIRLINE),
+      edge: both(offset ? CONTROL : edgeless || bevel ? NONE : HAIRLINE),
       bg: {
         light: grouped ? WHITE : tonal ? HALF : step("25"),
         dark: edgeless || tonal ? QUARTER : step("50"),
       },
-      shadow: rimmed(shadowLayers(card, edgeless)),
+      shadow: cast(card),
     },
     popover: {
-      edge: bevel
-        ? both(NONE)
-        : {
-            light: edgeless ? NONE : HAIRLINE,
-            dark: edgeless && tonal ? NONE : HAIRLINE,
-          },
+      edge: offset
+        ? both(CONTROL)
+        : bevel
+          ? both(NONE)
+          : {
+              light: edgeless ? NONE : HAIRLINE,
+              dark: edgeless && tonal ? NONE : HAIRLINE,
+            },
       bg: {
         light: grouped ? WHITE : tonal ? step("50") : step("25"),
         dark: HALF,
       },
-      shadow: rimmed(shadowLayers(popover, edgeless)),
+      shadow: cast(popover),
     },
-    modalShadow: shadowLayers(modal, edgeless),
+    modalShadow: offset ? OFFSET : shadowLayers(modal, edgeless),
     glass: state.translucentOverlays,
     stroke: surfaceStroke(state),
   }
 }
 
 function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
+  const px = strokePx(state.controlStroke)
   if (state.surfaceEdge === "bevel")
     return { card: "0px", tile: "1px", overlay: "0px", lip: "0px" }
+  if (state.surfaceEdge === "offset") {
+    const stroke = `${px}px`
+    return { card: stroke, tile: stroke, overlay: stroke, lip: "0px" }
+  }
   if (state.surfaceEdge !== "ledge")
     return { card: "1px", tile: "1px", overlay: "1px", lip: "0px" }
-  const px = strokePx(state.controlStroke)
   const ledge = `${px}px ${px}px ${px + LEDGE_LIP}px`
   return { card: ledge, tile: ledge, overlay: `${px}px`, lip: `${LEDGE_LIP}px` }
 }
@@ -291,6 +309,7 @@ function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
 interface SurfacePalette {
   step: (step: string) => string
   hairline: string
+  control: string
 }
 
 const alpha = (value: number) => String(Math.round(value * 1000) / 1000)
@@ -306,6 +325,8 @@ export function surfaceColorCss(
       return "oklch(1 0 0)"
     case "hairline":
       return palette.hairline
+    case "control":
+      return palette.control
     case "step":
       return palette.step(color.step)
     case "mix":
@@ -337,6 +358,7 @@ export function shadowCss(
 const TOKEN_PALETTE: SurfacePalette = {
   step: (step) => `var(--neutral-${step})`,
   hairline: "var(--color-border)",
+  control: "var(--color-border-control)",
 }
 
 function pairCss(pair: PerMode<SurfaceColor>): string {
@@ -385,6 +407,7 @@ export const chapter = defineChapter({
     if (sidebar) tokens["--color-sidebar"] = sidebar
     const tile = {
       cardPress: state.surfaceEdge === "ledge" ? "sink" : "none",
+      cardEdge: state.surfaceEdge === "offset" ? "control" : "surface",
     }
     return {
       tokens,
@@ -402,6 +425,14 @@ export const chapter = defineChapter({
     ],
   },
   rules: [
+    {
+      // Offset casts its own shadow on every surface; the ladder is unused.
+      id: "surfaces/offset-casts-own-shadow",
+      target: "surfaceShadow",
+      when: { key: "surfaceEdge", in: ["offset"] },
+      effect: { kind: "hide", value: "flat" },
+      cause: "surfaceEdge",
+    },
     {
       // Flat cards need an edge or a tone apart from the page; Grouped's
       // white cards get theirs from the page clamp (color/grouped-page).

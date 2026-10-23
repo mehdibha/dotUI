@@ -35,6 +35,11 @@ export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
     description: "A dark gray, high-contrast edge",
     credits: ["Polaris", "Atlassian", "Material 3"],
   },
+  ink: {
+    label: "Ink",
+    description: "The darkest edge: text color in light, black in dark",
+    credits: ["Gumroad", "neobrutalism.dev"],
+  },
 })
 
 export const SELECTED_WASH_OPTIONS = options(SELECTED_WASH_VALUES, {

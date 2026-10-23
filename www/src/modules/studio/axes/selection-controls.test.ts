@@ -75,16 +75,19 @@ describe("selection controls", () => {
     expect(ds.componentParams.checkbox).toEqual({
       cardSelected: "tint",
       cardPress: "none",
+      cardEdge: "surface",
     })
     expect(ds.componentParams["radio-group"]).toEqual({
       mark: "dot",
       cardSelected: "tint",
       cardPress: "none",
+      cardEdge: "surface",
     })
     expect(ds.componentParams.switch).toEqual({
       style: "inset",
       cardSelected: "tint",
       cardPress: "none",
+      cardEdge: "surface",
     })
     expect(ds.componentParams.slider).toEqual({ thumb: "knob", track: "thin" })
   })

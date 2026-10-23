@@ -384,9 +384,19 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
       lightBg: 100,
     },
   ],
+  "color/brutal-draws-ink": [{ style: "brutal" }, { controlEdge: "ink" }],
+  "color/ink-lifts-dark-page": [
+    { controlEdge: "ink" },
+    { controlEdge: "ink", darkBg: 18 },
+  ],
   "color/white-ink-needs-exact": [
     { solidInk: "white" },
     { preserveSeed: true, solidInk: "white" },
+  ],
+  "shape/brutal-draws-bold": [{ style: "brutal" }, { controlStroke: "bold" }],
+  "surfaces/offset-casts-own-shadow": [
+    { style: "brutal", surfaceShadow: "high" },
+    { style: "brutal", surfaceEdge: "line", surfaceShadow: "high" },
   ],
   "surfaces/flat-needs-separation": [
     { surfaceEdge: "none" },
@@ -436,9 +446,13 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", buttonPress: "nudge" },
     { buttonPress: "nudge" },
   ],
-  "button-groups/ledge-gaps-groups": [
-    { style: "chunky", groupSeparator: "divider" },
+  "button-groups/gapped-styles": [
+    { style: "brutal", groupSeparator: "divider" },
     { groupSeparator: "divider" },
+  ],
+  "switch/ink-edge-outlines-track": [
+    { controlEdge: "ink" },
+    { controlEdge: "ink", switchStyle: "slab" },
   ],
   "menus/check-or-fill": [
     { menuIndicator: "none" },
@@ -480,6 +494,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", buttonStyle: "bevel" },
     { style: "chunky", buttonStyle: "ledge" },
   ],
+  "style/buttonStyle-brutal": [
+    { style: "brutal", buttonStyle: "ledge" },
+    { style: "brutal", buttonStyle: "offset" },
+  ],
   "style/surfaceEdge-flat": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
@@ -492,7 +510,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/inputStyle-flat": [
+  "style/surfaceEdge-brutal": [
+    { style: "brutal", surfaceEdge: "ledge" },
+    { style: "brutal", surfaceEdge: "offset" },
+  ],
+  "style/inputStyle-flat-brutal": [
     { inputStyle: "well" },
     { style: "tactile", inputStyle: "well" },
   ],

@@ -49,6 +49,7 @@ const SIGNATURE: Record<string, string> = {
   gloss: "after:from-white/11",
   bevel: "from-63%",
   ledge: "shadow-[0_4px_0_0_var(--color-primary-active)]",
+  offset: "shadow-[4px_4px_0_0_var(--color-border-control)]",
 }
 
 describe("button styles", () => {
@@ -96,6 +97,21 @@ describe("button styles", () => {
     const bold = await at("bold")
     expect(bold).toContain("border-2 border-border-control")
     expect(bold).toContain("shadow-[0_2px_0_0_var(--color-primary-active)]")
+  })
+
+  // neobrutalism (Gumroad, neobrutalism.dev): border-2 in ink on a 4px hard
+  // shadow the press moves the face into; 2px on xs and sm, so an addon
+  // button stays inside its field.
+  test("Offset: a 2px ink edge on a hard shadow the press moves into", async () => {
+    const content = await shipped("button", { style: "brutal" })
+    expect(content).toContain("border-2 border-border-control")
+    expect(content).toContain("pressed:translate-1 pressed:shadow-none")
+    const offset = BUTTON_STYLES.offset
+    for (const { size, class: cls } of offset.compoundVariants) {
+      expect(["xs", "sm"]).toContain(size)
+      expect(cls).toContain("shadow-[2px_2px_0_0_")
+      expect(cls).toContain("pressed:translate-0.5")
+    }
   })
 })
 
@@ -190,12 +206,14 @@ describe("buttons axes", () => {
     expect(state.buttonSecondary).toBe("soft")
   })
 
-  test("Ledge groups sit apart and their seam row goes inert", () => {
-    const state = parseState(owned("ledge"))
-    const { componentParams } = designSystemOf(state)
-    expect(componentParams.group?.segments).toBe("gapped")
-    expect(componentParams["toggle-button-group"]?.segments).toBe("gapped")
-    expect(effective(state).explain.groupSeparator?.lock?.kind).toBe("hide")
+  test("Ledge and Offset groups sit apart and their seam row goes inert", () => {
+    for (const buttonStyle of ["ledge", "offset"]) {
+      const state = parseState(owned(buttonStyle))
+      const { componentParams } = designSystemOf(state)
+      expect(componentParams.group?.segments).toBe("gapped")
+      expect(componentParams["toggle-button-group"]?.segments).toBe("gapped")
+      expect(effective(state).explain.groupSeparator?.lock?.kind).toBe("hide")
+    }
   })
 
   test("Solid needs a brand primary: under a neutral one it falls back to the Style", () => {
@@ -311,10 +329,12 @@ describe("shipped buttons", () => {
 
   test("gapped groups ship no attach mechanics", async () => {
     for (const name of ["group", "toggle-button-group"]) {
-      const ledge = await shipped(name, owned("ledge"))
-      expect(ledge, name).toContain("gap-2")
-      expect(ledge, name).not.toContain("rounded-l-none")
-      expect(ledge, name).not.toContain("shadow-none")
+      for (const buttonStyle of ["ledge", "offset"]) {
+        const gapped = await shipped(name, owned(buttonStyle))
+        expect(gapped, name).toContain("gap-2")
+        expect(gapped, name).not.toContain("rounded-l-none")
+        expect(gapped, name).not.toContain("shadow-none")
+      }
       expect(await shipped(name), name).toContain("rounded-l-none")
     }
   })

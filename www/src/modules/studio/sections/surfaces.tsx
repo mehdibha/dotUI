@@ -49,11 +49,12 @@ const GLYPH_SHADOWS = [
 ]
 
 /* The card's edge at glyph scale: Bevel's rim is a shadow, Ledge's lip a
-   heavier bottom. */
+   heavier bottom. Offset's hard shadow is drawn at half size. */
 const GLYPH_STROKE: Record<string, string> = {
   bevel: "0",
   ledge: "1px 1px 2px",
 }
+const GLYPH_OFFSET = "2px 2px 0 0"
 
 /** A card on the page, light beside dark, in the system's own neutral. */
 function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
@@ -66,10 +67,16 @@ function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
           m.scales.neutral?.[s as StepName] ?? m.background
         const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
         const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
+        // Offset is Brutal's alone, whose control edge is ink: the text
+        // color in light, black in dark.
+        const control = mode === "light" ? step("950") : "oklch(0 0 0)"
         const color = (pair: PerMode<SurfaceColor>) =>
-          surfaceColorCss(pair[mode], { step, hairline })
+          surfaceColorCss(pair[mode], { step, hairline, control })
         const rim = recipe.card.shadow.filter((layer) => layer.inset)
-        const drop = GLYPH_SHADOWS[Math.min(cardRung(state), 4)]
+        const drop =
+          state.surfaceEdge === "offset"
+            ? `${GLYPH_OFFSET} ${control}`
+            : GLYPH_SHADOWS[Math.min(cardRung(state), 4)]
         return (
           <span
             key={mode}
@@ -138,7 +145,8 @@ const LayersRow = () => (
   <DialSelect axis="surfaceLayers" label="Layers" options={LAYERS_OPTIONS} />
 )
 
-/* Auto: the edge the button finish implies (Bevel, Ledge, else Line). */
+/* Auto: the edge the button finish implies (Bevel, Ledge, Offset, else
+   Line). */
 const EDGE_ROW = [{ value: "auto", label: "Auto" }, ...EDGE_OPTIONS]
 
 function EdgeRow() {

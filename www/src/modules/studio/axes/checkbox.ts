@@ -15,7 +15,7 @@ import { oneOf } from "./schema"
 export const CORNER_VALUES = ["auto", "sharp"] as const
 
 /* Same as fields: Color's control edge. Strong: Color's Strong edge on checks
-   and radios only, fields unchanged. */
+   and radios only, fields unchanged; an Ink edge is already darker. */
 export const EDGE_VALUES = ["fields", "strong"] as const
 
 export function cornerTokens(corner: string) {
@@ -28,7 +28,7 @@ export const EDGE_FLOOR = "var(--neutral-400)"
 
 export function edgeTokens(edge: string, controlEdge: string) {
   const value =
-    edge === "strong"
+    edge === "strong" && controlEdge !== "ink"
       ? STRONG_EDGE
       : controlEdge === "soft"
         ? EDGE_FLOOR

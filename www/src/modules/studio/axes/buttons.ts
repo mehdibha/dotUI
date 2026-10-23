@@ -1,7 +1,7 @@
 /* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
    here writes both). Style picks a real system's recipe, copied whole; an
    open style (Flat, Hairline) lets Secondary and Press swap in, a closed one
-   draws its own. Under Ledge, groups always sit apart. */
+   draws its own. Under Ledge and Offset, groups always sit apart. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -14,10 +14,14 @@ export const STYLE_VALUES = [
   "gloss",
   "bevel",
   "ledge",
+  "offset",
 ] as const
 
 /** Styles that draw their own secondary and press. */
-const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
+const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge", "offset"]
+
+/** Styles whose lip or shadow would overlap a neighbor's: groups gap. */
+export const GAPPED_STYLES = ["ledge", "offset"]
 
 export const SECONDARY_VALUES = [
   "as-style",
@@ -61,7 +65,9 @@ export const chapter = defineChapter({
       press: state.buttonPress,
       case: state.buttonCase,
     }
-    const segments = { segments: style === "ledge" ? "gapped" : "attached" }
+    const segments = {
+      segments: GAPPED_STYLES.includes(style) ? "gapped" : "attached",
+    }
     return {
       tokens:
         state.buttonRadius === "pill"

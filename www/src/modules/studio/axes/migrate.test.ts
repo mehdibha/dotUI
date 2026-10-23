@@ -59,8 +59,8 @@ const RENAMED: Record<string, Raw> = {
 const RULED: Record<string, string> = {
   // Attached cells' underlines merged into one line on main.
   "otp-field/underline-separates-cells": "otpStyle",
-  // Ledge groups never attach, so no seam is drawn.
-  "button-groups/ledge-gaps-groups": "groupSeparator",
+  // Gapped groups never attach, so no seam is drawn.
+  "button-groups/gapped-styles": "groupSeparator",
   // Flat cards with no edge get a tone or a shadow apart from the page.
   "color/grouped-page": "lightBg",
   "surfaces/flat-needs-separation": "surfaceShadow",

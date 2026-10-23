@@ -8,7 +8,6 @@ import {
   effective,
   followersOf,
   parseState,
-  RULES,
 } from "./index"
 import { AUTO_STYLE } from "./inputs"
 import {
@@ -18,6 +17,7 @@ import {
   pickStyle,
   resetToStyle,
   STYLE_KEYS,
+  RULES as STYLE_RULES,
   STYLE_VALUES,
 } from "./style"
 
@@ -70,7 +70,8 @@ describe("columns", () => {
   it("never writes what survives a change of material", () => {
     for (const style of STYLE_VALUES)
       expect(valuesOf({ style }), style).toMatchObject({
-        controlEdge: "firm",
+        // Brutal's one exception: its edges are ink.
+        controlEdge: style === "brutal" ? "ink" : "firm",
         toggleSelected: "tone",
         toastStyle: "surface",
         menuInset: "inset",
@@ -91,6 +92,32 @@ describe("columns", () => {
     })
   })
 
+  it("Brutal draws 2px ink edges over hard offset shadows", () => {
+    const brutal = {
+      buttonStyle: "offset",
+      surfaceEdge: "offset",
+      surfaceShadow: "flat",
+      inputStyle: "inset",
+      segmentedSelected: "ring",
+      controlEdge: "ink",
+      controlStroke: "bold",
+      darkBg: 16,
+    }
+    expect(valuesOf({ style: "brutal" })).toMatchObject(brutal)
+    // Picks can't take the ink or the weight off, add a soft shadow, or sink
+    // the dark page under the black ink.
+    expect(
+      valuesOf({
+        style: "brutal",
+        controlEdge: "soft",
+        controlStroke: "regular",
+        surfaceShadow: "high",
+        darkBg: 0,
+      }),
+    ).toMatchObject(brutal)
+    expect(valuesOf({ style: "brutal", darkBg: 20 }).darkBg).toBe(20)
+  })
+
   it("an Auto column resolves one more hop", () => {
     for (const buttonStyle of ["flat", "hairline"]) {
       const { values, explain } = effective(parseState({ buttonStyle }))
@@ -107,11 +134,11 @@ describe("columns", () => {
 })
 
 describe("exclusions", () => {
-  it("are the eight options other styles own", () => {
+  it("are the ten options other styles own", () => {
     expect(
       Object.values(ALLOWED).flatMap((byOption) => Object.keys(byOption ?? {})),
-    ).toHaveLength(8)
-    for (const rule of RULES.filter((r) => r.cause === "style"))
+    ).toHaveLength(10)
+    for (const rule of STYLE_RULES)
       expect(rule.effect).toMatchObject({ kind: "exclude", fallback: "style" })
   })
 

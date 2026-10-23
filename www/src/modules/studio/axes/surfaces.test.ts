@@ -86,6 +86,7 @@ const resolved = (values: Partial<typeof DEFAULTS>) => effective(owned(values))
 const PALETTE = {
   step: (s: string) => `var(--neutral-${s})`,
   hairline: "var(--color-border)",
+  control: "var(--color-border-control)",
 }
 
 /** A registry semantic target as the CSS `base/colors.css` declares. */
@@ -507,6 +508,28 @@ describe("drawn edges", () => {
       expect(origin, name).not.toContain("disabled:border-b")
     }
     expect(tokensFor({ surfaceEdge: "ledge" })["--studio-tile-lip"]).toBe("2px")
+  })
+
+  test("Offset casts the control edge 4px on every surface, tiles included", async () => {
+    const cast = "4px 4px 0 0 var(--color-border-control)"
+    expect(tokensFor({ surfaceEdge: "offset" })).toMatchObject({
+      "--card-border": "var(--color-border-control)",
+      "--overlay-border": "var(--color-border-control)",
+      "--shadow-card": cast,
+      "--shadow-popover": cast,
+      "--shadow-modal": cast,
+      "--studio-card-stroke": "2px",
+      "--studio-tile-stroke": "2px",
+      "--studio-overlay-stroke": "2px",
+    })
+    const edge = "has-data-label:border-border-control"
+    for (const name of ["checkbox", "radio-group", "switch"]) {
+      expect(
+        await shippedItem(name, { surfaceEdge: "offset" }),
+        name,
+      ).toContain(edge)
+      expect(await shippedItem(name, {}), name).not.toContain(edge)
+    }
   })
 
   test("under Ledge, popovers and dialogs drop their shadow", () => {

@@ -22,6 +22,7 @@ const toggleButtonMeta = {
         "gloss",
         "bevel",
         "ledge",
+        "offset",
       ] as const,
     },
     secondary: {
@@ -33,6 +34,7 @@ const toggleButtonMeta = {
         "gloss",
         "bevel",
         "ledge",
+        "offset",
         "outline",
         "raised",
         "soft",

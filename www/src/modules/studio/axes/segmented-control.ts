@@ -19,6 +19,8 @@ const CHIP_AUTO: Record<string, string> = {
   "rim-light": "raised",
   gloss: "raised",
   bevel: "raised",
+  // A white chip on the ink edge (neobrutalism.dev tabs).
+  offset: "ring",
 }
 
 export const chapter = defineChapter({

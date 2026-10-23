@@ -19,6 +19,11 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "Thick solid ledges under controls",
     credits: ["Duolingo", "PostHog", "Kahoot"],
   },
+  brutal: {
+    label: "Brutal",
+    description: "Ink edges and hard offset shadows",
+    credits: ["Gumroad", "neobrutalism.dev", "RetroUI"],
+  },
 })
 
 /** Each Style's finish row: the options it allows, for the key

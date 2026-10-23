@@ -7,7 +7,7 @@
 
 import type { TokenOverrides } from "@/registry/theme"
 
-import { SOURCE_VALUES } from "./color"
+import { DARK_EDGES, SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
@@ -181,7 +181,9 @@ export const chapter = defineChapter({
       tokens["--user-select-ui"] = "auto"
 
     if (state.focusColor !== "neutral") return { tokens }
-    const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
+    const overrides = DARK_EDGES.includes(state.controlEdge)
+      ? INK_FOCUS
+      : NEUTRAL_FOCUS
     return { tokens, color: { overrides } }
   },
   follows: {

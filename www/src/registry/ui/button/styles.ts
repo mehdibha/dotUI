@@ -146,6 +146,56 @@ export const BUTTON_STYLES = {
       },
     ],
   },
+  offset: {
+    variants: {
+      variant: {
+        primary:
+          "border-(length:--studio-control-stroke) border-border-control bg-primary shadow-[4px_4px_0_0_var(--color-border-control)] hover:bg-primary-hover disabled:border-(--disabled-border,var(--color-border-control)) disabled:shadow-none pressed:translate-1 pressed:shadow-none",
+        warning:
+          "border-(length:--studio-control-stroke) border-border-control bg-warning shadow-[4px_4px_0_0_var(--color-border-control)] hover:bg-warning-hover disabled:border-(--disabled-border,var(--color-border-control)) disabled:shadow-none pressed:translate-1 pressed:shadow-none",
+        danger:
+          "border-(length:--studio-control-stroke) border-border-control bg-danger shadow-[4px_4px_0_0_var(--color-border-control)] hover:bg-danger-hover disabled:border-(--disabled-border,var(--color-border-control)) disabled:shadow-none pressed:translate-1 pressed:shadow-none",
+      },
+    },
+    compoundVariants: [
+      {
+        variant: "primary" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+      {
+        variant: "primary" as const,
+        size: "sm" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+      {
+        variant: "warning" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+      {
+        variant: "warning" as const,
+        size: "sm" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+      {
+        variant: "danger" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+      {
+        variant: "danger" as const,
+        size: "sm" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:translate-0.5",
+      },
+    ],
+  },
 }
 
 /* The secondary button: each style's own, then the ones an open style can
@@ -202,6 +252,28 @@ export const BUTTON_SECONDARY = {
           "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
       },
     },
+  },
+  offset: {
+    variants: {
+      variant: {
+        secondary:
+          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[4px_4px_0_0_var(--color-border-control)] hover:bg-neutral disabled:shadow-none pressed:not-aria-expanded:translate-1 pressed:not-aria-expanded:shadow-none",
+      },
+    },
+    compoundVariants: [
+      {
+        variant: "secondary" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:not-aria-expanded:translate-0.5",
+      },
+      {
+        variant: "secondary" as const,
+        size: "sm" as const,
+        class:
+          "shadow-[2px_2px_0_0_var(--color-border-control)] pressed:not-aria-expanded:translate-0.5",
+      },
+    ],
   },
   // shadcn, Geist, Notion, Stripe: an edge on no fill.
   outline: {

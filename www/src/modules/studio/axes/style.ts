@@ -1,17 +1,20 @@
 /* Style — the material, named by its light: how every surface and control
    draws depth. Flat has no light (lines), Tactile lights controls from
-   above, Chunky casts hard light onto solid ledges. Seven keys default to
-   the "style" follow and read their column below; Flat's column is each
-   key's own default, so Origin is untouched. An option that needs another
-   light (Bevel buttons outside Tactile) is excluded, falling back to the
-   column. Color, type, radius, density and motion never change with it. */
+   above, Chunky casts hard light onto solid ledges, Brutal casts it from the
+   top left: ink edges over hard offset shadows. Seven keys default to the
+   "style" follow and read their column below; Flat's column is each key's
+   own default, so Origin is untouched. An option that needs another light
+   (Bevel buttons outside Tactile) is excluded, falling back to the column.
+   Color, type, radius, density and motion never change with it, except that
+   Brutal pins every control edge to 2px ink (rules in color.ts and
+   shape.ts). */
 
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
 
-export const STYLE_VALUES = ["flat", "tactile", "chunky"] as const
+export const STYLE_VALUES = ["flat", "tactile", "chunky", "brutal"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -22,37 +25,44 @@ export const COLUMNS = {
     flat: "same",
     tactile: "same",
     chunky: "same",
+    brutal: "same",
   },
-  // Tactile and Chunky draw the edge their button finish implies.
+  // Tactile, Chunky and Brutal draw the edge their button finish implies.
   surfaceEdge: {
     flat: "line",
     tactile: "auto",
     chunky: "auto",
+    brutal: "auto",
   },
   surfaceShadow: {
     flat: "flat",
     tactile: "low",
     chunky: "flat",
+    brutal: "flat",
   },
   buttonStyle: {
     flat: "flat",
     tactile: "bevel",
     chunky: "ledge",
+    brutal: "offset",
   },
   buttonSecondary: {
     flat: "as-style",
     tactile: "as-style",
     chunky: "as-style",
+    brutal: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
     tactile: "auto",
     chunky: "auto",
+    brutal: "auto",
   },
   inputStyle: {
     flat: "auto",
     tactile: "auto",
     chunky: "auto",
+    brutal: "auto",
   },
 } satisfies Record<string, Record<Style, string>>
 
@@ -70,8 +80,13 @@ export const ALLOWED: Partial<
     gloss: ["tactile"],
     bevel: ["tactile"],
     ledge: ["chunky"],
+    offset: ["brutal"],
   },
-  surfaceEdge: { bevel: ["tactile"], ledge: ["chunky"] },
+  surfaceEdge: {
+    bevel: ["tactile"],
+    ledge: ["chunky"],
+    offset: ["brutal"],
+  },
   inputStyle: { well: ["tactile", "chunky"] },
 }
 
