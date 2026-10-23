@@ -29,7 +29,12 @@ function draw({
   const page: RGB = [255, 255, 255]
   const data = new Uint8Array(W * H * 4)
   const inside = (px: number, py: number, inset: number) => {
-    const [x0, y0, x1, y1] = [bx + inset, by + inset, bx + bw - inset, by + bh - inset]
+    const [x0, y0, x1, y1] = [
+      bx + inset,
+      by + inset,
+      bx + bw - inset,
+      by + bh - inset,
+    ]
     if (px < x0 || px > x1 || py < y0 || py > y1) return false
     const rr = Math.max(0, r - inset)
     const cx = Math.min(Math.max(px, x0 + rr), x1 - rr)
@@ -39,14 +44,21 @@ function draw({
   for (let y = 0; y < H; y++)
     for (let x = 0; x < W; x++) {
       let color: RGB = page
-      if (shadow && x > bx && x < bx + bw && y >= by + bh && y < by + bh + 4 * scale)
+      if (
+        shadow &&
+        x > bx &&
+        x < bx + bw &&
+        y >= by + bh &&
+        y < by + bh + 4 * scale
+      )
         color = [235, 235, 235]
       const mix: number[] = [0, 0, 0]
       for (let sy = 0; sy < 4; sy++)
         for (let sx = 0; sx < 4; sx++) {
           const [px, py] = [x + (sx + 0.5) / 4, y + (sy + 0.5) / 4]
           let c = color
-          if (inside(px, py, 0)) c = edge && !inside(px, py, scale) ? edge : fill
+          if (inside(px, py, 0))
+            c = edge && !inside(px, py, scale) ? edge : fill
           if (
             ink &&
             px >= bx + 12 * scale &&
@@ -63,11 +75,17 @@ function draw({
 }
 
 const near = (value: string | undefined, expected: number, within = 1) =>
-  expect(Math.abs(Number.parseFloat(value ?? "") - expected)).toBeLessThanOrEqual(within)
+  expect(
+    Math.abs(Number.parseFloat(value ?? "") - expected),
+  ).toBeLessThanOrEqual(within)
 
 describe("pixel probe", () => {
   it("reads a filled button: fill, ink, radius, height, padding", () => {
-    const { img, box } = draw({ radius: 8, fill: [37, 99, 235], ink: [255, 255, 255] })
+    const { img, box } = draw({
+      radius: 8,
+      fill: [37, 99, 235],
+      ink: [255, 255, 255],
+    })
     const m = measureBox(img, box)
     expect(m.backgroundColor).toBe("rgb(37, 99, 235)")
     expect(m.color).toBe("rgb(255, 255, 255)")
@@ -108,9 +126,19 @@ describe("pixel probe", () => {
   })
 
   it("diffs like a probe reading", () => {
-    const { img, box } = draw({ radius: 8, fill: [37, 99, 235], ink: [255, 255, 255] })
+    const { img, box } = draw({
+      radius: 8,
+      fill: [37, 99, 235],
+      ink: [255, 255, 255],
+    })
     const rows = compareMeasures(
-      { button: { backgroundColor: "rgb(37, 99, 235)", borderRadius: "8px", height: "36px" } },
+      {
+        button: {
+          backgroundColor: "rgb(37, 99, 235)",
+          borderRadius: "8px",
+          height: "36px",
+        },
+      },
       { button: measureBox(img, box) },
     )
     expect(rows.every((row) => row.ok)).toBe(true)

@@ -817,7 +817,14 @@ export interface Look {
   /** The custom property behind each value, where one was found. */
   vars?: Values
   /** One element showing it: page key, pass, mode and census id. */
-  sample: { key: string; pass: string; mode: "light" | "dark"; id: number }
+  sample: {
+    key: string
+    pass: string
+    mode: "light" | "dark"
+    id: number
+    /** The same element's id in dark, when light leads. */
+    twin?: number
+  }
 }
 
 export interface Inventory {
@@ -939,6 +946,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
           pass: sample.page.pass,
           mode: lead,
           id: sample.element.id,
+          ...(twin ? { twin: twin.id } : {}),
         },
       })
     }

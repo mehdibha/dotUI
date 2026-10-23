@@ -84,7 +84,8 @@ export function optionsOf(
     steps.push(Math.round(n * 1000) / 1000)
   const at = typeof current === "number" ? current : value.min
   return steps.filter(
-    (n) => n !== current && (near === undefined || Math.abs(n - at) <= near * step),
+    (n) =>
+      n !== current && (near === undefined || Math.abs(n - at) <= near * step),
   )
 }
 

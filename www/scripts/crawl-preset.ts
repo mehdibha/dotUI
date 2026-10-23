@@ -31,8 +31,11 @@
  *     committed model, on the pages both share. Writes no model: rebuild it
  *     with --from to keep the signed-in pages.
  *
- * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, and the
- * model; <out> is .scratch-refs/<id>/<date>/census by default.
+ * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
+ * model, and frozen copies of each look's sample at rest and in its states
+ * (--copies per pass, 40 by default; redacted with --connect) as
+ * <out>/snapshots/<look>-<state>-<mode>.{json,html}, which /internal/compare
+ * lists as parts. <out> is .scratch-refs/<id>/<date>/census by default.
  */
 import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
@@ -70,6 +73,13 @@ import type {
   Step,
 } from "../src/modules/preset-lab/probe"
 import {
+  COPY_AREA,
+  type PartFile,
+  type Snapshot,
+  snapshotDocument,
+  snapshotSnippet,
+} from "../src/modules/preset-lab/snapshot"
+import {
   focusable,
   launch,
   type Mode,
@@ -99,6 +109,7 @@ const { values: args } = parseArgs({
     out: { type: "string" },
     max: { type: "string", default: "5000" },
     states: { type: "string", default: "80" },
+    copies: { type: "string", default: "40" },
     concurrency: { type: "string", default: "2" },
   },
 })
@@ -117,6 +128,8 @@ const CENSUS = versionOf("census.ts", "probe.ts")
 const today = new Date().toISOString().slice(0, 10)
 const OUT = resolve(args.out ?? `.scratch-refs/${pack}/${today}/census`)
 const modelFile = resolve(REFS, pack, "model.json")
+// Signed-in pages keep no text, values or images in their copies.
+const REDACT = !!args.connect
 const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8")) as T
 
@@ -157,6 +170,43 @@ function representatives(elements: CensusElement[], only?: Set<string>) {
     .map(([first]) => first as CensusElement)
 }
 
+/* Frozen copies (snapshot.ts) of each look's sample, at rest and in each
+   state read: what /internal/compare shows beside our part. Kept per page,
+   pass and mode, by census id. */
+type Copies = Record<number, Partial<Record<"rest" | State, Snapshot>>>
+const COPIES = new Map<string, Copies>()
+const copiesOf = (key: string, pass: string, mode: Mode) =>
+  `${key}|${pass}|${mode}`
+const BOXLESS = new Set([
+  "page",
+  "text",
+  "paragraph",
+  "label",
+  "time",
+  "blockquote",
+  "main",
+  "region",
+  "list",
+  "listitem",
+  "group",
+  "article",
+  "banner",
+  "contentinfo",
+  "complementary",
+  "navigation",
+])
+
+const freeze = async (page: Page, ids: number[]) =>
+  ids.length
+    ? ((await page.evaluate(
+        snapshotSnippet({
+          attribute: "data-census",
+          redact: REDACT,
+          keys: ids.map(String),
+        }),
+      )) as Record<string, Snapshot>)
+    : {}
+
 const finish = (page: Page) =>
   page.evaluate(() => {
     for (const animation of document.getAnimations())
@@ -179,7 +229,11 @@ const read = async (page: Page, id: number, focus = false) =>
    focused forced through the DevTools protocol plus a keyboard round trip,
    so CSS and script focus rings both show. Each state is undone before the
    next. Only what a state changes is kept. */
-async function readStates(page: Page, elements: CensusElement[]) {
+async function readStates(
+  page: Page,
+  elements: CensusElement[],
+  copies: Copies,
+) {
   const cdp = await page.createCDPSession()
   await cdp.send("DOM.enable")
   await cdp.send("CSS.enable")
@@ -199,6 +253,12 @@ async function readStates(page: Page, elements: CensusElement[]) {
     const handle = await page.$(`>>> [data-census="${element.id}"]`)
     if (!handle) continue
     const states: Partial<Record<State, Values>> = {}
+    const copy = async (state: State) => {
+      const frozen =
+        copies[element.id] && (await freeze(page, [element.id]))[element.id]
+      if (frozen)
+        copies[element.id] = { ...copies[element.id], [state]: frozen }
+    }
     try {
       await handle.hover()
       await pause(60)
@@ -207,11 +267,13 @@ async function readStates(page: Page, elements: CensusElement[]) {
       // The pointer may have scrolled the page, which moves nothing a look
       // is made of.
       if (hover) states.hover = changed(element.values, hover)
+      await copy("hover")
       await page.mouse.move(0, 0)
       await force(handle, ["hover", "active"])
       await finish(page)
       const pressed = await read(page, element.id)
       if (pressed) states.pressed = changed(element.values, pressed)
+      await copy("pressed")
       await force(handle, [])
       if (element.focusable) {
         await handle.focus()
@@ -225,6 +287,7 @@ async function readStates(page: Page, elements: CensusElement[]) {
         await finish(page)
         const focus = await read(page, element.id, true)
         if (focus) states.focus = changed(element.values, focus)
+        await copy("focus")
         await force(handle, [])
         await handle.evaluate((el) => (el as HTMLElement).blur?.())
       }
@@ -265,9 +328,26 @@ async function pass(
     viewport: CensusPage["viewport"]
   }
   const { elements } = walked
+  // The most used looks with a box small enough to copy.
+  const copied = representatives(elements)
+    .filter(
+      ({ role, box: [, , w, h] }) =>
+        !BOXLESS.has(role) && w * h > 0 && w * h <= COPY_AREA,
+    )
+    .slice(0, Number(args.copies))
+  const copies: Copies = Object.fromEntries(
+    Object.entries(
+      await freeze(
+        page,
+        copied.map((element) => element.id),
+      ),
+    ).map(([id, rest]) => [id, { rest }]),
+  )
+  COPIES.set(copiesOf(key, name, mode), copies)
   await readStates(
     page,
     representatives(elements, INTERACTIVE).slice(0, Number(args.states)),
+    copies,
   )
   const { vars, tokens } = (await page.evaluate(
     censusSnippet({
@@ -338,9 +418,7 @@ const slug = (key: string) =>
 
 async function crawl(
   job: Job,
-  open: (
-    job: Job,
-  ) => Promise<{
+  open: (job: Job) => Promise<{
     page: Page
     load: () => Promise<void>
     close: () => Promise<void>
@@ -385,11 +463,16 @@ async function crawl(
   } finally {
     await close()
   }
-  for (const [i, censusPage] of pages.entries())
-    await writeFile(
-      resolve(OUT, "pages", `${slug(job.key)}-${i}-${job.mode}.json`),
-      `${JSON.stringify(censusPage)}\n`,
-    )
+  for (const [i, censusPage] of pages.entries()) {
+    const file = resolve(OUT, "pages", `${slug(job.key)}-${i}-${job.mode}`)
+    await writeFile(`${file}.json`, `${JSON.stringify(censusPage)}\n`)
+    const copies = COPIES.get(copiesOf(job.key, censusPage.pass, job.mode))
+    if (copies && Object.keys(copies).length)
+      await writeFile(
+        `${file}.copies.json`,
+        `${JSON.stringify({ key: job.key, pass: censusPage.pass, mode: job.mode, copies })}\n`,
+      )
+  }
   const count = pages.reduce((sum, p) => sum + p.elements.length, 0)
   console.log(
     `${job.key} (${job.mode}): ${pages.length} pass${pages.length === 1 ? "" : "es"}, ${count} elements`,
@@ -570,11 +653,69 @@ async function saved(dir: string): Promise<CensusPage[]> {
   const folder = existsSync(resolve(dir, "pages"))
     ? resolve(dir, "pages")
     : resolve(dir)
+  const files = await readdir(folder)
+  for (const file of files.filter((file) => file.endsWith(".copies.json"))) {
+    const { key, pass, mode, copies } = await readJson<{
+      key: string
+      pass: string
+      mode: Mode
+      copies: Copies
+    }>(resolve(folder, file))
+    COPIES.set(copiesOf(key, pass, mode), copies)
+  }
   return Promise.all(
-    (await readdir(folder))
-      .filter((file) => file.endsWith(".json"))
+    files
+      .filter(
+        (file) => file.endsWith(".json") && !file.endsWith(".copies.json"),
+      )
       .map((file) => readJson<CensusPage>(resolve(folder, file))),
   )
+}
+
+/** Each look's copies as /internal/compare reads parts:
+ *  snapshots/<look>-<state>-<mode>.json, with a standalone .html beside. */
+async function writeCopies(inventory: Inventory) {
+  const dir = resolve(OUT, "snapshots")
+  let written = 0
+  for (const look of inventory.looks) {
+    const { key, pass, mode, id, twin } = look.sample
+    const sides: [Mode, number | undefined][] = [
+      [mode, id],
+      ["dark", mode === "light" ? twin : undefined],
+    ]
+    for (const [side, element] of sides) {
+      const copies =
+        element === undefined
+          ? undefined
+          : COPIES.get(copiesOf(key, pass, side))?.[element]
+      for (const [state, snapshot] of Object.entries(copies ?? {})) {
+        if (!snapshot) continue
+        const part = `${look.id}-${state}`
+        const file: PartFile = {
+          kind: "dotui-part",
+          part,
+          mode: side,
+          page: key,
+          dpr: 1,
+          snapshot,
+        }
+        if (!written++) await mkdir(dir, { recursive: true })
+        await writeFile(
+          resolve(dir, `${part}-${side}.json`),
+          `${JSON.stringify(file)}\n`,
+        )
+        // On the color it sat on, as the compare page shows it.
+        await writeFile(
+          resolve(dir, `${part}-${side}.html`),
+          snapshotDocument(snapshot).replace(
+            "<body>",
+            `<body style="background:${snapshot.backdrop}">`,
+          ),
+        )
+      }
+    }
+  }
+  if (written) console.log(`copies → ${dir} (${written})`)
 }
 
 await mkdir(resolve(OUT, "pages"), { recursive: true })
@@ -591,6 +732,7 @@ await writeFile(
 console.log(
   `census → ${resolve(OUT, "census.json")} (${inventory.looks.length} looks, ${pages.length} passes, census ${CENSUS})`,
 )
+await writeCopies(inventory)
 
 const model = buildModel(inventory)
 if (args.drift) {

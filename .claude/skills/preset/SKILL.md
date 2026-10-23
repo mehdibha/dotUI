@@ -27,17 +27,20 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 - Name parts as `SPECIMEN_TARGETS` in `probe.ts` does. Commit `targets.json` so the next review re-measures in one pass. Leave out a property the two sides put in different places (where padding sits, say) with the part's `skip`, or list the few a page owns with `only`, so a re-measure doesn't bring the rest back. Tokens published as code or token tables go into `tokens.json` by hand, cited in `sources.md`; a pack made only of them sets `"probe": "tokens"`. A part the product shows but the specimens don't is listed apart by `presets:measure`: add it to `SPECIMEN_TARGETS` (and to its sheet) instead of leaving it unmeasured. A specimen part the product has no component for: measure the product's closest look, the one the preset maps it to (Untitled UI's bordered tabs for `segmented`), and say so in `sources.md`.
 - **Reference images** for the review page: `--pack <id> --shots <dir>` crops each public part as it was measured; signed-in screens saved by the Remote Control session into the checkout's `www/.scratch-refs/`, then brought over with `connect_device` and `device_stage_files` (or ask the user to drop screenshots in the thread). They go to the project's shared files under `presets/<id>/<date>/refs/`, named `<component>-<mode>.png`, never to git. Look at each crop before it goes on a public page: a crop can catch a neighboring row instead of the measured part, or personal content.
 
+- **Census.** `pnpm --filter www presets:crawl --pack <id>` (`--open 2` opens menus too) reads every element of the pack's public pages with no targets: its model is the product's radius rungs, type styles, heights, spacing grid, palette and looks per control, a check on what `targets.json` misses, and it leaves frozen copies of each look for /internal/compare. Commit `refs/<id>/model.json`; when a signed-in census arrives (the kit's `__dotui.census()`), rebuild it with `--from <public dir> --from <signed-in dir>`.
+
 ## 3. Author or fix the preset
 
+- Start from `pnpm --filter www presets:fit --pack <id> --port <port>`: a draft diff and, per change, the rows it fixed and broke. Keep the changes that are true to the product, not every one that lowers the count, and check each against the catalog.
 - Work in the decision order (Style, color, type, shape and density, surfaces and states, components), one group at a time.
 - After each group, run `pnpm build:registry` (the preset catalog in `presets/__generated__/catalog.ts` is generated, and CI fails on a stale one), then `pnpm --filter www presets:measure --preset <id> --port <port>`, and re-capture the sheets you touched: `presets:capture --preset <id> --sheet <name> --port <port>`. Each measure ends with what moved since the previous run; check that a group fixed what it meant to and broke nothing.
 - An option the catalog marks **pinned** is overridden by a rule on this preset: setting it does nothing, and `presets.test` fails.
 - Sort every property that is off into one of five buckets:
   1. **Preset value:** fix it, with the measured value in a comment.
   2. **Stand-in:** the closest value, with a `// Stand-in: …` comment.
-  3. **Missing axis:** a comment on the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020), one look per comment (`Look | Systems that need it | Stand-in today`, with measured values), or naming an existing row to add your system to it. Read the table in the issue body first, and the ledgers it links to (controls, overlays, content, color engine); comments without a 👍 aren't folded in yet. The issue has hundreds of comments: read it through REST (`gh api` or curl, `per_page=100`, paged) and grep locally rather than through an MCP comments tool. Never edit the issue body: other preset threads write at the same time.
+  3. **Missing axis:** an entry in the pack's `gaps.json` under the narrowest look in `preset-lab/looks.ts` (`presets:gaps --look <id>` shows what other systems wrote for it; add a look to `looks.ts` when none fits), with the measured values and the stand-in. `presets:fit --write-gaps` files the rows the fit can't close for you; check them before committing. Each thread writes only its own pack's file, so there is nothing to coordinate.
   4. **Component bug:** its own issue.
-  5. **Color engine:** a ledger comment starting `Color engine:`, folded into the color engine ledger; the engine is queued for a rewrite, so don't work around it.
+  5. **Color engine:** a `gaps.json` entry under a `color.*` look; the engine is queued for a rewrite, so don't work around it.
 - Never add a token, axis, variant or override in this work, and don't touch other presets or component styles.
 
 ## 4. Compare
@@ -51,7 +54,7 @@ Three modes, same loop: **create** a preset for a new system, **review** an exis
 
 In a Claude project:
 
-- Publish or update the "<Name> fidelity" artifact. For each sheet, show the reference next to the specimen in light and dark, then the measured diff with off rows first, the score, and open gaps linking ledger rows. For a product with one mode, add a "Derived <mode>" section: what's kept, what the engine derives, and the weak spots. Images go in the artifact's asset store; a batch upload takes only files inside the working directory, so copy them to `www/.scratch-*/` first.
+- Publish or update the "<Name> fidelity" artifact. For each sheet, show the reference next to the specimen in light and dark, then the measured diff with off rows first, the score, and open gaps from `gaps.json`. For a product with one mode, add a "Derived <mode>" section: what's kept, what the engine derives, and the weak spots. Images go in the artifact's asset store; a batch upload takes only files inside the working directory, so copy them to `www/.scratch-*/` first.
 - Update the preset's row in the project's preset tracker: status, sheets passing, properties off with the `probe` version `presets:measure` prints, gaps, date, links. Write only that row; the tracker's link and update steps are in project memory. Other threads write at the same time: when the version pin fails, rebuild from the newest data and retry rather than resending.
 
 Outside a project, put the compare images and the diff summary in the PR description instead.
@@ -64,6 +67,6 @@ Outside a project, put the compare images and the diff summary in the PR descrip
 - The PR body covers:
   - the changes by group, with their evidence;
   - the measure summary, before → after;
-  - ledger comments posted;
+  - `gaps.json` entries added;
   - the review artifact link.
 - Cover and examples outputs can conflict between preset PRs: rebase and regenerate, never hand-merge them.

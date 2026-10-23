@@ -132,11 +132,15 @@ export function measureBox(img: Image, box: Box, scale = 1): Measure {
     ] as const
   ).map(([cx, cy, dx, dy]) => {
     for (let d = 0; d < reach; d++) {
-      const cover = Math.min(1, distance(at(img, cx + d * dx, cy + d * dy), outside) / span)
+      const cover = Math.min(
+        1,
+        distance(at(img, cx + d * dx, cy + d * dy), outside) / span,
+      )
       if (cover < 0.02) continue
       // The arc crosses the pixel square where x + y = s, its tangent
       // square to the diagonal; `cover` is the area past it.
-      const s = cover >= 0.5 ? Math.sqrt(2 * (1 - cover)) : 2 - Math.sqrt(2 * cover)
+      const s =
+        cover >= 0.5 ? Math.sqrt(2 * (1 - cover)) : 2 - Math.sqrt(2 * cover)
       return (d + s / 2) / (1 - Math.SQRT1_2)
     }
     return reach / (1 - Math.SQRT1_2)
@@ -165,7 +169,9 @@ export function measureBox(img: Image, box: Box, scale = 1): Measure {
     }
   }
   const strongest = Math.max(0, ...ink.map((color) => distance(color, fill)))
-  const inkColor = mode(ink.filter((color) => distance(color, fill) >= strongest * 0.9))
+  const inkColor = mode(
+    ink.filter((color) => distance(color, fill) >= strongest * 0.9),
+  )
 
   // Shadow: the band just below the box darker than the outside further
   // down.

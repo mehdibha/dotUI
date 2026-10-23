@@ -33,18 +33,29 @@ const { values: args } = parseArgs({
 })
 
 const mode = args.mode
-if (!args.pack || !args.shot || !args.rects || (mode !== "light" && mode !== "dark")) {
-  console.error("usage: --pack <id> --shot <png> --rects <file> --mode light|dark [--parts a,b] [--exact] [--write]")
+if (
+  !args.pack ||
+  !args.shot ||
+  !args.rects ||
+  (mode !== "light" && mode !== "dark")
+) {
+  console.error(
+    "usage: --pack <id> --shot <png> --rects <file> --mode light|dark [--parts a,b] [--exact] [--write]",
+  )
   process.exit(1)
 }
 
 const shot = PNG.sync.read(await readFile(resolve(args.shot)))
-const rects: { width: number; parts: Record<string, Box> } = JSON.parse(await readFile(resolve(args.rects), "utf8"))
+const rects: { width: number; parts: Record<string, Box> } = JSON.parse(
+  await readFile(resolve(args.rects), "utf8"),
+)
 const scale = shot.width / rects.width
 const only = args.parts?.split(",")
 
 const measures: Measures = {}
-console.log(`| part | box | fill | ink | edge | radius | height | padding | shadow |`)
+console.log(
+  `| part | box | fill | ink | edge | radius | height | padding | shadow |`,
+)
 console.log(`| --- | --- | --- | --- | --- | --- | --- | --- | --- |`)
 for (const [part, [x, y, w, h]] of Object.entries(rects.parts)) {
   if (only && !only.includes(part)) continue
@@ -59,8 +70,12 @@ for (const [part, [x, y, w, h]] of Object.entries(rects.parts)) {
 
 if (args.write) {
   const file = resolve(REFS, args.pack, "pixel.json")
-  const pixel: ReferenceTokens = existsSync(file) ? JSON.parse(await readFile(file, "utf8")) : { probe: "pixel" }
+  const pixel: ReferenceTokens = existsSync(file)
+    ? JSON.parse(await readFile(file, "utf8"))
+    : { probe: "pixel" }
   pixel[mode] = { ...pixel[mode], ...measures }
   await writeFile(file, `${JSON.stringify(pixel, null, 2)}\n`)
-  console.log(`\npixel → ${file} (${Object.keys(measures).length} parts, ${mode})`)
+  console.log(
+    `\npixel → ${file} (${Object.keys(measures).length} parts, ${mode})`,
+  )
 }
