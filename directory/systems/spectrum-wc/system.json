@@ -1,0 +1,17 @@
+{
+  "slug": "spectrum-wc",
+  "name": "Spectrum Web Components",
+  "org": "Adobe",
+  "type": "component-library",
+  "upstream": ["spectrum-2", "lit"],
+  "sources": {
+    "docs": "https://opensource.adobe.com/spectrum-web-components/",
+    "repo": "https://github.com/adobe/spectrum-web-components",
+    "site": "https://opensource.adobe.com/spectrum-web-components/storybook/",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

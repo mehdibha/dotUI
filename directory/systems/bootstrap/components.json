@@ -1,0 +1,249 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/accordion/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alerts",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/alerts/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/badge/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumb",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/breadcrumb/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "Button group",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/button-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Buttons",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/buttons/",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\" data-bs-theme=\"light\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Bootstrap Buttons</title>\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css\" integrity=\"sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB\" crossorigin=\"anonymous\">\n<script>\n  (function () {\n    function applyMode(dark) {\n      document.documentElement.setAttribute(\n        'data-bs-theme', dark ? 'dark' : 'light');\n    }\n    var mode = new URLSearchParams(window.location.search).get('mode');\n    if (mode !== null) { applyMode(mode === 'dark'); return; }\n    var root = null;\n    try { if (window.parent !== window) root = window.parent.document.documentElement; }\n    catch (e) { root = null; }\n    if (!root) { applyMode(false); return; }\n    applyMode(root.classList.contains('dark'));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains('dark'));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: ['class'] });\n    window.__dsModeObserver = observer;\n  })();\n</script>\n<style>\n  html, body { height: 100%; }\n  body {\n    margin: 0;\n    padding: 16px;\n    background: var(--bs-body-bg);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  .demo-row {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    flex-wrap: wrap;\n  }\n</style>\n</head>\n<body>\n  <div class=\"demo-row\">\n    <button type=\"button\" class=\"btn btn-primary\">Primary</button>\n    <button type=\"button\" class=\"btn btn-secondary\">Secondary</button>\n    <button type=\"button\" class=\"btn btn-outline-primary\">Outline</button>\n    <button type=\"button\" class=\"btn btn-primary\" disabled>Disabled</button>\n  </div>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/card/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "carousel",
+      "name": "Carousel",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/carousel/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checks & radios",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/checks-radios/",
+      "demo": null,
+      "note": "One page covering checkboxes, radios, and switches — Bootstrap ships them as one control family."
+    },
+    {
+      "component": null,
+      "name": "Close button",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/close-button/",
+      "demo": null,
+      "note": "Bootstrap-specific dismiss affordance shared by alerts, modals, offcanvas, and toasts."
+    },
+    {
+      "component": "accordion",
+      "name": "Collapse",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/collapse/",
+      "demo": null,
+      "note": "Low-level disclosure plugin; the Accordion component is built on top of it."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Dropdowns",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/dropdowns/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Floating labels",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/floating-labels/",
+      "demo": null,
+      "note": "Label-in-field variant of Bootstrap form controls."
+    },
+    {
+      "component": "text-input",
+      "name": "Form control",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/form-control/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Input group",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/input-group/",
+      "demo": null,
+      "note": "Composition wrapper that prepends/appends addons to form controls."
+    },
+    {
+      "component": "list",
+      "name": "List group",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/list-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Modal",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/modal/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "header",
+      "name": "Navbar",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/navbar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Navs & tabs",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/navs-tabs/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Offcanvas",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/offcanvas/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/pagination/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Placeholders",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/placeholders/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popovers",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/popovers/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/progress/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Range",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/range/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Scrollspy",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/scrollspy/",
+      "demo": null,
+      "note": "Scroll-position plugin that updates nav state; no cross-system equivalent."
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/forms/select/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Spinners",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/spinners/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Tables",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/content/tables/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Toasts",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/toasts/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltips",
+      "docsUrl": "https://getbootstrap.com/docs/5.3/components/tooltips/",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://getbootstrap.com/docs/5.3/components/",
+    "https://github.com/twbs/bootstrap"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/bootstrap.ts",
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/twbs/bootstrap",
+        "ref": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
+        "retrievedAt": null,
+        "snapshot": "sources/bootstrap"
+      },
+      {
+        "kind": "npm",
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css",
+        "ref": "5.3.8",
+        "retrievedAt": null,
+        "snapshot": null
+      }
+    ],
+    "notes": "Inventory read from site/data/sidebar.yml at v5.3.8 (the docs site's own page index); docs URLs derived by the same title slugification the site uses. Canonical taxonomy mapping is an explicit table in the extractor. The Button demo loads Bootstrap's published bootstrap.min.css from jsDelivr at the same pinned version with its published SRI hash — a version-pinned URL, not a live fetch. The demo switches color mode via Bootstrap's own data-bs-theme root attribute, which that same stylesheet defines: an explicit ?mode= in its URL is applied once as a standalone override, otherwise it mirrors the embedding parent document's <html class=\"dark\"> live through a MutationObserver."
+  }
+}

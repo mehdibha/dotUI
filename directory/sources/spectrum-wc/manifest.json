@@ -1,0 +1,14 @@
+{
+  "kind": "live-site",
+  "repo": "https://opensource.adobe.com/spectrum-web-components/",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "storybook-index.json",
+      "upstreamPath": null,
+      "url": "https://opensource.adobe.com/spectrum-web-components/storybook/index.json",
+      "sha256": "4982fb778a917695f942af8ffe5759d2bafefc351c326881f7bb497b68bde280"
+    }
+  ]
+}

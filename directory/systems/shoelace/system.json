@@ -1,0 +1,17 @@
+{
+  "slug": "shoelace",
+  "name": "Shoelace",
+  "org": "Cory LaViska",
+  "type": "component-library",
+  "upstream": ["lit"],
+  "sources": {
+    "docs": "https://shoelace.style",
+    "repo": "https://github.com/shoelace-style/shoelace",
+    "site": "https://shoelace.style",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

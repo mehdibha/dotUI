@@ -1,0 +1,14 @@
+{
+  "kind": "repo",
+  "repo": "https://github.com/radix-ui/website",
+  "ref": "bb424082fd33fadc244a6dd276d3ced55caa6234",
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "themes-routes.ts",
+      "upstreamPath": "utils/themesRoutes.ts",
+      "url": "https://raw.githubusercontent.com/radix-ui/website/bb424082fd33fadc244a6dd276d3ced55caa6234/utils/themesRoutes.ts",
+      "sha256": "a9e3a15d51e514ec21ec188259b358b99f0409b0ebb486302e08de574b9aebb7"
+    }
+  ]
+}
