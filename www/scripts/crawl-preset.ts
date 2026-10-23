@@ -34,8 +34,8 @@
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
  * model, and frozen copies of each look's sample at rest and in its states
  * (--copies per pass, 40 by default; redacted with --connect) as
- * <out>/crops/<look>-<state>-<mode>.{json,html}, which /internal/compare
- * lists as parts. <out> is .scratch-refs/<id>/<date>/census by default.
+ * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
+ * (presets:looks). <out> is .scratch-refs/<id>/<date>/census by default.
  */
 import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
@@ -64,6 +64,7 @@ import {
 import {
   buildModel,
   diffModels,
+  jsonLines,
   type Model,
   summarize,
 } from "../src/modules/preset-lab/model"
@@ -170,7 +171,7 @@ function representatives(elements: CensusElement[], only?: Set<string>) {
 }
 
 /* Frozen copies (snapshot.ts) of each look's sample, at rest and in each
-   state read: what /internal/compare shows beside our part. Kept per page,
+   state read: what a system page shows beside our part. Kept per page,
    pass and mode, by census id. */
 type Copies = Record<number, Partial<Record<"rest" | State, Snapshot>>>
 const COPIES = new Map<string, Copies>()
@@ -687,7 +688,7 @@ const documentOf = (copy: Snapshot) => {
   return `<!doctype html><html><head><meta charset="utf-8"><style>${css.replace(/</g, "\\3c ")}</style></head><body>${copy.html}</body></html>\n`
 }
 
-/** Each look's copies as /internal/compare reads parts:
+/** Each look's copies as part files:
  *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. */
 async function writeCopies(inventory: Inventory) {
   const dir = resolve(OUT, "crops")
@@ -762,6 +763,6 @@ if (args.drift) {
   )
   process.exit(0)
 }
-await writeFile(modelFile, `${JSON.stringify(model, null, 1)}\n`)
+await writeFile(modelFile, `${jsonLines(model)}\n`)
 console.log(`model → ${modelFile}\n`)
 console.log(summarize(model))

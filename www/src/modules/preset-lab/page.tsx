@@ -22,8 +22,7 @@ import { SHEETS, type SheetName } from "./sheets"
 const route = getRouteApi("/internal/specimens")
 
 /* A preset rendered through the preview iframe's global-mode provider, one
-   sheet per 1280×900 capture. `scripts/capture-specimens.mts` screenshots it,
-   and /internal/compare embeds it. */
+   sheet per 1280×900 capture. `scripts/capture-specimens.mts` screenshots it. */
 export function SpecimenPage() {
   const { preset = "origin", mode, sheet, diff } = route.useSearch()
   if (!sheet) return <SpecimenIndex />
@@ -74,9 +73,9 @@ const withDiff = (state: StudioState, diff: unknown) =>
 const prepare: PrepareDesignSystem<undefined> = (_, ready) => ready(undefined)
 
 /* The sheet shows `state`, then follows the `design-system` messages its
-   own origin posts: /internal/compare's studio panel, or a script calling
-   `window.__specimen.setDiff(diff)` to re-render in place, which resolves
-   once the new design system has committed. */
+   own origin posts: a script calls `window.__specimen.setDiff(diff)` to
+   re-render in place, which resolves once the new design system has
+   committed. */
 function SpecimenSheet({
   state,
   sheet,
@@ -164,10 +163,7 @@ function ReadySignal() {
       await document.fonts.ready
       await new Promise((r) => setTimeout(r, 300))
       if (cancelled) return
-      // Embedded in /internal/compare, a scroll would move the parent page.
-      document
-        .querySelector<HTMLElement>("[data-specimen-focus]")
-        ?.focus({ preventScroll: true })
+      document.querySelector<HTMLElement>("[data-specimen-focus]")?.focus()
       await document.fonts.ready
       document.documentElement.dataset.specimenReady = ""
     }

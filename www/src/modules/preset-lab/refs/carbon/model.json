@@ -1,3735 +1,882 @@
 {
- "probe": "ce94064",
- "pages": [
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
+  "probe": "ce94064",
+  "pages": [
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:white&args=kind:secondary",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:white&args=size:md",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:white&args=defaultOpen:!true",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white",
+      "modes": ["light","dark"]
+    }
+  ],
+  "radius": [
+    {
+      "px": 2,
+      "count": 2,
+      "groups": ["badge","box"]
+    },
+    {
+      "px": 4,
+      "count": 2,
+      "groups": ["tab"]
+    }
+  ],
+  "pills": ["box","avatar"],
+  "type": [
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "18.0001px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 118,
+      "groups": ["button","text","text@menuitem","text@tab","tab","menuitem"]
+    },
+    {
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16px",
+      "letterSpacing": "0.32px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 40,
+      "groups": ["text","box","label@dialog","label","text@dialog"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 20,
+      "groups": ["tooltip","box","navigation","panel","application","banner"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "lineHeight": "18.0001px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 11,
+      "groups": ["button","text@button","link","text","text@tab"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "14px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 9,
+      "groups": ["button","combobox"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "18px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 7,
+      "groups": ["link","text@link"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 6,
+      "groups": ["panel","box","paragraph@dialog","text"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "lineHeight": "20px",
+      "letterSpacing": "0.1px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 4,
+      "groups": ["text@link","link"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 4,
+      "groups": ["paragraph","link"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "0px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 3,
+      "groups": ["tooltip","box"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "20.5715px",
+      "letterSpacing": "0.16px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 3,
+      "groups": ["button"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "IBM Plex Sans",
+      "count": 3,
+      "groups": ["combobox","button"]
+    },
+    {
+      "fontSize": "32px",
+      "fontWeight": "400",
+      "lineHeight": "40px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 3,
+      "groups": ["heading.h2"]
+    },
+    {
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "IBM Plex Sans",
+      "count": 2,
+      "groups": ["button","text@button"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "IBM Plex Sans",
+      "count": 1,
+      "groups": ["button"]
+    },
+    {
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "IBM Plex Sans",
+      "count": 1,
+      "groups": ["button"]
+    },
+    {
+      "fontSize": "20px",
+      "fontWeight": "400",
+      "lineHeight": "28px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 1,
+      "groups": ["heading.h2@dialog"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "lineHeight": "normal",
+      "fontFamily": "IBM Plex Sans",
+      "count": 1,
+      "groups": ["spinbutton"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20px",
+      "letterSpacing": "0.1px",
+      "fontFamily": "IBM Plex Sans",
+      "count": 1,
+      "groups": ["text@link"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20px",
+      "letterSpacing": "0.32px",
+      "fontFamily": "IBM Plex Mono",
+      "count": 1,
+      "groups": ["textbox"]
+    }
+  ],
+  "heights": {
+    "avatar": [
+      {"px":18,"count":2},
+      {"px":16,"count":1}
+    ],
+    "badge": [
+      {"px":22,"count":1}
+    ],
+    "button": [
+      {"px":40,"count":41},
+      {"px":48,"count":20},
+      {"px":32,"count":3},
+      {"px":15.5,"count":2},
+      {"px":64,"count":2},
+      {"px":24,"count":1}
+    ],
+    "combobox": [
+      {"px":40,"count":5},
+      {"px":48,"count":1}
+    ],
+    "link": [
+      {"px":47,"count":5},
+      {"px":18,"count":2},
+      {"px":32,"count":2},
+      {"px":20,"count":1}
+    ],
+    "menuitem": [
+      {"px":40,"count":4}
+    ],
+    "menuitemcheckbox": [
+      {"px":40,"count":2}
+    ],
+    "menuitemradio": [
+      {"px":40,"count":4}
+    ],
+    "spinbutton": [
+      {"px":26,"count":1}
+    ],
+    "tab": [
+      {"px":40,"count":3},
+      {"px":38,"count":2}
+    ],
+    "textbox": [
+      {"px":40,"count":3}
+    ]
   },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
+  "spacing": {
+    "grid": 2,
+    "steps": [
+      {"px":1,"count":3},
+      {"px":2,"count":2},
+      {"px":4,"count":27},
+      {"px":8,"count":39},
+      {"px":10,"count":14},
+      {"px":12,"count":4},
+      {"px":14,"count":12},
+      {"px":15,"count":8},
+      {"px":16,"count":76},
+      {"px":17,"count":18},
+      {"px":20,"count":3},
+      {"px":32,"count":3},
+      {"px":42,"count":88},
+      {"px":48,"count":5},
+      {"px":63,"count":6},
+      {"px":77,"count":1}
+    ]
   },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
+  "colors": {
+    "light": {
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":95,"uses":["page backgroundColor","button backgroundColor","button color","link backgroundColor","tooltip backgroundColor"]},{"color":"rgb(244, 244, 244)","l":0.967,"c":0,"h":0,"count":61,"uses":["button backgroundColor","menuitem backgroundColor","menuitemradio backgroundColor","menuitemcheckbox backgroundColor","textbox backgroundColor"]},{"color":"rgb(232, 232, 232)","l":0.931,"c":0,"h":0,"count":1,"uses":["button backgroundColor"]},{"color":"rgb(224, 224, 224)","l":0.907,"c":0,"h":0,"count":12,"uses":["separator backgroundColor","box backgroundColor","tab edge","banner edge","progressbar backgroundColor"]},{"color":"rgb(198, 198, 198)","l":0.827,"c":0,"h":0,"count":2,"uses":["dialog edge","icon@button color"]},{"color":"rgb(189, 189, 189)","l":0.798,"c":0,"h":0,"count":3,"uses":["text@menuitem color","icon@menuitem color"]},{"color":"rgb(141, 141, 141)","l":0.643,"c":0,"h":0,"count":9,"uses":["combobox edge","panel edge","textbox edge"]},{"color":"rgb(111, 111, 111)","l":0.542,"c":0,"h":0,"count":15,"uses":["button color","text color"]},{"color":"rgb(102, 102, 102)","l":0.51,"c":0,"h":0,"count":1,"uses":["panel backgroundColor"]},{"color":"rgb(82, 82, 82)","l":0.439,"c":0,"h":0,"count":75,"uses":["text@menuitem color","icon@menuitem color","label@dialog color","tab color","text@link color"]},{"color":"rgb(57, 57, 57)","l":0.345,"c":0,"h":0,"count":11,"uses":["box backgroundColor","button backgroundColor","badge backgroundColor","box edge","status backgroundColor"]},{"color":"rgb(22, 22, 22)","l":0.2,"c":0,"h":0,"count":162,"uses":["button color","page color","text color","box color","tooltip color"]},{"color":"rgb(0, 0, 0)","l":0,"c":0,"h":0,"count":14,"uses":["img color","button color","icon@button color","combobox color"]}],
+      "accents": [{"hue":262,"count":29,"steps":[{"color":"rgb(208, 226, 255)","l":0.908,"c":0.044,"h":260,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(15, 98, 254)","l":0.557,"c":0.243,"h":262,"count":24,"uses":["button backgroundColor","button color","link color","icon@button color","icon@link color"]},{"color":"rgb(0, 67, 206)","l":0.454,"c":0.221,"h":263,"count":2,"uses":["box color","text color"]},{"color":"rgb(0, 83, 154)","l":0.442,"c":0.134,"h":253,"count":2,"uses":["box color","text color"]}]},{"hue":15,"count":7,"steps":[{"color":"rgb(255, 215, 217)","l":0.913,"c":0.045,"h":15,"count":2,"uses":["box backgroundColor","button backgroundColor"]},{"color":"rgb(250, 77, 86)","l":0.666,"c":0.209,"h":22,"count":1,"uses":["status edge"]},{"color":"rgb(159, 24, 83)","l":0.465,"c":0.172,"h":1,"count":2,"uses":["box color","text color"]},{"color":"rgb(162, 25, 31)","l":0.46,"c":0.171,"h":26,"count":2,"uses":["box color","text@button color"]}]},{"hue":148,"count":4,"steps":[{"color":"rgb(167, 240, 186)","l":0.893,"c":0.104,"h":152,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(36, 161, 72)","l":0.623,"c":0.166,"h":148,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(14, 96, 39)","l":0.429,"c":0.117,"h":148,"count":2,"uses":["box color","text color"]}]},{"hue":295,"count":3,"steps":[{"color":"rgb(232, 218, 255)","l":0.911,"c":0.052,"h":303,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(105, 41, 196)","l":0.468,"c":0.219,"h":295,"count":2,"uses":["box color","text color"]}]},{"hue":195,"count":3,"steps":[{"color":"rgb(158, 240, 240)","l":0.903,"c":0.08,"h":196,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(0, 93, 93)","l":0.433,"c":0.074,"h":195,"count":2,"uses":["box color","text color"]}]},{"hue":350,"count":1,"steps":[{"color":"rgb(255, 214, 232)","l":0.916,"c":0.051,"h":350,"count":1,"uses":["box backgroundColor"]}]},{"hue":233,"count":1,"steps":[{"color":"rgb(186, 230, 255)","l":0.902,"c":0.057,"h":233,"count":1,"uses":["box backgroundColor"]}]}]
+    },
+    "dark": {
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":26,"uses":["button color","img color","icon@button color","combobox color","menuitem edge"]},{"color":"rgb(244, 244, 244)","l":0.967,"c":0,"h":0,"count":170,"uses":["button color","page color","text color","box color","tooltip color"]},{"color":"rgb(198, 198, 198)","l":0.827,"c":0,"h":0,"count":75,"uses":["text@menuitem color","icon@menuitem color","label@dialog color","tab color","text@link color"]},{"color":"rgb(168, 168, 168)","l":0.732,"c":0,"h":0,"count":15,"uses":["button color","text color"]},{"color":"rgb(141, 141, 141)","l":0.643,"c":0,"h":0,"count":6,"uses":["panel edge","combobox edge","textbox edge"]},{"color":"rgb(111, 111, 111)","l":0.542,"c":0,"h":0,"count":6,"uses":["button backgroundColor","textbox edge","combobox edge"]},{"color":"rgb(89, 89, 89)","l":0.464,"c":0,"h":0,"count":3,"uses":["text@menuitem color","icon@menuitem color"]},{"color":"rgb(82, 82, 82)","l":0.439,"c":0,"h":0,"count":4,"uses":["box backgroundColor","dialog edge"]},{"color":"rgb(77, 77, 77)","l":0.42,"c":0,"h":0,"count":1,"uses":["icon@button color"]},{"color":"rgb(57, 57, 57)","l":0.345,"c":0,"h":0,"count":18,"uses":["combobox backgroundColor","separator backgroundColor","panel backgroundColor","tab edge","banner edge"]},{"color":"rgb(50, 50, 50)","l":0.317,"c":0,"h":0,"count":1,"uses":["button backgroundColor"]},{"color":"rgb(38, 38, 38)","l":0.269,"c":0,"h":0,"count":61,"uses":["button backgroundColor","menuitem backgroundColor","menuitemradio backgroundColor","menuitemcheckbox backgroundColor","textbox backgroundColor"]},{"color":"rgb(22, 22, 22)","l":0.2,"c":0,"h":0,"count":75,"uses":["page backgroundColor","button backgroundColor","link backgroundColor","tooltip backgroundColor","tab backgroundColor"]},{"color":"rgb(8, 8, 8)","l":0.134,"c":0,"h":0,"count":1,"uses":["panel backgroundColor"]}],
+      "accents": [{"hue":261,"count":27,"steps":[{"color":"rgb(208, 226, 255)","l":0.908,"c":0.044,"h":260,"count":2,"uses":["box color","text color"]},{"color":"rgb(120, 169, 255)","l":0.736,"c":0.136,"h":261,"count":16,"uses":["button color","link color","icon@button color","icon@link color"]},{"color":"rgb(69, 137, 255)","l":0.647,"c":0.189,"h":261,"count":2,"uses":["panel backgroundColor","panel color"]},{"color":"rgb(15, 98, 254)","l":0.557,"c":0.243,"h":262,"count":5,"uses":["button backgroundColor"]},{"color":"rgb(0, 67, 206)","l":0.454,"c":0.221,"h":263,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(0, 83, 154)","l":0.442,"c":0.134,"h":253,"count":1,"uses":["box backgroundColor"]}]},{"hue":26,"count":5,"steps":[{"color":"rgb(255, 215, 217)","l":0.913,"c":0.045,"h":15,"count":2,"uses":["box color","text@button color"]},{"color":"rgb(218, 30, 40)","l":0.569,"c":0.217,"h":26,"count":1,"uses":["status edge"]},{"color":"rgb(162, 25, 31)","l":0.46,"c":0.171,"h":26,"count":2,"uses":["box backgroundColor","button backgroundColor"]}]},{"hue":152,"count":4,"steps":[{"color":"rgb(167, 240, 186)","l":0.893,"c":0.104,"h":152,"count":2,"uses":["box color","text color"]},{"color":"rgb(66, 190, 101)","l":0.712,"c":0.168,"h":149,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(14, 96, 39)","l":0.429,"c":0.117,"h":148,"count":1,"uses":["box backgroundColor"]}]},{"hue":350,"count":3,"steps":[{"color":"rgb(255, 214, 232)","l":0.916,"c":0.051,"h":350,"count":2,"uses":["box color","text color"]},{"color":"rgb(159, 24, 83)","l":0.465,"c":0.172,"h":1,"count":1,"uses":["box backgroundColor"]}]},{"hue":303,"count":3,"steps":[{"color":"rgb(232, 218, 255)","l":0.911,"c":0.052,"h":303,"count":2,"uses":["box color","text color"]},{"color":"rgb(105, 41, 196)","l":0.468,"c":0.219,"h":295,"count":1,"uses":["box backgroundColor"]}]},{"hue":196,"count":3,"steps":[{"color":"rgb(158, 240, 240)","l":0.903,"c":0.08,"h":196,"count":2,"uses":["box color","text color"]},{"color":"rgb(0, 93, 93)","l":0.433,"c":0.074,"h":195,"count":1,"uses":["box backgroundColor"]}]},{"hue":233,"count":2,"steps":[{"color":"rgb(186, 230, 255)","l":0.902,"c":0.057,"h":233,"count":2,"uses":["box color","text color"]}]}]
+    }
   },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:white&args=kind:secondary",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:white&args=size:md",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:white&args=defaultOpen:!true",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
-  },
-  {
-   "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white",
-   "modes": [
-    "light",
-    "dark"
-   ]
+  "tokens": [
+    {
+      "name": "--cds-body-compact-01-font-weight",
+      "count": 83,
+      "feeds": ["button fontWeight","tab fontWeight","combobox fontWeight","label fontWeight","link fontWeight","text@combobox fontWeight","textbox fontWeight","badge fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-body-compact-01-line-height",
+      "count": 83,
+      "feeds": ["button lineHeight","tab lineHeight","combobox lineHeight","label lineHeight","link lineHeight","text@combobox lineHeight","textbox lineHeight","badge lineHeight"],
+      "light": "1.28572",
+      "dark": "1.28572"
+    },
+    {
+      "name": "--cds-body-compact-01-letter-spacing",
+      "count": 83,
+      "feeds": ["button letterSpacing","tab letterSpacing","combobox letterSpacing","label letterSpacing","link letterSpacing","text@combobox letterSpacing","textbox letterSpacing","badge letterSpacing"],
+      "light": ".16px",
+      "dark": ".16px"
+    },
+    {
+      "name": "--cds-text-primary",
+      "count": 79,
+      "feeds": ["button color","page color","combobox color","panel color","textbox color","text@combobox color","box color","heading.h2@dialog color"],
+      "light": "#161616",
+      "dark": "#f4f4f4"
+    },
+    {
+      "name": "--cds-body-compact-01-font-size",
+      "count": 75,
+      "feeds": ["button fontSize","tab fontSize","combobox fontSize","link fontSize","label fontSize","text@combobox fontSize","textbox fontSize","badge fontSize"],
+      "light": ".875rem",
+      "dark": ".875rem"
+    },
+    {
+      "name": "--cds-layout-size-height-local",
+      "count": 49,
+      "feeds": ["button paddingTop","button paddingInline","button paddingBottom","button paddingRight","combobox paddingInline","combobox paddingTop","combobox paddingBottom","combobox paddingRight"]
+    },
+    {
+      "name": "--cds-layout-density-padding-inline-local",
+      "count": 45,
+      "feeds": ["button paddingInline","button paddingRight","tab paddingInline","tab paddingTop","tab paddingBottom","tab paddingRight","textbox paddingInline","textbox paddingTop"]
+    },
+    {
+      "name": "--cds-text-secondary",
+      "count": 36,
+      "feeds": ["label@dialog color","tab color","link color","menuitem color","menuitemradio color","text color","label color","button color"],
+      "light": "#525252",
+      "dark": "#c6c6c6"
+    },
+    {
+      "name": "--cds-background",
+      "count": 28,
+      "feeds": ["page backgroundColor","link backgroundColor","banner backgroundColor","box backgroundColor"],
+      "light": "#fff",
+      "dark": "#161616"
+    },
+    {
+      "name": "--cds-label-01-font-size",
+      "count": 25,
+      "feeds": ["box fontSize","label@dialog fontSize","text fontSize","label fontSize","text@dialog fontSize"],
+      "light": ".75rem",
+      "dark": ".75rem"
+    },
+    {
+      "name": "--cds-label-01-letter-spacing",
+      "count": 25,
+      "feeds": ["box letterSpacing","label@dialog letterSpacing","text letterSpacing","label letterSpacing","text@dialog letterSpacing"],
+      "light": ".32px",
+      "dark": ".32px"
+    },
+    {
+      "name": "--cds-text-helper",
+      "count": 15,
+      "feeds": ["button color","text color"],
+      "light": "#6f6f6f",
+      "dark": "#a8a8a8"
+    },
+    {
+      "name": "--cds-button-radius-es",
+      "count": 13,
+      "feeds": ["button borderRadius"]
+    },
+    {
+      "name": "--cds-label-01-font-weight",
+      "count": 12,
+      "feeds": ["box fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-label-01-line-height",
+      "count": 12,
+      "feeds": ["box lineHeight"],
+      "light": "1.33333",
+      "dark": "1.33333"
+    },
+    {
+      "name": "--cds-body-short-01-font-size",
+      "count": 10,
+      "feeds": ["menuitem fontSize","menuitemradio fontSize","menuitemcheckbox fontSize"],
+      "light": ".875rem",
+      "dark": ".875rem"
+    },
+    {
+      "name": "--cds-body-short-01-font-weight",
+      "count": 10,
+      "feeds": ["menuitem fontWeight","menuitemradio fontWeight","menuitemcheckbox fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-body-short-01-line-height",
+      "count": 10,
+      "feeds": ["menuitem lineHeight","menuitemradio lineHeight","menuitemcheckbox lineHeight"],
+      "light": "1.28572",
+      "dark": "1.28572"
+    },
+    {
+      "name": "--cds-body-short-01-letter-spacing",
+      "count": 10,
+      "feeds": ["menuitem letterSpacing","menuitemradio letterSpacing","menuitemcheckbox letterSpacing"],
+      "light": ".16px",
+      "dark": ".16px"
+    },
+    {
+      "name": "--cds-text-on-color",
+      "count": 9,
+      "feeds": ["button color"],
+      "light": "#fff",
+      "dark": "#fff"
+    },
+    {
+      "name": "--cds-field",
+      "count": 9,
+      "feeds": ["combobox backgroundColor","panel backgroundColor","textbox backgroundColor"],
+      "light": "#f4f4f4",
+      "dark": "#262626"
+    },
+    {
+      "name": "--cds-tooltip-padding-block",
+      "count": 8,
+      "feeds": ["badge paddingInline","badge paddingTop","badge paddingBottom","badge paddingRight","box paddingInline","box paddingTop","box paddingBottom","box paddingRight"]
+    },
+    {
+      "name": "--cds-link-primary",
+      "count": 8,
+      "feeds": ["button color","link color"],
+      "light": "#0f62fe",
+      "dark": "#78a9ff"
+    },
+    {
+      "name": "--cds-button-primary",
+      "count": 6,
+      "feeds": ["button backgroundColor"],
+      "light": "#0f62fe",
+      "dark": "#0f62fe"
+    },
+    {
+      "name": "--cds-heading-compact-01-font-size",
+      "count": 6,
+      "feeds": ["button fontSize","link fontSize","text fontSize"],
+      "light": ".875rem",
+      "dark": ".875rem"
+    },
+    {
+      "name": "--cds-heading-compact-01-font-weight",
+      "count": 6,
+      "feeds": ["button fontWeight","link fontWeight","text fontWeight"],
+      "light": "600",
+      "dark": "600"
+    },
+    {
+      "name": "--cds-heading-compact-01-line-height",
+      "count": 6,
+      "feeds": ["button lineHeight","link lineHeight","text lineHeight"],
+      "light": "1.28572",
+      "dark": "1.28572"
+    },
+    {
+      "name": "--cds-heading-compact-01-letter-spacing",
+      "count": 6,
+      "feeds": ["button letterSpacing","link letterSpacing","text letterSpacing"],
+      "light": ".16px",
+      "dark": ".16px"
+    },
+    {
+      "name": "--cds-border-subtle",
+      "count": 5,
+      "feeds": ["separator backgroundColor","progressbar backgroundColor"],
+      "light": "#e0e0e0",
+      "dark": "#393939"
+    },
+    {
+      "name": "--cds-background-inverse",
+      "count": 4,
+      "feeds": ["box backgroundColor","box boxShadow","box edge","status backgroundColor"],
+      "light": "#393939",
+      "dark": "#f4f4f4"
+    },
+    {
+      "name": "--cds-button-separator",
+      "count": 4,
+      "feeds": ["button boxShadow","button edge"],
+      "light": "#e0e0e0",
+      "dark": "#161616"
+    },
+    {
+      "name": "--cds-helper-text-01-font-size",
+      "count": 4,
+      "feeds": ["text fontSize"],
+      "light": ".75rem",
+      "dark": ".75rem"
+    },
+    {
+      "name": "--cds-helper-text-01-line-height",
+      "count": 4,
+      "feeds": ["text lineHeight"],
+      "light": "1.33333",
+      "dark": "1.33333"
+    },
+    {
+      "name": "--cds-helper-text-01-letter-spacing",
+      "count": 4,
+      "feeds": ["text letterSpacing"],
+      "light": ".32px",
+      "dark": ".32px"
+    },
+    {
+      "name": "--cds-icon-primary",
+      "count": 3,
+      "feeds": ["avatar edge"],
+      "light": "#161616",
+      "dark": "#f4f4f4"
+    },
+    {
+      "name": "--cds-tag-background-gray",
+      "count": 3,
+      "feeds": ["box backgroundColor"],
+      "light": "#e0e0e0",
+      "dark": "#525252"
+    },
+    {
+      "name": "--cds-tag-color-gray",
+      "count": 3,
+      "feeds": ["box color"],
+      "light": "#161616",
+      "dark": "#f4f4f4"
+    },
+    {
+      "name": "--cds-body-01-font-size",
+      "count": 3,
+      "feeds": ["box fontSize","paragraph@dialog fontSize","text fontSize"],
+      "light": ".875rem",
+      "dark": ".875rem"
+    },
+    {
+      "name": "--cds-body-01-font-weight",
+      "count": 3,
+      "feeds": ["box fontWeight","paragraph@dialog fontWeight","text fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-body-01-line-height",
+      "count": 3,
+      "feeds": ["box lineHeight","paragraph@dialog lineHeight","text lineHeight"],
+      "light": "1.42857",
+      "dark": "1.42857"
+    },
+    {
+      "name": "--cds-body-01-letter-spacing",
+      "count": 3,
+      "feeds": ["box letterSpacing","paragraph@dialog letterSpacing","text letterSpacing"],
+      "light": ".16px",
+      "dark": ".16px"
+    },
+    {
+      "name": "--cds-button-secondary",
+      "count": 3,
+      "feeds": ["button backgroundColor"],
+      "light": "#393939",
+      "dark": "#6f6f6f"
+    },
+    {
+      "name": "--cds-layer",
+      "count": 3,
+      "feeds": ["dialog backgroundColor","menu backgroundColor","panel backgroundColor"],
+      "light": "#f4f4f4",
+      "dark": "#262626"
+    },
+    {
+      "name": "--cds-heading-05-font-size",
+      "count": 3,
+      "feeds": ["heading.h2 fontSize"],
+      "light": "2rem",
+      "dark": "2rem"
+    },
+    {
+      "name": "--cds-heading-05-font-weight",
+      "count": 3,
+      "feeds": ["heading.h2 fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-heading-05-line-height",
+      "count": 3,
+      "feeds": ["heading.h2 lineHeight"],
+      "light": "1.25",
+      "dark": "1.25"
+    },
+    {
+      "name": "--cds-heading-05-letter-spacing",
+      "count": 3,
+      "feeds": ["heading.h2 letterSpacing"],
+      "light": "0",
+      "dark": "0"
+    },
+    {
+      "name": "--cds-body-02-font-size",
+      "count": 3,
+      "feeds": ["paragraph fontSize"],
+      "light": "1rem",
+      "dark": "1rem"
+    },
+    {
+      "name": "--cds-body-02-font-weight",
+      "count": 3,
+      "feeds": ["paragraph fontWeight"],
+      "light": "400",
+      "dark": "400"
+    },
+    {
+      "name": "--cds-body-02-line-height",
+      "count": 3,
+      "feeds": ["paragraph lineHeight"],
+      "light": "1.5",
+      "dark": "1.5"
+    },
+    {
+      "name": "--cds-body-02-letter-spacing",
+      "count": 3,
+      "feeds": ["paragraph letterSpacing"],
+      "light": "0",
+      "dark": "0"
+    },
+    {
+      "name": "--cds-popover-background-color",
+      "count": 2,
+      "feeds": ["badge backgroundColor","box backgroundColor"]
+    },
+    {
+      "name": "--cds-popover-text-color",
+      "count": 2,
+      "feeds": ["badge color","box color"]
+    },
+    {
+      "name": "--cds-popover-border-radius",
+      "count": 2,
+      "feeds": ["badge borderRadius","box borderRadius"]
+    },
+    {
+      "name": "--cds-tag-color-red",
+      "count": 2,
+      "feeds": ["box color","text@button color"],
+      "light": "#a2191f",
+      "dark": "#ffd7d9"
+    },
+    {
+      "name": "--cds-text-inverse",
+      "count": 2,
+      "feeds": ["box color","status color"],
+      "light": "#fff",
+      "dark": "#161616"
+    },
+    {
+      "name": "--cds-link-text-color",
+      "count": 2,
+      "feeds": ["link color"]
+    },
+    {
+      "name": "--cds-shadow",
+      "count": 2,
+      "feeds": ["menu boxShadow","menu edge"],
+      "light": "#0000004d",
+      "dark": "#000c"
+    },
+    {
+      "name": "--cds-focus",
+      "count": 2,
+      "feeds": ["menuitem edge","textbox edge"],
+      "light": "#0f62fe",
+      "dark": "#fff"
+    },
+    {
+      "name": "--cds-support-success",
+      "count": 1,
+      "feeds": ["box backgroundColor"],
+      "light": "#24a148",
+      "dark": "#42be65"
+    }
+  ],
+  "inventory": {
+    "avatar": [
+      {"id":"avatar.1","count":2,"pages":[8],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"50%","edge":"1px rgb(22, 22, 22)","boxShadow":"none","height":"18px","paddingInline":"0px","color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"50%","edge":"1px rgb(244, 244, 244)","boxShadow":"none","height":"18px","paddingInline":"0px","color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"}}
+    ],
+    "box": [
+      {"id":"box.1","count":3,"pages":[18],"light":{"backgroundColor":"rgb(224, 224, 224)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"8px","paddingRight":"8px"},"dark":{"backgroundColor":"rgb(82, 82, 82)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"8px","paddingRight":"8px"}},
+      {"id":"box.2","count":2,"pages":[4,15],"light":{"backgroundColor":"rgb(57, 57, 57)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"},"dark":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "button": [
+      {"id":"button.1","count":29,"pages":[21],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"0px","color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"0px","color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"},"states":{"light":{"selected":{"color":"rgb(15, 98, 254)","fontWeight":"600","position":"relative"}},"dark":{"selected":{"color":"rgb(120, 169, 255)","fontWeight":"600","position":"relative"}}}},
+      {"id":"button.2","count":11,"pages":[21],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"0px","color":"rgb(111, 111, 111)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"0px","color":"rgb(168, 168, 168)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px"},"states":{"light":{"hover":{"backgroundColor":"rgb(255, 255, 255)"}},"dark":{"hover":{"backgroundColor":"rgb(22, 22, 22)"}}}},
+      {"id":"button.3","count":8,"pages":[3],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"4px","color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"4px","paddingTop":"17px","paddingBottom":"17px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"4px","color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"4px","paddingTop":"17px","paddingBottom":"17px"},"states":{"light":{"selected":{"fontWeight":"600"}},"dark":{"selected":{"fontWeight":"600"}}}},
+      {"id":"button.4","count":3,"pages":[0,13,16],"light":{"backgroundColor":"rgb(15, 98, 254)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"15px","color":"rgb(255, 255, 255)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"63px","paddingTop":"14px","paddingBottom":"14px"},"dark":{"backgroundColor":"rgb(15, 98, 254)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"15px","color":"rgb(255, 255, 255)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"63px","paddingTop":"14px","paddingBottom":"14px"}},
+      {"id":"button.5","count":3,"pages":[13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(15, 98, 254)","fontFamily":"\"IBM Plex Sans\"","fontSize":"16px","fontWeight":"400","letterSpacing":"0.16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(120, 169, 255)","fontFamily":"\"IBM Plex Sans\"","fontSize":"16px","fontWeight":"400","letterSpacing":"0.16px"}},
+      {"id":"button.6","count":2,"pages":[13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","paddingRight":"16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","paddingRight":"16px"}}
+    ],
+    "combobox": [
+      {"id":"combobox.1","count":2,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(141, 141, 141) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"48px"},"dark":{"backgroundColor":"rgb(57, 57, 57)","borderRadius":"0px","edge":"1px rgb(141, 141, 141) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"48px"},"states":{"light":{"hover":{"backgroundColor":"rgb(232, 232, 232)"}},"dark":{"hover":{"backgroundColor":"rgb(71, 71, 71)"}}}},
+      {"id":"combobox.2","count":2,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(0, 0, 0)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"48px"},"dark":{"backgroundColor":"rgb(57, 57, 57)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(255, 255, 255)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"48px"},"states":{"light":{"hover":{"backgroundColor":"rgb(232, 232, 232)"}},"dark":{"hover":{"backgroundColor":"rgb(71, 71, 71)"}}}}
+    ],
+    "heading.h2": [
+      {"id":"heading.h2.1","count":3,"pages":[13],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"32px","fontWeight":"400","letterSpacing":"normal","lineHeight":"40px","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"32px","fontWeight":"400","letterSpacing":"normal","lineHeight":"40px","paddingInline":"0px"}}
+    ],
+    "icon@button": [
+      {"id":"icon@button.1","count":4,"pages":[13],"light":{"color":"rgb(82, 82, 82)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@button.2","count":3,"pages":[13],"light":{"color":"rgb(15, 98, 254)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(120, 169, 255)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@button.3","count":3,"pages":[15,16,19],"light":{"color":"rgb(0, 0, 0)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(255, 255, 255)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@button.4","count":2,"pages":[13],"light":{"color":"rgb(22, 22, 22)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@link": [
+      {"id":"icon@link.1","count":2,"pages":[13],"light":{"color":"rgb(15, 98, 254)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(120, 169, 255)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@menuitem": [
+      {"id":"icon@menuitem.1","count":5,"pages":[14],"light":{"color":"rgb(82, 82, 82)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@menuitemcheckbox": [
+      {"id":"icon@menuitemcheckbox.1","count":3,"pages":[14],"light":{"color":"rgb(82, 82, 82)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "img": [
+      {"id":"img.1","count":6,"pages":[10,16],"light":{"color":"rgb(0, 0, 0)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(255, 255, 255)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.2","count":3,"pages":[21],"light":{"color":"rgb(22, 22, 22)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "label": [
+      {"id":"label.1","count":3,"pages":[5,6,21],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"label.2","count":2,"pages":[7],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"20px","paddingTop":"1px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"20px","paddingTop":"1px"}}
+    ],
+    "label@dialog": [
+      {"id":"label@dialog.1","count":5,"pages":[16],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}}
+    ],
+    "link": [
+      {"id":"link.1","count":4,"pages":[13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"47px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"47px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px"}},
+      {"id":"link.2","count":2,"pages":[13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(15, 98, 254)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","paddingRight":"16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(120, 169, 255)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","paddingRight":"16px"}}
+    ],
+    "menuitem": [
+      {"id":"menuitem.1","count":3,"pages":[14],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"},"states":{"light":{"disabled":{"color":"rgb(189, 189, 189)","cursor":"not-allowed"}},"dark":{"disabled":{"color":"rgb(89, 89, 89)","cursor":"not-allowed"}}}}
+    ],
+    "menuitemcheckbox": [
+      {"id":"menuitemcheckbox.1","count":2,"pages":[14],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"}}
+    ],
+    "menuitemradio": [
+      {"id":"menuitemradio.1","count":4,"pages":[14],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","gap":"normal 8px"}}
+    ],
+    "navigation": [
+      {"id":"navigation.1","count":2,"pages":[13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"16px"}}
+    ],
+    "page": [
+      {"id":"page.1","count":22,"pages":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"42px","paddingRight":"42px","paddingTop":"42px","paddingBottom":"42px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"42px","paddingRight":"42px","paddingTop":"42px","paddingBottom":"42px"}}
+    ],
+    "panel": [
+      {"id":"panel.1","count":3,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(141, 141, 141) bottom","boxShadow":"none","paddingInline":"0px"},"dark":{"backgroundColor":"rgb(57, 57, 57)","borderRadius":"0px","edge":"1px rgb(141, 141, 141) bottom","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "paragraph": [
+      {"id":"paragraph.1","count":3,"pages":[13],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"24px","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"24px","paddingInline":"0px"}}
+    ],
+    "separator": [
+      {"id":"separator.1","count":4,"pages":[14],"light":{"backgroundColor":"rgb(224, 224, 224)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"},"dark":{"backgroundColor":"rgb(57, 57, 57)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "tab": [
+      {"id":"tab.1","count":3,"pages":[10],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"2px rgb(224, 224, 224) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"2px rgb(57, 57, 57) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px"},"states":{"light":{"hover":{"color":"rgb(22, 22, 22)","edge":"2px rgb(141, 141, 141) bottom"},"selected":{"color":"rgb(22, 22, 22)","fontWeight":"600","edge":"2px rgb(15, 98, 254) bottom","width":"104.1px"}},"dark":{"hover":{"color":"rgb(244, 244, 244)","edge":"2px rgb(111, 111, 111) bottom"},"selected":{"color":"rgb(244, 244, 244)","fontWeight":"600","edge":"2px rgb(69, 137, 255) bottom","width":"104.1px"}}}},
+      {"id":"tab.2","count":2,"pages":[11],"light":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"4px","edge":"1px rgb(22, 22, 22) top+bottom","boxShadow":"none","height":"38px","paddingInline":"16px","color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","paddingTop":"8px","paddingBottom":"8px"},"dark":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"4px","edge":"1px rgb(244, 244, 244) top+bottom","boxShadow":"none","height":"38px","paddingInline":"16px","color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px","paddingTop":"8px","paddingBottom":"8px"},"states":{"light":{"selected":{"color":"rgb(255, 255, 255)","height":"40px","edge":"none","corners":"4px 0px 0px 4px","zIndex":"3"}},"dark":{"selected":{"color":"rgb(22, 22, 22)","height":"40px","edge":"none","corners":"4px 0px 0px 4px","zIndex":"3"}}}}
+    ],
+    "text": [
+      {"id":"text.1","count":13,"pages":[7,8,20,21],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"10px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"10px"}},
+      {"id":"text.2","count":4,"pages":[5,6,7,8],"light":{"color":"rgb(111, 111, 111)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(168, 168, 168)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"text.3","count":4,"pages":[7,8,9,20],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"text.4","count":4,"pages":[18],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}}
+    ],
+    "text@button": [
+      {"id":"text@button.1","count":2,"pages":[13],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "text@combobox": [
+      {"id":"text@combobox.1","count":2,"pages":[16],"light":{"color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "text@dialog": [
+      {"id":"text@dialog.1","count":1,"pages":[16],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"12px","fontWeight":"400","letterSpacing":"0.32px","lineHeight":"16px","paddingInline":"0px"}}
+    ],
+    "text@link": [
+      {"id":"text@link.1","count":3,"pages":[13],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"18px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@link.2","count":2,"pages":[13],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.1px","lineHeight":"20px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"600","letterSpacing":"0.1px","lineHeight":"20px","paddingInline":"0px"}}
+    ],
+    "text@menuitem": [
+      {"id":"text@menuitem.1","count":7,"pages":[14],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}},
+      {"id":"text@menuitem.2","count":2,"pages":[14],"light":{"color":"rgb(189, 189, 189)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(89, 89, 89)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "text@menuitemcheckbox": [
+      {"id":"text@menuitemcheckbox.1","count":4,"pages":[14],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "text@menuitemradio": [
+      {"id":"text@menuitemradio.1","count":4,"pages":[14],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "text@tab": [
+      {"id":"text@tab.1","count":5,"pages":[10,11],"light":{"color":"rgb(82, 82, 82)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"},"dark":{"color":"rgb(198, 198, 198)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","lineHeight":"18.0001px","paddingInline":"0px"}}
+    ],
+    "textbox": [
+      {"id":"textbox.1","count":1,"pages":[5],"light":{"backgroundColor":"rgb(244, 244, 244)","borderRadius":"0px","edge":"1px rgb(141, 141, 141) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(22, 22, 22)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px"},"dark":{"backgroundColor":"rgb(38, 38, 38)","borderRadius":"0px","edge":"1px rgb(111, 111, 111) bottom","boxShadow":"none","height":"40px","paddingInline":"16px","color":"rgb(244, 244, 244)","fontFamily":"\"IBM Plex Sans\"","fontSize":"14px","fontWeight":"400","letterSpacing":"0.16px","paddingRight":"16px"}}
+    ],
+    "tooltip": [
+      {"id":"tooltip.1","count":4,"pages":[13,4],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","color":"rgb(22, 22, 22)","fontSize":"16px","fontWeight":"400","height":"47px","paddingInline":"0px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","color":"rgb(244, 244, 244)","fontSize":"16px","fontWeight":"400","height":"47px","paddingInline":"0px"}},
+      {"id":"tooltip.2","count":2,"pages":[3],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","color":"rgb(22, 22, 22)","fontSize":"14px","fontWeight":"400","height":"48px","paddingInline":"0px"},"dark":{"backgroundColor":"rgb(22, 22, 22)","borderRadius":"0px","edge":"none","boxShadow":"none","color":"rgb(244, 244, 244)","fontSize":"14px","fontWeight":"400","height":"48px","paddingInline":"0px"}}
+    ]
   }
- ],
- "radius": [
-  {
-   "px": 2,
-   "count": 2,
-   "groups": [
-    "badge",
-    "box"
-   ]
-  },
-  {
-   "px": 4,
-   "count": 2,
-   "groups": [
-    "tab"
-   ]
-  }
- ],
- "pills": [
-  "box",
-  "avatar"
- ],
- "type": [
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "18.0001px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 118,
-   "groups": [
-    "button",
-    "text",
-    "text@menuitem",
-    "text@tab",
-    "tab",
-    "menuitem"
-   ]
-  },
-  {
-   "fontSize": "12px",
-   "fontWeight": "400",
-   "lineHeight": "16px",
-   "letterSpacing": "0.32px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 40,
-   "groups": [
-    "text",
-    "box",
-    "label@dialog",
-    "label",
-    "text@dialog"
-   ]
-  },
-  {
-   "fontSize": "16px",
-   "fontWeight": "400",
-   "lineHeight": "16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 20,
-   "groups": [
-    "tooltip",
-    "box",
-    "navigation",
-    "panel",
-    "application",
-    "banner"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "600",
-   "lineHeight": "18.0001px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 11,
-   "groups": [
-    "button",
-    "text@button",
-    "link",
-    "text",
-    "text@tab"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "14px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 9,
-   "groups": [
-    "button",
-    "combobox"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "18px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 7,
-   "groups": [
-    "link",
-    "text@link"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "20px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 6,
-   "groups": [
-    "panel",
-    "box",
-    "paragraph@dialog",
-    "text"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "600",
-   "lineHeight": "20px",
-   "letterSpacing": "0.1px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 4,
-   "groups": [
-    "text@link",
-    "link"
-   ]
-  },
-  {
-   "fontSize": "16px",
-   "fontWeight": "400",
-   "lineHeight": "24px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 4,
-   "groups": [
-    "paragraph",
-    "link"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "0px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 3,
-   "groups": [
-    "tooltip",
-    "box"
-   ]
-  },
-  {
-   "fontSize": "16px",
-   "fontWeight": "400",
-   "lineHeight": "20.5715px",
-   "letterSpacing": "0.16px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 3,
-   "groups": [
-    "button"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "normal",
-   "fontFamily": "IBM Plex Sans",
-   "count": 3,
-   "groups": [
-    "combobox",
-    "button"
-   ]
-  },
-  {
-   "fontSize": "32px",
-   "fontWeight": "400",
-   "lineHeight": "40px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 3,
-   "groups": [
-    "heading.h2"
-   ]
-  },
-  {
-   "fontSize": "12px",
-   "fontWeight": "400",
-   "lineHeight": "normal",
-   "fontFamily": "IBM Plex Sans",
-   "count": 2,
-   "groups": [
-    "button",
-    "text@button"
-   ]
-  },
-  {
-   "fontSize": "16px",
-   "fontWeight": "400",
-   "lineHeight": "normal",
-   "fontFamily": "IBM Plex Sans",
-   "count": 1,
-   "groups": [
-    "button"
-   ]
-  },
-  {
-   "fontSize": "13.3333px",
-   "fontWeight": "400",
-   "lineHeight": "normal",
-   "fontFamily": "IBM Plex Sans",
-   "count": 1,
-   "groups": [
-    "button"
-   ]
-  },
-  {
-   "fontSize": "20px",
-   "fontWeight": "400",
-   "lineHeight": "28px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 1,
-   "groups": [
-    "heading.h2@dialog"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "600",
-   "lineHeight": "normal",
-   "fontFamily": "IBM Plex Sans",
-   "count": 1,
-   "groups": [
-    "spinbutton"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "20px",
-   "letterSpacing": "0.1px",
-   "fontFamily": "IBM Plex Sans",
-   "count": 1,
-   "groups": [
-    "text@link"
-   ]
-  },
-  {
-   "fontSize": "14px",
-   "fontWeight": "400",
-   "lineHeight": "20px",
-   "letterSpacing": "0.32px",
-   "fontFamily": "IBM Plex Mono",
-   "count": 1,
-   "groups": [
-    "textbox"
-   ]
-  }
- ],
- "heights": {
-  "avatar": [
-   {
-    "px": 18,
-    "count": 2
-   },
-   {
-    "px": 16,
-    "count": 1
-   }
-  ],
-  "badge": [
-   {
-    "px": 22,
-    "count": 1
-   }
-  ],
-  "button": [
-   {
-    "px": 40,
-    "count": 41
-   },
-   {
-    "px": 48,
-    "count": 20
-   },
-   {
-    "px": 32,
-    "count": 3
-   },
-   {
-    "px": 15.5,
-    "count": 2
-   },
-   {
-    "px": 64,
-    "count": 2
-   },
-   {
-    "px": 24,
-    "count": 1
-   }
-  ],
-  "combobox": [
-   {
-    "px": 40,
-    "count": 5
-   },
-   {
-    "px": 48,
-    "count": 1
-   }
-  ],
-  "link": [
-   {
-    "px": 47,
-    "count": 5
-   },
-   {
-    "px": 18,
-    "count": 2
-   },
-   {
-    "px": 32,
-    "count": 2
-   },
-   {
-    "px": 20,
-    "count": 1
-   }
-  ],
-  "menuitem": [
-   {
-    "px": 40,
-    "count": 4
-   }
-  ],
-  "menuitemcheckbox": [
-   {
-    "px": 40,
-    "count": 2
-   }
-  ],
-  "menuitemradio": [
-   {
-    "px": 40,
-    "count": 4
-   }
-  ],
-  "spinbutton": [
-   {
-    "px": 26,
-    "count": 1
-   }
-  ],
-  "tab": [
-   {
-    "px": 40,
-    "count": 3
-   },
-   {
-    "px": 38,
-    "count": 2
-   }
-  ],
-  "textbox": [
-   {
-    "px": 40,
-    "count": 3
-   }
-  ]
- },
- "spacing": {
-  "grid": 2,
-  "steps": [
-   {
-    "px": 1,
-    "count": 3
-   },
-   {
-    "px": 2,
-    "count": 2
-   },
-   {
-    "px": 4,
-    "count": 27
-   },
-   {
-    "px": 8,
-    "count": 39
-   },
-   {
-    "px": 10,
-    "count": 14
-   },
-   {
-    "px": 12,
-    "count": 4
-   },
-   {
-    "px": 14,
-    "count": 12
-   },
-   {
-    "px": 15,
-    "count": 8
-   },
-   {
-    "px": 16,
-    "count": 76
-   },
-   {
-    "px": 17,
-    "count": 18
-   },
-   {
-    "px": 20,
-    "count": 3
-   },
-   {
-    "px": 32,
-    "count": 3
-   },
-   {
-    "px": 42,
-    "count": 88
-   },
-   {
-    "px": 48,
-    "count": 5
-   },
-   {
-    "px": 63,
-    "count": 6
-   },
-   {
-    "px": 77,
-    "count": 1
-   }
-  ]
- },
- "colors": {
-  "light": {
-   "neutrals": [
-    {
-     "color": "rgb(255, 255, 255)",
-     "l": 1,
-     "c": 0,
-     "h": 0,
-     "count": 95,
-     "uses": [
-      "page backgroundColor",
-      "button backgroundColor",
-      "button color",
-      "link backgroundColor",
-      "tooltip backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(244, 244, 244)",
-     "l": 0.967,
-     "c": 0,
-     "h": 0,
-     "count": 61,
-     "uses": [
-      "button backgroundColor",
-      "menuitem backgroundColor",
-      "menuitemradio backgroundColor",
-      "menuitemcheckbox backgroundColor",
-      "textbox backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(232, 232, 232)",
-     "l": 0.931,
-     "c": 0,
-     "h": 0,
-     "count": 1,
-     "uses": [
-      "button backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(224, 224, 224)",
-     "l": 0.907,
-     "c": 0,
-     "h": 0,
-     "count": 12,
-     "uses": [
-      "separator backgroundColor",
-      "box backgroundColor",
-      "tab edge",
-      "banner edge",
-      "progressbar backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(198, 198, 198)",
-     "l": 0.827,
-     "c": 0,
-     "h": 0,
-     "count": 2,
-     "uses": [
-      "dialog edge",
-      "icon@button color"
-     ]
-    },
-    {
-     "color": "rgb(189, 189, 189)",
-     "l": 0.798,
-     "c": 0,
-     "h": 0,
-     "count": 3,
-     "uses": [
-      "text@menuitem color",
-      "icon@menuitem color"
-     ]
-    },
-    {
-     "color": "rgb(141, 141, 141)",
-     "l": 0.643,
-     "c": 0,
-     "h": 0,
-     "count": 9,
-     "uses": [
-      "combobox edge",
-      "panel edge",
-      "textbox edge"
-     ]
-    },
-    {
-     "color": "rgb(111, 111, 111)",
-     "l": 0.542,
-     "c": 0,
-     "h": 0,
-     "count": 15,
-     "uses": [
-      "button color",
-      "text color"
-     ]
-    },
-    {
-     "color": "rgb(102, 102, 102)",
-     "l": 0.51,
-     "c": 0,
-     "h": 0,
-     "count": 1,
-     "uses": [
-      "panel backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(82, 82, 82)",
-     "l": 0.439,
-     "c": 0,
-     "h": 0,
-     "count": 75,
-     "uses": [
-      "text@menuitem color",
-      "icon@menuitem color",
-      "label@dialog color",
-      "tab color",
-      "text@link color"
-     ]
-    },
-    {
-     "color": "rgb(57, 57, 57)",
-     "l": 0.345,
-     "c": 0,
-     "h": 0,
-     "count": 11,
-     "uses": [
-      "box backgroundColor",
-      "button backgroundColor",
-      "badge backgroundColor",
-      "box edge",
-      "status backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(22, 22, 22)",
-     "l": 0.2,
-     "c": 0,
-     "h": 0,
-     "count": 162,
-     "uses": [
-      "button color",
-      "page color",
-      "text color",
-      "box color",
-      "tooltip color"
-     ]
-    },
-    {
-     "color": "rgb(0, 0, 0)",
-     "l": 0,
-     "c": 0,
-     "h": 0,
-     "count": 14,
-     "uses": [
-      "img color",
-      "button color",
-      "icon@button color",
-      "combobox color"
-     ]
-    }
-   ],
-   "accents": [
-    {
-     "hue": 262,
-     "count": 29,
-     "steps": [
-      {
-       "color": "rgb(208, 226, 255)",
-       "l": 0.908,
-       "c": 0.044,
-       "h": 260,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(15, 98, 254)",
-       "l": 0.557,
-       "c": 0.243,
-       "h": 262,
-       "count": 24,
-       "uses": [
-        "button backgroundColor",
-        "button color",
-        "link color",
-        "icon@button color",
-        "icon@link color"
-       ]
-      },
-      {
-       "color": "rgb(0, 67, 206)",
-       "l": 0.454,
-       "c": 0.221,
-       "h": 263,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(0, 83, 154)",
-       "l": 0.442,
-       "c": 0.134,
-       "h": 253,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 15,
-     "count": 7,
-     "steps": [
-      {
-       "color": "rgb(255, 215, 217)",
-       "l": 0.913,
-       "c": 0.045,
-       "h": 15,
-       "count": 2,
-       "uses": [
-        "box backgroundColor",
-        "button backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(250, 77, 86)",
-       "l": 0.666,
-       "c": 0.209,
-       "h": 22,
-       "count": 1,
-       "uses": [
-        "status edge"
-       ]
-      },
-      {
-       "color": "rgb(159, 24, 83)",
-       "l": 0.465,
-       "c": 0.172,
-       "h": 1,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(162, 25, 31)",
-       "l": 0.46,
-       "c": 0.171,
-       "h": 26,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text@button color"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 148,
-     "count": 4,
-     "steps": [
-      {
-       "color": "rgb(167, 240, 186)",
-       "l": 0.893,
-       "c": 0.104,
-       "h": 152,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(36, 161, 72)",
-       "l": 0.623,
-       "c": 0.166,
-       "h": 148,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(14, 96, 39)",
-       "l": 0.429,
-       "c": 0.117,
-       "h": 148,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 295,
-     "count": 3,
-     "steps": [
-      {
-       "color": "rgb(232, 218, 255)",
-       "l": 0.911,
-       "c": 0.052,
-       "h": 303,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(105, 41, 196)",
-       "l": 0.468,
-       "c": 0.219,
-       "h": 295,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 195,
-     "count": 3,
-     "steps": [
-      {
-       "color": "rgb(158, 240, 240)",
-       "l": 0.903,
-       "c": 0.08,
-       "h": 196,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(0, 93, 93)",
-       "l": 0.433,
-       "c": 0.074,
-       "h": 195,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 350,
-     "count": 1,
-     "steps": [
-      {
-       "color": "rgb(255, 214, 232)",
-       "l": 0.916,
-       "c": 0.051,
-       "h": 350,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 233,
-     "count": 1,
-     "steps": [
-      {
-       "color": "rgb(186, 230, 255)",
-       "l": 0.902,
-       "c": 0.057,
-       "h": 233,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    }
-   ]
-  },
-  "dark": {
-   "neutrals": [
-    {
-     "color": "rgb(255, 255, 255)",
-     "l": 1,
-     "c": 0,
-     "h": 0,
-     "count": 26,
-     "uses": [
-      "button color",
-      "img color",
-      "icon@button color",
-      "combobox color",
-      "menuitem edge"
-     ]
-    },
-    {
-     "color": "rgb(244, 244, 244)",
-     "l": 0.967,
-     "c": 0,
-     "h": 0,
-     "count": 170,
-     "uses": [
-      "button color",
-      "page color",
-      "text color",
-      "box color",
-      "tooltip color"
-     ]
-    },
-    {
-     "color": "rgb(198, 198, 198)",
-     "l": 0.827,
-     "c": 0,
-     "h": 0,
-     "count": 75,
-     "uses": [
-      "text@menuitem color",
-      "icon@menuitem color",
-      "label@dialog color",
-      "tab color",
-      "text@link color"
-     ]
-    },
-    {
-     "color": "rgb(168, 168, 168)",
-     "l": 0.732,
-     "c": 0,
-     "h": 0,
-     "count": 15,
-     "uses": [
-      "button color",
-      "text color"
-     ]
-    },
-    {
-     "color": "rgb(141, 141, 141)",
-     "l": 0.643,
-     "c": 0,
-     "h": 0,
-     "count": 6,
-     "uses": [
-      "panel edge",
-      "combobox edge",
-      "textbox edge"
-     ]
-    },
-    {
-     "color": "rgb(111, 111, 111)",
-     "l": 0.542,
-     "c": 0,
-     "h": 0,
-     "count": 6,
-     "uses": [
-      "button backgroundColor",
-      "textbox edge",
-      "combobox edge"
-     ]
-    },
-    {
-     "color": "rgb(89, 89, 89)",
-     "l": 0.464,
-     "c": 0,
-     "h": 0,
-     "count": 3,
-     "uses": [
-      "text@menuitem color",
-      "icon@menuitem color"
-     ]
-    },
-    {
-     "color": "rgb(82, 82, 82)",
-     "l": 0.439,
-     "c": 0,
-     "h": 0,
-     "count": 4,
-     "uses": [
-      "box backgroundColor",
-      "dialog edge"
-     ]
-    },
-    {
-     "color": "rgb(77, 77, 77)",
-     "l": 0.42,
-     "c": 0,
-     "h": 0,
-     "count": 1,
-     "uses": [
-      "icon@button color"
-     ]
-    },
-    {
-     "color": "rgb(57, 57, 57)",
-     "l": 0.345,
-     "c": 0,
-     "h": 0,
-     "count": 18,
-     "uses": [
-      "combobox backgroundColor",
-      "separator backgroundColor",
-      "panel backgroundColor",
-      "tab edge",
-      "banner edge"
-     ]
-    },
-    {
-     "color": "rgb(50, 50, 50)",
-     "l": 0.317,
-     "c": 0,
-     "h": 0,
-     "count": 1,
-     "uses": [
-      "button backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(38, 38, 38)",
-     "l": 0.269,
-     "c": 0,
-     "h": 0,
-     "count": 61,
-     "uses": [
-      "button backgroundColor",
-      "menuitem backgroundColor",
-      "menuitemradio backgroundColor",
-      "menuitemcheckbox backgroundColor",
-      "textbox backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(22, 22, 22)",
-     "l": 0.2,
-     "c": 0,
-     "h": 0,
-     "count": 75,
-     "uses": [
-      "page backgroundColor",
-      "button backgroundColor",
-      "link backgroundColor",
-      "tooltip backgroundColor",
-      "tab backgroundColor"
-     ]
-    },
-    {
-     "color": "rgb(8, 8, 8)",
-     "l": 0.134,
-     "c": 0,
-     "h": 0,
-     "count": 1,
-     "uses": [
-      "panel backgroundColor"
-     ]
-    }
-   ],
-   "accents": [
-    {
-     "hue": 261,
-     "count": 27,
-     "steps": [
-      {
-       "color": "rgb(208, 226, 255)",
-       "l": 0.908,
-       "c": 0.044,
-       "h": 260,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(120, 169, 255)",
-       "l": 0.736,
-       "c": 0.136,
-       "h": 261,
-       "count": 16,
-       "uses": [
-        "button color",
-        "link color",
-        "icon@button color",
-        "icon@link color"
-       ]
-      },
-      {
-       "color": "rgb(69, 137, 255)",
-       "l": 0.647,
-       "c": 0.189,
-       "h": 261,
-       "count": 2,
-       "uses": [
-        "panel backgroundColor",
-        "panel color"
-       ]
-      },
-      {
-       "color": "rgb(15, 98, 254)",
-       "l": 0.557,
-       "c": 0.243,
-       "h": 262,
-       "count": 5,
-       "uses": [
-        "button backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(0, 67, 206)",
-       "l": 0.454,
-       "c": 0.221,
-       "h": 263,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(0, 83, 154)",
-       "l": 0.442,
-       "c": 0.134,
-       "h": 253,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 26,
-     "count": 5,
-     "steps": [
-      {
-       "color": "rgb(255, 215, 217)",
-       "l": 0.913,
-       "c": 0.045,
-       "h": 15,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text@button color"
-       ]
-      },
-      {
-       "color": "rgb(218, 30, 40)",
-       "l": 0.569,
-       "c": 0.217,
-       "h": 26,
-       "count": 1,
-       "uses": [
-        "status edge"
-       ]
-      },
-      {
-       "color": "rgb(162, 25, 31)",
-       "l": 0.46,
-       "c": 0.171,
-       "h": 26,
-       "count": 2,
-       "uses": [
-        "box backgroundColor",
-        "button backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 152,
-     "count": 4,
-     "steps": [
-      {
-       "color": "rgb(167, 240, 186)",
-       "l": 0.893,
-       "c": 0.104,
-       "h": 152,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(66, 190, 101)",
-       "l": 0.712,
-       "c": 0.168,
-       "h": 149,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      },
-      {
-       "color": "rgb(14, 96, 39)",
-       "l": 0.429,
-       "c": 0.117,
-       "h": 148,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 350,
-     "count": 3,
-     "steps": [
-      {
-       "color": "rgb(255, 214, 232)",
-       "l": 0.916,
-       "c": 0.051,
-       "h": 350,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(159, 24, 83)",
-       "l": 0.465,
-       "c": 0.172,
-       "h": 1,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 303,
-     "count": 3,
-     "steps": [
-      {
-       "color": "rgb(232, 218, 255)",
-       "l": 0.911,
-       "c": 0.052,
-       "h": 303,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(105, 41, 196)",
-       "l": 0.468,
-       "c": 0.219,
-       "h": 295,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 196,
-     "count": 3,
-     "steps": [
-      {
-       "color": "rgb(158, 240, 240)",
-       "l": 0.903,
-       "c": 0.08,
-       "h": 196,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      },
-      {
-       "color": "rgb(0, 93, 93)",
-       "l": 0.433,
-       "c": 0.074,
-       "h": 195,
-       "count": 1,
-       "uses": [
-        "box backgroundColor"
-       ]
-      }
-     ]
-    },
-    {
-     "hue": 233,
-     "count": 2,
-     "steps": [
-      {
-       "color": "rgb(186, 230, 255)",
-       "l": 0.902,
-       "c": 0.057,
-       "h": 233,
-       "count": 2,
-       "uses": [
-        "box color",
-        "text color"
-       ]
-      }
-     ]
-    }
-   ]
-  }
- },
- "tokens": [
-  {
-   "name": "--cds-body-compact-01-font-weight",
-   "count": 83,
-   "feeds": [
-    "button fontWeight",
-    "tab fontWeight",
-    "combobox fontWeight",
-    "label fontWeight",
-    "link fontWeight",
-    "text@combobox fontWeight",
-    "textbox fontWeight",
-    "badge fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-body-compact-01-line-height",
-   "count": 83,
-   "feeds": [
-    "button lineHeight",
-    "tab lineHeight",
-    "combobox lineHeight",
-    "label lineHeight",
-    "link lineHeight",
-    "text@combobox lineHeight",
-    "textbox lineHeight",
-    "badge lineHeight"
-   ],
-   "light": "1.28572",
-   "dark": "1.28572"
-  },
-  {
-   "name": "--cds-body-compact-01-letter-spacing",
-   "count": 83,
-   "feeds": [
-    "button letterSpacing",
-    "tab letterSpacing",
-    "combobox letterSpacing",
-    "label letterSpacing",
-    "link letterSpacing",
-    "text@combobox letterSpacing",
-    "textbox letterSpacing",
-    "badge letterSpacing"
-   ],
-   "light": ".16px",
-   "dark": ".16px"
-  },
-  {
-   "name": "--cds-text-primary",
-   "count": 79,
-   "feeds": [
-    "button color",
-    "page color",
-    "combobox color",
-    "panel color",
-    "textbox color",
-    "text@combobox color",
-    "box color",
-    "heading.h2@dialog color"
-   ],
-   "light": "#161616",
-   "dark": "#f4f4f4"
-  },
-  {
-   "name": "--cds-body-compact-01-font-size",
-   "count": 75,
-   "feeds": [
-    "button fontSize",
-    "tab fontSize",
-    "combobox fontSize",
-    "link fontSize",
-    "label fontSize",
-    "text@combobox fontSize",
-    "textbox fontSize",
-    "badge fontSize"
-   ],
-   "light": ".875rem",
-   "dark": ".875rem"
-  },
-  {
-   "name": "--cds-layout-size-height-local",
-   "count": 49,
-   "feeds": [
-    "button paddingTop",
-    "button paddingInline",
-    "button paddingBottom",
-    "button paddingRight",
-    "combobox paddingInline",
-    "combobox paddingTop",
-    "combobox paddingBottom",
-    "combobox paddingRight"
-   ]
-  },
-  {
-   "name": "--cds-layout-density-padding-inline-local",
-   "count": 45,
-   "feeds": [
-    "button paddingInline",
-    "button paddingRight",
-    "tab paddingInline",
-    "tab paddingTop",
-    "tab paddingBottom",
-    "tab paddingRight",
-    "textbox paddingInline",
-    "textbox paddingTop"
-   ]
-  },
-  {
-   "name": "--cds-text-secondary",
-   "count": 36,
-   "feeds": [
-    "label@dialog color",
-    "tab color",
-    "link color",
-    "menuitem color",
-    "menuitemradio color",
-    "text color",
-    "label color",
-    "button color"
-   ],
-   "light": "#525252",
-   "dark": "#c6c6c6"
-  },
-  {
-   "name": "--cds-background",
-   "count": 28,
-   "feeds": [
-    "page backgroundColor",
-    "link backgroundColor",
-    "banner backgroundColor",
-    "box backgroundColor"
-   ],
-   "light": "#fff",
-   "dark": "#161616"
-  },
-  {
-   "name": "--cds-label-01-font-size",
-   "count": 25,
-   "feeds": [
-    "box fontSize",
-    "label@dialog fontSize",
-    "text fontSize",
-    "label fontSize",
-    "text@dialog fontSize"
-   ],
-   "light": ".75rem",
-   "dark": ".75rem"
-  },
-  {
-   "name": "--cds-label-01-letter-spacing",
-   "count": 25,
-   "feeds": [
-    "box letterSpacing",
-    "label@dialog letterSpacing",
-    "text letterSpacing",
-    "label letterSpacing",
-    "text@dialog letterSpacing"
-   ],
-   "light": ".32px",
-   "dark": ".32px"
-  },
-  {
-   "name": "--cds-text-helper",
-   "count": 15,
-   "feeds": [
-    "button color",
-    "text color"
-   ],
-   "light": "#6f6f6f",
-   "dark": "#a8a8a8"
-  },
-  {
-   "name": "--cds-button-radius-es",
-   "count": 13,
-   "feeds": [
-    "button borderRadius"
-   ]
-  },
-  {
-   "name": "--cds-label-01-font-weight",
-   "count": 12,
-   "feeds": [
-    "box fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-label-01-line-height",
-   "count": 12,
-   "feeds": [
-    "box lineHeight"
-   ],
-   "light": "1.33333",
-   "dark": "1.33333"
-  },
-  {
-   "name": "--cds-body-short-01-font-size",
-   "count": 10,
-   "feeds": [
-    "menuitem fontSize",
-    "menuitemradio fontSize",
-    "menuitemcheckbox fontSize"
-   ],
-   "light": ".875rem",
-   "dark": ".875rem"
-  },
-  {
-   "name": "--cds-body-short-01-font-weight",
-   "count": 10,
-   "feeds": [
-    "menuitem fontWeight",
-    "menuitemradio fontWeight",
-    "menuitemcheckbox fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-body-short-01-line-height",
-   "count": 10,
-   "feeds": [
-    "menuitem lineHeight",
-    "menuitemradio lineHeight",
-    "menuitemcheckbox lineHeight"
-   ],
-   "light": "1.28572",
-   "dark": "1.28572"
-  },
-  {
-   "name": "--cds-body-short-01-letter-spacing",
-   "count": 10,
-   "feeds": [
-    "menuitem letterSpacing",
-    "menuitemradio letterSpacing",
-    "menuitemcheckbox letterSpacing"
-   ],
-   "light": ".16px",
-   "dark": ".16px"
-  },
-  {
-   "name": "--cds-text-on-color",
-   "count": 9,
-   "feeds": [
-    "button color"
-   ],
-   "light": "#fff",
-   "dark": "#fff"
-  },
-  {
-   "name": "--cds-field",
-   "count": 9,
-   "feeds": [
-    "combobox backgroundColor",
-    "panel backgroundColor",
-    "textbox backgroundColor"
-   ],
-   "light": "#f4f4f4",
-   "dark": "#262626"
-  },
-  {
-   "name": "--cds-tooltip-padding-block",
-   "count": 8,
-   "feeds": [
-    "badge paddingInline",
-    "badge paddingTop",
-    "badge paddingBottom",
-    "badge paddingRight",
-    "box paddingInline",
-    "box paddingTop",
-    "box paddingBottom",
-    "box paddingRight"
-   ]
-  },
-  {
-   "name": "--cds-link-primary",
-   "count": 8,
-   "feeds": [
-    "button color",
-    "link color"
-   ],
-   "light": "#0f62fe",
-   "dark": "#78a9ff"
-  },
-  {
-   "name": "--cds-button-primary",
-   "count": 6,
-   "feeds": [
-    "button backgroundColor"
-   ],
-   "light": "#0f62fe",
-   "dark": "#0f62fe"
-  },
-  {
-   "name": "--cds-heading-compact-01-font-size",
-   "count": 6,
-   "feeds": [
-    "button fontSize",
-    "link fontSize",
-    "text fontSize"
-   ],
-   "light": ".875rem",
-   "dark": ".875rem"
-  },
-  {
-   "name": "--cds-heading-compact-01-font-weight",
-   "count": 6,
-   "feeds": [
-    "button fontWeight",
-    "link fontWeight",
-    "text fontWeight"
-   ],
-   "light": "600",
-   "dark": "600"
-  },
-  {
-   "name": "--cds-heading-compact-01-line-height",
-   "count": 6,
-   "feeds": [
-    "button lineHeight",
-    "link lineHeight",
-    "text lineHeight"
-   ],
-   "light": "1.28572",
-   "dark": "1.28572"
-  },
-  {
-   "name": "--cds-heading-compact-01-letter-spacing",
-   "count": 6,
-   "feeds": [
-    "button letterSpacing",
-    "link letterSpacing",
-    "text letterSpacing"
-   ],
-   "light": ".16px",
-   "dark": ".16px"
-  },
-  {
-   "name": "--cds-border-subtle",
-   "count": 5,
-   "feeds": [
-    "separator backgroundColor",
-    "progressbar backgroundColor"
-   ],
-   "light": "#e0e0e0",
-   "dark": "#393939"
-  },
-  {
-   "name": "--cds-background-inverse",
-   "count": 4,
-   "feeds": [
-    "box backgroundColor",
-    "box boxShadow",
-    "box edge",
-    "status backgroundColor"
-   ],
-   "light": "#393939",
-   "dark": "#f4f4f4"
-  },
-  {
-   "name": "--cds-button-separator",
-   "count": 4,
-   "feeds": [
-    "button boxShadow",
-    "button edge"
-   ],
-   "light": "#e0e0e0",
-   "dark": "#161616"
-  },
-  {
-   "name": "--cds-helper-text-01-font-size",
-   "count": 4,
-   "feeds": [
-    "text fontSize"
-   ],
-   "light": ".75rem",
-   "dark": ".75rem"
-  },
-  {
-   "name": "--cds-helper-text-01-line-height",
-   "count": 4,
-   "feeds": [
-    "text lineHeight"
-   ],
-   "light": "1.33333",
-   "dark": "1.33333"
-  },
-  {
-   "name": "--cds-helper-text-01-letter-spacing",
-   "count": 4,
-   "feeds": [
-    "text letterSpacing"
-   ],
-   "light": ".32px",
-   "dark": ".32px"
-  },
-  {
-   "name": "--cds-icon-primary",
-   "count": 3,
-   "feeds": [
-    "avatar edge"
-   ],
-   "light": "#161616",
-   "dark": "#f4f4f4"
-  },
-  {
-   "name": "--cds-tag-background-gray",
-   "count": 3,
-   "feeds": [
-    "box backgroundColor"
-   ],
-   "light": "#e0e0e0",
-   "dark": "#525252"
-  },
-  {
-   "name": "--cds-tag-color-gray",
-   "count": 3,
-   "feeds": [
-    "box color"
-   ],
-   "light": "#161616",
-   "dark": "#f4f4f4"
-  },
-  {
-   "name": "--cds-body-01-font-size",
-   "count": 3,
-   "feeds": [
-    "box fontSize",
-    "paragraph@dialog fontSize",
-    "text fontSize"
-   ],
-   "light": ".875rem",
-   "dark": ".875rem"
-  },
-  {
-   "name": "--cds-body-01-font-weight",
-   "count": 3,
-   "feeds": [
-    "box fontWeight",
-    "paragraph@dialog fontWeight",
-    "text fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-body-01-line-height",
-   "count": 3,
-   "feeds": [
-    "box lineHeight",
-    "paragraph@dialog lineHeight",
-    "text lineHeight"
-   ],
-   "light": "1.42857",
-   "dark": "1.42857"
-  },
-  {
-   "name": "--cds-body-01-letter-spacing",
-   "count": 3,
-   "feeds": [
-    "box letterSpacing",
-    "paragraph@dialog letterSpacing",
-    "text letterSpacing"
-   ],
-   "light": ".16px",
-   "dark": ".16px"
-  },
-  {
-   "name": "--cds-button-secondary",
-   "count": 3,
-   "feeds": [
-    "button backgroundColor"
-   ],
-   "light": "#393939",
-   "dark": "#6f6f6f"
-  },
-  {
-   "name": "--cds-layer",
-   "count": 3,
-   "feeds": [
-    "dialog backgroundColor",
-    "menu backgroundColor",
-    "panel backgroundColor"
-   ],
-   "light": "#f4f4f4",
-   "dark": "#262626"
-  },
-  {
-   "name": "--cds-heading-05-font-size",
-   "count": 3,
-   "feeds": [
-    "heading.h2 fontSize"
-   ],
-   "light": "2rem",
-   "dark": "2rem"
-  },
-  {
-   "name": "--cds-heading-05-font-weight",
-   "count": 3,
-   "feeds": [
-    "heading.h2 fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-heading-05-line-height",
-   "count": 3,
-   "feeds": [
-    "heading.h2 lineHeight"
-   ],
-   "light": "1.25",
-   "dark": "1.25"
-  },
-  {
-   "name": "--cds-heading-05-letter-spacing",
-   "count": 3,
-   "feeds": [
-    "heading.h2 letterSpacing"
-   ],
-   "light": "0",
-   "dark": "0"
-  },
-  {
-   "name": "--cds-body-02-font-size",
-   "count": 3,
-   "feeds": [
-    "paragraph fontSize"
-   ],
-   "light": "1rem",
-   "dark": "1rem"
-  },
-  {
-   "name": "--cds-body-02-font-weight",
-   "count": 3,
-   "feeds": [
-    "paragraph fontWeight"
-   ],
-   "light": "400",
-   "dark": "400"
-  },
-  {
-   "name": "--cds-body-02-line-height",
-   "count": 3,
-   "feeds": [
-    "paragraph lineHeight"
-   ],
-   "light": "1.5",
-   "dark": "1.5"
-  },
-  {
-   "name": "--cds-body-02-letter-spacing",
-   "count": 3,
-   "feeds": [
-    "paragraph letterSpacing"
-   ],
-   "light": "0",
-   "dark": "0"
-  },
-  {
-   "name": "--cds-popover-background-color",
-   "count": 2,
-   "feeds": [
-    "badge backgroundColor",
-    "box backgroundColor"
-   ]
-  },
-  {
-   "name": "--cds-popover-text-color",
-   "count": 2,
-   "feeds": [
-    "badge color",
-    "box color"
-   ]
-  },
-  {
-   "name": "--cds-popover-border-radius",
-   "count": 2,
-   "feeds": [
-    "badge borderRadius",
-    "box borderRadius"
-   ]
-  },
-  {
-   "name": "--cds-tag-color-red",
-   "count": 2,
-   "feeds": [
-    "box color",
-    "text@button color"
-   ],
-   "light": "#a2191f",
-   "dark": "#ffd7d9"
-  },
-  {
-   "name": "--cds-text-inverse",
-   "count": 2,
-   "feeds": [
-    "box color",
-    "status color"
-   ],
-   "light": "#fff",
-   "dark": "#161616"
-  },
-  {
-   "name": "--cds-link-text-color",
-   "count": 2,
-   "feeds": [
-    "link color"
-   ]
-  },
-  {
-   "name": "--cds-shadow",
-   "count": 2,
-   "feeds": [
-    "menu boxShadow",
-    "menu edge"
-   ],
-   "light": "#0000004d",
-   "dark": "#000c"
-  },
-  {
-   "name": "--cds-focus",
-   "count": 2,
-   "feeds": [
-    "menuitem edge",
-    "textbox edge"
-   ],
-   "light": "#0f62fe",
-   "dark": "#fff"
-  },
-  {
-   "name": "--cds-support-success",
-   "count": 1,
-   "feeds": [
-    "box backgroundColor"
-   ],
-   "light": "#24a148",
-   "dark": "#42be65"
-  }
- ],
- "inventory": {
-  "avatar": [
-   {
-    "id": "avatar.1",
-    "count": 2,
-    "pages": [
-     8
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "50%",
-     "edge": "1px rgb(22, 22, 22)",
-     "boxShadow": "none",
-     "height": "18px",
-     "paddingInline": "0px",
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "50%",
-     "edge": "1px rgb(244, 244, 244)",
-     "boxShadow": "none",
-     "height": "18px",
-     "paddingInline": "0px",
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    }
-   }
-  ],
-  "box": [
-   {
-    "id": "box.1",
-    "count": 3,
-    "pages": [
-     18
-    ],
-    "light": {
-     "backgroundColor": "rgb(224, 224, 224)",
-     "borderRadius": "16px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "8px",
-     "paddingRight": "8px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(82, 82, 82)",
-     "borderRadius": "16px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "8px",
-     "paddingRight": "8px"
-    }
-   },
-   {
-    "id": "box.2",
-    "count": 2,
-    "pages": [
-     4,
-     15
-    ],
-    "light": {
-     "backgroundColor": "rgb(57, 57, 57)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "button": [
-   {
-    "id": "button.1",
-    "count": 29,
-    "pages": [
-     21
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "0px",
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "0px",
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "states": {
-     "light": {
-      "selected": {
-       "color": "rgb(15, 98, 254)",
-       "fontWeight": "600",
-       "position": "relative"
-      }
-     },
-     "dark": {
-      "selected": {
-       "color": "rgb(120, 169, 255)",
-       "fontWeight": "600",
-       "position": "relative"
-      }
-     }
-    }
-   },
-   {
-    "id": "button.2",
-    "count": 11,
-    "pages": [
-     21
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "0px",
-     "color": "rgb(111, 111, 111)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "0px",
-     "color": "rgb(168, 168, 168)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "states": {
-     "light": {
-      "hover": {
-       "backgroundColor": "rgb(255, 255, 255)"
-      }
-     },
-     "dark": {
-      "hover": {
-       "backgroundColor": "rgb(22, 22, 22)"
-      }
-     }
-    }
-   },
-   {
-    "id": "button.3",
-    "count": 8,
-    "pages": [
-     3
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "4px",
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "4px",
-     "paddingTop": "17px",
-     "paddingBottom": "17px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "4px",
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "4px",
-     "paddingTop": "17px",
-     "paddingBottom": "17px"
-    },
-    "states": {
-     "light": {
-      "selected": {
-       "fontWeight": "600"
-      }
-     },
-     "dark": {
-      "selected": {
-       "fontWeight": "600"
-      }
-     }
-    }
-   },
-   {
-    "id": "button.4",
-    "count": 3,
-    "pages": [
-     0,
-     13,
-     16
-    ],
-    "light": {
-     "backgroundColor": "rgb(15, 98, 254)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "15px",
-     "color": "rgb(255, 255, 255)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "63px",
-     "paddingTop": "14px",
-     "paddingBottom": "14px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(15, 98, 254)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "15px",
-     "color": "rgb(255, 255, 255)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "63px",
-     "paddingTop": "14px",
-     "paddingBottom": "14px"
-    }
-   },
-   {
-    "id": "button.5",
-    "count": 3,
-    "pages": [
-     13
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "0px",
-     "color": "rgb(15, 98, 254)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "48px",
-     "paddingInline": "0px",
-     "color": "rgb(120, 169, 255)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px"
-    }
-   },
-   {
-    "id": "button.6",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "32px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "32px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    }
-   }
-  ],
-  "combobox": [
-   {
-    "id": "combobox.1",
-    "count": 2,
-    "pages": [
-     16
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(141, 141, 141) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "48px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(57, 57, 57)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(141, 141, 141) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "48px"
-    },
-    "states": {
-     "light": {
-      "hover": {
-       "backgroundColor": "rgb(232, 232, 232)"
-      }
-     },
-     "dark": {
-      "hover": {
-       "backgroundColor": "rgb(71, 71, 71)"
-      }
-     }
-    }
-   },
-   {
-    "id": "combobox.2",
-    "count": 2,
-    "pages": [
-     16
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(0, 0, 0)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "paddingRight": "48px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(57, 57, 57)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(255, 255, 255)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "paddingRight": "48px"
-    },
-    "states": {
-     "light": {
-      "hover": {
-       "backgroundColor": "rgb(232, 232, 232)"
-      }
-     },
-     "dark": {
-      "hover": {
-       "backgroundColor": "rgb(71, 71, 71)"
-      }
-     }
-    }
-   }
-  ],
-  "heading.h2": [
-   {
-    "id": "heading.h2.1",
-    "count": 3,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "32px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "40px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "32px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "40px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "icon@button": [
-   {
-    "id": "icon@button.1",
-    "count": 4,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "icon@button.2",
-    "count": 3,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(15, 98, 254)",
-     "iconSize": "20x20",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(120, 169, 255)",
-     "iconSize": "20x20",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "icon@button.3",
-    "count": 3,
-    "pages": [
-     15,
-     16,
-     19
-    ],
-    "light": {
-     "color": "rgb(0, 0, 0)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(255, 255, 255)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "icon@button.4",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "icon@link": [
-   {
-    "id": "icon@link.1",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(15, 98, 254)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(120, 169, 255)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "icon@menuitem": [
-   {
-    "id": "icon@menuitem.1",
-    "count": 5,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "icon@menuitemcheckbox": [
-   {
-    "id": "icon@menuitemcheckbox.1",
-    "count": 3,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "img": [
-   {
-    "id": "img.1",
-    "count": 6,
-    "pages": [
-     10,
-     16
-    ],
-    "light": {
-     "color": "rgb(0, 0, 0)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(255, 255, 255)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "img.2",
-    "count": 3,
-    "pages": [
-     21
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "iconSize": "16x16",
-     "iconStroke": "fill",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "label": [
-   {
-    "id": "label.1",
-    "count": 3,
-    "pages": [
-     5,
-     6,
-     21
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "label.2",
-    "count": 2,
-    "pages": [
-     7
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "20px",
-     "paddingTop": "1px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "20px",
-     "paddingTop": "1px"
-    }
-   }
-  ],
-  "label@dialog": [
-   {
-    "id": "label@dialog.1",
-    "count": 5,
-    "pages": [
-     16
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "link": [
-   {
-    "id": "link.1",
-    "count": 4,
-    "pages": [
-     13
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "47px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "paddingRight": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "47px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "paddingRight": "16px"
-    }
-   },
-   {
-    "id": "link.2",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "32px",
-     "paddingInline": "16px",
-     "color": "rgb(15, 98, 254)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "32px",
-     "paddingInline": "16px",
-     "color": "rgb(120, 169, 255)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    }
-   }
-  ],
-  "menuitem": [
-   {
-    "id": "menuitem.1",
-    "count": 3,
-    "pages": [
-     14
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    },
-    "states": {
-     "light": {
-      "disabled": {
-       "color": "rgb(189, 189, 189)",
-       "cursor": "not-allowed"
-      }
-     },
-     "dark": {
-      "disabled": {
-       "color": "rgb(89, 89, 89)",
-       "cursor": "not-allowed"
-      }
-     }
-    }
-   }
-  ],
-  "menuitemcheckbox": [
-   {
-    "id": "menuitemcheckbox.1",
-    "count": 2,
-    "pages": [
-     14
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    }
-   }
-  ],
-  "menuitemradio": [
-   {
-    "id": "menuitemradio.1",
-    "count": 4,
-    "pages": [
-     14
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "gap": "normal 8px"
-    }
-   }
-  ],
-  "navigation": [
-   {
-    "id": "navigation.1",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "16px"
-    }
-   }
-  ],
-  "page": [
-   {
-    "id": "page.1",
-    "count": 22,
-    "pages": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14,
-     15,
-     16,
-     17,
-     18,
-     19,
-     20,
-     21
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "42px",
-     "paddingRight": "42px",
-     "paddingTop": "42px",
-     "paddingBottom": "42px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "42px",
-     "paddingRight": "42px",
-     "paddingTop": "42px",
-     "paddingBottom": "42px"
-    }
-   }
-  ],
-  "panel": [
-   {
-    "id": "panel.1",
-    "count": 3,
-    "pages": [
-     16
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(141, 141, 141) bottom",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(57, 57, 57)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(141, 141, 141) bottom",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "paragraph": [
-   {
-    "id": "paragraph.1",
-    "count": 3,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "24px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "24px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "separator": [
-   {
-    "id": "separator.1",
-    "count": 4,
-    "pages": [
-     14
-    ],
-    "light": {
-     "backgroundColor": "rgb(224, 224, 224)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(57, 57, 57)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "tab": [
-   {
-    "id": "tab.1",
-    "count": 3,
-    "pages": [
-     10
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "2px rgb(224, 224, 224) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "2px rgb(57, 57, 57) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    },
-    "states": {
-     "light": {
-      "hover": {
-       "color": "rgb(22, 22, 22)",
-       "edge": "2px rgb(141, 141, 141) bottom"
-      },
-      "selected": {
-       "color": "rgb(22, 22, 22)",
-       "fontWeight": "600",
-       "edge": "2px rgb(15, 98, 254) bottom",
-       "width": "104.1px"
-      }
-     },
-     "dark": {
-      "hover": {
-       "color": "rgb(244, 244, 244)",
-       "edge": "2px rgb(111, 111, 111) bottom"
-      },
-      "selected": {
-       "color": "rgb(244, 244, 244)",
-       "fontWeight": "600",
-       "edge": "2px rgb(69, 137, 255) bottom",
-       "width": "104.1px"
-      }
-     }
-    }
-   },
-   {
-    "id": "tab.2",
-    "count": 2,
-    "pages": [
-     11
-    ],
-    "light": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "4px",
-     "edge": "1px rgb(22, 22, 22) top+bottom",
-     "boxShadow": "none",
-     "height": "38px",
-     "paddingInline": "16px",
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "paddingTop": "8px",
-     "paddingBottom": "8px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "4px",
-     "edge": "1px rgb(244, 244, 244) top+bottom",
-     "boxShadow": "none",
-     "height": "38px",
-     "paddingInline": "16px",
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px",
-     "paddingTop": "8px",
-     "paddingBottom": "8px"
-    },
-    "states": {
-     "light": {
-      "selected": {
-       "color": "rgb(255, 255, 255)",
-       "height": "40px",
-       "edge": "none",
-       "corners": "4px 0px 0px 4px",
-       "zIndex": "3"
-      }
-     },
-     "dark": {
-      "selected": {
-       "color": "rgb(22, 22, 22)",
-       "height": "40px",
-       "edge": "none",
-       "corners": "4px 0px 0px 4px",
-       "zIndex": "3"
-      }
-     }
-    }
-   }
-  ],
-  "text": [
-   {
-    "id": "text.1",
-    "count": 13,
-    "pages": [
-     7,
-     8,
-     20,
-     21
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "10px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "10px"
-    }
-   },
-   {
-    "id": "text.2",
-    "count": 4,
-    "pages": [
-     5,
-     6,
-     7,
-     8
-    ],
-    "light": {
-     "color": "rgb(111, 111, 111)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(168, 168, 168)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "text.3",
-    "count": 4,
-    "pages": [
-     7,
-     8,
-     9,
-     20
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "text.4",
-    "count": 4,
-    "pages": [
-     18
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@button": [
-   {
-    "id": "text@button.1",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@combobox": [
-   {
-    "id": "text@combobox.1",
-    "count": 2,
-    "pages": [
-     16
-    ],
-    "light": {
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@dialog": [
-   {
-    "id": "text@dialog.1",
-    "count": 1,
-    "pages": [
-     16
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "12px",
-     "fontWeight": "400",
-     "letterSpacing": "0.32px",
-     "lineHeight": "16px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@link": [
-   {
-    "id": "text@link.1",
-    "count": 3,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "18px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "normal",
-     "lineHeight": "18px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "text@link.2",
-    "count": 2,
-    "pages": [
-     13
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.1px",
-     "lineHeight": "20px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "600",
-     "letterSpacing": "0.1px",
-     "lineHeight": "20px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@menuitem": [
-   {
-    "id": "text@menuitem.1",
-    "count": 7,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "text@menuitem.2",
-    "count": 2,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(189, 189, 189)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(89, 89, 89)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@menuitemcheckbox": [
-   {
-    "id": "text@menuitemcheckbox.1",
-    "count": 4,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@menuitemradio": [
-   {
-    "id": "text@menuitemradio.1",
-    "count": 4,
-    "pages": [
-     14
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "text@tab": [
-   {
-    "id": "text@tab.1",
-    "count": 5,
-    "pages": [
-     10,
-     11
-    ],
-    "light": {
-     "color": "rgb(82, 82, 82)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "color": "rgb(198, 198, 198)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "lineHeight": "18.0001px",
-     "paddingInline": "0px"
-    }
-   }
-  ],
-  "textbox": [
-   {
-    "id": "textbox.1",
-    "count": 1,
-    "pages": [
-     5
-    ],
-    "light": {
-     "backgroundColor": "rgb(244, 244, 244)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(141, 141, 141) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(22, 22, 22)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(38, 38, 38)",
-     "borderRadius": "0px",
-     "edge": "1px rgb(111, 111, 111) bottom",
-     "boxShadow": "none",
-     "height": "40px",
-     "paddingInline": "16px",
-     "color": "rgb(244, 244, 244)",
-     "fontFamily": "\"IBM Plex Sans\"",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "letterSpacing": "0.16px",
-     "paddingRight": "16px"
-    }
-   }
-  ],
-  "tooltip": [
-   {
-    "id": "tooltip.1",
-    "count": 4,
-    "pages": [
-     13,
-     4
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "color": "rgb(22, 22, 22)",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "height": "47px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "color": "rgb(244, 244, 244)",
-     "fontSize": "16px",
-     "fontWeight": "400",
-     "height": "47px",
-     "paddingInline": "0px"
-    }
-   },
-   {
-    "id": "tooltip.2",
-    "count": 2,
-    "pages": [
-     3
-    ],
-    "light": {
-     "backgroundColor": "rgb(255, 255, 255)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "color": "rgb(22, 22, 22)",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "height": "48px",
-     "paddingInline": "0px"
-    },
-    "dark": {
-     "backgroundColor": "rgb(22, 22, 22)",
-     "borderRadius": "0px",
-     "edge": "none",
-     "boxShadow": "none",
-     "color": "rgb(244, 244, 244)",
-     "fontSize": "14px",
-     "fontWeight": "400",
-     "height": "48px",
-     "paddingInline": "0px"
-    }
-   }
-  ]
- }
 }

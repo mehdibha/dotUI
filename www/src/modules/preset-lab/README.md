@@ -12,13 +12,11 @@ Tooling for tuning a preset against the system it recreates, in dev and on Verce
 - A new sheet: add a component in `sheets/`, register it in `sheets/index.ts`; the capture script reads the list from the page.
 - `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `await window.__specimen.setDiff(diff)` swaps it without a reload, resolving once the new design has rendered, for scripts that try one change at a time.
 
-## Compare
+## Frozen copies
 
-`/internal/compare?preset=<id>&mode=light|dark&sheet=<name>&view=side|onion|swipe|difference` shows each part the pack measured next to ours: theirs from `.scratch-refs/<id>/`, ours as a live specimen centered on the part. The studio panel beside it edits the preset in its unsaved slot, and each part re-runs the probe and the diff against `tokens.json` as you edit: the table under a part is `presets:measure` for that part, live.
+A part file (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`) holds a frozen copy of one part of the real product, beside its crop (`<part>-<mode>.png`): the part's DOM with its computed styles inlined, pseudo-elements and shadow roots included. A copy stays sharp at any zoom and its text can be redacted; a crop is what the screen showed. `--shots` writes both, copies for parts up to 640×480, and so does the local capture kit for signed-in pages, its copies always redacted (`scripts/local-capture/RUNBOOK.md`). They stay in `crops/` folders under `.scratch-refs/<id>/`, never in git.
 
-- Theirs is a crop (`<part>-<mode>.png`) or a frozen copy from the part file next to it (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`): the part's DOM with its computed styles inlined, pseudo-elements and shadow roots included. A copy stays sharp at any zoom and its text can be redacted; a crop is what the screen showed. `--shots` writes both, copies for parts up to 640×480, and so does the local capture kit for signed-in pages, its copies always redacted (`scripts/local-capture/RUNBOOK.md`). The `crops/` folders at any depth under `.scratch-refs/<id>/` are read, and nothing else there is served (a local capture keeps its private page shots beside them); per part and mode, the folder holding its newest file wins, so a crop always pairs with its own part file. The dev server serves them, so a preview shows our side only.
-- Onion, swipe and difference lay theirs over ours, both centered on the part, so a size difference shows as edges that don't line up. In difference, matching pixels go black.
-- A copy loads its fonts from their original URLs; when one doesn't load, a stand-in shows and the row says so. `snapshotSnippet()` is the in-page expression that makes a copy (`redact: true` turns letters into x and digits into 0, and images into gray boxes).
+`snapshotSnippet()` is the in-page expression that makes a copy. `redact: true` turns letters into x, digits into 0 and images into gray boxes, and drops every `url()` that points outside the copy. A copy loads its fonts from their original URLs.
 
 ## Reference packs
 
@@ -47,7 +45,7 @@ Tooling for tuning a preset against the system it recreates, in dev and on Verce
 The census (`census.ts`) reads every element a page paints or labels, with no hand-written selectors: its role (ARIA, then tag, then box shape), the control or landmark it sits in, its box, its text's length (never the text), the probe's 12 values from the probe itself plus about 25 computed styles, and for one element per look its hover, pressed and focus changes and the custom property behind each value. `pnpm presets:crawl` runs it:
 
 - Headless over a pack's public pages in their modes (`--url` for any page, `--follow n` for linked pages, `--open n` to open popups one per fresh load), or in a signed-in Chrome over its debugging port (`--connect <port> --pages <file>`, page keys with placeholders, copies redacted). From Claude in Chrome, the local kit's `__dotui.census(pass)` does the same per page and pass (focus only, no hover or pressed) and `kit.mts --collect` files it next to `raw/`.
-- Output: `<out>/pages/*.json` (one per page, pass and mode), `census.json` (looks per role group, light paired with the same element in dark), and frozen copies of each look's sample at rest and in its states, `crops/<look>-<state>-<mode>.{json,html}`, which /internal/compare lists as parts (it reads only `crops/` folders). `<out>` defaults to `.scratch-refs/<id>/<date>/census`.
+- Output: `<out>/pages/*.json` (one per page, pass and mode), `census.json` (looks per role group, light paired with the same element in dark), and frozen copies of each look's sample at rest and in its states, `crops/<look>-<state>-<mode>.{json,html}`, which a system's `looks.json` points at. `<out>` defaults to `.scratch-refs/<id>/<date>/census`.
 - The model (`model.ts`, written to `refs/<id>/model.json` and printed as a DESIGN.md-style summary): radius rungs and pills, type styles, control heights, the spacing grid, OKLCH neutrals and accent hues per mode, the custom properties that feed most elements, and the looks of each control. `--from <dir>` (repeatable) rebuilds it from saved pages with no browser: how a public run and a signed-in one become one model.
 
 ## System looks
@@ -90,7 +88,7 @@ pnpm presets:measure --preset linear --port <port>
 
 # Measure every public page of a pack (4 at a time) into refs/<id>/tokens.json;
 # --shots also crops each part as it was measured, with its part file, for
-# presets:compare and /internal/compare (--shots .scratch-refs/<id>/crops)
+# presets:compare, and a frozen copy per part (--shots .scratch-refs/<id>/crops)
 pnpm presets:measure --pack linear [--url <one page>] [--shots <dir>]
 
 # The probe for a signed-in tab driven by Claude in Chrome: the page's steps,

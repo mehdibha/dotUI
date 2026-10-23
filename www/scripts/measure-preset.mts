@@ -14,7 +14,7 @@
  *     the results into refs/<id>/tokens.json. A page key that isn't a URL is
  *     a file in the pack's folder (a local harness page). `--shots` also
  *     saves each part as <dir>/<part>-<mode>.png, with a frozen copy of it
- *     in <part>-<mode>.json, for /internal/compare and presets:compare.
+ *     in <part>-<mode>.json (`PartFile`).
  *
  *   tsx scripts/measure-preset.mts --pack <id> --url <url> --merge <file> [--mode light|dark]
  *     Merges a signed-in page's measures (the snippet's output, saved as
@@ -207,8 +207,8 @@ const pool = <T, R>(items: T[], run: (item: T) => Promise<R>) =>
 /** The margin around a crop, for rings and shadows. */
 const PAD = 16
 
-/** A part as it shows, with a margin, once it settles, and beside it a frozen copy of it with what /internal/compare
- *  needs to line the two up (`PartFile`). */
+/** A part as it shows, with a margin, once it settles, and beside it a
+ *  frozen copy of it with what lines the two up (`PartFile`). */
 async function shoot(page: Page, part: string, mode: Mode) {
   if (!args.shots) return
   const el = await page.$(`>>> [data-probe-part="${part}"]`)

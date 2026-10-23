@@ -497,6 +497,32 @@ export function buildModel(inventory: Inventory): Model {
   }
 }
 
+/** JSON with one entry per line down to `depth` levels and every deeper
+ *  value on one line: model.json keeps one look per line, so drift reads as
+ *  a diff of looks. */
+export function jsonLines(value: unknown, depth = 3, indent = ""): string {
+  if (depth === 0 || value === null || typeof value !== "object")
+    return JSON.stringify(value)
+  const entries: [string | undefined, unknown][] = Array.isArray(value)
+    ? value.map((item) => [undefined, item])
+    : Object.entries(value)
+  if (
+    !entries.length ||
+    entries.every(([, item]) => item === null || typeof item !== "object")
+  )
+    return JSON.stringify(value)
+  const inner = `${indent}  `
+  const body = entries
+    .map(
+      ([key, item]) =>
+        `${inner}${key === undefined ? "" : `${JSON.stringify(key)}: `}${jsonLines(item, depth - 1, inner)}`,
+    )
+    .join(",\n")
+  return Array.isArray(value)
+    ? `[\n${body}\n${indent}]`
+    : `{\n${body}\n${indent}}`
+}
+
 const list = (counts: Count[]) =>
   counts.map((c) => `${c.px}px (${c.count})`).join(", ")
 
