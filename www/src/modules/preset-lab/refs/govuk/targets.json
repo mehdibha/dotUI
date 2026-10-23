@@ -1,0 +1,184 @@
+{
+  "https://www.gov.uk/check-uk-visa/y": {
+    "mode": "light",
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": ["color"]
+      },
+      "button.primary": {
+        "selector": "main .govuk-button",
+        "text": "Continue"
+      },
+      "select.trigger": {
+        "selector": "main .govuk-select"
+      }
+    }
+  },
+  "https://www.gov.uk/calculate-your-holiday-entitlement/y": {
+    "mode": "light",
+    "parts": {
+      "radio": {
+        "selector": "main .govuk-radios__item:first-child .govuk-radios__label",
+        "box": "::before"
+      },
+      "radio.checked": {
+        "selector": "main .govuk-radios__item:first-child .govuk-radios__label",
+        "box": "::before",
+        "before": [
+          {
+            "click": "main .govuk-radios__item:first-child .govuk-radios__label"
+          },
+          {
+            "click": "main h1"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.gov.uk/bank-holidays": {
+    "mode": "light",
+    "parts": {
+      "tab": {
+        "selector": "main .govuk-tabs__list-item:not(.govuk-tabs__list-item--selected)",
+        "ink": ".govuk-tabs__tab"
+      },
+      "tab.selected": {
+        "selector": "main .govuk-tabs__list-item--selected",
+        "ink": ".govuk-tabs__tab"
+      }
+    }
+  },
+  "https://www.gov.uk/universal-credit": {
+    "mode": "light",
+    "parts": {
+      "heading.1": {
+        "selector": "main h1"
+      },
+      "heading.2": {
+        "selector": "main .gem-c-govspeak h2"
+      },
+      "text": {
+        "selector": "main .gem-c-govspeak p"
+      },
+      "link": {
+        "selector": "main .gem-c-govspeak p a"
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/button/secondary/index.html": {
+    "mode": "light",
+    "parts": {
+      "button.secondary": {
+        "selector": ".govuk-button--secondary"
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/button/default/index.html": {
+    "mode": "light",
+    "parts": {
+      "button.focus": {
+        "selector": ".govuk-button",
+        "focus": true
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/checkboxes/default/index.html": {
+    "mode": "light",
+    "parts": {
+      "checkbox": {
+        "selector": ".govuk-checkboxes__item:first-child .govuk-checkboxes__label",
+        "box": "::before"
+      },
+      "checkbox.checked": {
+        "selector": ".govuk-checkboxes__item:first-child .govuk-checkboxes__label",
+        "box": "::before",
+        "before": [
+          {
+            "click": ".govuk-checkboxes__item:first-child .govuk-checkboxes__label"
+          },
+          {
+            "click": "legend"
+          }
+        ]
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/tag/default/index.html": {
+    "mode": "light",
+    "parts": {
+      "badge.accent": {
+        "selector": ".govuk-tag"
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/tag/all-colours/index.html": {
+    "mode": "light",
+    "parts": {
+      "badge": {
+        "selector": ".govuk-tag--grey"
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/pagination/default/index.html": {
+    "mode": "light",
+    "parts": {
+      "pagination.current": {
+        "selector": ".govuk-pagination__item--current",
+        "ink": ".govuk-pagination__link"
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/notification-banner/default/index.html": {
+    "mode": "light",
+    "parts": {
+      "alert": {
+        "selector": ".govuk-notification-banner",
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/summary-list/card-with-title/index.html": {
+    "mode": "light",
+    "parts": {
+      "card": {
+        "selector": ".govuk-summary-card",
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/fieldset/address-group/index.html": {
+    "mode": "light",
+    "parts": {
+      "input": {
+        "selector": ".govuk-input",
+        "nth": 0
+      },
+      "input.focus": {
+        "selector": ".govuk-input",
+        "nth": 0,
+        "focus": true
+      },
+      "field.label": {
+        "selector": ".govuk-label",
+        "nth": 0
+      }
+    }
+  },
+  "https://design-system.service.gov.uk/components/text-input/input-hint-text/index.html": {
+    "mode": "light",
+    "parts": {
+      "text.muted": {
+        "selector": ".govuk-hint"
+      }
+    }
+  },
+  "https://www.gov.uk/foreign-travel-advice/france/entry-requirements": {
+    "mode": "light",
+    "parts": {
+      "heading.3": {
+        "selector": "main .gem-c-govspeak h3"
+      }
+    }
+  }
+}
