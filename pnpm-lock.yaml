@@ -338,6 +338,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.12.4
+      '@types/pngjs':
+        specifier: ^6.0.5
+        version: 6.0.5
       '@types/react':
         specifier: 19.2.2
         version: 19.2.2
@@ -2998,6 +3001,9 @@ packages:
 
   '@types/pg@8.15.6':
     resolution: {integrity: sha512-NoaMtzhxOrubeL/7UZuNTrejB4MPAJ0RpxZqXQf2qXuVlTPuG6Y8p4u9dKRaue4yjmC7ZhzVO2/Yyyn25znrPQ==}
+
+  '@types/pngjs@6.0.5':
+    resolution: {integrity: sha512-0k5eKfrA83JOZPppLtS2C7OUtyNAl2wKNxfyYl9Q5g9lPkgBl/9hNyAu6HuEH2J4XmIv2znEpkDd0SaZVxW6iQ==}
 
   '@types/react-dom@19.2.1':
     resolution: {integrity: sha512-/EEvYBdT3BflCWvTMO7YkYBHVE9Ci6XdqZciZANQgKpaiDRGOLIlRo91jbTNRQjgPFWVaRxcYc0luVNFitz57A==}
@@ -9461,6 +9467,10 @@ snapshots:
       pg-protocol: 1.15.0
       pg-types: 2.2.0
     optional: true
+
+  '@types/pngjs@6.0.5':
+    dependencies:
+      '@types/node': 26.1.2
 
   '@types/react-dom@19.2.1(@types/react@19.2.2)':
     dependencies:

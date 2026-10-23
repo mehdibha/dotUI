@@ -1,0 +1,197 @@
+{
+  "gaps": [
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Spotify heavier still, the login title at 48/800 and web-player entity titles at 800 while shelf titles stay 24/700",
+      "standin": "Spotify `titleStyle: bold`, 700 at every level",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Spotify 4px beside 4px fields and pill buttons",
+      "standin": "2px in Radix and Spotify",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycap outlines in the control edge color, with a dark drop",
+      "note": "Spotify's keys have no fill and draw a 1px #7c7c7c inset ring (the field edge) plus a `0 1px 0` #121212 drop",
+      "standin": "`kbdTreatment: outline` draws the faint border (oklab L 0.31 in dark), not the strong control edge, and no drop",
+      "source": "ledger"
+    },
+    {
+      "look": "size.keycap",
+      "title": "Keycap size apart from the density",
+      "note": "Spotify's search shortcut keys 26px with 16/400 labels and 6px padding",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Spotify's Library rows at body size, 16/400 #fff titles over 14/400 #b3b3b3 subtitles, at rest and current alike",
+      "standin": "Spotify's sidebar items at 14px in muted ink, oklch 0.78",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Spotify 32px on 48px buttons, primary, secondary and tertiary alike, and 16px on 32px ones (Encore's legacy buttons)",
+      "standin": "`density: touch` pads 24px at Duolingo's, Wise's and Spotify's 48px (Duolingo's trigger with `selectTrigger: button`, +12px; `field` pads 14px but drops the weight and the lip)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Spotify title-large 48px, title-medium 32px and title-small 24px at 700 from 768px up (32, 24 and 20px below), headline-large 96px at 800",
+      "source": "ledger"
+    },
+    {
+      "look": "state.disabled",
+      "title": "Disabled controls at 30% opacity (`--encore-opacity-disabled: 0.3` on buttons, fields, tabs and links)",
+      "standin": "`disabledTreatment: fade` (50%)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "Spotify buttons, fields and Library rows at 16px, menu rows, tooltips and filter chips at 14px (40px menu rows, 12px padding)",
+      "standin": "Spotify's `density: touch` sets menu rows at 16px)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "Search field as a pill while text fields stay boxes",
+      "note": "Filled: Spotify 48px, fully round, a black 8% / white 7% tint, no edge, 12px padding; hover and focus step the tint to 12% / 10%",
+      "standin": "the search field follows `inputStyle` and the control radius (a 4px box on Spotify's #7c7c7c edge",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "Spotify's inline links take the text's color and weight (400), underlined",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "Spotify's Home and artist cards (Encore `card`) with no fill, edge or shadow at rest, clear on the #121212 panel at 6px and filled only on hover, while plated containers (sidebar prompt cards) are #1f1f1f at 8px",
+      "standin": "Spotify's `surfaceLayers: tonal` lifts cards one gray (oklab L 0.219)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Filled pill chips: Spotify's filter chips (Home, artist discography, Library) are 32px pills, 12px padding, 14/400, on a white 10% fill with no edge, the selected chip white under black ink, beside 48px buttons at 16/700",
+      "standin": "on Spotify Button's size, weight and edge (48px, 20px padding, 16/700, 1px)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Spotify's Settings switch a solid #535353 on the #121212 page, no ring, a step below its #7c7c7c field edge",
+      "standin": "Spotify's on the control edge, oklch 0.6 (ΔE 0.158); `switchStyle: outlined` clears the track and draws a 1px edge",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tabs-rule",
+      "title": "Line tabs with no rule under the list",
+      "note": "Spotify only the 2px accent bar under the current label",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.switch-knob",
+      "title": "Switch knob color apart from the solid ink",
+      "note": "Spotify's Settings switch a 20px white knob over the #1db954 on track and the #535353 off track (dark only)",
+      "standin": "in dark, the off knob stays white and the on knob takes the solid ink (a dark olive on Higgsfield's lime, a dark green on Spotify's)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Line tabs: Spotify 12px on 48px tabs",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Spotify's indicator is its own pill inside the 6px pill track",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Spotify's web player tooltips 14/400 at 28px with 8px padding, on the menu surface (#282828, 4px corners, the menu shadow)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Spotify's context menus, tooltips and dialogs on #282828, a gray above its #1f1f1f containers (sidebar prompt cards, the search field) on the #121212 panel",
+      "standin": "Spotify's share the container tone, oklab L 0.230)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-shadow",
+      "title": "Shadowless dialogs on a heavy scrim while menus keep their drop",
+      "note": "Spotify's language dialog is #282828 at 8px with no shadow over 70% black, while context menus and tooltips keep `0 16px 24px` black 30% plus `0 6px 8px` black 20%",
+      "standin": "`surfaceShadow: flat` drops card shadows but dialogs keep theirs (3 layers)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Spotify 24px text tags, 6px padding, 4px corners, 14/700",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Spotify banners at 4px like its menus and tooltips, under 8px dialogs",
+      "standin": "6px on Spotify at `roleSurface: sm`, a step above its 4px menus",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Spotify on small controls only (checks, radios, progress and tab bars on #159542 in light, #1ed760 in dark; accent text #107434 in light), buttons #1ed760 in both, while the shipped Settings switch (dark only) is on #1db954, the older brand green, a step below",
+      "standin": "Spotify checks 0.190 in light, the dark Settings switch 0.085 at `brand: #1ed760`",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Spotify 0.241",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Brighter: Spotify pure #fff",
+      "standin": "Spotify 0.043",
+      "source": "ledger"
+    },
+    {
+      "look": "color.shell-dark",
+      "title": "A pure black frame under a recessed shell",
+      "note": "Spotify's web player frame (top bar, gutters around the panels) is #000 around #121212 panels",
+      "standin": "`shellTone: recessed` frames the panels in oklab L 0.172 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Labels on brand solids in a set color",
+      "note": "Pure ink: Spotify #000 labels on its bright #1ed760 in both modes (primary buttons, accent tags)",
+      "standin": "`solidInk: auto` picks a dark green ink on Spotify, Wise and Higgsfield, oklch 0.25 0.04 (ΔE 0.253 on Spotify, 0.057 on Wise, 0.051 on Higgsfield; the only other option is `white`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Spotify #ebebeb / #2a2a2a (Encore `background-tinted-base`) on neutral tags, the neutral banner and the progress track, and in dark the account pages' group cards (white 10% over #121212: #2a2a2a at 5px, no edge or shadow)",
+      "standin": "the neutral badge fill, soft alert and track on oklch 0.963 / 0.254 (Spotify ΔE 0.023 / 0.031; its account cards take the card surface, oklab L 0.219, ΔE 0.066)",
+      "source": "ledger"
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "gaps": [
+    {
+      "look": "anatomy.shell-header",
+      "title": "App shell with a full-width header bar above the side nav",
+      "note": "Carbon's UI Shell header is 48px (#fff / #161616, a 1px #e0e0e0 / #393939 bottom hairline), the product name at 14/600, menu items in secondary ink (#525252 / #c6c6c6) and 48px icon actions",
+      "standin": "the shell has a sidebar and an inset content panel, and no header bar",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size apart from the control text",
+      "note": "Smaller labels and helper text: Carbon 12px in secondary ink (labels #525252 / #c6c6c6, helper #6f6f6f / #a8a8a8) over 14px values",
+      "source": "ledger"
+    },
+    {
+      "look": "size.field-padding",
+      "title": "Wider field inset",
+      "note": "16px inline padding at 40px (fields, selects, line tabs)",
+      "standin": "12px (`density: spacious`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in the link color",
+      "note": "Carbon #0f62fe / #78a9ff",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.button-layout",
+      "title": "Button anatomy",
+      "note": "48px by default, a step above 40px fields; label at the start with a 64px trailing icon slot (15px / 63px padding)",
+      "standin": "`density: spacious` (md 40 for both), centered label, 16px padding",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-edge",
+      "title": "Checkbox and radio edges darker than the field line",
+      "note": "Carbon full ink, 1px #161616 / #f4f4f4 on checkboxes, radios and the content switcher",
+      "standin": "Carbon radios ΔE 0.400 / 0.367)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.invalid-field",
+      "title": "Invalid fields drawn as a 2px danger outline inside the whole box",
+      "standin": "`invalidStyle: edge` (the bottom line turns red)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.invalid-field",
+      "title": "Invalid fields keep the label's ink",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "Focus ring in a color other than the brand",
+      "note": "Carbon the brand in light, white in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Secondary or muted ink, full ink on hover or when current: Carbon menu rows, dropdown options and side nav (#525252 / #c6c6c6)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-layer",
+      "title": "Layer-aware fields",
+      "note": "on a layer, fields step up one (white fields inside a #f4f4f4 modal or tile)",
+      "standin": "fields keep #f4f4f4 inside dialogs",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.layers-tonal",
+      "title": "Deeper tonal layers",
+      "source": "ledger"
+    },
+    {
+      "look": "font.ibm-plex-mono",
+      "title": "IBM Plex Mono in the font catalog",
+      "standin": "Source Code Pro",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Carbon small type tracked wider, `label-01` 12px at 0.32px (field labels, helper text, tags) and `body-compact-01` 14px at 0.16px",
+      "standin": "no tracking on body and labels (Carbon's field labels and badges off by 0.32px",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-flush",
+      "title": "Focus line flush over the control's edge",
+      "note": "Carbon's 2px inset",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.switch-on",
+      "title": "Switch on in the success color (#24a148 / #42be65), not the brand",
+      "standin": "`switchColor: accent` (brand blue)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.calendar-selected",
+      "title": "Calendar selection in the brand while checkboxes stay ink",
+      "note": "Carbon (for today, see the today marker row)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.calendar-today",
+      "title": "Today marker in a color of its own",
+      "note": "Carbon today in the link color with a dot",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tabs-rule",
+      "title": "Line tabs that rule the whole list in 2px, the current tab's indicator over it",
+      "note": "Carbon #e0e0e0 / #393939 with the current tab in the brand (#0f62fe / #4589ff)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Carbon 16px on 40px (see its wider-field-inset row)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress",
+      "title": "Progress corners apart from the other tracks",
+      "note": "Carbon's 8px bar is square; all three keep a pill switch",
+      "standin": "The `tracks: round` meta credits Carbon, but only its switch is round",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Carbon 40px items fill the 40px track edge to edge, the selected one a full-height block (#161616 / #f4f4f4)",
+      "standin": "a track about the button height around chips inset 2–4px: 44px with a 36px chip on Carbon, 36px with 30px items on GitHub and Radix, 40px with 32px chips on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Carbon's outer corners at 4px while everything else is square",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track edged in a control line, not the surface line",
+      "note": "Carbon full ink (1px #161616 / #f4f4f4, `$border-inverse`)",
+      "standin": "`segmentedTrack: outline` draws the light surface line (ΔE 0.35 on Material 3, 0.725 / 0.648 on Carbon, 0.064 / 0.077 on GitHub)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.segmented",
+      "title": "Segmented items at their own weight, apart from tabs",
+      "note": "Carbon's content switcher stays 14/400 when selected while its line tabs select at 14/600",
+      "standin": "`navWeight: regular-semibold`, one weight for tabs, segmented items and sidebar items (the selected segment at 600 on Carbon",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "Carbon 40×40 (a 288px calendar)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Carbon 14/400, today 600",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Carbon 14px text, 16px padding (its 2px corners: see the overlay corners row)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.overlay",
+      "title": "Overlay corners above a square system",
+      "note": "Carbon rounds popovers and tooltips to 2px while buttons, fields, menus and dialogs are square",
+      "standin": "popovers take the surface radius and tooltips the inline-item radius, both 0px under Carbon's `none` roles",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.notification",
+      "title": "Inverse notifications with a 3px status stripe at the start and filled status icons",
+      "standin": "`alertStyle` / `toastStyle: inverse`, no stripe, outline icons",
+      "source": "ledger"
+    },
+    {
+      "look": "type.notification-title",
+      "title": "Notification titles at semibold",
+      "note": "Carbon 14/600 over a 14/400 subtitle (toast, inline and actionable notifications)",
+      "standin": "toast titles at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "size.toast",
+      "title": "Narrow toasts",
+      "note": "Carbon 288px",
+      "standin": "toasts up to 384px (`max-w-96`)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.menu-dividers",
+      "title": "Hairlines between dropdown options (1px #e0e0e0 / #393939, inset 16px)",
+      "standin": "no separators",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Larger: Carbon 24px at 12/400 with 0.32px tracking",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Regular, 12/400: Carbon",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.badge-soft",
+      "title": "Soft badges at a strong tint, flipping to a mid-tone fill under light text in dark",
+      "note": "Carbon the 20 step behind 70-step text (light: gray #e0e0e0 / #161616, blue #d0e2ff / #0043ce; dark: gray #525252 / #f4f4f4, blue #0043ce / #d0e2ff)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.table-frame",
+      "title": "Tables with no outer frame",
+      "note": "Carbon's data table draws only the header band and a 1px hairline under each row (#e0e0e0 / #393939), with no box around it",
+      "source": "ledger"
+    },
+    {
+      "look": "type.table-header",
+      "title": "Table header label weight apart from 500",
+      "note": "Semibold: Carbon 14/600 (0.16px tracking) on the header band, body cells 14/400",
+      "standin": "`tableHeaderLabel` sets only the ink (`strong` on Carbon, `muted` on Untitled UI and Notion); header labels render at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "type.accordion-title",
+      "title": "Accordion titles at body weight",
+      "note": "Carbon 14/400 (0.16px tracking)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.accordion-inset",
+      "title": "Inset accordion rows",
+      "note": "Carbon's title and panel text start 16px in from the row's hairline edge",
+      "standin": "`accordionContainer: divided` puts titles and panels flush with the hairlines",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.accordion-panel",
+      "title": "Accordion panel text in body ink",
+      "note": "Carbon #161616 / #f4f4f4, the same as the title",
+      "standin": "panels in muted ink (oklch 0.50 / 0.78)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.pagination-current",
+      "title": "Current page as a bold numeral over an indicator bar",
+      "note": "Carbon's PaginationNav leaves the current page unfilled (page tone, ink text at 14/600) with a 16×4px brand bar at its foot (#0f62fe / #4589ff), on 48px page buttons",
+      "standin": "`paginationCurrent: secondary` fills the current page as a secondary button (#393939 under white in light, ΔE 0.653) at 14/400 and 40px; `primary` and `selected` fill it too",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Carbon buttons and the selected day on #0f62fe in both modes, while in dark the progress fill moves to #4589ff (`$interactive`) and links and today to #78a9ff",
+      "standin": "dark progress fill 0.106 on Carbon, 0.097 on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Carbon labels #525252 / #c6c6c6, values #161616 / #f4f4f4",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Inverse surfaces a step off the ink",
+      "note": "Carbon #393939 tooltips and notifications under #161616 text in light",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Carbon #8d8d8d / #6f6f6f (also the switch's off track)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Carbon on the brand step, the seed #0f62fe in light and #78a9ff in dark",
+      "standin": "`fg-accent` lands near Carbon's (ΔE 0.04 / 0.05)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Carbon's progress track, data table header band and slider track on `$layer-accent-01` (#e0e0e0 / #393939)",
+      "standin": "`bg-muted` at 0.963 / 0.262 on Carbon (ΔE 0.056 / 0.082; the header band with `tableHeader: filled` too, the slider track at 0.963 / 0.339)",
+      "source": "ledger"
+    }
+  ]
+}

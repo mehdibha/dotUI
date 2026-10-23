@@ -26,7 +26,7 @@ What this means when writing code today:
 - Registry items import only from `@/registry/*`, relative paths, and published packages — plain React files, shadcn-schema compatible. www-side imports (router, fumadocs, `@/components`) must never leak in.
 - Author registry source in one canonical style (current files are the reference) — `codeOptions` will be mechanical publisher transforms over it, and inconsistent source breaks the transforms.
 - Researching design systems (preset fidelity, a missing axis, component comparisons)? Start from [docs/design-system-references.md](docs/design-system-references.md) — a curated, link-verified list of the systems worth studying.
-- Working on a preset? Follow the `preset` skill; the rules are in [www/src/modules/presets/README.md](www/src/modules/presets/README.md), and looks no axis covers go to the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020).
+- Working on a preset? Follow the `preset` skill; the rules are in [www/src/modules/presets/README.md](www/src/modules/presets/README.md), and looks no axis covers go to the pack's `gaps.json` (`presets:gaps` builds the ledger; [#1020](https://github.com/mehdibha/dotUI/issues/1020) holds its history).
 
 ## Current state of the project
 

@@ -4,9 +4,10 @@
  *
  *   tsx scripts/local-capture/kit.mts > <file>
  *     Prints the kit: one JavaScript expression to run in the tab after each
- *     full load. It defines `window.__dotui` with the preset-lab probe, and
- *     keeps results in the tab's sessionStorage, so they survive reloads and
- *     leave the page as one download per page and mode. Where the page allows
+ *     full load. It defines `window.__dotui` with the preset-lab probe and
+ *     census, and keeps results in the tab's sessionStorage, so they survive
+ *     reloads and leave the page as one download per page and mode (plus one
+ *     per census pass). Where the page allows
  *     eval, `(0, eval)(sessionStorage.getItem("__dotui_kit"))` re-runs it
  *     after a load of the same site without resending it.
  *
@@ -16,9 +17,11 @@
  *
  *   tsx scripts/local-capture/kit.mts --collect <preset id> --out <dir> [--crops <dir>] [--downloads ~/Downloads]
  *     Moves the newest dotui__<id>__<slug>__<mode>.json of each page from the
- *     downloads folder to <dir>/<slug>-<mode>.json, and the frozen copies in
+ *     downloads folder to <dir>/<slug>-<mode>.json, the frozen copies in
  *     every dotui-snap__<id>__… download into the part files in --crops
- *     (<dir>/../crops by default), newest last.
+ *     (<dir>/../crops by default), newest last, and each census pass
+ *     (dotui-census__<id>__<slug>__<mode>__<pass>.json) to
+ *     <dir>/../census/pages/<slug>-<pass>-<mode>.json.
  *
  *   tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <file> --out <dir> --mode <mode> [--parts a,b]
  *     Crops each part `__dotui.rects()` returned (or only `--parts`) out of a
@@ -42,11 +45,16 @@ import { PNG } from "pngjs"
 import { minifySync } from "vite"
 
 import {
+  type CensusPage,
+  censusSource,
+  probeSource,
+  trim,
+} from "../../src/modules/preset-lab/census"
+import {
   type Pack,
   type Step,
   type Target,
   ownedProps,
-  snippet,
 } from "../../src/modules/preset-lab/probe"
 import {
   COPY_AREA,
@@ -54,6 +62,7 @@ import {
   type Snapshot,
   snapshotSource,
 } from "../../src/modules/preset-lab/snapshot"
+import { PROBE } from "../preset-pages"
 
 const { values: args } = parseArgs({
   options: {
@@ -71,16 +80,6 @@ const { values: args } = parseArgs({
   },
 })
 
-/** The probe's own source, taken from the expression `snippet` builds. */
-const probeSource = () => {
-  const head = "(() => { const __name = (fn) => fn; return ("
-  const tail = ")({}, {}, false, false) })()"
-  const expression = snippet({})
-  if (!expression.startsWith(head) || !expression.endsWith(tail))
-    throw new Error("snippet() changed shape: update probeSource()")
-  return expression.slice(head.length, -tail.length)
-}
-
 /* Runs in the page. It keeps its own source in sessionStorage, so on a page
    that allows eval the next load re-runs it with RELOAD instead of resending
    it. */
@@ -88,6 +87,7 @@ const KIT = `(function kit() {
   sessionStorage.setItem("__dotui_kit", "(" + kit.toString() + ")()")
   const __name = (fn) => fn
   const probe = ${probeSource()}
+  const run = ${censusSource()}
   const copy = ${snapshotSource()}
   const KEY = "__dotui", CURRENT = "__dotui_current"
   const load = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || "{}") } catch { return {} } }
@@ -100,6 +100,17 @@ const KIT = `(function kit() {
     all[name] = all[name] || { probe: {} }
     fn(all[name])
     save(all)
+  }
+  const settle = () => {
+    // Read where transitions land, not mid-way: focus rings and overlays ease in.
+    for (const a of document.getAnimations())
+      if (a.effect?.getComputedTiming().iterations !== Infinity) try { a.finish() } catch {}
+  }
+  const download = (file, data) => {
+    const a = document.createElement("a")
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }))
+    a.download = file
+    document.body.appendChild(a); a.click(); a.remove()
   }
   const visible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 }
   // Marked parts, including those inside shadow roots (web components, targets with >>>).
@@ -197,12 +208,41 @@ const KIT = `(function kit() {
       return { name, ...theme }
     },
     measure(targets, props, focus = false) {
-      // Read where transitions land, not mid-way: focus rings and overlays ease in.
-      for (const a of document.getAnimations())
-        if (a.effect?.getComputedTiming().iterations !== Infinity) try { a.finish() } catch {}
+      settle()
       const result = probe(targets, props, focus, true)
       update((b) => Object.assign(b.probe, result))
       return Object.fromEntries(Object.entries(result).map(([part, m]) => [part, m ? Object.keys(m).length + " props" : null]))
+    },
+    census(pass = "rest", max = 5000) {
+      const name = current()
+      const mode = name?.split("/").pop()
+      if (mode !== "light" && mode !== "dark") throw new Error('call __dotui.begin("<id>/<slug>/<light|dark>", key) first')
+      settle()
+      // A pass after "rest" on the same load reads only what it opened.
+      window.__dotui_passes = pass === "rest" ? 0 : (window.__dotui_passes ?? 0) + 1
+      const walked = run({ kind: "walk", max, fresh: pass !== "rest", start: window.__dotui_passes * 100000 })
+      // One element per look reads its custom properties and its focus.
+      const looks = new Map()
+      for (const e of walked.elements) {
+        const { width, ...values } = e.values
+        const sig = e.role + JSON.stringify(values)
+        if (!looks.has(sig)) looks.set(sig, e)
+      }
+      const reps = [...looks.values()]
+      const { vars, tokens } = run({ kind: "vars", ids: reps.slice(0, 400).map((e) => e.id) })
+      const focused = run({ kind: "focus", ids: reps.filter((e) => e.focusable).slice(0, 40).map((e) => e.id) })
+      for (const e of walked.elements) {
+        if (vars[e.id]) e.vars = vars[e.id]
+        const focus = focused[e.id]
+        if (!focus) continue
+        const diff = Object.fromEntries(Object.entries(focus).filter(([k, v]) => k !== "width" && e.values[k] !== v))
+        if (Object.keys(diff).length) e.states = { focus: diff }
+      }
+      run({ kind: "seen" })
+      const page = { key: load()[name]?.key, mode, probe: ${JSON.stringify(PROBE)}, pass, viewport: walked.viewport, elements: walked.elements, tokens, ...(walked.truncated ? { truncated: walked.truncated } : {}), reads: walked.reads }
+      const file = "dotui-census__" + name.replace(/\\//g, "__") + "__" + pass.replace(/[^a-zA-Z0-9]+/g, "-") + ".json"
+      download(file, page)
+      return { file, elements: walked.elements.length, looks: reps.length, focus: Object.keys(focused).length, truncated: walked.truncated }
     },
     peek(part) { return load()[current()]?.probe?.[part] },
     vars() {
@@ -265,17 +305,14 @@ const KIT = `(function kit() {
     },
     finish(name = current()) {
       const data = load()[name]
-      const json = JSON.stringify(data, null, 1)
-      const a = document.createElement("a")
-      a.href = URL.createObjectURL(new Blob([json], { type: "application/json" }))
-      a.download = "dotui__" + name.replace(/\\//g, "__") + ".json"
-      document.body.appendChild(a); a.click(); a.remove()
+      const file = "dotui__" + name.replace(/\\//g, "__") + ".json"
+      download(file, data)
       const nulls = Object.entries(data.probe).filter(([, m]) => !m).map(([p]) => p)
-      return { file: a.download, bytes: json.length, parts: Object.keys(data.probe).length, nulls }
+      return { file, bytes: JSON.stringify(data).length, parts: Object.keys(data.probe).length, nulls }
     },
     list() { return Object.fromEntries(Object.entries(load()).map(([n, b]) => [n, JSON.stringify(b).length])) },
     read(offset = 0, length = 900) { return JSON.stringify(load()[current()]).slice(offset, offset + length) },
-    reset() { for (const k of [KEY, CURRENT, "__dotui_kit"]) sessionStorage.removeItem(k); return "reset" },
+    reset() { for (const k of [KEY, CURRENT, "__dotui_kit"]) sessionStorage.removeItem(k); run({ kind: "clear" }); return "reset" },
   }
   for (const el of marked()) el.removeAttribute("data-probe-part")
   return "dotui kit ready" + (current() ? ", bundle " + current() : "")
@@ -363,8 +400,38 @@ if (args.collect) {
       console.log(`${path} ← copy from ${name}`)
     }
   }
+  // Census passes go next to raw/, as the crawl script writes them, with
+  // the values each element shows by default left out.
+  // A pass downloaded twice keeps its newest file, as raw/ does.
+  const census = `dotui-census__${args.collect}__`
+  const pages = resolve(args.out, "../census/pages")
+  const passes = new Map<string, { name: string; time: number }>()
+  for (const name of await readdir(args.downloads)) {
+    const match = /^(.+?)(?: \(\d+\))?\.json$/.exec(name)
+    if (!match || !name.startsWith(census)) continue
+    const [pass, mode, ...slug] = match[1]
+      .slice(census.length)
+      .split("__")
+      .reverse()
+    const target = resolve(
+      pages,
+      `${slug.reverse().join("-")}-${pass}-${mode}.json`,
+    )
+    const time = (await stat(resolve(args.downloads, name))).mtimeMs
+    if ((passes.get(target)?.time ?? -1) < time)
+      passes.set(target, { name, time })
+  }
+  if (passes.size) await mkdir(pages, { recursive: true })
+  for (const [target, { name }] of passes) {
+    const page: CensusPage = JSON.parse(
+      await readFile(resolve(args.downloads, name), "utf8"),
+    )
+    for (const element of page.elements) element.values = trim(element.values)
+    await writeFile(target, `${JSON.stringify(page)}\n`)
+    console.log(`${target} ← ${name}`)
+  }
   for (const name of await readdir(args.downloads))
-    if (name.startsWith(prefix) || name.startsWith(snapPrefix))
+    if ([prefix, snapPrefix, census].some((start) => name.startsWith(start)))
       await unlink(resolve(args.downloads, name))
   process.exit(0)
 }
