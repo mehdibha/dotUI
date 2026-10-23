@@ -25,6 +25,7 @@
     "presets:drift": "tsx scripts/crawl-preset.ts --drift",
     "presets:fit": "tsx scripts/fit-preset.ts",
     "presets:gaps": "tsx scripts/presets-gaps.ts",
+    "presets:looks": "tsx scripts/system-looks.ts",
     "presets:measure": "tsx scripts/measure-preset.mts",
     "presets:pixel": "tsx scripts/pixel-probe.ts"
   },
