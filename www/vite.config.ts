@@ -7,8 +7,6 @@ import { nitro } from "nitro/vite"
 import { defineConfig } from "vite"
 import type { Plugin } from "vite"
 
-import { presetRefs } from "./src/modules/preset-lab/refs-server"
-
 // Scoped design-system themes must paint before hydration, but the server has
 // no CSSOM to harvest the root token closure from. In server environments,
 // swap the root-closure-data placeholder for the closure parsed out of the
@@ -89,6 +87,5 @@ export default defineConfig({
       },
     }),
     viteReact(),
-    presetRefs(import.meta.dirname),
   ],
 })

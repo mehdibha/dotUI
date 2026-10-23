@@ -1,6 +1,6 @@
 /* A frozen copy of a part: its subtree with every computed style written
-   out, so /internal/compare can render the product's own element next to
-   ours, at the same size and in the same browser. It reads the state the
+   out, so a page can render the product's own element next to ours, at the
+   same size and in the same browser. It reads the state the
    element is in (hovered, focused, open) and forces none. */
 
 export interface SnapshotFont {
@@ -32,8 +32,7 @@ export interface Snapshot {
 }
 
 /** What a crop's `<part>-<mode>.json` holds, beside its PNG: written by
- *  `presets:measure --pack --shots` and the local kit, read by
- *  /internal/compare. */
+ *  `presets:measure --pack --shots` and the local kit. */
 export interface PartFile {
   kind: "dotui-part"
   part: string

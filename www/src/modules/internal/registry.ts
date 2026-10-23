@@ -22,12 +22,6 @@ export const INTERNAL_TOOLS: InternalTool[] = [
       "Every preset on fixed component sheets, captured to compare against the system it recreates.",
   },
   {
-    href: "/internal/compare",
-    label: "Compare",
-    description:
-      "A preset's live parts beside the real product's crops and frozen copies, with overlays and the probe diff.",
-  },
-  {
     href: "/internal/blur-reveal",
     label: "Blur reveal",
     description:

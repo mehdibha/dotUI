@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -49,7 +50,12 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 import { KEY_BOARDS, pageBoard, usePreviewFocus } from "@/modules/studio/focus"
-import { clearSettled, onWarmPreview } from "@/modules/studio/live"
+import {
+  clearSettled,
+  isDragPreview,
+  onWarmPreview,
+  useLive,
+} from "@/modules/studio/live"
 import {
   BOARD_SLUG_PREFIX,
   onMessage,
@@ -57,10 +63,11 @@ import {
   useMessage,
 } from "@/modules/studio/preset/iframe-sync"
 import type { ParentToIframeMessage } from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
 import type { BoardId } from "@/modules/studio/preview/boards/titles"
-import { useDesignSystemMessage } from "@/modules/studio/preview/design-system-message"
+import { designSystemOf } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
 import { useCurrent } from "@/modules/studio/selection"
 
@@ -218,10 +225,26 @@ function usePreviewSync(
   }, [iframeRef])
 }
 
+const withJson = (data: DesignSystem) => ({ data, json: JSON.stringify(data) })
+
 /** Posts the live preview, else the committed design, to the iframe. */
 function DesignSystemSync({ iframeRef }: { iframeRef: IframeRef }) {
   const { state } = useCurrent()
-  const { message, key } = useDesignSystemMessage()
+  const live = useLive()
+  const committed = useMemo(() => withJson(designSystemOf(state)), [state])
+  const preview = useMemo(() => live && withJson(designSystemOf(live)), [live])
+  const { message, key } = useMemo(() => {
+    // A preview that resolves to the committed design isn't one.
+    const shown =
+      preview && preview.json !== committed.json ? preview : committed
+    const { data, json } = shown
+    const isLive = shown !== committed
+    const drag = isDragPreview()
+    return {
+      message: { type: "design-system", data, live: isLive, drag } as const,
+      key: `${isLive}|${drag}|${json}`,
+    }
+  }, [preview, committed])
   usePreviewSync(iframeRef, message, key)
 
   // Another tab's change drops a hover's preview; a drag keeps its own.
