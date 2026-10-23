@@ -7,7 +7,7 @@
    hand: a look the capture never read is an empty slot on the page.
    `scripts/system-looks.ts` writes it. */
 
-import type { Inventory, Look as CensusLook, Values } from "./census"
+import type { Flag, Inventory, Look as CensusLook, Values } from "./census"
 import { compareMeasures, type Row } from "./compare"
 import type { Gap } from "./looks"
 import type { Count, Model, Swatch, TypeStyle } from "./model"
@@ -68,6 +68,9 @@ export interface Look {
   /** The probe part that reads this look on both sides: the specimen cell
    *  the page renders as ours. */
   part?: string
+  /** Found only disabled, selected or open, with no rest look of its shape:
+   *  its rest values are that state's. */
+  is?: Flag
   states: Partial<Record<State, Partial<Record<Mode, Reading>>>>
   /** Where the preset misses this look, from the fit's residual rows. */
   off?: {
@@ -363,6 +366,7 @@ interface PoolLook {
   dark?: Values
   states?: CensusLook["states"]
   vars?: Values
+  is?: Flag
 }
 
 export function systemLooks(input: SystemInput): SystemLooks {
@@ -439,6 +443,7 @@ export function systemLooks(input: SystemInput): SystemLooks {
       count: look.count,
       pages: look.pages,
       ...(part ? { part } : {}),
+      ...(look.is ? { is: look.is } : {}),
       states,
       ...(off ? { off } : {}),
     }
