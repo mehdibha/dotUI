@@ -57,6 +57,7 @@ export const LOOKS = {
   "size.tab-padding": look("Tab padding", "tab.* paddingInline"),
   "size.segmented": look("Segmented control height", "segmented.* height"),
   "size.calendar-day": look("Calendar day cell size", "calendar.* height"),
+  "size.progress": look("Progress track height", "progress height"),
   "size.button-quiet": look(
     "Quiet button size",
     "button.quiet height",
@@ -66,6 +67,12 @@ export const LOOKS = {
     "Button inline padding",
     "button.primary paddingInline",
     "button.secondary paddingInline",
+  ),
+  "size.button": look(
+    "Button height apart from density",
+    "button.primary height",
+    "button.secondary height",
+    "button.icon height",
   ),
   "size.button-icon-padding": look("Button padding beside an icon"),
   "size.field-padding": look(
@@ -283,6 +290,7 @@ export const LOOKS = {
   "radius.tooltip": look("Tooltip corners", "tooltip borderRadius"),
   "radius.badge": look("Badge corners", "badge.* borderRadius"),
   "radius.card": look("Card corners", "card borderRadius"),
+  "radius.squircle": look("Superellipse corners"),
   "radius.dialog": look("Dialog corners", "dialog borderRadius"),
   "radius.command": look("Command palette corners", "command borderRadius"),
   "radius.command-row": look(
