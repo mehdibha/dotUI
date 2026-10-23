@@ -1,5 +1,6 @@
-/* The internal tools index — what /internal lists. Dev-only scratch surfaces
-   (labs, playgrounds, demos); nothing here ships or is linked from the site. */
+/* The internal tools index — what /internal lists. Scratch surfaces (labs,
+   playgrounds, demos) for dev and Vercel previews; nothing here ships to
+   dotui.org or is linked from the site. */
 
 interface InternalTool {
   href: string

@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { CompositionSection } from "@/modules/internal/composition-section"
+import { INTERNAL_PAGES } from "@/modules/internal/enabled"
 import { InternalShell } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/composition-animation")({
-  component: import.meta.env.DEV ? CompositionAnimationDemo : undefined,
-  head: import.meta.env.DEV
+  component: INTERNAL_PAGES ? CompositionAnimationDemo : undefined,
+  head: INTERNAL_PAGES
     ? () => ({ meta: [{ title: "Composition animation · dotUI" }] })
     : undefined,
 })

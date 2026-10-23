@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { INTERNAL_PAGES } from "@/modules/internal/enabled"
 import { ComparePage } from "@/modules/preset-lab/compare-page"
 
 interface CompareSearch {
@@ -23,8 +24,8 @@ export const Route = createFileRoute("/internal/compare")({
     view: VIEWS.find((view) => view === search.view),
   }),
   ssr: false,
-  component: import.meta.env.DEV ? ComparePage : undefined,
-  head: import.meta.env.DEV
+  component: INTERNAL_PAGES ? ComparePage : undefined,
+  head: INTERNAL_PAGES
     ? () => ({ meta: [{ title: "Compare · dotUI" }] })
     : undefined,
 })
