@@ -101,11 +101,13 @@ if (reference.probe !== PROBE)
   )
 
 type Diff = Record<string, Value>
-/* Colors, fonts and the color engine's own dials (hue, vividness, tint,
-   page lightness) stay out; the color chapter's routing enums stay in. */
+/* Colors, fonts, brand assets (logos are content) and the color engine's
+   own dials (hue, vividness, tint, page lightness) stay out; the color
+   chapter's routing enums stay in. */
 const SKIP = new Set(["color", "font"])
 const searched = (key: string, axis: Axis) =>
   !SKIP.has(axis.value.type) &&
+  KEY_OWNER[key] !== "assets" &&
   (KEY_OWNER[key] !== "color" || axis.value.type === "enum")
 const wanted = (key: string) =>
   !args.keys ||
@@ -139,6 +141,8 @@ interface Tab {
   sheet: string
   targets: Record<string, Target>
   page: Page
+  /** A fresh page on the same sheet, for a tab that stopped answering. */
+  open: () => Promise<Page>
   /** What the tab shows now. */
   shown?: string
 }
@@ -150,24 +154,27 @@ async function openTabs(browser: Browser, preset: string): Promise<Tab[]> {
   return pool(
     jobs,
     async ({ mode, sheet, targets }) => {
-      const page = await browser.newPage()
-      await focusable(page)
-      await page.setViewport({ width: 1280, height: 900 })
-      await page.emulateMediaFeatures([
-        { name: "prefers-color-scheme", value: mode },
-      ])
-      await page.goto(
-        `http://localhost:${args.port}/internal/specimens?preset=${preset}&mode=${mode}&sheet=${sheet}`,
-        {
-          waitUntil: "networkidle0",
-          timeout: 120000,
-        },
-      )
-      await page.waitForSelector("html[data-specimen-ready]", {
-        timeout: 60000,
-      })
-      await settle(page)
-      return { mode, sheet, targets, page, shown: "{}" }
+      const open = async () => {
+        const page = await browser.newPage()
+        await focusable(page)
+        await page.setViewport({ width: 1280, height: 900 })
+        await page.emulateMediaFeatures([
+          { name: "prefers-color-scheme", value: mode },
+        ])
+        await page.goto(
+          `http://localhost:${args.port}/internal/specimens?preset=${preset}&mode=${mode}&sheet=${sheet}`,
+          {
+            waitUntil: "networkidle0",
+            timeout: 120000,
+          },
+        )
+        await page.waitForSelector("html[data-specimen-ready]", {
+          timeout: 60000,
+        })
+        await settle(page)
+        return page
+      }
+      return { mode, sheet, targets, page: await open(), open, shown: "{}" }
     },
     6,
   )
@@ -175,7 +182,8 @@ async function openTabs(browser: Browser, preset: string): Promise<Tab[]> {
 
 /* Re-renders the tabs of the given sheets (all by default) with `diff`
    over the tab's preset, refocuses the focus specimen, and reads them. A
-   tab the dev server reloaded (a source edit) is loaded again and read. */
+   tab the dev server reloaded (a source edit) or that stopped answering is
+   opened again and read; failing twice fails the render. */
 async function render(
   tabs: Tab[],
   diff: Diff,
@@ -183,12 +191,32 @@ async function render(
 ): Promise<Measured> {
   const json = JSON.stringify(diff)
   const measured: Measured = {}
+  // Every step gives up after a while and names itself, so a tab that hangs
+  // is replaced instead of stalling the run. A step given up on can still
+  // fail later, with no one listening: hence its empty catch.
+  const within = <T>(step: Promise<T>, ms: number, what: string) => {
+    step.catch(() => {})
+    return Promise.race([
+      step,
+      new Promise<never>((_, fail) =>
+        setTimeout(() => fail(new Error(`stalled: ${what}`)), ms),
+      ),
+    ])
+  }
   const read = async (tab: Tab) => {
     if (tab.shown !== json) {
       // Resolves on the commit; two frames more for styles to land.
-      await tab.page.evaluate(`window.__specimen.setDiff(${json})`)
-      await tab.page.evaluate(
-        `new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))`,
+      await within(
+        tab.page.evaluate(`window.__specimen.setDiff(${json})`),
+        20000,
+        "no commit",
+      )
+      await within(
+        tab.page.evaluate(
+          `new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))`,
+        ),
+        5000,
+        "no frame",
       )
       await tab.page.evaluate(
         `document.querySelector("[data-specimen-focus]")?.focus({ preventScroll: true })`,
@@ -196,9 +224,13 @@ async function render(
       await settle(tab.page)
       tab.shown = json
     }
-    return (await tab.page.evaluate(snippet(tab.targets))) as Measures
+    return (await within(
+      tab.page.evaluate(snippet(tab.targets)),
+      20000,
+      "no reading",
+    )) as Measures
   }
-  await Promise.all(
+  const reads = await Promise.allSettled(
     tabs
       .filter((tab) => !sheets || sheets.has(tab.sheet))
       .map(async (tab) => {
@@ -206,24 +238,38 @@ async function render(
         try {
           measures = await read(tab)
         } catch (error) {
-          if (
-            !/context was destroyed|detached|navigat/i.test(
-              (error as Error).message,
-            )
-          )
+          const { message } = error as Error
+          if (!/context was destroyed|detached|navigat|stalled/i.test(message))
             throw error
-          await tab.page.reload({ waitUntil: "networkidle0", timeout: 120000 })
-          await tab.page.waitForSelector("html[data-specimen-ready]", {
-            timeout: 60000,
-          })
+          console.warn(
+            `${tab.sheet} ${tab.mode} ${json}: ${message}, reopening`,
+          )
+          void tab.page.close().catch(() => {})
+          tab.page = await tab.open()
           tab.shown = "{}"
           measures = await read(tab)
         }
         measured[tab.mode] = { ...measured[tab.mode], ...measures }
       }),
   )
+  const failed = reads.find((read) => read.status === "rejected")
+  if (failed) throw new Unreadable(json, failed.reason)
   return measured
 }
+
+class Unreadable extends Error {
+  constructor(diff: string, cause: unknown) {
+    super(`${diff}: ${(cause as Error).message}`)
+  }
+}
+
+/** A candidate's render, or nothing when a tab fails it twice: the fit goes
+ *  on without that candidate. */
+const attempt = (tabs: Tab[], diff: Diff, sheets?: Set<string>) =>
+  render(tabs, diff, sheets).catch((error) => {
+    if (!(error instanceof Unreadable)) throw error
+    console.warn(`skipped ${error.message}`)
+  })
 
 const overlay = (base: Measured, top: Measured): Measured =>
   Object.fromEntries(
@@ -267,21 +313,21 @@ async function sensitivity(browser: Browser): Promise<SensitivityMap> {
       const state = parseState({ ...ORIGIN, [key]: option })
       // Hidden or pinned on Origin: no rows, and the fit renders it in full.
       if (fingerprint(state) === originPrint) continue
-      rows[String(option)] = changedRows(
-        base,
-        await render(tabs, { [key]: option }),
-      )
+      const read = await attempt(tabs, { [key]: option })
+      if (read) rows[String(option)] = changedRows(base, read)
     }
     if (numeric) rows["*"] = [...new Set(Object.values(rows).flat())]
     map.keys[key] = rows
-    if (++done % 10 === 0)
+    // Saved as it goes: a crashed run picks up where it stopped.
+    if (++done % 10 === 0 || done === todo.length) {
+      await mkdir(args.out, { recursive: true })
+      await writeFile(mapFile, `${JSON.stringify(map)}\n`)
       console.log(
         `sensitivity: ${done}/${todo.length} keys, ${Math.round((Date.now() - began) / 1000)}s`,
       )
+    }
   }
   await Promise.all(tabs.map((tab) => tab.page.close()))
-  await mkdir(args.out, { recursive: true })
-  await writeFile(mapFile, `${JSON.stringify(map)}\n`)
   console.log(`sensitivity map → ${mapFile} (${todo.length} keys rendered)`)
   return map
 }
@@ -334,8 +380,7 @@ try {
         const print = fingerprint(stateOf({ ...diff, [key]: option }))
         if (printed.has(print)) continue
         printed.add(print)
-        const rows =
-          map.keys[key]?.[String(option)] ?? map.keys[key]?.["*"]
+        const rows = map.keys[key]?.[String(option)] ?? map.keys[key]?.["*"]
         if (rows && !rows.some((row) => off.has(row))) continue
         candidates.push({ key, value: option, rows })
       }
@@ -347,7 +392,9 @@ try {
     for (const candidate of candidates) {
       const sheets = candidate.rows ? sheetsOf(candidate.rows) : undefined
       const next = { ...diff, [candidate.key]: candidate.value }
-      const read = overlay(measured, await render(tabs, next, sheets))
+      const some = await attempt(tabs, next, sheets)
+      if (!some) continue
+      const read = overlay(measured, some)
       const after = score(reference, read)
       if (after.score < current.score - 0.01) {
         const was = new Set(current.rows.filter((row) => row.ok).map(rowId))
@@ -374,7 +421,8 @@ try {
       if (step.rows?.some((row) => touched.has(row)) || (kept && !step.rows))
         continue
       const next = { ...diff, [step.key]: step.value }
-      const read = await render(tabs, next)
+      const read = await attempt(tabs, next)
+      if (!read) continue
       const after = score(reference, read)
       if (after.score >= current.score - 0.01) continue
       steps.push({
