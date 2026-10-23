@@ -1,3 +1,4 @@
+import { SOURCE_VALUES } from "./color"
 import { SOURCE_OPTIONS } from "./color.meta"
 import { options } from "./core/meta"
 import {
@@ -151,6 +152,28 @@ export const INVALID_OPTIONS = options(INVALID_VALUES, {
   },
 })
 
+const FIELD_INK_OPTIONS = options(SOURCE_VALUES, {
+  neutral: {
+    label: "Neutral",
+    description: "Focused fields use gray, not the ring color",
+    credits: ["Geist"],
+  },
+  accent: {
+    label: "Accent",
+    description: "Focused fields use the brand color",
+  },
+})
+
+/* The row: the follow, then the credited option. */
+export const FIELD_INK_ROW = [
+  {
+    value: "same",
+    label: "Same as ring",
+    description: "Follows the focus ring's color",
+  },
+  ...FIELD_INK_OPTIONS.filter((option) => option.value === "neutral"),
+]
+
 export const DISABLED_OPTIONS = options(DISABLED_VALUES, {
   solid: {
     label: "Solid",
@@ -209,6 +232,7 @@ export const OPTIONS = {
   focusStrength: STRENGTH_OPTIONS,
   focusInputStyle: FOCUS_INPUT_STYLE_OPTIONS,
   focusInputWeight: FOCUS_INPUT_WEIGHT_OPTIONS,
+  focusInputColor: FIELD_INK_OPTIONS,
   invalidStyle: INVALID_OPTIONS,
   disabledTreatment: DISABLED_OPTIONS,
   cursorControls: CURSOR_CONTROL_OPTIONS,

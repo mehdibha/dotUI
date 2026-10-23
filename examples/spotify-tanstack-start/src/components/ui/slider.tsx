@@ -17,7 +17,7 @@ const sliderVariants = tv({
       "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) dark:not-disabled:bg-neutral-active",
     fill: "pointer-events-none bg-selection disabled:bg-(--disabled-selected-bg,var(--color-selection))",
     thumb:
-      "top-1/2 left-1/2 grid cursor-drag place-items-center outline-none disabled:cursor-disabled dragging:cursor-dragging size-(--slider-thumb-size) rounded-full border border-fg-muted bg-thumb ring-fg-muted/50 transition-shadow hover:ring-3 focus-visible:focus-ring disabled:border-(--disabled-border,var(--color-border-control)) dragging:ring-3",
+      "top-1/2 left-1/2 grid cursor-drag place-items-center focus-reset disabled:cursor-disabled dragging:cursor-dragging size-(--slider-thumb-size) rounded-full border border-fg-muted bg-thumb ring-fg-muted/50 transition-shadow hover:ring-3 focus-visible:focus-ring-outside disabled:border-(--disabled-border,var(--color-border-control)) dragging:ring-3",
     output:
       "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted)) text-sm",
   },

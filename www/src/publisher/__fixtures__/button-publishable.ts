@@ -86,7 +86,7 @@ export const buttonPublishable: Publishable = {
     base: {
       base: [
         "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow] select-none",
-        "outline-none focus-visible:focus-ring",
+        "focus-reset focus-visible:focus-ring",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
         "pending:cursor-default pending:bg-disabled pending:text-transparent pending:**:not-data-spinner:not-in-data-spinner:opacity-0 pending:**:data-spinner:text-fg-muted",
         "disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",

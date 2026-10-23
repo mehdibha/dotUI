@@ -13,7 +13,7 @@ const { useStyles } = createStyles(accordionMeta, {
       item: "group/accordion-item w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor)",
       heading: "flex font-sans tracking-normal",
       trigger: [
-        "outline-none focus-visible:focus-ring",
+        "focus-reset focus-visible:focus-ring",
         "flex flex-1 cursor-interactive items-start rounded-(--studio-accordion-trigger-radius) py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
       ],
       marker:
@@ -46,8 +46,7 @@ const { useStyles } = createStyles(accordionMeta, {
             "overflow-clip rounded-(--studio-accordion-radius)",
           ],
           item: "not-last:border-b expanded:bg-muted/50",
-          trigger:
-            "px-4 focus-visible:outline-offset-(--studio-focus-inside-offset)",
+          trigger: "px-4 [--focus-ring-inset:inset]",
           panelContent: "px-4",
         },
       },
@@ -56,8 +55,7 @@ const { useStyles } = createStyles(accordionMeta, {
         slots: {
           root: "gap-2",
           item: [CONTAINER_SURFACE, "rounded-(--studio-accordion-radius)"],
-          trigger:
-            "px-4 focus-visible:outline-offset-(--studio-focus-inside-offset)",
+          trigger: "px-4 [--focus-ring-inset:inset]",
           panelContent: "px-4",
         },
       },

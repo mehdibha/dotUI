@@ -75,7 +75,7 @@ export function ComponentCard({
       params={{ _splat: `components/${slug}` }}
       aria-label={name}
       data-component={slug}
-      className="group flex flex-col items-center gap-3 rounded-lg outline-none focus-visible:focus-ring"
+      className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
     >
       {/* Only the frame renders in the selected preset and mode; the name
           below stays in the site theme so it never fades on a pinned mode. */}

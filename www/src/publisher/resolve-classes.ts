@@ -154,7 +154,6 @@ function utilitySuffix(utility: string, value: string): string | undefined {
       value,
     )
   if (token) return token[1]
-  if (value === "transparent") return value
   // Tailwind's own spelling of an opacity modifier: `bg-highlight/60`.
   const faded =
     /^color-mix\(in oklab,\s*var\(--color-([\w.-]+)\)\s+([\d.]+)%,\s*transparent\)$/.exec(
@@ -198,7 +197,7 @@ const HAS_ANIMATION = /(?:^|[\s:])animate-(?:in|out)(?=\s|$)/
 /* Width utilities whose 1px form is the bare name (`border`, `border-b`). */
 const BARE_WIDTH = /^(?:border(?:-[xytrblse])?|divide-[xy])$/
 /* Width utilities spelled with a number at 1px (`ring-1`, `stroke-1`). */
-const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline(?:-offset)?|stroke)$/
+const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline|stroke)$/
 /* Spacing utilities, whose 1px step is `px` (`-space-x-px`, `w-px`). */
 const SPACING =
   /^(?:space-[xy]|gap(?:-[xy])?|[mp][xytrblse]?|w|h|size|inset(?:-[xy])?|top|right|bottom|left|start|end|translate-[xy])$/
@@ -234,14 +233,6 @@ function resolvedUtility(utility: string, value: string, hint = ""): string {
 /* Variants that style the element itself — a pseudo-element or child
    selector (`after:`, `*:`, `[&_x]:`) paints another box. */
 const SAME_BOX_VARIANT = /^(?:has|group|peer|in|data|aria|not)-/
-
-/* A focus read that repeats its helper: a site's ring offset at the ring's
-   own, an indicator's field layer in the layer's color. */
-const FOCUS_HELPER_VAR: Record<string, string> = {
-  "--studio-focus-outside-offset": "--studio-focus-offset",
-  "--studio-focus-inside-offset": "--studio-focus-offset",
-  "--studio-field-indicator-color": "--studio-field-focus-color",
-}
 
 /** A motion read that changes nothing, or a prefixed radius read equal to its
  *  unprefixed sibling (`rounded-md has-data-x:rounded-md`). */
@@ -338,20 +329,13 @@ export function rewriteClassString(
       if (
         (value === "0" &&
           (utility.startsWith("rounded") || utility === "backdrop-blur")) ||
-        // A zero offset (`mt-0` under a zero stroke) moves nothing, and a
-        // zero inset ring draws nothing.
+        // A zero offset (`mt-0` under a zero stroke) moves nothing.
         (sign === "-" && /^0(?:px)?$/.test(value) && SPACING.test(utility)) ||
-        (utility === "inset-ring" && /^0(?:px)?$/.test(value)) ||
-        (name in FOCUS_HELPER_VAR &&
-          value === vars.get(FOCUS_HELPER_VAR[name]!)) ||
         isNoopRead(variants, utility, value, context, vars)
       ) {
         dropped = true
         return lead && trail ? " " : ""
       }
-      // A negative offset ships as Tailwind spells it: `-outline-offset-2`.
-      if (utility === "outline-offset" && value.startsWith("-"))
-        return `${lead}${variants}${sign ? "" : "-"}${resolvedUtility(utility, value.slice(1), hint)}${trail}`
       return `${lead}${variants}${sign}${resolvedUtility(utility, value, hint)}${trail}`
     },
   )

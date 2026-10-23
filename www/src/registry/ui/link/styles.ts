@@ -16,7 +16,7 @@ export const LINK_NEUTRAL_WEIGHT = "font-medium"
 const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
-      "rounded-(--studio-radius-detail) outline-none focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
+      "focus-reset focus-visible:focus-ring-outside",
       "inline-flex items-center gap-1 transition-colors duration-(--studio-link-state-duration) ease-(--studio-link-state-ease)",
     ],
     variants: {

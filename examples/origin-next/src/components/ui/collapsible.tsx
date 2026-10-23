@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 const collapsibleVariants = tv({
   slots: {
     root: "group/collapsible",
-    trigger: "cursor-interactive outline-none focus-visible:focus-ring",
+    trigger: "cursor-interactive focus-reset focus-visible:focus-ring",
     panel:
       "h-(--disclosure-panel-height) overflow-clip duration-200 ease-[cubic-bezier(0,0,0.58,1)] motion-safe:transition-[height]",
   },

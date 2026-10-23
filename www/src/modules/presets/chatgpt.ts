@@ -42,8 +42,9 @@ export const chatgpt = definePreset({
     density: "comfortable",
 
     // States
-    // Fields: the edge recolors, no halo (ChatGPT darkens it to 50% ink).
+    // Fields: the 16% ring darkens to 50% ink, no halo.
     focusInputStyle: "border",
+    focusInputColor: "neutral",
 
     // Buttons
     // Pills by default; secondary buttons are a gray fill with no edge.

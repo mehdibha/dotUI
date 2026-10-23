@@ -49,7 +49,7 @@ import type { Axis, AxisKey } from "./use-axis"
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
-  "cursor-interactive text-left outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
+  "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
@@ -886,7 +886,7 @@ function SliderRow({
         aria-valuetext={format(draft)}
         data-active={active || undefined}
         data-dragging={dragging || undefined}
-        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-pan-y overflow-hidden rounded-lg tint-5 outline-none select-none focus-visible:focus-ring"
+        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-pan-y overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -1077,7 +1077,7 @@ function SegmentedGroup({
           key={option.value}
           id={option.value}
           isDisabled={disabled?.includes(option.value)}
-          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 transition-colors outline-none hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center gap-1.5">

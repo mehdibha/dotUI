@@ -13,7 +13,7 @@ import buttonMeta from "./meta"
 
 export const BUTTON_BASE = [
   "relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
-  "outline-none focus-visible:focus-ring",
+  "focus-reset focus-visible:focus-ring",
   "**:[svg]:pointer-events-none **:[svg]:shrink-0",
 ]
 
@@ -28,16 +28,16 @@ export const BUTTON_ICON_ONLY = { true: "p-0" }
 
 export const BUTTON_VARIANTS = {
   primary:
-    "text-fg-on-primary focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
+    "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
   secondary:
     "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
   quiet:
     "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
   link: "disabled:text-(--disabled-fg,var(--color-fg))",
   warning:
-    "text-fg-on-warning focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
+    "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
   danger:
-    "text-fg-on-danger focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
+    "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
 }
 
 /* Each style is a real system's recipe, copied whole: its fills, edges,
