@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 import type { ComponentType, ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
@@ -74,7 +74,8 @@ const prepare: PrepareDesignSystem<undefined> = (_, ready) => ready(undefined)
 
 /* The sheet shows `state`, then follows the `design-system` messages its
    own origin posts: /internal/compare's studio panel, or a script calling
-   `window.__specimen.setDiff(diff)` to re-render in place. */
+   `window.__specimen.setDiff(diff)` to re-render in place, which resolves
+   once the new design system has committed. */
 function SpecimenSheet({
   state,
   sheet,
@@ -92,19 +93,32 @@ function SpecimenSheet({
     internDesignSystem,
   )
   useAnnouncePreviewReady()
+  const shown = useRef({ json: "", commits: 0, wait: () => {} })
+  useLayoutEffect(() => {
+    shown.current.json = JSON.stringify(designSystem)
+    shown.current.commits++
+    shown.current.wait()
+  }, [designSystem])
   useEffect(() => {
     const host = window as { __specimen?: unknown }
     host.__specimen = {
-      setDiff: (diff: unknown) =>
+      setDiff: (diff: unknown) => {
+        const data = designSystemOf(withDiff(state, diff))
+        // The same design system renders nothing, so nothing commits.
+        if (JSON.stringify(data) === shown.current.json)
+          return Promise.resolve()
+        const from = shown.current.commits
+        const committed = new Promise<void>((done) => {
+          shown.current.wait = () => {
+            if (shown.current.commits > from) done()
+          }
+        })
         window.postMessage(
-          {
-            type: "design-system",
-            data: designSystemOf(withDiff(state, diff)),
-            live: false,
-            drag: false,
-          },
+          { type: "design-system", data, live: false, drag: false },
           window.location.origin,
-        ),
+        )
+        return committed
+      },
     }
     return () => {
       delete host.__specimen
