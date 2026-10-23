@@ -10,7 +10,7 @@ Dev-only tooling for tuning a preset against the system it recreates. Nothing he
 - Overlays (menu, select, tooltip, dialog, drawer, command palette, toast) are controlled open. The toast sits at the preset's toast position.
 - Each `Cell` carries `data-cell="<label>"`, so probes can target a specimen by its label.
 - A new sheet: add a component in `sheets/`, register it in `sheets/index.ts`; the capture script reads the list from the page.
-- `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `window.__specimen.setDiff(diff)` swaps it without a reload, for scripts that try one change at a time.
+- `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `await window.__specimen.setDiff(diff)` swaps it without a reload, resolving once the new design has rendered, for scripts that try one change at a time.
 
 ## Compare
 
