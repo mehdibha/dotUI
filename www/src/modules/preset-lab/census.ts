@@ -31,6 +31,7 @@ export const EXTRA = {
   mixBlendMode: "normal",
   corners: undefined,
   iconSize: undefined,
+  iconStroke: undefined,
   transition: "none",
   cursor: "auto",
   position: "static",
@@ -42,6 +43,8 @@ export type Extra = keyof typeof EXTRA
 export type Values = Partial<Record<Prop | Extra, string>>
 export type State = "hover" | "pressed" | "focus"
 export const STATES: readonly State[] = ["hover", "pressed", "focus"]
+/** States an element is in as found, read from its attributes. */
+export type Flag = "disabled" | "selected" | "open"
 
 export interface CensusElement {
   id: number
@@ -59,6 +62,8 @@ export interface CensusElement {
   chars: number
   /** Whether it can take keyboard focus. */
   focusable?: boolean
+  /** Disabled, selected (checked, pressed, current) or open as found. */
+  is?: Flag
   values: Values
   /** Only the values a state changes. */
   states?: Partial<Record<State, Values>>
@@ -80,7 +85,12 @@ export interface CensusPage {
   tokens?: Record<string, string>
   /** Elements past the cap that were left out. */
   truncated?: number
+  /** What this census version reads beyond values and forced states. */
+  reads?: Reads[]
 }
+
+/** Disabled, selected and open elements (`is`), and icon strokes. */
+export type Reads = "flags" | "icons"
 
 type Command =
   | { kind: "walk"; max: number; fresh: boolean; start: number }
@@ -311,6 +321,35 @@ function census(
         : "panel"
     return "box"
   }
+  /* Disabled, selected or open as found, from ARIA, the native state and
+     the data attributes React Aria and Radix set. */
+  const flagOf = (el: Element) => {
+    const attr = (name: string) => el.getAttribute(name)
+    if (
+      el.matches(":disabled") ||
+      attr("aria-disabled") === "true" ||
+      el.hasAttribute("data-disabled")
+    )
+      return "disabled" as const
+    if (
+      el.matches(":checked") ||
+      attr("aria-checked") === "true" ||
+      attr("aria-checked") === "mixed" ||
+      attr("aria-selected") === "true" ||
+      attr("aria-pressed") === "true" ||
+      (attr("aria-current") ?? "false") !== "false" ||
+      el.hasAttribute("data-selected") ||
+      ["checked", "on", "active"].includes(attr("data-state") ?? "")
+    )
+      return "selected" as const
+    if (
+      attr("aria-expanded") === "true" ||
+      (el.hasAttribute("open") && el.localName !== "dialog") ||
+      attr("data-state") === "open"
+    )
+      return "open" as const
+    return undefined
+  }
   const roleOf = (
     el: Element,
     rect: DOMRect,
@@ -341,12 +380,39 @@ function census(
       style.borderBottomLeftRadius,
     ]
     // The icon a small box holds (a button's), or the icon itself.
-    let icon: DOMRect | null = el.localName === "svg" ? rect : null
+    let svg: SVGSVGElement | null =
+      el.localName === "svg" ? (el as SVGSVGElement) : null
+    let icon: DOMRect | null = svg ? rect : null
     if (!icon && rect.width * rect.height <= 400 * 100)
-      for (const svg of el.querySelectorAll("svg")) {
-        const box = svg.getBoundingClientRect()
-        if (box.width && (!icon || box.width > icon.width)) icon = box
+      for (const each of el.querySelectorAll("svg")) {
+        const box = each.getBoundingClientRect()
+        if (box.width && (!icon || box.width > icon.width)) {
+          icon = box
+          svg = each
+        }
       }
+    // Its stroke as drawn (the viewBox scales it), or "fill" for a filled
+    // icon.
+    let stroke = ""
+    if (svg && icon) {
+      const shape = [
+        ...svg.querySelectorAll(
+          "path, line, circle, rect, polyline, polygon, ellipse",
+        ),
+      ].find((part) => {
+        const look = getComputedStyle(part)
+        return look.stroke !== "none" && Number.parseFloat(look.strokeWidth) > 0
+      })
+      const view = svg.viewBox?.baseVal
+      const scale =
+        view?.width &&
+        getComputedStyle(shape ?? svg).vectorEffect !== "non-scaling-stroke"
+          ? icon.width / view.width
+          : 1
+      stroke = shape
+        ? px(Number.parseFloat(getComputedStyle(shape).strokeWidth) * scale)
+        : "fill"
+    }
     const values: Record<string, string> = {
       width: px(rect.width),
       paddingTop: style.paddingTop,
@@ -378,6 +444,7 @@ function census(
       iconSize: icon
         ? `${Math.round(icon.width)}x${Math.round(icon.height)}`
         : "",
+      iconStroke: stroke,
       // The first transition's timing stands for the rest.
       transition: style.transitionDuration
         .split(",")
@@ -648,6 +715,7 @@ function census(
       (el as HTMLElement).tabIndex >= 0 &&
       !(el as HTMLButtonElement).disabled &&
       (CONTROLS.has(role) || el.hasAttribute("tabindex"))
+    const is = flagOf(el)
     elements.push({
       id: next++,
       role,
@@ -660,6 +728,7 @@ function census(
       ) as [number, number, number, number],
       chars,
       ...(focusable ? { focusable } : {}),
+      ...(is ? { is } : {}),
       values: {},
     })
   }
@@ -673,6 +742,7 @@ function census(
     elements,
     truncated,
     viewport: { width: innerWidth, height: innerHeight },
+    reads: ["flags", "icons"],
   }
 }
 
@@ -742,6 +812,14 @@ const CONTROL_KEYS: (Prop | Extra)[] = [
   "paddingInline",
   ...TYPE_KEYS.filter((key) => key !== "lineHeight"),
 ]
+/* What a disabled, selected or open element shares with its rest look. */
+const SHAPE_KEYS = new Set<Prop | Extra>([
+  "height",
+  "borderRadius",
+  "paddingInline",
+  "fontSize",
+  "fontFamily",
+])
 const TEXT_ROLES = new Set([
   "text",
   "heading",
@@ -784,7 +862,8 @@ const SURFACE_ROLES = new Set([
 /** The keys that tell a role's looks apart. */
 export function lookKeys(role: string): (Prop | Extra)[] {
   if (TEXT_ROLES.has(role)) return TYPE_KEYS
-  if (role === "icon" || role === "img") return ["color", "iconSize"]
+  if (role === "icon" || role === "img")
+    return ["color", "iconSize", "iconStroke"]
   if (role === "tooltip")
     return [...BOX_KEYS, "color", "fontSize", "fontWeight", "height"]
   if (SURFACE_ROLES.has(role)) return BOX_KEYS
@@ -809,11 +888,14 @@ export interface Look {
   pages: string[]
   light?: Values
   dark?: Values
-  /** Per mode, what each state changes. */
+  /** Per mode, what each state changes: the ones read by forcing it, and
+   *  the disabled, selected or open elements of the same shape. */
   states?: {
-    light?: Partial<Record<State, Values>>
-    dark?: Partial<Record<State, Values>>
+    light?: Partial<Record<State | Flag, Values>>
+    dark?: Partial<Record<State | Flag, Values>>
   }
+  /** A disabled, selected or open look with no rest look of its shape. */
+  is?: Flag
   /** The custom property behind each value, where one was found. */
   vars?: Values
   /** One element showing it: page key, pass, mode and census id. */
@@ -830,6 +912,9 @@ export interface Look {
 export interface Inventory {
   probe: string
   pages: { key: string; modes: ("light" | "dark")[]; passes: string[] }[]
+  /** What every page's census read (CensusPage `reads`); older runs have
+   *  none. */
+  reads?: Reads[]
   looks: Look[]
   tokens: { light?: Record<string, string>; dark?: Record<string, string> }
 }
@@ -899,13 +984,45 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const home = clusters.find(
         ([head]) =>
           head?.page.mode === one?.page.mode &&
+          head?.element.is === one?.element.is &&
           sameLook(keys, head?.element.values ?? {}, one?.element.values ?? {}),
       )
       if (home) home.push(...members)
       else clusters.push([...members])
     }
-    clusters.sort((a, b) => b.length - a.length)
-    for (const [rank, members] of clusters.entries()) {
+    // A disabled, selected or open cluster is a state of the largest rest
+    // look of its shape: what it changes goes there, and one that changes
+    // nothing joins it. One with no rest look of its shape stays its own.
+    const shape = keys.filter((key) => SHAPE_KEYS.has(key))
+    const rest = clusters.filter(([head]) => !head?.element.is)
+    const flags = new Map<Member[], Partial<Record<Flag, Member[]>>>()
+    const own: Member[][] = []
+    for (const members of clusters) {
+      const [head] = members
+      const flag = head?.element.is
+      if (!head || !flag) continue
+      const base = rest
+        .filter(
+          ([top]) =>
+            top?.page.mode === head.page.mode &&
+            sameLook(shape, top.element.values, head.element.values),
+        )
+        .sort((a, b) => b.length - a.length)[0]
+      if (!base?.[0]) own.push(members)
+      else if (
+        !Object.keys(
+          changed(trim(base[0].element.values), trim(head.element.values)),
+        ).length
+      )
+        base.push(...members)
+      else {
+        const entry = flags.get(base) ?? {}
+        entry[flag] = [...(entry[flag] ?? []), ...members]
+        flags.set(base, entry)
+      }
+    }
+    const kept = [...rest, ...own].sort((a, b) => b.length - a.length)
+    for (const [rank, members] of kept.entries()) {
       const [first] = members
       if (!first) continue
       const lead = first.page.mode
@@ -923,6 +1040,30 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         (a, b) => b.length - a.length,
       )[0]
       const twin = darkest?.find((t) => t.states) ?? darkest?.[0]
+      // Each flag's changes, against the sample and its twin.
+      const found: { lead: Values; dark?: Values; flag: Flag }[] = []
+      for (const [flag, list] of Object.entries(flags.get(members) ?? {})) {
+        const [one] = list
+        if (!one) continue
+        const other = twins.get(key(one.page, one.element))
+        found.push({
+          flag: flag as Flag,
+          lead: changed(trim(sample.element.values), trim(one.element.values)),
+          ...(twin && other
+            ? { dark: changed(trim(twin.values), trim(other.values)) }
+            : {}),
+        })
+      }
+      const leadStates = {
+        ...sample.element.states,
+        ...Object.fromEntries(found.map((f) => [f.flag, f.lead])),
+      }
+      const darkStates = {
+        ...twin?.states,
+        ...Object.fromEntries(
+          found.flatMap((f) => (f.dark ? [[f.flag, f.dark]] : [])),
+        ),
+      }
       looks.push({
         id: `${group}.${rank + 1}`,
         group,
@@ -930,16 +1071,17 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         pages: [...new Set(members.map((m) => m.page.key))],
         [lead]: trim(sample.element.values),
         ...(twin ? { dark: trim(twin.values) } : {}),
-        ...(sample.element.states || twin?.states
+        ...(Object.keys(leadStates).length || Object.keys(darkStates).length
           ? {
               states: {
-                ...(sample.element.states
-                  ? { [lead]: sample.element.states }
+                ...(Object.keys(leadStates).length
+                  ? { [lead]: leadStates }
                   : {}),
-                ...(twin?.states ? { dark: twin.states } : {}),
+                ...(Object.keys(darkStates).length ? { dark: darkStates } : {}),
               },
             }
           : {}),
+        ...(first.element.is ? { is: first.element.is } : {}),
         ...(sample.element.vars ? { vars: sample.element.vars } : {}),
         sample: {
           key: sample.page.key,
@@ -966,5 +1108,8 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
     pageList.set(page.key, entry)
     tokens[page.mode] = { ...tokens[page.mode], ...page.tokens }
   }
-  return { probe, pages: [...pageList.values()], looks, tokens }
+  const reads = (["flags", "icons"] as const).filter((read) =>
+    pages.every((page) => page.reads?.includes(read)),
+  )
+  return { probe, pages: [...pageList.values()], reads, looks, tokens }
 }

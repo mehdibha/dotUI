@@ -507,7 +507,12 @@ export function systemLooks(input: SystemInput): SystemLooks {
               : "harness",
         }
       }),
-      missing: ["disabled", "motion", "icons", "shell"],
+      missing: [
+        ...(census?.reads?.includes("flags") ? [] : (["disabled"] as const)),
+        "motion",
+        ...(census?.reads?.includes("icons") ? [] : (["icons"] as const)),
+        "shell",
+      ],
     },
     color: {
       modes: Object.fromEntries(

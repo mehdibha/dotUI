@@ -239,7 +239,7 @@ const KIT = `(function kit() {
         if (Object.keys(diff).length) e.states = { focus: diff }
       }
       run({ kind: "seen" })
-      const page = { key: load()[name]?.key, mode, probe: ${JSON.stringify(PROBE)}, pass, viewport: walked.viewport, elements: walked.elements, tokens, ...(walked.truncated ? { truncated: walked.truncated } : {}) }
+      const page = { key: load()[name]?.key, mode, probe: ${JSON.stringify(PROBE)}, pass, viewport: walked.viewport, elements: walked.elements, tokens, ...(walked.truncated ? { truncated: walked.truncated } : {}), reads: walked.reads }
       const file = "dotui-census__" + name.replace(/\\//g, "__") + "__" + pass.replace(/[^a-zA-Z0-9]+/g, "-") + ".json"
       download(file, page)
       return { file, elements: walked.elements.length, looks: reps.length, focus: Object.keys(focused).length, truncated: walked.truncated }

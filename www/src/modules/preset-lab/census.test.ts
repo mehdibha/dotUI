@@ -119,6 +119,32 @@ describe("census", () => {
     ])
   })
 
+  it("folds disabled and selected elements into the rest look of their shape", () => {
+    const faded = { ...blue, opacity: "0.5" }
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          button(1, 0, blue),
+          button(2, 100, blue),
+          { ...button(3, 200, faded), is: "disabled" },
+          // Selected but drawn the same: it joins the rest look.
+          { ...button(4, 300, blue), is: "selected" },
+          // Open with no rest look of its height: a look of its own.
+          { ...button(5, 400, { ...navy, height: "40px" }), is: "open" },
+        ]),
+      ],
+      "test",
+    )
+    expect(looks).toEqual([
+      expect.objectContaining({
+        id: "button.1",
+        count: 3,
+        states: { light: { disabled: { opacity: "0.5" } } },
+      }),
+      expect.objectContaining({ id: "button.2", count: 1, is: "open" }),
+    ])
+  })
+
   it("keeps a page read only in dark as dark-only looks", () => {
     const inventory = cluster(
       [

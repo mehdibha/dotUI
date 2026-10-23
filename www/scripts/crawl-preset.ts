@@ -325,6 +325,7 @@ async function pass(
     elements: CensusElement[]
     truncated: number
     viewport: CensusPage["viewport"]
+    reads: CensusPage["reads"]
   }
   const { elements } = walked
   // The most used looks with a box small enough to copy.
@@ -369,6 +370,7 @@ async function pass(
     elements,
     ...(Object.keys(tokens).length ? { tokens } : {}),
     ...(walked.truncated ? { truncated: walked.truncated } : {}),
+    reads: walked.reads,
   }
 }
 
