@@ -6,6 +6,8 @@ interface SpecimenSearch {
   preset?: string
   mode?: "light" | "dark"
   sheet?: string
+  /** JSON of studio keys over the preset's state. */
+  diff?: string
 }
 
 export const Route = createFileRoute("/internal/specimens")({
@@ -16,6 +18,7 @@ export const Route = createFileRoute("/internal/specimens")({
         ? search.mode
         : undefined,
     sheet: typeof search.sheet === "string" ? search.sheet : undefined,
+    diff: typeof search.diff === "string" ? search.diff : undefined,
   }),
   ssr: false,
   component: import.meta.env.DEV ? SpecimenPage : undefined,
