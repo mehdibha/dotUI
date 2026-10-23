@@ -120,11 +120,16 @@ function SpecimenSheet({
       )
       return committed
     }
-    // One wait slot: calls queue, so each resolves on its own commit.
+    // One wait slot: calls queue, so each resolves on its own commit. A diff
+    // parseState rejects fails its own call, not the ones after it.
     let queue = Promise.resolve()
     const host = window as { __specimen?: unknown }
     host.__specimen = {
-      setDiff: (diff: unknown) => (queue = queue.then(() => apply(diff))),
+      setDiff: (diff: unknown) => {
+        const applied = queue.then(() => apply(diff))
+        queue = applied.catch(() => {})
+        return applied
+      },
     }
     return () => {
       delete host.__specimen
