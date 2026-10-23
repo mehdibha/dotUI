@@ -167,7 +167,7 @@ const ChapterStrip = memo(function ChapterStrip({
             id={chapter.id}
             onPress={() => onChange(chapter.id)}
             className={cn(
-              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 focus-reset hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
+              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 outline-none hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
               open ? "selected:tint-10" : "selected:tint-5",
             )}
           >

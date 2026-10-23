@@ -60,8 +60,8 @@ export const material3 = definePreset({
     // States
     // 3px ring; M3's is secondary #625b71, but Neutral would grey field focus too.
     focusWidth: 3,
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    // Fields: the indicator rule doubles, no halo.
+    focusInputStyle: "edge",
     cursorDisabled: "default",
 
     // Selection: M3 leaves ::selection to the browser.

@@ -88,9 +88,6 @@ describe("panel search", () => {
     expect(search("stroke")).toContain("Foundations › Icons › Stroke")
     expect(search("glass")).toContain("Foundations › Surfaces › Overlays")
     expect(search("Frost")).toContain("Components › Dialog › Backdrop › Frost")
-    expect(search("Strength")).toContain(
-      "Foundations › Focus › Focus ring › Strength",
-    )
   })
 
   it("finds a one-row component by its row's name", () => {

@@ -40,7 +40,7 @@ const SIGNATURE: Record<string, string> = {
   well: "var(--color-field)) border-border-control bg-field",
   filled: "border-transparent bg-field",
   indicator: "rounded-t-sm border-b",
-  underline: "focus:focus-input-underline",
+  underline: "focus:border-border-focus",
 }
 
 /** The class tokens of a shell slot. */
@@ -276,7 +276,8 @@ describe("field shells", () => {
   it("hover yields to the focus each slot shows", async () => {
     const tw = await compile(
       `@import "tailwindcss/utilities"; @plugin "tailwindcss-react-aria-components";
-       @theme { --color-border-focus: #00f; --color-border-control-hover: #888; --color-neutral-hover: #eee; }`,
+       @theme { --color-border-focus: #00f; --color-border-control-hover: #888; --color-neutral-hover: #eee; }
+       @utility focus-input { border-color: var(--color-border-focus); }`,
       { base: path.resolve(__dirname, "../../.."), onDependency() {} },
     )
     // RAC attributes a compiled rule requires, and those it excludes.
@@ -307,7 +308,7 @@ describe("field shells", () => {
             ...content.matchAll(new RegExp(`\\b${slot}: "([^"]*)"`, "g")),
           ].flatMap((m) => m[1]!.split(" "))
           const focus = classes.filter((c) =>
-            /border-\(--focus-input-border\)$/.test(c),
+            /:(focus-input|border-border-focus)$/.test(c),
           )
           const hovers = classes.filter((c) => c.startsWith("hover:"))
           expect(focus.length, `${style} ${slot}`).toBeGreaterThan(0)

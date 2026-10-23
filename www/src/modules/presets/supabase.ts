@@ -59,7 +59,7 @@ export const supabase = definePreset({
 
     // States
     // A 2px ring at 55% of the mint behind a 2px page-colored offset.
-    focusStrength: "soft",
+    // Stand-in: the full mint.
     focusInputStyle: "ring",
     invalidStyle: "tint",
     disabledTreatment: "fade",

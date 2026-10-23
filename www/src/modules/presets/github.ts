@@ -50,8 +50,7 @@ export const github = definePreset({
     // States
     focusStyle: "inset",
     // A #0969da edge plus a 2px outline at -1px.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     selectionHighlight: "browser",
 
     // Motion

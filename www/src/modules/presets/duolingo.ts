@@ -60,7 +60,7 @@ export const duolingo = definePreset({
     shellTone: "page",
 
     // States
-    focusInputStyle: "border",
+    focusInputStyle: "edge",
     cursorDisabled: "default",
 
     // Selection

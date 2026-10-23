@@ -333,7 +333,7 @@ function CommandBlock({
             <ToggleButtonPrimitives.ToggleButton
               key={pm}
               id={pm}
-              className="rounded-sm px-1.5 py-0.5 font-mono text-xs text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:bg-neutral selected:text-fg"
+              className="rounded-sm px-1.5 py-0.5 font-mono text-xs text-fg-muted outline-none hover:text-fg focus-visible:focus-ring selected:bg-neutral selected:text-fg"
             >
               {pm}
             </ToggleButtonPrimitives.ToggleButton>

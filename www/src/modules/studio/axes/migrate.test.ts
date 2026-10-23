@@ -64,6 +64,8 @@ const RULED: Record<string, string> = {
   // Flat cards with no edge get a tone or a shadow apart from the page.
   "color/grouped-page": "lightBg",
   "surfaces/flat-needs-separation": "surfaceShadow",
+  // An underline shows focus in its own rule, whatever the field focus.
+  "states/underline-owns-field-focus": "focusInputStyle",
 }
 
 /** Every key main drew that still draws a value of its own: today's
@@ -109,7 +111,9 @@ const DROPPED_KEYS = [
   "cursorPending",
   "drawerMotion",
   "focusGap",
+  "focusHaloStrength",
   "focusInputStrength",
+  "focusInputWidth",
   "loaderMotion",
   "messageScrollerMotion",
   "popoverHeader",
@@ -145,7 +149,6 @@ const DROPPED_VALUES = [
 ]
 
 const CONTEXT: Record<string, Raw> = {
-  focusHaloStrength: { focusStyle: "halo" },
   focusInputBorderWidth: { focusInputStyle: "border" },
 }
 
@@ -347,7 +350,7 @@ describe("main → v3", () => {
     expect(github.inputStyle).toBe("outline")
     expect(github.segmentedSelected).toBe("raised")
     expect(github.focusStyle).toBe("inset")
-    expect(github.focusInputWeight).toBe("thick")
+    expect(github.focusInputStyle).toBe("thick-edge")
     expect(github.popoverEntrance).toBe("fade")
     const airbnb = preset("airbnb")
     expect(airbnb.sliderThumb).toBe("ring")

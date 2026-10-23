@@ -168,7 +168,7 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
           <>
             <TokenInput
               placeholder="How can I help you today?"
-              className="min-h-14 rounded-none border-0 bg-transparent! bg-none! px-2 pt-2 text-base shadow-none! ring-0!"
+              className="min-h-14 rounded-none border-0 bg-transparent! bg-none! px-2 pt-2 text-base shadow-none! outline-none!"
             />
             <Popover className="min-w-56">
               <MenuContent

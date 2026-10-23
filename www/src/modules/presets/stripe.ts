@@ -60,11 +60,10 @@ export const stripe = definePreset({
     cursorDisabled: "default",
 
     // States
-    // 3px past the 1px edge, at 36%. Stand-in: the ring is the brand, Sail's is
-    // sky blue (rgba(1,150,237,.36)) on buttons and fields, and focused fields
-    // keep their slate edge.
+    // 3px past the 1px edge, at 36%. Stand-in: the halo is the brand at 50%,
+    // Sail's is sky blue (rgba(1,150,237,.36)) on buttons and fields, and
+    // focused fields keep their slate edge.
     focusStyle: "halo",
-    focusStrength: "faint",
     focusWidth: 3,
     focusInputStyle: "ring",
     disabledTreatment: "fade",

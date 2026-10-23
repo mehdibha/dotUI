@@ -8,105 +8,43 @@ import { cn } from "@/registry/lib/utils"
 
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
-import {
-  AUTO_STRENGTH,
-  AUTO_WIDTH,
-  INVALID_FILL,
-  NEUTRAL_FIELD_INK,
-} from "../axes/states"
+import { INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   DISABLED_OPTIONS,
-  FIELD_INK_ROW,
+  FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
-  FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
   INVALID_OPTIONS,
-  STRENGTH_OPTIONS,
-  WIDTH_OPTIONS,
 } from "../axes/states.meta"
-import { DialSegmented, DialSelect } from "../dial"
-import { Row } from "../row-host"
+import { DialSegmented, DialSelect, DialSlider } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { ArrowCursor, HandCursor } from "./cursors"
 
 const INK = "var(--color-border-focus)"
-const MUTED = "var(--color-border-focus-muted)"
-const BG = "var(--color-bg)"
 const DANGER = "var(--color-fg-danger)"
 const DANGER_MUTED = "var(--color-danger-muted)"
-const PCT: Record<string, number> = { solid: 100, soft: 50, faint: 30 }
-
-const ink = (strength: string) =>
-  `color-mix(in oklab, ${INK} ${PCT[strength] ?? 100}%, transparent)`
-
-interface Ring {
-  style: string
-  strength: string
-  width: number
-}
-
-/** The ring each recipe draws, as a box-shadow. */
-function ringShadow({ style, strength, width }: Ring) {
-  const color = ink(strength)
-  if (style === "halo") return `0 0 0 ${width}px ${color}`
-  if (style === "inset")
-    return `inset 0 0 0 ${width}px ${color}, inset 0 0 0 ${width + 1}px ${BG}`
-  return `0 0 0 2px ${BG}, 0 0 0 ${2 + width}px ${color}`
-}
 
 const SIZE = "h-3.5 w-6 rounded-[4px]"
 
-function ControlSpecimen({ ring }: { ring: Ring }) {
+/** The control ring as Focus draws it: Inset sits inside the edge, Halo
+ *  hugs it at half strength. */
+function ControlSpecimen({ state }: { state: Effective }) {
+  const { focusStyle: style, focusWidth: width } = state
   return (
     <span
       className={cn("mx-1 block shrink-0 bg-fg/25", SIZE)}
-      style={{ boxShadow: ringShadow(ring) }}
-    />
-  )
-}
-
-/** The field's pair: the focus pair, or the neutral steps under Neutral. */
-const fieldInks = (neutral?: boolean) =>
-  neutral ? [NEUTRAL_FIELD_INK.edge, NEUTRAL_FIELD_INK.halo] : [INK, MUTED]
-
-function fieldFocus(
-  focus: string,
-  weight: string,
-  ring: Ring,
-  neutral?: boolean,
-) {
-  if (focus === "ring") return { boxShadow: ringShadow(ring) }
-  const [ink, muted] = fieldInks(neutral)
-  if (focus === "border")
-    return {
-      borderColor: ink,
-      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${ink}` : undefined,
-    }
-  return {
-    borderColor: ink,
-    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${muted}`,
-  }
-}
-
-function FieldSpecimen({
-  focus,
-  weight,
-  ring,
-  neutral,
-}: {
-  focus: string
-  weight: string
-  ring: Ring
-  neutral?: boolean
-}) {
-  return (
-    <span
-      className={cn("mx-1 block shrink-0 border border-fg/30 bg-bg", SIZE)}
-      style={fieldFocus(focus, weight, ring, neutral)}
+      style={{
+        outline: `${width}px solid ${INK}`,
+        outlineColor:
+          style === "halo"
+            ? `color-mix(in oklab, ${INK} 50%, transparent)`
+            : INK,
+        outlineOffset: style === "inset" ? -width : style === "halo" ? 0 : 2,
+      }}
     />
   )
 }
@@ -147,11 +85,85 @@ function InvalidSpecimen({ invalid }: { invalid: string }) {
   )
 }
 
-const ringOf = (state: Effective): Ring => ({
-  style: state.focusStyle,
-  strength: state.focusStrength,
-  width: state.focusWidth,
-})
+const mix = (color: string, pct: number) =>
+  `color-mix(in oklab, ${color} ${pct}%, transparent)`
+
+/** The ring on a part that covers its own box (a check, a thumb): outside
+ *  the edge, except Halo, which hugs it. */
+function partRing({ focusStyle, focusWidth }: Effective, ink: string) {
+  return {
+    outline: `${focusWidth}px solid ${focusStyle === "halo" ? mix(ink, 50) : ink}`,
+    outlineOffset: focusStyle === "halo" ? 0 : 2,
+  }
+}
+
+/** The ring on a button: Inset draws it inside, over a page-colored line. */
+function buttonRing(state: Effective, ink: string) {
+  if (state.focusStyle !== "inset") return partRing(state, ink)
+  const width = state.focusWidth
+  return {
+    outline: `${width}px solid ${ink}`,
+    outlineOffset: -width,
+    boxShadow: `inset 0 0 0 ${width + 1}px var(--color-bg)`,
+  }
+}
+
+function fieldFocus(state: Effective, ink: string): React.CSSProperties {
+  if (state.inputStyle === "underline")
+    return {
+      borderWidth: "0 0 2px",
+      borderColor: ink,
+      borderRadius: 0,
+      background: "none",
+    }
+  switch (state.focusInputStyle) {
+    case "edge":
+      return { borderColor: ink }
+    case "thick-edge":
+      return {
+        borderColor: ink,
+        outline: `2px solid ${ink}`,
+        outlineOffset: -2,
+      }
+    case "ring":
+      return { borderColor: ink, ...buttonRing(state, ink), boxShadow: "none" }
+    default:
+      return { borderColor: ink, outline: `2px solid ${mix(ink, 35)}` }
+  }
+}
+
+/** What keyboard focus looks like on a button, a check, a switch and a
+ *  field, in the panel's own inks. */
+export function FocusSpecimen() {
+  const { effective: state } = useStudio()
+  const ink = state.focusColor === "neutral" ? "var(--color-fg)" : INK
+  const part = partRing(state, ink)
+  return (
+    <div className="flex h-36 shrink-0 flex-col items-center justify-center gap-5 rounded-lg tint-5">
+      <div className="flex items-center gap-6">
+        <span
+          className="flex h-7 items-center rounded-md bg-fg px-3 text-[12px] font-medium text-bg"
+          style={buttonRing(state, ink)}
+        >
+          Save
+        </span>
+        <span className="size-4 rounded-[4px] bg-fg" style={part} />
+        <span
+          className="relative h-[18px] w-[30px] rounded-full bg-fg/25"
+          style={part}
+        >
+          <span className="absolute top-0.5 left-0.5 size-3.5 rounded-full bg-fg" />
+        </span>
+      </div>
+      <span
+        className="flex h-8 w-48 items-center rounded-md border border-fg/20 bg-bg px-2.5 text-[12px] text-fg/50"
+        style={fieldFocus(state, ink)}
+      >
+        name@company.com
+      </span>
+    </div>
+  )
+}
 
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default. */
@@ -169,7 +181,7 @@ function HighlightChip({ value }: { value: string }) {
 }
 
 export function FocusPreview({ state }: { state: Effective }) {
-  return <ControlSpecimen ring={ringOf(state)} />
+  return <ControlSpecimen state={state} />
 }
 
 export function DisabledPreview({ state }: { state: Effective }) {
@@ -190,114 +202,58 @@ export function TextSelectionPreview({ state }: { state: Effective }) {
   return <HighlightChip value={state.selectionHighlight} />
 }
 
-const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
-  const ring = {
-    style: option.value,
-    strength: AUTO_STRENGTH[option.value]!,
-    width: AUTO_WIDTH[option.value]!,
-  }
-  return { ...option, glyph: <ControlSpecimen ring={ring} /> }
-})
-
 const FocusStyleRow = () => (
-  <DialSelect
-    axis="focusStyle"
-    holds={["focusStrength", "focusWidth", "focusColor"]}
-    label="Focus ring"
-    options={FOCUS_STYLE_ROW_OPTIONS}
-  >
-    <Row axis="focusStrength" />
-    <Row axis="focusWidth" />
-    <Row axis="focusColor" />
-  </DialSelect>
-)
-
-const FOCUS_STRENGTH_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  ...STRENGTH_OPTIONS,
-]
-
-const FocusStrengthRow = () => (
-  <DialSelect
-    axis="focusStrength"
-    label="Strength"
-    options={FOCUS_STRENGTH_OPTIONS}
-  />
-)
-
-function FocusWidthRow() {
-  const { set } = useStudio()
-  return (
-    <DialSelect
-      axis="focusWidth"
-      label="Width"
-      onChange={(value) =>
-        set("focusWidth")(value === "auto" ? "auto" : Number(value))
-      }
-      options={[
-        { value: "auto", label: "Auto" },
-        ...WIDTH_OPTIONS.map((option) => ({
-          ...option,
-          value: String(option.value),
-        })),
-      ]}
-    />
-  )
-}
-
-function FieldFocusRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="focusInputStyle"
-      holds={["focusInputWeight", "focusInputColor"]}
-      label="Field focus"
-      options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
-        ...option,
-        glyph: (
-          <FieldSpecimen
-            focus={option.value}
-            weight={effective.focusInputWeight}
-            ring={ringOf(effective)}
-            neutral={effective.focusInputColor === "neutral"}
-          />
-        ),
-      }))}
-    >
-      <Row axis="focusInputWeight" />
-      <Row axis="focusInputColor" />
-    </DialSelect>
-  )
-}
-
-const FieldFocusWeightRow = () => (
   <DialSegmented
-    axis="focusInputWeight"
-    label="Weight"
-    options={FOCUS_INPUT_WEIGHT_OPTIONS}
+    axis="focusStyle"
+    label="Controls"
+    options={FOCUS_STYLE_OPTIONS}
   />
 )
 
-function FieldInkRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="focusInputColor"
-      label="Ink"
-      options={FIELD_INK_ROW.map((option) => ({
-        ...option,
-        glyph: (
-          <FieldSpecimen
-            focus={effective.focusInputStyle}
-            weight={effective.focusInputWeight}
-            ring={ringOf(effective)}
-            neutral={option.value === "neutral"}
-          />
-        ),
-      }))}
-    />
-  )
+const FocusWidthRow = () => (
+  <DialSlider
+    axis="focusWidth"
+    label="Width"
+    minValue={1}
+    maxValue={4}
+    step={1}
+    format={(value) => `${value}px`}
+  />
+)
+
+const SWATCH: Record<string, string> = {
+  accent: INK,
+  neutral: "var(--color-fg)",
 }
+
+const FOCUS_COLOR_ROW_OPTIONS = FOCUS_COLOR_OPTIONS.map((option) => ({
+  ...option,
+  label: (
+    <span className="flex items-center gap-1.5">
+      <span
+        className="size-2.5 rounded-full"
+        style={{ background: SWATCH[option.value] }}
+      />
+      {option.label}
+    </span>
+  ),
+}))
+
+const FocusColorRow = () => (
+  <DialSegmented
+    axis="focusColor"
+    label="Color"
+    options={FOCUS_COLOR_ROW_OPTIONS}
+  />
+)
+
+const FieldFocusRow = () => (
+  <DialSegmented
+    axis="focusInputStyle"
+    label="Fields"
+    options={FOCUS_INPUT_STYLE_OPTIONS}
+  />
+)
 
 const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
   ...option,
@@ -364,11 +320,9 @@ const HighlightRow = () => (
 
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,
-  focusStrength: FocusStrengthRow,
   focusWidth: FocusWidthRow,
+  focusColor: FocusColorRow,
   focusInputStyle: FieldFocusRow,
-  focusInputWeight: FieldFocusWeightRow,
-  focusInputColor: FieldInkRow,
   disabledTreatment: DisabledRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
