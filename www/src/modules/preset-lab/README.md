@@ -36,6 +36,39 @@ A part file (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`) holds a frozen c
 - `fonts` maps a reference family the preset can't ship to its stand-in, lowercase (`{ "din-round": "nunito", "geistsans": "geist" }`): those rows pass as `stand-in`. Cite the choice in `sources.md`.
 - Packs from token tables: a system that publishes its resolved tokens (Material 3's DSM token tables, Carbon themes, Primer primitives) can fill `tokens.json` from them by hand, in the probe's value format, with `"probe": "tokens"` (no probe-version warning). `sources.md` records the table, its build or version, and how it was resolved (platform, theme); `refs/material3/sources.md` is the worked example. A pack can mix token-table parts with measured ones. A product that ships a dark palette it never renders (Airbnb) writes dark by hand the same way: the light entries' props, clear fills composited over the dark page, shadows only where the palette has them.
 
+- `gaps.json`: the looks the preset can't reach with today's axes, one entry per look (`Gap` in `looks.ts`): its look id, a title, the stand-in the preset uses, and its source (`ledger` for the rows backfilled from the #1020 ledger, `hand`, or `fit <probe>` for residual rows the fit filed). Look ids come from the vocabulary in `looks.ts`, each under a pattern (size, type, surface, ink, radius, color, anatomy, state, flourish, font): add a look there when none fits, never a free-text one. `pnpm presets:gaps` builds the ledger from every pack: looks per pattern, the systems behind each, and which meet the proposal bar (3 systems, or 2 with a north star: Material 3, Vercel, Linear; color looks wait for the engine rewrite).
+- `model.json`: the system behind the product, inferred from a census (below). Committed, so drift has a baseline.
+- `pixel.json`: what the pixel probe read from screenshots (below), in `tokens.json`'s format with `"probe": "pixel"`. The diff and the fit read it only for the props `tokens.json` lacks, and say which.
+
+## Census and model
+
+The census (`census.ts`) reads every element a page paints or labels, with no hand-written selectors: its role (ARIA, then tag, then box shape), the control or landmark it sits in, its box, its text's length (never the text), the probe's 12 values from the probe itself plus about 25 computed styles, and for one element per look its hover, pressed and focus changes and the custom property behind each value. `pnpm presets:crawl` runs it:
+
+- Headless over a pack's public pages in their modes (`--url` for any page, `--follow n` for linked pages, `--open n` to open popups one per fresh load), or in a signed-in Chrome over its debugging port (`--connect <port> --pages <file>`, page keys with placeholders, copies redacted). From Claude in Chrome, the local kit's `__dotui.census(pass)` does the same per page and pass (focus only, no hover or pressed) and `kit.mts --collect` files it next to `raw/`.
+- Output: `<out>/pages/*.json` (one per page, pass and mode), `census.json` (looks per role group, light paired with the same element in dark), and frozen copies of each look's sample at rest and in its states, `crops/<look>-<state>-<mode>.{json,html}`, which a system's `looks.json` points at. `<out>` defaults to `.scratch-refs/<id>/<date>/census`.
+- The model (`model.ts`, written to `refs/<id>/model.json` and printed as a DESIGN.md-style summary): radius rungs and pills, type styles, control heights, the spacing grid, OKLCH neutrals and accent hues per mode, the custom properties that feed most elements, and the looks of each control. `--from <dir>` (repeatable) rebuilds it from saved pages with no browser: how a public run and a signed-in one become one model.
+
+## System looks
+
+`pnpm presets:looks --pack <id>` writes the system's `looks.json` for its doc page (`system-looks.ts`): the pages read and how, the palette per mode with the color roles the probe parts name, type, shape, spacing, distinct shadows, every component look (keyed by registry component; census groups with none go under `other`) with its states, custom properties and frozen copies, the fit's misses on the looks they belong to, and `gaps.json`. Each probe part is tied to the census look whose values agree with it (three quarters of its props or more), so the page can show ours beside theirs. It reads `model.json` (run the census first), the newest census under `.scratch-refs/<id>/` and the fit's `fit.json` when there is one; copies stay under `.scratch-refs/<id>/`, never in git. Output: `../directory/systems/<id>/looks.json`.
+
+## Fit
+
+`pnpm presets:fit --pack <id> [--preset <id>]` searches the studio state whose specimens read closest to the pack's reference, dev server running. Each candidate (every option of every enum and boolean key, numbers coarse then fine) renders for real through `__specimen.setDiff` and is scored on every row: 0 when ok, 1 to 2 when off by how far. A sensitivity map (each option set alone on Origin: which rows it moves, `.scratch-specimens/sensitivity-<build>.json`, rendered once per registry, studio and probe version) skips candidates that touch no off row and limits each render to the sheets it can change. Each round keeps the best change, then others on other rows while the full render still scores lower.
+
+- It prints the changes kept (rows fixed and broken), the preset's full draft diff, and the residual off rows by look; `--write-gaps` replaces the pack's `fit` entries in `gaps.json` with them. `--keys a,b*` narrows the search; `--preset origin` starts a new preset from the defaults.
+- Color and font keys are left out: the color engine is queued for a rewrite, and fonts are catalog picks with stand-ins. The draft is a starting point a preset thread reviews, never applied as is: a change that fixes rows on the specimens can still be wrong for the product (a radius that matches buttons by bending cards).
+- Don't edit files the specimens page imports during a run: the dev server reloads the tabs. A tab that reloads or stops answering (each step times out by name) is opened again; a candidate that fails twice is skipped and logged. The map is saved every ten keys, so a stopped run picks up where it left off.
+- On GitHub (152 keys, about 6 minutes for the map, 4 rounds after it) it took 85 off rows to 80: `roleSurface: lg` (the segmented control's radius, at the cost of the menu's), tonal surface layers, accent links and the halo input focus, each a change for the GitHub thread to judge. The rest are looks with no axis, which `--write-gaps` files.
+
+## Pixel probe
+
+For products with no DOM to read (native apps), `pixel.ts` reads a part from a screenshot alone: fill, ink, edge and its width, corner radius (sub-pixel, from where the corner's diagonal meets the arc), height, inline padding from the first ink column, and whether a shadow falls below. `pnpm presets:pixel --pack <id> --shot <png> --rects <file> --mode light|dark [--write]` takes boxes in the shot's points (`__dotui.rects()` output, or written by eye: each side snaps to the strongest edge within 8 points) and merges into `pixel.json`. It reads parts with a visible box; type, focus rings and boxless parts (a tab's label) stay by hand. On GitHub's real Code button it reads fill, ink, edge and height exactly, radius 5.5 for 6, padding 13.5 for 12 (the icon's side bearing), and misses a 4% shadow.
+
+## Drift
+
+`pnpm presets:drift --pack <id>` re-runs the headless census and lists the looks gone or new against the committed model, on the pages both share (a model that also holds signed-in pages compares fairly). It writes no model: when the product changed, re-run the census, rebuild with `--from` (signed-in folders included), and re-check the preset.
+
 Screenshots, crops and compare sheets go to the project's shared files (`presets/<id>/<date>/`), or `.scratch-*` locally.
 
 ## Commands
@@ -70,6 +103,22 @@ pnpm presets:measure --url <page> --targets <file> --mode dark
 # Every axis, where each of the preset's values comes from, and the options a
 # rule overrides on that preset (presets.test rejects them)
 pnpm presets:catalog --preset linear [--chapter buttons]
+
+# The gap ledger from every pack's gaps.json, or one look across systems
+pnpm presets:gaps [--pattern size] | pnpm presets:gaps --look size.switch
+
+# Census of a pack's public pages, the model, and frozen copies of each look
+pnpm presets:crawl --pack linear [--url <page>] [--open 2] [--follow 5]
+pnpm presets:crawl --pack linear --from <census dir> --from <signed-in census dir>
+
+# Draft diff and residual gaps for a pack, against the dev server
+pnpm presets:fit --pack linear --port <port> [--keys button*] [--write-gaps]
+
+# A native app's parts from a screenshot
+pnpm presets:pixel --pack spotify --shot app.png --rects rects.json --mode dark --write
+
+# What moved on the product since its committed model
+pnpm presets:drift --pack linear
 ```
 
 - References match sheets by filename: the first word that names a component decides the sheet, plurals included (`segmented-display-popover-dark.png` → `actions`, dark). Start names with the component word, full-page shots too (`menu-image-page-dark.png`), and end with `-light`/`-dark`; unmatched ones land in `compare-unmatched.png`. `--shots` names crops `<part>-<mode>.png`, which match.
