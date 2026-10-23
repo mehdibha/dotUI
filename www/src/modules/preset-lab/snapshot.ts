@@ -27,7 +27,7 @@ export interface Snapshot {
   backdrop: string
   /** The page's @font-face rules for the families the copy uses. */
   fonts: SnapshotFont[]
-  /** Text, values, images and `url()` backgrounds were replaced. */
+  /** Text, values, images and `url()`s outside the copy were replaced. */
   redacted: boolean
 }
 
@@ -94,6 +94,13 @@ async function snapshot(
   const esc = (text: string) =>
     text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   const attr = (text: string) => esc(text).replace(/"/g, "&quot;")
+  // Redacted, a url() outside the copy goes: it can carry a private path or a
+  // signed token. url(#gradient) points inside it and stays.
+  const unlink = (value: string) =>
+    value.replace(
+      /url\(\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^)]*)\s*\)/g,
+      (ref) => (/^url\(\s*["']?#/.test(ref) ? ref : "none"),
+    )
 
   type Values = Record<string, string>
   const read = (style: CSSStyleDeclaration): Values => {
@@ -206,10 +213,8 @@ async function snapshot(
       if (values.display === "inline") values.display = "inline-block"
     }
     if (redact)
-      values["background-image"] = (values["background-image"] ?? "").replace(
-        /url\([^)]*\)/g,
-        "none",
-      )
+      for (const [prop, value] of Object.entries(values))
+        values[prop] = unlink(value)
     if (root) {
       // Where it sat on its page doesn't come along: the copy is its box.
       const box = el.getBoundingClientRect()
@@ -243,11 +248,14 @@ async function snapshot(
       if (ps.content === "none" || ps.content === "normal") continue
       const own = read(ps)
       useFonts(own["font-family"])
-      if (redact)
+      if (redact) {
+        for (const [prop, value] of Object.entries(own))
+          own[prop] = unlink(value)
         own.content = (own.content ?? "").replace(
           /"((?:[^"\\]|\\.)*)"/g,
           (_, text: string) => `"${hide(text)}"`,
         )
+      }
       rules.push(
         `[data-s="${n}"]${pseudo}{${declarations(own, defaultsOf(null, "span"), values)}}`,
       )
@@ -267,10 +275,9 @@ async function snapshot(
         if (svg) {
           // An id stays: url(#gradient) and <use href="#icon"> point at it.
           if (key.startsWith("data-") || key.startsWith("aria-")) continue
-          // Redacted, only links inside the copy stay: a sprite or image URL
-          // can carry a private path or a signed token.
+          // Redacted, only links inside the copy stay (see `unlink`).
           if (redact && key.endsWith("href") && !value.startsWith("#")) continue
-          attrs.push(`${key}="${attr(value)}"`)
+          attrs.push(`${key}="${attr(redact ? unlink(value) : value)}"`)
         } else if (KEEP.has(key))
           attrs.push(
             `${key}="${attr(key === "placeholder" && redact ? hide(value) : value)}"`,
