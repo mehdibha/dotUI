@@ -76,6 +76,8 @@ export async function pool<T, R>(
   run: (item: T) => Promise<R>,
   concurrency: number,
 ) {
+  if (!Number.isInteger(concurrency) || concurrency < 1)
+    throw new Error("--concurrency must be a whole number above 0")
   const results: R[] = new Array(items.length)
   let next = 0
   const worker = async () => {
@@ -84,7 +86,13 @@ export async function pool<T, R>(
       results[index] = await run(items[index] as T)
     }
   }
-  await Promise.all(Array.from({ length: concurrency }, () => worker()))
+  // When one worker fails, the rest finish before the caller closes the
+  // browser under them.
+  const settled = await Promise.allSettled(
+    Array.from({ length: concurrency }, () => worker()),
+  )
+  const failed = settled.find((result) => result.status === "rejected")
+  if (failed) throw failed.reason
   return results
 }
 
@@ -173,21 +181,27 @@ export async function openPage(
   }: Omit<PackPage, "parts">,
 ) {
   const context = await browser.createBrowserContext()
-  const page = await context.newPage()
-  await shim(page)
-  await page.setViewport({ width, height: 900 })
-  await page.emulateMediaFeatures([
-    { name: "prefers-color-scheme", value: mode },
-  ])
-  await focusable(page)
-  // Some sites turn away a "HeadlessChrome" user agent (Notion).
-  await page.setUserAgent(
-    (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
-  )
-  if (storage)
-    await page.evaluateOnNewDocument(
-      `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
+  let page: Page
+  try {
+    page = await context.newPage()
+    await shim(page)
+    await page.setViewport({ width, height: 900 })
+    await page.emulateMediaFeatures([
+      { name: "prefers-color-scheme", value: mode },
+    ])
+    await focusable(page)
+    // Some sites turn away a "HeadlessChrome" user agent (Notion).
+    await page.setUserAgent(
+      (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
     )
+    if (storage)
+      await page.evaluateOnNewDocument(
+        `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
+      )
+  } catch (error) {
+    await context.close().catch(() => {})
+    throw error
+  }
   const load = async () => {
     // A goto that changes only the hash keeps the document, so a hash-routed
     // dialog would keep the last part's state.
