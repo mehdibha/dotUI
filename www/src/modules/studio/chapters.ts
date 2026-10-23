@@ -76,6 +76,8 @@ export interface SearchRow {
 export interface Chapter {
   id: string
   label: string
+  /** Its label names it for search and the mobile strip, not over its rows. */
+  untitled?: boolean
   /** Keys (or axis modules) whose rows sit on the chapter itself. */
   owners?: string[]
   /** Other names search answers to. */
@@ -97,6 +99,8 @@ export interface ChapterPage {
   aliases?: string[]
   /** Its rows, for search. */
   rows?: SearchRow[]
+  /** The page that lists it, where Back leads when it opens on its own. */
+  parent?: string
   Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
@@ -105,6 +109,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "foundations",
     label: "Foundations",
+    untitled: true,
     owners: FOUNDATION_KEYS,
     rows: FOUNDATION_ROWS,
     Body: FoundationsSection,

@@ -1,0 +1,852 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://mantine.dev/core/accordion",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "ActionIcon",
+      "docsUrl": "https://mantine.dev/core/action-icon",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Affix",
+      "docsUrl": "https://mantine.dev/core/affix",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alert",
+      "docsUrl": "https://mantine.dev/core/alert",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "AlphaSlider",
+      "docsUrl": "https://mantine.dev/core/alpha-slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "Anchor",
+      "docsUrl": "https://mantine.dev/core/anchor",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "AngleSlider",
+      "docsUrl": "https://mantine.dev/core/angle-slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "AppShell",
+      "docsUrl": "https://mantine.dev/core/app-shell",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "AspectRatio",
+      "docsUrl": "https://mantine.dev/core/aspect-ratio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "Autocomplete",
+      "docsUrl": "https://mantine.dev/core/autocomplete",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://mantine.dev/core/avatar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "BackgroundImage",
+      "docsUrl": "https://mantine.dev/core/background-image",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://mantine.dev/core/badge",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Blockquote",
+      "docsUrl": "https://mantine.dev/core/blockquote",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Box",
+      "docsUrl": "https://mantine.dev/core/box",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "docsUrl": "https://mantine.dev/core/breadcrumbs",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Burger",
+      "docsUrl": "https://mantine.dev/core/burger",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://mantine.dev/core/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\" data-mantine-color-scheme=\"light\">\n<head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Mantine Button</title>\n<script>\n  (function () {\n    function applyMode(dark) {\n      var scheme = dark ? \"dark\" : \"light\";\n      window.__mantineColorScheme = scheme;\n      document.documentElement.setAttribute(\"data-mantine-color-scheme\", scheme);\n      if (typeof window.__mantineRender === \"function\") {\n        window.__mantineRender(scheme);\n      }\n    }\n    window.__mantineApplyMode = applyMode;\n\n    var param = new URLSearchParams(window.location.search).get(\"mode\");\n    if (param !== null) {\n      applyMode(param === \"dark\");\n      return;\n    }\n\n    var root = null;\n    try {\n      if (window.parent !== window) {\n        root = window.parent.document.documentElement;\n      }\n    } catch (err) {\n      root = null;\n    }\n    if (!root) {\n      applyMode(false);\n      return;\n    }\n\n    applyMode(root.classList.contains(\"dark\"));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains(\"dark\"));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: [\"class\"] });\n    // Held on window so the observer outlives this IIFE for the page lifetime.\n    window.__mantineModeObserver = observer;\n  })();\n</script>\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@mantine/core@7.17.8/styles.css\" />\n<style>\n  html, body { background: #fff; }\n  :root[data-mantine-color-scheme='dark'],\n  :root[data-mantine-color-scheme='dark'] body {\n    background: var(--mantine-color-body);\n  }\n  body { margin: 0; padding: 16px; }\n  #root {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    min-height: calc(100vh - 32px);\n    flex-wrap: wrap;\n  }\n</style>\n<script type=\"importmap\">\n{\n  \"imports\": {\n    \"react\": \"https://esm.sh/react@18.3.1\",\n    \"react-dom\": \"https://esm.sh/react-dom@18.3.1?deps=react@18.3.1\",\n    \"react-dom/client\": \"https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1\",\n    \"@mantine/hooks\": \"https://esm.sh/@mantine/hooks@7.17.8?deps=react@18.3.1\",\n    \"@mantine/core\": \"https://esm.sh/@mantine/core@7.17.8?deps=react@18.3.1,react-dom@18.3.1\"\n  }\n}\n</script>\n</head>\n<body>\n<div id=\"root\"></div>\n<script type=\"module\">\n  import { createElement as h } from \"react\";\n  import { createRoot } from \"react-dom/client\";\n  import { MantineProvider, Button } from \"@mantine/core\";\n\n  const root = createRoot(document.getElementById(\"root\"));\n\n  function render(scheme) {\n    root.render(\n      h(\n        MantineProvider,\n        { forceColorScheme: scheme },\n        h(Button, { variant: \"filled\", color: \"blue\" }, \"Primary\"),\n        h(Button, { variant: \"default\" }, \"Secondary\"),\n        h(Button, { variant: \"filled\", color: \"blue\", disabled: true }, \"Disabled\")\n      )\n    );\n  }\n\n  window.__mantineRender = render;\n  render(window.__mantineColorScheme);\n</script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://mantine.dev/core/card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Cascader",
+      "docsUrl": "https://mantine.dev/core/cascader",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Center",
+      "docsUrl": "https://mantine.dev/core/center",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://mantine.dev/core/checkbox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Chip",
+      "docsUrl": "https://mantine.dev/core/chip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "CloseButton",
+      "docsUrl": "https://mantine.dev/core/close-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Code",
+      "docsUrl": "https://mantine.dev/core/code",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "accordion",
+      "name": "Collapse",
+      "docsUrl": "https://mantine.dev/core/collapse",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ColorInput",
+      "docsUrl": "https://mantine.dev/core/color-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ColorPicker",
+      "docsUrl": "https://mantine.dev/core/color-picker",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ColorSwatch",
+      "docsUrl": "https://mantine.dev/core/color-swatch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "Combobox",
+      "docsUrl": "https://mantine.dev/core/combobox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ComboboxPopover",
+      "docsUrl": "https://mantine.dev/core/combobox-popover",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Container",
+      "docsUrl": "https://mantine.dev/core/container",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "CopyButton",
+      "docsUrl": "https://mantine.dev/core/copy-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "DataList",
+      "docsUrl": "https://mantine.dev/core/data-list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://mantine.dev/core/dialog",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://mantine.dev/core/divider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://mantine.dev/core/drawer",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "empty-state",
+      "name": "EmptyState",
+      "docsUrl": "https://mantine.dev/core/empty-state",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Fieldset",
+      "docsUrl": "https://mantine.dev/core/fieldset",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "file-upload",
+      "name": "FileButton",
+      "docsUrl": "https://mantine.dev/core/file-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "file-upload",
+      "name": "FileInput",
+      "docsUrl": "https://mantine.dev/core/file-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Flex",
+      "docsUrl": "https://mantine.dev/core/flex",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FloatingIndicator",
+      "docsUrl": "https://mantine.dev/core/floating-indicator",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FloatingWindow",
+      "docsUrl": "https://mantine.dev/core/floating-window",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FocusTrap",
+      "docsUrl": "https://mantine.dev/core/focus-trap",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Grid",
+      "docsUrl": "https://mantine.dev/core/grid",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Group",
+      "docsUrl": "https://mantine.dev/core/group",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Highlight",
+      "docsUrl": "https://mantine.dev/core/highlight",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "HoverCard",
+      "docsUrl": "https://mantine.dev/core/hover-card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "HueSlider",
+      "docsUrl": "https://mantine.dev/core/hue-slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Image",
+      "docsUrl": "https://mantine.dev/core/image",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Indicator",
+      "docsUrl": "https://mantine.dev/core/indicator",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Input",
+      "docsUrl": "https://mantine.dev/core/input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "JsonInput",
+      "docsUrl": "https://mantine.dev/core/json-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "kbd",
+      "name": "Kbd",
+      "docsUrl": "https://mantine.dev/core/kbd",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "List",
+      "docsUrl": "https://mantine.dev/core/list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Loader",
+      "docsUrl": "https://mantine.dev/core/loader",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "LoadingOverlay",
+      "docsUrl": "https://mantine.dev/core/loading-overlay",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Mark",
+      "docsUrl": "https://mantine.dev/core/mark",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Marquee",
+      "docsUrl": "https://mantine.dev/core/marquee",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "MaskInput",
+      "docsUrl": "https://mantine.dev/core/mask-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://mantine.dev/core/menu",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Menubar",
+      "docsUrl": "https://mantine.dev/core/menubar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Modal",
+      "docsUrl": "https://mantine.dev/core/modal",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "MultiSelect",
+      "docsUrl": "https://mantine.dev/core/multi-select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "NativeSelect",
+      "docsUrl": "https://mantine.dev/core/native-select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "NavLink",
+      "docsUrl": "https://mantine.dev/core/nav-link",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Notification",
+      "docsUrl": "https://mantine.dev/core/notification",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "NumberFormatter",
+      "docsUrl": "https://mantine.dev/core/number-formatter",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "NumberInput",
+      "docsUrl": "https://mantine.dev/core/number-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "OverflowList",
+      "docsUrl": "https://mantine.dev/core/overflow-list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Overlay",
+      "docsUrl": "https://mantine.dev/core/overlay",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Package",
+      "docsUrl": "https://mantine.dev/core/package",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://mantine.dev/core/pagination",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Paper",
+      "docsUrl": "https://mantine.dev/core/paper",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "PasswordInput",
+      "docsUrl": "https://mantine.dev/core/password-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Pill",
+      "docsUrl": "https://mantine.dev/core/pill",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "PillsInput",
+      "docsUrl": "https://mantine.dev/core/pills-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "PinInput",
+      "docsUrl": "https://mantine.dev/core/pin-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://mantine.dev/core/popover",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Portal",
+      "docsUrl": "https://mantine.dev/core/portal",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://mantine.dev/core/progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://mantine.dev/core/radio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "RangeSlider",
+      "docsUrl": "https://mantine.dev/core/range-slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "rating",
+      "name": "Rating",
+      "docsUrl": "https://mantine.dev/core/rating",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "RingProgress",
+      "docsUrl": "https://mantine.dev/core/ring-progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "RollingNumber",
+      "docsUrl": "https://mantine.dev/core/rolling-number",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ScrollArea",
+      "docsUrl": "https://mantine.dev/core/scroll-area",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Scroller",
+      "docsUrl": "https://mantine.dev/core/scroller",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "segmented-control",
+      "name": "SegmentedControl",
+      "docsUrl": "https://mantine.dev/core/segmented-control",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://mantine.dev/core/select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "SemiCircleProgress",
+      "docsUrl": "https://mantine.dev/core/semi-circle-progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "SimpleGrid",
+      "docsUrl": "https://mantine.dev/core/simple-grid",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://mantine.dev/core/skeleton",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://mantine.dev/core/slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Space",
+      "docsUrl": "https://mantine.dev/core/space",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Splitter",
+      "docsUrl": "https://mantine.dev/core/splitter",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Spoiler",
+      "docsUrl": "https://mantine.dev/core/spoiler",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Stack",
+      "docsUrl": "https://mantine.dev/core/stack",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-steps",
+      "name": "Stepper",
+      "docsUrl": "https://mantine.dev/core/stepper",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://mantine.dev/core/switch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://mantine.dev/core/table",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TableOfContents",
+      "docsUrl": "https://mantine.dev/core/table-of-contents",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://mantine.dev/core/tabs",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TagsInput",
+      "docsUrl": "https://mantine.dev/core/tags-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Text",
+      "docsUrl": "https://mantine.dev/core/text",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea",
+      "docsUrl": "https://mantine.dev/core/textarea",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "TextInput",
+      "docsUrl": "https://mantine.dev/core/text-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "ThemeIcon",
+      "docsUrl": "https://mantine.dev/core/theme-icon",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "timeline",
+      "name": "Timeline",
+      "docsUrl": "https://mantine.dev/core/timeline",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Title",
+      "docsUrl": "https://mantine.dev/core/title",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://mantine.dev/core/tooltip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Transition",
+      "docsUrl": "https://mantine.dev/core/transition",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tree",
+      "docsUrl": "https://mantine.dev/core/tree",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "TreeSelect",
+      "docsUrl": "https://mantine.dev/core/tree-select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Typography",
+      "docsUrl": "https://mantine.dev/core/typography",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "UnstyledButton",
+      "docsUrl": "https://mantine.dev/core/unstyled-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "VisuallyHidden",
+      "docsUrl": "https://mantine.dev/core/visually-hidden",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://mantine.dev",
+    "https://mantine.dev/sitemap.xml",
+    "https://github.com/mantinedev/mantine"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/mantine.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://mantine.dev/sitemap.xml",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/mantine"
+      }
+    ],
+    "notes": "Inventory is every /core/<slug> page in the deployed mantine.dev sitemap — Mantine's own machine-readable list of documented core components. Display names are derived from the docs slug (kebab → PascalCase, Mantine's export naming); docsUrl is the sitemap <loc>. The canonical-taxonomy mapping is an editorial table in the extractor, not extracted. The sitemap itself is not version-pinned (live-site tier), but the demo documents load only Mantine's published assets at pinned versions — @mantine/core@7.17.8 styles.css from jsDelivr and the @mantine/core@7.17.8 / react@18.3.1 ESM builds from esm.sh — so demos are reproducible. Demos follow their embedding parent's color scheme live: a head script reads `dark` off the parent document's <html> classList and keeps a MutationObserver on that element's `class` attribute, applying Mantine's own `data-mantine-color-scheme` on <html> (the selector its published styles.css keys the dark token block on), painting the canvas with Mantine's `--mantine-color-body` token in dark, and re-rendering the React root so MantineProvider's `forceColorScheme` agrees — both directions, no reload. A cross-origin or absent parent falls back to light; an explicit `?mode=` query parameter overrides observation and is applied once (standalone testing). Demo coverage in this pass is Button only; every other entry is inventory (name + docsUrl + mapping) with demo null."
+  }
+}

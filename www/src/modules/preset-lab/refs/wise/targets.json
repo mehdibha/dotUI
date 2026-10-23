@@ -1,0 +1,663 @@
+{
+  "https://wise.com/login": {
+    "mode": "light",
+    "settle": 3000,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "input": {
+        "selector": "input[name=email]"
+      },
+      "field.label": {
+        "selector": "label.np-label",
+        "text": "Your email address"
+      },
+      "button.primary": {
+        "selector": "button.wds-Button--primary",
+        "ink": ".wds-Button-content"
+      },
+      "link": {
+        "selector": "a[href='/register/']"
+      }
+    }
+  },
+  "react.html?sheet=actions&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "button.secondary": {
+        "within": "[data-part=button-secondary]",
+        "selector": "button",
+        "ink": ".wds-Button-content"
+      },
+      "button.quiet": {
+        "within": "[data-part=button-tertiary]",
+        "selector": "button",
+        "ink": ".wds-Button-content",
+        "skip": ["borderRadius"]
+      },
+      "button.icon": {
+        "within": "[data-part=button-icon]",
+        "selector": "button"
+      },
+      "button.focus": {
+        "within": "[data-part=button-focus]",
+        "selector": "button",
+        "focus": true
+      },
+      "toggle": {
+        "within": "[data-part=chips]",
+        "selector": ".np-chip:not(.np-chip--selected)",
+        "ink": "div"
+      },
+      "toggle.on": {
+        "within": "[data-part=chips]",
+        "selector": ".np-chip--selected",
+        "ink": "div"
+      },
+      "segmented": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segments"
+      },
+      "segmented.item": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segment:not(.segmented-control__selected-segment)",
+        "ink": ".segmented-control__text",
+        "skip": ["borderRadius"]
+      },
+      "segmented.selected": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segments",
+        "box": "::after",
+        "ink": ".segmented-control__selected-segment .segmented-control__text",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "react.html?sheet=fields&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "input.focus": {
+        "within": "[data-part=input-focus]",
+        "selector": "input",
+        "focus": true
+      },
+      "select.trigger": {
+        "within": "[data-part=select]",
+        "selector": "button[role=combobox]",
+        "ink": ".np-select-input-content"
+      }
+    }
+  },
+  "react.html?sheet=selection&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "checkbox": {
+        "within": "[data-part=checkbox]",
+        "selector": ".tw-checkbox-button"
+      },
+      "checkbox.checked": {
+        "within": "[data-part=checkbox-checked]",
+        "selector": ".tw-checkbox-button"
+      },
+      "radio": {
+        "within": "[data-part=radio]",
+        "selector": ".tw-radio-button"
+      },
+      "radio.checked": {
+        "within": "[data-part=radio-checked]",
+        "selector": ".tw-radio-button"
+      },
+      "switch.on": {
+        "within": "[data-part=switch-on]",
+        "selector": ".np-switch"
+      },
+      "switch.off": {
+        "within": "[data-part=switch-off]",
+        "selector": ".np-switch"
+      }
+    }
+  },
+  "react.html?sheet=menu&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "menu": {
+        "selector": "[role=listbox]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      },
+      "menu.item": {
+        "within": "[role=listbox]",
+        "selector": "[role=option][aria-selected=false]",
+        "ink": ".np-select-input-option",
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      },
+      "tooltip": {
+        "selector": ".np-tooltip .np-panel__content",
+        "skip": ["height"],
+        "before": [
+          {
+            "focus": "[data-part=tooltip] button"
+          }
+        ]
+      }
+    }
+  },
+  "react.html?sheet=command&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "command": {
+        "selector": "[role=listbox]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ],
+        "skip": ["borderRadius"]
+      },
+      "command.item": {
+        "within": "[role=listbox]",
+        "selector": "[role=option][aria-selected=false]",
+        "ink": ".np-select-input-option",
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      }
+    }
+  },
+  "react.html?sheet=dialog&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "selector": ".tw-modal-content",
+        "surface": true
+      }
+    }
+  },
+  "react.html?sheet=navigation&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "tab": {
+        "within": "[data-part=tabs]",
+        "selector": "[role=tab][aria-selected=false]",
+        "ink": ".tabs__tab__content"
+      },
+      "tab.selected": {
+        "within": "[data-part=tabs]",
+        "selector": "[role=tab][aria-selected=true]",
+        "ink": ".tabs__tab__content"
+      }
+    }
+  },
+  "react.html?sheet=feedback&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "alert": {
+        "within": "[data-part=alert-neutral]",
+        "selector": ".wds-prompt"
+      },
+      "badge": {
+        "within": "[data-part=tag-neutral]",
+        "selector": ".wds-tag"
+      },
+      "badge.accent": {
+        "within": "[data-part=tag-success]",
+        "selector": ".wds-tag"
+      }
+    }
+  },
+  "react.html?sheet=display&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "card": {
+        "within": "[data-part=card]",
+        "selector": ".np-Card"
+      }
+    }
+  },
+  "react.html?sheet=dates&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "calendar.day": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell]:not(.active):not(.today)"
+      },
+      "calendar.today": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell].today"
+      },
+      "calendar.selected": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell].active"
+      }
+    }
+  },
+  "react.html?sheet=type&theme=light": {
+    "mode": "light",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "heading.1": {
+        "within": "[data-part=title-screen]",
+        "selector": "h1",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.2": {
+        "within": "[data-part=title-section]",
+        "selector": "h2",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.3": {
+        "within": "[data-part=title-subsection]",
+        "selector": "h3",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.4": {
+        "within": "[data-part=title-body]",
+        "selector": "h4",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "text": {
+        "within": "[data-part=body-large]",
+        "selector": "p"
+      },
+      "text.muted": {
+        "within": "[data-part=body-muted]",
+        "selector": "p"
+      }
+    }
+  },
+  "react.html?sheet=actions&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "within": "[data-part=button-primary]",
+        "selector": "button",
+        "ink": ".wds-Button-content"
+      },
+      "button.secondary": {
+        "within": "[data-part=button-secondary]",
+        "selector": "button",
+        "ink": ".wds-Button-content"
+      },
+      "button.quiet": {
+        "within": "[data-part=button-tertiary]",
+        "selector": "button",
+        "ink": ".wds-Button-content",
+        "skip": ["borderRadius"]
+      },
+      "button.icon": {
+        "within": "[data-part=button-icon]",
+        "selector": "button"
+      },
+      "button.focus": {
+        "within": "[data-part=button-focus]",
+        "selector": "button",
+        "focus": true
+      },
+      "toggle": {
+        "within": "[data-part=chips]",
+        "selector": ".np-chip:not(.np-chip--selected)",
+        "ink": "div"
+      },
+      "toggle.on": {
+        "within": "[data-part=chips]",
+        "selector": ".np-chip--selected",
+        "ink": "div"
+      },
+      "segmented": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segments"
+      },
+      "segmented.item": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segment:not(.segmented-control__selected-segment)",
+        "ink": ".segmented-control__text",
+        "skip": ["borderRadius"]
+      },
+      "segmented.selected": {
+        "within": "[data-part=segmented]",
+        "selector": ".segmented-control__segments",
+        "box": "::after",
+        "ink": ".segmented-control__selected-segment .segmented-control__text",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "react.html?sheet=fields&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "input": {
+        "within": "[data-part=input]",
+        "selector": "input"
+      },
+      "field.label": {
+        "within": "[data-part=input]",
+        "selector": "label"
+      },
+      "input.focus": {
+        "within": "[data-part=input-focus]",
+        "selector": "input",
+        "focus": true
+      },
+      "select.trigger": {
+        "within": "[data-part=select]",
+        "selector": "button[role=combobox]",
+        "ink": ".np-select-input-content"
+      }
+    }
+  },
+  "react.html?sheet=selection&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "checkbox": {
+        "within": "[data-part=checkbox]",
+        "selector": ".tw-checkbox-button"
+      },
+      "checkbox.checked": {
+        "within": "[data-part=checkbox-checked]",
+        "selector": ".tw-checkbox-button"
+      },
+      "radio": {
+        "within": "[data-part=radio]",
+        "selector": ".tw-radio-button"
+      },
+      "radio.checked": {
+        "within": "[data-part=radio-checked]",
+        "selector": ".tw-radio-button"
+      },
+      "switch.on": {
+        "within": "[data-part=switch-on]",
+        "selector": ".np-switch"
+      },
+      "switch.off": {
+        "within": "[data-part=switch-off]",
+        "selector": ".np-switch"
+      }
+    }
+  },
+  "react.html?sheet=menu&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "menu": {
+        "selector": "[role=listbox]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      },
+      "menu.item": {
+        "within": "[role=listbox]",
+        "selector": "[role=option][aria-selected=false]",
+        "ink": ".np-select-input-option",
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      },
+      "tooltip": {
+        "selector": ".np-tooltip .np-panel__content",
+        "skip": ["height"],
+        "before": [
+          {
+            "focus": "[data-part=tooltip] button"
+          }
+        ]
+      }
+    }
+  },
+  "react.html?sheet=command&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "command": {
+        "selector": "[role=listbox]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ],
+        "skip": ["borderRadius"]
+      },
+      "command.item": {
+        "within": "[role=listbox]",
+        "selector": "[role=option][aria-selected=false]",
+        "ink": ".np-select-input-option",
+        "before": [
+          {
+            "click": "[role=combobox]"
+          }
+        ]
+      }
+    }
+  },
+  "react.html?sheet=dialog&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "selector": ".tw-modal-content",
+        "surface": true
+      }
+    }
+  },
+  "react.html?sheet=navigation&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "tab": {
+        "within": "[data-part=tabs]",
+        "selector": "[role=tab][aria-selected=false]",
+        "ink": ".tabs__tab__content"
+      },
+      "tab.selected": {
+        "within": "[data-part=tabs]",
+        "selector": "[role=tab][aria-selected=true]",
+        "ink": ".tabs__tab__content"
+      },
+      "link": {
+        "within": "[data-part=link]",
+        "selector": "a"
+      }
+    }
+  },
+  "react.html?sheet=feedback&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "alert": {
+        "within": "[data-part=alert-neutral]",
+        "selector": ".wds-prompt"
+      },
+      "badge": {
+        "within": "[data-part=tag-neutral]",
+        "selector": ".wds-tag"
+      },
+      "badge.accent": {
+        "within": "[data-part=tag-success]",
+        "selector": ".wds-tag"
+      }
+    }
+  },
+  "react.html?sheet=display&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "card": {
+        "within": "[data-part=card]",
+        "selector": ".np-Card"
+      }
+    }
+  },
+  "react.html?sheet=dates&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "calendar.day": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell]:not(.active):not(.today)"
+      },
+      "calendar.today": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell].today"
+      },
+      "calendar.selected": {
+        "within": "[data-part=calendar]",
+        "selector": "[data-calendar-cell].active"
+      }
+    }
+  },
+  "react.html?sheet=type&theme=dark": {
+    "mode": "dark",
+    "steps": [
+      {
+        "wait": "html[data-specimen-ready]"
+      }
+    ],
+    "parts": {
+      "heading.1": {
+        "within": "[data-part=title-screen]",
+        "selector": "h1",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.2": {
+        "within": "[data-part=title-section]",
+        "selector": "h2",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.3": {
+        "within": "[data-part=title-subsection]",
+        "selector": "h3",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.4": {
+        "within": "[data-part=title-body]",
+        "selector": "h4",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "text": {
+        "within": "[data-part=body-large]",
+        "selector": "p"
+      },
+      "text.muted": {
+        "within": "[data-part=body-muted]",
+        "selector": "p"
+      }
+    }
+  }
+}

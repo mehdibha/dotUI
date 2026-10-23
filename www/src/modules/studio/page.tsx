@@ -63,10 +63,12 @@ const ChapterBlock = memo(function ChapterBlock({
   chapter,
   studio,
   docked,
+  first,
 }: {
   chapter: Chapter
   studio: Studio
   docked: boolean
+  first: boolean
 }) {
   const { Body } = chapter
   return (
@@ -78,13 +80,22 @@ const ChapterBlock = memo(function ChapterBlock({
         !docked && "max-lg:hidden",
       )}
     >
+      {!first && (
+        <div
+          role="separator"
+          className="mx-2.5 mt-4 mb-3 h-px bg-fg/8 max-lg:hidden"
+        />
+      )}
       <h2
         id={`chapter-${chapter.id}`}
-        className="truncate px-1 text-xs/9 font-medium text-fg/50 max-lg:sr-only"
+        className={cn(
+          "truncate px-2.5 pb-2 text-xs/4 font-medium text-fg/50 max-lg:sr-only",
+          chapter.untitled && "sr-only",
+        )}
       >
         {chapter.label}
       </h2>
-      <div className="flex flex-col gap-1.5 pb-2.5 max-lg:py-2">
+      <div className="flex flex-col gap-1.5 max-lg:py-2">
         <Body studio={studio} />
       </div>
     </section>
@@ -202,9 +213,12 @@ export function PanelPage({
   const [active, setActive] = useState(chapters[0]?.id ?? "")
   const [tucked, setTucked] = useState(false)
   const [pageId, setPageId] = useState<string | null>(null)
+  // The pages Back leads through, nearest last.
+  const [trail, setTrail] = useState<string[]>([])
   const [drill, setDrill] = useState<keyof typeof DRILL | null>(null)
   const scroller = useRef<HTMLDivElement>(null)
-  const scrolled = useRef(0)
+  // Where each page (the main one under "") was left, for Back.
+  const scrolled = useRef(new Map<string, number>())
   const back = useRef<HTMLButtonElement>(null)
   // Set by a press that swaps pages: focus moves with it.
   const moveFocus = useRef(false)
@@ -217,6 +231,7 @@ export function PanelPage({
     [chapters],
   )
   const page = pages.find((p) => p.id === pageId)
+  const behind = pages.find((p) => p.id === trail.at(-1))
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
@@ -244,7 +259,7 @@ export function PanelPage({
     lastPage.current = pageId
     if (!moveFocus.current) return
     moveFocus.current = false
-    if (pageId) back.current?.focus()
+    if (drill !== "out") back.current?.focus()
     else
       untilMounted(() => {
         const row = layer?.querySelector<HTMLElement>(
@@ -253,34 +268,39 @@ export function PanelPage({
         row?.focus()
         return !!row
       })
-  }, [pageId, layer])
+  }, [pageId, drill, layer])
 
   // Going back lands where the page was left; a new page opens at its top.
   useLayoutEffect(() => {
     if (scroller.current)
-      scroller.current.scrollTop = pageId ? 0 : scrolled.current
-  }, [pageId])
+      scroller.current.scrollTop =
+        drill === "out" || !pageId
+          ? (scrolled.current.get(pageId ?? "") ?? 0)
+          : 0
+  }, [pageId, drill])
 
   const openPage = useCallback(
-    (id: string) => {
+    (id: string, from?: string[]) => {
       const target = pages.find((p) => p.id === id)
       if (!target) return
-      if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
+      scrolled.current.set(pageId ?? "", scroller.current?.scrollTop ?? 0)
       setDrill("in")
       setActive(target.chapter.id)
+      setTrail(from ?? (target.parent ? [target.parent] : []))
       setPageId(id)
       setHash(id)
     },
     [pages, pageId],
   )
 
-  // A row press moves focus with the swap; search and deep links don't.
+  // A row press moves focus with the swap, and Back retraces it; search and
+  // deep links don't move focus, and Back leads to the page's parent.
   const navigate = useCallback(
     (id: string) => {
       moveFocus.current = true
-      openPage(id)
+      openPage(id, pageId ? [...trail, pageId] : [])
     },
-    [openPage],
+    [openPage, pageId, trail],
   )
 
   const dock = useCallback(
@@ -288,6 +308,7 @@ export function PanelPage({
       setActive(id)
       setTucked(false)
       setDrill(null)
+      setTrail([])
       setPageId(null)
       if (pageId) setHash(null)
       requestAnimationFrame(() => {
@@ -412,37 +433,42 @@ export function PanelPage({
                 />
               }
               page={
-                open &&
-                page && (
-                  <>
+                open && page ? (
+                  <span className="flex min-w-0 items-center gap-0.5">
                     <Button
                       ref={back}
                       size="sm"
                       variant="quiet"
                       isIconOnly
-                      aria-label={`Back to ${page.chapter.label}`}
+                      aria-label={`Back to ${behind?.label ?? page.chapter.label}`}
                       onPress={() => {
                         moveFocus.current = true
                         setDrill("out")
-                        setPageId(null)
-                        setHash(null)
+                        setTrail(trail.slice(0, -1))
+                        setPageId(behind?.id ?? null)
+                        setHash(behind?.id ?? null)
                       }}
-                      className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
+                      // Slides in with the first page, then stays put.
+                      className={cn(
+                        "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
+                        drill && DRILL.in,
+                      )}
                     >
                       <ChevronLeftIcon />
                     </Button>
                     <span
                       key={page.id}
                       className={cn(
-                        "min-w-0 flex-1 truncate text-[13px] font-medium",
-                        drill === "in" && DRILL.in,
+                        "min-w-0 truncate text-sm font-medium",
+                        drill && DRILL[drill],
                       )}
                     >
                       {page.label}
                     </span>
-                  </>
-                )
+                  </span>
+                ) : undefined
               }
+              systemClassName={drill === "out" ? DRILL.out : undefined}
               scrollRef={scroller}
               className={
                 open
@@ -456,9 +482,9 @@ export function PanelPage({
                   data-page={page.id}
                   aria-label={page.label}
                   className={cn(
-                    "flex w-full shrink-0 flex-col gap-1.5 pb-2.5 max-lg:py-2",
+                    "flex w-full shrink-0 flex-col gap-1.5 max-lg:py-2",
                     !open && "max-lg:hidden",
-                    drill === "in" && DRILL.in,
+                    drill && DRILL[drill],
                   )}
                 >
                   <page.Body studio={studio} />
@@ -470,12 +496,13 @@ export function PanelPage({
                     drill === "out" && DRILL.out,
                   )}
                 >
-                  {chapters.map((chapter) => (
+                  {chapters.map((chapter, i) => (
                     <ChapterBlock
                       key={chapter.id}
                       chapter={chapter}
                       studio={studio}
                       docked={open && chapter.id === active}
+                      first={i === 0}
                     />
                   ))}
                 </div>

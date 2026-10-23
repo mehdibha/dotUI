@@ -1,0 +1,309 @@
+{
+  "https://linear.app/<ws>/settings/account/preferences": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "main"
+      },
+      "panel": {
+        "selector": "main"
+      },
+      "shell": {
+        "selector": "html"
+      },
+      "heading.3": {
+        "selector": "main span",
+        "text": "Preferences"
+      },
+      "text.muted": {
+        "selector": "main section li span",
+        "nth": 1,
+        "skip": ["fontSize"]
+      },
+      "select.trigger": {
+        "selector": "main button[role=combobox][data-select-variant=default]"
+      },
+      "switch.on": {
+        "selector": "main input[type=checkbox]",
+        "nth": 0
+      },
+      "switch.off": {
+        "selector": "main input[type=checkbox]",
+        "nth": 1
+      },
+      "card": {
+        "selector": "main section"
+      },
+      "button.quiet": {
+        "selector": "main button[aria-label=\"Customize sidebar\"]"
+      },
+      "button.focus": {
+        "selector": "main button[aria-label=\"Customize sidebar\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://linear.app/<ws>/settings/account/profile": {
+    "signedIn": true,
+    "parts": {
+      "input": {
+        "selector": "main input#title"
+      },
+      "input.focus": {
+        "selector": "main input#title",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "main label"
+      }
+    }
+  },
+  "https://linear.app/<ws>/settings/security": {
+    "signedIn": true,
+    "parts": {
+      "button.secondary": {
+        "selector": "main button",
+        "text": "Copy"
+      },
+      "link": {
+        "selector": "main a[href^=\"http\"]",
+        "text": "Docs"
+      }
+    }
+  },
+  "https://linear.app/<ws>/settings/issue-labels": {
+    "signedIn": true,
+    "parts": {
+      "button.primary": {
+        "selector": "main button",
+        "text": "New label"
+      }
+    }
+  },
+  "https://linear.app/<ws>/inbox": {
+    "signedIn": true,
+    "parts": {
+      "nav.item": {
+        "selector": "a[href*=\"/my-issues\"] > span"
+      },
+      "nav.item.active": {
+        "selector": "a[data-active=true] > span",
+        "ink": ":scope > div > span"
+      },
+      "tooltip": {
+        "text": "Create new issue",
+        "surface": true,
+        "ink": ":scope > div > div",
+        "skip": ["paddingInline"],
+        "before": [
+          {
+            "hover": "[aria-label=\"Create new issue\"]"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": "[role=dialog][aria-label=\"Create issue\"] div",
+        "surface": true,
+        "before": [
+          {
+            "press": "c"
+          }
+        ]
+      },
+      "command": {
+        "selector": "input[aria-label=\"Command menu\"]",
+        "surface": true,
+        "before": [
+          {
+            "press": "Meta+k"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[role=listbox] [role=option][data-focused=false]",
+        "box": "::before",
+        "ink": ":scope > div > div > span",
+        "before": [
+          {
+            "press": "Meta+k"
+          }
+        ]
+      },
+      "kbd": {
+        "selector": "[role=listbox] [role=option] kbd",
+        "before": [
+          {
+            "press": "Meta+k"
+          }
+        ]
+      },
+      "button.icon": {
+        "selector": "[aria-label=\"Create new issue\"]"
+      }
+    }
+  },
+  "https://linear.app/<ws>/my-issues/assigned": {
+    "signedIn": true,
+    "parts": {
+      "tab": {
+        "selector": "main a",
+        "text": "Created"
+      },
+      "tab.selected": {
+        "selector": "main a",
+        "text": "Assigned"
+      }
+    }
+  },
+  "https://linear.app/<ws>/my-issues/created": {
+    "signedIn": true,
+    "parts": {
+      "checkbox": {
+        "selector": "main div:has(> input[type=checkbox])",
+        "before": [
+          {
+            "hover": "main a[href*=\"/issue/\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://linear.app/<ws>/issue/<id>": {
+    "signedIn": true,
+    "parts": {
+      "calendar.day": {
+        "selector": "[role=grid] td[role=gridcell]:not([data-today]):not([data-hidden]) button",
+        "nth": 0,
+        "before": [
+          {
+            "press": "Shift+D"
+          },
+          {
+            "click": "li[role=option]::-p-text(Custom)"
+          },
+          {
+            "wait": "[role=grid] td[data-today=true] button"
+          }
+        ]
+      },
+      "calendar.today": {
+        "selector": "[role=grid] td[data-today=true] button",
+        "before": [
+          {
+            "press": "Shift+D"
+          },
+          {
+            "click": "li[role=option]::-p-text(Custom)"
+          },
+          {
+            "wait": "[role=grid] td[data-today=true] button"
+          }
+        ]
+      },
+      "menu": {
+        "selector": "[role=dialog][aria-label=Menu]",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Issue options\"]"
+          },
+          {
+            "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=dialog][aria-label=Menu] li[role=option][data-focused=true]",
+        "box": ":scope > div:first-child",
+        "ink": ":scope > div:nth-child(2) > div:nth-child(2) > span",
+        "skip": ["backgroundColor", "color", "paddingInline"],
+        "before": [
+          {
+            "click": "main button[aria-label=\"Issue options\"]"
+          },
+          {
+            "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+          },
+          {
+            "hover": "[role=dialog][aria-label=Menu] li[role=option][id$=\"add-document\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://linear.app/<ws>/team/<team>/all": {
+    "signedIn": true,
+    "parts": {
+      "segmented": {
+        "selector": "[data-animated-popover-container] [role=tablist]",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.item": {
+        "selector": "[data-animated-popover-container] [role=tablist] [role=tab][aria-selected=false]",
+        "ink": "span",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.selected": {
+        "selector": "[data-animated-popover-container] [role=tablist] [role=tab][aria-selected=true]",
+        "ink": "span",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      },
+      "toggle": {
+        "selector": "[data-animated-popover-container] button:not([role]):not([data-active])",
+        "text": "Milestone",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ],
+        "skip": ["height", "fontSize"]
+      },
+      "toggle.on": {
+        "selector": "[data-animated-popover-container] button[data-active=true]:not([role])",
+        "text": "Status",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Display options\"]"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ],
+        "skip": ["height", "fontSize"]
+      }
+    }
+  },
+  "https://linear.app/<ws>/settings/members": {
+    "signedIn": true,
+    "parts": {
+      "badge.accent": {
+        "selector": "main [data-contextual-menu] [data-list-grid-column=status] div:has(> span)",
+        "nth": 0,
+        "ink": "span"
+      }
+    }
+  }
+}

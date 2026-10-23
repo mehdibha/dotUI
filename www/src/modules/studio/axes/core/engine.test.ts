@@ -98,10 +98,13 @@ describe("catalog", () => {
             `${key} at ${combo}`,
           ).toBeUndefined()
         }
-        // A table that maps everything to one value is no pairing.
-        expect(new Set(Object.values(follow.table)).size, key).toBeGreaterThan(
-          1,
-        )
+        // A table that maps everything to one value is no pairing. Style's
+        // columns are exempt: a key may sit on Flat's value under every Style.
+        if (follow.id !== "style")
+          expect(
+            new Set(Object.values(follow.table)).size,
+            key,
+          ).toBeGreaterThan(1)
       }
     }
   })
@@ -387,7 +390,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "surfaces/flat-needs-separation": [
     { surfaceEdge: "none" },
-    { style: "tonal", surfaceEdge: "none" },
+    { surfaceLayers: "tonal", surfaceEdge: "none" },
   ],
   "icons/stroke-only-line-sets": [
     { iconLibrary: "phosphor", iconStroke: 2.5 },
@@ -477,10 +480,6 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonStyle: "gloss" },
     { style: "tactile", buttonStyle: "gloss" },
   ],
-  "style/buttonStyle-tonal": [
-    { style: "tonal", buttonStyle: "hairline" },
-    { buttonStyle: "hairline" },
-  ],
   "style/buttonStyle-tactile": [
     { style: "tactile", buttonStyle: "hairline" },
     { style: "tactile", buttonStyle: "rim-light" },
@@ -489,7 +488,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", buttonStyle: "bevel" },
     { style: "chunky", buttonStyle: "ledge" },
   ],
-  "style/surfaceEdge-flat-tonal": [
+  "style/surfaceEdge-flat": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
@@ -501,11 +500,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceLayers-flat-tactile-chunky": [
-    { surfaceLayers: "tonal" },
-    { style: "tonal", surfaceLayers: "tonal" },
-  ],
-  "style/inputStyle-flat-tonal": [
+  "style/inputStyle-flat": [
     { inputStyle: "well" },
     { style: "tactile", inputStyle: "well" },
   ],

@@ -1,0 +1,296 @@
+{
+  "https://www.notion.so/login": {
+    "mode": "light",
+    "parts": {
+      "input": {
+        "selector": "main div:has(> input[type=email])",
+        "before": [
+          {
+            "click": "h1"
+          }
+        ],
+        "only": ["backgroundColor", "edge"]
+      }
+    }
+  },
+  "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814": {
+    "parts": {
+      "page": {
+        "selector": ".notion-page-content",
+        "surface": true
+      },
+      "button.primary": {
+        "text": "Start with this template"
+      },
+      "button.secondary": {
+        "text": "Ran today",
+        "skip": ["height", "paddingInline"]
+      },
+      "button.quiet": {
+        "selector": ".notion-topbar [role=button]",
+        "text": "Search"
+      },
+      "tab": {
+        "selector": "[role=tab][aria-selected=false]"
+      },
+      "tab.selected": {
+        "selector": "[role=tab][aria-selected=true]"
+      },
+      "checkbox": {
+        "selector": ".notion-collection-item div:has(> input[type=checkbox])",
+        "skip": ["backgroundColor"]
+      },
+      "heading.1": {
+        "selector": ".notion-page-block h1"
+      },
+      "text.muted": {
+        "text": "Pages",
+        "within": "[role=dialog][aria-label='Search Notion']",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ],
+        "only": ["color"]
+      },
+      "menu": {
+        "selector": "[role=menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menuitem]",
+        "nth": 1,
+        "ink": "[role=presentation]",
+        "before": [
+          {
+            "click": "[aria-label='More actions']"
+          }
+        ],
+        "skip": ["paddingInline"]
+      },
+      "tooltip": {
+        "selector": ".notion-overlay-container [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[aria-label=Filter]"
+          }
+        ]
+      },
+      "command": {
+        "selector": "[role=dialog][aria-label='Search Notion']",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[role=dialog][aria-label='Search Notion'] [role=option]",
+        "ink": "[role=presentation] div",
+        "before": [
+          {
+            "click": ".notion-topbar [role=button] ::-p-text(Search)"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "shell": {
+        "selector": "nav[aria-label=Sidebar]",
+        "before": [
+          {
+            "click": "[aria-label='Lock sidebar open']"
+          }
+        ]
+      },
+      "nav.item.active": {
+        "selector": "nav [role=treeitem][aria-current=page]",
+        "box": "[data-inp-target=sidebar-page-item]",
+        "ink": ".notranslate",
+        "skip": ["paddingInline"]
+      },
+      "nav.item": {
+        "selector": "nav [role=treeitem]:not([aria-current])",
+        "box": "[data-inp-target=sidebar-page-item]",
+        "ink": ".notranslate",
+        "skip": ["paddingInline"]
+      },
+      "button.focus": {
+        "text": "Start with this template",
+        "focus": true
+      }
+    }
+  },
+  "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f": {
+    "parts": {
+      "heading.2": {
+        "selector": ".notion-header-block h2"
+      },
+      "heading.3": {
+        "selector": ".notion-sub_header-block h3"
+      },
+      "text": {
+        "selector": ".notion-text-block [data-content-editable-leaf]"
+      },
+      "badge": {
+        "selector": ".notion-gallery-view div:has(> div > span)",
+        "nth": 1
+      },
+      "badge.accent": {
+        "selector": ".notion-gallery-view div:has(> div > span)",
+        "nth": 2
+      }
+    }
+  },
+  "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c": {
+    "parts": {
+      "checkbox.checked": {
+        "selector": "div:has(> input[type=checkbox]:checked)"
+      }
+    }
+  },
+  "https://app.notion.com/": {
+    "signedIn": true,
+    "settle": 2500,
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog][aria-label='Settings & members']",
+        "surface": true,
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          }
+        ]
+      },
+      "select.trigger": {
+        "selector": "[role=dialog][aria-label='Settings & members'] [role=button]",
+        "text": "Use system setting",
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
+          }
+        ]
+      },
+      "calendar.day": {
+        "selector": ".notion-overlay-container .rdp-day:not(.rdp-day_today):not(.rdp-day_selected):not(.rdp-day_outside)",
+        "before": [
+          {
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
+          }
+        ]
+      },
+      "calendar.today": {
+        "selector": ".notion-overlay-container .rdp-day_today",
+        "before": [
+          {
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
+          }
+        ]
+      },
+      "calendar.selected": {
+        "selector": ".notion-overlay-container .rdp-day_selected",
+        "before": [
+          {
+            "click": ".notion-page-content ::-p-text(Tomorrow)"
+          },
+          {
+            "wait": ".notion-overlay-container .rdp-day"
+          }
+        ]
+      },
+      "alert": {
+        "selector": ".notion-callout-block [contenteditable]",
+        "surface": true
+      },
+      "heading.4": {
+        "selector": ".notion-sub_sub_header-block h4"
+      },
+      "link": {
+        "selector": ".notion-page-content a[href*='example.com']"
+      },
+      "button.icon": {
+        "selector": ".notion-topbar-more-button",
+        "skip": ["edge"]
+      },
+      "kbd": {
+        "selector": ".notion-sidebar [aria-label=\"Search or ask\"] span",
+        "nth": 1,
+        "box": ":scope > div",
+        "ink": ":scope > div > span",
+        "skip": [
+          "color",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "switch.on": {
+        "selector": "[role=dialog][aria-label='Settings & members'] div:has(> input[role=switch]:checked) > div",
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
+          }
+        ]
+      },
+      "switch.off": {
+        "selector": "[role=dialog][aria-label='Settings & members'] div:has(> input[role=switch]:not(:checked)) > div",
+        "before": [
+          {
+            "click": ".notion-sidebar-switcher"
+          },
+          {
+            "click": ".notion-overlay-container [role=button]::-p-text(Settings)"
+          },
+          {
+            "click": "[role=dialog] [role=tab]::-p-text(Preferences)"
+          }
+        ]
+      }
+    }
+  },
+  "https://app.notion.com/#board-view": {
+    "signedIn": true,
+    "settle": 2500,
+    "steps": [
+      {
+        "click": ".notion-collection_view-block [role=tab]::-p-text(Table)"
+      },
+      {
+        "click": ".notion-collection_view-block [role=tab]::-p-text(Board)"
+      }
+    ],
+    "parts": {
+      "card": {
+        "selector": ".notion-board-view .notion-collection-item > [role=presentation]",
+        "nth": 1
+      }
+    }
+  }
+}

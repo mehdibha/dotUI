@@ -12,13 +12,15 @@ export const airbnb = definePreset({
 
     // Style
     // Popovers drop 0 2px 16px .12 while bordered tiles stay hairline. The
-    // Dates | Flexible pill is a white chip on an #ebebeb track.
+    // Dates | Flexible pill is a white chip on a hairline, no shadow, on an
+    // #ebebeb track.
     surfaceShadow: "low",
-    segmentedSelected: "raised",
+    segmentedSelected: "ring",
 
     // Color
-    // Rausch #ff385c, pinned verbatim; selection, checks and focus are ink #222.
-    brand: "#ff385c",
+    // The CTA gradient's midpoint and the price bars, #e31c5f (Rausch #ff385c
+    // stays on the logo); selection, checks and focus are ink #222.
+    brand: "#e31c5f",
     preserveSeed: true,
     selectionColor: "neutral",
     successSeed: "#038026",
@@ -36,10 +38,10 @@ export const airbnb = definePreset({
     // Cereal is proprietary; Plus Jakarta Sans is the closest free match.
     bodyFont: "Plus Jakarta Sans",
     monoFont: "System Mono",
-    // Titles from 22px track at -0.02em.
+    // Section titles 22/500 at -0.02em; Plus Jakarta 600 carries Cereal 500's ink.
     titleStyle: "tight",
     fieldTextSize: "large",
-    // Cereal 500 labels; Plus Jakarta reads a step lighter at the same weight.
+    // Cereal 500 labels; Plus Jakarta needs 600 to carry the same ink.
     labelWeight: "semibold",
 
     // Shape
@@ -50,11 +52,12 @@ export const airbnb = definePreset({
     roleCard: "md",
 
     // Space
-    // Buttons 32 / 40 / 48, fields 56–60.
+    // Buttons 32 / 40 / 48, menu rows 36.
     density: "spacious",
 
     // Surfaces
-    // Menus and dialogs are borderless; depth is the shadow.
+    // Menus and dialogs are borderless; depth is the shadow. Stand-in for
+    // cards: the booking card keeps a 1px #dddddd edge under its shadow.
     surfaceEdge: "none",
     // Guest and host pages are white edge to edge.
     shellTone: "page",
@@ -63,9 +66,10 @@ export const airbnb = definePreset({
     selectionHighlight: "browser",
 
     // States
-    // A 2px #222 ring after a white gap; neutral is the nearest ink. Fields thicken to #222.
+    // A 2px #222 ring after a 2px white gap.
     focusColor: "neutral",
     focusInputStyle: "border",
+    // Stand-in: focused fields draw a 1.5px #222 edge.
     focusInputWeight: "thick",
     // 1px #c13515 edge on a #fff5f3 fill.
     invalidStyle: "tint",
@@ -86,10 +90,11 @@ export const airbnb = definePreset({
     switchColor: "neutral",
     checkboxColor: "neutral",
     radioColor: "neutral",
+    // A 2px #222 ring around a #222 dot, on white.
+    radioMark: "ring",
     // A 6px corner on a 22px box; the 16px base's detail rung reads as a circle.
     checkCorner: "sharp",
-    sliderColor: "neutral",
-    // 2px #dddddd price track.
+    // The price range fills in the brand on a 2px track.
     sliderTrack: "hairline",
     // A 2px #222 outline on white ("Any" in Type of place); the #f7f7f7 wash has no option.
     cardSelected: "outline",
@@ -98,6 +103,7 @@ export const airbnb = definePreset({
 
     // Inputs
     inputHover: "edge",
+    // Stand-in: the login fields are 60px.
     inputHeight: "tall",
     inputError: "icon-message",
     // − and + at both ends; Airbnb's are free 32px circles, not cells.
@@ -119,6 +125,8 @@ export const airbnb = definePreset({
 
     // Navigation
     tabStyle: "line",
+    // A 3px #222 bar under the tab's icon and label.
+    tabIndicator: "label",
     linkUnderline: "always",
     linkColor: "neutral",
     // Search results mark the current page with an ink circle.

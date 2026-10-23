@@ -1,0 +1,275 @@
+{
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--default&globals=backgrounds.value:g100",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": ".cds--btn--primary"
+      },
+      "button.focus": {
+        "selector": ".cds--btn--primary",
+        "focus": true
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--secondary&globals=backgrounds.value:g100",
+    "parts": {
+      "button.secondary": {
+        "selector": ".cds--btn--secondary"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-button--ghost&globals=backgrounds.value:g100",
+    "parts": {
+      "button.quiet": {
+        "selector": ".cds--btn--ghost"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-paginationnav--default&globals=backgrounds.value:g100",
+    "parts": {
+      "pagination.current": {
+        "selector": ".cds--pagination-nav__page--active"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:white&args=kind:secondary": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-iconbutton--default&globals=backgrounds.value:g100&args=kind:secondary",
+    "parts": {
+      "button.icon": {
+        "selector": ".cds--btn"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-textinput--default&globals=backgrounds.value:g100",
+    "parts": {
+      "input": {
+        "selector": ".cds--text-input"
+      },
+      "input.focus": {
+        "selector": ".cds--text-input",
+        "focus": true
+      },
+      "field.label": {
+        "selector": ".cds--label"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-select--default&globals=backgrounds.value:g100",
+    "parts": {
+      "select.trigger": {
+        "selector": ".cds--select-input"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-checkbox--default&globals=backgrounds.value:g100",
+    "parts": {
+      "checkbox": {
+        "selector": ".cds--checkbox-label",
+        "box": "::before"
+      },
+      "checkbox.checked": {
+        "selector": ".cds--checkbox:checked + .cds--checkbox-label",
+        "box": "::before",
+        "before": [
+          {
+            "click": ".cds--checkbox-label"
+          }
+        ]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-radiobutton--default&globals=backgrounds.value:g100",
+    "parts": {
+      "radio": {
+        "selector": ".cds--radio-button:not(:checked) + label .cds--radio-button__appearance"
+      },
+      "radio.checked": {
+        "selector": ".cds--radio-button:checked + label .cds--radio-button__appearance",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-toggle--default&globals=backgrounds.value:g100",
+    "parts": {
+      "switch.on": {
+        "selector": ".cds--toggle__switch--checked"
+      },
+      "switch.off": {
+        "selector": ".cds--toggle__switch",
+        "before": [
+          {
+            "click": ".cds--toggle__button"
+          }
+        ]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tabs--default&globals=backgrounds.value:g100",
+    "parts": {
+      "tab.selected": {
+        "selector": ".cds--tabs__nav-item--selected",
+        "skip": ["edge"]
+      },
+      "tab": {
+        "selector": ".cds--tabs__nav-item:not(.cds--tabs__nav-item--selected):not(.cds--tabs__nav-item--disabled)",
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-contentswitcher--default&globals=backgrounds.value:g100",
+    "parts": {
+      "segmented": {
+        "selector": ".cds--content-switcher"
+      },
+      "segmented.item": {
+        "selector": ".cds--content-switcher-btn:not(.cds--content-switcher--selected)",
+        "skip": ["backgroundColor", "edge"]
+      },
+      "segmented.selected": {
+        "selector": ".cds--content-switcher--selected"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-link--default&globals=backgrounds.value:g100",
+    "parts": {
+      "link": {
+        "selector": ".cds--link"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:g100",
+    "parts": {
+      "shell": {
+        "selector": ".cds--side-nav__navigation"
+      },
+      "panel": {
+        "selector": ".cds--content",
+        "surface": true
+      },
+      "nav.item": {
+        "selector": ".cds--side-nav__link:not([aria-current=page])",
+        "ink": ".cds--side-nav__link-text",
+        "skip": ["paddingInline"]
+      },
+      "nav.item.active": {
+        "selector": ".cds--side-nav__link[aria-current=page]",
+        "ink": ".cds--side-nav__link-text",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:white&args=size:md": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-menu--default&globals=backgrounds.value:g100&args=size:md",
+    "parts": {
+      "menu": {
+        "selector": ".cds--menu"
+      },
+      "menu.item": {
+        "selector": ".cds--menu-item"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:white&args=defaultOpen:!true": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tooltip--default&globals=backgrounds.value:g100&args=defaultOpen:!true",
+    "parts": {
+      "tooltip": {
+        "selector": ".cds--tooltip .cds--popover-content",
+        "skip": ["height"]
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:g100",
+    "parts": {
+      "dialog": {
+        "selector": ".cds--modal-container"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tile--default&globals=backgrounds.value:g100",
+    "parts": {
+      "card": {
+        "selector": ".cds--tile"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-tag--read-only&globals=backgrounds.value:g100",
+    "parts": {
+      "badge": {
+        "selector": ".cds--tag--gray"
+      },
+      "badge.accent": {
+        "selector": ".cds--tag--blue"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-notifications-inline--default&globals=backgrounds.value:g100",
+    "parts": {
+      "alert": {
+        "selector": ".cds--inline-notification"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-progressbar--default&globals=backgrounds.value:g100",
+    "parts": {
+      "progress": {
+        "selector": ".cds--progress-bar__track"
+      },
+      "progress.fill": {
+        "selector": ".cds--progress-bar__bar"
+      }
+    }
+  },
+  "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white": {
+    "dark": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:g100",
+    "steps": [
+      {
+        "click": ".cds--date-picker__input"
+      },
+      {
+        "wait": ".flatpickr-calendar.open"
+      }
+    ],
+    "parts": {
+      "calendar.day": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day:not(.prevMonthDay):not(.nextMonthDay):not(.today):not(.selected)"
+      },
+      "calendar.today": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day.today"
+      },
+      "calendar.selected": {
+        "selector": ".flatpickr-calendar.open .flatpickr-day.selected",
+        "before": [
+          {
+            "click": ".flatpickr-calendar.open .flatpickr-day:not(.prevMonthDay):not(.nextMonthDay):not(.today)"
+          },
+          {
+            "click": ".cds--date-picker__input"
+          },
+          {
+            "wait": ".flatpickr-calendar.open .flatpickr-day.selected"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,10 +1,11 @@
 "use client"
 
 /* The panel chrome, after DialKit: one 14px-radius card, its header fixed
-   over a hairline — the design-system picker's trigger on the left, Reset,
-   Save and search on the right — and only the body below it scrolls. Docked
-   under the preview, the header and strip sit at the bottom edge instead, so
-   they stay put as the dock hugs each chapter. */
+   over a hairline — the design-system picker's trigger on the left (an open
+   page's Back and title in its place), Reset, Save and search on the right —
+   and only the body below it scrolls. Docked under the preview, the header
+   and strip sit at the bottom edge instead, so they stay put as the dock
+   hugs each chapter. */
 
 import type { ReactNode, Ref } from "react"
 import { ChevronsUpDownIcon } from "lucide-react"
@@ -31,6 +32,7 @@ export function PanelChrome({
   actions,
   strip,
   page,
+  systemClassName,
   scrollRef,
   className,
   children,
@@ -40,8 +42,10 @@ export function PanelChrome({
   actions: ReactNode
   /** Mobile chapter navigation, pinned with the header. */
   strip?: ReactNode
-  /** An open page's header (back, title), pinned over the body. */
+  /** An open page's Back and title, in the picker's place. */
   page?: ReactNode
+  /** The picker trigger's entrance, as Back returns to it. */
+  systemClassName?: string
   scrollRef?: Ref<HTMLDivElement>
   className?: string
   children: ReactNode
@@ -55,33 +59,39 @@ export function PanelChrome({
     >
       <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
         <div className="flex items-center justify-between gap-1">
-          {system.renderSwitcher(
-            <Tooltip>
-              <Button
-                ref={system.triggerRef}
-                variant="quiet"
-                size="sm"
-                aria-label={`Design system: ${system.name}. Change design system`}
-                className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
-              >
-                <span
-                  aria-hidden
-                  className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
-                  style={{ background: system.swatch }}
-                />
-                <span dir="auto" className="min-w-0 truncate">
-                  {system.note
-                    ? system.name.slice(0, -system.note.length).trimEnd()
-                    : system.name}
-                </span>
-                {system.note && <span className="shrink-0">{system.note}</span>}
-                <ChevronsUpDownIcon
-                  data-icon="inline-end"
-                  className="size-3 shrink-0 text-fg-muted"
-                />
-              </Button>
-              <TooltipContent>{system.name}</TooltipContent>
-            </Tooltip>,
+          {page ?? (
+            <span className={cn("flex min-w-0", systemClassName)}>
+              {system.renderSwitcher(
+                <Tooltip>
+                  <Button
+                    ref={system.triggerRef}
+                    variant="quiet"
+                    size="sm"
+                    aria-label={`Design system: ${system.name}. Change design system`}
+                    className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
+                  >
+                    <span
+                      aria-hidden
+                      className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                      style={{ background: system.swatch }}
+                    />
+                    <span dir="auto" className="min-w-0 truncate">
+                      {system.note
+                        ? system.name.slice(0, -system.note.length).trimEnd()
+                        : system.name}
+                    </span>
+                    {system.note && (
+                      <span className="shrink-0">{system.note}</span>
+                    )}
+                    <ChevronsUpDownIcon
+                      data-icon="inline-end"
+                      className="size-3 shrink-0 text-fg-muted"
+                    />
+                  </Button>
+                  <TooltipContent>{system.name}</TooltipContent>
+                </Tooltip>,
+              )}
+            </span>
           )}
           <span className="flex shrink-0 items-center gap-1">
             {system.buttons}
@@ -90,14 +100,9 @@ export function PanelChrome({
         </div>
         {strip}
       </div>
-      {page && (
-        <div className="flex h-11 shrink-0 items-center gap-1 border-b border-fg/6 px-2">
-          {page}
-        </div>
-      )}
       <div
         ref={scrollRef}
-        className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0"
+        className="no-scrollbar flex min-h-0 grow scroll-pt-4 flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0"
       >
         {children}
       </div>

@@ -1,0 +1,17 @@
+{
+  "slug": "chakra",
+  "name": "Chakra UI v3",
+  "org": "Chakra",
+  "type": "component-library",
+  "upstream": ["ark-ui", "zag-js", "panda-css"],
+  "sources": {
+    "docs": "https://chakra-ui.com/docs/components/concepts/overview",
+    "repo": "https://github.com/chakra-ui/chakra-ui",
+    "site": "https://chakra-ui.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

@@ -21,8 +21,8 @@ export const linear = definePreset({
     successSeed: "#26a544",
     warningSeed: "#f0bf00",
     dangerSeed: "#f34e52",
-    // Content panel #f8f8f9 / #111212.
-    lightBg: 97.5,
+    // Content panel #f9f9fa / #121213.
+    lightBg: 98,
     darkBg: 5.5,
 
     // Typography
@@ -42,12 +42,15 @@ export const linear = definePreset({
     roleSurface: "xl",
 
     // Surfaces
-    // White menus and dialogs over the #f8f8f9 panel.
+    // White menus and dialogs over the #f9f9fa panel.
     surfaceLayers: "grouped",
-    // An #efeff0 frame around a bordered #f8f8f9 panel.
+    // An #efeff0 / #09090a frame around the bordered panel.
     shellTone: "recessed",
 
     // States
+    // outline: 1px solid accent at 0px offset, hugging the control.
+    focusStyle: "halo",
+    focusStrength: "solid",
     focusWidth: 1,
     focusInputStyle: "border",
     disabledTreatment: "fade",
@@ -61,7 +64,7 @@ export const linear = definePreset({
     segmentedTrack: "outline",
 
     // Selection
-    // Checkbox 1px #7c7c7c against #d2d2d2 fields.
+    // Checkbox 1px #7c7c7c against #d8d8d8 fields.
     checkEdge: "strong",
 
     // Inputs
@@ -76,8 +79,6 @@ export const linear = definePreset({
     // Menu rows 32px, the control height.
     menuRows: "match",
     menuSearch: "prompt",
-    // ⌘K: 720px, 46px rows, 15px text.
-    menuScale: "large",
     tooltipStyle: "surface",
 
     // Dialogs
@@ -91,7 +92,8 @@ export const linear = definePreset({
     tabStyle: "pill",
     // Sidebar items keep 510 when current.
     navItemWeight: "medium",
-    linkUnderline: "hover",
+    // Body ink, no underline at rest or on hover.
+    linkColor: "neutral",
     accordionMarker: "leading-caret",
 
     // Feedback
@@ -100,11 +102,13 @@ export const linear = definePreset({
     spinnerStyle: "dots",
 
     // Data display
-    badgeStyle: "dot",
+    // Role chips: an indigo wash, accent ink, 3px corners, no edge.
+    badgeStyle: "soft",
+    badgeShape: "rounded",
     kbdTreatment: "outline",
     avatarFallback: "accent",
+    // 26px circles; today is a grey disc (Origin's fill).
     calendarDayShape: "circle",
-    calendarToday: "ring",
     calendarWeekdays: "double",
   },
 })

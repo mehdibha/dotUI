@@ -1,0 +1,14 @@
+{
+  "kind": "repo",
+  "repo": "https://github.com/mui/material-ui",
+  "ref": "fc3a3a0a8b7c8f20274eca4758ea07a33e25c1b4",
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "pages.ts",
+      "upstreamPath": "docs/data/material/pages.ts",
+      "url": "https://raw.githubusercontent.com/mui/material-ui/fc3a3a0a8b7c8f20274eca4758ea07a33e25c1b4/docs/data/material/pages.ts",
+      "sha256": "bd38233d50e8517c35ce56523d799861bff26f82b806b5ebc99ad907f125a2a8"
+    }
+  ]
+}

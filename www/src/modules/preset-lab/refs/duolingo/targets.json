@@ -1,0 +1,342 @@
+{
+  "https://www.duolingo.com/log-in": {
+    "parts": {
+      "button.secondary": {
+        "selector": "[data-test=login-with-apple]"
+      },
+      "input": {
+        "selector": "div:has(> [data-test=email-input])",
+        "ink": "input",
+        "skip": ["paddingInline"]
+      },
+      "input.focus": {
+        "selector": "div:has(> [data-test=email-input])",
+        "ink": "input",
+        "focus": true
+      },
+      "heading.3": {
+        "selector": "h1",
+        "text": "Log in"
+      }
+    }
+  },
+  "https://www.duolingo.com/efficacy": {
+    "parts": {
+      "link": {
+        "selector": "a",
+        "text": "teaching method"
+      }
+    }
+  },
+  "https://www.duolingo.com/register#lesson": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      }
+    ],
+    "parts": {
+      "page": {
+        "selector": "[data-test=challenge-header]",
+        "surface": true,
+        "skip": ["fontFamily"]
+      },
+      "heading.2": {
+        "selector": "[data-test=challenge-header]"
+      },
+      "kbd": {
+        "selector": "[data-test=challenge-choice] > div:nth-child(2) > span:last-child",
+        "nth": 1,
+        "skip": ["paddingInline"]
+      },
+      "progress": {
+        "selector": "[role=progressbar] > div"
+      }
+    }
+  },
+  "https://www.duolingo.com/register#check": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      },
+      {
+        "click": "::-p-xpath(//*[@data-test=\"challenge-choice\"][not(contains(., \"gato\"))])"
+      }
+    ],
+    "parts": {
+      "button.primary": {
+        "selector": "[data-test=player-next]"
+      }
+    }
+  },
+  "https://www.duolingo.com/register#hearts": {
+    "steps": [
+      {
+        "click": "[data-test~=flag-spanish]"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(YouTube)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Spend time productively)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(new to Spanish)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(5 min / day)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "::-p-text(Start from scratch)"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "click": "[data-test=funboarding-continue-button]:not([disabled])"
+      },
+      {
+        "wait": "[data-test=challenge-header]"
+      },
+      {
+        "click": "::-p-xpath(//*[@data-test=\"challenge-choice\"][not(contains(., \"gato\"))])"
+      },
+      {
+        "click": "[data-test=player-next]"
+      },
+      {
+        "wait": "::-p-text(Each mistake costs 1 heart!)"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "text": "Each mistake costs 1 heart!",
+        "surface": true
+      }
+    }
+  },
+  "https://www.duolingo.com/learn": {
+    "signedIn": true,
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "shell": {
+        "selector": "div:has(> div > div > [data-test=home-nav])"
+      },
+      "nav.item": {
+        "selector": "[data-test=shop-nav] > span",
+        "ink": ":scope > span:last-child",
+        "skip": ["borderRadius"]
+      },
+      "nav.item.active": {
+        "selector": "[data-test=home-nav] > span",
+        "ink": ":scope > span:last-child"
+      },
+      "tooltip": {
+        "selector": "[data-test=skill-path-tooltip-unit-test] > div",
+        "skip": ["color"]
+      },
+      "menu": {
+        "selector": "[data-test=more-nav] div[style*=fixed] > div",
+        "before": [
+          {
+            "hover": "[data-test=more-nav]"
+          },
+          {
+            "wait": "[data-test=settings-button]"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": "[data-test=settings-button]",
+        "ink": ":scope > span",
+        "before": [
+          {
+            "hover": "[data-test=more-nav]"
+          },
+          {
+            "wait": "[data-test=settings-button]"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.duolingo.com/settings/preferences": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "switch.on": {
+        "selector": "[data-test=enable-speaker] > span",
+        "skip": ["backgroundColor"]
+      },
+      "select.trigger": {
+        "selector": "div:has(> [data-test=dark-mode])",
+        "box": "::before",
+        "ink": ":scope > span"
+      },
+      "field.label": {
+        "selector": "li:has([data-test=dark-mode]) span[id]"
+      }
+    }
+  },
+  "https://www.duolingo.com/profile/<id>": {
+    "signedIn": true,
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "tab": {
+        "selector": "li:has([data-test=friend-followers-list]) > span",
+        "ink": "[data-test]",
+        "skip": ["paddingInline", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "li:has([data-test=friend-following-list]) > span",
+        "ink": "[data-test]",
+        "skip": ["paddingInline", "borderRadius", "edge"]
+      }
+    }
+  },
+  "https://www.duolingo.com/shop": {
+    "signedIn": true,
+    "settle": 3500,
+    "parts": {
+      "card": {
+        "selector": "[class*=_2cnFr]"
+      },
+      "badge": {
+        "selector": "li:has(> [data-test=purchase-icon]) > div > div:nth-child(2)"
+      },
+      "text.muted": {
+        "selector": "li:has(> [data-test=purchase-icon]) > p"
+      }
+    }
+  }
+}
