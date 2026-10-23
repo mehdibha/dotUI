@@ -267,7 +267,9 @@ async function snapshot(
         if (svg) {
           // An id stays: url(#gradient) and <use href="#icon"> point at it.
           if (key.startsWith("data-") || key.startsWith("aria-")) continue
-          if (redact && tag === "image" && key.endsWith("href")) continue
+          // Redacted, only links inside the copy stay: a sprite or image URL
+          // can carry a private path or a signed token.
+          if (redact && key.endsWith("href") && !value.startsWith("#")) continue
           attrs.push(`${key}="${attr(value)}"`)
         } else if (KEEP.has(key))
           attrs.push(

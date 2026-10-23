@@ -323,6 +323,7 @@ function useRefs(preset: string) {
     error?: string
   }>({ preset })
   useEffect(() => {
+    if (!import.meta.env.DEV) return
     let live = true
     fetch(`/__preset-refs/${preset}`)
       .then((res) => (res.ok ? res.json() : Promise.reject(res.statusText)))
@@ -343,6 +344,11 @@ function useRefs(preset: string) {
       live = false
     }
   }, [preset])
+  if (!import.meta.env.DEV)
+    return {
+      preset,
+      error: `the dev server serves them from .scratch-refs/${preset}/, so a preview shows our side only.`,
+    }
   return state.preset === preset ? state : { preset }
 }
 
