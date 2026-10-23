@@ -796,14 +796,14 @@ function extract(sourcesDir: string): ColorsFile {
     sources: [REPO, COLORS_URL, THEMING_URL],
     provenance: {
       method: "script",
-      extractor: "ds/scripts/systems/shadcn-ui.ts",
+      extractor: "scripts/systems/shadcn-ui.ts",
       sources: [
         {
           kind: "repo",
           url: REPO,
           ref: REF,
           retrievedAt: null,
-          snapshot: "shadcn-ui",
+          snapshot: "sources/shadcn-ui",
         },
       ],
       notes:

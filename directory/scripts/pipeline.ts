@@ -111,6 +111,13 @@ async function runExtract(config: SystemConfig): Promise<void> {
 
 async function runDrift(config: SystemConfig): Promise<number> {
   const dir = sourcesDirFor(config.slug)
+  const bad = verifySnapshot(dir)
+  if (bad.length > 0) {
+    console.error(
+      `[drift] ${config.slug}: snapshot fails manifest verification (hand-edited?): ${bad.join(", ")}`,
+    )
+    return 1
+  }
   let exitCode = 0
   for (const artifact of artifactsFor(config)) {
     if (!fs.existsSync(artifact.out)) {
@@ -142,7 +149,11 @@ async function runDrift(config: SystemConfig): Promise<number> {
 
 async function main() {
   const [command, target] = process.argv.slice(2)
-  if (!command || !["snapshot", "extract", "drift"].includes(command)) {
+  if (
+    !command ||
+    !["snapshot", "extract", "drift"].includes(command) ||
+    !target
+  ) {
     console.error(
       "usage: tsx scripts/pipeline.ts snapshot|extract|drift <slug>|--all",
     )
@@ -151,13 +162,11 @@ async function main() {
 
   const configs = await loadConfigs()
   const selected =
-    target === "--all" || !target
-      ? configs
-      : configs.filter((c) => c.slug === target)
+    target === "--all" ? configs : configs.filter((c) => c.slug === target)
 
   if (selected.length === 0) {
     console.error(
-      `no config matched "${target ?? "(none)"}" — known: ${configs.map((c) => c.slug).join(", ") || "(none)"}`,
+      `no config matched "${target}" — known: ${configs.map((c) => c.slug).join(", ") || "(none)"}`,
     )
     process.exit(2)
   }

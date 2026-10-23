@@ -116,13 +116,6 @@
       "note": null
     },
     {
-      "component": "timeline",
-      "name": "Component API",
-      "docsUrl": "https://mui.com/material-ui/react-timeline/",
-      "demo": null,
-      "note": null
-    },
-    {
       "component": null,
       "name": "Container",
       "docsUrl": "https://mui.com/material-ui/react-container/",
@@ -140,6 +133,13 @@
       "component": "dialog",
       "name": "Dialog",
       "docsUrl": "https://mui.com/material-ui/react-dialog/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://mui.com/material-ui/react-divider/",
       "demo": null,
       "note": null
     },
@@ -196,13 +196,6 @@
       "component": null,
       "name": "Masonry",
       "docsUrl": "https://mui.com/material-ui/react-masonry/",
-      "demo": null,
-      "note": null
-    },
-    {
-      "component": "divider",
-      "name": "Material Icons",
-      "docsUrl": "https://mui.com/material-ui/react-divider/",
       "demo": null,
       "note": null
     },
@@ -378,6 +371,13 @@
       "component": "textarea",
       "name": "Textarea Autosize",
       "docsUrl": "https://mui.com/material-ui/react-textarea-autosize/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "timeline",
+      "name": "Timeline",
+      "docsUrl": "https://mui.com/material-ui/react-timeline/",
       "demo": null,
       "note": null
     },

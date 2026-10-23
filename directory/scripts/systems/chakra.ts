@@ -476,7 +476,7 @@ function extractComponents(sourcesDir: string): ComponentsFile {
           url: REPO,
           ref: REF,
           retrievedAt: null,
-          snapshot: SLUG,
+          snapshot: `sources/${SLUG}`,
         },
       ],
       notes:

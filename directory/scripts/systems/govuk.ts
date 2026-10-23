@@ -253,14 +253,14 @@ function extractComponents(sourcesDir: string): ComponentsFile {
           url: TREE_URL,
           ref: COMPONENTS_TREE_SHA,
           retrievedAt: manifest.retrievedAt,
-          snapshot: SLUG,
+          snapshot: `sources/${SLUG}`,
         },
         {
           kind: "live-site",
           url: SITEMAP_URL,
           ref: null,
           retrievedAt: manifest.retrievedAt,
-          snapshot: SLUG,
+          snapshot: `sources/${SLUG}`,
         },
       ],
       notes: [

@@ -1,7 +1,7 @@
 // Offline cross-check of the bespoke shadcn UI data (src/components/system/
 // sections/shadcn/data.ts) against the committed, pinned snapshot — so the
 // hand-curated page data is provable against upstream without hitting the live
-// network. Run: pnpm --filter=ds verify:colors
+// network. Run: pnpm --filter directory verify:colors
 //
 // Replaces the old network verifier (which fetched ui.shadcn.com live). Values
 // are now checked against sources/shadcn-ui/ at the pinned SHA; the machine

@@ -153,7 +153,7 @@ export const provenanceSourceSchema = z.object({
   ref: z.string().nullable(),
   /** ISO day a live-site/docs source was captured; null when `ref` pins it. */
   retrievedAt: isoDate.nullable(),
-  /** Snapshot dir under ds/sources/ whose manifest.json hashes the vendored files. */
+  /** The snapshot dir, sources/<slug>, whose manifest.json hashes the vendored files. */
   snapshot: z.string().nullable(),
 })
 

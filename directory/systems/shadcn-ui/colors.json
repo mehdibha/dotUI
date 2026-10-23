@@ -1,29 +1,40 @@
 {
-  "modes": ["light", "dark"],
+  "modes": [
+    "light",
+    "dark"
+  ],
   "overview": [
     {
       "label": "Token model",
       "value": "Semantic CSS custom properties, authored in OKLCH.",
       "note": "Components consume --primary, --muted, --border… directly; no primitive token tier is shipped.",
-      "sources": ["https://ui.shadcn.com/docs/theming"]
+      "sources": [
+        "https://ui.shadcn.com/docs/theming"
+      ]
     },
     {
       "label": "Scale source",
       "value": "Borrowed Tailwind v4 palette plus shadcn’s custom neutrals.",
       "note": "28 ramps — 9 neutral, 17 chromatic, and pure black/white.",
-      "sources": ["https://ui.shadcn.com/colors"]
+      "sources": [
+        "https://ui.shadcn.com/colors"
+      ]
     },
     {
       "label": "Themes",
       "value": "24 themes — 7 base neutral + 17 accent.",
       "note": "The default base is neutral; accent themes repaint primary/ring and their sidebar twins.",
-      "sources": ["https://ui.shadcn.com/colors"]
+      "sources": [
+        "https://ui.shadcn.com/colors"
+      ]
     },
     {
       "label": "Modes",
       "value": "Light and dark, per theme.",
       "note": "Scales are mode-invariant; only the semantic token map changes between modes.",
-      "sources": ["https://ui.shadcn.com/docs/theming"]
+      "sources": [
+        "https://ui.shadcn.com/docs/theming"
+      ]
     },
     {
       "label": "Point-of-use colours",
@@ -6182,7 +6193,9 @@
       "label": "Focus ring",
       "value": "Drawn from the --ring token.",
       "note": "Components paint the ring at reduced opacity, e.g. ring-ring/50 (see the usage section).",
-      "sources": ["https://ui.shadcn.com/docs/theming"]
+      "sources": [
+        "https://ui.shadcn.com/docs/theming"
+      ]
     }
   ],
   "focusRing": null,
@@ -6195,7 +6208,10 @@
         "expression": "bg-[color-mix(in oklch,var(--muted),var(--foreground) 5%)]",
         "resolved": "color-mix(in oklch,var(--muted),var(--foreground) 5%)",
         "kind": "color-mix",
-        "refs": ["foreground", "muted"],
+        "refs": [
+          "foreground",
+          "muted"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6210,7 +6226,10 @@
         "expression": "bg-[color-mix(in oklch,var(--secondary),var(--foreground) 5%)]",
         "resolved": "color-mix(in oklch,var(--secondary),var(--foreground) 5%)",
         "kind": "color-mix",
-        "refs": ["foreground", "secondary"],
+        "refs": [
+          "foreground",
+          "secondary"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6231,7 +6250,9 @@
         "expression": "bg-[oklch(from var(--primary) 0.3 calc(c*0.4) h)]",
         "resolved": "oklch(from var(--primary) 0.3 calc(c*0.4) h)",
         "kind": "literal",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6246,7 +6267,9 @@
         "expression": "bg-[oklch(from var(--primary) 0.35 calc(c*0.5) h)]",
         "resolved": "oklch(from var(--primary) 0.35 calc(c*0.5) h)",
         "kind": "literal",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6261,7 +6284,9 @@
         "expression": "bg-[oklch(from var(--primary) 0.88 calc(c*0.5) h)]",
         "resolved": "oklch(from var(--primary) 0.88 calc(c*0.5) h)",
         "kind": "literal",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6276,7 +6301,9 @@
         "expression": "bg-[oklch(from var(--primary) 0.93 calc(c*0.4) h)]",
         "resolved": "oklch(from var(--primary) 0.93 calc(c*0.4) h)",
         "kind": "literal",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6295,19 +6322,27 @@
         "usedBy": [
           {
             "component": "Alert Dialog",
-            "classes": ["bg-black/10"]
+            "classes": [
+              "bg-black/10"
+            ]
           },
           {
             "component": "Dialog",
-            "classes": ["bg-black/10"]
+            "classes": [
+              "bg-black/10"
+            ]
           },
           {
             "component": "Drawer",
-            "classes": ["bg-black/10"]
+            "classes": [
+              "bg-black/10"
+            ]
           },
           {
             "component": "Sheet",
-            "classes": ["bg-black/10"]
+            "classes": [
+              "bg-black/10"
+            ]
           }
         ],
         "note": null
@@ -6320,7 +6355,9 @@
         "usedBy": [
           {
             "component": "Slider",
-            "classes": ["bg-white"]
+            "classes": [
+              "bg-white"
+            ]
           }
         ],
         "note": null
@@ -6329,11 +6366,15 @@
         "expression": "bg-background/10",
         "resolved": "color-mix(in oklab, var(--background) 10%, transparent)",
         "kind": "opacity",
-        "refs": ["background"],
+        "refs": [
+          "background"
+        ],
         "usedBy": [
           {
             "component": "Kbd",
-            "classes": ["dark:in-data-[slot=tooltip-content]:bg-background/10"]
+            "classes": [
+              "dark:in-data-[slot=tooltip-content]:bg-background/10"
+            ]
           }
         ],
         "note": null
@@ -6342,11 +6383,15 @@
         "expression": "bg-background/20",
         "resolved": "color-mix(in oklab, var(--background) 20%, transparent)",
         "kind": "opacity",
-        "refs": ["background"],
+        "refs": [
+          "background"
+        ],
         "usedBy": [
           {
             "component": "Kbd",
-            "classes": ["in-data-[slot=tooltip-content]:bg-background/20"]
+            "classes": [
+              "in-data-[slot=tooltip-content]:bg-background/20"
+            ]
           }
         ],
         "note": null
@@ -6355,31 +6400,45 @@
         "expression": "bg-destructive/10",
         "resolved": "color-mix(in oklab, var(--destructive) 10%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["bg-destructive/10"]
+            "classes": [
+              "bg-destructive/10"
+            ]
           },
           {
             "component": "Bubble",
-            "classes": ["*:data-[slot=bubble-content]:bg-destructive/10"]
+            "classes": [
+              "*:data-[slot=bubble-content]:bg-destructive/10"
+            ]
           },
           {
             "component": "Button",
-            "classes": ["bg-destructive/10"]
+            "classes": [
+              "bg-destructive/10"
+            ]
           },
           {
             "component": "Context Menu",
-            "classes": ["data-[variant=destructive]:focus:bg-destructive/10"]
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
           },
           {
             "component": "Dropdown Menu",
-            "classes": ["data-[variant=destructive]:focus:bg-destructive/10"]
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
           },
           {
             "component": "Menubar",
-            "classes": ["data-[variant=destructive]:focus:bg-destructive/10"]
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
           }
         ],
         "note": null
@@ -6388,11 +6447,16 @@
         "expression": "bg-destructive/20",
         "resolved": "color-mix(in oklab, var(--destructive) 20%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["[a]:hover:bg-destructive/20", "dark:bg-destructive/20"]
+            "classes": [
+              "[a]:hover:bg-destructive/20",
+              "dark:bg-destructive/20"
+            ]
           },
           {
             "component": "Bubble",
@@ -6403,7 +6467,10 @@
           },
           {
             "component": "Button",
-            "classes": ["dark:bg-destructive/20", "hover:bg-destructive/20"]
+            "classes": [
+              "dark:bg-destructive/20",
+              "hover:bg-destructive/20"
+            ]
           },
           {
             "component": "Context Menu",
@@ -6430,7 +6497,9 @@
         "expression": "bg-destructive/30",
         "resolved": "color-mix(in oklab, var(--destructive) 30%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6440,7 +6509,9 @@
           },
           {
             "component": "Button",
-            "classes": ["dark:hover:bg-destructive/30"]
+            "classes": [
+              "dark:hover:bg-destructive/30"
+            ]
           }
         ],
         "note": null
@@ -6449,7 +6520,9 @@
         "expression": "bg-foreground/10",
         "resolved": "color-mix(in oklab, var(--foreground) 10%, transparent)",
         "kind": "opacity",
-        "refs": ["foreground"],
+        "refs": [
+          "foreground"
+        ],
         "usedBy": [
           {
             "component": "Menu Translucent",
@@ -6466,11 +6539,15 @@
         "expression": "bg-foreground/5",
         "resolved": "color-mix(in oklab, var(--foreground) 5%, transparent)",
         "kind": "opacity",
-        "refs": ["foreground"],
+        "refs": [
+          "foreground"
+        ],
         "usedBy": [
           {
             "component": "Menu Translucent",
-            "classes": ["**:data-[slot$=-separator]:bg-foreground/5"]
+            "classes": [
+              "**:data-[slot$=-separator]:bg-foreground/5"
+            ]
           }
         ],
         "note": null
@@ -6479,7 +6556,9 @@
         "expression": "bg-input/30",
         "resolved": "color-mix(in oklab, var(--input) 30%, transparent)",
         "kind": "opacity",
-        "refs": ["input"],
+        "refs": [
+          "input"
+        ],
         "usedBy": [
           {
             "component": "Bubble",
@@ -6489,11 +6568,15 @@
           },
           {
             "component": "Button",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Checkbox",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Combobox",
@@ -6504,35 +6587,51 @@
           },
           {
             "component": "Command",
-            "classes": ["bg-input/30"]
+            "classes": [
+              "bg-input/30"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Input Group",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Input OTP",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Native Select",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Radio Group",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["dark:bg-input/30"]
+            "classes": [
+              "dark:bg-input/30"
+            ]
           }
         ],
         "note": null
@@ -6541,31 +6640,45 @@
         "expression": "bg-input/50",
         "resolved": "color-mix(in oklab, var(--input) 50%, transparent)",
         "kind": "opacity",
-        "refs": ["input"],
+        "refs": [
+          "input"
+        ],
         "usedBy": [
           {
             "component": "Button",
-            "classes": ["dark:hover:bg-input/50"]
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["disabled:bg-input/50"]
+            "classes": [
+              "disabled:bg-input/50"
+            ]
           },
           {
             "component": "Input Group",
-            "classes": ["has-disabled:bg-input/50"]
+            "classes": [
+              "has-disabled:bg-input/50"
+            ]
           },
           {
             "component": "Native Select",
-            "classes": ["dark:hover:bg-input/50"]
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["dark:hover:bg-input/50"]
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["disabled:bg-input/50"]
+            "classes": [
+              "disabled:bg-input/50"
+            ]
           }
         ],
         "note": null
@@ -6574,23 +6687,33 @@
         "expression": "bg-input/80",
         "resolved": "color-mix(in oklab, var(--input) 80%, transparent)",
         "kind": "opacity",
-        "refs": ["input"],
+        "refs": [
+          "input"
+        ],
         "usedBy": [
           {
             "component": "Input",
-            "classes": ["dark:disabled:bg-input/80"]
+            "classes": [
+              "dark:disabled:bg-input/80"
+            ]
           },
           {
             "component": "Input Group",
-            "classes": ["dark:has-disabled:bg-input/80"]
+            "classes": [
+              "dark:has-disabled:bg-input/80"
+            ]
           },
           {
             "component": "Switch",
-            "classes": ["dark:data-unchecked:bg-input/80"]
+            "classes": [
+              "dark:data-unchecked:bg-input/80"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["dark:disabled:bg-input/80"]
+            "classes": [
+              "dark:disabled:bg-input/80"
+            ]
           }
         ],
         "note": null
@@ -6599,15 +6722,21 @@
         "expression": "bg-muted/50",
         "resolved": "color-mix(in oklab, var(--muted) 50%, transparent)",
         "kind": "opacity",
-        "refs": ["muted"],
+        "refs": [
+          "muted"
+        ],
         "usedBy": [
           {
             "component": "Alert Dialog",
-            "classes": ["bg-muted/50"]
+            "classes": [
+              "bg-muted/50"
+            ]
           },
           {
             "component": "Badge",
-            "classes": ["dark:hover:bg-muted/50"]
+            "classes": [
+              "dark:hover:bg-muted/50"
+            ]
           },
           {
             "component": "Bubble",
@@ -6617,19 +6746,27 @@
           },
           {
             "component": "Button",
-            "classes": ["dark:hover:bg-muted/50"]
+            "classes": [
+              "dark:hover:bg-muted/50"
+            ]
           },
           {
             "component": "Card",
-            "classes": ["bg-muted/50"]
+            "classes": [
+              "bg-muted/50"
+            ]
           },
           {
             "component": "Dialog",
-            "classes": ["bg-muted/50"]
+            "classes": [
+              "bg-muted/50"
+            ]
           },
           {
             "component": "Item",
-            "classes": ["bg-muted/50"]
+            "classes": [
+              "bg-muted/50"
+            ]
           },
           {
             "component": "Navigation Menu",
@@ -6641,7 +6778,10 @@
           },
           {
             "component": "Table",
-            "classes": ["bg-muted/50", "hover:bg-muted/50"]
+            "classes": [
+              "bg-muted/50",
+              "hover:bg-muted/50"
+            ]
           }
         ],
         "note": null
@@ -6650,11 +6790,15 @@
         "expression": "bg-popover/70",
         "resolved": "color-mix(in oklab, var(--popover) 70%, transparent)",
         "kind": "opacity",
-        "refs": ["popover"],
+        "refs": [
+          "popover"
+        ],
         "usedBy": [
           {
             "component": "Menu Translucent",
-            "classes": ["bg-popover/70"]
+            "classes": [
+              "bg-popover/70"
+            ]
           }
         ],
         "note": null
@@ -6663,11 +6807,15 @@
         "expression": "bg-primary/10",
         "resolved": "color-mix(in oklab, var(--primary) 10%, transparent)",
         "kind": "opacity",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Field",
-            "classes": ["dark:has-data-checked:bg-primary/10"]
+            "classes": [
+              "dark:has-data-checked:bg-primary/10"
+            ]
           }
         ],
         "note": null
@@ -6676,11 +6824,15 @@
         "expression": "bg-primary/5",
         "resolved": "color-mix(in oklab, var(--primary) 5%, transparent)",
         "kind": "opacity",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Field",
-            "classes": ["has-data-checked:bg-primary/5"]
+            "classes": [
+              "has-data-checked:bg-primary/5"
+            ]
           }
         ],
         "note": null
@@ -6689,11 +6841,15 @@
         "expression": "bg-primary/80",
         "resolved": "color-mix(in oklab, var(--primary) 80%, transparent)",
         "kind": "opacity",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["[a]:hover:bg-primary/80"]
+            "classes": [
+              "[a]:hover:bg-primary/80"
+            ]
           },
           {
             "component": "Bubble",
@@ -6703,7 +6859,9 @@
           },
           {
             "component": "Button",
-            "classes": ["hover:bg-primary/80"]
+            "classes": [
+              "hover:bg-primary/80"
+            ]
           }
         ],
         "note": null
@@ -6712,11 +6870,15 @@
         "expression": "bg-secondary/80",
         "resolved": "color-mix(in oklab, var(--secondary) 80%, transparent)",
         "kind": "opacity",
-        "refs": ["secondary"],
+        "refs": [
+          "secondary"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["[a]:hover:bg-secondary/80"]
+            "classes": [
+              "[a]:hover:bg-secondary/80"
+            ]
           }
         ],
         "note": null
@@ -6725,11 +6887,15 @@
         "expression": "border-border/50",
         "resolved": "color-mix(in oklab, var(--border) 50%, transparent)",
         "kind": "opacity",
-        "refs": ["border"],
+        "refs": [
+          "border"
+        ],
         "usedBy": [
           {
             "component": "Chart",
-            "classes": ["border-border/50"]
+            "classes": [
+              "border-border/50"
+            ]
           }
         ],
         "note": null
@@ -6738,11 +6904,15 @@
         "expression": "border-destructive/40",
         "resolved": "color-mix(in oklab, var(--destructive) 40%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Button",
-            "classes": ["focus-visible:border-destructive/40"]
+            "classes": [
+              "focus-visible:border-destructive/40"
+            ]
           }
         ],
         "note": null
@@ -6751,43 +6921,63 @@
         "expression": "border-destructive/50",
         "resolved": "color-mix(in oklab, var(--destructive) 50%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Button",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Checkbox",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Combobox",
-            "classes": ["dark:has-aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:has-aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Native Select",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Radio Group",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Switch",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["dark:aria-invalid:border-destructive/50"]
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
           }
         ],
         "note": null
@@ -6796,15 +6986,21 @@
         "expression": "border-input/30",
         "resolved": "color-mix(in oklab, var(--input) 30%, transparent)",
         "kind": "opacity",
-        "refs": ["input"],
+        "refs": [
+          "input"
+        ],
         "usedBy": [
           {
             "component": "Combobox",
-            "classes": ["*:data-[slot=input-group]:border-input/30"]
+            "classes": [
+              "*:data-[slot=input-group]:border-input/30"
+            ]
           },
           {
             "component": "Command",
-            "classes": ["border-input/30"]
+            "classes": [
+              "border-input/30"
+            ]
           }
         ],
         "note": null
@@ -6813,11 +7009,15 @@
         "expression": "border-primary/20",
         "resolved": "color-mix(in oklab, var(--primary) 20%, transparent)",
         "kind": "opacity",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Field",
-            "classes": ["dark:has-data-checked:border-primary/20"]
+            "classes": [
+              "dark:has-data-checked:border-primary/20"
+            ]
           }
         ],
         "note": null
@@ -6826,11 +7026,15 @@
         "expression": "border-primary/30",
         "resolved": "color-mix(in oklab, var(--primary) 30%, transparent)",
         "kind": "opacity",
-        "refs": ["primary"],
+        "refs": [
+          "primary"
+        ],
         "usedBy": [
           {
             "component": "Field",
-            "classes": ["has-data-checked:border-primary/30"]
+            "classes": [
+              "has-data-checked:border-primary/30"
+            ]
           }
         ],
         "note": null
@@ -6839,11 +7043,15 @@
         "expression": "ring-destructive/20",
         "resolved": "color-mix(in oklab, var(--destructive) 20%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["focus-visible:ring-destructive/20"]
+            "classes": [
+              "focus-visible:ring-destructive/20"
+            ]
           },
           {
             "component": "Button",
@@ -6854,15 +7062,21 @@
           },
           {
             "component": "Checkbox",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Combobox",
-            "classes": ["has-aria-invalid:ring-destructive/20"]
+            "classes": [
+              "has-aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Input Group",
@@ -6879,27 +7093,39 @@
           },
           {
             "component": "Native Select",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Radio Group",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Switch",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           },
           {
             "component": "Toggle",
-            "classes": ["aria-invalid:ring-destructive/20"]
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
           }
         ],
         "note": null
@@ -6908,11 +7134,15 @@
         "expression": "ring-destructive/40",
         "resolved": "color-mix(in oklab, var(--destructive) 40%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Badge",
-            "classes": ["dark:focus-visible:ring-destructive/40"]
+            "classes": [
+              "dark:focus-visible:ring-destructive/40"
+            ]
           },
           {
             "component": "Button",
@@ -6923,15 +7153,21 @@
           },
           {
             "component": "Checkbox",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Combobox",
-            "classes": ["dark:has-aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:has-aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Input Group",
@@ -6948,27 +7184,39 @@
           },
           {
             "component": "Native Select",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Radio Group",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Switch",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           },
           {
             "component": "Toggle",
-            "classes": ["dark:aria-invalid:ring-destructive/40"]
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
           }
         ],
         "note": null
@@ -6977,39 +7225,57 @@
         "expression": "ring-foreground/10",
         "resolved": "color-mix(in oklab, var(--foreground) 10%, transparent)",
         "kind": "opacity",
-        "refs": ["foreground"],
+        "refs": [
+          "foreground"
+        ],
         "usedBy": [
           {
             "component": "Alert Dialog",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Card",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Combobox",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Context Menu",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Dialog",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Dropdown Menu",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Hover Card",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Menubar",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Navigation Menu",
@@ -7020,11 +7286,15 @@
           },
           {
             "component": "Popover",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["ring-foreground/10"]
+            "classes": [
+              "ring-foreground/10"
+            ]
           }
         ],
         "note": null
@@ -7033,39 +7303,57 @@
         "expression": "ring-ring/50",
         "resolved": "color-mix(in oklab, var(--ring) 50%, transparent)",
         "kind": "opacity",
-        "refs": ["ring"],
+        "refs": [
+          "ring"
+        ],
         "usedBy": [
           {
             "component": "Accordion",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Attachment",
-            "classes": ["focus-within:ring-ring/50"]
+            "classes": [
+              "focus-within:ring-ring/50"
+            ]
           },
           {
             "component": "Bubble",
-            "classes": ["[button,a]:focus-visible:ring-ring/50"]
+            "classes": [
+              "[button,a]:focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Button",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Calendar",
-            "classes": ["has-focus:ring-ring/50"]
+            "classes": [
+              "has-focus:ring-ring/50"
+            ]
           },
           {
             "component": "Checkbox",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Combobox",
-            "classes": ["focus-within:ring-ring/50"]
+            "classes": [
+              "focus-within:ring-ring/50"
+            ]
           },
           {
             "component": "Input",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Input Group",
@@ -7075,39 +7363,57 @@
           },
           {
             "component": "Input OTP",
-            "classes": ["data-[active=true]:ring-ring/50"]
+            "classes": [
+              "data-[active=true]:ring-ring/50"
+            ]
           },
           {
             "component": "Native Select",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Navigation Menu",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Radio Group",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Select",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Slider",
-            "classes": ["ring-ring/50"]
+            "classes": [
+              "ring-ring/50"
+            ]
           },
           {
             "component": "Switch",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Textarea",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           },
           {
             "component": "Toggle",
-            "classes": ["focus-visible:ring-ring/50"]
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
           }
         ],
         "note": null
@@ -7116,11 +7422,15 @@
         "expression": "text-destructive/90",
         "resolved": "color-mix(in oklab, var(--destructive) 90%, transparent)",
         "kind": "opacity",
-        "refs": ["destructive"],
+        "refs": [
+          "destructive"
+        ],
         "usedBy": [
           {
             "component": "Alert",
-            "classes": ["*:data-[slot=alert-description]:text-destructive/90"]
+            "classes": [
+              "*:data-[slot=alert-description]:text-destructive/90"
+            ]
           }
         ],
         "note": null
@@ -7129,11 +7439,15 @@
         "expression": "text-sidebar-foreground/70",
         "resolved": "color-mix(in oklab, var(--sidebar-foreground) 70%, transparent)",
         "kind": "opacity",
-        "refs": ["sidebar-foreground"],
+        "refs": [
+          "sidebar-foreground"
+        ],
         "usedBy": [
           {
             "component": "Sidebar",
-            "classes": ["text-sidebar-foreground/70"]
+            "classes": [
+              "text-sidebar-foreground/70"
+            ]
           }
         ],
         "note": null
@@ -7144,12 +7458,16 @@
     {
       "section": "palette",
       "text": "Scales are the borrowed Tailwind v4 palette plus shadcn’s custom neutrals. They do not vary by colour scheme — the same value paints in light and dark.",
-      "sources": ["https://ui.shadcn.com/colors"]
+      "sources": [
+        "https://ui.shadcn.com/colors"
+      ]
     },
     {
       "section": "tokens",
       "text": "One theme per token group. The seven base-neutral themes ship a full token set; accent themes override only primary/ring and their sidebar twins. References point at the Tailwind step shadcn resolves each value to.",
-      "sources": ["https://ui.shadcn.com/docs/theming"]
+      "sources": [
+        "https://ui.shadcn.com/docs/theming"
+      ]
     },
     {
       "section": "usage",
@@ -7164,14 +7482,14 @@
   ],
   "provenance": {
     "method": "script",
-    "extractor": "ds/scripts/systems/shadcn-ui.ts",
+    "extractor": "scripts/systems/shadcn-ui.ts",
     "sources": [
       {
         "kind": "repo",
         "url": "https://github.com/shadcn-ui/ui",
         "ref": "dd6ce77cf1606eee2839368a97cc35417f763232",
         "retrievedAt": null,
-        "snapshot": "shadcn-ui"
+        "snapshot": "sources/shadcn-ui"
       }
     ],
     "notes": "Ramps come from _legacy-colors.ts (the palette source; the generated public/r/colors/index.json is a stale subset that omits the four custom neutrals). Its nonstandard comma oklch syntax is normalized to space-separated CSS on emit. Derived colours are extracted from style-nova only — shadcn’s default style; the other styles repeat the same derivations. The bases/{base,radix} component tsx carry a small number of additional opacity-modified token uses (~15 each, no color-mix) that are not vendored, so a handful of point-of-use colours may be missing from the usage section."

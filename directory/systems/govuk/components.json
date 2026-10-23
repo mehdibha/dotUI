@@ -277,14 +277,14 @@
         "url": "https://api.github.com/repos/alphagov/govuk-frontend/git/trees/388325c279329ce22bc2308912c80f943efa5317",
         "ref": "388325c279329ce22bc2308912c80f943efa5317",
         "retrievedAt": "2026-08-29",
-        "snapshot": "govuk"
+        "snapshot": "sources/govuk"
       },
       {
         "kind": "live-site",
         "url": "https://design-system.service.gov.uk/sitemap.xml",
         "ref": null,
         "retrievedAt": "2026-08-29",
-        "snapshot": "govuk"
+        "snapshot": "sources/govuk"
       }
     ],
     "notes": "Inventory = every component documented at https://design-system.service.gov.uk/components/, read from the docs sitemap; docs URLs are the sitemap's own <loc> values. Implementation notes come from the GitHub git-trees listing of packages/govuk-frontend/src/govuk/components/ at govuk-frontend v6.5.0 (commit fbf045a0d6013d7dd1e5d878d21027a239645324). The snapshot kind is live-site because the API is not a raw git file, but the URL is addressed by that directory's tree SHA (388325c279329ce22bc2308912c80f943efa5317) — a content hash, so it is version-pinned and immutable; only the sitemap can drift. Component names are title-cased from the docs slug, not scraped from the page titles. Source directories with no documented page at this version: hint, label — these are field building blocks reused inside other components rather than standalone documented components, so they are not inventory entries. Canonical taxonomy mapping is editorial (declared in this config); GOV.UK-specific patterns with no cross-system equivalent map to null. Demos load the published govuk-frontend stylesheet from jsDelivr at a pinned version; only centering and the button width/margin reset are authored locally. Demo scope: Button."

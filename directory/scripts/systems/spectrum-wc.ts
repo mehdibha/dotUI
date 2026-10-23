@@ -338,7 +338,7 @@ const DEMOS: Record<string, { html: string; height: number }> = {
       body: [
         '    <sp-button variant="accent" treatment="fill">Primary</sp-button>',
         '    <sp-button variant="secondary" treatment="outline">Secondary</sp-button>',
-        '    <sp-button variant="accent" treatment="fill" disabled>Primary</sp-button>',
+        '    <sp-button variant="accent" treatment="fill" disabled>Disabled</sp-button>',
       ].join("\n"),
     }),
     height: 130,

@@ -1,4 +1,4 @@
-// Snapshot: fetch a system's raw source into ds/sources/<slug>/ and write a
+// Snapshot: fetch a system's raw source into sources/<slug>/ and write a
 // manifest that pins exactly what was captured. Two source kinds:
 //   - repo: files at a pinned git SHA via raw.githubusercontent.com. `ref`
 //     pins the bytes, so `retrievedAt` is only informational.

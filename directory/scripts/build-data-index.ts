@@ -1,4 +1,4 @@
-// Validates ds/data/catalog.json + every ds/systems dir against the schema and
+// Validates data/catalog.json + every systems/ dir against the schema and
 // emits the static index consumed by routes at build time. `--check` validates
 // only. Exits non-zero on any violation so CI fails on bad data.
 import fs from "node:fs"

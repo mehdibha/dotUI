@@ -146,9 +146,9 @@ function titleFromKey(key: string): string {
 }
 
 /** Read every `/material-ui/react-*` nav entry out of the vendored pages.ts.
-    Each entry is an object literal; we slice from one `pathname:` to the next
-    and read the optional `title:` inside that window, which keeps multi-line
-    entries intact without a TS parse. */
+    Each entry is an object literal; we slice from its `pathname:` to its
+    closing brace and read the optional `title:` inside that window, which
+    keeps multi-line entries intact without a TS parse. */
 function parsePages(src: string): DocsPage[] {
   const re = /pathname:\s*'(\/material-ui\/(react-[a-z0-9-]+))'/g
   const matches = [...src.matchAll(re)]
@@ -156,8 +156,9 @@ function parsePages(src: string): DocsPage[] {
   for (let i = 0; i < matches.length; i++) {
     const match = matches[i]!
     const start = match.index! + match[0].length
-    const end = i + 1 < matches.length ? matches[i + 1]!.index! : src.length
-    const window = src.slice(start, end)
+    const next = i + 1 < matches.length ? matches[i + 1]!.index! : src.length
+    const close = src.indexOf("}", start)
+    const window = src.slice(start, close === -1 ? next : Math.min(close, next))
     const title = window.match(/title:\s*'([^']+)'/)
     pages.push({
       key: match[2]!,

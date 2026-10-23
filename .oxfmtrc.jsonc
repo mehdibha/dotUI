@@ -104,6 +104,8 @@
     "directory/src/routeTree.gen.ts",
     // Written by www/scripts/system-looks.ts from a capture.
     "directory/systems/*/looks.json",
+    // Extractor-owned, byte-deterministic from directory/'s pipeline.
+    "directory/systems/*/colors.json",
     // Upstream files snapshotted byte for byte; the manifest hashes them.
     "directory/sources/**",
     // examples/: what the shadcn CLI writes during the consumer smoke — the
