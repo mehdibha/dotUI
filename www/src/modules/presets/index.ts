@@ -12,6 +12,7 @@ import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
 import { origin } from "./origin"
+import { pinterest } from "./pinterest"
 import { polaris } from "./polaris"
 import type { Preset, PresetMeta } from "./preset"
 import { radix } from "./radix"
@@ -42,6 +43,7 @@ export const PRESETS: Preset[] = [
   carbon,
   wise,
   higgsfield,
+  pinterest,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
