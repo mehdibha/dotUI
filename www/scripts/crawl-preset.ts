@@ -34,7 +34,7 @@
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
  * model, and frozen copies of each look's sample at rest and in its states
  * (--copies per pass, 40 by default; redacted with --connect) as
- * <out>/snapshots/<look>-<state>-<mode>.{json,html}, which /internal/compare
+ * <out>/crops/<look>-<state>-<mode>.{json,html}, which /internal/compare
  * lists as parts. <out> is .scratch-refs/<id>/<date>/census by default.
  */
 import { existsSync } from "node:fs"
@@ -686,9 +686,9 @@ const documentOf = (copy: Snapshot) => {
 }
 
 /** Each look's copies as /internal/compare reads parts:
- *  snapshots/<look>-<state>-<mode>.json, with a standalone .html beside. */
+ *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. */
 async function writeCopies(inventory: Inventory) {
-  const dir = resolve(OUT, "snapshots")
+  const dir = resolve(OUT, "crops")
   let written = 0
   for (const look of inventory.looks) {
     const { key, pass, mode, id, twin } = look.sample
