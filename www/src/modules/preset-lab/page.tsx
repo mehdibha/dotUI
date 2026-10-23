@@ -100,25 +100,27 @@ function SpecimenSheet({
     shown.current.wait()
   }, [designSystem])
   useEffect(() => {
+    const apply = (diff: unknown) => {
+      const data = designSystemOf(withDiff(state, diff))
+      // The same design system renders nothing, so nothing commits.
+      if (JSON.stringify(data) === shown.current.json) return Promise.resolve()
+      const from = shown.current.commits
+      const committed = new Promise<void>((done) => {
+        shown.current.wait = () => {
+          if (shown.current.commits > from) done()
+        }
+      })
+      window.postMessage(
+        { type: "design-system", data, live: false, drag: false },
+        window.location.origin,
+      )
+      return committed
+    }
+    // One wait slot: calls queue, so each resolves on its own commit.
+    let queue = Promise.resolve()
     const host = window as { __specimen?: unknown }
     host.__specimen = {
-      setDiff: (diff: unknown) => {
-        const data = designSystemOf(withDiff(state, diff))
-        // The same design system renders nothing, so nothing commits.
-        if (JSON.stringify(data) === shown.current.json)
-          return Promise.resolve()
-        const from = shown.current.commits
-        const committed = new Promise<void>((done) => {
-          shown.current.wait = () => {
-            if (shown.current.commits > from) done()
-          }
-        })
-        window.postMessage(
-          { type: "design-system", data, live: false, drag: false },
-          window.location.origin,
-        )
-        return committed
-      },
+      setDiff: (diff: unknown) => (queue = queue.then(() => apply(diff))),
     }
     return () => {
       delete host.__specimen
