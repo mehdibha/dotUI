@@ -11,10 +11,8 @@ export const spotify = definePreset({
     brandAssets: "spotify",
 
     // Style
-    // Containers step up one gray (#1f1f1f on #121212), no borders, soft drops.
     // Field, checkbox and radio edges are #7c7c7c, far above the #292929 dividers.
     // Toasts are a white box on the dark app.
-    style: "tonal",
     controlEdge: "strong",
 
     // Color
@@ -57,10 +55,11 @@ export const spotify = definePreset({
     density: "touch",
 
     // Surfaces
+    // Containers step up one gray (#1f1f1f on #121212), no borders.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
     // A #000 frame around 8px-rounded #121212 panels.
     shellTone: "recessed",
-    // Cards carry no shadow.
-    surfaceShadow: "flat",
 
     // Browser
     selectionHighlight: "browser",
@@ -89,6 +88,7 @@ export const spotify = definePreset({
     buttonSecondary: "outline",
     // Selected filter chips flip to white on black ink (black on white in light).
     toggleSelected: "inverse",
+    segmentedSelected: "inverse",
 
     // Inputs
     // A page-colored box on the edge; Outline tints it #333 in dark.

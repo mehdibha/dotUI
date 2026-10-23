@@ -8,9 +8,6 @@ export const higgsfield = definePreset({
   inspiredBy: "Higgsfield",
   diff: {
     // Style
-    // Cards and fields step up one gray (#23262a on #131416), no borders.
-    style: "tonal",
-    surfaceShadow: "flat",
     // Tertiary buttons are white 10%, no edge.
     buttonSecondary: "soft",
     segmentedSelected: "tone",
@@ -53,6 +50,9 @@ export const higgsfield = definePreset({
     density: "spacious",
 
     // Surfaces
+    // Cards and fields step up one gray (#23262a on #131416), no borders.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
     // Menus and dialogs are #23262a at 75% over a 40px blur.
     translucentOverlays: true,
     shellTone: "page",

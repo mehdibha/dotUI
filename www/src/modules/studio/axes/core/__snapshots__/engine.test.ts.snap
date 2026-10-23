@@ -592,79 +592,7 @@ exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "button": {
-      "case": "sentence",
-      "current": "none",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "tonal",
-      "style": "flat",
-    },
-    "group": {
-      "segments": "attached",
-      "separator": "divider",
-    },
-    "input": {
-      "errorIcon": "none",
-      "height": "controls",
-      "hover": "tint",
-      "style": "indicator",
-      "text": "same",
-    },
-    "otp-field": {
-      "cells": "separate",
-    },
-    "segmented-control": {
-      "case": "sentence",
-      "selected": "inverse",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "tabs": {
-      "case": "sentence",
-      "chip": "inverse",
-      "color": "neutral",
-      "indicator": "full",
-      "pill": "tone",
-      "style": "segmented",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "toggle-button": {
-      "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "tonal",
-      "selected": "tone",
-      "style": "flat",
-    },
-    "toggle-button-group": {
-      "segments": "attached",
-      "separator": "divider",
-    },
-  },
-  "tokens": {
-    "--card-border": "transparent",
-    "--color-card": "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
-    "--color-popover": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
-    "--indicator-edge": "var(--neutral-700)",
-    "--overlay-border": "transparent",
-    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-    "--studio-indicator-edge": "var(--indicator-edge)",
-  },
-}
-`;
-
-exports[`rules > style/inputStyle-flat-tonal: fires, then holds back 1`] = `
+exports[`rules > style/inputStyle-flat: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -736,7 +664,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-flat-tonal: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -800,15 +728,6 @@ exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
     "--studio-card-stroke": "0px",
     "--studio-overlay-stroke": "0px",
   },
-}
-`;
-
-exports[`rules > style/surfaceLayers-flat-tactile-chunky: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
 }
 `;
 
