@@ -11,7 +11,7 @@ Bluesky's design system is ALF, open source in two places, read at pinned versio
 
 Bluesky ships three themes: light, dim and dark. Dark mode defaults to dim, a navy theme built by inverting the subdued palette, so its page is `#151d28` and its ink white. Dark is the OLED option: the inverted default palette on a `#000` page. The pack's dark mode is dim, which is what a new user sees; `darkBg: 0` (OLED) would recreate dark.
 
-The app keeps the theme in localStorage under `BSKY_STORAGE`, not `prefers-color-scheme`. Headless runs write the whole object (`colorMode` and `darkTheme`, plus the fields its schema requires) before the page loads.
+The app keeps the theme in localStorage under `BSKY_STORAGE`. With nothing stored it uses the schema's defaults, `colorMode: 'system'` and `darkTheme: 'dim'` (`src/state/persisted/schema.ts`), so it follows `prefers-color-scheme` and dark renders dim. The pack declares no `storage` for that reason: the runner's emulated color scheme is enough, and the dark tokens read the dim page `rgb(21, 29, 40)`. Reaching the OLED theme would mean writing the whole object (`darkTheme: 'dark'` plus the fields the schema requires), not a raw mode string.
 
 ## Pages
 
