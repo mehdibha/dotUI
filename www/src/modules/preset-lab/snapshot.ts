@@ -97,8 +97,8 @@ async function snapshot(
   // signed token. url(#gradient) points inside it and stays.
   const unlink = (value: string) =>
     value.replace(
-      /url\(\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^)]*)\s*\)/g,
-      (ref) => (/^url\(\s*["']?#/.test(ref) ? ref : "none"),
+      /url\(\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^)]*)\s*\)/gi,
+      (ref) => (/^url\(\s*["']?#/i.test(ref) ? ref : "none"),
     )
 
   type Values = Record<string, string>
