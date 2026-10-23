@@ -408,56 +408,15 @@ exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > states/neutral-ring-owns-field-ink: fires, then holds back 1`] = `
-{
-  "color": {
-    "background": {
-      "dark": 2,
-    },
-    "overrides": {
-      "color-border-focus": {
-        "job": "solid",
-        "palette": "neutral",
-      },
-      "color-border-focus-muted": {
-        "job": "ui-active",
-        "palette": "neutral",
-      },
-    },
-    "primary": "accent",
-    "seeds": {
-      "accent": "#0070f1",
-    },
-    "v": 2,
-  },
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > states/ring-hides-field-ink: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {
-    "--focus-input-color": "var(--focus-ring-color)",
-    "--focus-input-offset": "var(--focus-ring-offset)",
-    "--focus-input-width": "var(--focus-ring-width)",
-  },
-}
-`;
-
 exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
   "params": {},
   "tokens": {
-    "--focus-input-color": "var(--focus-ring-color)",
-    "--focus-input-offset": "var(--focus-ring-offset)",
-    "--focus-input-width": "var(--focus-ring-width)",
+    "--studio-field-focus-color": "var(--studio-focus-color)",
+    "--studio-field-focus-offset": "var(--studio-focus-offset)",
+    "--studio-field-focus-width": "var(--studio-focus-width)",
   },
 }
 `;

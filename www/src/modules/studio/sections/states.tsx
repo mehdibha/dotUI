@@ -8,18 +8,12 @@ import { cn } from "@/registry/lib/utils"
 
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
-import {
-  AUTO_STRENGTH,
-  AUTO_WIDTH,
-  INVALID_FILL,
-  NEUTRAL_FIELD_INK,
-} from "../axes/states"
+import { AUTO_STRENGTH, AUTO_WIDTH, INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   DISABLED_OPTIONS,
-  FIELD_INK_ROW,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
@@ -69,26 +63,16 @@ function ControlSpecimen({ ring }: { ring: Ring }) {
   )
 }
 
-/** The field's pair: the focus pair, or the neutral steps under Neutral. */
-const fieldInks = (neutral?: boolean) =>
-  neutral ? [NEUTRAL_FIELD_INK.edge, NEUTRAL_FIELD_INK.halo] : [INK, MUTED]
-
-function fieldFocus(
-  focus: string,
-  weight: string,
-  ring: Ring,
-  neutral?: boolean,
-) {
+function fieldFocus(focus: string, weight: string, ring: Ring) {
   if (focus === "ring") return { boxShadow: ringShadow(ring) }
-  const [ink, muted] = fieldInks(neutral)
   if (focus === "border")
     return {
-      borderColor: ink,
-      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${ink}` : undefined,
+      borderColor: INK,
+      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${INK}` : undefined,
     }
   return {
-    borderColor: ink,
-    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${muted}`,
+    borderColor: INK,
+    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${MUTED}`,
   }
 }
 
@@ -96,17 +80,15 @@ function FieldSpecimen({
   focus,
   weight,
   ring,
-  neutral,
 }: {
   focus: string
   weight: string
   ring: Ring
-  neutral?: boolean
 }) {
   return (
     <span
       className={cn("mx-1 block shrink-0 border border-fg/30 bg-bg", SIZE)}
-      style={fieldFocus(focus, weight, ring, neutral)}
+      style={fieldFocus(focus, weight, ring)}
     />
   )
 }
@@ -250,7 +232,7 @@ function FieldFocusRow() {
   return (
     <DialSelect
       axis="focusInputStyle"
-      holds={["focusInputWeight", "focusInputColor"]}
+      holds={["focusInputWeight"]}
       label="Field focus"
       options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
         ...option,
@@ -259,13 +241,11 @@ function FieldFocusRow() {
             focus={option.value}
             weight={effective.focusInputWeight}
             ring={ringOf(effective)}
-            neutral={effective.focusInputColor === "neutral"}
           />
         ),
       }))}
     >
       <Row axis="focusInputWeight" />
-      <Row axis="focusInputColor" />
     </DialSelect>
   )
 }
@@ -277,27 +257,6 @@ const FieldFocusWeightRow = () => (
     options={FOCUS_INPUT_WEIGHT_OPTIONS}
   />
 )
-
-function FieldInkRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="focusInputColor"
-      label="Ink"
-      options={FIELD_INK_ROW.map((option) => ({
-        ...option,
-        glyph: (
-          <FieldSpecimen
-            focus={effective.focusInputStyle}
-            weight={effective.focusInputWeight}
-            ring={ringOf(effective)}
-            neutral={option.value === "neutral"}
-          />
-        ),
-      }))}
-    />
-  )
-}
 
 const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
   ...option,
@@ -368,7 +327,6 @@ export const ROWS: RowMap = {
   focusWidth: FocusWidthRow,
   focusInputStyle: FieldFocusRow,
   focusInputWeight: FieldFocusWeightRow,
-  focusInputColor: FieldInkRow,
   disabledTreatment: DisabledRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,

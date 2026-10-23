@@ -404,14 +404,6 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusInputStyle: "ring", focusInputWeight: "thick" },
     { focusInputStyle: "border", focusInputWeight: "thick" },
   ],
-  "states/ring-hides-field-ink": [
-    { focusInputStyle: "ring", focusInputColor: "neutral" },
-    { focusInputStyle: "border", focusInputColor: "neutral" },
-  ],
-  "states/neutral-ring-owns-field-ink": [
-    { focusColor: "neutral", focusInputColor: "accent" },
-    { focusInputColor: "accent" },
-  ],
   "motion/popover-none-pins-entrance": [
     { popoverMotion: "none", popoverEntrance: "fade" },
     { popoverMotion: "standard", popoverEntrance: "fade" },

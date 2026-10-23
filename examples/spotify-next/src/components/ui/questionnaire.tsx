@@ -14,7 +14,7 @@ const questionnaireVariants = tv({
     root: "flex w-full min-w-0 flex-col gap-6 [--questionnaire-title-gap:--spacing(5)]",
     progress:
       "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums text-xs",
-    item: "flex min-w-0 flex-col border-0 p-0 focus-reset gap-5",
+    item: "flex min-w-0 flex-col border-0 p-0 outline-none gap-5",
     title:
       "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap) text-xl font-bold",
     description: "text-pretty text-fg-muted text-sm",
@@ -35,7 +35,7 @@ const questionnaireVariants = tv({
       "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-xs border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
-      "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:ring-(--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
+      "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:outline-fg-danger aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
     error: "mt-2 text-fg-danger text-sm",
     actions:
       "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:min-h-12",

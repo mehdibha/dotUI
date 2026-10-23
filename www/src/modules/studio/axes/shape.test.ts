@@ -145,14 +145,6 @@ describe("shape axis", () => {
     expect(STYLE_VAR_DEFAULTS["--studio-control-stroke"]).toBe("1px")
   })
 
-  test("a border focus adds only what the stroke doesn't draw", () => {
-    const focus = { focusInputStyle: "border", focusInputWeight: "thick" }
-    expect(resolve(focus).tokens["--focus-input-edge"]).toBe("1px")
-    expect(
-      resolve({ ...focus, controlStroke: "bold" }).tokens["--focus-input-edge"],
-    ).toBe("0px")
-  })
-
   test("tracks stay round, or follow the detail rung", () => {
     expect(resolve({ tracks: "follow" }).tokens).toEqual({
       "--studio-radius-track": "var(--radius-sm)",

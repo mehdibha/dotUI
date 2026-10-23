@@ -11,39 +11,39 @@ const { useStyles } = createStyles(tableMeta, {
       // Blur lives on the cells, not the thead: a backdrop-filter escapes the scroll container's rounded clip in Chromium.
       header: "sticky top-0 z-10",
       column: [
-        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden",
+        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap outline-none",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
+        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring focus-visible:before:outline-offset-(--studio-focus-inside-offset) focus-visible:before:content-['']",
       ],
       columnContent: "flex h-full min-w-0 items-center gap-1.5",
       columnLabel: "min-w-0 flex-1 truncate",
       chromeColumn: [
-        "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden",
+        "box-border h-10 px-0 text-left align-middle outline-none",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
+        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring focus-visible:before:outline-offset-(--studio-focus-inside-offset) focus-visible:before:content-['']",
       ],
       selectionColumn: "w-10 min-w-10 px-2.5",
       sortIndicator:
         "size-3.5 shrink-0 text-fg-muted transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
       resizer: [
-        "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring",
+        "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 outline-none focus-visible:focus-ring",
         "resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
       ],
       body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
+        "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) outline-none last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
         "hover:bg-muted/50 pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30",
-        "focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+        "focus-visible:bg-selected/30 focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-inside-offset) disabled:text-(--disabled-fg,currentColor)",
       ],
       cell: [
-        "relative box-border h-10 align-middle leading-5 whitespace-nowrap focus-reset outline-hidden",
+        "relative box-border h-10 align-middle leading-5 whitespace-nowrap outline-none",
         "bg-clip-padding px-2.5",
         "[div]:flex [div]:h-full [div]:w-full [div]:items-center",
         "[&.text-center]:justify-center [&.text-right]:justify-end",
-        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
+        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring focus-visible:before:outline-offset-(--studio-focus-inside-offset) focus-visible:before:content-['']",
       ],
       selectionCell: [
         "w-10 min-w-10 px-2.5",
@@ -54,16 +54,16 @@ const { useStyles } = createStyles(tableMeta, {
         "[div]:justify-center",
       ],
       dragButton: [
-        "inline-flex size-6 cursor-drag items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) focus-visible:focus-ring",
+        "inline-flex size-6 cursor-drag items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) outline-none focus-visible:focus-ring",
         "group-hover/row:text-fg group-dragging/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
       ],
-      dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
+      dropIndicator: "relative z-20 h-0 outline-none",
       dropIndicatorLine: [
         "pointer-events-none relative z-30 block h-0 w-full opacity-0 transition-opacity duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
         "before:absolute before:inset-x-2 before:top-0 before:h-0.5 before:-translate-y-1/2 before:rounded-full before:bg-border-focus before:shadow-[0_0_0_1px_var(--surface-bg,var(--color-bg))] before:content-['']",
       ],
       expandButton: [
-        "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset focus-visible:focus-ring",
+        "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted outline-none focus-visible:focus-ring",
         "group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
       ],
       expandIcon:
