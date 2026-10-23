@@ -10,13 +10,13 @@ Dev-only tooling for tuning a preset against the system it recreates. Nothing he
 - Overlays (menu, select, tooltip, dialog, drawer, command palette, toast) are controlled open. The toast sits at the preset's toast position.
 - Each `Cell` carries `data-cell="<label>"`, so probes can target a specimen by its label.
 - A new sheet: add a component in `sheets/`, register it in `sheets/index.ts`; the capture script reads the list from the page.
-- `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `window.__specimen.setDiff(diff)` swaps it without a reload, for scripts that try one change at a time.
+- `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `await window.__specimen.setDiff(diff)` swaps it without a reload, resolving once the new design has rendered, for scripts that try one change at a time.
 
 ## Compare
 
 `/internal/compare?preset=<id>&mode=light|dark&sheet=<name>&view=side|onion|swipe|difference` (dev server only) shows each part the pack measured next to ours: theirs from `.scratch-refs/<id>/`, ours as a live specimen centered on the part. The studio panel beside it edits the preset in its unsaved slot, and each part re-runs the probe and the diff against `tokens.json` as you edit: the table under a part is `presets:measure` for that part, live.
 
-- Theirs is a crop (`<part>-<mode>.png`) or a frozen copy from the part file next to it (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`): the part's DOM with its computed styles inlined, pseudo-elements and shadow roots included. A copy stays sharp at any zoom and its text can be redacted; a crop is what the screen showed. `--shots` writes both, copies for parts up to 640×480. Any folder depth under `.scratch-refs/<id>/` is read, and the newest file per part and mode wins.
+- Theirs is a crop (`<part>-<mode>.png`) or a frozen copy from the part file next to it (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`): the part's DOM with its computed styles inlined, pseudo-elements and shadow roots included. A copy stays sharp at any zoom and its text can be redacted; a crop is what the screen showed. `--shots` writes both, copies for parts up to 640×480, and so does the local capture kit for signed-in pages, its copies always redacted (`scripts/local-capture/RUNBOOK.md`). Any folder depth under `.scratch-refs/<id>/` is read; per part and mode, the folder holding its newest file wins, so a crop always pairs with its own part file.
 - Onion, swipe and difference lay theirs over ours, both centered on the part, so a size difference shows as edges that don't line up. In difference, matching pixels go black.
 - A copy loads its fonts from their original URLs; when one doesn't load, a stand-in shows and the row says so. `snapshotSnippet()` is the in-page expression that makes a copy (`redact: true` turns letters into x and digits into 0, and images into gray boxes).
 

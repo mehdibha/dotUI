@@ -111,13 +111,18 @@ async function snapshot(
   let frame: HTMLIFrameElement | null = document.createElement("iframe")
   frame.style.cssText =
     "position:fixed;left:-10000px;top:0;width:100px;height:100px;border:0"
-  frame.srcdoc = "<!doctype html><html><body></body></html>"
   try {
+    // A page that enforces Trusted Types refuses srcdoc: the frame stays
+    // about:blank, in quirks mode, which differs on a few table defaults.
+    try {
+      frame.srcdoc = "<!doctype html><html><body></body></html>"
+    } catch {}
     document.documentElement.appendChild(frame)
-    await new Promise((resolve) => {
-      frame!.addEventListener("load", resolve, { once: true })
-      setTimeout(resolve, 2000)
-    })
+    if (frame.srcdoc)
+      await new Promise((resolve) => {
+        frame!.addEventListener("load", resolve, { once: true })
+        setTimeout(resolve, 2000)
+      })
   } catch {
     frame = null
   }
@@ -262,6 +267,7 @@ async function snapshot(
         if (svg) {
           // An id stays: url(#gradient) and <use href="#icon"> point at it.
           if (key.startsWith("data-") || key.startsWith("aria-")) continue
+          if (redact && tag === "image" && key.endsWith("href")) continue
           attrs.push(`${key}="${attr(value)}"`)
         } else if (KEEP.has(key))
           attrs.push(
@@ -446,6 +452,10 @@ export const snapshotSnippet = ({
   keys,
 }: { attribute?: string; redact?: boolean; keys?: string[] } = {}) =>
   `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}) })()`
+
+/** Parts larger than this (in CSS px²), such as `page`, get a crop but no
+ *  frozen copy. */
+export const COPY_AREA = 640 * 480
 
 /** The snapshot's own source, for the kit to embed. */
 export const snapshotSource = () => snapshot.toString()

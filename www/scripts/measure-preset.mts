@@ -55,6 +55,7 @@ import {
   type Target,
 } from "../src/modules/preset-lab/probe"
 import {
+  COPY_AREA,
   type PartFile,
   type Snapshot,
   snapshotSnippet,
@@ -205,8 +206,6 @@ const pool = <T, R>(items: T[], run: (item: T) => Promise<R>) =>
 
 /** The margin around a crop, for rings and shadows. */
 const PAD = 16
-/** Parts larger than this (in CSS px²) get a crop but no frozen copy. */
-const COPY_AREA = 640 * 480
 
 /** A part as it shows, with a margin, once it settles, and beside it a frozen copy of it with what /internal/compare
  *  needs to line the two up (`PartFile`). */

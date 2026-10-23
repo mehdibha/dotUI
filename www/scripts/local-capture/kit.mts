@@ -15,15 +15,18 @@
  *     Prints the calls that measure one page of a pack-format targets file:
  *     one for the plain parts, then one per focus or `before` part.
  *
- *   tsx scripts/local-capture/kit.mts --collect <preset id> --out <dir> [--downloads ~/Downloads]
+ *   tsx scripts/local-capture/kit.mts --collect <preset id> --out <dir> [--crops <dir>] [--downloads ~/Downloads]
  *     Moves the newest dotui__<id>__<slug>__<mode>.json of each page from the
- *     downloads folder to <dir>/<slug>-<mode>.json, and each census pass
+ *     downloads folder to <dir>/<slug>-<mode>.json, the frozen copies in
+ *     every dotui-snap__<id>__… download into the part files in --crops
+ *     (<dir>/../crops by default), newest last, and each census pass
  *     (dotui-census__<id>__<slug>__<mode>__<pass>.json) to
  *     <dir>/../census/pages/<slug>-<pass>-<mode>.json.
  *
  *   tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <file> --out <dir> --mode <mode> [--parts a,b]
  *     Crops each part `__dotui.rects()` returned (or only `--parts`) out of a
- *     viewport screenshot taken in the same state, as <dir>/<part>-<mode>.png.
+ *     viewport screenshot taken in the same state, as <dir>/<part>-<mode>.png,
+ *     with where the part sits in it in <dir>/<part>-<mode>.json.
  */
 import { execFileSync } from "node:child_process"
 import {
@@ -53,6 +56,12 @@ import {
   type Target,
   ownedProps,
 } from "../../src/modules/preset-lab/probe"
+import {
+  COPY_AREA,
+  type PartFile,
+  type Snapshot,
+  snapshotSource,
+} from "../../src/modules/preset-lab/snapshot"
 import { PROBE } from "../preset-pages"
 
 const { values: args } = parseArgs({
@@ -66,6 +75,7 @@ const { values: args } = parseArgs({
     pad: { type: "string", default: "8" },
     parts: { type: "string" },
     collect: { type: "string" },
+    crops: { type: "string" },
     downloads: { type: "string", default: resolve(homedir(), "Downloads") },
   },
 })
@@ -78,6 +88,7 @@ const KIT = `(function kit() {
   const __name = (fn) => fn
   const probe = ${probeSource()}
   const run = ${censusSource()}
+  const copy = ${snapshotSource()}
   const KEY = "__dotui", CURRENT = "__dotui_current"
   const load = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || "{}") } catch { return {} } }
   const save = (all) => sessionStorage.setItem(KEY, JSON.stringify(all))
@@ -279,6 +290,19 @@ const KIT = `(function kit() {
       return JSON.stringify({ width: innerWidth, height: innerHeight, parts })
     },
     survey(extra = {}) { return { ...this.vars(), inventory: this.inventory(extra) } },
+    // Frozen copies of the measured parts (or only parts), text and images
+    // redacted, as one download per call: too big for sessionStorage.
+    async snapshot(parts) {
+      const name = current()
+      if (!name) throw new Error("call __dotui.begin(name, key) first")
+      const small = marked().filter((el) => { const r = el.getBoundingClientRect(); return r.width * r.height <= ${COPY_AREA} })
+      const copies = await copy("data-probe-part", true, parts || small.map((el) => el.getAttribute("data-probe-part")))
+      const a = document.createElement("a")
+      a.href = URL.createObjectURL(new Blob([JSON.stringify({ kind: "dotui-snaps", dpr: devicePixelRatio, copies })], { type: "application/json" }))
+      a.download = "dotui-snap__" + name.replace(/\\//g, "__") + ".json"
+      document.body.appendChild(a); a.click(); a.remove()
+      return { file: a.download, parts: Object.keys(copies) }
+    },
     finish(name = current()) {
       const data = load()[name]
       const file = "dotui__" + name.replace(/\\//g, "__") + ".json"
@@ -315,6 +339,13 @@ const call = (targets: Record<string, Target>, focus = false) => {
   return `__dotui.measure(${JSON.stringify(targets)}, ${JSON.stringify(props)}${focus ? ", true" : ""})`
 }
 
+/** A part file so far: a crop and a copy land in it at different times. */
+const readPart = (path: string): Promise<Partial<PartFile>> =>
+  readFile(path, "utf8").then(
+    (text) => JSON.parse(text),
+    () => ({}),
+  )
+
 if (args.collect) {
   if (!args.out) {
     console.error("--collect needs --out")
@@ -336,6 +367,38 @@ if (args.collect) {
   for (const [target, { file }] of newest) {
     await copyFile(file, resolve(args.out, target))
     console.log(`${target} ← ${file}`)
+  }
+  // Every copy, oldest first, so a part's newest copy is the one kept.
+  const snapPrefix = `dotui-snap__${args.collect}__`
+  const snaps: { name: string; file: string; time: number }[] = []
+  for (const name of await readdir(args.downloads)) {
+    if (!name.startsWith(snapPrefix) || !name.endsWith(".json")) continue
+    const file = resolve(args.downloads, name)
+    snaps.push({ name, file, time: (await stat(file)).mtimeMs })
+  }
+  const crops = resolve(args.crops ?? resolve(args.out, "../crops"))
+  if (snaps.length) await mkdir(crops, { recursive: true })
+  for (const { name, file } of snaps.sort((a, b) => a.time - b.time)) {
+    const mode = name
+      .replace(/(?: \(\d+\))?\.json$/, "")
+      .split("__")
+      .at(-1)
+    const { dpr, copies }: { dpr: number; copies: Record<string, Snapshot> } =
+      JSON.parse(await readFile(file, "utf8"))
+    for (const [part, snapshot] of Object.entries(copies)) {
+      const path = resolve(crops, `${part}-${mode}.json`)
+      // A crop's dpr and box stay: they describe its PNG.
+      const partFile = {
+        kind: "dotui-part",
+        part,
+        mode: mode as PartFile["mode"],
+        dpr,
+        ...(await readPart(path)),
+        snapshot,
+      } satisfies PartFile
+      await writeFile(path, JSON.stringify(partFile))
+      console.log(`${path} ← copy from ${name}`)
+    }
   }
   // Census passes go next to raw/, as the crawl script writes them, with
   // the values each element shows by default left out.
@@ -361,7 +424,7 @@ if (args.collect) {
     console.log(`${target} ← ${name}`)
   }
   for (const name of await readdir(args.downloads))
-    if (name.startsWith(prefix) || name.startsWith(census))
+    if ([prefix, snapPrefix, census].some((start) => name.startsWith(start)))
       await unlink(resolve(args.downloads, name))
   process.exit(0)
 }
@@ -380,9 +443,10 @@ if (args.crop) {
     file = png
   }
   const shot = PNG.sync.read(await readFile(file))
-  const rects: { width: number; parts: Record<string, number[]> } = JSON.parse(
-    await readFile(resolve(args.rects), "utf8"),
-  )
+  const rects: {
+    width: number
+    parts: Record<string, [number, number, number, number]>
+  } = JSON.parse(await readFile(resolve(args.rects), "utf8"))
   const scale = shot.width / rects.width
   const pad = Number(args.pad)
   const only = args.parts?.split(",")
@@ -403,6 +467,21 @@ if (args.crop) {
       () => false,
     )
     await writeFile(out, PNG.sync.write(crop))
+    const path = resolve(args.out, `${part}-${args.mode}.json`)
+    const partFile = {
+      ...(await readPart(path)),
+      kind: "dotui-part",
+      part,
+      mode: args.mode as PartFile["mode"],
+      dpr: scale,
+      crop: {
+        left: x - left / scale,
+        top: y - top / scale,
+        width: w,
+        height: h,
+      },
+    } satisfies PartFile
+    await writeFile(path, JSON.stringify(partFile))
     console.log(replaced ? `${out} (replaced an earlier crop)` : out)
   }
   process.exit(0)
