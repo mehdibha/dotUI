@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { INTERNAL_PAGES } from "@/modules/internal/enabled"
 import { RegistriesPage } from "@/modules/registries/page"
 
 export const Route = createFileRoute("/internal/registries")({
-  component: import.meta.env.DEV ? RegistriesPage : undefined,
-  head: import.meta.env.DEV
+  component: INTERNAL_PAGES ? RegistriesPage : undefined,
+  head: INTERNAL_PAGES
     ? () => ({ meta: [{ title: "Registry directory · dotUI" }] })
     : undefined,
 })

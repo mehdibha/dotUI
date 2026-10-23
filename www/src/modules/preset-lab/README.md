@@ -1,6 +1,6 @@
 # Preset lab
 
-Dev-only tooling for tuning a preset against the system it recreates. Nothing here ships: the route is gated on `import.meta.env.DEV`. The process around it (fidelity bar, decision order, definition of done) is in [`../presets/README.md`](../presets/README.md).
+Tooling for tuning a preset against the system it recreates, in dev and on Vercel previews. Nothing here ships to dotui.org: the routes are gated on `INTERNAL_PAGES` (`../internal/enabled.ts`). The process around it (fidelity bar, decision order, definition of done) is in [`../presets/README.md`](../presets/README.md).
 
 ## Specimen sheets
 
@@ -10,6 +10,13 @@ Dev-only tooling for tuning a preset against the system it recreates. Nothing he
 - Overlays (menu, select, tooltip, dialog, drawer, command palette, toast) are controlled open. The toast sits at the preset's toast position.
 - Each `Cell` carries `data-cell="<label>"`, so probes can target a specimen by its label.
 - A new sheet: add a component in `sheets/`, register it in `sheets/index.ts`; the capture script reads the list from the page.
+- `&diff=<json>` merges a partial studio state over the preset (parsed like a saved one), and `await window.__specimen.setDiff(diff)` swaps it without a reload, resolving once the new design has rendered, for scripts that try one change at a time.
+
+## Frozen copies
+
+A part file (`<part>-<mode>.json`, `PartFile` in `snapshot.ts`) holds a frozen copy of one part of the real product, beside its crop (`<part>-<mode>.png`): the part's DOM with its computed styles inlined, pseudo-elements and shadow roots included. A copy stays sharp at any zoom and its text can be redacted; a crop is what the screen showed. `--shots` writes both, copies for parts up to 640×480, and so does the local capture kit for signed-in pages, its copies always redacted (`scripts/local-capture/RUNBOOK.md`). They stay in `crops/` folders under `.scratch-refs/<id>/`, never in git.
+
+`snapshotSnippet()` is the in-page expression that makes a copy. `redact: true` turns letters into x, digits into 0 and images into gray boxes, and drops every `url()` that points outside the copy. A copy loads its fonts from their original URLs.
 
 ## Reference packs
 
@@ -47,7 +54,8 @@ pnpm presets:compare --preset linear --refs <dir of reference pngs>
 pnpm presets:measure --preset linear --port <port>
 
 # Measure every public page of a pack (4 at a time) into refs/<id>/tokens.json;
-# --shots also crops each part as it was measured, for presets:compare
+# --shots also crops each part as it was measured, with its part file, for
+# presets:compare, and a frozen copy per part (--shots .scratch-refs/<id>/crops)
 pnpm presets:measure --pack linear [--url <one page>] [--shots <dir>]
 
 # The probe for a signed-in tab driven by Claude in Chrome: the page's steps,
