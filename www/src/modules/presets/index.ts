@@ -21,6 +21,7 @@ import { supabase } from "./supabase"
 import { untitled } from "./untitled"
 import { vercel } from "./vercel"
 import { wise } from "./wise"
+import { zara } from "./zara"
 
 export const PRESETS: Preset[] = [
   origin,
@@ -42,6 +43,7 @@ export const PRESETS: Preset[] = [
   carbon,
   wise,
   higgsfield,
+  zara,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
