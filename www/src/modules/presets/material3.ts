@@ -10,10 +10,8 @@ export const material3 = definePreset({
     // Assets
     brandAssets: "material",
 
-    // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
-    // Control edges at the darkest step, for M3's #79747e outline and the
-    // #49454f field and check lines.
-    style: "tonal",
+    // Style: control edges at the darkest step, for M3's #79747e outline and
+    // the #49454f field and check lines.
     controlEdge: "strong",
 
     // Color
@@ -52,6 +50,10 @@ export const material3 = definePreset({
     density: "spacious",
 
     // Surfaces
+    // Tone separates layers, not hairlines; menus keep a level-2 shadow.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
+    surfaceShadow: "low",
     // The nav rail sits a tone below borderless content panels.
     shellTone: "recessed",
 
@@ -73,11 +75,11 @@ export const material3 = definePreset({
     // Buttons
     toggleSelected: "solid",
     buttonRadius: "pill",
-    // The chip follows the button style, not Tonal's inverse one.
-    segmentedSelected: "auto",
+    buttonSecondary: "tonal",
     segmentedTrack: "outline",
 
     // Inputs: the 56dp filled field with a bottom indicator.
+    inputStyle: "indicator",
     inputHeight: "tall",
     inputError: "icon-field",
     selectTrigger: "field",
