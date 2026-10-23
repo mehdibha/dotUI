@@ -59,9 +59,6 @@ export const vercel = definePreset({
     shellTone: "page",
 
     // States
-    // Fields focus with a 1px edge at 34% black and a 4px halo at 16%.
-    focusInputWeight: "thick",
-    focusInputColor: "neutral",
     invalidStyle: "halo",
 
     // Motion

@@ -67,8 +67,7 @@ export const spotify = definePreset({
     // States
     // A 2px white (dark) or black (light) ring 2px outside, never green.
     focusColor: "neutral",
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     // Stand-in: Encore fades disabled controls to 30%.
     disabledTreatment: "fade",
 

@@ -18,6 +18,7 @@ import {
   CursorPreview,
   DisabledPreview,
   FocusPreview,
+  FocusSpecimen,
   TextSelectionPreview,
 } from "./states"
 import { SurfacesRow } from "./surfaces"
@@ -84,9 +85,11 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
   typography: [[["headingFont", "Heading"]]],
   focus: [
     [
-      ["focusStyle", "Focus ring"],
-      ["focusInputStyle", "Field focus"],
+      ["focusStyle", "Controls", ["Focus ring"]],
+      ["focusWidth", "Width"],
+      ["focusColor", "Color"],
     ],
+    [["focusInputStyle", "Fields", ["Field focus"]]],
   ],
   disabled: [[["disabledTreatment", "Style"]]],
   cursor: [
@@ -151,18 +154,29 @@ function Rows({ rows }: { rows: FoundationRow[] }) {
   })
 }
 
-const page = (page: Omit<ChapterPage, "Body" | "rows">): ChapterPage => {
+/** `lead` sits above the page's rows: a specimen they edit together. */
+const page = ({
+  lead: Lead,
+  ...page
+}: Omit<ChapterPage, "Body" | "rows"> & {
+  lead?: React.ComponentType
+}): ChapterPage => {
   const groups = PAGE_ROWS[page.id] ?? []
   return {
     ...page,
     rows: groups.flat().map(searchRow),
     Body: function FoundationPage() {
-      return groups.map((rows, i) => (
-        <Fragment key={i}>
-          {i > 0 && <DialGap />}
-          <Rows rows={rows} />
-        </Fragment>
-      ))
+      return (
+        <>
+          {Lead && <Lead />}
+          {groups.map((rows, i) => (
+            <Fragment key={i}>
+              {(i > 0 || Lead) && <DialGap />}
+              <Rows rows={rows} />
+            </Fragment>
+          ))}
+        </>
+      )
     },
   }
 }
@@ -178,17 +192,10 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "focus",
     label: "Focus",
-    owners: [
-      "focusStyle",
-      "focusStrength",
-      "focusWidth",
-      "focusColor",
-      "focusInputStyle",
-      "focusInputWeight",
-      "focusInputColor",
-    ],
+    owners: ["focusStyle", "focusWidth", "focusColor", "focusInputStyle"],
     aliases: ["Focus ring", "Keyboard"],
     Preview: FocusPreview,
+    lead: FocusSpecimen,
   }),
   page({
     id: "disabled",

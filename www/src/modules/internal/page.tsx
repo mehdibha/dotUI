@@ -21,7 +21,7 @@ export function InternalIndex() {
           <li key={tool.href}>
             <Link
               to={tool.href}
-              className="group/tool flex h-full cursor-interactive flex-col gap-1.5 rounded-xl border border-border/45 bg-card p-4 focus-reset transition-colors hover:bg-muted focus-visible:focus-ring"
+              className="group/tool flex h-full cursor-interactive flex-col gap-1.5 rounded-xl border border-border/45 bg-card p-4 transition-colors outline-none hover:bg-muted focus-visible:focus-ring"
             >
               <span className="flex items-center gap-1.5">
                 <span className="text-[0.8125rem] font-medium text-fg">

@@ -57,8 +57,7 @@ export const wise = definePreset({
     // States
     // A 2px forest ring 2px off the edge; fields thicken to 3px.
     focusColor: "neutral",
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
 
     // Links
     // Forest #163300 at 600 in light, the bright green in dark.

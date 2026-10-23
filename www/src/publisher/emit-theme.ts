@@ -47,9 +47,14 @@ import {
 } from "@/registry/theme"
 import type { RegistryItem } from "@/registry/types"
 
+import { STYLE_VAR_DEFAULTS } from "../registry/__generated__/style-var-defaults"
 import { fontItemNamesForTokens } from "./emit-font"
 import { colorLookup, flattenColorValue } from "./flatten-color"
-import { STUDIO_VAR_PREFIX } from "./resolve-classes"
+import {
+  resolveCssFields,
+  resolveStudioVars,
+  STUDIO_VAR_PREFIX,
+} from "./resolve-classes"
 import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
@@ -283,7 +288,7 @@ export function mergePresetCssFields(
     googleFontsImport?: boolean
   } = {},
 ): RegistryCssFields {
-  const css = cloneRecord(base.css) ?? {}
+  const css = focusHelpers(base.css, preset) ?? {}
   const theme = { ...base.cssVars?.theme }
   const light: Record<string, string> = {
     ...base.cssVars?.light,
@@ -376,6 +381,39 @@ export function mergePresetCssFields(
     ...(Object.keys(css).length > 0 ? { css } : {}),
     cssVars: { theme, light, dark },
   }
+}
+
+type CssRule = NonNullable<RegistryCssFields["css"]>
+
+/**
+ * The focus helpers (base.css focus-ring, focus-input) as the user chose
+ * them: studio reads resolved to plain values, and an outline that draws
+ * nothing dropped with what rides on it, so a recolored edge ships as a
+ * border color alone.
+ */
+function focusHelpers(
+  css: RegistryCssFields["css"],
+  preset: PublishPreset,
+): RegistryCssFields["css"] {
+  const vars = resolveStudioVars({ ...STYLE_VAR_DEFAULTS, ...preset.tokens })
+  const prune = (rule: CssRule, drawn = true) => {
+    const outline = rule.outline
+    if (typeof outline === "string" && /^0(?:px)?\s/.test(outline)) {
+      delete rule.outline
+      drawn = false
+    }
+    if (!drawn) delete rule["outline-color"]
+    if (!drawn || /^0(?:px)?$/.test(String(rule["outline-offset"])))
+      delete rule["outline-offset"]
+    for (const value of Object.values(rule))
+      if (typeof value === "object") prune(value as CssRule, drawn)
+  }
+  const out = resolveCssFields(cloneRecord(css), vars)
+  for (const name of ["@utility focus-ring", "@utility focus-input"]) {
+    const rule = out?.[name]
+    if (typeof rule === "object") prune(rule as CssRule)
+  }
+  return out
 }
 
 function cloneRecord<T>(value: T): T {
