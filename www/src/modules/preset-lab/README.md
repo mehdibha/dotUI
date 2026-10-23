@@ -56,7 +56,8 @@ The census (`census.ts`) reads every element a page paints or labels, with no ha
 
 - It prints the changes kept (rows fixed and broken), the preset's full draft diff, and the residual off rows by look; `--write-gaps` replaces the pack's `fit` entries in `gaps.json` with them. `--keys a,b*` narrows the search; `--preset origin` starts a new preset from the defaults.
 - Color and font keys are left out: the color engine is queued for a rewrite, and fonts are catalog picks with stand-ins. The draft is a starting point a preset thread reviews, never applied as is: a change that fixes rows on the specimens can still be wrong for the product (a radius that matches buttons by bending cards).
-- Don't edit files the specimens page imports during a run: the dev server reloads the tabs (the run reloads and carries on, but slower).
+- Don't edit files the specimens page imports during a run: the dev server reloads the tabs. A tab that reloads or stops answering (each step times out by name) is opened again; a candidate that fails twice is skipped and logged. The map is saved every ten keys, so a stopped run picks up where it left off.
+- On GitHub (152 keys, about 6 minutes for the map, 4 rounds after it) it took 85 off rows to 80: `roleSurface: lg` (the segmented control's radius, at the cost of the menu's), tonal surface layers, accent links and the halo input focus, each a change for the GitHub thread to judge. The rest are looks with no axis, which `--write-gaps` files.
 
 ## Pixel probe
 
