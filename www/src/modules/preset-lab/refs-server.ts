@@ -1,15 +1,16 @@
 /* Dev server only (vite.config.ts): hands /internal/compare the reference
-   crops and part files under .scratch-refs/<preset id>/, which stay out of
-   git. Any folder depth works, so a dated local capture and a headless
-   `--shots` run sit side by side; of two folders holding one part and mode,
-   the one with the newest file wins.
+   crops and part files in the crops/ folders under .scratch-refs/<preset id>/,
+   which stay out of git. Any depth works, so a dated local capture and a
+   headless `--shots` run sit side by side; of two folders holding one part
+   and mode, the one with the newest file wins. Nothing else in the tree is
+   served: a local capture keeps its private page shots and raw bundles there.
 
      GET /__preset-refs/<id>            { "<part>-<mode>": { png?, json? } }
      GET /__preset-refs/<id>/<path>     the file */
 
 import { createReadStream } from "node:fs"
 import { open, readdir, stat } from "node:fs/promises"
-import { join, relative, resolve, sep } from "node:path"
+import { basename, join, relative, resolve, sep } from "node:path"
 import type { Plugin } from "vite"
 
 const ROUTE = "/__preset-refs"
@@ -19,6 +20,9 @@ export type RefsIndex = Record<string, { png?: string; json?: string }>
 
 const NAME = /^(.+)-(light|dark)\.(png|json)$/
 const DEPTH = 6
+
+/** Files an index has listed: the only ones served. */
+const listed = new Set<string>()
 
 async function index(folder: string): Promise<RefsIndex> {
   const sets = new Map<
@@ -34,14 +38,14 @@ async function index(folder: string): Promise<RefsIndex> {
         continue
       }
       const match = NAME.exec(entry.name)
-      if (!match) continue
+      if (!match || basename(dir) !== "crops") continue
       const [, part, mode, ext] = match as unknown as [
         string,
         string,
         string,
         "png" | "json",
       ]
-      // Page bundles share the naming: only part files count.
+      // Other JSON can share the naming: only part files count.
       if (ext === "json" && !(await isPartFile(path))) continue
       const key = `${part}-${mode}`
       const set = sets.get(`${dir}|${key}`) ?? { key, time: 0, files: {} }
@@ -60,6 +64,8 @@ async function index(folder: string): Promise<RefsIndex> {
       times.set(key, time)
       found[key] = files
     }
+  for (const files of Object.values(found))
+    for (const path of Object.values(files)) listed.add(join(folder, path))
   return found
 }
 
@@ -98,6 +104,11 @@ export function presetRefs(root: string): Plugin {
             res.setHeader("Cache-Control", "no-store")
             res.end(JSON.stringify(found))
           }, next)
+          return
+        }
+        if (!listed.has(path)) {
+          res.statusCode = 404
+          res.end()
           return
         }
         res.setHeader(
