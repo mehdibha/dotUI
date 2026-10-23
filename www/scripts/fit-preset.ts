@@ -48,6 +48,7 @@ import { getPreset } from "../src/modules/presets"
 import {
   DEFAULTS,
   FOLLOWS,
+  KEY_OWNER,
   parseState,
   SCHEMA,
   type StudioState,
@@ -100,7 +101,12 @@ if (reference.probe !== PROBE)
   )
 
 type Diff = Record<string, Value>
+/* Colors, fonts and the color engine's own dials (hue, vividness, tint,
+   page lightness) stay out; the color chapter's routing enums stay in. */
 const SKIP = new Set(["color", "font"])
+const searched = (key: string, axis: Axis) =>
+  !SKIP.has(axis.value.type) &&
+  (KEY_OWNER[key] !== "color" || axis.value.type === "enum")
 const wanted = (key: string) =>
   !args.keys ||
   args.keys
@@ -109,7 +115,7 @@ const wanted = (key: string) =>
       glob.endsWith("*") ? key.startsWith(glob.slice(0, -1)) : key === glob,
     )
 const KEYS = Object.entries(SCHEMA as Record<string, Axis>)
-  .filter(([key, axis]) => !SKIP.has(axis.value.type) && wanted(key))
+  .filter(([key, axis]) => searched(key, axis) && wanted(key))
   .map(([key]) => key)
 const followsOf = (key: string) =>
   (FOLLOWS[key] ?? []).map((follow) => String(follow.id))
@@ -245,14 +251,19 @@ async function sensitivity(browser: Browser): Promise<SensitivityMap> {
   const base = await render(tabs, {})
   const originPrint = fingerprint(ORIGIN)
   let done = 0
+  const began = Date.now()
   for (const key of todo) {
     const axis = (SCHEMA as Record<string, Axis>)[key] as Axis
     const rows: Record<string, string[]> = {}
-    for (const option of optionsOf(
+    const options = optionsOf(
       axis,
       (ORIGIN as Record<string, Value>)[key] ?? null,
       followsOf(key),
-    )) {
+    )
+    // A number moves the same rows across its range: five steps tell which.
+    const numeric = axis.value.type === "number"
+    const every = numeric ? Math.ceil(options.length / 5) : 1
+    for (const option of options.filter((_, i) => i % every === 0)) {
       const state = parseState({ ...ORIGIN, [key]: option })
       // Hidden or pinned on Origin: no rows, and the fit renders it in full.
       if (fingerprint(state) === originPrint) continue
@@ -261,9 +272,12 @@ async function sensitivity(browser: Browser): Promise<SensitivityMap> {
         await render(tabs, { [key]: option }),
       )
     }
+    if (numeric) rows["*"] = [...new Set(Object.values(rows).flat())]
     map.keys[key] = rows
     if (++done % 10 === 0)
-      console.log(`sensitivity: ${done}/${todo.length} keys`)
+      console.log(
+        `sensitivity: ${done}/${todo.length} keys, ${Math.round((Date.now() - began) / 1000)}s`,
+      )
   }
   await Promise.all(tabs.map((tab) => tab.page.close()))
   await mkdir(args.out, { recursive: true })
@@ -320,7 +334,8 @@ try {
         const print = fingerprint(stateOf({ ...diff, [key]: option }))
         if (printed.has(print)) continue
         printed.add(print)
-        const rows = map.keys[key]?.[String(option)]
+        const rows =
+          map.keys[key]?.[String(option)] ?? map.keys[key]?.["*"]
         if (rows && !rows.some((row) => off.has(row))) continue
         candidates.push({ key, value: option, rows })
       }
