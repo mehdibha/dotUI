@@ -23,6 +23,17 @@
   --studio-tile-lip: 0px;
   /* Every scrim's frost (modal, sheet). */
   --studio-scrim-blur: var(--blur-sm);
+  --studio-focus-width: 2px;
+  --studio-focus-offset: 2px;
+  --studio-focus-color: var(--color-border-focus);
+  --studio-focus-outside-offset: 2px;
+  --studio-focus-inside-offset: -2px;
+  --studio-focus-inner: 0px;
+  --studio-field-focus-width: 2px;
+  --studio-field-focus-offset: 0px;
+  --studio-field-focus-color: var(--color-border-focus-muted);
+  --studio-field-indicator-color: var(--studio-field-focus-color);
+  --studio-field-invalid-color: var(--color-danger-muted);
   /* Action labels only (Button, ToggleButton, GroupText). */
   --studio-font-weight-label: var(--font-weight-medium);
 }

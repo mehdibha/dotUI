@@ -22,6 +22,10 @@ export const LOOK_OPTIONS = options(SURFACE_LOOK_VALUES, {
     label: "Grouped",
     description: "In light, white cards on a gray page",
   },
+  tonal: {
+    label: "Tonal",
+    description: "Cards a shade below the page, no border",
+  },
 })
 
 export const LAYERS_OPTIONS = options(LAYERS_VALUES, {

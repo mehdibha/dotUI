@@ -22,7 +22,7 @@ const { useStyles, styles } = createStyles(calendarMeta, {
       gridBody: "contents *:[tr]:contents",
       cell: [
         "relative flex aspect-square size-full min-w-(--cell-size) items-center justify-center text-center text-sm font-medium no-highlight",
-        "cursor-interactive focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease)",
+        "cursor-interactive transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) outline-none",
         "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:pointer-events-none outside-month:text-fg-disabled",
       ],
       cellInner: "",
@@ -40,7 +40,7 @@ const { useStyles, styles } = createStyles(calendarMeta, {
         true: {
           cell: "selected:bg-selection-muted",
           cellInner:
-            "relative flex size-full items-center justify-center focus-reset transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-focus-visible:focus-ring in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
+            "relative flex size-full items-center justify-center transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) outline-none not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-focus-visible:focus-ring in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
         },
       },
     },

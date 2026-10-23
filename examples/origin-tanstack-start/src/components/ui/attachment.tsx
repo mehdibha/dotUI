@@ -18,7 +18,7 @@ const attachmentVariants = tv({
       "mt-0.5 block max-w-full min-w-0 truncate text-fg-muted group-data-[state=error]/attachment:text-fg-danger text-xs",
     actions:
       "relative z-20 flex shrink-0 items-center group-orientation-vertical/attachment:absolute group-orientation-vertical/attachment:top-3 group-orientation-vertical/attachment:right-3 group-orientation-vertical/attachment:gap-1",
-    trigger: "absolute inset-0 z-10 cursor-interactive focus-reset",
+    trigger: "absolute inset-0 z-10 cursor-interactive outline-none",
     group:
       "flex min-w-0 snap-x snap-mandatory scrollbar-none overflow-x-auto overscroll-x-contain *:data-attachment:flex-none *:data-attachment:snap-start scroll-px-1 gap-3 py-1",
   },

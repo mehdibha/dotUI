@@ -1,26 +1,20 @@
 /* Style — the material, named by its light: how every surface and control
-   draws depth. Flat has no light (lines), Tonal stands tone in for light,
-   Tactile lights controls from above, Chunky casts hard light onto solid
-   ledges, Brutal casts it from the top left: ink edges over hard offset
-   shadows. Seven keys default to the "style" follow and read
-   their column below; Flat's column is each key's own default, so Origin is
-   untouched. An option that needs another light (Bevel buttons outside
-   Tactile) is excluded, falling back to the column. Color, type, radius,
-   density and motion never change with it, except that Brutal pins every
-   control edge to 2px ink (rules in color.ts and shape.ts). */
+   draws depth. Flat has no light (lines), Tactile lights controls from
+   above, Chunky casts hard light onto solid ledges, Brutal casts it from the
+   top left: ink edges over hard offset shadows. Seven keys default to the
+   "style" follow and read their column below; Flat's column is each key's
+   own default, so Origin is untouched. An option that needs another light
+   (Bevel buttons outside Tactile) is excluded, falling back to the column.
+   Color, type, radius, density and motion never change with it, except that
+   Brutal pins every control edge to 2px ink (rules in color.ts and
+   shape.ts). */
 
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
 
-export const STYLE_VALUES = [
-  "flat",
-  "tonal",
-  "tactile",
-  "chunky",
-  "brutal",
-] as const
+export const STYLE_VALUES = ["flat", "tactile", "chunky", "brutal"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -29,7 +23,6 @@ export type Style = (typeof STYLE_VALUES)[number]
 export const COLUMNS = {
   surfaceLayers: {
     flat: "same",
-    tonal: "tonal",
     tactile: "same",
     chunky: "same",
     brutal: "same",
@@ -37,42 +30,36 @@ export const COLUMNS = {
   // Tactile, Chunky and Brutal draw the edge their button finish implies.
   surfaceEdge: {
     flat: "line",
-    tonal: "none",
     tactile: "auto",
     chunky: "auto",
     brutal: "auto",
   },
   surfaceShadow: {
     flat: "flat",
-    tonal: "low",
     tactile: "low",
     chunky: "flat",
     brutal: "flat",
   },
   buttonStyle: {
     flat: "flat",
-    tonal: "flat",
     tactile: "bevel",
     chunky: "ledge",
     brutal: "offset",
   },
   buttonSecondary: {
     flat: "as-style",
-    tonal: "tonal",
     tactile: "as-style",
     chunky: "as-style",
     brutal: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
-    tonal: "inverse",
     tactile: "auto",
     chunky: "auto",
     brutal: "auto",
   },
   inputStyle: {
     flat: "auto",
-    tonal: "indicator",
     tactile: "auto",
     chunky: "auto",
     brutal: "auto",
@@ -100,7 +87,6 @@ export const ALLOWED: Partial<
     ledge: ["chunky"],
     offset: ["brutal"],
   },
-  surfaceLayers: { tonal: ["tonal"] },
   inputStyle: { well: ["tactile", "chunky"] },
 }
 

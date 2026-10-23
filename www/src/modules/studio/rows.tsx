@@ -492,7 +492,7 @@ export function NeutralPickerPopover({
                 background:
                   option.hue === null ? sample(0, 0) : sample(option.hue),
               }}
-              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
+              className="size-5 cursor-interactive rounded-full ring-offset-2 ring-offset-card outline-none focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
             />
           ))}
         </RacToggleButtonGroup>

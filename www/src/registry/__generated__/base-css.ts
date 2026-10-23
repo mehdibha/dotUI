@@ -9,43 +9,18 @@ export const baseRegistryCss = {
 		'@plugin "tailwindcss-react-aria-components"': {},
 		'@plugin "tailwindcss-with"': {},
 		"@custom-variant dark (&:is(.dark *))": {},
-		"@utility focus-reset": {
-			"@apply ring-0 ring-transparent outline-none": {},
-		},
 		"@utility focus-ring": {
-			"--tw-ring-shadow":
-				"var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color), inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg))",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
-		},
-		"@utility focus-ring-outside": {
-			"--tw-ring-shadow":
-				"0 0 0 var(--focus-ring-outside-offset) var(--surface-bg, var(--color-bg)), 0 0 0 calc(var(--focus-ring-outside-offset) + var(--focus-ring-width)) var(--focus-ring-color)",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
-		},
-		"@utility focus-ring-inside": {
-			"--tw-ring-shadow": "inset 0 0 0 var(--focus-ring-width) var(--focus-ring-color)",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+			outline: "var(--studio-focus-width) solid var(--studio-focus-color)",
+			"outline-offset": "var(--studio-focus-offset)",
 		},
 		"@utility focus-input": {
-			"--tw-ring-shadow":
-				"inset 0 0 0 var(--focus-input-edge) var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
-		},
-		"@utility focus-input-indicator": {
-			"--tw-ring-shadow":
-				"inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
-		},
-		"@utility focus-input-underline": {
-			"--tw-ring-shadow":
-				"inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), 0 var(--focus-input-offset) 0 0 var(--surface-bg, var(--color-bg)), 0 calc(var(--focus-input-offset) + var(--focus-input-width)) 0 0 var(--tw-ring-color, var(--focus-input-color))",
-			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+			"border-color": "var(--color-border-focus)",
+			outline: "var(--studio-field-focus-width) solid var(--studio-field-focus-color)",
+			"outline-offset": "var(--studio-field-focus-offset)",
+			"@variant invalid": {
+				"border-color": "var(--color-fg-danger)",
+				"outline-color": "var(--studio-field-invalid-color)",
+			},
 		},
 		"@utility invalid-ring": {
 			"--tw-ring-shadow": "0 0 0 var(--invalid-ring-width) var(--color-danger-muted)",
@@ -89,8 +64,6 @@ export const baseRegistryCss = {
 			"--overlay-border": "var(--color-border)",
 			"--popover-alpha": "100%",
 			"--popover-backdrop-filter": "none",
-			"--focus-input-border": "var(--color-border-focus)",
-			"--focus-input-color": "var(--color-border-focus-muted)",
 			"--invalid-fill": "transparent",
 		},
 		"::selection": {
@@ -111,15 +84,6 @@ export const baseRegistryCss = {
 			"--cursor-drag": "var(--cursor-interactive)",
 			"--cursor-dragging": "var(--cursor-interactive)",
 			"--color-scrim": "color-mix(in oklab, var(--color-overlay) 40%, transparent)",
-			"--focus-ring-color": "var(--color-border-focus)",
-			"--focus-ring-width": "2px",
-			"--focus-ring-offset": "2px",
-			"--focus-ring-outside-offset": "2px",
-			"--focus-ring-inner": "0px",
-			"--focus-input-width": "2px",
-			"--focus-input-offset": "0px",
-			"--focus-input-edge": "0px",
-			"--focus-invalid-color": "var(--color-danger-muted)",
 			"--invalid-ring-width": "0px",
 			"--disabled-bg": "var(--color-disabled)",
 			"--disabled-fg": "var(--color-fg-disabled)",

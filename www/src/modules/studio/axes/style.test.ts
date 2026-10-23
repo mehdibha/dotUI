@@ -60,10 +60,10 @@ describe("columns", () => {
           valuesOf({ style, [key]: COLUMNS[key][style] })[key],
         ])
     }
-    expect(valuesOf({ style: "tonal" })).toMatchObject({
-      surfaceLayers: "tonal",
-      surfaceEdge: "none",
-      inputStyle: "indicator",
+    expect(valuesOf({ style: "tactile" })).toMatchObject({
+      buttonStyle: "bevel",
+      surfaceEdge: "bevel",
+      surfaceShadow: "low",
     })
   })
 
@@ -134,10 +134,10 @@ describe("columns", () => {
 })
 
 describe("exclusions", () => {
-  it("are the eleven options other styles own", () => {
+  it("are the ten options other styles own", () => {
     expect(
       Object.values(ALLOWED).flatMap((byOption) => Object.keys(byOption ?? {})),
-    ).toHaveLength(11)
+    ).toHaveLength(10)
     for (const rule of STYLE_RULES)
       expect(rule.effect).toMatchObject({ kind: "exclude", fallback: "style" })
   })
@@ -187,20 +187,19 @@ describe("picking a style", () => {
   })
 
   it("drops only the picks the new style excludes", () => {
-    const tonal = pickStyle(state, "tonal")
-    expect(tonal).toMatchObject({
-      style: "tonal",
-      buttonStyle: "style",
-      inputStyle: "style",
-      surfaceShadow: "high",
-      menuInset: "full-bleed",
-    })
     // Well needs Tactile or Chunky's light: both keep it, Hairline goes.
     for (const style of ["tactile", "chunky"] as const)
       expect(pickStyle(state, style)).toMatchObject({
+        style,
         buttonStyle: "style",
         inputStyle: "well",
+        surfaceShadow: "high",
+        menuInset: "full-bleed",
       })
+    expect(pickStyle(state, "flat")).toMatchObject({
+      buttonStyle: "hairline",
+      inputStyle: "style",
+    })
   })
 
   it("drops the old Style's finish, not the new one's", () => {
@@ -215,8 +214,8 @@ describe("picking a style", () => {
     expect(followersOf(state, "style").sort()).toEqual(
       ["buttonStyle", "inputStyle", "surfaceShadow"].sort(),
     )
-    const reset = resetToStyle(pickStyle(state, "tonal"))
-    expect(reset.style).toBe("tonal")
+    const reset = resetToStyle(pickStyle(state, "chunky"))
+    expect(reset.style).toBe("chunky")
     expect(followersOf(reset, "style")).toEqual([])
   })
 })

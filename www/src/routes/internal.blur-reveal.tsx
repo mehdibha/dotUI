@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { ProgressiveBlur } from "@/components/progressive-blur"
+import { INTERNAL_PAGES } from "@/modules/internal/enabled"
 import { InternalHeader } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/blur-reveal")({
-  component: import.meta.env.DEV ? BlurRevealDemo : undefined,
+  component: INTERNAL_PAGES ? BlurRevealDemo : undefined,
 })
 
 // Internal demo of the blur-reveal utilities (styles.css) paired with
