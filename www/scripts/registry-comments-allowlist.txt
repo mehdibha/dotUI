@@ -1,11 +1,17 @@
 src/registry/base/base.css: /* Cursor axes: what the pointer becomes over enabled and disabled controls.
 src/registry/base/base.css: /* Disabled axis: what a disabled control recolors to. Every site reads one
+src/registry/base/base.css: /* Field focus, one per shell shape. A box draws the layer around itself and
+src/registry/base/base.css: /* Focus axes: the ring controls wear (color, width, the gap in bg, an inner
 src/registry/base/base.css: /* Hugeicons paths carry their own stroke-width attribute, so the rule must
 src/registry/base/base.css: /* Identical to shadcn's default so `shadcn init` dedupes it instead of
 src/registry/base/base.css: /* Invalid at rest: a danger halo, 0 wide unless the system draws one.
 src/registry/base/base.css: /* Invalid fill: a danger wash laid over whatever the field paints,
 src/registry/base/base.css: /* Only the outermost disabled element dims, so nested opacity doesn't
 src/registry/base/base.css: /* Scrim axis: what every modal layer (modal, sheet) lays over the
+src/registry/base/base.css: /* The field focus inks and invalid fill: per-mode, so on :root. */
+src/registry/base/base.css: /* The ring inside a row or cell, where an outside ring would clip. */
+src/registry/base/base.css: /* The ring outside a control whose own part covers its box (a checkbox's
+src/registry/base/base.css: /* The strokes ride in `--tw-ring-shadow` so `ring-0` still silences them;
 src/registry/base/colors.css: /* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */
 src/registry/base/colors.css: /* Primitive ramps generated from SITE_COLOR_CONFIG (see @/registry/theme). */
 src/registry/base/colors.css: /* Semantic tokens over the ramps above. */
@@ -308,6 +314,7 @@ src/registry/ui/input/styles.ts: // 16px below sm, so iOS never zooms a focused 
 src/registry/ui/input/styles.ts: // A select trigger drawn by Button: it only borrows the field height.
 src/registry/ui/input/styles.ts: // A select trigger worn as a field (Inputs › Select trigger: Field).
 src/registry/ui/input/styles.ts: // Boxed shells: the addon owns asymmetric inline padding.
+src/registry/ui/input/styles.ts: // Every focus and invalid layer draws under the rule.
 src/registry/ui/input/styles.ts: // GitHub Primer: a page-white box on the control edge, recessed by a 1px
 src/registry/ui/input/styles.ts: // Material 3 filled, Carbon: the well over a bottom indicator. It ends in a
 src/registry/ui/input/styles.ts: // One height rung on every slot that starts a field.
@@ -409,6 +416,7 @@ src/registry/ui/progress-bar/styles.ts: // Spectrum 2 (6px), Radix Themes (size 
 src/registry/ui/qr-code/base.dots.tsx: // Scanners require solid finder patterns, so the corner markers are rounded squares, not dots.
 src/registry/ui/questionnaire/styles.ts: // The shell is input's; this adds the questionnaire's own invalid
 src/registry/ui/questionnaire/styles.ts: // state, which it marks with aria-invalid.
+src/registry/ui/search-field/demos/with-suggestions.tsx: // Moving through suggestions blurs the input virtually, toward the popover.
 src/registry/ui/segmented-control/styles.ts: /* Item weight at rest, then selected. */
 src/registry/ui/segmented-control/styles.ts: /* The selection bar, shared with tabs' segmented variant (tabs imports
 src/registry/ui/segmented-control/styles.ts: // Outline trades a padding pixel for the hairline so the box stays put.
@@ -440,6 +448,7 @@ src/registry/ui/sidebar/styles.ts: // Polaris: a page-toned chip on a recessed s
 src/registry/ui/sidebar/styles.ts: // Primer, Carbon: a neutral wash and a wider bar.
 src/registry/ui/sidebar/styles.ts: // Stripe: the label and icon alone, a brand wash on hover. Sub-item icons
 src/registry/ui/sidebar/styles.ts: // The inset panel wears the card's edge and shadow (Linear's hairline).
+src/registry/ui/sidebar/styles.ts: // `order-last` keeps a right sidebar on the right wherever it sits in the JSX.
 src/registry/ui/sidebar/styles.ts: // `relative` makes this the positioning context for the absolute panel, so the sidebar works embedded in a page.
 src/registry/ui/sidebar/styles.ts: // on a stadium item (meta.ts rounds it through the item var).
 src/registry/ui/sidebar/styles.ts: // rest muted, so the current one takes the ink.
@@ -465,6 +474,7 @@ src/registry/ui/time-picker/base.tsx: /** Handler that is called when the popove
 src/registry/ui/time-picker/base.tsx: /** The time columns inside a TimePicker popover; reads and writes the enclosing TimePicker's value. */
 src/registry/ui/time-picker/base.tsx: /** Whether the popover is open (controlled). */
 src/registry/ui/time-picker/base.tsx: /** Whether the popover is open by default (uncontrolled). */
+src/registry/ui/time-picker/base.tsx: // Every TimeValue member implements `.set`; the cast only satisfies the union-method call.
 src/registry/ui/time-picker/base.tsx: // React Aria has no TimePicker primitive, so this composes one from DatePicker's building blocks and contexts.
 src/registry/ui/time-picker/base.tsx: // Trigger contexts that must not leak into the popover content.
 src/registry/ui/toast/base.tsx: // Whether a status toast's own fill is solid; undefined sits on the surface.
@@ -482,6 +492,7 @@ src/registry/ui/toast/styles.ts: // status fill.
 src/registry/ui/toast/styles.ts: // surface.
 src/registry/ui/toast/styles.ts: // the overlay surface, glass included.
 src/registry/ui/toggle-button-group/styles.ts: /* Group's seams, imported; segments attach or sit apart as on Group. */
+src/registry/ui/toggle-button/base.tsx: // A group attaches its secondary segments by data-variant.
 src/registry/ui/toggle-button/styles.ts: /* Button's recipe tables, imported: the toggle adds only its selected look. */
 src/registry/ui/token-field/base.tsx: /** A field for text with inline tokens; compose a `TokenInput` for the editable area. */
 src/registry/ui/token-field/base.tsx: /** An inline token within a `TokenInput`. */

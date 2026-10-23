@@ -7,7 +7,7 @@ const { useStyles } = createStyles(collapsibleMeta, {
   base: {
     slots: {
       root: "group/collapsible",
-      trigger: "cursor-interactive outline-none focus-visible:focus-ring",
+      trigger: "cursor-interactive focus-reset focus-visible:focus-ring",
       panel: "h-(--disclosure-panel-height) overflow-clip",
     },
   },

@@ -24,7 +24,7 @@ export function PresetSwitcher({ selected }: { selected: number }) {
   // list so it holds while the selection catches up with focus. Its lightness
   // is capped per mode so pale (Wise, Higgsfield) and near-black (Polaris)
   // accents keep 3:1 against the page.
-  const swatch = active?.swatch ?? "var(--color-border-focus)"
+  const swatch = active?.swatch ?? "var(--focus-ring-color)"
   const radius = active?.designSystem.tokens["--radius"] ?? "0.625rem"
   const indicatorStyle = {
     "--indicator-radius": `calc(${radius} * 0.75)`,

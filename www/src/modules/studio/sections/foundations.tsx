@@ -185,6 +185,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
       "focusColor",
       "focusInputStyle",
       "focusInputWeight",
+      "focusInputColor",
     ],
     aliases: ["Focus ring", "Keyboard"],
     Preview: FocusPreview,
