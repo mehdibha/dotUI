@@ -67,6 +67,7 @@ import {
   pool as poolOf,
   pause,
   PROBE,
+  readReference,
   REFS,
   runSteps,
   say,
@@ -603,11 +604,15 @@ await mkdir(dirname(outFile), { recursive: true })
 await writeFile(outFile, `${JSON.stringify(measured, null, 2)}\n`)
 console.log(`measures → ${outFile}`)
 
-if (!existsSync(tokensFile(preset))) {
+const reference = readReference(preset)
+if (!reference) {
   console.log(`no reference at ${tokensFile(preset)}: nothing to diff`)
   process.exit(0)
 }
-const reference: ReferenceTokens = await readJson(tokensFile(preset))
+if (reference.pixel.length)
+  console.log(
+    `${reference.pixel.length} values come from screenshots (pixel.json): ${reference.pixel.join(", ")}`,
+  )
 await writeFile(snapshotFile, `${JSON.stringify(reference, null, 2)}\n`)
 if (reference.probe !== PROBE && reference.probe !== "tokens")
   console.log(

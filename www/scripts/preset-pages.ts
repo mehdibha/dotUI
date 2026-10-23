@@ -2,11 +2,16 @@
    launching the headless browser, opening a reference page in a mode, and
    the steps a pack's pages run. */
 import { execFileSync } from "node:child_process"
+import { existsSync, readFileSync } from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
 
-import type { Page as PackPage, Step } from "../src/modules/preset-lab/probe"
+import type {
+  Page as PackPage,
+  ReferenceTokens,
+  Step,
+} from "../src/modules/preset-lab/probe"
 import { executablePath } from "./chromium"
 
 export type Mode = "light" | "dark"
@@ -31,6 +36,31 @@ export function versionOf(...files: string[]) {
 
 /** The probe and the diff: off counts and tokens compare only within one. */
 export const PROBE = versionOf("probe.ts", "compare.ts")
+
+/** A pack's reference: tokens.json, with what the pixel probe read from
+ *  screenshots (pixel.json) under it, prop by prop, where tokens.json has
+ *  nothing. `pixel` lists the "<mode> <part> <prop>" it filled. */
+export function readReference(pack: string) {
+  const read = (name: string): ReferenceTokens | undefined => {
+    const file = resolve(REFS, pack, name)
+    return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : undefined
+  }
+  const reference = read("tokens.json")
+  const pixel = read("pixel.json")
+  if (!reference) return undefined
+  const filled: string[] = []
+  for (const mode of ["light", "dark"] as const)
+    for (const [part, measure] of Object.entries(pixel?.[mode] ?? {})) {
+      const has = reference[mode]?.[part] ?? {}
+      for (const prop of Object.keys(measure ?? {}))
+        if (!(prop in has)) filled.push(`${mode} ${part} ${prop}`)
+      reference[mode] = {
+        ...reference[mode],
+        [part]: { ...measure, ...reference[mode]?.[part] },
+      }
+    }
+  return Object.assign(reference, { pixel: filled })
+}
 
 export const launch = () =>
   puppeteer.launch({
