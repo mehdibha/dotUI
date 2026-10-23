@@ -18,7 +18,7 @@ const { useStyles } = createStyles(breadcrumbsMeta, {
       root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted",
       item: "inline-flex items-center gap-1",
       link: [
-        "focus-reset focus-visible:focus-ring-outside",
+        "rounded-(--studio-radius-detail) outline-none focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
         "inline-flex items-center gap-1 px-0.5 leading-none transition-colors duration-(--studio-breadcrumbs-state-duration) ease-(--studio-breadcrumbs-state-ease) disabled:cursor-disabled disabled:not-current:text-(--disabled-fg,currentColor) current:text-fg",
       ],
       separator: "[&_svg]:size-4",

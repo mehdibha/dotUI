@@ -103,7 +103,7 @@ export function ChipButton({
       }}
       onPointerDown={(e) => e.stopPropagation()}
       onKeyDown={(e) => e.stopPropagation()}
-      className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 font-sans text-xs font-medium text-fg/70 focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
+      className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 font-sans text-xs font-medium text-fg/70 transition-colors outline-none hover:bg-fg/12 focus-visible:focus-ring"
     >
       {children}
     </button>
