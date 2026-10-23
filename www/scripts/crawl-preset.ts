@@ -76,7 +76,6 @@ import {
   COPY_AREA,
   type PartFile,
   type Snapshot,
-  snapshotDocument,
   snapshotSnippet,
 } from "../src/modules/preset-lab/snapshot"
 import {
@@ -672,6 +671,20 @@ async function saved(dir: string): Promise<CensusPage[]> {
   )
 }
 
+/** A copy as a page of its own, on the color it sat on, its fonts loaded
+ *  from where the product serves them. */
+const documentOf = (copy: Snapshot) => {
+  const faces = copy.fonts
+    .map(
+      (font) =>
+        `@font-face{font-family:${JSON.stringify(font.family)};src:${font.src}${font.weight ? `;font-weight:${font.weight}` : ""}${font.style ? `;font-style:${font.style}` : ""}${font.unicodeRange ? `;unicode-range:${font.unicodeRange}` : ""}}`,
+    )
+    .join("\n")
+  const css = `${faces}\nbody{margin:0;padding:16px;background:${copy.backdrop}}\n${copy.css}`
+  // A "<" in the CSS would close the style element.
+  return `<!doctype html><html><head><meta charset="utf-8"><style>${css.replace(/</g, "\\3c ")}</style></head><body>${copy.html}</body></html>\n`
+}
+
 /** Each look's copies as /internal/compare reads parts:
  *  snapshots/<look>-<state>-<mode>.json, with a standalone .html beside. */
 async function writeCopies(inventory: Inventory) {
@@ -704,13 +717,9 @@ async function writeCopies(inventory: Inventory) {
           resolve(dir, `${part}-${side}.json`),
           `${JSON.stringify(file)}\n`,
         )
-        // On the color it sat on, as the compare page shows it.
         await writeFile(
           resolve(dir, `${part}-${side}.html`),
-          snapshotDocument(snapshot).replace(
-            "<body>",
-            `<body style="background:${snapshot.backdrop}">`,
-          ),
+          documentOf(snapshot),
         )
       }
     }
