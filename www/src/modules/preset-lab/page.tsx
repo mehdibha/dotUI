@@ -1,39 +1,117 @@
 "use client"
 
 import { useEffect } from "react"
+import type { ComponentType, ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { InternalShell } from "@/modules/internal/shell"
-import { getPreset, PRESETS, resolvePreset } from "@/modules/presets"
+import { getPreset, PRESETS } from "@/modules/presets"
+import { parseState } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
+import {
+  useAnnouncePreviewReady,
+  useAppliedDesignSystem,
+} from "@/modules/studio/preset/iframe-sync"
+import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 
 import { SHEETS, type SheetName } from "./sheets"
 
 const route = getRouteApi("/internal/specimens")
 
 /* A preset rendered through the preview iframe's global-mode provider, one
-   sheet per 1280×900 capture. `scripts/capture-specimens.mts` screenshots it. */
+   sheet per 1280×900 capture. `scripts/capture-specimens.mts` screenshots it,
+   and /internal/compare embeds it. */
 export function SpecimenPage() {
-  const { preset = "origin", mode, sheet } = route.useSearch()
+  const { preset = "origin", mode, sheet, diff } = route.useSearch()
   if (!sheet) return <SpecimenIndex />
 
   const Sheet = Object.hasOwn(SHEETS, sheet)
     ? SHEETS[sheet as SheetName]
     : undefined
-  if (!getPreset(preset) || !Sheet) {
+  const base = getPreset(preset)
+  if (!base || !Sheet) {
     return (
-      <p data-specimen-error="" className="p-10 font-mono text-sm">
+      <SpecimenError>
         Unknown {Sheet ? `preset "${preset}"` : `sheet "${sheet}"`}. Presets:{" "}
         {PRESETS.map((p) => p.id).join(", ")}. Sheets:{" "}
         {Object.keys(SHEETS).join(", ")}.
-      </p>
+      </SpecimenError>
     )
   }
 
-  const designSystem = resolvePreset(preset)
+  let state = base.state
+  try {
+    if (diff) state = withDiff(state, JSON.parse(diff))
+  } catch (error) {
+    return <SpecimenError>{(error as Error).message}</SpecimenError>
+  }
+
+  return (
+    <SpecimenSheet
+      key={`${preset}|${diff}`}
+      state={state}
+      sheet={sheet}
+      Sheet={Sheet}
+      mode={mode}
+    />
+  )
+}
+
+function SpecimenError({ children }: { children: ReactNode }) {
+  return (
+    <p data-specimen-error="" className="p-10 font-mono text-sm">
+      {children}
+    </p>
+  )
+}
+
+const withDiff = (state: StudioState, diff: unknown) =>
+  parseState({ ...state, ...(diff as object) })
+
+const prepare: PrepareDesignSystem<undefined> = (_, ready) => ready(undefined)
+
+/* The sheet shows `state`, then follows the `design-system` messages its
+   own origin posts: /internal/compare's studio panel, or a script calling
+   `window.__specimen.setDiff(diff)` to re-render in place. */
+function SpecimenSheet({
+  state,
+  sheet,
+  Sheet,
+  mode,
+}: {
+  state: StudioState
+  sheet: string
+  Sheet: ComponentType
+  mode?: "light" | "dark"
+}) {
+  const { designSystem } = useAppliedDesignSystem(
+    prepare,
+    () => ({ designSystem: designSystemOf(state), prepared: undefined }),
+    internDesignSystem,
+  )
+  useAnnouncePreviewReady()
+  useEffect(() => {
+    const host = window as { __specimen?: unknown }
+    host.__specimen = {
+      setDiff: (diff: unknown) =>
+        window.postMessage(
+          {
+            type: "design-system",
+            data: designSystemOf(withDiff(state, diff)),
+            live: false,
+            drag: false,
+          },
+          window.location.origin,
+        ),
+    }
+    return () => {
+      delete host.__specimen
+    }
+  }, [state])
   return (
     <DesignSystemProvider
-      key={preset}
       params={designSystem.componentParams}
       tokens={designSystem.tokens}
       density={designSystem.density}
@@ -61,7 +139,10 @@ function ReadySignal() {
       await document.fonts.ready
       await new Promise((r) => setTimeout(r, 300))
       if (cancelled) return
-      document.querySelector<HTMLElement>("[data-specimen-focus]")?.focus()
+      // Embedded in /internal/compare, a scroll would move the parent page.
+      document
+        .querySelector<HTMLElement>("[data-specimen-focus]")
+        ?.focus({ preventScroll: true })
       await document.fonts.ready
       document.documentElement.dataset.specimenReady = ""
     }

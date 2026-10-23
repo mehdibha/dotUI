@@ -13,7 +13,8 @@
  *     each page's steps and each part's focus and `before` steps, and merges
  *     the results into refs/<id>/tokens.json. A page key that isn't a URL is
  *     a file in the pack's folder (a local harness page). `--shots` also
- *     saves each part as <dir>/<part>-<mode>.png, for presets:compare.
+ *     saves each part as <dir>/<part>-<mode>.png, with a frozen copy of it
+ *     in <part>-<mode>.json, for /internal/compare and presets:compare.
  *
  *   tsx scripts/measure-preset.mts --pack <id> --url <url> --merge <file> [--mode light|dark]
  *     Merges a signed-in page's measures (the snippet's output, saved as
@@ -55,6 +56,11 @@ import {
   snippet,
   type Target,
 } from "../src/modules/preset-lab/probe"
+import {
+  type PartFile,
+  type Snapshot,
+  snapshotSnippet,
+} from "../src/modules/preset-lab/snapshot"
 import { executablePath } from "./chromium"
 
 const { values: args } = parseArgs({
@@ -289,7 +295,13 @@ const settle = (page: Page) =>
     )
     .catch(() => {})
 
-/** A part as it shows, with a margin for rings and shadows, once it settles. */
+/** The margin around a crop, for rings and shadows. */
+const PAD = 16
+/** Parts larger than this (in CSS px²) get a crop but no frozen copy. */
+const COPY_AREA = 640 * 480
+
+/** A part as it shows, with a margin, once it settles, and beside it a frozen copy of it with what /internal/compare
+ *  needs to line the two up (`PartFile`). */
 async function shoot(page: Page, part: string, mode: Mode) {
   if (!args.shots) return
   const el = await page.$(`>>> [data-probe-part="${part}"]`)
@@ -301,19 +313,45 @@ async function shoot(page: Page, part: string, mode: Mode) {
   await settle(page)
   const box = await el.boundingBox()
   if (!box) return
-  const [left, top] = await page.evaluate(() => [
-    window.scrollX,
-    window.scrollY,
-  ])
-  const x = Math.max(0, box.x + left - 16)
-  const y = Math.max(0, box.y + top - 16)
+  const { left, top, dpr } = await page.evaluate(() => ({
+    left: window.scrollX,
+    top: window.scrollY,
+    dpr: window.devicePixelRatio,
+  }))
+  const x = Math.max(0, box.x + left - PAD)
+  const y = Math.max(0, box.y + top - PAD)
   await mkdir(args.shots, { recursive: true })
   await page.screenshot({
     path: resolve(args.shots, `${part}-${mode}.png`),
-    clip: { x, y, width: box.width + 32, height: box.height + 32 },
+    clip: { x, y, width: box.width + 2 * PAD, height: box.height + 2 * PAD },
     // Capturing beyond the viewport resizes it, which closes hover overlays.
     captureBeyondViewport: false,
   })
+  // A page or shell is the whole product: its copy is too big to be useful.
+  const copies =
+    box.width * box.height > COPY_AREA
+      ? {}
+      : ((await page.evaluate(
+          snapshotSnippet({ attribute: "data-probe-part", keys: [part] }),
+        )) as Record<string, Snapshot>)
+  const file: PartFile = {
+    kind: "dotui-part",
+    part,
+    mode,
+    page: page.url(),
+    dpr,
+    crop: {
+      left: box.x + left - x,
+      top: box.y + top - y,
+      width: box.width,
+      height: box.height,
+    },
+    snapshot: copies[part],
+  }
+  await writeFile(
+    resolve(args.shots, `${part}-${mode}.json`),
+    `${JSON.stringify(file)}\n`,
+  )
 }
 
 /** Says when a part was read where nothing shows: under opacity 0 or

@@ -1,0 +1,30 @@
+import { createFileRoute } from "@tanstack/react-router"
+
+import { ComparePage } from "@/modules/preset-lab/compare-page"
+
+interface CompareSearch {
+  /** The reference pack, and the preset the studio opens on. */
+  preset?: string
+  mode?: "light" | "dark"
+  sheet?: string
+  view?: "side" | "onion" | "swipe" | "difference"
+}
+
+const VIEWS = ["side", "onion", "swipe", "difference"] as const
+
+export const Route = createFileRoute("/internal/compare")({
+  validateSearch: (search: Record<string, unknown>): CompareSearch => ({
+    preset: typeof search.preset === "string" ? search.preset : undefined,
+    mode:
+      search.mode === "light" || search.mode === "dark"
+        ? search.mode
+        : undefined,
+    sheet: typeof search.sheet === "string" ? search.sheet : undefined,
+    view: VIEWS.find((view) => view === search.view),
+  }),
+  ssr: false,
+  component: import.meta.env.DEV ? ComparePage : undefined,
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Compare · dotUI" }] })
+    : undefined,
+})
