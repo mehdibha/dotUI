@@ -1,0 +1,823 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://chakra-ui.com/docs/components/accordion",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Action Bar",
+      "docsUrl": "https://chakra-ui.com/docs/components/action-bar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alert",
+      "docsUrl": "https://chakra-ui.com/docs/components/alert",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Aspect Ratio",
+      "docsUrl": "https://chakra-ui.com/docs/components/aspect-ratio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://chakra-ui.com/docs/components/avatar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://chakra-ui.com/docs/components/badge",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Bleed",
+      "docsUrl": "https://chakra-ui.com/docs/components/bleed",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Blockquote",
+      "docsUrl": "https://chakra-ui.com/docs/components/blockquote",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Box",
+      "docsUrl": "https://chakra-ui.com/docs/components/box",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumb",
+      "docsUrl": "https://chakra-ui.com/docs/components/breadcrumb",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://chakra-ui.com/docs/components/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Chakra UI Button</title>\n<script>\n  (function () {\n    var el = document.documentElement;\n    var listeners = [];\n    var dark = false;\n\n    // The whole dark mechanism, idempotent and two-way.\n    function applyMode(next) {\n      dark = !!next;\n      if (dark) el.classList.add(\"dark\");\n      else el.classList.remove(\"dark\");\n      for (var i = 0; i < listeners.length; i++) listeners[i](dark);\n    }\n\n    window.__demoMode = {\n      isDark: function () { return dark; },\n      subscribe: function (fn) { listeners.push(fn); fn(dark); }\n    };\n\n    // 1. Explicit ?mode= override: apply once, never observe.\n    var param = new URLSearchParams(window.location.search).get(\"mode\");\n    if (param !== null) {\n      applyMode(param === \"dark\");\n      return;\n    }\n\n    // 2. Otherwise mirror the embedding parent's <html> class, live.\n    var root = null;\n    try {\n      if (window.parent !== window) root = window.parent.document.documentElement;\n    } catch (err) {\n      root = null;\n    }\n    if (!root) {\n      applyMode(false);\n      return;\n    }\n    applyMode(root.classList.contains(\"dark\"));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains(\"dark\"));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: [\"class\"] });\n    window.__demoModeObserver = observer;\n  })();\n</script>\n<style>\n  html, body { margin: 0; padding: 0; background: #ffffff; }\n  html.dark, html.dark body { background: var(--chakra-colors-bg, #09090B); }\n  #root { min-height: 100vh; }\n</style>\n<script type=\"importmap\">\n{\n  \"imports\": {\n    \"react\": \"https://esm.sh/react@19.1.0\",\n    \"react/jsx-runtime\": \"https://esm.sh/react@19.1.0/jsx-runtime\",\n    \"react-dom\": \"https://esm.sh/react-dom@19.1.0?deps=react@19.1.0\",\n    \"react-dom/client\": \"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0\",\n    \"@emotion/react\": \"https://esm.sh/@emotion/react@11.14.0?deps=react@19.1.0\",\n    \"@chakra-ui/react\": \"https://esm.sh/@chakra-ui/react@3.30.0?deps=react@19.1.0,react-dom@19.1.0,@emotion/react@11.14.0\"\n  }\n}\n</script>\n</head>\n<body>\n<div id=\"root\"></div>\n<script type=\"module\">\n  import React from \"react\";\n  import { createRoot } from \"react-dom/client\";\n  import { ChakraProvider, defaultSystem, Button } from \"@chakra-ui/react\";\n\n  const h = React.createElement;\n\n  function Row({ dark }) {\n    return h(\n      \"div\",\n      {\n        style: {\n          minHeight: \"100vh\",\n          boxSizing: \"border-box\",\n          padding: \"16px\",\n          display: \"flex\",\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          gap: \"12px\",\n          flexWrap: \"wrap\",\n          background: dark ? \"var(--chakra-colors-bg, #09090B)\" : \"#ffffff\"\n        }\n      },\n      h(Button, { colorPalette: \"blue\" }, \"Primary\"),\n      h(Button, { colorPalette: \"blue\", variant: \"outline\" }, \"Secondary\"),\n      h(Button, { colorPalette: \"blue\", disabled: true }, \"Disabled\")\n    );\n  }\n\n  const root = createRoot(document.getElementById(\"root\"));\n\n  // Renders now with the resolved mode, and again on every parent change.\n  window.__demoMode.subscribe(function (dark) {\n    root.render(\n      h(ChakraProvider, { value: defaultSystem }, h(Row, { dark: dark }))\n    );\n  });\n</script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "calendar",
+      "name": "Calendar",
+      "docsUrl": "https://chakra-ui.com/docs/components/calendar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://chakra-ui.com/docs/components/card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "carousel",
+      "name": "Carousel",
+      "docsUrl": "https://chakra-ui.com/docs/components/carousel",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Center",
+      "docsUrl": "https://chakra-ui.com/docs/components/center",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Center (Absolute)",
+      "docsUrl": "https://chakra-ui.com/docs/components/absolute-center",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://chakra-ui.com/docs/components/checkbox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Checkbox Card",
+      "docsUrl": "https://chakra-ui.com/docs/components/checkbox-card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Checkmark",
+      "docsUrl": "https://chakra-ui.com/docs/components/checkmark",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ClientOnly",
+      "docsUrl": "https://chakra-ui.com/docs/components/client-only",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Clipboard",
+      "docsUrl": "https://chakra-ui.com/docs/components/clipboard",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Close Button",
+      "docsUrl": "https://chakra-ui.com/docs/components/close-button",
+      "demo": null,
+      "note": "Preset icon button for dismissing overlays; kept unmapped so a single Chakra page owns the canonical button slug."
+    },
+    {
+      "component": null,
+      "name": "Code",
+      "docsUrl": "https://chakra-ui.com/docs/components/code",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Code Block",
+      "docsUrl": "https://chakra-ui.com/docs/components/code-block",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Collapsible",
+      "docsUrl": "https://chakra-ui.com/docs/components/collapsible",
+      "demo": null,
+      "note": "Single disclosure region — the canonical accordion slug is held by Chakra’s Accordion."
+    },
+    {
+      "component": null,
+      "name": "Color Picker",
+      "docsUrl": "https://chakra-ui.com/docs/components/color-picker",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Swatch",
+      "docsUrl": "https://chakra-ui.com/docs/components/color-swatch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "Combobox",
+      "docsUrl": "https://chakra-ui.com/docs/components/combobox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Container",
+      "docsUrl": "https://chakra-ui.com/docs/components/container",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Data List",
+      "docsUrl": "https://chakra-ui.com/docs/components/data-list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Date Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/date-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "date-picker",
+      "name": "Date Picker",
+      "docsUrl": "https://chakra-ui.com/docs/components/date-picker",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://chakra-ui.com/docs/components/dialog",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Download Trigger",
+      "docsUrl": "https://chakra-ui.com/docs/components/download-trigger",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://chakra-ui.com/docs/components/drawer",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Editable",
+      "docsUrl": "https://chakra-ui.com/docs/components/editable",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Em",
+      "docsUrl": "https://chakra-ui.com/docs/components/em",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "empty-state",
+      "name": "Empty State",
+      "docsUrl": "https://chakra-ui.com/docs/components/empty-state",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "EnvironmentProvider",
+      "docsUrl": "https://chakra-ui.com/docs/components/environment-provider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Field",
+      "docsUrl": "https://chakra-ui.com/docs/components/field",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Fieldset",
+      "docsUrl": "https://chakra-ui.com/docs/components/fieldset",
+      "demo": null,
+      "note": "Grouping wrapper that pairs with Field; the canonical form slug is held by Field."
+    },
+    {
+      "component": "file-upload",
+      "name": "File Upload",
+      "docsUrl": "https://chakra-ui.com/docs/components/file-upload",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Flex",
+      "docsUrl": "https://chakra-ui.com/docs/components/flex",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Float",
+      "docsUrl": "https://chakra-ui.com/docs/components/float",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Floating Panel",
+      "docsUrl": "https://chakra-ui.com/docs/components/floating-panel",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "For",
+      "docsUrl": "https://chakra-ui.com/docs/components/for",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FormatByte",
+      "docsUrl": "https://chakra-ui.com/docs/components/format-byte",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FormatNumber",
+      "docsUrl": "https://chakra-ui.com/docs/components/format-number",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Grid",
+      "docsUrl": "https://chakra-ui.com/docs/components/grid",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "Group",
+      "docsUrl": "https://chakra-ui.com/docs/components/group",
+      "demo": null,
+      "note": "Generic grouping primitive — Chakra has no dedicated ButtonGroup in v3; Group is what button toolbars are built from."
+    },
+    {
+      "component": null,
+      "name": "Heading",
+      "docsUrl": "https://chakra-ui.com/docs/components/heading",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Highlight",
+      "docsUrl": "https://chakra-ui.com/docs/components/highlight",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Hover Card",
+      "docsUrl": "https://chakra-ui.com/docs/components/hover-card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icon",
+      "docsUrl": "https://chakra-ui.com/docs/components/icon",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Icon Button",
+      "docsUrl": "https://chakra-ui.com/docs/components/icon-button",
+      "demo": null,
+      "note": "A separate docs page rather than a Button variant; the canonical button entry is Chakra’s Button."
+    },
+    {
+      "component": null,
+      "name": "Image",
+      "docsUrl": "https://chakra-ui.com/docs/components/image",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "kbd",
+      "name": "Kbd",
+      "docsUrl": "https://chakra-ui.com/docs/components/kbd",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://chakra-ui.com/docs/components/link",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Link Overlay",
+      "docsUrl": "https://chakra-ui.com/docs/components/link-overlay",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "List",
+      "docsUrl": "https://chakra-ui.com/docs/components/list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Listbox",
+      "docsUrl": "https://chakra-ui.com/docs/components/listbox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "LocaleProvider",
+      "docsUrl": "https://chakra-ui.com/docs/components/locale-provider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Mark",
+      "docsUrl": "https://chakra-ui.com/docs/components/mark",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Marquee",
+      "docsUrl": "https://chakra-ui.com/docs/components/marquee",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://chakra-ui.com/docs/components/menu",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Number Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/number-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Overlay Manager",
+      "docsUrl": "https://chakra-ui.com/docs/components/overlay-manager",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://chakra-ui.com/docs/components/pagination",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Password Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/password-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Pin Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/pin-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://chakra-ui.com/docs/components/popover",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Portal",
+      "docsUrl": "https://chakra-ui.com/docs/components/portal",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Presence",
+      "docsUrl": "https://chakra-ui.com/docs/components/presence",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://chakra-ui.com/docs/components/progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Progress Circle",
+      "docsUrl": "https://chakra-ui.com/docs/components/progress-circle",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Prose",
+      "docsUrl": "https://chakra-ui.com/docs/components/prose",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "QR Code",
+      "docsUrl": "https://chakra-ui.com/docs/components/qr-code",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://chakra-ui.com/docs/components/radio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Radio Card",
+      "docsUrl": "https://chakra-ui.com/docs/components/radio-card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Radiomark",
+      "docsUrl": "https://chakra-ui.com/docs/components/radiomark",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "rating",
+      "name": "Rating",
+      "docsUrl": "https://chakra-ui.com/docs/components/rating",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Rich Text Editor",
+      "docsUrl": "https://chakra-ui.com/docs/components/rich-text-editor",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Scroll Area",
+      "docsUrl": "https://chakra-ui.com/docs/components/scroll-area",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "segmented-control",
+      "name": "Segmented Control",
+      "docsUrl": "https://chakra-ui.com/docs/components/segmented-control",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://chakra-ui.com/docs/components/select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Select (Native)",
+      "docsUrl": "https://chakra-ui.com/docs/components/native-select",
+      "demo": null,
+      "note": "Wrapper around the browser’s <select>; the canonical select slug is held by Chakra’s composite Select."
+    },
+    {
+      "component": "divider",
+      "name": "Separator",
+      "docsUrl": "https://chakra-ui.com/docs/components/separator",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Show",
+      "docsUrl": "https://chakra-ui.com/docs/components/show",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "SimpleGrid",
+      "docsUrl": "https://chakra-ui.com/docs/components/simple-grid",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://chakra-ui.com/docs/components/skeleton",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Skip Nav",
+      "docsUrl": "https://chakra-ui.com/docs/components/skip-nav",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://chakra-ui.com/docs/components/slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Spinner",
+      "docsUrl": "https://chakra-ui.com/docs/components/spinner",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Splitter",
+      "docsUrl": "https://chakra-ui.com/docs/components/splitter",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Stack",
+      "docsUrl": "https://chakra-ui.com/docs/components/stack",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Stat",
+      "docsUrl": "https://chakra-ui.com/docs/components/stat",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Status",
+      "docsUrl": "https://chakra-ui.com/docs/components/status",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-steps",
+      "name": "Steps",
+      "docsUrl": "https://chakra-ui.com/docs/components/steps",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://chakra-ui.com/docs/components/switch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://chakra-ui.com/docs/components/table",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://chakra-ui.com/docs/components/tabs",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tag",
+      "docsUrl": "https://chakra-ui.com/docs/components/tag",
+      "demo": null,
+      "note": "Interactive, removable label; the canonical badge slug is held by Chakra’s Badge."
+    },
+    {
+      "component": null,
+      "name": "Tags Input",
+      "docsUrl": "https://chakra-ui.com/docs/components/tags-input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Text",
+      "docsUrl": "https://chakra-ui.com/docs/components/text",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea",
+      "docsUrl": "https://chakra-ui.com/docs/components/textarea",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Theme",
+      "docsUrl": "https://chakra-ui.com/docs/components/theme",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "timeline",
+      "name": "Timeline",
+      "docsUrl": "https://chakra-ui.com/docs/components/timeline",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Toast",
+      "docsUrl": "https://chakra-ui.com/docs/components/toast",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Toggle Tip",
+      "docsUrl": "https://chakra-ui.com/docs/components/toggle-tip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://chakra-ui.com/docs/components/tooltip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tree View",
+      "docsUrl": "https://chakra-ui.com/docs/components/tree-view",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Visually Hidden",
+      "docsUrl": "https://chakra-ui.com/docs/components/visually-hidden",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Wrap",
+      "docsUrl": "https://chakra-ui.com/docs/components/wrap",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://github.com/chakra-ui/chakra-ui",
+    "https://chakra-ui.com/docs/components/concepts/overview"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/chakra.ts",
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/chakra-ui/chakra-ui",
+        "ref": "7aca83e44de50f501d8274a55c331cb8fb06e4fa",
+        "retrievedAt": null,
+        "snapshot": "chakra"
+      }
+    ],
+    "notes": "Inventory is the \"Components\" branch of Chakra’s own docs sidebar (apps/www/docs.config.ts), vendored at a pinned commit SHA — display name and docs slug come straight from it, and docsUrl is that slug under https://chakra-ui.com/docs/components/. The \"Concepts\" group (overview, composition, animation, colour mode, server components, testing) is prose and is excluded; the Charts branch is a separate add-on package and is out of scope. Canonical taxonomy mapping is editorial: an explicit slug→slug map in the extractor, one canonical slug claimed at most once, unknown docs slugs fail the extract rather than defaulting to null. The Button demo loads @chakra-ui/react 3.30.0 (with React 19.1.0 and @emotion/react 11.14.0) from pinned esm.sh URLs — real published assets, no hand-written styles; its package version is pinned independently of the docs SHA. Demo colour mode is a single idempotent two-way `applyMode(dark)`: it adds or removes the class `dark` on <html> — Chakra v3’s own default dark condition (`dark: \".dark &, .dark .chakra-theme:not(.light) &\"` in the published 3.30.0 base preset) — and re-renders the React root so the canvas uses Chakra’s semantic `bg` token (`--chakra-colors-bg`, `_dark` = `{colors.black}` = #09090B) in dark and `#ffffff` in light. Resolution happens in a head IIFE before first paint: an explicit `mode` query parameter is applied once with no observation (standalone testing), otherwise the demo reads the embedding parent’s <html> (same-origin only — a cross-origin or top-level page means light) and mirrors its `dark` class live via a MutationObserver on `class` kept for the page lifetime, so a parent theme toggle restyles the frame both ways without reloading it."
+  }
+}

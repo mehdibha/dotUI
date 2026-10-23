@@ -1,0 +1,17 @@
+{
+  "slug": "daisyui",
+  "name": "daisyUI",
+  "org": "Pouya Saadeghi",
+  "type": "component-library",
+  "upstream": ["tailwind"],
+  "sources": {
+    "docs": "https://daisyui.com/docs/intro/",
+    "repo": "https://github.com/saadeghi/daisyui",
+    "site": "https://daisyui.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

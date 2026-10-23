@@ -1,0 +1,292 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://design-system.service.gov.uk/components/accordion/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/accordion/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "link",
+      "name": "Back link",
+      "docsUrl": "https://design-system.service.gov.uk/components/back-link/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/back-link/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "docsUrl": "https://design-system.service.gov.uk/components/breadcrumbs/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/breadcrumbs/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://design-system.service.gov.uk/components/button/",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>GOV.UK Design System — Buttons</title>\n<!-- Real published govuk-frontend CSS, pinned to v6.5.0 -->\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/govuk-frontend@6.5.0/dist/govuk/govuk-frontend.min.css\">\n<style>\n  /* Layout only. No component styling: all appearance comes from govuk-frontend.min.css. */\n  html { background: #fff; }\n  body.govuk-template__body {\n    min-height: 100vh;\n    margin: 0;\n    padding: 16px;\n    box-sizing: border-box;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background: #fff;\n  }\n  .demo-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }\n  /* govuk-frontend makes buttons full-width below its 40.0625em breakpoint and adds a\n     bottom margin for form flow; neutralised here so the demo is a single tight row. */\n  .demo-row .govuk-button { width: auto; margin: 0; }\n</style>\n</head>\n<body class=\"govuk-template__body\">\n  <div class=\"demo-row\">\n    <button type=\"submit\" class=\"govuk-button\" data-module=\"govuk-button\">\n      Save and continue\n    </button>\n    <button type=\"submit\" class=\"govuk-button govuk-button--secondary\" data-module=\"govuk-button\">\n      Secondary button\n    </button>\n    <button type=\"submit\" disabled aria-disabled=\"true\" class=\"govuk-button\" data-module=\"govuk-button\">\n      Disabled button\n    </button>\n  </div>\n</body>\n</html>\n",
+        "height": 190
+      },
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/button/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Character count",
+      "docsUrl": "https://design-system.service.gov.uk/components/character-count/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/character-count/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkboxes",
+      "docsUrl": "https://design-system.service.gov.uk/components/checkboxes/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/checkboxes/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Cookie banner",
+      "docsUrl": "https://design-system.service.gov.uk/components/cookie-banner/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/cookie-banner/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "date-picker",
+      "name": "Date input",
+      "docsUrl": "https://design-system.service.gov.uk/components/date-input/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/date-input/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "accordion",
+      "name": "Details",
+      "docsUrl": "https://design-system.service.gov.uk/components/details/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/details/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "form",
+      "name": "Error message",
+      "docsUrl": "https://design-system.service.gov.uk/components/error-message/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/error-message/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "alert",
+      "name": "Error summary",
+      "docsUrl": "https://design-system.service.gov.uk/components/error-summary/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/error-summary/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Exit this page",
+      "docsUrl": "https://design-system.service.gov.uk/components/exit-this-page/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/exit-this-page/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Feedback",
+      "docsUrl": "https://design-system.service.gov.uk/components/feedback/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/feedback/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "form",
+      "name": "Fieldset",
+      "docsUrl": "https://design-system.service.gov.uk/components/fieldset/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/fieldset/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "file-upload",
+      "name": "File upload",
+      "docsUrl": "https://design-system.service.gov.uk/components/file-upload/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/file-upload/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "footer",
+      "name": "Footer",
+      "docsUrl": "https://design-system.service.gov.uk/components/footer/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/footer/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "header",
+      "name": "Generic header",
+      "docsUrl": "https://design-system.service.gov.uk/components/generic-header/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/generic-header/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "header",
+      "name": "Header",
+      "docsUrl": "https://design-system.service.gov.uk/components/header/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/header/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Inset text",
+      "docsUrl": "https://design-system.service.gov.uk/components/inset-text/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/inset-text/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Language navigation",
+      "docsUrl": "https://design-system.service.gov.uk/components/language-navigation/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/language-navigation/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "alert",
+      "name": "Notification banner",
+      "docsUrl": "https://design-system.service.gov.uk/components/notification-banner/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/notification-banner/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://design-system.service.gov.uk/components/pagination/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/pagination/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "card",
+      "name": "Panel",
+      "docsUrl": "https://design-system.service.gov.uk/components/panel/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/panel/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "text-input",
+      "name": "Password input",
+      "docsUrl": "https://design-system.service.gov.uk/components/password-input/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/password-input/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": null,
+      "name": "Phase banner",
+      "docsUrl": "https://design-system.service.gov.uk/components/phase-banner/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/phase-banner/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "radio",
+      "name": "Radios",
+      "docsUrl": "https://design-system.service.gov.uk/components/radios/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/radios/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://design-system.service.gov.uk/components/select/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/select/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "header",
+      "name": "Service navigation",
+      "docsUrl": "https://design-system.service.gov.uk/components/service-navigation/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/service-navigation/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "link",
+      "name": "Skip link",
+      "docsUrl": "https://design-system.service.gov.uk/components/skip-link/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/skip-link/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "list",
+      "name": "Summary list",
+      "docsUrl": "https://design-system.service.gov.uk/components/summary-list/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/summary-list/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://design-system.service.gov.uk/components/table/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/table/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://design-system.service.gov.uk/components/tabs/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/tabs/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "badge",
+      "name": "Tag",
+      "docsUrl": "https://design-system.service.gov.uk/components/tag/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/tag/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "list",
+      "name": "Task list",
+      "docsUrl": "https://design-system.service.gov.uk/components/task-list/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/task-list/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "text-input",
+      "name": "Text input",
+      "docsUrl": "https://design-system.service.gov.uk/components/text-input/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/input/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea",
+      "docsUrl": "https://design-system.service.gov.uk/components/textarea/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/textarea/ (govuk-frontend v6.5.0)."
+    },
+    {
+      "component": "alert",
+      "name": "Warning text",
+      "docsUrl": "https://design-system.service.gov.uk/components/warning-text/",
+      "demo": null,
+      "note": "Nunjucks/Sass source: packages/govuk-frontend/src/govuk/components/warning-text/ (govuk-frontend v6.5.0)."
+    }
+  ],
+  "sources": [
+    "https://design-system.service.gov.uk",
+    "https://design-system.service.gov.uk/components/",
+    "https://github.com/alphagov/govuk-frontend"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/govuk.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://api.github.com/repos/alphagov/govuk-frontend/git/trees/388325c279329ce22bc2308912c80f943efa5317",
+        "ref": "388325c279329ce22bc2308912c80f943efa5317",
+        "retrievedAt": "2026-08-29",
+        "snapshot": "govuk"
+      },
+      {
+        "kind": "live-site",
+        "url": "https://design-system.service.gov.uk/sitemap.xml",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "govuk"
+      }
+    ],
+    "notes": "Inventory = every component documented at https://design-system.service.gov.uk/components/, read from the docs sitemap; docs URLs are the sitemap's own <loc> values. Implementation notes come from the GitHub git-trees listing of packages/govuk-frontend/src/govuk/components/ at govuk-frontend v6.5.0 (commit fbf045a0d6013d7dd1e5d878d21027a239645324). The snapshot kind is live-site because the API is not a raw git file, but the URL is addressed by that directory's tree SHA (388325c279329ce22bc2308912c80f943efa5317) — a content hash, so it is version-pinned and immutable; only the sitemap can drift. Component names are title-cased from the docs slug, not scraped from the page titles. Source directories with no documented page at this version: hint, label — these are field building blocks reused inside other components rather than standalone documented components, so they are not inventory entries. Canonical taxonomy mapping is editorial (declared in this config); GOV.UK-specific patterns with no cross-system equivalent map to null. Demos load the published govuk-frontend stylesheet from jsDelivr at a pinned version; only centering and the button width/margin reset are authored locally. Demo scope: Button."
+  }
+}

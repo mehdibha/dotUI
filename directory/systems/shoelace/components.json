@@ -1,0 +1,432 @@
+{
+  "components": [
+    {
+      "component": "alert",
+      "name": "Alert",
+      "docsUrl": "https://shoelace.style/components/alert",
+      "demo": null,
+      "note": "Alerts are used to display important messages inline or as toast notifications. <sl-alert>"
+    },
+    {
+      "component": null,
+      "name": "Animated Image",
+      "docsUrl": "https://shoelace.style/components/animated-image",
+      "demo": null,
+      "note": "A component for displaying animated GIFs and WEBPs that play and pause on interaction. <sl-animated-image>"
+    },
+    {
+      "component": null,
+      "name": "Animation",
+      "docsUrl": "https://shoelace.style/components/animation",
+      "demo": null,
+      "note": "Animate elements declaratively with nearly 100 baked-in presets, or roll your own with custom keyframes. Powered by the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). <sl-animation>"
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://shoelace.style/components/avatar",
+      "demo": null,
+      "note": "Avatars are used to represent a person or object. <sl-avatar>"
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://shoelace.style/components/badge",
+      "demo": null,
+      "note": "Badges are used to draw attention and display statuses or counts. <sl-badge>"
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumb",
+      "docsUrl": "https://shoelace.style/components/breadcrumb",
+      "demo": null,
+      "note": "Breadcrumbs provide a group of links so users can easily navigate a website's hierarchy. <sl-breadcrumb>"
+    },
+    {
+      "component": null,
+      "name": "Breadcrumb Item",
+      "docsUrl": "https://shoelace.style/components/breadcrumb-item",
+      "demo": null,
+      "note": "Breadcrumb Items are used inside [breadcrumbs](/components/breadcrumb) to represent different links. <sl-breadcrumb-item>"
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://shoelace.style/components/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Shoelace Button</title>\n\n<!-- Shoelace 2.20.1 — official light theme (real published CSS, pinned) -->\n<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css\"\n/>\n\n<!-- Shoelace 2.20.1 — official dark theme. Scoped entirely to .sl-theme-dark\n     (it declares no :root block), so loading it is inert until the class is set.\n     Loaded after light.css so its equal-specificity declarations win in dark. -->\n<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css\"\n/>\n\n<!-- Dark mode → Shoelace's own mechanism: the sl-theme-dark class on <html>.\n     Runs in <head>, before first paint, so there is no light flash.\n     ?mode= is a standalone-testing override; otherwise the demo follows the\n     parent document's <html class=\"dark\"> live, via a MutationObserver. -->\n<script>\n  (function () {\n    // Idempotent, switches both ways: adding/removing sl-theme-dark is the\n    // whole mechanism — the light canvas rule applies again once it is gone.\n    function applyMode(dark) {\n      document.documentElement.classList.toggle('sl-theme-dark', !!dark);\n    }\n\n    var override = new URLSearchParams(location.search).get('mode');\n    if (override !== null) {\n      applyMode(override === 'dark');\n      return;\n    }\n\n    var root = null;\n    try {\n      if (window.parent !== window) root = window.parent.document.documentElement;\n    } catch (err) {\n      root = null; // cross-origin parent\n    }\n    if (!root) {\n      applyMode(false);\n      return;\n    }\n\n    applyMode(root.classList.contains('dark'));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains('dark'));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: ['class'] });\n    // Keep the observer alive for the page lifetime.\n    window.__dsModeObserver = observer;\n  })();\n</script>\n\n<!-- Shoelace 2.20.1 autoloader — lazily registers any <sl-*> element it finds -->\n<script\n  type=\"module\"\n  src=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js\"\n  data-shoelace=\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/\"\n></script>\n\n<style>\n  html, body {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    background: #ffffff;\n  }\n  /* Dark canvas from Shoelace's own dark palette — no invented hexes. */\n  html.sl-theme-dark,\n  html.sl-theme-dark body {\n    background: var(--sl-color-neutral-0);\n    color: var(--sl-color-neutral-900);\n  }\n  body {\n    box-sizing: border-box;\n    padding: 16px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-family: var(--sl-font-sans, system-ui, -apple-system, \"Segoe UI\", sans-serif);\n  }\n  .row {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    flex-wrap: wrap;\n  }\n  /* Avoid a flash of unstyled/unregistered custom elements */\n  .row > *:not(:defined) {\n    visibility: hidden;\n  }\n  /* Safety net: if the CDN modules never load, still show the markup */\n  body.sl-timeout .row > *:not(:defined) {\n    visibility: visible;\n  }\n</style>\n</head>\n<body>\n  <div class=\"row\">\n    <sl-button variant=\"primary\">Primary</sl-button>\n    <sl-button variant=\"default\">Secondary</sl-button>\n    <sl-button variant=\"primary\" disabled>Disabled</sl-button>\n  </div>\n\n  <script>\n    // If Shoelace fails to register within 6s, un-hide so the page is never blank.\n    setTimeout(function () {\n      if (!customElements.get('sl-button')) {\n        document.body.classList.add('sl-timeout');\n      }\n    }, 6000);\n  </script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": "Buttons represent actions that are available to the user. <sl-button>"
+    },
+    {
+      "component": "button-group",
+      "name": "Button Group",
+      "docsUrl": "https://shoelace.style/components/button-group",
+      "demo": null,
+      "note": "Button groups can be used to group related buttons into sections. <sl-button-group>"
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://shoelace.style/components/card",
+      "demo": null,
+      "note": "Cards can be used to group related subjects in a container. <sl-card>"
+    },
+    {
+      "component": "carousel",
+      "name": "Carousel",
+      "docsUrl": "https://shoelace.style/components/carousel",
+      "demo": null,
+      "note": "Carousels display an arbitrary number of content slides along a horizontal or vertical axis. <sl-carousel> Status: experimental."
+    },
+    {
+      "component": null,
+      "name": "Carousel Item",
+      "docsUrl": "https://shoelace.style/components/carousel-item",
+      "demo": null,
+      "note": "A carousel item represent a slide within a [carousel](/components/carousel). <sl-carousel-item> Status: experimental."
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://shoelace.style/components/checkbox",
+      "demo": null,
+      "note": "Checkboxes allow the user to toggle an option on or off. <sl-checkbox>"
+    },
+    {
+      "component": null,
+      "name": "Color Picker",
+      "docsUrl": "https://shoelace.style/components/color-picker",
+      "demo": null,
+      "note": "Color pickers allow the user to select a color. <sl-color-picker>"
+    },
+    {
+      "component": null,
+      "name": "Copy Button",
+      "docsUrl": "https://shoelace.style/components/copy-button",
+      "demo": null,
+      "note": "Copies text data to the clipboard when the user clicks the trigger. <sl-copy-button> Status: experimental."
+    },
+    {
+      "component": "accordion",
+      "name": "Details",
+      "docsUrl": "https://shoelace.style/components/details",
+      "demo": null,
+      "note": "Details show a brief summary and expand to show additional content. <sl-details>"
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://shoelace.style/components/dialog",
+      "demo": null,
+      "note": "Dialogs, sometimes called \"modals\", appear above the page and require the user's immediate attention. <sl-dialog>"
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://shoelace.style/components/divider",
+      "demo": null,
+      "note": "Dividers are used to visually separate or group elements. <sl-divider>"
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://shoelace.style/components/drawer",
+      "demo": null,
+      "note": "Drawers slide in from a container to expose additional options and information. <sl-drawer>"
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Dropdown",
+      "docsUrl": "https://shoelace.style/components/dropdown",
+      "demo": null,
+      "note": "Dropdowns expose additional content that \"drops down\" in a panel. <sl-dropdown>"
+    },
+    {
+      "component": null,
+      "name": "Format Bytes",
+      "docsUrl": "https://shoelace.style/components/format-bytes",
+      "demo": null,
+      "note": "Formats a number as a human readable bytes value. <sl-format-bytes>"
+    },
+    {
+      "component": null,
+      "name": "Format Date",
+      "docsUrl": "https://shoelace.style/components/format-date",
+      "demo": null,
+      "note": "Formats a date/time using the specified locale and options. <sl-format-date>"
+    },
+    {
+      "component": null,
+      "name": "Format Number",
+      "docsUrl": "https://shoelace.style/components/format-number",
+      "demo": null,
+      "note": "Formats a number using the specified locale and options. <sl-format-number>"
+    },
+    {
+      "component": "icon",
+      "name": "Icon",
+      "docsUrl": "https://shoelace.style/components/icon",
+      "demo": null,
+      "note": "Icons are symbols that can be used to represent various options within an application. <sl-icon>"
+    },
+    {
+      "component": null,
+      "name": "Icon Button",
+      "docsUrl": "https://shoelace.style/components/icon-button",
+      "demo": null,
+      "note": "Icons buttons are simple, icon-only buttons that can be used for actions and in toolbars. <sl-icon-button>"
+    },
+    {
+      "component": null,
+      "name": "Image Comparer",
+      "docsUrl": "https://shoelace.style/components/image-comparer",
+      "demo": null,
+      "note": "Compare visual differences between similar photos with a sliding panel. <sl-image-comparer>"
+    },
+    {
+      "component": null,
+      "name": "Include",
+      "docsUrl": "https://shoelace.style/components/include",
+      "demo": null,
+      "note": "Includes give you the power to embed external HTML files into the page. <sl-include>"
+    },
+    {
+      "component": "text-input",
+      "name": "Input",
+      "docsUrl": "https://shoelace.style/components/input",
+      "demo": null,
+      "note": "Inputs collect data from the user. <sl-input>"
+    },
+    {
+      "component": null,
+      "name": "Menu",
+      "docsUrl": "https://shoelace.style/components/menu",
+      "demo": null,
+      "note": "Menus provide a list of options for the user to choose from. <sl-menu>"
+    },
+    {
+      "component": null,
+      "name": "Menu Item",
+      "docsUrl": "https://shoelace.style/components/menu-item",
+      "demo": null,
+      "note": "Menu items provide options for the user to pick from in a menu. <sl-menu-item>"
+    },
+    {
+      "component": null,
+      "name": "Menu Label",
+      "docsUrl": "https://shoelace.style/components/menu-label",
+      "demo": null,
+      "note": "Menu labels are used to describe a group of menu items. <sl-menu-label>"
+    },
+    {
+      "component": null,
+      "name": "Mutation Observer",
+      "docsUrl": "https://shoelace.style/components/mutation-observer",
+      "demo": null,
+      "note": "The Mutation Observer component offers a thin, declarative interface to the [`MutationObserver API`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). <sl-mutation-observer>"
+    },
+    {
+      "component": null,
+      "name": "Option",
+      "docsUrl": "https://shoelace.style/components/option",
+      "demo": null,
+      "note": "Options define the selectable items within various form controls such as [select](/components/select). <sl-option>"
+    },
+    {
+      "component": null,
+      "name": "Popup",
+      "docsUrl": "https://shoelace.style/components/popup",
+      "demo": null,
+      "note": "Popup is a utility that lets you declaratively anchor \"popup\" containers to another element. <sl-popup>"
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress Bar",
+      "docsUrl": "https://shoelace.style/components/progress-bar",
+      "demo": null,
+      "note": "Progress bars are used to show the status of an ongoing operation. <sl-progress-bar>"
+    },
+    {
+      "component": null,
+      "name": "Progress Ring",
+      "docsUrl": "https://shoelace.style/components/progress-ring",
+      "demo": null,
+      "note": "Progress rings are used to show the progress of a determinate operation in a circular fashion. <sl-progress-ring>"
+    },
+    {
+      "component": null,
+      "name": "QR Code",
+      "docsUrl": "https://shoelace.style/components/qr-code",
+      "demo": null,
+      "note": "Generates a [QR code](https://www.qrcode.com/) and renders it using the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API). <sl-qr-code>"
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://shoelace.style/components/radio",
+      "demo": null,
+      "note": "Radios allow the user to select a single option from a group. <sl-radio>"
+    },
+    {
+      "component": null,
+      "name": "Radio Button",
+      "docsUrl": "https://shoelace.style/components/radio-button",
+      "demo": null,
+      "note": "Radios buttons allow the user to select a single option from a group using a button-like control. <sl-radio-button>"
+    },
+    {
+      "component": null,
+      "name": "Radio Group",
+      "docsUrl": "https://shoelace.style/components/radio-group",
+      "demo": null,
+      "note": "Radio groups are used to group multiple [radios](/components/radio) or [radio buttons](/components/radio-button) so they function as a single form control. <sl-radio-group>"
+    },
+    {
+      "component": "slider",
+      "name": "Range",
+      "docsUrl": "https://shoelace.style/components/range",
+      "demo": null,
+      "note": "Ranges allow the user to select a single value within a given range using a slider. <sl-range>"
+    },
+    {
+      "component": "rating",
+      "name": "Rating",
+      "docsUrl": "https://shoelace.style/components/rating",
+      "demo": null,
+      "note": "Ratings give users a way to quickly view and provide feedback. <sl-rating>"
+    },
+    {
+      "component": null,
+      "name": "Relative Time",
+      "docsUrl": "https://shoelace.style/components/relative-time",
+      "demo": null,
+      "note": "Outputs a localized time phrase relative to the current date and time. <sl-relative-time>"
+    },
+    {
+      "component": null,
+      "name": "Resize Observer",
+      "docsUrl": "https://shoelace.style/components/resize-observer",
+      "demo": null,
+      "note": "The Resize Observer component offers a thin, declarative interface to the [`ResizeObserver API`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver). <sl-resize-observer>"
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://shoelace.style/components/select",
+      "demo": null,
+      "note": "Selects allow you to choose items from a menu of predefined options. <sl-select>"
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://shoelace.style/components/skeleton",
+      "demo": null,
+      "note": "Skeletons are used to provide a visual representation of where content will eventually be drawn. <sl-skeleton>"
+    },
+    {
+      "component": "loading",
+      "name": "Spinner",
+      "docsUrl": "https://shoelace.style/components/spinner",
+      "demo": null,
+      "note": "Spinners are used to show the progress of an indeterminate operation. <sl-spinner>"
+    },
+    {
+      "component": null,
+      "name": "Split Panel",
+      "docsUrl": "https://shoelace.style/components/split-panel",
+      "demo": null,
+      "note": "Split panels display two adjacent panels, allowing the user to reposition them. <sl-split-panel>"
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://shoelace.style/components/switch",
+      "demo": null,
+      "note": "Switches allow the user to toggle an option on or off. <sl-switch>"
+    },
+    {
+      "component": null,
+      "name": "Tab",
+      "docsUrl": "https://shoelace.style/components/tab",
+      "demo": null,
+      "note": "Tabs are used inside [tab groups](/components/tab-group) to represent and activate [tab panels](/components/tab-panel). <sl-tab>"
+    },
+    {
+      "component": "tabs",
+      "name": "Tab Group",
+      "docsUrl": "https://shoelace.style/components/tab-group",
+      "demo": null,
+      "note": "Tab groups organize content into a container that shows one section at a time. <sl-tab-group>"
+    },
+    {
+      "component": null,
+      "name": "Tab Panel",
+      "docsUrl": "https://shoelace.style/components/tab-panel",
+      "demo": null,
+      "note": "Tab panels are used inside [tab groups](/components/tab-group) to display tabbed content. <sl-tab-panel>"
+    },
+    {
+      "component": null,
+      "name": "Tag",
+      "docsUrl": "https://shoelace.style/components/tag",
+      "demo": null,
+      "note": "Tags are used as labels to organize things or to indicate a selection. <sl-tag>"
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea",
+      "docsUrl": "https://shoelace.style/components/textarea",
+      "demo": null,
+      "note": "Textareas collect data from the user and allow multiple lines of text. <sl-textarea>"
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://shoelace.style/components/tooltip",
+      "demo": null,
+      "note": "Tooltips display additional information based on a specific action. <sl-tooltip>"
+    },
+    {
+      "component": null,
+      "name": "Tree",
+      "docsUrl": "https://shoelace.style/components/tree",
+      "demo": null,
+      "note": "Trees allow you to display a hierarchical list of selectable [tree items](/components/tree-item). Items with children can be expanded and collapsed as desired by the user. <sl-tree>"
+    },
+    {
+      "component": null,
+      "name": "Tree Item",
+      "docsUrl": "https://shoelace.style/components/tree-item",
+      "demo": null,
+      "note": "A tree item serves as a hierarchical node that lives inside a [tree](/components/tree). <sl-tree-item>"
+    },
+    {
+      "component": null,
+      "name": "Visually Hidden",
+      "docsUrl": "https://shoelace.style/components/visually-hidden",
+      "demo": null,
+      "note": "The visually hidden utility makes content accessible to assistive devices without displaying it on the screen. <sl-visually-hidden>"
+    }
+  ],
+  "sources": [
+    "https://shoelace.style",
+    "https://github.com/shoelace-style/shoelace",
+    "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/dist/custom-elements.json"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/shoelace.ts",
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/dist/custom-elements.json",
+        "ref": "2.20.1",
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/shoelace"
+      }
+    ],
+    "notes": "Inventory comes entirely from the Custom Elements Manifest shipped in the @shoelace-style/shoelace npm package. The snapshot is fetched with the live-site source kind, but the URL is version-pinned (jsDelivr serves immutable npm tarball contents per version), so the bytes are pinned as strongly as a repo ref; the version in provenance.ref is read from the manifest’s own package.version. Docs URLs are derived from each module’s components/<dir>/ path, and display names are the title-cased directory (Shoelace’s own docs heading). Canonical taxonomy mapping is an explicit map in the extractor; sub-part elements (sl-tab, sl-menu-item, sl-tree-item…) and utility elements (sl-include, sl-mutation-observer, formatters…) map to null. Demos: Button only in this pass, built from Shoelace’s published light and dark themes + autoloader at the same pinned version. Each demo document applies Shoelace’s own dark mechanism — the sl-theme-dark class on <html> — with the page canvas taken from the theme’s --sl-color-neutral-0 token; light rendering is unchanged because dark.css declares no :root block. Mode resolution runs before first paint: an explicit “mode” query parameter is a one-shot standalone-testing override, otherwise the document reads the embedding parent’s <html class=\"dark\"> (when same-origin and framed; a cross-origin or top-level document falls back to light) and keeps following it for the page lifetime through a MutationObserver on the parent’s class attribute, toggling the theme class in both directions without reloading."
+  }
+}

@@ -1,0 +1,438 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://mui.com/material-ui/react-accordion/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alert",
+      "docsUrl": "https://mui.com/material-ui/react-alert/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "header",
+      "name": "App Bar",
+      "docsUrl": "https://mui.com/material-ui/react-app-bar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "Autocomplete",
+      "docsUrl": "https://mui.com/material-ui/react-autocomplete/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://mui.com/material-ui/react-avatar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Backdrop",
+      "docsUrl": "https://mui.com/material-ui/react-backdrop/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://mui.com/material-ui/react-badge/",
+      "demo": null,
+      "note": "MUI’s Badge is the count/status overlay anchored to another element — the canonical badge. Chip covers the tag/pill sense of the same canonical name and is therefore left unmapped."
+    },
+    {
+      "component": null,
+      "name": "Bottom Navigation",
+      "docsUrl": "https://mui.com/material-ui/react-bottom-navigation/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Box",
+      "docsUrl": "https://mui.com/material-ui/react-box/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "docsUrl": "https://mui.com/material-ui/react-breadcrumbs/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://mui.com/material-ui/react-button/",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Material UI</title>\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@fontsource/roboto@5.2.5/400.css\">\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@fontsource/roboto@5.2.5/500.css\">\n<style>\n  html, body { margin: 0; padding: 0; background: #fff; }\n  html[data-mode=\"dark\"], html[data-mode=\"dark\"] body { background: #121212; }\n  body {\n    min-height: 100vh;\n    padding: 16px;\n    box-sizing: border-box;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  #root { display: flex; align-items: center; justify-content: center; }\n  .row { display: flex; flex-direction: row; align-items: center; gap: 12px; flex-wrap: wrap; }\n</style>\n<script>\n  // Mode resolution, before first paint. applyMode(dark) is the one switch:\n  // it stamps the document ground and — once the module below has loaded MUI —\n  // re-renders the React root with the matching theme. Until then the latest\n  // requested mode is buffered, so a toggle during load is never lost.\n  window.__demoMode = (function () {\n    var render = null;\n    var current = null;\n    function applyMode(dark) {\n      current = !!dark;\n      document.documentElement.dataset.mode = current ? \"dark\" : \"light\";\n      if (render) render(current);\n    }\n    function setRenderer(fn) {\n      render = fn;\n      if (current !== null) fn(current);\n    }\n    var params = new URLSearchParams(location.search);\n    if (params.has(\"mode\")) {\n      // Standalone-testing override: apply once, never observe.\n      applyMode(params.get(\"mode\") === \"dark\");\n      return { applyMode: applyMode, setRenderer: setRenderer };\n    }\n    var root = null;\n    try {\n      if (window.parent !== window) {\n        root = window.parent.document.documentElement;\n      }\n    } catch (err) {\n      root = null; // cross-origin parent: unreadable\n    }\n    if (!root) {\n      applyMode(false);\n      return { applyMode: applyMode, setRenderer: setRenderer };\n    }\n    applyMode(root.classList.contains(\"dark\"));\n    // Held on window for the page lifetime, so it is never collected.\n    window.__demoModeObserver = new MutationObserver(function () {\n      applyMode(root.classList.contains(\"dark\"));\n    });\n    window.__demoModeObserver.observe(root, {\n      attributes: true,\n      attributeFilter: [\"class\"],\n    });\n    return { applyMode: applyMode, setRenderer: setRenderer };\n  })();\n</script>\n<script type=\"importmap\">\n{\n  \"imports\": {\n    \"react\": \"https://esm.sh/react@18.3.1\",\n    \"react/jsx-runtime\": \"https://esm.sh/react@18.3.1/jsx-runtime\",\n    \"react-dom\": \"https://esm.sh/react-dom@18.3.1?deps=react@18.3.1\",\n    \"react-dom/client\": \"https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1\",\n    \"@mui/material/Button\": \"https://esm.sh/@mui/material@6.4.7/Button?deps=react@18.3.1,react-dom@18.3.1,@emotion/react@11.14.0,@emotion/styled@11.14.0\",\n    \"@mui/material/styles\": \"https://esm.sh/@mui/material@6.4.7/styles?deps=react@18.3.1,react-dom@18.3.1,@emotion/react@11.14.0,@emotion/styled@11.14.0\",\n    \"@emotion/react\": \"https://esm.sh/@emotion/react@11.14.0?deps=react@18.3.1\",\n    \"@emotion/cache\": \"https://esm.sh/@emotion/cache@11.14.0\"\n  }\n}\n</script>\n</head>\n<body>\n<div id=\"root\"></div>\n<script type=\"module\">\n  import React from \"react\";\n  import { createRoot } from \"react-dom/client\";\n  import Button from \"@mui/material/Button\";\n  import { ThemeProvider, createTheme } from \"@mui/material/styles\";\n  import { CacheProvider } from \"@emotion/react\";\n  import createCache from \"@emotion/cache\";\n\n  const h = React.createElement;\n  const lightTheme = createTheme();\n  const darkTheme = createTheme({ palette: { mode: \"dark\" } });\n\n  // One Emotion cache per mode. Both palettes serialize MUI's Button to the\n  // SAME generated class name, so with a single shared cache the rules inserted\n  // by whichever mode rendered first win forever and re-theming silently does\n  // nothing. Separate caches give each mode its own class prefix and its own\n  // <style> container, so the two rule sets coexist and swapping the theme\n  // actually swaps the painted styles — in both directions.\n  const caches = {\n    light: createCache({ key: \"mui-light\" }),\n    dark: createCache({ key: \"mui-dark\" }),\n  };\n\n  function Demo({ mode, theme }) {\n    return h(\n      CacheProvider,\n      { value: caches[mode] },\n      h(\n        ThemeProvider,\n        { theme: theme },\n        h(\"div\", { className: \"row\" }, [\n        h(Button, { key: \"a\", variant: \"contained\", color: \"primary\" }, \"Primary\"),\n        h(Button, { key: \"b\", variant: \"outlined\", color: \"primary\" }, \"Secondary\"),\n        h(Button, { key: \"c\", variant: \"contained\", color: \"primary\", disabled: true }, \"Disabled\")\n      ])\n      )\n    );\n  }\n\n  const reactRoot = createRoot(document.getElementById(\"root\"));\n\n  // The system mechanism, both directions: the live theme object is the source\n  // of truth for the canvas, so light restores MUI's default background too.\n  // `key` remounts the subtree, so nothing carries class names across modes.\n  function render(dark) {\n    const mode = dark ? \"dark\" : \"light\";\n    const theme = dark ? darkTheme : lightTheme;\n    const canvas = theme.palette.background.default;\n    document.documentElement.style.background = canvas;\n    document.body.style.background = canvas;\n    document.body.style.color = theme.palette.text.primary;\n    reactRoot.render(h(Demo, { key: mode, mode: mode, theme: theme }));\n  }\n\n  window.__demoMode.setRenderer(render);\n</script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "Button Group",
+      "docsUrl": "https://mui.com/material-ui/react-button-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://mui.com/material-ui/react-card/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://mui.com/material-ui/react-checkbox/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Chip",
+      "docsUrl": "https://mui.com/material-ui/react-chip/",
+      "demo": null,
+      "note": "Overlaps the canonical badge (its tag/pill sense), but MUI ships Badge under that name, so this entry stays system-specific."
+    },
+    {
+      "component": null,
+      "name": "Click-Away Listener",
+      "docsUrl": "https://mui.com/material-ui/react-click-away-listener/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "timeline",
+      "name": "Component API",
+      "docsUrl": "https://mui.com/material-ui/react-timeline/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Container",
+      "docsUrl": "https://mui.com/material-ui/react-container/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "CSS Baseline",
+      "docsUrl": "https://mui.com/material-ui/react-css-baseline/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://mui.com/material-ui/react-dialog/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://mui.com/material-ui/react-drawer/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Floating Action Button",
+      "docsUrl": "https://mui.com/material-ui/react-floating-action-button/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Grid",
+      "docsUrl": "https://mui.com/material-ui/react-grid/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Image List",
+      "docsUrl": "https://mui.com/material-ui/react-image-list/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "InitColorSchemeScript",
+      "docsUrl": "https://mui.com/material-ui/react-init-color-scheme-script/",
+      "demo": null,
+      "note": "A script component for blocking-render color-scheme setup, not a UI control."
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://mui.com/material-ui/react-link/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "List",
+      "docsUrl": "https://mui.com/material-ui/react-list/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Masonry",
+      "docsUrl": "https://mui.com/material-ui/react-masonry/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "divider",
+      "name": "Material Icons",
+      "docsUrl": "https://mui.com/material-ui/react-divider/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://mui.com/material-ui/react-menu/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Menubar",
+      "docsUrl": "https://mui.com/material-ui/react-menubar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Modal",
+      "docsUrl": "https://mui.com/material-ui/react-modal/",
+      "demo": null,
+      "note": "The low-level focus-trapping primitive Dialog and Drawer are built on; Dialog holds the canonical dialog mapping."
+    },
+    {
+      "component": null,
+      "name": "No SSR",
+      "docsUrl": "https://mui.com/material-ui/react-no-ssr/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Number Field",
+      "docsUrl": "https://mui.com/material-ui/react-number-field/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://mui.com/material-ui/react-pagination/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Paper",
+      "docsUrl": "https://mui.com/material-ui/react-paper/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://mui.com/material-ui/react-popover/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Popper",
+      "docsUrl": "https://mui.com/material-ui/react-popper/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Portal",
+      "docsUrl": "https://mui.com/material-ui/react-portal/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://mui.com/material-ui/react-progress/",
+      "demo": null,
+      "note": "One docs page for both CircularProgress (a spinner) and LinearProgress (a bar); mapped to the bar, which is the closer canonical fit."
+    },
+    {
+      "component": "radio",
+      "name": "Radio Group",
+      "docsUrl": "https://mui.com/material-ui/react-radio-button/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "rating",
+      "name": "Rating",
+      "docsUrl": "https://mui.com/material-ui/react-rating/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://mui.com/material-ui/react-select/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://mui.com/material-ui/react-skeleton/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://mui.com/material-ui/react-slider/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Snackbar",
+      "docsUrl": "https://mui.com/material-ui/react-snackbar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Speed Dial",
+      "docsUrl": "https://mui.com/material-ui/react-speed-dial/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Stack",
+      "docsUrl": "https://mui.com/material-ui/react-stack/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-steps",
+      "name": "Stepper",
+      "docsUrl": "https://mui.com/material-ui/react-stepper/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://mui.com/material-ui/react-switch/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://mui.com/material-ui/react-table/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://mui.com/material-ui/react-tabs/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Text Field",
+      "docsUrl": "https://mui.com/material-ui/react-text-field/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea Autosize",
+      "docsUrl": "https://mui.com/material-ui/react-textarea-autosize/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "segmented-control",
+      "name": "Toggle Button",
+      "docsUrl": "https://mui.com/material-ui/react-toggle-button/",
+      "demo": null,
+      "note": "ToggleButtonGroup is MUI’s connected row of exclusive options — the canonical segmented control."
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://mui.com/material-ui/react-tooltip/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Transfer List",
+      "docsUrl": "https://mui.com/material-ui/react-transfer-list/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Typography",
+      "docsUrl": "https://mui.com/material-ui/react-typography/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "useMediaQuery",
+      "docsUrl": "https://mui.com/material-ui/react-use-media-query/",
+      "demo": null,
+      "note": "A hook, documented alongside the components."
+    }
+  ],
+  "sources": [
+    "https://github.com/mui/material-ui",
+    "https://mui.com/material-ui/all-components/"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/mui.ts",
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/mui/material-ui/blob/fc3a3a0a8b7c8f20274eca4758ea07a33e25c1b4/docs/data/material/pages.ts",
+        "ref": "fc3a3a0a8b7c8f20274eca4758ea07a33e25c1b4",
+        "retrievedAt": null,
+        "snapshot": "sources/mui"
+      }
+    ],
+    "notes": "Inventory is parsed from the docs navigation tree (docs/data/material/pages.ts) at a pinned SHA: every /material-ui/react-* entry becomes a component, with MUI’s own display title (explicit `title:` when the nav overrides the pathname-derived one) and the docs URL built from the pathname. Excluded by that rule: the icon gallery pages (/material-ui/icons, /material-ui/material-icons), the transitions page, and MUI X (/x/react-data-grid, date pickers, charts, tree view) which is a separate product linked outbound from the same nav — so date picker and data grid are absent from this inventory. Canonical taxonomy mapping is an explicit map in the extractor (editorial, not extracted); the extractor fails hard when upstream adds or removes a component page. Demos load real published @mui/material 6.4.7 from pinned esm.sh URLs with React 18.3.1 and Emotion 11.14.0; only Button has a demo so far. The manifest retrievedAt is not stamped into provenance because the git SHA pins the bytes."
+  }
+}

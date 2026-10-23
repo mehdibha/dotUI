@@ -1,0 +1,474 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/accordion/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Action Bar",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/action-bar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Action Button",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/action-button/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "Action Group",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/action-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Action menu",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/action-menu/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alert Banner",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/alert-banner/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Alert Dialog",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Asset",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/asset/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/avatar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/badge/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/breadcrumbs/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/button/",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Spectrum Web Components — Button</title>\n<script>\n  // Runs before the body parses, so the resolved mode is stamped on <html>\n  // for the very first paint (no light flash).\n  (function () {\n    var dark = false;\n\n    // The one place the system's dark mechanism lives. Idempotent, and it\n    // switches both ways: dark drops <sp-theme color=\"dark\"> and the\n    // data-mode stamp the canvas rules key off, light restores both.\n    function applyMode(next) {\n      dark = !!next;\n      var html = document.documentElement;\n      if (dark) html.setAttribute('data-mode', 'dark');\n      else html.removeAttribute('data-mode');\n      // <sp-theme> is parsed after this script; the body re-calls applyMode\n      // once it exists, and every later call finds it.\n      var theme = document.querySelector('sp-theme');\n      if (theme) theme.setAttribute('color', dark ? 'dark' : 'light');\n    }\n    window.__applyMode = applyMode;\n    window.__isDark = function () { return dark; };\n\n    // Explicit ?mode= wins once and disables observation (standalone testing).\n    var override = null;\n    try { override = new URLSearchParams(location.search).get('mode'); } catch (e) {}\n    if (override) { applyMode(override === 'dark'); return; }\n\n    // Otherwise follow the embedding parent's <html> class list, live.\n    var root = null;\n    try {\n      if (window.parent !== window) root = window.parent.document.documentElement;\n    } catch (e) { root = null; }\n    if (!root) { applyMode(false); return; }\n\n    applyMode(root.classList.contains('dark'));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains('dark'));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: ['class'] });\n    // Held for the page lifetime so it is never collected.\n    window.__modeObserver = observer;\n  })();\n</script>\n<style>\n  html, body { margin: 0; padding: 0; background: #fff; }\n  body {\n    min-height: 100vh;\n    padding: 16px;\n    box-sizing: border-box;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  sp-theme {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    flex-wrap: wrap;\n    opacity: 1;\n    transition: opacity 120ms ease;\n  }\n  sp-theme:not(:defined) { opacity: 0; }\n\n  /* Dark mode — reached whenever applyMode stamped data-mode on <html>. */\n  html[data-mode=\"dark\"], html[data-mode=\"dark\"] body { background: rgb(27, 27, 27); }\n  html[data-mode=\"dark\"] body { padding: 0; }\n  html[data-mode=\"dark\"] sp-theme {\n    width: 100%;\n    min-height: 100vh;\n    box-sizing: border-box;\n    padding: 16px;\n    /* The theme's own canvas token, resolved inside <sp-theme>'s scope. */\n    background: var(--spectrum-background-layer-1-color);\n  }\n</style>\n</head>\n<body>\n  <sp-theme system=\"spectrum-two\" color=\"light\" scale=\"medium\">\n    <sp-button variant=\"accent\" treatment=\"fill\">Primary</sp-button>\n    <sp-button variant=\"secondary\" treatment=\"outline\">Secondary</sp-button>\n    <sp-button variant=\"accent\" treatment=\"fill\" disabled>Primary</sp-button>\n  </sp-theme>\n  <script>\n    // <sp-theme> now exists, so re-apply the already-resolved mode to reach\n    // the system's real mechanism (color=\"dark\"/\"light\"). Runs before\n    // DOMContentLoaded; later observer callbacks find the element themselves.\n    window.__applyMode(window.__isDark());\n  </script>\n\n  <script type=\"module\">\n    // Adobe Spectrum Web Components 1.12.2 — real published packages via esm.sh\n    import 'https://esm.sh/@spectrum-web-components/theme@1.12.2/sp-theme.js';\n    import 'https://esm.sh/@spectrum-web-components/theme@1.12.2/spectrum-two/theme-light-core-tokens.js';\n    import 'https://esm.sh/@spectrum-web-components/theme@1.12.2/spectrum-two/theme-dark-core-tokens.js';\n    import 'https://esm.sh/@spectrum-web-components/theme@1.12.2/spectrum-two/scale-medium-core-tokens.js';\n    import 'https://esm.sh/@spectrum-web-components/button@1.12.2/sp-button.js';\n  </script>\n  <script>\n    // Safety net: if the module graph fails to load, still show the markup\n    // rather than an empty white page.\n    setTimeout(function () {\n      var t = document.querySelector('sp-theme');\n      if (t && !window.customElements.get('sp-theme')) t.style.opacity = '1';\n    }, 6000);\n  </script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "Button Group",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/button-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/card/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/checkbox/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Coachmark",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/coachmark/",
+      "demo": null,
+      "note": "Storybook documents 2 sections in this package: CoachIndicator, Coachmark."
+    },
+    {
+      "component": null,
+      "name": "Color Area",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-area/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Field",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-field/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Handle",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-handle/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Loupe",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-loupe/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Slider",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-slider/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Color Wheel",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/color-wheel/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "Combobox",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/combobox/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Contextual Help",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/contextual-help/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/dialog/",
+      "demo": null,
+      "note": "Storybook documents 3 sections in this package: Dialog, Dialog Base, Dialog Wrapper."
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/divider/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "file-upload",
+      "name": "Dropzone",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/dropzone/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Field Group",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/field-group/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Field Label",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/field-label/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Help Text",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/help-text/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icon",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/icon/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icons",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/icons/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icons UI",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/icons-ui/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icons Workflow",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "empty-state",
+      "name": "IllustratedMessage",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Infield Button",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/infield-button/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/link/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/menu/",
+      "demo": null,
+      "note": "Storybook documents 4 sections in this package: Menu, Menu Divider, Menu Group, Menu Item."
+    },
+    {
+      "component": "progress-bar",
+      "name": "Meter",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/meter/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Number Field",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/number-field/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Overlay",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/overlay/",
+      "demo": null,
+      "note": "Storybook documents 3 sections in this package: Overlay, Overlay Directive, Overlay Element."
+    },
+    {
+      "component": "select",
+      "name": "Picker",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/picker/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Picker Button",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/picker-button/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/popover/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress Bar",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/progress-bar/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Progress Circle",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/progress-circle/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/radio/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "search-input",
+      "name": "Search",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/search/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Sidenav",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/sidenav/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/slider/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Split View",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/split-view/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "StatusLight",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/status-light/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Swatch",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/swatch/",
+      "demo": null,
+      "note": "Storybook documents 2 sections in this package: Swatch, Swatch group."
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/switch/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/table/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/tabs/",
+      "demo": null,
+      "note": "Storybook documents 2 sections in this package: Tabs, Tabs Overflow."
+    },
+    {
+      "component": "badge",
+      "name": "Tags",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/tags/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Textfield",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/textfield/",
+      "demo": null,
+      "note": "Storybook documents 2 sections in this package: Textarea, Textfield."
+    },
+    {
+      "component": null,
+      "name": "Thumbnail",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/thumbnail/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Toast",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/toast/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/tooltip/",
+      "demo": null,
+      "note": "Storybook documents 2 sections in this package: Tooltip, Tooltip Directive."
+    },
+    {
+      "component": "header",
+      "name": "Top Nav",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/top-nav/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Tray",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/tray/",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Underlay",
+      "docsUrl": "https://opensource.adobe.com/spectrum-web-components/components/underlay/",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://opensource.adobe.com/spectrum-web-components/",
+    "https://opensource.adobe.com/spectrum-web-components/storybook/",
+    "https://github.com/adobe/spectrum-web-components"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/spectrum-wc.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://opensource.adobe.com/spectrum-web-components/storybook/index.json",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/spectrum-wc"
+      }
+    ],
+    "notes": "Inventory is the published Storybook's generated index.json: one entry per ./packages/<name> story group, which is one shipped element family and one docs page (./tools/* stories — theme, grid, styles, truncated — are infrastructure, not components, and are excluded). Names are derived from the shared story-title path, falling back to the package directory when a package documents several families (Textfield/Textarea, Menu/Menu Item…); the `note` field lists those sections. The index.json URL is not version-pinned, so this is a live-site tier source stamped with retrievedAt. docsUrl is derived from the package directory against the documented /components/<package>/ URL pattern. The Button demo is not derived from the snapshot: it loads @spectrum-web-components/theme and /button at the pinned version 1.12.2 from esm.sh (verified rendering in a browser), so its markup and pinned version live in this config. Dark mode applies Spectrum's own mechanism — <sp-theme color=\"dark\">, resolved against the \"dark-spectrum-two\" color fragment registered by spectrum-two/theme-dark-core-tokens.js at the same pinned version — with the page canvas painted from that theme's --spectrum-background-layer-1-color (--spectrum-gray-50, rgb(27,27,27) at 1.12.2). It is wrapped in one idempotent applyMode(dark) that switches both ways. An explicit ?mode= in the URL applies once and stops (standalone testing); otherwise the demo reads the embedding parent's documentElement (same-origin only; cross-origin or top-level falls back to light) and follows its 'dark' class live via a MutationObserver on the class attribute that lives for the page lifetime, so host theme toggles restyle the frame in place."
+  }
+}

@@ -101,6 +101,11 @@
     "**/.output/**",
     "**/.source/**",
     "www/src/routeTree.gen.ts",
+    "directory/src/routeTree.gen.ts",
+    // Written by www/scripts/system-looks.ts from a capture.
+    "directory/systems/*/looks.json",
+    // Upstream files snapshotted byte for byte; the manifest hashes them.
+    "directory/sources/**",
     // examples/: what the shadcn CLI writes during the consumer smoke — the
     // registry's output, committed verbatim (its own formatting pass applies).
     "examples/*/src/routeTree.gen.ts",
