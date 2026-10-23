@@ -1,0 +1,243 @@
+{
+  "gaps": [
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "GitHub 6px, the control radius, on a 20px key",
+      "standin": "4px in GitHub with its 8px base)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycaps filled inside a hairline, no bottom lip",
+      "note": "GitHub's KeybindingHint on #eff2f5 / #2a313c inside 1px #dae0e6 / #373e48 (markdown `<kbd>` adds a 1px inset bottom shadow)",
+      "standin": "GitHub takes `keycap` on the page fill (ΔE 0.040 / 0.107)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Full ink at rest, the current one set apart by weight or its chip: GitHub UnderlineNav, NavList and SegmentedControl (#1f2328 / #f0f6fc at 400, current at 600)",
+      "standin": "sidebar rows, tabs and segmented items rest in muted ink (GitHub ΔE 0.25 / 0.19 on tabs, 0.247 / 0.194 on segmented",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "Links and selection in a second accent, apart from the button brand",
+      "note": "GitHub links (#0969da / #4493f8 at 400), the current NavList bar (#0969da / #1f6feb) and accent Labels and topic tags in blue, while primary buttons and progress stay green (#1f883d / #238636)",
+      "standin": "GitHub runs `selectionSeed: #0969da` (checks, switches, focus and the current page go blue) with links and the nav bar in ink (`linkColor: neutral`, ΔE 0.34) and accent badges green (ΔE 0.27)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-flush",
+      "title": "Focus line flush over the control's edge",
+      "note": "GitHub a 2px outline at -2px covering the 1px border on buttons, and on fields the border turns #0969da / #1f6feb under a 2px outline at -1px on the TextInput wrapper",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-danger",
+      "title": "Danger buttons as secondary buttons in danger ink",
+      "note": "#d1242f / #fa5e55 on the control fill (#f6f8fa / #212830), filling red (#cf222e / #b62324) only on hover",
+      "standin": "a solid danger fill at rest",
+      "source": "ledger"
+    },
+    {
+      "look": "state.disabled",
+      "title": "A disabled primary that keeps its hue",
+      "note": "#95d8a6 / #105823 under a faded white label (#ffffffcc / #ffffff66), while fields, checkboxes and secondary buttons go flat gray (#eff2f5 / #212830 fill, #818b98 / #656c76 ink)",
+      "standin": "`disabledTreatment: solid` greys the primary too; `fade` keeps the green but fades fields instead of filling them gray",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-indicator",
+      "title": "Line-tab indicator in a color of its own",
+      "note": "UnderlineNav's 2px underline in coral #fd8c73 / #f78166 (`underlineNav-borderColor-active`), apart from the brand, the selection color and the ink",
+      "standin": "`tabsColor: neutral`, an ink underline",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "GitHub's Box on #0d1117 under a #3d444d hairline",
+      "standin": "`surfaceLayers: same` still lifts dark cards (L 0.206 on GitHub, ΔE 0.030",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "GitHub 64×32 at 6px corners with a 31×28 knob at 4px",
+      "standin": "44×24 switch (GitHub: `switchStyle: slab` at the density's 24px height",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "GitHub #e6eaef / #010409 inside a 1px #d1d9e0 / #3d444d edge",
+      "standin": "GitHub's slab track on the muted fill (ΔE 0.029 / 0.145)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress track on the line color",
+      "note": "GitHub #d1d9e0 / #3d444d (`progressBar-track-bgColor` is `borderColor-default`)",
+      "standin": "`progressTrackStyle: plain` on the muted fill (GitHub oklch 0.964 / 0.248",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress",
+      "title": "Progress corners apart from the other tracks",
+      "note": "GitHub its 8px bar at 3px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "GitHub 32px like a button, items edge to edge",
+      "standin": "a track about the button height around chips inset 2–4px: 44px with a 36px chip on Carbon, 36px with 30px items on GitHub and Radix, 40px with 32px chips on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "GitHub's track at 6px, the control radius, under 12px overlays",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track edged in a control line, not the surface line",
+      "note": "GitHub the control edge (1px #d1d9e0 / #3d444d)",
+      "standin": "`segmentedTrack: outline` draws the light surface line (ΔE 0.35 on Material 3, 0.725 / 0.648 on Carbon, 0.064 / 0.077 on GitHub)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track filled and edged together",
+      "note": "Primer's well on #e6eaef / #010409 inside 1px #d1d9e0 / #3d444d, the selected chip a lighter step (white / #262c36) in the same edge",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "GitHub's Dialog at 640px (`width=\"xlarge\"`)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Short: GitHub's \"Search or jump to\" suggestions at 33px, 14/400, the height of its menu rows",
+      "standin": "on GitHub `menuRows: match` brings menu rows to 32px but doesn't reach the palette",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "GitHub 12px text, 4px 8px padding, 27.5px tall",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "GitHub goes below the page: menus, dialogs and side sheets on #010409 (L 0.10, `overlay-bgColor`) over the #0d1117 page (L 0.18), ringed in #3d444d",
+      "standin": "0.227 on GitHub, ΔE 0.124",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "GitHub #3d444d under white text in dark (#25292e in light, `bgColor-emphasis`)",
+      "standin": "`tooltipStyle: inverted` flips to a light chip in dark (ΔE 0.57 on GitHub, 0.66 on Notion, 0.647 on ChatGPT, 0.713 on Claude, with no ring); `surface` stays dark but loses the dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.info-seed",
+      "title": "An info status seed",
+      "note": "Primer's info is its accent blue, #0969da / #4493f8 (info Banner, accent Label)",
+      "standin": "info is the engine's fixed #4862ff: the studio has success, warning and danger seeds but no info seed, though `@dotui/colors` accepts one",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "GitHub Banners (and the SegmentedControl track) at 6px under 12px menus, popovers and dialogs",
+      "standin": "12px at GitHub's and Geist's `roleSurface: xl`",
+      "source": "ledger"
+    },
+    {
+      "look": "type.pagination",
+      "title": "Pagination numbers at regular weight",
+      "note": "GitHub 14/400 on github.com (repository search, Actions, labels; Primer's Storybook story sets 16px), inside 32px squares, the current page filled #0969da / #1f6feb",
+      "standin": "page links are buttons at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "GitHub selection blue #0969da / #1f6feb and primary green #1f883d / #238636",
+      "standin": "GitHub 0.033 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "GitHub controls in `control-fgColor-rest` #25292e, text in #1f2328",
+      "standin": "GitHub 0.039",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "GitHub 0.10 in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-tint-per-mode",
+      "title": "A neutral tint per mode",
+      "note": "GitHub near-pure in light (#f6f8fa, C 0.003) with dark neutrals that keep their tint (control fill #212830 L 0.27 C 0.018, lines #3d444d C 0.018, at h 252–255)",
+      "standin": "GitHub at `neutralTint: 1.8` fades the dark steps to C 0.0075 (secondary button fill ΔE 0.027), and more would overshoot light",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Inverse surfaces a step off the ink",
+      "note": "GitHub tooltips on #25292e (`bgColor-emphasis`) over #1f2328 text in light",
+      "standin": "GitHub 0.039)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "GitHub check and radio edges in `borderColor-emphasis`, #818b98 (L 0.63) / #656c76 (L 0.53)",
+      "standin": "GitHub 0.033 / 0.072 with `checkEdge: strong`",
+      "source": "ledger"
+    },
+    {
+      "look": "color.overlay-line",
+      "title": "Overlay hairlines apart from card edges",
+      "note": "GitHub in light menus at #d1d9e040 (shows #f3f5f7) and dialogs at #d1d9e080 (#e8ecef) vs cards and labels #d1d9e0, all #3d444d in dark",
+      "standin": "GitHub ΔE 0.044 on the light menu",
+      "source": "ledger"
+    },
+    {
+      "look": "color.one-line",
+      "title": "One hairline for everything, on the control-edge step",
+      "note": "GitHub's `borderColor-default` #d1d9e0 / #3d444d on cards, Labels, keycaps and dark overlays, the step of its field and button edges",
+      "standin": "0.926 / 0.307, ΔE 0.045 / 0.077 on GitHub); `soft` would put everything on the lighter line, though the catalog credits Primer to it",
+      "source": "ledger"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Stronger status tints, on their own hue",
+      "note": "GitHub's warning Banner on #fff8c5 (C 0.066) inside a #eed888 edge (C 0.10), accent-muted #ddf4ff",
+      "standin": "`alertStyle: soft-outline` puts GitHub's warning on oklch 0.969 0.020 inside oklch 0.867 0.052",
+      "source": "ledger"
+    },
+    {
+      "look": "color.segmented-track-dark",
+      "title": "Segmented track sunk below the page in dark",
+      "note": "GitHub's well #010409 under the #0d1117 page, its chip #262c36 (see the filled-and-edged track row)",
+      "standin": "`segmentedTrack: filled` lifts the dark track (ΔE 0.145) and keeps the chip on the page tone (ΔE 0.114); light matches",
+      "source": "ledger"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "gaps": [
+    {
+      "look": "surface.field-fill",
+      "title": "Outline fields clear in dark",
+      "note": "Wise's on the #121511 page, drawn by the 1px #b9bab7 line",
+      "standin": "`inputStyle: outline` tints dark fields with the control line at 30% (ΔE 0.135; Wise takes `inputStyle: inset`: a page-colored box with a 1px inner top shade, 24% in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in the link color (#0f62fe / #78a9ff)",
+      "standin": "quiet buttons in body ink (Wise ΔE 0.092 / 0.196)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.check",
+      "title": "Checkbox and radio size apart from density",
+      "note": "Wise 22px checkboxes (3px corners) and 24px radios beside 48px fields",
+      "standin": "16px (`density: touch` on Wise, `spacious` on Higgsfield and Airbnb, -6px on Airbnb, whose checkbox takes 2px corners with `checkCorner: sharp`, -4px, and whose checked radio matches with `radioMark: ring`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.layers-tonal",
+      "title": "Deeper tonal layers",
+      "note": "Wise's BaseCard on `background-neutral` #16330014 (#edefeb on white), the tint of its InfoPrompt and SegmentedControl track, at 32px corners with no edge or shadow (`background-elevated` #1e211d in dark)",
+      "standin": "Wise's cards a half rung lighter than prompts, oklab L 0.978 against #edefeb (ΔE 0.029), alerts on the full step (ΔE 0.009), dark matches (ΔE 0.019)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Wise 16px on 48px buttons (Button v2 at its default lg size)",
+      "standin": "`density: touch` pads 24px at Duolingo's, Wise's and Spotify's 48px (Duolingo's trigger with `selectTrigger: button`, +12px; `field` pads 14px but drops the weight and the lip)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Heavier links",
+      "note": "Wise 600, always underlined, in forest #163300 / bright green #9fe870",
+      "source": "ledger"
+    },
+    {
+      "look": "type.display-font",
+      "title": "A display face apart from the title font",
+      "note": "Wise sets hero and display headlines in Wise Sans (proprietary, heavy and condensed, uppercase), while screen, section and body titles are Inter 600",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused fields thicken their edge to 3px, with no outer ring",
+      "note": "forest #163300 / bright green #9fe870 on inputs and select triggers",
+      "standin": "`focusInputStyle: border` at `focusInputWeight: thick` draws 2px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "Search field as a pill while text fields stay boxes",
+      "note": "Outlined: Wise's help-centre search a 48px pill (24px corners) in a 1px #868685 edge, thickening to a 3px forest inset edge on focus, and its converter's amount field a 72px pill (`np-input--shape-pill`), while form fields and the SelectInput search stay 10px boxes",
+      "standin": "10.5px on Wise)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Wise's filter Chips are 32px pills at 14/600 with 16px padding and a 1px #868685 edge on the page at rest, the selected chip filled forest #163300 under a bright green #9fe870 label (inverted in dark), beside 48px buttons",
+      "standin": "on Wise the tonal secondary, 48px with 20px padding, 16px text and a pale accent tint with no edge",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Wise a 28px-tall track beside 48px controls",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.calendar-today",
+      "title": "Today underlined",
+      "note": "a short line under today's numeral, no fill, ring or dot",
+      "standin": "`calendarToday: dot`, the nearest mark under the number",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Wise's current line tab forest #163300 / bright green #9fe870 at 600 over a matching 2px line, idle tabs #454745 / #e8ebe6 at 400",
+      "standin": "the label stays in body ink (Wise: `accent` lands on an olive ink, oklch 0.51 0.12, in light",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Wise 24px on 40px tabs at 16px text, beside 48px controls",
+      "standin": "16px on 47px tabs at Wise's touch)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Wise's fill keeps the 10px corners of its 8px bar at both ends (forest #163300 / bright green #9fe870, from neptune-css)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Wise a pill, 24px corners on a 45.7px track with pill items, while fields and menus are 10px",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Flat segmented chip, a pale tone or the page color with no shadow",
+      "note": "Wise's a page-colored pill (#ffffff in light) with no edge on a #16330014 track (#ffffff1a in dark)",
+      "standin": "Wise takes `segmentedSelected: ring`, a page chip with a 1px control edge",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "Wise's DateLookup 40px circles",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Wise 14/600 on weekdays, today and the selected day, weekend days lighter",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Wise the elevated surface (#ffffff / #1e211d), 14/400 text, 16px padding, 16px corners, a `0 0 40px` rgba(69,71,69,.2) shadow and a tail",
+      "standin": "12px text, 12px padding, square (Stripe and Wise: `tooltipStyle: surface`, 6px corners, 10.5px on Wise",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Wise's SelectInput options padded 16px in 48px rows, plain and filterable",
+      "standin": "on Wise 12px in menus and 8px in the command list at `menuRows: match`",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.menu-row",
+      "title": "Menu and list rows in the brand ink at rest",
+      "note": "Wise's SelectInput options, plain and filterable, in forest #163300 / bright green #9fe870, while the panel's own text is #454745 / #e8ebe6",
+      "standin": "rows in `fg` (ΔE 0.092 / 0.196)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.drawer",
+      "title": "Docked drawers with square corners while dialogs are round",
+      "note": "Wise's Drawer sits flush on the screen edge with no radius, while its Modal rounds to 32px",
+      "standin": "`drawerEdge: docked` rounds the drawer's inner corners at the panel rung (31.5px on Wise, 13px on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Heavier: Wise's Tags at 12/600 with 4px padding and 6px corners",
+      "standin": "12/500 (7px padding on Wise",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Above overlays: Wise's InfoPrompt at 16px (`radius-medium`) over its 10px menus and fields",
+      "standin": "10.5px on Wise, following menus",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Wise's selection roles (checks, switches, radios, progress, the selected chip and day, focus, links, tabs and menu rows) on forest #163300 (oklch 0.287 0.084 135) in light and bright green #9fe870 (0.857 0.170 135) in dark, while its CTA stays #9fe870 in both",
+      "standin": "Wise's roles on ink, ΔE 0.092 / 0.196, and a forest `selectionSeed` stays one color in both modes, lifted to oklch 0.43, ΔE 0.146 / 0.433)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Wise 0.075",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Wise body copy and the text of the page, menus, dialogs and prompts in `content-secondary` #454745 (oklch 0.395) / #e8ebe6, under headings, labels and values in `content-primary` #0e0f0c / #f3f5f1",
+      "standin": "Wise 0.155 on body copy in light",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Wise 0.104 / 0.152",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Wise `interactive-secondary` #868685 (L 0.62) / #b9bab7 (L 0.787) on fields, select triggers, checkboxes, radios and the off switch",
+      "standin": "Wise `controlEdge: strong`, L 0.60 in both modes, ΔE 0.020 / 0.187)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.secondary-role",
+      "title": "A secondary role, a desaturated brand container under dark ink",
+      "note": "Wise's secondary buttons on a pale brand tint, #e2f6d5 (oklch 0.950 0.048 133), under a forest #163300 label in light, forest under a bright green label in dark",
+      "standin": "the tonal secondary button puts brand ink on the accent tint (Wise: the tint ΔE 0.027, the label in the accent ink, oklch 0.51 0.12, ΔE 0.228; dark 0.043 / 0.096)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Labels on brand solids in a set color",
+      "note": "A chosen color: Wise forest #163300 (`interactive-control`) on the #9fe870 CTA in both modes",
+      "standin": "`solidInk: auto` picks a dark green ink on Spotify, Wise and Higgsfield, oklch 0.25 0.04 (ΔE 0.253 on Spotify, 0.057 on Wise, 0.051 on Higgsfield; the only other option is `white`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-selection",
+      "title": "The selection solid labelled in the brand",
+      "note": "Wise's selected chips and selected calendar day put a bright green #9fe870 label on forest #163300 in light, and forest on bright green in dark",
+      "standin": "on the ink stand-in, white on ink in light (label ΔE 0.221) and ink on white in dark (0.125)",
+      "source": "ledger"
+    }
+  ]
+}

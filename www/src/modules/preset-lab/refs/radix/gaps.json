@@ -1,0 +1,194 @@
+{
+  "gaps": [
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Radix 0.35em (4px at 12px)",
+      "standin": "2px in Radix and Spotify",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.keycap",
+      "title": "Keycap label ink as one choice of faint, muted or full",
+      "note": "Radix full ink (#1c2024 / #edeef0)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycaps filled with the page tone in dark (#fcfcfd / #111113)",
+      "standin": "keycaps take the card fill (#161618 in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in the link color (#0f62fe / #78a9ff)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Radix segmented items in gray-12 (#1c2024 / #edeef0) at 14/400, selected 500",
+      "standin": "Radix 0.26 / 0.17",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Radix bold headings tracked -1% to -0.5% (-0.35px at 35px, -0.21px at 28px, -0.15px at 24px, -0.1px at 20px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Radix 40px triggers above the line, labels inset 8px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.button-quiet",
+      "title": "Quiet buttons at regular weight (400) while solid and soft buttons stay 500",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet buttons a step shorter",
+      "note": "Radix 28px with 8px padding, pulled out by negative margins so the label lines up with text",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Radix secondary buttons (gray-a11 #5a5f68 / #b7bcc1 on gray-a3) neutral badges (#5a5e68 / #b4b8be on #f0f0f3 / #202124) and gray soft callouts (gray-a11 on gray-a3, 8px corners, no edge)",
+      "standin": "`alertStyle: soft` matches Radix's callout fill and corners with body-ink text (ΔE 0.24 / 0.18)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-fill",
+      "title": "Checkboxes filled with the field surface",
+      "note": "Radix white in light, black 25% over the page in dark (#0d0d0e), radios too (#0c0c0e)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Radix 35/28/24/20px for h1–h4",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.radio-checked",
+      "title": "Checked radios keep their edge over the fill",
+      "note": "Radix's gray-a7 inset ring stays on the accent-9 dot, a darker rim in light (#3150ba) and a lighter one in dark (#6485e5); checked checkboxes drop theirs",
+      "standin": "the checked radio has no edge",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Radix 35×20, 18px knob",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Radix gray-a3 (#f0f0f3 / #212225) inside a gray-a5 ring (#d3d4dc / #3c3f44); Radix, Supabase and Untitled UI keep the ring when the switch is on, over the accent track (Supabase's mint #2caa6f / #56cf92)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Radix a 32px track around a 30px chip",
+      "standin": "a track about the button height around chips inset 2–4px: 44px with a 36px chip on Carbon, 36px with 30px items on GitHub and Radix, 40px with 32px chips on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Radix's track at 4px (the button rung) with a 3px chip",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Radix 12px text, 4px 8px padding, 24px tall",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim stronger in dark than light",
+      "note": "Radix black 40% / 60%",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Radix 12px from the row edge inside 8px menu padding, at 32px rows",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tooltip",
+      "title": "Tooltip corners apart from menu-row corners",
+      "note": "Radix 4px tooltips with 4px rows (dotUI's inline-item radius rounds one rung above the item rung)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-shadow",
+      "title": "Deep overlay shadows over shadowless cards",
+      "note": "menus `0 12px 60px` black 15% plus `0 12px 32px -16px`, dialogs deeper; cards flat",
+      "standin": "`surfaceShadow: flat` (Tailwind md under menus, lg under dialogs)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.dialog-padding",
+      "title": "Roomier dialog padding",
+      "note": "24px",
+      "standin": "16px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.dialog-title",
+      "title": "Larger dialog titles",
+      "note": "20px bold",
+      "standin": "18px bold",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.dialog-close",
+      "title": "Dialogs with no close button",
+      "standin": "`dialogClose: faint`, the quietest close",
+      "source": "ledger"
+    },
+    {
+      "look": "color.focus-step",
+      "title": "Focus on an opaque accent step",
+      "note": "Radix step 8 (#8da4ef / #435db1) for button rings and focused fields",
+      "standin": "Radix ΔE 0.04 light, 0.14 dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Field edges between the firm and strong lines",
+      "note": "Radix gray-a7, #cdced6 in light, on fields, checkboxes and radios",
+      "standin": "`controlEdge: firm` on Radix (#d7dadf, ΔE 0.035; `strong` is far darker)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.overlay-line",
+      "title": "Overlay hairlines apart from card edges",
+      "note": "Radix menus and dialogs #edeff3 vs cards #dddfe5 in light, #393d42 vs #313438 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-accent",
+      "title": "Soft accent fills on their own accent steps",
+      "note": "Radix a3 behind a11 (#edf2fe with #3658c7 text in light, #18244a with #9eb1ff in dark)",
+      "standin": "the soft accent badge: Radix lands close, #f0f4ff / #3e60cb in light (text ΔE 0.025), #142040 / #97b5ff in dark (fill ΔE 0.023)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.gray-alpha-steps",
+      "title": "The segmented chip and progress track on their own gray-a steps",
+      "note": "Radix's chip is the page in light and gray-a3 in dark (#1c1d1f over #111113), ringed in gray-a4 (#e8e8ec / #222528); the progress track rings gray-a3 in gray-a4 (#dadae1 / #34383b)",
+      "source": "ledger"
+    }
+  ]
+}

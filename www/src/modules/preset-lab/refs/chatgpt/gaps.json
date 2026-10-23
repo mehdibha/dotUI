@@ -1,0 +1,180 @@
+{
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "ChatGPT's menus ringed in 0.5px black 10% / white 15% (reads #cbcbcb / #464646) and the main panel split from the sidebar by a 0.5px line (#e2e2e2 / #262626)",
+      "standin": "ChatGPT's menu edges ΔE 0.078 / 0.113 on the color too, and the specimen panel draws no divider at `shellTone: page`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "ChatGPT's sidebar rows 35px at 14/400, padded 10px, 8px corners, beside 36px buttons, selects and menu rows",
+      "standin": "ChatGPT -3px at `density: comfortable`, where its controls reach 36px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "ChatGPT's signed-in app, the GPT search field #fff / #1b1b1b inside a 1px #d9d9d9 / #484848 line and the UI font size field #fff / #303030 inside #d9d9d9 / #595959",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Select triggers filled and edged while secondary buttons are fill only",
+      "note": "ChatGPT's select triggers are 36px pills on #f3f3f3 under 1px #dadada (#303030 under #4e4e4e in dark), while its secondary buttons are #f0f0f0 / #0c0c0c with no edge (signed in)",
+      "standin": "select triggers follow `buttonSecondary: soft` and lose the edge in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "ChatGPT too, signed in, page titles at 24/500 (GPTs) and 24/400 (Settings), between a 36/600 pricing title and a 16/600 dialog title",
+      "standin": "ChatGPT `compact`, 600 at every level, h3 24px, h4 20px",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "ChatGPT's settings nav rows #0d0d0d / #ededed at 14/400 and its main sidebar's a step under (#313131 / #cacaca), the current row in the same ink and weight on a #efefef / #1a1a1a chip",
+      "standin": "ChatGPT's settings rows ΔE 0.342 / 0.178 and main sidebar rows 0.188 / 0.071, the current row matched with `navItemWeight: regular`",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.button-icon",
+      "title": "Button corners per kind, apart from the button radius",
+      "note": "Rounded-rect quiet buttons beside pill buttons: ChatGPT's header ghost buttons at 8px (36px icon buttons, the 34px Upgrade button with 12px padding) while its solid, soft and destructive buttons are pills",
+      "standin": "ChatGPT's `buttonRadius: pill` rounds every button, quiet ones included",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "ChatGPT's settings groups #000 on the #000 page under a 1px #262626 hairline at 16px (#fcfcfc under #e2e2e2 in light)",
+      "standin": "oklch 0.147 on ChatGPT, ΔE 0.147)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.tabs-ink",
+      "title": "Tabs marked by ink alone, with no fill, underline or track",
+      "note": "ChatGPT's GPTs category tabs change only the label ink, #5d5d5d → #0d0d0d in light and #cdcdcd → #ededed in dark, 28px at 14/500 with 8px padding and 6px corners (signed in)",
+      "standin": "`tabStyle: pill`: a tone chip on the current tab, 36px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-trackless",
+      "title": "Segmented control with no track",
+      "note": "ChatGPT's Settings › Appearance and Reduce motion items, 24px at 14/400 with 8px padding, unselected labels #8f8f8f / #afafaf, the selected one a flat gray pill (#e3e3e3 / #181818) with no shadow or edge (signed in)",
+      "standin": "ChatGPT takes `segmentedSelected: tone` on the default filled well, a 40px track at comfortable, the chip keeping a faint drop",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "ChatGPT 32×19, a 13px knob inset 3px under `0 1px 2px` black 20%, beside 32px controls",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "ChatGPT 14/400 in 30px circles, today (marked by a 3px dot) and the selected day too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "ChatGPT lifts them well above its #000 page: menus #2b2b2b (90% with a 16px blur), select triggers and tooltips #303030, dialogs #212121, the selected segment and off switch track #181818 (signed in)",
+      "standin": "ChatGPT at `darkBg: 0` derives them from the page, menus #0d0d0d (ΔE 0.130) and select triggers oklch 0.216 (ΔE 0.094), dialogs oklab 0.18 (ΔE 0.066), the segmented chip L 0.30 (ΔE 0.094) and the off track L 0.35 (ΔE 0.145)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "ChatGPT's dialogs (Keyboard shortcuts) have no edge, only a `0 4px 8px -2px` black 10% drop, while settings cards draw a 1px line and menus a 0.5px ring (signed in)",
+      "standin": "ChatGPT's at `surfaceEdge: line` too)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "ChatGPT's app tooltip a #0d0d0d chip under white text in light and #303030 under #ededed in dark, on the #000 page",
+      "standin": "`tooltipStyle: inverted` flips to a light chip in dark (ΔE 0.57 on GitHub, 0.66 on Notion, 0.647 on ChatGPT, 0.713 on Claude, with no ring); `surface` stays dark but loses the dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tooltip",
+      "title": "Tooltip text at label weight",
+      "note": "ChatGPT 14/600 in a 30px tooltip, 12px padding, 16px corners (a pill at that height)",
+      "standin": "12/400 in a 28px tooltip, 6px corners (8px at ChatGPT's `roleItem: lg`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Inverted tooltips with a drop shadow",
+      "note": "ChatGPT's dark chip under `0 8px 18px` rgba(15, 23, 42, 0.2), ringed in 1px #191919 in light and #393939 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.menu-row",
+      "title": "Menu rows rounder than sidebar rows",
+      "note": "ChatGPT's menu rows round at 12px (36px, padded 10px) inside 16px menus, while its sidebar rows, keycaps and fields sit at 8px",
+      "standin": "one `roleItem` for menu and sidebar rows: `lg` (8px) matches the sidebar and leaves menu rows 4px square; `xl` would flip it",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "ChatGPT's RECOMMENDED badge (pricing, signed in) a 27px pill with 8px padding at 11/600 uppercase, -0.18px tracking",
+      "standin": "ChatGPT 20px pills at 12/500",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Above cards: ChatGPT's GPTs page alert at 24px in a 1px #d6d6d6 / #333 edge under a `0 1px 2px` black 5% drop, its pricing columns at 24px too (`0 4px 8px` black 5%), while settings groups, GPT cards and dialogs stay at 16px",
+      "standin": "ChatGPT's banner and pricing columns at the card's 16px, `roleCard: 2xl`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "ChatGPT focus rings (2px at +2px) and links on blue-500 #0169cc in light, while in dark the ring is blue-400 #0285ff, links blue-300 #339cff and the info badge's text #339cff on #1c2d3d",
+      "standin": "ChatGPT with `brand: #0285ff`: light ring 0.101, dark links and accent badge text 0.126, while #0169cc fixes the light ring and breaks the dark one",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "ChatGPT 0.082, its most common off row, 16 parts in light, while `buttonColor: neutral` fills land on #181818 at 0.032",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "ChatGPT 0.023 / 0.080",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "ChatGPT draws control lines as ink alphas, outline fields, select triggers and outline buttons at 16% ink (#d8d8d8 on white, #585858 on #212121) and 50% on focus (#868686 / #909090), checkbox edges #cdcdcd / #5d5d5d, the off switch track #dfdfdf / #414141",
+      "standin": "ChatGPT on the firm line, L 0.887 / 0.40: light fields match, dark edges 0.057, checkboxes 0.038 / 0.075, the neutral focus edge at L 0.60 0.020 / 0.053, the dark off track 0.028",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-accent",
+      "title": "Soft accent fills on their own accent steps",
+      "note": "ChatGPT's info badge #deefff behind a deep #004f99 in light, #1c2d3d behind #339cff in dark",
+      "standin": "ChatGPT oklch 0.969 0.015 behind 0.521 0.171 in light (ΔE 0.028 / 0.096), 0.303 0.069 behind 0.789 0.109 in dark (ΔE 0.036 / 0.126)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "ChatGPT's soft secondary badge on #ececec / #3c3c3c",
+      "standin": "ChatGPT's soft badge on #f9f9f9 / #272727 (ΔE 0.039 / 0.083)",
+      "source": "ledger"
+    }
+  ]
+}
