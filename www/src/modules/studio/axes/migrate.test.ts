@@ -64,8 +64,6 @@ const RULED: Record<string, string> = {
   // Flat cards with no edge get a tone or a shadow apart from the page.
   "color/grouped-page": "lightBg",
   "surfaces/flat-needs-separation": "surfaceShadow",
-  // Main's tonal layers win over a button style Tonal excludes.
-  "style/buttonStyle-tonal": "buttonStyle",
 }
 
 /** Every key main drew that still draws a value of its own: today's
@@ -265,6 +263,19 @@ describe("migrate", () => {
     })
   })
 
+  it("reads Tonal as Flat with Tonal's columns, keeping explicit picks", () => {
+    const tonal = { ...DEFAULT_STATE, style: "tonal", inputStyle: "inset" }
+    expect(migrate({ version: 5, ...tonal })).toEqual({
+      ...DEFAULT_STATE,
+      surfaceLayers: "tonal",
+      surfaceEdge: "none",
+      surfaceShadow: "low",
+      buttonSecondary: "tonal",
+      segmentedSelected: "inverse",
+      inputStyle: "inset",
+    })
+  })
+
   it("reads the chart's own transition as a tempo, following Motion where it matches", () => {
     const v4 = (picks: Record<string, unknown>) =>
       migrate({ version: 4, ...DEFAULT_STATE, ...picks })
@@ -410,24 +421,25 @@ describe("main → v3", () => {
     ).toBe("attached")
   })
 
-  it("keeps main's tonal layers over a button style Tonal excludes", () => {
+  it("keeps main's tonal layers beside any button style", () => {
     for (const buttonStyle of ["hairline", "gloss", "rim-light", "bevel"]) {
-      const state = load(mainState({ buttonStyle, surfaceLayers: "tonal" }))
-      expect(state.style, buttonStyle).toBe("tonal")
-      expect(effective(state).values.surfaceLayers).toBe("tonal")
-      // Saved, so a Style that allows it draws it again.
-      expect(state.buttonStyle).toBe(buttonStyle)
+      const { values } = effective(
+        load(mainState({ buttonStyle, surfaceLayers: "tonal" })),
+      )
+      expect(values.surfaceLayers, buttonStyle).toBe("tonal")
+      expect(values.buttonStyle).toBe(buttonStyle)
     }
   })
 
   it("picks Flat unless a pick is another Style's", () => {
+    // Main's Spotify had tonal layers, which every Style allows now.
     const spotify = preset("spotify")
-    expect(spotify.style).toBe("tonal")
-    expect(spotify.surfaceLayers).toBe("style")
-    expect(spotify.surfaceEdge).toBe("style")
+    expect(spotify.style).toBe("flat")
+    expect(spotify.surfaceLayers).toBe("tonal")
+    expect(spotify.surfaceEdge).toBe("none")
     expect(spotify.toggleSelected).toBe("inverse")
     expect(spotify.inputStyle).toBe("filled")
-    expect(spotify.surfaceShadow).toBe("flat")
+    expect(spotify.surfaceShadow).toBe("style")
     expect(spotify.menuInset).toBe("inset")
 
     const bevel = load(mainState({ buttonStyle: "bevel" }))
@@ -437,8 +449,7 @@ describe("main → v3", () => {
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
     expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("tactile")
-    const { spotify: _, ...flat } = main.presets
-    for (const diff of Object.values(flat))
+    for (const diff of Object.values(main.presets))
       expect(load(mainState(diff)).style).toBe("flat")
   })
 

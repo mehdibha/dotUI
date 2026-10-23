@@ -8,10 +8,6 @@ export const wise = definePreset({
   inspiredBy: "Wise",
   diff: {
     // Style
-    // Panels and prompts sit on a forest-tinted gray with no border or shadow;
-    // only menus and tooltips float, on a soft 40px shadow.
-    style: "tonal",
-    surfaceShadow: "flat",
     // Field, checkbox and radio edges are #868685.
     controlEdge: "strong",
 
@@ -52,6 +48,10 @@ export const wise = definePreset({
     density: "touch",
 
     // Surfaces
+    // Panels and prompts sit on a forest-tinted gray with no border or shadow;
+    // only menus and tooltips float, on a soft 40px shadow.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
     shellTone: "page",
 
     // States
@@ -67,6 +67,7 @@ export const wise = definePreset({
 
     // Buttons
     buttonRadius: "pill",
+    buttonSecondary: "tonal",
     // Selected chips fill forest under bright-green labels. Chips are 32px
     // and outlined at rest, which has no option.
     toggleSelected: "solid",

@@ -70,8 +70,7 @@ const SHELL_SIDEBAR: Record<string, string> = {
 
 /* The Surfaces picker: a look writes layers, edge and shadow together;
    Style puts all three back on the Style's column. Any other mix is Custom.
-   Every look stands under every Style (none needs Tonal's layers or a
-   finish's edge). */
+   Every look stands under every Style (none needs a finish's edge). */
 const look = (layers: string, edge: string, shadow: string) => ({
   surfaceLayers: layers,
   surfaceEdge: edge,
@@ -84,6 +83,7 @@ export const SURFACE_LOOKS = {
   raised: look("same", "line", "low"),
   floating: look("same", "none", "medium"),
   grouped: look("grouped", "none", "low"),
+  tonal: look("tonal", "none", "low"),
 }
 
 export type SurfaceLookId = keyof typeof SURFACE_LOOKS

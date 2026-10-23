@@ -217,10 +217,6 @@ const sameValues = (a: Raw, b: Raw) =>
 
 const defaults: Raw = DEFAULTS
 
-/* A pick no Style allows beside another (main's tonal layers with hairline
-   buttons) loses one side; page layering outweighs a control's. */
-const WEIGHTS: Partial<Record<string, number>> = { surfaceLayers: 2 }
-
 /** Main's look pinned key by key, under the Style that keeps most of it
  *  (main had none: Flat, unless a pick is another Style's; Style keys main
  *  never had draw Flat's column); then each key goes back to its default
@@ -230,7 +226,7 @@ function settle(picks: Raw): Raw {
   const conflicts = (style: string) =>
     STYLE_KEYS.filter((key) =>
       excludedUnder(key, style).includes(picks[key] as string),
-    ).reduce((sum, key) => sum + (WEIGHTS[key] ?? 1), 0)
+    ).length
   const style = STYLE_VALUES.reduce((best, s) =>
     conflicts(s) < conflicts(best) ? s : best,
   )
@@ -288,20 +284,24 @@ function fromMain(main: Raw): Raw {
   return settle(state)
 }
 
+/** A removed Style becomes Flat, its columns written into every key that
+ *  still followed it. */
+const toFlat =
+  (style: string, columns: Raw) =>
+  (state: Raw): Raw => {
+    if (state.style !== style) return state
+    const next: Raw = { ...state, style: "flat" }
+    for (const [key, value] of Object.entries(columns))
+      if ((next[key] ?? "style") === "style") next[key] = value
+    return next
+  }
+
 /* Soft was Flat with these three columns; its finishes were Edge values. */
-const SOFT: Raw = {
+const fromSoft = toFlat("soft", {
   surfaceShadow: "low",
   buttonSecondary: "raised",
   segmentedSelected: "raised",
-}
-
-function fromSoft(state: Raw): Raw {
-  if (state.style !== "soft") return state
-  const next: Raw = { ...state, style: "flat" }
-  for (const [key, value] of Object.entries(SOFT))
-    if ((next[key] ?? "style") === "style") next[key] = value
-  return next
-}
+})
 
 /* Chart motion was the chart's own transition; it is now a tempo that
    follows Motion. */
@@ -314,9 +314,20 @@ function fromChartTransition(state: Raw): Raw {
   return { ...state, chartMotion: same ? "same" : tempo }
 }
 
+/* Tonal was Flat with these columns. */
+const fromTonal = toFlat("tonal", {
+  surfaceLayers: "tonal",
+  surfaceEdge: "none",
+  surfaceShadow: "low",
+  buttonSecondary: "tonal",
+  segmentedSelected: "inverse",
+  inputStyle: "indicator",
+})
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
   3: fromSoft,
   4: fromChartTransition,
+  5: fromTonal,
 }

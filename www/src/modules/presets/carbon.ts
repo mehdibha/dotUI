@@ -11,9 +11,7 @@ export const carbon = definePreset({
     brandAssets: "ibm",
 
     // Style
-    // #f4f4f4 layers on white, no edges; field bottom lines are #8d8d8d.
-    // Toggles select solid: Inverse #1f1f1f barely parts from the #393939 secondary.
-    style: "tonal",
+    // Field bottom lines are #8d8d8d.
     controlEdge: "strong",
 
     // Color
@@ -53,8 +51,9 @@ export const carbon = definePreset({
     // Fields md 40, buttons lg 48.
     density: "spacious",
 
-    // Surfaces
-    surfaceShadow: "flat",
+    // Surfaces: #f4f4f4 layers on white, no edges.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
     shellTone: "page",
 
     // States: a 2px inset focus, white inner stroke on filled buttons.
@@ -66,11 +65,14 @@ export const carbon = definePreset({
     tooltipEntrance: "fade",
 
     // Buttons: #393939 secondary.
+    // Toggles select solid: Inverse #1f1f1f barely parts from the #393939 secondary.
     toggleSelected: "solid",
     buttonSecondary: "solid",
+    segmentedSelected: "inverse",
     segmentedTrack: "outline",
 
     // Inputs: a #f4f4f4 field with one bottom line; TextInput has no hover.
+    inputStyle: "indicator",
     inputHover: "none",
     inputError: "icon-field",
     selectTrigger: "field",
