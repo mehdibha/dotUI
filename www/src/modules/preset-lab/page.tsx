@@ -14,6 +14,7 @@ import {
   useAppliedDesignSystem,
 } from "@/modules/studio/preset/iframe-sync"
 import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
+import { shareDesignSystem } from "@/modules/studio/preset/share-design-system"
 import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 
 import { SHEETS, type SheetName } from "./sheets"
@@ -93,17 +94,20 @@ function SpecimenSheet({
     internDesignSystem,
   )
   useAnnouncePreviewReady()
-  const shown = useRef({ json: "", commits: 0, wait: () => {} })
+  const shown = useRef({ designSystem, commits: 0, wait: () => {} })
   useLayoutEffect(() => {
-    shown.current.json = JSON.stringify(designSystem)
+    shown.current.designSystem = designSystem
     shown.current.commits++
     shown.current.wait()
   }, [designSystem])
   useEffect(() => {
     const apply = (diff: unknown) => {
       const data = designSystemOf(withDiff(state, diff))
-      // The same design system renders nothing, so nothing commits.
-      if (JSON.stringify(data) === shown.current.json) return Promise.resolve()
+      // What the applier counts as the same design system renders nothing,
+      // so nothing commits.
+      const now = shown.current.designSystem
+      if (shareDesignSystem(now, internDesignSystem(data)) === now)
+        return Promise.resolve()
       const from = shown.current.commits
       const committed = new Promise<void>((done) => {
         shown.current.wait = () => {
