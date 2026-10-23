@@ -1,0 +1,474 @@
+{
+  "react.html?sheet=actions&theme=light": {
+    "mode": "light",
+    "parts": {
+      "button.primary": {
+        "within": "[data-part=button-primary]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "button.secondary": {
+        "within": "[data-part=button-secondary]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "button.quiet": {
+        "within": "[data-part=button-quiet]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "only": [
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "button.focus": {
+        "within": "[data-part=button-focus]",
+        "selector": "button",
+        "focus": true,
+        "only": ["ring"]
+      },
+      "kbd": {
+        "within": "[data-part=kbd-small]",
+        "selector": ".Polaris-KeyboardKey",
+        "skip": ["letterSpacing", "boxShadow"]
+      },
+      "button.icon": {
+        "within": "[data-part=button-icon]",
+        "selector": "button"
+      },
+      "segmented": {
+        "within": "[data-part=segmented]",
+        "selector": ".Polaris-ButtonGroup",
+        "skip": ["borderRadius"]
+      },
+      "segmented.item": {
+        "within": "[data-part=segmented]",
+        "selector": "button:not([aria-pressed=true])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      },
+      "segmented.selected": {
+        "within": "[data-part=segmented]",
+        "selector": "button[aria-pressed=true]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing"]
+      }
+    }
+  },
+  "react.html?sheet=selection&theme=light": {
+    "mode": "light",
+    "parts": {
+      "checkbox": {
+        "within": "[data-part=checkbox]",
+        "selector": ".Polaris-Checkbox__Backdrop"
+      }
+    }
+  },
+  "react.html?sheet=navigation&theme=light": {
+    "mode": "light",
+    "parts": {
+      "link": {
+        "within": "[data-part=link]",
+        "selector": "a"
+      },
+      "panel": {
+        "selector": ".Polaris-Frame"
+      }
+    }
+  },
+  "react.html?sheet=dates&theme=light": {
+    "mode": "light",
+    "parts": {
+      "calendar.day": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day:not(.Polaris-DatePicker__Day--selected):not([aria-label^=Today])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["backgroundColor"]
+      },
+      "calendar.today": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day[aria-label^=Today]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["backgroundColor"]
+      },
+      "calendar.selected": {
+        "within": "[data-part=calendar]",
+        "selector": ".Polaris-DatePicker__Day--selected",
+        "ink": ".Polaris-Text--root"
+      }
+    }
+  },
+  "react.html?sheet=feedback&theme=light": {
+    "mode": "light",
+    "parts": {
+      "badge": {
+        "within": "[data-part=badge]",
+        "selector": ".Polaris-Badge",
+        "ink": ".Polaris-Text--root",
+        "skip": ["letterSpacing", "boxShadow"]
+      },
+      "alert": {
+        "within": "[data-part=banner-info]",
+        "selector": ".Polaris-Banner"
+      },
+      "progress": {
+        "within": "[data-part=progress]",
+        "selector": ".Polaris-ProgressBar"
+      },
+      "progress.fill": {
+        "within": "[data-part=progress]",
+        "selector": ".Polaris-ProgressBar__Indicator"
+      }
+    }
+  },
+  "react.html?sheet=type&theme=light": {
+    "mode": "light",
+    "parts": {
+      "heading.1": {
+        "within": "[data-part=heading-3xl]",
+        "selector": "h1"
+      },
+      "heading.2": {
+        "within": "[data-part=heading-2xl]",
+        "selector": "h1"
+      },
+      "heading.3": {
+        "within": "[data-part=heading-xl]",
+        "selector": "h2"
+      },
+      "heading.4": {
+        "within": "[data-part=heading-lg]",
+        "selector": "h3"
+      },
+      "text": {
+        "within": "[data-part=text]",
+        "selector": "p",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "text.muted": {
+        "within": "[data-part=text-muted]",
+        "selector": "p",
+        "only": ["color"]
+      }
+    }
+  },
+  "react.html?sheet=actions&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "within": "[data-part=button-primary]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "only": ["backgroundColor", "color"]
+      },
+      "button.secondary": {
+        "within": "[data-part=button-secondary]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "only": ["backgroundColor", "color"]
+      },
+      "button.quiet": {
+        "within": "[data-part=button-quiet]",
+        "selector": "button",
+        "ink": ".Polaris-Text--root",
+        "only": ["color"]
+      }
+    }
+  },
+  "react.html?sheet=selection&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "checkbox.checked": {
+        "within": "[data-part=checkbox-checked]",
+        "selector": ".Polaris-Checkbox__Backdrop",
+        "skip": ["borderRadius", "height"]
+      }
+    }
+  },
+  "react.html?sheet=navigation&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "tab.selected": {
+        "within": ".Polaris-Tabs__Wrapper",
+        "selector": ".Polaris-Tabs__Tab--active",
+        "ink": ".Polaris-Text--root",
+        "only": ["backgroundColor", "color"]
+      }
+    }
+  },
+  "react.html?sheet=menu&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "menu": {
+        "selector": ".Polaris-Popover__ContentContainer",
+        "surface": true,
+        "only": ["backgroundColor"]
+      },
+      "tooltip": {
+        "selector": ".Polaris-Tooltip-TooltipOverlay__Content",
+        "ink": ".Polaris-Text--root",
+        "only": ["backgroundColor", "color"]
+      }
+    }
+  },
+  "react.html?sheet=dialog&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "dialog": {
+        "selector": ".Polaris-Modal-Dialog__Modal",
+        "only": ["backgroundColor"]
+      }
+    }
+  },
+  "react.html?sheet=display&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "card": {
+        "within": "[data-part=card]",
+        "selector": ".Polaris-ShadowBevel",
+        "only": ["backgroundColor"]
+      }
+    }
+  },
+  "react.html?sheet=type&theme=dark": {
+    "mode": "dark",
+    "parts": {
+      "heading.1": {
+        "within": "[data-part=heading-3xl]",
+        "selector": "h1",
+        "only": ["color"]
+      },
+      "heading.2": {
+        "within": "[data-part=heading-2xl]",
+        "selector": "h1",
+        "only": ["color"]
+      },
+      "heading.3": {
+        "within": "[data-part=heading-xl]",
+        "selector": "h2",
+        "only": ["color"]
+      },
+      "heading.4": {
+        "within": "[data-part=heading-lg]",
+        "selector": "h3",
+        "only": ["color"]
+      },
+      "text": {
+        "within": "[data-part=text]",
+        "selector": "p",
+        "only": ["color"]
+      },
+      "text.muted": {
+        "within": "[data-part=text-muted]",
+        "selector": "p",
+        "only": ["color"]
+      }
+    }
+  },
+  "web.html": {
+    "mode": "light",
+    "parts": {
+      "switch.off": {
+        "selector": "[data-part=switch] s-switch >>> input"
+      }
+    }
+  },
+  "https://admin.shopify.com/products": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "shell": {
+        "selector": "#AppFrameNav nav"
+      },
+      "nav.item": {
+        "selector": "#AppFrameNav [class*=_ItemInnerWrapper_]:not([class*=_ItemInnerWrapper-selected_])",
+        "ink": ".Polaris-Text--root",
+        "skip": ["paddingInline"]
+      },
+      "nav.item.active": {
+        "selector": "#AppFrameNav [class*=_ItemInnerWrapper-selected_]",
+        "ink": ".Polaris-Text--root",
+        "skip": ["paddingInline"]
+      },
+      "card": {
+        "selector": "s-internal-section >>> section"
+      }
+    }
+  },
+  "https://admin.shopify.com/products/new": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 6000,
+    "parts": {
+      "input": {
+        "selector": "s-internal-text-field[name=title] >>> .input-wrapper",
+        "ink": "input",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "input.focus": {
+        "selector": "s-internal-text-field[name=title] >>> .input-wrapper",
+        "ink": "input",
+        "focus": true,
+        "only": ["backgroundColor", "edge", "ring"]
+      },
+      "field.label": {
+        "selector": "s-internal-text-field[name=title] >>> label .label-content"
+      },
+      "select.trigger": {
+        "selector": "s-internal-single-picker-field[label=Status] >>> .field-container",
+        "ink": ".content",
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "height",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "switch.on": {
+        "selector": "s-internal-switch[label='Inventory tracked'] >>> input"
+      },
+      "tooltip": {
+        "selector": "s-internal-tooltip >>> .tooltip:popover-open",
+        "before": [
+          {
+            "hover": "button[aria-label=Bold]"
+          },
+          {
+            "wait": "s-internal-tooltip .tooltip:visible"
+          }
+        ]
+      }
+    }
+  },
+  "https://admin.shopify.com/customers": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "dialog": {
+        "selector": "s-internal-modal >>> dialog[open]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "radio": {
+        "selector": "s-choice-list[label='File format'] >>> input[value=PLAIN_CSV]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "radio.checked": {
+        "selector": "s-choice-list[label='File format'] >>> input[value=EXCEL_CSV]",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "s-checkbox[label='Customer tags'] >>> .checkbox",
+        "before": [
+          {
+            "click": "s-internal-button:has-text(\"Export\")"
+          },
+          {
+            "wait": "s-internal-modal dialog[open]"
+          }
+        ]
+      }
+    }
+  },
+  "https://admin.shopify.com/analytics": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 6000,
+    "parts": {
+      "menu": {
+        "selector": "s-internal-page >>> s-menu >>> .popover:popover-open",
+        "before": [
+          {
+            "click": "s-internal-page .actions button[aria-label='More actions']"
+          },
+          {
+            "wait": "s-menu [role=menuitem]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "s-internal-page >>> s-menu >>> .popover:popover-open .menu-item",
+        "before": [
+          {
+            "click": "s-internal-page .actions button[aria-label='More actions']"
+          },
+          {
+            "wait": "s-menu [role=menuitem]"
+          }
+        ],
+        "ink": "s-text >>> .text"
+      }
+    }
+  },
+  "https://admin.shopify.com/settings/locations": {
+    "mode": "light",
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "tab": {
+        "selector": ".Polaris-Tabs__Tab:not(.Polaris-Tabs__Tab--active)",
+        "ink": ".Polaris-Text--root",
+        "only": [
+          "color",
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight",
+          "edge"
+        ]
+      },
+      "tab.selected": {
+        "selector": ".Polaris-Tabs__Tab--active",
+        "ink": ".Polaris-Text--root",
+        "skip": ["fontFamily", "letterSpacing", "boxShadow"]
+      }
+    }
+  }
+}

@@ -10,9 +10,8 @@ export const material3 = definePreset({
     // Assets
     brandAssets: "material",
 
-    // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
-    // outline #79747e on fields and buttons, #49454f on checks.
-    style: "tonal",
+    // Style: control edges at the darkest step, for M3's #79747e outline and
+    // the #49454f field and check lines.
     controlEdge: "strong",
 
     // Color
@@ -39,16 +38,22 @@ export const material3 = definePreset({
     iconLibrary: "material-symbols",
 
     // Shape
-    // 4.5px fields, field tops and menus, 13.5px cards, 27px dialogs (4 / 12 / 28), pill buttons.
+    // Field tops 4.5px, menu rows 4.5px, cards 13.5px, menus 18px, dialogs
+    // 27px (M3: 4 / 4 / 12 / 16 / 28), pill buttons. Tooltips and snackbars
+    // land on 6.75px for M3's 4.
     radiusPx: 9,
-    roleItem: "none",
-    roleSurface: "sm",
+    roleItem: "sm",
+    roleSurface: "2xl",
     rolePanel: "3xl",
     roleCard: "xl",
     // 40dp buttons, 56dp fields, 48dp menu rows.
     density: "spacious",
 
     // Surfaces
+    // Tone separates layers, not hairlines; menus keep a level-2 shadow.
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
+    surfaceShadow: "low",
     // The nav rail sits a tone below borderless content panels.
     shellTone: "recessed",
 
@@ -70,11 +75,11 @@ export const material3 = definePreset({
     // Buttons
     toggleSelected: "solid",
     buttonRadius: "pill",
-    // The chip follows the button style, not Tonal's inverse one.
-    segmentedSelected: "auto",
+    buttonSecondary: "tonal",
     segmentedTrack: "outline",
 
     // Inputs: the 56dp filled field with a bottom indicator.
+    inputStyle: "indicator",
     inputHeight: "tall",
     inputError: "icon-field",
     selectTrigger: "field",
@@ -87,15 +92,17 @@ export const material3 = definePreset({
     switchStyle: "outlined",
     sliderThumb: "handle",
 
-    // Menus & popovers: full-bleed rows, no check, a tinted selected row.
-    menuInset: "full-bleed",
+    // Menus & popovers: the vertical menu's rows sit 4px in from the edge, no
+    // check, a tinted selected row.
     menuSelectedRow: "tint",
     menuArrows: "none",
     menuIndicator: "none",
     menuRows: "step",
     mobilePickers: "anchored",
-    // The docked search view: a bare input over a divider.
+    // The docked search view: a bare input over a divider, 16px query and
+    // rows (body-large).
     menuSearch: "bar",
+    menuScale: "large",
 
     // Dialogs: a 32% black scrim; dividers only while scrolling.
     dialogBackdrop: "scrim",
@@ -107,10 +114,12 @@ export const material3 = definePreset({
     tabsColor: "accent",
     tabIndicator: "label",
     navMarker: "pill",
+    // Drawer labels 500, 700 when active (600 is the nearest step).
+    navItemWeight: "medium-semibold",
 
     // Feedback
     toastStyle: "inverse",
-    // Chips: 1px #79747e outline, 8px corners.
+    // Chips: a 1px #cac4d0 outline. Stand-in: 4.5px corners for their 8px.
     badgeStyle: "outline",
     badgeShape: "rounded",
     progressTrackStyle: "gap",

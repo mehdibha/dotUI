@@ -17,7 +17,11 @@
     "preview:example": "tsx scripts/preview-example.ts",
     "check:tailwind": "tsx scripts/tw-canonical.ts",
     "build:cover": "pnpm build:registry && tsx scripts/capture-cover.mts",
-    "check:registry-comments": "tsx scripts/check-registry-comments.ts"
+    "check:registry-comments": "tsx scripts/check-registry-comments.ts",
+    "presets:catalog": "tsx scripts/presets-catalog.ts",
+    "presets:capture": "tsx scripts/capture-specimens.mts",
+    "presets:compare": "tsx scripts/compose-refs.mts",
+    "presets:measure": "tsx scripts/measure-preset.mts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

@@ -59,7 +59,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           list: "rounded-(--studio-tabs-list-radius)",
           item: "rounded-[calc(var(--studio-tabs-list-radius)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
           indicator:
-            "inset-0 rounded-[calc(var(--studio-tabs-list-radius)-3px)]",
+            "top-0 left-0 size-full rounded-[calc(var(--studio-tabs-list-radius)-3px)]",
         },
         line: {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
@@ -70,7 +70,8 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         pill: {
           list: "gap-1",
           item: "group/tab rounded-(--studio-tabs-pill-radius) orientation-horizontal:h-full",
-          indicator: "inset-0 rounded-(--studio-tabs-pill-radius)",
+          indicator:
+            "top-0 left-0 size-full rounded-(--studio-tabs-pill-radius)",
         },
         enclosed: {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
@@ -154,35 +155,50 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           compact: {
             variants: {
               variant: {
-                line: { indicator: "orientation-horizontal:inset-x-1.5" },
+                line: {
+                  indicator:
+                    "orientation-horizontal:left-1.5 orientation-horizontal:w-[calc(100%-var(--spacing)*3)]",
+                },
               },
             },
           },
           default: {
             variants: {
               variant: {
-                line: { indicator: "orientation-horizontal:inset-x-1.5" },
+                line: {
+                  indicator:
+                    "orientation-horizontal:left-1.5 orientation-horizontal:w-[calc(100%-var(--spacing)*3)]",
+                },
               },
             },
           },
           comfortable: {
             variants: {
               variant: {
-                line: { indicator: "orientation-horizontal:inset-x-2" },
+                line: {
+                  indicator:
+                    "orientation-horizontal:left-2 orientation-horizontal:w-[calc(100%-var(--spacing)*4)]",
+                },
               },
             },
           },
           spacious: {
             variants: {
               variant: {
-                line: { indicator: "orientation-horizontal:inset-x-3" },
+                line: {
+                  indicator:
+                    "orientation-horizontal:left-3 orientation-horizontal:w-[calc(100%-var(--spacing)*6)]",
+                },
               },
             },
           },
           touch: {
             variants: {
               variant: {
-                line: { indicator: "orientation-horizontal:inset-x-4" },
+                line: {
+                  indicator:
+                    "orientation-horizontal:left-4 orientation-horizontal:w-[calc(100%-var(--spacing)*8)]",
+                },
               },
             },
           },

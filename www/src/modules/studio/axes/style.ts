@@ -1,18 +1,17 @@
 /* Style — the material, named by its light: how every surface and control
-   draws depth. Flat has no light (lines), Tonal stands tone in for light,
-   Polished lights controls from above, Chunky casts hard light onto solid
-   ledges. Seven keys default to the "style" follow and read
-   their column below; Flat's column is each key's own default, so Origin is
-   untouched. An option that needs another light (Bevel buttons outside
-   Polished) is excluded, falling back to the column. Color, type, radius,
-   density and motion never change with it. */
+   draws depth. Flat has no light (lines), Polished lights controls from
+   above, Chunky casts hard light onto solid ledges. Seven keys default to
+   the "style" follow and read their column below; Flat's column is each
+   key's own default, so Origin is untouched. An option that needs another
+   light (Bevel buttons outside Polished) is excluded, falling back to the
+   column. Color, type, radius, density and motion never change with it. */
 
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { oneOf } from "./schema"
 
-export const STYLE_VALUES = ["flat", "tonal", "polished", "chunky"] as const
+export const STYLE_VALUES = ["flat", "polished", "chunky"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -21,44 +20,37 @@ export type Style = (typeof STYLE_VALUES)[number]
 export const COLUMNS = {
   surfaceLayers: {
     flat: "same",
-    tonal: "tonal",
     polished: "same",
     chunky: "same",
   },
   // Polished and Chunky draw the edge their button finish implies.
   surfaceEdge: {
     flat: "line",
-    tonal: "none",
     polished: "auto",
     chunky: "auto",
   },
   surfaceShadow: {
     flat: "flat",
-    tonal: "low",
     polished: "low",
     chunky: "flat",
   },
   buttonStyle: {
     flat: "flat",
-    tonal: "flat",
     polished: "bevel",
     chunky: "ledge",
   },
   buttonSecondary: {
     flat: "as-style",
-    tonal: "tonal",
     polished: "as-style",
     chunky: "as-style",
   },
   segmentedSelected: {
     flat: "auto",
-    tonal: "inverse",
     polished: "auto",
     chunky: "auto",
   },
   inputStyle: {
     flat: "auto",
-    tonal: "indicator",
     polished: "auto",
     chunky: "auto",
   },
@@ -80,7 +72,6 @@ export const ALLOWED: Partial<
     ledge: ["chunky"],
   },
   surfaceEdge: { bevel: ["polished"], ledge: ["chunky"] },
-  surfaceLayers: { tonal: ["tonal"] },
   inputStyle: { well: ["polished", "chunky"] },
 }
 

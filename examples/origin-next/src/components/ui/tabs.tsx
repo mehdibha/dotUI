@@ -32,7 +32,7 @@ const tabsVariants = tv({
         list: "rounded-lg bg-muted p-[3px]",
         item: "rounded-[calc(var(--radius-lg)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
         indicator:
-          "inset-0 rounded-[calc(var(--radius-lg)-3px)] bg-selected shadow-sm",
+          "top-0 left-0 size-full rounded-[calc(var(--radius-lg)-3px)] bg-selected shadow-sm",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
@@ -44,7 +44,7 @@ const tabsVariants = tv({
         list: "gap-1",
         item: "group/tab rounded-md orientation-horizontal:h-full selected:text-fg-on-selected",
         indicator:
-          "inset-0 rounded-md bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active",
+          "top-0 left-0 size-full rounded-md bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active",
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",

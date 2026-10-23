@@ -157,7 +157,7 @@ describe("POST /api/snapshots", () => {
 
   it("keeps a current state as it is", async () => {
     const store = memoryStore()
-    const state = parseState({ style: "tonal", surfaceShadow: "flat" })
+    const state = parseState({ style: "polished", surfaceShadow: "flat" })
     const id = await save(store, { name: "Acme", state: stamp(state) })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       state,

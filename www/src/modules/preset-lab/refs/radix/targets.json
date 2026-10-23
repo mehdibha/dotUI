@@ -1,0 +1,257 @@
+{
+  "https://www.radix-ui.com/themes/docs/components/button": {
+    "parts": {
+      "page": {
+        "selector": ".radix-themes-default-fonts"
+      },
+      "button.primary": {
+        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid"
+      },
+      "button.quiet": {
+        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-ghost"
+      },
+      "button.focus": {
+        "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid",
+        "focus": true
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/icon-button": {
+    "parts": {
+      "button.icon": {
+        "selector": ".radix-themes-default-fonts .rt-IconButton.rt-r-size-2.rt-variant-soft[data-accent-color=gray]"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/segmented-control": {
+    "parts": {
+      "segmented": {
+        "selector": ".radix-themes-default-fonts .rt-SegmentedControlRoot.rt-r-size-2",
+        "skip": ["backgroundColor"]
+      },
+      "segmented.item": {
+        "selector": ".radix-themes-default-fonts .rt-SegmentedControlRoot.rt-r-size-2 .rt-SegmentedControlItem[data-state=off]",
+        "ink": ".rt-SegmentedControlItemLabelInactive",
+        "only": [
+          "color",
+          "height",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "segmented.selected": {
+        "selector": ".radix-themes-default-fonts .rt-SegmentedControlRoot.rt-r-size-2 .rt-SegmentedControlIndicator",
+        "box": "::before",
+        "only": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "boxShadow",
+          "edge"
+        ]
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/text-field": {
+    "parts": {
+      "input": {
+        "selector": ".radix-themes-default-fonts .rt-TextFieldRoot.rt-r-size-2.rt-variant-surface",
+        "skip": ["paddingInline"]
+      },
+      "input.focus": {
+        "selector": ".radix-themes-default-fonts .rt-TextFieldRoot.rt-r-size-2.rt-variant-surface",
+        "focus": true
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/select": {
+    "parts": {
+      "select.trigger": {
+        "selector": ".radix-themes-default-fonts .rt-SelectTrigger.rt-r-size-2.rt-variant-surface"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/checkbox": {
+    "parts": {
+      "checkbox": {
+        "selector": ".radix-themes-default-fonts .rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]",
+        "box": "::before"
+      },
+      "checkbox.checked": {
+        "selector": ".radix-themes-default-fonts .rt-CheckboxRoot.rt-r-size-2.rt-variant-surface[data-state=checked]",
+        "box": "::before"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/radio-group": {
+    "parts": {
+      "radio": {
+        "selector": ".radix-themes-default-fonts .rt-BaseRadioRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]",
+        "box": "::before"
+      },
+      "radio.checked": {
+        "selector": ".radix-themes-default-fonts .rt-BaseRadioRoot.rt-r-size-2.rt-variant-surface[data-state=checked]",
+        "box": "::before"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/switch": {
+    "parts": {
+      "switch.on": {
+        "selector": ".radix-themes-default-fonts .rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=checked]",
+        "box": "::before",
+        "skip": ["backgroundColor"]
+      },
+      "switch.off": {
+        "selector": ".radix-themes-default-fonts .rt-SwitchRoot.rt-r-size-2.rt-variant-surface[data-state=unchecked]",
+        "box": "::before"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/tabs": {
+    "parts": {
+      "tab": {
+        "selector": ".radix-themes-default-fonts .rt-TabsTrigger[data-state=inactive]",
+        "ink": ".rt-TabsTriggerInner",
+        "skip": ["borderRadius"]
+      },
+      "tab.selected": {
+        "selector": ".radix-themes-default-fonts .rt-TabsTrigger[data-state=active]",
+        "ink": ".rt-TabsTriggerInner",
+        "skip": ["borderRadius"]
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/link": {
+    "parts": {
+      "link": {
+        "within": ".radix-themes-default-fonts",
+        "text": "Sign up"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/dropdown-menu": {
+    "parts": {
+      "menu": {
+        "selector": ".rt-DropdownMenuContent",
+        "before": [
+          {
+            "click": ".radix-themes-default-fonts .rt-Button"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": ".rt-DropdownMenuItem",
+        "before": [
+          {
+            "click": ".radix-themes-default-fonts .rt-Button"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/tooltip": {
+    "parts": {
+      "tooltip": {
+        "selector": ".rt-TooltipContent",
+        "before": [
+          {
+            "hover": ".radix-themes-default-fonts .rt-IconButton"
+          }
+        ],
+        "ink": ".rt-TooltipText"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/dialog": {
+    "parts": {
+      "dialog": {
+        "selector": ".rt-DialogContent",
+        "before": [
+          {
+            "click": ".radix-themes-default-fonts .rt-Button"
+          }
+        ]
+      },
+      "button.secondary": {
+        "within": ".rt-DialogContent",
+        "text": "Cancel",
+        "before": [
+          {
+            "click": ".radix-themes-default-fonts .rt-Button"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/card": {
+    "parts": {
+      "card": {
+        "selector": ".radix-themes-default-fonts .rt-Card.rt-variant-surface",
+        "box": "::before"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/callout": {
+    "parts": {
+      "alert": {
+        "selector": ".radix-themes-default-fonts .rt-CalloutRoot.rt-variant-soft[data-accent-color=gray]"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/progress": {
+    "parts": {
+      "progress": {
+        "selector": ".radix-themes-default-fonts .rt-ProgressRoot.rt-r-size-2.rt-variant-surface[data-state=loading]"
+      },
+      "progress.fill": {
+        "selector": ".radix-themes-default-fonts .rt-ProgressRoot.rt-r-size-2.rt-variant-surface[data-state=loading] .rt-ProgressIndicator"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/badge": {
+    "parts": {
+      "badge": {
+        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=gray]"
+      },
+      "badge.accent": {
+        "selector": ".radix-themes-default-fonts .rt-Badge.rt-r-size-1.rt-variant-soft[data-accent-color=indigo]"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/kbd": {
+    "parts": {
+      "kbd": {
+        "selector": ".radix-themes-default-fonts .rt-Kbd"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/heading": {
+    "parts": {
+      "heading.1": {
+        "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-8"
+      },
+      "heading.2": {
+        "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-7"
+      },
+      "heading.3": {
+        "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-6"
+      },
+      "heading.4": {
+        "selector": ".radix-themes-default-fonts .rt-Heading.rt-r-size-5"
+      }
+    }
+  },
+  "https://www.radix-ui.com/themes/docs/components/text": {
+    "parts": {
+      "text": {
+        "selector": ".radix-themes-default-fonts .rt-Text.rt-r-size-3"
+      },
+      "text.muted": {
+        "selector": ".radix-themes-default-fonts .rt-Text.rt-r-size-2[data-accent-color=gray]"
+      }
+    }
+  }
+}

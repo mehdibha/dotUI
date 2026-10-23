@@ -3,7 +3,7 @@
 
 import type { StudioState } from "./index"
 
-export const STATE_VERSION = 6
+export const STATE_VERSION = 7
 
 /** The state as stored: stamped with the version it was written at. */
 export const stamp = (state: StudioState) => ({

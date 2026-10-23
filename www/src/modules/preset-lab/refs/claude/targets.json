@@ -1,0 +1,651 @@
+{
+  "https://claude.ai/new": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "shell": {
+        "selector": "[data-testid=sidebar]"
+      },
+      "nav.item": {
+        "selector": "[data-testid=sidebar] a[href='/artifacts']",
+        "skip": ["paddingInline"]
+      },
+      "nav.item.active": {
+        "selector": "[data-testid=sidebar] a[aria-current=page]",
+        "skip": ["paddingInline"]
+      },
+      "badge": {
+        "selector": "[data-testid=sidebar] a[href='/cowork/projects'] span.h-control-nested",
+        "ink": "span"
+      },
+      "heading.display": {
+        "selector": "main div.font-ui-serif > span"
+      },
+      "model.trigger": {
+        "selector": "[data-testid=model-selector-dropdown]"
+      },
+      "button.icon.quiet": {
+        "selector": "[data-testid=chat-input-attach]"
+      },
+      "button.voice": {
+        "selector": "button[aria-label='Use voice mode']"
+      },
+      "composer": {
+        "selector": "[data-testid=chat-input]",
+        "surface": true,
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "wait": "[data-testid=chat-input]"
+          }
+        ]
+      },
+      "composer.focus": {
+        "selector": "[data-testid=chat-input]",
+        "surface": true,
+        "focus": true
+      },
+      "tooltip": {
+        "selector": "[role=tooltip]",
+        "before": [
+          {
+            "hover": "[aria-label='Hide sidebar']"
+          },
+          {
+            "wait": "[role=tooltip]"
+          }
+        ]
+      },
+      "menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=chat-input-attach]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitem]:not([data-highlighted])",
+        "nth": 1,
+        "before": [
+          {
+            "click": "[data-testid=chat-input-attach]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          }
+        ]
+      },
+      "menu.item.highlighted": {
+        "selector": "[role=menu] [role=menuitem][data-highlighted]",
+        "before": [
+          {
+            "click": "[data-testid=chat-input-attach]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          },
+          {
+            "hover": "[role=menu] [role=menuitem]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem][data-highlighted]"
+          }
+        ]
+      },
+      "command": {
+        "selector": "[role=dialog]:has(textarea[role=combobox])",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] textarea[role=combobox]"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "q"
+          },
+          {
+            "press": "x"
+          },
+          {
+            "wait": "[role=dialog] [role=option]"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[role=dialog] [role=option][aria-selected=false]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] textarea[role=combobox]"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "q"
+          },
+          {
+            "press": "x"
+          },
+          {
+            "wait": "[role=dialog] [role=option]"
+          }
+        ]
+      },
+      "command.item.highlighted": {
+        "selector": "[role=dialog] [role=option][aria-selected=true]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] textarea[role=combobox]"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "z"
+          },
+          {
+            "press": "q"
+          },
+          {
+            "press": "x"
+          },
+          {
+            "wait": "[role=dialog] [role=option]"
+          }
+        ]
+      },
+      "kbd": {
+        "selector": "[role=dialog] kbd",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] kbd"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "nav.search": {
+        "selector": "[data-testid=sidebar] .df-search-field"
+      },
+      "heading.caption": {
+        "selector": "main h3"
+      },
+      "segmented.app": {
+        "selector": ".df-app-switch [role=radiogroup]"
+      },
+      "segmented.app.item": {
+        "selector": ".df-app-switch [role=radio][aria-checked=false]"
+      },
+      "segmented.app.selected": {
+        "selector": ".df-app-switch [role=radiogroup] > div[aria-hidden] > div"
+      },
+      "command.tab": {
+        "selector": "[role=dialog] [role=tab][aria-selected=false]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] [role=tab]"
+          }
+        ],
+        "box": "::before"
+      },
+      "command.tab.selected": {
+        "selector": "[role=dialog] [role=tab][aria-selected=true]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] [role=tab]"
+          }
+        ],
+        "box": "::before"
+      }
+    }
+  },
+  "https://claude.ai/new#composer-typed": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "button.send": {
+        "selector": "[data-testid=chat-input-send]",
+        "before": [
+          {
+            "click": "[data-testid=chat-input]"
+          },
+          {
+            "press": "a"
+          },
+          {
+            "wait": "[data-testid=chat-input-send]:not([disabled])"
+          }
+        ]
+      }
+    }
+  },
+  "https://claude.ai/recents": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "button.secondary": {
+        "text": "Select",
+        "within": "main",
+        "box": ".cds-btn-squish > span"
+      },
+      "list.item": {
+        "selector": "main [role=tabpanel] tbody tr:has(a[href^=\"/chat/\"])"
+      },
+      "text": {
+        "selector": "main [role=tabpanel] tbody td span:not(.sr-only):not(:has(*))",
+        "nth": 1,
+        "skip": ["fontSize"]
+      },
+      "checkbox": {
+        "selector": "main tr span[role=checkbox][aria-checked=false] > span",
+        "before": [
+          {
+            "click": "main button:has-text(\"Select\")"
+          },
+          {
+            "wait": "main button[aria-label=\"Exit selection\"]"
+          }
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "main tr span[role=checkbox][aria-checked=true] > span",
+        "before": [
+          {
+            "click": "main button:has-text(\"Select\")"
+          },
+          {
+            "wait": "main button[aria-label=\"Exit selection\"]"
+          },
+          {
+            "click": "main tr span[role=checkbox]"
+          },
+          {
+            "wait": "main tr span[role=checkbox][aria-checked=true]"
+          },
+          {
+            "hover": "main h1"
+          }
+        ]
+      },
+      "input.search.focus": {
+        "selector": "main div:has(> input[type=search])",
+        "before": [
+          {
+            "click": "main button[aria-label=\"Search your activity\"]"
+          },
+          {
+            "wait": "main input[type=search]"
+          },
+          {
+            "wait": "main input[type=search]:focus"
+          }
+        ],
+        "ink": "input"
+      },
+      "button.focus": {
+        "selector": "main a[href=\"/new\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://claude.ai/projects": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "card": {
+        "selector": "main li > div[class*=\"group/card\"]",
+        "box": "::after"
+      }
+    }
+  },
+  "https://claude.ai/artifacts": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "heading.1": {
+        "selector": "main h1"
+      },
+      "tab": {
+        "selector": "main [role=tablist] [role=tab][aria-selected=false]",
+        "box": "::before"
+      },
+      "tab.selected": {
+        "selector": "main [role=tablist] [role=tab][aria-selected=true]",
+        "box": "::before"
+      },
+      "badge.accent": {
+        "selector": "main button[aria-label=\"Docs, New\"] span.h-control-nested",
+        "ink": "span"
+      },
+      "card.artifact": {
+        "selector": "main li div.bg-surface-2"
+      },
+      "button.menu": {
+        "selector": "main button[aria-label^=\"Group by\"]",
+        "box": ".cds-btn-squish > span"
+      },
+      "heading.section": {
+        "selector": "main h2"
+      },
+      "card.tile": {
+        "selector": "main button[aria-label=\"Docs, New\"] span.rounded-composer"
+      }
+    }
+  },
+  "https://claude.ai/new#settings/general": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "heading.3": {
+        "selector": "[role=dialog] h3"
+      },
+      "field.label": {
+        "selector": "[role=dialog] span.settings-row-title"
+      },
+      "text.muted": {
+        "selector": "[role=dialog] div.text-muted-as-secondary",
+        "skip": ["fontSize"]
+      },
+      "segmented": {
+        "selector": "[role=dialog] [role=radiogroup]:not(:has([aria-label=System]))"
+      },
+      "segmented.item": {
+        "selector": "[role=dialog] [role=radiogroup]:not(:has([aria-label=System])) > span[role=radio][aria-checked=false]"
+      },
+      "segmented.selected": {
+        "selector": "[role=dialog] [role=radiogroup]:not(:has([aria-label=System])) > div[aria-hidden] > div",
+        "skip": ["paddingInline"]
+      },
+      "segmented.selected.ink": {
+        "selector": "[role=dialog] [role=radiogroup]:not(:has([aria-label=System])) > span[role=radio][aria-checked=true]"
+      },
+      "segmented.icon": {
+        "selector": "[role=dialog] span[role=radio][aria-label=Light]"
+      },
+      "dialog.settings": {
+        "selector": "[role=dialog]"
+      },
+      "settings.nav.item": {
+        "text": "Account",
+        "within": "[role=dialog]"
+      },
+      "settings.nav.item.active": {
+        "selector": "[role=dialog] button[aria-current=page]"
+      }
+    }
+  },
+  "https://claude.ai/new#settings/account": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "textarea": {
+        "selector": "[role=dialog] textarea"
+      },
+      "link.muted": {
+        "selector": "[role=dialog] a[href]:not([href^=\"/\"])",
+        "nth": 2
+      }
+    },
+    "steps": [
+      {
+        "wait": "[role=dialog] textarea"
+      }
+    ]
+  },
+  "https://claude.ai/new#settings/billing": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "button.danger": {
+        "text": "Cancel",
+        "within": "[role=dialog]",
+        "box": ".cds-btn-squish > span"
+      }
+    }
+  },
+  "https://claude.ai/new#settings/usage": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "progress": {
+        "selector": "[role=dialog] [role=meter]"
+      },
+      "progress.fill": {
+        "selector": "[role=dialog] [role=meter] > div"
+      },
+      "button.quiet": {
+        "text": "Manage",
+        "within": "[role=dialog]",
+        "box": ".cds-btn-squish > span"
+      }
+    }
+  },
+  "https://claude.ai/new#settings/capabilities": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "select.trigger": {
+        "selector": "[role=dialog] button[role=combobox]"
+      },
+      "switch.on": {
+        "selector": "[role=dialog] span[role=switch][aria-checked=true]"
+      },
+      "switch.off": {
+        "selector": "[role=dialog] span[role=switch][aria-checked=false]"
+      },
+      "link": {
+        "selector": "[role=dialog] div.text-body a[href]"
+      },
+      "input.focus": {
+        "selector": "[role=dialog] input[placeholder^=\"example.com\"]",
+        "focus": true
+      }
+    }
+  },
+  "https://claude.ai/new#customize/connectors/yours": {
+    "signedIn": true,
+    "settle": 5000,
+    "parts": {
+      "heading.2": {
+        "selector": "[role=dialog] h2",
+        "nth": 1
+      },
+      "input.search": {
+        "selector": "[role=dialog] input[aria-label=Search]"
+      },
+      "button.primary": {
+        "selector": "[role=dialog] button[aria-label=\"Add connector\"]",
+        "box": ".cds-btn-squish > span"
+      },
+      "dialog": {
+        "selector": "[role=dialog]:has(input[placeholder=\"MCP server URL\"])",
+        "before": [
+          {
+            "click": "[role=dialog] button[aria-label=\"Add connector\"]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          },
+          {
+            "click": "[role=menu] [role=menuitem]"
+          },
+          {
+            "wait": "input[placeholder=\"MCP server URL\"]"
+          }
+        ]
+      },
+      "input": {
+        "selector": "[role=dialog]:has(input[placeholder=\"MCP server URL\"]) input[placeholder=Name]",
+        "before": [
+          {
+            "click": "[role=dialog] button[aria-label=\"Add connector\"]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          },
+          {
+            "click": "[role=menu] [role=menuitem]"
+          },
+          {
+            "wait": "input[placeholder=\"MCP server URL\"]"
+          }
+        ],
+        "skip": ["backgroundColor"]
+      },
+      "button.disabled": {
+        "selector": "[role=dialog]:has(input[placeholder=\"MCP server URL\"]) button[type=submit]",
+        "box": ".cds-btn-squish > span",
+        "before": [
+          {
+            "click": "[role=dialog] button[aria-label=\"Add connector\"]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          },
+          {
+            "click": "[role=menu] [role=menuitem]"
+          },
+          {
+            "wait": "input[placeholder=\"MCP server URL\"]"
+          }
+        ]
+      }
+    }
+  },
+  "https://claude.ai/new#model-menu": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "menu.model": {
+        "selector": "[role=menu]:has([role=menuitemradio])",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "click": "[data-testid=model-selector-dropdown]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitemradio]"
+          }
+        ]
+      },
+      "menu.model.item": {
+        "selector": "[role=menu] [role=menuitemradio][aria-checked=false]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "click": "[data-testid=model-selector-dropdown]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitemradio]"
+          }
+        ]
+      },
+      "menu.model.item.checked": {
+        "selector": "[role=menu] [role=menuitemradio][aria-checked=true]",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "click": "[data-testid=model-selector-dropdown]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitemradio]"
+          }
+        ]
+      }
+    }
+  },
+  "https://claude.ai/new#account-menu": {
+    "signedIn": true,
+    "settle": 3000,
+    "parts": {
+      "user.trigger": {
+        "selector": "[data-testid=user-menu-button]"
+      },
+      "menu.account": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=user-menu-button]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          }
+        ]
+      },
+      "menu.account.item.highlighted": {
+        "selector": "[role=menu] [role=menuitem][data-highlighted]",
+        "before": [
+          {
+            "click": "[data-testid=user-menu-button]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          },
+          {
+            "hover": "[role=menu] [role=menuitem]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem][data-highlighted]"
+          }
+        ]
+      }
+    }
+  }
+}

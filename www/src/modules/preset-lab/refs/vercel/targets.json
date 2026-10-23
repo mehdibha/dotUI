@@ -1,0 +1,292 @@
+{
+  "https://vercel.com/geist/button": {
+    "parts": {
+      "button.primary": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(1)"
+      },
+      "button.secondary": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(4)"
+      },
+      "button.quiet": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(5)",
+        "skip": ["backgroundColor"]
+      },
+      "button.icon": {
+        "selector": "[data-geist-button][aria-label=Upload]",
+        "nth": 2,
+        "only": ["borderRadius", "height"]
+      },
+      "button.focus": {
+        "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(1)",
+        "focus": true
+      }
+    }
+  },
+  "https://vercel.com/geist/input": {
+    "parts": {
+      "input": {
+        "selector": "[data-geist-input-wrapper]",
+        "nth": 1,
+        "ink": "input",
+        "skip": ["borderRadius", "paddingInline"]
+      },
+      "input.focus": {
+        "selector": "[data-geist-input-wrapper]",
+        "nth": 1,
+        "ink": "input",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "main label[data-version] > div.mb-2"
+      }
+    }
+  },
+  "https://vercel.com/geist/select": {
+    "parts": {
+      "select.trigger": {
+        "selector": "[data-geist-select] select",
+        "nth": 1
+      }
+    }
+  },
+  "https://vercel.com/geist/checkbox": {
+    "parts": {
+      "checkbox": {
+        "selector": "main label[for^=checkbox] input + span"
+      },
+      "checkbox.checked": {
+        "selector": "main label[for^=checkbox] input + span",
+        "before": [
+          {
+            "click": "main label[for^=checkbox]"
+          }
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/radio": {
+    "parts": {
+      "radio": {
+        "selector": "main label[data-geist-radio-item] input + span",
+        "nth": 1
+      },
+      "radio.checked": {
+        "selector": "main label[data-geist-radio-item] input + span"
+      }
+    }
+  },
+  "https://vercel.com/geist/toggle": {
+    "parts": {
+      "switch.off": {
+        "selector": "input[data-testid='toggle/input'] + span"
+      },
+      "switch.on": {
+        "selector": "input[data-testid='toggle/input'] + span",
+        "nth": 1
+      }
+    }
+  },
+  "https://vercel.com/geist/switch": {
+    "parts": {
+      "segmented": {
+        "selector": "main div.flex.bg-background-100.p-1"
+      },
+      "segmented.item": {
+        "within": "main div.flex.bg-background-100.p-1",
+        "selector": "input:not(:checked) + div",
+        "skip": ["borderRadius"]
+      },
+      "segmented.selected": {
+        "within": "main div.flex.bg-background-100.p-1",
+        "selector": "input:checked + div"
+      }
+    }
+  },
+  "https://vercel.com/geist/tabs": {
+    "parts": {
+      "tab": {
+        "selector": "[data-geist-tab][aria-selected=false]",
+        "skip": ["backgroundColor", "borderRadius"]
+      },
+      "tab.selected": {
+        "selector": "[data-geist-tab][aria-selected=true]",
+        "skip": ["backgroundColor", "borderRadius", "edge"]
+      }
+    }
+  },
+  "https://vercel.com/geist/menu": {
+    "parts": {
+      "menu": {
+        "selector": "[data-geist-menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "[data-geist-menu-item][role=menuitem]",
+        "nth": 1,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/tooltip": {
+    "parts": {
+      "tooltip": {
+        "selector": "[role=tooltip]",
+        "surface": true,
+        "before": [
+          {
+            "hover": "[data-testid='legacy/tooltip-trigger']"
+          }
+        ],
+        "skip": ["borderRadius", "height"]
+      }
+    }
+  },
+  "https://vercel.com/geist/command-menu": {
+    "parts": {
+      "command": {
+        "selector": "[cmdk-dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      },
+      "command.item": {
+        "selector": "[cmdk-item]:not([aria-selected=true])",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/keyboard-input": {
+    "parts": {
+      "kbd": {
+        "selector": "[data-geist-kbd]"
+      }
+    }
+  },
+  "https://vercel.com/geist/modal": {
+    "parts": {
+      "dialog": {
+        "selector": "[data-geist-modal]",
+        "surface": true,
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      },
+      "text.muted": {
+        "selector": "[data-geist-modal-subtitle]",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
+    }
+  },
+  "https://vercel.com/geist/badge": {
+    "parts": {
+      "badge": {
+        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
+        "nth": 1
+      },
+      "badge.accent": {
+        "selector": "main div.rounded-lg.border.bg-background-100 div.tracking-normal.inline-flex",
+        "nth": 3
+      }
+    }
+  },
+  "https://vercel.com/geist/note": {
+    "parts": {
+      "alert": {
+        "selector": "main [data-slot=note]",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
+  "https://vercel.com/geist/progress": {
+    "parts": {
+      "progress": {
+        "selector": "main progress"
+      }
+    }
+  },
+  "https://vercel.com/geist/materials": {
+    "parts": {
+      "card": {
+        "selector": "main .material-base",
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://vercel.com/geist/typography": {
+    "parts": {
+      "heading.1": {
+        "selector": "main .text-heading-40",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.2": {
+        "selector": "main .text-heading-32",
+        "skip": ["fontSize", "letterSpacing"]
+      },
+      "heading.3": {
+        "selector": "main .text-heading-24",
+        "nth": 1
+      },
+      "heading.4": {
+        "selector": "main .text-heading-20"
+      },
+      "text": {
+        "selector": "main .text-copy-16",
+        "nth": 1,
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://vercel.com/dashboard": {
+    "signedIn": true,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "shell": {
+        "selector": ".dashboard-layout-container > div:has(> .dash-sidebar)",
+        "surface": true
+      },
+      "panel": {
+        "selector": "main section.dashboard-section"
+      },
+      "nav.item": {
+        "selector": "nav a[data-sidebar-link-key][data-active=false]",
+        "skip": ["paddingInline"]
+      },
+      "nav.item.active": {
+        "selector": "nav a[data-sidebar-link-key][data-active=true]",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://vercel.com/<team>/<project>/settings/environment-variables": {
+    "signedIn": true,
+    "parts": {
+      "link": {
+        "selector": "main p.text-copy-14 > a[href^='/docs/']"
+      }
+    }
+  }
+}

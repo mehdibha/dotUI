@@ -33,7 +33,7 @@ export function Cell({
   children: ReactNode
 }) {
   return (
-    <section className="flex min-w-0 flex-col gap-2.5">
+    <section data-cell={label} className="flex min-w-0 flex-col gap-2.5">
       <p className="font-mono text-[10px] tracking-wider text-fg-muted uppercase">
         {label}
       </p>

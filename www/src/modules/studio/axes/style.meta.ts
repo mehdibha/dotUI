@@ -9,11 +9,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "Borders on every edge, no shadows",
     credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
   },
-  tonal: {
-    label: "Tonal",
-    description: "Tinted surfaces instead of borders",
-    credits: ["Material 3", "Carbon", "Spotify"],
-  },
   polished: {
     label: "Polished",
     description: "Raised, beveled controls with soft shadows",
