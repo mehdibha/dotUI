@@ -48,7 +48,6 @@ import type { Measure, Measures, ReferenceTokens } from "./probe"
 import type { RefsIndex } from "./refs-server"
 import { SHEETS } from "./sheets"
 import type { SheetName } from "./sheets"
-import { fontFaces } from "./snapshot"
 import type { PartFile, Snapshot, SnapshotFont } from "./snapshot"
 
 const route = getRouteApi("/internal/compare")
@@ -128,9 +127,12 @@ export function ComparePage() {
     parts.some((p) => p.sheet === name),
   )
   const shown = parts.filter((p) => sheet === "all" || p.sheet === sheet)
-  const measured = shown.filter((p) => offs[`${p.part}-${mode}`] !== undefined)
+  // Part names repeat across packs: the preset keeps one pack's counts
+  // from hiding another's rows.
+  const offKey = (part: string) => `${preset}|${part}-${mode}`
+  const measured = shown.filter((p) => offs[offKey(p.part)] !== undefined)
   const offCount = measured.reduce(
-    (sum, p) => sum + (offs[`${p.part}-${mode}`] ?? 0),
+    (sum, p) => sum + (offs[offKey(p.part)] ?? 0),
     0,
   )
 
@@ -267,7 +269,7 @@ export function ComparePage() {
                       fonts={pack.fonts}
                       files={refs.index?.[`${part}-${mode}`]}
                       settings={settings}
-                      hidden={offOnly && offs[`${part}-${mode}`] === 0}
+                      hidden={offOnly && offs[offKey(part)] === 0}
                       onOff={report}
                     />
                   ))}
@@ -416,8 +418,8 @@ function PartRow({
   )
   const off = rows.filter((row) => !row.ok)
   useEffect(() => {
-    if (read) onOff(`${part}-${mode}`, off.length)
-  }, [read, off.length, part, mode, onOff])
+    if (read) onOff(`${preset}|${part}-${mode}`, off.length)
+  }, [read, off.length, preset, part, mode, onOff])
 
   // One frame for both sides, each part centered in it; a page-sized part
   // shows its middle.
@@ -623,7 +625,7 @@ const loaded = new Map<string, Promise<boolean>>()
 function loadFonts(fonts: SnapshotFont[]) {
   return Promise.all(
     fonts.map((font) => {
-      const key = fontFaces([font])
+      const key = JSON.stringify(font)
       let done = loaded.get(key)
       if (!done) {
         const face = new FontFace(font.family, font.src, {
@@ -656,7 +658,8 @@ function SnapshotView({
     const host = ref.current
     if (!host) return
     const root = host.shadowRoot ?? host.attachShadow({ mode: "open" })
-    root.innerHTML = `<style>:host{all:initial;display:block}\n${snapshot.css}</style>${snapshot.html}`
+    // A `<` in the CSS could close the style element: escape it.
+    root.innerHTML = `<style>:host{all:initial;display:block}\n${snapshot.css.replace(/</g, "\\3c ")}</style>${snapshot.html}`
   }, [snapshot])
   return (
     <div
