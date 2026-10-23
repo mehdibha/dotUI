@@ -19,13 +19,13 @@ import type { TocItem } from "./toc"
  * its sections. A Select whose value tracks the section in view.
  */
 export function SystemTocSelect({ className }: { className?: string }) {
-  const system = useMatch({
+  const slug = useMatch({
     from: "/systems/$slug",
     shouldThrow: false,
-    select: (match) => match.loaderData?.system,
+    select: (match) => match.params.slug,
   })
   const scrolled = useScrolled()
-  const items = system ? getSectionList(system.slug) : []
+  const items = slug ? getSectionList(slug) : []
   // Only surfaces once scrolled — at the top the page title is still in view.
   if (items.length === 0 || !scrolled) return null
   return <TocSelect items={items} className={className} />

@@ -4,6 +4,7 @@
 import fs from "node:fs"
 import path from "node:path"
 
+import { looksFileSchema } from "../src/data/looks"
 import {
   catalogSchema,
   colorsFileSchema,
@@ -57,9 +58,25 @@ const systemDirs = fs.existsSync(systemsDir)
   : []
 
 const systems: SystemEntry[] = []
+const looks: string[] = []
 
 for (const dir of systemDirs) {
   const rel = `systems/${dir}`
+
+  // A captured product's looks. It can come before the system is researched,
+  // so it needs no system.json.
+  const looksPath = path.join(systemsDir, dir, "looks.json")
+  if (fs.existsSync(looksPath)) {
+    const looksResult = looksFileSchema.safeParse(readJson(looksPath))
+    if (!looksResult.success) {
+      errors.push(`${rel}/looks.json: ${looksResult.error.message}`)
+    } else if (looksResult.data.slug !== dir) {
+      errors.push(`${rel}/looks.json: slug must match its directory name`)
+    } else {
+      looks.push(dir)
+    }
+  }
+  if (!fs.existsSync(path.join(systemsDir, dir, "system.json"))) continue
   const systemResult = systemSchema.safeParse(
     readJson(path.join(systemsDir, dir, "system.json")),
   )
@@ -160,6 +177,7 @@ if (!checkOnly) {
       ? componentsCatalogResult.data.components
       : [],
     systems,
+    looks,
   }
   fs.mkdirSync(path.dirname(outFile), { recursive: true })
   fs.writeFileSync(outFile, `${JSON.stringify(index, null, 2)}\n`)

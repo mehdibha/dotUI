@@ -353,4 +353,6 @@ export interface DataIndex {
   catalog: CatalogEntry[]
   componentsCatalog: ComponentDef[]
   systems: SystemEntry[]
+  /** Systems with a captured looks.json, which loads on its own page. */
+  looks: string[]
 }
