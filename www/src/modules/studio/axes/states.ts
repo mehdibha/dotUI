@@ -7,7 +7,7 @@
 
 import type { TokenOverrides } from "@/registry/theme"
 
-import { SOURCE_VALUES } from "./color"
+import { DARK_EDGES, SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
@@ -179,7 +179,10 @@ export const chapter = defineChapter({
       if (state.focusInputStyle === "halo")
         tokens["--focus-input-color"] = NEUTRAL_FIELD_INK.halo
     }
-    if (state.focusInputColor === "neutral" && state.controlEdge === "strong")
+    if (
+      state.focusInputColor === "neutral" &&
+      DARK_EDGES.includes(state.controlEdge)
+    )
       tokens["--focus-input-border"] = NEUTRAL_FIELD_INK.strong
 
     // Invalid: the halo is as wide as the field's own focus halo.
@@ -201,7 +204,9 @@ export const chapter = defineChapter({
       tokens["--user-select-ui"] = "auto"
 
     if (state.focusColor !== "neutral") return { tokens }
-    const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
+    const overrides = DARK_EDGES.includes(state.controlEdge)
+      ? INK_FOCUS
+      : NEUTRAL_FOCUS
     return { tokens, color: { overrides } }
   },
   follows: {

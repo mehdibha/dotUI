@@ -40,6 +40,16 @@ export const CHOICE_CARD_PRESS = {
   },
 }
 
+export const CHOICE_CARD_EDGE = {
+  surface: {},
+  control: {
+    slots: {
+      control:
+        "has-data-label:border-border-control has-data-label:disabled:border-(--disabled-border,var(--color-border-control))",
+    },
+  },
+}
+
 const roomy = {
   slots: {
     root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
@@ -82,6 +92,7 @@ const { useStyles } = createStyles(checkboxMeta, {
   params: {
     cardSelected: CHOICE_CARD,
     cardPress: CHOICE_CARD_PRESS,
+    cardEdge: CHOICE_CARD_EDGE,
   },
 })
 

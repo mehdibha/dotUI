@@ -50,11 +50,13 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 ## Style
 
 `../style.ts` owns `style` (the material, named by its light; `STYLE_VALUES`:
-Flat, Tonal, Tactile, Chunky) and, from `../index.ts`, seven keys of other
+Flat, Tonal, Tactile, Chunky, Brutal) and, from `../index.ts`, seven keys of other
 chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
 its column, whose Flat entry is the key's chapter default (Origin). An
 option that needs another light is an exclude rule with `cause: "style"` and
-`fallback: "style"`, so it lands on the column. `pickStyle` drops only the
+`fallback: "style"`, so it lands on the column. Brutal also pins keys
+outside its columns (2px ink control edges) with ordinary rules in their
+owners' modules. `pickStyle` drops only the
 picks the new style excludes; `resetToStyle` drops them all. A Style's
 finish (`FINISHES` in `style.meta.ts`) is one of those keys, offered in the
 Style popover.

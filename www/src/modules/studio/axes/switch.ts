@@ -43,4 +43,14 @@ export const chapter = defineChapter({
       color: fillScope(state, "switch", state.switchColor),
     }
   },
+  rules: [
+    {
+      // Inset fills its off track with the edge: in ink it reads as on.
+      id: "switch/ink-edge-outlines-track",
+      target: "switchStyle",
+      when: { key: "controlEdge", in: ["ink"] },
+      effect: { kind: "exclude", options: ["inset"], fallback: "outlined" },
+      cause: "controlEdge",
+    },
+  ],
 })

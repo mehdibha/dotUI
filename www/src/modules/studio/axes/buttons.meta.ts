@@ -38,6 +38,11 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "A solid lip below that presses flat",
     credits: ["Duolingo"],
   },
+  offset: {
+    label: "Offset",
+    description: "An ink edge on a hard shadow it presses into",
+    credits: ["Gumroad", "neobrutalism.dev"],
+  },
 })
 
 export const SECONDARY_OPTIONS = options(SECONDARY_VALUES, {

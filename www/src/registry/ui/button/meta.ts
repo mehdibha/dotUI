@@ -22,6 +22,7 @@ const buttonMeta = {
         "gloss",
         "bevel",
         "ledge",
+        "offset",
       ] as const,
       description:
         "A real system's button recipe: fills, edges, hover and press.",
@@ -35,6 +36,7 @@ const buttonMeta = {
         "gloss",
         "bevel",
         "ledge",
+        "offset",
         "outline",
         "raised",
         "soft",

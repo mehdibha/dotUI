@@ -63,6 +63,11 @@ export const EDGE_OPTIONS = options(EDGE_VALUES, {
     description: "A solid border with a thick bottom lip",
     credits: ["Duolingo"],
   },
+  offset: {
+    label: "Offset",
+    description: "An ink border on a hard offset shadow",
+    credits: ["Gumroad", "neobrutalism.dev"],
+  },
 })
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {

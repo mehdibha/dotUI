@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
+exports[`rules > button-groups/gapped-styles: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -11,11 +11,12 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
-      "secondary": "ledge",
-      "style": "ledge",
+      "secondary": "offset",
+      "style": "offset",
     },
     "checkbox": {
-      "cardPress": "sink",
+      "cardEdge": "control",
+      "cardPress": "none",
       "cardSelected": "tint",
     },
     "group": {
@@ -25,28 +26,46 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     "input": {
       "errorIcon": "none",
       "height": "controls",
-      "hover": "edge",
-      "style": "well",
+      "hover": "none",
+      "style": "inset",
       "text": "same",
     },
     "radio-group": {
-      "cardPress": "sink",
+      "cardEdge": "control",
+      "cardPress": "none",
       "cardSelected": "tint",
       "mark": "dot",
     },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
     "switch": {
-      "cardPress": "sink",
+      "cardEdge": "control",
+      "cardPress": "none",
       "cardSelected": "tint",
-      "style": "inset",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
     },
     "toggle-button": {
       "case": "sentence",
       "linkColor": "accent",
       "linkUnderline": "never",
       "press": "as-style",
-      "secondary": "ledge",
+      "secondary": "offset",
       "selected": "tone",
-      "style": "ledge",
+      "style": "offset",
     },
     "toggle-button-group": {
       "segments": "gapped",
@@ -54,11 +73,18 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     },
   },
   "tokens": {
-    "--shadow-modal": "0 0 #0000",
-    "--shadow-popover": "0 0 #0000",
-    "--studio-card-stroke": "1px 1px 3px",
-    "--studio-tile-lip": "2px",
-    "--studio-tile-stroke": "1px 1px 3px",
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
   },
 }
 `;
@@ -78,6 +104,7 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
     },
@@ -93,11 +120,13 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "style": "inset",
@@ -199,6 +228,95 @@ exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] =
   "icons": undefined,
   "params": {},
   "tokens": {},
+}
+`;
+
+exports[`rules > color/brutal-draws-ink: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "style": "offset",
+    },
+    "checkbox": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "switch": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "selected": "tone",
+      "style": "offset",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
+  },
 }
 `;
 
@@ -394,6 +512,95 @@ exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`]
 }
 `;
 
+exports[`rules > shape/brutal-draws-bold: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "style": "offset",
+    },
+    "checkbox": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "switch": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "selected": "tone",
+      "style": "offset",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
+  },
+}
+`;
+
 exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -462,6 +669,95 @@ exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > style/buttonStyle-brutal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "style": "offset",
+    },
+    "checkbox": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "switch": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "selected": "tone",
+      "style": "offset",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
+  },
+}
+`;
+
 exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -477,6 +773,7 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
     },
@@ -492,11 +789,13 @@ exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "style": "inset",
@@ -664,12 +963,101 @@ exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/inputStyle-flat-tonal: fires, then holds back 1`] = `
+exports[`rules > style/inputStyle-flat-tonal-brutal: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
   "params": {},
   "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceEdge-brutal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "style": "offset",
+    },
+    "checkbox": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "switch": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "selected": "tone",
+      "style": "offset",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
+  },
 }
 `;
 
@@ -688,6 +1076,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
       "style": "ledge",
     },
     "checkbox": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
     },
@@ -703,11 +1092,13 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
       "text": "same",
     },
     "radio-group": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "mark": "dot",
     },
     "switch": {
+      "cardEdge": "surface",
       "cardPress": "sink",
       "cardSelected": "tint",
       "style": "inset",
@@ -803,7 +1194,7 @@ exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceLayers-flat-tactile-chunky: fires, then holds back 1`] = `
+exports[`rules > style/surfaceLayers-flat-tactile-chunky-brutal: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -824,6 +1215,114 @@ exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
     "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
     "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
     "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > surfaces/offset-casts-own-shadow: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "style": "offset",
+    },
+    "checkbox": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "ring",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "switch": {
+      "cardEdge": "control",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "ring",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "offset",
+      "selected": "tone",
+      "style": "offset",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--card-border": "var(--color-border-control)",
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
+    "--overlay-border": "var(--color-border-control)",
+    "--shadow-card": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-modal": "4px 4px 0 0 var(--color-border-control)",
+    "--shadow-popover": "4px 4px 0 0 var(--color-border-control)",
+    "--studio-card-stroke": "2px",
+    "--studio-control-stroke": "2px",
+    "--studio-overlay-stroke": "2px",
+    "--studio-popover-tip-size": "calc(var(--spacing) * 3.5)",
+    "--studio-tile-stroke": "2px",
+  },
+}
+`;
+
+exports[`rules > switch/ink-edge-outlines-track: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "switch": {
+      "cardEdge": "surface",
+      "cardPress": "none",
+      "cardSelected": "tint",
+      "style": "outlined",
+    },
+  },
+  "tokens": {
+    "--color-border-control": "var(--color-fg)",
+    "--color-border-control-hover": "var(--color-fg)",
   },
 }
 `;

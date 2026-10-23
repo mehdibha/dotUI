@@ -1,7 +1,7 @@
 /* Inputs — the field shell every text field, picker trigger and OTP cell
    wears, its pointer state and its height. */
 
-import { STRONG_EDGE } from "./color"
+import { DARK_EDGES, STRONG_EDGE } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -27,6 +27,8 @@ export const AUTO_STYLE: Record<string, string> = {
   // Spec pairing, uncredited: Polaris (Bevel's source) measured Outline.
   bevel: "inset",
   ledge: "well",
+  // Spec pairing, uncredited: a page-white box on the ink edge.
+  offset: "inset",
 }
 
 export const HOVER_VALUES = ["none", "edge", "tint", "edge-tint"] as const
@@ -49,7 +51,7 @@ export const HEIGHT_VALUES = ["controls", "step", "tall"] as const
    edge it takes Color's Strong edge (Material 3 on-surface-variant, Carbon
    border-strong), which clears 3:1 on the well. */
 function indicatorTokens(inputStyle: string, controlEdge: string) {
-  return inputStyle === "indicator" && controlEdge !== "strong"
+  return inputStyle === "indicator" && !DARK_EDGES.includes(controlEdge)
     ? {
         "--indicator-edge": STRONG_EDGE,
         "--studio-indicator-edge": "var(--indicator-edge)",

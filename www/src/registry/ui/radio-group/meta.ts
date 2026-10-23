@@ -27,6 +27,11 @@ const radioGroupMeta = {
       values: ["none", "sink"] as const,
       description: "Whether a pressed or disabled card sinks into its lip.",
     },
+    cardEdge: {
+      default: "surface",
+      values: ["surface", "control"] as const,
+      description: "Whether the card's edge is a surface's or a control's.",
+    },
   },
 } satisfies RegistryItem
 

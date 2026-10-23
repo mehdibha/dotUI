@@ -40,15 +40,19 @@ export const SOURCE_VALUES = ["neutral", "accent"] as const
 export const SOLID_INK_VALUES = ["auto", "white"] as const
 
 /* How far a control's edge (fields, unchecked checks, outline buttons) sits
-   from the surface hairline. */
-export const CONTROL_EDGE_VALUES = ["soft", "firm", "strong"] as const
+   from the surface hairline. Ink is the text color itself (neobrutalism). */
+export const CONTROL_EDGE_VALUES = ["soft", "firm", "strong", "ink"] as const
 
 /** The Strong edge, also Selection's check edge. */
 export const STRONG_EDGE = "var(--neutral-700)"
 
+/** Edges at Strong or darker: they need no floor or stronger stand-in. */
+export const DARK_EDGES = ["strong", "ink"]
+
 const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
   soft: ["var(--color-border)", "var(--neutral-400)"],
   strong: [STRONG_EDGE, "var(--neutral-800)"],
+  ink: ["var(--color-fg)", "var(--color-fg)"],
 }
 
 /* The wash on a persistent selected item: table and tree rows, tags,
@@ -213,6 +217,14 @@ export const chapter = defineChapter({
     ],
   },
   rules: [
+    {
+      // Brutal's edges and offset shadows are drawn in ink.
+      id: "color/brutal-draws-ink",
+      target: "controlEdge",
+      when: { key: "style", in: ["brutal"] },
+      effect: { kind: "pin", value: "ink" },
+      cause: "style",
+    },
     {
       // The engine fits a loose seed so its label clears; only a kept-exact
       // solid has a label to override.

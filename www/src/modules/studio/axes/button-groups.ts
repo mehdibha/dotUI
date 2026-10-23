@@ -1,9 +1,10 @@
 /* Button groups — how attached segments meet, on Group and Toggle Group (a
    synced pair: one key writes both). Auto reads the secondary's edge: an
-   edged one shares it, an edgeless fill takes a divider. Ledge groups sit
-   apart (the Buttons resolver writes that), so the seam row is inert there. */
+   edged one shares it, an edgeless fill takes a divider. Ledge and Offset
+   groups sit apart (the Buttons resolver writes that), so the seam row is
+   inert there. */
 
-import { SECONDARY_VALUES, STYLE_VALUES } from "./buttons"
+import { GAPPED_STYLES, SECONDARY_VALUES, STYLE_VALUES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -51,10 +52,10 @@ export const chapter = defineChapter({
   },
   rules: [
     {
-      // Ledge groups never attach, so no seam is drawn.
-      id: "button-groups/ledge-gaps-groups",
+      // Gapped groups never attach, so no seam is drawn.
+      id: "button-groups/gapped-styles",
       target: "groupSeparator",
-      when: { key: "buttonStyle", in: ["ledge"] },
+      when: { key: "buttonStyle", in: GAPPED_STYLES },
       effect: { kind: "hide", value: "shared-edge" },
       cause: "buttonStyle",
     },
