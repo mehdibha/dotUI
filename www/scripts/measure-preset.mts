@@ -433,6 +433,8 @@ async function measurePage(
   {
     parts: targets,
     storage,
+    cookies = {},
+    hide = [],
     steps = [],
     width = 1440,
     settle = 1500,
@@ -452,6 +454,8 @@ async function measurePage(
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
     )
+    for (const [name, value] of Object.entries(cookies))
+      await context.setCookie({ name, value, domain: new URL(url).hostname })
     if (storage)
       await page.evaluateOnNewDocument(
         `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
@@ -468,6 +472,8 @@ async function measurePage(
         .catch(() => {})
       await pause(settle)
       await runSteps(page, steps)
+      for (const selector of hide)
+        await page.$$eval(selector, (els) => els.forEach((el) => el.remove()))
     }
     await load()
     const plain = Object.fromEntries(

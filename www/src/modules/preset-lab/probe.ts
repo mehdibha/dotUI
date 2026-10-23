@@ -95,6 +95,12 @@ export interface Page {
   /** The localStorage key the site reads its theme from (next-themes'
    *  "theme"): `--pack` sets it to "light" or "dark" before load. */
   storage?: string
+  /** Cookies set on the page's host before load, in both modes (a theme
+   *  behind an opt-in: The Guardian's web dark mode). */
+  cookies?: Record<string, string>
+  /** Elements removed after load and the page's steps: a consent banner
+   *  fixed over the page that crops would show instead of the part. */
+  hide?: string[]
   /** Steps that walk to the page's state after each load, before any part
    *  is read (a lesson reached through onboarding). */
   steps?: Step[]
