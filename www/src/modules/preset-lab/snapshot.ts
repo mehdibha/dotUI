@@ -386,12 +386,14 @@ async function snapshot(
       )
         return fill
     }
-    // The canvas: Chrome's in a dark color scheme, else white.
-    return getComputedStyle(document.documentElement).colorScheme.includes(
-      "dark",
-    )
-      ? "rgb(18, 18, 18)"
-      : "rgb(255, 255, 255)"
+    // The canvas: Chrome's in a dark color scheme, else white. With both
+    // schemes listed, the user's preference picks.
+    const schemes = getComputedStyle(document.documentElement).colorScheme
+    const dark =
+      schemes.includes("dark") &&
+      (!schemes.includes("light") ||
+        matchMedia("(prefers-color-scheme: dark)").matches)
+    return dark ? "rgb(18, 18, 18)" : "rgb(255, 255, 255)"
   }
 
   const marked = (root: Document | ShadowRoot, out: Element[] = []) => {
@@ -459,16 +461,3 @@ export const COPY_AREA = 640 * 480
 
 /** The snapshot's own source, for the kit to embed. */
 export const snapshotSource = () => snapshot.toString()
-
-/** `@font-face` rules for a snapshot's fonts. */
-export const fontFaces = (fonts: SnapshotFont[]) =>
-  fonts
-    .map(
-      (font) =>
-        `@font-face{font-family:${JSON.stringify(font.family)};src:${font.src}${font.weight ? `;font-weight:${font.weight}` : ""}${font.style ? `;font-style:${font.style}` : ""}${font.stretch ? `;font-stretch:${font.stretch}` : ""}${font.unicodeRange ? `;unicode-range:${font.unicodeRange}` : ""}}`,
-    )
-    .join("\n")
-
-/** A snapshot as a standalone HTML file, `pad` pixels around the copy. */
-export const snapshotDocument = (copy: Snapshot, pad = 16) =>
-  `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaces(copy.fonts)}\nbody{margin:0;padding:${pad}px}\n${copy.css}</style></head><body>${copy.html}</body></html>\n`
