@@ -84,7 +84,7 @@ describe("navigation axes", () => {
       params({ segmentedSelected: "ring", segmentedTrack: "outline" }).tabs,
     ).toMatchObject({ chip: "ring", track: "outline" })
     // Auto follows the button style there too.
-    expect(params({ style: "tactile", buttonStyle: "bevel" }).tabs?.chip).toBe(
+    expect(params({ style: "polished", buttonStyle: "bevel" }).tabs?.chip).toBe(
       "raised",
     )
   })

@@ -534,7 +534,7 @@ exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
+exports[`rules > style/buttonStyle-polished: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -673,7 +673,7 @@ exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-tactile: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-polished: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
