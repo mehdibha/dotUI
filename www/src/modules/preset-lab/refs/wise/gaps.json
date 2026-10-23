@@ -9,7 +9,7 @@
     },
     {
       "look": "ink.button-quiet",
-      "title": "Quiet buttons in the link color (#0f62fe / #78a9ff)",
+      "title": "Quiet buttons in the link color",
       "standin": "quiet buttons in body ink (Wise ΔE 0.092 / 0.196)",
       "source": "ledger"
     },

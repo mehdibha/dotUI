@@ -187,6 +187,21 @@ describe("model", () => {
     expect(model.spacing.steps).toContainEqual({ px: 12, count: 3 })
   })
 
+  it("reads a percentage radius as a pill, never a px rung", () => {
+    const round = (id: number, borderRadius: string) => ({
+      ...button(id, id * 100, blue),
+      values: { ...blue, borderRadius },
+    })
+    const { radius, pills } = buildModel(
+      cluster(
+        [page("/a", "light", [button(1, 0, blue), round(2, "50%")])],
+        "test",
+      ),
+    )
+    expect(radius.map((rung) => rung.px)).toEqual([6])
+    expect(pills).toEqual(["button"])
+  })
+
   it("splits colors into neutrals and accent hues per mode", () => {
     expect(model.colors.light?.neutrals[0]?.l).toBe(1)
     expect(model.colors.light?.accents[0]?.hue).toBeGreaterThan(250)

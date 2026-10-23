@@ -280,8 +280,15 @@ export function matchParts(
               reference.fonts,
             ).filter((row) => row.prop !== "ring"),
           )
+          // A prop the look doesn't carry counts against it.
+          const absent = Object.entries(theirs).filter(
+            ([prop, value]) =>
+              prop !== "ring" &&
+              value !== undefined &&
+              values[prop as keyof Values] === undefined,
+          ).length
           ok += counted.ok
-          read += counted.read
+          read += counted.read + absent
         }
         if (read >= 3 && ok / read >= 0.75 && (!best || ok > best.ok))
           best = { id: look.id, ok, read }
@@ -474,15 +481,16 @@ export function systemLooks(input: SystemInput): SystemLooks {
   }
 
   const shadows = new Map<string, { count: number; groups: Set<string> }>()
-  for (const look of census?.looks ?? [])
-    for (const mode of MODES) {
-      const value = look[mode]?.boxShadow
-      if (!value || value === "none") continue
-      const entry = shadows.get(value) ?? { count: 0, groups: new Set() }
-      entry.count += look.count
-      entry.groups.add(look.group)
-      shadows.set(value, entry)
-    }
+  for (const [group, list] of Object.entries(pool))
+    for (const look of list)
+      for (const mode of MODES) {
+        const value = look[mode]?.boxShadow
+        if (!value || value === "none") continue
+        const entry = shadows.get(value) ?? { count: 0, groups: new Set() }
+        entry.count += look.count
+        entry.groups.add(group)
+        shadows.set(value, entry)
+      }
 
   const families = new Map<string, number>()
   for (const style of model.type)

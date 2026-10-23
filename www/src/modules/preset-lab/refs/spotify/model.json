@@ -43,17 +43,12 @@
       "groups": ["card","box","button","dialog"]
     },
     {
-      "px": 50,
-      "count": 15,
-      "groups": ["card"]
-    },
-    {
       "px": 10,
       "count": 1,
       "groups": ["box"]
     }
   ],
-  "pills": ["button","box","link","badge","avatar","checkbox","card","combobox"],
+  "pills": ["button","box","card","link","badge","avatar","checkbox","combobox"],
   "type": [
     {
       "fontSize": "16px",

@@ -7,7 +7,8 @@
  *     tokens.json, gaps.json and targets.json; the newest census under
  *     .scratch-refs/<id>/ for fuller values, custom properties and copies;
  *     and .scratch-specimens/<id>/fit.json for the rows the preset misses.
- *     Writes ../directory/systems/<id>/looks.json unless --out (one pack).
+ *     Writes ../directory/systems/<id>/looks.json unless --out. --census,
+ *     --fit and --out take one pack.
  */
 import { existsSync, readdirSync, statSync } from "node:fs"
 import { mkdir, readFile, writeFile } from "node:fs/promises"
@@ -28,7 +29,11 @@ const { values: args } = parseArgs({
     out: { type: "string" },
   },
 })
-if (!args.pack.length || (args.out && args.pack.length > 1)) {
+// --census, --fit and --out name one pack's files.
+if (
+  !args.pack.length ||
+  (args.pack.length > 1 && (args.census || args.fit || args.out))
+) {
   console.error(
     "usage: --pack <id>… [--census <dir>] [--fit <file>] [--out <file>]",
   )

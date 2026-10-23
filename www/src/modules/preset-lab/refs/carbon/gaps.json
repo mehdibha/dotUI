@@ -22,7 +22,8 @@
     },
     {
       "look": "ink.button-quiet",
-      "title": "Quiet buttons in the link color (#0f62fe / #78a9ff)",
+      "title": "Quiet buttons in the link color",
+      "note": "Carbon #0f62fe / #78a9ff",
       "source": "ledger"
     },
     {

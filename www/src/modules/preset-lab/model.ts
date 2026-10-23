@@ -161,6 +161,11 @@ function radii(looks: Look[]) {
     for (const values of [look.light, look.dark]) {
       const radius = px(values?.borderRadius)
       if (!values || !radius) continue
+      // A percentage has no px to rank: 50% rounds any box into a pill.
+      if (values.borderRadius?.endsWith("%")) {
+        if (radius >= 50) add(pills, look.group, look.count)
+        continue
+      }
       const height = px(values.height)
       if (
         radius >= 999 ||

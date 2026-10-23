@@ -402,8 +402,10 @@ if (args.collect) {
   }
   // Census passes go next to raw/, as the crawl script writes them, with
   // the values each element shows by default left out.
+  // A pass downloaded twice keeps its newest file, as raw/ does.
   const census = `dotui-census__${args.collect}__`
   const pages = resolve(args.out, "../census/pages")
+  const passes = new Map<string, { name: string; time: number }>()
   for (const name of await readdir(args.downloads)) {
     const match = /^(.+?)(?: \(\d+\))?\.json$/.exec(name)
     if (!match || !name.startsWith(census)) continue
@@ -411,15 +413,20 @@ if (args.collect) {
       .slice(census.length)
       .split("__")
       .reverse()
-    const page: CensusPage = JSON.parse(
-      await readFile(resolve(args.downloads, name), "utf8"),
-    )
-    for (const element of page.elements) element.values = trim(element.values)
-    await mkdir(pages, { recursive: true })
     const target = resolve(
       pages,
       `${slug.reverse().join("-")}-${pass}-${mode}.json`,
     )
+    const time = (await stat(resolve(args.downloads, name))).mtimeMs
+    if ((passes.get(target)?.time ?? -1) < time)
+      passes.set(target, { name, time })
+  }
+  if (passes.size) await mkdir(pages, { recursive: true })
+  for (const [target, { name }] of passes) {
+    const page: CensusPage = JSON.parse(
+      await readFile(resolve(args.downloads, name), "utf8"),
+    )
+    for (const element of page.elements) element.values = trim(element.values)
     await writeFile(target, `${JSON.stringify(page)}\n`)
     console.log(`${target} ← ${name}`)
   }

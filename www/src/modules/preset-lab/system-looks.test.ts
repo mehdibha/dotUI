@@ -104,6 +104,44 @@ describe("system looks", () => {
     ).toEqual({ "button.primary": "button.2" })
   })
 
+  it("counts a prop the look lacks against it", () => {
+    const { backgroundColor, color, borderRadius } = primary
+    expect(
+      matchParts(
+        { light: { "button.primary": primary } },
+        {
+          button: [
+            { id: "button.1", light: { backgroundColor, color, borderRadius } },
+          ],
+        },
+      ),
+    ).toEqual({})
+  })
+
+  it("reads shadows from the model when there is no census", () => {
+    const shadow = "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px"
+    const looks = systemLooks({
+      slug: "example",
+      model: {
+        ...model,
+        inventory: {
+          button: [
+            {
+              id: "button.1",
+              count: 2,
+              pages: [0],
+              light: { ...quiet, boxShadow: shadow },
+            },
+          ],
+        },
+      },
+      date: "2026-10-23",
+    })
+    expect(looks.elevation.shadows).toEqual([
+      { value: shadow, count: 2, groups: ["button"] },
+    ])
+  })
+
   it("keeps the model's looks and every look a part reads", () => {
     const looks = systemLooks({
       slug: "example",

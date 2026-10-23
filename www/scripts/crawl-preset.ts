@@ -37,6 +37,7 @@
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
  * (presets:looks). <out> is .scratch-refs/<id>/<date>/census by default.
  */
+import { createHash } from "node:crypto"
 import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
@@ -411,12 +412,14 @@ interface Job {
   passes: Step[][]
 }
 
+/** A file name for a page key: readable, with a hash of the whole key so
+ *  long keys that share a start (Storybook story URLs) stay apart. */
 const slug = (key: string) =>
-  key
+  `${key
     .replace(/^[a-z]+:\/\//, "")
     .replace(/[^a-zA-Z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
-    .slice(0, 80)
+    .slice(0, 60)}-${createHash("sha1").update(key).digest("hex").slice(0, 8)}`
 
 async function crawl(
   job: Job,
