@@ -1,8 +1,8 @@
 /* Dev server only (vite.config.ts): hands /internal/compare the reference
    crops and part files under .scratch-refs/<preset id>/, which stay out of
    git. Any folder depth works, so a dated local capture and a headless
-   `--shots` run sit side by side; of two files for one part and mode, the
-   newest wins.
+   `--shots` run sit side by side; of two folders holding one part and mode,
+   the one with the newest file wins.
 
      GET /__preset-refs/<id>            { "<part>-<mode>": { png?, json? } }
      GET /__preset-refs/<id>/<path>     the file */
@@ -21,8 +21,10 @@ const NAME = /^(.+)-(light|dark)\.(png|json)$/
 const DEPTH = 6
 
 async function index(folder: string): Promise<RefsIndex> {
-  const found: Record<string, { png?: string; json?: string }> = {}
-  const times = new Map<string, number>()
+  const sets = new Map<
+    string,
+    { key: string; time: number; files: RefsIndex[string] }
+  >()
   const walk = async (dir: string, depth: number) => {
     const entries = await readdir(dir, { withFileTypes: true }).catch(() => [])
     for (const entry of entries) {
@@ -42,13 +44,22 @@ async function index(folder: string): Promise<RefsIndex> {
       // Page bundles share the naming: only part files count.
       if (ext === "json" && !(await isPartFile(path))) continue
       const key = `${part}-${mode}`
-      const { mtimeMs } = await stat(path)
-      if ((times.get(`${key}.${ext}`) ?? -1) > mtimeMs) continue
-      times.set(`${key}.${ext}`, mtimeMs)
-      found[key] = { ...found[key], [ext]: relative(folder, path) }
+      const set = sets.get(`${dir}|${key}`) ?? { key, time: 0, files: {} }
+      set.files[ext] = relative(folder, path)
+      set.time = Math.max(set.time, (await stat(path)).mtimeMs)
+      sets.set(`${dir}|${key}`, set)
     }
   }
   await walk(folder, 0)
+  // A crop pairs with the part file beside it (its box in the PNG), so both
+  // come from one folder: the one holding the part's newest file.
+  const found: RefsIndex = {}
+  const times = new Map<string, number>()
+  for (const { key, time, files } of sets.values())
+    if ((times.get(key) ?? -1) < time) {
+      times.set(key, time)
+      found[key] = files
+    }
   return found
 }
 
