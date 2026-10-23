@@ -37,7 +37,7 @@ export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
   },
   ink: {
     label: "Ink",
-    description: "The text color, the darkest edge",
+    description: "The darkest edge: text color in light, black in dark",
     credits: ["Gumroad", "neobrutalism.dev"],
   },
 })

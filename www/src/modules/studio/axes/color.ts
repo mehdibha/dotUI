@@ -40,7 +40,8 @@ export const SOURCE_VALUES = ["neutral", "accent"] as const
 export const SOLID_INK_VALUES = ["auto", "white"] as const
 
 /* How far a control's edge (fields, unchecked checks, outline buttons) sits
-   from the surface hairline. Ink is the text color itself (neobrutalism). */
+   from the surface hairline. Ink is the darkest (neobrutalism): the text
+   color in light, black in dark, where a light edge would glare. */
 export const CONTROL_EDGE_VALUES = ["soft", "firm", "strong", "ink"] as const
 
 /** The Strong edge, also Selection's check edge. */
@@ -49,10 +50,12 @@ export const STRONG_EDGE = "var(--neutral-700)"
 /** Edges at Strong or darker: they need no floor or stronger stand-in. */
 export const DARK_EDGES = ["strong", "ink"]
 
+const INK = "light-dark(var(--color-fg), oklch(0 0 0))"
+
 const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
   soft: ["var(--color-border)", "var(--neutral-400)"],
   strong: [STRONG_EDGE, "var(--neutral-800)"],
-  ink: ["var(--color-fg)", "var(--color-fg)"],
+  ink: [INK, INK],
 }
 
 /* The wash on a persistent selected item: table and tree rows, tags,
@@ -79,6 +82,8 @@ const ORIGIN_PAGE = 99
 /** Grouped's page: its cards are white, so the page's gray is its depth
  *  (Apple, Polaris, HeroUI). */
 export const GROUPED_PAGE = 96
+/** The darkest page black ink still reads on: Dim. */
+export const INK_DARK_PAGE = 16
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
@@ -224,6 +229,14 @@ export const chapter = defineChapter({
       when: { key: "style", in: ["brutal"] },
       effect: { kind: "pin", value: "ink" },
       cause: "style",
+    },
+    {
+      // Black ink vanishes on a near-black page: dark pages stay Dim or lighter.
+      id: "color/ink-lifts-dark-page",
+      target: "darkBg",
+      when: { key: "controlEdge", in: ["ink"] },
+      effect: { kind: "exclude", below: INK_DARK_PAGE },
+      cause: "controlEdge",
     },
     {
       // The engine fits a loose seed so its label clears; only a kept-exact

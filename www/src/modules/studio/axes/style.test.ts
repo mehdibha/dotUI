@@ -101,17 +101,21 @@ describe("columns", () => {
       segmentedSelected: "ring",
       controlEdge: "ink",
       controlStroke: "bold",
+      darkBg: 16,
     }
     expect(valuesOf({ style: "brutal" })).toMatchObject(brutal)
-    // Picks can't take the ink or the weight off, nor add a soft shadow.
+    // Picks can't take the ink or the weight off, add a soft shadow, or sink
+    // the dark page under the black ink.
     expect(
       valuesOf({
         style: "brutal",
         controlEdge: "soft",
         controlStroke: "regular",
         surfaceShadow: "high",
+        darkBg: 0,
       }),
     ).toMatchObject(brutal)
+    expect(valuesOf({ style: "brutal", darkBg: 20 }).darkBg).toBe(20)
   })
 
   it("an Auto column resolves one more hop", () => {

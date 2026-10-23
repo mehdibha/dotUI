@@ -382,6 +382,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     },
   ],
   "color/brutal-draws-ink": [{ style: "brutal" }, { controlEdge: "ink" }],
+  "color/ink-lifts-dark-page": [
+    { controlEdge: "ink" },
+    { controlEdge: "ink", darkBg: 18 },
+  ],
   "color/white-ink-needs-exact": [
     { solidInk: "white" },
     { preserveSeed: true, solidInk: "white" },

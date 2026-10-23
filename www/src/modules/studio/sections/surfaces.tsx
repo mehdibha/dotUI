@@ -67,8 +67,9 @@ function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
           m.scales.neutral?.[s as StepName] ?? m.background
         const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
         const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
-        // Offset is Brutal's alone, whose control edge is ink.
-        const control = step("950")
+        // Offset is Brutal's alone, whose control edge is ink: the text
+        // color in light, black in dark.
+        const control = mode === "light" ? step("950") : "oklch(0 0 0)"
         const color = (pair: PerMode<SurfaceColor>) =>
           surfaceColorCss(pair[mode], { step, hairline, control })
         const rim = recipe.card.shadow.filter((layer) => layer.inset)
