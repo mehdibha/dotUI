@@ -1,0 +1,23 @@
+@import "tailwindcss" source(none);
+@import "../../../registry/styles.css";
+
+/* Every param's classes: the card switches styles at runtime, like /preview. */
+@source "../../../registry";
+@source "../../../lib/styles.tsx";
+@source "../../../components/showcase/controls.tsx";
+@source "./";
+@source inline("animate-spin animate-pulse");
+
+/* A subtree pins its own mode with data-mode, as on the site. */
+@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+/* The host paints the chat behind the card. */
+html,
+body {
+  background: transparent;
+}
