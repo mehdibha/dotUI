@@ -18,7 +18,7 @@ import { parseArgs } from "node:util"
 import type { Inventory } from "../src/census"
 import type { GapsFile } from "../src/looks"
 import type { Model } from "../src/model"
-import { systemLooks } from "../src/system-looks"
+import { type SystemInput, systemLooks } from "../src/system-looks"
 import { readReference, REFS } from "./preset-pages"
 
 const { values: args } = parseArgs({
@@ -39,6 +39,8 @@ if (
   )
   process.exit(1)
 }
+
+type Residuals = NonNullable<SystemInput["residuals"]>
 
 const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8"))
@@ -92,8 +94,8 @@ for (const pack of args.pack) {
   const fitFile = resolve(args.fit ?? `.scratch-specimens/${pack}/fit.json`)
   const fit = existsSync(fitFile)
     ? await readJson<{
-        gaps: { rows?: [] }[]
-        unfiled: []
+        gaps: { rows?: Residuals }[]
+        unfiled?: Residuals
       }>(fitFile)
     : undefined
   const targetsFile = resolve(REFS, pack, "targets.json")
@@ -108,7 +110,7 @@ for (const pack of args.pack) {
       : undefined,
     residuals: fit && [
       ...fit.gaps.flatMap((gap) => gap.rows ?? []),
-      ...fit.unfiled,
+      ...(fit.unfiled ?? []),
     ],
     census,
     censusDir,

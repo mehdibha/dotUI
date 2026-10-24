@@ -71,7 +71,7 @@
     {
       "look": "size.switch",
       "title": "Switch size apart from density",
-      "note": "Airbnb's settings switches 48×32, on #222222 and off #8c8c8c, with a 28px white knob, beside 40–48px buttons, signed in)",
+      "note": "Airbnb's settings switches 48×32, on #222222 and off #8c8c8c, with a 28px white knob, beside 40–48px buttons, signed in",
       "standin": "Airbnb 24px tall at `density: spacious`, -8px)",
       "source": "ledger"
     },
