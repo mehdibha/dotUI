@@ -2,6 +2,7 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
+import { america } from "./america"
 import { bluesky } from "./bluesky"
 import { carbon } from "./carbon"
 import { chatgpt } from "./chatgpt"
@@ -54,6 +55,7 @@ export const PRESETS: Preset[] = [
   headspace,
   pinterest,
   zara,
+  america,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
