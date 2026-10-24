@@ -1,0 +1,17 @@
+{
+  "slug": "mantine",
+  "name": "Mantine",
+  "org": "Mantine",
+  "type": "component-library",
+  "upstream": [],
+  "sources": {
+    "docs": "https://mantine.dev/getting-started",
+    "repo": "https://github.com/mantinedev/mantine",
+    "site": "https://mantine.dev",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

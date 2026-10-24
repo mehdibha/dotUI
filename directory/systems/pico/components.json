@@ -1,0 +1,174 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://picocss.com/docs/accordion",
+      "demo": null,
+      "note": "Built on native <details>/<summary>."
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://picocss.com/docs/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\" data-theme=\"light\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Pico CSS — Button</title>\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css\">\n<script>\n  (function () {\n    function applyMode(dark) {\n      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')\n    }\n\n    var mode = new URLSearchParams(window.location.search).get('mode')\n    if (mode !== null) {\n      applyMode(mode === 'dark')\n      return\n    }\n\n    var root = null\n    try {\n      if (window.parent !== window) root = window.parent.document.documentElement\n    } catch (err) {\n      root = null\n    }\n    if (!root) {\n      applyMode(false)\n      return\n    }\n\n    applyMode(root.classList.contains('dark'))\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains('dark'))\n    })\n    observer.observe(root, { attributes: true, attributeFilter: ['class'] })\n    window.__picoDemoModeObserver = observer\n  })()\n</script>\n<style>\n  html, body { background: #fff; }\n  html[data-theme=\"dark\"], html[data-theme=\"dark\"] body {\n    background: var(--pico-background-color);\n  }\n  body {\n    margin: 0;\n    padding: 16px;\n    min-height: 100vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  .row {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    flex-wrap: wrap;\n  }\n</style>\n</head>\n<body>\n  <div class=\"row\">\n    <button type=\"button\">Primary</button>\n    <button type=\"button\" class=\"secondary\">Secondary</button>\n    <button type=\"button\" class=\"contrast\">Contrast</button>\n    <button type=\"button\" class=\"outline\">Outline</button>\n    <button type=\"button\" disabled>Disabled</button>\n  </div>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://picocss.com/docs/card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkboxes",
+      "docsUrl": "https://picocss.com/docs/forms/checkboxes",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Dropdown",
+      "docsUrl": "https://picocss.com/docs/dropdown",
+      "demo": null,
+      "note": "One <details class=\"dropdown\"> pattern that covers menus, custom selects and multi-selects."
+    },
+    {
+      "component": "form",
+      "name": "Form elements",
+      "docsUrl": "https://picocss.com/docs/forms",
+      "demo": null,
+      "note": "Overview page covering the styled native form controls as a set."
+    },
+    {
+      "component": "button-group",
+      "name": "Group",
+      "docsUrl": "https://picocss.com/docs/group",
+      "demo": null,
+      "note": "role=\"group\" wrapper joining inputs and buttons into one row."
+    },
+    {
+      "component": "text-input",
+      "name": "Input",
+      "docsUrl": "https://picocss.com/docs/forms/input",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://picocss.com/docs/link",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Loading",
+      "docsUrl": "https://picocss.com/docs/loading",
+      "demo": null,
+      "note": "aria-busy=\"true\" renders a spinner on any element."
+    },
+    {
+      "component": "dialog",
+      "name": "Modal",
+      "docsUrl": "https://picocss.com/docs/modal",
+      "demo": null,
+      "note": "Styled native <dialog>."
+    },
+    {
+      "component": "header",
+      "name": "Nav",
+      "docsUrl": "https://picocss.com/docs/nav",
+      "demo": null,
+      "note": "Styled <nav>, used for the page header/navbar as well as breadcrumbs."
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://picocss.com/docs/progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radios",
+      "docsUrl": "https://picocss.com/docs/forms/radios",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Range",
+      "docsUrl": "https://picocss.com/docs/forms/range",
+      "demo": null,
+      "note": "Styled native <input type=\"range\">."
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://picocss.com/docs/forms/select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://picocss.com/docs/forms/switch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://picocss.com/docs/table",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "Textarea",
+      "docsUrl": "https://picocss.com/docs/forms/textarea",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://picocss.com/docs/tooltip",
+      "demo": null,
+      "note": "data-tooltip attribute on any element."
+    },
+    {
+      "component": null,
+      "name": "Typography",
+      "docsUrl": "https://picocss.com/docs/typography",
+      "demo": null,
+      "note": "Base typographic styling for semantic HTML, not a discrete component."
+    }
+  ],
+  "sources": [
+    "https://picocss.com",
+    "https://picocss.com/docs",
+    "https://github.com/picocss/pico",
+    "https://github.com/picocss/picocss.com"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/pico.ts",
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/picocss/picocss.com",
+        "ref": "c68648909393e0d6a3ab4edd814f95af3a1e8240",
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/pico"
+      }
+    ],
+    "notes": "Inventory is the docs site's own navigation data (app/data/documentationMenu.json) at a pinned SHA; the Content, Forms and Components categories are the UI-element pages, the rest of the menu is getting-started/customization/layout/about prose. Pico is classless, so most entries are styled native HTML elements rather than named components; canonical taxonomy mapping and the one name override (/docs/forms → \"Form elements\", whose menu label is just \"Overview\") are explicit in the config. The Button demo loads Pico's published stylesheet from a version-pinned jsDelivr URL (@picocss/pico@2.1.1), which pins the bytes the same way a git ref does even though it is not part of the snapshot. That same stylesheet ships both color schemes, selected by data-theme on <html>, so the demo switches mode by writing that one attribute (\"dark\" for Pico's own dark scheme and --pico-background-color canvas, \"light\" to restore the white one). Mode follows the embedding page live: an explicit \"mode\" query parameter is applied once for standalone testing, otherwise the demo mirrors the \"dark\" class on the parent document's <html> and re-applies it through a MutationObserver on that element's class attribute; a cross-origin or top-level load has no readable parent and renders light."
+  }
+}

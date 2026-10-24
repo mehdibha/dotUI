@@ -1,6 +1,6 @@
 /**
  * Measures presets and the products they recreate with the same probe
- * (src/modules/preset-lab/probe.ts), then diffs the two. Run from www/.
+ * (@dotui/capture/probe), then diffs the two. Run from www/.
  *
  *   tsx scripts/measure-preset.mts --preset <id> [--mode light|dark|both] [--port 5173] [--baseline <file>]
  *     Measures the preset's specimen sheets (dev server running) into
@@ -30,19 +30,28 @@
  * A targets file maps part names (see SPECIMEN_TARGETS) to Targets. A pack's
  * targets.json maps page URLs to Pages (see probe.ts).
  */
-import { execFileSync } from "node:child_process"
 import { existsSync } from "node:fs"
 import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
-import { fileURLToPath, pathToFileURL } from "node:url"
+import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
-import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
+import type { Browser, Page } from "puppeteer"
 
+import { compareMeasures, compareRuns, type Row } from "@dotui/capture/compare"
 import {
-  compareMeasures,
-  compareRuns,
-  type Row,
-} from "../src/modules/preset-lab/compare"
+  focusable,
+  launch,
+  type Mode,
+  openPage,
+  pool as poolOf,
+  pause,
+  PROBE,
+  readReference,
+  REFS,
+  runSteps,
+  say,
+  settle,
+} from "@dotui/capture/preset-pages"
 import {
   type Measures,
   type Pack,
@@ -51,18 +60,16 @@ import {
   PROPS,
   type ReferenceTokens,
   SPECIMEN_TARGETS,
-  type Step,
   ownedProps,
   snippet,
   type Target,
-} from "../src/modules/preset-lab/probe"
+} from "@dotui/capture/probe"
 import {
   COPY_AREA,
   type PartFile,
   type Snapshot,
   snapshotSnippet,
-} from "../src/modules/preset-lab/snapshot"
-import { executablePath } from "./chromium"
+} from "@dotui/capture/snapshot"
 
 const { values: args } = parseArgs({
   options: {
@@ -81,29 +88,11 @@ const { values: args } = parseArgs({
   },
 })
 
-type Mode = "light" | "dark"
-
-const LAB = resolve(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/modules/preset-lab",
-)
-const REFS = resolve(LAB, "refs")
 const MODES = (args.mode === "both" ? ["light", "dark"] : [args.mode]) as Mode[]
 if (!MODES.every((m) => m === "light" || m === "dark")) {
   console.error("--mode must be light, dark or both")
   process.exit(1)
 }
-
-/* The commit that last changed the probe or the compare, so measures and
-   off counts from different versions aren't mixed up. */
-const PROBE = (() => {
-  const files = [resolve(LAB, "probe.ts"), resolve(LAB, "compare.ts")]
-  const git = (...cmd: string[]) =>
-    execFileSync("git", [...cmd, "--", ...files], { encoding: "utf8" }).trim()
-  // Seven characters, as %h grows with the clone's object count.
-  const sha = git("log", "-1", "--format=%H").slice(0, 7)
-  return git("status", "--porcelain") ? `${sha}+dirty` : sha
-})()
 
 const TARGET_KEYS = new Set([
   "selector",
@@ -173,17 +162,6 @@ function owned(measures: Measures, targets: Record<string, Target>) {
   return measures
 }
 
-const say = (step: Step) =>
-  "click" in step
-    ? `click ${step.click}`
-    : "hover" in step
-      ? `hover ${step.hover}`
-      : "focus" in step
-        ? `focus ${step.focus}`
-        : "wait" in step
-          ? `wait for ${step.wait}`
-          : `press ${step.press}`
-
 if (args.snippet) {
   const targets = Object.entries(await readTargets())
   const walk =
@@ -219,82 +197,8 @@ if (args.snippet) {
   process.exit(0)
 }
 
-const launch = () =>
-  puppeteer.launch({
-    headless: "shell",
-    executablePath,
-    // Cloud containers run as root, where Chrome's sandbox refuses to start.
-    args: process.getuid?.() === 0 ? ["--no-sandbox"] : [],
-  })
-
-/** Runs jobs a few at a time; docs pages can take seconds each. */
-async function pool<T, R>(items: T[], run: (item: T) => Promise<R>) {
-  const results: R[] = new Array(items.length)
-  let next = 0
-  const worker = async () => {
-    while (next < items.length) {
-      const index = next++
-      results[index] = await run(items[index] as T)
-    }
-  }
-  await Promise.all(
-    Array.from({ length: Number(args.concurrency) }, () => worker()),
-  )
-  return results
-}
-
-const pause = (ms: number) => new Promise((done) => setTimeout(done, ms))
-
-/** Pages run side by side; each acts as the focused tab, as :focus-visible
- *  needs. */
-async function focusable(page: Page) {
-  const cdp = await page.createCDPSession()
-  await cdp.send("Emulation.setFocusEmulationEnabled", { enabled: true })
-}
-
-async function runSteps(page: Page, steps: Step[]) {
-  for (const step of steps) {
-    if ("press" in step) {
-      await page.keyboard.press(step.press as KeyInput)
-      continue
-    }
-    const selector =
-      "click" in step
-        ? step.click
-        : "hover" in step
-          ? step.hover
-          : "focus" in step
-            ? step.focus
-            : step.wait
-    await page
-      .waitForSelector(selector, { visible: true, timeout: 15000 })
-      .catch(async (error) => {
-        if (await page.$(selector))
-          throw new Error(`step ${JSON.stringify(step)}: found, but hidden`)
-        throw error
-      })
-    if ("click" in step) await page.click(selector)
-    else if ("hover" in step) await page.hover(selector)
-    else if ("focus" in step) await page.focus(selector)
-  }
-}
-
-/** Waits for running animations and transitions to end (overlays fade in,
- *  focus rings grow); endless ones like spinners don't count. */
-const settle = (page: Page) =>
-  page
-    .waitForFunction(
-      () =>
-        document
-          .getAnimations()
-          .every(
-            (a) =>
-              a.playState !== "running" ||
-              a.effect?.getComputedTiming().iterations === Infinity,
-          ),
-      { timeout: 3000 },
-    )
-    .catch(() => {})
+const pool = <T, R>(items: T[], run: (item: T) => Promise<R>) =>
+  poolOf(items, run, Number(args.concurrency))
 
 /** The margin around a crop, for rings and shadows. */
 const PAD = 16
@@ -430,45 +334,11 @@ async function measurePage(
   browser: Browser,
   url: string,
   mode: Mode,
-  {
-    parts: targets,
-    storage,
-    steps = [],
-    width = 1440,
-    settle = 1500,
-  }: PackPage,
+  { parts: targets, ...settings }: PackPage,
 ): Promise<Measures> {
-  // Its own context, so pages measured side by side don't share a theme
-  // through localStorage (next-themes syncs it across tabs).
-  const context = await browser.createBrowserContext()
-  const page = await context.newPage()
+  const { page, load, close } = await openPage(browser, url, mode, settings)
+  const width = settings.width ?? 1440
   try {
-    await page.setViewport({ width, height: 900 })
-    await page.emulateMediaFeatures([
-      { name: "prefers-color-scheme", value: mode },
-    ])
-    await focusable(page)
-    // Some sites turn away a "HeadlessChrome" user agent (Notion).
-    await page.setUserAgent(
-      (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
-    )
-    if (storage)
-      await page.evaluateOnNewDocument(
-        `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
-      )
-    const load = async () => {
-      // A goto that changes only the hash keeps the document, so a
-      // hash-routed dialog would keep the last part's state.
-      if (page.url() !== "about:blank") await page.goto("about:blank")
-      await page.goto(url, { waitUntil: "load", timeout: 60000 })
-      // Docs sites keep connections open, so a short quiet spell is enough;
-      // apps still hydrate after it.
-      await page
-        .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
-        .catch(() => {})
-      await pause(settle)
-      await runSteps(page, steps)
-    }
     await load()
     const plain = Object.fromEntries(
       Object.entries(targets).filter(([, target]) => !stepped(target)),
@@ -508,7 +378,7 @@ async function measurePage(
     }
     return owned(measures, targets)
   } finally {
-    await context.close()
+    await close()
   }
 }
 
@@ -729,11 +599,15 @@ await mkdir(dirname(outFile), { recursive: true })
 await writeFile(outFile, `${JSON.stringify(measured, null, 2)}\n`)
 console.log(`measures → ${outFile}`)
 
-if (!existsSync(tokensFile(preset))) {
+const reference = readReference(preset)
+if (!reference) {
   console.log(`no reference at ${tokensFile(preset)}: nothing to diff`)
   process.exit(0)
 }
-const reference: ReferenceTokens = await readJson(tokensFile(preset))
+if (reference.pixel.length)
+  console.log(
+    `${reference.pixel.length} values come from screenshots (pixel.json): ${reference.pixel.join(", ")}`,
+  )
 await writeFile(snapshotFile, `${JSON.stringify(reference, null, 2)}\n`)
 if (reference.probe !== PROBE && reference.probe !== "tokens")
   console.log(

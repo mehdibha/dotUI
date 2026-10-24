@@ -1,0 +1,14 @@
+{
+  "kind": "repo",
+  "repo": "https://github.com/picocss/picocss.com",
+  "ref": "c68648909393e0d6a3ab4edd814f95af3a1e8240",
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "documentationMenu.json",
+      "upstreamPath": "app/data/documentationMenu.json",
+      "url": "https://raw.githubusercontent.com/picocss/picocss.com/c68648909393e0d6a3ab4edd814f95af3a1e8240/app/data/documentationMenu.json",
+      "sha256": "5c1cf846652f9473a224dfc3cf48179cfac2a53c3f97959ac56d2be92b9c0236"
+    }
+  ]
+}

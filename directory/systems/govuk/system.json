@@ -1,0 +1,17 @@
+{
+  "slug": "govuk",
+  "name": "GOV.UK Design System",
+  "org": "Government Digital Service (UK Government)",
+  "type": "corporate-design-system",
+  "upstream": [],
+  "sources": {
+    "docs": "https://design-system.service.gov.uk",
+    "repo": "https://github.com/alphagov/govuk-frontend",
+    "site": "https://www.gov.uk",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

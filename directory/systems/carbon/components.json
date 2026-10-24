@@ -1,0 +1,621 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-accordion--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Actionable",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-notifications-actionable--overview",
+      "demo": null,
+      "note": "Documented under the “Notifications” group in the Carbon React Storybook."
+    },
+    {
+      "component": null,
+      "name": "AILabel",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-ailabel--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "AISkeleton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-skeleton-aiskeleton--overview",
+      "demo": null,
+      "note": "Documented under the “Skeleton” group in the Carbon React Storybook."
+    },
+    {
+      "component": null,
+      "name": "AspectRatio",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-aspectratio--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumb",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-breadcrumb--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-button--overview",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <title>IBM Carbon — Button</title>\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />\n    <link\n      rel=\"stylesheet\"\n      href=\"https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap\"\n    />\n    <link\n      rel=\"stylesheet\"\n      href=\"https://cdn.jsdelivr.net/npm/@carbon/styles@1.114.0/css/styles.min.css\"\n    />\n    <style>\n      html,\n      body {\n        height: 100%;\n      }\n      body {\n        margin: 0;\n        padding: 16px;\n        box-sizing: border-box;\n        background: var(--cds-background, #fff);\n        font-family: \"IBM Plex Sans\", \"Helvetica Neue\", Arial, sans-serif;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n      }\n      .row {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        gap: 12px;\n        flex-wrap: wrap;\n        justify-content: center;\n      }\n    </style>\n  </head>\n  <body class=\"cds--white\">\n      <script>\n        (function () {\n          function applyMode(dark) {\n            var body = document.body;\n            body.classList.remove(dark ? \"cds--white\" : \"cds--g100\");\n            body.classList.add(dark ? \"cds--g100\" : \"cds--white\");\n          }\n          var override = null;\n          try {\n            override = new URLSearchParams(location.search).get(\"mode\");\n          } catch (e) {}\n          if (override) {\n            applyMode(override === \"dark\");\n            return;\n          }\n          var root = null;\n          try {\n            if (window.parent !== window) {\n              root = window.parent.document.documentElement;\n            }\n          } catch (e) {\n            root = null;\n          }\n          if (!root) {\n            applyMode(false);\n            return;\n          }\n          var sync = function () {\n            applyMode(root.classList.contains(\"dark\"));\n          };\n          sync();\n          var observer = new MutationObserver(sync);\n          observer.observe(root, {\n            attributes: true,\n            attributeFilter: [\"class\"],\n          });\n          window.__cdsModeObserver = observer;\n        })();\n      </script>\n    <div class=\"row\">\n      <button\n        type=\"button\"\n        class=\"cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary\"\n      >\n        Primary\n      </button>\n      <button\n        type=\"button\"\n        class=\"cds--btn cds--btn--lg cds--layout--size-lg cds--btn--secondary\"\n      >\n        Secondary\n      </button>\n      <button\n        type=\"button\"\n        disabled\n        class=\"cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary cds--btn--disabled\"\n      >\n        Disabled\n      </button>\n    </div>\n  </body>\n</html>\n",
+        "height": 180
+      },
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Callout",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-notifications-callout--overview",
+      "demo": null,
+      "note": "Documented under the “Notifications” group in the Carbon React Storybook."
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-checkbox--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ClassPrefix",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-classprefix--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "CodeSnippet",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-codesnippet--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "ComboBox",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-combobox--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button-group",
+      "name": "ComboButton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-combobutton--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "ComposedModal",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-composedmodal--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "ContainedList",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-containedlist--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "segmented-control",
+      "name": "ContentSwitcher",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-contentswitcher--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "CopyButton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-copybutton--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "DataTable",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-datatable-basic--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "date-picker",
+      "name": "DatePicker",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-datepicker--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "DefinitionTooltip",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-definitiontooltip--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Dropdown",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-dropdown--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ErrorBoundary",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-errorboundary--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "file-upload",
+      "name": "FileUploader",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fileuploader--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "FluidComboBox",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidcombobox--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "date-picker",
+      "name": "FluidDatePicker",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluiddatepicker--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "select",
+      "name": "FluidDropdown",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluiddropdown--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "form",
+      "name": "FluidForm",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidform--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "select",
+      "name": "FluidMultiSelect",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidmultiselect--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "text-input",
+      "name": "FluidNumberInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidnumberinput--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "text-input",
+      "name": "FluidPasswordInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidpasswordinput--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "search-input",
+      "name": "FluidSearch",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidsearch--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "select",
+      "name": "FluidSelect",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidselect--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "textarea",
+      "name": "FluidTextArea",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidtextarea--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "text-input",
+      "name": "FluidTextInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidtextinput--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": null,
+      "name": "FluidTimePicker",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-fluid-components-fluidtimepicker--overview",
+      "demo": null,
+      "note": "Documented under the “Fluid Components” group in the Carbon React Storybook."
+    },
+    {
+      "component": "form",
+      "name": "Form",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-form--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "FormGroup",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-formgroup--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "FormLabel",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-formlabel--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "header",
+      "name": "Header",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-ui-shell-header--overview",
+      "demo": null,
+      "note": "Documented under the “UI Shell” group in the Carbon React Storybook."
+    },
+    {
+      "component": null,
+      "name": "Heading",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-heading--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "IconButton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-iconbutton--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "IdPrefix",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-idprefix--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Inline",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-notifications-inline--overview",
+      "demo": null,
+      "note": "Documented under the “Notifications” group in the Carbon React Storybook."
+    },
+    {
+      "component": "loading",
+      "name": "InlineLoading",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-inlineloading--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Layer",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-layer--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-link--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Loading",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-loading--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-menu--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "MenuButton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-menubutton--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Modal",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-modal--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "MultiSelect",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-multiselect--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "NumberInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-numberinput--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "OrderedList",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-orderedlist--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "OverflowMenu",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-overflowmenu--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-pagination--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "pagination",
+      "name": "PaginationNav",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-paginationnav--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "PasswordInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-passwordinput--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-popover--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "ProgressBar",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-progressbar--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-steps",
+      "name": "ProgressIndicator",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-progressindicator--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "RadioButton",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-radiobutton--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "search-input",
+      "name": "Search",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-search--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Section",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-section-overview--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-select--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "SideNav",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-ui-shell-sidenav--overview",
+      "demo": null,
+      "note": "Documented under the “UI Shell” group in the Carbon React Storybook."
+    },
+    {
+      "component": "skeleton",
+      "name": "SkeletonIcon",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-skeleton-skeletonicon--overview",
+      "demo": null,
+      "note": "Documented under the “Skeleton” group in the Carbon React Storybook."
+    },
+    {
+      "component": "skeleton",
+      "name": "SkeletonPlaceholder",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-skeleton-skeletonplaceholder--overview",
+      "demo": null,
+      "note": "Documented under the “Skeleton” group in the Carbon React Storybook."
+    },
+    {
+      "component": "skeleton",
+      "name": "SkeletonText",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-skeleton-skeletontext--overview",
+      "demo": null,
+      "note": "Documented under the “Skeleton” group in the Carbon React Storybook."
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-slider--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Stack",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/layout-stack--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "StructuredList",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-structuredlist--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-tabs--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Tag",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-tag--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "textarea",
+      "name": "TextArea",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-textarea--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "TextInput",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-textinput--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Theme",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-theme--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Tile",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-tile--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TimePicker",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-timepicker--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "toast",
+      "name": "Toast",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-notifications-toast--overview",
+      "demo": null,
+      "note": "Documented under the “Notifications” group in the Carbon React Storybook."
+    },
+    {
+      "component": "switch",
+      "name": "Toggle",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-toggle--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "popover",
+      "name": "Toggletip",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-toggletip--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-tooltip--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TreeView",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-treeview--overview",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "UnorderedList",
+      "docsUrl": "https://react.carbondesignsystem.com/?path=/docs/components-unorderedlist--overview",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://carbondesignsystem.com",
+    "https://react.carbondesignsystem.com",
+    "https://react.carbondesignsystem.com/index.json"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/carbon.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://react.carbondesignsystem.com/index.json",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/carbon"
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@carbon/styles",
+        "ref": "1.114.0",
+        "retrievedAt": null,
+        "snapshot": "sources/carbon"
+      }
+    ],
+    "notes": "Inventory comes from the Carbon React Storybook’s generated index.json (unversioned URL, so it is stamped live-site with the snapshot’s retrievedAt); component names and docs URLs are derived from its story titles and ids. Excluded on purpose: the Preview (unreleased), Deprecated, Elements (grid/type/icon foundations), Hooks, Helpers and Utilities sections. Feature-flag stories are folded into their component, and the Fluid Components / Notifications / Skeleton / UI Shell folders are unwrapped to their leaf components (the folder is recorded in each entry’s note). Canonical taxonomy mapping is an explicit table in the extractor. The Button demo loads the compiled @carbon/styles CSS from jsDelivr at a pinned version, read from the vendored package.json of that exact version — a pinned URL despite the live-site fetch; only Button has a demo so far. Dark mode swaps the body’s Carbon theme-zone class between cds--white and cds--g100 (both declared in that same compiled stylesheet), and the page canvas reads the zone’s own --cds-background token, so dark mode uses Carbon’s real g100 theme rather than any invented colour. The demo resolves its mode from its embedder: an explicit “mode” query parameter wins and is applied once (standalone testing), otherwise the page follows the parent document’s <html> class list live — dark iff it carries “dark” — via a MutationObserver on that element’s class attribute, so toggling the site theme restyles the iframe in place without reloading it; a cross-origin or absent parent falls back to light."
+  }
+}

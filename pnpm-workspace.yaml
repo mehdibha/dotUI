@@ -3,6 +3,7 @@ packages:
   - www/scripts/api-docs-builder
   - packages/*
   - video
+  - directory
 
 catalog:
   "@tailwindcss/node": ^4.3.0
