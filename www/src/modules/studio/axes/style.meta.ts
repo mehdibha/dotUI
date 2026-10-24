@@ -9,8 +9,8 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     description: "Borders on every edge, no shadows",
     credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
   },
-  tactile: {
-    label: "Tactile",
+  polished: {
+    label: "Polished",
     description: "Raised, beveled controls with soft shadows",
     credits: ["Polaris", "Untitled UI", "Clerk"],
   },
@@ -24,7 +24,7 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
 /** Each Style's finish row: the options it allows, for the key
  *  FINISH_KEYS names. A Style with one finish has no row. */
 export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
-  tactile: [
+  polished: [
     {
       value: "rim-light",
       label: "Rim",

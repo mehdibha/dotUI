@@ -22,7 +22,7 @@ describe("toggles axis", () => {
   test("keeps the Buttons axis params on toggle-button", () => {
     const { componentParams } = designSystemOf(
       parseState({
-        style: "tactile",
+        style: "polished",
         toggleSelected: "tint",
         buttonStyle: "bevel",
       }),

@@ -7,8 +7,8 @@ export const untitled = definePreset({
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
-    // Style: Tactile with the Rim finish.
-    style: "tactile",
+    // Style: Polished with the Rim finish.
+    style: "polished",
 
     // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
