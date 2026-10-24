@@ -1,0 +1,17 @@
+{
+  "slug": "bootstrap",
+  "name": "Bootstrap",
+  "org": "Bootstrap Core Team",
+  "type": "component-library",
+  "upstream": [],
+  "sources": {
+    "docs": "https://getbootstrap.com/docs/5.3/getting-started/introduction/",
+    "repo": "https://github.com/twbs/bootstrap",
+    "site": "https://getbootstrap.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

@@ -1,0 +1,207 @@
+{
+  "gaps": [
+    {
+      "look": "ink.keycap",
+      "title": "Keycap label ink as one choice of faint, muted or full",
+      "note": "Stripe between full and muted, #414552 (oklch ≈ 0.40)",
+      "standin": "ΔE 0.253 / 0.301 on Duolingo, 0.108 on Stripe)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.keycap",
+      "title": "Keycap labels in the mono face",
+      "note": "Stripe's Dashboard shortcuts drawer sets keys in Menlo, Consolas, monospace at 13/500 on a #EBEEF1 chip with 3px corners, 20px tall, 6px padding, no edge",
+      "standin": "keycaps in the body font at the UI size (14/500 with `uiTextSize: 14`); `kbdTreatment: chip` matches the fill and edge",
+      "source": "ledger"
+    },
+    {
+      "look": "type.caption",
+      "title": "Caption text one rung below control text",
+      "note": "Stripe 12/16 badges, chips, list secondary lines and descriptions under 14/20 controls at 28px",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "Focus ring in a color other than the brand",
+      "note": "Stripe sky blue rgba(1,150,237,.36), 3px past the edge and 1px out, on Dashboard buttons, links and fields (the opaque lavender field focus is only on the login page)",
+      "standin": "ΔE 0.095 on Material 3, 0.062 on Stripe's `button.focus` and `input.focus`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Stripe's Dashboard sidebar rows #1A2C44 at 14/400 (30px, 6px corners), the current row blurple #533AFD at 600 with no fill",
+      "standin": "Stripe's sidebar rows ΔE 0.210, the current row matched by `navMarker: ink` and `navItemWeight: regular-semibold`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Stripe's Dashboard tabs 36px (invoice settings, Payments' filter tabs) with 12px inline padding, square, 14/600, the selected one in blurple over a 2px bar (only Communication preferences' tabs are 52px)",
+      "standin": "39px from the density (`tabStyle: line` at 35px on Geist, 31px on Stripe, -5px, with 6px padding and 6px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.control-shadow",
+      "title": "A small drop under select triggers, checkboxes and switches while buttons and text fields stay flat",
+      "note": "select `0 1px 1px` rgba(16,17,26,.16); checkbox `0 1px 1px` black 12% + `0 2px 5px` rgba(48,49,61,.08)",
+      "standin": "the Flat style: no shadow on any control",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Stripe neutral badges, slate-600 #50617A on slate-25 #F4F7FA inside a #D4DEE9 edge",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.choice-label",
+      "title": "Checkbox, radio and switch labels at label weight",
+      "note": "14/600 in #1A2C44, like field labels",
+      "standin": "choice labels at body weight (14/400); `fieldLabel: semibold` only reaches field labels",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Heavier links",
+      "note": "Stripe semibold in the docs, 14/600, primary links in the brand ink and secondary links in slate-800 #273951, and 14/500 in blurple #533AFD in the signed-in Dashboard",
+      "source": "ledger"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "Smaller: Stripe's Dashboard copy at 14/20 in #1A2C44 under 28px controls",
+      "standin": "body size from the density, 16px at Duolingo's `touch` and Stripe's `compact`; `uiTextSize` reaches only controls and offers 13 and 14",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "Stripe's Dashboard fields keep their 1px slate-100 #D4DEE9 edge unchanged under the 3px sky blue ring",
+      "standin": "Stripe, to the blurple, 0.377)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Stripe 34×18",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Stripe slate-50 #ECF1F6 inside a 1px #D4DEE9 ring plus a `0 1px 1px` drop",
+      "standin": "ΔE 0.059 / 0.053 on Geist, 0.069 on Stripe, 0.080 / 0.142 on Supabase)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Stripe the link color, the others in slate-600 #50617A, all 14/600",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Stripe 12px on 52px in the signed-in Dashboard's settings tabs, square (none in its docs example)",
+      "standin": "6px with 6px corners at Stripe's compact",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Stripe's Dashboard search results 28px with 8px corners, the control height, under 32px menu rows",
+      "standin": "on Stripe 38.8px rows at 6px corners (`menuRows: step` keeps its 32px menu rows right)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Stripe a white bubble like the popover, 14/20 text in #1A2C44, 16px padding, 8px corners (the popover radius), 1px #D4DEE9 edge, a small drop, no arrow",
+      "standin": "12px text, 12px padding, square (Stripe and Wise: `tooltipStyle: surface`, 6px corners, 10.5px on Wise",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "Stripe's Create customer dialog has no hairline, only the menu shadow (`0 5px 15px` black 12% plus `0 15px 35px` rgba(48,49,61,.08)), white at 8px, while menus keep a 1px #D4DEE9 hairline and cards a 1px #EBEEF1 ring",
+      "standin": "Stripe's at oklab L 0.926",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-section",
+      "title": "Menu section headers in full ink and bold",
+      "note": "12/700 #1A2C44, inset like the rows",
+      "standin": "`sectionLabels: sentence`: small labels in muted ink at body weight",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.command-edge",
+      "title": "Command palette ringed in a wide pale rim",
+      "note": "Stripe's Dashboard search popover draws a 2px slate-25 #F4F7FA edge at 8px corners under the menu shadow, while menus keep the 1px slate-100 #D4DEE9 hairline",
+      "standin": "the palette takes the overlay hairline, 1px (ΔE 0.049)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Stripe's 20px badges (6px padding, 4px corners)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Status banners in status ink",
+      "note": "title (16/700) and description both in the status color (#B13600 warning, #C0123C critical) on a status tint inside a status edge; the neutral banner stays white with the border",
+      "standin": "`alertStyle: soft-outline` (ink text, a gray tint on the neutral one); `neutral` keeps the status text but drops the tint",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Stripe banners at 6px, the button, field and card rung (Dashboard cards round at 6px too), under 8px menus, tooltips and dialogs",
+      "standin": "alerts follow the container radius from `roleSurface` (8px on Stripe, whose cards take 6px from `roleCard: md`, and Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Stripe text, labels and menu rows in slate-900 #1A2C44, button, field and select ink in slate-800 #273951",
+      "standin": "one `fg` for text and labels, `fg-muted` for the rest (Stripe ΔE 0.055 on text, 0.102 on control ink",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Stripe 0.080",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-chroma",
+      "title": "More strongly tinted neutrals",
+      "note": "Sail's slate inks at C ≈ 0.05 (#1A2C44 oklch 0.290 0.050 256, #273951 0.341 0.049, #50617A 0.488 0.046), its border #D4DEE9 at 0.019",
+      "standin": "`neutralTint: 2` (the maximum) gives C 0.025 in the ink; muted text lands at ΔE 0.022",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Stripe the brand #533AFD itself on Dashboard links and the current sidebar row",
+      "standin": "on Stripe at oklch 0.539 0.238 (ΔE 0.035)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.one-line",
+      "title": "One hairline for everything, on the control-edge step",
+      "note": "Sail's slate-100 #D4DEE9 (L 0.896) on buttons, fields, menus, tooltips, badges and banners",
+      "standin": "menus, tooltips, badges and cards sit on the lighter surface line (L 0.926, ΔE 0.030 on Stripe",
+      "source": "ledger"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Stronger status tints, on their own hue",
+      "note": "Stripe warning on yellow (#FDF8C9, edge #FBD992) behind orange ink #B13600, info on cyan (#E2FBFE, edge #A7E7FC) behind blue ink #045AD0",
+      "source": "ledger"
+    }
+  ]
+}

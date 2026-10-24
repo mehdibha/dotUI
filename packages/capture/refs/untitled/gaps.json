@@ -1,0 +1,299 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Untitled UI 36px (6px corners, 14/600), as tall as its sm buttons",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycaps that keep their hairline and fill inside list rows (⌘K shortcuts)",
+      "note": "Untitled UI's palette shortcuts on neutral-50 #fafafa / neutral-950 inside a 1px neutral-200 / neutral-800 ring",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Untitled UI 4px beside 8px controls and 6px rows",
+      "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "size.keycap",
+      "title": "Keycap size apart from the density",
+      "note": "Untitled UI 24px with 14/500 labels in neutral-600 #525252 / neutral-400, 4px padding",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Untitled UI sidebar rows in neutral-700 #404040 / neutral-300, the current row neutral-800 / neutral-200 on neutral-50 / neutral-900",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Untitled UI display sizes from 36px tracked -2% (-0.72px at 36), 30px and below untracked",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-icon",
+      "title": "Quiet icon buttons in the faintest ink",
+      "note": "Untitled UI's close, more, copy and edit icon buttons have no plate (28px at 6px corners, 36px at 8px) and draw their icons in neutral-400 #a1a1a1 / neutral-600 #525252 (`text-fg-quaternary`), a step below the muted text ink; 260 such buttons across the app-screen demos",
+      "standin": "quiet icon buttons in full ink; `dialogClose: faint` reaches only the dialog's X",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Untitled UI neutral badges, neutral-700 #404040 on neutral-50 #fafafa inside a neutral-200 ring (neutral-300 on neutral-900 in a neutral-700 ring in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Heavier links",
+      "note": "Untitled UI link buttons and inline links at 14/600",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "Untitled UI's on #0a0a0a (see the dark overlays row)",
+      "standin": "oklch 0.18 on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Untitled UI 36×20, 16px knob with shadow-sm",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Untitled UI neutral-100 #f5f5f5 / neutral-800 #262626 inside a 0.5px ring; Radix, Supabase and Untitled UI keep the ring when the switch is on, over the accent track (Supabase's mint #2caa6f / #56cf92)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Untitled UI a brand-700 #6941c6 label on a brand-50 #f9f5ff pill in light",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tab-pill",
+      "title": "Pill tab corners apart from the control radius",
+      "note": "Below: Untitled UI tabs at 6px beside 8px buttons and fields",
+      "standin": "`tabStyle: pill` rounds tabs at the control radius (8px on Untitled UI, 6.5px on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress track on the line color",
+      "note": "Untitled UI `bg-quaternary`, neutral-200 #e5e5e5 / neutral-700 #404040",
+      "standin": "Untitled UI #f3f3f3 / #1e1e1e, ΔE 0.041 / 0.138",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Untitled UI's fill is a full-width pill (6px corners on the 8px bar) slid under the track's clip",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Untitled UI 36px chips (its sm button height) in a 44px track padded 4px",
+      "standin": "a track about the button height around chips inset 2–4px: 44px with a 36px chip on Carbon, 36px with 30px items on GitHub and Radix, 40px with 32px chips on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Untitled UI's track at 10px with 6px chips",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Segmented selected chip raised by shadow alone, no edge",
+      "note": "Untitled UI white / neutral-900 #171717 under shadow-sm",
+      "standin": "`segmentedSelected: raised` adds a 1px edge (#d9d9d9 / #3f3f3f); `ring` keeps the edge and drops the shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "Untitled UI round cells beside 36px buttons",
+      "standin": "32px cells from the density (`calendarDayShape: circle` on Untitled UI and Airbnb",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Untitled UI 14/400, today and the selected day 500",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Untitled UI cards, menus, dialogs and the palette all on the page tone #0a0a0a, set apart by neutral-800 hairlines and shadows",
+      "standin": "L 0.21 on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "Untitled UI modals (r16) and the command palette (r12) have no hairline, only shadow-xl, while cards (neutral-200 ring) and dropdown menus (black 10% ring) keep one",
+      "standin": "`line` and `ledge` stroke menus and dialogs too (Untitled UI's dialogs take the surface hairline, #e4e4e4 / oklab L 0.29",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu rows at label weight",
+      "note": "Untitled UI dropdown rows 14/600 in neutral-700 #404040 (36px highlight), palette rows 14/500 in neutral-900",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "Untitled UI neutral-950 #0a0a0a in light, neutral-900 #171717 in dark, white 12/600 text in both",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tooltip",
+      "title": "Tooltip text at label weight",
+      "note": "Untitled UI 12/600 in a 34px tooltip with 12px padding and 8px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Inverted tooltips with a drop shadow",
+      "note": "Untitled UI shadow-lg (`0 12px 16px -4px` black 8%, `0 4px 6px -2px` black 3%, `0 2px 2px -1px` black 4%) under the dark chip",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.command",
+      "title": "Command palette radius apart from dialogs",
+      "note": "Untitled UI's palette at 12px, modals at 16px",
+      "standin": "the palette takes the panel rung with dialogs (`rolePanel: 2xl`: 16px on Untitled UI, 13px on Notion",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim in a lighter gray in dark",
+      "note": "neutral-950 at 70% in light, neutral-800 #262626 at 70% in dark, both with a 6px blur, so the dark page reads gray behind a modal",
+      "standin": "`dialogBackdrop: frosted` at `heavy` strength tints black in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Untitled UI 24px md pills, 10px padding, 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.badge-neutral",
+      "title": "Neutral badges raised like the secondary button, beside soft-outline colored pills",
+      "note": "Untitled UI's neutral badge (`badge-modern`) is white inside a 1px neutral-300 #d4d4d4 ring with shadow-xs (`0 1px 2px` black 5%), 6px corners, 14/500 or 12/500 in neutral-700 #404040; in dark the page tone #0a0a0a inside a neutral-700 #404040 ring under neutral-300 text. Category and status badges stay soft-outline pills (50 fill, 700 label, 200 ring). 92 raised neutral badges against 52 colored pills across the 161 app-screen demos",
+      "standin": "`badgeStyle: soft-outline` with `badgeShape: pill` paints the neutral badge as a neutral-50 pill in a neutral-200 ring with no drop, and `badgeShape` can't round neutral and colored badges differently",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Alerts in neutral ink with the status only in the icon",
+      "note": "every alert is the same white / #0a0a0a card with a hairline, title and text in neutral-700 / neutral-600, the status in a ringed featured icon",
+      "standin": "`alertStyle: neutral` keeps the neutral card but colors the title and text with the status",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Untitled UI floating alerts at the card's 12px",
+      "standin": "alerts follow the container radius from `roleSurface` (8px on Stripe, whose cards take 6px from `roleCard: md`, and Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.alert-shadow",
+      "title": "Alerts with the card's drop",
+      "note": "Untitled UI's floating alerts under shadow-xs (`0 1px 2px` black 5%), like its cards",
+      "standin": "alerts draw no shadow while cards have a drop",
+      "source": "ledger"
+    },
+    {
+      "look": "type.table-header",
+      "title": "Table header label weight apart from 500",
+      "note": "Untitled UI 12/600 (18px line) in neutral-500 #737373 / neutral-400 #a1a1a1 on the neutral-50 #fafafa / neutral-900 #171717 band, over 14/400 cells",
+      "standin": "`tableHeaderLabel` sets only the ink (`strong` on Carbon, `muted` on Untitled UI and Notion); header labels render at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "size.table-row",
+      "title": "Table row height apart from the control height",
+      "note": "Untitled UI 72px body rows (`h-18`, 16px block padding; 56px on the small table) holding one line of 14/400 or a 40px avatar beside two lines; A header shorter than the rows: Untitled UI's 44px header band (`h-11`) over those 72px rows",
+      "standin": "comfortable density's 48px rows and header on Untitled UI)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.table-padding",
+      "title": "Wider table cell inset",
+      "note": "Untitled UI pads every header and body cell 24px inline (`px-6`; 20px on the small table), apart from density, the second column pulled in to 12px beside the checkbox column",
+      "standin": "comfortable density's 12px cell padding (`px-3`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.pagination-current",
+      "title": "Current page on the hover fill, apart from the toggles' selected tone",
+      "note": "a 36px square on neutral-50 #fafafa / neutral-900 #171717 under 14/500 neutral-700 #404040 / neutral-300",
+      "standin": "`paginationCurrent: selected` takes the toggles' tone fill, #e2e2e2 / #323232 (ΔE 0.071 / 0.110), at 14/600",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Untitled UI buttons on brand-600 #7f56d9 in both modes, the progress fill on brand-500 #9e77ed in dark",
+      "standin": "dark progress fill 0.106 on Carbon, 0.097 on Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Untitled UI four steps: values and headings neutral-900 #171717, control labels, menu rows, badges and sidebar rows neutral-700 #404040, supporting text neutral-600 #525252, placeholders and unselected tabs neutral-500 #737373 (dark neutral-50, 300, 400, 400)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Untitled UI a step below the solid in light (brand-700 #6941c6 under the brand-600 #7f56d9 fill) and off the brand in dark (neutral-300 #d4d4d4)",
+      "standin": "on Untitled UI it lands at oklch 0.53 0.17 in light and a light purple, oklch 0.78 0.12, in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.focus-step",
+      "title": "Focus on an opaque accent step",
+      "note": "Untitled UI button rings (2px at +2px) and field rings (2px inset) on brand-500 #9e77ed / brand-400 #b692f6, a step lighter than the brand-600 #7f56d9 fill",
+      "standin": "Untitled UI's `solid` rings in the fill's own accent (oklch 0.56 0.19, over tolerance in both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.brand-tint-dark",
+      "title": "Brand tints that turn neutral in dark",
+      "note": "the selected tab pill is brand-50 / brand-700 in light but neutral-900 #171717 / neutral-300 #d4d4d4 in dark, and links go from brand-700 to neutral-300",
+      "standin": "`tabsPill: tint` keeps a brand-tinted pill in dark (oklch 0.24 0.065, ΔE 0.073)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.alert-line",
+      "title": "Alert edges on the control-edge step while cards keep the lighter line",
+      "note": "Untitled UI alerts in `border-primary`, neutral-300 #d4d4d4 / neutral-700 #404040, cards in neutral-200 #e5e5e5 / neutral-800",
+      "standin": "the surface line, #e6e6e6 / #2c2c2c (ΔE 0.055 / 0.078)",
+      "source": "ledger"
+    }
+  ]
+}

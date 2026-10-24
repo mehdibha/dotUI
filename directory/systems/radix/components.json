@@ -1,0 +1,419 @@
+{
+  "components": [
+    {
+      "component": null,
+      "name": "Accessible Icon",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/accessible-icon",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    },
+    {
+      "component": "dialog",
+      "name": "Alert Dialog",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/alert-dialog",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Aspect Ratio",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/aspect-ratio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/avatar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/badge",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Blockquote",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/blockquote",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": null,
+      "name": "Box",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/box",
+      "demo": null,
+      "note": "Layout primitive."
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Radix Themes Button</title>\n<script>\n  (function () {\n    function applyMode(dark) {\n      var el = document.documentElement;\n      if (dark) el.classList.add(\"dark\");\n      else el.classList.remove(\"dark\");\n      window.__radixDemoDark = dark;\n      if (window.__radixDemoRender) window.__radixDemoRender(dark);\n    }\n    window.__radixDemoApplyMode = applyMode;\n\n    var mode = new URLSearchParams(window.location.search).get(\"mode\");\n    if (mode !== null) {\n      applyMode(mode === \"dark\");\n      return;\n    }\n\n    var root = null;\n    try {\n      if (window.parent !== window) {\n        root = window.parent.document.documentElement;\n      }\n    } catch (e) {\n      root = null;\n    }\n    if (!root) {\n      applyMode(false);\n      return;\n    }\n\n    applyMode(root.classList.contains(\"dark\"));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains(\"dark\"));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: [\"class\"] });\n    window.__radixDemoObserver = observer;\n  })();\n</script>\n<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@radix-ui/themes@3.3.0/styles.css\" />\n<style>\n  html, body { margin: 0; padding: 0; height: 100%; background: #fff; }\n  body { padding: 16px; box-sizing: border-box; }\n  #root { height: 100%; }\n  .rt-Theme-fill {\n    min-height: 100%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    flex-wrap: wrap;\n    background: #fff;\n  }\n  /* The demo's <Theme grayColor=\"slate\"> re-points --gray-1 at --slate-1, but\n     only inside .radix-themes; mirror that on the root so the padding around\n     the theme resolves to the very same canvas token, not the default gray. */\n  html.dark { --gray-1: var(--slate-1); }\n  html.dark, html.dark body, html.dark .rt-Theme-fill {\n    background: var(--color-background);\n  }\n</style>\n<script type=\"importmap\">\n{\n  \"imports\": {\n    \"react\": \"https://esm.sh/react@18.3.1\",\n    \"react/jsx-runtime\": \"https://esm.sh/react@18.3.1/jsx-runtime\",\n    \"react-dom\": \"https://esm.sh/react-dom@18.3.1\",\n    \"react-dom/client\": \"https://esm.sh/react-dom@18.3.1/client\",\n    \"@radix-ui/themes\": \"https://esm.sh/@radix-ui/themes@3.3.0?external=react,react-dom&deps=react@18.3.1,react-dom@18.3.1\"\n  }\n}\n</script>\n</head>\n<body>\n<div id=\"root\"></div>\n<script type=\"module\">\n  import React from \"react\";\n  import { createRoot } from \"react-dom/client\";\n  import { Theme, Button } from \"@radix-ui/themes\";\n\n  const h = React.createElement;\n\n  const root = createRoot(document.getElementById(\"root\"));\n\n  function render(dark) {\n    root.render(\n      h(\n        Theme,\n        {\n          appearance: dark ? \"dark\" : \"light\",\n          accentColor: \"indigo\",\n          grayColor: \"slate\",\n          radius: \"medium\",\n          scaling: \"100%\",\n          hasBackground: false,\n          className: \"rt-Theme-fill\",\n        },\n        h(Button, { variant: \"solid\", size: \"2\" }, \"Primary\"),\n        h(Button, { variant: \"soft\", size: \"2\" }, \"Secondary\"),\n        h(Button, { variant: \"solid\", size: \"2\", disabled: true }, \"Disabled\")\n      )\n    );\n  }\n\n  window.__radixDemoRender = render;\n  render(window.__radixDemoDark === true);\n</script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Callout",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/callout",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/checkbox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox Cards",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/checkbox-cards",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox Group",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/checkbox-group",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Code",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/code",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": null,
+      "name": "Container",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/container",
+      "demo": null,
+      "note": "Layout primitive."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Context Menu",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/context-menu",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "Data List",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/data-list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/dialog",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Dropdown Menu",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/dropdown-menu",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Em",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/em",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": null,
+      "name": "Flex",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/flex",
+      "demo": null,
+      "note": "Layout primitive."
+    },
+    {
+      "component": null,
+      "name": "Grid",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/grid",
+      "demo": null,
+      "note": "Layout primitive."
+    },
+    {
+      "component": null,
+      "name": "Heading",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/heading",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "popover",
+      "name": "Hover Card",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/hover-card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Icon Button",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/icon-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Inset",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/inset",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "kbd",
+      "name": "Kbd",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/kbd",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/link",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/popover",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Portal",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/portal",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/progress",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Quote",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/quote",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/radio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio Cards",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/radio-cards",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio Group",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/radio-group",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Reset",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/reset",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    },
+    {
+      "component": null,
+      "name": "Scroll Area",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/scroll-area",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Section",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/section",
+      "demo": null,
+      "note": "Layout primitive."
+    },
+    {
+      "component": "segmented-control",
+      "name": "Segmented Control",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/segmented-control",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "divider",
+      "name": "Separator",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/separator",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/skeleton",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Slot",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/slot",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    },
+    {
+      "component": "loading",
+      "name": "Spinner",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/spinner",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Strong",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/strong",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/switch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tab Nav",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/tab-nav",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/table",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/tabs",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Text",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/text",
+      "demo": null,
+      "note": "Typography component."
+    },
+    {
+      "component": "textarea",
+      "name": "Text Area",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/text-area",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Text Field",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/text-field",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Theme",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/theme",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/tooltip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Visually Hidden",
+      "docsUrl": "https://www.radix-ui.com/themes/docs/components/visually-hidden",
+      "demo": null,
+      "note": "Utility component — renders no UI of its own."
+    }
+  ],
+  "sources": [
+    "https://www.radix-ui.com",
+    "https://www.radix-ui.com/themes/docs/overview/getting-started",
+    "https://github.com/radix-ui/themes",
+    "https://github.com/radix-ui/website"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/radix.ts",
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/radix-ui/website/blob/bb424082fd33fadc244a6dd276d3ced55caa6234/utils/themesRoutes.ts",
+        "ref": "bb424082fd33fadc244a6dd276d3ced55caa6234",
+        "retrievedAt": null,
+        "snapshot": "sources/radix"
+      }
+    ],
+    "notes": "Inventory is every `themes/docs/components/<slug>` route in utils/themesRoutes.ts from radix-ui/website at pinned SHA bb424082fd33fadc244a6dd276d3ced55caa6234 — the docs site's own navigation table, so names (the docs titles) and docsUrls are derived, never typed. Radix documents its layout primitives, typography components and render utilities in the same component section; they are emitted as entries with a note saying what they are, and most map to null in the taxonomy. The canonical-taxonomy mapping is an editorial table in the extractor, not extracted. Demo documents load only Radix's published assets at pinned versions — @radix-ui/themes@3.3.0 styles.css from jsDelivr and the @radix-ui/themes@3.3.0 / react@18.3.1 ESM builds from esm.sh, and follow dark mode using Radix Themes' own mechanism — the `dark` class on the root element (plus the matching `<Theme appearance>`), which the pinned styles.css uses to carry the dark scales and to set `--color-background`, the token the demo paints the page with. A `?mode=` query parameter, when present, applies that mode once for standalone testing; otherwise the demo observes its embedding parent's `<html class>` with a MutationObserver and restyles itself in place, both directions, whenever the parent toggles dark (no reload; a cross-origin or top-level parent falls back to light). Demo coverage in this pass is Button only; every other entry is inventory (name + docsUrl + mapping) with demo null."
+  }
+}

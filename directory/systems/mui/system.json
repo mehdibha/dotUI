@@ -1,0 +1,17 @@
+{
+  "slug": "mui",
+  "name": "Material UI (MUI)",
+  "org": "MUI",
+  "type": "component-library",
+  "upstream": [],
+  "sources": {
+    "docs": "https://mui.com/material-ui/getting-started/",
+    "repo": "https://github.com/mui/material-ui",
+    "site": "https://mui.com/material-ui/",
+    "figma": "https://mui.com/store/items/figma-react/"
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

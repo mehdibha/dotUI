@@ -2,16 +2,21 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
+import { bluesky } from "./bluesky"
 import { carbon } from "./carbon"
 import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
+import { govuk } from "./govuk"
+import { guardian } from "./guardian"
+import { headspace } from "./headspace"
 import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
 import { origin } from "./origin"
+import { pinterest } from "./pinterest"
 import { polaris } from "./polaris"
 import type { Preset, PresetMeta } from "./preset"
 import { radix } from "./radix"
@@ -43,6 +48,11 @@ export const PRESETS: Preset[] = [
   carbon,
   wise,
   higgsfield,
+  govuk,
+  bluesky,
+  guardian,
+  headspace,
+  pinterest,
   zara,
 ]
 

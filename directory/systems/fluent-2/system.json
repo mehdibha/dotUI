@@ -1,0 +1,17 @@
+{
+  "slug": "fluent-2",
+  "name": "Microsoft Fluent 2",
+  "org": "Microsoft",
+  "type": "corporate-design-system",
+  "upstream": [],
+  "sources": {
+    "docs": "https://fluent2.microsoft.design",
+    "repo": "https://github.com/microsoft/fluentui",
+    "site": "https://storybooks.fluentui.dev/web-components/",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

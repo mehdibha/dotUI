@@ -60,7 +60,7 @@ describe("columns", () => {
           valuesOf({ style, [key]: COLUMNS[key][style] })[key],
         ])
     }
-    expect(valuesOf({ style: "tactile" })).toMatchObject({
+    expect(valuesOf({ style: "polished" })).toMatchObject({
       buttonStyle: "bevel",
       surfaceEdge: "bevel",
       surfaceShadow: "low",
@@ -78,10 +78,10 @@ describe("columns", () => {
       })
   })
 
-  it("Tactile and Chunky draw the edge their finish implies", () => {
-    expect(valuesOf({ style: "tactile" }).surfaceEdge).toBe("bevel")
+  it("Polished and Chunky draw the edge their finish implies", () => {
+    expect(valuesOf({ style: "polished" }).surfaceEdge).toBe("bevel")
     for (const buttonStyle of ["rim-light", "gloss"])
-      expect(valuesOf({ style: "tactile", buttonStyle }).surfaceEdge).toBe(
+      expect(valuesOf({ style: "polished", buttonStyle }).surfaceEdge).toBe(
         "line",
       )
     expect(valuesOf({ style: "chunky" })).toMatchObject({
@@ -97,8 +97,8 @@ describe("columns", () => {
       expect(values.inputStyle).toBe(AUTO_STYLE[buttonStyle])
       expect(explain.inputStyle?.via).toBe("style")
     }
-    // Tactile's Bevel buttons, read through two Style columns.
-    expect(valuesOf({ style: "tactile" })).toMatchObject({
+    // Polished's Bevel buttons, read through two Style columns.
+    expect(valuesOf({ style: "polished" })).toMatchObject({
       buttonStyle: "bevel",
       inputStyle: AUTO_STYLE.bevel,
       segmentedSelected: "raised",
@@ -160,8 +160,8 @@ describe("picking a style", () => {
   })
 
   it("drops only the picks the new style excludes", () => {
-    // Well needs Tactile or Chunky's light: both keep it, Hairline goes.
-    for (const style of ["tactile", "chunky"] as const)
+    // Well needs Polished or Chunky's light: both keep it, Hairline goes.
+    for (const style of ["polished", "chunky"] as const)
       expect(pickStyle(state, style)).toMatchObject({
         style,
         buttonStyle: "style",
@@ -177,8 +177,8 @@ describe("picking a style", () => {
 
   it("drops the old Style's finish, not the new one's", () => {
     const shadowOnly = parseState({ surfaceEdge: "none" })
-    expect(pickStyle(shadowOnly, "tactile").surfaceEdge).toBe("none")
-    const rim = parseState({ style: "tactile", buttonStyle: "rim-light" })
+    expect(pickStyle(shadowOnly, "polished").surfaceEdge).toBe("none")
+    const rim = parseState({ style: "polished", buttonStyle: "rim-light" })
     expect(pickStyle(rim, "flat").buttonStyle).toBe("style")
     expect(pickStyle(state, "flat")).toMatchObject({ buttonStyle: "hairline" })
   })

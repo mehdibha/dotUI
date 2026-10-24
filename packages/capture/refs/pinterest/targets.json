@@ -1,0 +1,180 @@
+{
+  "https://www.pinterest.com/pinterest/": {
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": ["color"]
+      },
+      "shell": {
+        "selector": "div:has(> div > div > [data-test-id=vertical-nav-icon])",
+        "surface": true
+      },
+      "button.primary": {
+        "selector": "[data-test-id=board-follow-button] button",
+        "ink": "[class*=textUI]"
+      },
+      "button.secondary": {
+        "selector": "[data-test-id=login-button] button",
+        "ink": "[class*=textUI]"
+      },
+      "button.icon": {
+        "selector": "[data-test-id=profile-header] [data-test-id=share-button] button",
+        "box": "[class*=pog_]"
+      },
+      "heading.4": {
+        "selector": "h2[class*=size_300]"
+      },
+      "text": {
+        "selector": "[data-test-id=main-user-description-text]"
+      },
+      "text.muted": {
+        "selector": "[data-test-id=profile-username]"
+      },
+      "tooltip": {
+        "selector": "[role=tooltip] > div",
+        "ink": "[class*=TextBody]",
+        "skip": ["paddingInline", "boxShadow"],
+        "before": [
+          {
+            "hover": "button[aria-label='More options']"
+          }
+        ]
+      },
+      "menu": {
+        "selector": "div:has(> #VerticalNav-MoreOptions-Flyout)",
+        "ink": "#tos-policy [class*=textUI], #tos-policy [class*=TextBody]",
+        "before": [
+          {
+            "click": "button[aria-label='More options']"
+          },
+          {
+            "wait": "#VerticalNav-MoreOptions-Flyout"
+          }
+        ],
+        "skip": ["boxShadow"]
+      },
+      "menu.item": {
+        "selector": "#tos-policy",
+        "ink": "[class*=TextBody], [class*=textUI]",
+        "before": [
+          {
+            "click": "button[aria-label='More options']"
+          },
+          {
+            "wait": "#tos-policy"
+          }
+        ]
+      },
+      "button.focus": {
+        "selector": "[data-test-id=board-follow-button] button",
+        "focus": true
+      }
+    }
+  },
+  "https://www.pinterest.com/ideas/": {
+    "mode": "light",
+    "settle": 2500,
+    "steps": [
+      {
+        "wait": "[role=dialog][aria-label=modal] > div"
+      }
+    ],
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog][aria-label=modal] > div",
+        "skip": ["color"]
+      },
+      "heading.1": {
+        "selector": "h1",
+        "text": "Explore the best of Pinterest"
+      },
+      "heading.2": {
+        "selector": "h2",
+        "text": "Browse by category"
+      },
+      "link": {
+        "selector": "[role=dialog] a",
+        "text": "Join for free"
+      }
+    }
+  },
+  "https://www.pinterest.com/pin/309692911902891416/": {
+    "mode": "light",
+    "settle": 2000,
+    "parts": {
+      "button.quiet": {
+        "selector": "[data-test-id=login-button] button",
+        "ink": "[class*=textUI]"
+      }
+    }
+  },
+  "https://www.pinterest.com/business/create/": {
+    "mode": "light",
+    "settle": 2000,
+    "parts": {
+      "input": {
+        "selector": "input#email"
+      },
+      "input.focus": {
+        "selector": "input#email",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "label[for=email] > div"
+      }
+    }
+  },
+  "https://www.pinterest.com/search/pins/?q=latte%20nails": {
+    "mode": "light",
+    "settle": 2000,
+    "steps": [
+      {
+        "wait": "button[class*=searchGuideNoThumbnail]"
+      }
+    ],
+    "parts": {
+      "toggle": {
+        "selector": "button[class*=searchGuideNoThumbnail]:has([class*=colorBase])",
+        "box": "[class*=childrenDiv]",
+        "ink": "[class*=textUI]",
+        "skip": ["paddingInline"]
+      },
+      "toggle.on": {
+        "selector": "button[class*=searchGuide]:has([class*=selected_11])",
+        "box": "[class*=selected_11]",
+        "ink": "[class*=textColorSelected]",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://trends.pinterest.com/": {
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "select.trigger": {
+        "selector": "select",
+        "skip": ["height", "borderRadius"]
+      },
+      "badge.accent": {
+        "selector": "[class*=badge_][class*=info_]",
+        "ink": "span",
+        "only": [
+          "borderRadius",
+          "height",
+          "paddingInline",
+          "fontSize",
+          "fontWeight"
+        ]
+      },
+      "card": {
+        "selector": "[class*=shadowSurface]",
+        "skip": ["color"]
+      },
+      "heading.3": {
+        "selector": "h3"
+      }
+    }
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Geist's dashboard sidebar 36px at 14/400 with 6px corners, a 36px icon box 2px in and the label 38px in, beside 40px buttons (signed in)",
+      "standin": "Geist `nav.item` -4px in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "Geist background-100 (#fff / #0a0a0a) over the background-200 page (#fafafa / #000) under a gray-alpha-400 hairline, select triggers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycaps filled inside a hairline, no bottom lip",
+      "note": "Geist background-100 (#fff / #0a0a0a) inside the gray-alpha-400 hairline",
+      "source": "ledger"
+    },
+    {
+      "look": "type.keycap",
+      "title": "Keycap labels at regular weight",
+      "note": "Geist 12/400",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size apart from the control text",
+      "note": "Geist 13/400 in gray-900 (#4d4d4d / #a1a1a1), 8px above 14px values",
+      "standin": "labels and helper text at 14px, labels in body ink (Geist `fieldLabel: regular`: ΔE 0.179 / 0.248, +1px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Geist headings tracked more as they grow, -2% at 14–20px, -4% at 24–32px, -6% from 40px (-0.96px at 24, -2.4px at 40), all at 600",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Geist 50px with 2px inline padding, spaced by the list's gap, 14/400",
+      "standin": "39px from the density (`tabStyle: line` at 35px on Geist, 31px on Stripe, -5px, with 6px padding and 6px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "Outline secondary buttons filled with the raised surface",
+      "note": "background-100 (#fff / #0a0a0a) under the gray-alpha-400 hairline, no shadow",
+      "standin": "`buttonSecondary: outline` (clear, the page shows through); `raised` adds a drop shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-fill",
+      "title": "Checkboxes filled with the field surface",
+      "note": "Geist checkboxes and 16px radios on background-100 (#fff / #0a0a0a) inside a 1px gray-700 #8f8f8f edge, the checked radio a gray-1000 edge around an 8px dot",
+      "standin": "a clear box (the page shows through in dark: Geist's radio ΔE 0.145",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.choice-card",
+      "title": "Selected choice cards inked in the accent",
+      "note": "title (14/500) and description both in blue-900 #0068d6, against ink and gray-900 when not selected",
+      "standin": "`cardSelected: outline-tint` tints the fill and edge; the text stays in ink and muted ink",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.choice-card",
+      "title": "Choice card radio at the end, centered vertically",
+      "standin": "the indicator at the start of the card",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.slider-thumb",
+      "title": "Slider thumb as a small light bar",
+      "note": "6×14, white, 1px corners, over an 8px track (gray-200 #ebebeb / #1f1f1f, blue-700 fill)",
+      "standin": "`sliderThumb: knob` (a light disc); `handle` is a tall bar in the fill color that cuts the track",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Geist 28×14, 11px knob, no knob shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Geist a pale solid gray-200 (#ebebeb / #2e2e2e), no ring",
+      "standin": "ΔE 0.059 / 0.053 on Geist, 0.069 on Stripe, 0.080 / 0.142 on Supabase)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Geist 2px on 50px",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Geist's gray-1000 fill keeps the 6px corners of its 10px track (gray-200 #ebebeb / #1f1f1f)",
+      "standin": "`tracks: round` rounds the track, but the fill is a square bar clipped by it, so its leading end is square (Geist's `progressTrackStyle: plain` too: 0px at the fill's leading end)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Geist a 36px track, the button height (`--ds-size-medium`), padded 4px around 28px items with 12px inline padding",
+      "standin": "40px with 34px items and a 32px chip on Geist at comfortable",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Geist's track at 6px, the control radius, under 12px menus and modals",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track filled and edged together",
+      "note": "Geist's track on background-100 (#fff / #0a0a0a), the raised surface, inside a 1px gray-alpha-400 ring",
+      "standin": "`outline` adds the edge but clears the track (Geist ΔE 0.145 in dark, where the page shows through)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Flat segmented chip, a pale tone or the page color with no shadow",
+      "note": "Geist's selected item on gray-100 (#f2f2f2 / #1a1a1a), 4px corners",
+      "standin": "`segmentedSelected: tone` adds a small drop shadow, and a darker chip on Geist (oklch 0.908 / 0.303; ΔE 0.053 / 0.085); The catalog credits Geist with the shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "type.segmented",
+      "title": "Segmented items at their own weight, apart from tabs",
+      "note": "Geist's segmented items at 14/500, at rest and selected, while its line tabs stay 14/400",
+      "standin": "on Geist `regular` puts both at 400, `medium` would put the tabs at 500",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Geist's ⌘K menu at 640px and modal at 540px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Geist 8px padding with 13px text",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Geist menus, dialogs and the ⌘K menu on background-100 #0a0a0a, the cards' tone",
+      "standin": "dark popovers sit on a fixed lighter step (oklab L 0.18 on Geist, ΔE 0.037",
+      "source": "ledger"
+    },
+    {
+      "look": "type.command-input",
+      "title": "Command search text larger than its rows",
+      "note": "Geist an 18px prompt in a 53px band over 36px rows at 14/400",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Geist 24px, 12px padding, 12/500",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Neutral alert text in muted ink",
+      "note": "Geist's default Note is clear inside a 1px gray-alpha-400 edge, 6px corners, 12px padding, its 14px text and icon in gray-900 (#4d4d4d / #a1a1a1)",
+      "standin": "`alertStyle: outline` sets the neutral alert's text in body ink (ΔE 0.179 / 0.248)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Geist notes at 6px, the control radius, under 12px menus and modals",
+      "standin": "12px at GitHub's and Geist's `roleSurface: xl`; `md` would take Geist's to 8px but its menus to 6px",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Fills fixed, focus and links moving: Geist blue-700 #0072f5 in both modes, focus rings and links on blue-900 #52a8ff in dark",
+      "standin": "one `brand` (and one `selectionSeed`) in both modes (Geist dark focus ring ΔE 0.154",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "`fg` at L 0.24 (Geist ΔE 0.037, the most common off row on Vercel",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Geist field values in pure #000 / #fff (`--geist-foreground`) while text, buttons and labels take gray-1000 #171717 / #ededed",
+      "standin": "Geist values 0.241 / 0.043",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Geist 0.081 / 0.059",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Inverse surfaces a step off the ink",
+      "note": "Geist tooltips on #0a0a0a under #ededed in light, #fff under #171717 in dark",
+      "standin": "`--color-inverse` is the text ink (Geist ΔE 0.097 / 0.043, text 0.040 / 0.205",
+      "source": "ledger"
+    },
+    {
+      "look": "color.check-edge",
+      "title": "Check edges between the field line and strong",
+      "note": "Geist gray-700 #8f8f8f (L 0.65) in both modes, on checkboxes and radios",
+      "standin": "`checkEdge: strong`, neutral L 0.60 (Geist ΔE 0.050, the radio too)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Geist the seed itself in light, blue-700 P3 `oklch(0.576 0.251 258)` ≈ #006bff on #fafafa (signed-in dashboard, environment variables and settings)",
+      "standin": "on Geist a step darker than the seed, #1262d5 for brand #0072f5",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-dark",
+      "title": "Soft badges in dark a clear step above the surface",
+      "note": "Geist gray-subtle #262626 under #ededed and blue-subtle #0b2648 under #52a8ff (/geist/badge and the signed-in dashboard's Not Enabled and Current badges)",
+      "standin": "`badgeStyle: soft` tints sit nearly at the surface in dark (#0d0d0d neutral, #09173b under the #70b9fb accent)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.nav-active-dark",
+      "title": "Current sidebar row chip a step further from the page in dark",
+      "note": "Geist's dashboard marks the current row with gray-200, #ebebeb on the #fafafa sidebar in light and #1f1f1f on the #000 sidebar in dark (signed in)",
+      "source": "ledger"
+    }
+  ]
+}

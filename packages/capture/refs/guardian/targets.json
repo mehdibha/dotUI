@@ -1,0 +1,249 @@
+{
+  "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft": {
+    "cookies": {
+      "gu_force_test_groups": "webx-dark-mode-web:enable"
+    },
+    "settle": 3000,
+    "hide": ["[id^=sp_message_container]"],
+    "parts": {
+      "page": {
+        "selector": "article",
+        "skip": ["fontFamily"]
+      },
+      "heading.1": {
+        "selector": "article h1"
+      },
+      "text": {
+        "selector": "[data-gu-name=body] p"
+      },
+      "text.muted": {
+        "selector": "figcaption"
+      },
+      "link": {
+        "selector": "[data-gu-name=body] p a"
+      },
+      "badge": {
+        "selector": "[data-gu-name=body] ul li:has(> a[href^='/'])",
+        "ink": "a"
+      }
+    }
+  },
+  "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft#menu": {
+    "mode": "light",
+    "settle": 3000,
+    "hide": ["[id^=sp_message_container]"],
+    "parts": {
+      "menu": {
+        "selector": "[data-testid=dropdown-options]",
+        "before": [
+          {
+            "click": "[data-testid=dropdown-button]"
+          },
+          {
+            "wait": "[data-testid=dropdown-options] a"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": "[data-testid=dropdown-options] a[href^='/preference/edition/']",
+        "nth": 1,
+        "before": [
+          {
+            "click": "[data-testid=dropdown-button]"
+          },
+          {
+            "wait": "[data-testid=dropdown-options] a"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases": {
+    "cookies": {
+      "gu_force_test_groups": "webx-dark-mode-web:enable"
+    },
+    "settle": 3000,
+    "hide": ["[id^=sp_message_container]"],
+    "parts": {
+      "heading.3": {
+        "selector": "[data-link-name=more-on-this-story] h2"
+      },
+      "heading.4": {
+        "selector": "[data-link-name=more-on-this-story] .card-headline"
+      }
+    }
+  },
+  "https://www.theguardian.com/podcasts": {
+    "cookies": {
+      "gu_force_test_groups": "webx-dark-mode-web:enable"
+    },
+    "settle": 3000,
+    "hide": ["[id^=sp_message_container]"],
+    "parts": {
+      "tab": {
+        "selector": "li:has(> [role=tab][aria-selected=false])",
+        "ink": "[role=tab]",
+        "before": [
+          {
+            "hover": "h2::-p-text(Most viewed)"
+          },
+          {
+            "wait": "[role=tab]"
+          }
+        ],
+        "skip": ["paddingInline"]
+      },
+      "tab.selected": {
+        "selector": "li:has(> [role=tab][aria-selected=true])",
+        "ink": "[role=tab]",
+        "before": [
+          {
+            "hover": "h2::-p-text(Most viewed)"
+          },
+          {
+            "wait": "[role=tab]"
+          }
+        ],
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://profile.theguardian.com/signin": {
+    "parts": {
+      "heading.2": {
+        "selector": "main h1"
+      },
+      "field.label": {
+        "selector": "label[for]",
+        "ink": "label > *"
+      },
+      "input": {
+        "selector": "input[type=email]"
+      },
+      "input.focus": {
+        "selector": "input[type=email]",
+        "focus": true
+      },
+      "button.primary": {
+        "selector": "button[type=submit]"
+      },
+      "button.secondary": {
+        "selector": "a",
+        "text": "Continue with Google"
+      },
+      "button.focus": {
+        "selector": "button[type=submit]",
+        "focus": true
+      }
+    }
+  },
+  "https://www.theguardian.com/football/tables": {
+    "cookies": {
+      "gu_force_test_groups": "webx-dark-mode-web:enable"
+    },
+    "settle": 3000,
+    "hide": ["[id^=sp_message_container]"],
+    "parts": {
+      "select.trigger": {
+        "selector": "select"
+      }
+    }
+  },
+  "https://support.theguardian.com/uk/contribute": {
+    "mode": "light",
+    "parts": {
+      "segmented": {
+        "selector": "[role=tablist]"
+      },
+      "segmented.item": {
+        "selector": "[role=tab][aria-selected=false]"
+      },
+      "segmented.selected": {
+        "selector": "[role=tab][aria-selected=true]"
+      },
+      "badge.accent": {
+        "text": "Recommended"
+      }
+    }
+  },
+  "https://main--5e933197d94d9c002275a15e.chromatic.com/iframe.html?viewMode=story&id=react-components-checkboxgroup--default-default-theme": {
+    "mode": "light",
+    "parts": {
+      "checkbox": {
+        "selector": "#storybook-root input[type=checkbox]",
+        "before": [
+          {
+            "click": "#storybook-root input[type=checkbox]"
+          },
+          {
+            "hover": "#storybook-root legend"
+          },
+          {
+            "wait": "#storybook-root input[type=checkbox]:not(:checked)"
+          }
+        ]
+      },
+      "checkbox.checked": {
+        "selector": "#storybook-root input[type=checkbox]:checked"
+      }
+    }
+  },
+  "https://main--5e933197d94d9c002275a15e.chromatic.com/iframe.html?viewMode=story&id=react-components-radiogroup--default-default-theme": {
+    "mode": "light",
+    "parts": {
+      "radio": {
+        "selector": "#storybook-root input[type=radio]:not(:checked)",
+        "skip": ["backgroundColor"]
+      },
+      "radio.checked": {
+        "selector": "#storybook-root input[type=radio]:checked",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
+  "https://main--5e933197d94d9c002275a15e.chromatic.com/iframe.html?viewMode=story&id=react-components-button--subdued-priority-default-theme": {
+    "mode": "light",
+    "parts": {
+      "button.quiet": {
+        "selector": "#storybook-root button"
+      }
+    }
+  },
+  "https://main--5e933197d94d9c002275a15e.chromatic.com/iframe.html?viewMode=story&id=react-components-button--icon-only-small-size-default-theme": {
+    "mode": "light",
+    "parts": {
+      "button.icon": {
+        "selector": "#storybook-root button",
+        "skip": ["backgroundColor", "edge"]
+      }
+    }
+  },
+  "https://main--664e157241c2ba0925660bce.chromatic.com/iframe.html?viewMode=story&id=react-components-toggleswitch--with-label": {
+    "mode": "light",
+    "parts": {
+      "switch.off": {
+        "selector": "#storybook-root [role=switch]"
+      },
+      "switch.on": {
+        "selector": "#storybook-root [role=switch]",
+        "before": [
+          {
+            "click": "#storybook-root [role=switch]"
+          },
+          {
+            "wait": "#storybook-root [role=switch][aria-checked=true]"
+          }
+        ]
+      }
+    }
+  },
+  "https://main--664e157241c2ba0925660bce.chromatic.com/iframe.html?viewMode=story&id=react-components-info-summary--with-context": {
+    "mode": "light",
+    "parts": {
+      "alert": {
+        "selector": "#storybook-root > div"
+      }
+    }
+  }
+}

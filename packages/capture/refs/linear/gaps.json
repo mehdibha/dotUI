@@ -1,0 +1,187 @@
+{
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "Linear 0.5px edges on controls, menus, cards and dialogs (drawn mostly as a `::after` box-shadow ring)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Linear 28px rows",
+      "source": "ledger"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "Weights between the standard steps",
+      "note": "Linear body text at 450, links included, and (signed in) its action menu rows (13/450, 32px) and role badges (12/450)",
+      "standin": "Linear's menu rows at 400 and badges at 500",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "Linear white / #1a1a1b",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.selected-row",
+      "title": "Selected list rows tinted with the brand while tabs, segmented chips, toggles and nav stay neutral",
+      "standin": "`selectedWash: neutral` (all neutral; `brand` tints all of them)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.card",
+      "title": "Card radius between rungs (10px with an 8px base)",
+      "standin": "`roleCard: auto` (8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Linear lighter, page headings at 500 (24px, -0.16px tracking)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycaps that keep their hairline and fill inside list rows (⌘K shortcuts)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Linear 3px",
+      "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Linear's sidebar",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "Linear's at its 450 body weight",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Linear's Display properties chips (signed in), 24px pills at 12/500 in a 0.5px edge (#e9e9e9 / #4a4a4b) with no shadow, off on the popover fill in muted ink and on a grey step (lch(94.857) / lch(25.834 1.525 272)) under full ink when on, while its secondary button is raised",
+      "standin": "on Linear the raised secondary face (`buttonSecondary: raised`), a one-layer drop and full ink at rest",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.tabs-chip",
+      "title": "Chip tabs",
+      "note": "every tab is a ringed pill chip, the current one filled (28px, 12/500)",
+      "standin": "`tabStyle: pill` (only the current tab gets a chip, at the control radius)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-trackless",
+      "title": "Segmented control with no track",
+      "note": "Linear's Display options › List / Board (signed in) are two separate 28px pills at 12/500 with 8px padding, each in a 0.5px edge (#e9e9e9 / #4a4a4b) on the unpainted popover, the selected one on a grey fill (lch(95.543) / lch(23.906 1.429 272)) in a darker 0.5px edge (#cfcfcf / #696a6b), full ink, no shadow",
+      "standin": "on Linear a 36px track at 12px corners with 9px chips, the selected one under a small drop, which `segmentedSelected: ring` drops along with the grey fill)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "small (Linear 30×20 track, 14px knob, no knob shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Linear a clear mid-gray (#cdcdcd / #707172)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.calendar-today",
+      "title": "Today marked by a fill and a hairline ring together",
+      "note": "Linear's due-date picker draws today as a grey disc (lch(90.55 0 282) / lch(16.32 1.48 272)) inside a darker 1px ring (about #a0a0a2 / #5c5d5f), 13/500 in full ink (signed in)",
+      "standin": "`calendarToday: fill` draws the disc alone, `ring` the ring alone",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "Smaller: Linear's due-date picker 26px circular days beside its 32px buttons and fields (signed in)",
+      "standin": "-6px on Linear)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.calendar-weekend",
+      "title": "Weekend columns banded in the calendar",
+      "note": "Linear's due-date picker sets Saturday and Sunday on a full-height band with rounded ends (lch(97.3) on the white popover in light, drawn with a box-shadow that bridges the rows), their numerals in muted ink (signed in)",
+      "standin": "no weekend band; weekend days look like weekdays",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Linear 13/400 in lch(20 1 282) / lch(90.826 1.425 272), today 13/500 in full ink (signed in)",
+      "standin": "day cells hardcode `text-sm font-medium` in `calendar/styles.ts`, so they stay 14/500 whatever the density or `uiTextSize` (Linear's read 13/500)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.dialog",
+      "title": "Dialog radius apart from the app-shell panel (dialog 21px, inset content panel 12px)",
+      "standin": "`rolePanel: xl` (12px) for both",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Linear's Create issue dialog at 750px and command palette at 720px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Tall but body-size text: Linear 46px at 13px with 16px icons",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Linear 11px text, 8px padding",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim stronger in dark than light",
+      "note": "Linear 25% / 40%",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.badge-tag",
+      "title": "Badges and tags styled apart",
+      "note": "Linear's role badges are soft (the Admin chip on Settings › Members, signed in: an indigo wash rgb(236, 237, 246) / rgb(33, 35, 57) under accent ink lch(50 80 288.43) / lch(80 80 288.43), 3px corners, no edge, 18.5px at 12/450), while its issue labels are outlined pills with a color dot (seen in the product, not measured)",
+      "standin": "`badgeStyle` paints badges and tags alike: `soft` with `badgeShape: rounded` for both, so the labels lose their dot",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Lighter in light: Linear #6d78d5 light, #5e6ad2 dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Linear labels in a secondary ink (#303032 / #e4e5e7), values in the primary (#1b1b1b / #fff)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.shell-dark",
+      "title": "A deeper dark shell under the panel",
+      "note": "Linear #09090a under the #121213 panel",
+      "source": "ledger"
+    }
+  ]
+}

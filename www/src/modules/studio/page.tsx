@@ -434,7 +434,7 @@ export function PanelPage({
               }
               page={
                 open && page ? (
-                  <span className="flex min-w-0 items-center gap-0.5">
+                  <>
                     <Button
                       ref={back}
                       size="sm"
@@ -459,16 +459,15 @@ export function PanelPage({
                     <span
                       key={page.id}
                       className={cn(
-                        "min-w-0 truncate text-sm font-medium",
+                        "ml-0.5 min-w-0 truncate text-sm font-medium",
                         drill && DRILL[drill],
                       )}
                     >
                       {page.label}
                     </span>
-                  </span>
+                  </>
                 ) : undefined
               }
-              systemClassName={drill === "out" ? DRILL.out : undefined}
               scrollRef={scroller}
               className={
                 open

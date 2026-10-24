@@ -21,7 +21,14 @@
     "presets:catalog": "tsx scripts/presets-catalog.ts",
     "presets:capture": "tsx scripts/capture-specimens.mts",
     "presets:compare": "tsx scripts/compose-refs.mts",
-    "presets:measure": "tsx scripts/measure-preset.mts"
+    "presets:crawl": "tsx ../packages/capture/scripts/crawl-preset.ts",
+    "presets:drift": "tsx ../packages/capture/scripts/crawl-preset.ts --drift",
+    "presets:fit": "tsx scripts/fit-preset.ts",
+    "presets:gaps": "tsx scripts/presets-gaps.ts",
+    "presets:kit": "tsx ../packages/capture/scripts/local-capture/kit.mts",
+    "presets:looks": "tsx ../packages/capture/scripts/system-looks.ts",
+    "presets:measure": "tsx scripts/measure-preset.mts",
+    "presets:pixel": "tsx ../packages/capture/scripts/pixel-probe.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
@@ -80,6 +87,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@dotui/capture": "workspace:*",
     "@dotui/ts-config": "workspace:*",
     "@tailwindcss/node": "catalog:",
     "@tailwindcss/oxide": "catalog:",
@@ -89,6 +97,7 @@
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.13",
     "@types/node": "catalog:",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vercel/config": "^0.5.0",

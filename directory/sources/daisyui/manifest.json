@@ -1,0 +1,26 @@
+{
+  "kind": "live-site",
+  "repo": "https://daisyui.com",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "components-index.html",
+      "upstreamPath": null,
+      "url": "https://daisyui.com/components/",
+      "sha256": "3a422f97b0ba458cba00d198e26022acc8d49dd60781d0efae18e909d4374b40"
+    },
+    {
+      "path": "daisyui.css",
+      "upstreamPath": null,
+      "url": "https://cdn.jsdelivr.net/npm/daisyui@5.7.22/daisyui.css",
+      "sha256": "bf1dcfbf41ece82e12f74264efb8a5c618b05a8daaf76bd8232f1ecf9c67fe46"
+    },
+    {
+      "path": "sitemap.xml",
+      "upstreamPath": null,
+      "url": "https://daisyui.com/sitemap.xml",
+      "sha256": "47e638d037cb8a6593221824ea37e6bf3e12c87b024f96ea49baf56482dc780f"
+    }
+  ]
+}

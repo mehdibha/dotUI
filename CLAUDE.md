@@ -26,7 +26,7 @@ What this means when writing code today:
 - Registry items import only from `@/registry/*`, relative paths, and published packages — plain React files, shadcn-schema compatible. www-side imports (router, fumadocs, `@/components`) must never leak in.
 - Author registry source in one canonical style (current files are the reference) — `codeOptions` will be mechanical publisher transforms over it, and inconsistent source breaks the transforms.
 - Researching design systems (preset fidelity, a missing axis, component comparisons)? Start from [docs/design-system-references.md](docs/design-system-references.md) — a curated, link-verified list of the systems worth studying.
-- Working on a preset? Follow the `preset` skill; the rules are in [www/src/modules/presets/README.md](www/src/modules/presets/README.md), and looks no axis covers go to the [preset gap ledger](https://github.com/mehdibha/dotUI/issues/1020).
+- Working on a preset? Follow the `preset` skill; the rules are in [www/src/modules/presets/README.md](www/src/modules/presets/README.md), and looks no axis covers go to the pack's `gaps.json` (`presets:gaps` builds the ledger; [#1020](https://github.com/mehdibha/dotUI/issues/1020) holds its history).
 
 ## Current state of the project
 
@@ -41,9 +41,10 @@ An honest snapshot (August 2026) to calibrate against. Task-level work is tracke
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /studio builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
-- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/ts-config` — shared TypeScript configs.
+- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/capture` — `@dotui/capture`, reads real products for presets: the probe, census, reference packs (`refs/<id>/`) and the `presets:*` capture scripts (private, never imports www). `packages/ts-config` — shared TypeScript configs.
 - `examples/` — consumer templates with the registry's resolved output committed (see Registry changes).
 - `video/` — the launch film (Remotion), rendering the real registry components and /studio panel from `www/src`.
+- `directory/` — ds.dotui.org, the design-system directory: one page per system from captured data, rendering registry components from `www/src` the same way. Its data rules are in `directory/CLAUDE.md`.
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 
 ## Registry
