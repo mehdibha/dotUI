@@ -20,7 +20,7 @@
  *                 unchanged.
  */
 import { existsSync } from "node:fs"
-import { mkdir, readFile, writeFile } from "node:fs/promises"
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { parseArgs } from "node:util"
 import type { Browser, Page } from "puppeteer"
@@ -96,6 +96,16 @@ if (!start) {
 }
 const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8")) as T
+// Through a temporary file, so a stopped run never leaves half a JSON file.
+const writeAtomic = async (file: string, text: string) => {
+  await writeFile(`${file}.tmp`, text)
+  await rename(`${file}.tmp`, file)
+}
+const rounds = Number(args.rounds)
+if (!Number.isInteger(rounds) || rounds < 1) {
+  console.error("--rounds must be a whole number above 0")
+  process.exit(1)
+}
 const MODES = (["light", "dark"] as const).filter((mode) => reference[mode])
 if (reference.probe !== PROBE)
   console.log(
@@ -290,9 +300,11 @@ const mapFile = resolve(args.out, `sensitivity-${BUILD}.json`)
 const ORIGIN = parseState({})
 
 async function sensitivity(browser: Browser): Promise<SensitivityMap> {
-  const map: SensitivityMap = existsSync(mapFile)
-    ? await readJson(mapFile)
-    : { probe: PROBE, build: BUILD, keys: {} }
+  // A dirty tree keeps one file name across edits: render its map afresh.
+  const map: SensitivityMap =
+    existsSync(mapFile) && !BUILD.endsWith("+dirty")
+      ? await readJson(mapFile)
+      : { probe: PROBE, build: BUILD, keys: {} }
   const todo = KEYS.filter((key) => args.map || !map.keys[key])
   if (!todo.length) return map
   const tabs = await openTabs(browser, "origin")
@@ -323,7 +335,7 @@ async function sensitivity(browser: Browser): Promise<SensitivityMap> {
     // Saved as it goes: a crashed run picks up where it stopped.
     if (++done % 10 === 0 || done === todo.length) {
       await mkdir(args.out, { recursive: true })
-      await writeFile(mapFile, `${JSON.stringify(map)}\n`)
+      await writeAtomic(mapFile, `${JSON.stringify(map)}\n`)
       console.log(
         `sensitivity: ${done}/${todo.length} keys, ${Math.round((Date.now() - began) / 1000)}s`,
       )
@@ -359,7 +371,7 @@ try {
   console.log(
     `start: ${start.id}, ${current.off} rows off (score ${current.score.toFixed(1)})`,
   )
-  for (let round = 1; round <= Number(args.rounds); round++) {
+  for (let round = 1; round <= rounds; round++) {
     const off = new Set(
       current.rows.filter((row) => !row.ok && !row.missing).map(rowId),
     )
@@ -502,7 +514,7 @@ if (args["write-gaps"]) {
     ? await readJson(file)
     : { gaps: [] }
   const kept = existing.gaps.filter((gap) => !gap.source.startsWith("fit "))
-  await writeFile(
+  await writeAtomic(
     file,
     `${JSON.stringify({ gaps: [...kept, ...gaps] }, null, 2)}\n`,
   )

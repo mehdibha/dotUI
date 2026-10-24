@@ -168,7 +168,10 @@ export function measureBox(img: Image, box: Box, scale = 1): Measure {
       inkLeft = Math.min(inkLeft, cx)
     }
   }
-  const strongest = Math.max(0, ...ink.map((color) => distance(color, fill)))
+  const strongest = ink.reduce(
+    (max, color) => Math.max(max, distance(color, fill)),
+    0,
+  )
   const inkColor = mode(
     ink.filter((color) => distance(color, fill) >= strongest * 0.9),
   )

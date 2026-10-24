@@ -90,7 +90,7 @@
     {
       "look": "size.switch",
       "title": "Switch size apart from density",
-      "note": "Claude 36×20 on the settings toggles, beside 32px controls) or large (Material 3 52×32, the knob growing from 16 to 24px when on",
+      "note": "Material 3 52×32, the knob growing from 16 to 24px when on",
       "source": "ledger"
     },
     {
