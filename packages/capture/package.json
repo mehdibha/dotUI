@@ -1,0 +1,30 @@
+{
+  "name": "@dotui/capture",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "exports": {
+    "./chromium": "./scripts/chromium.ts",
+    "./preset-pages": "./scripts/preset-pages.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dotui/colors": "workspace:*"
+  },
+  "devDependencies": {
+    "@dotui/ts-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/pngjs": "^6.0.5",
+    "pngjs": "^7.0.0",
+    "puppeteer": "^25.0.2",
+    "tsx": "^4.21.0",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

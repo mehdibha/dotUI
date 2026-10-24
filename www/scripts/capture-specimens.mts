@@ -11,7 +11,7 @@ import { resolve } from "node:path"
 import { parseArgs } from "node:util"
 import puppeteer, { type Browser } from "puppeteer"
 
-import { executablePath } from "./chromium"
+import { executablePath } from "@dotui/capture/chromium"
 
 const { values: args } = parseArgs({
   options: {

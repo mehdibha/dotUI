@@ -4,7 +4,7 @@
  * Manifest-driven: each entry names a live design-system doc page + a selector for its
  * primary component showcase. Every entry is captured in light AND dark and written to
  *   .scratch-refs/<system>/<component>-<light|dark>.png (gitignored: images stay out of git)
- * `scripts/compose-refs.mts` pairs these with specimen captures (see preset-lab/README.md).
+ * `scripts/compose-refs.mts` pairs these with specimen captures (see packages/capture/README.md).
  *
  * Usage:  tsx scripts/capture-refs.mts [system] [component]   (run from www/; args filter)
  */
@@ -13,7 +13,7 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type Page } from "puppeteer"
 
-import { executablePath } from "./chromium"
+import { executablePath } from "@dotui/capture/chromium"
 
 type Theme = "light" | "dark"
 type RefEntry = {

@@ -1,41 +1,47 @@
-/* What the preset tools share: the preset lab's paths and probe version,
+/* What the capture tools share: the package's paths and probe version,
    launching the headless browser, opening a reference page in a mode, and
    the steps a pack's pages run. */
 import { execFileSync } from "node:child_process"
-import { existsSync, readFileSync } from "node:fs"
+import { existsSync, readFileSync, statSync } from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
 
-import type {
-  Page as PackPage,
-  ReferenceTokens,
-  Step,
-} from "../src/modules/preset-lab/probe"
+import type { Page as PackPage, ReferenceTokens, Step } from "../src/probe"
 import { executablePath } from "./chromium"
 
 export type Mode = "light" | "dark"
 
-export const LAB = resolve(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/modules/preset-lab",
-)
-export const REFS = resolve(LAB, "refs")
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..")
+export const SRC = resolve(ROOT, "src")
+export const REFS = resolve(ROOT, "refs")
 
-/** The commit that last changed these preset-lab files (seven characters,
+/** The newest commit that changed these files or folders (seven characters,
  *  "+dirty" with local edits), so readings from different versions aren't
- *  mixed up. */
-export function versionOf(...files: string[]) {
-  const paths = files.map((file) => resolve(LAB, file))
+ *  mixed up. A file's history follows exact moves and skips them, so moving
+ *  the probe doesn't make it a new probe. */
+export function versionOf(...paths: string[]) {
   const git = (...cmd: string[]) =>
-    execFileSync("git", [...cmd, "--", ...paths], { encoding: "utf8" }).trim()
+    execFileSync("git", cmd, { encoding: "utf8" }).trim()
+  const last = paths
+    .map((path) => {
+      const follow = statSync(path).isFile()
+        ? ["--follow", "-M100%", "--diff-filter=r"]
+        : []
+      return git("log", "-1", "--format=%ct %H", ...follow, "--", path)
+    })
+    .sort()
+    .at(-1)
   // Seven characters, as %h grows with the clone's object count.
-  const sha = git("log", "-1", "--format=%H").slice(0, 7)
-  return git("status", "--porcelain") ? `${sha}+dirty` : sha
+  const sha = last?.split(" ")[1]?.slice(0, 7) ?? "unknown"
+  return git("status", "--porcelain", "--", ...paths) ? `${sha}+dirty` : sha
 }
 
 /** The probe and the diff: off counts and tokens compare only within one. */
-export const PROBE = versionOf("probe.ts", "compare.ts")
+export const PROBE = versionOf(
+  resolve(SRC, "probe.ts"),
+  resolve(SRC, "compare.ts"),
+)
 
 /** A pack's reference: tokens.json, with what the pixel probe read from
  *  screenshots (pixel.json) under it, prop by prop, where tokens.json has

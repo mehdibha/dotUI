@@ -2,20 +2,20 @@
  * Helpers for a local Claude Code session that captures signed-in products
  * in the user's Chrome (see RUNBOOK.md next to this file). Run from www/.
  *
- *   tsx scripts/local-capture/kit.mts > <file>
+ *   pnpm -s presets:kit > <file>
  *     Prints the kit: one JavaScript expression to run in the tab after each
- *     full load. It defines `window.__dotui` with the preset-lab probe and
+ *     full load. It defines `window.__dotui` with the capture probe and
  *     census, and keeps results in the tab's sessionStorage, so they survive
  *     reloads and leave the page as one download per page and mode (plus one
  *     per census pass). Where the page allows
  *     eval, `(0, eval)(sessionStorage.getItem("__dotui_kit"))` re-runs it
  *     after a load of the same site without resending it.
  *
- *   tsx scripts/local-capture/kit.mts --targets <file> --url <page key>
+ *   pnpm -s presets:kit --targets <file> --url <page key>
  *     Prints the calls that measure one page of a pack-format targets file:
  *     one for the plain parts, then one per focus or `before` part.
  *
- *   tsx scripts/local-capture/kit.mts --collect <preset id> --out <dir> [--crops <dir>] [--downloads ~/Downloads]
+ *   pnpm -s presets:kit --collect <preset id> --out <dir> [--crops <dir>] [--downloads ~/Downloads]
  *     Moves the newest dotui__<id>__<slug>__<mode>.json of each page from the
  *     downloads folder to <dir>/<slug>-<mode>.json, the frozen copies in
  *     every dotui-snap__<id>__… download into the part files in --crops
@@ -23,7 +23,7 @@
  *     (dotui-census__<id>__<slug>__<mode>__<pass>.json) to
  *     <dir>/../census/pages/<slug>-<pass>-<mode>.json.
  *
- *   tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <file> --out <dir> --mode <mode> [--parts a,b]
+ *   pnpm -s presets:kit --crop <screenshot> --rects <file> --out <dir> --mode <mode> [--parts a,b]
  *     Crops each part `__dotui.rects()` returned (or only `--parts`) out of a
  *     viewport screenshot taken in the same state, as <dir>/<part>-<mode>.png,
  *     with where the part sits in it in <dir>/<part>-<mode>.json.
@@ -49,19 +49,14 @@ import {
   censusSource,
   probeSource,
   trim,
-} from "../../src/modules/preset-lab/census"
-import {
-  type Pack,
-  type Step,
-  type Target,
-  ownedProps,
-} from "../../src/modules/preset-lab/probe"
+} from "../../src/census"
+import { type Pack, type Step, type Target, ownedProps } from "../../src/probe"
 import {
   COPY_AREA,
   type PartFile,
   type Snapshot,
   snapshotSource,
-} from "../../src/modules/preset-lab/snapshot"
+} from "../../src/snapshot"
 import { PROBE } from "../preset-pages"
 
 const { values: args } = parseArgs({
@@ -356,7 +351,7 @@ if (args.collect) {
   for (const name of await readdir(args.downloads)) {
     const match = /^(.+?)(?: \(\d+\))?\.json$/.exec(name)
     if (!match || !name.startsWith(prefix)) continue
-    const [mode, ...slug] = match[1].slice(prefix.length).split("__").reverse()
+    const [mode, ...slug] = match[1]!.slice(prefix.length).split("__").reverse()
     const target = `${slug.reverse().join("-")}-${mode}.json`
     const file = resolve(args.downloads, name)
     const time = (await stat(file)).mtimeMs
@@ -409,7 +404,7 @@ if (args.collect) {
   for (const name of await readdir(args.downloads)) {
     const match = /^(.+?)(?: \(\d+\))?\.json$/.exec(name)
     if (!match || !name.startsWith(census)) continue
-    const [pass, mode, ...slug] = match[1]
+    const [pass, mode, ...slug] = match[1]!
       .slice(census.length)
       .split("__")
       .reverse()
