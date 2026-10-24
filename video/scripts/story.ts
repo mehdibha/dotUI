@@ -39,6 +39,12 @@ const serveUrl = await bundle({
   }),
   onProgress: () => {},
 })
+// The site's brand wordmarks, at the root paths the panel asks for.
+fs.cpSync(
+  path.join(root, "../www/public/studio"),
+  path.join(serveUrl, "studio"),
+  { recursive: true },
+)
 
 for (const id of ORDER) {
   const file = path.join(out, `${id}.mov`)
