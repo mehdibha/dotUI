@@ -1,0 +1,3493 @@
+{
+  "version": 1,
+  "slug": "chatgpt",
+  "preset": "chatgpt",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-23",
+    "pages": [
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-input--base&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-slider--base&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-checkbox--base&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-radiogroup--base&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-badge--colors&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-textlink--primary&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=components-datepicker--base&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://openai.github.io/apps-sdk-ui/iframe.html?viewMode=story&id=foundations-typography--sizes&globals=theme:light",
+        "modes": [
+          "light",
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 112,
+            "uses": [
+              "button backgroundColor",
+              "page backgroundColor",
+              "panel backgroundColor",
+              "badge color",
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(222, 239, 255)",
+            "l": 0.944,
+            "c": 0.028,
+            "h": 246,
+            "count": 1,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(254, 231, 219)",
+            "l": 0.943,
+            "c": 0.03,
+            "h": 49,
+            "count": 1,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(235, 235, 235)",
+            "l": 0.94,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "dialog edge"
+            ]
+          },
+          {
+            "color": "rgb(223, 223, 223)",
+            "l": 0.904,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(216, 216, 216)",
+            "l": 0.882,
+            "c": 0,
+            "h": 0,
+            "count": 7,
+            "uses": [
+              "radio edge",
+              "badge edge",
+              "button edge",
+              "card edge"
+            ]
+          },
+          {
+            "color": "rgb(205, 205, 205)",
+            "l": 0.848,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "checkbox edge"
+            ]
+          },
+          {
+            "color": "rgb(143, 143, 143)",
+            "l": 0.65,
+            "c": 0,
+            "h": 0,
+            "count": 12,
+            "uses": [
+              "text color",
+              "button color",
+              "icon@button color",
+              "text@button color"
+            ]
+          },
+          {
+            "color": "rgb(118, 118, 118)",
+            "l": 0.566,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(93, 93, 93)",
+            "l": 0.478,
+            "c": 0,
+            "h": 0,
+            "count": 29,
+            "uses": [
+              "text@dialog color",
+              "icon@button color",
+              "button color",
+              "badge backgroundColor",
+              "badge color"
+            ]
+          },
+          {
+            "color": "rgb(13, 13, 13)",
+            "l": 0.159,
+            "c": 0,
+            "h": 0,
+            "count": 173,
+            "uses": [
+              "button color",
+              "button edge",
+              "box color",
+              "page color",
+              "panel color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 41,
+            "count": 8,
+            "steps": [
+              {
+                "color": "rgb(226, 85, 7)",
+                "l": 0.63,
+                "c": 0.189,
+                "h": 41,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(224, 46, 42)",
+                "l": 0.59,
+                "c": 0.213,
+                "h": 28,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(186, 38, 35)",
+                "l": 0.515,
+                "c": 0.184,
+                "h": 27,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(146, 59, 15)",
+                "l": 0.466,
+                "c": 0.129,
+                "h": 43,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 148,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(218, 244, 228)",
+                "l": 0.944,
+                "c": 0.035,
+                "h": 159,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(0, 162, 64)",
+                "l": 0.621,
+                "c": 0.18,
+                "h": 148,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(0, 134, 53)",
+                "l": 0.541,
+                "c": 0.155,
+                "h": 148,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 255,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(2, 133, 255)",
+                "l": 0.626,
+                "c": 0.205,
+                "h": 255,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(1, 105, 204)",
+                "l": 0.529,
+                "c": 0.173,
+                "h": 255,
+                "count": 3,
+                "uses": [
+                  "badge color",
+                  "badge edge",
+                  "link color"
+                ]
+              },
+              {
+                "color": "rgb(0, 79, 153)",
+                "l": 0.431,
+                "c": 0.138,
+                "h": 254,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 297,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(239, 229, 254)",
+                "l": 0.937,
+                "c": 0.035,
+                "h": 304,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(146, 79, 247)",
+                "l": 0.596,
+                "c": 0.236,
+                "h": 297,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(128, 70, 217)",
+                "l": 0.543,
+                "c": 0.212,
+                "h": 297,
+                "count": 2,
+                "uses": [
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(107, 58, 180)",
+                "l": 0.476,
+                "c": 0.183,
+                "h": 297,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 20,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(254, 225, 224)",
+                "l": 0.933,
+                "c": 0.032,
+                "h": 20,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 328,
+        "roles": {
+          "canvas": {
+            "color": "rgb(252, 252, 252)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(13, 13, 13)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(93, 93, 93)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(252, 252, 252)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(252, 252, 252)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(226, 226, 226)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(13, 13, 13)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(1, 105, 204)",
+            "source": "probe"
+          }
+        }
+      },
+      "dark": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 178,
+            "uses": [
+              "button color",
+              "button edge",
+              "box color",
+              "page color",
+              "panel color"
+            ]
+          },
+          {
+            "color": "rgb(175, 175, 175)",
+            "l": 0.754,
+            "c": 0,
+            "h": 0,
+            "count": 28,
+            "uses": [
+              "text@dialog color",
+              "icon@button color",
+              "button color",
+              "badge color",
+              "heading.h5 color"
+            ]
+          },
+          {
+            "color": "rgb(143, 143, 143)",
+            "l": 0.65,
+            "c": 0,
+            "h": 0,
+            "count": 13,
+            "uses": [
+              "text color",
+              "box backgroundColor",
+              "button color",
+              "icon@button color",
+              "text@button color"
+            ]
+          },
+          {
+            "color": "rgb(93, 93, 93)",
+            "l": 0.478,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "checkbox edge"
+            ]
+          },
+          {
+            "color": "rgb(88, 88, 88)",
+            "l": 0.46,
+            "c": 0,
+            "h": 0,
+            "count": 7,
+            "uses": [
+              "radio edge",
+              "badge edge",
+              "button edge",
+              "card edge"
+            ]
+          },
+          {
+            "color": "rgb(73, 73, 73)",
+            "l": 0.405,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(65, 65, 65)",
+            "l": 0.375,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "badge backgroundColor",
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(60, 60, 60)",
+            "l": 0.356,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(55, 55, 55)",
+            "l": 0.337,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "dialog edge"
+            ]
+          },
+          {
+            "color": "rgb(48, 48, 48)",
+            "l": 0.309,
+            "c": 0,
+            "h": 0,
+            "count": 67,
+            "uses": [
+              "button backgroundColor",
+              "box backgroundColor",
+              "dialog backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(33, 33, 33)",
+            "l": 0.248,
+            "c": 0,
+            "h": 0,
+            "count": 32,
+            "uses": [
+              "page backgroundColor",
+              "panel backgroundColor",
+              "badge backgroundColor",
+              "radio backgroundColor",
+              "textbox backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(13, 13, 13)",
+            "l": 0.159,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "button color",
+              "slider backgroundColor"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 41,
+            "count": 10,
+            "steps": [
+              {
+                "color": "rgb(251, 106, 34)",
+                "l": 0.696,
+                "c": 0.193,
+                "h": 43,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(250, 66, 62)",
+                "l": 0.653,
+                "c": 0.221,
+                "h": 27,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(226, 85, 7)",
+                "l": 0.63,
+                "c": 0.189,
+                "h": 41,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(224, 46, 42)",
+                "l": 0.59,
+                "c": 0.213,
+                "h": 28,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(67, 44, 32)",
+                "l": 0.317,
+                "c": 0.04,
+                "h": 48,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(67, 38, 37)",
+                "l": 0.306,
+                "c": 0.044,
+                "h": 22,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 251,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(51, 156, 255)",
+                "l": 0.682,
+                "c": 0.173,
+                "h": 251,
+                "count": 2,
+                "uses": [
+                  "badge color",
+                  "link color"
+                ]
+              },
+              {
+                "color": "rgb(2, 133, 255)",
+                "l": 0.626,
+                "c": 0.205,
+                "h": 255,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(1, 105, 204)",
+                "l": 0.529,
+                "c": 0.173,
+                "h": 255,
+                "count": 2,
+                "uses": [
+                  "badge color",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(28, 45, 61)",
+                "l": 0.29,
+                "c": 0.037,
+                "h": 248,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 148,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(4, 184, 76)",
+                "l": 0.683,
+                "c": 0.195,
+                "h": 148,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(0, 162, 64)",
+                "l": 0.621,
+                "c": 0.18,
+                "h": 148,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(0, 134, 53)",
+                "l": 0.541,
+                "c": 0.155,
+                "h": 148,
+                "count": 2,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(29, 55, 39)",
+                "l": 0.31,
+                "c": 0.043,
+                "h": 156,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 297,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(190, 149, 250)",
+                "l": 0.747,
+                "c": 0.147,
+                "h": 302,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(146, 79, 247)",
+                "l": 0.596,
+                "c": 0.236,
+                "h": 297,
+                "count": 2,
+                "uses": [
+                  "badge backgroundColor",
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(128, 70, 217)",
+                "l": 0.543,
+                "c": 0.212,
+                "h": 297,
+                "count": 1,
+                "uses": [
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(50, 40, 65)",
+                "l": 0.3,
+                "c": 0.046,
+                "h": 302,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": {
+          "canvas": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(237, 237, 237)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(205, 205, 205)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(33, 33, 33)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(43, 43, 43)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(38, 38, 38)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(13, 13, 13)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(51, 156, 255)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--badge-gutter",
+        "count": 72,
+        "feeds": [
+          "badge paddingInline",
+          "badge paddingTop",
+          "badge paddingBottom",
+          "badge paddingRight",
+          "text paddingInline",
+          "text paddingTop",
+          "text paddingBottom",
+          "text paddingRight"
+        ]
+      },
+      {
+        "name": "--badge-size",
+        "count": 18,
+        "feeds": [
+          "badge height",
+          "text height"
+        ]
+      },
+      {
+        "name": "--badge-font-size",
+        "count": 18,
+        "feeds": [
+          "badge fontSize",
+          "text fontSize"
+        ]
+      },
+      {
+        "name": "--badge-font-weight",
+        "count": 18,
+        "feeds": [
+          "badge fontWeight",
+          "text fontWeight"
+        ]
+      },
+      {
+        "name": "--badge-tracking",
+        "count": 18,
+        "feeds": [
+          "badge letterSpacing",
+          "text letterSpacing"
+        ]
+      },
+      {
+        "name": "--badge-radius",
+        "count": 18,
+        "feeds": [
+          "badge borderRadius",
+          "text borderRadius"
+        ]
+      },
+      {
+        "name": "--spacing",
+        "count": 18,
+        "feeds": [
+          "badge gap",
+          "text gap"
+        ],
+        "light": ".25rem",
+        "dark": ".25rem"
+      },
+      {
+        "name": "--badge-text-color",
+        "count": 18,
+        "feeds": [
+          "badge color",
+          "text color"
+        ]
+      },
+      {
+        "name": "--color-surface",
+        "count": 16,
+        "feeds": [
+          "page backgroundColor",
+          "panel backgroundColor"
+        ],
+        "light": "#fff",
+        "dark": "#212121"
+      },
+      {
+        "name": "--badge-background-color",
+        "count": 12,
+        "feeds": [
+          "badge backgroundColor",
+          "text backgroundColor"
+        ]
+      },
+      {
+        "name": "--badge-border-color",
+        "count": 12,
+        "feeds": [
+          "badge boxShadow",
+          "badge edge"
+        ]
+      },
+      {
+        "name": "--text-sm",
+        "count": 10,
+        "feeds": [
+          "text fontSize",
+          "heading.h3 fontSize"
+        ],
+        "light": ".875rem",
+        "dark": ".875rem"
+      },
+      {
+        "name": "--tw-leading",
+        "count": 10,
+        "feeds": [
+          "text lineHeight",
+          "heading.h3 lineHeight"
+        ]
+      },
+      {
+        "name": "--tw-tracking",
+        "count": 10,
+        "feeds": [
+          "text letterSpacing",
+          "heading.h3 letterSpacing"
+        ]
+      },
+      {
+        "name": "--color-text",
+        "count": 9,
+        "feeds": [
+          "panel color",
+          "textbox color"
+        ],
+        "light": "#0d0d0d",
+        "dark": "#fff"
+      },
+      {
+        "name": "--tw-font-weight",
+        "count": 9,
+        "feeds": [
+          "text fontWeight"
+        ]
+      },
+      {
+        "name": "--color-text-tertiary",
+        "count": 9,
+        "feeds": [
+          "text color"
+        ],
+        "light": "#8f8f8f"
+      },
+      {
+        "name": "--default-font-family",
+        "count": 8,
+        "feeds": [
+          "panel fontFamily"
+        ],
+        "light": "ui-sans-serif,-apple-system,system-ui,\"Segoe UI\",\"Noto Sans\",\"Helvetica\",\"Arial\",\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",sans-serif",
+        "dark": "ui-sans-serif,-apple-system,system-ui,\"Segoe UI\",\"Noto Sans\",\"Helvetica\",\"Arial\",\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",sans-serif"
+      },
+      {
+        "name": "--tracking-normal",
+        "count": 8,
+        "feeds": [
+          "panel letterSpacing"
+        ],
+        "light": "0em",
+        "dark": "0em"
+      },
+      {
+        "name": "--radio-group-indicator-size",
+        "count": 8,
+        "feeds": [
+          "radio width",
+          "radio height"
+        ],
+        "light": "1rem",
+        "dark": "1rem"
+      },
+      {
+        "name": "--radio-group-indicator-border-color",
+        "count": 8,
+        "feeds": [
+          "radio boxShadow",
+          "radio edge"
+        ],
+        "light": "color-mix(in oklab, #0d0d0d 16%, transparent)",
+        "dark": "color-mix(in oklab, #fff 25%, transparent)"
+      },
+      {
+        "name": "--button-gutter",
+        "count": 4,
+        "feeds": [
+          "button paddingInline",
+          "button paddingTop",
+          "button paddingBottom",
+          "button paddingRight"
+        ]
+      },
+      {
+        "name": "--select-control-gutter",
+        "count": 4,
+        "feeds": [
+          "button paddingInline",
+          "button paddingTop",
+          "button paddingBottom",
+          "button paddingRight"
+        ]
+      },
+      {
+        "name": "--radio-group-item-font-size",
+        "count": 4,
+        "feeds": [
+          "label@radiogroup fontSize"
+        ],
+        "light": ".875rem",
+        "dark": ".875rem"
+      },
+      {
+        "name": "--radio-group-item-line-height",
+        "count": 4,
+        "feeds": [
+          "label@radiogroup lineHeight"
+        ],
+        "light": "1.25rem",
+        "dark": "1.25rem"
+      },
+      {
+        "name": "--radio-group-item-gap",
+        "count": 4,
+        "feeds": [
+          "label@radiogroup gap"
+        ],
+        "light": "calc(.25rem * 1.5)",
+        "dark": "calc(.25rem * 1.5)"
+      },
+      {
+        "name": "--radius-full",
+        "count": 4,
+        "feeds": [
+          "radio borderRadius"
+        ],
+        "light": "9999px",
+        "dark": "9999px"
+      },
+      {
+        "name": "--input-gutter",
+        "count": 4,
+        "feeds": [
+          "textbox paddingInline",
+          "textbox paddingTop",
+          "textbox paddingBottom",
+          "textbox paddingRight"
+        ]
+      },
+      {
+        "name": "--slider-range-color",
+        "count": 3,
+        "feeds": [
+          "box backgroundColor",
+          "slider boxShadow",
+          "slider edge"
+        ],
+        "light": "#767676",
+        "dark": "#8f8f8f"
+      },
+      {
+        "name": "--color-text-secondary",
+        "count": 3,
+        "feeds": [
+          "heading.h5 color",
+          "icon@button color",
+          "text color"
+        ],
+        "light": "#5d5d5d",
+        "dark": "#afafaf"
+      },
+      {
+        "name": "--radius-2xs",
+        "count": 2,
+        "feeds": [
+          "box borderRadius"
+        ],
+        "light": ".125rem",
+        "dark": ".125rem"
+      },
+      {
+        "name": "--button-size",
+        "count": 2,
+        "feeds": [
+          "button height",
+          "button width"
+        ]
+      },
+      {
+        "name": "--input-outline-border-color",
+        "count": 2,
+        "feeds": [
+          "card boxShadow",
+          "card edge"
+        ],
+        "light": "color-mix(in oklab, #0d0d0d 16%, transparent)",
+        "dark": "color-mix(in oklab, #fff 25%, transparent)"
+      },
+      {
+        "name": "--start-icon-size",
+        "count": 2,
+        "feeds": [
+          "icon@button width",
+          "icon@button height"
+        ]
+      },
+      {
+        "name": "--button-icon-size",
+        "count": 2,
+        "feeds": [
+          "icon@button width",
+          "icon@button height"
+        ]
+      },
+      {
+        "name": "--slider-track-color",
+        "count": 1,
+        "feeds": [
+          "box backgroundColor"
+        ],
+        "light": "#dfdfdf",
+        "dark": "#414141"
+      },
+      {
+        "name": "--button-font-size",
+        "count": 1,
+        "feeds": [
+          "button fontSize"
+        ]
+      },
+      {
+        "name": "--button-font-weight",
+        "count": 1,
+        "feeds": [
+          "button fontWeight"
+        ],
+        "light": "500",
+        "dark": "500"
+      },
+      {
+        "name": "--button-radius",
+        "count": 1,
+        "feeds": [
+          "button borderRadius"
+        ]
+      },
+      {
+        "name": "--button-gap",
+        "count": 1,
+        "feeds": [
+          "button gap"
+        ]
+      },
+      {
+        "name": "--button-text-color",
+        "count": 1,
+        "feeds": [
+          "button color"
+        ]
+      },
+      {
+        "name": "--select-control-size",
+        "count": 1,
+        "feeds": [
+          "button height"
+        ]
+      },
+      {
+        "name": "--select-control-font-size",
+        "count": 1,
+        "feeds": [
+          "button fontSize"
+        ]
+      },
+      {
+        "name": "--select-control-font-weight",
+        "count": 1,
+        "feeds": [
+          "button fontWeight"
+        ],
+        "light": "500",
+        "dark": "500"
+      },
+      {
+        "name": "--font-text-md-line-height",
+        "count": 1,
+        "feeds": [
+          "button lineHeight"
+        ],
+        "light": "1.5rem",
+        "dark": "1.5rem"
+      },
+      {
+        "name": "--select-control-radius",
+        "count": 1,
+        "feeds": [
+          "button borderRadius"
+        ]
+      },
+      {
+        "name": "--select-control-gap",
+        "count": 1,
+        "feeds": [
+          "button gap"
+        ]
+      },
+      {
+        "name": "--input-placeholder-text-color",
+        "count": 1,
+        "feeds": [
+          "button color"
+        ],
+        "light": "#8f8f8f",
+        "dark": "#8f8f8f"
+      },
+      {
+        "name": "--input-text-color",
+        "count": 1,
+        "feeds": [
+          "card color"
+        ],
+        "light": "#0d0d0d",
+        "dark": "#fff"
+      },
+      {
+        "name": "--input-font-size",
+        "count": 1,
+        "feeds": [
+          "card fontSize"
+        ]
+      },
+      {
+        "name": "--font-weight-normal",
+        "count": 1,
+        "feeds": [
+          "card fontWeight"
+        ],
+        "light": "400",
+        "dark": "400"
+      },
+      {
+        "name": "--input-radius",
+        "count": 1,
+        "feeds": [
+          "card borderRadius"
+        ]
+      },
+      {
+        "name": "--input-gap",
+        "count": 1,
+        "feeds": [
+          "card gap"
+        ]
+      },
+      {
+        "name": "--radius-xs",
+        "count": 1,
+        "feeds": [
+          "checkbox borderRadius"
+        ],
+        "light": ".25rem",
+        "dark": ".25rem"
+      },
+      {
+        "name": "--gray-200",
+        "count": 1,
+        "feeds": [
+          "checkbox edge"
+        ],
+        "light": "#cdcdcd"
+      },
+      {
+        "name": "--font-heading-xl-size",
+        "count": 1,
+        "feeds": [
+          "heading.h2 fontSize"
+        ],
+        "light": "2rem",
+        "dark": "2rem"
+      },
+      {
+        "name": "--font-heading-xl-weight",
+        "count": 1,
+        "feeds": [
+          "heading.h2 fontWeight"
+        ],
+        "light": "600",
+        "dark": "600"
+      },
+      {
+        "name": "--font-heading-xl-tracking",
+        "count": 1,
+        "feeds": [
+          "heading.h2 letterSpacing"
+        ],
+        "light": "0em",
+        "dark": "0em"
+      },
+      {
+        "name": "--font-heading-xl-line-height",
+        "count": 1,
+        "feeds": [
+          "heading.h2 lineHeight"
+        ],
+        "light": "2.375rem",
+        "dark": "2.375rem"
+      },
+      {
+        "name": "--font-weight-semibold",
+        "count": 1,
+        "feeds": [
+          "heading.h3 fontWeight"
+        ],
+        "light": "600",
+        "dark": "600"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "ui-sans-serif",
+        "count": 152
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "21px",
+        "fontFamily": "ui-sans-serif",
+        "count": 67,
+        "groups": [
+          "button",
+          "box",
+          "card",
+          "label",
+          "textbox"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "fontFamily": "ui-sans-serif",
+        "count": 22,
+        "groups": [
+          "panel",
+          "box",
+          "dialog",
+          "paragraph",
+          "checkbox",
+          "heading.h5"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "21px",
+        "fontFamily": "ui-sans-serif",
+        "count": 18,
+        "groups": [
+          "badge",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "ui-sans-serif",
+        "count": 18,
+        "groups": [
+          "text",
+          "label@radiogroup",
+          "radio",
+          "label"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "18px",
+        "fontFamily": "ui-sans-serif",
+        "count": 15,
+        "groups": [
+          "text@dialog",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "14px",
+        "fontFamily": "ui-sans-serif",
+        "count": 4,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "24px",
+        "fontFamily": "ui-sans-serif",
+        "count": 2,
+        "groups": [
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "600",
+        "lineHeight": "19.5px",
+        "fontFamily": "ui-sans-serif",
+        "count": 2,
+        "groups": [
+          "paragraph@dialog"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "lineHeight": "12px",
+        "fontFamily": "ui-sans-serif",
+        "count": 1,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "600",
+        "lineHeight": "38px",
+        "fontFamily": "ui-sans-serif",
+        "count": 1,
+        "groups": [
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "20px",
+        "fontFamily": "ui-sans-serif",
+        "count": 1,
+        "groups": [
+          "heading.h3"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "lineHeight": "19.5px",
+        "fontFamily": "ui-sans-serif",
+        "count": 1,
+        "groups": [
+          "textbox"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 4,
+        "count": 18,
+        "groups": [
+          "badge",
+          "checkbox"
+        ]
+      },
+      {
+        "px": 6,
+        "count": 5,
+        "groups": [
+          "button",
+          "link"
+        ]
+      },
+      {
+        "px": 12,
+        "count": 2,
+        "groups": [
+          "dialog"
+        ]
+      },
+      {
+        "px": 8,
+        "count": 1,
+        "groups": [
+          "card"
+        ]
+      }
+    ],
+    "pills": [
+      "button",
+      "box",
+      "radio",
+      "slider"
+    ]
+  },
+  "spacing": {
+    "grid": 2,
+    "steps": [
+      {
+        "px": 2,
+        "count": 1
+      },
+      {
+        "px": 3,
+        "count": 1
+      },
+      {
+        "px": 4,
+        "count": 22
+      },
+      {
+        "px": 6,
+        "count": 48
+      },
+      {
+        "px": 8,
+        "count": 3
+      },
+      {
+        "px": 12,
+        "count": 2
+      },
+      {
+        "px": 16,
+        "count": 2
+      }
+    ],
+    "heights": {
+      "badge": [
+        {
+          "px": 22,
+          "count": 17
+        }
+      ],
+      "button": [
+        {
+          "px": 30,
+          "count": 62
+        },
+        {
+          "px": 28,
+          "count": 4
+        },
+        {
+          "px": 22,
+          "count": 1
+        },
+        {
+          "px": 36,
+          "count": 1
+        }
+      ],
+      "checkbox": [
+        {
+          "px": 18,
+          "count": 1
+        }
+      ],
+      "link": [
+        {
+          "px": 24,
+          "count": 1
+        }
+      ],
+      "radio": [
+        {
+          "px": 16,
+          "count": 4
+        }
+      ],
+      "textbox": [
+        {
+          "px": 20,
+          "count": 1
+        },
+        {
+          "px": 32,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "oklab(0.159058 0.00000725687 0.00000318885 / 0.16) 0px 0px 0px 1px inset",
+        "count": 6,
+        "groups": [
+          "badge",
+          "card",
+          "radio"
+        ]
+      },
+      {
+        "value": "oklab(0.999994 0.0000455678 0.0000200868 / 0.25) 0px 0px 0px 1px inset",
+        "count": 6,
+        "groups": [
+          "badge",
+          "card",
+          "radio"
+        ]
+      },
+      {
+        "value": "rgb(226, 85, 7) 0px 0px 0px 1px inset",
+        "count": 2,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgb(224, 46, 42) 0px 0px 0px 1px inset",
+        "count": 2,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgb(1, 105, 204) 0px 0px 0px 1px inset",
+        "count": 2,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgb(128, 70, 217) 0px 0px 0px 1px inset",
+        "count": 2,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+        "count": 2,
+        "groups": [
+          "dialog"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.2) 0px 4px 6px -4px, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px",
+        "count": 2,
+        "groups": [
+          "dialog"
+        ]
+      },
+      {
+        "value": "rgb(0, 162, 64) 0px 0px 0px 1px inset",
+        "count": 1,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgb(0, 134, 53) 0px 0px 0px 1px inset",
+        "count": 1,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "value": "rgb(118, 118, 118) 0px 0px 0px 2px inset",
+        "count": 1,
+        "groups": [
+          "slider"
+        ]
+      },
+      {
+        "value": "rgb(143, 143, 143) 0px 0px 0px 2px inset",
+        "count": 1,
+        "groups": [
+          "slider"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "badge": {
+      "groups": [
+        "badge"
+      ],
+      "found": 17,
+      "looks": [
+        {
+          "id": "badge.1",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(218, 244, 228)",
+                  "color": "rgb(0, 134, 53)",
+                  "borderRadius": "4px",
+                  "height": "22px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.4px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "height": "--badge-size",
+                  "fontSize": "--badge-font-size",
+                  "fontWeight": "--badge-font-weight",
+                  "letterSpacing": "--badge-tracking",
+                  "borderRadius": "--badge-radius",
+                  "paddingInline": "--badge-gutter",
+                  "paddingTop": "--badge-gutter",
+                  "paddingBottom": "--badge-gutter",
+                  "paddingRight": "--badge-gutter",
+                  "gap": "--spacing",
+                  "backgroundColor": "--badge-background-color",
+                  "color": "--badge-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(29, 55, 39)",
+                  "color": "rgb(4, 184, 76)",
+                  "borderRadius": "4px",
+                  "height": "22px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.4px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "height": "--badge-size",
+                  "fontSize": "--badge-font-size",
+                  "fontWeight": "--badge-font-weight",
+                  "letterSpacing": "--badge-tracking",
+                  "borderRadius": "--badge-radius",
+                  "paddingInline": "--badge-gutter",
+                  "paddingTop": "--badge-gutter",
+                  "paddingBottom": "--badge-gutter",
+                  "paddingRight": "--badge-gutter",
+                  "gap": "--spacing",
+                  "backgroundColor": "--badge-background-color",
+                  "color": "--badge-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.6",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "part": "badge",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(93, 93, 93)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "22px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.4px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "height": "--badge-size",
+                  "fontSize": "--badge-font-size",
+                  "fontWeight": "--badge-font-weight",
+                  "letterSpacing": "--badge-tracking",
+                  "borderRadius": "--badge-radius",
+                  "paddingInline": "--badge-gutter",
+                  "paddingTop": "--badge-gutter",
+                  "paddingBottom": "--badge-gutter",
+                  "paddingRight": "--badge-gutter",
+                  "gap": "--spacing",
+                  "backgroundColor": "--badge-background-color",
+                  "color": "--badge-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.6-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(65, 65, 65)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "22px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.4px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "height": "--badge-size",
+                  "fontSize": "--badge-font-size",
+                  "fontWeight": "--badge-font-weight",
+                  "letterSpacing": "--badge-tracking",
+                  "borderRadius": "--badge-radius",
+                  "paddingInline": "--badge-gutter",
+                  "paddingTop": "--badge-gutter",
+                  "paddingBottom": "--badge-gutter",
+                  "paddingRight": "--badge-gutter",
+                  "gap": "--spacing",
+                  "backgroundColor": "--badge-background-color",
+                  "color": "--badge-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.6-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "page",
+        "panel"
+      ],
+      "found": 6,
+      "looks": [
+        {
+          "id": "page.1",
+          "count": 8,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "24px",
+                  "display": "flex"
+                },
+                "vars": {
+                  "backgroundColor": "--color-surface"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "24px",
+                  "display": "flex"
+                },
+                "vars": {
+                  "backgroundColor": "--color-surface"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 8,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontFamily": "--default-font-family",
+                  "color": "--color-text",
+                  "letterSpacing": "--tracking-normal",
+                  "backgroundColor": "--color-surface"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontFamily": "--default-font-family",
+                  "color": "--color-text",
+                  "letterSpacing": "--tracking-normal",
+                  "backgroundColor": "--color-surface"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 4,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "lineHeight": "24px",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "lineHeight": "24px",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.1-rest-dark.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(24, 24, 24)",
+                  "height": "10.8px",
+                  "width": "10.8px",
+                  "textAlign": "center",
+                  "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 2.88919, 4.33655)",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(237, 237, 237)",
+                  "height": "10.8px",
+                  "width": "10.8px",
+                  "textAlign": "center",
+                  "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 2.88919, 4.33655)",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.2",
+          "count": 2,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(13, 13, 13)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "100%",
+                  "height": "3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "3px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.19, 1, 0.22, 1)",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "100%",
+                  "height": "3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "3px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.19, 1, 0.22, 1)",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 9,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 61,
+          "pages": [
+            6
+          ],
+          "part": "calendar.day",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "9999px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(13, 13, 13)",
+                  "width": "30px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(255, 255, 255)",
+                  "width": "30px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 4,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(93, 93, 93)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(73, 73, 73)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "6px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.1",
+          "count": 4,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(93, 93, 93)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 1,
+          "pages": [
+            6
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(13, 13, 13)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.4-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "9999px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "21px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.4-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkbox": {
+      "groups": [
+        "checkbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "checkbox.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "part": "checkbox",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "4px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(205, 205, 205)",
+                  "width": "18px",
+                  "lineHeight": "24px",
+                  "textAlign": "center",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "borderRadius": "--radius-xs",
+                  "edge": "--gray-200"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/checkbox.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(93, 93, 93)",
+                  "width": "18px",
+                  "lineHeight": "24px",
+                  "textAlign": "center",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "borderRadius": "--radius-xs",
+                  "edge": "--gray-200"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/checkbox.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "dialog": {
+      "groups": [
+        "dialog"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "dialog.1",
+          "count": 2,
+          "pages": [
+            6
+          ],
+          "is": "open",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "12px",
+                  "height": "246px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                  "edge": "1px rgb(235, 235, 235)",
+                  "width": "234px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/dialog.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "12px",
+                  "height": "246px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.2) 0px 4px 6px -4px, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px",
+                  "edge": "1px rgb(55, 55, 55)",
+                  "width": "234px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/dialog.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "heading.h2",
+        "paragraph",
+        "paragraph@dialog",
+        "text",
+        "text@dialog"
+      ],
+      "found": 7,
+      "looks": [
+        {
+          "id": "text@dialog.1",
+          "count": 14,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(93, 93, 93)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "18px",
+                  "textAlign": "center",
+                  "display": "flex"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "18px",
+                  "textAlign": "center",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 9,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(143, 143, 143)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "70px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--text-sm",
+                  "lineHeight": "--tw-leading",
+                  "letterSpacing": "--tw-tracking",
+                  "fontWeight": "--tw-font-weight",
+                  "color": "--color-text-tertiary"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(143, 143, 143)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "70px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--text-sm",
+                  "lineHeight": "--tw-leading",
+                  "letterSpacing": "--tw-tracking",
+                  "fontWeight": "--tw-font-weight",
+                  "color": "--color-text-tertiary"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 2,
+          "pages": [
+            5,
+            7
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "232px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "232px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@dialog.1",
+          "count": 2,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "13px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "210px",
+                  "lineHeight": "19.5px",
+                  "display": "flex"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "13px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "210px",
+                  "lineHeight": "19.5px",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 1,
+          "pages": [
+            7
+          ],
+          "part": "heading.2",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "32px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1019.1px",
+                  "lineHeight": "38px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--font-heading-xl-size",
+                  "fontWeight": "--font-heading-xl-weight",
+                  "letterSpacing": "--font-heading-xl-tracking",
+                  "lineHeight": "--font-heading-xl-line-height"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h2.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "32px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1019.1px",
+                  "lineHeight": "38px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--font-heading-xl-size",
+                  "fontWeight": "--font-heading-xl-weight",
+                  "letterSpacing": "--font-heading-xl-tracking",
+                  "lineHeight": "--font-heading-xl-line-height"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h2.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(93, 93, 93)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16.9px",
+                  "lineHeight": "18px",
+                  "textAlign": "center",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--color-text-secondary"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16.9px",
+                  "lineHeight": "18px",
+                  "textAlign": "center",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--color-text-secondary"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label",
+        "label@radiogroup"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "label@radiogroup.1",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "54.7px",
+                  "gap": "6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontSize": "--radio-group-item-font-size",
+                  "lineHeight": "--radio-group-item-line-height",
+                  "gap": "--radio-group-item-gap"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "54.7px",
+                  "gap": "6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontSize": "--radio-group-item-font-size",
+                  "lineHeight": "--radio-group-item-line-height",
+                  "gap": "--radio-group-item-gap"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "label.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "field.label",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "213.1px",
+                  "lineHeight": "21px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "213.1px",
+                  "lineHeight": "21px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "link"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "part": "link",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(1, 105, 204)",
+                  "borderRadius": "6px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "88.7px",
+                  "gap": "2px",
+                  "lineHeight": "24px",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "fontWeight": "--link-font-weight",
+                  "borderRadius": "--link-radius",
+                  "gap": "--link-gap",
+                  "color": "--link-primary-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(51, 156, 255)",
+                  "borderRadius": "6px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "88.7px",
+                  "gap": "2px",
+                  "lineHeight": "24px",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "fontWeight": "--link-font-weight",
+                  "borderRadius": "--link-radius",
+                  "gap": "--link-gap",
+                  "color": "--link-primary-text-color"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "radio-group": {
+      "groups": [
+        "radio"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "radio.1",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "part": "radio",
+          "is": "selected",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "9999px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "oklab(0.159058 0.00000725687 0.00000318885 / 0.16) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(216, 216, 216)",
+                  "width": "16px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--radio-group-indicator-size",
+                  "height": "--radio-group-indicator-size",
+                  "boxShadow": "--radio-group-indicator-border-color",
+                  "edge": "--radio-group-indicator-border-color",
+                  "borderRadius": "--radius-full"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/radio.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "oklab(0.999994 0.0000455678 0.0000200868 / 0.25) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(88, 88, 88)",
+                  "width": "16px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--radio-group-indicator-size",
+                  "height": "--radio-group-indicator-size",
+                  "boxShadow": "--radio-group-indicator-border-color",
+                  "edge": "--radio-group-indicator-border-color",
+                  "borderRadius": "--radius-full"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/radio.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "input": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(13, 13, 13)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "12px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "242px",
+                  "paddingRight": "12px",
+                  "lineHeight": "21px",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "height": "--input-size",
+                  "paddingInline": "--input-gutter",
+                  "paddingTop": "--input-gutter",
+                  "paddingBottom": "--input-gutter",
+                  "paddingRight": "--input-gutter"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(33, 33, 33)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "12px",
+                  "fontFamily": "ui-sans-serif",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "242px",
+                  "paddingRight": "12px",
+                  "lineHeight": "21px",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "height": "--input-size",
+                  "paddingInline": "--input-gutter",
+                  "paddingTop": "--input-gutter",
+                  "paddingBottom": "--input-gutter",
+                  "paddingRight": "--input-gutter"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "ChatGPT's menus ringed in 0.5px black 10% / white 15% (reads #cbcbcb / #464646) and the main panel split from the sidebar by a 0.5px line (#e2e2e2 / #262626)",
+      "standin": "ChatGPT's menu edges ΔE 0.078 / 0.113 on the color too, and the specimen panel draws no divider at `shellTone: page`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "ChatGPT's sidebar rows 35px at 14/400, padded 10px, 8px corners, beside 36px buttons, selects and menu rows",
+      "standin": "ChatGPT -3px at `density: comfortable`, where its controls reach 36px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "ChatGPT's signed-in app, the GPT search field #fff / #1b1b1b inside a 1px #d9d9d9 / #484848 line and the UI font size field #fff / #303030 inside #d9d9d9 / #595959",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Select triggers filled and edged while secondary buttons are fill only",
+      "note": "ChatGPT's select triggers are 36px pills on #f3f3f3 under 1px #dadada (#303030 under #4e4e4e in dark), while its secondary buttons are #f0f0f0 / #0c0c0c with no edge (signed in)",
+      "standin": "select triggers follow `buttonSecondary: soft` and lose the edge in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "ChatGPT too, signed in, page titles at 24/500 (GPTs) and 24/400 (Settings), between a 36/600 pricing title and a 16/600 dialog title",
+      "standin": "ChatGPT `compact`, 600 at every level, h3 24px, h4 20px",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "ChatGPT's settings nav rows #0d0d0d / #ededed at 14/400 and its main sidebar's a step under (#313131 / #cacaca), the current row in the same ink and weight on a #efefef / #1a1a1a chip",
+      "standin": "ChatGPT's settings rows ΔE 0.342 / 0.178 and main sidebar rows 0.188 / 0.071, the current row matched with `navItemWeight: regular`",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.button-icon",
+      "title": "Button corners per kind, apart from the button radius",
+      "note": "Rounded-rect quiet buttons beside pill buttons: ChatGPT's header ghost buttons at 8px (36px icon buttons, the 34px Upgrade button with 12px padding) while its solid, soft and destructive buttons are pills",
+      "standin": "ChatGPT's `buttonRadius: pill` rounds every button, quiet ones included",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "ChatGPT's settings groups #000 on the #000 page under a 1px #262626 hairline at 16px (#fcfcfc under #e2e2e2 in light)",
+      "standin": "oklch 0.147 on ChatGPT, ΔE 0.147)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.tabs-ink",
+      "title": "Tabs marked by ink alone, with no fill, underline or track",
+      "note": "ChatGPT's GPTs category tabs change only the label ink, #5d5d5d → #0d0d0d in light and #cdcdcd → #ededed in dark, 28px at 14/500 with 8px padding and 6px corners (signed in)",
+      "standin": "`tabStyle: pill`: a tone chip on the current tab, 36px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-trackless",
+      "title": "Segmented control with no track",
+      "note": "ChatGPT's Settings › Appearance and Reduce motion items, 24px at 14/400 with 8px padding, unselected labels #8f8f8f / #afafaf, the selected one a flat gray pill (#e3e3e3 / #181818) with no shadow or edge (signed in)",
+      "standin": "ChatGPT takes `segmentedSelected: tone` on the default filled well, a 40px track at comfortable, the chip keeping a faint drop",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "ChatGPT 32×19, a 13px knob inset 3px under `0 1px 2px` black 20%, beside 32px controls",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "ChatGPT 14/400 in 30px circles, today (marked by a 3px dot) and the selected day too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "ChatGPT lifts them well above its #000 page: menus #2b2b2b (90% with a 16px blur), select triggers and tooltips #303030, dialogs #212121, the selected segment and off switch track #181818 (signed in)",
+      "standin": "ChatGPT at `darkBg: 0` derives them from the page, menus #0d0d0d (ΔE 0.130) and select triggers oklch 0.216 (ΔE 0.094), dialogs oklab 0.18 (ΔE 0.066), the segmented chip L 0.30 (ΔE 0.094) and the off track L 0.35 (ΔE 0.145)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "ChatGPT's dialogs (Keyboard shortcuts) have no edge, only a `0 4px 8px -2px` black 10% drop, while settings cards draw a 1px line and menus a 0.5px ring (signed in)",
+      "standin": "ChatGPT's at `surfaceEdge: line` too)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "ChatGPT's app tooltip a #0d0d0d chip under white text in light and #303030 under #ededed in dark, on the #000 page",
+      "standin": "`tooltipStyle: inverted` flips to a light chip in dark (ΔE 0.57 on GitHub, 0.66 on Notion, 0.647 on ChatGPT, 0.713 on Claude, with no ring); `surface` stays dark but loses the dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tooltip",
+      "title": "Tooltip text at label weight",
+      "note": "ChatGPT 14/600 in a 30px tooltip, 12px padding, 16px corners (a pill at that height)",
+      "standin": "12/400 in a 28px tooltip, 6px corners (8px at ChatGPT's `roleItem: lg`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Inverted tooltips with a drop shadow",
+      "note": "ChatGPT's dark chip under `0 8px 18px` rgba(15, 23, 42, 0.2), ringed in 1px #191919 in light and #393939 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.menu-row",
+      "title": "Menu rows rounder than sidebar rows",
+      "note": "ChatGPT's menu rows round at 12px (36px, padded 10px) inside 16px menus, while its sidebar rows, keycaps and fields sit at 8px",
+      "standin": "one `roleItem` for menu and sidebar rows: `lg` (8px) matches the sidebar and leaves menu rows 4px square; `xl` would flip it",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "ChatGPT's RECOMMENDED badge (pricing, signed in) a 27px pill with 8px padding at 11/600 uppercase, -0.18px tracking",
+      "standin": "ChatGPT 20px pills at 12/500",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Above cards: ChatGPT's GPTs page alert at 24px in a 1px #d6d6d6 / #333 edge under a `0 1px 2px` black 5% drop, its pricing columns at 24px too (`0 4px 8px` black 5%), while settings groups, GPT cards and dialogs stay at 16px",
+      "standin": "ChatGPT's banner and pricing columns at the card's 16px, `roleCard: 2xl`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "ChatGPT focus rings (2px at +2px) and links on blue-500 #0169cc in light, while in dark the ring is blue-400 #0285ff, links blue-300 #339cff and the info badge's text #339cff on #1c2d3d",
+      "standin": "ChatGPT with `brand: #0285ff`: light ring 0.101, dark links and accent badge text 0.126, while #0169cc fixes the light ring and breaks the dark one",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "ChatGPT 0.082, its most common off row, 16 parts in light, while `buttonColor: neutral` fills land on #181818 at 0.032",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "ChatGPT 0.023 / 0.080",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "ChatGPT draws control lines as ink alphas, outline fields, select triggers and outline buttons at 16% ink (#d8d8d8 on white, #585858 on #212121) and 50% on focus (#868686 / #909090), checkbox edges #cdcdcd / #5d5d5d, the off switch track #dfdfdf / #414141",
+      "standin": "ChatGPT on the firm line, L 0.887 / 0.40: light fields match, dark edges 0.057, checkboxes 0.038 / 0.075, the neutral focus edge at L 0.60 0.020 / 0.053, the dark off track 0.028",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-accent",
+      "title": "Soft accent fills on their own accent steps",
+      "note": "ChatGPT's info badge #deefff behind a deep #004f99 in light, #1c2d3d behind #339cff in dark",
+      "standin": "ChatGPT oklch 0.969 0.015 behind 0.521 0.171 in light (ΔE 0.028 / 0.096), 0.303 0.069 behind 0.789 0.109 in dark (ΔE 0.036 / 0.126)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "ChatGPT's soft secondary badge on #ececec / #3c3c3c",
+      "standin": "ChatGPT's soft badge on #f9f9f9 / #272727 (ΔE 0.039 / 0.083)",
+      "source": "ledger"
+    }
+  ]
+}

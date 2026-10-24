@@ -1,7 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 
 import { Link } from "@/registry/ui/link"
-import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 import { LooksExplorer } from "~/components/looks"
 import { SystemExplorer } from "~/components/system"
 import { SystemDesktopToc } from "~/components/system/toc"
@@ -19,19 +18,19 @@ export const Route = createFileRoute("/systems/$slug")({
       (entry) => entry.slug === params.slug,
     )
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
+    const captured = dataIndex.looks.find((l) => l.slug === params.slug)
     const load = looksFiles[`../../systems/${params.slug}/looks.json`]
     const looks = load ? await load() : undefined
     if (!catalogEntry && !system && !looks) throw notFound()
-    return { catalogEntry, system, looks }
+    return { catalogEntry, system, captured, looks }
   },
   component: SystemPage,
 })
 
 function SystemPage() {
-  const { catalogEntry, system, looks } = Route.useLoaderData()
-  const preset = PRESET_CATALOG.find((p) => p.id === looks?.preset)
-  const name = system?.name ?? catalogEntry?.name ?? preset?.name ?? ""
-  const org = system?.org ?? catalogEntry?.org ?? preset?.name ?? ""
+  const { catalogEntry, system, captured, looks } = Route.useLoaderData()
+  const name = system?.name ?? catalogEntry?.name ?? captured?.name ?? ""
+  const org = system?.org ?? catalogEntry?.org
   const homepage = catalogEntry?.homepage ?? system?.sources.site ?? undefined
   const homepageLabel = homepage
     ? homepage.replace(/^https?:\/\//, "").replace(/\/$/, "")
@@ -55,7 +54,7 @@ function SystemPage() {
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {name}
           </h1>
-          <span className="text-sm text-fg-muted">by {org}</span>
+          {org && <span className="text-sm text-fg-muted">by {org}</span>}
         </div>
         {homepage && homepageLabel && (
           <div className="mt-2 text-sm">

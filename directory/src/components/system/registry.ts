@@ -53,7 +53,8 @@ export function getSectionGroups(slug: string): SectionGroup[] {
 
 /** Flat id + label list of a system's sections, for the TOC lines and dropdown. */
 export function getSectionList(slug: string): { id: string; label: string }[] {
-  if (dataIndex.looks.includes(slug)) return LOOKS_SECTIONS
+  if (dataIndex.looks.some((looks) => looks.slug === slug))
+    return LOOKS_SECTIONS
   return getSectionGroups(slug).flatMap((group) =>
     group.sections.map(({ id, label }) => ({ id, label })),
   )

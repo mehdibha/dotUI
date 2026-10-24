@@ -1,0 +1,6347 @@
+{
+  "version": 1,
+  "slug": "spotify",
+  "preset": "spotify",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-23",
+    "pages": [
+      {
+        "key": "encore.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "encore.html#dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "https://accounts.spotify.com/en/login",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://open.spotify.com/",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 24,
+            "uses": [
+              "button backgroundColor",
+              "box backgroundColor",
+              "textbox backgroundColor",
+              "avatar backgroundColor",
+              "link backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(235, 235, 235)",
+            "l": 0.94,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "button backgroundColor",
+              "textbox backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(129, 129, 129)",
+            "l": 0.603,
+            "c": 0,
+            "h": 0,
+            "count": 10,
+            "uses": [
+              "button edge",
+              "textbox edge",
+              "box edge",
+              "avatar edge",
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(101, 101, 101)",
+            "l": 0.507,
+            "c": 0,
+            "h": 0,
+            "count": 12,
+            "uses": [
+              "heading.h6 color",
+              "tab color",
+              "icon color",
+              "paragraph color",
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 75,
+            "uses": [
+              "button color",
+              "text@button color",
+              "box color",
+              "text color",
+              "textbox color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 149,
+            "count": 15,
+            "steps": [
+              {
+                "color": "rgb(150, 240, 182)",
+                "l": 0.883,
+                "c": 0.119,
+                "h": 155,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(30, 215, 96)",
+                "l": 0.77,
+                "c": 0.212,
+                "h": 149,
+                "count": 8,
+                "uses": [
+                  "button backgroundColor",
+                  "box backgroundColor",
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(21, 149, 66)",
+                "l": 0.587,
+                "c": 0.16,
+                "h": 149,
+                "count": 5,
+                "uses": [
+                  "box backgroundColor",
+                  "avatar backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(7, 49, 22)",
+                "l": 0.277,
+                "c": 0.067,
+                "h": 151,
+                "count": 1,
+                "uses": [
+                  "card color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 25,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(255, 210, 215)",
+                "l": 0.904,
+                "c": 0.051,
+                "h": 11,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(233, 20, 41)",
+                "l": 0.593,
+                "c": 0.234,
+                "h": 25,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(201, 17, 35)",
+                "l": 0.531,
+                "c": 0.209,
+                "h": 25,
+                "count": 2,
+                "uses": [
+                  "text color",
+                  "textbox edge"
+                ]
+              },
+              {
+                "color": "rgb(89, 8, 16)",
+                "l": 0.3,
+                "c": 0.112,
+                "h": 23,
+                "count": 1,
+                "uses": [
+                  "card color"
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": {
+          "canvas": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(101, 101, 101)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(129, 129, 129)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(30, 215, 96)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          }
+        }
+      },
+      "dark": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 851,
+            "uses": [
+              "link color",
+              "text@link color",
+              "button color",
+              "card color",
+              "img color"
+            ]
+          },
+          {
+            "color": "rgb(234, 234, 234)",
+            "l": 0.937,
+            "c": 0,
+            "h": 0,
+            "count": 20,
+            "uses": [
+              "img color",
+              "menuitem color",
+              "text@menuitem color"
+            ]
+          },
+          {
+            "color": "rgb(184, 184, 184)",
+            "l": 0.783,
+            "c": 0,
+            "h": 0,
+            "count": 7,
+            "uses": [
+              "button color",
+              "combobox color",
+              "text@button color",
+              "text@combobox color"
+            ]
+          },
+          {
+            "color": "rgb(179, 179, 179)",
+            "l": 0.767,
+            "c": 0,
+            "h": 0,
+            "count": 655,
+            "uses": [
+              "link color",
+              "button color",
+              "text@grid color",
+              "img color",
+              "text@button color"
+            ]
+          },
+          {
+            "color": "rgb(157, 150, 142)",
+            "l": 0.677,
+            "c": 0.014,
+            "h": 71,
+            "count": 3,
+            "uses": [
+              "slider color"
+            ]
+          },
+          {
+            "color": "rgb(128, 128, 128)",
+            "l": 0.6,
+            "c": 0,
+            "h": 0,
+            "count": 6,
+            "uses": [
+              "separator color"
+            ]
+          },
+          {
+            "color": "rgb(124, 124, 124)",
+            "l": 0.586,
+            "c": 0,
+            "h": 0,
+            "count": 24,
+            "uses": [
+              "button edge",
+              "box edge",
+              "textbox edge",
+              "kbd edge",
+              "link edge"
+            ]
+          },
+          {
+            "color": "rgb(122, 117, 126)",
+            "l": 0.57,
+            "c": 0.015,
+            "h": 310,
+            "count": 1,
+            "uses": [
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(119, 119, 119)",
+            "l": 0.569,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(111, 122, 116)",
+            "l": 0.568,
+            "c": 0.016,
+            "h": 162,
+            "count": 1,
+            "uses": [
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(106, 120, 130)",
+            "l": 0.565,
+            "c": 0.023,
+            "h": 239,
+            "count": 2,
+            "uses": [
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(89, 89, 89)",
+            "l": 0.464,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box backgroundColor",
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(83, 83, 83)",
+            "l": 0.442,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "panel backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(77, 77, 77)",
+            "l": 0.42,
+            "c": 0,
+            "h": 0,
+            "count": 6,
+            "uses": [
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(72, 72, 72)",
+            "l": 0.402,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(61, 61, 61)",
+            "l": 0.36,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "slider backgroundColor",
+              "panel edge"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 149,
+            "count": 28,
+            "steps": [
+              {
+                "color": "rgb(150, 240, 182)",
+                "l": 0.883,
+                "c": 0.119,
+                "h": 155,
+                "count": 1,
+                "uses": [
+                  "card color"
+                ]
+              },
+              {
+                "color": "rgb(30, 215, 96)",
+                "l": 0.77,
+                "c": 0.212,
+                "h": 149,
+                "count": 23,
+                "uses": [
+                  "button backgroundColor",
+                  "box backgroundColor",
+                  "badge backgroundColor",
+                  "avatar backgroundColor",
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(101, 127, 76)",
+                "l": 0.563,
+                "c": 0.08,
+                "h": 131,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(56, 134, 49)",
+                "l": 0.552,
+                "c": 0.143,
+                "h": 142,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(64, 88, 32)",
+                "l": 0.427,
+                "c": 0.087,
+                "h": 129,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(7, 49, 22)",
+                "l": 0.277,
+                "c": 0.067,
+                "h": 151,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 45,
+            "count": 8,
+            "steps": [
+              {
+                "color": "rgb(233, 20, 41)",
+                "l": 0.593,
+                "c": 0.234,
+                "h": 25,
+                "count": 2,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(192, 87, 74)",
+                "l": 0.586,
+                "c": 0.138,
+                "h": 29,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(175, 101, 7)",
+                "l": 0.578,
+                "c": 0.131,
+                "h": 62,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(163, 105, 79)",
+                "l": 0.577,
+                "c": 0.084,
+                "h": 45,
+                "count": 3,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(216, 24, 32)",
+                "l": 0.562,
+                "c": 0.219,
+                "h": 27,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 16,
+            "count": 8,
+            "steps": [
+              {
+                "color": "rgb(255, 210, 215)",
+                "l": 0.904,
+                "c": 0.051,
+                "h": 11,
+                "count": 1,
+                "uses": [
+                  "card color"
+                ]
+              },
+              {
+                "color": "rgb(243, 114, 127)",
+                "l": 0.708,
+                "c": 0.159,
+                "h": 16,
+                "count": 2,
+                "uses": [
+                  "text color",
+                  "textbox edge"
+                ]
+              },
+              {
+                "color": "rgb(200, 24, 80)",
+                "l": 0.539,
+                "c": 0.204,
+                "h": 11,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(192, 48, 56)",
+                "l": 0.536,
+                "c": 0.18,
+                "h": 23,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(152, 24, 32)",
+                "l": 0.44,
+                "c": 0.162,
+                "h": 25,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(96, 0, 24)",
+                "l": 0.31,
+                "c": 0.124,
+                "h": 17,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(89, 8, 16)",
+                "l": 0.3,
+                "c": 0.112,
+                "h": 23,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 282,
+            "count": 7,
+            "steps": [
+              {
+                "color": "rgb(158, 158, 255)",
+                "l": 0.739,
+                "c": 0.139,
+                "h": 282,
+                "count": 3,
+                "uses": [
+                  "link color"
+                ]
+              },
+              {
+                "color": "rgb(111, 116, 164)",
+                "l": 0.574,
+                "c": 0.074,
+                "h": 279,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(88, 88, 152)",
+                "l": 0.49,
+                "c": 0.101,
+                "h": 282,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(32, 64, 144)",
+                "l": 0.398,
+                "c": 0.138,
+                "h": 264,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(40, 53, 79)",
+                "l": 0.33,
+                "c": 0.05,
+                "h": 264,
+                "count": 1,
+                "uses": [
+                  "panel backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 345,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(217, 22, 179)",
+                "l": 0.605,
+                "c": 0.255,
+                "h": 339,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(228, 7, 139)",
+                "l": 0.603,
+                "c": 0.246,
+                "h": 354,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(193, 79, 114)",
+                "l": 0.585,
+                "c": 0.149,
+                "h": 4,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(161, 99, 135)",
+                "l": 0.579,
+                "c": 0.093,
+                "h": 345,
+                "count": 2,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 257,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(13, 114, 234)",
+                "l": 0.571,
+                "c": 0.2,
+                "h": 257,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(88, 120, 161)",
+                "l": 0.565,
+                "c": 0.074,
+                "h": 255,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(24, 56, 96)",
+                "l": 0.339,
+                "c": 0.08,
+                "h": 255,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(8, 32, 64)",
+                "l": 0.245,
+                "c": 0.068,
+                "h": 257,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(0, 32, 56)",
+                "l": 0.235,
+                "c": 0.059,
+                "h": 245,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 183,
+            "count": 4,
+            "steps": [
+              {
+                "color": "rgb(79, 127, 119)",
+                "l": 0.56,
+                "c": 0.054,
+                "h": 183,
+                "count": 2,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(56, 88, 88)",
+                "l": 0.436,
+                "c": 0.038,
+                "h": 196,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(40, 64, 56)",
+                "l": 0.349,
+                "c": 0.033,
+                "h": 171,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 220,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(7, 127, 169)",
+                "l": 0.559,
+                "c": 0.111,
+                "h": 231,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(16, 129, 156)",
+                "l": 0.559,
+                "c": 0.099,
+                "h": 220,
+                "count": 1,
+                "uses": [
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 319,
+        "roles": {
+          "canvas": {
+            "color": "rgb(18, 18, 18)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(179, 179, 179)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(42, 42, 42)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(40, 40, 40)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(40, 40, 40)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(124, 124, 124)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(30, 215, 96)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--encore-text-weight",
+        "count": 111,
+        "feeds": [
+          "text@button fontWeight",
+          "heading.h2@dialog fontWeight",
+          "paragraph@dialog fontWeight"
+        ]
+      },
+      {
+        "name": "--encore-text-size",
+        "count": 109,
+        "feeds": [
+          "text@button fontSize"
+        ]
+      },
+      {
+        "name": "--encore-text-font-family",
+        "count": 109,
+        "feeds": [
+          "text@button fontFamily"
+        ]
+      },
+      {
+        "name": "--text-base",
+        "count": 95,
+        "feeds": [
+          "text@button color",
+          "button color",
+          "card color",
+          "page color",
+          "badge color",
+          "heading.h2@dialog color",
+          "paragraph@dialog color"
+        ],
+        "light": "#000000",
+        "dark": "#fff"
+      },
+      {
+        "name": "--text-subdued",
+        "count": 72,
+        "feeds": [
+          "button color",
+          "heading.h6 color",
+          "paragraph color"
+        ],
+        "light": "#656565",
+        "dark": "#b3b3b3"
+      },
+      {
+        "name": "--encore-body-font-stack",
+        "count": 59,
+        "feeds": [
+          "button fontFamily",
+          "page fontFamily",
+          "paragraph@dialog fontFamily"
+        ],
+        "light": "SpotifyMixUI,CircularSp-Arab,CircularSp-Hebr,CircularSp-Cyrl,CircularSp-Grek,CircularSp-Deva,sans-serif",
+        "dark": "SpotifyMixUI, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Sans, Hiragino Kaku Gothic ProN, Meiryo, MS Gothic, Apple "
+      },
+      {
+        "name": "--background-base",
+        "count": 3,
+        "feeds": [
+          "page backgroundColor"
+        ],
+        "light": "#ffffff",
+        "dark": "#121212"
+      },
+      {
+        "name": "--generic-tooltip-background-color",
+        "count": 1,
+        "feeds": [
+          "box backgroundColor"
+        ]
+      },
+      {
+        "name": "--encore-text-size-larger",
+        "count": 1,
+        "feeds": [
+          "heading.h2@dialog fontSize"
+        ],
+        "dark": "1.5rem"
+      },
+      {
+        "name": "--encore-title-font-stack",
+        "count": 1,
+        "feeds": [
+          "heading.h2@dialog fontFamily"
+        ],
+        "dark": "SpotifyMixUITitle, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Sans, Hiragino Kaku Gothic ProN, Meiryo, MS Gothic, A"
+      },
+      {
+        "name": "--encore-text-size-base",
+        "count": 1,
+        "feeds": [
+          "paragraph@dialog fontSize"
+        ],
+        "dark": "1rem"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "SpotifyMixUI",
+        "count": 1379
+      },
+      {
+        "family": "SpotifyMixUITitle",
+        "count": 41
+      },
+      {
+        "family": "Times New Roman",
+        "count": 15
+      },
+      {
+        "family": "ui-monospace",
+        "count": 14
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 822,
+        "groups": [
+          "link",
+          "text@link",
+          "button",
+          "text@button",
+          "card",
+          "box"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 241,
+        "groups": [
+          "link",
+          "text@grid",
+          "text",
+          "time",
+          "text@navigation",
+          "text@menuitem"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 108,
+        "groups": [
+          "button",
+          "text@button",
+          "heading.h4@navigation",
+          "box",
+          "text@navigation",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 77,
+        "groups": [
+          "button",
+          "text@link",
+          "badge",
+          "text@button",
+          "label",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 77,
+        "groups": [
+          "button",
+          "menuitem",
+          "slider",
+          "textbox",
+          "box",
+          "combobox"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 38,
+        "groups": [
+          "link",
+          "text@complementary",
+          "text@button",
+          "text@link",
+          "paragraph"
+        ]
+      },
+      {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUITitle",
+        "count": 34,
+        "groups": [
+          "heading.h2",
+          "link",
+          "text@complementary",
+          "heading.h2@dialog",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Times New Roman",
+        "count": 15,
+        "groups": [
+          "panel"
+        ]
+      },
+      {
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "13.2px",
+        "letterSpacing": "0.66px",
+        "fontFamily": "ui-monospace",
+        "textTransform": "uppercase",
+        "count": 14,
+        "groups": [
+          "heading.h6"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "14px",
+        "fontFamily": "SpotifyMixUI",
+        "count": 7,
+        "groups": [
+          "checkbox",
+          "text@checkbox",
+          "badge"
+        ]
+      },
+      {
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 3,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "fontFamily": "SpotifyMixUI",
+        "count": 3,
+        "groups": [
+          "kbd"
+        ]
+      },
+      {
+        "fontSize": "48px",
+        "fontWeight": "800",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUITitle",
+        "count": 2,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUITitle",
+        "count": 2,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUITitle",
+        "count": 2,
+        "groups": [
+          "heading.h3"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUI",
+        "count": 2,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "96px",
+        "fontWeight": "800",
+        "lineHeight": "normal",
+        "fontFamily": "SpotifyMixUITitle",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "32px",
+        "fontFamily": "SpotifyMixUI",
+        "count": 1,
+        "groups": [
+          "text"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 6,
+        "count": 72,
+        "groups": [
+          "card",
+          "box"
+        ]
+      },
+      {
+        "px": 3.5,
+        "count": 37,
+        "groups": [
+          "textbox",
+          "box",
+          "card",
+          "kbd",
+          "badge",
+          "button"
+        ]
+      },
+      {
+        "px": 8,
+        "count": 22,
+        "groups": [
+          "card",
+          "box",
+          "button",
+          "dialog"
+        ]
+      },
+      {
+        "px": 10,
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      }
+    ],
+    "pills": [
+      "button",
+      "box",
+      "card",
+      "link",
+      "badge",
+      "avatar",
+      "checkbox",
+      "combobox"
+    ]
+  },
+  "spacing": {
+    "grid": 4,
+    "steps": [
+      {
+        "px": 2,
+        "count": 21
+      },
+      {
+        "px": 4,
+        "count": 98
+      },
+      {
+        "px": 6,
+        "count": 24
+      },
+      {
+        "px": 8,
+        "count": 382
+      },
+      {
+        "px": 12,
+        "count": 180
+      },
+      {
+        "px": 15,
+        "count": 3
+      },
+      {
+        "px": 16,
+        "count": 445
+      },
+      {
+        "px": 20,
+        "count": 18
+      },
+      {
+        "px": 24,
+        "count": 54
+      },
+      {
+        "px": 28,
+        "count": 3
+      },
+      {
+        "px": 32,
+        "count": 57
+      },
+      {
+        "px": 36,
+        "count": 6
+      },
+      {
+        "px": 40,
+        "count": 12
+      },
+      {
+        "px": 48,
+        "count": 3
+      },
+      {
+        "px": 56,
+        "count": 3
+      },
+      {
+        "px": 96,
+        "count": 3
+      }
+    ],
+    "heights": {
+      "avatar": [
+        {
+          "px": 12,
+          "count": 4
+        },
+        {
+          "px": 16,
+          "count": 4
+        }
+      ],
+      "badge": [
+        {
+          "px": 32,
+          "count": 10
+        },
+        {
+          "px": 24,
+          "count": 2
+        }
+      ],
+      "button": [
+        {
+          "px": 48,
+          "count": 52
+        },
+        {
+          "px": 32,
+          "count": 46
+        },
+        {
+          "px": 249.5,
+          "count": 43
+        },
+        {
+          "px": 76,
+          "count": 25
+        },
+        {
+          "px": 83,
+          "count": 24
+        },
+        {
+          "px": 280,
+          "count": 15
+        }
+      ],
+      "checkbox": [
+        {
+          "px": 32,
+          "count": 6
+        }
+      ],
+      "combobox": [
+        {
+          "px": 48,
+          "count": 3
+        },
+        {
+          "px": 32,
+          "count": 1
+        }
+      ],
+      "kbd": [
+        {
+          "px": 26,
+          "count": 3
+        }
+      ],
+      "link": [
+        {
+          "px": 22,
+          "count": 190
+        },
+        {
+          "px": 20,
+          "count": 82
+        },
+        {
+          "px": 17,
+          "count": 22
+        },
+        {
+          "px": 44,
+          "count": 22
+        },
+        {
+          "px": 48,
+          "count": 16
+        },
+        {
+          "px": 29,
+          "count": 13
+        }
+      ],
+      "menuitem": [
+        {
+          "px": 40,
+          "count": 7
+        }
+      ],
+      "row": [
+        {
+          "px": 37,
+          "count": 1
+        }
+      ],
+      "tab": [
+        {
+          "px": 48,
+          "count": 4
+        }
+      ],
+      "textbox": [
+        {
+          "px": 48,
+          "count": 7
+        },
+        {
+          "px": 18,
+          "count": 2
+        },
+        {
+          "px": 84,
+          "count": 2
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgba(0, 0, 0, 0.5) 0px 8px 24px 0px",
+        "count": 85,
+        "groups": [
+          "card"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.5) 0px 4px 60px 0px",
+        "count": 8,
+        "groups": [
+          "img"
+        ]
+      },
+      {
+        "value": "rgb(124, 124, 124) 0px 0px 0px 1px inset",
+        "count": 4,
+        "groups": [
+          "textbox"
+        ]
+      },
+      {
+        "value": "rgb(18, 18, 18) 0px 1px 0px 0px, rgb(124, 124, 124) 0px 0px 0px 1px inset",
+        "count": 3,
+        "groups": [
+          "kbd"
+        ]
+      },
+      {
+        "value": "rgb(129, 129, 129) 0px 0px 0px 1px inset",
+        "count": 3,
+        "groups": [
+          "textbox"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.3) 0px 16px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 8px 0px",
+        "count": 2,
+        "groups": [
+          "box",
+          "menu"
+        ]
+      },
+      {
+        "value": "rgb(201, 17, 35) 0px 0px 0px 1px inset",
+        "count": 1,
+        "groups": [
+          "textbox"
+        ]
+      },
+      {
+        "value": "rgb(243, 114, 127) 0px 0px 0px 1px inset",
+        "count": 1,
+        "groups": [
+          "textbox"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "avatar": {
+      "groups": [
+        "avatar"
+      ],
+      "found": 6,
+      "looks": [
+        {
+          "id": "avatar.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "normal",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/avatar.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "avatar.2",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "normal",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/avatar.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "badge": {
+      "groups": [
+        "badge"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "badge.1",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "125.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.2",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "76.4px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.3",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "badge",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "4px",
+                  "height": "24px",
+                  "paddingInline": "6px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "42.1px",
+                  "paddingRight": "6px",
+                  "lineHeight": "normal",
+                  "transition": "0.2s ease",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-base"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "complementary",
+        "icon",
+        "icon@navigation",
+        "img",
+        "navigation",
+        "page",
+        "panel",
+        "time"
+      ],
+      "found": 60,
+      "looks": [
+        {
+          "id": "img.1",
+          "count": 55,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(152, 24, 32)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "171.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.2",
+          "count": 45,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 15,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "time.1",
+          "count": 15,
+          "pages": [
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "31.6px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.3",
+          "count": 14,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.3-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.4",
+          "count": 8,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "24px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "24x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.4-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.5",
+          "count": 8,
+          "pages": [
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "4px",
+                  "height": "232px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.5) 0px 4px 60px 0px",
+                  "edge": "none",
+                  "width": "232px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.6",
+          "count": 7,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(234, 234, 234)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.6-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(77, 77, 77)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "2px",
+                  "height": "4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "453.6px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, -2)",
+                  "position": "absolute",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.2",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "64px",
+                  "paddingInline": "8px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "transition": "0.3s ease-in",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/panel.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.7",
+          "count": 5,
+          "pages": [
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "cursor": "not-allowed",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.7-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.2",
+          "count": 4,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "32px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "122.8px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "32px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.8",
+          "count": 4,
+          "pages": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "normal",
+                  "iconSize": "32x32",
+                  "iconStroke": "1.3px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.8-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.3",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(124, 124, 124) left",
+                  "width": "41px",
+                  "paddingRight": "4px",
+                  "lineHeight": "normal",
+                  "iconSize": "24x24",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.4",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "32px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "108.3px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "32px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.5",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "2px",
+                  "height": "4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "453.6px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, -453.594, 0)",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "complementary.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "754px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "331px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@navigation.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "9.8px",
+                  "paddingInline": "4px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "25px",
+                  "lineHeight": "normal",
+                  "iconSize": "25x10",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "navigation.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "421px",
+                  "paddingInline": "24px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1045px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "40px",
+                  "paddingRight": "24px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.3",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "66px",
+                  "paddingInline": "15px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1424px",
+                  "paddingTop": "11px",
+                  "paddingBottom": "7px",
+                  "paddingRight": "24px",
+                  "gap": "24px",
+                  "lineHeight": "normal",
+                  "backgroundImage": "linear-gradient(90deg, rgb(175, 40, 150), rgb(80, 155, 245))",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "1"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.6",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "32px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "122.8px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "32px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.7",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(21, 149, 66)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "lineHeight": "normal",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.7-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.2",
+          "count": 2,
+          "pages": [
+            1,
+            2
+          ],
+          "part": "page",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "40px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingTop": "32px",
+                  "paddingBottom": "32px",
+                  "paddingRight": "40px",
+                  "gap": "28px 40px",
+                  "lineHeight": "normal",
+                  "display": "grid"
+                },
+                "vars": {
+                  "color": "--text-base",
+                  "fontFamily": "--encore-body-font-stack",
+                  "backgroundColor": "--background-base"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.10",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "alert",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(21, 149, 66)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "3px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.10-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.1",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(101, 101, 101)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "24px",
+                  "lineHeight": "normal",
+                  "iconSize": "24x24",
+                  "iconStroke": "fill",
+                  "transition": "0.1s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 62,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 43,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "249.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "195.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 25,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "76px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "232.5px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-subdued",
+                  "fontFamily": "--encore-body-font-stack"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(61, 61, 61)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.2-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 24,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "83px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "232.5px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-subdued",
+                  "fontFamily": "--encore-body-font-stack"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.3-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 18,
+          "pages": [
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.4-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "height": "33.3px",
+                  "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+                  "iconSize": "17x17",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.4-hover-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "width": "32px",
+                  "opacity": "0.3",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "32x32",
+                  "cursor": "not-allowed"
+                },
+                "source": "census"
+              }
+            },
+            "open": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(89, 89, 89)",
+                  "color": "rgb(255, 255, 255)",
+                  "height": "33.3px",
+                  "width": "16.6px",
+                  "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+                  "iconSize": "17x17",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.5",
+          "count": 16,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "204.2px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.5-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "height": "300.2px"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.5-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.6",
+          "count": 15,
+          "pages": [
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "280.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "204.2px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.6-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.7",
+          "count": 9,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "67px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.7-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "color": "rgb(255, 255, 255)",
+                  "height": "49.9px",
+                  "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.7-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.8",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "108.3px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.8-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(240, 240, 240)",
+                  "height": "49.9px",
+                  "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.8-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.25",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "122.8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.25-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(59, 228, 119)",
+                  "height": "49.9px",
+                  "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.25-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.36",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "24px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(129, 129, 129)",
+                  "width": "118.6px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "24px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-base"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.36-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "edge": "1px rgb(0, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.36-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.37",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "button.quiet",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "90.2px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "16px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-base"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.37-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.37-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.44",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "toggle",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "16px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "101.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "16px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-base"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.44-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(51, 51, 51)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.44-hover-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "card": {
+      "groups": [
+        "card"
+      ],
+      "found": 51,
+      "looks": [
+        {
+          "id": "card.1",
+          "count": 29,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(51, 51, 51)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "171.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.5) 0px 8px 24px 0px",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "paddingBottom": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.2",
+          "count": 11,
+          "pages": [
+            3,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(51, 51, 51)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "50%",
+                  "height": "171.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.5) 0px 8px 24px 0px",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "paddingBottom": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.3",
+          "count": 9,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "8px",
+                  "height": "754px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1045px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.4",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(31, 31, 31)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "8px",
+                  "height": "134px",
+                  "paddingInline": "20px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "315px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "20px",
+                  "gap": "20px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.4-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.5",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "8px",
+                  "height": "754px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "331px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "4"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.6",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "48px",
+                  "paddingInline": "32px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "153px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "32px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.7",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(163, 105, 79)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "171.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.5) 0px 8px 24px 0px",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "paddingBottom": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.7-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.8",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(161, 99, 135)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "171.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.5) 0px 8px 24px 0px",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "paddingBottom": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.8-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.18",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "card",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(233, 20, 41)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "44px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "12px",
+                  "gap": "12px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--text-base"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.18-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkbox": {
+      "groups": [
+        "checkbox"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "checkbox.1",
+          "count": 3,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "72.5px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/checkbox.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(51, 51, 51)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/checkbox.1-hover-dark.json"
+              }
+            },
+            "selected": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "width": "128.4px",
+                  "zIndex": "1"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "checkbox.2",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "is": "disabled",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "8px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "opacity": "0.3",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "not-allowed",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/checkbox.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "combobox": {
+      "groups": [
+        "combobox"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "combobox.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(31, 31, 31)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "500px",
+                  "height": "48px",
+                  "paddingInline": "48px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "474px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "96px",
+                  "lineHeight": "normal",
+                  "transition": "0.22s ease-in",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "boxShadow": "rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(63, 63, 63)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "dialog": {
+      "groups": [
+        "dialog"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "dialog.1",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "part": "dialog",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "8px",
+                  "height": "588px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "978px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "heading.h1",
+        "heading.h1@banner",
+        "heading.h2",
+        "heading.h3",
+        "heading.h4@navigation",
+        "heading.h6",
+        "paragraph",
+        "paragraph@complementary",
+        "text",
+        "text@button",
+        "text@checkbox",
+        "text@complementary",
+        "text@grid",
+        "text@link",
+        "text@menuitem",
+        "text@navigation"
+      ],
+      "found": 61,
+      "looks": [
+        {
+          "id": "text@link.1",
+          "count": 129,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "77.9px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@grid.1",
+          "count": 67,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "156.3px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.1",
+          "count": 55,
+          "pages": [
+            3,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "52.1px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--encore-text-size",
+                  "fontFamily": "--encore-text-font-family",
+                  "fontWeight": "--encore-text-weight",
+                  "color": "--text-base"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.2",
+          "count": 54,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "52.1px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontSize": "--encore-text-size",
+                  "fontFamily": "--encore-text-font-family",
+                  "fontWeight": "--encore-text-weight"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 36,
+          "pages": [
+            1,
+            5,
+            4
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "434.7px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 16,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "29px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUITitle",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "168.1px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h2.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.2",
+          "count": 15,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "69.3px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 13,
+          "pages": [
+            1,
+            2,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "117.4px",
+                  "paddingRight": "24px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h4@navigation.1",
+          "count": 12,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "169px",
+                  "paddingBottom": "8px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h4@navigation.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.3",
+          "count": 11,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "58.8px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.2s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.4",
+          "count": 9,
+          "pages": [
+            1,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "79.5px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.2s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h6.1",
+          "count": 7,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(101, 101, 101)",
+                  "borderRadius": "0px",
+                  "height": "13.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-monospace",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "0.66px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "lineHeight": "13.2px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--text-subdued"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h6.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h6.2",
+          "count": 7,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "13.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ui-monospace",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "0.66px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "lineHeight": "13.2px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--text-subdued"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h6.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 7,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "117.4px",
+                  "paddingRight": "24px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@complementary.1",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "50px",
+                  "lineHeight": "normal",
+                  "fontVariantNumeric": "tabular-nums",
+                  "textAlign": "right",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@menuitem.1",
+          "count": 6,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(234, 234, 234)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "91.3px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.1",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(31, 31, 31)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "176.8px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.2",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(31, 31, 31)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "176.8px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.5",
+          "count": 4,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.5px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.2s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1@banner.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "90.1px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.2",
+          "count": 3,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@complementary.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "634.4px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@complementary.2",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "634.4px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.6",
+          "count": 3,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "69.5px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.2s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.7",
+          "count": 3,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(30, 215, 96)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "58.8px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.2s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.8",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "111.1px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@checkbox.1",
+          "count": 3,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "9999px",
+                  "height": "32px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "72.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "12px",
+                  "lineHeight": "14px",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@complementary.2",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "29px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUITitle",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "249.4px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.3",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "44px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.3",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "117px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 2,
+          "pages": [
+            2,
+            4
+          ],
+          "part": "heading.1",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "58px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUITitle",
+                  "fontSize": "48px",
+                  "fontWeight": "800",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "324px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h1.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.3",
+          "count": 2,
+          "pages": [
+            1,
+            4
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "426.7px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--text-subdued"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.4",
+          "count": 2,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "34px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "324px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 2,
+          "pages": [
+            1,
+            4
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "44px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "893.3px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "12px",
+                  "gap": "12px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.5",
+          "count": 2,
+          "pages": [
+            1,
+            2
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(42, 42, 42)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "24px",
+                  "paddingInline": "6px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "63.9px",
+                  "paddingRight": "6px",
+                  "lineHeight": "normal",
+                  "transition": "0.2s ease",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3.1",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "heading.3",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "39px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUITitle",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "426.7px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "icon@link",
+        "link"
+      ],
+      "found": 29,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 81,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "72.9px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline",
+                  "zIndex": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 75,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "60px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.2-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 63,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "45.7px",
+                  "lineHeight": "normal",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.3-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.3-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.4",
+          "count": 49,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "130.8px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.4-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "height": "22.2px",
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.4-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.5",
+          "count": 21,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "29.8px",
+                  "lineHeight": "normal",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.5-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.5-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.6",
+          "count": 17,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "44px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "171.5px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.6-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.6-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.7",
+          "count": 13,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "29px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUITitle",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "168.1px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline",
+                  "zIndex": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.7-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.7-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.8",
+          "count": 12,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "54px",
+                  "paddingBottom": "2px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.8-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.8-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.1",
+          "count": 2,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "25px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "25x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@link.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "kbd": {
+      "groups": [
+        "kbd"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "kbd.1",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "part": "kbd",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "4px",
+                  "height": "26px",
+                  "paddingInline": "6px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(18, 18, 18) 0px 1px 0px 0px, rgb(124, 124, 124) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(124, 124, 124)",
+                  "width": "38.3px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "6px",
+                  "lineHeight": "24px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/kbd.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "label.1",
+          "count": 4,
+          "pages": [
+            0
+          ],
+          "part": "field.label",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "434.7px",
+                  "paddingBottom": "8px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "label.2",
+          "count": 4,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "434.7px",
+                  "paddingBottom": "8px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "menu": {
+      "groups": [
+        "menu",
+        "menuitem"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "menuitem.1",
+          "count": 6,
+          "pages": [
+            4
+          ],
+          "part": "menu.item",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(234, 234, 234)",
+                  "borderRadius": "2px",
+                  "height": "40px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "205.8px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "gap": "12px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menuitem.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(61, 61, 61)",
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menuitem.1-hover-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "menu.1",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "part": "menu",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(40, 40, 40)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "4px",
+                  "height": "290px",
+                  "paddingInline": "4px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.3) 0px 16px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 8px 0px",
+                  "edge": "none",
+                  "width": "213.8px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "4px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menu.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "separator": {
+      "groups": [
+        "separator"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "separator.1",
+          "count": 6,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(128, 128, 128)",
+                  "borderRadius": "0px",
+                  "height": "1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(41, 41, 41) top",
+                  "width": "997px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/separator.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.2",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "376px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(0, 0, 0) bottom",
+                  "width": "1px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/separator.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.3",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "slider": {
+      "groups": [
+        "slider"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "slider.1",
+          "count": 3,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(59, 59, 59)",
+                  "color": "rgb(157, 150, 142)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "129px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "inline-block"
+                },
+                "source": "census"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(197, 197, 197)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tabs": {
+      "groups": [
+        "tab"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "tab.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "tab",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(101, 101, 101)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "96.8px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/tab.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(0, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/tab.1-hover-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "color": "rgb(0, 0, 0)",
+                  "width": "70.5px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "tab.2",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(179, 179, 179)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "96.8px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transition": "0.15s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/tab.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "color": "rgb(255, 255, 255)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/tab.2-hover-dark.json"
+              }
+            },
+            "selected": {
+              "dark": {
+                "values": {
+                  "color": "rgb(255, 255, 255)",
+                  "width": "70.5px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "input": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 8,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 3,
+          "pages": [
+            1,
+            2
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(18, 18, 18)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "4px",
+                  "height": "48px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(124, 124, 124) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(124, 124, 124)",
+                  "width": "434.7px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "12px",
+                  "lineHeight": "normal",
+                  "transition": "0.1s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(255, 255, 255)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.1-hover-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(41, 41, 41)",
+                  "opacity": "0.3",
+                  "cursor": "not-allowed"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "textbox.2",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "4px",
+                  "height": "48px",
+                  "paddingInline": "12px",
+                  "fontFamily": "SpotifyMixUI",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(129, 129, 129) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(129, 129, 129)",
+                  "width": "434.7px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "12px",
+                  "lineHeight": "normal",
+                  "transition": "0.1s cubic-bezier(0.3, 0, 0, 1)",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgb(0, 0, 0) 0px 0px 0px 1px inset",
+                  "edge": "1px rgb(0, 0, 0)",
+                  "transition": "0.05s cubic-bezier(0.3, 0, 0, 1)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.2-hover-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(222, 222, 222)",
+                  "opacity": "0.3",
+                  "cursor": "not-allowed"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Spotify heavier still, the login title at 48/800 and web-player entity titles at 800 while shelf titles stay 24/700",
+      "standin": "Spotify `titleStyle: bold`, 700 at every level",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Spotify 4px beside 4px fields and pill buttons",
+      "standin": "2px in Radix and Spotify",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.keycap",
+      "title": "Keycap outlines in the control edge color, with a dark drop",
+      "note": "Spotify's keys have no fill and draw a 1px #7c7c7c inset ring (the field edge) plus a `0 1px 0` #121212 drop",
+      "standin": "`kbdTreatment: outline` draws the faint border (oklab L 0.31 in dark), not the strong control edge, and no drop",
+      "source": "ledger"
+    },
+    {
+      "look": "size.keycap",
+      "title": "Keycap size apart from the density",
+      "note": "Spotify's search shortcut keys 26px with 16/400 labels and 6px padding",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Spotify's Library rows at body size, 16/400 #fff titles over 14/400 #b3b3b3 subtitles, at rest and current alike",
+      "standin": "Spotify's sidebar items at 14px in muted ink, oklch 0.78",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Spotify 32px on 48px buttons, primary, secondary and tertiary alike, and 16px on 32px ones (Encore's legacy buttons)",
+      "standin": "`density: touch` pads 24px at Duolingo's, Wise's and Spotify's 48px (Duolingo's trigger with `selectTrigger: button`, +12px; `field` pads 14px but drops the weight and the lip)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Spotify title-large 48px, title-medium 32px and title-small 24px at 700 from 768px up (32, 24 and 20px below), headline-large 96px at 800",
+      "source": "ledger"
+    },
+    {
+      "look": "state.disabled",
+      "title": "Disabled controls at 30% opacity (`--encore-opacity-disabled: 0.3` on buttons, fields, tabs and links)",
+      "standin": "`disabledTreatment: fade` (50%)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "Spotify buttons, fields and Library rows at 16px, menu rows, tooltips and filter chips at 14px (40px menu rows, 12px padding)",
+      "standin": "Spotify's `density: touch` sets menu rows at 16px)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "Search field as a pill while text fields stay boxes",
+      "note": "Filled: Spotify 48px, fully round, a black 8% / white 7% tint, no edge, 12px padding; hover and focus step the tint to 12% / 10%",
+      "standin": "the search field follows `inputStyle` and the control radius (a 4px box on Spotify's #7c7c7c edge",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "Spotify's inline links take the text's color and weight (400), underlined",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "Spotify's Home and artist cards (Encore `card`) with no fill, edge or shadow at rest, clear on the #121212 panel at 6px and filled only on hover, while plated containers (sidebar prompt cards) are #1f1f1f at 8px",
+      "standin": "Spotify's `surfaceLayers: tonal` lifts cards one gray (oklab L 0.219)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Filled pill chips: Spotify's filter chips (Home, artist discography, Library) are 32px pills, 12px padding, 14/400, on a white 10% fill with no edge, the selected chip white under black ink, beside 48px buttons at 16/700",
+      "standin": "on Spotify Button's size, weight and edge (48px, 20px padding, 16/700, 1px)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Spotify's Settings switch a solid #535353 on the #121212 page, no ring, a step below its #7c7c7c field edge",
+      "standin": "Spotify's on the control edge, oklch 0.6 (ΔE 0.158); `switchStyle: outlined` clears the track and draws a 1px edge",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tabs-rule",
+      "title": "Line tabs with no rule under the list",
+      "note": "Spotify only the 2px accent bar under the current label",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.switch-knob",
+      "title": "Switch knob color apart from the solid ink",
+      "note": "Spotify's Settings switch a 20px white knob over the #1db954 on track and the #535353 off track (dark only)",
+      "standin": "in dark, the off knob stays white and the on knob takes the solid ink (a dark olive on Higgsfield's lime, a dark green on Spotify's)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Line tabs: Spotify 12px on 48px tabs",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Spotify's indicator is its own pill inside the 6px pill track",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Spotify's web player tooltips 14/400 at 28px with 8px padding, on the menu surface (#282828, 4px corners, the menu shadow)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Spotify's context menus, tooltips and dialogs on #282828, a gray above its #1f1f1f containers (sidebar prompt cards, the search field) on the #121212 panel",
+      "standin": "Spotify's share the container tone, oklab L 0.230)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-shadow",
+      "title": "Shadowless dialogs on a heavy scrim while menus keep their drop",
+      "note": "Spotify's language dialog is #282828 at 8px with no shadow over 70% black, while context menus and tooltips keep `0 16px 24px` black 30% plus `0 6px 8px` black 20%",
+      "standin": "`surfaceShadow: flat` drops card shadows but dialogs keep theirs (3 layers)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Spotify 24px text tags, 6px padding, 4px corners, 14/700",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Spotify banners at 4px like its menus and tooltips, under 8px dialogs",
+      "standin": "6px on Spotify at `roleSurface: sm`, a step above its 4px menus",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Spotify on small controls only (checks, radios, progress and tab bars on #159542 in light, #1ed760 in dark; accent text #107434 in light), buttons #1ed760 in both, while the shipped Settings switch (dark only) is on #1db954, the older brand green, a step below",
+      "standin": "Spotify checks 0.190 in light, the dark Settings switch 0.085 at `brand: #1ed760`",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Spotify 0.241",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Brighter: Spotify pure #fff",
+      "standin": "Spotify 0.043",
+      "source": "ledger"
+    },
+    {
+      "look": "color.shell-dark",
+      "title": "A pure black frame under a recessed shell",
+      "note": "Spotify's web player frame (top bar, gutters around the panels) is #000 around #121212 panels",
+      "standin": "`shellTone: recessed` frames the panels in oklab L 0.172 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Labels on brand solids in a set color",
+      "note": "Pure ink: Spotify #000 labels on its bright #1ed760 in both modes (primary buttons, accent tags)",
+      "standin": "`solidInk: auto` picks a dark green ink on Spotify, Wise and Higgsfield, oklch 0.25 0.04 (ΔE 0.253 on Spotify, 0.057 on Wise, 0.051 on Higgsfield; the only other option is `white`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Spotify #ebebeb / #2a2a2a (Encore `background-tinted-base`) on neutral tags, the neutral banner and the progress track, and in dark the account pages' group cards (white 10% over #121212: #2a2a2a at 5px, no edge or shadow)",
+      "standin": "the neutral badge fill, soft alert and track on oklch 0.963 / 0.254 (Spotify ΔE 0.023 / 0.031; its account cards take the card surface, oklab L 0.219, ΔE 0.066)",
+      "source": "ledger"
+    }
+  ]
+}

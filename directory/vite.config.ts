@@ -32,12 +32,6 @@ function refs(): Plugin {
   }
 }
 
-// No page links to a captured system yet: seed the prerender with each one.
-const systemsDir = path.resolve(import.meta.dirname, "systems")
-const captured = fs
-  .readdirSync(systemsDir)
-  .filter((slug) => fs.existsSync(path.join(systemsDir, slug, "looks.json")))
-
 // `~/` is this app, `@/` is www's source: registry components and the preset
 // engine come straight from there, as in video/.
 export default defineConfig({
@@ -62,7 +56,6 @@ export default defineConfig({
     nitro({ preset: process.env.VERCEL ? "vercel" : "node" }),
     tailwindcss(),
     tanstackStart({
-      pages: captured.map((slug) => ({ path: `/systems/${slug}` })),
       prerender: {
         enabled: true,
       },

@@ -296,6 +296,8 @@ export const catalogScoresSchema = z.object({
 
 export const catalogEntrySchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
+  /** The captured preset whose page this system opens, when its slug differs. */
+  preset: z.string().optional(),
   name: z.string().min(1),
   org: z.string().min(1),
   category: catalogCategorySchema,
@@ -354,5 +356,20 @@ export interface DataIndex {
   componentsCatalog: ComponentDef[]
   systems: SystemEntry[]
   /** Systems with a captured looks.json, which loads on its own page. */
-  looks: string[]
+  looks: CapturedSystem[]
+}
+
+/** What /design-systems lists of a captured system, without loading its looks. */
+export interface CapturedSystem {
+  slug: string
+  /** The preset's name. */
+  name: string
+  date: string
+  pages: number
+  signedIn: number
+  /** Core components with at least one look. */
+  core: number
+  looks: number
+  /** Looks the preset misses. */
+  off: number
 }

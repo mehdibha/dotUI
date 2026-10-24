@@ -93,8 +93,12 @@ export function CoverageSection({ looks }: { looks: LooksFile }) {
         />
         <Stat
           label="Off in the preset"
-          value={offLooks.length}
-          note={`looks, ${offLooks.reduce((n, l) => n + (l.off?.length ?? 0), 0)} values`}
+          value={offLooks.length || "—"}
+          note={
+            offLooks.length
+              ? `looks, ${offLooks.reduce((n, l) => n + (l.off?.length ?? 0), 0)} values`
+              : "not compared yet"
+          }
         />
       </div>
       <Block title="States" description="Looks with a reading in each state.">

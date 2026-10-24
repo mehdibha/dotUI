@@ -93,6 +93,7 @@
     },
     {
       "slug": "primer",
+      "preset": "github",
       "name": "GitHub Primer",
       "org": "GitHub",
       "category": "fintech-devtools",
@@ -269,6 +270,7 @@
     },
     {
       "slug": "geist",
+      "preset": "vercel",
       "name": "Vercel Geist",
       "org": "Vercel",
       "category": "fintech-devtools",
@@ -1567,6 +1569,7 @@
     },
     {
       "slug": "untitled-ui",
+      "preset": "untitled",
       "name": "Untitled UI",
       "org": "Untitled UI",
       "category": "oss-libraries",
@@ -1677,6 +1680,7 @@
     },
     {
       "slug": "airbnb-dls",
+      "preset": "airbnb",
       "name": "Airbnb DLS",
       "org": "Airbnb",
       "category": "consumer-media",
