@@ -15,7 +15,7 @@ const looksFiles = import.meta.glob<LooksFile>("../../systems/*/looks.json", {
 export const Route = createFileRoute("/systems/$slug")({
   loader: async ({ params }) => {
     const catalogEntry = dataIndex.catalog.find(
-      (entry) => entry.slug === params.slug,
+      (entry) => entry.slug === params.slug || entry.preset === params.slug,
     )
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
     const captured = dataIndex.looks.find((l) => l.slug === params.slug)
