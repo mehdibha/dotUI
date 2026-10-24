@@ -67,7 +67,7 @@ export const guardian = definePreset({
     cardSelected: "outline-tint",
 
     // Inputs
-    // Labels are 17/700.
+    // Labels are 17/700; semibold is the heaviest fieldLabel option.
     fieldLabel: "semibold",
     selectTrigger: "field",
 
