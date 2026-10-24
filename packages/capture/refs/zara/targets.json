@@ -1,0 +1,228 @@
+{
+  "https://www.zara.com/us/en/": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "dialog": {
+        "selector": ".geolocation-modal [role=alertdialog]"
+      },
+      "button.primary": {
+        "selector": ".geolocation-modal .zds-button--primary"
+      },
+      "tab": {
+        "selector": ".menu-std a.zds-tabs-tab[aria-selected=false][href*=\"man-l534\"]",
+        "ink": ".layout-categories-category-name__label",
+        "before": [
+          {
+            "click": "[data-qa-id=layout-desktop-open-menu-trigger]"
+          },
+          {
+            "wait": ".menu-std a.zds-tabs-tab[aria-selected=true]"
+          }
+        ]
+      },
+      "tab.selected": {
+        "selector": ".menu-std a.zds-tabs-tab[aria-selected=true]",
+        "ink": ".layout-categories-category-name__label",
+        "before": [
+          {
+            "click": "[data-qa-id=layout-desktop-open-menu-trigger]"
+          },
+          {
+            "wait": ".menu-std a.zds-tabs-tab[aria-selected=true]"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.zara.com/us/en/woman-jackets-l1114.html": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "nav.item": {
+        "selector": "a.category-sidebar-link:not(.category-sidebar-link--selected)"
+      },
+      "nav.item.active": {
+        "selector": "a.category-sidebar-link--selected"
+      },
+      "badge": {
+        "selector": ".product-grid-product-info__tag"
+      },
+      "segmented": {
+        "selector": "ul.view-option-selector__list"
+      },
+      "segmented.item": {
+        "selector": ".view-option-selector-button:not(.view-option-selector-button--selected)"
+      },
+      "segmented.selected": {
+        "selector": ".view-option-selector-button--selected"
+      },
+      "button.quiet": {
+        "selector": "button[data-qa-action=filters-button]"
+      },
+      "button.icon": {
+        "selector": "button[data-qa-action=product-grid-open-size-selector]"
+      },
+      "heading.3": {
+        "selector": ".product-grid-product-info h3"
+      }
+    }
+  },
+  "https://www.zara.com/us/en/man-shirts-l737.html": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "toggle": {
+        "selector": "[role=dialog] label.filters-group-text__item",
+        "nth": 3,
+        "ink": ".zds-checkbox-label",
+        "before": [
+          {
+            "click": "button[data-qa-action=filters-button]"
+          },
+          {
+            "wait": ".filters-panel-std__container[role=dialog]"
+          }
+        ]
+      },
+      "toggle.on": {
+        "selector": "[role=dialog] label.filters-group-text__item--checked",
+        "ink": ".zds-checkbox-label",
+        "before": [
+          {
+            "click": "button[data-qa-action=filters-button]"
+          },
+          {
+            "wait": ".filters-panel-std__container[role=dialog]"
+          },
+          {
+            "click": "[role=dialog] label.filters-group-text__item:nth-child(3) input"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.zara.com/us/en/<product>-p<id>.html": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.focus": {
+        "selector": "button[data-qa-action=add-to-cart]",
+        "focus": true
+      },
+      "heading.1": {
+        "selector": "h1.product-detail-info__header-name"
+      },
+      "heading.2": {
+        "selector": "h2.product-detail-recommended-products-carousel__title"
+      },
+      "text": {
+        "selector": ".product-detail-description .expandable-text__inner-content p"
+      },
+      "menu": {
+        "selector": "div.size-selector.product-detail-size-selector-std__size-selector",
+        "before": [
+          {
+            "click": "button[data-qa-action=add-to-cart]"
+          },
+          {
+            "wait": "div.size-selector.product-detail-size-selector-std__size-selector"
+          }
+        ]
+      },
+      "menu.item": {
+        "selector": "button.size-selector-sizes-size__button",
+        "ink": ".size-selector-sizes-size__label",
+        "before": [
+          {
+            "click": "button[data-qa-action=add-to-cart]"
+          },
+          {
+            "wait": "div.size-selector.product-detail-size-selector-std__size-selector"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.zara.com/us/en/shop/cart": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "checkbox": {
+        "selector": "main label.shop-cart-item-checkbox__control .zds-checkbox-control",
+        "before": [
+          {
+            "click": "main label.shop-cart-item-checkbox__control input"
+          }
+        ],
+        "skip": ["edge"]
+      },
+      "checkbox.checked": {
+        "selector": "main label.shop-cart-item-checkbox__control .zds-checkbox-control",
+        "skip": ["edge"]
+      },
+      "link": {
+        "selector": ".shop-cart-gift-options-block__add-edit"
+      }
+    }
+  },
+  "https://www.zara.com/us/en/search/home": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "steps": [
+      {
+        "focus": "input#search-home-form-combo-input"
+      }
+    ],
+    "parts": {
+      "text.muted": {
+        "selector": "#search-home-form-combo-menu .search-home-input-autocomplete-terms-part:not(.search-home-input-autocomplete-terms-part--is-highlighted)"
+      }
+    }
+  },
+  "https://www.zara.com/us/en/logon": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 3000,
+    "parts": {
+      "input": {
+        "selector": "label.mds-base-field__control",
+        "ink": "input"
+      },
+      "input.focus": {
+        "selector": "label.mds-base-field__control",
+        "ink": "input",
+        "before": [
+          {
+            "focus": "input[data-qa-input-qualifier=logonId]"
+          }
+        ]
+      },
+      "field.label": {
+        "selector": ".mds-base-field .mds-label"
+      },
+      "heading.4": {
+        "selector": "h1.check-user-form__title"
+      }
+    }
+  },
+  "https://www.zara.com/us/en/z-newsletter-nl1400.html": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 2500,
+    "parts": {
+      "button.secondary": {
+        "selector": "button[data-qa-id=add-sections-to-newsletter]"
+      }
+    }
+  }
+}
