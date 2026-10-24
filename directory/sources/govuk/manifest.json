@@ -1,0 +1,20 @@
+{
+  "kind": "live-site",
+  "repo": "https://design-system.service.gov.uk",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "components-tree.json",
+      "upstreamPath": null,
+      "url": "https://api.github.com/repos/alphagov/govuk-frontend/git/trees/388325c279329ce22bc2308912c80f943efa5317",
+      "sha256": "2d08065c069a627210cd8f789293b25e7ae1ab0d474312ff2793272b6efa7d87"
+    },
+    {
+      "path": "sitemap.xml",
+      "upstreamPath": null,
+      "url": "https://design-system.service.gov.uk/sitemap.xml",
+      "sha256": "af37a36ee54fd71c691e3f5dd99e39803d3ae7ac5d932dd437b9c996b21e5f6b"
+    }
+  ]
+}

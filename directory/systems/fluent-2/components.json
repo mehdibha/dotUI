@@ -1,0 +1,341 @@
+{
+  "components": [
+    {
+      "component": "accordion",
+      "name": "Accordion",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-accordion-accordion--docs",
+      "demo": null,
+      "note": "Registered as <fluent-accordion> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "accordion",
+      "name": "AccordionItem",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-accordion-accordionitem--docs",
+      "demo": null,
+      "note": "Registered as <fluent-accordion-item> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "button",
+      "name": "Anchor",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-anchor--docs",
+      "demo": null,
+      "note": "Registered as <fluent-anchor-button> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-avatar--docs",
+      "demo": null,
+      "note": "Registered as <fluent-avatar> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-badge-badge--docs",
+      "demo": null,
+      "note": "Registered as <fluent-badge> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-button--docs",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Fluent UI Web Components — Button</title>\n<!-- Fluent UI Web Components v3.1.3 (Microsoft), official published bundle, pinned. -->\n<script src=\"https://cdn.jsdelivr.net/npm/@fluentui/web-components@3.1.3/dist/web-components.min.js\"></script>\n<script>\n  // Runs before the body parses, so the resolved mode is stamped on <html>\n  // for the very first paint (no light flash).\n  (function () {\n    var dark = false;\n\n    // The one place the system's dark mechanism lives. Idempotent, and it\n    // switches both ways: the data-mode stamp the canvas rules key off is\n    // added or removed, and Fluent's own setTheme() is re-run with the\n    // matching published theme object. The theme modules are imported by the\n    // module script below; until they resolve, applyMode only stamps and the\n    // module script re-applies the current mode as soon as they land.\n    function applyMode(next) {\n      dark = !!next;\n      var html = document.documentElement;\n      if (dark) html.setAttribute(\"data-mode\", \"dark\");\n      else html.removeAttribute(\"data-mode\");\n      var themes = window.__fluentThemes;\n      if (!themes) return;\n      try {\n        globalThis.Fluent.setTheme(dark ? themes.dark : themes.light);\n      } catch (e) {\n        console.error(\"Fluent setTheme failed\", e);\n      }\n    }\n    window.__applyMode = applyMode;\n    window.__isDark = function () { return dark; };\n\n    // Explicit ?mode= wins once and disables observation (standalone testing).\n    var override = null;\n    try { override = new URLSearchParams(location.search).get(\"mode\"); } catch (e) {}\n    if (override) { applyMode(override === \"dark\"); return; }\n\n    // Otherwise follow the embedding parent's <html> class list, live.\n    var root = null;\n    try {\n      if (window.parent !== window) root = window.parent.document.documentElement;\n    } catch (e) { root = null; }\n    if (!root) { applyMode(false); return; }\n\n    applyMode(root.classList.contains(\"dark\"));\n    var observer = new MutationObserver(function () {\n      applyMode(root.classList.contains(\"dark\"));\n    });\n    observer.observe(root, { attributes: true, attributeFilter: [\"class\"] });\n    // Held for the page lifetime so it is never collected.\n    window.__modeObserver = observer;\n  })();\n</script>\n<style>\n  html, body { margin: 0; padding: 0; background: #ffffff; }\n  /* Fluent's setTheme() writes the theme's tokens as custom properties on the\n     document, so the dark canvas is the system's own colorNeutralBackground1;\n     the literal is only the fallback for the moment before the module runs. */\n  html[data-mode=\"dark\"], html[data-mode=\"dark\"] body {\n    background: var(--colorNeutralBackground1, #292929);\n    color: var(--colorNeutralForeground1, #ffffff);\n  }\n  body {\n    min-height: 100vh;\n    padding: 16px;\n    box-sizing: border-box;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  .row {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 12px;\n    flex-wrap: wrap;\n  }\n</style>\n</head>\n<body>\n  <div class=\"row\">\n    <fluent-button appearance=\"primary\">Primary</fluent-button>\n    <fluent-button>Secondary</fluent-button>\n    <fluent-button appearance=\"primary\" disabled>Disabled</fluent-button>\n  </div>\n  <script type=\"module\">\n    // Official Fluent design tokens package (native ESM, fully-specified\n    // relative imports, so it loads straight from the CDN with no bundler).\n    // Both themes ship in the same pinned package and are loaded up front, so\n    // applyMode can switch either way without another network round trip.\n    const [light, dark] = await Promise.all([\n      import(\"https://cdn.jsdelivr.net/npm/@fluentui/tokens@1.0.0-alpha.24/lib/themes/web/lightTheme.js\"),\n      import(\"https://cdn.jsdelivr.net/npm/@fluentui/tokens@1.0.0-alpha.24/lib/themes/web/darkTheme.js\"),\n    ]);\n    window.__fluentThemes = { light: light.webLightTheme, dark: dark.webDarkTheme };\n    // Re-apply the already-resolved mode now that the real themes exist; every\n    // later applyMode call (observer or override) finds them itself.\n    window.__applyMode(window.__isDark());\n  </script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": "Registered as <fluent-button> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-checkbox--docs",
+      "demo": null,
+      "note": "Registered as <fluent-checkbox> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "combobox",
+      "name": "Combobox",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-combobox--docs",
+      "demo": null,
+      "note": "Documented in the Storybook but not registered as a custom element in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "button",
+      "name": "Compound Button",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-compound-button--docs",
+      "demo": null,
+      "note": "Registered as <fluent-compound-button> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "badge",
+      "name": "Counter Badge",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-badge-counter-badge--docs",
+      "demo": null,
+      "note": "Registered as <fluent-counter-badge> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-dialog-dialog--docs",
+      "demo": null,
+      "note": "Registered as <fluent-dialog> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "dialog",
+      "name": "Dialog Body",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-dialog-dialog-body--docs",
+      "demo": null,
+      "note": "Registered as <fluent-dialog-body> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-divider--docs",
+      "demo": null,
+      "note": "Registered as <fluent-divider> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-drawer--docs",
+      "demo": null,
+      "note": "Registered as <fluent-drawer> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "drawer",
+      "name": "DrawerBody",
+      "docsUrl": null,
+      "demo": null,
+      "note": "Registered as <fluent-drawer-body> in @fluentui/web-components 3.1.3; no dedicated Storybook docs page."
+    },
+    {
+      "component": "select",
+      "name": "Dropdown",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-dropdown--docs",
+      "demo": null,
+      "note": "Registered as <fluent-dropdown> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "form",
+      "name": "Field",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-field--docs",
+      "demo": null,
+      "note": "Registered as <fluent-field> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": null,
+      "name": "Image",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-image--docs",
+      "demo": null,
+      "note": "Registered as <fluent-image> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "form",
+      "name": "Label",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-label--docs",
+      "demo": null,
+      "note": "Registered as <fluent-label> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "link",
+      "name": "Link",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-link--docs",
+      "demo": null,
+      "note": "Registered as <fluent-link> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "select",
+      "name": "Listbox",
+      "docsUrl": null,
+      "demo": null,
+      "note": "Registered as <fluent-listbox> in @fluentui/web-components 3.1.3; no dedicated Storybook docs page."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-menu--docs",
+      "demo": null,
+      "note": "Registered as <fluent-menu> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Menu Button",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-menu-button--docs",
+      "demo": null,
+      "note": "Registered as <fluent-menu-button> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "MenuItem",
+      "docsUrl": null,
+      "demo": null,
+      "note": "Registered as <fluent-menu-item> in @fluentui/web-components 3.1.3; no dedicated Storybook docs page."
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "MenuList",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-menulist--docs",
+      "demo": null,
+      "note": "Registered as <fluent-menu-list> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "alert",
+      "name": "MessageBar",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-messagebar--docs",
+      "demo": null,
+      "note": "Registered as <fluent-message-bar> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "select",
+      "name": "Option",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-dropdown-option--docs",
+      "demo": null,
+      "note": "Registered as <fluent-dropdown-option> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "progress-bar",
+      "name": "ProgressBar",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-progressbar--docs",
+      "demo": null,
+      "note": "Registered as <fluent-progress-bar> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-radio--docs",
+      "demo": null,
+      "note": "Registered as <fluent-radio> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "radio",
+      "name": "RadioGroup",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-radiogroup--docs",
+      "demo": null,
+      "note": "Registered as <fluent-radio-group> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "rating",
+      "name": "Rating Display",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-rating-display--docs",
+      "demo": null,
+      "note": "Registered as <fluent-rating-display> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-slider--docs",
+      "demo": null,
+      "note": "Registered as <fluent-slider> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "loading",
+      "name": "Spinner",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-spinner--docs",
+      "demo": null,
+      "note": "Registered as <fluent-spinner> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "button",
+      "name": "Split-Button",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-split-button--docs",
+      "demo": null,
+      "note": "Documented in the Storybook but not registered as a custom element in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-switch--docs",
+      "demo": null,
+      "note": "Registered as <fluent-switch> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "tabs",
+      "name": "Tab",
+      "docsUrl": null,
+      "demo": null,
+      "note": "Registered as <fluent-tab> in @fluentui/web-components 3.1.3; no dedicated Storybook docs page."
+    },
+    {
+      "component": "tabs",
+      "name": "Tablist",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-tablist--docs",
+      "demo": null,
+      "note": "Registered as <fluent-tablist> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": null,
+      "name": "Text",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-text--docs",
+      "demo": null,
+      "note": "Registered as <fluent-text> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "textarea",
+      "name": "TextArea",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-textarea--docs",
+      "demo": null,
+      "note": "Registered as <fluent-text-area> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "text-input",
+      "name": "TextInput",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-textinput--docs",
+      "demo": null,
+      "note": "Registered as <fluent-text-input> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "button",
+      "name": "Toggle Button",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-button-toggle-button--docs",
+      "demo": null,
+      "note": "Registered as <fluent-toggle-button> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-tooltip--docs",
+      "demo": null,
+      "note": "Registered as <fluent-tooltip> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": null,
+      "name": "Tree",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-tree--docs",
+      "demo": null,
+      "note": "Registered as <fluent-tree> in @fluentui/web-components 3.1.3."
+    },
+    {
+      "component": null,
+      "name": "Tree-Item",
+      "docsUrl": "https://storybooks.fluentui.dev/web-components/?path=/docs/components-tree-tree-item--docs",
+      "demo": null,
+      "note": "Registered as <fluent-tree-item> in @fluentui/web-components 3.1.3."
+    }
+  ],
+  "sources": [
+    "https://fluent2.microsoft.design",
+    "https://storybooks.fluentui.dev/web-components/",
+    "https://github.com/microsoft/fluentui"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/fluent-2.ts",
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://cdn.jsdelivr.net/npm/@fluentui/web-components@3.1.3/custom-elements.json",
+        "ref": "3.1.3",
+        "retrievedAt": null,
+        "snapshot": "sources/fluent-2"
+      },
+      {
+        "kind": "live-site",
+        "url": "https://storybooks.fluentui.dev/web-components/index.json",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/fluent-2"
+      }
+    ],
+    "notes": "Inventory is the union of two vendored machine-readable sources: the custom-elements.json shipped by @fluentui/web-components 3.1.3 (every registered <fluent-*> element, keyed by its dist/esm/<dir> directory) and the public Storybook's generated index.json (every Components/* docs page, keyed by the src/<dir> its stories are authored in; two directories that differ between the two — option/dropdown-option and textarea/text-area — are aliased onto the element directory). The Storybook tracks the repo's main branch, so it documents a few components the pinned package does not yet register (and a few registered sub-elements have no docs page of their own); the note on each entry says which side it came from. Names are the last segment of the Storybook story title, falling back to the exported class name; docsUrl is the Storybook docs path, null when there is no docs page. The jsdelivr URL carries the package version, so that file is pinned by ref despite being fetched through the live-site snapshot path; the Storybook index URL is not pinned and is stamped with retrievedAt. The Button demo is not derived from the snapshot: it loads the published @fluentui/web-components 3.1.3 bundle and the @fluentui/tokens 1.0.0-alpha.24 web themes from pinned jsDelivr URLs (verified rendering in a browser), so its markup and pinned versions live in this config. Dark mode is a single idempotent applyMode(dark) that stamps or removes data-mode=\"dark\" on <html> (painting the canvas with the dark theme's own colorNeutralBackground1) and re-runs Fluent's setTheme() with webDarkTheme or webLightTheme (lib/themes/web/{darkTheme,lightTheme}.js from the same pinned tokens package, both preloaded), so it switches both ways. An explicit \"mode\" query parameter applies once and disables observation (standalone testing); otherwise the demo resolves dark from the embedding parent document's <html> class list and keeps following it live via a MutationObserver on that element's class attribute, held for the page lifetime. A cross-origin or top-level page has no reachable parent and stays light."
+  }
+}

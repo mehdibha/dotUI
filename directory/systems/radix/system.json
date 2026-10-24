@@ -1,0 +1,17 @@
+{
+  "slug": "radix",
+  "name": "Radix Themes",
+  "org": "WorkOS",
+  "type": "component-library",
+  "upstream": ["radix-primitives", "radix-colors"],
+  "sources": {
+    "docs": "https://www.radix-ui.com/themes/docs/overview/getting-started",
+    "repo": "https://github.com/radix-ui/themes",
+    "site": "https://www.radix-ui.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

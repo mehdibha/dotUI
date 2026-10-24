@@ -1,0 +1,289 @@
+{
+  "$comment": "Canonical component taxonomy. Editorial file (like catalog.json): naming, aliases, and descriptions are curated here; per-system data in systems/<slug>/components.json maps onto these slugs and is extracted, never hand-written.",
+  "version": 1,
+  "createdAt": "2026-08-29",
+  "components": [
+    {
+      "slug": "accordion",
+      "name": "Accordion",
+      "aliases": [
+        "Collapse",
+        "Collapsible",
+        "Disclosure",
+        "Expander",
+        "Details"
+      ],
+      "description": "A stack of headings that expand and collapse to reveal or hide the content beneath each one."
+    },
+    {
+      "slug": "alert",
+      "name": "Alert",
+      "aliases": ["Banner", "Callout", "Message", "Notification"],
+      "description": "An inline, prominent message that tells the user about a state or event they should notice."
+    },
+    {
+      "slug": "avatar",
+      "name": "Avatar",
+      "aliases": [],
+      "description": "A compact visual stand-in for a user or entity — photo, initials, or icon."
+    },
+    {
+      "slug": "badge",
+      "name": "Badge",
+      "aliases": ["Tag", "Chip", "Label", "Pill"],
+      "description": "A tiny annotation attached near another element to convey status, count, or category."
+    },
+    {
+      "slug": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "aliases": ["Breadcrumb trail"],
+      "description": "A horizontal chain of links tracing the current page's position in the site hierarchy."
+    },
+    {
+      "slug": "button",
+      "name": "Button",
+      "aliases": ["Push button", "Action"],
+      "description": "The fundamental trigger control: press it and something happens — submit, open, toggle, confirm."
+    },
+    {
+      "slug": "button-group",
+      "name": "Button group",
+      "aliases": ["Toolbar", "Action group"],
+      "description": "Several related buttons presented as one connected unit."
+    },
+    {
+      "slug": "calendar",
+      "name": "Calendar",
+      "aliases": ["Month view"],
+      "description": "A month-style grid for viewing and picking dates, often the inner surface of a date picker."
+    },
+    {
+      "slug": "card",
+      "name": "Card",
+      "aliases": ["Tile", "Panel"],
+      "description": "A bounded container that groups the content and actions belonging to a single item."
+    },
+    {
+      "slug": "carousel",
+      "name": "Carousel",
+      "aliases": ["Slider", "Content slider", "Gallery"],
+      "description": "A horizontally traversable strip of slides shown one or a few at a time."
+    },
+    {
+      "slug": "checkbox",
+      "name": "Checkbox",
+      "aliases": ["Check box"],
+      "description": "A square toggle for a yes/no choice; in groups it lets users pick any number of options."
+    },
+    {
+      "slug": "combobox",
+      "name": "Combobox",
+      "aliases": ["Autocomplete", "Autosuggest", "Typeahead"],
+      "description": "A text input fused with a filtered listbox: type to narrow the options, then pick one."
+    },
+    {
+      "slug": "date-picker",
+      "name": "Date picker",
+      "aliases": ["Datepicker", "Datetime picker"],
+      "description": "An input for choosing a date, usually pairing a field with a popover calendar."
+    },
+    {
+      "slug": "dialog",
+      "name": "Dialog",
+      "aliases": ["Modal", "Popup", "Modal window"],
+      "description": "A window layered over the page that captures the user's attention — and often their input — before they can continue."
+    },
+    {
+      "slug": "divider",
+      "name": "Divider",
+      "aliases": ["Separator", "Rule", "Hr"],
+      "description": "A thin line (or labeled gap) separating groups of content."
+    },
+    {
+      "slug": "drawer",
+      "name": "Drawer",
+      "aliases": ["Sheet", "Tray", "Flyout", "Side panel"],
+      "description": "A panel that slides in from a screen edge over or beside the page content."
+    },
+    {
+      "slug": "dropdown-menu",
+      "name": "Dropdown menu",
+      "aliases": ["Menu", "Dropdown", "Action menu"],
+      "description": "A button-summoned list of actions or navigation choices, hidden until requested."
+    },
+    {
+      "slug": "empty-state",
+      "name": "Empty state",
+      "aliases": ["Zero state", "Blank slate"],
+      "description": "What a view shows when there is nothing to show — ideally explaining why and offering a next step."
+    },
+    {
+      "slug": "file-upload",
+      "name": "File upload",
+      "aliases": ["File input", "Dropzone", "File uploader"],
+      "description": "An input for sending files from the user's device, by browsing or dragging them in."
+    },
+    {
+      "slug": "footer",
+      "name": "Footer",
+      "aliases": [],
+      "description": "The closing region of a page or section, home to legal text, secondary links, and metadata."
+    },
+    {
+      "slug": "form",
+      "name": "Form",
+      "aliases": ["Fieldset", "Form field"],
+      "description": "The structure that assembles inputs, labels, help text, and validation into a submittable whole."
+    },
+    {
+      "slug": "header",
+      "name": "Header",
+      "aliases": ["Navbar", "App bar", "Top bar"],
+      "description": "The persistent bar across the top of an app or site carrying identity and primary navigation."
+    },
+    {
+      "slug": "icon",
+      "name": "Icon",
+      "aliases": ["Glyph", "Symbol"],
+      "description": "A small pictographic symbol standing in for an action, object, or idea."
+    },
+    {
+      "slug": "kbd",
+      "name": "Keyboard key",
+      "aliases": ["Kbd", "Key cap", "Shortcut hint"],
+      "description": "A typographic rendering of a keyboard key, used when documenting shortcuts."
+    },
+    {
+      "slug": "link",
+      "name": "Link",
+      "aliases": ["Anchor", "Hyperlink"],
+      "description": "Inline navigable text that takes the user somewhere else when activated."
+    },
+    {
+      "slug": "list",
+      "name": "List",
+      "aliases": ["List group", "Stack"],
+      "description": "A vertical arrangement of related items, plain or interactive."
+    },
+    {
+      "slug": "loading",
+      "name": "Loading indicator",
+      "aliases": ["Spinner", "Loader"],
+      "description": "An animated signal that work is happening and the interface hasn't frozen."
+    },
+    {
+      "slug": "pagination",
+      "name": "Pagination",
+      "aliases": ["Pager", "Page navigation"],
+      "description": "Controls for moving through content that has been split across numbered pages."
+    },
+    {
+      "slug": "popover",
+      "name": "Popover",
+      "aliases": [],
+      "description": "A small interactive surface anchored to a trigger element, floating above the page."
+    },
+    {
+      "slug": "progress-bar",
+      "name": "Progress bar",
+      "aliases": ["Progress", "Meter"],
+      "description": "A filling track that shows how much of a task has completed."
+    },
+    {
+      "slug": "progress-steps",
+      "name": "Progress steps",
+      "aliases": ["Stepper", "Steps", "Progress tracker", "Wizard"],
+      "description": "A visualization of a multi-step flow marking finished, current, and upcoming steps."
+    },
+    {
+      "slug": "radio",
+      "name": "Radio button",
+      "aliases": ["Radio", "Radio group"],
+      "description": "A round selector used in groups where exactly one option can be chosen."
+    },
+    {
+      "slug": "rating",
+      "name": "Rating",
+      "aliases": ["Star rating"],
+      "description": "A row of symbols — usually stars — for displaying or capturing a score."
+    },
+    {
+      "slug": "search-input",
+      "name": "Search input",
+      "aliases": ["Search bar", "Search field"],
+      "description": "A text field purpose-built for entering search queries."
+    },
+    {
+      "slug": "segmented-control",
+      "name": "Segmented control",
+      "aliases": ["Toggle group", "Button toggle"],
+      "description": "A connected row of mutually exclusive options, part button group and part radio group."
+    },
+    {
+      "slug": "select",
+      "name": "Select",
+      "aliases": ["Dropdown", "Picker", "Listbox"],
+      "description": "A form input that opens a list of options and holds the chosen one."
+    },
+    {
+      "slug": "skeleton",
+      "name": "Skeleton",
+      "aliases": ["Placeholder", "Shimmer"],
+      "description": "A greyed-out preview of a layout shown while its real content loads."
+    },
+    {
+      "slug": "slider",
+      "name": "Slider",
+      "aliases": ["Range", "Range input"],
+      "description": "A draggable thumb on a track for choosing a value (or range) within bounds."
+    },
+    {
+      "slug": "switch",
+      "name": "Switch",
+      "aliases": ["Toggle", "Toggle switch"],
+      "description": "An on/off control that flips state immediately, styled like a physical switch."
+    },
+    {
+      "slug": "table",
+      "name": "Table",
+      "aliases": ["Data table", "Grid"],
+      "description": "Rows and columns for structured data, often sortable and selectable."
+    },
+    {
+      "slug": "tabs",
+      "name": "Tabs",
+      "aliases": ["Tab bar", "Tab group"],
+      "description": "A row of labeled triggers that swap between panels sharing the same space."
+    },
+    {
+      "slug": "text-input",
+      "name": "Text input",
+      "aliases": ["Input", "Text field", "TextBox"],
+      "description": "The single-line field for typing free text."
+    },
+    {
+      "slug": "textarea",
+      "name": "Textarea",
+      "aliases": ["Multiline input", "Text area"],
+      "description": "A multi-line field for longer free-form text."
+    },
+    {
+      "slug": "timeline",
+      "name": "Timeline",
+      "aliases": ["Activity feed"],
+      "description": "Events laid out along an axis in chronological order."
+    },
+    {
+      "slug": "toast",
+      "name": "Toast",
+      "aliases": ["Snackbar", "Toast notification"],
+      "description": "A transient message that slides in at a screen edge, then dismisses itself."
+    },
+    {
+      "slug": "tooltip",
+      "name": "Tooltip",
+      "aliases": [],
+      "description": "A short text bubble that appears on hover or focus to identify or explain its trigger."
+    }
+  ]
+}

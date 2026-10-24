@@ -1,0 +1,10 @@
+/* dotui.org's own stylesheet: registry tokens and component styles, so the
+   registry components render here exactly as they do on the site. */
+@import "../../www/src/styles.css";
+
+@source "../../www/src";
+@source "./";
+
+:root {
+  --header-height: --spacing(14);
+}
