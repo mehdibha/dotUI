@@ -1,0 +1,20 @@
+{
+  "kind": "live-site",
+  "repo": "https://storybooks.fluentui.dev/web-components/",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "custom-elements.json",
+      "upstreamPath": null,
+      "url": "https://cdn.jsdelivr.net/npm/@fluentui/web-components@3.1.3/custom-elements.json",
+      "sha256": "e460a61de0cd6f99ec6caedc203db681d95ac16332d3b296b50484b79ad61329"
+    },
+    {
+      "path": "storybook-index.json",
+      "upstreamPath": null,
+      "url": "https://storybooks.fluentui.dev/web-components/index.json",
+      "sha256": "69197ee6bb280301650aaa494fca0aeed296d914caa5297d4befea1827ca0bbc"
+    }
+  ]
+}

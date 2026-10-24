@@ -1,0 +1,309 @@
+{
+  "https://www.headspace.com/login": {
+    "mode": "light",
+    "settle": 3000,
+    "parts": {
+      "input": {
+        "selector": "[data-testid=text-input-field]",
+        "ink": "input"
+      },
+      "input.focus": {
+        "selector": "[data-testid=text-input-field]",
+        "before": [
+          {
+            "focus": "input[name=username]"
+          }
+        ],
+        "only": ["edge"]
+      },
+      "button.primary": {
+        "selector": "button[type=submit][data-testid=button]"
+      },
+      "link": {
+        "text": "Sign up for free"
+      },
+      "button.focus": {
+        "selector": "button[type=submit][data-testid=button]",
+        "focus": true
+      }
+    }
+  },
+  "https://www.headspace.com/": {
+    "mode": "light",
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "#onetrust-reject-all-handler"
+      }
+    ],
+    "parts": {
+      "page": {
+        "selector": "body",
+        "skip": ["color"]
+      },
+      "toggle": {
+        "selector": "[data-testid=deeper-dive-tabs-link-1]"
+      },
+      "toggle.on": {
+        "selector": "[data-testid=deeper-dive-tabs-link-0-active]"
+      },
+      "heading.1": {
+        "selector": "[data-testid=quotes-title]",
+        "skip": ["fontSize"]
+      },
+      "heading.2": {
+        "selector": "[data-testid=accordion-module-title]",
+        "skip": ["fontSize"]
+      },
+      "heading.3": {
+        "selector": "[data-testid=need-state-container-title]",
+        "skip": ["fontSize"]
+      }
+    }
+  },
+  "https://www.headspace.com/app": {
+    "mode": "light",
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "#onetrust-reject-all-handler"
+      }
+    ],
+    "parts": {
+      "card": {
+        "selector": ".threeCard"
+      }
+    }
+  },
+  "https://www.headspace.com/sleep": {
+    "mode": "light",
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "#onetrust-reject-all-handler"
+      }
+    ],
+    "parts": {
+      "pagination.current": {
+        "within": "[data-testid=article-grid-pagination]",
+        "selector": "button[disabled]",
+        "text": "1"
+      }
+    }
+  },
+  "https://www.headspace.com/subscriptions": {
+    "mode": "light",
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "#onetrust-reject-all-handler"
+      }
+    ],
+    "parts": {
+      "badge.accent": {
+        "selector": "[data-testid=subscription-plan-tag-text]"
+      }
+    }
+  },
+  "https://www.headspace.com/content/meditation/youre-worthy-of-love/7976": {
+    "mode": "light",
+    "settle": 3000,
+    "steps": [
+      {
+        "click": "#onetrust-reject-all-handler"
+      }
+    ],
+    "parts": {
+      "button.secondary": {
+        "selector": "button[data-testid=button]",
+        "text": "Play Sample"
+      },
+      "text": {
+        "selector": "[data-testid=media-banner-content]",
+        "skip": ["color"]
+      },
+      "heading.4": {
+        "selector": "h1[data-testid=content-hero-contentTitle]",
+        "skip": ["fontSize", "color"]
+      }
+    }
+  },
+  "ds.html#light": {
+    "mode": "light",
+    "settle": 1500,
+    "parts": {
+      "button.quiet": {
+        "selector": "[data-ref=\"button.quiet\"]"
+      },
+      "button.icon": {
+        "selector": "[data-ref=\"button.icon\"]"
+      },
+      "segmented": {
+        "selector": "[data-ref=\"segmented\"]"
+      },
+      "segmented.item": {
+        "selector": "[data-ref=\"segmented.item\"]"
+      },
+      "segmented.selected": {
+        "selector": "[data-ref=\"segmented.selected\"]"
+      },
+      "select.trigger": {
+        "selector": "[data-ref=\"select.trigger\"]"
+      },
+      "menu": {
+        "selector": "[data-ref=\"menu\"]"
+      },
+      "menu.item": {
+        "selector": "[data-ref=\"menu.item\"]"
+      },
+      "checkbox": {
+        "selector": "[data-ref=\"checkbox\"]"
+      },
+      "checkbox.checked": {
+        "selector": "[data-ref=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-ref=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-ref=\"radio.checked\"]"
+      },
+      "switch.off": {
+        "selector": "[data-ref=\"switch.off\"]"
+      },
+      "switch.on": {
+        "selector": "[data-ref=\"switch.on\"]"
+      },
+      "tab": {
+        "selector": "[data-ref=\"tab\"]"
+      },
+      "tab.selected": {
+        "selector": "[data-ref=\"tab.selected\"]"
+      },
+      "badge": {
+        "selector": "[data-ref=\"badge\"]"
+      },
+      "text.muted": {
+        "selector": "[data-ref=\"text.muted\"]"
+      },
+      "dialog": {
+        "selector": "[data-ref=\"dialog\"]"
+      }
+    }
+  },
+  "ds.html#dark": {
+    "mode": "dark",
+    "settle": 1500,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.primary": {
+        "selector": "[data-ref=\"button.primary\"]"
+      },
+      "button.secondary": {
+        "selector": "[data-ref=\"button.secondary\"]"
+      },
+      "toggle": {
+        "selector": "[data-ref=\"toggle\"]",
+        "skip": ["paddingInline", "fontSize", "fontWeight", "letterSpacing"]
+      },
+      "toggle.on": {
+        "selector": "[data-ref=\"toggle.on\"]",
+        "skip": ["paddingInline", "fontSize", "fontWeight", "letterSpacing"]
+      },
+      "input": {
+        "selector": "[data-ref=\"input\"]",
+        "ink": "input"
+      },
+      "input.focus": {
+        "selector": "[data-ref=\"input.focus\"]",
+        "before": [
+          {
+            "focus": "[data-ref=\"input.focus\"] input"
+          }
+        ],
+        "only": ["edge"]
+      },
+      "link": {
+        "selector": "[data-ref=\"link\"]"
+      },
+      "heading.1": {
+        "selector": "[data-ref=\"heading.1\"]",
+        "skip": ["fontSize"]
+      },
+      "heading.2": {
+        "selector": "[data-ref=\"heading.2\"]",
+        "skip": ["fontSize"]
+      },
+      "heading.3": {
+        "selector": "[data-ref=\"heading.3\"]",
+        "skip": ["fontSize"]
+      },
+      "heading.4": {
+        "selector": "[data-ref=\"heading.4\"]",
+        "skip": ["fontSize"]
+      },
+      "text": {
+        "selector": "[data-ref=\"text\"]"
+      },
+      "button.quiet": {
+        "selector": "[data-ref=\"button.quiet\"]"
+      },
+      "button.icon": {
+        "selector": "[data-ref=\"button.icon\"]"
+      },
+      "segmented": {
+        "selector": "[data-ref=\"segmented\"]"
+      },
+      "segmented.item": {
+        "selector": "[data-ref=\"segmented.item\"]"
+      },
+      "segmented.selected": {
+        "selector": "[data-ref=\"segmented.selected\"]"
+      },
+      "select.trigger": {
+        "selector": "[data-ref=\"select.trigger\"]"
+      },
+      "menu": {
+        "selector": "[data-ref=\"menu\"]"
+      },
+      "menu.item": {
+        "selector": "[data-ref=\"menu.item\"]"
+      },
+      "checkbox": {
+        "selector": "[data-ref=\"checkbox\"]"
+      },
+      "checkbox.checked": {
+        "selector": "[data-ref=\"checkbox.checked\"]"
+      },
+      "radio": {
+        "selector": "[data-ref=\"radio\"]"
+      },
+      "radio.checked": {
+        "selector": "[data-ref=\"radio.checked\"]"
+      },
+      "switch.off": {
+        "selector": "[data-ref=\"switch.off\"]"
+      },
+      "switch.on": {
+        "selector": "[data-ref=\"switch.on\"]"
+      },
+      "tab": {
+        "selector": "[data-ref=\"tab\"]"
+      },
+      "tab.selected": {
+        "selector": "[data-ref=\"tab.selected\"]"
+      },
+      "badge": {
+        "selector": "[data-ref=\"badge\"]"
+      },
+      "text.muted": {
+        "selector": "[data-ref=\"text.muted\"]"
+      },
+      "dialog": {
+        "selector": "[data-ref=\"dialog\"]"
+      }
+    }
+  }
+}

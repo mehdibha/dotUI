@@ -1,0 +1,225 @@
+{
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "Polaris 0.66px (`border-width-0165`) #8a8a8a on fields, selects and checkboxes (Chrome rounds the field borders to 1px at DPR 1)",
+      "standin": "Polaris `controlEdge: strong`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Polaris 28px at 13px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.panel-edge",
+      "title": "Inset page panel with no edge while cards and overlays keep a 1px line",
+      "note": "the Shopify Admin's #f1f1f1 page panel sits beside the #ebebeb sidebar and under the black top bar with no edge, while its cards, menus, tooltips and the modal draw a 1px ring (`rgba(0, 0, 0, 0.06)`, #e2e2e2 over the page) under soft shadows (signed in)",
+      "standin": "`surfaceEdge: line` also rims the sidebar inset (`panel` edge 1px, oklab L 0.90); `bevel` leaves the panel clear but drops the card, menu and dialog lines (3 rows off)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "Weights between the standard steps",
+      "note": "Polaris's live Admin (now on Polaris web components, signed in) body, field values, field labels and menu rows at 450, buttons, tabs and nav rows at 550, the current nav row and page and card titles at 600 (Polaris React set 650 and 700)",
+      "standin": "400 / 500 / 600 (neutral links at 500), so Polaris's 450 and 550 measure 50 light (its 600 steps match with `navItemWeight: medium-semibold`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "Polaris #fdfdfd fields and selects behind a 0.66px #8a8a8a edge, on white cards and the #f1f1f1 page alike",
+      "standin": "on Polaris it reads as #f0f1f1, ΔE 0.037)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Polaris heavier, page headings at 700 (3xl 36px, 2xl 30px, xl 24px) and 650 (lg 20px) while card titles stay 13/650 and modal titles 14/650",
+      "standin": "Polaris takes `compact` for its small card titles, 100 light on 3xl to xl",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Polaris 4px on a 20px key (`KeyboardKey size=\"small\"`, #f3f3f3 fill, 12/550 #616161 label)",
+      "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "state.invalid-field",
+      "title": "Invalid fields keep the label's ink",
+      "note": "Polaris a #fee8eb fill behind a 1px #8e0b21 edge with a 13px #8e0b21 message and icon, the label staying #303030",
+      "standin": "`invalidStyle: edge` and `tint` turn the label red too (Polaris's `tint` matches the fill and edge by eye, not probed)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Polaris sidebar rows #303030 at 550, the current at 650 on a #fafafa chip over the #ebebeb sidebar, and its segmented buttons",
+      "standin": "Polaris 0.192 on segmented and on idle rows with `navItemWeight: medium-semibold`, 500 / 600, the chip on the page tone, ΔE 0.029",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Polaris headings -0.54px at 36px, -0.3px at 30px, -0.2px at 24px and 20px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Pill tabs at button size: Polaris 28px with 12px padding at 12/550",
+      "standin": "a 32px list with 6px padding on Polaris",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Wider: Polaris 12px on 28px buttons and pill tabs",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Polaris neutral badges, #616161 on 6% black (#f0f0f0 on white)",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude); the neutral badge fill is #f8f9fa / #19191b (Polaris fill ΔE 0.012",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-fill",
+      "title": "Checkboxes filled with the field surface",
+      "note": "Polaris #fff checkboxes and radios, 16px, 4px corners",
+      "standin": "Polaris reads as #f0f1f1, ΔE 0.043)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "Polaris's turns ink #1a1a1a over a #f7f7f7 fill under the 2px brand ring (#005bd3) 1px out",
+      "standin": "Polaris 0.349",
+      "source": "ledger"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "Polaris actions at 12px (buttons, tabs, badges, keycaps) while field and select values, menu rows and tooltips set 13px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Polaris 32×16",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Polaris the field fill #fdfdfd inside 1px #8a8a8a, on #303030 with no edge",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-pill",
+      "title": "Pill tab tones",
+      "note": "Polaris idle labels in #4a4a4a (between body and muted ink); The selected chip a fainter wash than the toggles' selected fill: Polaris 8% black (#ebebeb on a white card)",
+      "standin": "`tabStyle: pill`: idle labels in muted ink (Polaris ΔE 0.092); the chip takes the toggles' selected fill (Polaris ΔE 0.050",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-fill",
+      "title": "Progress fill in the info color",
+      "note": "#91d0ff (`bg-fill-info`) on #e3e3e3, while the brand stays #005bd3",
+      "standin": "`progressColor: accent` (the #005bd3 brand)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress",
+      "title": "Progress corners apart from the other tracks",
+      "note": "Polaris rounds its 16px bar at 4px",
+      "standin": "`tracks: round` rounds switch, slider and progress together (a pill: +4px on Polaris); `follow` squares or rounds the switch with them",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-joined",
+      "title": "Segmented control as joined buttons",
+      "note": "each item a full secondary button (white fill, the bevel, 28px, 12px padding, 12/550 in full ink) butted against the next, square inner corners and 8px outer ones, no track; the pressed item on #cccccc under an inset shadow (`ButtonGroup variant=\"segmented\"`)",
+      "standin": "`segmentedTrack: outline` with `segmentedSelected: tone`: a 32px bordered track around clear 24–26px items, 9px item corners, a lighter chip (ΔE 0.045)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Polaris 12/450 (`bodySm`), today 700",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Polaris's Modal at 620px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Polaris 8px padding, 28px tall, 13/450 text (tighter than ours but a text size up, so padding and text size have to move apart)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Polaris's `dark-experimental` goes the other way, a bigger lift: cards, menus, dialogs and tooltips on #303030 over the #1a1a1a page (low priority, Shopify ships no production dark mode)",
+      "standin": "Polaris surfaces at 0.24–0.26 over the 0.21 page, ΔE 0.049–0.068",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Badge corners at the control radius",
+      "note": "8px on a 20px badge (`border-radius-200`), between a small rung and a pill",
+      "standin": "`badgeShape: pill` (10px); `rounded` gives 4px",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Categorical label colors (tags, labels, avatars)",
+      "note": "Polaris puts initials avatars on a palette color picked from the name (#52f490 with #014b40 initials for \"MB\"), 28px with 6px corners",
+      "standin": "hardcoded in demos; Polaris: neutral avatars (`avatarShape: rounded`)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.alert-header",
+      "title": "Banners with a solid status header",
+      "note": "a filled strip with the icon and a 13/650 title (warning #ffb800, info #91d0ff) over a white body; inside a card, a compact tinted row with an icon",
+      "standin": "`alertStyle: soft`: one tint over the whole alert, the in-card look",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Polaris 0.068, the same step for `buttonColor: neutral` fills",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Polaris #e3e3e3",
+      "standin": "Polaris 0.041",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Field edges between the firm and strong lines",
+      "note": "Polaris #8a8a8a (L 0.63), with a cooler #898f94 top edge on fields",
+      "standin": "`strong` on Polaris (neutral-700, L 0.60; ΔE 0.033 on selects, 0.048 on fields)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Labels on brand solids in a set color",
+      "note": "Polaris #fff labels on its #303030 charcoal primaries (`dark-experimental` flips it, #303030 on #fff)",
+      "standin": "on Polaris the on-fill ink lands on the page tone, L 0.957 (ΔE 0.043)",
+      "source": "ledger"
+    }
+  ]
+}

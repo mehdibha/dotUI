@@ -16,7 +16,7 @@ import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
 import puppeteer from "puppeteer"
 
-import { executablePath } from "./chromium"
+import { executablePath } from "@dotui/capture/chromium"
 
 const { values: args } = parseArgs({
   options: {

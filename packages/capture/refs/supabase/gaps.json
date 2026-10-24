@@ -1,0 +1,179 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Supabase's Studio product-menu rows 24.6px, padded 12px, at 13/450 with 8px corners, beside 26px buttons (signed in)",
+      "standin": "32px rows (padded 8px at 14px at Supabase's compact",
+      "source": "ledger"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "Weights between the standard steps",
+      "note": "Supabase Inter at 450 for body copy, field values, tabs, nav rows, menu and ⌘K rows and tooltips, links inheriting it",
+      "source": "ledger"
+    },
+    {
+      "look": "size.keycap",
+      "title": "Keycap size apart from the density",
+      "note": "Smaller: Supabase Studio's header ⌘K chip 17px tall with 11px labels at 450, 5px padding and 5.33px corners, beside 26px buttons (its ⌘K and rail tooltip keys look the same size)",
+      "standin": "20px keycaps at 12/500 in muted ink (13/500 at Supabase's `uiTextSize: 13`, +3px tall, +2px text)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Supabase menu, ⌘K and dashboard nav rows in foreground-light (oklch 0.39 / 0.80), the current nav row in full ink (0.10 / 0.95) at 600 on #f3f3f3 / #1e1e1e, inactive tabs a step lighter (0.52 / 0.68, from the docs)",
+      "standin": "menu rows in body ink (Supabase ΔE 0.15 / 0.16; its nav rows in muted ink, ΔE 0.107 in light, the current row matched by `navItemWeight: regular-semibold`)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Supabase keycap labels at -0.025em (-0.275px at 11px) on the ⌘K chip, body and controls untracked",
+      "standin": "Supabase's keycaps by 0.3px); `titleStyle: tight` gives -0.6px at 24px and tracks every heading",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Supabase 10px on its 26px buttons and 12px on some default ones (Restart project), signed in and on the dashboard sign-in page",
+      "standin": "`compact` pads 8px on buttons (Supabase -2px, -4px on Restart project) and 6px on tabs",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "Supabase's edge steps darker (#b0b0b0 / #4d4f4d) under a 2px mint ring at 55%, 2px out",
+      "standin": "`focusInputStyle: ring` also turns the edge to the selection color (Supabase ΔE 0.18 / 0.27",
+      "source": "ledger"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "Supabase buttons, menu rows, tooltips and segmented items at 12px while fields, select triggers, line tabs, nav rows, toggles and field labels set 13px (the signed-in dashboard agrees: New project and Restart project at 12/500, the project-name field and its label at 13/450, product-menu rows at 13)",
+      "standin": "one UI size per density: `density: compact` gives every control 12px, `uiTextSize: 13` every control 13px (Supabase keeps `uiTextSize: 13`, right on fields, labels, selects, tabs and toggles and 1px large on buttons, menu rows, tooltips and segmented items: 14 rows each way",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "Supabase's at the text's size and weight (13/450) in foreground-light, underlined",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.radio-edge",
+      "title": "Radios edged in the brand, checked or not",
+      "note": "Supabase's RadioGroup items draw a 1px `border-primary` edge (oklch 0.525 0.12 / 0.76 0.15) while checkboxes keep the gray control edge",
+      "standin": "`checkEdge: fields`, the gray field line at rest (ΔE 0.378 / 0.411); checked radios take the selection mint (ΔE 0.129 / 0.109)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "No plate at rest: Supabase's Toggle and ToggleGroup items have no fill, edge or shadow (foreground-light ink, 6px corners), stepping to the accent tone when on (#f3f3f3 / #1e1e1e under foreground ink), while its default button is a raised plate; shadcn's default Toggle is the same",
+      "standin": "ToggleButton shares the secondary button's look: on Supabase (`buttonSecondary: raised`) an edge and a drop at rest",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-trackless",
+      "title": "Segmented control with no track",
+      "note": "Supabase's toggle group (26px items at 12/500, foreground-light ink at rest) has no fill or edge behind the items, the selected one on a sliding chip on the accent tone (see the flat segmented chip row)",
+      "standin": "`segmentedTrack: outline` draws a 1px track edge (on Supabase 8px corners at 32px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Supabase 34×20, 16px knob",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Supabase #f3f3f3 / #1e1e1e inside a 1px #dfdfdf / #2d2d2d ring; Radix, Supabase and Untitled UI keep the ring when the switch is on, over the accent track (Supabase's mint #2caa6f / #56cf92)",
+      "standin": "ΔE 0.059 / 0.053 on Geist, 0.069 on Stripe, 0.080 / 0.142 on Supabase)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.calendar-selected",
+      "title": "Calendar selection in the brand while checkboxes stay ink",
+      "note": "Supabase the selected day on a mint fill (#6ecfa1 / #214231) under body ink, while checked boxes are ink (oklch 0.10 / 0.95)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Flat segmented chip, a pale tone or the page color with no shadow",
+      "note": "Supabase's sliding chip on the accent tone (#f3f3f3 / #1e1e1e), 4px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Supabase's ⌘K menu at 576px, 500px tall",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Supabase 43px rows at 13/450 under a 56px search at 15px",
+      "standin": "`large` sets 16px text and 20px icons and gives 48px rows (40px at compact, Supabase's density)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Supabase dialogs, tooltips and ⌘K on the page tone (oklch 0.19) under cards (0.215), dropdown menus a step up (0.24)",
+      "standin": "0.23 on Supabase, ΔE 0.043",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Smaller: Supabase 17px pills with 9px uppercase labels at 500 and 0.63px tracking",
+      "standin": "20px, 7px padding, 12/500 (Supabase and Higgsfield: 20px at 11px with `badgeCase: uppercase`",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.badge-edge",
+      "title": "Soft badges with a saturated status edge",
+      "note": "the success badge draws a strong edge (#16b674 / #006239) around a pale tint (#e9f8f1 / #17261f), labelled #097c4f / #85e0ba",
+      "standin": "`badgeStyle: soft-outline` draws the edge in a pale tint (ΔE 0.199 / 0.079)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.table-header",
+      "title": "Table header labels in mono caps",
+      "note": "12/500 Source Code Pro, uppercase, 0.6px tracking, in muted ink (oklch 0.52 / 0.68), a 40px header over 52px rows",
+      "standin": "`sectionLabels: mono-caps` doesn't reach table headers, which stay sentence case in the body font (`tableHeaderLabel: muted`)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Supabase's plate deepens in dark (oklch 0.525 → 0.436) while its mint brightens (focus ring and on switch 0.70 → 0.76)",
+      "standin": "Supabase dark plate 0.088, ring 0.090, switch 0.109",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Supabase 0.141",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Supabase body copy, badges and links in foreground-light (form labels too in the design-system docs, but full ink in the Studio dashboard) (oklch 0.39 / 0.80) under headings and values in foreground (0.10 / 0.95)",
+      "standin": "Supabase 0.15 / 0.16 on body text",
+      "source": "ledger"
+    },
+    {
+      "look": "color.overlay-line",
+      "title": "Overlay hairlines apart from card edges",
+      "note": "Supabase in dark menus #3a3b3a, fields #2d2e2d, cards #282a29, and dialogs, tooltips and ⌘K dimmest at #232423, in light menus #dadada vs #e8e8e8–#eaeaea elsewhere",
+      "standin": "Supabase ΔE 0.029–0.052)",
+      "source": "ledger"
+    }
+  ]
+}

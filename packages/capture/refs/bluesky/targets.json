@@ -1,0 +1,194 @@
+{
+  "https://bsky.app/profile/bsky.app": {
+    "settle": 2500,
+    "parts": {
+      "page": {
+        "selector": "body",
+        "only": ["backgroundColor"]
+      },
+      "button.primary": {
+        "selector": "button[aria-label='Create account']",
+        "ink": "div"
+      },
+      "button.secondary": {
+        "selector": "button[aria-label='Sign in']",
+        "ink": "div"
+      },
+      "button.icon": {
+        "selector": "[data-testid=profileHeaderDropdownBtn]"
+      },
+      "button.focus": {
+        "selector": "button[aria-label='Create account']",
+        "focus": true
+      },
+      "tab": {
+        "selector": "[data-testid=profilePager-selector-1]",
+        "ink": "[data-testid=profilePager-Media]",
+        "skip": ["backgroundColor", "borderRadius", "edge", "boxShadow"]
+      },
+      "tab.selected": {
+        "selector": "[data-testid=profilePager-selector-0]",
+        "ink": "[data-testid=profilePager-Posts]",
+        "skip": ["backgroundColor", "borderRadius", "edge", "boxShadow"]
+      },
+      "heading.1": {
+        "selector": "[data-testid=profileHeaderDisplayName]",
+        "only": ["color", "fontWeight"]
+      },
+      "text": {
+        "selector": "[data-testid=postText]",
+        "only": ["color", "fontSize", "fontWeight"]
+      },
+      "text.muted": {
+        "selector": "div:has(> div > button[aria-label='Trending options']) a[role=link] > div > div:last-child",
+        "only": ["color", "fontWeight"]
+      },
+      "link": {
+        "selector": "[data-testid=postText] a[role=link]",
+        "only": ["color", "fontWeight"]
+      },
+      "card": {
+        "selector": "div:has(> div > button[aria-label='Trending options'])",
+        "only": ["backgroundColor", "borderRadius", "edge", "boxShadow"]
+      },
+      "menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=postDropdownBtn]"
+          }
+        ],
+        "only": [
+          "backgroundColor",
+          "color",
+          "borderRadius",
+          "boxShadow",
+          "edge"
+        ]
+      },
+      "menu.item": {
+        "selector": "[role=menuitem]",
+        "before": [
+          {
+            "click": "[data-testid=postDropdownBtn]"
+          }
+        ],
+        "ink": "div",
+        "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
+      },
+      "tooltip": {
+        "selector": "a[data-tooltip]",
+        "box": "::after",
+        "before": [
+          {
+            "hover": "a[data-tooltip]"
+          }
+        ],
+        "only": ["backgroundColor", "borderRadius"]
+      }
+    }
+  },
+  "https://bsky.app/profile/bsky.app#sign-in": {
+    "settle": 2500,
+    "steps": [
+      {
+        "click": "button[aria-label='Sign in']"
+      },
+      {
+        "wait": "[data-testid=loginForm]"
+      }
+    ],
+    "parts": {
+      "input": {
+        "selector": "div:has(> [data-testid=loginPasswordInput])",
+        "box": "input ~ div",
+        "ink": "input",
+        "skip": ["paddingInline"]
+      },
+      "input.focus": {
+        "selector": "div:has(> [data-testid=loginUsernameInput])",
+        "box": "input ~ div",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "[data-testid=loginForm] > div:nth-child(2) > div:first-child"
+      },
+      "button.quiet": {
+        "selector": "[data-testid=selectServiceButton]",
+        "ink": "div"
+      }
+    }
+  },
+  "https://bsky.app/profile/bsky.app#hosting-provider": {
+    "settle": 2500,
+    "parts": {
+      "segmented": {
+        "selector": "[role=dialog] [role=tablist]",
+        "before": [
+          {
+            "click": "button[aria-label='Sign in']"
+          },
+          {
+            "click": "[data-testid=selectServiceButton]"
+          },
+          {
+            "wait": "[role=dialog] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.selected": {
+        "selector": "[role=dialog] [role=tablist] > div:first-child",
+        "only": [
+          "backgroundColor",
+          "borderRadius",
+          "height",
+          "boxShadow",
+          "edge"
+        ],
+        "before": [
+          {
+            "click": "button[aria-label='Sign in']"
+          },
+          {
+            "click": "[data-testid=selectServiceButton]"
+          },
+          {
+            "wait": "[role=dialog] [role=tablist]"
+          }
+        ]
+      },
+      "segmented.item": {
+        "selector": "[data-testid=manualSelectBtn]",
+        "ink": "div",
+        "skip": ["backgroundColor"],
+        "before": [
+          {
+            "click": "button[aria-label='Sign in']"
+          },
+          {
+            "click": "[data-testid=selectServiceButton]"
+          },
+          {
+            "wait": "[role=dialog] [role=tablist]"
+          }
+        ]
+      }
+    }
+  },
+  "https://bsky.app/profile/bsky.app#embed": {
+    "settle": 2500,
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "[data-testid=postShareBtn]"
+          },
+          {
+            "click": "::-p-text(Embed post)"
+          }
+        ]
+      }
+    }
+  }
+}
