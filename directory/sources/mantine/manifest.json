@@ -1,0 +1,14 @@
+{
+  "kind": "live-site",
+  "repo": "https://mantine.dev",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "sitemap.xml",
+      "upstreamPath": null,
+      "url": "https://mantine.dev/sitemap.xml",
+      "sha256": "cc23642fa34adbfa0eb766b2aa5ba201f52e79e4f0c811b12fe627656d376f1f"
+    }
+  ]
+}

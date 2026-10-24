@@ -2,11 +2,14 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
+import { bluesky } from "./bluesky"
 import { carbon } from "./carbon"
 import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
+import { govuk } from "./govuk"
+import { guardian } from "./guardian"
 import { headspace } from "./headspace"
 import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
@@ -43,6 +46,9 @@ export const PRESETS: Preset[] = [
   carbon,
   wise,
   higgsfield,
+  govuk,
+  bluesky,
+  guardian,
   headspace,
 ]
 

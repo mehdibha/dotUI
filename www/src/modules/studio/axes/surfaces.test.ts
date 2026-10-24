@@ -67,7 +67,7 @@ const HALF = "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))"
 const QUARTER = "color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100))"
 const WHITE = "oklch(1 0 0)"
 
-/* The first Style that allows every value (Bevel edges under Tactile). */
+/* The first Style that allows every value (Bevel edges under Polished). */
 const ownerOf = (values: Partial<typeof DEFAULTS>) =>
   STYLE_VALUES.find((style) =>
     Object.entries(values).every(

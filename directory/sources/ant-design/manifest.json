@@ -1,0 +1,20 @@
+{
+  "kind": "live-site",
+  "repo": "https://ant.design",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "antd-index.js",
+      "upstreamPath": null,
+      "url": "https://cdn.jsdelivr.net/npm/antd@6.6.2/es/index.js",
+      "sha256": "50fca853ce602287ff5e95e547648f7f316f3b05e19206d3f068f1a198dd5110"
+    },
+    {
+      "path": "sitemap.xml",
+      "upstreamPath": null,
+      "url": "https://ant.design/sitemap.xml",
+      "sha256": "b30885ec31e1f82c1ee36d32a12c5a6d08fcd81c00246766808f16434819f910"
+    }
+  ]
+}
