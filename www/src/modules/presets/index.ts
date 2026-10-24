@@ -10,6 +10,7 @@ import { duolingo } from "./duolingo"
 import { github } from "./github"
 import { govuk } from "./govuk"
 import { guardian } from "./guardian"
+import { headspace } from "./headspace"
 import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
@@ -48,6 +49,7 @@ export const PRESETS: Preset[] = [
   govuk,
   bluesky,
   guardian,
+  headspace,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
