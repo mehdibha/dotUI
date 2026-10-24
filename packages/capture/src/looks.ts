@@ -73,6 +73,10 @@ export const LOOKS = {
     "input paddingInline",
     "select.trigger paddingInline",
   ),
+  "size.field-height": look(
+    "Field height between the control steps",
+    "input height",
+  ),
   "size.command-row": look("Command palette row height", "command.item height"),
   "size.menu-inset": look(
     "Menu label inset",
@@ -215,6 +219,7 @@ export const LOOKS = {
   "surface.card-dark": look("Dark cards on the page tone"),
   "surface.overlay-dark": look("Dark overlays on the card or page tone"),
   "surface.tooltip-dark": look("Tooltips that stay dark in dark mode"),
+  "surface.tooltip-chip": look("Tooltips as a mid-gray chip"),
   "surface.scrim": look("Dialog scrim per mode and kind"),
   "surface.hairline-width": look("Half-pixel hairlines"),
   "surface.field-layer": look("Layer-aware fields"),
@@ -317,6 +322,9 @@ export const LOOKS = {
   "state.disabled": look("Disabled treatment"),
 
   "anatomy.shell-header": look("Full-width header above the side nav"),
+  "anatomy.nav-filled-icon": look(
+    "Current nav item marked by weight and a filled icon",
+  ),
   "anatomy.button-layout": look("Button layout with a trailing icon slot"),
   "anatomy.field-label-inside": look("Labels inside the field"),
   "anatomy.choice-card": look("Choice card radio placement"),
@@ -330,6 +338,7 @@ export const LOOKS = {
   "anatomy.calendar-weekend": look("Weekend columns banded"),
   "anatomy.notification": look("Notifications with a status stripe"),
   "anatomy.menu-dividers": look("Hairlines between options"),
+  "anatomy.menu-trailing-icon": look("Menu icons after the label"),
   "anatomy.dialog-header": look("Dialog title centered in the header"),
   "anatomy.dialog-centered": look("Centered dialog content"),
   "anatomy.dialog-close": look("Dialogs with no close button"),
