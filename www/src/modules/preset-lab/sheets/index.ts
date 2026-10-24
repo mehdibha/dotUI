@@ -1,3 +1,5 @@
+import type { SheetName } from "@dotui/capture/sheets"
+
 import { ActionsSheet } from "./actions"
 import { CommandSheet } from "./command"
 import { DatesSheet } from "./dates"
@@ -23,6 +25,6 @@ export const SHEETS = {
   display: DisplaySheet,
   dates: DatesSheet,
   type: TypeSheet,
-}
+} satisfies Record<SheetName, unknown>
 
-export type SheetName = keyof typeof SHEETS
+export type { SheetName }

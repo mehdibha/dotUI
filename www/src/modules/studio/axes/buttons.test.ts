@@ -210,7 +210,7 @@ describe("buttons axes", () => {
     })
     expect(state.buttonSecondary).toBe("solid")
     expect(
-      designSystemOf({ ...state, style: "tactile" }).componentParams.button
+      designSystemOf({ ...state, style: "polished" }).componentParams.button
         ?.secondary,
     ).toBe("bevel")
     expect(

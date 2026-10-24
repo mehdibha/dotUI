@@ -2,17 +2,22 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
+import { america } from "./america"
+import { bluesky } from "./bluesky"
 import { carbon } from "./carbon"
 import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
 import { govuk } from "./govuk"
+import { guardian } from "./guardian"
+import { headspace } from "./headspace"
 import { higgsfield } from "./higgsfield"
 import { linear } from "./linear"
 import { material3 } from "./material3"
 import { notion } from "./notion"
 import { origin } from "./origin"
+import { pinterest } from "./pinterest"
 import { polaris } from "./polaris"
 import type { Preset, PresetMeta } from "./preset"
 import { radix } from "./radix"
@@ -22,6 +27,7 @@ import { supabase } from "./supabase"
 import { untitled } from "./untitled"
 import { vercel } from "./vercel"
 import { wise } from "./wise"
+import { zara } from "./zara"
 
 export const PRESETS: Preset[] = [
   origin,
@@ -44,6 +50,12 @@ export const PRESETS: Preset[] = [
   wise,
   higgsfield,
   govuk,
+  bluesky,
+  guardian,
+  headspace,
+  pinterest,
+  zara,
+  america,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
