@@ -1,0 +1,4 @@
+# Emitted by `pnpm build:data`: the data index, and the demo pages from
+# systems/*/components.json.
+src/data/__generated__/
+public/demos/

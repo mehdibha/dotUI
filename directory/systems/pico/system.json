@@ -1,0 +1,17 @@
+{
+  "slug": "pico",
+  "name": "Pico CSS",
+  "org": "Pico CSS",
+  "type": "styling-distribution",
+  "upstream": [],
+  "sources": {
+    "docs": "https://picocss.com/docs",
+    "repo": "https://github.com/picocss/pico",
+    "site": "https://picocss.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

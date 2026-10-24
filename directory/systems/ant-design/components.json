@@ -1,0 +1,537 @@
+{
+  "components": [
+    {
+      "component": null,
+      "name": "Affix",
+      "docsUrl": "https://ant.design/components/affix",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "alert",
+      "name": "Alert",
+      "docsUrl": "https://ant.design/components/alert",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Anchor",
+      "docsUrl": "https://ant.design/components/anchor",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "App",
+      "docsUrl": "https://ant.design/components/app",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "combobox",
+      "name": "AutoComplete",
+      "docsUrl": "https://ant.design/components/auto-complete",
+      "demo": null,
+      "note": "An input with a dropdown of suggestions — Ant Design’s take on the canonical combobox; Select with `showSearch` covers the same ground from the select side."
+    },
+    {
+      "component": "avatar",
+      "name": "Avatar",
+      "docsUrl": "https://ant.design/components/avatar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "badge",
+      "name": "Badge",
+      "docsUrl": "https://ant.design/components/badge",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "BorderBeam",
+      "docsUrl": "https://ant.design/components/border-beam",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "breadcrumbs",
+      "name": "Breadcrumb",
+      "docsUrl": "https://ant.design/components/breadcrumb",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "button",
+      "name": "Button",
+      "docsUrl": "https://ant.design/components/button",
+      "demo": {
+        "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Ant Design</title>\n<style>\n  html, body { margin: 0; padding: 0; background: var(--demo-bg, #fff); }\n  body {\n    padding: 16px;\n    box-sizing: border-box;\n    min-height: 100vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n  #root { display: flex; align-items: center; justify-content: center; }\n  .row { display: flex; flex-direction: row; align-items: center; gap: 12px; flex-wrap: wrap; }\n</style>\n<script src=\"https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/antd@5.29.3/dist/antd.min.js\"></script>\n</head>\n<body>\n<div id=\"root\"></div>\n<script>\n  var e = React.createElement;\n  var ConfigProvider = antd.ConfigProvider;\n  var Button = antd.Button;\n\n  var content = e(\"div\", { className: \"row\" }, [\n      e(Button, { key: \"a\", type: \"primary\" }, \"Primary\"),\n      e(Button, { key: \"b\", type: \"default\" }, \"Default\"),\n      e(Button, { key: \"c\", type: \"primary\", disabled: true }, \"Disabled\")\n    ]);\n  var reactRoot = ReactDOM.createRoot(document.getElementById(\"root\"));\n  var darkToken = antd.theme.getDesignToken({ algorithm: antd.theme.darkAlgorithm });\n\n  // The whole dark mechanism, idempotent and switching both ways: antd v5's own\n  // darkAlgorithm via ConfigProvider, plus a canvas painted with antd's own\n  // colorBgContainer token — never a hand-picked hex. Light re-renders the bare\n  // tree and drops the canvas override.\n  function applyMode(dark) {\n    if (dark) {\n      document.documentElement.style.setProperty(\"--demo-bg\", darkToken.colorBgContainer);\n      reactRoot.render(\n        e(ConfigProvider, { theme: { algorithm: antd.theme.darkAlgorithm } }, content)\n      );\n    } else {\n      document.documentElement.style.removeProperty(\"--demo-bg\");\n      reactRoot.render(content);\n    }\n  }\n\n  // Resolve the mode before first paint. ?mode= is a standalone-testing\n  // override applied once; otherwise follow the embedding page's <html class>\n  // live, for the lifetime of this document.\n  window.__demoModeObserver = (function () {\n    var override = new URLSearchParams(location.search).get(\"mode\");\n    if (override !== null) {\n      applyMode(override === \"dark\");\n      return null;\n    }\n    var parentRoot = null;\n    try {\n      if (window.parent !== window) parentRoot = window.parent.document.documentElement;\n    } catch (err) {\n      parentRoot = null;\n    }\n    if (!parentRoot) {\n      applyMode(false);\n      return null;\n    }\n    var sync = function () { applyMode(parentRoot.classList.contains(\"dark\")); };\n    sync();\n    var observer = new MutationObserver(sync);\n    observer.observe(parentRoot, { attributes: true, attributeFilter: [\"class\"] });\n    return observer;\n  })();\n</script>\n</body>\n</html>\n",
+        "height": 130
+      },
+      "note": null
+    },
+    {
+      "component": "calendar",
+      "name": "Calendar",
+      "docsUrl": "https://ant.design/components/calendar",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "card",
+      "name": "Card",
+      "docsUrl": "https://ant.design/components/card",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "carousel",
+      "name": "Carousel",
+      "docsUrl": "https://ant.design/components/carousel",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Cascader",
+      "docsUrl": "https://ant.design/components/cascader",
+      "demo": null,
+      "note": "A multi-level select over hierarchical options; no cross-system canonical equivalent, and Select holds the canonical select mapping."
+    },
+    {
+      "component": "checkbox",
+      "name": "Checkbox",
+      "docsUrl": "https://ant.design/components/checkbox",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "accordion",
+      "name": "Collapse",
+      "docsUrl": "https://ant.design/components/collapse",
+      "demo": null,
+      "note": "Ant Design’s name for the expand/collapse stack — the canonical accordion."
+    },
+    {
+      "component": null,
+      "name": "ColorPicker",
+      "docsUrl": "https://ant.design/components/color-picker",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "ConfigProvider",
+      "docsUrl": "https://ant.design/components/config-provider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "date-picker",
+      "name": "DatePicker",
+      "docsUrl": "https://ant.design/components/date-picker",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Descriptions",
+      "docsUrl": "https://ant.design/components/descriptions",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "divider",
+      "name": "Divider",
+      "docsUrl": "https://ant.design/components/divider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "drawer",
+      "name": "Drawer",
+      "docsUrl": "https://ant.design/components/drawer",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "dropdown-menu",
+      "name": "Dropdown",
+      "docsUrl": "https://ant.design/components/dropdown",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "empty-state",
+      "name": "Empty",
+      "docsUrl": "https://ant.design/components/empty",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Flex",
+      "docsUrl": "https://ant.design/components/flex",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "FloatButton",
+      "docsUrl": "https://ant.design/components/float-button",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "form",
+      "name": "Form",
+      "docsUrl": "https://ant.design/components/form",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Grid",
+      "docsUrl": "https://ant.design/components/grid",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "icon",
+      "name": "Icon",
+      "docsUrl": "https://ant.design/components/icon",
+      "demo": null,
+      "note": "Documented under /components/icon, but the glyphs ship separately in @ant-design/icons, so there is no default export in the antd entry point."
+    },
+    {
+      "component": null,
+      "name": "Image",
+      "docsUrl": "https://ant.design/components/image",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "text-input",
+      "name": "Input",
+      "docsUrl": "https://ant.design/components/input",
+      "demo": null,
+      "note": "The Input family: Input.TextArea, Input.Search, Input.Password and Input.OTP share this one docs page, so textarea and search-input have no separate entry in this inventory."
+    },
+    {
+      "component": null,
+      "name": "InputNumber",
+      "docsUrl": "https://ant.design/components/input-number",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Layout",
+      "docsUrl": "https://ant.design/components/layout",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "list",
+      "name": "List",
+      "docsUrl": "https://ant.design/components/list",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Listy",
+      "docsUrl": "https://ant.design/components/listy",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Masonry",
+      "docsUrl": "https://ant.design/components/masonry",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Mentions",
+      "docsUrl": "https://ant.design/components/mentions",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Menu",
+      "docsUrl": "https://ant.design/components/menu",
+      "demo": null,
+      "note": "The persistent navigation menu (sidebar/top nav), not a pop-up action list; Dropdown holds the canonical dropdown-menu mapping."
+    },
+    {
+      "component": "toast",
+      "name": "message",
+      "docsUrl": "https://ant.design/components/message",
+      "demo": null,
+      "note": "The lightweight global feedback strip — the canonical toast. Exported lowercase (`message`) because it is an imperative API object, not a component class."
+    },
+    {
+      "component": "dialog",
+      "name": "Modal",
+      "docsUrl": "https://ant.design/components/modal",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "notification",
+      "docsUrl": "https://ant.design/components/notification",
+      "demo": null,
+      "note": "A stacked corner notification with title and description. Overlaps the canonical toast, but `message` is the closer fit and holds that mapping, so this entry stays system-specific."
+    },
+    {
+      "component": "pagination",
+      "name": "Pagination",
+      "docsUrl": "https://ant.design/components/pagination",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Popconfirm",
+      "docsUrl": "https://ant.design/components/popconfirm",
+      "demo": null,
+      "note": "A popover-anchored confirmation bubble; Popover holds the canonical popover mapping."
+    },
+    {
+      "component": "popover",
+      "name": "Popover",
+      "docsUrl": "https://ant.design/components/popover",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-bar",
+      "name": "Progress",
+      "docsUrl": "https://ant.design/components/progress",
+      "demo": null,
+      "note": "One docs page for the line, circle and dashboard variants; mapped to the bar, the closer canonical fit."
+    },
+    {
+      "component": null,
+      "name": "QRCode",
+      "docsUrl": "https://ant.design/components/qr-code",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "radio",
+      "name": "Radio",
+      "docsUrl": "https://ant.design/components/radio",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "rating",
+      "name": "Rate",
+      "docsUrl": "https://ant.design/components/rate",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Result",
+      "docsUrl": "https://ant.design/components/result",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "segmented-control",
+      "name": "Segmented",
+      "docsUrl": "https://ant.design/components/segmented",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "select",
+      "name": "Select",
+      "docsUrl": "https://ant.design/components/select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "skeleton",
+      "name": "Skeleton",
+      "docsUrl": "https://ant.design/components/skeleton",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "slider",
+      "name": "Slider",
+      "docsUrl": "https://ant.design/components/slider",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Space",
+      "docsUrl": "https://ant.design/components/space",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "loading",
+      "name": "Spin",
+      "docsUrl": "https://ant.design/components/spin",
+      "demo": null,
+      "note": "Ant Design’s loading indicator — the canonical loading component."
+    },
+    {
+      "component": null,
+      "name": "Splitter",
+      "docsUrl": "https://ant.design/components/splitter",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Statistic",
+      "docsUrl": "https://ant.design/components/statistic",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "progress-steps",
+      "name": "Steps",
+      "docsUrl": "https://ant.design/components/steps",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "switch",
+      "name": "Switch",
+      "docsUrl": "https://ant.design/components/switch",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "table",
+      "name": "Table",
+      "docsUrl": "https://ant.design/components/table",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": "tabs",
+      "name": "Tabs",
+      "docsUrl": "https://ant.design/components/tabs",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tag",
+      "docsUrl": "https://ant.design/components/tag",
+      "demo": null,
+      "note": "Overlaps the canonical badge (its tag/pill sense), but Badge ships under that name and holds the mapping, so this entry stays system-specific."
+    },
+    {
+      "component": "timeline",
+      "name": "Timeline",
+      "docsUrl": "https://ant.design/components/timeline",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TimePicker",
+      "docsUrl": "https://ant.design/components/time-picker",
+      "demo": null,
+      "note": "Time-only sibling of DatePicker, which holds the canonical date-picker mapping."
+    },
+    {
+      "component": "tooltip",
+      "name": "Tooltip",
+      "docsUrl": "https://ant.design/components/tooltip",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tour",
+      "docsUrl": "https://ant.design/components/tour",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Transfer",
+      "docsUrl": "https://ant.design/components/transfer",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Tree",
+      "docsUrl": "https://ant.design/components/tree",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "TreeSelect",
+      "docsUrl": "https://ant.design/components/tree-select",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Typography",
+      "docsUrl": "https://ant.design/components/typography",
+      "demo": null,
+      "note": "A text family (Title/Text/Paragraph/Link) rather than a single control; Link has no standalone Ant Design page."
+    },
+    {
+      "component": "file-upload",
+      "name": "Upload",
+      "docsUrl": "https://ant.design/components/upload",
+      "demo": null,
+      "note": null
+    },
+    {
+      "component": null,
+      "name": "Watermark",
+      "docsUrl": "https://ant.design/components/watermark",
+      "demo": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    "https://ant.design",
+    "https://ant.design/components/overview",
+    "https://github.com/ant-design/ant-design"
+  ],
+  "provenance": {
+    "method": "script",
+    "extractor": "scripts/systems/ant-design.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://ant.design/sitemap.xml",
+        "ref": null,
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/ant-design"
+      },
+      {
+        "kind": "npm",
+        "url": "https://cdn.jsdelivr.net/npm/antd@6.6.2/es/index.js",
+        "ref": "6.6.2",
+        "retrievedAt": "2026-08-29",
+        "snapshot": "sources/ant-design"
+      }
+    ],
+    "notes": "Inventory is the join of two snapshot files: ant.design/sitemap.xml decides which components are documented (every English /components/<slug> page, minus the non-component pages _util, overview and changelog) and supplies the docs URL verbatim; the antd@6.6.2 package entry point (es/index.js, fetched from a version-pinned jsDelivr URL — pinned bytes even though the snapshot kind is live-site) supplies the system's own name per slug. Extraction throws when a documented slug is missing from the canonical map, when the map holds a slug no longer documented, or when a documented slug has no exported name, so upstream additions fail loudly. The one documented component with no default export is Icon, whose glyphs ship in @ant-design/icons; its name comes from an explicit docs-only map. `message` and `notification` keep antd's lowercase export identifiers because those are imperative API objects rather than component classes. Canonical taxonomy mapping and the notes are editorial (an explicit map in the extractor), not extracted. Only Button carries a demo; it loads antd 5.29.3 UMD with React 18.3.1 and dayjs 1.11.13 from pinned jsDelivr URLs — the 5.x line is used because it is the last one publishing dist/antd.min.js for script-tag use, so the demo is one major version behind the 6.6.2 inventory. The demo document's dark mechanism is antd v5's own: ConfigProvider with `theme.algorithm = antd.theme.darkAlgorithm`, plus a page canvas painted with `colorBgContainer` read from `antd.theme.getDesignToken` under that same algorithm, so the dark canvas is an antd token rather than a chosen hex. It is wrapped in one idempotent `applyMode(dark)` that switches both ways (light re-renders the bare tree and removes the canvas override). Mode is resolved before first paint: a `mode` query parameter, when present, is a standalone-testing override applied once with no observation; otherwise the demo reads `window.parent.document.documentElement`, applies dark iff that element carries the `dark` class, and keeps a MutationObserver on its `class` attribute for the page lifetime, so toggling the embedding page's theme restyles the demo in place without reloading the iframe. A cross-origin parent (the read throws) or a top-level load renders light. Ant Design documents component families on one page (Input covers TextArea/Search/Password/OTP, DatePicker covers RangePicker), so the sub-components of those families have no separate inventory entry."
+  }
+}

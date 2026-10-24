@@ -30,8 +30,9 @@ const BLUR_LAYERS = [
 ]
 
 /**
- * The layered blur + `--color-bg` tint stack behind the app header and the
- * create preview toolbar. Fills its positioned parent; strongest at the top,
+ * The layered blur + tint stack behind the app header and the studio panel's
+ * page header. The tint is `--blur-tint`, `--color-bg` unless the surface
+ * under it differs. Fills its positioned parent; strongest at the top,
  * dissolving to sharp at the bottom. Intensity rides `--blur-progress`
  * (registered in styles.css, initial 0): drive it with the `blur-reveal` /
  * `blur-reveal-nearest` utilities (scroll timelines) or pin it manually
@@ -58,10 +59,11 @@ export function ProgressiveBlur() {
         style={{
           // Darkness rides this element's opacity (0.9 at full progress) — never the
           // backdrop-filter layers, which would form an opacity group and drop the
-          // blur. The gradient peaks at full --color-bg at the top.
+          // blur. The gradient peaks at full --blur-tint (default --color-bg) at
+          // the top.
           opacity: "calc(var(--blur-progress, 0) * 0.9)",
           background:
-            "linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 76%, transparent) 55%, var(--color-bg) 100%)",
+            "linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--blur-tint, var(--color-bg)) 76%, transparent) 55%, var(--blur-tint, var(--color-bg)) 100%)",
         }}
       />
       <div
