@@ -1,3 +1,5 @@
+import "./tab-storage"
+
 import { useLayoutEffect } from "react"
 
 import { effective, parseState } from "@/modules/studio/axes"
