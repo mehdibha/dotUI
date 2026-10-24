@@ -1,6 +1,6 @@
 # Local capture runbook
 
-One Claude Code session on Mehdi's Mac captures the signed-in products behind the dotUI presets, in his Chrome (Claude in Chrome), product by product, in light and dark. It collects screenshots, CSS variables, a style inventory and preset-lab probe readings, and writes them as files. It commits nothing: each preset's cloud thread ingests its folder and updates its own PR.
+One Claude Code session on Mehdi's Mac captures the signed-in products behind the dotUI presets, in his Chrome (Claude in Chrome), product by product, in light and dark. It collects screenshots, CSS variables, a style inventory and capture probe readings, and writes them as files. It commits nothing: each preset's cloud thread ingests its folder and updates its own PR.
 
 Read this whole file before starting. Re-read the product's section before each product, and `_run/PROGRESS.md` after any context summary.
 
@@ -20,14 +20,14 @@ Read this whole file before starting. Re-read the product's section before each 
 
 ```sh
 cd ~/Desktop/dotUI
-git fetch origin claude/project-thread-ac25vf
-git worktree add --detach ../dotUI-capture origin/claude/project-thread-ac25vf
+git fetch origin main
+git worktree add --detach ../dotUI-capture origin/main
 cd ../dotUI-capture && PUPPETEER_SKIP_DOWNLOAD=1 pnpm install
 mkdir -p ~/Desktop/dotUI/www/.scratch-refs/_run
-cd www && pnpm -s exec tsx scripts/local-capture/kit.mts > ~/Desktop/dotUI/www/.scratch-refs/_run/kit.js
+cd www && pnpm -s presets:kit > ~/Desktop/dotUI/www/.scratch-refs/_run/kit.js
 ```
 
-In this file `$OUT` is `~/Desktop/dotUI/www/.scratch-refs` (in the main checkout, gitignored, where the cloud threads read) and `$DATE` the day the run starts (`date +%F`, written in PROGRESS.md). Shell variables don't persist between your commands: spell both out in each one. Run every `kit.mts` command from `~/Desktop/dotUI-capture/www`. The worktree is `feat/preset-workflow` (probe 8eb9b12) plus this folder.
+In this file `$OUT` is `~/Desktop/dotUI/www/.scratch-refs` (in the main checkout, gitignored, where the cloud threads read) and `$DATE` the day the run starts (`date +%F`, written in PROGRESS.md). Shell variables don't persist between your commands: spell both out in each one. Run every `presets:kit` command from `~/Desktop/dotUI-capture/www`. The worktree is `main`; the kit lives in `packages/capture/scripts/local-capture/`.
 
 1. **Progress file.** Create `$OUT/_run/PROGRESS.md`: the Mac's original appearance, the javascript tool's output limit, then one line per product as you go (`stripe: light 8/10 pages, dark 0/10`). Update it after every page.
 2. **Mac appearance.** Record it: `osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode'`. Switch with `... to set dark mode to true` (or `false`). macOS may ask once to let the terminal control System Events: ask Mehdi to click OK.
@@ -65,7 +65,7 @@ In this file `$OUT` is `~/Desktop/dotUI/www/.scratch-refs` (in the main checkout
 | Path                                    | What                                                                                                                                                                                                                                           |
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `NOTES.md`                              | viewport, theme method, original value and "restored ✓", pages done or skipped and why, parts that read `null` and the selector that fixed them, looks the probe can't read (sidebar hairlines, hover-only states, shadows on pseudo-elements) |
-| `pack-targets.json`                     | the pack's `targets.json` from its branch, if it has one (input)                                                                                                                                                                               |
+| `pack-targets.json`                     | the pack's `targets.json` from main, if it has one (input)                                                                                                                                                                                     |
 | `targets-signed-in.json`                | every page you measured, in pack format: `{ "<key>": { "signedIn": true, "mode"?: …, "parts": { … } } }`                                                                                                                                       |
 | `pages.json`                            | `{ "<slug>": "<key>" }`, slug → page key                                                                                                                                                                                                       |
 | `raw/<slug>-<mode>.json`                | one bundle per page and mode (below)                                                                                                                                                                                                           |
@@ -87,18 +87,18 @@ Calls, in order, for each page in each mode:
 1. `__dotui.begin("<id>/<slug>/<mode>", "<key>")` names the bundle and returns the theme it sees. Check the mode.
 2. `__dotui.survey(extra)`: CSS variables on `:root` and `body`, loaded fonts, and an inventory of every visible control kind (buttons, links, inputs, selects, checkboxes, switches, tabs, menus, dialogs, tooltips, nav links, headings, badges, cards, table cells, kbd, progress), up to 6 distinct styles each with counts. `extra` adds named selectors: `{ "Polaris-Button--variantPrimary": ".Polaris-Button--variantPrimary" }`.
 3. `__dotui.classes("<prefix>")` where the product section names a class prefix (`Polaris-`, `cds--`, `q-`, `sail-`): each class's count and the computed style of its first visible element.
-4. Probe parts. Print the calls with `pnpm -s exec tsx scripts/local-capture/kit.mts --targets <targets file> --url "<key>"`. Paste each printed `__dotui.measure(…)` into the javascript tool:
+4. Probe parts. Print the calls with `pnpm -s presets:kit --targets <targets file> --url "<key>"`. Paste each printed `__dotui.measure(…)` into the javascript tool:
    - the plain parts call as is;
    - a `before` part: do its steps with the Chrome tools first (click, hover; a `focus` step is a keyboard focus: `document.querySelector(sel).focus()`), run its call, then close the overlay with Escape (reload and re-run the kit only if the state stays);
    - a focus part: run its call (it focuses the element), press Tab then Shift+Tab, run the call again. Every call first jumps running transitions to their end, so a ring that eases in reads settled.
      Each call answers with the number of props read per part, or `null` when the selector matched nothing. Fix a `null` or a suspicious reading (`__dotui.peek("<part>")` shows the values) by editing the target in `targets-signed-in.json`, reprinting and re-running that part.
 5. Screenshot: take one and save it to disk, then move it to `shots/`. A long page: scroll a viewport down and take `-2`, `-3` (three at most).
-6. Crops: right after a screenshot, run `__dotui.rects()`, write its answer to `rects/…json`, then `pnpm -s exec tsx scripts/local-capture/kit.mts --crop <screenshot> --rects <rects file> --out $OUT/<id>/$DATE/crops --mode <mode>`. It writes one PNG per probed part in view (the part as last measured, so take the overlay crops while the overlay is open). For an overlay's shot, add `--parts <the overlay's parts>`, or the parts cropped before it opened get cropped again under it. Crops are named `<part>-<mode>.png`, so measure each part on one page: a second page replaces the crop (the command says so). Look at the crops and delete any with personal content. Each crop gets a `<part>-<mode>.json` beside it, saying where the part sits in the PNG.
+6. Crops: right after a screenshot, run `__dotui.rects()`, write its answer to `rects/…json`, then `pnpm -s presets:kit --crop <screenshot> --rects <rects file> --out $OUT/<id>/$DATE/crops --mode <mode>`. It writes one PNG per probed part in view (the part as last measured, so take the overlay crops while the overlay is open). For an overlay's shot, add `--parts <the overlay's parts>`, or the parts cropped before it opened get cropped again under it. Crops are named `<part>-<mode>.png`, so measure each part on one page: a second page replaces the crop (the command says so). Look at the crops and delete any with personal content. Each crop gets a `<part>-<mode>.json` beside it, saying where the part sits in the PNG.
    Then, in the same state, `await __dotui.snapshot()` (or `__dotui.snapshot([<the overlay's parts>])` for an overlay) downloads `dotui-snap__<id>__<slug>__<mode>.json`: a frozen copy of each measured part up to 640×480, its DOM with computed styles inlined, letters turned to x, digits to 0 and images to gray boxes. It answers with the file name and the parts it copied.
 7. Census, on every page in each mode, survey-only pages too: `__dotui.census()` reads every element the page paints or labels (role, box, about 40 computed values, the custom property behind each, focus changes; never text, only its length) and downloads `dotui-census__<id>__<slug>__<mode>__rest.json`. With an overlay open on the same load (no reload since the rest pass), `__dotui.census("<what you opened>")` reads only what it added. It answers with the element and look counts.
 8. `__dotui.finish()` downloads the bundle as `dotui__<id>__<slug>__<mode>.json`. The first time on a site, Chrome may block a second download behind a "Download multiple files" prompt in the address bar: ask Mehdi to click Allow. If downloads don't arrive at all, read the bundle in slices with `__dotui.read(offset, length)` and write it yourself.
 
-Once a product is done: `pnpm -s exec tsx scripts/local-capture/kit.mts --collect <id> --out $OUT/<id>/$DATE/raw` moves its downloads into `raw/` (newest per page), the copies into `crops/<part>-<mode>.json` (newest per part) and the census passes into `census/pages/`, then run `__dotui.reset()` in its tab(s) to clear the sessionStorage keys, and write `pages.json` and `NOTES.md`. Last, grep `raw/` and the JSON files for the account's name, email, and the workspace, org or store handle, and replace any hit with its placeholder. `begin()` keeps only theme words from page attributes, but a URL or note can still leak one.
+Once a product is done: `pnpm -s presets:kit --collect <id> --out $OUT/<id>/$DATE/raw` moves its downloads into `raw/` (newest per page), the copies into `crops/<part>-<mode>.json` (newest per part) and the census passes into `census/pages/`, then run `__dotui.reset()` in its tab(s) to clear the sessionStorage keys, and write `pages.json` and `NOTES.md`. Last, grep `raw/` and the JSON files for the account's name, email, and the workspace, org or store handle, and replace any hit with its placeholder. `begin()` keeps only theme words from page attributes, but a URL or note can still leak one.
 
 **Survey-only pages** (listed under "Survey" in a product section) skip step 4: begin, survey, screenshot, census, finish.
 
@@ -110,7 +110,7 @@ For pages a pack doesn't have yet, write `targets-signed-in.json` yourself. Part
 
 A product section may name a part outside this list (`button.send`, `composer`, `avatar`): measure it the same way, and the thread decides where it goes.
 
-A target (full reference: `src/modules/preset-lab/README.md` and the `Target` type in `src/modules/preset-lab/probe.ts`):
+A target (full reference: `packages/capture/README.md` and the `Target` type in `packages/capture/src/probe.ts`):
 
 - `selector` (CSS), `text` (match by a UI label), `within`, `nth` (from 0), `withinNth`. A `text` match climbs to its nearest control (button, link, row, tab), so a chip or badge inside a clickable row reads as the whole row: target those by selector or `nth`. `a >>> b` matches `b` inside the shadow roots of `a` (web components, like Shopify Admin's).
 - `surface: true` reads the nearest painted ancestor; `box: "::before"` or a child selector where the product paints the box apart from the element (a highlighted row's inset background); `ink: "<child>"` where a child carries the label's color and type.
@@ -121,11 +121,11 @@ Selector tips: prefer `data-testid`, `data-test`, `data-encore-id`, `aria-*` and
 
 ## Products
 
-Each section: branch and pack, theme, pages, parts, extras, skip. "Thread" means that preset's cloud thread will ingest the folder. Pack keys and parts already on a branch are reused with `--targets $OUT/<id>/$DATE/pack-targets.json`; get it with:
+Each section: branch and pack, theme, pages, parts, extras, skip. "Thread" means that preset's cloud thread will ingest the folder. Pack keys and parts already on main are reused with `--targets $OUT/<id>/$DATE/pack-targets.json`; get it with:
 
 ```sh
-git -C ~/Desktop/dotUI fetch origin <branch>
-git -C ~/Desktop/dotUI show origin/<branch>:www/src/modules/preset-lab/refs/<id>/targets.json > $OUT/<id>/$DATE/pack-targets.json
+git -C ~/Desktop/dotUI fetch origin main
+git -C ~/Desktop/dotUI show origin/main:packages/capture/refs/<id>/targets.json > $OUT/<id>/$DATE/pack-targets.json
 ```
 
 ### 1. Stripe (`stripe`, branch `claude/project-thread-g2lqs3`, PR #1033)

@@ -98,7 +98,7 @@ export interface SystemLooks {
   /** The preset rendered beside each look. */
   preset: string
   capture: {
-    /** The preset-lab commit that read it. */
+    /** The capture commit that read it. */
     probe: string
     /** The newest capture used, YYYY-MM-DD. */
     date: string

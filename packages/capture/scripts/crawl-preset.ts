@@ -1,11 +1,11 @@
 /**
- * The census (src/modules/preset-lab/census.ts) over a product's pages:
+ * The census (src/census.ts) over a product's pages:
  * every element each page paints or labels, its role and about 40 values, at
  * rest and hovered, pressed and focused, in both modes. Then the looks per
  * role (census.json) and the model (refs/<id>/model.json, see model.ts).
  * Run from www/.
  *
- *   tsx scripts/crawl-preset.ts --pack <id> [--url <url>]… [--follow <n>] [--open <n>]
+ *   pnpm presets:crawl --pack <id> [--url <url>]… [--follow <n>] [--open <n>]
  *     Headless, the pack's public pages with their mode, dark URL, storage,
  *     steps, settle and width (targets.json), each distinct `before` step
  *     list as one more pass (what it opens). --url keeps only those pages
@@ -13,7 +13,7 @@
  *     linked from them, --open up to n popups per page (aria-haspopup),
  *     each opened by a click on a fresh load.
  *
- *   tsx scripts/crawl-preset.ts --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
+ *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
  *     in new tabs of your profile. <file> maps each page key, with account
@@ -22,11 +22,11 @@
  *     appearance setting needs it set by hand, one mode per run. Clicks only
  *     with --passes (a pack page's `before` steps).
  *
- *   tsx scripts/crawl-preset.ts --pack <id> --from <census dir>…
+ *   pnpm presets:crawl --pack <id> --from <census dir>…
  *     Rebuilds census.json and the model from saved pages, no browser: how a
  *     public run and a signed-in one become one model.
  *
- *   tsx scripts/crawl-preset.ts --pack <id> --drift
+ *   pnpm presets:crawl --pack <id> --drift
  *     Re-runs the headless census and prints what moved against the
  *     committed model, on the pages both share. Writes no model: rebuild it
  *     with --from to keep the signed-in pages.
@@ -61,25 +61,21 @@ import {
   type State,
   trim,
   type Values,
-} from "../src/modules/preset-lab/census"
+} from "../src/census"
 import {
   buildModel,
   diffModels,
   jsonLines,
   type Model,
   summarize,
-} from "../src/modules/preset-lab/model"
-import type {
-  Pack,
-  Page as PackPage,
-  Step,
-} from "../src/modules/preset-lab/probe"
+} from "../src/model"
+import type { Pack, Page as PackPage, Step } from "../src/probe"
 import {
   COPY_AREA,
   type PartFile,
   type Snapshot,
   snapshotSnippet,
-} from "../src/modules/preset-lab/snapshot"
+} from "../src/snapshot"
 import {
   focusable,
   launch,
@@ -92,6 +88,7 @@ import {
   runSteps,
   say,
   shim,
+  SRC,
   versionOf,
 } from "./preset-pages"
 
@@ -125,7 +122,7 @@ if (!MODES.every((m) => m === "light" || m === "dark")) {
   console.error("--mode must be light, dark or both")
   process.exit(1)
 }
-const CENSUS = versionOf("census.ts", "probe.ts")
+const CENSUS = versionOf(resolve(SRC, "census.ts"), resolve(SRC, "probe.ts"))
 const today = new Date().toISOString().slice(0, 10)
 const OUT = resolve(args.out ?? `.scratch-refs/${pack}/${today}/census`)
 const modelFile = resolve(REFS, pack, "model.json")

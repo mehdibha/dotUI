@@ -1,6 +1,6 @@
 /**
  * Measures presets and the products they recreate with the same probe
- * (src/modules/preset-lab/probe.ts), then diffs the two. Run from www/.
+ * (@dotui/capture/probe), then diffs the two. Run from www/.
  *
  *   tsx scripts/measure-preset.mts --preset <id> [--mode light|dark|both] [--port 5173] [--baseline <file>]
  *     Measures the preset's specimen sheets (dev server running) into
@@ -37,29 +37,7 @@ import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
 import type { Browser, Page } from "puppeteer"
 
-import {
-  compareMeasures,
-  compareRuns,
-  type Row,
-} from "../src/modules/preset-lab/compare"
-import {
-  type Measures,
-  type Pack,
-  type Page as PackPage,
-  type Prop,
-  PROPS,
-  type ReferenceTokens,
-  SPECIMEN_TARGETS,
-  ownedProps,
-  snippet,
-  type Target,
-} from "../src/modules/preset-lab/probe"
-import {
-  COPY_AREA,
-  type PartFile,
-  type Snapshot,
-  snapshotSnippet,
-} from "../src/modules/preset-lab/snapshot"
+import { compareMeasures, compareRuns, type Row } from "@dotui/capture/compare"
 import {
   focusable,
   launch,
@@ -73,7 +51,25 @@ import {
   runSteps,
   say,
   settle,
-} from "./preset-pages"
+} from "@dotui/capture/preset-pages"
+import {
+  type Measures,
+  type Pack,
+  type Page as PackPage,
+  type Prop,
+  PROPS,
+  type ReferenceTokens,
+  SPECIMEN_TARGETS,
+  ownedProps,
+  snippet,
+  type Target,
+} from "@dotui/capture/probe"
+import {
+  COPY_AREA,
+  type PartFile,
+  type Snapshot,
+  snapshotSnippet,
+} from "@dotui/capture/snapshot"
 
 const { values: args } = parseArgs({
   options: {
