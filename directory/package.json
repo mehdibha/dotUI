@@ -38,6 +38,7 @@
     "tailwindcss": "catalog:",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "www": "workspace:*"
   }
 }
