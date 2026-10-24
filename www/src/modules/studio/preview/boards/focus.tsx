@@ -6,15 +6,41 @@ import {
   ChevronDownIcon,
   ChevronsUpDownIcon,
 } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { Checkbox } from "@/registry/ui/checkbox"
 import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
 import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
+import { Kbd } from "@/registry/ui/kbd"
+import { Link } from "@/registry/ui/link"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/registry/ui/select"
+import { Switch } from "@/registry/ui/switch"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
+import { TextField } from "@/registry/ui/text-field"
+import { useTweak } from "@/dev/tweaker"
 
-import { Board, BoardSection, stateProps, StateRow } from "./board"
+import { Board, CAPTION, stateProps, StateRow } from "./board"
+
+const GROUP = "Focus board"
+const LOOKS = ["plain", "canvas", "component set", "canvas + set"] as const
+type Look = (typeof LOOKS)[number]
+
+const GRID =
+  "grid grid-flow-col grid-rows-2 items-center justify-center justify-items-start gap-x-10 gap-y-5 max-sm:grid-flow-row max-sm:grid-cols-2 max-sm:grid-rows-none max-sm:gap-x-6"
+
+// Figma's component-set purple.
+const SET = "#9747FF"
 
 // Keyboard focus: inputs style `focus:`, everything else `focus-visible:`.
 const FOCUSED = { ...stateProps("focus"), "data-focused": "true" }
@@ -64,10 +90,7 @@ function Focus() {
   const toggle = useSwitchStyles()()
   const selected = { ...FOCUSED, "data-selected": "true" }
   return (
-    <div
-      inert
-      className="grid grid-flow-col grid-rows-2 items-center justify-center justify-items-start gap-x-10 gap-y-5 max-sm:grid-flow-row max-sm:grid-cols-2 max-sm:grid-rows-none max-sm:gap-x-6"
-    >
+    <div inert className={GRID}>
       <button
         type="button"
         {...FOCUSED}
@@ -150,15 +173,131 @@ function FieldFocus() {
   )
 }
 
-export default function FocusBoard() {
+/** The real components: Tab through them. */
+function Playground({ hint }: { hint: boolean }) {
   return (
-    <Board id="focus">
-      <BoardSection title="Focus ring">
+    <div className="group relative flex justify-center rounded-(--studio-radius-panel) border bg-bg p-10 max-sm:p-4">
+      {hint && (
+        <Kbd className="absolute top-3 right-3 transition-opacity group-has-[[data-focus-visible],[data-focused]]:opacity-0">
+          Tab ⇥
+        </Kbd>
+      )}
+      <div className="flex flex-col items-center gap-8">
+        <div className={GRID}>
+          <Button variant="primary">Publish</Button>
+          <Button>Preview</Button>
+          <Checkbox defaultSelected>Remember me</Checkbox>
+          <Switch aria-label="Auto-renew" defaultSelected />
+          <Tabs defaultSelectedKey="overview" className="max-sm:col-span-2">
+            <TabList aria-label="Project">
+              <Tab id="overview">Overview</Tab>
+              <Tab id="activity">Activity</Tab>
+              <Tab id="settings">Settings</Tab>
+            </TabList>
+          </Tabs>
+          <Link>View invoice</Link>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <TextField aria-label="Full name" defaultValue="Ada Lovelace">
+            <Input className="w-32" />
+          </TextField>
+          <Select aria-label="Plan" defaultSelectedKey="team">
+            <SelectTrigger className="w-32" />
+            <SelectContent>
+              <SelectItem id="free">Free plan</SelectItem>
+              <SelectItem id="pro">Pro plan</SelectItem>
+              <SelectItem id="team">Team plan</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const DOTS =
+  "bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] bg-size-[14px_14px]"
+
+/** A frozen specimen group, framed the way design tools frame a component set. */
+function Frame({
+  look,
+  name,
+  children,
+}: {
+  look: Look
+  name: string
+  children: React.ReactNode
+}) {
+  if (look === "plain") return children
+  const set = look !== "canvas"
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span
+        className={cn(CAPTION, "flex items-center gap-1")}
+        style={set ? { color: SET } : undefined}
+      >
+        {set && <span aria-hidden>❖</span>}
+        {name}
+      </span>
+      <div
+        className={cn(
+          "rounded-md border border-dashed bg-bg p-6 max-sm:p-4",
+          !set && "border-fg-muted/40",
+        )}
+        style={set ? { borderColor: SET } : undefined}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+/** Every specimen frozen in its focused state. */
+function Specs({ look }: { look: Look }) {
+  const canvas = look === "canvas" || look === "canvas + set"
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap items-start justify-center gap-x-10 gap-y-8 rounded-(--studio-radius-panel) border p-10 max-sm:p-4",
+        canvas ? DOTS : look === "component set" ? "bg-muted" : "bg-bg",
+        look !== "plain" && "cursor-default",
+      )}
+    >
+      <Frame look={look} name="Focused">
         <Focus />
-      </BoardSection>
-      <BoardSection title="Field focus">
+      </Frame>
+      <Frame look={look} name="Field">
         <FieldFocus />
-      </BoardSection>
+      </Frame>
+    </div>
+  )
+}
+
+export default function FocusBoard() {
+  const look = useTweak("Frozen look", {
+    type: "select",
+    options: [...LOOKS],
+    default: "canvas",
+    group: GROUP,
+  })
+  const hint = useTweak("Tab keycap", {
+    type: "boolean",
+    default: true,
+    group: GROUP,
+  })
+  const frozenFirst = useTweak("Frozen first", {
+    type: "boolean",
+    default: false,
+    group: GROUP,
+  })
+  return (
+    <Board id="focus" untitled>
+      <div
+        className={cn("flex flex-col gap-6", frozenFirst && "flex-col-reverse")}
+      >
+        <Playground hint={hint} />
+        <Specs look={look} />
+      </div>
     </Board>
   )
 }
