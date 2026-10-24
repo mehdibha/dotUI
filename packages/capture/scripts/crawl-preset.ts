@@ -1,17 +1,24 @@
 /**
  * The census (src/census.ts) over a product's pages:
  * every element each page paints or labels, its role and about 40 values, at
- * rest and hovered, pressed and focused, in both modes. Then the looks per
- * role (census.json) and the model (refs/<id>/model.json, see model.ts).
- * Run from www/.
+ * rest, hovered, pressed and focused, and set disabled, invalid and selected,
+ * in both modes. Then the looks per role (census.json) and the model
+ * (refs/<id>/model.json, see model.ts). Run from www/.
  *
  *   pnpm presets:crawl --pack <id> [--url <url>]… [--follow <n>] [--open <n>]
+ *       [--tips <n>] [--args <n>] [--stories <n>]
  *     Headless, the pack's public pages with their mode, dark URL, storage,
  *     steps, settle and width (targets.json), each distinct `before` step
- *     list as one more pass (what it opens). --url keeps only those pages
- *     (any page, in the pack or not); --follow adds up to n same-site pages
- *     linked from them, --open up to n popups per page (aria-haspopup),
- *     each opened by a click on a fresh load.
+ *     list and each of the page's `passes` as one more pass (what it opens).
+ *     --url keeps only those pages (any page, in the pack or not); --follow
+ *     adds up to n same-site pages linked from them. On each page the census
+ *     also finds what opens, in place: up to --open popups, menus,
+ *     disclosures and dialog triggers of distinct looks (8), each clicked
+ *     and closed with Escape (a reload when one stays open); up to --tips
+ *     tooltips (6), hovered or focused; and on a
+ *     Storybook story, each option of its variant, size and boolean args
+ *     (--args passes, 40), set in place. --stories adds one story for each
+ *     of up to n more components of each Storybook the pack reads (0).
  *
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
@@ -20,7 +27,9 @@
  *     segments as placeholders, to its real URL; real URLs are never
  *     written. Modes are emulated (prefers-color-scheme): a product with an
  *     appearance setting needs it set by hand, one mode per run. Clicks only
- *     with --passes (a pack page's `before` steps).
+ *     with --passes (a pack page's `before` steps and `passes`) or --open:
+ *     tooltips are hovered and states set, which changes nothing the
+ *     account keeps.
  *
  *   pnpm presets:crawl --pack <id> --from <census dir>…
  *     Rebuilds census.json and the model from saved pages, no browser: how a
@@ -43,11 +52,7 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
-import puppeteer, {
-  type Browser,
-  type ElementHandle,
-  type Page,
-} from "puppeteer"
+import puppeteer, { type Browser, type Page } from "puppeteer"
 
 import {
   type CensusElement,
@@ -55,6 +60,8 @@ import {
   censusSnippet,
   changed,
   cluster,
+  FORCED,
+  type Forced,
   groupOf,
   type Inventory,
   lookKeys,
@@ -69,7 +76,7 @@ import {
   type Model,
   summarize,
 } from "../src/model"
-import type { Pack, Step } from "../src/probe"
+import type { Step } from "../src/probe"
 import {
   COPY_AREA,
   type PartFile,
@@ -98,7 +105,10 @@ const { values: args } = parseArgs({
     pack: { type: "string" },
     url: { type: "string", multiple: true, default: [] },
     follow: { type: "string", default: "0" },
-    open: { type: "string", default: "0" },
+    open: { type: "string" },
+    tips: { type: "string", default: "6" },
+    args: { type: "string", default: "40" },
+    stories: { type: "string", default: "0" },
     connect: { type: "string" },
     pages: { type: "string" },
     passes: { type: "boolean", default: false },
@@ -129,6 +139,8 @@ const OUT = resolve(args.out ?? `.scratch-refs/${pack}/${today}/census`)
 const modelFile = resolve(REFS, pack, "model.json")
 // Signed-in pages keep no text, values or images in their copies.
 const REDACT = !!args.connect
+// A signed-in page clicks only what it's told to.
+const OPEN = Number(args.open ?? (args.connect ? "0" : "8"))
 const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8")) as T
 
@@ -150,6 +162,7 @@ const INTERACTIVE = new Set([
   "slider",
   "spinbutton",
   "treeitem",
+  "select",
   "row",
   "cell",
 ])
@@ -172,7 +185,7 @@ function representatives(elements: CensusElement[], only?: Set<string>) {
 /* Frozen copies (snapshot.ts) of each look's sample, at rest and in each
    state read: what a system page shows beside our part. Kept per page,
    pass and mode, by census id. */
-type Copies = Record<number, Partial<Record<"rest" | State, Snapshot>>>
+type Copies = Record<number, Partial<Record<"rest" | State | Forced, Snapshot>>>
 const COPIES = new Map<string, Copies>()
 const copiesOf = (key: string, pass: string, mode: Mode) =>
   `${key}|${pass}|${mode}`
@@ -225,34 +238,50 @@ const read = async (page: Page, id: number, focus = false) =>
   )[id] ?? null
 
 /* Hovered with the pointer (so script-driven hovers show too), pressed and
-   focused forced through the DevTools protocol plus a keyboard round trip,
-   so CSS and script focus rings both show. Each state is undone before the
-   next. Only what a state changes is kept. */
+   focused forced through the DevTools protocol (on the rest pass with a
+   keyboard round trip, so script focus rings show too), then disabled,
+   invalid and selected set on the element (census `force`), where it has
+   none of them already. Each state is undone before the next. Only what a
+   state changes is kept. With something open (a menu), `keys` is false: no
+   Tab or Escape, which would close it. */
 async function readStates(
   page: Page,
   elements: CensusElement[],
   copies: Copies,
+  keys: boolean,
 ) {
   const cdp = await page.createCDPSession()
   await cdp.send("DOM.enable")
   await cdp.send("CSS.enable")
   await cdp.send("DOM.getDocument", { depth: -1, pierce: true })
   const url = page.url()
-  const force = async (handle: ElementHandle, classes: string[]) => {
-    const { nodeId } = await cdp.send("DOM.requestNode", {
-      objectId: handle.remoteObject().objectId as string,
+  /* The node in this session: an object id from Puppeteer's own session
+     isn't valid here. */
+  const nodeOf = async (id: number) => {
+    const { result } = await cdp.send("Runtime.evaluate", {
+      expression: censusSnippet({ kind: "node", id }),
     })
-    await cdp.send("CSS.forcePseudoState", {
-      nodeId,
-      forcedPseudoClasses: classes,
-    })
+    if (!result.objectId) return undefined
+    return (await cdp.send("DOM.requestNode", { objectId: result.objectId }))
+      .nodeId
   }
+  const force = (nodeId: number, classes: string[]) =>
+    cdp.send("CSS.forcePseudoState", { nodeId, forcedPseudoClasses: classes })
+  const set = (id: number, state: Forced | null) =>
+    page.evaluate(
+      censusSnippet({ kind: "force", id, state }),
+    ) as Promise<boolean>
   for (const element of elements) {
     if (page.url() !== url) break
     const handle = await page.$(`>>> [data-census="${element.id}"]`)
-    if (!handle) continue
-    const states: Partial<Record<State, Values>> = {}
-    const copy = async (state: State) => {
+    const nodeId = handle && (await nodeOf(element.id).catch(() => undefined))
+    if (!handle || !nodeId) {
+      await handle?.dispose()
+      continue
+    }
+    const states: Partial<Record<State | Forced, Values>> = {}
+    const forced: Forced[] = []
+    const copy = async (state: State | Forced) => {
       const frozen =
         copies[element.id] && (await freeze(page, [element.id]))[element.id]
       if (frozen)
@@ -268,66 +297,89 @@ async function readStates(
       if (hover) states.hover = changed(element.values, hover)
       await copy("hover")
       await page.mouse.move(0, 0)
-      await force(handle, ["hover", "active"])
+      await force(nodeId, ["hover", "active"])
       await finish(page)
       const pressed = await read(page, element.id)
       if (pressed) states.pressed = changed(element.values, pressed)
       await copy("pressed")
-      await force(handle, [])
+      await force(nodeId, [])
       if (element.focusable) {
         await handle.focus()
-        await page.keyboard.press("Tab")
-        await page.keyboard.down("Shift")
-        await page.keyboard.press("Tab")
-        await page.keyboard.up("Shift")
-        if (!(await handle.evaluate((el) => el === document.activeElement)))
-          await handle.focus()
-        await force(handle, ["focus", "focus-visible", "focus-within"])
+        if (keys) {
+          await page.keyboard.press("Tab")
+          await page.keyboard.down("Shift")
+          await page.keyboard.press("Tab")
+          await page.keyboard.up("Shift")
+          if (!(await handle.evaluate((el) => el === document.activeElement)))
+            await handle.focus()
+        }
+        await force(nodeId, ["focus", "focus-visible", "focus-within"])
         await finish(page)
         const focus = await read(page, element.id, true)
         if (focus) states.focus = changed(element.values, focus)
         await copy("focus")
-        await force(handle, [])
+        await force(nodeId, [])
         await handle.evaluate((el) => (el as HTMLElement).blur?.())
       }
+      if (!element.is)
+        for (const state of FORCED) {
+          if (!(await set(element.id, state))) continue
+          await finish(page)
+          const values = await read(page, element.id)
+          const diff = values ? changed(element.values, values) : {}
+          delete diff.width
+          if (Object.keys(diff).length) {
+            states[state] = diff
+            forced.push(state)
+            await copy(state)
+          }
+          await set(element.id, null)
+        }
     } catch {
       // Detached or covered: keep what was read.
     } finally {
-      await page.keyboard.press("Escape").catch(() => {})
+      await set(element.id, null).catch(() => {})
+      if (keys) await page.keyboard.press("Escape").catch(() => {})
       await handle.dispose()
     }
-    for (const [state, values] of Object.entries(states) as [State, Values][]) {
+    for (const [state, values] of Object.entries(states) as [
+      State | Forced,
+      Values,
+    ][]) {
       delete values.width
       if (!Object.keys(values).length) delete states[state]
     }
     if (Object.keys(states).length) element.states = states
+    if (forced.length) element.forced = forced
   }
   await cdp.detach()
 }
 
 /** One pass over the page as it stands: the walk, the states of each
- *  interactive look, and the custom properties behind every look. */
+ *  interactive look, and the custom properties behind every look. A pass
+ *  after "rest" reads only what is new or changed since `seen` (only what
+ *  is new after a hover), and is null when nothing is. `open`: something is
+ *  open that a key press would close. */
 async function pass(
   page: Page,
   key: string,
   mode: Mode,
   name: string,
   start: number,
-): Promise<CensusPage> {
+  open = name !== "rest",
+  fresh: boolean | "new" = name !== "rest",
+): Promise<CensusPage | null> {
+  const rest = name === "rest"
   const walked = (await page.evaluate(
-    censusSnippet({
-      kind: "walk",
-      max: Number(args.max),
-      fresh: name !== "rest",
-      start,
-    }),
+    censusSnippet({ kind: "walk", max: Number(args.max), fresh, start }),
   )) as {
     elements: CensusElement[]
     truncated: number
     viewport: CensusPage["viewport"]
-    reads: CensusPage["reads"]
+    reads: NonNullable<CensusPage["reads"]>
   }
   const { elements } = walked
+  if (!rest && !elements.length) return null
   // The most used looks with a box small enough to copy.
   const copied = representatives(elements)
     .filter(
@@ -348,6 +400,7 @@ async function pass(
     page,
     representatives(elements, INTERACTIVE).slice(0, Number(args.states)),
     copies,
+    !open,
   )
   const { vars, tokens } = (await page.evaluate(
     censusSnippet({
@@ -370,37 +423,232 @@ async function pass(
     elements,
     ...(Object.keys(tokens).length ? { tokens } : {}),
     ...(walked.truncated ? { truncated: walked.truncated } : {}),
-    reads: walked.reads,
+    reads: [...walked.reads, "states"],
   }
 }
 
-/** A unique selector for a popup trigger, so a fresh load can find it. */
-const triggers = (page: Page, max: number) =>
-  page.evaluate((max) => {
-    const path = (el: Element): string => {
-      if (
-        el.id &&
-        document.querySelectorAll(`#${CSS.escape(el.id)}`).length === 1
-      )
-        return `#${CSS.escape(el.id)}`
-      const parent = el.parentElement
-      if (!parent) return el.localName
-      const index = [...parent.children]
-        .filter((child) => child.localName === el.localName)
-        .indexOf(el)
-      return `${path(parent)} > ${el.localName}:nth-of-type(${index + 1})`
-    }
-    return [
-      ...document.querySelectorAll(
-        '[aria-haspopup]:not([aria-haspopup="false"]), [aria-expanded="false"]',
-      ),
-    ]
-      .filter(
-        (el) => el.checkVisibility() && el.getBoundingClientRect().width > 0,
-      )
-      .slice(0, max)
-      .map(path)
-  }, max)
+const markSeen = (page: Page) => page.evaluate(censusSnippet({ kind: "seen" }))
+const appeared = (page: Page) =>
+  page.evaluate(censusSnippet({ kind: "appeared" })) as Promise<number>
+
+/** What opens on a page, found from the page alone, as unique selectors a
+ *  fresh load can find again: popup, menu, disclosure and dialog triggers,
+ *  or tooltip triggers (what an aria-describedby or a tooltip attribute
+ *  points at, then icon-only controls). One per look, so a page of twenty
+ *  identical menus opens one. */
+const finders = (page: Page, kind: "popups" | "tips", max: number) =>
+  page.evaluate(
+    (kind, max) => {
+      // Ids a framework generates (React's useId, Radix, React Aria) can
+      // change between loads.
+      const generated =
+        /^(:|_r|_R_|radix-|react-aria|headlessui-|mui-)|[:«»]|\d{3,}/
+      const path = (el: Element): string => {
+        if (
+          el.id &&
+          !generated.test(el.id) &&
+          document.querySelectorAll(`#${CSS.escape(el.id)}`).length === 1
+        )
+          return `#${CSS.escape(el.id)}`
+        const parent = el.parentElement
+        if (!parent) return el.localName
+        const index = [...parent.children]
+          .filter((child) => child.localName === el.localName)
+          .indexOf(el)
+        return `${path(parent)} > ${el.localName}:nth-of-type(${index + 1})`
+      }
+      const look = (el: Element) => {
+        const style = getComputedStyle(el)
+        return [
+          el.localName,
+          el.getAttribute("role") ?? "",
+          el.getAttribute("aria-haspopup") ?? "",
+          style.backgroundColor,
+          style.borderTopWidth,
+          style.borderTopLeftRadius,
+          style.fontSize,
+          Math.round(el.getBoundingClientRect().height),
+        ].join("|")
+      }
+      const all = (selector: string) => [...document.querySelectorAll(selector)]
+      let found: Element[]
+      if (kind === "popups")
+        found = [
+          ...all('[aria-haspopup]:not([aria-haspopup="false"])'),
+          ...all("[popovertarget], [commandfor]"),
+          ...all("details:not([open]) > summary"),
+          ...all('[aria-expanded="false"]'),
+        ].filter((el) => {
+          // A link to another page navigates instead of opening.
+          const href = el.localName === "a" ? el.getAttribute("href") : null
+          return (
+            !href || href.startsWith("#") || el.hasAttribute("aria-haspopup")
+          )
+        })
+      else {
+        const tip = (id: string) => {
+          const target = id ? document.getElementById(id) : null
+          return (
+            !!target &&
+            (target.getAttribute("role") === "tooltip" ||
+              target.hasAttribute("popover") ||
+              !target.checkVisibility())
+          )
+        }
+        found = [
+          ...all("[aria-describedby], [aria-labelledby]").filter((el) =>
+            ["aria-describedby", "aria-labelledby"].some((name) =>
+              (el.getAttribute(name) ?? "").split(/\s+/).some(tip),
+            ),
+          ),
+          ...all(
+            "[data-tooltip], [data-tip], [data-tippy-content], [data-tooltip-content], [data-tooltip-id]",
+          ),
+          ...all("button, [role=button], a[href]").filter(
+            (el) =>
+              !(el.textContent ?? "").trim() && el.querySelector("svg, img"),
+          ),
+        ]
+      }
+      const looks = new Set<string>()
+      const out = new Set<string>()
+      for (const el of found) {
+        if (out.size >= max) break
+        if (
+          !el.checkVisibility() ||
+          !el.getBoundingClientRect().width ||
+          el.closest("[aria-hidden=true], [inert]")
+        )
+          continue
+        const sig = look(el)
+        if (looks.has(sig)) continue
+        looks.add(sig)
+        out.add(path(el))
+      }
+      return [...out]
+    },
+    kind,
+    max,
+  )
+
+/** The story a Storybook iframe page shows, if it is one. */
+const storyOf = (url: string) => {
+  try {
+    const parsed = new URL(url)
+    return parsed.pathname.endsWith("/iframe.html")
+      ? parsed.searchParams.get("id")
+      : null
+  } catch {
+    return null
+  }
+}
+
+/** A story's variants, one arg changed at a time: each option of its enum
+ *  args (variant, size, tone…) and the other value of its boolean ones
+ *  (disabled, loading, invalid…), from the argTypes Storybook keeps. Args
+ *  that take components or functions (icons, slots) are left out. */
+async function variants(page: Page, story: string, max: number) {
+  const found = await page
+    .evaluate(async (story) => {
+      const store = (
+        window as unknown as {
+          __STORYBOOK_PREVIEW__?: {
+            storyStoreValue?: {
+              loadStory: (input: { storyId: string }) => Promise<{
+                initialArgs?: Record<string, unknown>
+                argTypes?: Record<
+                  string,
+                  {
+                    options?: unknown[]
+                    control?:
+                      | false
+                      | string
+                      | { type?: string; disable?: boolean }
+                    table?: { disable?: boolean }
+                    type?: { name?: string }
+                  }
+                >
+              }>
+            }
+          }
+        }
+      ).__STORYBOOK_PREVIEW__?.storyStoreValue
+      if (!store) return null
+      const loaded = await store.loadStory({ storyId: story })
+      return {
+        args: loaded.initialArgs ?? {},
+        types: Object.entries(loaded.argTypes ?? {}).map(([name, t]) => ({
+          name,
+          options: Array.isArray(t.options) ? t.options : undefined,
+          control: typeof t.control === "object" ? t.control?.type : t.control,
+          off:
+            t.control === false ||
+            (typeof t.control === "object" && !!t.control?.disable) ||
+            !!t.table?.disable,
+          type: t.type?.name,
+        })),
+      }
+    }, story)
+    .catch(() => null)
+  if (!found) return []
+  const options: Record<string, unknown>[] = []
+  const toggles: Record<string, unknown>[] = []
+  for (const t of found.types) {
+    if (t.off || t.type === "object" || t.type === "function") continue
+    if (
+      t.options &&
+      t.options.length <= 12 &&
+      t.options.every((o) => typeof o === "string" || typeof o === "number")
+    ) {
+      for (const option of t.options)
+        if (option !== found.args[t.name]) options.push({ [t.name]: option })
+    } else if (t.type === "boolean" || t.control === "boolean")
+      toggles.push({ [t.name]: !found.args[t.name] })
+  }
+  return [...options, ...toggles].slice(0, max)
+}
+
+/** Sets a story's args in place, or resets them (null), and waits for it to
+ *  render again. */
+const setArgs = (
+  page: Page,
+  story: string,
+  updated: Record<string, unknown> | null,
+) =>
+  page.evaluate(
+    (story, updated) =>
+      new Promise<boolean>((done) => {
+        const channel = (
+          window as unknown as {
+            __STORYBOOK_PREVIEW__?: {
+              channel?: {
+                on: (name: string, fn: () => void) => void
+                off: (name: string, fn: () => void) => void
+                emit: (name: string, payload: unknown) => void
+              }
+            }
+          }
+        ).__STORYBOOK_PREVIEW__?.channel
+        if (!channel) return done(false)
+        const rendered = () => {
+          channel.off("storyRendered", rendered)
+          done(true)
+        }
+        channel.on("storyRendered", rendered)
+        setTimeout(() => {
+          channel.off("storyRendered", rendered)
+          done(false)
+        }, 3000)
+        channel.emit(
+          updated ? "updateStoryArgs" : "resetStoryArgs",
+          updated
+            ? { storyId: story, updatedArgs: updated }
+            : { storyId: story },
+        )
+      }),
+    story,
+    updated,
+  )
 
 interface Job {
   key: string
@@ -419,6 +667,9 @@ const slug = (key: string) =>
     .replace(/^-|-$/g, "")
     .slice(0, 60)}-${createHash("sha1").update(key).digest("hex").slice(0, 8)}`
 
+/** Every pass of one page in one mode: at rest; then in place, each popup
+ *  and tooltip found and each variant of a story; then on a fresh load
+ *  each, the pack's passes. */
 async function crawl(
   job: Job,
   open: (job: Job) => Promise<{
@@ -429,36 +680,139 @@ async function crawl(
 ) {
   const { page, load, close } = await open(job)
   const pages: CensusPage[] = []
+  let start = 0
+  const keep = (censusPage: CensusPage | null) => {
+    if (censusPage) pages.push(censusPage)
+  }
+  const warn = (name: string, error: unknown) =>
+    console.warn(
+      `${job.key} (${job.mode}) pass "${name}": ${(error as Error).message}`,
+    )
+  // Where a load lands, without its hash: a pass that leaves it navigated.
+  const where = () => {
+    const url = new URL(page.url())
+    return url.origin + url.pathname + url.search
+  }
   try {
     page.on("dialog", (dialog) => void dialog.dismiss())
     await load()
-    pages.push(await pass(page, job.key, job.mode, "rest", 0))
-    const passes = [
-      ...job.passes,
-      ...(await triggers(page, Number(args.open))).map((selector): Step[] => [
-        { click: selector },
-      ]),
-    ]
-    for (const [i, steps] of passes.entries()) {
+    const home = where()
+    keep(await pass(page, job.key, job.mode, "rest", 0))
+    const popups = OPEN ? await finders(page, "popups", OPEN) : []
+    const tips = Number(args.tips)
+      ? await finders(page, "tips", Number(args.tips))
+      : []
+    const listed = new Set(job.passes.map((steps) => steps.map(say).join("; ")))
+    // Popups open in place too: Escape closes most, and one that leaves
+    // something open (a disclosure) or navigates reloads the page.
+    let dirty = false
+    for (const selector of popups) {
+      const name = `click ${selector}`
+      if (listed.has(name)) continue
       try {
-        await load()
-        await page.evaluate(censusSnippet({ kind: "seen" }))
-        await runSteps(page, steps)
+        if (dirty) await load()
+        dirty = false
+        await markSeen(page)
+        await runSteps(page, [{ click: selector }])
+        // The click leaves the pointer on the trigger, whose open look
+        // would read hovered.
+        await page.mouse.move(0, 0)
         await pause(400)
         await finish(page)
-        pages.push(
-          await pass(
-            page,
-            job.key,
-            job.mode,
-            steps.map(say).join("; "),
-            (i + 1) * 100000,
-          ),
+        // A trigger that navigates opened nothing.
+        if (where() === home)
+          keep(await pass(page, job.key, job.mode, name, (start += 100000)))
+      } catch (error) {
+        warn(name, error)
+        dirty = true
+      } finally {
+        await page.keyboard.press("Escape").catch(() => {})
+        await pause(300)
+        dirty ||= where() !== home || (await appeared(page).catch(() => 1)) > 0
+      }
+    }
+    if (dirty) await load()
+    for (const selector of tips) {
+      let name = `hover ${selector}`
+      try {
+        await markSeen(page)
+        await page.hover(selector)
+        await pause(900)
+        if (!(await appeared(page))) {
+          // React Aria and Primer tooltips open on keyboard focus.
+          name = `focus ${selector}`
+          await page.mouse.move(0, 0)
+          await page.focus(selector)
+          await page.keyboard.press("Tab")
+          await page.keyboard.down("Shift")
+          await page.keyboard.press("Tab")
+          await page.keyboard.up("Shift")
+          await pause(900)
+        }
+        if (await appeared(page)) {
+          await finish(page)
+          keep(
+            await pass(
+              page,
+              job.key,
+              job.mode,
+              name,
+              (start += 100000),
+              true,
+              "new",
+            ),
+          )
+        }
+      } catch (error) {
+        warn(name, error)
+      } finally {
+        await page.mouse.move(0, 0).catch(() => {})
+        await page
+          .evaluate(() =>
+            (document.activeElement as HTMLElement | null)?.blur?.(),
+          )
+          .catch(() => {})
+        await page.keyboard.press("Escape").catch(() => {})
+        await pause(200)
+      }
+      if (where() !== home) await load()
+    }
+    const story = storyOf(job.url)
+    for (const updated of story && Number(args.args)
+      ? await variants(page, story, Number(args.args))
+      : []) {
+      const name = `args ${Object.entries(updated)
+        .map(([arg, value]) => `${arg}:${value}`)
+        .join(",")}`
+      try {
+        await markSeen(page)
+        await setArgs(page, story as string, updated)
+        await pause(200)
+        await finish(page)
+        keep(
+          await pass(page, job.key, job.mode, name, (start += 100000), false),
         )
       } catch (error) {
-        console.warn(
-          `${job.key} (${job.mode}) pass "${steps.map(say).join("; ")}": ${(error as Error).message}`,
-        )
+        warn(name, error)
+      } finally {
+        await setArgs(page, story as string, null).catch(() => {})
+        await page.mouse.move(0, 0).catch(() => {})
+      }
+    }
+    for (const steps of job.passes) {
+      const name = steps.map(say).join("; ")
+      try {
+        await load()
+        await markSeen(page)
+        await runSteps(page, steps)
+        // A click leaves the pointer on the trigger, whose open look would
+        // read hovered.
+        if (!steps.some((step) => "hover" in step)) await page.mouse.move(0, 0)
+        await pause(400)
+        await finish(page)
+        keep(await pass(page, job.key, job.mode, name, (start += 100000)))
+      } catch (error) {
+        warn(name, error)
       }
     }
   } catch (error) {
@@ -530,9 +884,91 @@ async function discover(browser: Browser, jobs: Job[], max: number) {
   return found
 }
 
+/** For --stories: one story for each of up to `max` more components of each
+ *  Storybook the pack's pages read (its Playground story, else its Default
+ *  one), from the Storybook's index.json. They take the globals, dark URL
+ *  and settings of the pack's first story there. */
+async function moreStories(browser: Browser, jobs: Job[], max: number) {
+  if (!max) return []
+  const roots = new Map<string, Job[]>()
+  for (const job of jobs) {
+    if (!storyOf(job.url)) continue
+    const root = new URL("index.json", job.url).href
+    roots.set(root, [...(roots.get(root) ?? []), job])
+  }
+  type Entry = { id: string; title: string; name: string; type?: string }
+  const swap = (url: string, id: string) =>
+    url.replace(/([?&]id=)[^&#]*/, `$1${id}`)
+  const found: Job[] = []
+  for (const [root, list] of roots) {
+    const [first] = list
+    if (!first) continue
+    const { page, load, close } = await openPage(
+      browser,
+      first.url,
+      first.mode,
+      first.settings,
+    )
+    try {
+      await load()
+      const index = (await page.evaluate(
+        (root) => fetch(root).then((response) => response.json()),
+        root,
+      )) as { entries?: Record<string, Entry>; stories?: Record<string, Entry> }
+      const entries = Object.values(
+        index.entries ?? index.stories ?? {},
+      ).filter((entry) => (entry.type ?? "story") === "story")
+      const component = (title: string) =>
+        title.split("/").slice(0, 2).join("/")
+      const have = new Set(
+        list.flatMap((job) => {
+          const entry = entries.find((e) => e.id === storyOf(job.url))
+          return entry ? [component(entry.title)] : []
+        }),
+      )
+      const rank = (entry: Entry) =>
+        /^playground$/i.test(entry.name)
+          ? 0
+          : /^default$/i.test(entry.name)
+            ? 1
+            : 2
+      const picks = new Map<string, Entry>()
+      for (const entry of entries) {
+        const name = component(entry.title)
+        if (
+          have.has(name) ||
+          /deprecated|private|internal|hooks?\b|utilit|\btests?\b/i.test(name)
+        )
+          continue
+        const best = picks.get(name)
+        if (!best || rank(entry) < rank(best)) picks.set(name, entry)
+      }
+      const templates = list.filter((job) => job.key === first.key)
+      for (const entry of [...picks.values()].slice(0, max))
+        for (const job of templates)
+          found.push({
+            ...job,
+            key: swap(job.key, entry.id),
+            url: swap(job.url, entry.id),
+            passes: [],
+          })
+      console.log(
+        `${root}: ${Math.min(picks.size, max)} more of ${picks.size} components`,
+      )
+    } catch (error) {
+      console.warn(`${root}: ${(error as Error).message}`)
+    } finally {
+      await close()
+    }
+  }
+  return found
+}
+
 async function headless(): Promise<CensusPage[]> {
   const packFile = resolve(REFS, pack, "targets.json")
-  const targets: Pack = existsSync(packFile) ? await readJson(packFile) : {}
+  const targets: Record<string, PackPage> = existsSync(packFile)
+    ? await readJson(packFile)
+    : {}
   const folder = pathToFileURL(`${resolve(REFS, pack)}/`)
   const jobs: Job[] = []
   for (const [
@@ -542,12 +978,12 @@ async function headless(): Promise<CensusPage[]> {
     if (signedIn || (args.url.length && !args.url.includes(key))) continue
     const passes = [
       ...new Map(
-        Object.values(parts)
-          .filter((target) => target.before?.length)
-          .map((target) => [
-            JSON.stringify(target.before),
-            target.before as Step[],
-          ]),
+        [
+          ...Object.values(parts).flatMap((target) =>
+            target.before?.length ? [target.before] : [],
+          ),
+          ...(settings.passes ?? []),
+        ].map((steps) => [JSON.stringify(steps), steps]),
       ).values(),
     ]
     const url = new URL(key, folder).href
@@ -573,6 +1009,7 @@ async function headless(): Promise<CensusPage[]> {
   const browser = await launch()
   try {
     jobs.push(...(await discover(browser, jobs, Number(args.follow))))
+    jobs.push(...(await moreStories(browser, jobs, Number(args.stories))))
     const open = (job: Job) =>
       openPage(browser, job.url, job.mode, job.settings)
     return (
@@ -593,7 +1030,9 @@ async function connected(): Promise<CensusPage[]> {
     process.exit(1)
   }
   const urls: Record<string, string> = await readJson(resolve(args.pages))
-  const targets: Pack = existsSync(resolve(REFS, pack, "targets.json"))
+  const targets: Record<string, PackPage> = existsSync(
+    resolve(REFS, pack, "targets.json"),
+  )
     ? await readJson(resolve(REFS, pack, "targets.json"))
     : {}
   const port = args.connect as string
@@ -625,9 +1064,12 @@ async function connected(): Promise<CensusPage[]> {
       for (const mode of MODES) {
         const known = targets[key]
         const passes = args.passes
-          ? Object.values(known?.parts ?? {}).flatMap((target) =>
-              target.before?.length ? [target.before] : [],
-            )
+          ? [
+              ...Object.values(known?.parts ?? {}).flatMap((target) =>
+                target.before?.length ? [target.before] : [],
+              ),
+              ...(known?.passes ?? []),
+            ]
           : []
         pages.push(
           ...(await crawl(

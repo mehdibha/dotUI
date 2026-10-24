@@ -53,6 +53,7 @@ export interface ModelLook {
   light?: Values
   dark?: Values
   states?: Look["states"]
+  forced?: Look["forced"]
 }
 
 export interface Model {
@@ -115,6 +116,7 @@ const CONTROL_GROUPS = new Set([
   "textbox",
   "searchbox",
   "combobox",
+  "select",
   "switch",
   "checkbox",
   "radio",
@@ -475,6 +477,7 @@ function inventoryOf(looks: Look[], pages: string[]) {
               ...(light ? { light } : {}),
               ...(dark ? { dark } : {}),
               ...(look.states ? { states: look.states } : {}),
+              ...(look.forced ? { forced: look.forced } : {}),
             }
           }),
       ]),
