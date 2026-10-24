@@ -1,0 +1,13 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/www/src/**",
+        "$TURBO_ROOT$/packages/colors/src/**"
+      ]
+    }
+  }
+}
