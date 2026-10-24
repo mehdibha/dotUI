@@ -2,6 +2,7 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
+import { bluesky } from "./bluesky"
 import { carbon } from "./carbon"
 import { chatgpt } from "./chatgpt"
 import { claude } from "./claude"
@@ -44,6 +45,7 @@ export const PRESETS: Preset[] = [
   wise,
   higgsfield,
   govuk,
+  bluesky,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
