@@ -668,8 +668,9 @@ function census(
       set("data-invalid", "true")
       const field = el as HTMLInputElement
       if (typeof field.setCustomValidity === "function") {
+        const was = field.validity?.customError ? field.validationMessage : ""
         field.setCustomValidity("invalid")
-        undo.push(() => field.setCustomValidity(""))
+        undo.push(() => field.setCustomValidity(was))
       }
       return true
     }

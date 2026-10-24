@@ -794,18 +794,21 @@ async function crawl(
         .join(",")}`
       try {
         await markSeen(page)
-        await setArgs(page, story as string, updated)
-        await pause(200)
-        await finish(page)
-        keep(
-          await pass(page, job.key, job.mode, name, (start += 100000), false),
-        )
+        // No render in time: a late one would land mid-walk.
+        if (await setArgs(page, story as string, updated)) {
+          await pause(200)
+          await finish(page)
+          keep(
+            await pass(page, job.key, job.mode, name, (start += 100000), false),
+          )
+        }
       } catch (error) {
         warn(name, error)
-      } finally {
-        await setArgs(page, story as string, null).catch(() => {})
-        await page.mouse.move(0, 0).catch(() => {})
       }
+      await page.mouse.move(0, 0).catch(() => {})
+      // A story still re-rendering would read into the next variant.
+      if (!(await setArgs(page, story as string, null).catch(() => false)))
+        break
     }
     for (const steps of job.passes) {
       const name = steps.map(say).join("; ")
