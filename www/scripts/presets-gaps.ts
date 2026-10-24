@@ -1,6 +1,6 @@
 /**
  * The preset gap ledger, built from every pack's gaps.json
- * (src/modules/preset-lab/refs/<id>/gaps.json): looks per pattern, the
+ * (packages/capture/refs/<id>/gaps.json): looks per pattern, the
  * systems that need each, and which meet the proposal bar. Run from www/.
  *
  *   tsx scripts/presets-gaps.ts [--pattern <id>] [--json]
@@ -10,8 +10,7 @@
  *     Every system's reading of one look, with its stand-in.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs"
-import { dirname, resolve } from "node:path"
-import { fileURLToPath } from "node:url"
+import { resolve } from "node:path"
 import { parseArgs } from "node:util"
 
 import {
@@ -21,7 +20,9 @@ import {
   type LookId,
   type Pattern,
   PATTERNS,
-} from "../src/modules/preset-lab/looks"
+} from "@dotui/capture/looks"
+import { REFS } from "@dotui/capture/preset-pages"
+
 import { getPreset } from "../src/modules/presets"
 
 const { values: args } = parseArgs({
@@ -32,10 +33,6 @@ const { values: args } = parseArgs({
   },
 })
 
-const REFS = resolve(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/modules/preset-lab/refs",
-)
 const packs: Record<string, GapsFile> = {}
 for (const id of readdirSync(REFS)) {
   const file = resolve(REFS, id, "gaps.json")

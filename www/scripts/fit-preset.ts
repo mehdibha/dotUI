@@ -36,14 +36,27 @@ import {
   score,
   type SensitivityMap,
   type Value,
-} from "../src/modules/preset-lab/fit"
-import type { GapsFile } from "../src/modules/preset-lab/looks"
+} from "@dotui/capture/fit"
+import type { GapsFile } from "@dotui/capture/looks"
+import {
+  focusable,
+  launch,
+  type Mode,
+  pool,
+  PROBE,
+  readReference,
+  REFS,
+  settle,
+  SRC,
+  versionOf,
+} from "@dotui/capture/preset-pages"
 import {
   type Measures,
   SPECIMEN_TARGETS,
   snippet,
   type Target,
-} from "../src/modules/preset-lab/probe"
+} from "@dotui/capture/probe"
+
 import { getPreset } from "../src/modules/presets"
 import {
   DEFAULTS,
@@ -54,17 +67,6 @@ import {
   type StudioState,
 } from "../src/modules/studio/axes"
 import { designSystemOf } from "../src/modules/studio/resolve"
-import {
-  focusable,
-  launch,
-  type Mode,
-  pool,
-  PROBE,
-  readReference,
-  REFS,
-  settle,
-  versionOf,
-} from "./preset-pages"
 
 const { values: args } = parseArgs({
   options: {
@@ -277,12 +279,12 @@ const overlay = (base: Measured, top: Measured): Measured =>
   )
 
 // The sensitivity map: each candidate's rows, set alone on Origin.
+const WWW = resolve(import.meta.dirname, "../src")
 const BUILD = versionOf(
-  "../../registry",
-  "../studio",
-  "sheets",
-  "page.tsx",
-  "probe.ts",
+  resolve(WWW, "registry"),
+  resolve(WWW, "modules/studio"),
+  resolve(WWW, "modules/preset-lab"),
+  resolve(SRC, "probe.ts"),
 )
 const mapFile = resolve(args.out, `sensitivity-${BUILD}.json`)
 const ORIGIN = parseState({})

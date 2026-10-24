@@ -87,7 +87,7 @@ function RootDocument() {
             </div>
             <nav className="flex items-center gap-1 text-sm text-fg-muted">
               <LinkButton
-                href="https://github.com/mehdibha/ds-directory"
+                href="https://github.com/mehdibha/dotUI/tree/main/directory"
                 aria-label="GitHub"
                 variant="quiet"
                 size="sm"

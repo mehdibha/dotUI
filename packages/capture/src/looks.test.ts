@@ -12,7 +12,7 @@ import {
 } from "./looks"
 import { PROPS, SPECIMEN_TARGETS } from "./probe"
 
-const REFS = resolve(import.meta.dirname, "refs")
+const REFS = resolve(import.meta.dirname, "../refs")
 const packs = Object.fromEntries(
   readdirSync(REFS)
     .filter((id) => existsSync(resolve(REFS, id, "gaps.json")))

@@ -2,11 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
-import type {
-  PartFile,
-  Snapshot,
-  SnapshotFont,
-} from "@/modules/preset-lab/snapshot"
+import type { PartFile, Snapshot, SnapshotFont } from "@dotui/capture/snapshot"
 
 /* A frozen copy of the real product's element: its DOM with every computed
    style inlined, drawn in a shadow root. In dev the files come from

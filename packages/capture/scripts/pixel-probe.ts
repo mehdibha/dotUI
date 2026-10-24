@@ -1,8 +1,8 @@
 /**
- * The pixel probe (src/modules/preset-lab/pixel.ts) over a screenshot, for
+ * The pixel probe (src/pixel.ts) over a screenshot, for
  * products with no DOM to read: native apps. Run from www/.
  *
- *   tsx scripts/pixel-probe.ts --pack <id> --shot <png> --rects <file> --mode light|dark [--parts a,b] [--exact] [--write]
+ *   pnpm presets:pixel --pack <id> --shot <png> --rects <file> --mode light|dark [--parts a,b] [--exact] [--write]
  *     Reads each part's box in <rects> ({ width, parts: { part: [x, y, w, h] } }
  *     in the shot's points: `__dotui.rects()` output, or written by eye from
  *     the screenshot) and prints what the pixels say. Boxes are snapped to
@@ -16,8 +16,8 @@ import { resolve } from "node:path"
 import { parseArgs } from "node:util"
 import { PNG } from "pngjs"
 
-import { type Box, measureBox, snap } from "../src/modules/preset-lab/pixel"
-import type { Measures, ReferenceTokens } from "../src/modules/preset-lab/probe"
+import { type Box, measureBox, snap } from "../src/pixel"
+import type { Measures, ReferenceTokens } from "../src/probe"
 import { REFS } from "./preset-pages"
 
 const { values: args } = parseArgs({

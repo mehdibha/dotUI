@@ -65,7 +65,7 @@ export function CoverageSection({ looks }: { looks: LooksFile }) {
   return (
     <Section
       title="Coverage"
-      intro={`Read on ${capture.date} by preset-lab ${capture.probe}. Every number is something the capture measured; the empty slots further down are what it didn't reach.`}
+      intro={`Read on ${capture.date} with probe ${capture.probe}. Every number is something the capture measured; the empty slots further down are what it didn't reach.`}
     >
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <Stat

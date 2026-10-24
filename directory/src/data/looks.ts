@@ -1,8 +1,8 @@
 import { z } from "zod"
 
 /* systems/<slug>/looks.json: what a capture read off a real product, one
-   file per system. www's `scripts/system-looks.ts` writes it from a preset's
-   pack and census; nobody edits it by hand. build:data validates every file
+   file per system. `presets:looks` (packages/capture/scripts/system-looks.ts)
+   writes it from a preset's pack and census; nobody edits it by hand. build:data validates every file
    against this schema, and each system page imports only its own. */
 
 export const MODES = ["light", "dark"] as const

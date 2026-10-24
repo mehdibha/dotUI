@@ -1,8 +1,8 @@
 /**
- * Writes a system's looks.json for its doc page (src/modules/preset-lab/
- * system-looks.ts) from its pack and census. Run from www/.
+ * Writes a system's looks.json for its doc page (src/system-looks.ts) from
+ * its pack and census. Run from www/.
  *
- *   tsx scripts/system-looks.ts --pack <id>… [--census <dir>] [--fit <file>] [--out <file>]
+ *   pnpm presets:looks --pack <id>… [--census <dir>] [--fit <file>] [--out <file>]
  *     Reads refs/<id>/model.json (required: run presets:crawl first),
  *     tokens.json, gaps.json and targets.json; the newest census under
  *     .scratch-refs/<id>/ for fuller values, custom properties and copies;
@@ -15,10 +15,10 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname, relative, resolve } from "node:path"
 import { parseArgs } from "node:util"
 
-import type { Inventory } from "../src/modules/preset-lab/census"
-import type { GapsFile } from "../src/modules/preset-lab/looks"
-import type { Model } from "../src/modules/preset-lab/model"
-import { systemLooks } from "../src/modules/preset-lab/system-looks"
+import type { Inventory } from "../src/census"
+import type { GapsFile } from "../src/looks"
+import type { Model } from "../src/model"
+import { systemLooks } from "../src/system-looks"
 import { readReference, REFS } from "./preset-pages"
 
 const { values: args } = parseArgs({
