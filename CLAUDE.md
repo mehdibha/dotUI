@@ -41,7 +41,7 @@ An honest snapshot (August 2026) to calibrate against. Task-level work is tracke
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /studio builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
-- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/ts-config` — shared TypeScript configs.
+- `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www). `packages/capture` — `@dotui/capture`, reads real products for presets: the probe, census, reference packs (`refs/<id>/`) and the `presets:*` capture scripts (private, never imports www). `packages/ts-config` — shared TypeScript configs.
 - `examples/` — consumer templates with the registry's resolved output committed (see Registry changes).
 - `video/` — the launch film (Remotion), rendering the real registry components and /studio panel from `www/src`.
 - `directory/` — ds.dotui.org, the design-system directory: one page per system from captured data, rendering registry components from `www/src` the same way. Its data rules are in `directory/CLAUDE.md`.
