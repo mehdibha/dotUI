@@ -63,8 +63,8 @@ import {
    slide in from the right and bottom, the frame closes in to the preview's
    rounded border, and the panel slides in from the left beside it. The
    cards arrive slowly, one after another, the last as Controls lands. The
-   look holds from 9 s until the studio is in place, then the presets run on
-   at the same pace; then a pause and the end screens. */
+   presets run on at the same pace throughout; then a pause and the end
+   screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
@@ -96,9 +96,9 @@ const STUDIO = {
 /** Every swap of look: the frame it's centered on and how long it morphs. */
 const SWAPS = (() => {
   const swaps: { at: number; morph: number }[] = []
-  // One look a second, held from 9 s while the studio comes in.
-  for (let at = 60; at <= 1260; at += 60)
-    if (at <= 480 || at >= 720) swaps.push({ at, morph: 44 })
+  // One look a second, through the studio coming in, every preset once and
+  // back to the first.
+  for (let k = 1; k <= LOOKS.length; k++) swaps.push({ at: k * 60, morph: 44 })
   return swaps
 })()
 const lookOf = (i: number) => LOOKS[i % LOOKS.length]!
