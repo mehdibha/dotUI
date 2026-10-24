@@ -43,6 +43,7 @@ import {
   launch,
   type Mode,
   openPage,
+  type PackPage,
   pool as poolOf,
   pause,
   PROBE,
@@ -55,7 +56,6 @@ import {
 import {
   type Measures,
   type Pack,
-  type Page as PackPage,
   type Prop,
   PROPS,
   type ReferenceTokens,

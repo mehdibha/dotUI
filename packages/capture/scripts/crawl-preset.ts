@@ -69,7 +69,7 @@ import {
   type Model,
   summarize,
 } from "../src/model"
-import type { Pack, Page as PackPage, Step } from "../src/probe"
+import type { Pack, Step } from "../src/probe"
 import {
   COPY_AREA,
   type PartFile,
@@ -81,6 +81,7 @@ import {
   launch,
   type Mode,
   openPage,
+  type PackPage,
   pause,
   pool,
   PROBE,

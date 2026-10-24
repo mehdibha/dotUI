@@ -7,8 +7,19 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
 
-import type { Page as PackPage, ReferenceTokens, Step } from "../src/probe"
+import type { Page as ProbePage, ReferenceTokens, Step } from "../src/probe"
 import { executablePath } from "./chromium"
+
+/** A pack page as `openPage` loads it. Options that change only how the page
+ *  loads live here, not in probe.ts, so adding one doesn't make a new probe. */
+export interface PackPage extends ProbePage {
+  /** Cookies set on the page's host before load, in both modes (a theme
+   *  behind an opt-in: The Guardian's web dark mode). */
+  cookies?: Record<string, string>
+  /** Elements removed after load and the page's steps: a consent banner
+   *  fixed over the page that crops would show instead of the part. */
+  hide?: string[]
+}
 
 export type Mode = "light" | "dark"
 
@@ -181,6 +192,8 @@ export async function openPage(
   mode: Mode,
   {
     storage,
+    cookies = {},
+    hide = [],
     steps = [],
     width = 1440,
     settle: wait = 1500,
@@ -200,6 +213,8 @@ export async function openPage(
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
     )
+    for (const [name, value] of Object.entries(cookies))
+      await context.setCookie({ name, value, domain: new URL(url).hostname })
     if (storage)
       await page.evaluateOnNewDocument(
         `try { localStorage.setItem(${JSON.stringify(storage)}, ${JSON.stringify(mode)}) } catch {}`,
@@ -220,6 +235,8 @@ export async function openPage(
       .catch(() => {})
     await pause(wait)
     await runSteps(page, steps)
+    for (const selector of hide)
+      await page.$$eval(selector, (els) => els.forEach((el) => el.remove()))
   }
   return { page, load, close: () => context.close() }
 }
