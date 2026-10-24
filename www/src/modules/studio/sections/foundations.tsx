@@ -7,7 +7,7 @@
 import { Fragment } from "react"
 
 import type { ChapterPage, SearchRow } from "../chapters"
-import { DialGap, DialLink } from "../dial"
+import { DialGap, DialGroupTitle, DialLink } from "../dial"
 import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
@@ -80,16 +80,27 @@ export const FOUNDATION_KEYS = [
   "brandAssets",
 ]
 
+/** A run of rows; a titled one reads in search as "Title › Row". */
+type RowGroup = FoundationRow[] | { title: string; rows: FoundationRow[] }
+
+const rowsOf = (group: RowGroup) => ("rows" in group ? group.rows : group)
+
 /** Each page's rows, in groups. */
-export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
+export const PAGE_ROWS: Record<string, RowGroup[]> = {
   typography: [[["headingFont", "Heading"]]],
   focus: [
-    [
-      ["focusStyle", "Controls", ["Focus ring"]],
-      ["focusWidth", "Width"],
-      ["focusColor", "Color"],
-    ],
-    [["focusInputStyle", "Fields", ["Field focus"]]],
+    {
+      title: "Controls",
+      rows: [
+        ["focusStyle", "Style", ["Focus ring"]],
+        ["focusWidth", "Width"],
+        ["focusColor", "Color"],
+      ],
+    },
+    {
+      title: "Inputs",
+      rows: [["focusInputStyle", "Style", ["Field focus"]]],
+    },
   ],
   disabled: [[["disabledTreatment", "Style"]]],
   cursor: [
@@ -135,11 +146,15 @@ export const PAGE_ROWS: Record<string, FoundationRow[][]> = {
   ],
 }
 
-const searchRow = ([row, name, aliases]: FoundationRow): SearchRow => ({
-  name,
-  key: typeof row === "string" ? row : undefined,
-  aliases,
-})
+/** A page's rows, every group's in order. */
+export const pageRows = (id: string) => (PAGE_ROWS[id] ?? []).flatMap(rowsOf)
+
+const searchRows = (group: RowGroup): SearchRow[] =>
+  rowsOf(group).map(([row, name, aliases]) => ({
+    name: "title" in group ? `${group.title} › ${name}` : name,
+    key: typeof row === "string" ? row : undefined,
+    aliases,
+  }))
 
 function Rows({ rows }: { rows: FoundationRow[] }) {
   return rows.map(([row, label]) => {
@@ -164,15 +179,18 @@ const page = ({
   const groups = PAGE_ROWS[page.id] ?? []
   return {
     ...page,
-    rows: groups.flat().map(searchRow),
+    rows: groups.flatMap(searchRows),
     Body: function FoundationPage() {
       return (
         <>
           {Lead && <Lead />}
-          {groups.map((rows, i) => (
+          {groups.map((group, i) => (
             <Fragment key={i}>
               {(i > 0 || Lead) && <DialGap />}
-              <Rows rows={rows} />
+              {"title" in group && (
+                <DialGroupTitle>{group.title}</DialGroupTitle>
+              )}
+              <Rows rows={rowsOf(group)} />
             </Fragment>
           ))}
         </>
@@ -238,7 +256,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
 ]
 
 /** The main page's rows, for search. */
-export const FOUNDATION_ROWS = MAIN_ROWS.map(searchRow)
+export const FOUNDATION_ROWS = searchRows(MAIN_ROWS)
 
 export function FoundationsSection({ studio }: { studio: Studio }) {
   return MAIN_GROUPS.map(({ rows = [], pages = [] }, i) => (

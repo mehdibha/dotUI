@@ -19,7 +19,7 @@ import {
   FOCUS_STYLE_OPTIONS,
   INVALID_OPTIONS,
 } from "../axes/states.meta"
-import { DialSegmented, DialSelect, DialSlider } from "../dial"
+import { DialSelect, DialSlider } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 import { ArrowCursor, HandCursor } from "./cursors"
@@ -202,11 +202,15 @@ export function TextSelectionPreview({ state }: { state: Effective }) {
   return <HighlightChip value={state.selectionHighlight} />
 }
 
+/* The Focus page's pickers open under their row, clear of the preview. */
+const UNDER = "bottom end"
+
 const FocusStyleRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="focusStyle"
-    label="Controls"
+    label="Style"
     options={FOCUS_STYLE_OPTIONS}
+    placement={UNDER}
   />
 )
 
@@ -222,36 +226,35 @@ const FocusWidthRow = () => (
 )
 
 const SWATCH: Record<string, string> = {
-  accent: INK,
+  accent: "var(--accent-700)",
   neutral: "var(--color-fg)",
 }
 
 const FOCUS_COLOR_ROW_OPTIONS = FOCUS_COLOR_OPTIONS.map((option) => ({
   ...option,
-  label: (
-    <span className="flex items-center gap-1.5">
-      <span
-        className="size-2.5 rounded-full"
-        style={{ background: SWATCH[option.value] }}
-      />
-      {option.label}
-    </span>
+  glyph: (
+    <span
+      className="size-2.5 shrink-0 rounded-full"
+      style={{ background: SWATCH[option.value] }}
+    />
   ),
 }))
 
 const FocusColorRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="focusColor"
     label="Color"
     options={FOCUS_COLOR_ROW_OPTIONS}
+    placement={UNDER}
   />
 )
 
 const FieldFocusRow = () => (
-  <DialSegmented
+  <DialSelect
     axis="focusInputStyle"
-    label="Fields"
+    label="Style"
     options={FOCUS_INPUT_STYLE_OPTIONS}
+    placement={UNDER}
   />
 )
 

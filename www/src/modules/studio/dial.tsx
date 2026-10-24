@@ -96,6 +96,15 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
+/** A name over a group of rows, set like the panel's chapter titles. */
+export function DialGroupTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="truncate px-2.5 pt-1 text-xs/4 font-medium text-fg/50">
+      {children}
+    </h3>
+  )
+}
+
 /** A row that opens a popover: label, its value. Wraps the popover passed
  *  as `children` in a Dialog trigger. `swatch` for values that end in one:
  *  inset like DialColor's. `holds` names keys edited inside, so a reveal
@@ -169,13 +178,18 @@ export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 /** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
 export function DialPopover({
   className,
+  placement,
   children,
 }: {
   className?: string
+  placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children: React.ReactNode
 }) {
   return (
-    <PanelPopover className={cn("w-64 min-w-0", className)}>
+    <PanelPopover
+      placement={placement}
+      className={cn("w-64 min-w-0", className)}
+    >
       <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}
       </DialogContent>
@@ -234,6 +248,7 @@ export function DialSelect({
   value: valueProp,
   onChange: onChangeProp,
   options: listed,
+  placement,
   children,
 }: {
   /** The key the row edits: value, change, hide and exclusions follow it. */
@@ -244,6 +259,8 @@ export function DialSelect({
   value?: string
   onChange?: (value: string) => void
   options: DialSelectOption[]
+  /** Beside the panel by default; "bottom end" drops it under the row. */
+  placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children?: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -298,7 +315,7 @@ export function DialSelect({
         </>
       }
     >
-      <DialPopover className={PICK_POPOVER}>
+      <DialPopover className={PICK_POPOVER} placement={placement}>
         <SelectOptions
           axis={axis}
           label={label}

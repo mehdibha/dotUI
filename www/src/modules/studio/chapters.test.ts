@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest"
 import { DEFAULT_EFFECTIVE, RULES } from "./axes"
 import { ALL_ROWS, linkTarget, placeOf, SECTION_ROWS } from "./chapters"
 import { COMPONENTS, isSingle, keysOf } from "./sections/components"
-import { FOUNDATION_PAGES, MAIN_ROWS, PAGE_ROWS } from "./sections/foundations"
+import { FOUNDATION_PAGES, MAIN_ROWS, pageRows } from "./sections/foundations"
 import { valueLabel } from "./use-axis"
 
 const SECTIONS = path.join(__dirname, "sections")
@@ -33,7 +33,6 @@ describe("rows", () => {
 
 describe("homes", () => {
   const rows: Record<string, unknown> = ALL_ROWS
-  const pageRows = (id: string) => PAGE_ROWS[id]?.flat() ?? []
   // Every key a place's rows edit: a row that holds several keys homes them all.
   const rendered = (place: typeof MAIN_ROWS) => {
     const shown = new Set(

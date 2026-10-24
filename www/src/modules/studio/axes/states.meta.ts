@@ -48,7 +48,7 @@ export const FOCUS_INPUT_STYLE_OPTIONS = options(FOCUS_INPUT_STYLE_VALUES, {
     credits: ["Linear", "Claude", "Duolingo", "ChatGPT"],
   },
   "thick-edge": {
-    label: "Thick",
+    label: "Thick edge",
     description: "The edge recolors and thickens to 2px",
     credits: ["Material 3", "Untitled UI", "Primer", "Radix Themes", "Notion"],
   },
@@ -59,7 +59,7 @@ export const FOCUS_INPUT_STYLE_OPTIONS = options(FOCUS_INPUT_STYLE_VALUES, {
   },
   ring: {
     label: "Ring",
-    description: "Fields wear the controls' ring",
+    description: "Inputs wear the controls' ring",
     credits: ["shadcn", "Polaris", "Supabase", "Carbon", "Stripe"],
   },
 })
