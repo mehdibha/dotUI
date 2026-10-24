@@ -428,6 +428,12 @@ async function pass(
 }
 
 const markSeen = (page: Page) => page.evaluate(censusSnippet({ kind: "seen" }))
+/** Back to the top: reading states scrolls, and some headers hide while the
+ *  page is scrolled (America.gov's). */
+const top = async (page: Page) => {
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await pause(150)
+}
 const appeared = (page: Page) =>
   page.evaluate(censusSnippet({ kind: "appeared" })) as Promise<number>
 
@@ -442,7 +448,7 @@ const finders = (page: Page, kind: "popups" | "tips", max: number) =>
       // Ids a framework generates (React's useId, Radix, React Aria) can
       // change between loads.
       const generated =
-        /^(:|_r|_R_|radix-|react-aria|headlessui-|mui-)|[:«»]|\d{3,}/
+        /_r[\d_]|^(:|radix-|react-aria|headlessui-|mui-|base-ui-)|[:«»]|\d{3,}/i
       const path = (el: Element): string => {
         if (
           el.id &&
@@ -712,6 +718,7 @@ async function crawl(
       try {
         if (dirty) await load()
         dirty = false
+        await top(page)
         await markSeen(page)
         await runSteps(page, [{ click: selector }])
         // The click leaves the pointer on the trigger, whose open look
@@ -735,6 +742,7 @@ async function crawl(
     for (const selector of tips) {
       let name = `hover ${selector}`
       try {
+        await top(page)
         await markSeen(page)
         await page.hover(selector)
         await pause(900)
