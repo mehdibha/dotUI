@@ -98,8 +98,9 @@ const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8")) as T
 // Through a temporary file, so a stopped run never leaves half a JSON file.
 const writeAtomic = async (file: string, text: string) => {
-  await writeFile(`${file}.tmp`, text)
-  await rename(`${file}.tmp`, file)
+  const temp = `${file}.${process.pid}.tmp`
+  await writeFile(temp, text)
+  await rename(temp, file)
 }
 const rounds = Number(args.rounds)
 if (!Number.isInteger(rounds) || rounds < 1) {
