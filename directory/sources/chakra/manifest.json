@@ -1,0 +1,14 @@
+{
+  "kind": "repo",
+  "repo": "https://github.com/chakra-ui/chakra-ui",
+  "ref": "7aca83e44de50f501d8274a55c331cb8fb06e4fa",
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "docs.config.ts",
+      "upstreamPath": "apps/www/docs.config.ts",
+      "url": "https://raw.githubusercontent.com/chakra-ui/chakra-ui/7aca83e44de50f501d8274a55c331cb8fb06e4fa/apps/www/docs.config.ts",
+      "sha256": "02265061ef19c12081a2069397ab0cdb87d587d71c055f3d7d23c458d8acb2f0"
+    }
+  ]
+}

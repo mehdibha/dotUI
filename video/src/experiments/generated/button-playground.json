@@ -1,0 +1,87 @@
+{
+  "controls": [
+    {
+      "type": "string",
+      "name": "children",
+      "defaultValue": "Button"
+    },
+    {
+      "type": "enum",
+      "name": "variant",
+      "options": ["danger", "link", "primary", "quiet", "secondary", "warning"],
+      "defaultValue": "secondary"
+    },
+    {
+      "type": "enum",
+      "name": "size",
+      "options": ["xs", "sm", "md", "lg"],
+      "defaultValue": "md"
+    },
+    {
+      "type": "boolean",
+      "name": "isDisabled",
+      "defaultValue": false
+    },
+    {
+      "type": "boolean",
+      "name": "isPending",
+      "defaultValue": false
+    }
+  ],
+  "codeTemplate": {
+    "root": {
+      "tag": "Button",
+      "attrs": [
+        {
+          "part": "attr",
+          "control": "variant",
+          "attrName": "variant",
+          "kind": "enum",
+          "default": "secondary"
+        },
+        {
+          "part": "attr",
+          "control": "size",
+          "attrName": "size",
+          "kind": "enum",
+          "default": "md"
+        },
+        {
+          "part": "attr",
+          "control": "isDisabled",
+          "attrName": "isDisabled",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "part": "attr",
+          "control": "isPending",
+          "attrName": "isPending",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "children": [
+        {
+          "part": "text",
+          "control": "children",
+          "kind": "string"
+        }
+      ]
+    },
+    "consts": [],
+    "imports": [
+      {
+        "source": "@/components/ui/button",
+        "text": "import { Button } from \"@/components/ui/button\";",
+        "symbols": [
+          {
+            "name": "Button"
+          }
+        ],
+        "kind": "named"
+      }
+    ],
+    "bodyIndent": 4
+  }
+}

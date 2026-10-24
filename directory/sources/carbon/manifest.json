@@ -1,0 +1,20 @@
+{
+  "kind": "live-site",
+  "repo": "https://react.carbondesignsystem.com",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "carbon-styles-package.json",
+      "upstreamPath": null,
+      "url": "https://cdn.jsdelivr.net/npm/@carbon/styles@1.114.0/package.json",
+      "sha256": "17847dd4728a2500ab9f9a2dce0995f717836ee4266532974f98253427981e98"
+    },
+    {
+      "path": "storybook-index.json",
+      "upstreamPath": null,
+      "url": "https://react.carbondesignsystem.com/index.json",
+      "sha256": "90cde91895a429e3165fcf3080b32d0a790b7751ec01dacb548ce6990cc2c312"
+    }
+  ]
+}

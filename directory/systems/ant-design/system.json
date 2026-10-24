@@ -1,0 +1,17 @@
+{
+  "slug": "ant-design",
+  "name": "Ant Design",
+  "org": "Ant Group",
+  "type": "component-library",
+  "upstream": [],
+  "sources": {
+    "docs": "https://ant.design/docs/react/introduce",
+    "repo": "https://github.com/ant-design/ant-design",
+    "site": "https://ant.design",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}
