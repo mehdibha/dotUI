@@ -1,5 +1,12 @@
+import { useLayoutEffect } from "react"
+
 import { effective, parseState } from "@/modules/studio/axes"
+import { ALL_ROWS, CHAPTERS } from "@/modules/studio/chapters"
+import { PanelPage } from "@/modules/studio/page"
 import type { PanelSystem } from "@/modules/studio/panel"
+import { RowsContext } from "@/modules/studio/row-host"
+import { select, useCurrent } from "@/modules/studio/selection"
+import { useStudio } from "@/modules/studio/use-studio"
 import type { Studio } from "@/modules/studio/use-studio"
 
 import type { State } from "./theme"
@@ -26,4 +33,21 @@ export function panelSystem(name: string, swatch: string): PanelSystem {
     buttons: null,
     renderSwitcher: (trigger) => trigger,
   }
+}
+
+/** The real /studio panel on a preset, as the site shows it: its rows read
+ *  the site's current design system, so the preset is made current. */
+export function StudioPanel({ id }: { id: string }) {
+  useLayoutEffect(() => select({ kind: "preset", id }), [id])
+  const studio = useStudio()
+  const { name, swatch } = useCurrent()
+  return (
+    <RowsContext.Provider value={ALL_ROWS}>
+      <PanelPage
+        chapters={CHAPTERS}
+        studio={studio}
+        system={panelSystem(name, swatch)}
+      />
+    </RowsContext.Provider>
+  )
 }

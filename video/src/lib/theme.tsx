@@ -37,6 +37,21 @@ export function designSystem(state: State = {}): DesignSystem {
   return ds
 }
 
+const still = new WeakMap<DesignSystem, DesignSystem["componentParams"]>()
+
+/** Charts animate in on wall-clock time, which frames don't follow: off. */
+function stillParams(ds: DesignSystem) {
+  let params = still.get(ds)
+  if (!params) {
+    params = {
+      ...ds.componentParams,
+      chart: { ...ds.componentParams.chart, motion: "none" },
+    }
+    still.set(ds, params)
+  }
+  return params
+}
+
 /**
  * Themes its subtree with a design system. Scoped, so several themes can share
  * a frame (a wave re-theming a wall tile by tile). Each distinct state adds a
@@ -58,7 +73,7 @@ export function Theme({
     <DesignSystemProvider
       scoped
       forcedMode={mode}
-      params={ds.componentParams}
+      params={stillParams(ds)}
       tokens={ds.tokens}
       density={ds.density}
       color={ds.color}

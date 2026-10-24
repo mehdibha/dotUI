@@ -19,9 +19,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const out = path.resolve(process.argv[2] ?? "out/story")
 const flag = (name: string) =>
   process.argv.find((a) => a.startsWith(`--${name}=`))?.split("=")[1]
-const ORDER = ["Create", "Catalog", "Demos", "Export", "Agent", "End"].map(
-  (id) => `Story${id}`,
-)
+const ORDER = [
+  "Create",
+  "Blocks",
+  "Catalog",
+  "Demos",
+  "Export",
+  "Agent",
+  "End",
+].map((id) => `Story${id}`)
 const only = flag("scenes")?.split(",")
 fs.mkdirSync(out, { recursive: true })
 
