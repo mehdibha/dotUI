@@ -25,7 +25,7 @@
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
- *     in new tabs of your profile. <file> maps each page key, with account
+ *     in one new tab of your profile. <file> maps each page key, with account
  *     segments as placeholders, to its real URL; real URLs are never
  *     written. Modes are emulated (prefers-color-scheme), and a page with a
  *     `mode` is read only in it: a product with an appearance setting needs
@@ -1262,8 +1262,8 @@ async function headless(): Promise<CensusPage[]> {
   }
 }
 
-/* Signed in: new tabs in the person's own Chrome (their cookies), one at a
-   time, closed after; nothing in the profile is changed. */
+/* Signed in: one tab in the person's own Chrome (their cookies), reused for
+   every page and closed after; nothing in the profile is changed. */
 async function connected(): Promise<CensusPage[]> {
   if (!args.pages) {
     console.error(
@@ -1282,14 +1282,19 @@ async function connected(): Promise<CensusPage[]> {
     browserURL: /^\d+$/.test(port) ? `http://127.0.0.1:${port}` : port,
     defaultViewport: null,
   })
+  // One tab for every page, so the person's Chrome keeps one window.
+  let tab: Page | undefined
   const open = async (job: Job) => {
-    const page = await browser.newPage()
-    await shim(page)
+    if (!tab) {
+      tab = await browser.newPage()
+      await shim(tab)
+      await focusable(tab)
+    }
+    const page = tab
     await page.setViewport({ width: job.settings.width ?? 1440, height: 900 })
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: job.mode },
     ])
-    await focusable(page)
     const load = async () => {
       // A goto that changes only the hash keeps the document (claude.ai's
       // settings dialog is a hash route).
@@ -1301,7 +1306,7 @@ async function connected(): Promise<CensusPage[]> {
       await pause(job.settings.settle ?? 2500)
       await runSteps(page, job.settings.steps ?? [])
     }
-    return { page, load, close: () => page.close() }
+    return { page, load, close: async () => {} }
   }
   try {
     const pages: CensusPage[] = []
@@ -1339,6 +1344,7 @@ async function connected(): Promise<CensusPage[]> {
     }
     return pages
   } finally {
+    await tab?.close().catch(() => {})
     await browser.disconnect()
   }
 }
