@@ -114,10 +114,12 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
     ],
   ],
   "text-selection": [
-    [
-      ["selectionHighlight", "Highlight"],
-      ["selectionUiText", "Control text"],
-    ],
+    // One highlight for text, inputs and selectable labels alike.
+    [["selectionHighlight", "Highlight"]],
+    {
+      title: "Controls",
+      rows: [["selectionUiText", "Labels", ["Control text"]]],
+    },
   ],
   shape: [
     [["radiusPx", "Base radius"]],

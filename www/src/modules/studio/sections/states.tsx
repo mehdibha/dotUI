@@ -11,6 +11,8 @@ import {
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
 
+import { toHex, toOklch } from "@dotui/colors"
+
 import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
@@ -109,19 +111,16 @@ function InvalidSpecimen({ invalid }: { invalid: string }) {
   )
 }
 
-/* Painted words: the option is the highlight itself. The blue depicts the OS
-   default. */
-const HIGHLIGHT_CHIPS: Record<string, string> = {
-  accent: "bg-text-selection text-fg-on-text-selection",
-  browser: "bg-[#B3D7FF] text-[#1B1B1F]",
-}
-
-function HighlightChip({ value }: { value: string }) {
-  return (
-    <span className={cn("rounded-xs px-1 text-[11px]", HIGHLIGHT_CHIPS[value])}>
-      Aa
-    </span>
-  )
+/** Each highlight as the panel's mode paints it. */
+function useHighlightFill() {
+  const { m, mode } = usePanelMode()
+  return (value: string, custom: string) => {
+    if (value === "browser") return "Highlight"
+    if (value === "custom" && custom) return custom
+    const step = value === "neutral" && mode === "dark" ? "500" : "300"
+    const palette = value === "neutral" ? "neutral" : "accent"
+    return m.scales[palette]?.[step] ?? m.background
+  }
 }
 
 export function FocusPreview({ state }: { state: Effective }) {
@@ -142,8 +141,21 @@ export function CursorPreview({ state }: { state: Effective }) {
   )
 }
 
+/** Painted words: the row shows the highlight itself. */
 export function TextSelectionPreview({ state }: { state: Effective }) {
-  return <HighlightChip value={state.selectionHighlight} />
+  const value = state.selectionHighlight
+  const background = useHighlightFill()(value, state.selectionCustomColor)
+  const color =
+    value === "browser"
+      ? "HighlightText"
+      : toOklch(background).l > 0.6
+        ? "#1B1B1F"
+        : "#FAFAFA"
+  return (
+    <span className="rounded-xs px-1 text-[11px]" style={{ background, color }}>
+      Aa
+    </span>
+  )
 }
 
 /* The Focus page's pickers open under their row, clear of the preview. */
@@ -338,23 +350,87 @@ const CursorDisabledRow = () => (
 const ControlTextRow = () => (
   <DialSelect
     axis="selectionUiText"
-    label="Control text"
+    label="Labels"
     options={CONTROL_TEXT_OPTIONS}
+    placement={UNDER}
   />
 )
 
-const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
-  ...option,
-  glyph: <HighlightChip value={option.value} />,
-}))
-
-const HighlightRow = () => (
-  <DialSelect
-    axis="selectionHighlight"
-    label="Highlight"
-    options={HIGHLIGHT_ROW_OPTIONS}
-  />
-)
+/** The highlight's sources as swatches, each painted as the panel's mode
+ *  draws it; the custom one opens a picker. */
+function HighlightRow() {
+  const axis = useAxis("selectionHighlight")
+  const customAxis = useAxis("selectionCustomColor")
+  const fill = useHighlightFill()
+  const saved = String(customAxis?.saved ?? "")
+  // Unpicked, the picker starts on the accent highlight.
+  const [draft, setDraft] = useDraft<string | Color>(
+    saved || toHex(toOklch(fill("accent", ""))),
+  )
+  const row = useRef<HTMLDivElement>(null)
+  const under = !useDocked()
+  if (!axis) return null
+  const commit = (color: Color | null) => {
+    if (!color) return
+    customAxis?.set(color.toString("hex"))
+    axis.set("custom")
+  }
+  const label = (value: string) =>
+    HIGHLIGHT_OPTIONS.find((o) => o.value === value)?.label ?? value
+  return (
+    <div ref={row} data-axis="selectionHighlight" className={DIAL_ROW}>
+      <span className={DIAL_LABEL}>Highlight</span>
+      <RacToggleButtonGroup
+        aria-label="Highlight"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[String(axis.saved)]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) axis.set(next)
+        }}
+        className="flex items-center gap-2"
+      >
+        {(["accent", "neutral", "browser"] as const).map((value) => (
+          <Tooltip key={value} delay={0}>
+            <RacToggleButton
+              id={value}
+              aria-label={label(value)}
+              className={SWATCH}
+              style={{ background: fill(value, "") }}
+            />
+            <TooltipContent>{label(value)}</TooltipContent>
+          </Tooltip>
+        ))}
+        <ColorPicker value={draft} onChange={setDraft}>
+          <Tooltip delay={0}>
+            <RacToggleButton
+              id="custom"
+              aria-label={label("custom")}
+              className={SWATCH}
+              style={customSwatch(saved)}
+            />
+            <TooltipContent>
+              {saved ? `Custom · ${saved.toUpperCase()}` : "Custom"}
+            </TooltipContent>
+          </Tooltip>
+          <PanelPopoverTitle.Provider value="Highlight color">
+            <ColorPickerPopover
+              commit={commit}
+              placement={UNDER}
+              {...(under && {
+                triggerRef: row,
+                offset: 6,
+                showArrow: false,
+                className: UNDER_ROW,
+              })}
+            />
+          </PanelPopoverTitle.Provider>
+        </ColorPicker>
+      </RacToggleButtonGroup>
+    </div>
+  )
+}
 
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,
