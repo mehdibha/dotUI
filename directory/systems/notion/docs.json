@@ -32,51 +32,87 @@
         "button": {
           "variants": {
             "v-82h5jn": {
-              "name": { "value": "quiet icon", "from": "ai" },
+              "name": {
+                "value": "quiet icon",
+                "from": "ai"
+              },
               "note": "No fill until hover, ink-colored icons: the top bar's Notion logo, a page's actions."
             },
             "v-m5xyhg": {
-              "name": { "value": "quiet icon, muted", "from": "ai" },
+              "name": {
+                "value": "quiet icon, muted",
+                "from": "ai"
+              },
               "note": "A database toolbar's Filter and Sort in #7d7a75; the filter icon turns blue once a filter is on."
             },
             "v-yygmq4": {
-              "name": { "value": "icon", "from": "ai" },
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
               "note": "24px icons at full ink with no frame: the sidebar toggle ☰."
             },
             "v-modnc6": {
-              "name": { "value": "primary", "from": "ai" },
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
               "note": "Blue #2783de, white text at 500: Start with this template."
             },
             "v-puzqoi": {
-              "name": { "value": "button block", "from": "docs" },
+              "name": {
+                "value": "button block",
+                "from": "docs"
+              },
               "note": "A page's Button block: a 1px #e6e5e3 ring, an emoji, 500: Notion Basics for Beginners."
             },
             "v-wegtt0": {
-              "name": { "value": "filled", "from": "ai" },
+              "name": {
+                "value": "filled",
+                "from": "ai"
+              },
               "note": "A 5% black fill: the database's view picker, Gallery view ▾."
             },
             "v-3xemq8": {
-              "name": { "value": "filter chip", "from": "ai" },
+              "name": {
+                "value": "filter chip",
+                "from": "ai"
+              },
               "note": "An active filter: a pale blue pill with blue ink, To-Do Completion: Contains Tasks ▾."
             },
             "v-meqns8": {
-              "name": { "value": "quiet, muted", "from": "ai" },
+              "name": {
+                "value": "quiet, muted",
+                "from": "ai"
+              },
               "note": "Grey text with an icon: Language: English (US) ▾ on the login page."
             },
             "v-wz9g2p": {
-              "name": { "value": "breadcrumb", "from": "ai" },
+              "name": {
+                "value": "breadcrumb",
+                "from": "ai"
+              },
               "note": "The page's title in the top bar, at 600 with its icon: Templates."
             },
             "v-q9ledn": {
-              "name": { "value": "social tile", "from": "ai" },
+              "name": {
+                "value": "social tile",
+                "from": "ai"
+              },
               "note": "Log in with Google: a 72px white tile, a 1px ring and a 2px drop."
             },
             "v-q45y7k": {
-              "name": { "value": "primary, marketing", "from": "ai" },
+              "name": {
+                "value": "primary, marketing",
+                "from": "ai"
+              },
               "note": "Continue on the login page: a 40px #2383e2 button with an inner ring and a faint gradient."
             },
             "v-do7b2i": {
-              "name": { "value": "icon, active", "from": "ai" },
+              "name": {
+                "value": "icon, active",
+                "from": "ai"
+              },
               "note": "A blue icon for an open panel: the side peek toggle."
             },
             "v-lidmgm": {
@@ -88,31 +124,52 @@
           },
           "sizes": {
             "s-uzxfn9": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "28px, 6px padding, 14px, a 16px icon."
             },
             "s-wuwjfl": {
-              "name": { "value": "top bar", "from": "ai" },
+              "name": {
+                "value": "top bar",
+                "from": "ai"
+              },
               "note": "28px, 8px padding, a 22px icon."
             },
             "s-0gqap5": {
-              "name": { "value": "icon 24", "from": "ai" },
+              "name": {
+                "value": "icon 24",
+                "from": "ai"
+              },
               "note": "A 24px square with a 20px icon."
             },
             "s-7ilnvj": {
-              "name": { "value": "32", "from": "ai" },
+              "name": {
+                "value": "32",
+                "from": "ai"
+              },
               "note": "32px, 12px padding: button blocks."
             },
             "s-n9hfld": {
-              "name": { "value": "tile", "from": "ai" },
+              "name": {
+                "value": "tile",
+                "from": "ai"
+              },
               "note": "The login page's 72px social tiles."
             },
             "s-fque1j": {
-              "name": { "value": "icon 28", "from": "ai" },
+              "name": {
+                "value": "icon 28",
+                "from": "ai"
+              },
               "note": "A 28px square, 16px text."
             },
             "s-3kklgi": {
-              "name": { "value": "marketing", "from": "ai" },
+              "name": {
+                "value": "marketing",
+                "from": "ai"
+              },
               "note": "40px, 12px padding: Continue."
             }
           }
@@ -132,27 +189,45 @@
         "link": {
           "variants": {
             "v-r0uc4z": {
-              "name": { "value": "inline", "from": "ai" },
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
               "note": "Learn more in a callout: grey text over a 1px underline drawn as a border."
             },
             "v-yygmq4": {
-              "name": { "value": "page mention", "from": "docs" },
+              "name": {
+                "value": "page mention",
+                "from": "docs"
+              },
               "note": "Intro to Biology: the page's icon, its title at 500, underlined."
             },
             "v-fsx8la": {
-              "name": { "value": "muted", "from": "ai" },
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
               "note": "Grey and underlined at 12px: a template's credit line, Power Of Habits."
             },
             "v-1edv4f": {
-              "name": { "value": "muted, login", "from": "ai" },
+              "name": {
+                "value": "muted, login",
+                "from": "ai"
+              },
               "note": "Sign up under the login form."
             },
             "v-m5xyhg": {
-              "name": { "value": "muted, inline", "from": "ai" },
+              "name": {
+                "value": "muted, inline",
+                "from": "ai"
+              },
               "note": "A grey underlined word in a line of text."
             },
             "v-t10841": {
-              "name": { "value": "web bookmark", "from": "docs" },
+              "name": {
+                "value": "web bookmark",
+                "from": "docs"
+              },
               "note": "A Web bookmark block: a 1px-ringed box with the site's title, description and address."
             },
             "v-82h5jn": {
@@ -164,20 +239,35 @@
           },
           "sizes": {
             "s-96usa6": {
-              "name": { "value": "14px", "from": "ai" }
+              "name": {
+                "value": "14px",
+                "from": "ai"
+              }
             },
             "s-f4lyfp": {
-              "name": { "value": "12px", "from": "ai" }
+              "name": {
+                "value": "12px",
+                "from": "ai"
+              }
             },
             "s-h8qgta": {
-              "name": { "value": "mention", "from": "ai" },
+              "name": {
+                "value": "mention",
+                "from": "ai"
+              },
               "note": "14px with a 3px inset for the icon."
             },
             "s-sfdu69": {
-              "name": { "value": "16px", "from": "ai" }
+              "name": {
+                "value": "16px",
+                "from": "ai"
+              }
             },
             "s-gb2ose": {
-              "name": { "value": "bookmark", "from": "ai" }
+              "name": {
+                "value": "bookmark",
+                "from": "ai"
+              }
             }
           }
         }
@@ -190,15 +280,24 @@
         "badge": {
           "variants": {
             "v-3t57l8": {
-              "name": { "value": "status, done", "from": "docs" },
+              "name": {
+                "value": "status, done",
+                "from": "docs"
+              },
               "note": "A Status property: green #cfe1d6 under #2a533c, a green dot."
             },
             "v-hxt9z2": {
-              "name": { "value": "status, in progress", "from": "docs" },
+              "name": {
+                "value": "status, in progress",
+                "from": "docs"
+              },
               "note": "Blue #c1def5 under #264a72."
             },
             "v-94vooo": {
-              "name": { "value": "status, not started", "from": "docs" },
+              "name": {
+                "value": "status, not started",
+                "from": "docs"
+              },
               "note": "Grey #e0dedb under #494846."
             },
             "v-dyvd06": {
@@ -212,7 +311,9 @@
             }
           },
           "sizes": {
-            "s-fkf4ag": { "note": "20px, 7px padding, 14px." }
+            "s-fkf4ag": {
+              "note": "20px, 7px padding, 14px."
+            }
           }
         }
       },
@@ -227,12 +328,17 @@
         "tab": {
           "variants": {
             "v-6vopsr": {
-              "name": { "value": "view tab", "from": "ai" },
+              "name": {
+                "value": "view tab",
+                "from": "ai"
+              },
               "note": "Calendar, Table: unselected views."
             }
           },
           "sizes": {
-            "s-dq1hgd": { "note": "32px, 12px padding." }
+            "s-dq1hgd": {
+              "note": "32px, 12px padding."
+            }
           }
         }
       },
@@ -245,16 +351,24 @@
         "textbox": {
           "variants": {
             "v-95ajoh": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "Enter your email address."
             },
             "v-vxobch": {
-              "name": { "value": "focused", "from": "ai" },
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
               "note": "The same field focused: #2383e2 rings."
             }
           },
           "sizes": {
-            "s-yn8hw3": { "note": "40px, 16px padding." }
+            "s-yn8hw3": {
+              "note": "40px, 16px padding."
+            }
           }
         }
       },
@@ -266,7 +380,10 @@
         "label": {
           "variants": {
             "v-3cq6q2": {
-              "name": { "value": "login label", "from": "ai" },
+              "name": {
+                "value": "login label",
+                "from": "ai"
+              },
               "note": "Email: 12px at 500 in the muted color."
             }
           }
@@ -280,7 +397,10 @@
         "menu": {
           "variants": {
             "v-l7d1ng": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "A view's ⋯ menu: Copy link to view, Open as full page."
             }
           }
@@ -288,16 +408,24 @@
         "menuitem": {
           "variants": {
             "v-82h5jn": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "An icon and a 14px label."
             },
             "v-2rfdht": {
-              "name": { "value": "focused", "from": "ai" },
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
               "note": "The first row as the menu opens."
             }
           },
           "sizes": {
-            "s-p1yi0b": { "note": "28px rows." }
+            "s-p1yi0b": {
+              "note": "28px rows."
+            }
           }
         }
       }
@@ -308,7 +436,10 @@
         "listbox": {
           "variants": {
             "v-l7d1ng": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The view picker's list: Gallery view."
             }
           }
@@ -316,25 +447,40 @@
         "option": {
           "variants": {
             "v-82h5jn": {
-              "name": { "value": "two-line", "from": "ai" },
+              "name": {
+                "value": "two-line",
+                "from": "ai"
+              },
               "note": "The login page's language list: the language's own name over its English name."
             },
             "v-hafh4b": {
-              "name": { "value": "highlighted", "from": "ai" },
+              "name": {
+                "value": "highlighted",
+                "from": "ai"
+              },
               "note": "The highlighted row: a 5% fill. Habit tracker, Current Page in the search palette."
             }
           },
           "sizes": {
             "s-vz9rg2": {
-              "name": { "value": "two-line", "from": "ai" },
+              "name": {
+                "value": "two-line",
+                "from": "ai"
+              },
               "note": "45px."
             },
             "s-kska9q": {
-              "name": { "value": "search result", "from": "ai" },
+              "name": {
+                "value": "search result",
+                "from": "ai"
+              },
               "note": "36px, 8px padding."
             },
             "s-p1yi0b": {
-              "name": { "value": "menu row", "from": "ai" },
+              "name": {
+                "value": "menu row",
+                "from": "ai"
+              },
               "note": "28px."
             }
           }
@@ -348,7 +494,10 @@
         "dialog": {
           "variants": {
             "v-p7s9dk": {
-              "name": { "value": "search palette", "from": "ai" },
+              "name": {
+                "value": "search palette",
+                "from": "ai"
+              },
               "note": "Search in the top bar: rows with 12px corners and a page preview."
             },
             "v-0rzf9x": {
@@ -370,7 +519,10 @@
         "popover": {
           "variants": {
             "v-8p1xmk": {
-              "name": { "value": "floating sidebar", "from": "ai" },
+              "name": {
+                "value": "floating sidebar",
+                "from": "ai"
+              },
               "note": "The sidebar that slides in on hover when it isn't locked open: white, a 1px ring, a 20px 24px soft shadow."
             }
           }
@@ -384,15 +536,24 @@
         "card": {
           "variants": {
             "v-htrij8": {
-              "name": { "value": "board card", "from": "docs" },
+              "name": {
+                "value": "board card",
+                "from": "docs"
+              },
               "note": "Go to the Gym: a title with its icon and a property under it."
             },
             "v-81r9rd": {
-              "name": { "value": "gallery card", "from": "docs" },
+              "name": {
+                "value": "gallery card",
+                "from": "docs"
+              },
               "note": "Tasks: tags and progress bars in a Gallery view."
             },
             "v-68m209": {
-              "name": { "value": "board card, colored", "from": "ai" },
+              "name": {
+                "value": "board card, colored",
+                "from": "ai"
+              },
               "note": "Play Fortnite in a blue board group: a #dcedf9 ring."
             },
             "v-asioed": {
@@ -424,7 +585,10 @@
         "progressbar": {
           "variants": {
             "v-l7d1ng": {
-              "name": { "value": "number as bar", "from": "docs" },
+              "name": {
+                "value": "number as bar",
+                "from": "docs"
+              },
               "note": "A number property shown as a bar: a thin grey track with a green fill (33%)."
             }
           }
@@ -437,11 +601,17 @@
         "separator": {
           "variants": {
             "v-ftc03d": {
-              "name": { "value": "divider", "from": "docs" },
+              "name": {
+                "value": "divider",
+                "from": "docs"
+              },
               "note": "A Divider block: 1px of the ink at 11% (#e6e5e3)."
             },
             "v-uh3irc": {
-              "name": { "value": "row rule", "from": "ai" },
+              "name": {
+                "value": "row rule",
+                "from": "ai"
+              },
               "note": "1px under a table's rows, at 7%."
             },
             "v-26z2zv": {
@@ -457,12 +627,17 @@
         "treeitem": {
           "variants": {
             "v-7fiedq": {
-              "name": { "value": "sidebar page", "from": "ai" },
+              "name": {
+                "value": "sidebar page",
+                "from": "ai"
+              },
               "note": "A page in the sidebar: 30px, an icon, #5f5e59 ink on the #f9f8f7 sidebar."
             }
           },
           "sizes": {
-            "s-gykllm": { "note": "30px rows, 16px text, a 20px icon." }
+            "s-gykllm": {
+              "note": "30px rows, 16px text, a 20px icon."
+            }
           }
         }
       }

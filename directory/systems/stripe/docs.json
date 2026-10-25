@@ -36,22 +36,35 @@
         "button": {
           "variants": {
             "v-wwcali": {
-              "name": { "value": "secondary", "from": "docs" },
+              "name": {
+                "value": "secondary",
+                "from": "docs"
+              },
               "note": "White, a 1px #d4dee9 ring, #273951 ink: Yes in the feedback row, Small button in the examples."
             },
             "v-yzkzvc": {
-              "name": { "value": "primary", "from": "docs" },
+              "name": {
+                "value": "primary",
+                "from": "docs"
+              },
               "note": "Blurple #533afd fill, white ink."
             },
             "v-0gqd14": {
-              "name": { "value": "destructive", "from": "docs" },
+              "name": {
+                "value": "destructive",
+                "from": "docs"
+              },
               "note": "#e61947 fill, white ink."
             },
             "v-w0myz8": {
               "hide": "the code block's toolbar icons on the dark #1a2652 header: docs site chrome"
             },
-            "v-kx6ali": { "hide": "heading anchor links: docs site chrome" },
-            "v-2k2v2g": { "hide": "the docs header's plain icon buttons" },
+            "v-kx6ali": {
+              "hide": "heading anchor links: docs site chrome"
+            },
+            "v-2k2v2g": {
+              "hide": "the docs header's plain icon buttons"
+            },
             "v-2bsht4": {
               "hide": "the docs top navigation (APIs & SDKs, More)"
             },
@@ -61,13 +74,21 @@
             "v-puyt14": {
               "hide": "rows in the docs search palette (View test cards)"
             },
-            "v-4g9r8c": { "hide": "the docs Search box drawn as a button" },
+            "v-4g9r8c": {
+              "hide": "the docs Search box drawn as a button"
+            },
             "v-eu3uci": {
               "hide": "the docs footer's country picker (United States)"
             },
-            "v-y7kgbw": { "hide": "Ask AI in the docs header" },
-            "v-q4avf0": { "hide": "New chat in the docs AI panel" },
-            "v-xr5noo": { "hide": "the docs AI panel's close ×" },
+            "v-y7kgbw": {
+              "hide": "Ask AI in the docs header"
+            },
+            "v-q4avf0": {
+              "hide": "New chat in the docs AI panel"
+            },
+            "v-xr5noo": {
+              "hide": "the docs AI panel's close ×"
+            },
             "v-c09rgd": {
               "hide": "a banner example's close ×, a bare icon on white"
             },
@@ -77,30 +98,26 @@
           },
           "sizes": {
             "s-pq9p63": {
-              "name": { "value": "medium", "from": "ai" },
+              "name": {
+                "value": "medium",
+                "from": "ai"
+              },
               "note": "28px, 8px padding, 14px at 600: the Sail default."
             },
             "s-ypbbqn": {
-              "name": { "value": "small", "from": "docs" },
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
               "note": "24px, 12px text."
             },
             "s-czrvk8": {
-              "name": { "value": "large", "from": "docs" },
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
               "note": "40px, 16px padding, 16px text."
-            },
-            "s-ile8ox": { "hide": "the code block toolbar's icons" },
-            "s-r15315": { "hide": "heading anchors" },
-            "s-r95p8k": { "hide": "heading anchors" },
-            "s-dsjxa8": { "hide": "Ask about this page" },
-            "s-6336kj": { "hide": "docs header and footer buttons" },
-            "s-8sxnor": { "hide": "docs top navigation" },
-            "s-iswod7": { "hide": "Ask AI" },
-            "s-vx547w": { "hide": "the docs Search box" },
-            "s-wkfkbc": { "hide": "docs search rows" },
-            "s-83hzsv": { "hide": "docs top navigation" },
-            "s-ih8s71": { "hide": "docs search rows" },
-            "s-z8jjvp": { "hide": "the docs AI panel's close" },
-            "s-s32e0x": { "hide": "banner close buttons" }
+            }
           }
         }
       },
@@ -119,36 +136,57 @@
         "link": {
           "variants": {
             "v-jzexnz": {
-              "name": { "value": "inline", "from": "ai" },
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
               "note": "In running text: #5469d4 at 500, no underline (buttons, CSS)."
             },
             "v-udyd9a": {
-              "name": { "value": "inline, strong", "from": "ai" },
+              "name": {
+                "value": "inline, strong",
+                "from": "ai"
+              },
               "note": "Contact Support: the same blue at 600."
             },
-            "blue": { "hide": "the stripe DOCS logo" },
-            "v-po6rlz": { "hide": "the docs sidebar's page links" },
-            "v-puyt14": { "hide": "the docs sidebar's section links" },
-            "v-2bsht4": { "hide": "the docs top navigation" },
+            "blue": {
+              "hide": "the stripe DOCS logo"
+            },
+            "v-po6rlz": {
+              "hide": "the docs sidebar's page links"
+            },
+            "v-puyt14": {
+              "hide": "the docs sidebar's section links"
+            },
+            "v-2bsht4": {
+              "hide": "the docs top navigation"
+            },
             "v-wwcali": {
               "hide": "Sign in: a link drawn as the secondary button, see button"
             },
-            "v-4tawfs": { "hide": "a recently viewed page in the docs search" },
-            "v-ca0cgu": { "hide": "Skip to content" },
-            "v-fivaof": { "hide": "Create account in the docs header" }
+            "v-4tawfs": {
+              "hide": "a recently viewed page in the docs search"
+            },
+            "v-ca0cgu": {
+              "hide": "Skip to content"
+            },
+            "v-fivaof": {
+              "hide": "Create account in the docs header"
+            }
           },
           "sizes": {
-            "s-sfdu69": { "note": "16px in the docs body." },
-            "s-alefcp": { "note": "14px." },
-            "s-tf5ukr": { "note": "16px on a 48px line." },
-            "s-f90wmo": { "hide": "sidebar links" },
-            "s-sy470x": { "hide": "sidebar links" },
-            "s-cajuyz": { "hide": "top navigation" },
-            "s-vjyl6j": { "hide": "sidebar links" },
-            "s-gbm9an": { "hide": "Sign in" },
-            "s-2f2dnp": { "hide": "the logo" },
-            "s-6gv0s5": { "hide": "docs search" },
-            "s-711kej": { "hide": "Skip to content" }
+            "s-sfdu69": {
+              "note": "16px in the docs body."
+            },
+            "s-alefcp": {
+              "note": "14px."
+            },
+            "s-tf5ukr": {
+              "note": "16px on a 48px line."
+            },
+            "s-sy470x": {
+              "hide": "sidebar links"
+            }
           }
         }
       },
@@ -161,32 +199,52 @@
         "badge": {
           "variants": {
             "v-8swqrv": {
-              "name": { "value": "neutral", "from": "docs" },
+              "name": {
+                "value": "neutral",
+                "from": "docs"
+              },
               "note": "#f4f7fa fill, #d4dee9 edge, #50617a ink."
             },
             "v-iqszid": {
-              "name": { "value": "negative", "from": "docs" },
+              "name": {
+                "value": "negative",
+                "from": "docs"
+              },
               "note": "#fef4f6 fill, #fbd3dc edge, #c0123c ink."
             },
             "v-9b3ka3": {
-              "name": { "value": "positive", "from": "docs" },
+              "name": {
+                "value": "positive",
+                "from": "docs"
+              },
               "note": "#eafcdd fill, #a8f170 edge, #217005 ink."
             },
             "v-f4087w": {
-              "name": { "value": "info", "from": "docs" },
+              "name": {
+                "value": "info",
+                "from": "docs"
+              },
               "note": "#e2fbfe fill, #a7e7fc edge, #045ad0 ink."
             },
             "v-h8jp1t": {
-              "name": { "value": "warning", "from": "docs" },
+              "name": {
+                "value": "warning",
+                "from": "docs"
+              },
               "note": "#fdf8c9 fill, #fbd992 edge, #b13600 ink."
             },
             "v-k62t6g": {
-              "name": { "value": "urgent", "from": "docs" },
+              "name": {
+                "value": "urgent",
+                "from": "docs"
+              },
               "note": "Solid #e61947, white ink."
             }
           },
           "sizes": {
-            "s-ull5wn": { "note": "20px, 6px padding, 12px at 400." }
+            "s-ull5wn": {
+              "note": "20px, 6px padding, 12px at 400."
+            }
           }
         }
       }
@@ -198,31 +256,48 @@
         "textbox": {
           "variants": {
             "v-bwu8fk": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "Acme Inc… in the TextField example."
             },
-            "v-4nrwnc": { "hide": "the docs search palette's input" },
-            "v-f5ft1n": { "hide": "the docs AI panel's question box" }
+            "v-4nrwnc": {
+              "hide": "the docs search palette's input"
+            },
+            "v-f5ft1n": {
+              "hide": "the docs AI panel's question box"
+            }
           },
           "sizes": {
             "s-gbm9an": {
-              "name": { "value": "medium", "from": "docs" },
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
               "note": "28px, 8px padding, 14px."
             },
             "s-790e0h": {
-              "name": { "value": "medium", "from": "docs" },
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
               "note": "28px, a second example of the default."
             },
             "s-1incjg": {
-              "name": { "value": "large", "from": "docs" },
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
               "note": "40px, 12px padding, 16px."
             },
             "s-c042wh": {
-              "name": { "value": "small", "from": "docs" },
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
               "note": "24px, 12px text."
-            },
-            "large": { "hide": "the docs search input" },
-            "s-q7fi08": { "hide": "the docs AI question box" }
+            }
           }
         }
       },
@@ -236,12 +311,17 @@
         "searchbox": {
           "variants": {
             "v-bwu8fk": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The TextField example's search input: the same 28px ringed field."
             }
           },
           "sizes": {
-            "s-gbm9an": { "note": "28px, 8px padding." }
+            "s-gbm9an": {
+              "note": "28px, 8px padding."
+            }
           }
         }
       }
@@ -253,12 +333,17 @@
         "select": {
           "variants": {
             "v-0m6bzk": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The SDK version picker (8.x, 9.x) above each example."
             }
           },
           "sizes": {
-            "s-gbm9an": { "note": "28px, 8px padding." }
+            "s-gbm9an": {
+              "note": "28px, 8px padding."
+            }
           }
         }
       }
@@ -269,18 +354,29 @@
         "label": {
           "variants": {
             "v-483y8t": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "14px at 600 in #1a2c44: SDK version, the TextField labels."
             },
             "v-70f43t": {
-              "name": { "value": "disabled", "from": "ai" },
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
               "note": "The same label in #7d8ba4."
             }
           },
           "sizes": {
-            "s-1dg68b": { "note": "14/20." },
+            "s-1dg68b": {
+              "note": "14/20."
+            },
             "s-mx6che": {
-              "name": { "value": "small", "from": "ai" },
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
               "note": "12/16, beside the small field."
             }
           }
@@ -297,7 +393,10 @@
         "menu": {
           "variants": {
             "v-k5j5gp": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The Menu example: Edit, Copy, Paste."
             }
           }
@@ -305,7 +404,10 @@
         "menuitem": {
           "variants": {
             "v-2y9g2n": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "A Sail row: Edit."
             },
             "v-davrj2": {
@@ -313,7 +415,9 @@
             }
           },
           "sizes": {
-            "s-v52xop": { "note": "32px, 10px padding, 14px." }
+            "s-v52xop": {
+              "note": "32px, 10px padding, 14px."
+            }
           }
         }
       }
@@ -323,7 +427,9 @@
       "groups": {
         "listbox": {
           "variants": {
-            "v-l7d1ng": { "hide": "the docs search palette's results" }
+            "v-l7d1ng": {
+              "hide": "the docs search palette's results"
+            }
           }
         }
       }
@@ -333,7 +439,9 @@
       "groups": {
         "combobox": {
           "variants": {
-            "v-4nrwnc": { "hide": "the docs search palette's input" }
+            "v-4nrwnc": {
+              "hide": "the docs search palette's input"
+            }
           }
         }
       }
@@ -344,13 +452,19 @@
       "groups": {
         "alertdialog": {
           "variants": {
-            "v-1ak3xq": { "hide": "the docs search palette" }
+            "v-1ak3xq": {
+              "hide": "the docs search palette"
+            }
           }
         },
         "dialog": {
           "variants": {
-            "v-2y8n6a": { "hide": "the docs AI side panel" },
-            "v-l7d1ng": { "hide": "the docs search palette's body" }
+            "v-2y8n6a": {
+              "hide": "the docs AI side panel"
+            },
+            "v-l7d1ng": {
+              "hide": "the docs search palette's body"
+            }
           }
         }
       },
@@ -365,7 +479,10 @@
         "tooltip": {
           "variants": {
             "v-cxd2es": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The Tooltip example: You have no available balance to pay out."
             },
             "v-tepsia": {
@@ -373,8 +490,9 @@
             }
           },
           "sizes": {
-            "s-ytx6a9": { "note": "Three lines of 14px text, 114px tall." },
-            "s-dmmwfn": { "hide": "the docs tooltip" }
+            "s-ytx6a9": {
+              "note": "Three lines of 14px text, 114px tall."
+            }
           }
         }
       }
@@ -386,27 +504,44 @@
         "card": {
           "variants": {
             "v-ezoqkg": {
-              "name": { "value": "banner, default", "from": "docs" },
+              "name": {
+                "value": "banner, default",
+                "from": "docs"
+              },
               "note": "Neutral title, A short description, a Button and a close ×."
             },
             "v-2mzteu": {
-              "name": { "value": "banner, critical", "from": "docs" },
+              "name": {
+                "value": "banner, critical",
+                "from": "docs"
+              },
               "note": "Check your bank details, with a red title and Update bank account."
             },
             "v-a77sux": {
-              "name": { "value": "banner, caution", "from": "docs" },
+              "name": {
+                "value": "banner, caution",
+                "from": "docs"
+              },
               "note": "The same message on yellow, with Learn more."
             },
-            "blue800": { "hide": "the docs code block" },
+            "blue800": {
+              "hide": "the docs code block"
+            },
             "v-yv1gm3": {
               "hide": "the docs preview frame around each example (a dotted grid)"
             },
-            "v-2sp5a2": { "hide": "the docs header's APIs & SDKs dropdown" },
-            "v-2gqv0m": { "hide": "the docs AI panel's disclaimer" },
+            "v-2sp5a2": {
+              "hide": "the docs header's APIs & SDKs dropdown"
+            },
+            "v-2gqv0m": {
+              "hide": "the docs AI panel's disclaimer"
+            },
             "v-nhnk7w": {
               "hide": "a recently viewed card in the docs AI panel"
             },
-            "v-l7d1ng": { "hide": "the Menu example's panel, see menu" }
+            "v-l7d1ng": {
+              "hide": "the Menu example's panel, see menu"
+            }
           }
         }
       },
@@ -420,7 +555,10 @@
         "separator": {
           "variants": {
             "v-u8vspz": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "A 1px #d4dee9 rule: between menu groups and docs sections."
             },
             "v-7x7skm": {
@@ -436,12 +574,17 @@
         "kbd": {
           "variants": {
             "v-cl66e0": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "The / shortcut in the docs Search box: #f4f7fa with a 1px #ecf1f6 edge and #50617a ink."
             }
           },
           "sizes": {
-            "s-7dxfnf": { "note": "20px, 4px padding." }
+            "s-7dxfnf": {
+              "note": "20px, 4px padding."
+            }
           }
         }
       },

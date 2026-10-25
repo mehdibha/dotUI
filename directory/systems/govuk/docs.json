@@ -32,40 +32,64 @@
         "button": {
           "variants": {
             "v-pjn0af": {
-              "name": { "value": "default", "from": "docs" },
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
               "note": "Green #0f7a52, white text, a 2px #083d29 lip: Save and continue."
             },
             "secondary": {
               "note": "A #f3f3f3 plate on a 2px #858686 lip: Find address."
             },
             "v-aqha0o": {
-              "name": { "value": "feedback", "from": "ai" },
+              "name": {
+                "value": "feedback",
+                "from": "ai"
+              },
               "note": "Yes and No under Is this page useful?: no fill, a 1px black border and a 3px black lip, on the pale blue band."
             },
             "v-xzjfs6": {
-              "name": { "value": "search", "from": "ai" },
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
               "note": "The header search's submit: a blue #1d70b8 square with a white magnifier."
             },
             "v-uvsc64": {
-              "name": { "value": "link", "from": "ai" },
+              "name": {
+                "value": "link",
+                "from": "ai"
+              },
               "note": "A button drawn as an underlined link: Show 3 more topics."
             }
           },
           "sizes": {
             "s-chtoyu": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "38px, 10px padding, 19px text."
             },
             "s-mx94q8": {
-              "name": { "value": "small", "from": "ai" },
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
               "note": "37px with 16px text: the feedback band."
             },
             "s-iwp8gl": {
-              "name": { "value": "icon", "from": "ai" },
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
               "note": "A 50px square: the header search."
             },
             "s-fm366q": {
-              "name": { "value": "text", "from": "ai" },
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
               "note": "Text-sized."
             }
           }
@@ -84,17 +108,26 @@
         "toggle": {
           "variants": {
             "v-lxw81j": {
-              "name": { "value": "header toggle", "from": "ai" },
+              "name": {
+                "value": "header toggle",
+                "from": "ai"
+              },
               "note": "Menu and the search icon on the blue header: white text at 700, no frame, opening a panel below."
             }
           },
           "sizes": {
             "s-14l80i": {
-              "name": { "value": "icon", "from": "ai" },
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
               "note": "The search toggle: 61px tall, 20px padding."
             },
             "s-7kwmc0": {
-              "name": { "value": "text", "from": "ai" },
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
               "note": "Menu: 16px text."
             }
           }
@@ -108,7 +141,10 @@
         "link": {
           "variants": {
             "v-lnsc7k": {
-              "name": { "value": "default", "from": "docs" },
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
               "note": "Blue and underlined, 19px: the footer's topic links (Benefits)."
             },
             "sidebar": {
@@ -118,14 +154,20 @@
               "note": "Bold blue: next steps like Living in France."
             },
             "v-edxyjf": {
-              "name": { "value": "menu", "from": "ai" },
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
               "note": "Bold blue topics in the opened header menu."
             },
             "calendar": {
               "note": "A download link with a calendar icon: Add bank holidays to your calendar."
             },
             "v-lhe9l7": {
-              "name": { "value": "text colour", "from": "docs" },
+              "name": {
+                "value": "text colour",
+                "from": "docs"
+              },
               "note": "Black and underlined: © Crown copyright in the footer."
             },
             "v-xzjfs6": {
@@ -134,27 +176,46 @@
           },
           "sizes": {
             "s-7a5i4t": {
-              "name": { "value": "body", "from": "ai" },
+              "name": {
+                "value": "body",
+                "from": "ai"
+              },
               "note": "19px."
             },
             "s-f5wwx1": {
-              "name": { "value": "small", "from": "ai" },
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
               "note": "16px."
             },
             "s-1ck858": {
-              "name": { "value": "body, two lines", "from": "ai" }
+              "name": {
+                "value": "body, two lines",
+                "from": "ai"
+              }
             },
             "s-1w0hjg": {
-              "name": { "value": "small, two lines", "from": "ai" }
+              "name": {
+                "value": "small, two lines",
+                "from": "ai"
+              }
             },
-            "s-fh8hwl": { "hide": "the logo" },
-            "s-k7xfr4": { "hide": "the crown copyright block" },
+            "s-k7xfr4": {
+              "hide": "the crown copyright block"
+            },
             "s-ohbhdm": {
-              "name": { "value": "body, tight", "from": "ai" },
+              "name": {
+                "value": "body, tight",
+                "from": "ai"
+              },
               "note": "19px on a 19px line."
             },
             "s-cbdwsi": {
-              "name": { "value": "heading", "from": "ai" },
+              "name": {
+                "value": "heading",
+                "from": "ai"
+              },
               "note": "24px."
             }
           }
@@ -167,15 +228,33 @@
       "groups": {
         "badge": {
           "variants": {
-            "blue": { "note": "The default: Pending." },
-            "green": { "note": "New." },
-            "grey": { "note": "Inactive." },
-            "magenta": { "note": "Sent." },
-            "orange": { "note": "Declined." },
-            "purple": { "note": "Received." },
-            "red": { "note": "Rejected." },
-            "teal": { "note": "Active." },
-            "yellow": { "note": "Delayed." },
+            "blue": {
+              "note": "The default: Pending."
+            },
+            "green": {
+              "note": "New."
+            },
+            "grey": {
+              "note": "Inactive."
+            },
+            "magenta": {
+              "note": "Sent."
+            },
+            "orange": {
+              "note": "Declined."
+            },
+            "purple": {
+              "note": "Received."
+            },
+            "red": {
+              "note": "Rejected."
+            },
+            "teal": {
+              "note": "Active."
+            },
+            "yellow": {
+              "note": "Delayed."
+            },
             "v-d9cgk8": {
               "hide": "the header Menu toggle's label: see toggle-button"
             },
@@ -184,8 +263,9 @@
             }
           },
           "sizes": {
-            "s-3o2ac5": { "note": "30px, 8px padding, 19px." },
-            "s-3hhssu": { "hide": "the header Menu label" }
+            "s-3o2ac5": {
+              "note": "30px, 8px padding, 19px."
+            }
           }
         }
       }
@@ -197,7 +277,10 @@
         "tab": {
           "variants": {
             "v-xefaja": {
-              "name": { "value": "unselected", "from": "ai" },
+              "name": {
+                "value": "unselected",
+                "from": "ai"
+              },
               "note": "Scotland: a grey plate, an underlined label."
             }
           },
@@ -210,7 +293,10 @@
         "tablist": {
           "variants": {
             "v-a9x3b8": {
-              "name": { "value": "default", "from": "docs" },
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
               "note": "The row of tabs over a 1px #cecece rule."
             }
           }
@@ -228,7 +314,9 @@
             }
           },
           "sizes": {
-            "s-ottmhp": { "note": "40px, 5px padding, 19px." }
+            "s-ottmhp": {
+              "note": "40px, 5px padding, 19px."
+            }
           }
         }
       },
@@ -240,7 +328,10 @@
         "select": {
           "variants": {
             "v-t0h38u": {
-              "name": { "value": "default", "from": "docs" },
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
               "note": "A native select styled like the input: 2px black edge, 40px. The country list on Check if you need a UK visa."
             }
           }
@@ -257,7 +348,9 @@
             }
           },
           "sizes": {
-            "s-679sch": { "note": "50px, 19px." }
+            "s-679sch": {
+              "note": "50px, 19px."
+            }
           }
         }
       }
@@ -268,18 +361,29 @@
         "label": {
           "variants": {
             "v-m56f67": {
-              "name": { "value": "option label", "from": "ai" },
+              "name": {
+                "value": "option label",
+                "from": "ai"
+              },
               "note": "A checkbox or radio label: 19px at 400."
             },
             "v-q2cxdq": {
-              "name": { "value": "question", "from": "ai" },
+              "name": {
+                "value": "question",
+                "from": "ai"
+              },
               "note": "A label that is the page's question: bold."
             }
           },
           "sizes": {
-            "l": { "note": "govuk-label--l: 36px on a 40px line." },
+            "l": {
+              "note": "govuk-label--l: 36px on a 40px line."
+            },
             "s-7jtmlz": {
-              "name": { "value": "default", "from": "ai" },
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
               "note": "19px on a 25px line."
             }
           }
@@ -296,15 +400,24 @@
               "note": "govuk-panel: the green block with a big date, The next bank holiday is 25 December."
             },
             "v-xyxk0z": {
-              "name": { "value": "related content", "from": "ai" },
+              "name": {
+                "value": "related content",
+                "from": "ai"
+              },
               "note": "A 2px #1d70b8 rule over a heading and links."
             },
             "v-jitiyu": {
-              "name": { "value": "feedback", "from": "ai" },
+              "name": {
+                "value": "feedback",
+                "from": "ai"
+              },
               "note": "Is this page useful?: the pale blue #f4f8fb band with a 1px #8eb8dc top rule."
             },
             "v-r7suc7": {
-              "name": { "value": "summary card", "from": "docs" },
+              "name": {
+                "value": "summary card",
+                "from": "docs"
+              },
               "note": "A 1px #cecece box with a #f3f3f3 title band (Lead tenant)."
             },
             "v-dzjbai": {
@@ -323,7 +436,10 @@
         "separator": {
           "variants": {
             "v-cpp840": {
-              "name": { "value": "footer rule", "from": "ai" },
+              "name": {
+                "value": "footer rule",
+                "from": "ai"
+              },
               "note": "1px #8eb8dc across the pale blue footer."
             }
           }
@@ -337,7 +453,10 @@
         "breadcrumb": {
           "variants": {
             "v-cysucv": {
-              "name": { "value": "default", "from": "docs" },
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
               "note": "Home › Working, jobs and pensions."
             }
           }
@@ -351,22 +470,36 @@
         "pagination-item": {
           "variants": {
             "v-oftqfr": {
-              "name": { "value": "previous", "from": "docs" },
+              "name": {
+                "value": "previous",
+                "from": "docs"
+              },
               "note": "Bold, an arrow: Previous page."
             },
             "v-uvsc64": {
-              "name": { "value": "page number", "from": "ai" },
+              "name": {
+                "value": "page number",
+                "from": "ai"
+              },
               "note": "1, 2, 3: underlined blue at 400."
             },
             "v-a5ru7g": {
-              "name": { "value": "block", "from": "docs" },
+              "name": {
+                "value": "block",
+                "from": "docs"
+              },
               "note": "Previous over the page's title: Warnings and insurance."
             }
           },
           "sizes": {
-            "s-4dl5fr": { "note": "19px with a 15px arrow." },
+            "s-4dl5fr": {
+              "note": "19px with a 15px arrow."
+            },
             "s-gujce4": {
-              "name": { "value": "block", "from": "ai" },
+              "name": {
+                "value": "block",
+                "from": "ai"
+              },
               "note": "Two lines, 30px padding."
             }
           }

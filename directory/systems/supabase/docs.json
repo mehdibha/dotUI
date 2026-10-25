@@ -165,15 +165,6 @@
                 "from": "ai"
               },
               "note": "28px square, a 16px icon."
-            },
-            "s-xzwwh5": {
-              "hide": "calendar day cells"
-            },
-            "s-a2jvxl": {
-              "hide": "View code"
-            },
-            "s-aqs9na": {
-              "hide": "the Sidebar example's full-height rail"
             }
           }
         }
@@ -280,30 +271,6 @@
             },
             "s-3r5y3f": {
               "note": "13px."
-            },
-            "tiny": {
-              "hide": "links drawn as buttons"
-            },
-            "default": {
-              "hide": "Sidebar example rows"
-            },
-            "s-2wmmv4": {
-              "hide": "docs sidebar"
-            },
-            "s-97oj05": {
-              "hide": "docs header"
-            },
-            "s-hoqsw5": {
-              "hide": "the docs Previous and Next links"
-            },
-            "s-f4lyfp": {
-              "hide": "docs notice"
-            },
-            "s-b80e1f": {
-              "hide": "the logo"
-            },
-            "s-hizt0z": {
-              "hide": "docs header"
             }
           }
         }
@@ -343,9 +310,6 @@
           "sizes": {
             "s-r8f1bz": {
               "note": "About 31px, 13px."
-            },
-            "s-cgiaz4": {
-              "hide": "docs install tabs"
             }
           }
         }
