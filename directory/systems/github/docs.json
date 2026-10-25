@@ -739,14 +739,7 @@
               "note": "The command palette's rows."
             },
             "default": {
-              "note": "A select panel's row."
-            },
-            "v-89vymc": {
-              "name": {
-                "value": "active",
-                "from": "ai"
-              },
-              "note": "The hovered or keyboard-active row."
+              "note": "A select panel's row, grey when hovered or keyboard-active."
             }
           }
         }
@@ -1237,7 +1230,7 @@
                 "value": "unselected",
                 "from": "ai"
               },
-              "note": "Icon and label in the default ink, grey on hover."
+              "note": "Label in the default ink, grey on hover."
             },
             "invisible": {
               "hide": "the More overflow at the end: a button"
@@ -1259,8 +1252,8 @@
             }
           },
           "sizes": {
-            "s-vx547w": {
-              "note": "8px padding, icon then label."
+            "s-i4hd36": {
+              "note": "8px padding around a 14px label."
             },
             "s-ay406o": {
               "name": {
@@ -1304,6 +1297,9 @@
                 "from": "ai"
               },
               "note": "An unstyled 13px browser checkbox in one story."
+            },
+            "v-1kyslt": {
+              "hide": "the default checkbox again, read in dark only from the indeterminate story's pass"
             }
           }
         }
