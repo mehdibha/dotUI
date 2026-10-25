@@ -17,8 +17,10 @@
  *     and closed with Escape (a reload when one stays open); up to --tips
  *     tooltips (6), hovered or focused; and on a
  *     Storybook story, each option of its variant, size and boolean args
- *     (--args passes, 40), set in place. --stories adds one story for each
- *     of up to n more components of each Storybook the pack reads (0).
+ *     (--args passes, 40), set in place. --stories walks every story of
+ *     the components each Storybook the pack reads shows, and of up to n
+ *     more of its components (off by default; 999 walks them all); the
+ *     extra stories get no popups, tooltips or args passes.
  *
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
@@ -42,7 +44,7 @@
  *
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
  * model, frozen copies of each look's sample at rest and in its states
- * (--copies per pass, 40 by default; redacted with --connect) as
+ * (--copies per pass, 120 by default; redacted with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
  * (presets:looks), and a shot of each pass (the whole page at rest, else the
  * viewport, where the page's `shotAt` says it starts) as
@@ -52,7 +54,7 @@
  */
 import { createHash } from "node:crypto"
 import { existsSync } from "node:fs"
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
@@ -123,7 +125,7 @@ const { values: args } = parseArgs({
     out: { type: "string" },
     max: { type: "string", default: "5000" },
     states: { type: "string", default: "80" },
-    copies: { type: "string", default: "40" },
+    copies: { type: "string", default: "120" },
     concurrency: { type: "string", default: "2" },
     shots: { type: "boolean" },
   },
@@ -206,7 +208,6 @@ const BOXLESS = new Set([
   "page",
   "text",
   "paragraph",
-  "label",
   "time",
   "blockquote",
   "main",
@@ -408,6 +409,7 @@ async function pass(
         page,
         `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
         !fresh,
+        elements,
       )
     : undefined
   // The most used looks with a box small enough to copy.
@@ -737,6 +739,9 @@ interface Job {
   mode: Mode
   settings: Omit<PackPage, "parts">
   passes: Step[][]
+  /** One story among its component's many: read at rest and in its states,
+   *  with no popups, tooltips or args passes. */
+  lite?: boolean
 }
 
 /* Taller pages are cut: a shot is for finding a look, not reading the
@@ -749,10 +754,18 @@ const SHOT_HEIGHT = 10000
  *  viewport. A whole shot grows the viewport to the page's height and waits
  *  for the page to paint it (an app that re-renders on resize, Airbnb's,
  *  shot mid-render is blank), so what is fixed or sticky moves away from
- *  where its box was read, and some tooltips close. */
-async function shoot(page: Page, file: string, whole: boolean) {
+ *  where its box was read, some tooltips close, and content that loads or
+ *  sizes to the viewport moves what follows: `shotBoxes` holds where the
+ *  `elements` that moved sit on the shot. */
+async function shoot(
+  page: Page,
+  file: string,
+  whole: boolean,
+  elements: CensusElement[],
+) {
   const viewport = page.viewport() ?? { width: 1440, height: 900 }
   let grown = false
+  let moved: Record<number, CensusElement["box"]> = {}
   try {
     // The body's height too: a body that scrolls on its own, or one a
     // notice holds fixed (Airbnb's), holds the page.
@@ -776,11 +789,39 @@ async function shoot(page: Page, file: string, whole: boolean) {
         .waitForNetworkIdle({ idleTime: 500, timeout: 4000 })
         .catch(() => {})
       await settle(page)
+      // A framed field's box is its frame's, as the census read it.
+      const boxes = (await page.evaluate(() => {
+        const boxOf = (el: Element) => {
+          const { x, y, width, height } = el.getBoundingClientRect()
+          return [x, y, width, height].map(Math.round)
+        }
+        const by = (attribute: string) =>
+          [...document.querySelectorAll(`[${attribute}]`)].map((el) => [
+            el.getAttribute(attribute),
+            boxOf(el),
+          ])
+        return Object.fromEntries([
+          ...by("data-census"),
+          ...by("data-census-frame"),
+        ])
+      })) as Record<string, CensusElement["box"]>
+      moved = Object.fromEntries(
+        elements.flatMap(({ id, box }) => {
+          const now = boxes[id]
+          return now && now.some((value, i) => Math.abs(value - box[i]!) > 1)
+            ? [[id, now]]
+            : []
+        }),
+      )
     }
     const shot = await page.screenshot({ type: "jpeg", quality: 60 })
     await mkdir(resolve(OUT, "shots"), { recursive: true })
     await writeFile(resolve(OUT, "shots", file), shot)
-    return { shot: `shots/${file}`, ...(at ? { shotAt: at } : {}) }
+    return {
+      shot: `shots/${file}`,
+      ...(at ? { shotAt: at } : {}),
+      ...(Object.keys(moved).length ? { shotBoxes: moved } : {}),
+    }
   } catch {
     return undefined
   } finally {
@@ -842,10 +883,11 @@ async function crawl(
     rendered = initial
     await top(page)
     keep(await pass(page, job.key, job.mode, "rest", 0))
-    const popups = OPEN ? await finders(page, "popups", OPEN) : []
-    const tips = Number(args.tips)
-      ? await finders(page, "tips", Number(args.tips))
-      : []
+    const popups = OPEN && !job.lite ? await finders(page, "popups", OPEN) : []
+    const tips =
+      Number(args.tips) && !job.lite
+        ? await finders(page, "tips", Number(args.tips))
+        : []
     const listed = new Set(job.passes.map((steps) => steps.map(say).join("; ")))
     // Popups open in place too: Escape closes most, and one that leaves
     // something open (a disclosure) or navigates reloads the page.
@@ -923,7 +965,7 @@ async function crawl(
       }
       if (where() !== home) await load()
     }
-    for (const updated of found && Number(args.args)
+    for (const updated of found && Number(args.args) && !job.lite
       ? variants(found, Number(args.args))
       : []) {
       const name = `args ${Object.entries(updated)
@@ -1035,10 +1077,12 @@ async function discover(browser: Browser, jobs: Job[], max: number) {
   return found
 }
 
-/** For --stories: one story for each of up to `max` more components of each
- *  Storybook the pack's pages read (its Playground story, else its Default
- *  one), from the Storybook's index.json. They take the globals, dark URL
- *  and settings of the pack's first story there. */
+/** For --stories: every story of each component the pack's pages read in a
+ *  Storybook, and of up to `max` more of its components, from the
+ *  Storybook's index.json. A new component's Playground story (else its
+ *  Default one) is read in full, every other story `lite`: a story shows
+ *  one feature (a size, a variant) its args name. They take the globals,
+ *  dark URL and settings of the pack's first story there. */
 async function moreStories(browser: Browser, jobs: Job[], max: number) {
   if (!max) return []
   const roots = new Map<string, Job[]>()
@@ -1083,28 +1127,43 @@ async function moreStories(browser: Browser, jobs: Job[], max: number) {
           : /^default$/i.test(entry.name)
             ? 1
             : 2
-      const picks = new Map<string, Entry>()
+      const byComponent = new Map<string, Entry[]>()
       for (const entry of entries) {
-        const name = component(entry.title)
         if (
-          have.has(name) ||
-          /deprecated|private|internal|hooks?\b|utilit|\btests?\b/i.test(name)
+          /deprecated|private|internal|hooks?\b|utilit|\btests?\b/i.test(
+            entry.title,
+          )
         )
           continue
-        const best = picks.get(name)
-        if (!best || rank(entry) < rank(best)) picks.set(name, entry)
+        const name = component(entry.title)
+        byComponent.set(name, [...(byComponent.get(name) ?? []), entry])
       }
+      const more = [...byComponent.keys()]
+        .filter((name) => !have.has(name))
+        .slice(0, max)
+      const taken = new Set(list.map((job) => storyOf(job.url)))
       const templates = list.filter((job) => job.key === first.key)
-      for (const entry of [...picks.values()].slice(0, max))
-        for (const job of templates)
-          found.push({
-            ...job,
-            key: swap(job.key, entry.id),
-            url: swap(job.url, entry.id),
-            passes: [],
-          })
+      let walked = 0
+      for (const name of [...have, ...more]) {
+        const stories = byComponent.get(name) ?? []
+        const lead = have.has(name)
+          ? undefined
+          : [...stories].sort((a, b) => rank(a) - rank(b))[0]
+        for (const entry of stories) {
+          if (taken.has(entry.id)) continue
+          walked++
+          for (const job of templates)
+            found.push({
+              ...job,
+              key: swap(job.key, entry.id),
+              url: swap(job.url, entry.id),
+              passes: [],
+              ...(entry === lead ? {} : { lite: true }),
+            })
+        }
+      }
       console.log(
-        `${root}: ${Math.min(picks.size, max)} more of ${picks.size} components`,
+        `${root}: ${walked} more stories of ${have.size + more.length} of ${byComponent.size} components`,
       )
     } catch (error) {
       console.warn(`${root}: ${(error as Error).message}`)
@@ -1283,9 +1342,11 @@ const documentOf = (copy: Snapshot) => {
 }
 
 /** Each look's copies as part files:
- *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. */
+ *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. An
+ *  earlier run's are removed first: look ids move between runs. */
 async function writeCopies(inventory: Inventory) {
   const dir = resolve(OUT, "crops")
+  await rm(dir, { recursive: true, force: true })
   let written = 0
   for (const look of inventory.looks) {
     const { key, pass, mode, id, twin } = look.sample
@@ -1330,7 +1391,12 @@ const pages = args.from.length
   : args.connect
     ? await connected()
     : await headless()
-const inventory: Inventory = cluster(pages, PROBE)
+const inventory: Inventory = cluster(
+  pages,
+  PROBE,
+  (page, element) =>
+    !!COPIES.get(copiesOf(page.key, page.pass, page.mode))?.[element.id]?.rest,
+)
 await writeFile(
   resolve(OUT, "census.json"),
   `${JSON.stringify({ census: CENSUS, ...inventory }, null, 1)}\n`,

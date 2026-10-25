@@ -176,6 +176,27 @@ async function snapshot(
       )
   }
 
+  // Its size as laid out: a transform (a press that scales it down) shrinks
+  // its box, and the copy drops the transform. An inline box has no size of
+  // its own: its box.
+  const sizeOf = (el: Element, style: CSSStyleDeclaration) => {
+    const width = Number.parseFloat(style.width)
+    const height = Number.parseFloat(style.height)
+    if (!(width >= 0 && height >= 0)) {
+      const { width, height } = el.getBoundingClientRect()
+      return { width, height }
+    }
+    if (style.boxSizing === "border-box") return { width, height }
+    const sides = (a: string, b: string) =>
+      [`padding-${a}`, `padding-${b}`, `border-${a}-width`, `border-${b}-width`]
+        .map((prop) => Number.parseFloat(style.getPropertyValue(prop)) || 0)
+        .reduce((total, value) => total + value, 0)
+    return {
+      width: width + sides("left", "right"),
+      height: height + sides("top", "bottom"),
+    }
+  }
+
   let next = 0
   let rules: string[] = []
 
@@ -217,7 +238,7 @@ async function snapshot(
         values[prop] = unlink(value)
     if (root) {
       // Where it sat on its page doesn't come along: the copy is its box.
-      const box = el.getBoundingClientRect()
+      const box = sizeOf(el, style)
       Object.assign(values, {
         position: "relative",
         top: "auto",
@@ -435,7 +456,7 @@ async function snapshot(
     if (keys && !keys.includes(key)) continue
     if (preferred.has(key) && !(prefer && el.hasAttribute(prefer))) continue
     if (!sized(el)) continue
-    const box = el.getBoundingClientRect()
+    const box = sizeOf(el, getComputedStyle(el))
     families.clear()
     next = 0
     rules = []

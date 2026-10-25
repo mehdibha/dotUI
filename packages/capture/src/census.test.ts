@@ -280,6 +280,41 @@ describe("census", () => {
     )
   })
 
+  it("reads a round box around a small icon as a badge", () => {
+    const round = (
+      id: number,
+      x: number,
+      iconSize?: string,
+    ): CensusElement => ({
+      ...button(id, x, {
+        borderRadius: "50%",
+        ...(iconSize ? { iconSize } : {}),
+      }),
+      role: "avatar",
+      by: "shape",
+      tag: "div",
+      box: [x, 0, 32, 32],
+    })
+    const groups = cluster(
+      [page("/a", "light", [round(1, 0), round(2, 100, "16x16")])],
+      "test",
+    ).looks.map((one) => one.group)
+    expect(groups).toEqual(["avatar", "badge"])
+  })
+
+  it("samples a look from a member with a frozen copy", () => {
+    const pages = [
+      page("/a", "light", [button(1, 0, blue), button(2, 100, blue)]),
+    ]
+    const sampleOf = (
+      copied?: (one: CensusPage, element: CensusElement) => boolean,
+    ) =>
+      cluster(pages, "test", copied).looks.find((one) => one.group === "button")
+        ?.sample.id
+    expect(sampleOf()).toBe(1)
+    expect(sampleOf((_, element) => element.id === 2)).toBe(2)
+  })
+
   it("names a component's look by an attribute only most of it carries", () => {
     const item = (id: number, x: number, variant?: string) => ({
       ...button(id, x, blue),
