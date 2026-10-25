@@ -18,7 +18,6 @@ import {
   CursorPreview,
   DisabledPreview,
   FocusPreview,
-  FocusSpecimen,
   TextSelectionPreview,
 } from "./states"
 import { SurfacesRow } from "./surfaces"
@@ -89,17 +88,22 @@ const rowsOf = (group: RowGroup) => ("rows" in group ? group.rows : group)
 export const PAGE_ROWS: Record<string, RowGroup[]> = {
   typography: [[["headingFont", "Heading"]]],
   focus: [
+    // One ink for controls and inputs alike.
+    [["focusColor", "Color"]],
     {
       title: "Controls",
       rows: [
         ["focusStyle", "Style", ["Focus ring"]],
         ["focusWidth", "Width"],
-        ["focusColor", "Color"],
+        ["focusRingGap", "Gap"],
       ],
     },
     {
       title: "Inputs",
-      rows: [["focusInputStyle", "Style", ["Field focus"]]],
+      rows: [
+        ["focusInputStyle", "Style", ["Field focus"]],
+        ["focusFieldWidth", "Width"],
+      ],
     },
   ],
   disabled: [[["disabledTreatment", "Style"]]],
@@ -169,13 +173,7 @@ function Rows({ rows }: { rows: FoundationRow[] }) {
   })
 }
 
-/** `lead` sits above the page's rows: a specimen they edit together. */
-const page = ({
-  lead: Lead,
-  ...page
-}: Omit<ChapterPage, "Body" | "rows"> & {
-  lead?: React.ComponentType
-}): ChapterPage => {
+const page = (page: Omit<ChapterPage, "Body" | "rows">): ChapterPage => {
   const groups = PAGE_ROWS[page.id] ?? []
   return {
     ...page,
@@ -183,10 +181,9 @@ const page = ({
     Body: function FoundationPage() {
       return (
         <>
-          {Lead && <Lead />}
           {groups.map((group, i) => (
             <Fragment key={i}>
-              {(i > 0 || Lead) && <DialGap />}
+              {i > 0 && <DialGap />}
               {"title" in group && (
                 <DialGroupTitle>{group.title}</DialGroupTitle>
               )}
@@ -210,10 +207,16 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "focus",
     label: "Focus",
-    owners: ["focusStyle", "focusWidth", "focusColor", "focusInputStyle"],
+    owners: [
+      "focusColor",
+      "focusStyle",
+      "focusWidth",
+      "focusRingGap",
+      "focusInputStyle",
+      "focusFieldWidth",
+    ],
     aliases: ["Focus ring", "Keyboard"],
     Preview: FocusPreview,
-    lead: FocusSpecimen,
   }),
   page({
     id: "disabled",

@@ -3,14 +3,14 @@
    `--studio-focus-*` vars (roles.css) that base.css's focus-ring and
    focus-input read, which the publisher bakes into plain outlines; the rest
    are the `--invalid-*`, `--disabled-*`, `--cursor-*` and `--user-select-ui`
-   tokens. The focus ink is a leaf of Color's Primary. */
+   tokens. The focus ink is a leaf of Color's Primary, or a color of its own. */
 
 import type { TokenOverrides } from "@/registry/theme"
 
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { oneOf, range } from "./schema"
+import { auto, COLOR, oneOf, range } from "./schema"
 
 /** Ring: a gap, then the ring. Inset: inside the edge, a filled control
  *  drawing an on-color line inside it (outside where the control's own part
@@ -18,8 +18,8 @@ import { oneOf, range } from "./schema"
  *  strength. */
 export const FOCUS_STYLE_VALUES = ["ring", "inset", "halo"] as const
 
-/** How a field shows focus: Edge recolors it, Thick edge draws it 2px, Halo
- *  adds a muted 2px halo around it, Ring wears the control ring. Underline
+/** How a field shows focus: Edge recolors it, Thick edge thickens it, Halo
+ *  adds a muted halo around it, Ring wears the control ring. Underline
  *  and Indicator draw in their own shape. */
 export const FOCUS_INPUT_STYLE_VALUES = [
   "edge",
@@ -46,6 +46,9 @@ export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
 
 /** Whether text on controls and their labels selects. Content always does. */
 export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
+
+/** Primary's two sources, or the custom color. */
+export const FOCUS_COLOR_VALUES = [...SOURCE_VALUES, "custom"] as const
 
 const px = (n: number) => `${n}px`
 
@@ -78,9 +81,12 @@ export const chapter = defineChapter({
   id: "states",
   defaults: {
     focusColor: "accent",
+    focusCustomColor: "",
     focusStyle: "ring",
     focusWidth: 2,
+    focusRingGap: 2,
     focusInputStyle: "halo",
+    focusFieldWidth: 2,
     invalidStyle: "edge",
     disabledTreatment: "solid",
     cursorControls: "pointer",
@@ -88,10 +94,13 @@ export const chapter = defineChapter({
     selectionUiText: "none",
   },
   schema: {
-    focusColor: oneOf(SOURCE_VALUES),
+    focusColor: oneOf(FOCUS_COLOR_VALUES),
+    focusCustomColor: auto(COLOR),
     focusStyle: oneOf(FOCUS_STYLE_VALUES),
     focusWidth: range({ min: 1, max: 4, step: 1 }),
+    focusRingGap: range({ min: 0, max: 4, step: 1 }),
     focusInputStyle: oneOf(FOCUS_INPUT_STYLE_VALUES),
+    focusFieldWidth: range({ min: 1, max: 4, step: 1 }),
     invalidStyle: oneOf(INVALID_VALUES),
     disabledTreatment: oneOf(DISABLED_VALUES),
     cursorControls: oneOf(CURSOR_CONTROL_VALUES),
@@ -102,10 +111,15 @@ export const chapter = defineChapter({
   resolve(state: Effective): Resolved {
     const tokens: Record<string, string> = {}
     const width = state.focusWidth
+    const fieldWidth = state.focusFieldWidth
 
     // The control ring. Inset draws it inside the edge, where a filled
     // control adds an on-color line so it doesn't sink into the fill.
     if (width !== 2) tokens["--studio-focus-width"] = px(width)
+    if (state.focusStyle === "ring" && state.focusRingGap !== 2) {
+      tokens["--studio-focus-offset"] = px(state.focusRingGap)
+      tokens["--studio-focus-outside-offset"] = px(state.focusRingGap)
+    }
     if (state.focusStyle === "halo") {
       tokens["--studio-focus-color"] = mix("var(--color-border-focus)", 50)
       tokens["--studio-focus-offset"] = "0px"
@@ -123,8 +137,14 @@ export const chapter = defineChapter({
       case "edge":
         tokens["--studio-field-focus-width"] = "0px"
         break
+      case "halo":
+        if (fieldWidth !== 2)
+          tokens["--studio-field-focus-width"] = px(fieldWidth)
+        break
       case "thick-edge":
-        tokens["--studio-field-focus-offset"] = "-2px"
+        if (fieldWidth !== 2)
+          tokens["--studio-field-focus-width"] = px(fieldWidth)
+        tokens["--studio-field-focus-offset"] = px(-fieldWidth)
         tokens["--studio-field-focus-color"] = "var(--color-border-focus)"
         tokens["--studio-field-invalid-color"] = "var(--color-fg-danger)"
         break
@@ -138,7 +158,7 @@ export const chapter = defineChapter({
     // Invalid: the halo is as wide as the field's own focus halo.
     if (state.invalidStyle === "halo")
       tokens["--invalid-ring-width"] =
-        state.focusInputStyle === "halo" ? "2px" : px(width)
+        state.focusInputStyle === "halo" ? px(fieldWidth) : px(width)
     if (state.invalidStyle === "tint") tokens["--invalid-fill"] = INVALID_FILL
 
     if (state.disabledTreatment === "fade") {
@@ -153,11 +173,41 @@ export const chapter = defineChapter({
     if (state.selectionUiText === "selectable")
       tokens["--user-select-ui"] = "auto"
 
+    // A custom ring is that color in both modes; its muted pair, the field
+    // halo, is the same color see-through. Unset, it starts on the brand.
+    if (state.focusColor === "custom") {
+      const color = state.focusCustomColor || state.brand
+      tokens["--color-border-focus"] = color
+      tokens["--color-border-focus-muted"] = mix(color, 40)
+    }
+
     if (state.focusColor !== "neutral") return { tokens }
     const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
     return { tokens, color: { overrides } }
   },
   rules: [
+    // Only a ring stands off its control.
+    {
+      id: "states/gap-only-ring",
+      target: "focusRingGap",
+      when: { key: "focusStyle", in: ["inset", "halo"] },
+      effect: { kind: "hide" },
+      cause: "focusStyle",
+    },
+    // Edge draws no layer, Ring wears the controls' width, an underline
+    // draws its own rule.
+    {
+      id: "states/field-width-needs-layer",
+      target: "focusFieldWidth",
+      when: {
+        any: [
+          { key: "focusInputStyle", in: ["edge", "ring"] },
+          { key: "inputStyle", in: ["underline"] },
+        ],
+      },
+      effect: { kind: "hide" },
+      cause: "focusInputStyle",
+    },
     // An underline shows focus one way: its rule recolors and doubles.
     {
       id: "states/underline-owns-field-focus",

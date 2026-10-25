@@ -6,7 +6,7 @@ import {
 } from "./color"
 import { options } from "./core/meta"
 
-export const SOURCE_OPTIONS = options(SOURCE_VALUES, {
+export const SOURCE_META = {
   neutral: {
     label: "Neutral",
     description: "Black, or white in dark mode",
@@ -17,7 +17,9 @@ export const SOURCE_OPTIONS = options(SOURCE_VALUES, {
     description: "The brand color",
     credits: ["Material 3", "Radix Themes"],
   },
-})
+}
+
+export const SOURCE_OPTIONS = options(SOURCE_VALUES, SOURCE_META)
 
 export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
   soft: {

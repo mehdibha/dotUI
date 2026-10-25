@@ -400,6 +400,14 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { iconWeight: "bold" },
     { iconLibrary: "phosphor", iconWeight: "bold" },
   ],
+  "states/gap-only-ring": [
+    { focusStyle: "halo", focusRingGap: 3 },
+    { focusRingGap: 3 },
+  ],
+  "states/field-width-needs-layer": [
+    { focusInputStyle: "edge", focusFieldWidth: 3 },
+    { focusFieldWidth: 3 },
+  ],
   "states/underline-owns-field-focus": [
     { inputStyle: "underline", focusInputStyle: "edge" },
     { focusInputStyle: "edge" },
