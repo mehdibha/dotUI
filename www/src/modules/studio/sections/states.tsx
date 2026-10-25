@@ -420,7 +420,7 @@ function CursorDragRow() {
   const { state } = useCurrent()
   const options = useCursorTiles(
     CURSOR_DRAG_OPTIONS,
-    <Slider aria-label="Volume" defaultValue={60} className="w-24">
+    <Slider aria-label="Volume" defaultValue={60} className="w-20">
       <SliderControl />
     </Slider>,
     { as: { controls: state.cursorControls }, at: "left-[55%]" },
