@@ -7,7 +7,12 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
 
-import type { Page as ProbePage, ReferenceTokens, Step } from "../src/probe"
+import type {
+  Page as ProbePage,
+  ReferenceTokens,
+  Step,
+  Target,
+} from "../src/probe"
 import { executablePath } from "./chromium"
 
 /** A pack page as `openPage` loads it. Options that change only how the page
@@ -23,7 +28,15 @@ export interface PackPage extends ProbePage {
    *  census can't find a trigger for (a dialog behind a plain button, a
    *  date picker). The probe never reads them. */
   passes?: Step[][]
+  /** Composed pieces (a repository header, a booking card), found as parts
+   *  are, that `presets:blocks` freezes whole. Named in kebab-case, unique
+   *  across the pack. */
+  blocks?: Record<string, BlockTarget>
 }
+
+/** `redact`: copied with text as x and images grey on a public page too,
+ *  for a block that shows private people (a review, a host). */
+export type BlockTarget = Target & { redact?: boolean }
 
 export type Mode = "light" | "dark"
 
