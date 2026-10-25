@@ -8,23 +8,21 @@ import {
 } from "./surfaces"
 
 export const LOOK_OPTIONS = options(SURFACE_LOOK_VALUES, {
-  style: { label: "Style", description: "Cards take the Style's look" },
   outlined: {
     label: "Outlined",
-    description: "A hairline around cards, no shadow",
+    description: "Cards on the page's tone, inside an edge",
   },
-  raised: { label: "Raised", description: "A hairline and a small shadow" },
   floating: {
     label: "Floating",
-    description: "No border; a soft shadow lifts cards",
+    description: "Cards on the page's tone, lifted by a shadow alone",
   },
   grouped: {
     label: "Grouped",
-    description: "In light, white cards on a gray page",
+    description: "In light, edged white cards on a gray page",
   },
   tonal: {
     label: "Tonal",
-    description: "Cards a shade below the page, no border",
+    description: "Cards a shade off the page, no edge",
   },
 })
 
@@ -71,7 +69,7 @@ export const EDGE_OPTIONS = options(EDGE_VALUES, {
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
   flat: {
-    label: "Flat",
+    label: "None",
     description: "No card shadow; menus and dialogs keep theirs",
   },
   low: {

@@ -1,9 +1,8 @@
 "use client"
 
-/* Surfaces — on the main page, a few looks that set how cards separate from
-   the page, then Custom. On the Surfaces page, each setting on its own:
-   layers, edge, shadow, overlays, the app shell, each mode's page tone and
-   the control edges. */
+/* Surfaces — on the main page, a link to the Surfaces page showing the look.
+   On the page: the look and its shadow as preview tiles, then overlays, each
+   mode's page tone, the app shell and the control edges. */
 
 import type { Mode, StepName, Theme } from "@dotui/colors"
 
@@ -12,6 +11,7 @@ import type { Effective } from "../axes"
 import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
+  looksUnder,
   pickSurfaceLook,
   shadowCss,
   surfaceColorCss,
@@ -20,22 +20,15 @@ import {
 } from "../axes/surfaces"
 import type { PerMode, SurfaceColor, SurfaceLookId } from "../axes/surfaces"
 import {
-  EDGE_OPTIONS,
-  LAYERS_OPTIONS,
   LOOK_OPTIONS,
   OVERLAY_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
 } from "../axes/surfaces.meta"
-import {
-  DialLink,
-  DialPopover,
-  DialSelect,
-  DialSlider,
-  DialTrigger,
-} from "../dial"
+import { DialLink, DialSelect, DialSlider } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
+import { DialTiles } from "../tiles"
 import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
@@ -55,19 +48,28 @@ const GLYPH_STROKE: Record<string, string> = {
   ledge: "1px 1px 2px",
 }
 
+const MODES = ["light", "dark"] as const
+
+/** A mode's surface colors, solved from the system's own neutral. */
+function paletteOf(theme: Theme, mode: Mode) {
+  const m = theme[mode]
+  const step = (s: string) => m.scales.neutral?.[s as StepName] ?? m.background
+  const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
+  const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
+  return {
+    step,
+    color: (pair: PerMode<SurfaceColor>) =>
+      surfaceColorCss(pair[mode], { step, hairline }),
+  }
+}
+
 /** A card on the page, light beside dark, in the system's own neutral. */
 function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
   const recipe = surfaceRecipe(state)
   return (
     <span className="grid w-10 shrink-0 grid-cols-2 overflow-hidden rounded border border-fg/15">
-      {(["light", "dark"] as const).map((mode) => {
-        const m = theme[mode]
-        const step = (s: string) =>
-          m.scales.neutral?.[s as StepName] ?? m.background
-        const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
-        const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
-        const color = (pair: PerMode<SurfaceColor>) =>
-          surfaceColorCss(pair[mode], { step, hairline })
+      {MODES.map((mode) => {
+        const { step, color } = paletteOf(theme, mode)
         const rim = recipe.card.shadow.filter((layer) => layer.inset)
         const drop = GLYPH_SHADOWS[Math.min(cardRung(state), 4)]
         return (
@@ -94,6 +96,44 @@ function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
   )
 }
 
+/** A card under a menu on the page, light beside dark, at the size they
+ *  ship: a look's tile. */
+function SurfaceScene({ state, theme }: { state: Effective; theme: Theme }) {
+  const { card, popover, stroke } = surfaceRecipe(state)
+  return (
+    <span className="absolute inset-0 grid grid-cols-2">
+      {MODES.map((mode) => {
+        const { step, color } = paletteOf(theme, mode)
+        const layer = (
+          look: typeof card,
+          width: string,
+        ): React.CSSProperties => ({
+          background: color(look.bg),
+          borderColor: color(look.edge),
+          borderWidth: width,
+          boxShadow: shadowCss(look.shadow, color),
+        })
+        return (
+          <span
+            key={mode}
+            className="relative block"
+            style={{ background: step("25") }}
+          >
+            <span
+              className="absolute top-2.5 left-3 h-9 w-14 rounded-[5px] border-solid"
+              style={layer(card, stroke.card)}
+            />
+            <span
+              className="absolute top-7 left-9 h-6 w-10 rounded-[4px] border-solid"
+              style={layer(popover, stroke.overlay)}
+            />
+          </span>
+        )
+      })}
+    </span>
+  )
+}
+
 const PAGE_NAMES: Record<Mode, Record<number, string>> = {
   light: { 100: "White", 99: "Off-white", 96: "Gray" },
   dark: { 0: "Black", 2: "Near-black", 16: "Dim" },
@@ -102,124 +142,138 @@ const PAGE_NAMES: Record<Mode, Record<number, string>> = {
 const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
-/** The main page's Surfaces: a look sets layers, edge and shadow; Custom
- *  opens the page. Style reads as the look its column draws. */
+/** The main page's Surfaces: the look and its shadow, opening the page. */
 export function SurfacesRow() {
-  const { state, setState } = useStudio()
+  const { effective: values } = useStudio()
   const { theme } = usePanelMode()
-  const options = LOOK_OPTIONS.map((option) => {
-    const look = effective(
-      pickSurfaceLook(state, option.value as SurfaceLookId),
-    ).values
-    const drawn = option.value === "style" ? surfaceLookOf(look) : undefined
-    const label =
-      drawn && drawn !== "style"
-        ? `Style · ${LOOK_OPTIONS.find((o) => o.value === drawn)?.label}`
-        : option.label
-    return {
-      ...option,
-      label,
-      glyph: <SurfaceGlyph state={look} theme={theme} />,
-    }
-  })
+  const look = LOOK_OPTIONS.find((o) => o.value === surfaceLookOf(values))
+  const shadow = SHADOW_OPTIONS.find((o) => o.value === values.surfaceShadow)
   return (
-    <DialSelect
+    <DialLink
+      page="surfaces"
       label="Surfaces"
-      value={surfaceLookOf(state) ?? "Custom"}
-      options={options}
-      onChange={(id) => setState(pickSurfaceLook(state, id as SurfaceLookId))}
-    >
-      <DialLink page="surfaces" label="Custom" value={null} />
-    </DialSelect>
-  )
-}
-
-const LayersRow = () => (
-  <DialSelect axis="surfaceLayers" label="Layers" options={LAYERS_OPTIONS} />
-)
-
-/* Auto: the edge the button finish implies (Bevel, Ledge, else Line). */
-const EDGE_ROW = [{ value: "auto", label: "Auto" }, ...EDGE_OPTIONS]
-
-function EdgeRow() {
-  const { state } = useStudio()
-  const { theme } = usePanelMode()
-  return (
-    <DialSelect
-      axis="surfaceEdge"
-      label="Edge"
-      options={EDGE_ROW.map((option) => {
-        const values = effective({ ...state, surfaceEdge: option.value }).values
-        return {
-          ...option,
-          glyph: <SurfaceGlyph state={values} theme={theme} />,
-        }
-      })}
+      value={
+        <>
+          <SurfaceGlyph state={values} theme={theme} />
+          <span className="truncate">
+            {look?.label}
+            {values.surfaceShadow !== "flat" && ` · ${shadow?.label}`}
+          </span>
+        </>
+      }
     />
   )
 }
 
-const ShadowRow = () => (
-  <DialSelect axis="surfaceShadow" label="Shadow" options={SHADOW_OPTIONS} />
-)
-
-/** Each mode's page tone. */
-function PageRow() {
-  const { state, effective: values, set } = useStudio()
+/** How cards meet the page: one look sets their tone and edge. */
+function LookRow() {
+  const { state, setState, effective: values } = useStudio()
+  const { theme } = usePanelMode()
+  const current = surfaceLookOf(values)
+  const listed = looksUnder(state.style)
   return (
-    <DialTrigger
-      label="Page"
-      holds={["lightBg", "darkBg"]}
-      value={`${formatPage("light")(values.lightBg)} · ${formatPage("dark")(values.darkBg)}`}
-    >
-      <DialPopover className="w-72">
-        <DialSlider
-          axis="lightBg"
-          label="Light page"
-          minValue={LIGHT_BG_RANGE.min}
-          maxValue={LIGHT_BG_RANGE.max}
-          step={LIGHT_BG_RANGE.step}
-          format={formatPage("light")}
-        />
-        <DialSlider
-          label="Dark page"
-          value={state.darkBg}
-          onChange={set("darkBg")}
-          minValue={DARK_BG_RANGE.min}
-          maxValue={DARK_BG_RANGE.max}
-          step={DARK_BG_RANGE.step}
-          format={formatPage("dark")}
-        />
-      </DialPopover>
-    </DialTrigger>
+    <DialTiles
+      axis="surfaceLayers"
+      label="Look"
+      value={current}
+      onChange={(id) => setState(pickSurfaceLook(state, id as SurfaceLookId))}
+      options={LOOK_OPTIONS.filter(
+        (o) => o.value === current || listed.includes(o.value),
+      ).map((option) => ({
+        ...option,
+        tile: (
+          <SurfaceScene
+            state={
+              effective(pickSurfaceLook(state, option.value as SurfaceLookId))
+                .values
+            }
+            theme={theme}
+          />
+        ),
+      }))}
+    />
   )
 }
+
+function ShadowRow() {
+  const { state } = useStudio()
+  const { theme } = usePanelMode()
+  return (
+    <DialTiles
+      axis="surfaceShadow"
+      label="Shadow"
+      options={SHADOW_OPTIONS.map((option) => ({
+        ...option,
+        tile: (
+          <SurfaceScene
+            state={effective({ ...state, surfaceShadow: option.value }).values}
+            theme={theme}
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+/* Pickers open under their row, clear of the preview. */
+const UNDER = "bottom end"
 
 function OverlaysRow() {
   const { state, set } = useStudio()
   return (
     <DialSelect
       axis="translucentOverlays"
-      label="Overlays"
+      label="Background"
       value={state.translucentOverlays ? "translucent" : "solid"}
       onChange={(value) => set("translucentOverlays")(value === "translucent")}
       options={OVERLAY_OPTIONS}
+      placement={UNDER}
     />
   )
 }
 
-function ShellRow() {
+const LightPageRow = () => (
+  <DialSlider
+    axis="lightBg"
+    label="Light"
+    minValue={LIGHT_BG_RANGE.min}
+    maxValue={LIGHT_BG_RANGE.max}
+    step={LIGHT_BG_RANGE.step}
+    format={formatPage("light")}
+  />
+)
+
+function DarkPageRow() {
+  const { state, set } = useStudio()
   return (
-    <DialSelect axis="shellTone" label="App shell" options={SHELL_OPTIONS} />
+    <DialSlider
+      label="Dark"
+      value={state.darkBg}
+      onChange={set("darkBg")}
+      minValue={DARK_BG_RANGE.min}
+      maxValue={DARK_BG_RANGE.max}
+      step={DARK_BG_RANGE.step}
+      format={formatPage("dark")}
+    />
   )
 }
 
+const ShellRow = () => (
+  <DialSelect
+    axis="shellTone"
+    label="App shell"
+    options={SHELL_OPTIONS}
+    placement={UNDER}
+  />
+)
+
 export const ROWS: RowMap = {
-  surfaceLayers: LayersRow,
-  surfaceEdge: EdgeRow,
+  // The look writes the cards' tone and edge together.
+  surfaceLayers: LookRow,
+  surfaceEdge: LookRow,
   surfaceShadow: ShadowRow,
-  lightBg: PageRow,
-  darkBg: PageRow,
+  lightBg: LightPageRow,
+  darkBg: DarkPageRow,
   translucentOverlays: OverlaysRow,
   shellTone: ShellRow,
 }

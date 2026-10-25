@@ -39,6 +39,7 @@ export const BOARD_TITLES = {
   disabled: "Disabled",
   cursor: "Cursor",
   "text-selection": "Text selection",
+  surfaces: "Surfaces",
   motion: "Motion",
   icons: "Icons",
 }

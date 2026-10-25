@@ -1,7 +1,7 @@
-/* Surfaces — how the page, cards and floating layers separate. A style is a
-   named starting point over three settings; Glass sits beside it, and each
-   mode's page L* is Color's (the engine re-anchors every ramp on it; the
-   light page is Auto on Layers).
+/* Surfaces — how the page, cards and floating layers separate. A look sets
+   the cards' tone and edge, Shadow their depth; Glass sits beside them, and
+   each mode's page L* is Color's (the engine re-anchors every ramp on it;
+   the light page is Auto on Layers).
 
    - Layers, in light: cards on the page's tone (Same), white cards on a gray
      page (Grouped), or cards shaded below the page (Tonal). The page is always the page slider's
@@ -31,6 +31,7 @@ import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import { strokePx } from "./shape"
+import { COLUMNS } from "./style"
 
 const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
@@ -68,44 +69,56 @@ const SHELL_SIDEBAR: Record<string, string> = {
   recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
 }
 
-/* The Surfaces picker: a look writes layers, edge and shadow together;
-   Style puts all three back on the Style's column. Any other mix is Custom.
-   Every look stands under every Style (none needs a finish's edge). */
-const look = (layers: string, edge: string, shadow: string) => ({
-  surfaceLayers: layers,
-  surfaceEdge: edge,
-  surfaceShadow: shadow,
-})
-
+/* The Surfaces page's looks: how a card meets the page, by its tone in
+   light and whether it draws an edge. Shadow is its own row. An edged look
+   draws the edge the Style implies: a line, Polished's bevel, Chunky's
+   ledge. Every state wears exactly one look. */
 export const SURFACE_LOOKS = {
-  style: look("style", "style", "style"),
-  outlined: look("same", "line", "flat"),
-  raised: look("same", "line", "low"),
-  floating: look("same", "none", "medium"),
-  grouped: look("grouped", "none", "low"),
-  tonal: look("tonal", "none", "low"),
+  outlined: { surfaceLayers: "same", edged: true },
+  floating: { surfaceLayers: "same", edged: false },
+  grouped: { surfaceLayers: "grouped", edged: true },
+  tonal: { surfaceLayers: "tonal", edged: false },
 }
 
 export type SurfaceLookId = keyof typeof SURFACE_LOOKS
 
 export const SURFACE_LOOK_VALUES = Object.keys(SURFACE_LOOKS) as SurfaceLookId[]
 
-const LOOK_KEYS = Object.keys(SURFACE_LOOKS.style) as Array<
-  keyof typeof SURFACE_LOOKS.style
->
+/** The look resolved `values` draw. */
+export const surfaceLookOf = (values: Effective): SurfaceLookId =>
+  SURFACE_LOOK_VALUES.find(
+    (id) =>
+      values.surfaceLayers === SURFACE_LOOKS[id].surfaceLayers &&
+      (values.surfaceEdge !== "none") === SURFACE_LOOKS[id].edged,
+  ) ?? "outlined"
 
-/** The look `state` wears, or undefined when it's Custom. */
-export const surfaceLookOf = (
-  state: Record<string, unknown>,
-): SurfaceLookId | undefined =>
-  SURFACE_LOOK_VALUES.find((id) =>
-    LOOK_KEYS.every((key) => state[key] === SURFACE_LOOKS[id][key]),
-  )
-
-export const pickSurfaceLook = (
+/** `id` picked: an edged look keeps the edge it was saved with (the Style's
+ *  columns never draw none); a tone the Style draws goes back to following
+ *  it. */
+export function pickSurfaceLook(
   state: StudioState,
   id: SurfaceLookId,
-): StudioState => ({ ...state, ...SURFACE_LOOKS[id] }) as StudioState
+): StudioState {
+  const { surfaceLayers, edged } = SURFACE_LOOKS[id]
+  return {
+    ...state,
+    surfaceLayers:
+      COLUMNS.surfaceLayers[state.style] === surfaceLayers
+        ? "style"
+        : surfaceLayers,
+    surfaceEdge: !edged
+      ? "none"
+      : state.surfaceEdge === "none"
+        ? "style"
+        : state.surfaceEdge,
+  }
+}
+
+/** Chunky's ledge needs an edge: only edged looks stand under it. */
+export const looksUnder = (style: string): SurfaceLookId[] =>
+  SURFACE_LOOK_VALUES.filter(
+    (id) => style !== "chunky" || SURFACE_LOOKS[id].edged,
+  )
 
 export interface PerMode<T> {
   light: T

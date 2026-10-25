@@ -134,19 +134,28 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
   motion: [[["motionSpeed", "Speed"]], [[ComponentMotionRow, "Components"]]],
   surfaces: [
     [
-      ["surfaceLayers", "Layers"],
-      ["surfaceEdge", "Edge"],
+      ["surfaceLayers", "Look", ["Layers", "Edge", "Elevation"]],
       ["surfaceShadow", "Shadow"],
     ],
-    [
-      ["translucentOverlays", "Overlays", ["Glass"]],
-      ["shellTone", "App shell"],
-      ["lightBg", "Page"],
-    ],
-    [
-      ["controlEdge", "Control edge"],
-      ["controlStroke", "Control stroke"],
-    ],
+    {
+      title: "Overlays",
+      rows: [["translucentOverlays", "Background", ["Glass", "Translucent"]]],
+    },
+    {
+      title: "Page",
+      rows: [
+        ["lightBg", "Light", ["Page tone"]],
+        ["darkBg", "Dark", ["Page tone"]],
+        ["shellTone", "App shell", ["Sidebar"]],
+      ],
+    },
+    {
+      title: "Controls",
+      rows: [
+        ["controlEdge", "Edge", ["Control edge"]],
+        ["controlStroke", "Stroke", ["Control stroke"]],
+      ],
+    },
   ],
 }
 

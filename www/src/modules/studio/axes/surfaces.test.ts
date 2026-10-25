@@ -27,11 +27,11 @@ import {
 } from "./index"
 import { excludedUnder, STYLE_VALUES } from "./style"
 import {
+  looksUnder,
   NO_SHADOW,
   pickSurfaceLook,
   shadowCss,
   SURFACE_LOOK_VALUES,
-  SURFACE_LOOKS,
   surfaceColorCss,
   surfaceLookOf,
   surfaceRecipe,
@@ -542,27 +542,38 @@ describe("drawn edges", () => {
 })
 
 describe("surface looks", () => {
-  test("Origin wears Style, and Flat's column draws Outlined", () => {
-    expect(surfaceLookOf(DEFAULT_STATE)).toBe("style")
+  test("Origin wears Outlined, following its Style", () => {
     expect(surfaceLookOf(DEFAULT_EFFECTIVE)).toBe("outlined")
+    expect(pickSurfaceLook(DEFAULT_STATE, "outlined")).toEqual(DEFAULT_STATE)
   })
 
-  test("a pick reads back as its look; any other mix is Custom", () => {
-    const edited = { ...DEFAULT_STATE, surfaceShadow: "high" }
-    expect(surfaceLookOf(edited)).toBeUndefined()
-    for (const id of SURFACE_LOOK_VALUES)
-      expect(surfaceLookOf(pickSurfaceLook(edited, id))).toBe(id)
-  })
-
-  test("every look draws as picked under every Style", () => {
+  test("every listed look draws as picked under every Style, shadow kept", () => {
     for (const style of STYLE_VALUES)
-      for (const id of SURFACE_LOOK_VALUES) {
-        if (id === "style") continue
-        const { values } = effective(
-          pickSurfaceLook({ ...DEFAULT_STATE, style }, id),
-        )
+      for (const id of looksUnder(style)) {
+        const state = { ...DEFAULT_STATE, style, surfaceShadow: "high" }
+        const { values } = effective(pickSurfaceLook(state, id))
         expect(surfaceLookOf(values), `${style} ${id}`).toBe(id)
-        expect(parseState(SURFACE_LOOKS[id])).toMatchObject(SURFACE_LOOKS[id])
+        expect(values.surfaceShadow).toBe("high")
+        expect(parseState(pickSurfaceLook(state, id))).toMatchObject(
+          pickSurfaceLook(state, id),
+        )
       }
+  })
+
+  test("an edged look keeps the edge it was saved with", () => {
+    const line = {
+      ...DEFAULT_STATE,
+      style: "chunky" as const,
+      surfaceEdge: "line",
+    }
+    expect(pickSurfaceLook(line, "grouped").surfaceEdge).toBe("line")
+    const floating = pickSurfaceLook(line, "floating")
+    expect(floating.surfaceEdge).toBe("none")
+    expect(pickSurfaceLook(floating, "outlined").surfaceEdge).toBe("style")
+  })
+
+  test("Chunky lists only the edged looks", () => {
+    expect(looksUnder("chunky")).toEqual(["outlined", "grouped"])
+    expect(looksUnder("flat")).toEqual(SURFACE_LOOK_VALUES)
   })
 })

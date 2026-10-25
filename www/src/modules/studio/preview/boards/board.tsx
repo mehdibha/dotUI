@@ -10,10 +10,11 @@ import {
   useSyncExternalStore,
 } from "react"
 
-import { useParamSelections } from "@/lib/styles"
+import { DesignSystemProvider, useParamSelections } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useMessage } from "@/modules/studio/preset/iframe-sync"
 import type { PreviewFocus } from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { BOARD_TITLES } from "./titles"
 import type { BoardId } from "./titles"
@@ -42,6 +43,34 @@ export function BoardFocusProvider({
 
 /** The row the panel is editing, for emphasis and replays. */
 export const useBoardFocus = () => useContext(BoardFocusContext)
+
+/** The previewed design system, for parts drawn in a mode of their own. */
+export const BoardSystemContext = createContext<DesignSystem | null>(null)
+
+/** `children` in `mode`, whichever mode the preview is in. */
+export function InMode({
+  mode,
+  children,
+}: {
+  mode: "light" | "dark"
+  children: React.ReactNode
+}) {
+  const system = useContext(BoardSystemContext)
+  if (!system) return children
+  return (
+    <DesignSystemProvider
+      scoped
+      forcedMode={mode}
+      params={system.componentParams}
+      tokens={system.tokens}
+      density={system.density}
+      color={system.color}
+      icons={system.icons}
+    >
+      {children}
+    </DesignSystemProvider>
+  )
+}
 
 export function Board({
   id,
