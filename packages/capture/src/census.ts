@@ -107,6 +107,10 @@ export interface CensusPage {
    *  rest, or one read scrolled, is shot as the viewport. A box sits in the
    *  shot at its x and y less these. */
   shotAt?: [number, number]
+  /** Where elements sit on a whole-page shot when growing the viewport for
+   *  it moved them (content that loads or sizes to the viewport), by census
+   *  id: draw these instead of their `box`. */
+  shotBoxes?: Record<number, CensusElement["box"]>
 }
 
 /** Disabled, selected and open elements (`is`), and icon strokes; "states":
@@ -381,12 +385,56 @@ function census(
     }
     return value
   }
+  // Clipped away through the ancestors (Airbnb's photo arrows sit under
+  // clip-path: inset(100%) until the card is hovered), or fixed (a bar slid
+  // out of view is fixed past the viewport's edge).
+  const clips = (clip: string, el: Element) => {
+    const inset = /^inset\(([^)]*?)(?:\s+round\b[^)]*)?\)$/.exec(clip)
+    if (!inset?.[1]) return false
+    const [top, right = top, bottom = top, left = right] = inset[1]
+      .trim()
+      .split(/\s+/)
+    const { width, height } = el.getBoundingClientRect()
+    const length = (value: string | undefined, of: number) =>
+      value?.endsWith("%")
+        ? (Number.parseFloat(value) / 100) * of
+        : Number.parseFloat(value ?? "0")
+    const across = length(top, height) + length(bottom, height)
+    const along = length(left, width) + length(right, width)
+    return (across > 0 && across >= height) || (along > 0 && along >= width)
+  }
+  const placed = new Map<Element, { clipped: boolean; fixed: boolean }>()
+  const placeOf = (
+    el: Element | null,
+  ): { clipped: boolean; fixed: boolean } => {
+    if (!el) return { clipped: false, fixed: false }
+    let value = placed.get(el)
+    if (!value) {
+      const style = getComputedStyle(el)
+      const up = placeOf(el.parentElement)
+      value = {
+        clipped: up.clipped || clips(style.clipPath, el),
+        fixed: up.fixed || style.position === "fixed",
+      }
+      placed.set(el, value)
+    }
+    return value
+  }
   const shown = (el: Element) => {
     const rect = el.getBoundingClientRect()
+    const { clipped, fixed } = placeOf(el)
     return (
       rect.width * rect.height > 1 &&
       el.checkVisibility({ opacityProperty: true, visibilityProperty: true }) &&
-      opacityOf(el) >= 0.05
+      opacityOf(el) >= 0.05 &&
+      !clipped &&
+      !(
+        fixed &&
+        (rect.bottom <= 0 ||
+          rect.right <= 0 ||
+          rect.top >= innerHeight ||
+          rect.left >= innerWidth)
+      )
     )
   }
   const edged = (style: CSSStyleDeclaration) =>
@@ -486,7 +534,15 @@ function census(
             el.querySelector("img, svg, picture, canvas, video")
           ? "avatar"
           : "box"
-    if (h <= 32 && w <= 240 && chars > 0) return "badge"
+    // A pill holding text in a child is one too (Airbnb's "Guest
+    // favorite"), when nothing in it is a control.
+    const pill =
+      radius >= h / 2 - 1 &&
+      !!el.textContent?.trim() &&
+      !el.querySelector(
+        "a, button, input, select, textarea, [role], [tabindex]",
+      )
+    if (h <= 32 && w <= 240 && (chars > 0 || pill)) return "badge"
     if (w * h >= 120 * 60)
       return style.boxShadow !== "none" ||
         radius > 0 ||
@@ -836,14 +892,31 @@ function census(
           if (value !== undefined && !(key === "ring" && value === "none"))
             values[key] = value
         }
+        // From the frame's inner edge to what it shows first: the field's
+        // text, or what sits before it (an icon, Primer's tokens).
         const style = getComputedStyle(el)
-        const look = getComputedStyle(frame)
-        values.paddingInline = px(
+        let start =
           el.getBoundingClientRect().left +
-            Number.parseFloat(style.borderLeftWidth) +
-            Number.parseFloat(style.paddingLeft) -
+          Number.parseFloat(style.borderLeftWidth) +
+          Number.parseFloat(style.paddingLeft)
+        for (const part of frame.querySelectorAll("*")) {
+          if (part.contains(el) || el.contains(part)) continue
+          const box = part.getBoundingClientRect()
+          if (box.width * box.height <= 1 || box.left >= start) continue
+          const look = getComputedStyle(part)
+          if (
+            (part.localName === "svg" ||
+              part.localName === "img" ||
+              alpha(look.backgroundColor) > 0 ||
+              edged(look)) &&
+            shown(part)
+          )
+            start = box.left
+        }
+        values.paddingInline = px(
+          start -
             frame.getBoundingClientRect().left -
-            Number.parseFloat(look.borderLeftWidth),
+            Number.parseFloat(getComputedStyle(frame).borderLeftWidth),
         )
       }
       if (!focus) delete values.ring
@@ -1775,8 +1848,13 @@ function unwrap(pages: CensusPage[]): CensusPage[] {
  *  where a page was read in both modes; the same element in dark (same page,
  *  pass, role and box: a theme moves nothing) gives the dark values. A page
  *  read only in dark (a signed-in run, one mode per run) gives dark-only
- *  looks. */
-export function cluster(read: CensusPage[], probe: string): Inventory {
+ *  looks. `copied`: whether an element has a frozen copy, which the sample
+ *  then prefers. */
+export function cluster(
+  read: CensusPage[],
+  probe: string,
+  copied?: (page: CensusPage, element: CensusElement) => boolean,
+): Inventory {
   const pages = unwrap(read)
   const where = (page: CensusPage) => `${page.key}|${page.pass}`
   const lit = new Set(pages.filter((page) => page.mode === "light").map(where))
@@ -1859,11 +1937,17 @@ export function cluster(read: CensusPage[], probe: string): Inventory {
       if (!first) continue
       const lead = first.page.mode
       // The sample: a member read in a state, on the rest pass where one
-      // was (a later pass's page may have moved on), else the first.
+      // was (a later pass's page may have moved on), else the first; of
+      // those, one with a frozen copy where one has.
+      const pick = (list: Member[]) =>
+        list.find((m) => copied?.(m.page, m.element)) ?? list[0]
       const sample =
-        members.find((m) => m.element.states && m.page.pass === "rest") ??
-        members.find((m) => m.element.states) ??
-        members.find((m) => m.page.pass === "rest") ??
+        pick(
+          members.filter((m) => m.element.states && m.page.pass === "rest"),
+        ) ??
+        pick(members.filter((m) => m.element.states)) ??
+        pick(members.filter((m) => m.page.pass === "rest")) ??
+        pick(members) ??
         first
       const paired = members
         .map((member) => twins.get(key(member.page, member.element)))
