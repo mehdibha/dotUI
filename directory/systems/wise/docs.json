@@ -833,6 +833,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: a harness that renders Neptune's published React components in light and dark, plus the public wise.com login page. Partial: the signed-in web app (shell, sidebar, account pages) isn't captured. Names without a from are Neptune's own class names; names marked ai are ours."
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: a harness that renders Neptune's published React components in light and dark, plus the public wise.com login page. Partial: the signed-in web app (shell, sidebar, account pages) isn't captured. Names without a from are Neptune's own class names; names marked ai are ours."
   }
 }
