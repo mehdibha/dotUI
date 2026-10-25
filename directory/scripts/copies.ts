@@ -1,7 +1,7 @@
-// The frozen copies a system page shows, one file per system and census date:
-// { [copy path]: Snapshot }, built from the census a capture left in
-// www/.scratch-refs/<slug>/. In dev, vite.config.ts serves them from there;
-// `copies:upload` puts them on the Blob store the deployed site reads.
+// The frozen copies a system page shows, one file per copy at <slug>/<copy
+// path>, read from the census a capture left in www/.scratch-refs/<slug>/. In
+// dev, vite.config.ts serves them from there; `copies:upload` puts them on the
+// Blob store the deployed site reads.
 import fs from "node:fs"
 import path from "node:path"
 
@@ -47,16 +47,10 @@ export function copyPaths(slug: string) {
   return byDate
 }
 
-export function bundleCopies(slug: string, paths: Iterable<string>) {
-  const copies: Record<string, Snapshot> = {}
-  const missing: string[] = []
-  for (const copy of paths) {
-    const file = path.join(refsDir, slug, copy)
-    const part: PartFile | undefined = fs.existsSync(file)
-      ? JSON.parse(fs.readFileSync(file, "utf8"))
-      : undefined
-    if (part?.snapshot) copies[copy] = part.snapshot
-    else missing.push(copy)
-  }
-  return { copies, missing }
+export function readCopy(slug: string, copy: string): Snapshot | undefined {
+  const file = path.join(refsDir, slug, copy)
+  if (!file.startsWith(path.join(refsDir, slug) + path.sep)) return undefined
+  if (!fs.existsSync(file)) return undefined
+  const part: PartFile = JSON.parse(fs.readFileSync(file, "utf8"))
+  return part.snapshot
 }

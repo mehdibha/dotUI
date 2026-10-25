@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { provenanceSchema } from "./schema"
+
 /* systems/<slug>/docs.json: the written layer of a system's docs, one entry
    per block (a foundation id or a component key). An AI pass over the
    capture's full-page shots and copies writes it, a person checks it;
@@ -22,6 +24,7 @@ const entry = z.object({
 export const docsFileSchema = z.object({
   version: z.literal(1),
   slug: z.string(),
+  provenance: provenanceSchema,
   blocks: z.record(
     z.string(),
     z.object({

@@ -107,29 +107,23 @@
             "v-g46kt0": {
               "hide": "calendar day cells: a date picker's parts"
             },
-            "v-i7qhq2": {
-              "hide": "the same price link on a tinted hotel card"
-            },
             "v-uglul8": {
               "hide": "an underlined grey text link: see link"
             },
             "v-253b9m": {
               "hide": "map controls"
             },
-            "v-hy1sn5": {
-              "hide": "a 12px info icon"
-            },
             "v-jaw0bk": {
               "hide": "a heading read as a button (Add dates for prices)"
-            },
-            "v-jsd5sl": {
-              "hide": "the close × on a dark callout"
             },
             "v-wp9ssp": {
               "hide": "an underlined heading link (Guest favorite)"
             },
             "v-iq2u3o": {
               "hide": "a disabled row arrow on a tinted section"
+            },
+            "v-jtg2h9": {
+              "hide": "a photo arrow with its focus ring: see photo arrow"
             }
           },
           "sizes": {
@@ -232,8 +226,22 @@
             "v-ao6wcc": {
               "hide": "the Airbnb logo"
             },
-            "v-fznk62": {
-              "hide": "pagination pages"
+            "secondary": {
+              "note": "Grey fill, a link drawn as a button: Show more."
+            },
+            "v-qftbza": {
+              "name": {
+                "value": "legal, dark",
+                "from": "ai"
+              },
+              "note": "Dark, bold and underlined in the login dialog: Privacy Policy."
+            },
+            "v-xgjsr7": {
+              "name": {
+                "value": "inline, small",
+                "from": "ai"
+              },
+              "note": "Grey and underlined at the end of a paragraph: See details and exclusions."
             }
           },
           "sizes": {
@@ -278,7 +286,7 @@
     },
     "badge": {
       "status": "reviewed",
-      "summary": "Small text tags under a listing's price: green for Airbnb credit, grey-bordered for terms like Free cancellation.",
+      "summary": "Small pills: white Guest favorite and grey Superhost on listing photos, green text for Airbnb credit, a grey 1px border for terms like Free cancellation.",
       "groups": {
         "badge": {
           "variants": {
@@ -287,7 +295,7 @@
                 "value": "credit",
                 "from": "ai"
               },
-              "note": "Green text on a pale green fill: +$56 Airbnb credit."
+              "note": "Green text on a pale green fill: Airbnb credit."
             },
             "v-9gbo6p": {
               "name": {
@@ -307,13 +315,33 @@
             },
             "v-xlwqrd": {
               "hide": "the 'or' between login options"
+            },
+            "v-chg5y1": {
+              "name": {
+                "value": "guest favorite",
+                "from": "ai"
+              },
+              "note": "A white pill with a soft shadow on listing photos."
+            },
+            "v-9ytwtw": {
+              "name": {
+                "value": "superhost",
+                "from": "ai"
+              },
+              "note": "A translucent grey pill with white text on listing photos."
+            },
+            "v-couwyg": {
+              "hide": "map price pins: see button"
+            },
+            "v-6zywe0": {
+              "hide": "the round search button: see button"
+            },
+            "v-1fhjvp": {
+              "hide": "a row's arrow: see button"
             }
           }
         }
-      },
-      "missing": [
-        "The 'Guest favorite' pill on listing photos wasn't read as a badge."
-      ]
+      }
     },
     "card": {
       "status": "reviewed",
@@ -345,9 +373,6 @@
             "v-l7d1ng": {
               "hide": "the stats strip inside a host card"
             },
-            "v-vmtkfk": {
-              "hide": "a segmented control in Filters"
-            },
             "v-uqdxth": {
               "hide": "a whole row of listings"
             },
@@ -372,9 +397,6 @@
             "v-kqhlr0": {
               "hide": "the main search bar: see search-field"
             },
-            "v-ojouej": {
-              "hide": "the page header"
-            },
             "v-pd3dgv": {
               "hide": "a section of the listing page"
             },
@@ -388,7 +410,7 @@
               },
               "note": "Meet your host on a listing: white, a soft shadow, the photo beside the stats."
             },
-            "v-herk4m": {
+            "v-jmfjz5": {
               "name": {
                 "value": "banner",
                 "from": "ai"
@@ -418,12 +440,6 @@
             },
             "v-j94fhq": {
               "hide": "a marker over a map that hadn't loaded"
-            },
-            "v-04duug": {
-              "hide": "the round search button: see button"
-            },
-            "v-vmtkfk": {
-              "hide": "a row's arrow: see button"
             }
           }
         }
@@ -442,11 +458,13 @@
               },
               "note": "Log in or sign up: centered, large corners, the page dimmed behind."
             },
-            "v-a887nw": {
-              "hide": "a dark callout with an arrow: see tooltip"
-            },
             "v-zxb0r5": {
               "hide": "Price details, anchored to the price: see popover"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
             }
           }
         }
@@ -476,6 +494,11 @@
             },
             "v-qj65e1": {
               "hide": "the booking card's guests field, open"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
             }
           }
         }
@@ -541,6 +564,13 @@
                 "from": "ai"
               },
               "note": "The login field: a label inside a bordered box; focus darkens the border."
+            },
+            "v-c07rd4": {
+              "name": {
+                "value": "price",
+                "from": "ai"
+              },
+              "note": "Minimum and maximum price in Filters: a pill with a 1px border."
             }
           }
         }
@@ -558,22 +588,6 @@
                 "from": "ai"
               },
               "note": "Where: Search destinations."
-            }
-          }
-        }
-      }
-    },
-    "switch": {
-      "status": "reviewed",
-      "groups": {
-        "switch": {
-          "variants": {
-            "v-5w6vjd": {
-              "name": {
-                "value": "on dark",
-                "from": "ai"
-              },
-              "note": "The AI search switch on the dark banner: a white knob, Off inside the track."
             }
           }
         }
@@ -606,13 +620,6 @@
                 "from": "ai"
               },
               "note": "Type of place: the chosen option gets a dark border."
-            },
-            "v-bhx43i": {
-              "name": {
-                "value": "segment, filled",
-                "from": "ai"
-              },
-              "note": "Nightly or Trip price: a grey track."
             }
           }
         },
@@ -643,6 +650,11 @@
                 "from": "ai"
               },
               "note": "The last row, no rule."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
             }
           }
         }
@@ -698,9 +710,28 @@
             "v-u9xxij": {
               "hide": "the earnings slider's track"
             }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
           }
         }
       }
     }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 7be1fff) and its page shots, public pages in light. Names marked ai are ours; Airbnb publishes no component docs."
   }
 }
