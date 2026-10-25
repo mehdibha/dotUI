@@ -12,7 +12,10 @@ import {
 } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { ColorPicker } from "@/registry/ui/color-picker"
+import { Slider, SliderControl } from "@/registry/ui/slider"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import type { Effective } from "../axes"
@@ -39,6 +42,7 @@ import {
   UNDER_ROW,
 } from "../dial"
 import { usePanelMode } from "../panel-mode"
+import { stateProps } from "../preview/boards/board"
 import type { RowMap } from "../row-host"
 import {
   ColorPickerPopover,
@@ -47,6 +51,8 @@ import {
   useDraft,
 } from "../rows"
 import { useCurrent } from "../selection"
+import { DialTiles } from "../tiles"
+import type { DialTile } from "../tiles"
 import { useAxis } from "../use-axis"
 import {
   ArrowCursor,
@@ -338,65 +344,88 @@ const CURSORS: Record<string, () => React.ReactNode> = {
   grab: GrabCursor,
 }
 
-function CursorGlyph({ cursor }: { cursor: string }) {
+/** A specimen with the cursor `cursor` names resting on it. */
+function CursorScene({
+  cursor,
+  at = "left-[70%]",
+  children,
+}: {
+  cursor: string
+  at?: string
+  children: React.ReactNode
+}) {
   const Glyph = CURSORS[cursor] ?? ArrowCursor
   return (
-    <span className="-my-0.5 size-5 shrink-0 *:size-full">
-      <Glyph />
+    <span className="relative inline-flex">
+      {children}
+      <span className={cn("absolute top-1/2 z-10 size-6 *:size-full", at)}>
+        <Glyph />
+      </span>
     </span>
   )
 }
 
-/** Each option drawn as the cursor it sets; `as` names it where its value
- *  isn't a cursor keyword (Drag's "Same as controls"). */
-const withCursors = (
-  options: DialSelectOption[],
-  as: Record<string, string> = {},
-): DialSelectOption[] =>
-  options.map((option) => {
-    const glyph = <CursorGlyph cursor={as[option.value] ?? option.value} />
-    return { ...option, icon: glyph, glyph }
-  })
+/** Each option as its cursor over `specimen`; `as` names the cursor where
+ *  the value isn't a cursor keyword (Drag's "Same as controls"). */
+function useCursorTiles(
+  options: readonly DialSelectOption[],
+  specimen: React.ReactNode,
+  { as = {}, at }: { as?: Record<string, string>; at?: string } = {},
+): DialTile[] {
+  return options.map((option) => ({
+    ...option,
+    tile: (
+      <CursorScene cursor={as[option.value] ?? option.value} at={at}>
+        {specimen}
+      </CursorScene>
+    ),
+  }))
+}
 
-const CursorControlsRow = () => (
-  <DialSelect
-    axis="cursorControls"
-    label="Controls"
-    options={withCursors(CURSOR_CONTROL_OPTIONS)}
-    placement={UNDER}
-  />
-)
+function SpecimenButton(props: React.ComponentProps<"span">) {
+  const button = useButtonStyles()
+  return (
+    <span {...props} className={button({ variant: "primary", size: "sm" })}>
+      Button
+    </span>
+  )
+}
 
-const CursorDisabledRow = () => (
-  <DialSelect
-    axis="cursorDisabled"
-    label="Disabled"
-    options={withCursors(CURSOR_DISABLED_OPTIONS)}
-    placement={UNDER}
-  />
-)
+function CursorControlsRow() {
+  const options = useCursorTiles(CURSOR_CONTROL_OPTIONS, <SpecimenButton />)
+  return <DialTiles axis="cursorControls" label="Controls" options={options} />
+}
 
-const CursorBusyRow = () => (
-  <DialSelect
-    axis="cursorBusy"
-    label="Busy"
-    options={withCursors(CURSOR_BUSY_OPTIONS)}
-    placement={UNDER}
-  />
-)
+function CursorDisabledRow() {
+  const options = useCursorTiles(
+    CURSOR_DISABLED_OPTIONS,
+    <SpecimenButton {...stateProps("disabled")} />,
+  )
+  return <DialTiles axis="cursorDisabled" label="Disabled" options={options} />
+}
+
+function CursorBusyRow() {
+  const options = useCursorTiles(
+    CURSOR_BUSY_OPTIONS,
+    <Button variant="primary" size="sm" isPending>
+      Save
+    </Button>,
+  )
+  return (
+    <DialTiles axis="cursorBusy" label="Busy" options={options} columns={3} />
+  )
+}
 
 function CursorDragRow() {
   const { state } = useCurrent()
-  return (
-    <DialSelect
-      axis="cursorDrag"
-      label="Drag"
-      options={withCursors(CURSOR_DRAG_OPTIONS, {
-        controls: state.cursorControls,
-      })}
-      placement={UNDER}
-    />
+  const options = useCursorTiles(
+    CURSOR_DRAG_OPTIONS,
+    <Slider aria-label="Volume" defaultValue={60} className="w-24">
+      <SliderControl />
+    </Slider>,
+    { as: { controls: state.cursorControls }, at: "left-[55%]" },
   )
+  return <DialTiles axis="cursorDrag" label="Drag" options={options} />
 }
 
 const ControlTextRow = () => (

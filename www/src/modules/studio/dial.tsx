@@ -264,8 +264,6 @@ export interface DialSelectOption {
   credits?: readonly string[]
   /** A specimen beside the row's value. */
   glyph?: React.ReactNode
-  /** Before the label in the list: what the option looks like. */
-  icon?: React.ReactNode
   /** Beside the label: a follow option's source chip. */
   aside?: React.ReactNode
 }
@@ -431,7 +429,6 @@ interface DialPickOption {
   label: string
   description?: string
   credits?: readonly string[]
-  icon?: React.ReactNode
   /** After the label: a follow's source chip, an exclusion's cause. */
   aside?: React.ReactNode
 }
@@ -467,7 +464,6 @@ function PickItem({
         <>
           <span className="flex min-w-0 flex-col gap-0.5">
             <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
-              {option.icon}
               {option.label}
               {option.aside}
             </span>
