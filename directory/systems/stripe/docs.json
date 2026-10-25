@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "stripe",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Sail's light slate on white: #1a2c44 for labels and menu rows, #273951 on buttons and fields, #50617a for quiet text, #d4dee9 for every edge and #f4f7fa for the offset surfaces. The one brand color is blurple: #533afd fills the primary button and marks the active nav row, #675dff the form accents. Badges and banners each pair a pale fill with a matching edge and a dark ink of the same hue.",

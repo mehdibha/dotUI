@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "america",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Navy on white. Ink is a navy-black, #000c1f, and most neutrals are that ink at an alpha: body copy at 65% (#59616d on white), quiet text at 45% (#8c919a), edges at 10% (#e5e6e8) and 45%. Tints are blue-700 at 5% (#f2f4f7) and 10%. The primary is navy #002664 and links are blue #0066c5. Dark is #0b0d12 with white ink at the same alphas; the primary lifts to #0066c5 and links to #66aef5.",

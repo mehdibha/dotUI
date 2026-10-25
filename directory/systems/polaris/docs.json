@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "polaris",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Neutral greys with no tint: a #f1f1f1 page, white cards, menus and modals, #303030 ink and #616161 for secondary text, #e3e3e3 for borders and tracks. The primary button is near-black (#303030), not a brand color; blue (#005bd3) is kept for links and focus. Status colors come as pale fills with dark ink (critical #fed1d7 on #8e0b21) and solid banner headers (warning #ffb800, info #91d0ff). Dark is Polaris's dark-experimental theme: a #1a1a1a page, #303030 surfaces and #e3e3e3 ink, with the primary button flipped to white.",

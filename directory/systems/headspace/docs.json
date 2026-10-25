@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "headspace",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Warm greys on white: ink #2d2c2b, quieter text #44423f and #63605d, borders #e2ded9, and #f9f4f2 under chips, secondary buttons and tinted cards. The marketing pages keep an older body ink, #4b4c4d. Blue #0061ef (hover #0040ea) is the primary and the link color. The logo's orange #ff7300 and sunny yellows (#ffce00, #ffb700) fill illustrations and promo sections. The app's dark theme is navy: #050726 page, #101340 surfaces, #2a2d55 borders, #e5e7ec ink.",
@@ -27,16 +27,40 @@
     },
     "button": {
       "status": "reviewed",
-      "summary": "Bold pills. On marketing pages the main action is blue #0061ef or ink #2d2c2b on the 2px lip, and the secondary is a #f9f4f2 pill. Topic chips (Popular, Featured) are #f9f4f2 pills that turn ink when chosen. Hover darkens a fill; pressing drops the lip.",
+      "summary": "Bold pills. On marketing pages the main action is blue #0061ef or ink #2d2c2b on the 2px lip, and the secondary is a #f9f4f2 pill. Topic chips (Popular, Featured) are #f9f4f2 pills that turn ink when chosen. Hover darkens a fill; pressing drops the lip. In the app the same pills come as primary, secondary and ghost at mLarge (48px, 24px sides, 16px text), disabled at 40% opacity.",
       "groups": {
         "button": {
           "variants": {
-            "v-zzw4zn": {
+            "primary": {
+              "note": "Get started in the app: #0061ef under white at 700 on the 2px lip; pressing drops the lip and darkens to #0040ea."
+            },
+            "secondary": {
+              "note": "Play sample: a #f9f4f2 pill, #c6c1b9 pressed. The marketing topic chips (Popular, Guided meditations) are this look at 18px, #e2ded9 on hover."
+            },
+            "ghost": {
+              "note": "Skip: no fill, #2d2c2b text; #d0d0d0 pressed."
+            },
+            "state-enabled": {
               "name": {
-                "value": "primary",
+                "value": "chip",
                 "from": "ai"
               },
-              "note": "Continue on the sign-in page: #0061ef with white text at 700; hover #0040ea, pressed #0000db."
+              "note": "Sleep: the app's filter chip, #f9f4f2 at 400 with 16px sides (#2a2d55 under #e5e7ec in dark), #c6c1b9 pressed. Focus is a 2px #0061ef ring 4px outside."
+            },
+            "v-3vu3p2": {
+              "note": "Saved: one of the app's top tabs, 20px #63605d at 700 with no box; the current one (Explore) is #2d2c2b."
+            },
+            "v-uqqpt2": {
+              "note": "The same tab in dark: #9da5b8."
+            },
+            "v-zlovfc": {
+              "note": "Reminder time: a select's trigger, 56px with 12px corners and a 2px #e2ded9 edge; #63605d on hover, #0061ef on focus."
+            },
+            "v-u3z6vr": {
+              "note": "The same trigger in dark: #050726 inside a 2px #2a2d55 edge."
+            },
+            "v-zzw4zn": {
+              "note": "Continue on the sign-in page: the same blue without the lip; hover #0040ea, pressed #0000db."
             },
             "v-52my05": {
               "name": {
@@ -47,24 +71,17 @@
             },
             "v-p4icyb": {
               "name": {
-                "value": "secondary",
+                "value": "marketing secondary",
                 "from": "ai"
               },
-              "note": "Play Sample: a #f9f4f2 pill; hover #e5e7ec. The carousel arrows are this look as 48px circles."
-            },
-            "v-dk2e58": {
-              "name": {
-                "value": "chip",
-                "from": "ai"
-              },
-              "note": "Popular, Guided meditations: #f9f4f2 pills at 18px and 700 with an emoji; hover #e2ded9."
+              "note": "Play Sample: a #f9f4f2 pill with #44423f text; hover #e5e7ec. The carousel arrows are this look as 48px circles."
             },
             "v-sns3tz": {
               "name": {
                 "value": "chip, selected",
                 "from": "ai"
               },
-              "note": "Featured: the chosen chip, #2d2c2b with white text."
+              "note": "Featured: the chosen topic chip, #2d2c2b with white text."
             },
             "v-966lyd": {
               "name": {
@@ -159,9 +176,6 @@
             "v-y2wuk9": {
               "note": "Monthly on the plans page: the unchosen plan card."
             },
-            "primary": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
-            },
             "v-gv00tv": {
               "hide": "Sign in with Facebook: the social button in Facebook's blue"
             },
@@ -188,12 +202,20 @@
             }
           },
           "sizes": {
-            "s-dbecer": {
-              "name": {
-                "value": "mLarge",
-                "from": "docs"
-              },
-              "note": "48px, 24px sides, 16px text."
+            "mlarge": {
+              "note": "48px, 24px sides, 16px text: the app's default."
+            },
+            "large": {
+              "note": "Text-only at 20px: the app's top tabs."
+            },
+            "s-fxxsu7": {
+              "note": "48px, 24px sides: the sign-in page."
+            },
+            "s-rervkw": {
+              "note": "48px, 16px sides: the app's filter chip."
+            },
+            "s-lv0h1f": {
+              "note": "56px: a select's trigger."
             },
             "s-o24bsg": {
               "note": "44px, 24px sides, 18px text: topic chips."
@@ -221,10 +243,7 @@
             }
           }
         }
-      },
-      "missing": [
-        "The app's own buttons (primary, secondary, ghost, icon-only) are only in the harness, which rendered without its stylesheet in this census. Per the stylesheet they are bold pills, mLarge 48px with 24px sides, disabled at 40% opacity."
-      ]
+      }
     },
     "toggle-button": {
       "status": "reviewed",
@@ -427,12 +446,14 @@
       "groups": {
         "badge": {
           "variants": {
-            "v-4au31k": {
-              "name": {
-                "value": "default",
-                "from": "ai"
-              },
-              "note": "Trending: #0061ef on #f9f4f2."
+            "default": {
+              "note": "Trending, New: #0061ef on #f9f4f2."
+            },
+            "v-m2kptu": {
+              "hide": "an underlined privacy policy link in the app's text"
+            },
+            "v-pkf8c9": {
+              "hide": "an underlined privacy policy link in the app's text, dark"
             },
             "v-3mzo3k": {
               "name": {
@@ -472,6 +493,9 @@
             }
           },
           "sizes": {
+            "large": {
+              "note": "24px, 8px sides, 14px."
+            },
             "s-jufn8n": {
               "note": "23px, 8px sides, 14px."
             },
@@ -487,25 +511,57 @@
     },
     "segmented-control": {
       "status": "reviewed",
+      "summary": "A 56px #f9f4f2 pill track with 4px padding holding 48px pill segments at 16px and 700. In the high-contrast version the current segment is #2d2c2b under white. Disabled segments drop to 48% opacity.",
       "groups": {
+        "segmented": {
+          "variants": {
+            "contrast-high": {
+              "note": "Day, Week, Month: the #f9f4f2 track (#2a2d55 in dark)."
+            }
+          },
+          "sizes": {
+            "large": {
+              "note": "56px, 4px padding."
+            }
+          }
+        },
         "segment": {
           "variants": {
-            "v-6v376w": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            "v-dk2e58": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Week: #2d2c2b text on the track, 16px sides."
             },
-            "v-1kef96": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            "v-sns3tz": {
+              "name": {
+                "value": "selected",
+                "from": "ai"
+              },
+              "note": "Day: #2d2c2b under white."
+            },
+            "v-b43j8n": {
+              "note": "A segment in dark: #e5e7ec on the #2a2d55 track."
+            },
+            "v-qlmocw": {
+              "note": "The selected segment in dark: #e5e7ec under #050726."
+            }
+          },
+          "sizes": {
+            "s-oe3yci": {
+              "note": "48px, 16px sides."
+            },
+            "s-w7xd80": {
+              "note": "48px, in dark."
             }
           }
         }
-      },
-      "missing": [
-        "The app's segmented control is only in the harness. Per the stylesheet it is a #f9f4f2 pill track with 4px padding, 48px segments at 16/700, the current one white under #2d2c2b ink."
-      ]
+      }
     },
     "text-field": {
       "status": "reviewed",
-      "summary": "The sign-in field is 56px with 12px corners and a 2px #e2ded9 edge, the label inside it: 16px centered, shrinking to 12px when there's a value or focus. Focus turns the edge blue #0061ef.",
+      "summary": "Fields are 56px with 12px corners and a 2px #e2ded9 edge (#2a2d55 on #050726 in dark), the label inside: 16px centered, shrinking to 12px when there's a value or focus. Hover darkens the edge to #63605d (#9da5b8 in dark) and focus turns it blue #0061ef. The sign-in page uses the same field.",
       "groups": {
         "textbox": {
           "variants": {
@@ -514,7 +570,13 @@
                 "value": "default",
                 "from": "ai"
               },
-              "note": "Email address* on the sign-in page."
+              "note": "Email address in the app, and on the sign-in page."
+            },
+            "v-u3z6vr": {
+              "note": "The field in dark: #050726 inside a 2px #2a2d55 edge."
+            },
+            "v-brufkv": {
+              "note": "First name in dark with the 2px #0061ef edge."
             },
             "v-0fksyy": {
               "name": {
@@ -529,17 +591,14 @@
                 "from": "ai"
               },
               "note": "The footer's Email address: 58px, 8px corners, a 1px #d2d5de edge."
-            },
-            "v-77k1ac": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
-            },
-            "v-9wkn7e": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
             }
           },
           "sizes": {
             "s-s77f3h": {
               "note": "56px, 16px sides, 16px text."
+            },
+            "s-d9qzrh": {
+              "note": "56px, in dark."
             }
           }
         }
@@ -569,11 +628,14 @@
             "v-w35oyk": {
               "hide": "a content tile's title, marked up as a label"
             },
-            "v-85ns87": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            "v-vrnkj8": {
+              "note": "The app's resting label: 16px #44423f."
             },
-            "v-k8guj1": {
-              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            "v-4xv8eg": {
+              "note": "The resting label in dark: #d2d5de."
+            },
+            "v-8hffwl": {
+              "note": "Floated in dark: 12px #9da5b8."
             }
           }
         }
@@ -600,7 +662,7 @@
         }
       },
       "missing": [
-        "The app's checkbox (2px edge, primary when checked) is only in the harness."
+        "The app's checkbox (2px edge, primary when checked) isn't in this census."
       ]
     },
     "card": {
@@ -648,6 +710,15 @@
             },
             "v-tbzir3": {
               "note": "A dark promo panel on the sleep page."
+            },
+            "v-1imop4": {
+              "hide": "a select's open list in the app, see popover"
+            },
+            "v-emytb4": {
+              "hide": "a select's open list in the app, dark, see popover"
+            },
+            "v-3rbjct": {
+              "hide": "the app's Turn on reminders? dialog, see dialog"
             },
             "v-6buw13": {
               "hide": "a full-width page section"
@@ -742,6 +813,7 @@
     },
     "popover": {
       "status": "reviewed",
+      "summary": "The app's popups (a select's open list) are white inside a 2px #e2ded9 edge with 12px corners and 0 0 12px at 20%; in dark #050726 inside a 2px #2a2d55 edge with 0 4px 8px #9da5b8 at 20%.",
       "groups": {
         "popover": {
           "variants": {
@@ -758,6 +830,7 @@
     },
     "dialog": {
       "status": "reviewed",
+      "summary": "The app's dialogs have 24px corners; in dark they are #101340 (Turn on reminders?).",
       "groups": {
         "alertdialog": {
           "variants": {
@@ -781,6 +854,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: public www.headspace.com pages and the sign-in page, light only. Partial: the app's own parts come from a harness page over the shipped app stylesheet, and in this census that page rendered without the stylesheet, so its looks are left out; the foundations and the app facts quoted come from the pack's notes on that stylesheet. The app's dark theme isn't in this census. mLarge is the stylesheet's size name; names marked ai are ours."
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: public www.headspace.com pages and the sign-in page in light, and a harness page over the shipped app stylesheet in light and dark. Partial: the app's own parts come from that harness, not the signed-in app, and the app's checkbox isn't in it. Names without a from are the stylesheet's own; names marked ai are ours."
   }
 }

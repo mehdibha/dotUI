@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "carbon",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Two themes from @carbon/themes: White for light and G100 for dark. White pages are #fff with layer-01 (#f4f4f4) for fields, menus, tiles and modals, #161616 ink, #525252 secondary and #6f6f6f helper text. G100 is #161616 with #262626 layers, #f4f4f4 ink and #c6c6c6 secondary. IBM blue #0f62fe is the primary button, the links and the focus outline; in G100 links turn #78a9ff and focus turns white. Fields draw a 1px #8d8d8d line under them (#6f6f6f in G100). Secondary buttons are #393939, errors #da1e28 (#fa4d56 in G100).",

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "bluesky",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "ALF's light theme is white with black text, slate greys for secondary text (#405168 for handles, #667b99 for post actions) and #dce2ea for every hairline. Bluesky blue #006aff is the one accent: Follow, links and mentions. Dark mode defaults to dim, a navy theme: #151d28 pages, #1c2736 raised surfaces, #2c3a4e hairlines, #abb8c9 secondary text, links in #4d97ff and the primary at #0f73ff.",

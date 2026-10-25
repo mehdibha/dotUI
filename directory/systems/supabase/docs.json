@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "supabase",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Neutral greys with one green. Light pages are #fdfdfd with near-black #030303 for strong text, #464646 for body copy and #696969 for quiet text; edges run from #e8e8e8 to #d8d8d8. The brand green #0e7e4e fills the primary button and rings the radios. Dark mode is a faintly green grey: #131413 pages, #edefee and #bcbdbc text, #232423 to #303130 edges, and the primary drops to a deep #006338 with green text links in #4acd8b.",
