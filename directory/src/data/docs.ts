@@ -2,12 +2,14 @@ import { z } from "zod"
 
 import { provenanceSchema } from "./schema"
 
-/* systems/<slug>/docs.json: the written layer of a system's docs, one entry
-   per block (a foundation id or a component key). An AI pass over the
-   capture's full-page shots and copies writes it, a person checks it;
-   looks.json and spec.json stay machine output. Entries here name, explain
-   or leave out spec.json's variants and sizes, keyed by grid group, then by
-   variant or size key. */
+/* systems/<slug>/docs.json: the written layer of a system's docs. An AI pass
+   over the capture's full-page shots and copies writes it, a person checks
+   it; looks.json, spec.json and blocks.json stay machine output.
+   - sections: one per foundation id or component key. Entries name, explain
+     or leave out spec.json's variants and sizes, keyed by grid group, then
+     by variant or size key.
+   - blocks and pages: the Blocks tab, keyed by blocks.json's block names and
+     page keys. */
 
 const entry = z.object({
   /** Its name, where the product gives none or a wrong one. "ai": named by
@@ -25,7 +27,7 @@ export const docsFileSchema = z.object({
   version: z.literal(1),
   slug: z.string(),
   provenance: provenanceSchema,
-  blocks: z.record(
+  sections: z.record(
     z.string(),
     z.object({
       status: z.enum(["reviewed", "checked"]),
@@ -43,12 +45,35 @@ export const docsFileSchema = z.object({
         .optional(),
       /** How the product uses it, one short sentence each. */
       usage: z.array(z.string()).optional(),
-      /** What the block still lacks: a pass for the next capture. */
+      /** What the section still lacks: a pass for the next capture. */
       missing: z.array(z.string()).optional(),
     }),
   ),
+  /** What each page is, and how it is laid out. */
+  pages: z
+    .record(
+      z.string(),
+      z.object({
+        title: z.string(),
+        summary: z.string(),
+        /** Measured off its regions and block boxes, one fact each. */
+        layout: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
+  blocks: z
+    .record(
+      z.string(),
+      z.object({
+        title: z.string(),
+        note: z.string().optional(),
+        /** The components it is built from, as component keys. */
+        uses: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
 })
 
 export type DocsFile = z.infer<typeof docsFileSchema>
-export type DocsBlock = DocsFile["blocks"][string]
+export type DocsSection = DocsFile["sections"][string]
 export type DocsEntry = z.infer<typeof entry>

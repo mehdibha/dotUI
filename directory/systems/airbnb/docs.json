@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "airbnb",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Almost no color in the interface: #222222 ink on white, #6c6c6c for secondary text, #dddddd borders, #f7f7f7 and #f2f2f2 fills. The brand's pink-to-magenta gradient (#e61e4d to #d70466) is kept for the main action and the search button; photos carry the rest.",

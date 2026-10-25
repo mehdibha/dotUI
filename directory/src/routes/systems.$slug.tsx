@@ -10,6 +10,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { getTabs, TABS } from "~/components/system/registry"
 import { SystemDesktopToc } from "~/components/system/toc"
 import { dataIndex } from "~/data"
+import type { BlocksFile } from "~/data/blocks"
 import type { DocsFile } from "~/data/docs"
 import type { LooksFile } from "~/data/looks"
 import type { SpecFile } from "~/data/spec"
@@ -24,6 +25,10 @@ const specFiles = import.meta.glob<SpecFile>("../../systems/*/spec.json", {
 const docsFiles = import.meta.glob<DocsFile>("../../systems/*/docs.json", {
   import: "default",
 })
+const blocksFiles = import.meta.glob<BlocksFile>(
+  "../../systems/*/blocks.json",
+  { import: "default" },
+)
 
 /* A system's page: its header and tabs. The first tab is /systems/<slug>,
    the others /systems/<slug>/<tab>, so each one prerenders. */
@@ -35,13 +40,14 @@ export const Route = createFileRoute("/systems/$slug")({
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
     const captured = dataIndex.looks.find((l) => l.slug === params.slug)
     const file = `../../systems/${params.slug}`
-    const [looks, spec, docs] = await Promise.all([
+    const [looks, spec, docs, blocks] = await Promise.all([
       looksFiles[`${file}/looks.json`]?.(),
       specFiles[`${file}/spec.json`]?.(),
       docsFiles[`${file}/docs.json`]?.(),
+      blocksFiles[`${file}/blocks.json`]?.(),
     ])
     if (!system && !looks) throw notFound()
-    return { catalogEntry, system, captured, looks, spec, docs }
+    return { catalogEntry, system, captured, looks, spec, docs, blocks }
   },
   component: SystemPage,
 })

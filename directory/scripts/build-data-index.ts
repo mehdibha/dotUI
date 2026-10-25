@@ -5,7 +5,10 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { PRESET_CATALOG } from "../../www/src/modules/presets/__generated__/catalog"
+import { blocksFileSchema } from "../src/data/blocks"
+import type { BlocksFile } from "../src/data/blocks"
 import { docsFileSchema } from "../src/data/docs"
+import type { DocsFile } from "../src/data/docs"
 import { CORE_COMPONENTS, looksFileSchema, MODES } from "../src/data/looks"
 import {
   catalogSchema,
@@ -14,6 +17,7 @@ import {
   componentsFileSchema,
   systemSchema,
 } from "../src/data/schema"
+import { pageLabel } from "../src/data/schema"
 import type { CapturedSystem, DataIndex, SystemEntry } from "../src/data/schema"
 import { specFileSchema } from "../src/data/spec"
 import type { SpecFile } from "../src/data/spec"
@@ -107,9 +111,28 @@ for (const dir of systemDirs) {
       errors.push(`${rel}/spec.json: slug must match its directory name`)
     else spec = specResult.data
   }
-  // Its written docs, over the looks and the spec: every key they name must
-  // still be in the spec, so a re-capture that moves one fails here.
+  // Its blocks: composed pieces frozen whole, and their pages' regions.
+  const blocksPath = path.join(systemsDir, dir, "blocks.json")
+  let blocks: BlocksFile | undefined
+  if (fs.existsSync(blocksPath)) {
+    const blocksResult = blocksFileSchema.safeParse(readJson(blocksPath))
+    if (!blocksResult.success)
+      errors.push(`${rel}/blocks.json: ${blocksResult.error.message}`)
+    else if (blocksResult.data.slug !== dir)
+      errors.push(`${rel}/blocks.json: slug must match its directory name`)
+    else {
+      blocks = blocksResult.data
+      for (const block of blocks.blocks)
+        if (!blocks.pages.some((page) => page.key === block.page))
+          errors.push(
+            `${rel}/blocks.json: block ${block.name} is on page ${block.page}, which has no entry in pages`,
+          )
+    }
+  }
+  // Its written docs, over the looks, the spec and the blocks: every key they
+  // name must still be there, so a re-capture that moves one fails here.
   const docsPath = path.join(systemsDir, dir, "docs.json")
+  let docs: DocsFile | undefined
   if (fs.existsSync(docsPath)) {
     const docsResult = docsFileSchema.safeParse(readJson(docsPath))
     if (!docsResult.success)
@@ -117,8 +140,9 @@ for (const dir of systemDirs) {
     else if (docsResult.data.slug !== dir)
       errors.push(`${rel}/docs.json: slug must match its directory name`)
     else {
-      for (const [key, block] of Object.entries(docsResult.data.blocks)) {
-        for (const [group, entries] of Object.entries(block.groups ?? {})) {
+      docs = docsResult.data
+      for (const [key, section] of Object.entries(docs.sections)) {
+        for (const [group, entries] of Object.entries(section.groups ?? {})) {
           const grid = spec?.components[key]?.grids.find(
             (g) => g.group === group,
           )
@@ -130,8 +154,19 @@ for (const dir of systemDirs) {
                 )
         }
       }
+      for (const name of Object.keys(docs.blocks ?? {}))
+        if (!blocks?.blocks.some((block) => block.name === name))
+          errors.push(`${rel}/docs.json: block ${name} is not in blocks.json`)
+      for (const key of Object.keys(docs.pages ?? {}))
+        if (!blocks?.pages.some((page) => page.key === key))
+          errors.push(`${rel}/docs.json: page ${key} is not in blocks.json`)
     }
   }
+  const captured = looks.find((entry) => entry.slug === dir)
+  if (captured && blocks)
+    captured.blockPages = blocks.pages.map(
+      (page) => docs?.pages?.[page.key]?.title ?? pageLabel(page.key),
+    )
   if (!fs.existsSync(path.join(systemsDir, dir, "system.json"))) continue
   const systemResult = systemSchema.safeParse(
     readJson(path.join(systemsDir, dir, "system.json")),

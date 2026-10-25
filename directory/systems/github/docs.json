@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "github",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Cool greys on white, nearly neutral: #1f2328 ink, #59636e for secondary text, #d1d9e0 borders and #f6f8fa for bands and default buttons. Blue (#0969da) is links, focus and selection; green (#1f883d) is kept for the primary action and open states; purple marks merged. Dark mode is its own palette: #0d1117 page, #f0f6fc ink, #3d444d borders, a lighter blue (#4493f8) for links.",

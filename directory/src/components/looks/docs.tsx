@@ -7,20 +7,20 @@ import { CORE_COMPONENTS } from "~/data/looks"
 import { cn } from "~/lib/utils"
 
 import type { LooksData } from "."
-import { ComponentDoc, DocStatus, WrittenBlock } from "./component-doc"
+import { ComponentDoc, DocStatus, WrittenSection } from "./component-doc"
 
-/* A system's docs, one block per foundation and per component: written
+/* A system's docs, one section per foundation and per component: written
    where docs.json covers it, otherwise a draft of what the capture read,
    or missing when it read nothing. */
 
-interface DocBlock {
+interface DocSection {
   id: string
   name: string
   /** What the capture read for it, empty when it read nothing. */
   read: string
   /** Its section under Computed. */
   anchor?: string
-  /** Its block further down this tab, once a spec grid describes it. */
+  /** Its section further down this tab, once a spec grid describes it. */
   inPage?: boolean
 }
 
@@ -35,7 +35,7 @@ export function DocsFoundations({ looks, docs }: LooksData) {
     ),
     0,
   )
-  const blocks: DocBlock[] = [
+  const sections: DocSection[] = [
     {
       id: "color",
       name: "Color",
@@ -73,21 +73,21 @@ export function DocsFoundations({ looks, docs }: LooksData) {
       anchor: "elevation",
     },
     { id: "icons", name: "Icons", read: "" },
-  ].map((block) => ({ ...block, inPage: !!docs?.blocks[block.id] }))
+  ].map((section) => ({ ...section, inPage: !!docs?.sections[section.id] }))
   return (
     <Section
       title="Foundations"
-      intro="The docs are written block by block, from what the capture read and a review of full-page shots. A draft has captured data to write from; a missing block needs another capture pass."
+      intro="The docs are written one section at a time, from what the capture read and a review of full-page shots. A draft has captured data to write from; a missing section needs another capture pass."
     >
-      <Blocks slug={looks.slug} blocks={blocks} docs={docs} />
-      {blocks
-        .filter((block) => block.inPage)
-        .map((block) => (
-          <WrittenBlock
-            key={block.id}
-            id={block.id}
-            title={block.name}
-            doc={docs!.blocks[block.id]}
+      <SectionList slug={looks.slug} sections={sections} docs={docs} />
+      {sections
+        .filter((section) => section.inPage)
+        .map((section) => (
+          <WrittenSection
+            key={section.id}
+            id={section.id}
+            title={section.name}
+            doc={docs!.sections[section.id]}
           />
         ))}
     </Section>
@@ -101,7 +101,7 @@ export function DocsComponents({ looks, spec, docs }: LooksData) {
       (key) => key !== "other" && !CORE_COMPONENTS.includes(key),
     ),
   ]
-  const blocks = keys.map((key) => {
+  const sections = keys.map((key) => {
     const found = looks.components[key]?.looks.length ?? 0
     return {
       id: key,
@@ -114,79 +114,81 @@ export function DocsComponents({ looks, spec, docs }: LooksData) {
   return (
     <Section
       title="Components"
-      intro="One block per component: its variants and sizes by name, its states, and how the product uses it."
+      intro="One section per component: its variants and sizes by name, its states, and how the product uses it."
     >
-      <Blocks slug={looks.slug} blocks={blocks} docs={docs} />
-      {blocks
-        .filter((block) => block.inPage)
-        .map((block) => (
+      <SectionList slug={looks.slug} sections={sections} docs={docs} />
+      {sections
+        .filter((section) => section.inPage)
+        .map((section) => (
           <ComponentDoc
-            key={block.id}
+            key={section.id}
             slug={looks.slug}
-            id={block.id}
-            spec={spec!.components[block.id]!}
-            doc={docs?.blocks[block.id]}
+            id={section.id}
+            spec={spec!.components[section.id]!}
+            doc={docs?.sections[section.id]}
           />
         ))}
     </Section>
   )
 }
 
-function Blocks({
+function SectionList({
   slug,
-  blocks,
+  sections,
   docs,
 }: {
   slug: string
-  blocks: DocBlock[]
+  sections: DocSection[]
   docs?: DocsFile
 }) {
-  const drafts = blocks.filter((block) => block.read).length
-  const written = blocks.filter((block) => docs?.blocks[block.id]).length
+  const drafts = sections.filter((section) => section.read).length
+  const written = sections.filter(
+    (section) => docs?.sections[section.id],
+  ).length
   return (
     <div className="flex flex-col gap-3">
       <p className="text-xs text-fg-muted">
-        {drafts} of {blocks.length} with captured data · {written} written
+        {drafts} of {sections.length} with captured data · {written} written
       </p>
       <ul className="grid gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
-        {blocks.map((block) => (
+        {sections.map((section) => (
           <li
-            key={block.id}
+            key={section.id}
             className="flex items-center justify-between gap-3 bg-bg px-4 py-3"
           >
             <span className="flex min-w-0 flex-col">
-              {block.inPage ? (
+              {section.inPage ? (
                 <a
-                  href={`#docs-${block.id}`}
+                  href={`#docs-${section.id}`}
                   className="text-sm font-medium underline-offset-2 hover:underline"
                 >
-                  {block.name}
+                  {section.name}
                 </a>
               ) : (
                 <span
                   className={cn(
                     "text-sm font-medium",
-                    !block.read && "text-fg-muted",
+                    !section.read && "text-fg-muted",
                   )}
                 >
-                  {block.name}
+                  {section.name}
                 </span>
               )}
-              {block.read && block.anchor ? (
+              {section.read && section.anchor ? (
                 <Link
                   to="/systems/$slug/$tab"
                   params={{ slug, tab: "computed" }}
-                  hash={block.anchor}
+                  hash={section.anchor}
                   className="text-xs text-fg-muted underline-offset-2 hover:text-fg hover:underline"
                 >
-                  {block.read} read
+                  {section.read} read
                 </Link>
               ) : (
                 <span className="text-xs text-fg-muted">nothing read yet</span>
               )}
             </span>
-            {block.read ? (
-              <DocStatus doc={docs?.blocks[block.id]} />
+            {section.read ? (
+              <DocStatus doc={docs?.sections[section.id]} />
             ) : (
               <Badge size="sm" appearance="outline">
                 Missing
