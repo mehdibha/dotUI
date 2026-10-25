@@ -73,6 +73,7 @@ import {
   lookKeys,
   type State,
   trim,
+  unwrap,
   type Values,
 } from "../src/census"
 import {
@@ -183,13 +184,14 @@ const INTERACTIVE = new Set([
 ])
 
 /** One element per look of a pass, most-used looks first: the ones whose
- *  states and custom properties are read. */
+ *  states and custom properties are read. Flagged apart, as `cluster`
+ *  groups them: a checked box drawn like an unchecked one is its own. */
 function representatives(elements: CensusElement[], only?: Set<string>) {
   const looks = new Map<string, CensusElement[]>()
   for (const element of elements) {
     if (only && !only.has(element.role)) continue
     const keys = lookKeys(element.role)
-    const sig = `${groupOf(element)} ${JSON.stringify(keys.map((key) => element.values[key] ?? ""))}`
+    const sig = `${groupOf(element)} ${element.is ?? ""} ${JSON.stringify(keys.map((key) => element.values[key] ?? ""))}`
     looks.set(sig, [...(looks.get(sig) ?? []), element])
   }
   return [...looks.values()]
@@ -401,19 +403,18 @@ async function pass(
   }
   const { elements } = walked
   if (!rest && !elements.length) return null
-  // Before reading states, which hover, scroll and can close what the pass
-  // opened: the shot shows the page the boxes were read on. A later pass
-  // reads only the viewport (census `fresh`): the shot is the viewport too.
-  const shot = SHOTS
-    ? await shoot(
-        page,
-        `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
-        !fresh,
-        elements,
-      )
-    : undefined
-  // The most used looks with a box small enough to copy.
-  const copied = representatives(elements)
+  // Read as `cluster` will: a wrapper it drops gives no look its copy,
+  // states or custom properties.
+  const ids = new Set(
+    unwrap([{ key, pass: name, mode, elements }])[0]?.elements.map(
+      (element) => element.id,
+    ),
+  )
+  const kept = elements.filter((element) => ids.has(element.id))
+  // The most used looks with a box small enough to copy, before the shot:
+  // a page that renders only what the viewport shows (Notion) drops what
+  // the grown viewport scrolled out once it shrinks back.
+  const copied = representatives(kept)
     .filter(
       ({ role, box: [, , w, h] }) =>
         !BOXLESS.has(role) && w * h > 0 && w * h <= COPY_AREA,
@@ -428,16 +429,27 @@ async function pass(
     ).map(([id, rest]) => [id, { rest }]),
   )
   COPIES.set(copiesOf(key, name, mode), copies)
+  // Before reading states, which hover, scroll and can close what the pass
+  // opened: the shot shows the page the boxes were read on. A later pass
+  // reads only the viewport (census `fresh`): the shot is the viewport too.
+  const shot = SHOTS
+    ? await shoot(
+        page,
+        `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
+        !fresh,
+        elements,
+      )
+    : undefined
   await readStates(
     page,
-    representatives(elements, INTERACTIVE).slice(0, Number(args.states)),
+    representatives(kept, INTERACTIVE).slice(0, Number(args.states)),
     copies,
     !open,
   )
   const { vars, tokens } = (await page.evaluate(
     censusSnippet({
       kind: "vars",
-      ids: representatives(elements)
+      ids: representatives(kept)
         .slice(0, 400)
         .map((element) => element.id),
     }),
