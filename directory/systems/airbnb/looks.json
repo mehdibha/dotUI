@@ -15,7 +15,7 @@
         "how": "headless"
       },
       {
-        "key": "https://www.airbnb.com/s/Paris/homes",
+        "key": "https://www.airbnb.com/host/homes",
         "modes": [
           "light"
         ],
@@ -31,7 +31,7 @@
         "how": "headless"
       },
       {
-        "key": "https://www.airbnb.com/host/homes",
+        "key": "https://www.airbnb.com/s/Paris/homes",
         "modes": [
           "light"
         ],
@@ -53,7 +53,7 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 615,
+            "count": 611,
             "uses": [
               "button backgroundColor",
               "badge backgroundColor",
@@ -67,7 +67,7 @@
             "l": 0.979,
             "c": 0,
             "h": 0,
-            "count": 211,
+            "count": 215,
             "uses": [
               "link backgroundColor",
               "badge backgroundColor",
@@ -91,13 +91,13 @@
             "l": 0.961,
             "c": 0,
             "h": 0,
-            "count": 50,
+            "count": 46,
             "uses": [
               "button backgroundColor",
               "box backgroundColor",
               "toggle edge",
-              "avatar backgroundColor",
-              "contentinfo edge"
+              "badge backgroundColor",
+              "link backgroundColor"
             ]
           },
           {
@@ -115,16 +115,25 @@
             ]
           },
           {
+            "color": "rgb(231, 231, 231)",
+            "l": 0.928,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "panel edge"
+            ]
+          },
+          {
             "color": "rgb(229, 227, 223)",
             "l": 0.916,
             "c": 0.006,
             "h": 85,
-            "count": 21,
+            "count": 19,
             "uses": [
               "box backgroundColor",
               "avatar backgroundColor",
               "card backgroundColor",
-              "panel edge",
               "panel backgroundColor"
             ]
           },
@@ -232,16 +241,6 @@
             "uses": [
               "panel backgroundColor"
             ]
-          },
-          {
-            "color": "rgb(55, 55, 55)",
-            "l": 0.337,
-            "c": 0,
-            "h": 0,
-            "count": 2,
-            "uses": [
-              "text@button color"
-            ]
           }
         ],
         "accents": [
@@ -297,7 +296,7 @@
                 "h": 16,
                 "count": 5,
                 "uses": [
-                  "avatar backgroundColor",
+                  "badge backgroundColor",
                   "button backgroundColor"
                 ]
               },
@@ -445,14 +444,14 @@
     "tokens": [
       {
         "name": "--typography-weight-medium500",
-        "count": 311,
+        "count": 295,
         "feeds": [
           "button fontWeight",
           "text fontWeight",
           "badge fontWeight",
           "link fontWeight",
-          "text@link fontWeight",
           "text@button fontWeight",
+          "text@link fontWeight",
           "text@toggle fontWeight",
           "heading.h3@contentinfo fontWeight"
         ],
@@ -460,45 +459,45 @@
       },
       {
         "name": "--typography-body-text_14_18-font-size",
-        "count": 276,
+        "count": 285,
         "feeds": [
           "link fontSize",
           "badge fontSize",
           "toggle fontSize",
           "text@toggle fontSize",
+          "text fontSize",
           "text@contentinfo fontSize",
           "text@button fontSize",
-          "heading.h3@contentinfo fontSize",
-          "button fontSize"
+          "heading.h3@contentinfo fontSize"
         ],
         "light": "0.875rem"
       },
       {
         "name": "--typography-body-text_14_18-letter-spacing",
-        "count": 267,
+        "count": 276,
         "feeds": [
           "link letterSpacing",
           "badge letterSpacing",
           "toggle letterSpacing",
           "text@toggle letterSpacing",
+          "text letterSpacing",
           "text@contentinfo letterSpacing",
           "heading.h3@contentinfo letterSpacing",
-          "button letterSpacing",
           "tab letterSpacing"
         ],
         "light": "normal"
       },
       {
         "name": "--typography-body-text_14_18-line-height",
-        "count": 267,
+        "count": 276,
         "feeds": [
           "link lineHeight",
           "badge lineHeight",
           "toggle lineHeight",
           "text@toggle lineHeight",
+          "text lineHeight",
           "text@contentinfo lineHeight",
           "heading.h3@contentinfo lineHeight",
-          "button lineHeight",
           "tab lineHeight"
         ],
         "light": "1.125rem"
@@ -535,35 +534,22 @@
       },
       {
         "name": "--typography-font-family-cereal-font-family",
-        "count": 177,
+        "count": 183,
         "feeds": [
           "button fontFamily",
           "link fontFamily",
           "text fontFamily",
+          "heading.h2 fontFamily",
           "tab fontFamily",
           "toggle fontFamily",
-          "heading.h2 fontFamily",
           "text@dialog fontFamily",
           "card fontFamily"
         ],
         "light": "'Airbnb Cereal VF','Circular',-apple-system,'BlinkMacSystemFont','Roboto','Helvetica Neue',sans-serif"
       },
       {
-        "name": "--typography-weight-book400",
-        "count": 135,
-        "feeds": [
-          "link fontWeight",
-          "badge fontWeight",
-          "text fontWeight",
-          "button fontWeight",
-          "text@button fontWeight",
-          "card fontWeight"
-        ],
-        "light": "400"
-      },
-      {
         "name": "--label_padding-ltr",
-        "count": 120,
+        "count": 144,
         "feeds": [
           "text paddingInline",
           "text paddingTop",
@@ -574,6 +560,19 @@
           "heading.h2 paddingBottom",
           "heading.h2 paddingRight"
         ]
+      },
+      {
+        "name": "--typography-weight-book400",
+        "count": 131,
+        "feeds": [
+          "link fontWeight",
+          "badge fontWeight",
+          "text fontWeight",
+          "text@button fontWeight",
+          "button fontWeight",
+          "card fontWeight"
+        ],
+        "light": "400"
       },
       {
         "name": "--palette-grey1000",
@@ -695,30 +694,16 @@
         ]
       },
       {
-        "name": "--palette-grey400",
-        "count": 53,
+        "name": "--typography-body-text_12_16-letter-spacing",
+        "count": 50,
         "feeds": [
-          "separator edge",
-          "toggle edge",
-          "checkbox edge",
-          "box edge",
-          "card edge",
-          "panel edge",
-          "button edge",
-          "radiogroup edge"
-        ],
-        "light": "#DDDDDD"
-      },
-      {
-        "name": "--typography-body-text_16_20-letter-spacing",
-        "count": 49,
-        "feeds": [
-          "link letterSpacing",
           "text letterSpacing",
+          "checkbox letterSpacing",
+          "box letterSpacing",
+          "label@dialog letterSpacing",
           "text@button letterSpacing",
-          "text@dialog letterSpacing",
           "button letterSpacing",
-          "contentinfo letterSpacing"
+          "card letterSpacing"
         ],
         "light": "normal"
       },
@@ -735,34 +720,6 @@
         "light": "0 2px 4px rgba(0,0,0,0.18)"
       },
       {
-        "name": "--typography-body-text_16_20-font-size",
-        "count": 45,
-        "feeds": [
-          "text fontSize",
-          "link fontSize",
-          "text@button fontSize",
-          "text@dialog fontSize",
-          "button fontSize",
-          "contentinfo fontSize",
-          "text@complementary fontSize"
-        ],
-        "light": "1rem"
-      },
-      {
-        "name": "--typography-body-text_16_20-line-height",
-        "count": 45,
-        "feeds": [
-          "text lineHeight",
-          "link lineHeight",
-          "text@button lineHeight",
-          "text@dialog lineHeight",
-          "button lineHeight",
-          "contentinfo lineHeight",
-          "text@complementary lineHeight"
-        ],
-        "light": "1.25rem"
-      },
-      {
         "name": "--palette-text-secondary",
         "count": 42,
         "feeds": [
@@ -773,6 +730,21 @@
           "text@tab color"
         ],
         "light": "#6C6C6C"
+      },
+      {
+        "name": "--palette-grey400",
+        "count": 39,
+        "feeds": [
+          "toggle edge",
+          "checkbox edge",
+          "box edge",
+          "card edge",
+          "panel edge",
+          "button edge",
+          "radiogroup edge",
+          "complementary edge"
+        ],
+        "light": "#DDDDDD"
       },
       {
         "name": "--typography-body-text_12_16-font-size",
@@ -789,20 +761,6 @@
         "light": "0.75rem"
       },
       {
-        "name": "--typography-body-text_12_16-letter-spacing",
-        "count": 37,
-        "feeds": [
-          "text letterSpacing",
-          "checkbox letterSpacing",
-          "box letterSpacing",
-          "label@dialog letterSpacing",
-          "text@button letterSpacing",
-          "button letterSpacing",
-          "card letterSpacing"
-        ],
-        "light": "normal"
-      },
-      {
         "name": "--typography-body-text_12_16-line-height",
         "count": 37,
         "feeds": [
@@ -817,18 +775,8 @@
         "light": "1rem"
       },
       {
-        "name": "--field_padding-inline",
-        "count": 36,
-        "feeds": [
-          "text@button paddingInline",
-          "text@button paddingTop",
-          "text@button paddingBottom",
-          "text@button paddingRight"
-        ]
-      },
-      {
         "name": "--label_color",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text color",
           "heading.h2 color",
@@ -839,7 +787,7 @@
       },
       {
         "name": "--label_letter-spacing-custom",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text letterSpacing",
           "heading.h2 letterSpacing",
@@ -850,7 +798,7 @@
       },
       {
         "name": "--label_width",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text width",
           "heading.h2 width",
@@ -861,7 +809,7 @@
       },
       {
         "name": "--label_font-size-custom",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text fontSize",
           "heading.h2 fontSize",
@@ -872,7 +820,7 @@
       },
       {
         "name": "--label_font-weight-custom",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text fontWeight",
           "heading.h2 fontWeight",
@@ -883,13 +831,23 @@
       },
       {
         "name": "--label_line-height-custom",
-        "count": 30,
+        "count": 36,
         "feeds": [
           "text lineHeight",
           "heading.h2 lineHeight",
           "text@table lineHeight",
           "text@button lineHeight",
           "heading.h3 lineHeight"
+        ]
+      },
+      {
+        "name": "--field_padding-inline",
+        "count": 36,
+        "feeds": [
+          "text@button paddingInline",
+          "text@button paddingTop",
+          "text@button paddingBottom",
+          "text@button paddingRight"
         ]
       },
       {
@@ -929,6 +887,17 @@
           "button color",
           "link color"
         ]
+      },
+      {
+        "name": "--typography-body-text_16_20-letter-spacing",
+        "count": 28,
+        "feeds": [
+          "link letterSpacing",
+          "text@dialog letterSpacing",
+          "button letterSpacing",
+          "contentinfo letterSpacing"
+        ],
+        "light": "normal"
       },
       {
         "name": "--media-container_border-radius",
@@ -989,6 +958,19 @@
         "light": "600"
       },
       {
+        "name": "--palette-grey700",
+        "count": 25,
+        "feeds": [
+          "text color",
+          "label@dialog color",
+          "paragraph color",
+          "badge color",
+          "button color",
+          "text@button color"
+        ],
+        "light": "#6C6C6C"
+      },
+      {
         "name": "--dls-button_border-radius",
         "count": 24,
         "feeds": [
@@ -1003,6 +985,30 @@
           "button width",
           "link width"
         ]
+      },
+      {
+        "name": "--typography-body-text_16_20-font-size",
+        "count": 24,
+        "feeds": [
+          "link fontSize",
+          "text@dialog fontSize",
+          "button fontSize",
+          "contentinfo fontSize",
+          "text@complementary fontSize"
+        ],
+        "light": "1rem"
+      },
+      {
+        "name": "--typography-body-text_16_20-line-height",
+        "count": 24,
+        "feeds": [
+          "link lineHeight",
+          "text@dialog lineHeight",
+          "button lineHeight",
+          "contentinfo lineHeight",
+          "text@complementary lineHeight"
+        ],
+        "light": "1.25rem"
       },
       {
         "name": "--card-container_border",
@@ -1056,17 +1062,6 @@
           "button paddingBottom",
           "link paddingBottom"
         ]
-      },
-      {
-        "name": "--palette-shadow50",
-        "count": 20,
-        "feeds": [
-          "avatar edge",
-          "avatar boxShadow",
-          "contentinfo boxShadow",
-          "contentinfo edge"
-        ],
-        "light": "color-mix(in srgb,#000000 4%,transparent)"
       }
     ]
   },
@@ -1074,7 +1069,7 @@
     "families": [
       {
         "family": "Airbnb Cereal VF",
-        "count": 1611
+        "count": 1618
       }
     ],
     "styles": [
@@ -1098,14 +1093,14 @@
         "fontWeight": "400",
         "lineHeight": "20.02px",
         "fontFamily": "Airbnb Cereal VF",
-        "count": 274,
+        "count": 276,
         "groups": [
           "box",
           "card",
           "link",
           "button",
           "panel",
-          "dialog"
+          "badge"
         ]
       },
       {
@@ -1279,6 +1274,20 @@
         ]
       },
       {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Airbnb Cereal VF",
+        "count": 15,
+        "groups": [
+          "button",
+          "panel",
+          "card",
+          "badge",
+          "link"
+        ]
+      },
+      {
         "fontSize": "18px",
         "fontWeight": "500",
         "lineHeight": "24px",
@@ -1321,18 +1330,6 @@
         "groups": [
           "box",
           "text"
-        ]
-      },
-      {
-        "fontSize": "16px",
-        "fontWeight": "400",
-        "lineHeight": "normal",
-        "fontFamily": "Airbnb Cereal VF",
-        "count": 10,
-        "groups": [
-          "button",
-          "link",
-          "panel"
         ]
       },
       {
@@ -1463,11 +1460,11 @@
       "badge",
       "button",
       "box",
-      "avatar",
       "link",
       "toggle",
       "card",
       "checkbox",
+      "avatar",
       "textbox",
       "separator",
       "popover",
@@ -1483,7 +1480,7 @@
       },
       {
         "px": 4,
-        "count": 41
+        "count": 54
       },
       {
         "px": 5.5,
@@ -1495,7 +1492,7 @@
       },
       {
         "px": 8,
-        "count": 163
+        "count": 167
       },
       {
         "px": 9,
@@ -1539,22 +1536,14 @@
       },
       {
         "px": 48,
-        "count": 24
+        "count": 20
       }
     ],
     "heights": {
       "avatar": [
         {
           "px": 28,
-          "count": 10
-        },
-        {
-          "px": 32,
-          "count": 3
-        },
-        {
-          "px": 48,
-          "count": 1
+          "count": 7
         },
         {
           "px": 88,
@@ -1572,18 +1561,18 @@
         },
         {
           "px": 28,
-          "count": 12
+          "count": 15
         },
         {
           "px": 10,
           "count": 8
         },
         {
-          "px": 18,
-          "count": 2
+          "px": 32,
+          "count": 3
         },
         {
-          "px": 20,
+          "px": 18,
           "count": 2
         }
       ],
@@ -1829,14 +1818,14 @@
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0.16) 0px 2px 8px 0px",
+        "value": "rgba(0, 0, 0, 0.18) 0px 2px 4px 0px",
         "count": 1,
         "groups": [
           "img"
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0.18) 0px 2px 4px 0px",
+        "value": "rgba(0, 0, 0, 0.16) 0px 2px 8px 0px",
         "count": 1,
         "groups": [
           "img"
@@ -1870,13 +1859,13 @@
       "groups": [
         "avatar"
       ],
-      "found": 5,
+      "found": 2,
       "looks": [
         {
           "id": "avatar.1",
           "count": 7,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -1907,88 +1896,6 @@
               }
             }
           }
-        },
-        {
-          "id": "avatar.2",
-          "count": 3,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(242, 242, 242)",
-                  "color": "rgb(34, 34, 34)",
-                  "borderRadius": "14px",
-                  "height": "28px",
-                  "paddingInline": "0px",
-                  "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "28px",
-                  "lineHeight": "20.02px",
-                  "iconSize": "12x12",
-                  "iconStroke": "1.5px",
-                  "transition": "0.25s cubic-bezier(0.2, 0, 0, 1)",
-                  "cursor": "pointer",
-                  "display": "flex"
-                },
-                "vars": {
-                  "backgroundColor": "--palette-grey200"
-                },
-                "source": "census",
-                "copy": "2026-10-25/census/crops/avatar.2-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "avatar.3",
-          "count": 3,
-          "pages": [
-            0,
-            1,
-            2
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(218, 18, 73)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "24px",
-                  "height": "32px",
-                  "paddingInline": "10px",
-                  "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "32px",
-                  "paddingTop": "10px",
-                  "paddingBottom": "10px",
-                  "paddingRight": "10px",
-                  "lineHeight": "20.02px",
-                  "iconSize": "12x12",
-                  "iconStroke": "2px",
-                  "cursor": "pointer",
-                  "display": "flex",
-                  "zIndex": "2"
-                },
-                "vars": {
-                  "color": "--palette-always-white",
-                  "backgroundColor": "--palette-rausch700"
-                },
-                "source": "census",
-                "copy": "2026-10-25/census/crops/avatar.3-rest-light.json"
-              }
-            }
-          }
         }
       ]
     },
@@ -1996,7 +1903,7 @@
       "groups": [
         "badge"
       ],
-      "found": 10,
+      "found": 14,
       "looks": [
         {
           "id": "badge.1",
@@ -2131,7 +2038,7 @@
           "id": "badge.4",
           "count": 11,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2173,48 +2080,6 @@
           "id": "badge.5",
           "count": 8,
           "pages": [
-            1
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(34, 34, 34)",
-                  "borderRadius": "28px",
-                  "height": "10px",
-                  "paddingInline": "8px",
-                  "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "11px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgba(0, 0, 0, 0.18) 0px 2px 4px 0px, rgba(0, 0, 0, 0.18) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-                  "edge": "1px rgb(211, 209, 205)",
-                  "width": "16px",
-                  "paddingRight": "8px",
-                  "lineHeight": "normal",
-                  "transform": "matrix(0.4, 0, 0, 0.357143, 0, 0)",
-                  "transition": "0.2s cubic-bezier(0.2, 0, 0, 1)",
-                  "cursor": "pointer",
-                  "position": "relative",
-                  "display": "block"
-                },
-                "vars": {
-                  "backgroundColor": "--palette-bg-primary",
-                  "boxShadow": "--elevation-tertiary-box-shadow",
-                  "edge": "--elevation-tertiary-box-shadow",
-                  "color": "--palette-text-primary"
-                },
-                "source": "census",
-                "copy": "2026-10-25/census/crops/badge.5-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "badge.6",
-          "count": 8,
-          "pages": [
             2
           ],
           "states": {
@@ -2248,16 +2113,16 @@
                   "lineHeight": "--typography-body-text_14_18-line-height"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/badge.6-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.5-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "badge.7",
-          "count": 2,
+          "id": "badge.6",
+          "count": 8,
           "pages": [
-            0
+            3
           ],
           "states": {
             "rest": {
@@ -2265,25 +2130,67 @@
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(34, 34, 34)",
-                  "borderRadius": "0px",
-                  "height": "18px",
-                  "paddingInline": "12px",
+                  "borderRadius": "28px",
+                  "height": "10px",
+                  "paddingInline": "8px",
+                  "fontFamily": "\"Airbnb Cereal VF\"",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.18) 0px 2px 4px 0px, rgba(0, 0, 0, 0.18) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                  "edge": "1px rgb(211, 209, 205)",
+                  "width": "16px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(0.4, 0, 0, 0.357143, 0, 0)",
+                  "transition": "0.2s cubic-bezier(0.2, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "vars": {
+                  "backgroundColor": "--palette-bg-primary",
+                  "boxShadow": "--elevation-tertiary-box-shadow",
+                  "edge": "--elevation-tertiary-box-shadow",
+                  "color": "--palette-text-primary"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.7",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "color": "rgb(34, 34, 34)",
+                  "borderRadius": "14px",
+                  "height": "28px",
+                  "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
                   "fontSize": "14px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "37.8px",
-                  "paddingRight": "12px",
-                  "lineHeight": "18px",
-                  "display": "block"
+                  "width": "28px",
+                  "lineHeight": "20.02px",
+                  "iconSize": "12x12",
+                  "iconStroke": "1.5px",
+                  "transition": "0.25s cubic-bezier(0.2, 0, 0, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
                 },
                 "vars": {
-                  "letterSpacing": "--typography-body-text_14_18-letter-spacing",
-                  "fontSize": "--typography-body-text_14_18-font-size",
-                  "lineHeight": "--typography-body-text_14_18-line-height",
-                  "backgroundColor": "--palette-bg-primary"
+                  "backgroundColor": "--palette-grey200"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/badge.7-rest-light.json"
@@ -2292,10 +2199,53 @@
           }
         },
         {
-          "id": "badge.10",
+          "id": "badge.8",
+          "count": 2,
+          "pages": [
+            0,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(218, 18, 73)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "24px",
+                  "height": "32px",
+                  "paddingInline": "10px",
+                  "fontFamily": "\"Airbnb Cereal VF\"",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20.02px",
+                  "iconSize": "12x12",
+                  "iconStroke": "2px",
+                  "cursor": "pointer",
+                  "display": "flex",
+                  "zIndex": "2"
+                },
+                "vars": {
+                  "color": "--palette-always-white",
+                  "backgroundColor": "--palette-rausch700"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.8-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.14",
           "count": 1,
           "pages": [
-            1
+            3
           ],
           "part": "badge",
           "states": {
@@ -2326,7 +2276,7 @@
                   "fontWeight": "--typography-weight-medium500"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/badge.10-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.14-rest-light.json"
               }
             }
           }
@@ -2353,7 +2303,7 @@
           "id": "box.1",
           "count": 100,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2597,7 +2547,7 @@
           "id": "box.2",
           "count": 10,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2664,8 +2614,8 @@
           "count": 10,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -2701,7 +2651,7 @@
           "id": "box.3",
           "count": 8,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2736,7 +2686,7 @@
           "id": "img.2",
           "count": 8,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2923,7 +2873,7 @@
           "id": "img.3",
           "count": 5,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -2990,7 +2940,7 @@
           "id": "box.7",
           "count": 4,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3028,7 +2978,7 @@
           "id": "icon.4",
           "count": 4,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3062,7 +3012,7 @@
           "id": "banner.1",
           "count": 3,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3107,8 +3057,8 @@
           "count": 3,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -3145,7 +3095,7 @@
           "id": "contentinfo.2",
           "count": 3,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3222,7 +3172,7 @@
           "id": "img.4",
           "count": 3,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3260,7 +3210,7 @@
           "id": "panel.5",
           "count": 3,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3295,7 +3245,7 @@
           "id": "box.8",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3332,7 +3282,7 @@
           "count": 2,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3366,7 +3316,7 @@
           "id": "icon.6",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3431,7 +3381,7 @@
           "id": "img.6",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3505,8 +3455,8 @@
           "id": "panel.7",
           "count": 2,
           "pages": [
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -3515,19 +3465,19 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(34, 34, 34)",
                   "borderRadius": "0px",
-                  "height": "56px",
-                  "paddingInline": "48px",
+                  "height": "96px",
+                  "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
+                  "fontSize": "16px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "1px rgb(229, 229, 229) bottom",
-                  "width": "1440px",
-                  "paddingTop": "1px",
-                  "paddingRight": "48px",
-                  "lineHeight": "20.02px",
-                  "display": "block"
+                  "edge": "1px rgb(231, 231, 231) bottom",
+                  "width": "1425px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "1"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/panel.7-rest-light.json"
@@ -3576,7 +3526,7 @@
           "id": "region.1",
           "count": 1,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3695,7 +3645,7 @@
           "count": 28,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3771,7 +3721,7 @@
           "count": 28,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -3807,7 +3757,7 @@
           "id": "button.3",
           "count": 20,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -3924,8 +3874,10 @@
                   "edge": "none",
                   "width": "16px",
                   "lineHeight": "20px",
+                  "textAlign": "center",
                   "iconSize": "16x16",
                   "iconStroke": "2px",
+                  "cursor": "pointer",
                   "display": "block"
                 },
                 "source": "census",
@@ -3977,8 +3929,8 @@
           "count": 7,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -4014,8 +3966,8 @@
           "count": 6,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "part": "button.secondary",
           "states": {
@@ -4193,7 +4145,7 @@
           "count": 6,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -4281,8 +4233,8 @@
           "id": "button.7",
           "count": 5,
           "pages": [
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -4451,7 +4403,7 @@
           "count": 4,
           "pages": [
             0,
-            1
+            3
           ],
           "part": "button.icon",
           "states": {
@@ -4571,8 +4523,8 @@
           "id": "icon@button.8",
           "count": 4,
           "pages": [
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -4608,8 +4560,8 @@
           "count": 3,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "part": "button.quiet",
           "states": {
@@ -4694,10 +4646,10 @@
           }
         },
         {
-          "id": "button.53",
+          "id": "button.38",
           "count": 1,
           "pages": [
-            3
+            1
           ],
           "part": "segmented",
           "states": {
@@ -4746,7 +4698,7 @@
                   "paddingBottom": "--dls-button_padding-bottom"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/button.53-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.38-rest-light.json"
               }
             },
             "hover": {
@@ -4756,7 +4708,7 @@
                   "color": "rgb(0, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/button.53-hover-light.json"
+                "copy": "2026-10-25/census/crops/button.38-hover-light.json"
               }
             },
             "pressed": {
@@ -4769,7 +4721,7 @@
                   "iconSize": "16x15"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/button.53-pressed-light.json"
+                "copy": "2026-10-25/census/crops/button.38-pressed-light.json"
               }
             },
             "focus": {
@@ -4779,7 +4731,7 @@
                   "ring": "2px rgb(34, 34, 34) +2px"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/button.53-focus-light.json"
+                "copy": "2026-10-25/census/crops/button.38-focus-light.json"
               }
             },
             "disabled": {
@@ -4789,7 +4741,7 @@
                   "cursor": "not-allowed"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/button.53-disabled-light.json",
+                "copy": "2026-10-25/census/crops/button.38-disabled-light.json",
                 "forced": true
               }
             }
@@ -4816,7 +4768,7 @@
           "count": 28,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -4857,7 +4809,7 @@
           "id": "card.2",
           "count": 4,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -4906,7 +4858,7 @@
           "id": "card.3",
           "count": 4,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -4952,8 +4904,8 @@
           "count": 3,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -5062,7 +5014,40 @@
           "count": 2,
           "pages": [
             1,
-            2
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(229, 227, 223)",
+                  "color": "rgb(34, 34, 34)",
+                  "borderRadius": "0px",
+                  "height": "592.3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Roboto",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(26, 115, 232)",
+                  "width": "623.5px",
+                  "lineHeight": "normal",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "1000002"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.8",
+          "count": 2,
+          "pages": [
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -5074,13 +5059,13 @@
                   "height": "46px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
+                  "fontSize": "16px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "rgba(0, 0, 0, 0.08) 0px 1px 2px 0px, rgba(0, 0, 0, 0.05) 0px 4px 12px 0px",
                   "edge": "1px rgb(221, 221, 221)",
-                  "width": "411.8px",
-                  "lineHeight": "20.02px",
+                  "width": "375.8px",
+                  "lineHeight": "normal",
                   "cursor": "pointer",
                   "position": "absolute",
                   "display": "block",
@@ -5089,43 +5074,6 @@
                 "vars": {
                   "backgroundColor": "--palette-bg-primary",
                   "edge": "--palette-border-tertiary"
-                },
-                "source": "census",
-                "copy": "2026-10-25/census/crops/card.7-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "card.8",
-          "count": 2,
-          "pages": [
-            1
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(34, 34, 34)",
-                  "borderRadius": "9999px",
-                  "height": "58px",
-                  "paddingInline": "0px",
-                  "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "1px rgb(250, 250, 250)",
-                  "width": "520px",
-                  "lineHeight": "20.02px",
-                  "iconSize": "16x16",
-                  "iconStroke": "1.5px",
-                  "display": "block"
-                },
-                "vars": {
-                  "boxShadow": "--elevation-elevation3-box-shadow",
-                  "edge": "--elevation-elevation3-box-shadow"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/card.8-rest-light.json"
@@ -5182,7 +5130,7 @@
           "id": "checkbox.1",
           "count": 9,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -5267,7 +5215,7 @@
           "count": 5,
           "pages": [
             0,
-            1
+            3
           ],
           "part": "dialog",
           "states": {
@@ -5371,8 +5319,8 @@
           "count": 101,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -5439,7 +5387,7 @@
           "count": 47,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -5473,8 +5421,8 @@
           "count": 39,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -5522,8 +5470,9 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "39.3px",
+                  "width": "31.8px",
                   "lineHeight": "18px",
+                  "textAlign": "center",
                   "cursor": "pointer",
                   "display": "inline"
                 },
@@ -5602,7 +5551,7 @@
           "id": "text@dialog.1",
           "count": 23,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -5796,33 +5745,34 @@
           "id": "text.8",
           "count": 13,
           "pages": [
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(34, 34, 34)",
+                  "color": "rgb(108, 108, 108)",
                   "borderRadius": "0px",
-                  "height": "20px",
+                  "height": "18px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "16px",
-                  "fontWeight": "500",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "180.3px",
-                  "lineHeight": "20px",
+                  "width": "608px",
+                  "lineHeight": "18px",
+                  "textAlign": "center",
                   "display": "block"
                 },
                 "vars": {
-                  "letterSpacing": "--typography-body-text_16_20-letter-spacing",
-                  "fontSize": "--typography-body-text_16_20-font-size",
-                  "fontWeight": "--typography-weight-medium500",
-                  "lineHeight": "--typography-body-text_16_20-line-height"
+                  "color": "--palette-grey700",
+                  "letterSpacing": "--typography-body-text_14_18-letter-spacing",
+                  "fontSize": "--typography-body-text_14_18-font-size",
+                  "lineHeight": "--typography-body-text_14_18-line-height"
                 },
                 "source": "census"
               }
@@ -5833,7 +5783,7 @@
           "id": "text@toggle.1",
           "count": 13,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -5866,8 +5816,8 @@
           "count": 12,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -5981,8 +5931,8 @@
           "count": 9,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -6021,8 +5971,8 @@
           "count": 9,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -6039,7 +5989,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "111.2px",
+                  "width": "83.3px",
                   "paddingRight": "16px",
                   "lineHeight": "22px",
                   "transition": "0.15s cubic-bezier(0, 0, 1, 1)",
@@ -6063,7 +6013,7 @@
           "id": "heading.h2@dialog.1",
           "count": 8,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -6105,7 +6055,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(34, 34, 34)",
                   "borderRadius": "0px",
-                  "height": "43px",
+                  "height": "20px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
                   "fontSize": "16px",
@@ -6113,16 +6063,13 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "273.4px",
-                  "paddingBottom": "3px",
+                  "width": "93.1px",
                   "lineHeight": "20px",
                   "cursor": "pointer",
                   "display": "block"
                 },
                 "vars": {
-                  "letterSpacing": "--typography-body-text_16_20-letter-spacing",
-                  "fontSize": "--typography-body-text_16_20-font-size",
-                  "lineHeight": "--typography-body-text_16_20-line-height"
+                  "fontWeight": "--typography-weight-medium500"
                 },
                 "source": "census"
               }
@@ -6133,7 +6080,7 @@
           "id": "text@radio.1",
           "count": 8,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -6270,7 +6217,7 @@
           "id": "text@dialog.2",
           "count": 6,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -6339,7 +6286,7 @@
           "id": "heading.h2.2",
           "count": 5,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -6384,18 +6331,18 @@
           "id": "heading.h2.3",
           "count": 4,
           "pages": [
-            2,
-            3
+            1,
+            2
           ],
           "part": "heading.2",
           "states": {
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
+                  "backgroundColor": "rgb(244, 242, 236)",
                   "color": "rgb(34, 34, 34)",
                   "borderRadius": "0px",
-                  "height": "26px",
+                  "height": "34px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
                   "fontSize": "22px",
@@ -6403,9 +6350,23 @@
                   "letterSpacing": "-0.44px",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "1120px",
+                  "width": "232.9px",
+                  "paddingBottom": "8px",
                   "lineHeight": "26px",
                   "display": "block"
+                },
+                "vars": {
+                  "color": "--label_color",
+                  "letterSpacing": "--label_letter-spacing-custom",
+                  "width": "--label_width",
+                  "paddingInline": "--label_padding-ltr",
+                  "paddingTop": "--label_padding-ltr",
+                  "paddingBottom": "--label_padding-ltr",
+                  "paddingRight": "--label_padding-ltr",
+                  "fontFamily": "--typography-font-family-cereal-font-family",
+                  "fontSize": "--label_font-size-custom",
+                  "fontWeight": "--label_font-weight-custom",
+                  "lineHeight": "--label_line-height-custom"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/heading.h2.3-rest-light.json"
@@ -6487,7 +6448,7 @@
           "id": "text@button.8",
           "count": 4,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -6519,7 +6480,7 @@
           "id": "heading.h1@banner.1",
           "count": 3,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -6616,7 +6577,7 @@
           "count": 3,
           "pages": [
             0,
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -6753,7 +6714,7 @@
           "id": "text@table.1",
           "count": 3,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -6835,7 +6796,7 @@
           "id": "heading.h2@dialog.2",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -7027,7 +6988,7 @@
           "id": "text@dialog.5",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -7130,7 +7091,7 @@
           "id": "heading.h1.1",
           "count": 1,
           "pages": [
-            1
+            2
           ],
           "states": {
             "rest": {
@@ -7139,17 +7100,17 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(34, 34, 34)",
                   "borderRadius": "0px",
-                  "height": "24px",
+                  "height": "34px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
+                  "fontSize": "26px",
+                  "fontWeight": "500",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "235.5px",
-                  "lineHeight": "20.02px",
-                  "display": "block"
+                  "width": "387.1px",
+                  "lineHeight": "30px",
+                  "display": "inline"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
@@ -7204,8 +7165,8 @@
           "count": 87,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -7378,8 +7339,8 @@
           "count": 11,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -7471,7 +7432,7 @@
           "id": "link.5",
           "count": 7,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -7556,7 +7517,7 @@
           "count": 6,
           "pages": [
             0,
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -7620,7 +7581,7 @@
           "id": "link.7",
           "count": 6,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -7689,8 +7650,8 @@
           "count": 3,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -7759,8 +7720,8 @@
           "count": 3,
           "pages": [
             0,
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -7842,10 +7803,10 @@
           }
         },
         {
-          "id": "link.26",
+          "id": "link.21",
           "count": 1,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -7890,7 +7851,7 @@
                   "paddingBottom": "--dls_button_padding-bottom"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/link.26-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.21-rest-light.json"
               }
             },
             "pressed": {
@@ -7901,7 +7862,7 @@
                   "transform": "matrix(0.96, 0, 0, 0.96, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/link.26-pressed-light.json"
+                "copy": "2026-10-25/census/crops/link.21-pressed-light.json"
               }
             },
             "focus": {
@@ -7911,7 +7872,7 @@
                   "ring": "2px rgb(34, 34, 34) +2px"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/link.26-focus-light.json"
+                "copy": "2026-10-25/census/crops/link.21-focus-light.json"
               }
             }
           },
@@ -7922,10 +7883,10 @@
           }
         },
         {
-          "id": "link.27",
+          "id": "link.22",
           "count": 1,
           "pages": [
-            3
+            1
           ],
           "part": "tab",
           "states": {
@@ -7954,7 +7915,7 @@
                   "fontWeight": "--typography-weight-medium500"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/link.27-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.22-rest-light.json"
               }
             },
             "focus": {
@@ -7963,7 +7924,7 @@
                   "ring": "1px rgb(16, 16, 16) +1px"
                 },
                 "source": "census",
-                "copy": "2026-10-25/census/crops/link.27-focus-light.json"
+                "copy": "2026-10-25/census/crops/link.22-focus-light.json"
               }
             }
           }
@@ -7982,7 +7943,7 @@
           "id": "radio.1",
           "count": 6,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8075,7 +8036,7 @@
           "id": "radio.2",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "is": "selected",
           "states": {
@@ -8126,7 +8087,7 @@
           "id": "radiogroup.1",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8174,8 +8135,8 @@
           "count": 3,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -8187,13 +8148,13 @@
                   "height": "12px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "14px",
+                  "fontSize": "16px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
                   "width": "12px",
-                  "lineHeight": "20.02px",
+                  "lineHeight": "normal",
                   "iconSize": "12x12",
                   "iconStroke": "2px",
                   "cursor": "pointer",
@@ -8285,7 +8246,7 @@
           "id": "icon@toggle.1",
           "count": 13,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8320,7 +8281,7 @@
           "id": "toggle.1",
           "count": 12,
           "pages": [
-            1
+            3
           ],
           "part": "toggle",
           "states": {
@@ -8475,7 +8436,7 @@
           "id": "toggle.3",
           "count": 8,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8559,7 +8520,7 @@
           "id": "label@dialog.1",
           "count": 4,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8650,7 +8611,7 @@
           "id": "row.1",
           "count": 2,
           "pages": [
-            3
+            1
           ],
           "states": {
             "rest": {
@@ -8693,8 +8654,8 @@
           "count": 18,
           "pages": [
             0,
-            1,
-            2
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -8726,8 +8687,8 @@
           "id": "separator.2",
           "count": 14,
           "pages": [
-            2,
-            3
+            1,
+            2
           ],
           "states": {
             "rest": {
@@ -8739,17 +8700,17 @@
                   "height": "1px",
                   "paddingInline": "0px",
                   "fontFamily": "\"Airbnb Cereal VF\"",
-                  "fontSize": "16px",
+                  "fontSize": "14px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "1px rgb(221, 221, 221) top",
-                  "width": "653.3px",
-                  "lineHeight": "20px",
+                  "width": "1064px",
+                  "lineHeight": "20.02px",
                   "display": "block"
                 },
                 "vars": {
-                  "edge": "--palette-grey400"
+                  "edge": "--divider-line_border-top"
                 },
                 "source": "census",
                 "copy": "2026-10-25/census/crops/separator.2-rest-light.json"
@@ -8805,7 +8766,7 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(34, 34, 34)",
-                  "color": "rgb(255, 255, 255)",
+                  "color": "rgb(34, 34, 34)",
                   "borderRadius": "0px",
                   "height": "1px",
                   "paddingInline": "0px",
@@ -8833,7 +8794,7 @@
           "id": "separator.5",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -8871,7 +8832,7 @@
           "id": "separator.6",
           "count": 2,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -9132,7 +9093,7 @@
           "id": "textbox.1",
           "count": 3,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
@@ -9189,7 +9150,7 @@
           "id": "textbox.2",
           "count": 3,
           "pages": [
-            1
+            3
           ],
           "states": {
             "rest": {
