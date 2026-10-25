@@ -397,7 +397,8 @@ function census(
   }
   // Clipped away through the ancestors (Airbnb's photo arrows sit under
   // clip-path: inset(100%) until the card is hovered), or fixed (a bar slid
-  // out of view is fixed past the viewport's edge).
+  // out of view is fixed past the viewport's edge). A fixed body is a scroll
+  // lock, not a bar: Airbnb's search page runs on below the fold.
   const clips = (clip: string, el: Element) => {
     const inset = /^inset\(([^)]*?)(?:\s+round\b[^)]*)?\)$/.exec(clip)
     if (!inset?.[1]) return false
@@ -424,7 +425,11 @@ function census(
       const up = placeOf(el.parentElement)
       value = {
         clipped: up.clipped || clips(style.clipPath, el),
-        fixed: up.fixed || style.position === "fixed",
+        fixed:
+          up.fixed ||
+          (style.position === "fixed" &&
+            el !== document.body &&
+            el !== document.documentElement),
       }
       placed.set(el, value)
     }
