@@ -8,7 +8,7 @@ import { ColorThumb } from "@/components/ui/color-thumb";
 import { tv } from "tailwind-variants";
 
 const colorAreaVariants = tv({
-  base: "block aspect-square min-w-20 rounded-xs disabled:[background:var(--color-disabled)]! w-56",
+  base: "block aspect-square min-w-20 cursor-drag rounded-xs disabled:cursor-disabled disabled:[background:var(--color-disabled)]! w-56",
 });
 
 type ColorAreaProps = React.ComponentProps<
