@@ -3,7 +3,7 @@
   "slug": "github",
   "capture": {
     "probe": "ce94064",
-    "census": "6d2f9c9",
+    "census": "cb7a19d",
     "date": "2026-10-25"
   },
   "components": {
@@ -7346,7 +7346,7 @@
           "variants": [
             {
               "key": "v-y8t6kg",
-              "count": 58,
+              "count": 59,
               "values": {
                 "light": {
                   "backgroundColor": "rgb(255, 255, 255)",
@@ -7383,25 +7383,12 @@
                   "fontWeight": "400"
                 }
               }
-            },
-            {
-              "key": "v-1kyslt",
-              "count": 1,
-              "values": {
-                "dark": {
-                  "backgroundColor": "rgb(13, 17, 23)",
-                  "edge": "1px rgb(101, 108, 118)",
-                  "boxShadow": "none",
-                  "color": "rgb(255, 255, 255)",
-                  "fontWeight": "400"
-                }
-              }
             }
           ],
           "sizes": [
             {
               "key": "s-dxqkv1",
-              "count": 58,
+              "count": 59,
               "values": {
                 "height": "16px",
                 "paddingInline": "0px",
@@ -7418,16 +7405,6 @@
                 "fontSize": "13.3333px",
                 "letterSpacing": "normal"
               }
-            },
-            {
-              "key": "s-04kwsz",
-              "count": 1,
-              "values": {
-                "height": "16px",
-                "paddingInline": "0px",
-                "fontSize": "13.3333px",
-                "letterSpacing": "normal"
-              }
             }
           ],
           "cells": [
@@ -7435,7 +7412,7 @@
               "variant": "v-y8t6kg",
               "size": "s-dxqkv1",
               "look": "checkbox.1",
-              "count": 58,
+              "count": 59,
               "states": {
                 "light": [
                   "rest",
@@ -7501,38 +7478,6 @@
                 "disabled": {
                   "light": "2026-10-25/census/crops/checkbox.2-disabled-light.json",
                   "dark": "2026-10-25/census/crops/checkbox.2-disabled-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-1kyslt",
-              "size": "s-04kwsz",
-              "look": "checkbox.3",
-              "count": 1,
-              "states": {
-                "dark": [
-                  "rest",
-                  "focus",
-                  "disabled",
-                  "selected"
-                ]
-              },
-              "forced": [
-                "disabled",
-                "selected"
-              ],
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/checkbox.3-rest-dark.json"
-                },
-                "focus": {
-                  "dark": "2026-10-25/census/crops/checkbox.3-focus-dark.json"
-                },
-                "disabled": {
-                  "dark": "2026-10-25/census/crops/checkbox.3-disabled-dark.json"
-                },
-                "selected": {
-                  "dark": "2026-10-25/census/crops/checkbox.3-selected-dark.json"
                 }
               }
             }

@@ -1961,6 +1961,24 @@ export function cluster(
         flags.set(base, entry)
       }
     }
+    // A look read only in dark (a pass with no light page: a story arg) is
+    // more uses of the one light look whose dark twin reads the same.
+    for (const members of rest.filter(
+      (cluster) => cluster[0]?.page.mode === "dark" && !flags.has(cluster),
+    )) {
+      const head = members[0]!.element
+      const homes = rest.filter(
+        (cluster) =>
+          cluster[0]?.page.mode === "light" &&
+          cluster.some((m) => {
+            const twin = twins.get(key(m.page, m.element))
+            return !!twin && sameLook(keys, twin.values, head.values)
+          }),
+      )
+      if (homes.length !== 1) continue
+      homes[0]!.push(...members)
+      rest.splice(rest.indexOf(members), 1)
+    }
     const kept = [...rest, ...own].sort((a, b) => b.length - a.length)
     for (const [rank, members] of kept.entries()) {
       const [first] = members
@@ -1968,16 +1986,17 @@ export function cluster(
       const lead = first.page.mode
       // The sample: a member read in a state, on the rest pass where one
       // was (a later pass's page may have moved on), else the first; of
-      // those, one with a frozen copy where one has.
+      // those, one with a frozen copy where one has. Always in the lead mode.
       const pick = (list: Member[]) =>
         list.find((m) => copied?.(m.page, m.element)) ?? list[0]
+      const leading = members.filter((m) => m.page.mode === lead)
       const sample =
         pick(
-          members.filter((m) => m.element.states && m.page.pass === "rest"),
+          leading.filter((m) => m.element.states && m.page.pass === "rest"),
         ) ??
-        pick(members.filter((m) => m.element.states)) ??
-        pick(members.filter((m) => m.page.pass === "rest")) ??
-        pick(members) ??
+        pick(leading.filter((m) => m.element.states)) ??
+        pick(leading.filter((m) => m.page.pass === "rest")) ??
+        pick(leading) ??
         first
       const paired = members
         .map((member) => twins.get(key(member.page, member.element)))

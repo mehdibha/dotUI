@@ -8967,7 +8967,7 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 9057,
+            "count": 9058,
             "uses": [
               "panel backgroundColor",
               "treeitem backgroundColor",
@@ -25861,11 +25861,11 @@
       "groups": [
         "checkbox"
       ],
-      "found": 3,
+      "found": 2,
       "looks": [
         {
           "id": "checkbox.1",
-          "count": 58,
+          "count": 59,
           "pages": [
             26,
             138,
