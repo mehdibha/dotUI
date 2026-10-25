@@ -27,8 +27,9 @@ export const blocksFileSchema = z.object({
       name: z.string(),
       /** The pack's page key it was frozen on. */
       page: z.string(),
-      /** The steps that opened it: a dialog, a menu. Absent at rest. */
-      pass: z.string().optional(),
+      /** The steps that opened it, a dialog or a menu ({ click: selector },
+       *  { press: "Enter" }…). Absent at rest. */
+      pass: z.array(z.record(z.string(), z.string())).optional(),
       /** On the page, or on the viewport when it was opened. */
       box,
       /** Frozen copies, as paths under the system's folder. */

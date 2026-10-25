@@ -102,9 +102,10 @@
     "**/.source/**",
     "www/src/routeTree.gen.ts",
     "directory/src/routeTree.gen.ts",
-    // Written by presets:looks and presets:spec from a capture.
+    // Written by presets:looks, presets:spec and presets:blocks from a capture.
     "directory/systems/*/looks.json",
     "directory/systems/*/spec.json",
+    "directory/systems/*/blocks.json",
     // Extractor-owned, byte-deterministic from directory/'s pipeline.
     "directory/systems/*/colors.json",
     // Upstream files snapshotted byte for byte; the manifest hashes them.

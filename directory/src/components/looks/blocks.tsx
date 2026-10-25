@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router"
+import { useTheme } from "starter-themes"
 
 import { Badge } from "@/registry/ui/badge"
 import type { Block, BlocksFile, BlocksPage } from "~/data/blocks"
@@ -10,7 +11,8 @@ import { Copy } from "./copy"
 
 /* A captured system's Blocks tab: composed pieces of the real product (a
    card, a dialog, a page header) frozen whole, page by page, each page drawn
-   as a wireframe of its regions and where its blocks sit. */
+   as a wireframe of its regions and where its blocks sit. Copies follow the
+   site's theme where the capture froze both modes. */
 
 export const pageId = (i: number) => `page-${i + 1}`
 
@@ -65,11 +67,13 @@ function PageBlocks({
   spec?: SpecFile
 }) {
   const written = docs?.pages?.[page.key]
+  const hidden = blocks.filter((block) => docs?.blocks?.[block.name]?.hide)
+  const shown = blocks.filter((block) => !hidden.includes(block))
   // Top to bottom, then what opens over the page.
-  const atRest = blocks
+  const atRest = shown
     .filter((block) => !block.pass)
     .sort((a, b) => a.box[1] - b.box[1] || a.box[0] - b.box[0])
-  const ordered = [...atRest, ...blocks.filter((block) => block.pass)]
+  const ordered = [...atRest, ...shown.filter((block) => block.pass)]
   return (
     <section id={id} className="flex scroll-mt-24 flex-col gap-10">
       <header className="flex flex-col gap-1.5">
@@ -89,7 +93,7 @@ function PageBlocks({
         <Wireframe
           page={page}
           blocks={atRest}
-          className="hidden shrink-0 sm:block"
+          className="hidden shrink-0 self-start sm:block"
         />
         <div className="flex min-w-0 flex-col gap-6">
           {written?.summary && (
@@ -122,6 +126,17 @@ function PageBlocks({
               </li>
             ))}
           </ol>
+          {hidden.length > 0 && (
+            <p className="max-w-2xl text-xs text-fg-muted">
+              Left out:{" "}
+              {hidden
+                .map((block) => {
+                  const written = docs!.blocks![block.name]!
+                  return `${written.title} (${written.hide})`
+                })
+                .join("; ")}
+            </p>
+          )}
         </div>
       </div>
       {ordered.map((block, i) => (
@@ -220,7 +235,11 @@ function BlockDoc({
   spec?: SpecFile
 }) {
   const written = docs?.blocks?.[block.name]
-  const copy = block.copies.light ?? block.copies.dark
+  const { resolvedTheme } = useTheme()
+  const copy =
+    (resolvedTheme === "dark" ? block.copies.dark : undefined) ??
+    block.copies.light ??
+    block.copies.dark
   return (
     <article
       id={`block-${block.name}`}
@@ -275,6 +294,8 @@ function BlockDoc({
         <Copy
           slug={slug}
           path={copy}
+          clip
+          size={[block.box[2], block.box[3]]}
           className="max-h-160 overflow-y-auto rounded-lg border"
         />
       ) : (

@@ -69,6 +69,8 @@ export const docsFileSchema = z.object({
         note: z.string().optional(),
         /** The components it is built from, as component keys. */
         uses: z.array(z.string()).optional(),
+        /** Why it is left out: another block holds all of it. */
+        hide: z.string().optional(),
       }),
     )
     .optional(),

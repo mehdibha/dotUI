@@ -1,0 +1,804 @@
+{
+  "version": 1,
+  "slug": "airbnb",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/s/Paris/homes",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/rooms/47803806",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/host/homes",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "bf562a4",
+    "date": "2026-10-25"
+  },
+  "blocks": [
+    {
+      "name": "ai-search-banner",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        0,
+        0,
+        1425,
+        76
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/ai-search-banner-light.json"
+      }
+    },
+    {
+      "name": "site-header",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        0,
+        76,
+        1425,
+        96
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/site-header-light.json"
+      }
+    },
+    {
+      "name": "search-bar",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        288,
+        178,
+        850,
+        66
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/search-bar-light.json"
+      }
+    },
+    {
+      "name": "listing-row",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        0,
+        330,
+        1425,
+        257
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/listing-row-light.json"
+      }
+    },
+    {
+      "name": "listing-card",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        48,
+        374,
+        180,
+        213
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/listing-card-light.json"
+      }
+    },
+    {
+      "name": "profile-menu",
+      "page": "https://www.airbnb.com/",
+      "pass": [
+        {
+          "focus": "button[data-testid=cypress-headernav-profile]"
+        },
+        {
+          "press": "Enter"
+        }
+      ],
+      "box": [
+        1112,
+        161,
+        265,
+        349
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/profile-menu-light.json"
+      }
+    },
+    {
+      "name": "login-dialog",
+      "page": "https://www.airbnb.com/",
+      "pass": [
+        {
+          "focus": "button[aria-label='Log in or sign up']"
+        },
+        {
+          "press": "Enter"
+        }
+      ],
+      "box": [
+        473,
+        206,
+        480,
+        488
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/login-dialog-light.json"
+      }
+    },
+    {
+      "name": "date-picker",
+      "page": "https://www.airbnb.com/",
+      "pass": [
+        {
+          "click": "[role=search] [role=button]"
+        },
+        {
+          "wait": "[data-testid=expanded-searchbar-dates-calendar-tab]"
+        }
+      ],
+      "box": [
+        288,
+        256,
+        850,
+        544
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/date-picker-light.json"
+      }
+    },
+    {
+      "name": "footer",
+      "page": "https://www.airbnb.com/",
+      "box": [
+        0,
+        1588,
+        1425,
+        705
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/footer-light.json"
+      }
+    },
+    {
+      "name": "search-header",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        0,
+        76,
+        1440,
+        96
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/search-header-light.json"
+      }
+    },
+    {
+      "name": "filter-bar",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        0,
+        173,
+        1440,
+        54
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/filter-bar-light.json"
+      }
+    },
+    {
+      "name": "result-card",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        48,
+        322,
+        307,
+        351
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/result-card-light.json"
+      }
+    },
+    {
+      "name": "featured-hotels",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        24,
+        1506,
+        686,
+        510
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/featured-hotels-light.json"
+      }
+    },
+    {
+      "name": "price-details",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "pass": [
+        {
+          "focus": "[data-testid=price-availability-row] button"
+        },
+        {
+          "press": "Enter"
+        }
+      ],
+      "box": [
+        52,
+        392,
+        285,
+        210
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/price-details-light.json"
+      }
+    },
+    {
+      "name": "map",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        734,
+        252,
+        658,
+        684
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/map-light.json"
+      }
+    },
+    {
+      "name": "filters-dialog",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "pass": [
+        {
+          "focus": "button[aria-label=Filters]"
+        },
+        {
+          "press": "Enter"
+        }
+      ],
+      "box": [
+        436,
+        40,
+        568,
+        820
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/filters-dialog-light.json"
+      }
+    },
+    {
+      "name": "pagination",
+      "page": "https://www.airbnb.com/s/Paris/homes",
+      "box": [
+        183,
+        4717,
+        368,
+        32
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/pagination-light.json"
+      }
+    },
+    {
+      "name": "listing-title",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        96,
+        1120,
+        54
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/listing-title-light.json"
+      }
+    },
+    {
+      "name": "photo-grid",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        150,
+        1120,
+        500
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/photo-grid-light.json"
+      }
+    },
+    {
+      "name": "guest-favorite-strip",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        764,
+        653,
+        89
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/guest-favorite-strip-light.json"
+      }
+    },
+    {
+      "name": "highlights",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        956,
+        653,
+        258
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/highlights-light.json"
+      }
+    },
+    {
+      "name": "booking-card",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        899,
+        682,
+        372,
+        280
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/booking-card-light.json"
+      }
+    },
+    {
+      "name": "sleep-cards",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        1536,
+        653,
+        289
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/sleep-cards-light.json"
+      }
+    },
+    {
+      "name": "amenities",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        1826,
+        653,
+        450
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/amenities-light.json"
+      }
+    },
+    {
+      "name": "inline-calendar",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        2325,
+        653,
+        420
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/inline-calendar-light.json"
+      }
+    },
+    {
+      "name": "rating-summary",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        2858,
+        1120,
+        242
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/rating-summary-light.json"
+      }
+    },
+    {
+      "name": "review",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        145,
+        3441,
+        473,
+        226
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/review-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "host-profile",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        4694,
+        1120,
+        722
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/host-profile-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "things-to-know",
+      "page": "https://www.airbnb.com/rooms/47803806",
+      "box": [
+        153,
+        5417,
+        1120,
+        434
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/things-to-know-light.json"
+      }
+    },
+    {
+      "name": "earnings-hero",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        0,
+        80,
+        1425,
+        800
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/earnings-hero-light.json"
+      }
+    },
+    {
+      "name": "hosting-banner",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        289,
+        880,
+        848,
+        148
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/hosting-banner-light.json"
+      }
+    },
+    {
+      "name": "value-props",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        0,
+        1316,
+        1425,
+        248
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/value-props-light.json"
+      }
+    },
+    {
+      "name": "cohost-cards",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        105,
+        2004,
+        1216,
+        352
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/cohost-cards-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "aircover-list",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        0,
+        2942,
+        1425,
+        470
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/aircover-list-light.json"
+      }
+    },
+    {
+      "name": "faq",
+      "page": "https://www.airbnb.com/host/homes",
+      "box": [
+        0,
+        5715,
+        1425,
+        226
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/faq-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.airbnb.com/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2293,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            76,
+            1425,
+            96
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            0,
+            76,
+            1425,
+            96
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1152,
+            84,
+            225,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            277,
+            1425,
+            903
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1588,
+            1425,
+            705
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/s/Paris/homes",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5406,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            76,
+            1440,
+            152
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            0,
+            76,
+            1440,
+            96
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            518,
+            101,
+            404,
+            46
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1167,
+            84,
+            225,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            228,
+            1440,
+            4553
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            183,
+            4717,
+            368,
+            32
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            80,
+            4781,
+            1280,
+            625
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/rooms/47803806",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6573,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            0,
+            0,
+            1425,
+            96
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            525,
+            25,
+            376,
+            46
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            887,
+            8,
+            491,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            96,
+            1425,
+            5852
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            899,
+            682,
+            372,
+            280
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            153,
+            5884,
+            1120,
+            20
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            5948,
+            1425,
+            625
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/host/homes",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6930,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1425,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            731,
+            0,
+            555,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1425,
+            6225
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6305,
+            1425,
+            625
+          ]
+        }
+      ]
+    }
+  ]
+}

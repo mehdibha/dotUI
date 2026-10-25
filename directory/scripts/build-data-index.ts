@@ -154,9 +154,15 @@ for (const dir of systemDirs) {
                 )
         }
       }
-      for (const name of Object.keys(docs.blocks ?? {}))
-        if (!blocks?.blocks.some((block) => block.name === name))
+      for (const [name, block] of Object.entries(docs.blocks ?? {})) {
+        if (!blocks?.blocks.some((entry) => entry.name === name))
           errors.push(`${rel}/docs.json: block ${name} is not in blocks.json`)
+        for (const component of block.uses ?? [])
+          if (!spec?.components[component])
+            errors.push(
+              `${rel}/docs.json: block ${name} uses ${component}, which is not in spec.json`,
+            )
+      }
       for (const key of Object.keys(docs.pages ?? {}))
         if (!blocks?.pages.some((page) => page.key === key))
           errors.push(`${rel}/docs.json: page ${key} is not in blocks.json`)

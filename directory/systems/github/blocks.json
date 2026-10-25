@@ -1,0 +1,892 @@
+{
+  "version": 1,
+  "slug": "github",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://github.com/mehdibha/dotUI",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/mehdibha/dotUI/issues",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/mehdibha/dotUI/pulse",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/mehdibha/dotUI/pulls",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/search?q=design+system&type=repositories",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "bf562a4",
+    "date": "2026-10-25"
+  },
+  "blocks": [
+    {
+      "name": "global-header",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        0,
+        0,
+        1440,
+        72
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/global-header-light.json",
+        "dark": "2026-10-25/blocks/global-header-dark.json"
+      }
+    },
+    {
+      "name": "repo-header",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        0,
+        72,
+        1440,
+        100
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/repo-header-light.json",
+        "dark": "2026-10-25/blocks/repo-header-dark.json"
+      }
+    },
+    {
+      "name": "repo-title",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        112,
+        188,
+        1216,
+        36
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/repo-title-light.json",
+        "dark": "2026-10-25/blocks/repo-title-dark.json"
+      }
+    },
+    {
+      "name": "file-toolbar",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        112,
+        257,
+        904,
+        56
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/file-toolbar-light.json",
+        "dark": "2026-10-25/blocks/file-toolbar-dark.json"
+      }
+    },
+    {
+      "name": "file-list",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        112,
+        313,
+        904,
+        956
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/file-list-light.json",
+        "dark": "2026-10-25/blocks/file-list-dark.json"
+      }
+    },
+    {
+      "name": "readme",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        112,
+        1285,
+        904,
+        1717
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/readme-light.json",
+        "dark": "2026-10-25/blocks/readme-dark.json"
+      }
+    },
+    {
+      "name": "about-sidebar",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        1056,
+        249,
+        272,
+        486
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/about-sidebar-light.json",
+        "dark": "2026-10-25/blocks/about-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "sidebar-sections",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        1056,
+        249,
+        272,
+        825
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/sidebar-sections-light.json",
+        "dark": "2026-10-25/blocks/sidebar-sections-dark.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://github.com/mehdibha/dotUI",
+      "box": [
+        0,
+        3082,
+        1440,
+        114
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/site-footer-light.json",
+        "dark": "2026-10-25/blocks/site-footer-dark.json"
+      }
+    },
+    {
+      "name": "platform-menu",
+      "page": "https://github.com/mehdibha/dotUI",
+      "pass": [
+        {
+          "click": "header[data-marketing-header] nav[aria-label=Global] li:first-child button"
+        }
+      ],
+      "box": [
+        80,
+        56,
+        1085,
+        485
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/platform-menu-light.json",
+        "dark": "2026-10-25/blocks/platform-menu-dark.json"
+      }
+    },
+    {
+      "name": "command-palette",
+      "page": "https://github.com/mehdibha/dotUI",
+      "pass": [
+        {
+          "click": "button[aria-label^='Search or jump to']"
+        }
+      ],
+      "box": [
+        736,
+        7,
+        480,
+        271
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/command-palette-light.json",
+        "dark": "2026-10-25/blocks/command-palette-dark.json"
+      }
+    },
+    {
+      "name": "branch-picker",
+      "page": "https://github.com/mehdibha/dotUI",
+      "pass": [
+        {
+          "click": "#ref-picker-repos-header-ref-selector"
+        }
+      ],
+      "box": [
+        112,
+        301,
+        320,
+        518
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/branch-picker-light.json",
+        "dark": "2026-10-25/blocks/branch-picker-dark.json"
+      }
+    },
+    {
+      "name": "clone-panel",
+      "page": "https://github.com/mehdibha/dotUI",
+      "pass": [
+        {
+          "click": "button[data-variant=primary]"
+        }
+      ],
+      "box": [
+        616,
+        301,
+        400,
+        247
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/clone-panel-light.json",
+        "dark": "2026-10-25/blocks/clone-panel-dark.json"
+      }
+    },
+    {
+      "name": "issues-sidebar",
+      "page": "https://github.com/mehdibha/dotUI/issues",
+      "box": [
+        0,
+        172,
+        256,
+        728
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/issues-sidebar-light.json",
+        "dark": "2026-10-25/blocks/issues-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "issues-filter",
+      "page": "https://github.com/mehdibha/dotUI/issues",
+      "box": [
+        280,
+        196,
+        1136,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/issues-filter-light.json",
+        "dark": "2026-10-25/blocks/issues-filter-dark.json"
+      }
+    },
+    {
+      "name": "issue-list",
+      "page": "https://github.com/mehdibha/dotUI/issues",
+      "box": [
+        280,
+        292,
+        1136,
+        1284
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/issue-list-light.json",
+        "dark": "2026-10-25/blocks/issue-list-dark.json"
+      }
+    },
+    {
+      "name": "issue-row",
+      "page": "https://github.com/mehdibha/dotUI/issues",
+      "box": [
+        281,
+        341,
+        1134,
+        65
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/issue-row-light.json",
+        "dark": "2026-10-25/blocks/issue-row-dark.json"
+      }
+    },
+    {
+      "name": "author-filter",
+      "page": "https://github.com/mehdibha/dotUI/issues",
+      "pass": [
+        {
+          "click": "button[data-testid=authors-anchor-button]"
+        }
+      ],
+      "box": [
+        457,
+        337,
+        320,
+        204
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/author-filter-light.json",
+        "dark": "2026-10-25/blocks/author-filter-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "insights-nav",
+      "page": "https://github.com/mehdibha/dotUI/pulse",
+      "box": [
+        112,
+        196,
+        296,
+        305
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/insights-nav-light.json",
+        "dark": "2026-10-25/blocks/insights-nav-dark.json"
+      }
+    },
+    {
+      "name": "pulse-overview",
+      "page": "https://github.com/mehdibha/dotUI/pulse",
+      "box": [
+        432,
+        246,
+        896,
+        218
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/pulse-overview-light.json",
+        "dark": "2026-10-25/blocks/pulse-overview-dark.json"
+      }
+    },
+    {
+      "name": "pulse-summary",
+      "page": "https://github.com/mehdibha/dotUI/pulse",
+      "box": [
+        432,
+        472,
+        896,
+        222
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/pulse-summary-light.json",
+        "dark": "2026-10-25/blocks/pulse-summary-dark.json"
+      }
+    },
+    {
+      "name": "merged-list",
+      "page": "https://github.com/mehdibha/dotUI/pulse",
+      "box": [
+        432,
+        702,
+        896,
+        2727
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/merged-list-light.json",
+        "dark": "2026-10-25/blocks/merged-list-dark.json"
+      }
+    },
+    {
+      "name": "pr-row",
+      "page": "https://github.com/mehdibha/dotUI/pulls",
+      "box": [
+        105,
+        341,
+        1230,
+        67
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/pr-row-light.json",
+        "dark": "2026-10-25/blocks/pr-row-dark.json"
+      }
+    },
+    {
+      "name": "search-filters",
+      "page": "https://github.com/search?q=design+system&type=repositories",
+      "box": [
+        0,
+        120,
+        296,
+        1123
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/search-filters-light.json",
+        "dark": "2026-10-25/blocks/search-filters-dark.json"
+      }
+    },
+    {
+      "name": "repo-result",
+      "page": "https://github.com/search?q=design+system&type=repositories",
+      "box": [
+        321,
+        132,
+        731,
+        164
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/repo-result-light.json",
+        "dark": "2026-10-25/blocks/repo-result-dark.json"
+      }
+    },
+    {
+      "name": "pagination",
+      "page": "https://github.com/search?q=design+system&type=repositories",
+      "box": [
+        321,
+        1778,
+        731,
+        32
+      ],
+      "copies": {
+        "light": "2026-10-25/blocks/pagination-light.json",
+        "dark": "2026-10-25/blocks/pagination-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://github.com/mehdibha/dotUI",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3196,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            657,
+            40
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            72,
+            1440,
+            3010
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            88,
+            1400,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            113,
+            1286,
+            860,
+            48
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            3082,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            426,
+            3134,
+            749,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/mehdibha/dotUI/issues",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1675,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            657,
+            40
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            72,
+            1440,
+            1544
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            88,
+            1400,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            172,
+            256,
+            728
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            180,
+            224,
+            176
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            381,
+            224,
+            144
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            816,
+            239,
+            32
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            244,
+            1136,
+            32
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            280,
+            244,
+            1136,
+            32
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1616,
+            1440,
+            59
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            426,
+            1637,
+            749,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/mehdibha/dotUI/pulse",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 4468,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            657,
+            40
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            72,
+            1440,
+            4282
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            88,
+            1400,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            112,
+            196,
+            296,
+            305
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            4354,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            426,
+            4406,
+            749,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/mehdibha/dotUI/pulls",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1236,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            657,
+            40
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            72,
+            1440,
+            1105
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            88,
+            1400,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            104,
+            244,
+            1232,
+            32
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            104,
+            244,
+            1232,
+            32
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1177,
+            1440,
+            59
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            426,
+            1198,
+            749,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/search?q=design+system&type=repositories",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1865,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            657,
+            40
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            72,
+            1440,
+            1793
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            321,
+            1778,
+            731,
+            32
+          ]
+        }
+      ]
+    }
+  ]
+}
