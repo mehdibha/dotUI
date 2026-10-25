@@ -340,6 +340,16 @@ describe("main → v3", () => {
     expect(load(mainState())).toEqual(DEFAULT_STATE)
   })
 
+  it("keeps main's busy and drag cursors", () => {
+    for (const cursorPending of ["progress", "wait"])
+      expect(load(mainState({ cursorPending }))).toMatchObject({
+        cursorBusy: cursorPending,
+      })
+    expect(load(mainState({ cursorDragging: "grab" }))).toMatchObject({
+      cursorDrag: "grab",
+    })
+  })
+
   it("draws every main state as main did, once", () => {
     const ruled = new Set<string>()
     for (const diff of CORPUS) {
