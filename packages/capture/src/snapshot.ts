@@ -415,11 +415,17 @@ async function snapshot(
   }
   const found = marked(document)
   // An element carrying `prefer` is copied for the one whose key it holds
-  // (the census's frame of a field).
+  // (the census's frame of a field), when it has a box to copy.
   const keyOf = (el: Element) =>
     (prefer && el.getAttribute(prefer)) || el.getAttribute(attribute)!
+  const sized = (el: Element) => {
+    const box = el.getBoundingClientRect()
+    return box.width > 0 && box.height > 0
+  }
   const preferred = new Set(
-    found.filter((el) => prefer && el.hasAttribute(prefer)).map(keyOf),
+    found
+      .filter((el) => prefer && el.hasAttribute(prefer) && sized(el))
+      .map(keyOf),
   )
 
   const copies: Record<string, Omit<Snapshot, "fonts"> & { used: string[] }> =
@@ -428,8 +434,8 @@ async function snapshot(
     const key = keyOf(el)
     if (keys && !keys.includes(key)) continue
     if (preferred.has(key) && !(prefer && el.hasAttribute(prefer))) continue
+    if (!sized(el)) continue
     const box = el.getBoundingClientRect()
-    if (!box.width || !box.height) continue
     families.clear()
     next = 0
     rules = []
