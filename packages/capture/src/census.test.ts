@@ -308,6 +308,59 @@ describe("census", () => {
   })
 })
 
+describe("cluster: wrappers", () => {
+  const part = (
+    id: number,
+    role: string,
+    box: CensusElement["box"],
+    chars = 0,
+  ): CensusElement => ({
+    id,
+    role,
+    by: "shape",
+    tag: "span",
+    box,
+    chars,
+    values: { backgroundColor: "rgb(221, 244, 255)", borderRadius: "9999px" },
+  })
+  const bare = (id: number, box: CensusElement["box"]) => ({
+    ...button(id, 0, { backgroundColor: "rgba(0, 0, 0, 0)" }),
+    box,
+    chars: 0,
+  })
+
+  it("counts a button around an avatar, a label or nothing as nothing", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          // An avatar button.
+          bare(1, [0, 0, 20, 20]),
+          { ...part(2, "avatar", [0, 0, 20, 20]), tag: "img" },
+          // An issue label: the pill holds the text.
+          bare(3, [100, 0, 99, 22]),
+          part(4, "box", [102, 1, 95, 20]),
+          part(5, "text", [110, 3, 77, 15], 14),
+          // A chart's hit area.
+          bare(6, [300, 0, 181, 27]),
+          // A real button, its label in a span.
+          bare(7, [600, 0, 80, 32]),
+          part(8, "text", [612, 8, 56, 16], 4),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.filter((one) => one.group === "button")).toEqual([
+      expect.objectContaining({ count: 1 }),
+    ])
+    expect(looks.map((one) => one.group).sort()).toEqual([
+      "avatar",
+      "badge",
+      "button",
+      "text",
+    ])
+  })
+})
+
 describe("namesOf", () => {
   const of = (attributes: Record<string, string>) => {
     const asked: string[] = []

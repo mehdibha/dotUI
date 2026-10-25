@@ -350,11 +350,26 @@ function census(
     }
     return match(document)
   }
+  // Opacity through the ancestors: Highcharts' accessibility proxies sit
+  // over the chart at 0.001, which checkVisibility counts as shown.
+  const opacities = new Map<Element, number>()
+  const opacityOf = (el: Element | null): number => {
+    if (!el) return 1
+    let value = opacities.get(el)
+    if (value === undefined) {
+      value =
+        Number.parseFloat(getComputedStyle(el).opacity) *
+        opacityOf(el.parentElement)
+      opacities.set(el, value)
+    }
+    return value
+  }
   const shown = (el: Element) => {
     const rect = el.getBoundingClientRect()
     return (
       rect.width * rect.height > 1 &&
-      el.checkVisibility({ opacityProperty: true, visibilityProperty: true })
+      el.checkVisibility({ opacityProperty: true, visibilityProperty: true }) &&
+      opacityOf(el) >= 0.05
     )
   }
   const paints = (style: CSSStyleDeclaration) =>
@@ -1490,13 +1505,90 @@ export const sameLook = (keys: (Prop | Extra)[], a: Values, b: Values) => {
     .every((key) => (a[key] ?? "") === (b[key] ?? ""))
 }
 
+type Box = CensusElement["box"]
+const within = (outer: Box, inner: Box) =>
+  inner[0] >= outer[0] - 1 &&
+  inner[1] >= outer[1] - 1 &&
+  inner[0] + inner[2] <= outer[0] + outer[2] + 1 &&
+  inner[1] + inner[3] <= outer[1] + outer[3] + 1
+const area = (box: Box) => box[2] * box[3]
+
+/* Buttons and links that only wrap something else: no text or icon of
+   their own around one painted part that fills them (an avatar, an issue
+   label's pill), or around nothing at all (a chart's hit area). They count
+   as nothing and the part as itself; a pill with text in it is the badge
+   the shape rule would have read had the text been its own. */
+function unwrap(pages: CensusPage[]): CensusPage[] {
+  const rests = new Map(
+    pages
+      .filter((page) => page.pass === "rest")
+      .map((page) => [`${page.key}|${page.mode}`, page]),
+  )
+  const dropped = new Set<CensusElement>()
+  const badges = new Set<CensusElement>()
+  for (const page of pages) {
+    // A later pass holds only what changed: the parts may sit in the rest.
+    const rest = rests.get(`${page.key}|${page.mode}`)
+    const around =
+      rest && rest !== page
+        ? [...page.elements, ...rest.elements]
+        : page.elements
+    for (const element of page.elements) {
+      const { values } = element
+      if (
+        (element.role !== "button" && element.role !== "link") ||
+        element.chars ||
+        values.iconSize ||
+        values.backgroundImage ||
+        (values.edge ?? "none") !== "none" ||
+        (values.boxShadow ?? "none") !== "none"
+      )
+        continue
+      const inside = around.filter(
+        (one) =>
+          one !== element &&
+          !(one.role === element.role && `${one.box}` === `${element.box}`) &&
+          within(element.box, one.box),
+      )
+      const fill = inside.find(
+        (one) =>
+          ["box", "badge", "avatar", "img"].includes(one.role) &&
+          area(one.box) >= 0.75 * area(element.box),
+      )
+      if (inside.length && !fill) continue
+      if (
+        fill &&
+        !inside.every((one) => one === fill || within(fill.box, one.box))
+      )
+        continue
+      dropped.add(element)
+      if (
+        fill?.role === "box" &&
+        fill.box[3] <= 32 &&
+        fill.box[2] <= 240 &&
+        inside.some((one) => TEXT_ROLES.has(one.role))
+      )
+        badges.add(fill)
+    }
+  }
+  return pages.map((page) => ({
+    ...page,
+    elements: page.elements
+      .filter((element) => !dropped.has(element))
+      .map((element) =>
+        badges.has(element) ? { ...element, role: "badge" } : element,
+      ),
+  }))
+}
+
 /** Clusters a product's census pages into looks per role group, counted
  *  across pages, with each look's other mode and its states. Light leads
  *  where a page was read in both modes; the same element in dark (same page,
  *  pass, role and box: a theme moves nothing) gives the dark values. A page
  *  read only in dark (a signed-in run, one mode per run) gives dark-only
  *  looks. */
-export function cluster(pages: CensusPage[], probe: string): Inventory {
+export function cluster(read: CensusPage[], probe: string): Inventory {
+  const pages = unwrap(read)
   const where = (page: CensusPage) => `${page.key}|${page.pass}`
   const lit = new Set(pages.filter((page) => page.mode === "light").map(where))
   const key = (page: CensusPage, element: CensusElement) =>
@@ -1576,8 +1668,13 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const [first] = members
       if (!first) continue
       const lead = first.page.mode
-      // The sample: a member read in a state, else the first.
-      const sample = members.find((m) => m.element.states) ?? first
+      // The sample: a member read in a state, on the rest pass where one
+      // was (a later pass's page may have moved on), else the first.
+      const sample =
+        members.find((m) => m.element.states && m.page.pass === "rest") ??
+        members.find((m) => m.element.states) ??
+        members.find((m) => m.page.pass === "rest") ??
+        first
       const paired = members
         .map((member) => twins.get(key(member.page, member.element)))
         .filter((t): t is CensusElement => !!t)
@@ -1589,7 +1686,13 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const darkest = [...twinSigs.values()].sort(
         (a, b) => b.length - a.length,
       )[0]
-      const twin = darkest?.find((t) => t.states) ?? darkest?.[0]
+      // The sample's own twin where it reads like the rest, so both
+      // modes point at the same pass.
+      const own = twins.get(key(sample.page, sample.element))
+      const twin =
+        (own && darkest?.includes(own) ? own : undefined) ??
+        darkest?.find((t) => t.states) ??
+        darkest?.[0]
       // Each flag's changes, against the sample and its twin.
       const found: { lead: Values; dark?: Values; flag: Flag }[] = []
       for (const [flag, list] of Object.entries(flags.get(members) ?? {})) {

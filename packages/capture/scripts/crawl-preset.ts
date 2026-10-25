@@ -45,7 +45,7 @@
  * (--copies per pass, 40 by default; redacted with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
  * (presets:looks), and a full-page shot of each pass as
- * <out>/shots/<page>-<pass>-<mode>.jpg (--no-shots skips them). <out> is
+ * <out>/shots/<page>-<pass hash>-<mode>.jpg (--no-shots skips them). <out> is
  * .scratch-refs/<id>/<date>/census by default: never in git.
  */
 import { createHash } from "node:crypto"
@@ -393,6 +393,14 @@ async function pass(
   }
   const { elements } = walked
   if (!rest && !elements.length) return null
+  // Before reading states, which hover, scroll and can close what the pass
+  // opened: the shot shows the page the boxes were read on.
+  const shot = args.shots
+    ? await shoot(
+        page,
+        `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
+      )
+    : undefined
   // The most used looks with a box small enough to copy.
   const copied = representatives(elements)
     .filter(
@@ -437,6 +445,7 @@ async function pass(
     ...(Object.keys(tokens).length ? { tokens } : {}),
     ...(walked.truncated ? { truncated: walked.truncated } : {}),
     reads: [...walked.reads, "states"],
+    ...(shot ? { shot } : {}),
   }
 }
 
@@ -770,15 +779,11 @@ async function crawl(
   let start = 0
   // A story's enum args as the pass renders them.
   let rendered: Record<string, string> = {}
-  const keep = async (censusPage: CensusPage | null) => {
+  const keep = (censusPage: CensusPage | null) => {
     if (!censusPage) return
-    const shot = args.shots
-      ? await shoot(page, `${slug(job.key)}-${pages.length}-${job.mode}.jpg`)
-      : undefined
     pages.push({
       ...censusPage,
       ...(Object.keys(rendered).length ? { args: rendered } : {}),
-      ...(shot ? { shot } : {}),
     })
   }
   const warn = (name: string, error: unknown) =>
@@ -798,7 +803,7 @@ async function crawl(
     const found = story ? await storyArgs(page, story) : null
     const initial = found ? enumArgs(found, found.args) : {}
     rendered = initial
-    await keep(await pass(page, job.key, job.mode, "rest", 0))
+    keep(await pass(page, job.key, job.mode, "rest", 0))
     const popups = OPEN ? await finders(page, "popups", OPEN) : []
     const tips = Number(args.tips)
       ? await finders(page, "tips", Number(args.tips))
@@ -823,9 +828,7 @@ async function crawl(
         await finish(page)
         // A trigger that navigates opened nothing.
         if (where() === home)
-          await keep(
-            await pass(page, job.key, job.mode, name, (start += 100000)),
-          )
+          keep(await pass(page, job.key, job.mode, name, (start += 100000)))
       } catch (error) {
         warn(name, error)
         dirty = true
@@ -856,7 +859,7 @@ async function crawl(
         }
         if (await appeared(page)) {
           await finish(page)
-          await keep(
+          keep(
             await pass(
               page,
               job.key,
@@ -895,7 +898,7 @@ async function crawl(
           await pause(200)
           await finish(page)
           rendered = found ? enumArgs(found, { ...found.args, ...updated }) : {}
-          await keep(
+          keep(
             await pass(page, job.key, job.mode, name, (start += 100000), false),
           )
         }
@@ -920,7 +923,7 @@ async function crawl(
         if (!steps.some((step) => "hover" in step)) await page.mouse.move(0, 0)
         await pause(400)
         await finish(page)
-        await keep(await pass(page, job.key, job.mode, name, (start += 100000)))
+        keep(await pass(page, job.key, job.mode, name, (start += 100000)))
       } catch (error) {
         warn(name, error)
       }

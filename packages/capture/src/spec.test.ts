@@ -188,6 +188,41 @@ describe("systemSpec", () => {
     })
   })
 
+  it("reads a size from the height most of its variants share", () => {
+    const inline = { height: "19.5px", paddingInline: "0px", fontSize: "12px" }
+    const spec = specOf([
+      // Link-style buttons: the most used "small", but one variant.
+      look(
+        "button.1",
+        18,
+        { ...gray, ...inline },
+        { "data-variant": ["link"], "data-size": ["small"] },
+      ),
+      look(
+        "button.2",
+        4,
+        { ...gray, ...small },
+        { "data-variant": ["default"], "data-size": ["small"] },
+      ),
+      look(
+        "button.3",
+        3,
+        { ...green, ...small },
+        { "data-variant": ["primary"], "data-size": ["small"] },
+      ),
+    ])
+    const grid = spec.components.button?.grids[0]
+    expect(grid?.sizes).toEqual([
+      expect.objectContaining({ key: "small", values: small }),
+    ])
+    // What the link-style cell adds to its size.
+    expect(
+      grid?.cells.find((cell) => cell.look === "button.1")?.values,
+    ).toEqual({
+      light: { height: "19.5px", paddingInline: "0px" },
+    })
+  })
+
   it("hashes to six base-36 characters", () => {
     expect(hashOf("a")).toMatch(/^[0-9a-z]{6}$/)
     expect(hashOf("a")).toBe(hashOf("a"))
