@@ -90,6 +90,7 @@ export const chapter = defineChapter({
     focusFieldWidth: 2,
     invalidStyle: "edge",
     disabledTreatment: "solid",
+    disabledOpacity: 50,
     cursorControls: "pointer",
     cursorDisabled: "not-allowed",
     selectionUiText: "none",
@@ -104,6 +105,7 @@ export const chapter = defineChapter({
     focusFieldWidth: range({ min: 1, max: 4, step: 1 }),
     invalidStyle: oneOf(INVALID_VALUES),
     disabledTreatment: oneOf(DISABLED_VALUES),
+    disabledOpacity: range({ min: 30, max: 70, step: 5 }),
     cursorControls: oneOf(CURSOR_CONTROL_VALUES),
     cursorDisabled: oneOf(CURSOR_DISABLED_VALUES),
     selectionUiText: oneOf(CONTROL_TEXT_VALUES),
@@ -164,7 +166,7 @@ export const chapter = defineChapter({
 
     if (state.disabledTreatment === "fade") {
       for (const name of DISABLED_TOKENS) tokens[name] = "initial"
-      tokens["--disabled-opacity"] = "0.5"
+      tokens["--disabled-opacity"] = String(state.disabledOpacity / 100)
     }
 
     if (state.cursorControls !== "pointer")
@@ -187,6 +189,14 @@ export const chapter = defineChapter({
     return { tokens, color: { overrides } }
   },
   rules: [
+    // Gray recolors, so only Fade has a strength.
+    {
+      id: "states/opacity-only-fade",
+      target: "disabledOpacity",
+      when: { key: "disabledTreatment", in: ["solid"] },
+      effect: { kind: "hide" },
+      cause: "disabledTreatment",
+    },
     // Only a ring stands off its control.
     {
       id: "states/gap-only-ring",

@@ -302,6 +302,19 @@ const DisabledRow = () => (
   />
 )
 
+const percent = (value: number) => `${value}%`
+
+const DisabledOpacityRow = () => (
+  <DialSlider
+    axis="disabledOpacity"
+    label="Opacity"
+    minValue={30}
+    maxValue={70}
+    step={5}
+    format={percent}
+  />
+)
+
 const INVALID_ROW_OPTIONS = INVALID_OPTIONS.map((option) => ({
   ...option,
   glyph: <InvalidSpecimen invalid={option.value} />,
@@ -360,6 +373,7 @@ export const ROWS: RowMap = {
   focusInputStyle: FieldFocusRow,
   focusFieldWidth: FieldFocusWidthRow,
   disabledTreatment: DisabledRow,
+  disabledOpacity: DisabledOpacityRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
   cursorDisabled: CursorDisabledRow,
