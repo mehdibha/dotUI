@@ -319,6 +319,10 @@ const fromTonal = toFlat("tonal", {
   inputStyle: "indicator",
 })
 
+// Tactile was renamed Polished.
+const fromTactile = (state: Raw): Raw =>
+  state.style === "tactile" ? { ...state, style: "polished" } : state
+
 /* Focus lost Strength and the field weight: a halo is half strength, 3px
    when its width was Auto; a field's Border became Edge or Thick edge. */
 function fromFocus(state: Raw): Raw {
@@ -341,5 +345,6 @@ const STEPS: Record<number, (state: Raw) => Raw> = {
   3: fromSoft,
   4: fromChartTransition,
   5: fromTonal,
-  6: fromFocus,
+  6: fromTactile,
+  7: fromFocus,
 }

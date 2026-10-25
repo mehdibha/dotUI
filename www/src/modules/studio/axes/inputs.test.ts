@@ -96,7 +96,7 @@ describe("inputs", () => {
     )
     const system = designSystemOf(
       parseState({
-        style: "tactile",
+        style: "polished",
         inputStyle: "well",
         inputHover: "none",
         inputHeight: "step",

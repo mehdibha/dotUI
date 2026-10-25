@@ -1,0 +1,183 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Airbnb's account-settings side nav 56px at 16/400 with 16px padding, the current row 16/500 on #f2f2f2 at 16px corners, beside 40–48px buttons (signed in)",
+      "standin": "Airbnb's 32px at 14px with 8px padding and 12px corners at `density: spacious`, -24px, -2px, -8px, -4px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.check",
+      "title": "Checkbox and radio size apart from density",
+      "note": "Airbnb (signed in, account settings) a 22px checkbox at 6px corners and a 22px radio, both under a 1px #8c8c8c edge, the checked radio a 2px #222222 ring around a 14px dot, beside 40–48px buttons",
+      "standin": "16px (`density: touch` on Wise, `spacious` on Higgsfield and Airbnb, -6px on Airbnb, whose checkbox takes 2px corners with `checkCorner: sharp`, -4px, and whose checked radio matches with `radioMark: ring`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Airbnb's Dates / Flexible items #222222 at 14/500, selected or not (its category tabs rest in muted #6c6c6c); Airbnb's account-settings side nav #222222 at 16/400, the current row 500 on a #f2f2f2 chip (signed in)",
+      "standin": "Airbnb segmented #646464 / #b6b6b6, ΔE 0.250 / 0.201; Airbnb's side nav rows ΔE 0.250 / 0.201, the current row matched by `navMarker: fill` and `navItemWeight: auto`",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.field-label-inside",
+      "title": "Labels inside the field",
+      "note": "Airbnb's outlined fields (1px #8c8c8c, r12, 60px in the login dialog) carry the label inside the box, as do the booking card's CHECK-IN, CHECKOUT and GUESTS cells",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-primary",
+      "title": "Two primary buttons",
+      "note": "conversion CTAs in the brand (Reserve, Continue, Search) while dialog confirms are ink, #222222 with white text in light, #f7f7f7 with #222222 text in dark (40px, r12, 14/500, 20px padding)",
+      "standin": "every primary in the brand (`buttonColor: accent`); `neutral` would ink the CTAs too",
+      "source": "ledger"
+    },
+    {
+      "look": "flourish.button-gradient",
+      "title": "Gradient CTA fill",
+      "note": "`linear-gradient(to right, #e61e4d, #e31c5f, #d70466)` in light (hover: a radial burst from #ff385c out to #bd1e59), #ff385c → #ff497d in dark",
+      "standin": "a solid primary, `brand: #e31c5f` (the light gradient's midpoint)",
+      "source": "ledger"
+    },
+    {
+      "look": "flourish.button-hero",
+      "title": "A hero CTA finish apart from the other buttons",
+      "note": "Airbnb's gradient conversion CTAs are the same split (see the two rows above)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.button-icon",
+      "title": "Button corners per kind, apart from the button radius",
+      "note": "Round icon buttons beside rounded-rect text buttons: Airbnb's 40px #f2f2f2 header icon buttons, carousel arrows and the guest stepper's 32px buttons are circles while text buttons sit at r12; its search pagination draws 32px circles at 14/500, the current page filled #222222 under white, the others clear in ink",
+      "standin": "icon buttons at the control radius (12px on Airbnb); `paginationCurrent: selected` gives the ink fill, but at 12px and 40px from the density",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Airbnb's search-card tags (Free cancellation), #6c6c6c on #f2f2f2 at 75% (dark tokens #a6a6a6 on #222222)",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Outlined pill chips: Airbnb's Filters amenity chips (Wifi, Kitchen…) are 48px pills (28px corners, 16px padding, 14/400) with a 1px #dddddd edge on white; when on, the fill stays white and the edge turns ink #222222 (a 1px border plus a 1px inset ring, 2px drawn)",
+      "standin": "on Airbnb 12px corners, 40px, no edge, 600, and `toggleSelected: inverse` fills it with ink when on (`toggle.on` ΔE 0.759)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Airbnb's settings switches 48×32, on #222222 and off #8c8c8c, with a 28px white knob, beside 40–48px buttons, signed in",
+      "standin": "Airbnb 24px tall at `density: spacious`, -8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.calendar-today",
+      "title": "Today marker in a color of its own",
+      "note": "Airbnb's host calendar fills today with a 32px Rausch circle (#da1249) behind white 18/500 while checks and selection are ink #222222 (signed in; the guest date picker marks no today)",
+      "standin": "Airbnb takes `calendarToday: numeral` after its guest date picker, and `fill` offers only the neutral tint or the selection color (ink there)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tabs-rule",
+      "title": "Line tabs with no rule under the list",
+      "note": "Airbnb only the current tab's 3px #222222 bar under its icon and label",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Airbnb's Dates / Flexible switch a pill, a 44px #ebebeb track at 100px corners around 36px pill chips, while its buttons and fields sit at 12px",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Segmented chip edged in the surface hairline while fields take a strong edge",
+      "note": "Airbnb's selected Dates chip is white inside 1px #dddddd (dark tokens #2c2c2c), while its fields and checkboxes draw #8c8c8c",
+      "standin": "`segmentedSelected: ring` edges the chip in the control line, which `controlEdge: strong` sets to #808080 for fields (ΔE 0.298 / 0.307)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "Airbnb 42px round days at 14/500 on the listing calendar (past days #8c8c8c at 400), 48px circles in the search panel",
+      "standin": "32px cells from the density (`calendarDayShape: circle` on Untitled UI and Airbnb",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Airbnb's Filters dialog at 568px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim stronger in dark than light",
+      "note": "Airbnb black 30% / 60%",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Airbnb menus and dialogs on the page tone #111111, by shadow alone (from its `-dark` palette; the guest site ships no dark mode)",
+      "standin": "#1c1c1c on Airbnb, ΔE 0.049",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "Airbnb's booking card keeps a 1px #dddddd / #2c2c2c edge under `0 6px 16px` black 12% at r12, while menus are borderless under `0 2px 16px` black 12% and the Filters dialog under `0 8px 24px` black 10%",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Airbnb full-bleed 36px rows padded 24px at 14/400, separators inset 24px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.dialog-header",
+      "title": "Dialog title centered in the header, the close button at the end (over a divided header)",
+      "standin": "the title at the start; `dialogSections: divided` keeps the rule",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Airbnb 20px at 11/500 with 4px padding and 6px corners, under 40–48px buttons",
+      "standin": "Airbnb at spacious, 12/500 with 7px padding and 8px corners)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.badge-per-tone",
+      "title": "Badge shape, case and weight per tone",
+      "note": "Airbnb's pink New badge a full pill (20px, 16px corners, 8px padding, 11/500 #d80669 on #fbeff8) while its neutral tags (Free cancellation) round at 6px",
+      "standin": "one `badgeShape`, one `badgeCase` and one weight (500) for every tone: Airbnb `rounded`, 8px on both",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Deeper in light: Airbnb #e31c5f (the light gradient's midpoint), #ff385c → #ff497d in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Airbnb 0.030 / 0.050",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Airbnb grey600 #8c8c8c / #6a6a6a",
+      "standin": "Airbnb 0.040 / 0.076",
+      "source": "ledger"
+    }
+  ]
+}

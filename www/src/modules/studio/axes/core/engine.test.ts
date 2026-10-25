@@ -433,7 +433,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonColor: "neutral", buttonSecondary: "solid" },
   ],
   "buttons/closed-style-owns-secondary": [
-    { style: "tactile", buttonSecondary: "outline" },
+    { style: "polished", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
@@ -474,11 +474,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "style/buttonStyle-flat": [
     { buttonStyle: "gloss" },
-    { style: "tactile", buttonStyle: "gloss" },
+    { style: "polished", buttonStyle: "gloss" },
   ],
-  "style/buttonStyle-tactile": [
-    { style: "tactile", buttonStyle: "hairline" },
-    { style: "tactile", buttonStyle: "rim-light" },
+  "style/buttonStyle-polished": [
+    { style: "polished", buttonStyle: "hairline" },
+    { style: "polished", buttonStyle: "rim-light" },
   ],
   "style/buttonStyle-chunky": [
     { style: "chunky", buttonStyle: "bevel" },
@@ -488,9 +488,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceEdge-tactile": [
-    { style: "tactile", surfaceEdge: "ledge" },
-    { style: "tactile", surfaceEdge: "bevel" },
+  "style/surfaceEdge-polished": [
+    { style: "polished", surfaceEdge: "ledge" },
+    { style: "polished", surfaceEdge: "bevel" },
   ],
   "style/surfaceEdge-chunky": [
     { style: "chunky", surfaceEdge: "bevel" },
@@ -498,7 +498,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "style/inputStyle-flat": [
     { inputStyle: "well" },
-    { style: "tactile", inputStyle: "well" },
+    { style: "polished", inputStyle: "well" },
   ],
 }
 

@@ -171,7 +171,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
       },
     },
   },
@@ -179,7 +179,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border border-[color-mix(in_oklab,var(--color-fg)_11%,transparent)] bg-bg text-fg-on-neutral shadow-[0_2px_3px_-1px_rgb(0_0_0/0.08),0_1px_0_0_rgb(0_0_0/0.02)] hover:bg-[color-mix(in_oklab,var(--color-fg)_3%,var(--color-bg))] disabled:shadow-none",
+          "border border-[color-mix(in_oklab,var(--color-fg)_11%,transparent)] bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[0_2px_3px_-1px_rgb(0_0_0/0.08),0_1px_0_0_rgb(0_0_0/0.02)] hover:bg-[color-mix(in_oklab,var(--color-fg)_3%,var(--surface-bg,var(--color-bg)))] disabled:shadow-none",
       },
     },
   },
@@ -199,7 +199,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
       },
     },
   },

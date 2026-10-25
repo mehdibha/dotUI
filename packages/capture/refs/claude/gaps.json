@@ -1,0 +1,302 @@
+{
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "Claude's ⌘K palette ringed in 0.5px #cecece / #4c4c4b and its sidebar search field in 0.5px #e4e4e3 / #343434 under a `0 1px 2px` black 5% drop, while buttons, fields, menus, cards and dialogs keep 1px",
+      "standin": "Claude's at 1px, oklab 0.920 / 0.318)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Select triggers with no plate",
+      "note": "Claude's Capabilities settings select is its value and a chevron, with no fill, edge or corners, 32px tall with 8px padding at 14/400",
+      "standin": "the field trigger: 8px corners, a 10% ink ring and a drop",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Claude's page titles (h1 on /artifacts and /projects) at 24/500 in the serif and the /new greeting at 32/360, while h2 (Connectors, dialog titles) and h3 sit at 580 in the sans",
+      "standin": "Claude `quiet`, every heading at 600, h1 100 heavy, 580 within tolerance)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Claude 4px on 18px keys (the ⌘K footer) beside 8px controls",
+      "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "type.keycap",
+      "title": "Keycap labels at regular weight",
+      "note": "Claude 12/400 in #6d6b67 / #a5a49a",
+      "source": "ledger"
+    },
+    {
+      "look": "type.button-quiet",
+      "title": "Quiet buttons at regular weight (400) while solid and soft buttons stay 500",
+      "note": "Claude further, secondary, quiet and menu buttons at 14/400 while primary and danger buttons stay 14/500",
+      "standin": "Claude's `labelWeight: normal` sets every button at 400, the primary 100 light",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet buttons a step shorter",
+      "note": "Claude's 28px quiet buttons (Manage on Connectors) with 10px padding and 7px corners, beside 32px buttons",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "Secondary buttons that change treatment per mode",
+      "note": "Claude's are raised in light (the #fcfcfb page plate inside a 1px 10% ink ring, `0 1px 2px` black 5%) and a flat #2c2c2c fill with no ring in dark (the same drop)",
+      "standin": "`buttonSecondary: raised` in both modes: the dark plate at oklch 0.262 (ΔE 0.031) inside the 0.318 line",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Claude's neutral badges #52514e on #efefed / #c3c2b7 on #1d1d1d",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Claude h1 24px, h2 22px, h3 15px, the /new greeting 32px",
+      "standin": "Claude's h1–h3 at 36 / 30 / 24px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.display-font",
+      "title": "A display face apart from the title font",
+      "note": "Claude's serif (anthropic-serif, Source Serif 4 in the pack) sets only page titles and the /new greeting, while dialog titles, h2 and h3 stay in the sans at 580",
+      "standin": "Claude's `headingFont: Source Serif 4` sets every heading in the serif, dialog titles included",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-double",
+      "title": "Focus as a 1px accent ring outside the edge over a 1px page-colored line inside",
+      "note": "Claude's `--cds-focus-shadow`, `inset 0 0 0 1px` page and `0 0 0 1px #2a78d6`, on buttons and fields, the page line covering the control's own 10% ring (the composer only deepens its ring to 20% ink)",
+      "standin": "`focusStyle: inset` at width 1 draws the same pair 1px further in; fields take `focusInputStyle: border`, the edge turning #2a78d6 with no outer ring",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-glow",
+      "title": "A soft glow around the focus ring",
+      "note": "Claude's focused fields add a `0 0 6px 1px` glow outside the 1px #2a78d6 ring, accent-100 #cde2fb in light and accent-600 #184f95 at 60% in dark (the danger ring glows #fad6d6 around #d03b3b); buttons share `--cds-focus-shadow`, but the probe read only their ring",
+      "standin": "no glow; a halo is a solid translucent band, not a blur",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "Claude's /projects cards on the #151515 page in a 1px #2c2c2c ring (in light the #fcfcfb page under a 10% ink ring)",
+      "standin": "Claude's at oklch 0.220 (ΔE 0.024) under the 0.318 line (ΔE 0.025)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Claude 36×20 on the settings toggles, beside 32px controls",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Claude 12px on 32px tabs (/artifacts)",
+      "standin": "6px at Notion's compact and on Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-pill",
+      "title": "Pill tab tones",
+      "note": "Claude's #f0f0ef / #262626 under full ink at 14/500, idle labels in its muted #898781 in both modes",
+      "standin": "Claude's `tabsPill: tone` chip at oklch 0.909 / 0.337, ΔE 0.046 / 0.069, idle labels ΔE 0.123 / 0.154)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress track tinted with the fill color",
+      "note": "Claude's usage bars run a #2a78d6 fill over an accent-100 track (#cde2fb / #032042) inside a 1px accent line (#c3d7ef / #0f2b4b)",
+      "standin": "`progressTrackStyle: bordered` on the neutral muted fill (oklch 0.956 / 0.262, ΔE 0.067 / 0.078) inside the neutral line (ΔE 0.065 / 0.079)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Progress fill with a round leading end",
+      "note": "Claude's usage bar fill a full-width 4px pill scaled with a transform, so its leading end stays round",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Claude a 32px track, the button height, around 30px items and a 30px chip inset 1px (Settings › Appearance)",
+      "standin": "36px on Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Claude's track at 8px, the control radius, the chip at 7px and items at 6px",
+      "standin": "the segmented control takes the container radius from `roleSurface`: 8px with a 5px chip on Radix and Untitled UI, 0px under Carbon's `none`, 12px at GitHub's and Geist's `xl` (9px items on GitHub), 16px with 13px chips at Airbnb's `md`, 10.5px with a 7.5px chip on Wise, 12 / 9 / 9px on Claude; raising it rounds menus and popovers too",
+      "source": "ledger"
+    },
+    {
+      "look": "type.segmented",
+      "title": "Segmented items at their own weight, apart from tabs",
+      "note": "Claude's at 14/400, selected too, while its pill tabs are 14/500",
+      "standin": "Claude's at 500, 100 heavy)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Claude's ⌘K at 672px, the custom connector dialog at 536px and the settings dialog at 1024×800",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Claude 24px tall, 8px padding, 13/400",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim stronger in dark than light",
+      "note": "Claude black 40% / 50% (`--cds-backdrop`), no blur",
+      "standin": "Claude's `dialogBackdrop: scrim` at 40% in both",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Claude's menu rows padded 10px (32px rows, 8px corners) and ⌘K rows 12px (36px rows)",
+      "standin": "Claude 6px in menus and 8px on ⌘K rows",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.menu-check",
+      "title": "Menu checkmarks in the accent color",
+      "note": "Claude's model menu marks the current choice with a #2a78d6 check at the row's end in both modes, while the label stays in ink",
+      "standin": "the check takes the row's ink (`menuIndicator: check-end` places it at the end)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tooltip",
+      "title": "Tooltip corners apart from menu-row corners",
+      "note": "A rung below: Claude's 6px tooltips (`--cds-radius-xs`) beside 8px menu rows",
+      "standin": "Claude's at the 8px inline-item radius",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "Claude's #0b0b0b in light and the popover surface #20201f under #f0efec in dark, ringed in 1px #363635",
+      "standin": "`tooltipStyle: inverted` flips to a light chip in dark (ΔE 0.57 on GitHub, 0.66 on Notion, 0.647 on ChatGPT, 0.713 on Claude, with no ring); `surface` stays dark but loses the dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Inverted tooltips with a drop shadow",
+      "note": "Claude's #0b0b0b chip under `0 1px 2px` ink 6% and `0 2px 8px` ink 8% (black 24% in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.command",
+      "title": "Command palette radius apart from dialogs",
+      "note": "Claude's ⌘K at 20px under `0 25px 50px -12px` black 25%, over 12px dialogs and menus",
+      "standin": "24px on Higgsfield, 12px on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Claude's neutral badges 18px, 6px padding, 11/500, 4.5px corners, its small accent badge 16px, 4px padding, 10/500",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Claude 0.091, its most common off row, about 25 parts)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Claude a secondary ink #52514e / #c3c2b7 (oklch 0.435 / 0.812) for sidebar rows, ⌘K rows, segmented items and neutral badges, between the body ink #0b0b0b / #f0efec and the muted #898781",
+      "standin": "Claude's rows on `fg-muted`, ΔE 0.066 / 0.036, its badges and ⌘K rows on body ink, 0.195 / 0.145)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Claude 0.123 / 0.154",
+      "source": "ledger"
+    },
+    {
+      "look": "color.shell-dark",
+      "title": "A deeper dark shell under the panel",
+      "note": "Claude's sidebar on #111111 (oklch 0.178) beside the #151515 page (0.196) in dark, sharing the page in light (#fbfbf9 on #fcfcfb)",
+      "standin": "Claude's `shellTone: page` is right in light and takes the page tone in dark (ΔE 0.020)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Claude's fields ring at 10% ink in light but #40403f (oklch 0.371) in dark, brighter than its menu and dialog lines (#363635)",
+      "standin": "Claude's `controlEdge: soft` matches in light and lands at 0.318 in dark (ΔE 0.053)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.check-edge",
+      "title": "Check edges between the field line and strong",
+      "note": "Claude 20% ink against 10% for fields and cards, checkbox edges #cbcbca (oklch 0.842) / #434343, and the off switch track on the same line (#cecece / #313130)",
+      "standin": "Claude's checkbox edges at 0.883 in light (ΔE 0.041; dark matches), the off track at 0.883 / 0.380 (ΔE 0.032 / 0.068)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Claude links on accent-600 #184f95 (oklch 0.433) in light and accent-300 #6da7ec (0.717) in dark, around the #2a78d6 fill",
+      "standin": "on Claude 0.520 / 0.773, ΔE 0.088 / 0.060",
+      "source": "ledger"
+    },
+    {
+      "look": "color.solid-neutral-dark",
+      "title": "The neutral solid brighter than the text ink in dark",
+      "note": "Claude's primary buttons fill pure #fff under #0b0b0b labels while text stays #f0efec (oklch 0.952)",
+      "standin": "`buttonColor: neutral` fills with `fg`, oklch 0.956 under 0.198 labels (ΔE 0.044 / 0.048)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-accent",
+      "title": "Soft accent fills on their own accent steps",
+      "note": "Claude's accent badge on accent-100 #cde2fb behind accent-600 #184f95 in light, accent-800 #052042 behind accent-300 #6da7ec in dark",
+      "standin": "Claude oklch 0.960 0.019 behind 0.520 0.145 in light (ΔE 0.059 / 0.088), 0.264 0.055 behind 0.773 0.104 in dark (ΔE 0.026 / 0.060)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Claude's neutral badge on #efefed (oklch 0.952) in light, deeper than the 5% ink wash (#f3f3f3) of menu highlights and the segmented track, while dark matches",
+      "standin": "Claude's on #f7f7f4 (ΔE 0.024)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.nav-active-dark",
+      "title": "Current sidebar row chip a step further from the page in dark",
+      "note": "Claude's #343434 (oklch 0.325) on the #111 sidebar in dark, #edece8 in light",
+      "standin": "Claude's light chip matches, dark at oklch 0.262 (ΔE 0.063)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.gray-alpha-steps",
+      "title": "The segmented chip and progress track on their own gray-a steps",
+      "note": "Claude's chip is white in light and #3b3b3a (oklch 0.352) ringed #4f4f4e in dark, above its #252524 track",
+      "standin": "Claude's light chip matches, the dark one on the page tone, 0.198 (ΔE 0.154), ringed by the 0.318 line (ΔE 0.109)",
+      "source": "ledger"
+    }
+  ]
+}

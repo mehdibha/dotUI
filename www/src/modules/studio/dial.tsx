@@ -40,6 +40,7 @@ import {
   PanelNav,
   PanelPopover,
   PanelPopoverTitle,
+  useDocked,
   useDraft,
 } from "./rows"
 import { useCurrent } from "./selection"
@@ -175,7 +176,14 @@ export function DialTrigger({
 /** A pick list's popover: as wide as its longest option, not the row. */
 export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 
-/** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
+/* Under its row, a popover covers the rows below: the row's width, a row gap
+   away, a step brighter than the row with a deeper shadow so it reads as on
+   top. Its hover tints step from that surface. */
+const UNDER_ROW =
+  "w-(--trigger-width)! min-w-0! max-w-none! border-fg/10 bg-(--panel-surface) shadow-xl [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
+
+/** What a DialTrigger opens: a run of dial rows beside the row, shown whole;
+ *  with a bottom `placement`, under it instead. */
 export function DialPopover({
   className,
   placement,
@@ -185,10 +193,13 @@ export function DialPopover({
   placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children: React.ReactNode
 }) {
+  const docked = useDocked()
+  const under = !docked && placement?.startsWith("bottom")
   return (
     <PanelPopover
       placement={placement}
-      className={cn("w-64 min-w-0", className)}
+      {...(under && { offset: 6, showArrow: false })}
+      className={cn("w-64 min-w-0", className, under && UNDER_ROW)}
     >
       <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
         {children}

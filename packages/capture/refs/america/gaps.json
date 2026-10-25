@@ -1,0 +1,319 @@
+{
+  "gaps": [
+    {
+      "look": "size.button",
+      "title": "Button height apart from density",
+      "note": "America.gov sizes buttons by place, not by density: 56px with 24px padding in forms and section CTAs, 44px with 20px in the header and lists, 64px with 36px at 18px for hero CTAs, all at 16px text",
+      "standin": "`density: touch`: 48px at 24px padding and 16px text (-8px on the form button), 56px at lg",
+      "source": "hand"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented control height",
+      "note": "The Menu sheet's theme switcher: a 36px tinted track with 4px padding around 28px circular icon items (36px on phones)",
+      "standin": "`density: touch` draws a 52px track around 46px items",
+      "source": "hand"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Tooltip size",
+      "note": "36px white pills padded 12px at 12/500",
+      "standin": "30px at 12/400 (`tooltipStyle: surface`)",
+      "source": "hand"
+    },
+    {
+      "look": "size.progress",
+      "title": "Progress track height",
+      "note": "The fraud page's Before / Now bars are 12px pills on ink at 5% (8% in dark); the roadmap mockups' step bars are 4px on ink at 10%",
+      "standin": "`progressTrack: thick`, 8px",
+      "source": "hand"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size",
+      "note": "The \"New\" pill is 26px tall, padded 8px, at 12/500",
+      "standin": "20px padded 7px",
+      "source": "hand"
+    },
+    {
+      "look": "size.check",
+      "title": "Checkbox size",
+      "note": "20px checkboxes with 6px corners beside 16px text",
+      "standin": "16px at 2px corners (`checkCorner: sharp`); Auto rounds them to circles at this radius",
+      "source": "hand"
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet button size",
+      "note": "Footer links are ghost buttons 40px tall, padded 12px",
+      "standin": "48px padded 24px",
+      "source": "hand"
+    },
+    {
+      "look": "radius.button",
+      "title": "Quiet buttons square while the rest are pills",
+      "note": "The footer's ghost links and the language select take 8px corners; every filled button is a pill",
+      "standin": "`buttonRadius: pill` rounds quiet buttons too",
+      "source": "hand"
+    },
+    {
+      "look": "type.button-quiet",
+      "title": "Quiet button weight",
+      "note": "Footer ghost links at 16/400 in pure black (white in dark)",
+      "standin": "500 in body ink",
+      "source": "hand"
+    },
+    {
+      "look": "radius.squircle",
+      "title": "Superellipse corners",
+      "note": "`.squircle` boxes (cards, bento tiles, carousels, the Before / Now figure) set `corner-shape: superellipse(1.3)` and scale their radius by 1.194 where supported: `rounded-48` computes 57.312px",
+      "standin": "60px circular corners (`roleCard: 3xl` at `radiusPx: 20`)",
+      "source": "hand"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes",
+      "note": "Rhymes headlines run 96px for page headings (80px on policy pages, 144px on the home and About heroes) and 64px for section headings, from clamp() type tokens",
+      "standin": "`titleStyle: display` tops out at 36 / 30px",
+      "source": "hand"
+    },
+    {
+      "look": "type.display-font",
+      "title": "A display face only for headlines",
+      "note": "Rhymes Text sets page and section headlines only; policy section headings are Helvetica Now Display 24/400 and card titles Helvetica Now Text 18/500",
+      "standin": "`headingFont` sets every heading level in Newsreader",
+      "source": "hand"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Card titles heavier than headlines",
+      "note": "Card and table titles are 18/500 under 400-weight headlines",
+      "standin": "`titleStyle: display` sets every level at 400",
+      "source": "hand"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Body and control text at -0.03em (-0.48px at 16px), headlines at -0.05 to -0.06em (-5.76px at 96px, -3.2px at 64px)",
+      "standin": "normal tracking everywhere",
+      "source": "hand"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field labels at the control size",
+      "note": "Labels are 16/400, the same size as field values",
+      "standin": "14px under `density: touch`",
+      "source": "hand"
+    },
+    {
+      "look": "type.tooltip",
+      "title": "Tooltip weight",
+      "note": "Tooltips at 12/500",
+      "standin": "12/400",
+      "source": "hand"
+    },
+    {
+      "look": "type.body-size",
+      "title": "16px body and secondary text",
+      "note": "Body copy, placeholders and helper text are 16/400 (the composer's placeholder, policy paragraphs, field help); 21px for FAQ questions and lead text",
+      "standin": "`density: touch` sets 16px controls but 14px secondary text",
+      "source": "hand"
+    },
+    {
+      "look": "type.link",
+      "title": "Prose links at body weight",
+      "note": "Policy and FAQ links keep the paragraph's color and 400 weight with a solid underline 4px below",
+      "standin": "`linkColor: neutral` sets them at 500",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "A navy-black ink",
+      "note": "`text-primary` is blue-900 #000c1f (OKLCH 0.154 / 0.047 at hue 253): darker and far more chromatic than the grays, which are that ink at an alpha",
+      "standin": "the engine's text step, OKLCH 0.240 / 0.013 at the same hue (ΔE 0.092)",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Pure white ink in dark",
+      "note": "Dark text is #ffffff",
+      "standin": "OKLCH 0.956 (ΔE 0.044)",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Body copy in secondary ink",
+      "note": "Paragraphs take `text-secondary`, ink at 65% (#59616d on white, #a9aaac on #0b0d12); headings, labels and controls keep the full ink",
+      "standin": "body text in the primary ink (ΔE 0.250 / 0.218)",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink at 45%",
+      "note": "`text-tertiary` is ink at 45%: #8c919a on white, #797a7c on the dark page",
+      "standin": "the engine's muted step, darker in light and lighter in dark (ΔE 0.156 / 0.197)",
+      "source": "hand"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "A navy accent that turns mid-blue in dark",
+      "note": "blue-700 is #002664 in light and #0066c5 in dark (hover blue-800 #00163b / #1a75d0): the primary button, checks and selected pharmacy pins all switch",
+      "standin": "`preserveSeed` pins #002664 in both modes (dark ΔE 0.233)",
+      "source": "hand"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "A link blue apart from the navy brand",
+      "note": "The `link` token is blue-500 #0066c5 (#66aef5 in dark): action and source links with a dotted underline 3px below, the roadmap step bars and the \"Now\" bar",
+      "standin": "`linkColor: neutral`, ink links underlined",
+      "source": "hand"
+    },
+    {
+      "look": "ink.progress-fill",
+      "title": "Progress fill in the link blue",
+      "note": "Bar fills take `link` #0066c5 / #66aef5, or ink at 45% for the \"Before\" bar",
+      "standin": "the brand navy (ΔE 0.233 / 0.444)",
+      "source": "hand"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Emphasis badge in the ink",
+      "note": "The \"New\" pill fills with `text-primary`: #000c1f under white text, white under #000c1f in dark",
+      "standin": "the accent badge in navy (ΔE 0.153 light, 0.720 dark)",
+      "source": "hand"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Segmented chip on a faint ring",
+      "note": "The theme switcher's indicator is a white pill with `shadow-widget`: a 1px ring at ink 5% plus 0 10px 40px #010e2414",
+      "standin": "`segmentedSelected: raised` draws its edge in the strong control line (ΔE 0.330)",
+      "source": "hand"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Overlays ringed while cards have no edge",
+      "note": "Menus, dialogs and tooltips carry a 1px ring at ink 5% (white 5% in dark) inside `shadow-widget`; tinted cards and panels have no edge",
+      "standin": "`surfaceEdge: none` drops the overlay ring too",
+      "source": "hand"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays on the page tone",
+      "note": "In dark the Menu sheet, dialogs and tooltips stay on the page color #0b0d12, set apart only by the white 5% ring",
+      "standin": "one surface step up (ΔE 0.055)",
+      "source": "hand"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Page-colored fields with no inner shade",
+      "note": "Textareas are clear boxes on the page with a 1px `border-secondary` edge in both modes",
+      "standin": "`inputStyle: inset` adds a 1px inner top shade (4% in light, 24% in dark); Outline tints the dark fill instead",
+      "source": "hand"
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Ghost select",
+      "note": "The only select is the footer's native language picker: transparent, a transparent 1px border, 8px corners, 44px, 12px padding, 16/400 in black",
+      "standin": "`selectTrigger: field`, matching the form fields",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-double",
+      "title": "Focus ring over a white line",
+      "note": "Buttons, links and checkboxes focus with `0 0 0 2px #fff, 0 0 0 4px #0c0c0c` in both modes, so dark shows a white 2px band around the control; fields recolor their edge to `ring` (#0c0c0c, white in dark) and add a 1px inset ring",
+      "standin": "`focusColor: neutral`: a 2px ink ring (white in dark) 2px off over the page color",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "The chat composer as a pill",
+      "note": "The \"Ask anything\" composer is an 82px white pill with a 1px ring at ink 5% and `elevation-1`, ghost Upload PDF and Voice input buttons and a navy circular Send",
+      "standin": "search fields take the 15px field box",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.table-frame",
+      "title": "Tables with no outer frame",
+      "note": "The fraud page's tables: header cells 16/400 in secondary ink, 1px rules at ink 10% between rows, 24px vertical cell padding, no frame or header band",
+      "standin": "the table sits in a framed card",
+      "source": "hand"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Segmented items in secondary ink",
+      "note": "Unselected theme-switcher icons take `text-secondary`, ink at 65% (#555d6a on the tinted track, #aeaeb0 in dark)",
+      "standin": "the engine's muted control ink",
+      "source": "hand"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress track darker than the panel",
+      "note": "The Before / Now tracks are ink at 5% (8% in dark) laid over the tinted figure, so they read darker than the panel: #e6e9ec on the light card, #292b2f in dark",
+      "standin": "the track takes the same tonal step as the card",
+      "source": "hand"
+    },
+    {
+      "look": "radius.progress-fill",
+      "title": "Pill-ended progress fill",
+      "note": "Bar fills are pills inside the pill track",
+      "standin": "square-ended fills",
+      "source": "hand"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in pure black",
+      "note": "Footer ghost links are #000000 (#ffffff in dark), apart from the navy-black ink",
+      "standin": "the text ink",
+      "source": "hand"
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "Dark tints as white at 5%",
+      "note": "In dark the secondary button is white at 5% over the page, #17191e",
+      "standin": "one tonal step up, a little lighter (ΔE 0.023)",
+      "source": "hand"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Dark segmented track as white at 5%",
+      "note": "The theme switcher's track is white at 5% over the dark page, #17191e",
+      "standin": "one tonal step up, a little lighter",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "A near-black focus ring",
+      "note": "Rings are `ring` #0c0c0c, a neutral black apart from the navy-black ink",
+      "standin": "`focusColor: neutral` with `controlEdge: strong` rings in the text ink",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in the ring color",
+      "note": "Focus recolors the textarea's 1px edge to `ring` (#0c0c0c, white in dark) and adds a 1px inset ring",
+      "standin": "`focusInputStyle: border` at `thick` draws a 2px edge in the text ink",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.dialog-header",
+      "title": "Dialog title centered in the header",
+      "note": "The Submit feedback dialog centers its 16/500 sans title, with a 36px tinted circular close at the right",
+      "standin": "the title sits left in the heading face",
+      "source": "hand"
+    },
+    {
+      "look": "type.accordion-title",
+      "title": "Accordion questions at 21/400",
+      "note": "FAQ questions are 21/400 in the ink, in 64px rows with 16px block padding",
+      "standin": "14/500",
+      "source": "hand"
+    },
+    {
+      "look": "size.table-row",
+      "title": "Tall table rows",
+      "note": "The fraud page's tables run 97px rows: 24px block padding and 32px between columns around 16/400 cells with agency seals",
+      "standin": "`density: touch` rows",
+      "source": "hand"
+    }
+  ]
+}
