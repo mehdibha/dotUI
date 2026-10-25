@@ -26,6 +26,8 @@ export const docsFileSchema = z.object({
     z.string(),
     z.object({
       status: z.enum(["reviewed", "checked"]),
+      // The product's names for it, when the capture's list is off.
+      called: z.array(z.string()).optional(),
       summary: z.string().optional(),
       groups: z
         .record(

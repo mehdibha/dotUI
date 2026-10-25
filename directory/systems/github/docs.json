@@ -27,7 +27,7 @@
     },
     "button": {
       "status": "reviewed",
-      "summary": "Primer's Button, read off github.com and Primer's Storybook. The product names five looks with data-variant: invisible (the most used, for toolbar actions), default, primary (green, the page's main action), danger and secondary. Two sizes cover almost everything: medium at 32px and small at 28px. Icon-only buttons are squares at the same heights.",
+      "summary": "Primer's Button, read off github.com and Primer's Storybook. The product names its looks with data-variant: invisible (the most used, for toolbar actions), default, primary (green, the page's main action), danger, link and secondary. Two sizes cover almost everything: medium at 32px and small at 28px. Icon-only buttons are squares at the same heights.",
       "groups": {
         "button": {
           "variants": {
@@ -47,16 +47,13 @@
               "note": "Sponsor on search results: github.com's own scheme, not in Primer React."
             },
             "link": {
-              "hide": "avatar buttons in issue rows: see avatar"
+              "note": "Underlined text with no frame: the checks count (19/20) on pull requests."
             },
             "v-klgzcs": {
-              "hide": "the dotted author link in issue rows: see link"
+              "hide": "the dotted author name in issue rows, a hovercard trigger: see link"
             },
-            "v-026pg2": {
-              "hide": "issue labels, drawn as buttons: see badge"
-            },
-            "v-6v376w": {
-              "hide": "noise: an empty box over the Pulse chart"
+            "v-jwoc11": {
+              "hide": "side navigation rows (NavList), like More on search"
             },
             "v-me01zg": {
               "hide": "the × inside a token: see badge"
@@ -65,7 +62,7 @@
               "hide": "the signed-out header's menus (Platform ▾) on its black bar: marketing chrome outside Primer's Button"
             },
             "subtle": {
-              "hide": "icon buttons on the signed-out header's black bar"
+              "hide": "the search and icon buttons on the signed-out header's black bar"
             }
           },
           "sizes": {
@@ -90,8 +87,7 @@
         "The repo header's Notifications, Fork and Star are small default buttons, Fork and Star with a counter."
       ],
       "missing": [
-        "No large (40px) button on the pages read; Primer documents one.",
-        "Primer's link variant shows only as avatar buttons here; no text-link button was read."
+        "No large (40px) button on the pages read; Primer documents one."
       ]
     },
     "badge": {
@@ -122,11 +118,18 @@
               },
               "note": "StateLabel for an open issue: filled green with an icon. The capture took 'small' from a story's size arg."
             },
-            "v-l76cfh": {
-              "hide": "the query highlight in the issues filter (is:issue): not a badge"
+            "v-zlgy42": {
+              "name": {
+                "value": "issue label",
+                "from": "ai"
+              },
+              "note": "An issue label in the repository's own color: filled, ink picked for contrast."
             },
-            "v-y0kcdd": {
-              "hide": "Pulse's 'Unresolved conversations' line: not a badge"
+            "v-jb6i07": {
+              "hide": "another issue label color: the repository's data"
+            },
+            "v-tg0c9f": {
+              "hide": "another issue label color: the repository's data"
             }
           },
           "sizes": {
@@ -136,22 +139,20 @@
             "medium": {
               "note": "StateLabel at its default size."
             },
-            "s-alefcp": {
-              "hide": "the filter's query highlight"
-            },
             "s-ogghbt": {
-              "hide": "the Pulse line"
+              "hide": "Pulse's 'Unresolved conversations' line: not a badge"
             }
           }
         }
       },
       "usage": [
         "Counts sit beside tab names (Issues, Pull requests) and inside the Fork and Star buttons.",
-        "Issue labels take the repository's own colors and are buttons, so the capture put them under button."
+        "Issue labels take the repository's own colors, so each color reads as its own look; one stands for all."
       ],
       "missing": [
         "Label's attention, severe, danger, done and sponsors colors weren't read; Storybook has a story for each.",
-        "Topic tags (blue fill, blue ink) are links, so they landed under link."
+        "Topic tags (blue fill, blue ink) are links, so they landed under link.",
+        "StateLabel's closed, merged and draft states weren't read."
       ]
     },
     "link": {
@@ -212,6 +213,9 @@
             "subtle": {
               "hide": "Sign in on the signed-out header's black bar"
             },
+            "v-jwoc11": {
+              "hide": "side navigation rows (NavList): Assigned to me, Created by me"
+            },
             "v-jayerw": {
               "hide": "the GitHub logo in the header"
             }
@@ -247,6 +251,16 @@
             },
             "s-md1iui": {
               "hide": "topic tags"
+            },
+            "s-grstx8": {
+              "hide": "topic tags in the About sidebar"
+            },
+            "s-qk05q4": {
+              "name": {
+                "value": "12px text",
+                "from": "ai"
+              },
+              "note": "The Languages list."
             }
           }
         }
@@ -278,20 +292,21 @@
             "v-l3mmcb": {
               "hide": "timeline badges: an icon in a circle"
             },
-            "v-37ifn0": {
-              "hide": "a label's color dot in the label picker"
+            "v-x71jmd": {
+              "name": {
+                "value": "stacked",
+                "from": "docs"
+              },
+              "note": "Overlapping avatars on the latest commit (AvatarStack)."
             },
-            "v-3j89hz": {
-              "hide": "a label's color dot in the label picker"
+            "v-m7sn3r": {
+              "hide": "AvatarStack's back layers in Storybook"
             },
-            "v-3tp8rs": {
-              "hide": "a label's color dot in the label picker"
+            "v-mifivo": {
+              "hide": "AvatarStack's back layers in Storybook"
             },
-            "v-meur2q": {
-              "hide": "a label's color dot in the label picker"
-            },
-            "v-noczce": {
-              "hide": "a label's color dot in the label picker"
+            "v-ha11bi": {
+              "hide": "an avatar on a hovered menu row: the fill is the row's"
             }
           },
           "sizes": {
@@ -348,13 +363,6 @@
               },
               "note": "The grey band on top of a box: the latest commit row."
             },
-            "v-qrbii8": {
-              "name": {
-                "value": "box header",
-                "from": "docs"
-              },
-              "note": "The issues list's header: Open and Closed, the filters."
-            },
             "v-5k1sp6": {
               "name": {
                 "value": "box, list",
@@ -362,59 +370,34 @@
               },
               "note": "The issues list."
             },
-            "v-j595qo": {
-              "hide": "the command palette's search field: see text-field"
-            },
-            "v-iwja1a": {
-              "hide": "dialog headers: see dialog"
-            },
             "v-l7d1ng": {
               "hide": "dialog body rows: see dialog"
-            },
-            "v-c2636e": {
-              "hide": "Storybook's popover: see popover"
-            },
-            "v-d0ozdz": {
-              "hide": "the command palette's footer"
-            },
-            "warning": {
-              "hide": "Go to file's border wrapper: see text-field"
-            },
-            "error": {
-              "hide": "a text field's border wrapper (validation story)"
-            },
-            "v-bwvnrb": {
-              "hide": "a text field's border wrapper (validation story)"
-            },
-            "v-cxqi4a": {
-              "hide": "a text field's border wrapper (contrast story)"
             },
             "v-42g5hf": {
               "hide": "a Storybook placeholder"
             },
-            "v-dv9gx2": {
-              "hide": "a Storybook placeholder"
+            "v-ttaazn": {
+              "hide": "the label picker's filter field in Storybook: a text field"
             },
-            "v-458tnt": {
-              "hide": "a Storybook placeholder"
+            "v-wxuy4k": {
+              "name": {
+                "value": "expanded detail",
+                "from": "ai"
+              },
+              "note": "The latest commit's full message, opened under its row."
             },
             "v-ptsrp5": {
               "hide": "sidebar sections: ruled, not boxed"
-            },
-            "v-zq3b5f": {
-              "hide": "a select panel in Storybook: see popover"
             }
           },
           "sizes": {
-            "medium": {
+            "s-15zhf5": {
               "note": "Boxes have no size: they take their content's height."
             }
           }
         }
       },
-      "missing": [
-        "Text field wrappers, dialog parts and the command palette landed here: the census reads them as panels."
-      ]
+      "missing": ["Storybook's yellow placeholders still read as boxes."]
     },
     "dialog": {
       "status": "reviewed",
@@ -456,6 +439,13 @@
                 "from": "ai"
               },
               "note": "Suggestions under a field (Storybook)."
+            },
+            "v-9y2lqg": {
+              "name": {
+                "value": "autocomplete",
+                "from": "ai"
+              },
+              "note": "The same overlay, read only in dark."
             },
             "v-gaani7": {
               "hide": "tooltips: see tooltip"
@@ -502,39 +492,52 @@
     },
     "text-field": {
       "status": "reviewed",
-      "summary": "Primer's TextInput is a 32px bordered wrapper (6px corners, a faint inset shadow) around a borderless input. Focus turns the border blue and adds a 2px outline. Textareas share the look.",
+      "summary": "Primer's TextInput: 32px, a 1px #d1d9e0 border, 6px corners and a faint inset shadow at the top, text inset 12px (32px after a leading icon). Focus turns the border blue and adds a 2px outline. Validation colors the border; contrast fills it grey. Textareas share the look.",
       "groups": {
         "textbox": {
           "variants": {
-            "v-026pg2": {
+            "warning": {
               "name": {
                 "value": "default",
                 "from": "docs"
               },
-              "note": "The input inside the wrapper, so it has no border of its own."
+              "note": "The capture took 'warning' from a story's validation arg; the look is the plain field."
+            },
+            "v-hjv7ln": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "Validated: a green border."
             },
             "v-p3xq3w": {
               "name": {
-                "value": "read-only",
+                "value": "contrast",
+                "from": "docs"
+              },
+              "note": "Grey fill: Storybook's contrast story, the clone URL."
+            },
+            "v-umond2": {
+              "name": {
+                "value": "focused",
                 "from": "ai"
               },
-              "note": "The clone URL: grey fill, monospace."
+              "note": "The branch filter, focused as its panel opens: blue border."
             }
           },
           "sizes": {
-            "s-pe0209": {
+            "s-7ilnvj": {
               "name": {
                 "value": "medium",
                 "from": "docs"
-              },
-              "note": "32px with the wrapper's border."
+              }
             },
-            "s-37nafw": {
+            "s-tmcwep": {
               "name": {
                 "value": "medium, leading icon",
                 "from": "ai"
               },
-              "note": "The wrapper holds the padding: Go to file, the branch filter."
+              "note": "The branch filter."
             },
             "s-houu6l": {
               "name": {
@@ -543,27 +546,31 @@
               },
               "note": "The clone URL."
             },
-            "s-t7zi9m": {
+            "s-tmfirw": {
               "name": {
                 "value": "textarea",
                 "from": "docs"
               }
             },
-            "s-q7ouxx": {
+            "s-3lyr0b": {
               "name": {
                 "value": "textarea, auto-size",
                 "from": "ai"
               }
             },
-            "s-xcgsbx": {
-              "hide": "the typing area inside a token field"
+            "medium": {
+              "name": {
+                "value": "token field",
+                "from": "ai"
+              },
+              "note": "Grows with its tokens; the capture's 437px padding is the typing area's offset after them."
             }
           }
         }
       },
       "missing": [
         "Small (28px) and large (40px) inputs weren't read; Primer documents both.",
-        "The bordered wrapper landed under card, so the looks here have no border."
+        "The error state wasn't read."
       ]
     },
     "field": {
@@ -610,6 +617,9 @@
           "variants": {
             "horizontal-inset": {
               "note": "The command palette's list."
+            },
+            "inset": {
+              "note": "Autocomplete's list (Storybook, dark)."
             }
           }
         },
@@ -631,6 +641,20 @@
                 "from": "ai"
               },
               "note": "The hovered or keyboard-active row."
+            },
+            "v-q07nwa": {
+              "name": {
+                "value": "autocomplete, active",
+                "from": "ai"
+              },
+              "note": "Dark only: a blue bar marks it."
+            },
+            "v-o9yvgp": {
+              "name": {
+                "value": "autocomplete",
+                "from": "ai"
+              },
+              "note": "Dark only."
             }
           }
         }
@@ -638,7 +662,7 @@
     },
     "menu": {
       "status": "reviewed",
-      "summary": "Menus are ActionLists in an overlay: 32px rows, inset from the edges, with shortcuts right-aligned.",
+      "summary": "Menus are ActionLists in an overlay: 32px rows inset from the edges, shortcuts right-aligned, a check for the current choice in single-select menus.",
       "groups": {
         "menu": {
           "variants": {
@@ -649,17 +673,28 @@
         },
         "menuitem": {
           "variants": {
-            "danger": {
+            "v-026pg2": {
               "name": {
                 "value": "default",
-                "from": "ai"
+                "from": "docs"
               },
-              "note": "The capture named it danger, but the item it read is a plain one (Copy link)."
+              "note": "Action rows: Copy link, Quote reply."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "single select",
+                "from": "docs"
+              },
+              "note": "Pulse's period menu: a check marks the current one."
             }
           }
         }
       },
-      "missing": ["A danger item (red ink) wasn't read on its own."]
+      "missing": ["A danger item (red ink) wasn't read."]
     },
     "pagination": {
       "status": "reviewed",
@@ -696,7 +731,10 @@
     },
     "progress-bar": {
       "status": "reviewed",
-      "summary": "Thin 8px bars, split into colored segments: green and purple on Pulse, each language's own color in Languages.",
+      "summary": "Thin 8px bars with rounded ends, split into colored segments: green and purple on Pulse, each language's own color in Languages.",
+      "missing": [
+        "Only Pulse's green segment reads as a progress bar; the other segments now read as plain boxes."
+      ],
       "groups": {
         "progressbar": {
           "variants": {
@@ -706,28 +744,6 @@
                 "from": "docs"
               },
               "note": "Green: open items on Pulse."
-            },
-            "v-a1vbkp": {
-              "name": {
-                "value": "done",
-                "from": "docs"
-              },
-              "note": "Purple: merged pull requests on Pulse."
-            },
-            "v-6ttqpe": {
-              "hide": "a language's color in the Languages bar: data, not a variant"
-            },
-            "v-78sz5n": {
-              "hide": "a language's color in the Languages bar: data, not a variant"
-            },
-            "v-fz0jla": {
-              "hide": "a language's color in the Languages bar: data, not a variant"
-            },
-            "v-gjd2a0": {
-              "hide": "a language's color in the Languages bar: data, not a variant"
-            },
-            "v-ysecf6": {
-              "hide": "a language's color in the Languages bar: data, not a variant"
             }
           },
           "sizes": {
@@ -819,24 +835,22 @@
               }
             },
             "v-g6fqwu": {
-              "hide": "the signed-out header's bottom edge"
+              "name": {
+                "value": "on dark",
+                "from": "ai"
+              },
+              "note": "The signed-out header's bottom rule."
+            },
+            "v-2xul0b": {
+              "name": {
+                "value": "drag handle",
+                "from": "docs"
+              },
+              "note": "PageLayout's pane resize handle, 5px wide."
             }
           }
         }
       }
-    },
-    "slider": {
-      "status": "reviewed",
-      "groups": {
-        "slider": {
-          "variants": {
-            "v-2xul0b": {
-              "hide": "the search page's pane resize handle: not a slider"
-            }
-          }
-        }
-      },
-      "missing": ["Primer has no slider and the pages read show none."]
     },
     "switch": {
       "status": "reviewed",
@@ -906,42 +920,100 @@
       "groups": {
         "select": {
           "variants": {
-            "v-026pg2": {
+            "v-b0t6k7": {
               "name": {
                 "value": "default",
                 "from": "docs"
               },
-              "note": "A native select in Primer's wrapper, which draws the border."
+              "note": "A native select in TextInput's frame, with a chevron."
             }
           }
         }
-      }
+      },
+      "missing": [
+        "Only one select was read (Storybook); github.com's filters are menus, not selects."
+      ]
     },
     "combobox": {
       "status": "reviewed",
+      "summary": "Search fields with suggestions share TextInput's frame: Go to file, the issues filter, Autocomplete.",
       "groups": {
         "combobox": {
           "variants": {
-            "v-026pg2": {
+            "v-b0t6k7": {
               "name": {
                 "value": "default",
                 "from": "docs"
               },
-              "note": "The input of Go to file and Autocomplete; the wrapper draws the border."
+              "note": "Go to file, with a search icon."
+            },
+            "v-108kso": {
+              "name": {
+                "value": "filter bar",
+                "from": "ai"
+              },
+              "note": "The issues search: full width, query terms highlighted, no inset shadow."
+            },
+            "v-umond2": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "Blue border (Storybook's Autocomplete)."
+            },
+            "v-p3xq3w": {
+              "name": {
+                "value": "contrast",
+                "from": "docs"
+              },
+              "note": "Grey fill."
             }
           },
           "sizes": {
-            "s-pe0209": {
+            "s-a48inn": {
               "name": {
                 "value": "medium",
                 "from": "docs"
               }
             },
-            "s-37nafw": {
+            "s-tmcwep": {
               "name": {
                 "value": "medium, leading icon",
                 "from": "ai"
               }
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "called": [],
+      "summary": "UnderlineNav: 32px tabs with an icon, a label and sometimes a counter; the current one is 600 with a 2px coral underline.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-e9dqlp": {
+              "name": {
+                "value": "repository tabs",
+                "from": "ai"
+              },
+              "note": "Code, Issues, Pull requests on the header band."
+            },
+            "v-026pg2": {
+              "name": {
+                "value": "README tabs",
+                "from": "ai"
+              },
+              "note": "README, Contributing, MIT license inside the README box."
+            },
+            "invisible": {
+              "hide": "the More overflow at the end: a button"
+            }
+          },
+          "sizes": {
+            "s-vx547w": {
+              "note": "8px padding, icon then label."
             }
           }
         }

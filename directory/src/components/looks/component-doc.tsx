@@ -17,7 +17,8 @@ type Axis = SpecGrid["variants"][number] | SpecGrid["sizes"][number]
 type Written = NonNullable<DocsBlock["groups"]>[string]
 type Name = NonNullable<Axis["name"] | DocsEntry["name"]>
 
-const SHOWN = 6
+/** Variant tiles and size rows shown per axis. */
+const SHOWN = { variants: 9, sizes: 6 }
 
 const SOURCES = {
   attribute: (name: Name) => ("key" in name ? name.key : "attribute"),
@@ -99,6 +100,13 @@ export function WrittenBlock({
   )
 }
 
+const SIZE_KEYS = ["height", "paddingInline", "fontSize", "iconSize"]
+
+function resizes(cell: Cell) {
+  const values = cell.values?.light ?? cell.values?.dark
+  return SIZE_KEYS.some((key) => values?.[key] !== undefined)
+}
+
 export function ComponentDoc({
   slug,
   id,
@@ -116,7 +124,9 @@ export function ComponentDoc({
       id={id}
       title={id}
       doc={doc}
-      called={[...new Set(spec.names?.map((name) => name.value))]}
+      called={
+        doc?.called ?? [...new Set(spec.names?.map((name) => name.value))]
+      }
     >
       {grids.map((grid) => (
         <GridDoc
@@ -150,19 +160,27 @@ function GridDoc({
     )
     .sort((a, b) => b.count - a.count)
   // A variant or size reached only through left-out looks goes with them.
-  const variants = grid.variants.filter((v) =>
-    cells.some((c) => c.variant === v.key),
-  )
-  const kept = grid.sizes.filter((s) => cells.some((c) => c.size === s.key))
+  // Named ones come first (by the product, then by the written docs), each
+  // run most used first.
+  const rank = (axis: "variants" | "sizes", entry: Axis) =>
+    entry.name ? 0 : written?.[axis]?.[entry.key]?.name ? 1 : 2
+  const variants = grid.variants
+    .filter((v) => cells.some((c) => c.variant === v.key))
+    .sort((a, b) => rank("variants", a) - rank("variants", b))
+  const kept = grid.sizes
+    .filter((s) => cells.some((c) => c.size === s.key))
+    .sort((a, b) => rank("sizes", a) - rank("sizes", b))
   const variantName = (key: string) =>
     written?.variants?.[key]?.name ??
     grid.variants.find((v) => v.key === key)?.name
   const sizeName = (key: string) =>
     written?.sizes?.[key]?.name ?? grid.sizes.find((s) => s.key === key)?.name
-  // A size reads as its most used kept cell: a size's own values come from
-  // its most used look, which can be a variant left out (an avatar button).
-  const sizes = kept.slice(0, SHOWN).map((size) => {
-    const cell = cells.find((c) => c.size === size.key)
+  // A size's own values come from its most used look, which can be a variant
+  // left out (an avatar button). They stand when a kept cell matches them;
+  // otherwise the size reads as its most used kept cell.
+  const sizes = kept.slice(0, SHOWN.sizes).map((size) => {
+    const ofSize = cells.filter((c) => c.size === size.key)
+    const cell = ofSize.some((c) => !resizes(c)) ? undefined : ofSize[0]
     return {
       ...size,
       values: {
@@ -172,7 +190,7 @@ function GridDoc({
     }
   })
   sizes.sort((a, b) => px(a.values.height) - px(b.values.height))
-  const top = cells[0]
+  const top = cells.find((c) => c.variant === variants[0]?.key)
   const left = [
     ...Object.entries(written?.variants ?? {}),
     ...Object.entries(written?.sizes ?? {}),
@@ -184,9 +202,9 @@ function GridDoc({
         <h4 className="font-mono text-xs text-fg-muted">{grid.group}</h4>
       )}
       {variants.length > 0 && (
-        <Part title="Variants" note={axisNote(variants)}>
+        <Part title="Variants" note={axisNote(variants, SHOWN.variants)}>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {variants.slice(0, SHOWN).map((variant) => (
+            {variants.slice(0, SHOWN.variants).map((variant) => (
               <figure
                 key={variant.key}
                 className="flex flex-col overflow-hidden rounded-lg border"
@@ -219,7 +237,7 @@ function GridDoc({
         </Part>
       )}
       {sizes.length > 0 && (
-        <Part title="Sizes" note={axisNote(kept)}>
+        <Part title="Sizes" note={axisNote(kept, SHOWN.sizes)}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-120 text-left text-xs">
               <thead className="text-fg-muted">
@@ -295,7 +313,7 @@ function GridDoc({
 function States({ slug, cell, of }: { slug: string; cell: Cell; of: string }) {
   const shown = STATES.filter((state) => copyOf(cell, state))
   return (
-    <Part title="States" note={`Of its most used look${of ? `, ${of}` : ""}.`}>
+    <Part title="States" note={`Of its first variant${of ? `, ${of}` : ""}.`}>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((state) => (
           <figure
@@ -344,11 +362,11 @@ function NameLabel({ name, id }: { name?: Name; id: string }) {
   )
 }
 
-function axisNote(axis: Axis[]) {
+function axisNote(axis: Axis[], shown: number) {
   const named = axis.filter((entry) => entry.name).length
   return [
     `${axis.length} found, ${named} named by the product`,
-    axis.length > SHOWN && `the ${SHOWN} most used shown`,
+    axis.length > shown && `${shown} shown, named first`,
   ]
     .filter(Boolean)
     .join(" · ")
