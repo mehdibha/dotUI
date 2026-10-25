@@ -1630,22 +1630,24 @@ function argNames(pages: CensusPage[]) {
 /** Each key's values over the members, most used first. A component's
  *  element without one of its data attributes shows the default, so a
  *  data-* value names the look only when at least half the members a
- *  data-component names carry it (not one danger item among plain ones),
- *  or half of them all when none is named (not GitHub's repo tabs by the
- *  counter two of them hold). */
+ *  data-component names carry it, counting only those (not one danger item
+ *  among plain ones), or half of them all when none is named (not GitHub's
+ *  repo tabs by the counter two of them hold). */
 const tally = (names: Names[]) => {
+  const components = names.filter((each) => each["data-component"]).length
+  const voted = (key: string) =>
+    key.startsWith("data-") &&
+    !["data-component", "data-slot", "data-part"].includes(key)
   const counts = new Map<string, Map<string, number>>()
   for (const each of names)
     for (const [key, value] of Object.entries(each)) {
+      if (components && voted(key) && !each["data-component"]) continue
       const values = counts.get(key) ?? new Map<string, number>()
       values.set(value, (values.get(value) ?? 0) + 1)
       counts.set(key, values)
     }
-  const components = names.filter((each) => each["data-component"]).length
   const holds = (key: string, count: number) =>
-    !key.startsWith("data-") ||
-    ["data-component", "data-slot", "data-part"].includes(key) ||
-    count * 2 >= (components || names.length)
+    !voted(key) || count * 2 >= (components || names.length)
   return Object.fromEntries(
     [...counts]
       .sort(([a], [b]) => a.localeCompare(b))

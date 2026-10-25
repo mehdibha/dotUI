@@ -302,6 +302,20 @@ describe("census", () => {
       "data-component": ["ActionList.Item"],
       "data-variant": ["danger"],
     })
+    // Only the named members vote: two unnamed promo items don't name three.
+    const promo = (id: number, x: number) => ({
+      ...button(id, x, blue),
+      names: { "data-variant": "promo" },
+    })
+    expect(
+      namesOf([
+        item(1, 0),
+        item(2, 100),
+        item(3, 200),
+        promo(4, 300),
+        promo(5, 400),
+      ]),
+    ).toEqual({ "data-component": ["ActionList.Item"] })
     // No component named: half of all the members.
     const tab = (id: number, x: number, variant?: string) => ({
       ...button(id, x, blue),
