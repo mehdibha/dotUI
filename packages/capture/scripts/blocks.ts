@@ -393,6 +393,9 @@ try {
 }
 
 await mkdir(OUT, { recursive: true })
+const before: BlocksFile | undefined = existsSync(systemFile)
+  ? await readJson(systemFile)
+  : undefined
 const blocks = new Map<string, Block>()
 const layouts = new Map<string, PageLayout>()
 for (const { job, layout, frozen } of results) {
@@ -420,7 +423,13 @@ for (const { job, layout, frozen } of results) {
       ...(pass?.length ? { pass } : {}),
       // The first mode's: the page's regions are read in it too.
       box,
-      copies: {},
+      // A mode this run didn't freeze keeps its last copy, as a block it
+      // froze in no mode keeps its whole record.
+      copies: {
+        ...before?.blocks.find(
+          (known) => known.name === name && known.page === job.key,
+        )?.copies,
+      },
       ...(redact ? { redacted: true as const } : {}),
     }
     block.copies[job.mode] = `${today}/blocks/${copy}.json`
@@ -431,9 +440,6 @@ for (const { job, layout, frozen } of results) {
 // What this run read replaces what the file held; the rest stays while
 // targets.json still lists it.
 const visited = new Set(jobs.map((job) => job.key))
-const before: BlocksFile | undefined = existsSync(systemFile)
-  ? await readJson(systemFile)
-  : undefined
 const order = Object.keys(targets)
 const names = order.flatMap((key) => Object.keys(targets[key]?.blocks ?? {}))
 const pages = [

@@ -241,10 +241,16 @@ export async function openPage(
         if (request.resourceType() === "stylesheet") missing.add(request.url())
       })
       page.on("response", (response) => {
+        const status = response.status()
+        // A redirect answers again from where it leads.
         if (
-          response.request().resourceType() === "stylesheet" &&
-          !response.ok()
+          response.request().resourceType() !== "stylesheet" ||
+          (status >= 300 && status < 400)
         )
+          return
+        // Chrome ignores a stylesheet served as anything but text/css.
+        const type = response.headers()["content-type"]
+        if (!response.ok() || (type && !/^text\/css\b/i.test(type)))
           missing.add(response.url())
       })
     }
