@@ -1,0 +1,824 @@
+{
+  "version": 1,
+  "slug": "vercel",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Geist is near-greyscale. Light pages are #fafafa with #fff cards, fields and menus, #171717 ink and #4d4d4d for secondary text. Dark pages are #000 with #0a0a0a surfaces, #ededed ink and #a1a1a1 secondary. Every hairline is one alpha grey: black at 8% in light (#ebebeb on white), white at 14% in dark. The main action is the ink itself, not a color. Blue (#0072f5) is kept for focus rings, switches and sliders; red #da2f35 and amber #ff990a for the error and warning buttons.",
+      "usage": [
+        "Badges and Notes come in ten color scales, each as a solid and a subtle (tinted) pair.",
+        "The signed-in dashboard (Mehdi's 2026-10-22 local capture, not in this census) uses blue links at 400 and only subtle badges."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Geist for all text and Geist Mono for code. Most UI is 14px on a 20px line at 400; buttons, badges and labels take 500. Headings are 600 with tight tracking: 24px on 32px at -0.96px, 20px on 26px at -0.4px. Some docs elements set GeistSans, an alias of the same font."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "6px corners on buttons, fields, selects and menu rows; 8px at the large size. Menus and modals round to 12px, tooltips 8px, keyboard keys 4px. Badges and the rounded buttons are pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 2px grid where 8px is the most common gap. Buttons and fields are 32, 36 or 40px (small, medium, large), with 6, 10 and 14px sides on buttons and 12px on fields. Menu rows are 36px with 8px padding inside a 6px inset."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Mostly flat: surfaces are set apart by a 1px alpha ring drawn as a shadow, not a border. Menus add soft drops (0 1px 1px at 2%, 0 4px 8px -4px at 4%, 0 16px 24px -8px at 6%) and modals deeper ones (up to 0 32px 72px -12px). Focus is a 2px #0072f5 ring 2px outside; fields and selects use a grey focus border with a 3px halo instead."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Five types share one shape: default (the ink), secondary (white in a hairline ring), tertiary (no fill), error and warning. All are 500 at 14px with 6px corners, in small (32px), medium (36px, the default) and large (40px, 16px text, 8px corners). Icon-only buttons are squares or circles from 24 to 40px. A disabled button of any type turns #f2f2f2 with #8f8f8f text.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-wyy6gc": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "#171717 under white in light, #ededed under #0a0a0a in dark; #383838 on hover."
+            },
+            "v-qvui7q": {
+              "name": {
+                "value": "secondary",
+                "from": "docs"
+              },
+              "note": "#fff inside a 1px #ebebeb ring, #171717 text; #f2f2f2 on hover."
+            },
+            "v-vhauv2": {
+              "name": {
+                "value": "tertiary",
+                "from": "docs"
+              },
+              "note": "No fill and no ring; #ebebeb on hover."
+            },
+            "v-3popcy": {
+              "name": {
+                "value": "error",
+                "from": "docs"
+              },
+              "note": "#da2f35 under #f5f5f5; #ae292f on hover."
+            },
+            "v-mxu7oi": {
+              "name": {
+                "value": "warning",
+                "from": "docs"
+              },
+              "note": "#ff990a under #0a0a0a, in both modes."
+            },
+            "v-c22ug7": {
+              "name": {
+                "value": "rounded",
+                "from": "docs"
+              },
+              "note": "shape=\"rounded\" with the shadow prop, for marketing pages: a white pill with 12px sides."
+            },
+            "v-7bpa60": {
+              "name": {
+                "value": "custom",
+                "from": "docs"
+              },
+              "note": "CustomButton: the docs' Upgrade to Pro example in #0072f5."
+            },
+            "v-lg8g61": {
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
+              "note": "Upgrade in a disabled Note: #f2f2f2 under #8f8f8f with a 1px #dfdfdf edge."
+            },
+            "v-9ogkxj": {
+              "note": "Esc in the command menu's field: a 20px key-like button."
+            },
+            "v-tkxhqj": {
+              "hide": "the docs' Show code toggle under each example"
+            },
+            "v-en6i74": {
+              "hide": "the docs' Search Geist button in the header"
+            },
+            "v-h3f0t9": {
+              "hide": "an avatar used as the menu demo's trigger, no button look of its own"
+            }
+          },
+          "sizes": {
+            "s-003hlc": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "32px, 6px sides."
+            },
+            "s-oft7vp": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "36px, 10px sides: the default."
+            },
+            "s-fbpzse": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "40px, 14px sides, 16px text, 8px corners."
+            },
+            "s-mupp0d": {
+              "note": "Icon only, 24px, 4px corners."
+            },
+            "s-0j17g4": {
+              "note": "Icon only, 32px."
+            },
+            "s-wg5bfk": {
+              "note": "Icon only, 36px."
+            },
+            "s-fn0ocv": {
+              "note": "Icon only, 40px, 8px corners."
+            },
+            "s-7ilnvj": {
+              "note": "The small rounded button: 32px with 12px sides."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "The docs pages have no standalone Link demo. What reads as links is the site's navigation (ink at 400, no underline), the links inside Notes (the Note's dark shade at 500) and a ButtonLink.",
+      "missing": [
+        "The dashboard's blue links (Mehdi's local capture) aren't in this census."
+      ],
+      "groups": {
+        "link": {
+          "variants": {
+            "v-1tyr9i": {
+              "name": {
+                "value": "nav",
+                "from": "ai"
+              },
+              "note": "The docs sidebar and the on-page contents: 16px #171717 at 400 in light, #ededed in dark."
+            },
+            "v-tkxhqj": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "The Button component link in the Menu page's prose: #4d4d4d at 400."
+            },
+            "v-vhauv2": {
+              "name": {
+                "value": "note",
+                "from": "ai"
+              },
+              "note": "the documentation inside a default Note: the Note's ink at 500."
+            },
+            "v-rdzx1g": {
+              "note": "A badge used as a link: a white pill in the hairline ring, 500."
+            },
+            "v-wyy6gc": {
+              "note": "ButtonLink: Sign Up, a default button that navigates."
+            },
+            "v-y2zv1q": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-1ws2js": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-21r5mh": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-4axu02": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-8ppr2b": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-fuxlav": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-hxm8rf": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-n9d28w": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-t32ymv": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-vc120e": {
+              "hide": "the same link inside a Note of another type"
+            },
+            "v-wvgj2c": {
+              "hide": "the same link inside a Note of another type"
+            }
+          },
+          "sizes": {
+            "s-09221v": {
+              "note": "A sidebar row, 40px."
+            },
+            "s-gxlsfk": {
+              "note": "An on-page contents row, 32px with 20px sides."
+            },
+            "s-6pzf7f": {
+              "note": "A nested contents row, 26px."
+            },
+            "s-vl9fae": {
+              "note": "Next under each page: a 56px pager row."
+            },
+            "s-m4npec": {
+              "note": "Previous: the same pager row."
+            },
+            "s-aqfw60": {
+              "hide": "the Geist Design System logo in the header"
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Pills at 500 in ten colors, each as a solid fill and a subtle tint with darker text. Small is 20px (11px text), medium 24px (12px, the default), large 32px (14px). Two gradient badges, trial and turborepo, close the set.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-nlg4yq": {
+              "name": {
+                "value": "gray",
+                "from": "docs"
+              },
+              "note": "#4d4d4d under white."
+            },
+            "v-n4kkde": {
+              "name": {
+                "value": "gray-subtle",
+                "from": "docs"
+              },
+              "note": "#ebebeb under #171717."
+            },
+            "v-dt8viq": {
+              "name": {
+                "value": "blue",
+                "from": "docs"
+              },
+              "note": "#0062d1 under white."
+            },
+            "v-5nd6l4": {
+              "name": {
+                "value": "blue-subtle",
+                "from": "docs"
+              },
+              "note": "A pale blue under #0068d6; #52a8ff text in dark."
+            },
+            "v-hjiv8p": {
+              "name": {
+                "value": "purple",
+                "from": "docs"
+              }
+            },
+            "v-16ug0i": {
+              "name": {
+                "value": "purple-subtle",
+                "from": "docs"
+              }
+            },
+            "v-6vfqwr": {
+              "name": {
+                "value": "amber",
+                "from": "docs"
+              },
+              "note": "#ffb224 under black."
+            },
+            "v-ab4zj3": {
+              "name": {
+                "value": "amber-subtle",
+                "from": "docs"
+              }
+            },
+            "v-t3bcjs": {
+              "name": {
+                "value": "red",
+                "from": "docs"
+              },
+              "note": "#cb2a2f under white."
+            },
+            "v-ex526o": {
+              "name": {
+                "value": "red-subtle",
+                "from": "docs"
+              }
+            },
+            "v-mtqubh": {
+              "name": {
+                "value": "pink",
+                "from": "docs"
+              }
+            },
+            "v-kl0qmk": {
+              "name": {
+                "value": "pink-subtle",
+                "from": "docs"
+              }
+            },
+            "v-ktcp25": {
+              "name": {
+                "value": "green",
+                "from": "docs"
+              }
+            },
+            "v-sljgbu": {
+              "name": {
+                "value": "green-subtle",
+                "from": "docs"
+              }
+            },
+            "v-fg2ck7": {
+              "name": {
+                "value": "teal",
+                "from": "docs"
+              }
+            },
+            "v-famzjz": {
+              "name": {
+                "value": "teal-subtle",
+                "from": "docs"
+              }
+            },
+            "v-rm3zj5": {
+              "name": {
+                "value": "inverted",
+                "from": "docs"
+              },
+              "note": "#171717 under #f2f2f2; flips to #ededed in dark."
+            },
+            "v-uwxbke": {
+              "name": {
+                "value": "trial",
+                "from": "docs"
+              },
+              "note": "A 135deg gradient from #0070f3 to #f81ce5."
+            },
+            "v-5kdae5": {
+              "name": {
+                "value": "turborepo",
+                "from": "docs"
+              },
+              "note": "A 135deg gradient from #ff1e56 to #0096ff."
+            },
+            "v-z2dmia": {
+              "hide": "the Switch's selected segment (Source / Output), a segmented control"
+            },
+            "v-5yf0b1": {
+              "hide": "the Switch's segment, a segmented control"
+            },
+            "v-wxjnds": {
+              "hide": "the Toggle's track, a switch"
+            }
+          },
+          "sizes": {
+            "s-hav6s5": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "20px, 8px sides, 11px."
+            },
+            "s-mnewsa": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "24px, 12px sides, 12px."
+            },
+            "s-7ilnvj": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "32px, 12px sides, 14px."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-q0jt5k": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "#4d4d4d at 400; the current tab turns #171717 with a 2px ink bottom border."
+            }
+          },
+          "sizes": {
+            "s-wbnbsc": {
+              "note": "The primary tabs: 50px with 2px sides and 24px gaps."
+            },
+            "s-7700eo": {
+              "note": "The secondary tabs: 32px with 12px sides, 6px corners, 13px text; the current one sits on #ebebeb."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "primary": {
+              "note": "Underlined tabs."
+            },
+            "secondary": {
+              "note": "Pill tabs."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Inputs are #fff with 12px sides at 14px, inside a wrapper that draws the hairline ring and the focus border (1px at 34% black plus a 4px halo at 16%). Small is 32px, medium 36px, large 40px at 16px. An error turns the ring #cb2a2f; disabled fills #f2f2f2 under #8f8f8f.",
+      "missing": [
+        "The wrapper that draws the ring, the error and the disabled fill landed under card, so the input reads here with no edge."
+      ],
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "An input or textarea on its own wrapper."
+            },
+            "v-h3f0t9": {
+              "name": {
+                "value": "with prefix",
+                "from": "ai"
+              },
+              "note": "An input with a prefix or suffix icon in the same wrapper."
+            }
+          },
+          "sizes": {
+            "s-7ilnvj": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "32px."
+            },
+            "s-cajuyz": {
+              "name": {
+                "value": "medium",
+                "from": "ai"
+              },
+              "note": "36px: the default."
+            },
+            "s-1incjg": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "40px, 16px text."
+            },
+            "s-cm6j2v": {
+              "note": "The docs' feedback textarea, 100px with 10px top and bottom padding."
+            }
+          }
+        }
+      }
+    },
+    "search-field": {
+      "status": "reviewed",
+      "groups": {
+        "searchbox": {
+          "variants": {
+            "v-h3f0t9": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "The Search input: the medium input with a search icon; Escape clears it."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "summary": "A native select in the same frame as the input: #fff in the hairline ring, 6px corners (8px at large), 36px tall by default with room for the chevron. Focus turns the edge #a8a8a8 with a 3px #d6d6d6 halo.",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-atrcko": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              }
+            }
+          },
+          "sizes": {
+            "s-7ilnvj": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "32px."
+            },
+            "s-cajuyz": {
+              "name": {
+                "value": "medium",
+                "from": "ai"
+              },
+              "note": "36px: the default."
+            },
+            "s-1incjg": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "40px, 16px text."
+            },
+            "s-hkjyk6": {
+              "note": "Small with a prefix icon: 40px sides."
+            },
+            "s-8w04hm": {
+              "note": "Medium with a prefix icon."
+            },
+            "s-6165xt": {
+              "note": "Large with a prefix icon."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "missing": ["No radio page is in this census."],
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-q0jt5k": {
+              "hide": "the docs' feedback emoji picker"
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-r7rapa": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Actions: #fff, 12px corners, a 6px inset, the hairline ring with soft drops."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-h3f0t9": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "One: #171717 at 400; #f2f2f2 on hover."
+            },
+            "v-48u7ks": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "Delete: #cb2a2f text; #fff0f0 on hover."
+            }
+          },
+          "sizes": {
+            "s-1nbl9y": {
+              "note": "36px with 8px sides and 6px corners."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "The command menu's list: group labels over 36px rows with 6px corners, the active row on #f2f2f2.",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "command",
+                "from": "ai"
+              },
+              "note": "The Command Menu's results, 8px padding."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-h3f0t9": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Import Extension."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "The command menu's field: 53px with 16px sides, 18px text, a 1px rule under it and no ring."
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-q47fss": {
+              "name": {
+                "value": "modal",
+                "from": "ai"
+              },
+              "note": "Create Token: #fff, 12px corners, the hairline ring with drops up to 0 32px 72px -12px, with Cancel and Submit in its footer."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-masqbp": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Inverted: #0a0a0a under #ededed in light, white under #171717 in dark; 8px corners, 8px sides, 13px, with an arrow."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-p96dih": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The Materials table: 56px rows on the page fill, a 1px #ebebeb rule under each."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Surfaces are #fff with 8px corners and a 1px #ebebeb edge, on the #fafafa page.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-a8wel5": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The docs' example frame: #fff in a 1px #ebebeb edge, 8px corners."
+            },
+            "v-51jsxn": {
+              "hide": "the docs' Give feedback widget"
+            },
+            "v-ja4dc7": {
+              "hide": "an input's wrapper in its error state"
+            },
+            "v-qbfgwt": {
+              "hide": "an input's wrapper, disabled"
+            },
+            "v-vmtkfk": {
+              "hide": "a select's wrapper, disabled"
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-50w05q": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "An #ebebeb track (#1f1f1f in dark) with 6px corners; the fill is the ink."
+            }
+          },
+          "sizes": {
+            "s-okmi8z": {
+              "note": "10px: the default."
+            },
+            "s-h06tz0": {
+              "note": "4px."
+            },
+            "s-k7ikqv": {
+              "hide": "the docs' custom height demo at 50px"
+            },
+            "s-053gta": {
+              "hide": "the docs' custom height demo at 200px"
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-l7d1ng": {
+              "hide": "a stop marker inside a Progress bar"
+            },
+            "v-tw0ikn": {
+              "hide": "a stop marker inside a Progress bar"
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-atrcko": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Keyboard Input: #fff in the hairline ring, 4px corners, #171717."
+            },
+            "v-igm5b0": {
+              "note": "Ctrl K in the docs search: #4d4d4d text."
+            },
+            "v-ywozpa": {
+              "note": "Esc and ⌘ in an input's suffix: #4d4d4d at 500."
+            }
+          },
+          "sizes": {
+            "s-syg2qp": {
+              "note": "24px, 6px sides, 14px."
+            },
+            "s-xu1cgh": {
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
+              "note": "20px, 4px sides, 12px."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-ab7yxf": {
+              "hide": "an input's prefix icon, not a label"
+            },
+            "v-dg0bh6": {
+              "hide": "an input's suffix icon, not a label"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "docs",
+        "url": "https://vercel.com/geist",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: 18 public Geist docs pages, headless in light and dark. Partial: the signed-in dashboard (Mehdi's 2026-10-22 local capture) isn't in this census; facts quoted from it come from the pack's notes. Names marked docs come from the Geist pages (types, sizes and badge labels as the demos print them); names marked ai are ours."
+  }
+}
