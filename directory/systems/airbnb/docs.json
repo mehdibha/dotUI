@@ -25,7 +25,7 @@
     },
     "button": {
       "status": "reviewed",
-      "summary": "Airbnb names four button looks in the markup: brand (the pink gradient, one per view), secondary (grey fill), tertiary (no frame, grey on hover) and secondaryOutline (white with a 1px border). Around them sit many single-purpose buttons: the wishlist heart, photo arrows, map price pins, row arrows.",
+      "summary": "Airbnb names five button looks in the markup: brand (the pink gradient, one per view), primary (near-black fill), secondary (grey fill), tertiary (no frame, grey on hover) and secondaryOutline (white with a 1px border). Around them sit many single-purpose buttons: the wishlist heart, photo arrows, map price pins, row arrows.",
       "groups": {
         "button": {
           "variants": {
@@ -124,6 +124,9 @@
             },
             "v-jtg2h9": {
               "hide": "a photo arrow with its focus ring: see photo arrow"
+            },
+            "primary": {
+              "note": "Near-black fill, white text: Ask about hosting on the host page."
             }
           },
           "sizes": {
@@ -157,13 +160,6 @@
                 "from": "ai"
               },
               "note": "Map price pins."
-            },
-            "s-0j17g4": {
-              "name": {
-                "value": "icon 32, round",
-                "from": "ai"
-              },
-              "note": "Row arrows."
             }
           }
         }
@@ -172,7 +168,7 @@
         "Listing cards carry three buttons over the photo: the wishlist heart and two arrows shown on hover."
       ],
       "missing": [
-        "Nothing names sizes except medium; the rest are read off single uses."
+        "Only medium and small are named in the markup; the other sizes are read off single uses."
       ]
     },
     "link": {
@@ -286,17 +282,10 @@
     },
     "badge": {
       "status": "reviewed",
-      "summary": "Small pills: white Guest favorite and grey Superhost on listing photos, green text for Airbnb credit, a grey 1px border for terms like Free cancellation.",
+      "summary": "Small pills: white Guest favorite and grey Superhost on listing photos, and a grey 1px border for terms like Free cancellation.",
       "groups": {
         "badge": {
           "variants": {
-            "v-3kq6yh": {
-              "name": {
-                "value": "credit",
-                "from": "ai"
-              },
-              "note": "Green text on a pale green fill: Airbnb credit."
-            },
             "v-9gbo6p": {
               "name": {
                 "value": "outline",
@@ -341,7 +330,10 @@
             }
           }
         }
-      }
+      },
+      "missing": [
+        "Airbnb credit, green text on a pale green fill, showed in an earlier capture but not in this one."
+      ]
     },
     "card": {
       "status": "reviewed",
@@ -379,9 +371,6 @@
             "v-ouyadl": {
               "hide": "the compact search bar: see search-field"
             },
-            "v-rk3fpq": {
-              "hide": "a search field in Filters"
-            },
             "v-tvptwj": {
               "hide": "the hosting assistant's chat panel"
             },
@@ -416,6 +405,9 @@
                 "from": "ai"
               },
               "note": "Curious about hosting? on search results: a beige band with a dark pill."
+            },
+            "v-ojouej": {
+              "hide": "the site header with its search bar: page chrome"
             }
           },
           "sizes": {
@@ -458,8 +450,8 @@
               },
               "note": "Log in or sign up: centered, large corners, the page dimmed behind."
             },
-            "v-zxb0r5": {
-              "hide": "Price details, anchored to the price: see popover"
+            "v-a887nw": {
+              "hide": "a dark callout anchored to the AI note on search results: a popover, not a modal"
             }
           },
           "sizes": {
@@ -588,6 +580,22 @@
                 "from": "ai"
               },
               "note": "Where: Search destinations."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-5w6vjd": {
+              "name": {
+                "value": "on dark",
+                "from": "ai"
+              },
+              "note": "The AI search switch on the dark banner: a white knob, Off inside the track."
             }
           }
         }
