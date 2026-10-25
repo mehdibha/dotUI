@@ -305,7 +305,7 @@ describe("census", () => {
     // No component named: half of all the members.
     const tab = (id: number, x: number, variant?: string) => ({
       ...button(id, x, blue),
-      names: variant ? { "data-variant": variant } : {},
+      ...(variant ? { names: { "data-variant": variant } } : {}),
     })
     expect(
       namesOf([tab(1, 0, "secondary"), tab(2, 100), tab(3, 200)]),
