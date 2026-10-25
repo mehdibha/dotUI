@@ -44,8 +44,10 @@
  * model, frozen copies of each look's sample at rest and in its states
  * (--copies per pass, 40 by default; redacted with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
- * (presets:looks), and a full-page shot of each pass as
- * <out>/shots/<page>-<pass hash>-<mode>.jpg (--no-shots skips them). <out> is
+ * (presets:looks), and a shot of each pass (the whole page at rest, else the
+ * viewport, where the page's `shotAt` says it starts) as
+ * <out>/shots/<page>-<pass hash>-<mode>.jpg (--no-shots skips them; with
+ * --connect, only --shots writes them, unredacted). <out> is
  * .scratch-refs/<id>/<date>/census by default: never in git.
  */
 import { createHash } from "node:crypto"
@@ -122,7 +124,7 @@ const { values: args } = parseArgs({
     states: { type: "string", default: "80" },
     copies: { type: "string", default: "40" },
     concurrency: { type: "string", default: "2" },
-    shots: { type: "boolean", default: true },
+    shots: { type: "boolean" },
   },
   allowNegative: true,
 })
@@ -133,6 +135,8 @@ if (!args.pack) {
 }
 const pack = args.pack
 const MODES = (args.mode === "both" ? ["light", "dark"] : [args.mode]) as Mode[]
+// A signed-in page's shot shows the account unredacted: only when asked.
+const SHOTS = args.shots ?? !args.connect
 if (!MODES.every((m) => m === "light" || m === "dark")) {
   console.error("--mode must be light, dark or both")
   process.exit(1)
@@ -221,6 +225,8 @@ const freeze = async (page: Page, ids: number[]) =>
     ? ((await page.evaluate(
         snapshotSnippet({
           attribute: "data-census",
+          // A framed field's copy is its frame.
+          prefer: "data-census-frame",
           redact: REDACT,
           keys: ids.map(String),
         }),
@@ -394,11 +400,13 @@ async function pass(
   const { elements } = walked
   if (!rest && !elements.length) return null
   // Before reading states, which hover, scroll and can close what the pass
-  // opened: the shot shows the page the boxes were read on.
-  const shot = args.shots
+  // opened: the shot shows the page the boxes were read on. A later pass
+  // reads only the viewport (census `fresh`): the shot is the viewport too.
+  const shot = SHOTS
     ? await shoot(
         page,
         `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
+        !fresh,
       )
     : undefined
   // The most used looks with a box small enough to copy.
@@ -445,7 +453,7 @@ async function pass(
     ...(Object.keys(tokens).length ? { tokens } : {}),
     ...(walked.truncated ? { truncated: walked.truncated } : {}),
     reads: [...walked.reads, "states"],
-    ...(shot ? { shot } : {}),
+    ...shot,
   }
 }
 
@@ -732,23 +740,43 @@ interface Job {
    page. */
 const SHOT_HEIGHT = 10000
 
-/** A full-page shot of the page as it stands, in <out>/shots/; its path
- *  from <out>, or undefined when the page can't be shot. */
-async function shoot(page: Page, file: string) {
+/** A shot of the page as it stands, in <out>/shots/: its path from <out>,
+ *  and where on the page it starts when not at the top; undefined when the
+ *  page can't be shot. `whole`: the whole page, unless scrolled; else the
+ *  viewport. A full-page shot lays the page out again from the top, which
+ *  moves what is fixed or sticky away from where its box was read and
+ *  closes some tooltips. */
+async function shoot(page: Page, file: string, whole: boolean) {
   try {
-    const { width, height } = await page.evaluate(() => ({
-      width: document.documentElement.scrollWidth,
-      height: document.documentElement.scrollHeight,
-    }))
-    const shot = await page.screenshot({
-      type: "jpeg",
-      quality: 60,
-      clip: { x: 0, y: 0, width, height: Math.min(height, SHOT_HEIGHT) },
-      captureBeyondViewport: true,
+    const { x, y, width, height } = await page.evaluate(() => {
+      // A body that scrolls on its own holds the page (Airbnb's).
+      const body =
+        document.body &&
+        /auto|scroll/.test(getComputedStyle(document.body).overflowY)
+          ? document.body
+          : document.documentElement
+      return {
+        x: scrollX,
+        y: scrollY,
+        width: document.documentElement.scrollWidth,
+        height: body.scrollHeight,
+      }
     })
+    const at: [number, number] | null =
+      x || y ? [Math.round(x), Math.round(y)] : null
+    const shot = await page.screenshot(
+      at || !whole
+        ? { type: "jpeg", quality: 60 }
+        : {
+            type: "jpeg",
+            quality: 60,
+            clip: { x: 0, y: 0, width, height: Math.min(height, SHOT_HEIGHT) },
+            captureBeyondViewport: true,
+          },
+    )
     await mkdir(resolve(OUT, "shots"), { recursive: true })
     await writeFile(resolve(OUT, "shots", file), shot)
-    return `shots/${file}`
+    return { shot: `shots/${file}`, ...(at ? { shotAt: at } : {}) }
   } catch {
     return undefined
   }
@@ -803,6 +831,7 @@ async function crawl(
     const found = story ? await storyArgs(page, story) : null
     const initial = found ? enumArgs(found, found.args) : {}
     rendered = initial
+    await top(page)
     keep(await pass(page, job.key, job.mode, "rest", 0))
     const popups = OPEN ? await finders(page, "popups", OPEN) : []
     const tips = Number(args.tips)

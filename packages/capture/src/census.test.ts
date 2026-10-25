@@ -262,6 +262,30 @@ describe("census", () => {
     )
   })
 
+  it("names a component's look by an attribute only most of it carries", () => {
+    const item = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      names: {
+        "data-component": "ActionList.Item",
+        ...(variant ? { "data-variant": variant } : {}),
+      },
+    })
+    const namesOf = (elements: CensusElement[]) =>
+      cluster([page("/a", "light", elements)], "test").looks.find(
+        (one) => one.group === "button",
+      )?.names
+    // One danger item drawn like three plain ones: the plain look.
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100), item(3, 200), item(4, 300)]),
+    ).toEqual({ "data-component": ["ActionList.Item"] })
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100, "danger"), item(3, 200)]),
+    ).toEqual({
+      "data-component": ["ActionList.Item"],
+      "data-variant": ["danger"],
+    })
+  })
+
   it("names by a story's args only what their passes redrew", () => {
     const black = { backgroundColor: "rgb(0, 0, 0)" }
     const wrapper: CensusElement = {
@@ -358,6 +382,20 @@ describe("cluster: wrappers", () => {
       "button",
       "text",
     ])
+  })
+
+  it("counts pills drawn over a field as its value", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          part(1, "badge", [8, 8, 35, 17], 5),
+          { ...button(2, 0, {}), role: "combobox", box: [0, 0, 400, 32] },
+          part(3, "badge", [500, 8, 35, 17], 5),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.find((one) => one.group === "badge")?.count).toBe(1)
   })
 })
 
