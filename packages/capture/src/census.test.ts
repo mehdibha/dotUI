@@ -239,20 +239,68 @@ describe("census", () => {
         ]),
         {
           ...page("/story", "light", [button(1, 0, blue), label]),
-          args: { variant: "primary" },
+          args: { variant: "primary", size: "medium" },
+        },
+        {
+          ...page("/story", "light", [button(1, 0, navy)]),
+          pass: "variant=secondary",
+          args: { variant: "secondary", size: "medium" },
         },
       ],
       "test",
     )
-    const [look] = looks.filter((one) => one.group === "button")
+    const [look, other] = looks.filter((one) => one.group === "button")
+    // size is drawn the same under every value it took: not a name.
     expect(look?.names).toEqual({
       "args.variant": ["primary"],
       "data-size": ["medium"],
       "data-variant": ["primary", "brand"],
     })
+    expect(other?.names).toEqual({ "args.variant": ["secondary"] })
     expect(looks.find((one) => one.group === "text@button")?.names).toBe(
       undefined,
     )
+  })
+
+  it("names by a story's args only what their passes redrew", () => {
+    const black = { backgroundColor: "rgb(0, 0, 0)" }
+    const wrapper: CensusElement = {
+      ...button(2, 0, {}),
+      role: "card",
+      by: "shape",
+      tag: "div",
+      box: [0, 100, 300, 200],
+    }
+    const { looks } = cluster(
+      [
+        // Rendered once: nothing to tell its args apart.
+        {
+          ...page("/once", "light", [button(1, 0, black)]),
+          args: { variant: "error" },
+        },
+        // The wrapper no variant redraws is furniture.
+        {
+          ...page("/story", "light", [button(1, 0, blue), wrapper]),
+          args: { variant: "primary" },
+        },
+        {
+          ...page("/story", "light", [button(3, 0, navy)]),
+          pass: "args variant:secondary",
+          args: { variant: "secondary" },
+        },
+      ],
+      "test",
+    )
+    const of = (values: { backgroundColor: string }) =>
+      looks.find(
+        (one) =>
+          one.group === "button" &&
+          one.light?.backgroundColor === values.backgroundColor,
+      )?.names
+    expect(of(black)).toBeUndefined()
+    expect(of(blue)).toEqual({ "args.variant": ["primary"] })
+    expect(of(navy)).toEqual({ "args.variant": ["secondary"] })
+    expect(looks.find((one) => one.group === "card")?.names).toBeUndefined()
   })
 })
 

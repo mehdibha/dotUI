@@ -460,10 +460,12 @@ function census(
      the data attributes React Aria and Radix set. */
   const flagOf = (el: Element) => {
     const attr = (name: string) => el.getAttribute(name)
+    // Set unless it says "false": Primer writes data-disabled="false".
+    const data = (name: string) => (attr(name) ?? "false") !== "false"
     if (
       el.matches(":disabled") ||
       attr("aria-disabled") === "true" ||
-      el.hasAttribute("data-disabled")
+      data("data-disabled")
     )
       return "disabled" as const
     let userInvalid = false
@@ -472,11 +474,7 @@ function census(
     } catch {
       // Older engines don't know :user-invalid.
     }
-    if (
-      attr("aria-invalid") === "true" ||
-      el.hasAttribute("data-invalid") ||
-      userInvalid
-    )
+    if (attr("aria-invalid") === "true" || data("data-invalid") || userInvalid)
       return "invalid" as const
     if (
       el.matches(":checked") ||
@@ -485,7 +483,7 @@ function census(
       attr("aria-selected") === "true" ||
       attr("aria-pressed") === "true" ||
       (attr("aria-current") ?? "false") !== "false" ||
-      el.hasAttribute("data-selected") ||
+      data("data-selected") ||
       ["checked", "on", "active"].includes(attr("data-state") ?? "")
     )
       return "selected" as const
@@ -1302,6 +1300,9 @@ export function lookKeys(role: string): (Prop | Extra)[] {
     return ["color", "iconSize", "iconStroke"]
   if (role === "tooltip")
     return [...BOX_KEYS, "color", "fontSize", "fontWeight", "height"]
+  // Drawn with no text: the font and ink they inherit say nothing.
+  if (role === "avatar" || role === "progressbar" || role === "slider")
+    return [...BOX_KEYS, "height"]
   if (SURFACE_ROLES.has(role)) return BOX_KEYS
   return CONTROL_KEYS
 }
@@ -1370,6 +1371,7 @@ const UNNAMED_BY_ARGS = new Set([
   "img",
   "page",
   "main",
+  "panel",
   "list",
   "listitem",
   "row",
@@ -1382,15 +1384,59 @@ const UNNAMED_BY_ARGS = new Set([
   "complementary",
 ])
 
-/** An element's names, with its story's args as "args.<arg>". */
-const namesIn = (page: CensusPage, element: CensusElement): Names => ({
-  ...element.names,
-  ...(page.args && !UNNAMED_BY_ARGS.has(element.role)
-    ? Object.fromEntries(
-        Object.entries(page.args).map(([arg, value]) => [`args.${arg}`, value]),
-      )
-    : {}),
-})
+/* Which of a story's args name each element. The crawl reads an args pass
+   with what it already read marked seen, so the pass holds what the change
+   redrew: those take the args it changed. On the story's other passes an
+   element takes an arg only when a pass changing it redrew an element of
+   its role in its place; the rest is the story's furniture. */
+function argNames(pages: CensusPage[]) {
+  const named = new Map<CensusElement, Names>()
+  const stories = new Map<string, CensusPage[]>()
+  for (const page of pages) {
+    const story = `${page.key}|${page.mode}`
+    stories.set(story, [...(stories.get(story) ?? []), page])
+  }
+  const overlap = (a: CensusElement["box"], b: CensusElement["box"]) =>
+    a[0] < b[0] + b[2] &&
+    b[0] < a[0] + a[2] &&
+    a[1] < b[1] + b[3] &&
+    b[1] < a[1] + a[3]
+  for (const story of stories.values()) {
+    const initial = story.find((page) => page.pass === "rest")?.args ?? {}
+    const changes = story.map((page) => ({
+      page,
+      changed: Object.keys(page.args ?? {}).filter(
+        (arg) => page.args?.[arg] !== initial[arg],
+      ),
+    }))
+    for (const { page, changed } of changes)
+      for (const element of page.elements) {
+        if (UNNAMED_BY_ARGS.has(element.role)) continue
+        const args = changed.length
+          ? changed
+          : Object.keys(initial).filter((arg) =>
+              changes.some(
+                (other) =>
+                  other.changed.includes(arg) &&
+                  other.page.elements.some(
+                    (one) =>
+                      one.role === element.role &&
+                      overlap(one.box, element.box),
+                  ),
+              ),
+            )
+        const values = changed.length ? page.args : initial
+        if (args.length)
+          named.set(
+            element,
+            Object.fromEntries(
+              args.map((arg) => [`args.${arg}`, values?.[arg] ?? ""]),
+            ),
+          )
+      }
+  }
+  return named
+}
 
 /** Each key's values over the members, most used first. */
 const tally = (names: Names[]) => {
@@ -1453,6 +1499,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         twins.set(key(page, element), element)
 
   type Member = { page: CensusPage; element: CensusElement }
+  const byArgs = argNames(pages)
   const groups = new Map<string, Map<string, Member[]>>()
   for (const page of pages) {
     if (page.mode === "dark" && lit.has(where(page))) continue
@@ -1559,7 +1606,10 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         ),
       }
       const names = tally(
-        members.map((member) => namesIn(member.page, member.element)),
+        members.map(({ element }) => ({
+          ...element.names,
+          ...byArgs.get(element),
+        })),
       )
       const forced = FORCED.filter(
         (state) =>
