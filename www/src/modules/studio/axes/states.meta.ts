@@ -2,8 +2,10 @@ import { SOURCE_META } from "./color.meta"
 import { options } from "./core/meta"
 import {
   CONTROL_TEXT_VALUES,
+  CURSOR_BUSY_VALUES,
   CURSOR_CONTROL_VALUES,
   CURSOR_DISABLED_VALUES,
+  CURSOR_DRAG_VALUES,
   DISABLED_VALUES,
   FOCUS_COLOR_VALUES,
   FOCUS_INPUT_STYLE_VALUES,
@@ -124,6 +126,33 @@ export const CURSOR_DISABLED_OPTIONS = options(CURSOR_DISABLED_VALUES, {
   },
 })
 
+export const CURSOR_BUSY_OPTIONS = options(CURSOR_BUSY_VALUES, {
+  default: {
+    label: "Arrow",
+    description: "Plain arrow over a pending button",
+  },
+  progress: {
+    label: "Progress",
+    description: "Arrow with a spinner over a pending button",
+  },
+  wait: {
+    label: "Wait",
+    description: "Spinner alone over a pending button",
+  },
+})
+
+export const CURSOR_DRAG_OPTIONS = options(CURSOR_DRAG_VALUES, {
+  controls: {
+    label: "Same as controls",
+    description: "Sliders and drag handles use the controls' cursor",
+  },
+  grab: {
+    label: "Grab",
+    description: "Open hand that closes while dragging",
+    credits: ["Notion"],
+  },
+})
+
 export const CONTROL_TEXT_OPTIONS = options(CONTROL_TEXT_VALUES, {
   none: {
     label: "Unselectable",
@@ -145,5 +174,7 @@ export const OPTIONS = {
   disabledTreatment: DISABLED_OPTIONS,
   cursorControls: CURSOR_CONTROL_OPTIONS,
   cursorDisabled: CURSOR_DISABLED_OPTIONS,
+  cursorBusy: CURSOR_BUSY_OPTIONS,
+  cursorDrag: CURSOR_DRAG_OPTIONS,
   selectionUiText: CONTROL_TEXT_OPTIONS,
 }

@@ -107,8 +107,6 @@ const DROPPED_KEYS = [
   "breadcrumbsMotion",
   "cardControl",
   "colorSwatchPickerMotion",
-  "cursorDragging",
-  "cursorPending",
   "drawerMotion",
   "focusGap",
   "focusHaloStrength",

@@ -113,3 +113,88 @@ export function NotAllowedCursor() {
     </svg>
   )
 }
+
+/* The cursors below are drawn, not extracted: open and closed hands on
+   Lucide's hand outlines, and the spinning wait disc. */
+const OPEN_HAND = [
+  "M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2",
+  "M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2",
+  "M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8",
+  "M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15",
+]
+
+const CLOSED_HAND = [
+  "M18 11.5V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4",
+  "M14 10V8a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2",
+  "M10 9.9V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v5",
+  "M6 14a2 2 0 0 0-2-2a2 2 0 0 0-2 2",
+  "M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8 2 2 0 1 1 4 0",
+]
+
+function Hand({ paths }: { paths: string[] }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <g transform="translate(2.4 2.4) scale(0.8)" strokeLinecap="round">
+        {paths.map((d) => (
+          <path key={d} d={d} fill="#fff" stroke="#fff" strokeWidth="4" />
+        ))}
+        {paths.map((d) => (
+          <path key={d} d={d} stroke="#000" strokeWidth="1.6" />
+        ))}
+      </g>
+    </svg>
+  )
+}
+
+export const GrabCursor = () => <Hand paths={OPEN_HAND} />
+
+export const GrabbingCursor = () => <Hand paths={CLOSED_HAND} />
+
+const WAIT_COLORS = ["#2D7FF9", "#1DB954", "#F9C80E", "#F86624", "#EA3546"]
+
+/** The wait disc: five wedges in a white rim. */
+function WaitDisc({ x, y, r }: { x: number; y: number; r: number }) {
+  const point = (i: number) => {
+    const a = (i / WAIT_COLORS.length) * 2 * Math.PI - Math.PI / 2
+    return `${x + r * Math.cos(a)} ${y + r * Math.sin(a)}`
+  }
+  return (
+    <>
+      <circle cx={x} cy={y} r={r + 1} fill="#fff" />
+      {WAIT_COLORS.map((color, i) => (
+        <path
+          key={color}
+          d={`M${x} ${y} L${point(i)} A${r} ${r} 0 0 1 ${point(i + 1)} Z`}
+          fill={color}
+        />
+      ))}
+    </>
+  )
+}
+
+export function WaitCursor() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <WaitDisc x={12} y={12} r={7} />
+    </svg>
+  )
+}
+
+/** The arrow with the wait disc at its side. */
+export function ProgressCursor() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <g transform="translate(1.03 -2.52) scale(1.19)">
+        <path
+          d={ARROW_PATH}
+          fill="#fff"
+          stroke="#fff"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path d={ARROW_PATH} fill="#000" />
+      </g>
+      <WaitDisc x={18} y={18} r={4} />
+    </svg>
+  )
+}

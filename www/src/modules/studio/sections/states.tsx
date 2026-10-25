@@ -20,8 +20,10 @@ import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import { INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
+  CURSOR_BUSY_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
+  CURSOR_DRAG_OPTIONS,
   DISABLED_OPTIONS,
   FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
@@ -337,6 +339,24 @@ const CursorDisabledRow = () => (
   />
 )
 
+const CursorBusyRow = () => (
+  <DialSelect
+    axis="cursorBusy"
+    label="Busy"
+    options={CURSOR_BUSY_OPTIONS}
+    placement={UNDER}
+  />
+)
+
+const CursorDragRow = () => (
+  <DialSelect
+    axis="cursorDrag"
+    label="Drag"
+    options={CURSOR_DRAG_OPTIONS}
+    placement={UNDER}
+  />
+)
+
 const ControlTextRow = () => (
   <DialSelect
     axis="selectionUiText"
@@ -369,6 +389,8 @@ export const ROWS: RowMap = {
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
   cursorDisabled: CursorDisabledRow,
+  cursorBusy: CursorBusyRow,
+  cursorDrag: CursorDragRow,
   selectionUiText: ControlTextRow,
   selectionHighlight: HighlightRow,
 }

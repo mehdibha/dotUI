@@ -1,18 +1,23 @@
 "use client"
 
-import { CheckIcon, PlusIcon } from "@/registry/icons"
+import { CheckIcon } from "@/registry/icons"
+import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
 import { Label } from "@/registry/ui/field"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
-import { useStyles as useRadioStyles } from "@/registry/ui/radio-group/styles"
+import { Slider, SliderControl } from "@/registry/ui/slider"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
 
 import {
   ArrowCursor,
+  GrabbingCursor,
+  GrabCursor,
   HandCursor,
   NotAllowedCursor,
+  ProgressCursor,
+  WaitCursor,
 } from "../../sections/cursors"
 import { Board, stateProps, useBoardFocus, useRootToken } from "./board"
 import { CANVAS, ComponentSet, SetGrid } from "./set-parts"
@@ -21,12 +26,18 @@ const GLYPHS: Record<string, () => React.ReactNode> = {
   pointer: HandCursor,
   default: ArrowCursor,
   "not-allowed": NotAllowedCursor,
+  progress: ProgressCursor,
+  wait: WaitCursor,
+  grab: GrabCursor,
+  grabbing: GrabbingCursor,
 }
 
 type Row = { hovered: boolean }
 
 const CONTROL = "--cursor-interactive"
 const DISABLED = "--cursor-disabled"
+const BUSY = "--cursor-pending"
+const DRAG = "--cursor-drag"
 
 /** A specimen with, when hovered, the system cursor `token` names resting
  *  on it; with no token (links), the hand. */
@@ -68,15 +79,10 @@ function Buttons({ hovered }: Row) {
           Preview
         </span>
       </Hover>
-      <Hover hovered={hovered} token={CONTROL}>
-        <span
-          {...state}
-          data-icon-only=""
-          aria-label="Add"
-          className={button({ variant: "secondary" })}
-        >
-          <PlusIcon />
-        </span>
+      <Hover hovered={hovered} token={BUSY}>
+        <Button variant="secondary" isPending>
+          Save
+        </Button>
       </Hover>
     </>
   )
@@ -84,7 +90,6 @@ function Buttons({ hovered }: Row) {
 
 function SelectionControls({ hovered }: Row) {
   const checkbox = useCheckboxStyles()()
-  const radio = useRadioStyles()()
   const toggle = useSwitchStyles()()
   const state = { ...(hovered && stateProps("hover")), "data-selected": "true" }
   return (
@@ -100,21 +105,16 @@ function SelectionControls({ hovered }: Row) {
         </span>
       </Hover>
       <Hover hovered={hovered} token={CONTROL}>
-        <span data-radio="" className={radio.root()}>
-          <span {...state} className={radio.control()}>
-            <span {...state} className={radio.indicator()}>
-              <span />
-            </span>
-          </span>
-          <Label elementType="span">Monthly</Label>
-        </span>
-      </Hover>
-      <Hover hovered={hovered} token={CONTROL}>
         <span {...state} className={toggle.control()}>
           <span {...state} className={toggle.indicator()}>
             <span {...state} className={toggle.thumb()} />
           </span>
         </span>
+      </Hover>
+      <Hover hovered={hovered} token={DRAG}>
+        <Slider aria-label="Volume" defaultValue={70} className="w-32">
+          <SliderControl />
+        </Slider>
       </Hover>
     </>
   )
@@ -212,8 +212,9 @@ function Disabled({ hovered }: Row) {
 export default function CursorBoard() {
   const { axis, holds } = useBoardFocus()
   const keys = [axis, ...(holds ?? [])]
-  const controls = keys.includes("cursorControls")
-  const disabled = keys.includes("cursorDisabled")
+  const editing = (...names: string[]) =>
+    names.some((name) => keys.includes(name))
+  const controls = editing("cursorControls")
   const rows = (Set: React.ComponentType<Row>) =>
     [false, true].map((hovered) => (
       <Set key={String(hovered)} hovered={hovered} />
@@ -221,10 +222,14 @@ export default function CursorBoard() {
   return (
     <Board id="cursor" untitled className={CANVAS}>
       <SetGrid>
-        <ComponentSet name="Buttons" selected={controls} rows={rows(Buttons)} />
+        <ComponentSet
+          name="Buttons"
+          selected={editing("cursorControls", "cursorBusy")}
+          rows={rows(Buttons)}
+        />
         <ComponentSet
           name="Selection"
-          selected={controls}
+          selected={editing("cursorControls", "cursorDrag")}
           rows={rows(SelectionControls)}
         />
         <ComponentSet
@@ -234,7 +239,7 @@ export default function CursorBoard() {
         />
         <ComponentSet
           name="Disabled"
-          selected={disabled}
+          selected={editing("cursorDisabled")}
           rows={rows(Disabled)}
         />
       </SetGrid>
