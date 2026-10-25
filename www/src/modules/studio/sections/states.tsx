@@ -13,6 +13,7 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
@@ -195,9 +196,17 @@ const FieldFocusWidthRow = () => (
 const SWATCH =
   "size-5 shrink-0 cursor-interactive rounded-full border border-fg/15 ring-offset-2 ring-offset-(--panel-surface,var(--color-card)) outline-none focus-visible:focus-ring selected:ring-2 selected:ring-fg/70"
 
-/* The custom swatch before a color is picked: any color. */
+/* The custom swatch: any color before one is picked, then that color in a
+   spectrum rim, so it still reads as a picker. */
 const SPECTRUM =
   "conic-gradient(#ef4444, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7, #ef4444)"
+const customSwatch = (color: string) =>
+  color
+    ? {
+        background: `linear-gradient(${color} 0 0) padding-box, ${SPECTRUM} border-box`,
+        border: "2px solid transparent",
+      }
+    : { background: SPECTRUM }
 
 /** Primary's two sources and a color of its own, as swatches; the custom
  *  one opens a picker. */
@@ -223,52 +232,54 @@ function FocusColorRow() {
   return (
     <div ref={row} data-axis="focusColor" className={DIAL_ROW}>
       <span className={DIAL_LABEL}>Color</span>
-      <span className="flex min-w-0 items-center gap-3">
-        <span className="truncate text-[13px] font-medium text-fg/60">
-          {label(String(axis.saved))}
-        </span>
-        <RacToggleButtonGroup
-          aria-label="Focus color"
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[String(axis.saved)]}
-          onSelectionChange={(keys) => {
-            const next = keys.values().next().value
-            if (next) axis.set(next)
-          }}
-          className="flex items-center gap-2"
-        >
-          {(["accent", "neutral"] as const).map((source) => (
+      <RacToggleButtonGroup
+        aria-label="Focus color"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[String(axis.saved)]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) axis.set(next)
+        }}
+        className="flex items-center gap-2"
+      >
+        {(["accent", "neutral"] as const).map((source) => (
+          <Tooltip key={source} delay={0}>
             <RacToggleButton
-              key={source}
               id={source}
               aria-label={label(source)}
               className={SWATCH}
               style={{ background: ink[source].ring }}
             />
-          ))}
-          <ColorPicker value={draft} onChange={setDraft}>
+            <TooltipContent>{label(source)}</TooltipContent>
+          </Tooltip>
+        ))}
+        <ColorPicker value={draft} onChange={setDraft}>
+          <Tooltip delay={0}>
             <RacToggleButton
               id="custom"
               aria-label={label("custom")}
               className={SWATCH}
-              style={{ background: saved || SPECTRUM }}
+              style={customSwatch(saved)}
             />
-            <PanelPopoverTitle.Provider value="Focus color">
-              <ColorPickerPopover
-                commit={commit}
-                placement={UNDER}
-                {...(under && {
-                  triggerRef: row,
-                  offset: 6,
-                  showArrow: false,
-                  className: UNDER_ROW,
-                })}
-              />
-            </PanelPopoverTitle.Provider>
-          </ColorPicker>
-        </RacToggleButtonGroup>
-      </span>
+            <TooltipContent>
+              {saved ? `Custom · ${saved.toUpperCase()}` : "Custom"}
+            </TooltipContent>
+          </Tooltip>
+          <PanelPopoverTitle.Provider value="Focus color">
+            <ColorPickerPopover
+              commit={commit}
+              placement={UNDER}
+              {...(under && {
+                triggerRef: row,
+                offset: 6,
+                showArrow: false,
+                className: UNDER_ROW,
+              })}
+            />
+          </PanelPopoverTitle.Provider>
+        </ColorPicker>
+      </RacToggleButtonGroup>
     </div>
   )
 }

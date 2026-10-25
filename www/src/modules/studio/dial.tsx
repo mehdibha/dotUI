@@ -198,8 +198,9 @@ export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 export const UNDER_ROW =
   "w-(--trigger-width)! min-w-0! max-w-none! origin-top! border-fg/10 bg-(--panel-surface) shadow-xl transition-[transform,opacity,scale] will-change-[transform,opacity,scale] [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
 
-/** Under its row a popover covers the rows below, so a pick closes it. */
-const PickCloses = createContext(false)
+/** Under its row a popover covers the rows below: a pick closes it, and the
+ *  options go without descriptions, the preview showing each on hover. */
+const UnderRow = createContext(false)
 
 /** What a DialTrigger opens: a run of dial rows beside the row, shown whole;
  *  with a bottom `placement`, under it instead. */
@@ -221,7 +222,7 @@ export function DialPopover({
       className={cn("w-64 min-w-0", className, under && UNDER_ROW)}
     >
       <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
-        <PickCloses.Provider value={under}>{children}</PickCloses.Provider>
+        <UnderRow.Provider value={under}>{children}</UnderRow.Provider>
       </DialogContent>
     </PanelPopover>
   )
@@ -384,7 +385,7 @@ function SelectOptions({
   exclude: Axis["explain"]["exclude"]
 }) {
   const { state } = useCurrent()
-  const closes = useContext(PickCloses)
+  const under = useContext(UnderRow)
   const overlay = useContext(OverlayTriggerStateContext)
   const target = (option: DialSelectOption) => {
     if (!axis?.follows.includes(option.value)) return
@@ -400,7 +401,7 @@ function SelectOptions({
       label={label}
       value={value}
       onChange={onChange}
-      onPicked={closes ? () => overlay?.close() : undefined}
+      onPicked={under ? () => overlay?.close() : undefined}
       disabledKeys={exclude?.options}
       options={options.map((option) => {
         const to = target(option)
@@ -409,6 +410,7 @@ function SelectOptions({
           : undefined
         return {
           ...option,
+          description: under ? undefined : option.description,
           label: to ? `${option.label} · ${to.label}` : option.label,
           aside: (option.aside || cause) && (
             <>
