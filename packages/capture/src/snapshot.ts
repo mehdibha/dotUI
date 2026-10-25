@@ -52,6 +52,7 @@ async function snapshot(
   attribute: string,
   redact: boolean,
   keys: string[] | null,
+  prefer: string | null,
 ): Promise<Record<string, Snapshot>> {
   const SVG = "http://www.w3.org/2000/svg"
   const SKIP_TAGS = new Set([
@@ -406,19 +407,35 @@ async function snapshot(
 
   const marked = (root: Document | ShadowRoot, out: Element[] = []) => {
     for (const el of root.querySelectorAll("*")) {
-      if (el.hasAttribute(attribute)) out.push(el)
+      if (el.hasAttribute(attribute) || (prefer && el.hasAttribute(prefer)))
+        out.push(el)
       if (el.shadowRoot) marked(el.shadowRoot, out)
     }
     return out
   }
+  const found = marked(document)
+  // An element carrying `prefer` is copied for the one whose key it holds
+  // (the census's frame of a field), when it has a box to copy.
+  const keyOf = (el: Element) =>
+    (prefer && el.getAttribute(prefer)) || el.getAttribute(attribute)!
+  const sized = (el: Element) => {
+    const box = el.getBoundingClientRect()
+    return box.width > 0 && box.height > 0
+  }
+  const preferred = new Set(
+    found
+      .filter((el) => prefer && el.hasAttribute(prefer) && sized(el))
+      .map(keyOf),
+  )
 
   const copies: Record<string, Omit<Snapshot, "fonts"> & { used: string[] }> =
     {}
-  for (const el of marked(document)) {
-    const key = el.getAttribute(attribute)!
+  for (const el of found) {
+    const key = keyOf(el)
     if (keys && !keys.includes(key)) continue
+    if (preferred.has(key) && !(prefer && el.hasAttribute(prefer))) continue
+    if (!sized(el)) continue
     const box = el.getBoundingClientRect()
-    if (!box.width || !box.height) continue
     families.clear()
     next = 0
     rules = []
@@ -453,15 +470,22 @@ async function snapshot(
 
 /** A JavaScript expression that resolves to a `Snapshot` of every element
  *  carrying `attribute` (or of those whose value is in `keys`), keyed by
- *  its value: for `page.evaluate`. `redact` replaces text, values and
+ *  its value: for `page.evaluate`. An element carrying `prefer` with the
+ *  same value is copied in its place. `redact` replaces text, values and
  *  images, for signed-in pages. The `__name` shim covers the helper tsx
  *  compiles in. */
 export const snapshotSnippet = ({
   attribute = "data-snapshot",
   redact = false,
   keys,
-}: { attribute?: string; redact?: boolean; keys?: string[] } = {}) =>
-  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}) })()`
+  prefer,
+}: {
+  attribute?: string
+  redact?: boolean
+  keys?: string[]
+  prefer?: string
+} = {}) =>
+  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}) })()`
 
 /** Parts larger than this (in CSS px²), such as `page`, get a crop but no
  *  frozen copy. */

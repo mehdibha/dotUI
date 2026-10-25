@@ -146,6 +146,23 @@ describe("census", () => {
     ])
   })
 
+  it("keeps a look plain when its first element is selected", () => {
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          { ...button(1, 0, blue), is: "selected" },
+          button(2, 100, blue),
+          button(3, 200, blue),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks).toEqual([
+      expect.not.objectContaining({ is: expect.anything() }),
+    ])
+    expect(looks[0]?.count).toBe(3)
+  })
+
   it("keeps a state set on the sample unless one was found in it", () => {
     const sample = {
       ...button(1, 0, blue),
@@ -250,16 +267,52 @@ describe("census", () => {
       "test",
     )
     const [look, other] = looks.filter((one) => one.group === "button")
-    // size is drawn the same under every value it took: not a name.
+    // size is drawn the same under every value it took: not a name. Brand,
+    // on one of four, doesn't name the look.
     expect(look?.names).toEqual({
       "args.variant": ["primary"],
       "data-size": ["medium"],
-      "data-variant": ["primary", "brand"],
+      "data-variant": ["primary"],
     })
     expect(other?.names).toEqual({ "args.variant": ["secondary"] })
     expect(looks.find((one) => one.group === "text@button")?.names).toBe(
       undefined,
     )
+  })
+
+  it("names a component's look by an attribute only most of it carries", () => {
+    const item = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      names: {
+        "data-component": "ActionList.Item",
+        ...(variant ? { "data-variant": variant } : {}),
+      },
+    })
+    const namesOf = (elements: CensusElement[]) =>
+      cluster([page("/a", "light", elements)], "test").looks.find(
+        (one) => one.group === "button",
+      )?.names
+    // One danger item drawn like three plain ones: the plain look.
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100), item(3, 200), item(4, 300)]),
+    ).toEqual({ "data-component": ["ActionList.Item"] })
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100, "danger"), item(3, 200)]),
+    ).toEqual({
+      "data-component": ["ActionList.Item"],
+      "data-variant": ["danger"],
+    })
+    // No component named: half of all the members.
+    const tab = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      ...(variant ? { names: { "data-variant": variant } } : {}),
+    })
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100), tab(3, 200)]),
+    ).toBeUndefined()
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100, "secondary"), tab(3, 200)]),
+    ).toEqual({ "data-variant": ["secondary"] })
   })
 
   it("names by a story's args only what their passes redrew", () => {
@@ -305,6 +358,73 @@ describe("census", () => {
     expect(of(blue)).toEqual({ "args.variant": ["primary"] })
     expect(of(navy)).toEqual({ "args.variant": ["secondary"] })
     expect(looks.find((one) => one.group === "card")?.names).toBeUndefined()
+  })
+})
+
+describe("cluster: wrappers", () => {
+  const part = (
+    id: number,
+    role: string,
+    box: CensusElement["box"],
+    chars = 0,
+  ): CensusElement => ({
+    id,
+    role,
+    by: "shape",
+    tag: "span",
+    box,
+    chars,
+    values: { backgroundColor: "rgb(221, 244, 255)", borderRadius: "9999px" },
+  })
+  const bare = (id: number, box: CensusElement["box"]) => ({
+    ...button(id, 0, { backgroundColor: "rgba(0, 0, 0, 0)" }),
+    box,
+    chars: 0,
+  })
+
+  it("counts a button around an avatar, a label or nothing as nothing", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          // An avatar button.
+          bare(1, [0, 0, 20, 20]),
+          { ...part(2, "avatar", [0, 0, 20, 20]), tag: "img" },
+          // An issue label: the pill holds the text.
+          bare(3, [100, 0, 99, 22]),
+          part(4, "box", [102, 1, 95, 20]),
+          part(5, "text", [110, 3, 77, 15], 14),
+          // A chart's hit area.
+          bare(6, [300, 0, 181, 27]),
+          // A real button, its label in a span.
+          bare(7, [600, 0, 80, 32]),
+          part(8, "text", [612, 8, 56, 16], 4),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.filter((one) => one.group === "button")).toEqual([
+      expect.objectContaining({ count: 1 }),
+    ])
+    expect(looks.map((one) => one.group).sort()).toEqual([
+      "avatar",
+      "badge",
+      "button",
+      "text",
+    ])
+  })
+
+  it("counts pills drawn over a field as its value", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          part(1, "badge", [8, 8, 35, 17], 5),
+          { ...button(2, 0, {}), role: "combobox", box: [0, 0, 400, 32] },
+          part(3, "badge", [500, 8, 35, 17], 5),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.find((one) => one.group === "badge")?.count).toBe(1)
   })
 })
 

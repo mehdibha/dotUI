@@ -101,8 +101,12 @@ export interface CensusPage {
   reads?: Reads[]
   /** A Storybook story's enum args as rendered (variant, size…). */
   args?: Record<string, string>
-  /** The full-page shot of this pass, in the census folder's shots/. */
+  /** The shot of this pass, in the census folder's shots/. */
   shot?: string
+  /** Where the shot starts on the page, when not at the top: a pass after
+   *  rest, or one read scrolled, is shot as the viewport. A box sits in the
+   *  shot at its x and y less these. */
+  shotAt?: [number, number]
 }
 
 /** Disabled, selected and open elements (`is`), and icon strokes; "states":
@@ -208,8 +212,9 @@ export function namesOf(attribute: (name: string) => string | null): Names {
 }
 
 type Command =
-  /** `fresh`: only elements new or changed since `seen` ("new": new only,
-   *  for a hover, which restyles the hovered element and its ancestors). */
+  /** `fresh`: only elements in the viewport new or changed since `seen`
+   *  ("new": new only, for a hover, which restyles the hovered element and
+   *  its ancestors). */
   | { kind: "walk"; max: number; fresh: boolean | "new"; start: number }
   | { kind: "read"; ids: number[]; focus: boolean }
   | { kind: "seen" }
@@ -236,13 +241,17 @@ function census(
 ) {
   const ID = "data-census"
   const HOST = "data-census-host"
+  const FRAME = "data-census-frame"
   /* Each element's look when `seen` ran, so a later walk on the same load
-     keeps only what an interaction opened or changed. */
+     keeps only what an interaction opened or changed; and each field's
+     frame (`frameOf`), found once. */
   const scope = globalThis as unknown as {
     __censusSeen?: WeakMap<Element, string>
+    __censusFrames?: WeakMap<Element, Element | null>
     __censusUndo?: (() => void)[]
   }
   const seen = (scope.__censusSeen ??= new WeakMap())
+  const frames = (scope.__censusFrames ??= new WeakMap())
   const CONTROLS = new Set([
     "button",
     "link",
@@ -301,6 +310,14 @@ function census(
     "page",
     "avatar",
   ])
+  const OVERLAYS = new Set([
+    "dialog",
+    "alertdialog",
+    "menu",
+    "listbox",
+    "tooltip",
+    "popover",
+  ])
   const alpha = (color: string) => {
     if (color === "transparent") return 0
     const match = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(color)
@@ -321,8 +338,8 @@ function census(
     return out
   }
   const hosts = new Map<Element, number>()
-  const selectorOf = (el: Element) => {
-    const chain: string[] = [`[${ID}="${el.getAttribute(ID)}"]`]
+  const selectorOf = (el: Element, attribute = ID) => {
+    const chain: string[] = [`[${attribute}="${el.getAttribute(attribute)}"]`]
     for (
       let root = el.getRootNode();
       root instanceof ShadowRoot;
@@ -350,26 +367,40 @@ function census(
     }
     return match(document)
   }
+  // Opacity through the ancestors: Highcharts' accessibility proxies sit
+  // over the chart at 0.001, which checkVisibility counts as shown.
+  const opacities = new Map<Element, number>()
+  const opacityOf = (el: Element | null): number => {
+    if (!el) return 1
+    let value = opacities.get(el)
+    if (value === undefined) {
+      value =
+        Number.parseFloat(getComputedStyle(el).opacity) *
+        opacityOf(el.parentElement)
+      opacities.set(el, value)
+    }
+    return value
+  }
   const shown = (el: Element) => {
     const rect = el.getBoundingClientRect()
     return (
       rect.width * rect.height > 1 &&
-      el.checkVisibility({ opacityProperty: true, visibilityProperty: true })
+      el.checkVisibility({ opacityProperty: true, visibilityProperty: true }) &&
+      opacityOf(el) >= 0.05
     )
   }
+  const edged = (style: CSSStyleDeclaration) =>
+    style.boxShadow !== "none" ||
+    ["top", "right", "bottom", "left"].some(
+      (side) =>
+        style.getPropertyValue(`border-${side}-style`) !== "none" &&
+        Number.parseFloat(style.getPropertyValue(`border-${side}-width`)) > 0 &&
+        alpha(style.getPropertyValue(`border-${side}-color`)) > 0,
+    )
   const paints = (style: CSSStyleDeclaration) =>
     alpha(style.backgroundColor) > 0.1 ||
     style.backgroundImage !== "none" ||
-    style.boxShadow !== "none" ||
-    (["Top", "Right", "Bottom", "Left"] as const).some(
-      (side) =>
-        style.getPropertyValue(`border-${side.toLowerCase()}-style`) !==
-          "none" &&
-        Number.parseFloat(
-          style.getPropertyValue(`border-${side.toLowerCase()}-width`),
-        ) > 0 &&
-        alpha(style.getPropertyValue(`border-${side.toLowerCase()}-color`)) > 0,
-    )
+    edged(style)
   const paintsPseudo = (el: Element) =>
     ["::before", "::after"].some((pseudo) => {
       const style = getComputedStyle(el, pseudo)
@@ -436,6 +467,7 @@ function census(
   }
   /* A role from the box alone, for elements no role or tag names. */
   const shape = (
+    el: Element,
     rect: DOMRect,
     style: CSSStyleDeclaration,
     chars: number,
@@ -445,8 +477,15 @@ function census(
     if (!painted) return "text"
     const radius = Number.parseFloat(style.borderTopLeftRadius) || 0
     if ((h <= 2 && w >= 8) || (w <= 2 && h >= 8)) return "separator"
+    // A round box shows a person only with a picture: an empty one is a dot
+    // (a label's color, a status).
     if (Math.abs(w - h) <= 2 && w >= 12 && w <= 64 && radius >= h / 2 - 1)
-      return chars ? "badge" : "avatar"
+      return chars
+        ? "badge"
+        : style.backgroundImage !== "none" ||
+            el.querySelector("img, svg, picture, canvas, video")
+          ? "avatar"
+          : "box"
     if (h <= 32 && w <= 240 && chars > 0) return "badge"
     if (w * h >= 120 * 60)
       return style.boxShadow !== "none" ||
@@ -525,7 +564,10 @@ function census(
     if (tag) return { role: tag, by: "tag" as const }
     if (painted && el.matches(":popover-open"))
       return { role: "popover", by: "shape" as const }
-    return { role: shape(rect, style, chars, painted), by: "shape" as const }
+    return {
+      role: shape(el, rect, style, chars, painted),
+      by: "shape" as const,
+    }
   }
   /* What an element is named, for the roles names give: its data-component,
      data-slot and data-part, its classes and a custom element's tag. */
@@ -545,8 +587,12 @@ function census(
   }
   /* The roles no ARIA or tag names, from what an item or its three nearest
      containers are named: a segmented control and its segments, a
-     breadcrumb, a pagination item, a switch drawn as a button; and a
-     toggle button, from aria-pressed. */
+     breadcrumb, a pagination item, a tab drawn as a link, a switch drawn
+     as a button, a raised box named a popover; and a toggle button, from
+     aria-pressed. Two ARIA roles their shape overrules: a slider too thin
+     to drag along is a pane splitter (Primer's PageLayout handle), and
+     progress bars side by side are one stacked bar whose segments are
+     data colors (GitHub's languages). */
   const roleOf = (
     el: Element,
     rect: DOMRect,
@@ -563,6 +609,9 @@ function census(
         return { role: "breadcrumb", by: "name" as const }
       if (near(el, /paginat|\bpager\b/i))
         return { role: "pagination-item", by: "name" as const }
+      // Primer's UnderlineNav and TabNav: tabs drawn as links in a nav.
+      if (role !== "tab" && near(el, /underline-?nav|tab-?nav|tab-?bar/i))
+        return { role: "tab", by: "name" as const }
       if (role === "button" && near(el, /switch(?!er)/i))
         return { role: "switch", by: "name" as const }
       if (role === "button" && el.hasAttribute("aria-pressed"))
@@ -584,7 +633,68 @@ function census(
       /segmented/i.test(kindOf(el))
     )
       return { role: "segmented", by: "name" as const }
+    if (
+      found.by === "shape" &&
+      (role === "card" || role === "box") &&
+      style.boxShadow !== "none" &&
+      /popover|overlay/i.test(kindOf(el))
+    )
+      return { role: "popover", by: "name" as const }
+    if (role === "slider" && Math.min(rect.width, rect.height) <= 8)
+      return { role: "separator", by: "shape" as const }
+    if (
+      role === "progressbar" &&
+      [...(el.parentElement?.children ?? [])].some(
+        (other) => other !== el && other.getAttribute("role") === "progressbar",
+      )
+    )
+      return { role: "box", by: "shape" as const }
     return found
+  }
+  /* A field drawn borderless in a wrapper that draws its box (Primer's
+     TextInput, React Aria's Group): the nearest of its three closest
+     containers that draws an edge, holds no other field and is at most
+     16px taller (64px for a field of tokens). The field reads its box from
+     it, and the wrapper is no element of its own. */
+  const FIELDS = new Set([
+    "textbox",
+    "searchbox",
+    "combobox",
+    "select",
+    "spinbutton",
+  ])
+  const ariaOf = (el: Element) =>
+    el.getAttribute("role")?.trim().split(/\s+/)[0] ?? implicit(el) ?? ""
+  const frameOf = (el: Element) => {
+    if (!FIELDS.has(ariaOf(el))) return null
+    const known = frames.get(el)
+    if (known !== undefined) return known
+    let frame: Element | null = null
+    const style = getComputedStyle(el)
+    if (!edged(style)) {
+      const rect = el.getBoundingClientRect()
+      let up = parent(el)
+      for (let depth = 0; up && depth < 3; depth++, up = parent(up)) {
+        const role = ariaOf(up)
+        if (CONTROLS.has(role) || OVERLAYS.has(role)) break
+        if (up.getBoundingClientRect().height > Math.max(rect.height + 16, 64))
+          break
+        const look = getComputedStyle(up)
+        if (!edged(look)) continue
+        const fields = [...up.querySelectorAll("*")].filter((one) =>
+          FIELDS.has(ariaOf(one)),
+        )
+        if (
+          fields.length === 1 &&
+          (alpha(style.backgroundColor) === 0 ||
+            style.backgroundColor === look.backgroundColor)
+        )
+          frame = up
+        break
+      }
+    }
+    frames.set(el, frame)
+    return frame
   }
   const px = (n: number) => `${Math.round(n * 10) / 10}px`
   const extra = (el: Element) => {
@@ -675,13 +785,33 @@ function census(
     }
     return values
   }
+  /* What a framed field (`frameOf`) takes from its frame; its text inset
+     is measured from the frame's inner edge. */
+  const FRAMED = [
+    "backgroundColor",
+    "backgroundImage",
+    "backdropFilter",
+    "borderRadius",
+    "corners",
+    "edge",
+    "boxShadow",
+    "ring",
+    "height",
+    "width",
+    "iconSize",
+    "iconStroke",
+  ]
   const read = (els: Element[], focus: boolean) => {
-    const targets = Object.fromEntries(
-      els.map((el) => [
-        el.getAttribute(ID) as string,
-        { selector: selectorOf(el), focus },
-      ]),
-    )
+    const targets: Record<string, { selector: string; focus: boolean }> = {}
+    for (const el of els) {
+      const id = el.getAttribute(ID) as string
+      targets[id] = { selector: selectorOf(el), focus }
+      const frame = frameOf(el)
+      if (frame) {
+        frame.setAttribute(FRAME, id)
+        targets[`${id}/frame`] = { selector: selectorOf(frame, FRAME), focus }
+      }
+    }
     const measured = probe(
       targets,
       Object.fromEntries(Object.keys(targets).map((id) => [id, props])),
@@ -689,9 +819,32 @@ function census(
       false,
     )
     return els.map((el) => {
+      const id = el.getAttribute(ID) as string
       const values: Record<string, string> = {
-        ...(measured[el.getAttribute(ID) as string] ?? {}),
+        ...(measured[id] ?? {}),
         ...extra(el),
+      }
+      const frame = frameOf(el)
+      if (frame) {
+        const outer: Record<string, string> = {
+          ...(measured[`${id}/frame`] ?? {}),
+          ...extra(frame),
+        }
+        for (const key of FRAMED) {
+          const value = outer[key]
+          // A field can draw its own ring inside the frame.
+          if (value !== undefined && !(key === "ring" && value === "none"))
+            values[key] = value
+        }
+        const style = getComputedStyle(el)
+        const look = getComputedStyle(frame)
+        values.paddingInline = px(
+          el.getBoundingClientRect().left +
+            Number.parseFloat(style.borderLeftWidth) +
+            Number.parseFloat(style.paddingLeft) -
+            frame.getBoundingClientRect().left -
+            Number.parseFloat(look.borderLeftWidth),
+        )
       }
       if (!focus) delete values.ring
       // The first family is what the diff compares; the stack repeats on
@@ -754,8 +907,9 @@ function census(
 
   if (command.kind === "clear") {
     for (const el of all(document))
-      for (const name of [ID, HOST]) el.removeAttribute(name)
+      for (const name of [ID, HOST, FRAME]) el.removeAttribute(name)
     scope.__censusSeen = new WeakMap()
+    scope.__censusFrames = new WeakMap()
     return null
   }
   if (command.kind === "seen") {
@@ -1031,14 +1185,6 @@ function census(
   const elements: CensusElement[] = []
   const kept = new Map<Element, DOMRect>()
   const roles = new Map<Element, string>()
-  const OVERLAYS = new Set([
-    "dialog",
-    "alertdialog",
-    "menu",
-    "listbox",
-    "tooltip",
-    "popover",
-  ])
   const inOverlay = (el: Element) => {
     for (let up = parent(el); up; up = parent(up))
       if (
@@ -1053,13 +1199,26 @@ function census(
   }
   let next = command.start
   let truncated = 0
-  for (const el of all(document)) {
-    if (!keep(el) || !shown(el)) continue
-    if (
-      command.fresh &&
-      (command.fresh === "new" ? seen.has(el) : seen.get(el) === lookOf(el))
-    )
-      continue
+  const everything = all(document)
+  // A frame shows as its field.
+  const framing = new Set<Element>()
+  for (const el of everything) {
+    const frame = frameOf(el)
+    if (frame) framing.add(frame)
+  }
+  const same = (el: Element) =>
+    command.fresh === "new" ? seen.has(el) : seen.get(el) === lookOf(el)
+  for (const el of everything) {
+    if (!keep(el) || !shown(el) || framing.has(el)) continue
+    const frame = frameOf(el)
+    if (command.fresh && same(el) && (!frame || same(frame))) continue
+    // After the first pass, only the viewport: what an interaction opened
+    // shows there, and what changed past it changed by side effect.
+    if (command.fresh) {
+      const { top, right, bottom, left } = el.getBoundingClientRect()
+      if (bottom <= 0 || right <= 0 || top >= innerHeight || left >= innerWidth)
+        continue
+    }
     // Syntax highlighting is the code block's content, not its look.
     if (el.parentElement?.closest("pre, code")) continue
     const style = getComputedStyle(el)
@@ -1079,6 +1238,21 @@ function census(
     ) {
       role = "popover"
       by = "shape"
+    }
+    // A card's section (a dialog's header, a body row) runs edge to edge in
+    // what holds it: a band of its container, not a card.
+    if (role === "card" && by === "shape") {
+      let up = parent(el)
+      while (up && !kept.has(up)) up = parent(up)
+      const box = up && kept.get(up)
+      if (
+        up &&
+        box &&
+        !CONTROLS.has(roles.get(up) ?? "") &&
+        Math.abs(box.left - rect.left) <= 1 &&
+        Math.abs(box.right - rect.right) <= 1
+      )
+        role = "panel"
     }
     // Unpainted structure (lists, landmarks, rows) shows through its parts.
     if (!painted && !chars && !CONTROLS.has(role) && !ALWAYS.has(role)) continue
@@ -1124,7 +1298,12 @@ function census(
       !(el as HTMLButtonElement).disabled &&
       (CONTROLS.has(role) || el.hasAttribute("tabindex"))
     const is = flagOf(el)
-    const named = names((name) => el.getAttribute(name))
+    // A framed field is named by its frame first (Primer's data-component
+    // TextInput over the input's own).
+    const named = {
+      ...names((name) => el.getAttribute(name)),
+      ...(frame ? names((name) => frame.getAttribute(name)) : {}),
+    }
     // A control's variant and size can sit on its label (Airbnb's
     // data-size): what it lacks comes from its own parts, never from a
     // control nested in it.
@@ -1155,8 +1334,9 @@ function census(
       tag: el.localName,
       ...(around ? { in: around } : {}),
       ...(level ? { level } : {}),
-      box: [rect.x + scrollX, rect.y + scrollY, rect.width, rect.height].map(
-        Math.round,
+      box: (({ x, y, width, height }) =>
+        [x + scrollX, y + scrollY, width, height].map(Math.round))(
+        frame?.getBoundingClientRect() ?? rect,
       ) as [number, number, number, number],
       chars,
       ...(focusable ? { focusable } : {}),
@@ -1447,7 +1627,12 @@ function argNames(pages: CensusPage[]) {
   return named
 }
 
-/** Each key's values over the members, most used first. */
+/** Each key's values over the members, most used first. A component's
+ *  element without one of its data attributes shows the default, so a
+ *  data-* value names the look only when at least half the members a
+ *  data-component names carry it (not one danger item among plain ones),
+ *  or half of them all when none is named (not GitHub's repo tabs by the
+ *  counter two of them hold). */
 const tally = (names: Names[]) => {
   const counts = new Map<string, Map<string, number>>()
   for (const each of names)
@@ -1456,15 +1641,21 @@ const tally = (names: Names[]) => {
       values.set(value, (values.get(value) ?? 0) + 1)
       counts.set(key, values)
     }
+  const components = names.filter((each) => each["data-component"]).length
+  const holds = (key: string, count: number) =>
+    !key.startsWith("data-") ||
+    ["data-component", "data-slot", "data-part"].includes(key) ||
+    count * 2 >= (components || names.length)
   return Object.fromEntries(
     [...counts]
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, values]) => [
-        key,
-        [...values]
+      .flatMap(([key, values]) => {
+        const held = [...values]
+          .filter(([, count]) => holds(key, count))
           .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-          .map(([value]) => value),
-      ]),
+          .map(([value]) => value)
+        return held.length ? [[key, held] as const] : []
+      }),
   )
 }
 
@@ -1490,13 +1681,101 @@ export const sameLook = (keys: (Prop | Extra)[], a: Values, b: Values) => {
     .every((key) => (a[key] ?? "") === (b[key] ?? ""))
 }
 
+type Box = CensusElement["box"]
+const within = (outer: Box, inner: Box) =>
+  inner[0] >= outer[0] - 1 &&
+  inner[1] >= outer[1] - 1 &&
+  inner[0] + inner[2] <= outer[0] + outer[2] + 1 &&
+  inner[1] + inner[3] <= outer[1] + outer[3] + 1
+const area = (box: Box) => box[2] * box[3]
+
+/* Buttons and links that only wrap something else: no text or icon of
+   their own around one painted part that fills them (an avatar, an issue
+   label's pill), or around nothing at all (a chart's hit area). They count
+   as nothing and the part as itself; a pill with text in it is the badge
+   the shape rule would have read had the text been its own. And pills
+   drawn over a field (a filter's highlighted qualifiers) are its value,
+   not badges. */
+const TYPED = new Set(["textbox", "searchbox", "combobox"])
+function unwrap(pages: CensusPage[]): CensusPage[] {
+  const rests = new Map(
+    pages
+      .filter((page) => page.pass === "rest")
+      .map((page) => [`${page.key}|${page.mode}`, page]),
+  )
+  const dropped = new Set<CensusElement>()
+  const badges = new Set<CensusElement>()
+  for (const page of pages) {
+    // A later pass holds only what changed: the parts may sit in the rest.
+    const rest = rests.get(`${page.key}|${page.mode}`)
+    const around =
+      rest && rest !== page
+        ? [...page.elements, ...rest.elements]
+        : page.elements
+    const fields = around.filter((one) => TYPED.has(one.role))
+    for (const element of page.elements)
+      if (
+        element.role === "badge" &&
+        element.by === "shape" &&
+        fields.some((field) => within(field.box, element.box))
+      )
+        dropped.add(element)
+    for (const element of page.elements) {
+      const { values } = element
+      if (
+        (element.role !== "button" && element.role !== "link") ||
+        element.chars ||
+        values.iconSize ||
+        values.backgroundImage ||
+        (values.edge ?? "none") !== "none" ||
+        (values.boxShadow ?? "none") !== "none"
+      )
+        continue
+      const inside = around.filter(
+        (one) =>
+          one !== element &&
+          !(one.role === element.role && `${one.box}` === `${element.box}`) &&
+          within(element.box, one.box),
+      )
+      const fill = inside.find(
+        (one) =>
+          ["box", "badge", "avatar", "img"].includes(one.role) &&
+          area(one.box) >= 0.75 * area(element.box),
+      )
+      if (inside.length && !fill) continue
+      if (
+        fill &&
+        !inside.every((one) => one === fill || within(fill.box, one.box))
+      )
+        continue
+      dropped.add(element)
+      if (
+        fill?.role === "box" &&
+        fill.box[3] <= 32 &&
+        fill.box[2] <= 240 &&
+        inside.some((one) => TEXT_ROLES.has(one.role))
+      )
+        badges.add(fill)
+    }
+  }
+  return pages.map((page) => ({
+    ...page,
+    elements: page.elements
+      .filter((element) => !dropped.has(element))
+      .map((element) =>
+        badges.has(element) ? { ...element, role: "badge" } : element,
+      ),
+  }))
+}
+
 /** Clusters a product's census pages into looks per role group, counted
  *  across pages, with each look's other mode and its states. Light leads
  *  where a page was read in both modes; the same element in dark (same page,
  *  pass, role and box: a theme moves nothing) gives the dark values. A page
  *  read only in dark (a signed-in run, one mode per run) gives dark-only
  *  looks. */
-export function cluster(pages: CensusPage[], probe: string): Inventory {
+export function cluster(read: CensusPage[], probe: string): Inventory {
+  const pages = unwrap(read)
   const where = (page: CensusPage) => `${page.key}|${page.pass}`
   const lit = new Set(pages.filter((page) => page.mode === "light").map(where))
   const key = (page: CensusPage, element: CensusElement) =>
@@ -1516,7 +1795,8 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const group = groupOf(element)
       const keys = lookKeys(element.role)
       const bySignature = groups.get(group) ?? new Map<string, Member[]>()
-      const sig = `${page.mode}|${signature(keys, element.values)}`
+      // Flagged apart: a group takes its first member's flag.
+      const sig = `${page.mode}|${element.is ?? ""}|${signature(keys, element.values)}`
       bySignature.set(sig, [...(bySignature.get(sig) ?? []), { page, element }])
       groups.set(group, bySignature)
     }
@@ -1576,8 +1856,13 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const [first] = members
       if (!first) continue
       const lead = first.page.mode
-      // The sample: a member read in a state, else the first.
-      const sample = members.find((m) => m.element.states) ?? first
+      // The sample: a member read in a state, on the rest pass where one
+      // was (a later pass's page may have moved on), else the first.
+      const sample =
+        members.find((m) => m.element.states && m.page.pass === "rest") ??
+        members.find((m) => m.element.states) ??
+        members.find((m) => m.page.pass === "rest") ??
+        first
       const paired = members
         .map((member) => twins.get(key(member.page, member.element)))
         .filter((t): t is CensusElement => !!t)
@@ -1589,7 +1874,13 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
       const darkest = [...twinSigs.values()].sort(
         (a, b) => b.length - a.length,
       )[0]
-      const twin = darkest?.find((t) => t.states) ?? darkest?.[0]
+      // The sample's own twin where it reads like the rest, so both
+      // modes point at the same pass.
+      const own = twins.get(key(sample.page, sample.element))
+      const twin =
+        (own && darkest?.includes(own) ? own : undefined) ??
+        darkest?.find((t) => t.states) ??
+        darkest?.[0]
       // Each flag's changes, against the sample and its twin.
       const found: { lead: Values; dark?: Values; flag: Flag }[] = []
       for (const [flag, list] of Object.entries(flags.get(members) ?? {})) {

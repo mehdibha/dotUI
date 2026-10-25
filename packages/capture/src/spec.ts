@@ -233,6 +233,27 @@ function place(
   return { entries, of, count }
 }
 
+/** The look a size reads its values from: of the heights its looks take,
+ *  the one most variants share, then the most used. Primer's small button
+ *  is 28px across its variants; its inline link-style buttons, more used,
+ *  are not. */
+function sizeLook(entry: Entry, variantOf: (look: Look) => string) {
+  const byHeight = new Map<string, Look[]>()
+  for (const look of entry.looks) {
+    const height = look[leadOf(look)]?.height ?? ""
+    byHeight.set(height, [...(byHeight.get(height) ?? []), look])
+  }
+  const score = (looks: Look[]) => ({
+    variants: new Set(looks.map(variantOf)).size,
+    count: looks.reduce((sum, look) => sum + look.count, 0),
+  })
+  const [best] = [...byHeight.values()].sort((a, b) => {
+    const [x, y] = [score(a), score(b)]
+    return y.variants - x.variants || y.count - x.count
+  })
+  return best?.[0] as Look
+}
+
 export interface SpecInput {
   slug: string
   census: Inventory & { census?: string }
@@ -288,6 +309,10 @@ export function systemSpec(input: SpecInput): SystemSpec {
       new Map(entries.map((entry, i) => [entry.key, i]))
     const vOrder = order(variants.entries)
     const sOrder = order(sizes.entries)
+    const variantOf = (look: Look) => variants.of.get(look)?.key ?? ""
+    const sizeTop = new Map(
+      sizes.entries.map((entry) => [entry.key, sizeLook(entry, variantOf)]),
+    )
 
     const grid: Grid = {
       group,
@@ -305,7 +330,7 @@ export function systemSpec(input: SpecInput): SystemSpec {
         }
       }),
       sizes: sizes.entries.map((entry) => {
-        const [top] = entry.looks as [Look]
+        const top = sizeTop.get(entry.key) as Look
         return {
           key: entry.key,
           ...(entry.name ? { name: entry.name } : {}),
@@ -319,7 +344,7 @@ export function systemSpec(input: SpecInput): SystemSpec {
           const variant = variants.of.get(look) as Entry
           const size = sizes.of.get(look) as Entry
           const [vTop] = variant.looks as [Look]
-          const [sTop] = size.looks as [Look]
+          const sTop = sizeTop.get(size.key) as Look
           const states: Cell["states"] = {}
           const copies: NonNullable<Cell["copies"]> = {}
           const extra: NonNullable<Cell["values"]> = {}
