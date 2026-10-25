@@ -1,7 +1,6 @@
 "use client"
 
 import { CheckIcon, PlusIcon, SearchIcon } from "@/registry/icons"
-import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
 import { Label } from "@/registry/ui/field"
@@ -12,12 +11,10 @@ import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
 
 import { Board, stateProps, useBoardFocus } from "./board"
+import { CANVAS, ComponentSet, SetGrid } from "./set-parts"
 
 const CONTROL_KEYS = ["focusStyle", "focusWidth", "focusRingGap", "focusColor"]
 const INPUT_KEYS = ["focusInputStyle", "focusFieldWidth", "focusColor"]
-
-// Figma's selection blue.
-const SELECTION = "#0D99FF"
 
 // Keyboard focus: inputs style `focus:`, everything else `focus-visible:`.
 const FOCUSED = { ...stateProps("focus"), "data-focused": "true" }
@@ -158,48 +155,6 @@ function Inputs({ focused }: Row) {
   )
 }
 
-/** A component set at rest above and focused below, framed the way design tools frame one; selected while the panel edits it. */
-function Frame({
-  name,
-  selected,
-  set: Set,
-}: {
-  name: string
-  selected: boolean
-  set: React.ComponentType<Row>
-}) {
-  const color = selected ? SELECTION : undefined
-  return (
-    <div className="flex min-w-0 flex-col gap-2">
-      <span
-        className={cn(
-          "text-[11px] leading-none font-medium",
-          !selected && "text-fg-muted",
-        )}
-        style={{ color }}
-      >
-        {name}
-      </span>
-      <div
-        className={cn(
-          "flex flex-col gap-6 rounded-md border border-dashed bg-bg p-6 transition-colors duration-150 max-sm:p-4",
-          !selected && "border-fg-muted/40",
-        )}
-        style={{ borderColor: color }}
-      >
-        {[false, true].map((focused) => (
-          <div
-            key={String(focused)}
-            className="flex flex-wrap items-center gap-x-6 gap-y-4"
-          >
-            <Set focused={focused} />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function useEditing() {
   const { axis, holds } = useBoardFocus()
   const keys = [axis, ...(holds ?? [])]
@@ -209,27 +164,36 @@ function useEditing() {
   }
 }
 
-// A dot-grid canvas filling the preview; the bottom clears the toolbar.
-const CANVAS =
-  "min-h-dvh max-w-none cursor-default items-center justify-center bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] bg-size-[16px_16px] px-6 pt-10 pb-20 sm:px-10"
-
 export default function FocusBoard() {
   const editing = useEditing()
+  const rows = (Set: React.ComponentType<Row>) =>
+    [false, true].map((focused) => (
+      <Set key={String(focused)} focused={focused} />
+    ))
   return (
     <Board id="focus" untitled className={CANVAS}>
-      <div
-        inert
-        className="grid w-full max-w-4xl grid-cols-2 gap-8 max-md:grid-cols-1"
-      >
-        <Frame name="Buttons" selected={editing.controls} set={Buttons} />
-        <Frame
+      <SetGrid>
+        <ComponentSet
+          name="Buttons"
+          selected={editing.controls}
+          rows={rows(Buttons)}
+        />
+        <ComponentSet
           name="Selection"
           selected={editing.controls}
-          set={SelectionControls}
+          rows={rows(SelectionControls)}
         />
-        <Frame name="Navigation" selected={editing.controls} set={Navigation} />
-        <Frame name="Inputs" selected={editing.inputs} set={Inputs} />
-      </div>
+        <ComponentSet
+          name="Navigation"
+          selected={editing.controls}
+          rows={rows(Navigation)}
+        />
+        <ComponentSet
+          name="Inputs"
+          selected={editing.inputs}
+          rows={rows(Inputs)}
+        />
+      </SetGrid>
     </Board>
   )
 }
