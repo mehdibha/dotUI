@@ -102,12 +102,12 @@ export const DISABLED_OPTIONS = options(DISABLED_VALUES, {
 
 export const CURSOR_CONTROL_OPTIONS = options(CURSOR_CONTROL_VALUES, {
   pointer: {
-    label: "Hand",
+    label: "pointer",
     description: "Pointing hand over clickable controls",
     credits: ["Primer", "Polaris", "Carbon", "Geist", "Material 3"],
   },
   default: {
-    label: "Arrow",
+    label: "default",
     description: "Plain arrow, like a desktop app",
     credits: ["shadcn", "Radix Themes", "Spectrum 2", "Linear"],
   },
@@ -115,12 +115,12 @@ export const CURSOR_CONTROL_OPTIONS = options(CURSOR_CONTROL_VALUES, {
 
 export const CURSOR_DISABLED_OPTIONS = options(CURSOR_DISABLED_VALUES, {
   "not-allowed": {
-    label: "Blocked",
+    label: "not-allowed",
     description: "No-entry sign over disabled controls",
     credits: ["Radix Themes", "Carbon", "Primer", "Untitled UI", "Geist"],
   },
   default: {
-    label: "Arrow",
+    label: "default",
     description: "Plain arrow over disabled controls",
     credits: ["shadcn", "Polaris", "Material 3", "Linear", "Notion"],
   },
@@ -128,15 +128,15 @@ export const CURSOR_DISABLED_OPTIONS = options(CURSOR_DISABLED_VALUES, {
 
 export const CURSOR_BUSY_OPTIONS = options(CURSOR_BUSY_VALUES, {
   default: {
-    label: "Arrow",
+    label: "default",
     description: "Plain arrow over a pending button",
   },
   progress: {
-    label: "Progress",
+    label: "progress",
     description: "Arrow with a spinner over a pending button",
   },
   wait: {
-    label: "Wait",
+    label: "wait",
     description: "Spinner alone over a pending button",
   },
 })
@@ -147,8 +147,8 @@ export const CURSOR_DRAG_OPTIONS = options(CURSOR_DRAG_VALUES, {
     description: "Sliders and drag handles use the controls' cursor",
   },
   grab: {
-    label: "Grab",
-    description: "Open hand that closes while dragging",
+    label: "grab",
+    description: "Open hand, grabbing while dragging",
     credits: ["Notion"],
   },
 })

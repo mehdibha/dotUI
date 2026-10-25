@@ -34,6 +34,7 @@ import {
   DIAL_LABEL,
   DIAL_ROW,
   DialSelect,
+  type DialSelectOption,
   DialSlider,
   UNDER_ROW,
 } from "../dial"
@@ -47,7 +48,14 @@ import {
 } from "../rows"
 import { useCurrent } from "../selection"
 import { useAxis } from "../use-axis"
-import { ArrowCursor, HandCursor } from "./cursors"
+import {
+  ArrowCursor,
+  GrabCursor,
+  HandCursor,
+  NotAllowedCursor,
+  ProgressCursor,
+  WaitCursor,
+} from "./cursors"
 import { inks } from "./primary"
 
 const INK = "var(--color-border-focus)"
@@ -321,11 +329,40 @@ const InvalidRow = () => (
   />
 )
 
+const CURSORS: Record<string, () => React.ReactNode> = {
+  pointer: HandCursor,
+  default: ArrowCursor,
+  "not-allowed": NotAllowedCursor,
+  progress: ProgressCursor,
+  wait: WaitCursor,
+  grab: GrabCursor,
+}
+
+function CursorGlyph({ cursor }: { cursor: string }) {
+  const Glyph = CURSORS[cursor] ?? ArrowCursor
+  return (
+    <span className="-my-0.5 size-5 shrink-0 *:size-full">
+      <Glyph />
+    </span>
+  )
+}
+
+/** Each option drawn as the cursor it sets; `as` names it where its value
+ *  isn't a cursor keyword (Drag's "Same as controls"). */
+const withCursors = (
+  options: DialSelectOption[],
+  as: Record<string, string> = {},
+): DialSelectOption[] =>
+  options.map((option) => {
+    const glyph = <CursorGlyph cursor={as[option.value] ?? option.value} />
+    return { ...option, icon: glyph, glyph }
+  })
+
 const CursorControlsRow = () => (
   <DialSelect
     axis="cursorControls"
     label="Controls"
-    options={CURSOR_CONTROL_OPTIONS}
+    options={withCursors(CURSOR_CONTROL_OPTIONS)}
     placement={UNDER}
   />
 )
@@ -334,7 +371,7 @@ const CursorDisabledRow = () => (
   <DialSelect
     axis="cursorDisabled"
     label="Disabled"
-    options={CURSOR_DISABLED_OPTIONS}
+    options={withCursors(CURSOR_DISABLED_OPTIONS)}
     placement={UNDER}
   />
 )
@@ -343,19 +380,24 @@ const CursorBusyRow = () => (
   <DialSelect
     axis="cursorBusy"
     label="Busy"
-    options={CURSOR_BUSY_OPTIONS}
+    options={withCursors(CURSOR_BUSY_OPTIONS)}
     placement={UNDER}
   />
 )
 
-const CursorDragRow = () => (
-  <DialSelect
-    axis="cursorDrag"
-    label="Drag"
-    options={CURSOR_DRAG_OPTIONS}
-    placement={UNDER}
-  />
-)
+function CursorDragRow() {
+  const { state } = useCurrent()
+  return (
+    <DialSelect
+      axis="cursorDrag"
+      label="Drag"
+      options={withCursors(CURSOR_DRAG_OPTIONS, {
+        controls: state.cursorControls,
+      })}
+      placement={UNDER}
+    />
+  )
+}
 
 const ControlTextRow = () => (
   <DialSelect
