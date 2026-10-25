@@ -424,10 +424,13 @@ for (const { job, layout, frozen } of results) {
       // The first mode's: the page's regions are read in it too.
       box,
       // A mode this run didn't freeze keeps its last copy, as a block it
-      // froze in no mode keeps its whole record.
+      // froze in no mode keeps its whole record, if redacted alike.
       copies: {
         ...before?.blocks.find(
-          (known) => known.name === name && known.page === job.key,
+          (known) =>
+            known.name === name &&
+            known.page === job.key &&
+            !!known.redacted === redact,
         )?.copies,
       },
       ...(redact ? { redacted: true as const } : {}),
@@ -471,7 +474,11 @@ const file: BlocksFile = {
   capture: { census: VERSION, date: today },
   blocks: [
     ...(before?.blocks.filter(
-      (block) => names.includes(block.name) && !blocks.has(block.name),
+      (block) =>
+        names.includes(block.name) &&
+        !blocks.has(block.name) &&
+        // Frozen before its target asked for redaction: dropped.
+        (block.redacted || !targets[block.page]?.blocks?.[block.name]?.redact),
     ) ?? []),
     ...blocks.values(),
   ].sort(
