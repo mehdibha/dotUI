@@ -99,6 +99,7 @@ import {
   REFS,
   runSteps,
   say,
+  settle,
   shim,
   SRC,
   versionOf,
@@ -743,17 +744,19 @@ const SHOT_HEIGHT = 10000
 /** A shot of the page as it stands, in <out>/shots/: its path from <out>,
  *  and where on the page it starts when not at the top; undefined when the
  *  page can't be shot. `whole`: the whole page, unless scrolled; else the
- *  viewport. A full-page shot lays the page out again from the top, which
- *  moves what is fixed or sticky away from where its box was read and
- *  closes some tooltips. */
+ *  viewport. A whole shot grows the viewport to the page's height and waits
+ *  for the page to paint it (an app that re-renders on resize, Airbnb's,
+ *  shot mid-render is blank), so what is fixed or sticky moves away from
+ *  where its box was read, and some tooltips close. */
 async function shoot(page: Page, file: string, whole: boolean) {
+  const viewport = page.viewport() ?? { width: 1440, height: 900 }
+  let grown = false
   try {
     // The body's height too: a body that scrolls on its own, or one a
-    // closing notice still holds fixed (Airbnb's), holds the page.
-    const { x, y, width, height } = await page.evaluate(() => ({
+    // notice holds fixed (Airbnb's), holds the page.
+    const { x, y, height } = await page.evaluate(() => ({
       x: scrollX,
       y: scrollY,
-      width: document.documentElement.scrollWidth,
       height: Math.max(
         document.documentElement.scrollHeight,
         document.body?.scrollHeight ?? 0,
@@ -761,21 +764,28 @@ async function shoot(page: Page, file: string, whole: boolean) {
     }))
     const at: [number, number] | null =
       x || y ? [Math.round(x), Math.round(y)] : null
-    const shot = await page.screenshot(
-      at || !whole
-        ? { type: "jpeg", quality: 60 }
-        : {
-            type: "jpeg",
-            quality: 60,
-            clip: { x: 0, y: 0, width, height: Math.min(height, SHOT_HEIGHT) },
-            captureBeyondViewport: true,
-          },
-    )
+    if (whole && !at && height > viewport.height) {
+      await page.setViewport({
+        ...viewport,
+        height: Math.min(height, SHOT_HEIGHT),
+      })
+      grown = true
+      await page
+        .waitForNetworkIdle({ idleTime: 500, timeout: 4000 })
+        .catch(() => {})
+      await settle(page)
+    }
+    const shot = await page.screenshot({ type: "jpeg", quality: 60 })
     await mkdir(resolve(OUT, "shots"), { recursive: true })
     await writeFile(resolve(OUT, "shots", file), shot)
     return { shot: `shots/${file}`, ...(at ? { shotAt: at } : {}) }
   } catch {
     return undefined
+  } finally {
+    if (grown) {
+      await page.setViewport(viewport).catch(() => {})
+      await settle(page)
+    }
   }
 }
 
