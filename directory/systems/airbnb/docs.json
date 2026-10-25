@@ -282,7 +282,7 @@
     },
     "badge": {
       "status": "reviewed",
-      "summary": "Small pills on listing photos: white Guest favorite (a gradient version on search results) and translucent grey Superhost. Terms like Free cancellation sit on a pale grey fill.",
+      "summary": "Small pills: white Guest favorite (a gradient version on search results) and translucent grey Superhost on listing photos. Terms like Free cancellation sit on a pale grey fill, and savings like Airbnb credit on a pale green one.",
       "groups": {
         "badge": {
           "variants": {
@@ -337,13 +337,24 @@
             },
             "v-h8giha": {
               "hide": "the selected map price pin: see button"
+            },
+            "v-9v7que": {
+              "name": {
+                "value": "savings",
+                "from": "ai"
+              },
+              "note": "Green ink on a pale green fill: Airbnb credit, Extended stay discount, Book early to save."
+            },
+            "v-pz4jox": {
+              "name": {
+                "value": "luxe",
+                "from": "ai"
+              },
+              "note": "A white pill with a deeper shadow on a Luxe listing's photo."
             }
           }
         }
-      },
-      "missing": [
-        "Airbnb credit (green text on a pale green fill) is on the search page but wasn't read as a badge."
-      ]
+      }
     },
     "card": {
       "status": "reviewed",
@@ -409,15 +420,14 @@
               },
               "note": "Meet your host on a listing: white, a soft shadow, the photo beside the stats."
             },
-            "v-jmfjz5": {
-              "name": {
-                "value": "banner",
-                "from": "ai"
-              },
-              "note": "Curious about hosting? on search results: a beige band with a dark pill."
-            },
             "v-ojouej": {
               "hide": "the site header with its search bar: page chrome"
+            },
+            "v-vmtkfk": {
+              "hide": "the grey track behind Nightly / Trip price in Filters: see radio-group"
+            },
+            "v-herk4m": {
+              "hide": "the page footer's grey band: page chrome"
             }
           },
           "sizes": {
@@ -426,7 +436,10 @@
             }
           }
         }
-      }
+      },
+      "missing": [
+        "The beige bands (Curious about hosting?, Featured hotels) share a spec variant with the grey Nightly / Trip price track, so they aren't shown on their own yet."
+      ]
     },
     "avatar": {
       "status": "reviewed",
@@ -641,6 +654,13 @@
                 "from": "ai"
               },
               "note": "Type of place: the chosen option gets a dark border."
+            },
+            "v-bhx43i": {
+              "name": {
+                "value": "segment, on track",
+                "from": "ai"
+              },
+              "note": "Nightly or trip price in Filters: grey text on a grey track; the chosen one is a white pill."
             }
           }
         },
