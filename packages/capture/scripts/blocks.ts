@@ -473,13 +473,14 @@ const file: BlocksFile = {
   },
   capture: { census: VERSION, date: today },
   blocks: [
-    ...(before?.blocks.filter(
-      (block) =>
-        names.includes(block.name) &&
-        !blocks.has(block.name) &&
-        // Frozen before its target asked for redaction: dropped.
-        (block.redacted || !targets[block.page]?.blocks?.[block.name]?.redact),
-    ) ?? []),
+    ...(before?.blocks.filter((block) => {
+      const target = targets[block.page]?.blocks?.[block.name]
+      // Gone from its page, or frozen before its target asked for
+      // redaction: dropped.
+      return (
+        target && !blocks.has(block.name) && (block.redacted || !target.redact)
+      )
+    }) ?? []),
     ...blocks.values(),
   ].sort(
     (a, b) =>
