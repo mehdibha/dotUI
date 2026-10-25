@@ -9,10 +9,12 @@ const route = getRouteApi("/systems/$slug")
 
 /** One tab of a system's page, from the data its page loaded. */
 export function SystemTabPanel({ tab }: { tab: SystemTab }) {
-  const { catalogEntry, system, looks } = route.useLoaderData()
+  const { catalogEntry, system, looks, spec, docs } = route.useLoaderData()
   if (tab === "live")
     return (
       system && <SystemExplorer system={system} catalogEntry={catalogEntry} />
     )
-  return looks && <LooksTabPanel looks={looks} tab={tab} />
+  return (
+    looks && <LooksTabPanel looks={looks} spec={spec} docs={docs} tab={tab} />
+  )
 }

@@ -1,6 +1,8 @@
 import type { ComponentType } from "react"
 
+import type { DocsFile } from "~/data/docs"
 import type { LooksFile } from "~/data/looks"
+import type { SpecFile } from "~/data/spec"
 
 import { ComponentsSection } from "./components"
 import { DocsComponents, DocsFoundations } from "./docs"
@@ -18,10 +20,18 @@ import {
 /* A captured system's page, in three tabs: the docs written from it, the
    values the capture computed, and how far the capture went. */
 
+export interface LooksData {
+  looks: LooksFile
+  /** Its components as variants × sizes grids, once a capture wrote one. */
+  spec?: SpecFile
+  /** Its written docs. */
+  docs?: DocsFile
+}
+
 type LooksSection = {
   id: string
   label: string
-  Component: ComponentType<{ looks: LooksFile }>
+  Component: ComponentType<LooksData>
 }
 
 export const LOOKS_TABS = {
@@ -46,18 +56,12 @@ export const LOOKS_TABS = {
 
 export type LooksTab = keyof typeof LOOKS_TABS
 
-export function LooksTabPanel({
-  looks,
-  tab,
-}: {
-  looks: LooksFile
-  tab: LooksTab
-}) {
+export function LooksTabPanel({ tab, ...data }: LooksData & { tab: LooksTab }) {
   return (
     <div className="flex flex-col gap-20 pt-12 pb-28">
       {LOOKS_TABS[tab].map(({ id, Component }) => (
         <section key={id} id={id} className="scroll-mt-24">
-          <Component looks={looks} />
+          <Component {...data} />
         </section>
       ))}
     </div>

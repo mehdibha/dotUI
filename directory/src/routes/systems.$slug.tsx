@@ -10,10 +10,18 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { getTabs, TABS } from "~/components/system/registry"
 import { SystemDesktopToc } from "~/components/system/toc"
 import { dataIndex } from "~/data"
+import type { DocsFile } from "~/data/docs"
 import type { LooksFile } from "~/data/looks"
+import type { SpecFile } from "~/data/spec"
 
-// Each system's looks.json is its own chunk: a page loads only its own.
+// Each system's files are their own chunks: a page loads only its own.
 const looksFiles = import.meta.glob<LooksFile>("../../systems/*/looks.json", {
+  import: "default",
+})
+const specFiles = import.meta.glob<SpecFile>("../../systems/*/spec.json", {
+  import: "default",
+})
+const docsFiles = import.meta.glob<DocsFile>("../../systems/*/docs.json", {
   import: "default",
 })
 
@@ -26,10 +34,14 @@ export const Route = createFileRoute("/systems/$slug")({
     )
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
     const captured = dataIndex.looks.find((l) => l.slug === params.slug)
-    const load = looksFiles[`../../systems/${params.slug}/looks.json`]
-    const looks = load ? await load() : undefined
+    const file = `../../systems/${params.slug}`
+    const [looks, spec, docs] = await Promise.all([
+      looksFiles[`${file}/looks.json`]?.(),
+      specFiles[`${file}/spec.json`]?.(),
+      docsFiles[`${file}/docs.json`]?.(),
+    ])
     if (!system && !looks) throw notFound()
-    return { catalogEntry, system, captured, looks }
+    return { catalogEntry, system, captured, looks, spec, docs }
   },
   component: SystemPage,
 })

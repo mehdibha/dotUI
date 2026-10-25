@@ -5,6 +5,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { PRESET_CATALOG } from "../../www/src/modules/presets/__generated__/catalog"
+import { docsFileSchema } from "../src/data/docs"
 import { CORE_COMPONENTS, looksFileSchema, MODES } from "../src/data/looks"
 import {
   catalogSchema,
@@ -15,6 +16,7 @@ import {
 } from "../src/data/schema"
 import type { CapturedSystem, DataIndex, SystemEntry } from "../src/data/schema"
 import { specFileSchema } from "../src/data/spec"
+import type { SpecFile } from "../src/data/spec"
 
 const root = path.resolve(import.meta.dirname, "..")
 const dataDir = path.join(root, "data")
@@ -96,12 +98,39 @@ for (const dir of systemDirs) {
   }
   // Its components as variants × sizes grids, from the same capture.
   const specPath = path.join(systemsDir, dir, "spec.json")
+  let spec: SpecFile | undefined
   if (fs.existsSync(specPath)) {
     const specResult = specFileSchema.safeParse(readJson(specPath))
     if (!specResult.success)
       errors.push(`${rel}/spec.json: ${specResult.error.message}`)
     else if (specResult.data.slug !== dir)
       errors.push(`${rel}/spec.json: slug must match its directory name`)
+    else spec = specResult.data
+  }
+  // Its written docs, over the looks and the spec: every key they name must
+  // still be in the spec, so a re-capture that moves one fails here.
+  const docsPath = path.join(systemsDir, dir, "docs.json")
+  if (fs.existsSync(docsPath)) {
+    const docsResult = docsFileSchema.safeParse(readJson(docsPath))
+    if (!docsResult.success)
+      errors.push(`${rel}/docs.json: ${docsResult.error.message}`)
+    else if (docsResult.data.slug !== dir)
+      errors.push(`${rel}/docs.json: slug must match its directory name`)
+    else {
+      for (const [key, block] of Object.entries(docsResult.data.blocks)) {
+        for (const [group, entries] of Object.entries(block.groups ?? {})) {
+          const grid = spec?.components[key]?.grids.find(
+            (g) => g.group === group,
+          )
+          for (const axis of ["variants", "sizes"] as const)
+            for (const id of Object.keys(entries[axis] ?? {}))
+              if (!grid?.[axis].some((entry) => entry.key === id))
+                errors.push(
+                  `${rel}/docs.json: ${key}.${group}.${axis}.${id} is not in spec.json`,
+                )
+        }
+      }
+    }
   }
   if (!fs.existsSync(path.join(systemsDir, dir, "system.json"))) continue
   const systemResult = systemSchema.safeParse(
