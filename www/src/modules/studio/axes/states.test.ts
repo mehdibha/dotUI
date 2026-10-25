@@ -80,6 +80,16 @@ describe("focus ring", () => {
     })
   })
 
+  test("gap sets a ring's offset, only a ring's", () => {
+    expect(resolve({ focusRingGap: 0 }).tokens).toEqual({
+      "--studio-focus-offset": "0px",
+      "--studio-focus-outside-offset": "0px",
+    })
+    expect(resolve({ focusStyle: "halo", focusRingGap: 4 }).tokens).toEqual(
+      resolve({ focusStyle: "halo" }).tokens,
+    )
+  })
+
   test("neutral ink re-points the focus pair", () => {
     const system = resolve({ focusColor: "neutral" })
     expect(system.tokens).toEqual({})
@@ -118,6 +128,24 @@ describe("field focus", () => {
       "--studio-field-focus-color": "var(--color-border-focus)",
       "--studio-field-invalid-color": "var(--color-fg-danger)",
     })
+  })
+
+  test("width sizes the halo and the thick edge, and the invalid halo", () => {
+    expect(resolve({ focusFieldWidth: 3 }).tokens).toEqual({
+      "--studio-field-focus-width": "3px",
+    })
+    expect(
+      resolve({ focusInputStyle: "thick-edge", focusFieldWidth: 1 }).tokens,
+    ).toMatchObject({
+      "--studio-field-focus-width": "1px",
+      "--studio-field-focus-offset": "-1px",
+    })
+    expect(
+      resolve({ focusFieldWidth: 3, invalidStyle: "halo" }).tokens,
+    ).toMatchObject({ "--invalid-ring-width": "3px" })
+    expect(
+      resolve({ focusInputStyle: "ring", focusFieldWidth: 3 }).tokens,
+    ).toEqual(resolve({ focusInputStyle: "ring" }).tokens)
   })
 })
 

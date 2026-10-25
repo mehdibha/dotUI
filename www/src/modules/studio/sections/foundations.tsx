@@ -93,12 +93,16 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
       rows: [
         ["focusStyle", "Style", ["Focus ring"]],
         ["focusWidth", "Width"],
+        ["focusRingGap", "Gap"],
         ["focusColor", "Color"],
       ],
     },
     {
       title: "Inputs",
-      rows: [["focusInputStyle", "Style", ["Field focus"]]],
+      rows: [
+        ["focusInputStyle", "Style", ["Field focus"]],
+        ["focusFieldWidth", "Width"],
+      ],
     },
   ],
   disabled: [[["disabledTreatment", "Style"]]],
@@ -202,7 +206,14 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "focus",
     label: "Focus",
-    owners: ["focusStyle", "focusWidth", "focusColor", "focusInputStyle"],
+    owners: [
+      "focusStyle",
+      "focusWidth",
+      "focusRingGap",
+      "focusColor",
+      "focusInputStyle",
+      "focusFieldWidth",
+    ],
     aliases: ["Focus ring", "Keyboard"],
     Preview: FocusPreview,
   }),

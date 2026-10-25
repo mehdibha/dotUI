@@ -13,8 +13,8 @@ import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
 
 import { Board, stateProps, useBoardFocus } from "./board"
 
-const CONTROL_KEYS = ["focusStyle", "focusWidth", "focusColor"]
-const INPUT_KEYS = ["focusInputStyle", "focusColor"]
+const CONTROL_KEYS = ["focusStyle", "focusWidth", "focusRingGap", "focusColor"]
+const INPUT_KEYS = ["focusInputStyle", "focusFieldWidth", "focusColor"]
 
 // Figma's selection blue.
 const SELECTION = "#0D99FF"
@@ -181,41 +181,14 @@ function Frame({
       </span>
       <div
         className={cn(
-          "relative flex flex-wrap items-center gap-x-6 gap-y-4 rounded-md border bg-bg p-6 transition-colors duration-150 max-sm:p-4",
-          selected ? "border-solid" : "border-dashed border-fg-muted/40",
+          "flex flex-wrap items-center gap-x-6 gap-y-4 rounded-md border border-dashed bg-bg p-6 transition-colors duration-150 max-sm:p-4",
+          !selected && "border-fg-muted/40",
         )}
         style={{ borderColor: color }}
       >
-        {selected && <Handles />}
         {children}
       </div>
     </div>
-  )
-}
-
-/** Figma's selection corners. */
-function Handles() {
-  const corner = "absolute size-1.5 border bg-white"
-  const style = { borderColor: SELECTION }
-  return (
-    <>
-      <span
-        className={cn(corner, "-top-[3.5px] -left-[3.5px]")}
-        style={style}
-      />
-      <span
-        className={cn(corner, "-top-[3.5px] -right-[3.5px]")}
-        style={style}
-      />
-      <span
-        className={cn(corner, "-bottom-[3.5px] -left-[3.5px]")}
-        style={style}
-      />
-      <span
-        className={cn(corner, "-right-[3.5px] -bottom-[3.5px]")}
-        style={style}
-      />
-    </>
   )
 }
 

@@ -412,6 +412,30 @@ exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > states/field-width-needs-layer: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--studio-field-focus-width": "0px",
+  },
+}
+`;
+
+exports[`rules > states/gap-only-ring: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--studio-focus-color": "color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
+    "--studio-focus-offset": "0px",
+    "--studio-focus-outside-offset": "0px",
+  },
+}
+`;
+
 exports[`rules > states/indicator-rule-is-thick: fires, then holds back 1`] = `
 {
   "color": undefined,

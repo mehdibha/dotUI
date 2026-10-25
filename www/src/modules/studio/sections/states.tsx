@@ -133,6 +133,8 @@ const FocusStyleRow = () => (
   />
 )
 
+const px = (value: number) => `${value}px`
+
 const FocusWidthRow = () => (
   <DialSlider
     axis="focusWidth"
@@ -140,7 +142,29 @@ const FocusWidthRow = () => (
     minValue={1}
     maxValue={4}
     step={1}
-    format={(value) => `${value}px`}
+    format={px}
+  />
+)
+
+const FocusGapRow = () => (
+  <DialSlider
+    axis="focusRingGap"
+    label="Gap"
+    minValue={0}
+    maxValue={4}
+    step={1}
+    format={px}
+  />
+)
+
+const FieldFocusWidthRow = () => (
+  <DialSlider
+    axis="focusFieldWidth"
+    label="Width"
+    minValue={1}
+    maxValue={4}
+    step={1}
+    format={px}
   />
 )
 
@@ -243,8 +267,10 @@ const HighlightRow = () => (
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,
   focusWidth: FocusWidthRow,
+  focusRingGap: FocusGapRow,
   focusColor: FocusColorRow,
   focusInputStyle: FieldFocusRow,
+  focusFieldWidth: FieldFocusWidthRow,
   disabledTreatment: DisabledRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
