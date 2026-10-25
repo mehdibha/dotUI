@@ -4,6 +4,8 @@
 // need a new migration note.
 import { z } from "zod"
 
+import type { Mode } from "./looks"
+
 // Plain ISO days: full timestamps churn diffs without adding meaning.
 const isoDate = z
   .string()
@@ -359,7 +361,7 @@ export interface DataIndex {
   looks: CapturedSystem[]
 }
 
-/** What /design-systems lists of a captured system, without loading its looks. */
+/** What the directory lists of a captured system, without loading its looks. */
 export interface CapturedSystem {
   slug: string
   /** The preset's name. */
@@ -367,6 +369,7 @@ export interface CapturedSystem {
   date: string
   pages: number
   signedIn: number
+  modes: Mode[]
   /** Core components with at least one look. */
   core: number
   looks: number

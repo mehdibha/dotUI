@@ -5,7 +5,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { PRESET_CATALOG } from "../../www/src/modules/presets/__generated__/catalog"
-import { CORE_COMPONENTS, looksFileSchema } from "../src/data/looks"
+import { CORE_COMPONENTS, looksFileSchema, MODES } from "../src/data/looks"
 import {
   catalogSchema,
   colorsFileSchema,
@@ -84,6 +84,9 @@ for (const dir of systemDirs) {
         date: capture.date,
         pages: capture.pages.length,
         signedIn: capture.pages.filter((p) => p.signedIn).length,
+        modes: MODES.filter((mode) =>
+          capture.pages.some((p) => p.modes.includes(mode)),
+        ),
         core: CORE_COMPONENTS.filter((c) => components[c]?.looks.length).length,
         looks: all.length,
         off: all.filter((l) => l.off?.length).length,

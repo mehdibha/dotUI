@@ -2,6 +2,7 @@
 
 import type { CatalogEntry, SystemEntry } from "~/data/schema"
 
+import { LiveComponents } from "./components"
 import { getSectionGroups } from "./registry"
 
 export function SystemExplorer({
@@ -14,7 +15,7 @@ export function SystemExplorer({
   const groups = getSectionGroups(system.slug)
 
   return (
-    <div className="px-6 pt-16 pb-28">
+    <div className="flex flex-col gap-16 pt-12 pb-28">
       {groups.map((group) => (
         <div
           key={group.id}
@@ -44,6 +45,11 @@ export function SystemExplorer({
           </div>
         </div>
       ))}
+      {system.components && (
+        <section id="live-components" className="scroll-mt-24">
+          <LiveComponents system={system} />
+        </section>
+      )}
     </div>
   )
 }

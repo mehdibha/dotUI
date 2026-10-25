@@ -1,6 +1,9 @@
+import type { ComponentType } from "react"
+
 import type { LooksFile } from "~/data/looks"
 
 import { ComponentsSection } from "./components"
+import { DocsComponents, DocsFoundations } from "./docs"
 import {
   ColorSection,
   CoverageSection,
@@ -12,27 +15,47 @@ import {
   TypeSection,
 } from "./sections"
 
-/* A captured system on one page: what the capture read, section by section,
-   with the gaps left visible. */
+/* A captured system's page, in three tabs: the docs written from it, the
+   values the capture computed, and how far the capture went. */
 
-const SECTIONS = [
-  { id: "coverage", label: "Coverage", Component: CoverageSection },
-  { id: "color", label: "Color", Component: ColorSection },
-  { id: "type", label: "Type", Component: TypeSection },
-  { id: "shape", label: "Shape", Component: ShapeSection },
-  { id: "spacing", label: "Spacing", Component: SpacingSection },
-  { id: "elevation", label: "Elevation", Component: ElevationSection },
-  { id: "components", label: "Components", Component: ComponentsSection },
-  { id: "gaps", label: "Gaps", Component: GapsSection },
-  { id: "pages", label: "Pages read", Component: PagesSection },
-]
+type LooksSection = {
+  id: string
+  label: string
+  Component: ComponentType<{ looks: LooksFile }>
+}
 
-export const LOOKS_SECTIONS = SECTIONS.map(({ id, label }) => ({ id, label }))
+export const LOOKS_TABS = {
+  docs: [
+    { id: "foundations", label: "Foundations", Component: DocsFoundations },
+    { id: "docs-components", label: "Components", Component: DocsComponents },
+  ],
+  computed: [
+    { id: "color", label: "Color", Component: ColorSection },
+    { id: "type", label: "Type", Component: TypeSection },
+    { id: "shape", label: "Shape", Component: ShapeSection },
+    { id: "spacing", label: "Spacing", Component: SpacingSection },
+    { id: "elevation", label: "Elevation", Component: ElevationSection },
+    { id: "components", label: "Components", Component: ComponentsSection },
+  ],
+  capture: [
+    { id: "coverage", label: "Coverage", Component: CoverageSection },
+    { id: "gaps", label: "Gaps", Component: GapsSection },
+    { id: "pages", label: "Pages read", Component: PagesSection },
+  ],
+} satisfies Record<string, LooksSection[]>
 
-export function LooksExplorer({ looks }: { looks: LooksFile }) {
+export type LooksTab = keyof typeof LOOKS_TABS
+
+export function LooksTabPanel({
+  looks,
+  tab,
+}: {
+  looks: LooksFile
+  tab: LooksTab
+}) {
   return (
-    <div className="flex flex-col gap-20 px-6 pt-16 pb-28">
-      {SECTIONS.map(({ id, Component }) => (
+    <div className="flex flex-col gap-20 pt-12 pb-28">
+      {LOOKS_TABS[tab].map(({ id, Component }) => (
         <section key={id} id={id} className="scroll-mt-24">
           <Component looks={looks} />
         </section>

@@ -10,29 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DesignSystemsRouteImport } from './routes/design-systems'
-import { Route as ComponentsIndexRouteImport } from './routes/components.index'
-import { Route as ComponentsSlugRouteImport } from './routes/components.$slug'
 import { Route as SystemsSlugRouteImport } from './routes/systems.$slug'
+import { Route as SystemsSlugIndexRouteImport } from './routes/systems.$slug.index'
+import { Route as SystemsSlugTabRouteImport } from './routes/systems.$slug.$tab'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DesignSystemsRoute = DesignSystemsRouteImport.update({
-  id: '/design-systems',
-  path: '/design-systems',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
-  id: '/components/',
-  path: '/components/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComponentsSlugRoute = ComponentsSlugRouteImport.update({
-  id: '/components/$slug',
-  path: '/components/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SystemsSlugRoute = SystemsSlugRouteImport.update({
@@ -40,59 +24,51 @@ const SystemsSlugRoute = SystemsSlugRouteImport.update({
   path: '/systems/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SystemsSlugIndexRoute = SystemsSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SystemsSlugRoute,
+} as any)
+const SystemsSlugTabRoute = SystemsSlugTabRouteImport.update({
+  id: '/$tab',
+  path: '/$tab',
+  getParentRoute: () => SystemsSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/design-systems': typeof DesignSystemsRoute
-  '/components/$slug': typeof ComponentsSlugRoute
-  '/systems/$slug': typeof SystemsSlugRoute
-  '/components/': typeof ComponentsIndexRoute
+  '/systems/$slug': typeof SystemsSlugRouteWithChildren
+  '/systems/$slug/$tab': typeof SystemsSlugTabRoute
+  '/systems/$slug/': typeof SystemsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/design-systems': typeof DesignSystemsRoute
-  '/components/$slug': typeof ComponentsSlugRoute
-  '/systems/$slug': typeof SystemsSlugRoute
-  '/components': typeof ComponentsIndexRoute
+  '/systems/$slug/$tab': typeof SystemsSlugTabRoute
+  '/systems/$slug': typeof SystemsSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/design-systems': typeof DesignSystemsRoute
-  '/components/$slug': typeof ComponentsSlugRoute
-  '/systems/$slug': typeof SystemsSlugRoute
-  '/components/': typeof ComponentsIndexRoute
+  '/systems/$slug': typeof SystemsSlugRouteWithChildren
+  '/systems/$slug/$tab': typeof SystemsSlugTabRoute
+  '/systems/$slug/': typeof SystemsSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/design-systems'
-    | '/components/$slug'
-    | '/systems/$slug'
-    | '/components/'
+  fullPaths: '/' | '/systems/$slug' | '/systems/$slug/$tab' | '/systems/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/design-systems'
-    | '/components/$slug'
-    | '/systems/$slug'
-    | '/components'
+  to: '/' | '/systems/$slug/$tab' | '/systems/$slug'
   id:
     | '__root__'
     | '/'
-    | '/design-systems'
-    | '/components/$slug'
     | '/systems/$slug'
-    | '/components/'
+    | '/systems/$slug/$tab'
+    | '/systems/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DesignSystemsRoute: typeof DesignSystemsRoute
-  ComponentsSlugRoute: typeof ComponentsSlugRoute
-  SystemsSlugRoute: typeof SystemsSlugRoute
-  ComponentsIndexRoute: typeof ComponentsIndexRoute
+  SystemsSlugRoute: typeof SystemsSlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -104,27 +80,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/design-systems': {
-      id: '/design-systems'
-      path: '/design-systems'
-      fullPath: '/design-systems'
-      preLoaderRoute: typeof DesignSystemsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/components/': {
-      id: '/components/'
-      path: '/components'
-      fullPath: '/components/'
-      preLoaderRoute: typeof ComponentsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/components/$slug': {
-      id: '/components/$slug'
-      path: '/components/$slug'
-      fullPath: '/components/$slug'
-      preLoaderRoute: typeof ComponentsSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/systems/$slug': {
       id: '/systems/$slug'
       path: '/systems/$slug'
@@ -132,15 +87,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SystemsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/systems/$slug/': {
+      id: '/systems/$slug/'
+      path: '/'
+      fullPath: '/systems/$slug/'
+      preLoaderRoute: typeof SystemsSlugIndexRouteImport
+      parentRoute: typeof SystemsSlugRoute
+    }
+    '/systems/$slug/$tab': {
+      id: '/systems/$slug/$tab'
+      path: '/$tab'
+      fullPath: '/systems/$slug/$tab'
+      preLoaderRoute: typeof SystemsSlugTabRouteImport
+      parentRoute: typeof SystemsSlugRoute
+    }
   }
 }
 
+interface SystemsSlugRouteChildren {
+  SystemsSlugTabRoute: typeof SystemsSlugTabRoute
+  SystemsSlugIndexRoute: typeof SystemsSlugIndexRoute
+}
+
+const SystemsSlugRouteChildren: SystemsSlugRouteChildren = {
+  SystemsSlugTabRoute: SystemsSlugTabRoute,
+  SystemsSlugIndexRoute: SystemsSlugIndexRoute,
+}
+
+const SystemsSlugRouteWithChildren = SystemsSlugRoute._addFileChildren(
+  SystemsSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DesignSystemsRoute: DesignSystemsRoute,
-  ComponentsSlugRoute: ComponentsSlugRoute,
-  SystemsSlugRoute: SystemsSlugRoute,
-  ComponentsIndexRoute: ComponentsIndexRoute,
+  SystemsSlugRoute: SystemsSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

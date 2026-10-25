@@ -1,7 +1,7 @@
 "use client"
 
 import { type ComponentProps, useEffect, useState } from "react"
-import { useMatch } from "@tanstack/react-router"
+import { useParams } from "@tanstack/react-router"
 import { ChevronDownIcon } from "lucide-react"
 import { Button } from "react-aria-components/Button"
 import { Select } from "react-aria-components/Select"
@@ -9,7 +9,7 @@ import { Select } from "react-aria-components/Select"
 import { SelectContent, SelectItem } from "@/registry/ui/select"
 import { cn } from "~/lib/utils"
 
-import { getSectionList } from "./registry"
+import { getSectionList, getTabs } from "./registry"
 import { scrollToSection, useActiveSection } from "./toc"
 import type { TocItem } from "./toc"
 
@@ -19,13 +19,12 @@ import type { TocItem } from "./toc"
  * its sections. A Select whose value tracks the section in view.
  */
 export function SystemTocSelect({ className }: { className?: string }) {
-  const slug = useMatch({
-    from: "/systems/$slug",
-    shouldThrow: false,
-    select: (match) => match.params.slug,
-  })
+  const { slug, tab } = useParams({ strict: false })
   const scrolled = useScrolled()
-  const items = slug ? getSectionList(slug) : []
+  const tabs = slug ? getTabs(slug) : []
+  const items = slug
+    ? getSectionList(slug, tabs.find((id) => id === tab) ?? tabs[0] ?? "live")
+    : []
   // Only surfaces once scrolled — at the top the page title is still in view.
   if (items.length === 0 || !scrolled) return null
   return <TocSelect items={items} className={className} />

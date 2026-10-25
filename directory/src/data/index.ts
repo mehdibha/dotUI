@@ -1,12 +1,7 @@
 import { notFound } from "@tanstack/react-router"
 
 import rawIndex from "./__generated__/index.json"
-import type {
-  ComponentDef,
-  DataIndex,
-  SystemComponent,
-  SystemEntry,
-} from "./schema"
+import type { CapturedSystem, DataIndex, SystemEntry } from "./schema"
 
 export const dataIndex = rawIndex as unknown as DataIndex
 
@@ -17,41 +12,43 @@ export function getSystem(slug: string): SystemEntry {
   return system
 }
 
-/** One system's take on a canonical component. */
-export interface ComponentExample {
-  system: SystemEntry
-  entry: SystemComponent
-  /** Path under public/ where build-demos.ts materialized the live demo. */
-  demoSrc: string | null
+/** A row of the directory: a system with a page. Live ones render their real
+ *  components from their published packages; captured ones were read off the
+ *  real product. A system can be both. */
+export interface DirectoryRow {
+  slug: string
+  name: string
+  org?: string
+  live?: SystemEntry
+  captured?: CapturedSystem
 }
 
-// Inverted index: canonical component slug → every system's example of it.
-const examplesByComponent = new Map<string, ComponentExample[]>()
-for (const system of dataIndex.systems) {
-  for (const entry of system.components?.components ?? []) {
-    if (entry.component === null) continue
-    const list = examplesByComponent.get(entry.component) ?? []
-    list.push({
-      system,
-      entry,
-      demoSrc: entry.demo
-        ? `/demos/${system.slug}/${entry.component}.html`
-        : null,
-    })
-    examplesByComponent.set(entry.component, list)
-  }
-}
-for (const list of examplesByComponent.values()) {
-  list.sort((a, b) => a.system.name.localeCompare(b.system.name))
-}
+const catalogOf = (slug: string) =>
+  dataIndex.catalog.find(
+    (entry) => entry.slug === slug || entry.preset === slug,
+  )
 
-export function getComponentExamples(slug: string): ComponentExample[] {
-  return examplesByComponent.get(slug) ?? []
-}
+const slugs = new Set([
+  ...dataIndex.looks.map((looks) => looks.slug),
+  ...dataIndex.systems.map((system) => system.slug),
+])
 
-/** Loader helper for component pages: the canonical component or a 404. */
-export function getComponentDef(slug: string): ComponentDef {
-  const def = dataIndex.componentsCatalog.find((c) => c.slug === slug)
-  if (!def) throw notFound()
-  return def
-}
+/** Captured systems first, the current focus; then by name. */
+export const directory: DirectoryRow[] = [...slugs]
+  .map((slug) => {
+    const live = dataIndex.systems.find((system) => system.slug === slug)
+    const captured = dataIndex.looks.find((looks) => looks.slug === slug)
+    const entry = catalogOf(slug)
+    return {
+      slug,
+      name: live?.name ?? entry?.name ?? captured?.name ?? slug,
+      org: live?.org ?? entry?.org,
+      live,
+      captured,
+    }
+  })
+  .sort(
+    (a, b) =>
+      Number(!!b.captured) - Number(!!a.captured) ||
+      a.name.localeCompare(b.name),
+  )

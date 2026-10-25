@@ -55,6 +55,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
+        // A link to a section renders the same page as its link without it.
+        filter: ({ path }) => !path.includes("#"),
       },
     }),
     viteReact(),
