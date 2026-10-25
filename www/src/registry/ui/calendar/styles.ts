@@ -38,9 +38,9 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cellInner: "contents",
         },
         true: {
-          cell: "selected:bg-selection-muted",
+          cell: "group/calendar-cell selected:bg-selection-muted",
           cellInner:
-            "relative flex size-full items-center justify-center transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) outline-none not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-focus-visible:focus-ring in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
+            "relative flex size-full items-center justify-center transition-shadow duration-(--studio-calendar-state-duration) ease-(--studio-calendar-state-ease) outline-none group-focus-visible/calendar-cell:focus-ring not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
         },
       },
     },
