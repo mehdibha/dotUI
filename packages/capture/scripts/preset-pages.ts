@@ -2,7 +2,7 @@
    launching the headless browser, opening a reference page in a mode, and
    the steps a pack's pages run. */
 import { execFileSync } from "node:child_process"
-import { existsSync, readFileSync, statSync } from "node:fs"
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
@@ -251,3 +251,17 @@ export async function openPage(
   }
   return { page, load, close: () => context.close() }
 }
+
+/** Files under `root` whose path matches `test`, up to six folders deep. */
+export function walk(root: string, test: (path: string) => boolean, depth = 6) {
+  const out: string[] = []
+  if (!existsSync(root) || depth < 0) return out
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    const path = resolve(root, entry.name)
+    if (entry.isDirectory()) out.push(...walk(path, test, depth - 1))
+    else if (test(path)) out.push(path)
+  }
+  return out
+}
+export const newest = (files: string[]) =>
+  files.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0]

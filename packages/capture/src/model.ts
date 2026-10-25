@@ -107,6 +107,10 @@ const BOXLESS = new Set([
 ])
 const CONTROL_GROUPS = new Set([
   "button",
+  "toggle",
+  "segment",
+  "breadcrumb",
+  "pagination-item",
   "link",
   "tab",
   "menuitem",

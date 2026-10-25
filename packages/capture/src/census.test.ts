@@ -7,6 +7,7 @@ import {
   changed,
   cluster,
   groupOf,
+  namesOf,
   trim,
 } from "./census"
 import { buildModel, diffModels } from "./model"
@@ -145,6 +146,23 @@ describe("census", () => {
     ])
   })
 
+  it("keeps a look plain when its first element is selected", () => {
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          { ...button(1, 0, blue), is: "selected" },
+          button(2, 100, blue),
+          button(3, 200, blue),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks).toEqual([
+      expect.not.objectContaining({ is: expect.anything() }),
+    ])
+    expect(looks[0]?.count).toBe(3)
+  })
+
   it("keeps a state set on the sample unless one was found in it", () => {
     const sample = {
       ...button(1, 0, blue),
@@ -212,6 +230,349 @@ describe("census", () => {
     expect(light?.dark).toBeUndefined()
     expect(dark?.dark?.backgroundColor).toBe(navy.backgroundColor)
     expect(dark?.light).toBeUndefined()
+  })
+
+  it("folds a look read only in dark into the light look its dark matches", () => {
+    const green = { backgroundColor: "rgb(22, 163, 74)" }
+    const forest = { backgroundColor: "rgb(21, 128, 61)" }
+    const inventory = cluster(
+      [
+        page("/a", "light", [button(1, 0, blue), button(2, 100, green)]),
+        page("/a", "dark", [button(1, 0, navy), button(2, 100, forest)]),
+        // A story arg's pass, read in dark only.
+        { ...page("/a", "dark", [button(3, 200, navy)]), pass: "args.state" },
+      ],
+      "test",
+    )
+    expect(inventory.looks).toEqual([
+      expect.objectContaining({
+        count: 2,
+        light: expect.objectContaining(blue),
+        dark: expect.objectContaining(navy),
+        sample: expect.objectContaining({ mode: "light", id: 1 }),
+      }),
+      expect.objectContaining({
+        count: 1,
+        light: expect.objectContaining(green),
+      }),
+    ])
+  })
+
+  it("tallies each look's names, a story's args only on what it renders", () => {
+    const label: CensusElement = {
+      id: 9,
+      role: "text",
+      by: "shape",
+      tag: "span",
+      in: "button",
+      box: [0, 0, 10, 10],
+      chars: 4,
+      values: { color: "white" },
+    }
+    const named = (id: number, x: number, variant: string) => ({
+      ...button(id, x, blue),
+      names: { "data-variant": variant, "data-size": "medium" },
+    })
+    const { looks } = cluster(
+      [
+        page("/a", "light", [
+          named(1, 0, "primary"),
+          named(2, 100, "primary"),
+          named(3, 200, "brand"),
+        ]),
+        {
+          ...page("/story", "light", [button(1, 0, blue), label]),
+          args: { variant: "primary", size: "medium" },
+        },
+        {
+          ...page("/story", "light", [button(1, 0, navy)]),
+          pass: "variant=secondary",
+          args: { variant: "secondary", size: "medium" },
+        },
+      ],
+      "test",
+    )
+    const [look, other] = looks.filter((one) => one.group === "button")
+    // size is drawn the same under every value it took: not a name. Brand,
+    // on one of four, doesn't name the look.
+    expect(look?.names).toEqual({
+      "args.variant": ["primary"],
+      "data-size": ["medium"],
+      "data-variant": ["primary"],
+    })
+    expect(other?.names).toEqual({ "args.variant": ["secondary"] })
+    expect(looks.find((one) => one.group === "text@button")?.names).toBe(
+      undefined,
+    )
+  })
+
+  it("reads a round box around a small icon as a badge", () => {
+    const round = (
+      id: number,
+      x: number,
+      iconSize?: string,
+    ): CensusElement => ({
+      ...button(id, x, {
+        borderRadius: "50%",
+        ...(iconSize ? { iconSize } : {}),
+      }),
+      role: "avatar",
+      by: "shape",
+      tag: "div",
+      box: [x, 0, 32, 32],
+    })
+    const groups = cluster(
+      [page("/a", "light", [round(1, 0), round(2, 100, "16x16")])],
+      "test",
+    ).looks.map((one) => one.group)
+    expect(groups).toEqual(["avatar", "badge"])
+  })
+
+  it("samples a look from a member with a frozen copy", () => {
+    const pages = [
+      page("/a", "light", [button(1, 0, blue), button(2, 100, blue)]),
+    ]
+    const sampleOf = (
+      copied?: (one: CensusPage, element: CensusElement) => boolean,
+    ) =>
+      cluster(pages, "test", copied).looks.find((one) => one.group === "button")
+        ?.sample.id
+    expect(sampleOf()).toBe(1)
+    expect(sampleOf((_, element) => element.id === 2)).toBe(2)
+  })
+
+  it("names a component's look by an attribute only most of it carries", () => {
+    const item = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      names: {
+        "data-component": "ActionList.Item",
+        ...(variant ? { "data-variant": variant } : {}),
+      },
+    })
+    const namesOf = (elements: CensusElement[]) =>
+      cluster([page("/a", "light", elements)], "test").looks.find(
+        (one) => one.group === "button",
+      )?.names
+    // One danger item drawn like three plain ones: the plain look.
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100), item(3, 200), item(4, 300)]),
+    ).toEqual({ "data-component": ["ActionList.Item"] })
+    expect(
+      namesOf([item(1, 0, "danger"), item(2, 100, "danger"), item(3, 200)]),
+    ).toEqual({
+      "data-component": ["ActionList.Item"],
+      "data-variant": ["danger"],
+    })
+    // Only the named members vote: two unnamed promo items don't name three.
+    const promo = (id: number, x: number) => ({
+      ...button(id, x, blue),
+      names: { "data-variant": "promo" },
+    })
+    expect(
+      namesOf([
+        item(1, 0),
+        item(2, 100),
+        item(3, 200),
+        promo(4, 300),
+        promo(5, 400),
+      ]),
+    ).toEqual({ "data-component": ["ActionList.Item"] })
+    // No component named: half of all the members.
+    const tab = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      ...(variant ? { names: { "data-variant": variant } } : {}),
+    })
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100), tab(3, 200)]),
+    ).toBeUndefined()
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100, "secondary"), tab(3, 200)]),
+    ).toEqual({ "data-variant": ["secondary"] })
+  })
+
+  it("names by a story's args only what their passes redrew", () => {
+    const black = { backgroundColor: "rgb(0, 0, 0)" }
+    const wrapper: CensusElement = {
+      ...button(2, 0, {}),
+      role: "card",
+      by: "shape",
+      tag: "div",
+      box: [0, 100, 300, 200],
+    }
+    const { looks } = cluster(
+      [
+        // Rendered once: nothing to tell its args apart.
+        {
+          ...page("/once", "light", [button(1, 0, black)]),
+          args: { variant: "error" },
+        },
+        // The wrapper no variant redraws is furniture.
+        {
+          ...page("/story", "light", [button(1, 0, blue), wrapper]),
+          args: { variant: "primary" },
+        },
+        // The pass redraws the wrapper too, unchanged: still furniture.
+        {
+          ...page("/story", "light", [
+            button(3, 0, navy),
+            { ...wrapper, id: 4 },
+          ]),
+          pass: "args variant:secondary",
+          args: { variant: "secondary" },
+        },
+      ],
+      "test",
+    )
+    const of = (values: { backgroundColor: string }) =>
+      looks.find(
+        (one) =>
+          one.group === "button" &&
+          one.light?.backgroundColor === values.backgroundColor,
+      )?.names
+    expect(of(black)).toBeUndefined()
+    expect(of(blue)).toEqual({ "args.variant": ["primary"] })
+    expect(of(navy)).toEqual({ "args.variant": ["secondary"] })
+    expect(looks.find((one) => one.group === "card")?.names).toBeUndefined()
+  })
+})
+
+describe("cluster: wrappers", () => {
+  const part = (
+    id: number,
+    role: string,
+    box: CensusElement["box"],
+    chars = 0,
+  ): CensusElement => ({
+    id,
+    role,
+    by: "shape",
+    tag: "span",
+    box,
+    chars,
+    values: { backgroundColor: "rgb(221, 244, 255)", borderRadius: "9999px" },
+  })
+  const bare = (id: number, box: CensusElement["box"]) => ({
+    ...button(id, 0, { backgroundColor: "rgba(0, 0, 0, 0)" }),
+    box,
+    chars: 0,
+  })
+
+  it("counts a button around an avatar, a label or nothing as nothing", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          // An avatar button.
+          bare(1, [0, 0, 20, 20]),
+          { ...part(2, "avatar", [0, 0, 20, 20]), tag: "img" },
+          // An issue label: the pill holds the text.
+          bare(3, [100, 0, 99, 22]),
+          part(4, "box", [102, 1, 95, 20]),
+          part(5, "text", [110, 3, 77, 15], 14),
+          // A chart's hit area.
+          bare(6, [300, 0, 181, 27]),
+          // A real button, its label in a span.
+          bare(7, [600, 0, 80, 32]),
+          part(8, "text", [612, 8, 56, 16], 4),
+          // A filled one (opaque black) whose label the pass didn't read.
+          {
+            ...button(9, 0, { backgroundColor: "rgb(0, 0, 0)" }),
+            box: [800, 0, 168, 40],
+            chars: 0,
+          },
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.filter((one) => one.group === "button")).toEqual([
+      expect.objectContaining({ count: 1 }),
+      expect.objectContaining({ count: 1 }),
+    ])
+    expect(looks.map((one) => one.group).sort()).toEqual([
+      "avatar",
+      "badge",
+      "button",
+      "button",
+      "text",
+    ])
+  })
+
+  it("counts pills drawn over a field as its value", () => {
+    const { looks } = cluster(
+      [
+        page("/", "light", [
+          part(1, "badge", [8, 8, 35, 17], 5),
+          { ...button(2, 0, {}), role: "combobox", box: [0, 0, 400, 32] },
+          part(3, "badge", [500, 8, 35, 17], 5),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks.find((one) => one.group === "badge")?.count).toBe(1)
+  })
+})
+
+describe("namesOf", () => {
+  const of = (attributes: Record<string, string>) => {
+    const asked: string[] = []
+    const names = namesOf((name) => {
+      asked.push(name)
+      return attributes[name] ?? null
+    })
+    return { names, asked }
+  }
+
+  it("reads the allowed data attributes, never text, labels or links", () => {
+    const { names, asked } = of({
+      "data-variant": "primary",
+      "data-size": "medium",
+      "data-component": "SegmentedControl.Button",
+      "data-tone": "Click to save",
+      "aria-label": "Save",
+      title: "Save",
+      href: "/account",
+    })
+    expect(names).toEqual({
+      "data-variant": "primary",
+      "data-size": "medium",
+      "data-component": "SegmentedControl.Button",
+    })
+    for (const name of ["aria-label", "title", "alt", "href"])
+      expect(asked).not.toContain(name)
+  })
+
+  it.each([
+    [
+      "Primer_Brand__Button-module__Button___h1Yx2 Primer_Brand__Button-module__Button--size-small___zQrEw Primer_Brand__Button-module__Button--subtle___F7pEE",
+      { "class.size": "small", "class.variant": "subtle" },
+    ],
+    [
+      "btn btn-sm btn-primary",
+      { "class.size": "sm", "class.variant": "primary" },
+    ],
+    ["Link--secondary", { "class.variant": "secondary" }],
+    [
+      "cds--btn cds--btn--primary cds--btn--md",
+      { "class.variant": "primary", "class.size": "md" },
+    ],
+    [
+      "rt-Button rt-variant-soft rt-r-size-2",
+      { "class.variant": "soft", "class.size": "2" },
+    ],
+    ["spectrum-Button spectrum-Button--sizeM", { "class.size": "M" }],
+    ["Button_variant_ghost__1a2b3c4", { "class.variant": "ghost" }],
+  ])("reads names from %s", (classes, expected) => {
+    expect(of({ class: classes }).names).toEqual(expected)
+  })
+
+  it.each([
+    "size-4 flex rounded-lg shadow-sm appearance-none hover:bg-red-500",
+    "Popover-message Popover-message--bottom-left",
+    "Text--200____P1wy card__title",
+    "cds--btn",
+    "sc-a1b2c3 kJhGfD c1x2y3z",
+    "Button--fullWidth btn btn-block",
+  ])("finds no names in %s", (classes) => {
+    expect(of({ class: classes }).names).toEqual({})
   })
 })
 

@@ -17,8 +17,10 @@
  *     and closed with Escape (a reload when one stays open); up to --tips
  *     tooltips (6), hovered or focused; and on a
  *     Storybook story, each option of its variant, size and boolean args
- *     (--args passes, 40), set in place. --stories adds one story for each
- *     of up to n more components of each Storybook the pack reads (0).
+ *     (--args passes, 40), set in place. --stories walks every story of
+ *     the components each Storybook the pack reads shows, and of up to n
+ *     more of its components (off by default; 999 walks them all); the
+ *     extra stories get no popups, tooltips or args passes.
  *
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
@@ -41,18 +43,26 @@
  *     with --from to keep the signed-in pages.
  *
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
- * model, and frozen copies of each look's sample at rest and in its states
- * (--copies per pass, 40 by default; redacted with --connect) as
+ * model, frozen copies of each look's sample at rest and in its states
+ * (--copies per pass, 120 by default; redacted with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
- * (presets:looks). <out> is .scratch-refs/<id>/<date>/census by default.
+ * (presets:looks), and a shot of each pass (the whole page at rest, else the
+ * viewport, where the page's `shotAt` says it starts) as
+ * <out>/shots/<page>-<pass hash>-<mode>.jpg (--no-shots skips them; with
+ * --connect, only --shots writes them, unredacted). <out> is
+ * .scratch-refs/<id>/<date>/census by default: never in git.
  */
 import { createHash } from "node:crypto"
 import { existsSync } from "node:fs"
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
-import puppeteer, { type Browser, type Page } from "puppeteer"
+import puppeteer, {
+  type Browser,
+  type ElementHandle,
+  type Page,
+} from "puppeteer"
 
 import {
   type CensusElement,
@@ -67,6 +77,7 @@ import {
   lookKeys,
   type State,
   trim,
+  unwrap,
   type Values,
 } from "../src/census"
 import {
@@ -95,6 +106,7 @@ import {
   REFS,
   runSteps,
   say,
+  settle,
   shim,
   SRC,
   versionOf,
@@ -118,9 +130,11 @@ const { values: args } = parseArgs({
     out: { type: "string" },
     max: { type: "string", default: "5000" },
     states: { type: "string", default: "80" },
-    copies: { type: "string", default: "40" },
+    copies: { type: "string", default: "120" },
     concurrency: { type: "string", default: "2" },
+    shots: { type: "boolean" },
   },
+  allowNegative: true,
 })
 
 if (!args.pack) {
@@ -129,6 +143,8 @@ if (!args.pack) {
 }
 const pack = args.pack
 const MODES = (args.mode === "both" ? ["light", "dark"] : [args.mode]) as Mode[]
+// A signed-in page's shot shows the account unredacted: only when asked.
+const SHOTS = args.shots ?? !args.connect
 if (!MODES.every((m) => m === "light" || m === "dark")) {
   console.error("--mode must be light, dark or both")
   process.exit(1)
@@ -165,16 +181,21 @@ const INTERACTIVE = new Set([
   "select",
   "row",
   "cell",
+  "toggle",
+  "segment",
+  "breadcrumb",
+  "pagination-item",
 ])
 
 /** One element per look of a pass, most-used looks first: the ones whose
- *  states and custom properties are read. */
+ *  states and custom properties are read. Flagged apart, as `cluster`
+ *  groups them: a checked box drawn like an unchecked one is its own. */
 function representatives(elements: CensusElement[], only?: Set<string>) {
   const looks = new Map<string, CensusElement[]>()
   for (const element of elements) {
     if (only && !only.has(element.role)) continue
     const keys = lookKeys(element.role)
-    const sig = `${groupOf(element)} ${JSON.stringify(keys.map((key) => element.values[key] ?? ""))}`
+    const sig = `${groupOf(element)} ${element.is ?? ""} ${JSON.stringify(keys.map((key) => element.values[key] ?? ""))}`
     looks.set(sig, [...(looks.get(sig) ?? []), element])
   }
   return [...looks.values()]
@@ -193,7 +214,6 @@ const BOXLESS = new Set([
   "page",
   "text",
   "paragraph",
-  "label",
   "time",
   "blockquote",
   "main",
@@ -213,6 +233,9 @@ const freeze = async (page: Page, ids: number[]) =>
     ? ((await page.evaluate(
         snapshotSnippet({
           attribute: "data-census",
+          // A framed field's copy is its frame.
+          prefer: "data-census-frame",
+          held: "__censusIds",
           redact: REDACT,
           keys: ids.map(String),
         }),
@@ -267,13 +290,20 @@ async function readStates(
   }
   const force = (nodeId: number, classes: string[]) =>
     cdp.send("CSS.forcePseudoState", { nodeId, forcedPseudoClasses: classes })
-  const set = (id: number, state: Forced | null) =>
+  const set = (element: CensusElement, state: Forced | null) =>
     page.evaluate(
-      censusSnippet({ kind: "force", id, state }),
+      censusSnippet({
+        kind: "force",
+        id: element.id,
+        state,
+        role: element.role,
+      }),
     ) as Promise<boolean>
   for (const element of elements) {
     if (page.url() !== url) break
-    const handle = await page.$(`>>> [data-census="${element.id}"]`)
+    const handle = (
+      await page.evaluateHandle(censusSnippet({ kind: "node", id: element.id }))
+    ).asElement() as ElementHandle<Element> | null
     const nodeId = handle && (await nodeOf(element.id).catch(() => undefined))
     if (!handle || !nodeId) {
       await handle?.dispose()
@@ -323,7 +353,7 @@ async function readStates(
       }
       if (!element.is)
         for (const state of FORCED) {
-          if (!(await set(element.id, state))) continue
+          if (!(await set(element, state))) continue
           await finish(page)
           const values = await read(page, element.id)
           const diff = values ? changed(element.values, values) : {}
@@ -333,12 +363,12 @@ async function readStates(
             forced.push(state)
             await copy(state)
           }
-          await set(element.id, null)
+          await set(element, null)
         }
     } catch {
       // Detached or covered: keep what was read.
     } finally {
-      await set(element.id, null).catch(() => {})
+      await set(element, null).catch(() => {})
       if (keys) await page.keyboard.press("Escape").catch(() => {})
       await handle.dispose()
     }
@@ -380,8 +410,18 @@ async function pass(
   }
   const { elements } = walked
   if (!rest && !elements.length) return null
-  // The most used looks with a box small enough to copy.
-  const copied = representatives(elements)
+  // Read as `cluster` will: a wrapper it drops gives no look its copy,
+  // states or custom properties.
+  const ids = new Set(
+    unwrap([{ key, pass: name, mode, elements }])[0]?.elements.map(
+      (element) => element.id,
+    ),
+  )
+  const kept = elements.filter((element) => ids.has(element.id))
+  // The most used looks with a box small enough to copy, before the shot:
+  // a page that renders only what the viewport shows (Notion) drops what
+  // the grown viewport scrolled out once it shrinks back.
+  const copied = representatives(kept)
     .filter(
       ({ role, box: [, , w, h] }) =>
         !BOXLESS.has(role) && w * h > 0 && w * h <= COPY_AREA,
@@ -396,16 +436,27 @@ async function pass(
     ).map(([id, rest]) => [id, { rest }]),
   )
   COPIES.set(copiesOf(key, name, mode), copies)
+  // Before reading states, which hover, scroll and can close what the pass
+  // opened: the shot shows the page the boxes were read on. A later pass
+  // reads only the viewport (census `fresh`): the shot is the viewport too.
+  const shot = SHOTS
+    ? await shoot(
+        page,
+        `${slug(key)}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}-${mode}.jpg`,
+        !fresh,
+        elements,
+      )
+    : undefined
   await readStates(
     page,
-    representatives(elements, INTERACTIVE).slice(0, Number(args.states)),
+    representatives(kept, INTERACTIVE).slice(0, Number(args.states)),
     copies,
     !open,
   )
   const { vars, tokens } = (await page.evaluate(
     censusSnippet({
       kind: "vars",
-      ids: representatives(elements)
+      ids: representatives(kept)
         .slice(0, 400)
         .map((element) => element.id),
     }),
@@ -424,6 +475,7 @@ async function pass(
     ...(Object.keys(tokens).length ? { tokens } : {}),
     ...(walked.truncated ? { truncated: walked.truncated } : {}),
     reads: [...walked.reads, "states"],
+    ...shot,
   }
 }
 
@@ -549,12 +601,20 @@ const storyOf = (url: string) => {
   }
 }
 
-/** A story's variants, one arg changed at a time: each option of its enum
- *  args (variant, size, tone…) and the other value of its boolean ones
- *  (disabled, loading, invalid…), from the argTypes Storybook keeps. Args
- *  that take components or functions (icons, slots) are left out. */
-async function variants(page: Page, story: string, max: number) {
-  const found = await page
+type StoryArgs = {
+  args: Record<string, unknown>
+  types: {
+    name: string
+    options?: unknown[]
+    control?: string | false
+    off: boolean
+    type?: string
+  }[]
+}
+
+/** A story's initial args and argTypes, from the store Storybook keeps. */
+const storyArgs = (page: Page, story: string): Promise<StoryArgs | null> =>
+  page
     .evaluate(async (story) => {
       const store = (
         window as unknown as {
@@ -596,16 +656,52 @@ async function variants(page: Page, story: string, max: number) {
       }
     }, story)
     .catch(() => null)
-  if (!found) return []
+
+/* An arg with options to pick from: a variant, a size, a tone. */
+const isEnum = (t: StoryArgs["types"][number]) =>
+  !t.off &&
+  t.type !== "object" &&
+  t.type !== "function" &&
+  !!t.options &&
+  t.options.length <= 12 &&
+  t.options.every((o) => typeof o === "string" || typeof o === "number")
+
+/** The enum args a story renders with, as names: only values from its
+ *  options, never free text (a label, children). */
+const enumArgs = (found: StoryArgs, args: Record<string, unknown>) =>
+  Object.fromEntries(
+    found.types.filter(isEnum).flatMap((t) => {
+      const value = args[t.name]
+      return (typeof value === "string" || typeof value === "number") &&
+        t.options?.includes(value) &&
+        String(value).length <= 40
+        ? [[t.name, String(value)]]
+        : []
+    }),
+  )
+
+/* Variant and size args first, so --args reaches them first. Names that
+   only contain variant or size go last: responsive copies (variantAtNarrow)
+   and a part's size (leadingVisualSize) redraw what the plain ones do, or
+   a part, not the component. */
+const rankOf = (arg: string) =>
+  /^(variant|size|appearance|kind|tone|intent|emphasis|color|shape)$/i.test(arg)
+    ? 0
+    : /variant|size/i.test(arg)
+      ? 2
+      : 1
+
+/** A story's variants, one arg changed at a time: each option of its enum
+ *  args (variant, size, tone…) and the other value of its boolean ones
+ *  (disabled, loading, invalid…). Args that take components or functions
+ *  (icons, slots) are left out. */
+function variants(found: StoryArgs, max: number) {
   const options: Record<string, unknown>[] = []
   const toggles: Record<string, unknown>[] = []
-  for (const t of found.types) {
+  const types = [...found.types].sort((a, b) => rankOf(a.name) - rankOf(b.name))
+  for (const t of types) {
     if (t.off || t.type === "object" || t.type === "function") continue
-    if (
-      t.options &&
-      t.options.length <= 12 &&
-      t.options.every((o) => typeof o === "string" || typeof o === "number")
-    ) {
+    if (isEnum(t) && t.options) {
       for (const option of t.options)
         if (option !== found.args[t.name]) options.push({ [t.name]: option })
     } else if (t.type === "boolean" || t.control === "boolean")
@@ -662,6 +758,108 @@ interface Job {
   mode: Mode
   settings: Omit<PackPage, "parts">
   passes: Step[][]
+  /** One story among its component's many: read at rest and in its states,
+   *  with no popups, tooltips or args passes. */
+  lite?: boolean
+}
+
+/* Taller pages are cut: a shot is for finding a look, not reading the
+   page. */
+const SHOT_HEIGHT = 10000
+
+/** A shot of the page as it stands, in <out>/shots/: its path from <out>,
+ *  and where on the page it starts when not at the top; undefined when the
+ *  page can't be shot. `whole`: the whole page, unless scrolled; else the
+ *  viewport. A whole shot grows the viewport to the page's height and waits
+ *  for the page to paint it (an app that re-renders on resize, Airbnb's,
+ *  shot mid-render is blank), so what is fixed or sticky moves away from
+ *  where its box was read, some tooltips close, and content that loads or
+ *  sizes to the viewport moves what follows: `shotBoxes` holds where the
+ *  `elements` that moved sit on the shot. */
+async function shoot(
+  page: Page,
+  file: string,
+  whole: boolean,
+  elements: CensusElement[],
+) {
+  const viewport = page.viewport() ?? { width: 1440, height: 900 }
+  let grown = false
+  let moved: Record<number, CensusElement["box"]> = {}
+  try {
+    // The body's height too: a body that scrolls on its own, or one a
+    // notice holds fixed (Airbnb's), holds the page.
+    const measure = () =>
+      page.evaluate(() => ({
+        x: scrollX,
+        y: scrollY,
+        height: Math.max(
+          document.documentElement.scrollHeight,
+          document.body?.scrollHeight ?? 0,
+        ),
+      }))
+    const { x, y, height: first } = await measure()
+    let height = first
+    const at: [number, number] | null =
+      x || y ? [Math.round(x), Math.round(y)] : null
+    if (whole && !at && height > viewport.height) {
+      // A page grown to its height can grow again (Airbnb's search page
+      // pushed its footer 600px down): a few rounds, until it holds.
+      let shown = viewport.height
+      for (
+        let round = 0;
+        round < 3 && height > shown && shown < SHOT_HEIGHT;
+        round++
+      ) {
+        shown = Math.min(height, SHOT_HEIGHT)
+        await page.setViewport({ ...viewport, height: shown })
+        grown = true
+        await page
+          .waitForNetworkIdle({ idleTime: 500, timeout: 4000 })
+          .catch(() => {})
+        await settle(page)
+        ;({ height } = await measure())
+      }
+      // A framed field's box is its frame's, as the census read it.
+      const boxes = (await page.evaluate(() => {
+        const boxOf = (el: Element) => {
+          const { x, y, width, height } = el.getBoundingClientRect()
+          return [x, y, width, height].map(Math.round)
+        }
+        const by = (attribute: string) =>
+          [...document.querySelectorAll(`[${attribute}]`)].map((el) => [
+            el.getAttribute(attribute),
+            boxOf(el),
+          ])
+        return Object.fromEntries([
+          ...by("data-census"),
+          ...by("data-census-frame"),
+        ])
+      })) as Record<string, CensusElement["box"]>
+      moved = Object.fromEntries(
+        elements.flatMap(({ id, box }) => {
+          const now = boxes[id]
+          return now && now.some((value, i) => Math.abs(value - box[i]!) > 1)
+            ? [[id, now]]
+            : []
+        }),
+      )
+    }
+    const shot = await page.screenshot({ type: "jpeg", quality: 60 })
+    await mkdir(resolve(OUT, "shots"), { recursive: true })
+    await writeFile(resolve(OUT, "shots", file), shot)
+    return {
+      shot: `shots/${file}`,
+      ...(at ? { shotAt: at } : {}),
+      ...(Object.keys(moved).length ? { shotBoxes: moved } : {}),
+    }
+  } catch {
+    return undefined
+  } finally {
+    if (grown) {
+      await page.setViewport(viewport).catch(() => {})
+      await settle(page)
+    }
+  }
 }
 
 /** A file name for a page key: readable, with a hash of the whole key so
@@ -687,8 +885,14 @@ async function crawl(
   const { page, load, close } = await open(job)
   const pages: CensusPage[] = []
   let start = 0
+  // A story's enum args as the pass renders them.
+  let rendered: Record<string, string> = {}
   const keep = (censusPage: CensusPage | null) => {
-    if (censusPage) pages.push(censusPage)
+    if (!censusPage) return
+    pages.push({
+      ...censusPage,
+      ...(Object.keys(rendered).length ? { args: rendered } : {}),
+    })
   }
   const warn = (name: string, error: unknown) =>
     console.warn(
@@ -703,11 +907,17 @@ async function crawl(
     page.on("dialog", (dialog) => void dialog.dismiss())
     await load()
     const home = where()
+    const story = storyOf(job.url)
+    const found = story ? await storyArgs(page, story) : null
+    const initial = found ? enumArgs(found, found.args) : {}
+    rendered = initial
+    await top(page)
     keep(await pass(page, job.key, job.mode, "rest", 0))
-    const popups = OPEN ? await finders(page, "popups", OPEN) : []
-    const tips = Number(args.tips)
-      ? await finders(page, "tips", Number(args.tips))
-      : []
+    const popups = OPEN && !job.lite ? await finders(page, "popups", OPEN) : []
+    const tips =
+      Number(args.tips) && !job.lite
+        ? await finders(page, "tips", Number(args.tips))
+        : []
     const listed = new Set(job.passes.map((steps) => steps.map(say).join("; ")))
     // Popups open in place too: Escape closes most, and one that leaves
     // something open (a disclosure) or navigates reloads the page.
@@ -785,9 +995,8 @@ async function crawl(
       }
       if (where() !== home) await load()
     }
-    const story = storyOf(job.url)
-    for (const updated of story && Number(args.args)
-      ? await variants(page, story, Number(args.args))
+    for (const updated of found && Number(args.args) && !job.lite
+      ? variants(found, Number(args.args))
       : []) {
       const name = `args ${Object.entries(updated)
         .map(([arg, value]) => `${arg}:${value}`)
@@ -798,12 +1007,15 @@ async function crawl(
         if (await setArgs(page, story as string, updated)) {
           await pause(200)
           await finish(page)
+          rendered = found ? enumArgs(found, { ...found.args, ...updated }) : {}
           keep(
             await pass(page, job.key, job.mode, name, (start += 100000), false),
           )
         }
       } catch (error) {
         warn(name, error)
+      } finally {
+        rendered = initial
       }
       await page.mouse.move(0, 0).catch(() => {})
       // A story still re-rendering would read into the next variant.
@@ -895,10 +1107,12 @@ async function discover(browser: Browser, jobs: Job[], max: number) {
   return found
 }
 
-/** For --stories: one story for each of up to `max` more components of each
- *  Storybook the pack's pages read (its Playground story, else its Default
- *  one), from the Storybook's index.json. They take the globals, dark URL
- *  and settings of the pack's first story there. */
+/** For --stories: every story of each component the pack's pages read in a
+ *  Storybook, and of up to `max` more of its components, from the
+ *  Storybook's index.json. A new component's Playground story (else its
+ *  Default one) is read in full, every other story `lite`: a story shows
+ *  one feature (a size, a variant) its args name. They take the globals,
+ *  dark URL and settings of the pack's first story there. */
 async function moreStories(browser: Browser, jobs: Job[], max: number) {
   if (!max) return []
   const roots = new Map<string, Job[]>()
@@ -943,28 +1157,43 @@ async function moreStories(browser: Browser, jobs: Job[], max: number) {
           : /^default$/i.test(entry.name)
             ? 1
             : 2
-      const picks = new Map<string, Entry>()
+      const byComponent = new Map<string, Entry[]>()
       for (const entry of entries) {
-        const name = component(entry.title)
         if (
-          have.has(name) ||
-          /deprecated|private|internal|hooks?\b|utilit|\btests?\b/i.test(name)
+          /deprecated|private|internal|hooks?\b|utilit|\btests?\b/i.test(
+            entry.title,
+          )
         )
           continue
-        const best = picks.get(name)
-        if (!best || rank(entry) < rank(best)) picks.set(name, entry)
+        const name = component(entry.title)
+        byComponent.set(name, [...(byComponent.get(name) ?? []), entry])
       }
+      const more = [...byComponent.keys()]
+        .filter((name) => !have.has(name))
+        .slice(0, max)
+      const taken = new Set(list.map((job) => storyOf(job.url)))
       const templates = list.filter((job) => job.key === first.key)
-      for (const entry of [...picks.values()].slice(0, max))
-        for (const job of templates)
-          found.push({
-            ...job,
-            key: swap(job.key, entry.id),
-            url: swap(job.url, entry.id),
-            passes: [],
-          })
+      let walked = 0
+      for (const name of [...have, ...more]) {
+        const stories = byComponent.get(name) ?? []
+        const lead = have.has(name)
+          ? undefined
+          : [...stories].sort((a, b) => rank(a) - rank(b))[0]
+        for (const entry of stories) {
+          if (taken.has(entry.id)) continue
+          walked++
+          for (const job of templates)
+            found.push({
+              ...job,
+              key: swap(job.key, entry.id),
+              url: swap(job.url, entry.id),
+              passes: [],
+              ...(entry === lead ? {} : { lite: true }),
+            })
+        }
+      }
       console.log(
-        `${root}: ${Math.min(picks.size, max)} more of ${picks.size} components`,
+        `${root}: ${walked} more stories of ${have.size + more.length} of ${byComponent.size} components`,
       )
     } catch (error) {
       console.warn(`${root}: ${(error as Error).message}`)
@@ -1143,9 +1372,11 @@ const documentOf = (copy: Snapshot) => {
 }
 
 /** Each look's copies as part files:
- *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. */
+ *  crops/<look>-<state>-<mode>.json, with a standalone .html beside. An
+ *  earlier run's are removed first: look ids move between runs. */
 async function writeCopies(inventory: Inventory) {
   const dir = resolve(OUT, "crops")
+  await rm(dir, { recursive: true, force: true })
   let written = 0
   for (const look of inventory.looks) {
     const { key, pass, mode, id, twin } = look.sample
@@ -1190,7 +1421,12 @@ const pages = args.from.length
   : args.connect
     ? await connected()
     : await headless()
-const inventory: Inventory = cluster(pages, PROBE)
+const inventory: Inventory = cluster(
+  pages,
+  PROBE,
+  (page, element) =>
+    !!COPIES.get(copiesOf(page.key, page.pass, page.mode))?.[element.id]?.rest,
+)
 await writeFile(
   resolve(OUT, "census.json"),
   `${JSON.stringify({ census: CENSUS, ...inventory }, null, 1)}\n`,

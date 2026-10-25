@@ -52,6 +52,8 @@ async function snapshot(
   attribute: string,
   redact: boolean,
   keys: string[] | null,
+  prefer: string | null,
+  held?: string | null,
 ): Promise<Record<string, Snapshot>> {
   const SVG = "http://www.w3.org/2000/svg"
   const SKIP_TAGS = new Set([
@@ -175,6 +177,27 @@ async function snapshot(
       )
   }
 
+  // Its size as laid out: a transform (a press that scales it down) shrinks
+  // its box, and the copy drops the transform. An inline box has no size of
+  // its own: its box.
+  const sizeOf = (el: Element, style: CSSStyleDeclaration) => {
+    const width = Number.parseFloat(style.width)
+    const height = Number.parseFloat(style.height)
+    if (!(width >= 0 && height >= 0)) {
+      const { width, height } = el.getBoundingClientRect()
+      return { width, height }
+    }
+    if (style.boxSizing === "border-box") return { width, height }
+    const sides = (a: string, b: string) =>
+      [`padding-${a}`, `padding-${b}`, `border-${a}-width`, `border-${b}-width`]
+        .map((prop) => Number.parseFloat(style.getPropertyValue(prop)) || 0)
+        .reduce((total, value) => total + value, 0)
+    return {
+      width: width + sides("left", "right"),
+      height: height + sides("top", "bottom"),
+    }
+  }
+
   let next = 0
   let rules: string[] = []
 
@@ -216,7 +239,7 @@ async function snapshot(
         values[prop] = unlink(value)
     if (root) {
       // Where it sat on its page doesn't come along: the copy is its box.
-      const box = el.getBoundingClientRect()
+      const box = sizeOf(el, style)
       Object.assign(values, {
         position: "relative",
         top: "auto",
@@ -378,21 +401,37 @@ async function snapshot(
     })
   }
 
+  const opaque = (fill: string) => {
+    const alpha = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(fill)
+    return (
+      fill !== "transparent" &&
+      (!alpha ||
+        (fill.startsWith("rgb(") && !fill.includes("/")) ||
+        Number(alpha[1]) / (alpha[2] ? 100 : 1) >= 1)
+    )
+  }
   const backdropOf = (el: Element) => {
+    // What paints under its middle first: a layer drawn behind it need not
+    // be an ancestor (Airbnb's dark banner under its AI search switch).
+    const box = el.getBoundingClientRect()
+    const stack = (el.getRootNode() as Document | ShadowRoot).elementsFromPoint(
+      box.x + box.width / 2,
+      box.y + box.height / 2,
+    )
+    const at = stack.indexOf(el)
+    if (at >= 0)
+      for (const node of stack.slice(at + 1)) {
+        const style = getComputedStyle(node)
+        if (style.opacity !== "0" && opaque(style.backgroundColor))
+          return style.backgroundColor
+      }
     for (
       let node = el.parentElement ?? (el.getRootNode() as ShadowRoot).host;
       node;
       node = node.parentElement ?? (node.getRootNode() as ShadowRoot).host
     ) {
       const fill = getComputedStyle(node).backgroundColor
-      const alpha = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(fill)
-      if (
-        fill !== "transparent" &&
-        (!alpha ||
-          (fill.startsWith("rgb(") && !fill.includes("/")) ||
-          Number(alpha[1]) / (alpha[2] ? 100 : 1) >= 1)
-      )
-        return fill
+      if (opaque(fill)) return fill
     }
     // The canvas: Chrome's in a dark color scheme, else white. With both
     // schemes listed, the user's preference picks.
@@ -406,19 +445,54 @@ async function snapshot(
 
   const marked = (root: Document | ShadowRoot, out: Element[] = []) => {
     for (const el of root.querySelectorAll("*")) {
-      if (el.hasAttribute(attribute)) out.push(el)
+      if (el.hasAttribute(attribute) || (prefer && el.hasAttribute(prefer)))
+        out.push(el)
       if (el.shadowRoot) marked(el.shadowRoot, out)
     }
     return out
   }
+  const found = marked(document)
+  // A key whose attribute the page dropped from a node it kept (Notion's
+  // editor does), from the map of keys to elements `held` names.
+  const lost = new Map<Element, string>()
+  const map = held
+    ? (globalThis as unknown as Record<string, Map<number, Element>>)[held]
+    : undefined
+  if (map && keys) {
+    const have = new Set(found.map((el) => el.getAttribute(attribute)))
+    for (const key of keys) {
+      const el = map.get(Number(key))
+      if (!have.has(key) && el?.isConnected) {
+        found.push(el)
+        lost.set(el, key)
+      }
+    }
+  }
+  // An element carrying `prefer` is copied for the one whose key it holds
+  // (the census's frame of a field), when it has a box to copy.
+  const keyOf = (el: Element) =>
+    (prefer && el.getAttribute(prefer)) ||
+    lost.get(el) ||
+    el.getAttribute(attribute)!
+  const sized = (el: Element) => {
+    const box = el.getBoundingClientRect()
+    return box.width > 0 && box.height > 0
+  }
+  const preferred = new Set(
+    found
+      .filter((el) => prefer && el.hasAttribute(prefer) && sized(el))
+      .map(keyOf),
+  )
 
   const copies: Record<string, Omit<Snapshot, "fonts"> & { used: string[] }> =
     {}
-  for (const el of marked(document)) {
-    const key = el.getAttribute(attribute)!
+  const copied = new Map<string, Element>()
+  for (const el of found) {
+    const key = keyOf(el)
     if (keys && !keys.includes(key)) continue
-    const box = el.getBoundingClientRect()
-    if (!box.width || !box.height) continue
+    if (preferred.has(key) && !(prefer && el.hasAttribute(prefer))) continue
+    if (!sized(el)) continue
+    const box = sizeOf(el, getComputedStyle(el))
     families.clear()
     next = 0
     rules = []
@@ -428,12 +502,21 @@ async function snapshot(
       css: rules.join("\n"),
       width: Math.round(box.width * 100) / 100,
       height: Math.round(box.height * 100) / 100,
-      backdrop: backdropOf(el),
+      backdrop: "",
       redacted: redact,
       used: [...families],
     }
+    copied.set(key, el)
   }
   frame?.remove()
+
+  // After the copies, so they don't carry it: layers drawn behind a
+  // control often ignore the pointer.
+  const hit = document.createElement("style")
+  hit.textContent = "*{pointer-events:auto!important}"
+  document.documentElement.append(hit)
+  for (const [key, el] of copied) copies[key]!.backdrop = backdropOf(el)
+  hit.remove()
 
   // Read once, after every copy has named its families.
   families.clear()
@@ -453,15 +536,25 @@ async function snapshot(
 
 /** A JavaScript expression that resolves to a `Snapshot` of every element
  *  carrying `attribute` (or of those whose value is in `keys`), keyed by
- *  its value: for `page.evaluate`. `redact` replaces text, values and
- *  images, for signed-in pages. The `__name` shim covers the helper tsx
- *  compiles in. */
+ *  its value: for `page.evaluate`. An element carrying `prefer` with the
+ *  same value is copied in its place. `held` names a global map of keys
+ *  to elements, for those that lost the attribute. `redact` replaces text,
+ *  values and images, for signed-in pages. The `__name` shim covers the
+ *  helper tsx compiles in. */
 export const snapshotSnippet = ({
   attribute = "data-snapshot",
   redact = false,
   keys,
-}: { attribute?: string; redact?: boolean; keys?: string[] } = {}) =>
-  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}) })()`
+  prefer,
+  held,
+}: {
+  attribute?: string
+  redact?: boolean
+  keys?: string[]
+  prefer?: string
+  held?: string
+} = {}) =>
+  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}, ${JSON.stringify(held ?? null)}) })()`
 
 /** Parts larger than this (in CSS px²), such as `page`, get a crop but no
  *  frozen copy. */
