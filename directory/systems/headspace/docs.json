@@ -1,0 +1,786 @@
+{
+  "version": 1,
+  "slug": "headspace",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Warm greys on white: ink #2d2c2b, quieter text #44423f and #63605d, borders #e2ded9, and #f9f4f2 under chips, secondary buttons and tinted cards. The marketing pages keep an older body ink, #4b4c4d. Blue #0061ef (hover #0040ea) is the primary and the link color. The logo's orange #ff7300 and sunny yellows (#ffce00, #ffb700) fill illustrations and promo sections. The app's dark theme is navy: #050726 page, #101340 surfaces, #2a2d55 borders, #e5e7ec ink.",
+      "usage": [
+        "Status colors: success #02873e, warning #ffb700, critical #e01919."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "One proprietary family, Headspace Apercu (DM Sans is the closest free match). Buttons are bold and tracked -0.03em: 16px in the app, 18px on marketing chips and calls to action. Body copy is 16px. Headings are bold, at -0.03em in the app (56, 48, 32, 24 and 20px) and -0.04em on marketing pages."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Pills for buttons, chips, badges and the segmented control. Fields, selects and popups have 12px corners, dialogs and drawers 24px, checkboxes 4px. Marketing cards vary: 8, 12, 24 and 32px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Buttons step xSmall 24px, small 32px (16px sides), medium 40px, mLarge 48px (24px sides) and large 56px. Fields and select triggers are 56px with the label inside. Marketing sections space mostly at 24 and 32px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Depth is a 2px unblurred lip, 0 2px 0 at 20% (#14131333), under primary buttons, switch knobs, slider thumbs and marketing cards; pressing a button removes it. Popups take 0 0 12px at 20%; the marketing header's menu sits on 0 5px 10px at 7%. Dialog backdrops are 50% black with no blur. Focus is a 2px #0040ea ring."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Bold pills. On marketing pages the main action is blue #0061ef or ink #2d2c2b on the 2px lip, and the secondary is a #f9f4f2 pill. Topic chips (Popular, Featured) are #f9f4f2 pills that turn ink when chosen. Hover darkens a fill; pressing drops the lip.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-zzw4zn": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Continue on the sign-in page: #0061ef with white text at 700; hover #0040ea, pressed #0000db."
+            },
+            "v-52my05": {
+              "name": {
+                "value": "inverse",
+                "from": "ai"
+              },
+              "note": "Subscribe: #2d2c2b on the lip, 32px sides; hover #141313."
+            },
+            "v-p4icyb": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "Play Sample: a #f9f4f2 pill; hover #e5e7ec. The carousel arrows are this look as 48px circles."
+            },
+            "v-dk2e58": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "Popular, Guided meditations: #f9f4f2 pills at 18px and 700 with an emoji; hover #e2ded9."
+            },
+            "v-sns3tz": {
+              "name": {
+                "value": "chip, selected",
+                "from": "ai"
+              },
+              "note": "Featured: the chosen chip, #2d2c2b with white text."
+            },
+            "v-966lyd": {
+              "name": {
+                "value": "option",
+                "from": "ai"
+              },
+              "note": "What kind of support…: 78px white rows with a 2px #e2ded9 edge and 8px corners; hover darkens the edge to #c6c1b9."
+            },
+            "v-7m0ld1": {
+              "name": {
+                "value": "category",
+                "from": "ai"
+              },
+              "note": "Meditate: a 34px tab in its topic color (orange #ffa500), 14px at 500, 8px corners."
+            },
+            "v-4j71o6": {
+              "name": {
+                "value": "plan, selected",
+                "from": "ai"
+              },
+              "note": "Annual on the plans page: a 124px card in orange with a check."
+            },
+            "v-g3jq7c": {
+              "name": {
+                "value": "plan",
+                "from": "ai"
+              },
+              "note": "Monthly: the unchosen plan card, #f5f2ed."
+            },
+            "v-ejvc7z": {
+              "name": {
+                "value": "disclosure",
+                "from": "ai"
+              },
+              "note": "What is Headspace?: an FAQ row, ink at 400, no frame."
+            },
+            "v-os93f2": {
+              "note": "A chevron with no frame: back to top, 48px with a 32px icon."
+            },
+            "v-dwm9sl": {
+              "note": "2 AI guidance: a numbered step at 60% opacity until it's current."
+            },
+            "v-xz7y8y": {
+              "note": "1 Guided meditations: the current step."
+            },
+            "v-5p6r36": {
+              "note": "2: an article page number, a 32px circle."
+            },
+            "v-jaw0bk": {
+              "note": "The article pagination's next arrow."
+            },
+            "v-841ffu": {
+              "note": "English: the footer's language picker, a 52px pill with a 2px white edge on #44423f."
+            },
+            "v-heo7t6": {
+              "note": "Copy link: a white circle on the lip, in an article."
+            },
+            "v-ei80or": {
+              "note": "Play Headspace demo: a 32px #f9f4f2 pill on the lip."
+            },
+            "v-4g5q2x": {
+              "name": {
+                "value": "social",
+                "from": "ai"
+              },
+              "note": "Sign in with Google: a 44px pill with the logo."
+            },
+            "v-oqsbtj": {
+              "note": "Falling asleep: the category tab in the sleep topic's color, #6666cc."
+            },
+            "v-o5afbq": {
+              "note": "Before bed: the category tab in #5431a5."
+            },
+            "v-scklxq": {
+              "note": "Sleep: the category tab in orange."
+            },
+            "v-jqtq9f": {
+              "note": "Play in the sleep page's audio player: a 48px circle."
+            },
+            "v-r2z5u6": {
+              "note": "Play on the plans page: an orange 48px circle."
+            },
+            "v-k9yfu9": {
+              "note": "Monthly Plan on the sleep page: the unchosen plan card, white on the lip."
+            },
+            "v-z2p9zu": {
+              "note": "Annual on the sleep page: the chosen plan card, in purple."
+            },
+            "v-sqyn18": {
+              "note": "Annual on the plans page: the chosen plan card, in yellow."
+            },
+            "v-y2wuk9": {
+              "note": "Monthly on the plans page: the unchosen plan card."
+            },
+            "primary": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            },
+            "v-gv00tv": {
+              "hide": "Sign in with Facebook: the social button in Facebook's blue"
+            },
+            "v-qrhgpe": {
+              "hide": "Sign in with Apple: the social button in Apple's black"
+            },
+            "v-uo10xo": {
+              "hide": "Sign in with Spotify: the social button in Spotify's green"
+            },
+            "v-jsvwg0": {
+              "hide": "the OneTrust cookie banner's Reject All"
+            },
+            "v-qppxrw": {
+              "hide": "the OneTrust cookie banner's Accept Cookies"
+            },
+            "v-yg6poe": {
+              "hide": "the OneTrust cookie banner's Your Privacy Choices"
+            },
+            "v-pxlwlr": {
+              "hide": "the OneTrust cookie banner's close button"
+            },
+            "v-fvv00x": {
+              "hide": "a 652px video poster that plays on click"
+            }
+          },
+          "sizes": {
+            "s-dbecer": {
+              "name": {
+                "value": "mLarge",
+                "from": "docs"
+              },
+              "note": "48px, 24px sides, 16px text."
+            },
+            "s-o24bsg": {
+              "note": "44px, 24px sides, 18px text: topic chips."
+            },
+            "s-wzwxd8": {
+              "note": "48px, 24px sides, 18px text."
+            },
+            "s-vnzwkq": {
+              "note": "58px, 32px sides, 18px text."
+            },
+            "s-2qffu7": {
+              "note": "A 48px circle, 24px icon."
+            },
+            "s-gw3kw8": {
+              "note": "34px, 12px sides, 14px text."
+            },
+            "s-uhzp20": {
+              "note": "78px rows, 24px sides."
+            },
+            "s-vmbepj": {
+              "note": "44px."
+            },
+            "s-kolbfz": {
+              "note": "16px text, no box."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The app's own buttons (primary, secondary, ghost, icon-only) are only in the harness, which rendered without its stylesheet in this census. Per the stylesheet they are bold pills, mLarge 48px with 24px sides, disabled at 40% opacity."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-eodv2n": {
+              "name": {
+                "value": "pager dot",
+                "from": "ai"
+              },
+              "note": "A carousel's 10px dot: #44423f at 20%, full when current."
+            }
+          },
+          "sizes": {
+            "s-eeudo0": {
+              "note": "10px."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Text links are quiet: the header in ink at 400, the footer in #44423f at 500 and 70% opacity, prose links underlined in their paragraph's grey. Blue (#0061ef) underlined links appear on the sign-in page. Calls to action are links drawn as the button pills.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-whvmlo": {
+              "name": {
+                "value": "nav",
+                "from": "ai"
+              },
+              "note": "The header's links: 16px #2d2c2b (For You, Log in)."
+            },
+            "v-agxvu0": {
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "The footer's columns: 12px #44423f at 500, 70% opacity (Try 14-days free)."
+            },
+            "v-z2l0rt": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Underlined #44423f at 400: Sleep hygiene tips in an article."
+            },
+            "v-ruwxqz": {
+              "name": {
+                "value": "inline, blue",
+                "from": "ai"
+              },
+              "note": "Underlined #0061ef, 14px: Terms & Conditions and Sign up for free on the sign-in page."
+            },
+            "v-i0nw81": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Try for free: a #0061ef pill at 700 on the 2px lip; hover #0040ea."
+            },
+            "v-sns3tz": {
+              "name": {
+                "value": "inverse",
+                "from": "ai"
+              },
+              "note": "Try for free over a photo: the #2d2c2b pill."
+            },
+            "v-p4icyb": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "Chat with Ebb: the #f9f4f2 pill."
+            },
+            "v-iet076": {
+              "name": {
+                "value": "legal",
+                "from": "ai"
+              },
+              "note": "Terms & conditions on the dark footer strip: white at 70%."
+            },
+            "v-ooz339": {
+              "name": {
+                "value": "content card",
+                "from": "ai"
+              },
+              "note": "Whole-tile links: Meet Ebb, the Sleepcasts tiles."
+            },
+            "v-zzw4zn": {
+              "note": "Discover our library: the blue pill without the lip."
+            },
+            "v-gfa684": {
+              "note": "Try for free on the sleep page: a white pill on the lip."
+            },
+            "v-kpm6nl": {
+              "note": "Learn more: the blue pill with a 2px white edge, on blue."
+            },
+            "v-tftvhp": {
+              "note": "Request a demo: a white pill on blue."
+            },
+            "v-5p6r36": {
+              "note": "View Student Pricing: a #f9f4f2 pill at 400."
+            },
+            "v-os93f2": {
+              "note": "The footer's social icons."
+            },
+            "v-ejvc7z": {
+              "note": "Plans: a content page's header links, 80px tall."
+            },
+            "v-06yxzb": {
+              "note": "Terms & conditions under the plans: orange #fc5500 at 500."
+            },
+            "v-6ks3g3": {
+              "note": "On Original Medicare? Get Headspace at no cost →: the top banner's link."
+            },
+            "v-bpobkn": {
+              "note": "meditation: an underlined 20px link in an FAQ answer."
+            },
+            "v-lpbjr0": {
+              "note": "Privacy Policy. in the newsletter's fine print: 12px, underlined."
+            },
+            "v-esl2i2": {
+              "note": "Journal of Pediatric Nursing: underlined grey #828282 citations."
+            },
+            "v-nki84a": {
+              "note": "View all: 20px at 500, underlined."
+            },
+            "v-495h7f": {
+              "note": "Terms & Conditions in white, on the sleep page's navy."
+            },
+            "v-h1clqw": {
+              "note": "student plan: underlined blue at 700."
+            },
+            "v-w7jggc": {
+              "note": "The breadcrumb's current page."
+            },
+            "v-0gdy7b": {
+              "note": "New and Popular: an 80px topic tile in yellow #ffb700 with an illustration."
+            },
+            "v-fvv00x": {
+              "note": "All Articles: a 303px article tile."
+            },
+            "v-ts6tm7": {
+              "hide": "the OneTrust cookie banner's Privacy Policy"
+            },
+            "v-02g4hk": {
+              "hide": "App Store and Google Play badges"
+            },
+            "v-8le2ew": {
+              "hide": "the headspace logo, and a link left in the browser's default blue"
+            },
+            "v-vl3v5s": {
+              "hide": "the headspace logo"
+            },
+            "v-ozkqkh": {
+              "hide": "the topic tile again, in yellow #ffce00"
+            },
+            "v-sawgl6": {
+              "hide": "the topic tile again, in blue #00a4ff"
+            },
+            "v-xkysuq": {
+              "hide": "the topic tile again, in orange"
+            }
+          },
+          "sizes": {
+            "s-tf1hlu": {
+              "note": "12px on a 15px line."
+            },
+            "s-gejdey": {
+              "note": "16px on a 20px line."
+            },
+            "s-k59pn3": {
+              "note": "12px."
+            },
+            "s-fxxsu7": {
+              "note": "48px, 24px sides."
+            },
+            "s-gaew06": {
+              "note": "48px, 32px sides: the header's Login."
+            },
+            "s-e60ksw": {
+              "note": "62px, 40px sides."
+            },
+            "s-tf8b6h": {
+              "note": "28px icons."
+            },
+            "s-oqz7wz": {
+              "hide": "Get your headspace: a 72px headline that links"
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Badges are pills, 24px with 8px sides at 14px and 700; the default is link-blue on #f9f4f2 (Trending). Plan tags (Best value) are 24px with 4px corners.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-4au31k": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Trending: #0061ef on #f9f4f2."
+            },
+            "v-3mzo3k": {
+              "name": {
+                "value": "step",
+                "from": "ai"
+              },
+              "note": "A step's number: a 30px #d2d5de circle with a blue 18px numeral."
+            },
+            "v-zzw4zn": {
+              "name": {
+                "value": "step, current",
+                "from": "ai"
+              },
+              "note": "The current step: a #0061ef circle, white numeral."
+            },
+            "v-heysnp": {
+              "name": {
+                "value": "tag",
+                "from": "ai"
+              },
+              "note": "Best value on the sleep page: white with black 12px text at 700, 4px corners."
+            },
+            "v-psfzsi": {
+              "note": "Best value on the plans page: #0c6ff9 with white text at 500."
+            },
+            "v-sl27jb": {
+              "note": "Best value over the orange plan: white, black text at 500."
+            },
+            "v-f6i7og": {
+              "hide": "a carousel arrow, see button"
+            },
+            "v-jjepw4": {
+              "hide": "the check on a chosen plan card"
+            },
+            "v-jaw0bk": {
+              "hide": "the check on a chosen plan card"
+            }
+          },
+          "sizes": {
+            "s-jufn8n": {
+              "note": "23px, 8px sides, 14px."
+            },
+            "s-43p0gz": {
+              "note": "30px circle, 18px numeral."
+            },
+            "s-3qgk1n": {
+              "note": "24px, 12px sides, 12px text."
+            }
+          }
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-6v376w": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            },
+            "v-1kef96": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The app's segmented control is only in the harness. Per the stylesheet it is a #f9f4f2 pill track with 4px padding, 48px segments at 16/700, the current one white under #2d2c2b ink."
+      ]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "The sign-in field is 56px with 12px corners and a 2px #e2ded9 edge, the label inside it: 16px centered, shrinking to 12px when there's a value or focus. Focus turns the edge blue #0061ef.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-zlovfc": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email address* on the sign-in page."
+            },
+            "v-0fksyy": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "The same field focused: a 2px #0061ef edge, no ring."
+            },
+            "v-pb33uc": {
+              "name": {
+                "value": "newsletter",
+                "from": "ai"
+              },
+              "note": "The footer's Email address: 58px, 8px corners, a 1px #d2d5de edge."
+            },
+            "v-77k1ac": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            },
+            "v-9wkn7e": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            }
+          },
+          "sizes": {
+            "s-s77f3h": {
+              "note": "56px, 16px sides, 16px text."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-zy9fo4": {
+              "name": {
+                "value": "floating",
+                "from": "ai"
+              },
+              "note": "Email address inside a field: #63605d at 400, 16px resting, 12px when floated."
+            },
+            "v-7nvpiz": {
+              "hide": "a content tile's title, marked up as a label"
+            },
+            "v-go8c1i": {
+              "hide": "a content tile's title, marked up as a label"
+            },
+            "v-eglffw": {
+              "hide": "a content tile's title, marked up as a label"
+            },
+            "v-w35oyk": {
+              "hide": "a content tile's title, marked up as a label"
+            },
+            "v-85ns87": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            },
+            "v-k8guj1": {
+              "hide": "the app harness, which rendered without its stylesheet in this census: a browser-default control"
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-3psmlo": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The terms checkbox under the sign-in form: 16px."
+            }
+          },
+          "sizes": {
+            "s-yzaq22": {
+              "note": "16px."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The app's checkbox (2px edge, primary when checked) is only in the harness."
+      ]
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Marketing cards are flat #f9f4f2 tiles or white cards on the 2px lip, with 8 to 32px corners.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-tm8z7r": {
+              "name": {
+                "value": "tinted",
+                "from": "ai"
+              },
+              "note": "Sleep hygiene: #f9f4f2 tiles with 24px corners, no edge."
+            },
+            "v-lqtmxr": {
+              "name": {
+                "value": "lip",
+                "from": "ai"
+              },
+              "note": "10 days of Headspace…: a #f9f4f2 card on the 2px lip, 8px corners."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "plain",
+                "from": "ai"
+              },
+              "note": "Look after your mind: white, 8px corners, no edge."
+            },
+            "v-uo6p13": {
+              "name": {
+                "value": "promo",
+                "from": "ai"
+              },
+              "note": "The sleep page's app promos: 32px corners on a 0 0 10px shadow at 10%."
+            },
+            "v-nydplu": {
+              "note": "Quotes on the plans page: #f9f4f2 tiles, 12px corners, at 40% opacity in their carousel."
+            },
+            "v-i3gf6b": {
+              "note": "The sleep page's audio player: a #101340 strip with 12px corners."
+            },
+            "v-8gr4jx": {
+              "note": "573.7k meditating: a counter pill with a 2px white edge, on blue."
+            },
+            "v-tbzir3": {
+              "note": "A dark promo panel on the sleep page."
+            },
+            "v-6buw13": {
+              "hide": "a full-width page section"
+            },
+            "v-nb26b2": {
+              "hide": "a full-width page section"
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-6hqcpt": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Small round photos."
+            }
+          },
+          "sizes": {
+            "s-0602km": {
+              "note": "25px."
+            },
+            "s-h94pa2": {
+              "note": "31px."
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-blb1p6": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 3px bar in #2d2c2b on the home page."
+            },
+            "v-2jymyn": {
+              "note": "The 3px bar in #d2d5de."
+            },
+            "v-8on5sa": {
+              "note": "The 3px bar in #545f82."
+            },
+            "v-ausrzp": {
+              "note": "The 3px bar in #44423f."
+            },
+            "v-l7d1ng": {
+              "note": "The 3px bar in white."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-vb17l3": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The sign-in page's rule: 1px #c9cace."
+            },
+            "v-ws4orp": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              },
+              "note": "A 2px #e2ded9 rule between columns."
+            },
+            "v-n1aqm8": {
+              "hide": "a decorative yellow bar"
+            },
+            "v-odac7z": {
+              "hide": "a decorative orange bar"
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-05klqy": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "The header's dropdown: white on 0 5px 10px at 7%."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "alertdialog": {
+          "variants": {
+            "v-tm8z7r": {
+              "hide": "the OneTrust cookie banner"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: public www.headspace.com pages and the sign-in page, light only. Partial: the app's own parts come from a harness page over the shipped app stylesheet, and in this census that page rendered without the stylesheet, so its looks are left out; the foundations and the app facts quoted come from the pack's notes on that stylesheet. The app's dark theme isn't in this census. mLarge is the stylesheet's size name; names marked ai are ours."
+  }
+}
