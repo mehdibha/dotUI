@@ -1,69 +1,129 @@
 "use client"
 
-import { useComponentParams } from "@/lib/styles"
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronsUpDownIcon,
-} from "@/registry/icons"
+import { CheckIcon, PlusIcon, SearchIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
-import { Checkbox } from "@/registry/ui/checkbox"
 import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
 import { Label } from "@/registry/ui/field"
-import { Input } from "@/registry/ui/input"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
-import { Kbd } from "@/registry/ui/kbd"
-import { Link } from "@/registry/ui/link"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/registry/ui/select"
-import { Switch } from "@/registry/ui/switch"
+import { useStyles as useRadioStyles } from "@/registry/ui/radio-group/styles"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
-import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
-import { TextField } from "@/registry/ui/text-field"
 import { useTweak } from "@/dev/tweaker"
 
-import { Board, CAPTION, stateProps, StateRow } from "./board"
+import { Board, stateProps, useBoardFocus } from "./board"
 
 const GROUP = "Focus board"
-const LOOKS = ["plain", "canvas", "component set", "canvas + set"] as const
-type Look = (typeof LOOKS)[number]
+const LAYOUTS = ["sets", "matrix", "spotlight"] as const
+const CANVASES = ["dots", "grid", "plain"] as const
+const FRAMES = ["figma", "neutral"] as const
+type Layout = (typeof LAYOUTS)[number]
+type Canvas = (typeof CANVASES)[number]
+type FrameStyle = (typeof FRAMES)[number]
 
-const GRID =
-  "grid grid-flow-col grid-rows-2 items-center justify-center justify-items-start gap-x-10 gap-y-5 max-sm:grid-flow-row max-sm:grid-cols-2 max-sm:grid-rows-none max-sm:gap-x-6"
+const CONTROL_KEYS = ["focusStyle", "focusWidth", "focusColor"]
+const INPUT_KEYS = ["focusInputStyle", "focusColor"]
 
-// Figma's component-set purple.
+// Figma's component-set purple and selection blue.
 const SET = "#9747FF"
+const SELECTION = "#0D99FF"
 
 // Keyboard focus: inputs style `focus:`, everything else `focus-visible:`.
 const FOCUSED = { ...stateProps("focus"), "data-focused": "true" }
 
+type State = "rest" | "focus"
+const attrs = (state: State) => (state === "focus" ? FOCUSED : stateProps())
+
+/* ------------------------------- specimens -------------------------------- */
+
+function ButtonSpecimen({
+  state,
+  variant,
+  children,
+}: {
+  state: State
+  variant: "primary" | "secondary" | "quiet"
+  children: React.ReactNode
+}) {
+  const button = useButtonStyles()
+  return (
+    <span {...attrs(state)} className={button({ variant })}>
+      {children}
+    </span>
+  )
+}
+
+function IconButtonSpecimen({ state }: { state: State }) {
+  const button = useButtonStyles()
+  return (
+    <span
+      {...attrs(state)}
+      data-icon-only=""
+      aria-label="Add"
+      className={button({ variant: "secondary" })}
+    >
+      <PlusIcon />
+    </span>
+  )
+}
+
+function CheckboxSpecimen({ state }: { state: State }) {
+  const checkbox = useCheckboxStyles()()
+  const props = { ...attrs(state), "data-selected": "true" }
+  return (
+    <span className={checkbox.root()}>
+      <span {...props} className={checkbox.control()}>
+        <span {...props} className={checkbox.indicator()}>
+          <CheckIcon />
+        </span>
+      </span>
+      <Label elementType="span">Remember me</Label>
+    </span>
+  )
+}
+
+function RadioSpecimen({ state }: { state: State }) {
+  const radio = useRadioStyles()()
+  const props = { ...attrs(state), "data-selected": "true" }
+  return (
+    <span data-radio="" className={radio.root()}>
+      <span {...props} className={radio.control()}>
+        <span {...props} className={radio.indicator()}>
+          <span />
+        </span>
+      </span>
+      <Label elementType="span">Monthly</Label>
+    </span>
+  )
+}
+
+function SwitchSpecimen({ state }: { state: State }) {
+  const toggle = useSwitchStyles()()
+  const props = { ...attrs(state), "data-selected": "true" }
+  return (
+    <span {...props} className={toggle.control()}>
+      <span {...props} className={toggle.indicator()}>
+        <span {...props} className={toggle.thumb()} />
+      </span>
+    </span>
+  )
+}
+
 const TABS = ["Overview", "Activity", "Settings"]
 
-function FocusedTabs() {
+function TabsSpecimen({ state }: { state: State }) {
   const tabs = useTabsStyles()()
   const horizontal = { "data-rac": "", "data-orientation": "horizontal" }
   return (
-    <div
-      className={tabs.root({
-        orientation: "horizontal",
-        className: "max-sm:col-span-2",
-      })}
-    >
+    <div className={tabs.root({ orientation: "horizontal" })}>
       <div {...horizontal} className={tabs.list({ orientation: "horizontal" })}>
         {TABS.map((name, index) => (
           <div
             key={name}
             {...horizontal}
             // Arrow keys move selection with focus, so the focused tab is the selected one.
-            {...(index === 0 && { ...FOCUSED, "data-selected": "true" })}
+            {...(index === 0 && { ...attrs(state), "data-selected": "true" })}
             className={tabs.item({ orientation: "horizontal" })}
           >
             {index === 0 && (
@@ -82,221 +142,368 @@ function FocusedTabs() {
   )
 }
 
-// One column per kind (actions, choices, navigation), so the specimens share edges.
-function Focus() {
-  const button = useButtonStyles()
+function LinkSpecimen({ state }: { state: State }) {
   const link = useLinkStyles()
-  const checkbox = useCheckboxStyles()()
-  const toggle = useSwitchStyles()()
-  const selected = { ...FOCUSED, "data-selected": "true" }
   return (
-    <div inert className={GRID}>
-      <button
-        type="button"
-        {...FOCUSED}
-        className={button({ variant: "primary" })}
-      >
-        Publish
-      </button>
-      <button
-        type="button"
-        {...FOCUSED}
-        className={button({ variant: "secondary" })}
-      >
-        Preview
-      </button>
-      <span className={checkbox.root()}>
-        <span {...selected} className={checkbox.control()}>
-          <span {...selected} className={checkbox.indicator()}>
-            <CheckIcon />
-          </span>
-        </span>
-        <Label elementType="span">Remember me</Label>
-      </span>
-      <span {...selected} className={toggle.control()}>
-        <span {...selected} className={toggle.indicator()}>
-          <span {...selected} className={toggle.thumb()} />
-        </span>
-      </span>
-      <FocusedTabs />
-      <span {...FOCUSED} className={link({})}>
-        View invoice
-      </span>
-    </div>
-  )
-}
-
-/** The select trigger the design system ships: the field shell, or a button that takes the focus ring. */
-function FrozenTrigger(props: Record<string, string>) {
-  const { trigger, caret } = useComponentParams("select")
-  const input = useInputStyles()()
-  const button = useButtonStyles()
-  const Caret = caret === "double" ? ChevronsUpDownIcon : ChevronDownIcon
-  const className =
-    trigger === "field"
-      ? input.trigger({ className: "w-32" })
-      : button({ className: input.buttonTrigger({ className: "w-32" }) })
-  return (
-    <span
-      {...props}
-      {...(trigger === "field"
-        ? { "data-select-trigger": "" }
-        : { "data-button": "" })}
-      className={className}
-    >
-      <span className="truncate">Team plan</span>
-      <Caret className="ml-auto" />
+    <span {...attrs(state)} className={link({})}>
+      View invoice
     </span>
   )
 }
 
-function FieldFocus() {
-  const field = useInputStyles()()
+function InputSpecimen({ state }: { state: State }) {
+  const { input } = useInputStyles()()
   return (
-    <StateRow states={["rest", "focus"]}>
-      {(props, state) => {
-        const frozen = state === "focus" ? FOCUSED : props
-        return (
-          <div className="flex flex-col gap-2.5">
-            <input
-              {...frozen}
-              aria-label="Full name"
-              className={field.input({ className: "w-32" })}
-              defaultValue="Ada Lovelace"
-              readOnly
-            />
-            <FrozenTrigger {...frozen} />
-          </div>
-        )
-      }}
-    </StateRow>
+    <input
+      {...attrs(state)}
+      data-input=""
+      data-input-control=""
+      aria-label="Full name"
+      className={input({ className: "w-44" })}
+      defaultValue="Ada Lovelace"
+      readOnly
+      tabIndex={-1}
+    />
   )
 }
 
-/** The real components: Tab through them. */
-function Playground({ hint }: { hint: boolean }) {
+function SearchSpecimen({ state }: { state: State }) {
+  const { inputGroup, inputGroupAddon, input } = useInputStyles()()
   return (
-    <div className="group relative flex justify-center rounded-(--studio-radius-panel) border bg-bg p-10 max-sm:p-4">
-      {hint && (
-        <Kbd className="absolute top-3 right-3 transition-opacity group-has-[[data-focus-visible],[data-focused]]:opacity-0">
-          Tab ⇥
-        </Kbd>
-      )}
-      <div className="flex flex-col items-center gap-8">
-        <div className={GRID}>
-          <Button variant="primary">Publish</Button>
-          <Button>Preview</Button>
-          <Checkbox defaultSelected>Remember me</Checkbox>
-          <Switch aria-label="Auto-renew" defaultSelected />
-          <Tabs defaultSelectedKey="overview" className="max-sm:col-span-2">
-            <TabList aria-label="Project">
-              <Tab id="overview">Overview</Tab>
-              <Tab id="activity">Activity</Tab>
-              <Tab id="settings">Settings</Tab>
-            </TabList>
-          </Tabs>
-          <Link>View invoice</Link>
-        </div>
-        <div className="flex items-center gap-2.5">
-          <TextField aria-label="Full name" defaultValue="Ada Lovelace">
-            <Input className="w-32" />
-          </TextField>
-          <Select aria-label="Plan" defaultSelectedKey="team">
-            <SelectTrigger className="w-32" />
-            <SelectContent>
-              <SelectItem id="free">Free plan</SelectItem>
-              <SelectItem id="pro">Pro plan</SelectItem>
-              <SelectItem id="team">Team plan</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+    <div data-input-group="" className={inputGroup({ className: "w-44" })}>
+      <span data-input-group-addon="" className={inputGroupAddon()}>
+        <SearchIcon />
+      </span>
+      <input
+        {...attrs(state)}
+        data-input=""
+        data-input-control=""
+        aria-label="Search"
+        className={input()}
+        placeholder="Search"
+        readOnly
+        tabIndex={-1}
+      />
     </div>
   )
 }
 
-const DOTS =
-  "bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] bg-size-[14px_14px]"
+function TextAreaSpecimen({ state }: { state: State }) {
+  const { textArea } = useInputStyles()()
+  return (
+    <textarea
+      {...attrs(state)}
+      data-textarea=""
+      aria-label="Notes"
+      rows={2}
+      className={textArea({ className: "w-44 resize-none" })}
+      defaultValue="Ship on Friday"
+      readOnly
+      tabIndex={-1}
+    />
+  )
+}
 
-/** A frozen specimen group, framed the way design tools frame a component set. */
+interface Specimen {
+  name: string
+  render: (state: State) => React.ReactNode
+}
+
+const BUTTONS: Specimen[] = [
+  {
+    name: "Primary",
+    render: (s) => (
+      <ButtonSpecimen state={s} variant="primary">
+        Publish
+      </ButtonSpecimen>
+    ),
+  },
+  {
+    name: "Secondary",
+    render: (s) => (
+      <ButtonSpecimen state={s} variant="secondary">
+        Preview
+      </ButtonSpecimen>
+    ),
+  },
+  {
+    name: "Quiet",
+    render: (s) => (
+      <ButtonSpecimen state={s} variant="quiet">
+        Cancel
+      </ButtonSpecimen>
+    ),
+  },
+  { name: "Icon", render: (s) => <IconButtonSpecimen state={s} /> },
+]
+
+const SELECTION_CONTROLS: Specimen[] = [
+  { name: "Checkbox", render: (s) => <CheckboxSpecimen state={s} /> },
+  { name: "Radio", render: (s) => <RadioSpecimen state={s} /> },
+  { name: "Switch", render: (s) => <SwitchSpecimen state={s} /> },
+]
+
+const NAVIGATION: Specimen[] = [
+  { name: "Tabs", render: (s) => <TabsSpecimen state={s} /> },
+  { name: "Link", render: (s) => <LinkSpecimen state={s} /> },
+]
+
+const INPUTS: Specimen[] = [
+  { name: "Input", render: (s) => <InputSpecimen state={s} /> },
+  { name: "With icon", render: (s) => <SearchSpecimen state={s} /> },
+  { name: "Text area", render: (s) => <TextAreaSpecimen state={s} /> },
+]
+
+/* --------------------------------- chrome --------------------------------- */
+
+interface Chrome {
+  frame: FrameStyle
+  names: boolean
+}
+
+const TAG = "text-[11px] leading-none font-medium"
+
+/** A component set, framed the way design tools frame one; blue when the panel edits it. */
 function Frame({
-  look,
+  chrome,
   name,
+  selected,
+  className,
   children,
 }: {
-  look: Look
+  chrome: Chrome
   name: string
+  selected?: boolean
+  className?: string
   children: React.ReactNode
 }) {
-  if (look === "plain") return children
-  const set = look !== "canvas"
+  const figma = chrome.frame === "figma"
+  const color = selected ? SELECTION : figma ? SET : undefined
   return (
-    <div className="flex flex-col gap-1.5">
-      <span
-        className={cn(CAPTION, "flex items-center gap-1")}
-        style={set ? { color: SET } : undefined}
-      >
-        {set && <span aria-hidden>❖</span>}
-        {name}
-      </span>
+    <div className="flex min-w-0 flex-col gap-2">
+      {chrome.names && (
+        <span
+          className={cn(
+            TAG,
+            "flex items-center gap-1",
+            !color && "text-fg-muted",
+          )}
+          style={{ color }}
+        >
+          {figma && <span aria-hidden>❖</span>}
+          {name}
+        </span>
+      )}
       <div
         className={cn(
-          "rounded-md border border-dashed bg-bg p-6 max-sm:p-4",
-          !set && "border-fg-muted/40",
+          "relative rounded-md border bg-bg p-6 transition-colors duration-150 max-sm:p-4",
+          selected ? "border-solid" : "border-dashed",
+          !color && "border-fg-muted/40",
+          className,
         )}
-        style={set ? { borderColor: SET } : undefined}
+        style={{ borderColor: color }}
       >
+        {selected && <Handles />}
         {children}
       </div>
     </div>
   )
 }
 
-/** Every specimen frozen in its focused state. */
-function Specs({ look }: { look: Look }) {
-  const canvas = look === "canvas" || look === "canvas + set"
+/** Figma's selection corners. */
+function Handles() {
+  const corner = "absolute size-1.5 border bg-white"
+  const style = { borderColor: SELECTION }
+  return (
+    <>
+      <span
+        className={cn(corner, "-top-[3.5px] -left-[3.5px]")}
+        style={style}
+      />
+      <span
+        className={cn(corner, "-top-[3.5px] -right-[3.5px]")}
+        style={style}
+      />
+      <span
+        className={cn(corner, "-bottom-[3.5px] -left-[3.5px]")}
+        style={style}
+      />
+      <span
+        className={cn(corner, "-right-[3.5px] -bottom-[3.5px]")}
+        style={style}
+      />
+    </>
+  )
+}
+
+const CAPTION = "text-[11px] leading-none text-fg-muted"
+
+/** Every specimen of a set in one state, wrapped. */
+function Row({
+  specimens,
+  state = "focus",
+  className,
+}: {
+  specimens: Specimen[]
+  state?: State
+  className?: string
+}) {
   return (
     <div
-      className={cn(
-        "flex flex-wrap items-start justify-center gap-x-10 gap-y-8 rounded-(--studio-radius-panel) border p-10 max-sm:p-4",
-        canvas ? DOTS : look === "component set" ? "bg-muted" : "bg-bg",
-        look !== "plain" && "cursor-default",
-      )}
+      className={cn("flex flex-wrap items-center gap-x-6 gap-y-4", className)}
     >
-      <Frame look={look} name="Focused">
-        <Focus />
+      {specimens.map((specimen) => (
+        <span key={specimen.name} className="contents">
+          {specimen.render(state)}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+/** A variant table: a row per specimen, a column per state. */
+function Matrix({ specimens }: { specimens: Specimen[] }) {
+  return (
+    <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-8 gap-y-4">
+      <span />
+      <span className={CAPTION}>Rest</span>
+      <span className={CAPTION}>Focus</span>
+      {specimens.map((specimen) => (
+        <div key={specimen.name} className="contents">
+          <span className={cn(CAPTION, "pr-2")}>{specimen.name}</span>
+          <div className="justify-self-start">{specimen.render("rest")}</div>
+          <div className="justify-self-start">{specimen.render("focus")}</div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/* -------------------------------- layouts --------------------------------- */
+
+function useEditing() {
+  const { axis, holds } = useBoardFocus()
+  const keys = [axis, ...(holds ?? [])]
+  return {
+    controls: keys.some((key) => !!key && CONTROL_KEYS.includes(key)),
+    inputs: keys.some((key) => !!key && INPUT_KEYS.includes(key)),
+  }
+}
+
+function Sets({ chrome }: { chrome: Chrome }) {
+  const editing = useEditing()
+  return (
+    <div className="grid w-full max-w-4xl grid-cols-2 gap-8 max-md:grid-cols-1">
+      <Frame chrome={chrome} name="Buttons" selected={editing.controls}>
+        <Row specimens={BUTTONS} />
       </Frame>
-      <Frame look={look} name="Field">
-        <FieldFocus />
+      <Frame chrome={chrome} name="Selection" selected={editing.controls}>
+        <Row specimens={SELECTION_CONTROLS} />
+      </Frame>
+      <Frame chrome={chrome} name="Navigation" selected={editing.controls}>
+        <Row specimens={NAVIGATION} />
+      </Frame>
+      <Frame chrome={chrome} name="Inputs" selected={editing.inputs}>
+        <Row specimens={INPUTS} />
       </Frame>
     </div>
   )
 }
 
+function Matrices({ chrome }: { chrome: Chrome }) {
+  const editing = useEditing()
+  return (
+    <div className="flex flex-wrap items-start justify-center gap-8">
+      <Frame chrome={chrome} name="Controls" selected={editing.controls}>
+        <Matrix
+          specimens={[...BUTTONS, ...SELECTION_CONTROLS, ...NAVIGATION]}
+        />
+      </Frame>
+      <Frame chrome={chrome} name="Inputs" selected={editing.inputs}>
+        <Matrix specimens={INPUTS} />
+      </Frame>
+    </div>
+  )
+}
+
+/** One control and one input up close, the full sets underneath. */
+function Spotlight({ chrome }: { chrome: Chrome }) {
+  const editing = useEditing()
+  return (
+    <div className="flex w-full max-w-4xl flex-col items-center gap-8">
+      <div className="grid w-full grid-cols-2 gap-8 max-md:grid-cols-1">
+        <Frame
+          chrome={chrome}
+          name="Control"
+          selected={editing.controls}
+          className="flex h-56 items-center justify-center overflow-hidden"
+        >
+          <div style={{ zoom: 2.5 }}>{BUTTONS[0]?.render("focus")}</div>
+        </Frame>
+        <Frame
+          chrome={chrome}
+          name="Input"
+          selected={editing.inputs}
+          className="flex h-56 items-center justify-center overflow-hidden"
+        >
+          <div style={{ zoom: 2 }}>{INPUTS[0]?.render("focus")}</div>
+        </Frame>
+      </div>
+      <Frame chrome={chrome} name="All controls" selected={editing.controls}>
+        <Row
+          specimens={[...BUTTONS, ...SELECTION_CONTROLS, ...NAVIGATION]}
+          className="justify-center"
+        />
+      </Frame>
+    </div>
+  )
+}
+
+const CANVAS: Record<Canvas, string> = {
+  dots: "bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] bg-size-[16px_16px]",
+  grid: "bg-[linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] bg-size-[24px_24px] [background-position:-1px_-1px]",
+  plain: "bg-muted",
+}
+
 export default function FocusBoard() {
-  const look = useTweak("Frozen look", {
+  const layout = useTweak("Layout", {
     type: "select",
-    options: [...LOOKS],
-    default: "canvas",
+    options: [...LAYOUTS],
+    default: "sets",
     group: GROUP,
-  })
-  const hint = useTweak("Tab keycap", {
+  }) as Layout
+  const canvas = useTweak("Canvas", {
+    type: "select",
+    options: [...CANVASES],
+    default: "dots",
+    group: GROUP,
+  }) as Canvas
+  const frame = useTweak("Frame", {
+    type: "select",
+    options: [...FRAMES],
+    default: "figma",
+    group: GROUP,
+  }) as FrameStyle
+  const names = useTweak("Set names", {
     type: "boolean",
     default: true,
     group: GROUP,
   })
-  const frozenFirst = useTweak("Frozen first", {
-    type: "boolean",
-    default: false,
-    group: GROUP,
-  })
+  const chrome = { frame, names }
   return (
-    <Board id="focus" untitled>
-      <div
-        className={cn("flex flex-col gap-6", frozenFirst && "flex-col-reverse")}
-      >
-        <Playground hint={hint} />
-        <Specs look={look} />
+    <Board
+      id="focus"
+      untitled
+      // Full bleed: the canvas is the whole preview; the bottom clears the toolbar.
+      className={cn(
+        "min-h-dvh max-w-none cursor-default items-center justify-center px-6 pt-10 pb-20 sm:px-10",
+        CANVAS[canvas],
+      )}
+    >
+      <div inert className="flex w-full justify-center">
+        {layout === "sets" && <Sets chrome={chrome} />}
+        {layout === "matrix" && <Matrices chrome={chrome} />}
+        {layout === "spotlight" && <Spotlight chrome={chrome} />}
       </div>
     </Board>
   )
