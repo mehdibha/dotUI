@@ -58,7 +58,11 @@ import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises"
 import { resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
-import puppeteer, { type Browser, type Page } from "puppeteer"
+import puppeteer, {
+  type Browser,
+  type ElementHandle,
+  type Page,
+} from "puppeteer"
 
 import {
   type CensusElement,
@@ -231,6 +235,7 @@ const freeze = async (page: Page, ids: number[]) =>
           attribute: "data-census",
           // A framed field's copy is its frame.
           prefer: "data-census-frame",
+          held: "__censusIds",
           redact: REDACT,
           keys: ids.map(String),
         }),
@@ -296,7 +301,9 @@ async function readStates(
     ) as Promise<boolean>
   for (const element of elements) {
     if (page.url() !== url) break
-    const handle = await page.$(`>>> [data-census="${element.id}"]`)
+    const handle = (
+      await page.evaluateHandle(censusSnippet({ kind: "node", id: element.id }))
+    ).asElement() as ElementHandle<Element> | null
     const nodeId = handle && (await nodeOf(element.id).catch(() => undefined))
     if (!handle || !nodeId) {
       await handle?.dispose()

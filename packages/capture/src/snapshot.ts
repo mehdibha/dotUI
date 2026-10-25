@@ -53,6 +53,7 @@ async function snapshot(
   redact: boolean,
   keys: string[] | null,
   prefer: string | null,
+  held?: string | null,
 ): Promise<Record<string, Snapshot>> {
   const SVG = "http://www.w3.org/2000/svg"
   const SKIP_TAGS = new Set([
@@ -435,10 +436,28 @@ async function snapshot(
     return out
   }
   const found = marked(document)
+  // A key whose attribute the page dropped from a node it kept (Notion's
+  // editor does), from the map of keys to elements `held` names.
+  const lost = new Map<Element, string>()
+  const map = held
+    ? (globalThis as unknown as Record<string, Map<number, Element>>)[held]
+    : undefined
+  if (map && keys) {
+    const have = new Set(found.map((el) => el.getAttribute(attribute)))
+    for (const key of keys) {
+      const el = map.get(Number(key))
+      if (!have.has(key) && el?.isConnected) {
+        found.push(el)
+        lost.set(el, key)
+      }
+    }
+  }
   // An element carrying `prefer` is copied for the one whose key it holds
   // (the census's frame of a field), when it has a box to copy.
   const keyOf = (el: Element) =>
-    (prefer && el.getAttribute(prefer)) || el.getAttribute(attribute)!
+    (prefer && el.getAttribute(prefer)) ||
+    lost.get(el) ||
+    el.getAttribute(attribute)!
   const sized = (el: Element) => {
     const box = el.getBoundingClientRect()
     return box.width > 0 && box.height > 0
@@ -492,21 +511,24 @@ async function snapshot(
 /** A JavaScript expression that resolves to a `Snapshot` of every element
  *  carrying `attribute` (or of those whose value is in `keys`), keyed by
  *  its value: for `page.evaluate`. An element carrying `prefer` with the
- *  same value is copied in its place. `redact` replaces text, values and
- *  images, for signed-in pages. The `__name` shim covers the helper tsx
- *  compiles in. */
+ *  same value is copied in its place. `held` names a global map of keys
+ *  to elements, for those that lost the attribute. `redact` replaces text,
+ *  values and images, for signed-in pages. The `__name` shim covers the
+ *  helper tsx compiles in. */
 export const snapshotSnippet = ({
   attribute = "data-snapshot",
   redact = false,
   keys,
   prefer,
+  held,
 }: {
   attribute?: string
   redact?: boolean
   keys?: string[]
   prefer?: string
+  held?: string
 } = {}) =>
-  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}) })()`
+  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}, ${JSON.stringify(held ?? null)}) })()`
 
 /** Parts larger than this (in CSS px²), such as `page`, get a crop but no
  *  frozen copy. */

@@ -253,9 +253,13 @@ function census(
     __censusSeen?: WeakMap<Element, string>
     __censusFrames?: WeakMap<Element, Element | null>
     __censusUndo?: (() => void)[]
+    __censusIds?: Map<number, Element>
   }
   const seen = (scope.__censusSeen ??= new WeakMap())
   const frames = (scope.__censusFrames ??= new WeakMap())
+  // Each element by id too: a page may drop the attribute from a node it
+  // keeps (Notion's editor does).
+  const tagged = (scope.__censusIds ??= new Map())
   const CONTROLS = new Set([
     "button",
     "link",
@@ -369,7 +373,8 @@ function census(
       }
       return null
     }
-    return match(document)
+    const held = tagged.get(id)
+    return match(document) ?? (held?.isConnected ? held : null)
   }
   // Opacity through the ancestors: Highcharts' accessibility proxies sit
   // over the chart at 0.001, which checkVisibility counts as shown.
@@ -1352,6 +1357,7 @@ function census(
     kept.set(el, rect)
     roles.set(el, role)
     el.setAttribute(ID, String(next))
+    tagged.set(next, el)
     let around: string | undefined
     for (let up = parent(el); up && !around; up = parent(up)) {
       const role =
