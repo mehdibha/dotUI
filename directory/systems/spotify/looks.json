@@ -7,20 +7,20 @@
     "date": "2026-10-25",
     "pages": [
       {
-        "key": "https://accounts.spotify.com/en/login",
-        "modes": [
-          "dark"
-        ],
-        "signedIn": false,
-        "how": "headless"
-      },
-      {
         "key": "encore.html",
         "modes": [
           "light"
         ],
         "signedIn": false,
         "how": "harness"
+      },
+      {
+        "key": "https://accounts.spotify.com/en/login",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "headless"
       },
       {
         "key": "encore.html#dark",
@@ -1880,7 +1880,7 @@
           "id": "badge.3",
           "count": 1,
           "pages": [
-            1
+            0
           ],
           "part": "badge",
           "states": {
@@ -2783,7 +2783,7 @@
           "id": "box.8",
           "count": 2,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -2821,7 +2821,7 @@
           "id": "page.2",
           "count": 2,
           "pages": [
-            0,
+            1,
             2
           ],
           "part": "page",
@@ -2892,7 +2892,7 @@
           "id": "icon.1",
           "count": 1,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -3518,7 +3518,7 @@
           "id": "button.24",
           "count": 2,
           "pages": [
-            1
+            0
           ],
           "part": "button.primary",
           "states": {
@@ -3605,7 +3605,7 @@
           "id": "button.36",
           "count": 1,
           "pages": [
-            1
+            0
           ],
           "part": "button.secondary",
           "states": {
@@ -3698,7 +3698,7 @@
           "id": "button.37",
           "count": 1,
           "pages": [
-            1
+            0
           ],
           "part": "button.quiet",
           "states": {
@@ -4939,7 +4939,7 @@
           "id": "text.2",
           "count": 13,
           "pages": [
-            0,
+            1,
             2,
             5
           ],
@@ -5006,7 +5006,7 @@
           "id": "text@button.3",
           "count": 11,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -5075,7 +5075,7 @@
           "id": "heading.h6.1",
           "count": 7,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -5145,7 +5145,7 @@
           "id": "text.3",
           "count": 7,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -5279,7 +5279,7 @@
           "id": "text@button.5",
           "count": 4,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -5385,7 +5385,7 @@
           "id": "paragraph.1",
           "count": 3,
           "pages": [
-            1
+            0
           ],
           "part": "text",
           "states": {
@@ -5794,7 +5794,7 @@
           "id": "heading.h1.1",
           "count": 2,
           "pages": [
-            0,
+            1,
             4
           ],
           "part": "heading.1",
@@ -5828,7 +5828,7 @@
           "id": "paragraph.3",
           "count": 2,
           "pages": [
-            0,
+            1,
             4
           ],
           "part": "text.muted",
@@ -5900,7 +5900,7 @@
           "id": "text.4",
           "count": 2,
           "pages": [
-            0,
+            1,
             2
           ],
           "states": {
@@ -6022,7 +6022,7 @@
           "id": "heading.h3.1",
           "count": 1,
           "pages": [
-            1
+            0
           ],
           "part": "heading.3",
           "states": {
@@ -6737,7 +6737,7 @@
           "id": "icon@link.1",
           "count": 2,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -6835,7 +6835,7 @@
           "id": "label.1",
           "count": 4,
           "pages": [
-            1
+            0
           ],
           "part": "field.label",
           "states": {
@@ -7339,7 +7339,7 @@
           "id": "tab.1",
           "count": 2,
           "pages": [
-            1
+            0
           ],
           "part": "tab",
           "states": {
@@ -7538,7 +7538,7 @@
           "id": "textbox.1",
           "count": 3,
           "pages": [
-            0,
+            1,
             2
           ],
           "part": "input",
@@ -7642,7 +7642,7 @@
           "id": "textbox.2",
           "count": 2,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {

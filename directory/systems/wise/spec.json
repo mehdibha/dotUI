@@ -47,11 +47,11 @@
               },
               "count": 2,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(5, 77, 77)",
+                "light": {
+                  "backgroundColor": "rgb(224, 247, 247)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(224, 247, 247)",
+                  "color": "rgb(5, 77, 77)",
                   "fontWeight": "600"
                 }
               }
@@ -65,11 +65,11 @@
               },
               "count": 2,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(5, 77, 40)",
+                "light": {
+                  "backgroundColor": "rgb(226, 246, 213)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(206, 241, 184)",
+                  "color": "rgb(5, 77, 40)",
                   "fontWeight": "600"
                 }
               }
@@ -288,7 +288,7 @@
             {
               "variant": "v-22c6b6",
               "size": "s-2cruqp",
-              "look": "badge.13",
+              "look": "badge.7",
               "count": 1,
               "states": {
                 "light": [
@@ -297,99 +297,13 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/badge.13-rest-light.json"
+                  "light": "2026-10-25/census/crops/badge.7-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-22c6b6",
               "size": "s-f8f8lz",
-              "look": "badge.4",
-              "count": 2,
-              "states": {
-                "light": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/badge.4-rest-light.json"
-                }
-              }
-            },
-            {
-              "variant": "v-jmh6l0",
-              "size": "s-jtxijv",
-              "look": "badge.7",
-              "count": 1,
-              "states": {
-                "dark": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/badge.7-rest-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-jmh6l0",
-              "size": "s-1st7qx",
-              "look": "badge.3",
-              "count": 2,
-              "states": {
-                "dark": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/badge.3-rest-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "proposition",
-              "size": "small",
-              "look": "badge.11",
-              "count": 2,
-              "also": [
-                "badge.17"
-              ],
-              "states": {
-                "dark": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/badge.11-rest-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "success",
-              "size": "small",
-              "look": "badge.10",
-              "count": 2,
-              "also": [
-                "badge.16"
-              ],
-              "states": {
-                "dark": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/badge.10-rest-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-0o81sg",
-              "size": "s-iyn496",
               "look": "badge.2",
               "count": 2,
               "states": {
@@ -404,9 +318,79 @@
               }
             },
             {
-              "variant": "v-2bzuya",
-              "size": "s-f2ada8",
+              "variant": "v-jmh6l0",
+              "size": "s-jtxijv",
+              "look": "badge.13",
+              "count": 1,
+              "states": {
+                "dark": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/badge.13-rest-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "v-jmh6l0",
+              "size": "s-1st7qx",
               "look": "badge.5",
+              "count": 2,
+              "states": {
+                "dark": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/badge.5-rest-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "proposition",
+              "size": "small",
+              "look": "badge.11",
+              "count": 2,
+              "also": [
+                "badge.17"
+              ],
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.11-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "success",
+              "size": "small",
+              "look": "badge.10",
+              "count": 2,
+              "also": [
+                "badge.16"
+              ],
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.10-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-0o81sg",
+              "size": "s-iyn496",
+              "look": "badge.1",
               "count": 2,
               "states": {
                 "light": [
@@ -415,14 +399,30 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/badge.5-rest-light.json"
+                  "light": "2026-10-25/census/crops/badge.1-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-2bzuya",
+              "size": "s-f2ada8",
+              "look": "badge.3",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.3-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-fbp2se",
               "size": "s-ktu4s0",
-              "look": "badge.1",
+              "look": "badge.4",
               "count": 2,
               "states": {
                 "dark": [
@@ -431,14 +431,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/badge.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/badge.4-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-7wygv4",
               "size": "s-jtxijv",
-              "look": "badge.9",
+              "look": "badge.15",
               "count": 1,
               "states": {
                 "dark": [
@@ -447,14 +447,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/badge.9-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/badge.15-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-a1al5c",
               "size": "s-2cruqp",
-              "look": "badge.12",
+              "look": "badge.6",
               "count": 1,
               "states": {
                 "light": [
@@ -463,14 +463,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/badge.12-rest-light.json"
+                  "light": "2026-10-25/census/crops/badge.6-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-b5ogyc",
               "size": "s-jtxijv",
-              "look": "badge.6",
+              "look": "badge.12",
               "count": 1,
               "states": {
                 "dark": [
@@ -479,14 +479,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/badge.6-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/badge.12-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-bvomps",
               "size": "s-2cruqp",
-              "look": "badge.15",
+              "look": "badge.9",
               "count": 1,
               "states": {
                 "light": [
@@ -495,14 +495,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/badge.15-rest-light.json"
+                  "light": "2026-10-25/census/crops/badge.9-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-l62w10",
               "size": "s-jtxijv",
-              "look": "badge.8",
+              "look": "badge.14",
               "count": 1,
               "states": {
                 "dark": [
@@ -511,14 +511,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/badge.8-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/badge.14-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-vdlfk6",
               "size": "s-2cruqp",
-              "look": "badge.14",
+              "look": "badge.8",
               "count": 1,
               "states": {
                 "light": [
@@ -527,7 +527,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/badge.14-rest-light.json"
+                  "light": "2026-10-25/census/crops/badge.8-rest-light.json"
                 }
               }
             }
@@ -567,11 +567,11 @@
               },
               "count": 8,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(18, 21, 17)",
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(159, 232, 112)",
+                  "color": "rgb(22, 51, 0)",
                   "fontWeight": "400"
                 }
               }
@@ -585,11 +585,11 @@
               },
               "count": 6,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(22, 51, 0)",
+                "light": {
+                  "backgroundColor": "rgb(226, 246, 213)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(159, 232, 112)",
+                  "color": "rgb(22, 51, 0)",
                   "fontWeight": "400"
                 }
               }
@@ -629,11 +629,11 @@
               },
               "count": 2,
               "values": {
-                "light": {
-                  "backgroundColor": "rgb(237, 239, 235)",
+                "dark": {
+                  "backgroundColor": "rgb(42, 44, 41)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(14, 15, 12)",
+                  "color": "rgb(243, 245, 241)",
                   "fontWeight": "400"
                 }
               }
@@ -922,21 +922,13 @@
             {
               "variant": "primary",
               "size": "large",
-              "look": "button.2",
+              "look": "button.1",
               "count": 7,
               "also": [
-                "button.4",
+                "button.6",
                 "button.11",
-                "button.19"
+                "button.27"
               ],
-              "values": {
-                "light": {
-                  "height": "48px",
-                  "paddingInline": "16px",
-                  "fontSize": "14px",
-                  "letterSpacing": "normal"
-                }
-              },
               "states": {
                 "light": [
                   "rest",
@@ -948,19 +940,19 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.1-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.2-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.1-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.1-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.2-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.1-disabled-light.json"
                 }
               }
             },
@@ -970,21 +962,10 @@
               "look": "button.12",
               "count": 2,
               "also": [
-                "button.20"
+                "button.28"
               ],
-              "values": {
-                "dark": {
-                  "backgroundColor": "rgb(159, 232, 112)",
-                  "borderRadius": "9999px",
-                  "edge": "none",
-                  "boxShadow": "none",
-                  "color": "rgb(22, 51, 0)",
-                  "fontFamily": "Inter",
-                  "fontWeight": "400"
-                }
-              },
               "states": {
-                "dark": [
+                "light": [
                   "rest",
                   "hover",
                   "pressed",
@@ -997,19 +978,19 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.12-rest-dark.json"
+                  "light": "2026-10-25/census/crops/button.12-rest-light.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.12-hover-dark.json"
+                  "light": "2026-10-25/census/crops/button.12-hover-light.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.12-pressed-dark.json"
+                  "light": "2026-10-25/census/crops/button.12-pressed-light.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.12-focus-dark.json"
+                  "light": "2026-10-25/census/crops/button.12-focus-light.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.12-disabled-dark.json"
+                  "light": "2026-10-25/census/crops/button.12-disabled-light.json"
                 }
               }
             },
@@ -1019,21 +1000,10 @@
               "look": "button.13",
               "count": 2,
               "also": [
-                "button.21"
+                "button.29"
               ],
-              "values": {
-                "dark": {
-                  "backgroundColor": "rgb(159, 232, 112)",
-                  "borderRadius": "9999px",
-                  "edge": "none",
-                  "boxShadow": "none",
-                  "color": "rgb(22, 51, 0)",
-                  "fontFamily": "Inter",
-                  "fontWeight": "400"
-                }
-              },
               "states": {
-                "dark": [
+                "light": [
                   "rest",
                   "hover",
                   "pressed",
@@ -1046,19 +1016,19 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.13-rest-dark.json"
+                  "light": "2026-10-25/census/crops/button.13-rest-light.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.13-hover-dark.json"
+                  "light": "2026-10-25/census/crops/button.13-hover-light.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.13-pressed-dark.json"
+                  "light": "2026-10-25/census/crops/button.13-pressed-light.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.13-focus-dark.json"
+                  "light": "2026-10-25/census/crops/button.13-focus-light.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.13-disabled-dark.json"
+                  "light": "2026-10-25/census/crops/button.13-disabled-light.json"
                 }
               }
             },
@@ -1068,10 +1038,10 @@
               "look": "button.10",
               "count": 2,
               "also": [
-                "button.18"
+                "button.26"
               ],
               "states": {
-                "dark": [
+                "light": [
                   "rest",
                   "hover",
                   "pressed",
@@ -1084,32 +1054,32 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.10-rest-dark.json"
+                  "light": "2026-10-25/census/crops/button.10-rest-light.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.10-hover-dark.json"
+                  "light": "2026-10-25/census/crops/button.10-hover-light.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.10-pressed-dark.json"
+                  "light": "2026-10-25/census/crops/button.10-pressed-light.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.10-focus-dark.json"
+                  "light": "2026-10-25/census/crops/button.10-focus-light.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.10-disabled-dark.json"
+                  "light": "2026-10-25/census/crops/button.10-disabled-light.json"
                 }
               }
             },
             {
               "variant": "tertiary",
               "size": "small",
-              "look": "button.7",
+              "look": "button.5",
               "count": 4,
               "also": [
                 "button.8"
               ],
               "states": {
-                "dark": [
+                "light": [
                   "rest",
                   "hover",
                   "pressed",
@@ -1122,254 +1092,33 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.7-rest-dark.json"
+                  "light": "2026-10-25/census/crops/button.5-rest-light.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.7-hover-dark.json"
+                  "light": "2026-10-25/census/crops/button.5-hover-light.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.7-pressed-dark.json"
+                  "light": "2026-10-25/census/crops/button.5-pressed-light.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.7-focus-dark.json"
+                  "light": "2026-10-25/census/crops/button.5-focus-light.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.7-disabled-dark.json"
+                  "light": "2026-10-25/census/crops/button.5-disabled-light.json"
                 }
               }
             },
             {
               "variant": "tertiary",
               "size": "medium",
-              "look": "button.25",
-              "count": 2,
-              "also": [
-                "button.26"
-              ],
-              "values": {
-                "dark": {
-                  "fontSize": "18px"
-                }
-              },
-              "states": {
-                "dark": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/button.25-rest-dark.json"
-                },
-                "hover": {
-                  "dark": "2026-10-25/census/crops/button.25-hover-dark.json"
-                },
-                "pressed": {
-                  "dark": "2026-10-25/census/crops/button.25-pressed-dark.json"
-                },
-                "focus": {
-                  "dark": "2026-10-25/census/crops/button.25-focus-dark.json"
-                },
-                "disabled": {
-                  "dark": "2026-10-25/census/crops/button.25-disabled-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "secondary",
-              "size": "large",
-              "look": "button.1",
-              "count": 6,
-              "also": [
-                "button.3"
-              ],
-              "states": {
-                "dark": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/button.1-rest-dark.json"
-                },
-                "hover": {
-                  "dark": "2026-10-25/census/crops/button.1-hover-dark.json"
-                },
-                "pressed": {
-                  "dark": "2026-10-25/census/crops/button.1-pressed-dark.json"
-                },
-                "focus": {
-                  "dark": "2026-10-25/census/crops/button.1-focus-dark.json"
-                },
-                "disabled": {
-                  "dark": "2026-10-25/census/crops/button.1-disabled-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-o4y4wc",
-              "size": "s-7dtki5",
-              "look": "button.5",
-              "count": 2,
-              "states": {
-                "dark": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/button.5-rest-dark.json"
-                },
-                "hover": {
-                  "dark": "2026-10-25/census/crops/button.5-hover-dark.json"
-                },
-                "pressed": {
-                  "dark": "2026-10-25/census/crops/button.5-pressed-dark.json"
-                },
-                "focus": {
-                  "dark": "2026-10-25/census/crops/button.5-focus-dark.json"
-                },
-                "disabled": {
-                  "dark": "2026-10-25/census/crops/button.5-disabled-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-o4y4wc",
-              "size": "s-ugmyvk",
-              "look": "button.16",
-              "count": 1,
-              "states": {
-                "dark": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/button.16-rest-dark.json"
-                },
-                "hover": {
-                  "dark": "2026-10-25/census/crops/button.16-hover-dark.json"
-                },
-                "pressed": {
-                  "dark": "2026-10-25/census/crops/button.16-pressed-dark.json"
-                },
-                "focus": {
-                  "dark": "2026-10-25/census/crops/button.16-focus-dark.json"
-                },
-                "disabled": {
-                  "dark": "2026-10-25/census/crops/button.16-disabled-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "v-sepqc8",
-              "size": "s-bigyoz",
-              "look": "button.6",
-              "count": 2,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/button.6-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/button.6-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/button.6-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/button.6-focus-light.json"
-                },
-                "disabled": {
-                  "light": "2026-10-25/census/crops/button.6-disabled-light.json"
-                }
-              }
-            },
-            {
-              "variant": "v-sepqc8",
-              "size": "s-z078ja",
-              "look": "button.24",
-              "count": 1,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/button.24-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/button.24-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/button.24-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/button.24-focus-light.json"
-                },
-                "disabled": {
-                  "light": "2026-10-25/census/crops/button.24-disabled-light.json"
-                }
-              }
-            },
-            {
-              "variant": "secondary-neutral",
-              "size": "large",
               "look": "button.17",
               "count": 2,
               "also": [
-                "button.9"
+                "button.33"
               ],
               "values": {
                 "light": {
-                  "height": "48px",
-                  "paddingInline": "16px",
-                  "fontSize": "14px",
-                  "letterSpacing": "normal"
+                  "fontSize": "18px"
                 }
               },
               "states": {
@@ -1403,9 +1152,152 @@
               }
             },
             {
-              "variant": "v-nmseu0",
+              "variant": "secondary",
+              "size": "large",
+              "look": "button.2",
+              "count": 6,
+              "also": [
+                "button.3"
+              ],
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.2-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.2-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.2-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.2-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.2-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-o4y4wc",
+              "size": "s-7dtki5",
+              "look": "button.7",
+              "count": 2,
+              "states": {
+                "dark": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/button.7-rest-dark.json"
+                },
+                "hover": {
+                  "dark": "2026-10-25/census/crops/button.7-hover-dark.json"
+                },
+                "pressed": {
+                  "dark": "2026-10-25/census/crops/button.7-pressed-dark.json"
+                },
+                "focus": {
+                  "dark": "2026-10-25/census/crops/button.7-focus-dark.json"
+                },
+                "disabled": {
+                  "dark": "2026-10-25/census/crops/button.7-disabled-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "v-o4y4wc",
+              "size": "s-ugmyvk",
+              "look": "button.32",
+              "count": 1,
+              "states": {
+                "dark": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/button.32-rest-dark.json"
+                },
+                "hover": {
+                  "dark": "2026-10-25/census/crops/button.32-hover-dark.json"
+                },
+                "pressed": {
+                  "dark": "2026-10-25/census/crops/button.32-pressed-dark.json"
+                },
+                "focus": {
+                  "dark": "2026-10-25/census/crops/button.32-focus-dark.json"
+                },
+                "disabled": {
+                  "dark": "2026-10-25/census/crops/button.32-disabled-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "v-sepqc8",
               "size": "s-bigyoz",
-              "look": "button.28",
+              "look": "button.4",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.4-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.4-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.4-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.4-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.4-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-sepqc8",
+              "size": "s-z078ja",
+              "look": "button.16",
               "count": 1,
               "states": {
                 "light": [
@@ -1421,25 +1313,176 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.28-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.16-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.28-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.16-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.28-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.16-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.28-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.16-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.28-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.16-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "secondary-neutral",
+              "size": "large",
+              "look": "button.25",
+              "count": 2,
+              "also": [
+                "button.9"
+              ],
+              "values": {
+                "dark": {
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontSize": "14px",
+                  "letterSpacing": "normal"
+                }
+              },
+              "states": {
+                "dark": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/button.25-rest-dark.json"
+                },
+                "hover": {
+                  "dark": "2026-10-25/census/crops/button.25-hover-dark.json"
+                },
+                "pressed": {
+                  "dark": "2026-10-25/census/crops/button.25-pressed-dark.json"
+                },
+                "focus": {
+                  "dark": "2026-10-25/census/crops/button.25-focus-dark.json"
+                },
+                "disabled": {
+                  "dark": "2026-10-25/census/crops/button.25-disabled-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "v-nmseu0",
+              "size": "s-bigyoz",
+              "look": "button.18",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.18-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.18-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.18-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.18-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.18-disabled-light.json"
                 }
               }
             },
             {
               "variant": "v-nmseu0",
               "size": "s-z078ja",
+              "look": "button.15",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.15-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.15-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.15-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.15-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.15-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-43j1vw",
+              "size": "s-z078ja",
+              "look": "button.14",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.14-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.14-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.14-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.14-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.14-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-4vurgn",
+              "size": "s-pj4tuz",
               "look": "button.23",
               "count": 1,
               "states": {
@@ -1473,8 +1516,8 @@
               }
             },
             {
-              "variant": "v-43j1vw",
-              "size": "s-z078ja",
+              "variant": "v-8uh8v8",
+              "size": "s-pj4tuz",
               "look": "button.22",
               "count": 1,
               "states": {
@@ -1508,79 +1551,9 @@
               }
             },
             {
-              "variant": "v-4vurgn",
-              "size": "s-pj4tuz",
-              "look": "button.33",
-              "count": 1,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/button.33-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/button.33-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/button.33-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/button.33-focus-light.json"
-                },
-                "disabled": {
-                  "light": "2026-10-25/census/crops/button.33-disabled-light.json"
-                }
-              }
-            },
-            {
-              "variant": "v-8uh8v8",
-              "size": "s-pj4tuz",
-              "look": "button.32",
-              "count": 1,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus",
-                  "disabled"
-                ]
-              },
-              "forced": [
-                "disabled"
-              ],
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/button.32-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/button.32-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/button.32-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/button.32-focus-light.json"
-                },
-                "disabled": {
-                  "light": "2026-10-25/census/crops/button.32-disabled-light.json"
-                }
-              }
-            },
-            {
               "variant": "v-dj7x1e",
               "size": "s-7dtki5",
-              "look": "button.27",
+              "look": "button.34",
               "count": 1,
               "states": {
                 "dark": [
@@ -1596,26 +1569,26 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.27-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/button.34-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.27-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/button.34-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.27-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/button.34-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.27-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/button.34-focus-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.27-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/button.34-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-dv01ei",
               "size": "s-ugmyvk",
-              "look": "button.14",
+              "look": "button.30",
               "count": 1,
               "states": {
                 "dark": [
@@ -1631,26 +1604,26 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.14-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/button.30-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.14-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/button.30-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.14-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/button.30-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.14-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/button.30-focus-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.14-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/button.30-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-khzbzm",
               "size": "s-pj4tuz",
-              "look": "button.31",
+              "look": "button.21",
               "count": 1,
               "states": {
                 "light": [
@@ -1666,26 +1639,26 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.31-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.21-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.31-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.21-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.31-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.21-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.31-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.21-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.31-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.21-disabled-light.json"
                 }
               }
             },
             {
               "variant": "v-tlu6ah",
               "size": "s-ugmyvk",
-              "look": "button.15",
+              "look": "button.31",
               "count": 1,
               "states": {
                 "dark": [
@@ -1701,33 +1674,30 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/button.15-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/button.31-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/button.15-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/button.31-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/button.15-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/button.31-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/button.15-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/button.31-focus-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/button.15-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/button.31-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-utmao6",
               "size": "large",
-              "look": "button.34",
+              "look": "button.24",
               "count": 1,
               "values": {
                 "light": {
-                  "height": "50px",
-                  "paddingInline": "16px",
-                  "fontSize": "14px",
-                  "letterSpacing": "normal"
+                  "height": "50px"
                 }
               },
               "states": {
@@ -1744,26 +1714,26 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.34-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.24-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.34-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.24-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.34-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.24-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.34-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.24-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.34-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.24-disabled-light.json"
                 }
               }
             },
             {
               "variant": "x-large",
               "size": "s-9o6ikn",
-              "look": "button.29",
+              "look": "button.19",
               "count": 1,
               "states": {
                 "light": [
@@ -1779,26 +1749,26 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.29-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.19-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.29-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.19-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.29-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.19-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.29-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.19-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.29-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.19-disabled-light.json"
                 }
               }
             },
             {
               "variant": "x-small",
               "size": "s-sn44dr",
-              "look": "button.30",
+              "look": "button.20",
               "count": 1,
               "states": {
                 "light": [
@@ -1814,19 +1784,19 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/button.30-rest-light.json"
+                  "light": "2026-10-25/census/crops/button.20-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/button.30-hover-light.json"
+                  "light": "2026-10-25/census/crops/button.20-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/button.30-pressed-light.json"
+                  "light": "2026-10-25/census/crops/button.20-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/button.30-focus-light.json"
+                  "light": "2026-10-25/census/crops/button.20-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/button.30-disabled-light.json"
+                  "light": "2026-10-25/census/crops/button.20-disabled-light.json"
                 }
               }
             }
@@ -1848,8 +1818,8 @@
               },
               "count": 4,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(65, 11, 13)",
+                "light": {
+                  "backgroundColor": "rgb(251, 234, 234)",
                   "edge": "none",
                   "boxShadow": "none"
                 }
@@ -1864,8 +1834,8 @@
               },
               "count": 2,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(5, 77, 40)",
+                "light": {
+                  "backgroundColor": "rgb(226, 246, 213)",
                   "edge": "none",
                   "boxShadow": "none"
                 }
@@ -1880,8 +1850,8 @@
               },
               "count": 2,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(58, 53, 35)",
+                "light": {
+                  "backgroundColor": "rgb(255, 247, 215)",
                   "edge": "none",
                   "boxShadow": "none"
                 }
@@ -1926,11 +1896,19 @@
             {
               "variant": "negative",
               "size": "s-go0wsn",
-              "look": "card.2",
+              "look": "card.6",
               "count": 2,
               "also": [
-                "card.8"
+                "card.9"
               ],
+              "values": {
+                "dark": {
+                  "backgroundColor": "rgb(65, 11, 13)",
+                  "borderRadius": "16px",
+                  "edge": "none",
+                  "boxShadow": "none"
+                }
+              },
               "states": {
                 "dark": [
                   "rest"
@@ -1938,23 +1916,15 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/card.2-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/card.6-rest-dark.json"
                 }
               }
             },
             {
               "variant": "negative",
               "size": "s-bip6eh",
-              "look": "card.5",
+              "look": "card.1",
               "count": 1,
-              "values": {
-                "light": {
-                  "backgroundColor": "rgb(251, 234, 234)",
-                  "borderRadius": "16px",
-                  "edge": "none",
-                  "boxShadow": "none"
-                }
-              },
               "states": {
                 "light": [
                   "rest"
@@ -1962,103 +1932,60 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/card.5-rest-light.json"
+                  "light": "2026-10-25/census/crops/card.1-rest-light.json"
                 }
               }
             },
             {
               "variant": "negative",
               "size": "s-q1xzqh",
-              "look": "card.9",
-              "count": 1,
-              "values": {
-                "light": {
-                  "backgroundColor": "rgb(251, 234, 234)",
-                  "borderRadius": "10px",
-                  "edge": "none",
-                  "boxShadow": "none"
-                }
-              },
-              "states": {
-                "light": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/card.9-rest-light.json"
-                }
-              }
-            },
-            {
-              "variant": "success",
-              "size": "s-go0wsn",
-              "look": "card.3",
-              "count": 1,
-              "states": {
-                "dark": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "dark": "2026-10-25/census/crops/card.3-rest-dark.json"
-                }
-              }
-            },
-            {
-              "variant": "success",
-              "size": "s-bip6eh",
-              "look": "card.6",
-              "count": 1,
-              "values": {
-                "light": {
-                  "backgroundColor": "rgb(226, 246, 213)",
-                  "borderRadius": "16px",
-                  "edge": "none",
-                  "boxShadow": "none"
-                }
-              },
-              "states": {
-                "light": [
-                  "rest"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/card.6-rest-light.json"
-                }
-              }
-            },
-            {
-              "variant": "warning",
-              "size": "s-go0wsn",
               "look": "card.4",
               "count": 1,
+              "values": {
+                "light": {
+                  "borderRadius": "10px"
+                }
+              },
               "states": {
-                "dark": [
+                "light": [
                   "rest"
                 ]
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/card.4-rest-dark.json"
+                  "light": "2026-10-25/census/crops/card.4-rest-light.json"
                 }
               }
             },
             {
-              "variant": "warning",
-              "size": "s-bip6eh",
+              "variant": "success",
+              "size": "s-go0wsn",
               "look": "card.7",
               "count": 1,
               "values": {
-                "light": {
-                  "backgroundColor": "rgb(255, 247, 215)",
+                "dark": {
+                  "backgroundColor": "rgb(5, 77, 40)",
                   "borderRadius": "16px",
                   "edge": "none",
                   "boxShadow": "none"
                 }
               },
+              "states": {
+                "dark": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/card.7-rest-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "success",
+              "size": "s-bip6eh",
+              "look": "card.2",
+              "count": 1,
               "states": {
                 "light": [
                   "rest"
@@ -2066,14 +1993,54 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/card.7-rest-light.json"
+                  "light": "2026-10-25/census/crops/card.2-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "warning",
+              "size": "s-go0wsn",
+              "look": "card.8",
+              "count": 1,
+              "values": {
+                "dark": {
+                  "backgroundColor": "rgb(58, 53, 35)",
+                  "borderRadius": "16px",
+                  "edge": "none",
+                  "boxShadow": "none"
+                }
+              },
+              "states": {
+                "dark": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "dark": "2026-10-25/census/crops/card.8-rest-dark.json"
+                }
+              }
+            },
+            {
+              "variant": "warning",
+              "size": "s-bip6eh",
+              "look": "card.3",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/card.3-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-4fgaqq",
               "size": "s-go0wsn",
-              "look": "card.1",
+              "look": "card.5",
               "count": 1,
               "states": {
                 "dark": [
@@ -2082,7 +2049,7 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/card.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/card.5-rest-dark.json"
                 }
               }
             }
@@ -2143,8 +2110,16 @@
             {
               "variant": "v-qkatts",
               "size": "md",
-              "look": "combobox.1",
+              "look": "combobox.2",
               "count": 8,
+              "values": {
+                "dark": {
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontSize": "16px",
+                  "letterSpacing": "-0.176px"
+                }
+              },
               "states": {
                 "dark": [
                   "rest",
@@ -2159,35 +2134,27 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/combobox.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/combobox.2-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/combobox.1-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/combobox.2-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/combobox.1-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/combobox.2-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/combobox.1-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/combobox.2-focus-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/combobox.1-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/combobox.2-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-wix5qf",
               "size": "md",
-              "look": "combobox.2",
+              "look": "combobox.1",
               "count": 8,
-              "values": {
-                "light": {
-                  "height": "48px",
-                  "paddingInline": "16px",
-                  "fontSize": "16px",
-                  "letterSpacing": "-0.176px"
-                }
-              },
               "states": {
                 "light": [
                   "rest",
@@ -2202,19 +2169,19 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/combobox.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/combobox.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/combobox.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/combobox.1-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/combobox.2-pressed-light.json"
+                  "light": "2026-10-25/census/crops/combobox.1-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/combobox.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/combobox.1-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/combobox.2-disabled-light.json"
+                  "light": "2026-10-25/census/crops/combobox.1-disabled-light.json"
                 }
               }
             }
@@ -2298,7 +2265,7 @@
             {
               "variant": "v-i86w7j",
               "size": "md",
-              "look": "dialog.1",
+              "look": "dialog.2",
               "count": 5,
               "states": {
                 "dark": [
@@ -2307,14 +2274,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/dialog.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/dialog.2-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-sypykl",
               "size": "md",
-              "look": "dialog.2",
+              "look": "dialog.1",
               "count": 5,
               "states": {
                 "light": [
@@ -2323,14 +2290,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/dialog.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/dialog.1-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-4fgaqq",
               "size": "md",
-              "look": "dialog.3",
+              "look": "dialog.4",
               "count": 1,
               "states": {
                 "dark": [
@@ -2339,14 +2306,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/dialog.3-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/dialog.4-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-l7d1ng",
               "size": "md",
-              "look": "dialog.4",
+              "look": "dialog.3",
               "count": 1,
               "states": {
                 "light": [
@@ -2355,7 +2322,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/dialog.4-rest-light.json"
+                  "light": "2026-10-25/census/crops/dialog.3-rest-light.json"
                 }
               }
             }
@@ -2483,7 +2450,7 @@
             {
               "variant": "v-ahm42x",
               "size": "s-dvqokj",
-              "look": "label.4",
+              "look": "label.3",
               "count": 4,
               "states": {
                 "light": [
@@ -2492,14 +2459,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/label.4-rest-light.json"
+                  "light": "2026-10-25/census/crops/label.3-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-pp9glu",
               "size": "s-igig99",
-              "look": "label.3",
+              "look": "label.4",
               "count": 4,
               "states": {
                 "dark": [
@@ -2508,7 +2475,7 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/label.3-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/label.4-rest-dark.json"
                 }
               }
             }
@@ -2669,7 +2636,7 @@
             {
               "variant": "tertiary",
               "size": "s-q96e3b",
-              "look": "link.2",
+              "look": "link.1",
               "count": 2,
               "values": {
                 "light": {
@@ -2686,50 +2653,22 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/link.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/link.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/link.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/link.1-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/link.2-pressed-light.json"
+                  "light": "2026-10-25/census/crops/link.1-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/link.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/link.1-focus-light.json"
                 }
               }
             },
             {
               "variant": "tertiary",
               "size": "large",
-              "look": "link.7",
-              "count": 1,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/link.7-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/link.7-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/link.7-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/link.7-focus-light.json"
-                }
-              }
-            },
-            {
-              "variant": "v-b4nxln",
-              "size": "s-ffis4b",
               "look": "link.6",
               "count": 1,
               "states": {
@@ -2757,7 +2696,63 @@
             },
             {
               "variant": "v-b4nxln",
+              "size": "s-ffis4b",
+              "look": "link.5",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.5-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.5-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.5-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.5-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-b4nxln",
               "size": "s-06frtc",
+              "look": "link.2",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.2-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.2-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.2-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.2-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-34847v",
+              "size": "s-ffis4b",
               "look": "link.3",
               "count": 2,
               "states": {
@@ -2784,37 +2779,9 @@
               }
             },
             {
-              "variant": "v-34847v",
-              "size": "s-ffis4b",
-              "look": "link.4",
-              "count": 2,
-              "states": {
-                "light": [
-                  "rest",
-                  "hover",
-                  "pressed",
-                  "focus"
-                ]
-              },
-              "copies": {
-                "rest": {
-                  "light": "2026-10-25/census/crops/link.4-rest-light.json"
-                },
-                "hover": {
-                  "light": "2026-10-25/census/crops/link.4-hover-light.json"
-                },
-                "pressed": {
-                  "light": "2026-10-25/census/crops/link.4-pressed-light.json"
-                },
-                "focus": {
-                  "light": "2026-10-25/census/crops/link.4-focus-light.json"
-                }
-              }
-            },
-            {
               "variant": "v-o4y4wc",
               "size": "s-cdolzx",
-              "look": "link.1",
+              "look": "link.4",
               "count": 2,
               "states": {
                 "dark": [
@@ -2826,23 +2793,23 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/link.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/link.4-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/link.1-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/link.4-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/link.1-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/link.4-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/link.1-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/link.4-focus-dark.json"
                 }
               }
             },
             {
               "variant": "v-3ckfxz",
               "size": "s-soh9c5",
-              "look": "link.5",
+              "look": "link.7",
               "count": 1,
               "states": {
                 "dark": [
@@ -2854,16 +2821,16 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/link.5-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/link.7-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/link.5-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/link.7-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/link.5-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/link.7-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/link.5-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/link.7-focus-dark.json"
                 }
               }
             }
@@ -2937,7 +2904,7 @@
             {
               "variant": "v-4d3olo",
               "size": "s-15zhf5",
-              "look": "listbox.2",
+              "look": "listbox.1",
               "count": 3,
               "states": {
                 "light": [
@@ -2946,14 +2913,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/listbox.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/listbox.1-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-hetbd8",
               "size": "s-go0wsn",
-              "look": "listbox.1",
+              "look": "listbox.2",
               "count": 3,
               "states": {
                 "dark": [
@@ -2962,14 +2929,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/listbox.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/listbox.2-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-4fgaqq",
               "size": "s-go0wsn",
-              "look": "listbox.3",
+              "look": "listbox.4",
               "count": 2,
               "states": {
                 "dark": [
@@ -2978,14 +2945,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/listbox.3-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/listbox.4-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-l7d1ng",
               "size": "s-15zhf5",
-              "look": "listbox.4",
+              "look": "listbox.3",
               "count": 2,
               "states": {
                 "light": [
@@ -2994,7 +2961,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/listbox.4-rest-light.json"
+                  "light": "2026-10-25/census/crops/listbox.3-rest-light.json"
                 }
               }
             }
@@ -3058,7 +3025,7 @@
             {
               "variant": "v-k8l8j2",
               "size": "s-dc7g10",
-              "look": "option.2",
+              "look": "option.1",
               "count": 15,
               "states": {
                 "light": [
@@ -3068,14 +3035,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/option.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/option.1-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-qjj1fy",
               "size": "s-g9yu3u",
-              "look": "option.1",
+              "look": "option.2",
               "count": 15,
               "states": {
                 "dark": [
@@ -3085,7 +3052,7 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/option.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/option.2-rest-dark.json"
                 }
               }
             }
@@ -3141,7 +3108,7 @@
             {
               "variant": "v-f8vqc6",
               "size": "s-vxxj06",
-              "look": "progressbar.1",
+              "look": "progressbar.2",
               "count": 1,
               "states": {
                 "dark": [
@@ -3150,14 +3117,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/progressbar.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/progressbar.2-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-l7d1ng",
               "size": "s-r72gxk",
-              "look": "progressbar.2",
+              "look": "progressbar.1",
               "count": 1,
               "states": {
                 "light": [
@@ -3166,7 +3133,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/progressbar.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/progressbar.1-rest-light.json"
                 }
               }
             }
@@ -3232,7 +3199,7 @@
             {
               "variant": "v-0347sm",
               "size": "s-sioixv",
-              "look": "radio.2",
+              "look": "radio.1",
               "count": 2,
               "states": {
                 "light": [
@@ -3245,23 +3212,23 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/radio.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/radio.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/radio.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/radio.1-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/radio.2-pressed-light.json"
+                  "light": "2026-10-25/census/crops/radio.1-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/radio.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/radio.1-focus-light.json"
                 }
               }
             },
             {
               "variant": "v-8qdib6",
               "size": "s-32ed8h",
-              "look": "radio.1",
+              "look": "radio.2",
               "count": 2,
               "states": {
                 "dark": [
@@ -3274,16 +3241,16 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/radio.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/radio.2-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/radio.1-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/radio.2-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/radio.1-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/radio.2-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/radio.1-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/radio.2-focus-dark.json"
                 }
               }
             }
@@ -3349,7 +3316,7 @@
             {
               "variant": "v-3jbuxv",
               "size": "s-x2mvk7",
-              "look": "segmented.1",
+              "look": "segmented.2",
               "count": 1,
               "states": {
                 "dark": [
@@ -3358,14 +3325,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/segmented.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/segmented.2-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-6te0fe",
               "size": "s-lv8029",
-              "look": "segmented.2",
+              "look": "segmented.1",
               "count": 1,
               "states": {
                 "light": [
@@ -3374,7 +3341,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/segmented.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/segmented.1-rest-light.json"
                 }
               }
             }
@@ -3396,11 +3363,11 @@
               },
               "count": 2,
               "values": {
-                "dark": {
-                  "backgroundColor": "rgb(185, 186, 183)",
+                "light": {
+                  "backgroundColor": "rgb(134, 134, 133)",
                   "edge": "none",
                   "boxShadow": "none",
-                  "color": "rgb(232, 235, 230)",
+                  "color": "rgb(69, 71, 69)",
                   "fontWeight": "400"
                 }
               }
@@ -3432,19 +3399,8 @@
             {
               "variant": "unchecked",
               "size": "s-73ur8p",
-              "look": "switch.2",
+              "look": "switch.1",
               "count": 1,
-              "values": {
-                "light": {
-                  "backgroundColor": "rgb(134, 134, 133)",
-                  "borderRadius": "16px",
-                  "edge": "none",
-                  "boxShadow": "none",
-                  "color": "rgb(69, 71, 69)",
-                  "fontFamily": "Inter",
-                  "fontWeight": "400"
-                }
-              },
               "states": {
                 "light": [
                   "rest",
@@ -3458,21 +3414,32 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/switch.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/switch.1-rest-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/switch.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/switch.1-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/switch.2-disabled-light.json"
+                  "light": "2026-10-25/census/crops/switch.1-disabled-light.json"
                 }
               }
             },
             {
               "variant": "unchecked",
               "size": "s-w0ni73",
-              "look": "switch.1",
+              "look": "switch.2",
               "count": 1,
+              "values": {
+                "dark": {
+                  "backgroundColor": "rgb(185, 186, 183)",
+                  "borderRadius": "16px",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(232, 235, 230)",
+                  "fontFamily": "Inter",
+                  "fontWeight": "400"
+                }
+              },
               "states": {
                 "dark": [
                   "rest",
@@ -3486,13 +3453,13 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/switch.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/switch.2-rest-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/switch.1-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/switch.2-focus-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/switch.1-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/switch.2-disabled-dark.json"
                 }
               }
             }
@@ -3558,7 +3525,7 @@
             {
               "variant": "v-vevk16",
               "size": "s-sd9gbp",
-              "look": "tab.2",
+              "look": "tab.1",
               "count": 2,
               "states": {
                 "light": [
@@ -3571,23 +3538,23 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/tab.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/tab.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/tab.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/tab.1-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/tab.2-pressed-light.json"
+                  "light": "2026-10-25/census/crops/tab.1-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/tab.2-focus-light.json"
+                  "light": "2026-10-25/census/crops/tab.1-focus-light.json"
                 }
               }
             },
             {
               "variant": "v-yqiu9a",
               "size": "s-8tyff3",
-              "look": "tab.1",
+              "look": "tab.2",
               "count": 2,
               "states": {
                 "dark": [
@@ -3600,16 +3567,16 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/tab.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/tab.2-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/tab.1-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/tab.2-hover-dark.json"
                 },
                 "pressed": {
-                  "dark": "2026-10-25/census/crops/tab.1-pressed-dark.json"
+                  "dark": "2026-10-25/census/crops/tab.2-pressed-dark.json"
                 },
                 "focus": {
-                  "dark": "2026-10-25/census/crops/tab.1-focus-dark.json"
+                  "dark": "2026-10-25/census/crops/tab.2-focus-dark.json"
                 }
               }
             }
@@ -3657,7 +3624,7 @@
             {
               "variant": "v-2qx9gx",
               "size": "s-15zhf5",
-              "look": "tablist.2",
+              "look": "tablist.1",
               "count": 1,
               "states": {
                 "light": [
@@ -3666,14 +3633,14 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/tablist.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/tablist.1-rest-light.json"
                 }
               }
             },
             {
               "variant": "v-tjcyae",
               "size": "s-go0wsn",
-              "look": "tablist.1",
+              "look": "tablist.2",
               "count": 1,
               "states": {
                 "dark": [
@@ -3682,7 +3649,7 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/tablist.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/tablist.2-rest-dark.json"
                 }
               }
             }
@@ -3919,7 +3886,7 @@
             {
               "variant": "v-pqahhl",
               "size": "s-ze4zyj",
-              "look": "toggle.1",
+              "look": "toggle.2",
               "count": 21,
               "states": {
                 "dark": [
@@ -3934,20 +3901,20 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/toggle.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.2-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/toggle.1-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.2-hover-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/toggle.1-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.2-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-qxea4g",
               "size": "s-0pg9n9",
-              "look": "toggle.2",
+              "look": "toggle.1",
               "count": 21,
               "states": {
                 "light": [
@@ -3962,20 +3929,20 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/toggle.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/toggle.1-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/toggle.2-hover-light.json"
+                  "light": "2026-10-25/census/crops/toggle.1-hover-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/toggle.2-disabled-light.json"
+                  "light": "2026-10-25/census/crops/toggle.1-disabled-light.json"
                 }
               }
             },
             {
               "variant": "v-7vja3c",
               "size": "s-ze4zyj",
-              "look": "toggle.3",
+              "look": "toggle.4",
               "count": 8,
               "states": {
                 "dark": [
@@ -3989,20 +3956,20 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/toggle.3-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.4-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/toggle.3-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.4-hover-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/toggle.3-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.4-disabled-dark.json"
                 }
               }
             },
             {
               "variant": "v-afdhv8",
               "size": "s-0pg9n9",
-              "look": "toggle.4",
+              "look": "toggle.3",
               "count": 8,
               "states": {
                 "light": [
@@ -4016,20 +3983,20 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/toggle.4-rest-light.json"
+                  "light": "2026-10-25/census/crops/toggle.3-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/toggle.4-hover-light.json"
+                  "light": "2026-10-25/census/crops/toggle.3-hover-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/toggle.4-disabled-light.json"
+                  "light": "2026-10-25/census/crops/toggle.3-disabled-light.json"
                 }
               }
             },
             {
               "variant": "accent",
               "size": "md",
-              "look": "toggle.7",
+              "look": "toggle.6",
               "count": 1,
               "states": {
                 "light": [
@@ -4045,26 +4012,26 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/toggle.7-rest-light.json"
+                  "light": "2026-10-25/census/crops/toggle.6-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/toggle.7-hover-light.json"
+                  "light": "2026-10-25/census/crops/toggle.6-hover-light.json"
                 },
                 "pressed": {
-                  "light": "2026-10-25/census/crops/toggle.7-pressed-light.json"
+                  "light": "2026-10-25/census/crops/toggle.6-pressed-light.json"
                 },
                 "focus": {
-                  "light": "2026-10-25/census/crops/toggle.7-focus-light.json"
+                  "light": "2026-10-25/census/crops/toggle.6-focus-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/toggle.7-disabled-light.json"
+                  "light": "2026-10-25/census/crops/toggle.6-disabled-light.json"
                 }
               }
             },
             {
               "variant": "v-j2ktrj",
               "size": "s-0pg9n9",
-              "look": "toggle.6",
+              "look": "toggle.5",
               "count": 1,
               "states": {
                 "light": [
@@ -4078,20 +4045,20 @@
               ],
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/toggle.6-rest-light.json"
+                  "light": "2026-10-25/census/crops/toggle.5-rest-light.json"
                 },
                 "hover": {
-                  "light": "2026-10-25/census/crops/toggle.6-hover-light.json"
+                  "light": "2026-10-25/census/crops/toggle.5-hover-light.json"
                 },
                 "disabled": {
-                  "light": "2026-10-25/census/crops/toggle.6-disabled-light.json"
+                  "light": "2026-10-25/census/crops/toggle.5-disabled-light.json"
                 }
               }
             },
             {
               "variant": "v-pcrwgr",
               "size": "s-ze4zyj",
-              "look": "toggle.5",
+              "look": "toggle.7",
               "count": 1,
               "states": {
                 "dark": [
@@ -4105,13 +4072,13 @@
               ],
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/toggle.5-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.7-rest-dark.json"
                 },
                 "hover": {
-                  "dark": "2026-10-25/census/crops/toggle.5-hover-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.7-hover-dark.json"
                 },
                 "disabled": {
-                  "dark": "2026-10-25/census/crops/toggle.5-disabled-dark.json"
+                  "dark": "2026-10-25/census/crops/toggle.7-disabled-dark.json"
                 }
               }
             }
@@ -4173,7 +4140,7 @@
             {
               "variant": "v-cp4asz",
               "size": "s-msc5np",
-              "look": "tooltip.1",
+              "look": "tooltip.2",
               "count": 2,
               "states": {
                 "dark": [
@@ -4182,14 +4149,14 @@
               },
               "copies": {
                 "rest": {
-                  "dark": "2026-10-25/census/crops/tooltip.1-rest-dark.json"
+                  "dark": "2026-10-25/census/crops/tooltip.2-rest-dark.json"
                 }
               }
             },
             {
               "variant": "v-cycnal",
               "size": "s-s5zjqr",
-              "look": "tooltip.2",
+              "look": "tooltip.1",
               "count": 2,
               "states": {
                 "light": [
@@ -4198,7 +4165,7 @@
               },
               "copies": {
                 "rest": {
-                  "light": "2026-10-25/census/crops/tooltip.2-rest-light.json"
+                  "light": "2026-10-25/census/crops/tooltip.1-rest-light.json"
                 }
               }
             }

@@ -1417,7 +1417,11 @@ async function writeCopies(inventory: Inventory) {
 
 await mkdir(resolve(OUT, "pages"), { recursive: true })
 const pages = args.from.length
-  ? (await Promise.all(args.from.map(saved))).flat()
+  ? // Light first, as a crawl's targets list them: saved files sort by name,
+    // which puts a `theme=dark` page first, and a tie then goes to dark.
+    (await Promise.all(args.from.map(saved)))
+      .flat()
+      .sort((a, b) => Number(a.mode === "dark") - Number(b.mode === "dark"))
   : args.connect
     ? await connected()
     : await headless()
