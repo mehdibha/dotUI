@@ -145,6 +145,60 @@ describe("census", () => {
     ])
   })
 
+  it("keeps a state set on the sample unless one was found in it", () => {
+    const sample = {
+      ...button(1, 0, blue),
+      states: {
+        hover: { backgroundColor: "rgb(29, 78, 216)" },
+        disabled: { opacity: "0.4" },
+        invalid: { edge: "1px rgb(220, 38, 38)" },
+      },
+      forced: ["disabled", "invalid"] as ("disabled" | "invalid")[],
+    }
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          sample,
+          button(2, 100, blue),
+          // Found disabled: its reading wins over the one set.
+          { ...button(3, 200, { ...blue, opacity: "0.5" }), is: "disabled" },
+        ]),
+      ],
+      "test",
+    )
+    expect(looks[0]).toMatchObject({
+      states: {
+        light: {
+          hover: { backgroundColor: "rgb(29, 78, 216)" },
+          disabled: { opacity: "0.5" },
+          invalid: { edge: "1px rgb(220, 38, 38)" },
+        },
+      },
+      forced: ["invalid"],
+    })
+  })
+
+  it("folds found invalid elements into their rest look", () => {
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          button(1, 0, blue),
+          {
+            ...button(2, 100, { ...blue, edge: "1px rgb(220, 38, 38)" }),
+            is: "invalid",
+          },
+        ]),
+      ],
+      "test",
+    )
+    expect(looks).toEqual([
+      expect.objectContaining({
+        count: 1,
+        states: { light: { invalid: { edge: "1px rgb(220, 38, 38)" } } },
+      }),
+    ])
+  })
+
   it("keeps a page read only in dark as dark-only looks", () => {
     const inventory = cluster(
       [

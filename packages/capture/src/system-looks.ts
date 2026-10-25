@@ -7,7 +7,13 @@
    hand: a look the capture never read is an empty slot on the page.
    `scripts/system-looks.ts` writes it. */
 
-import type { Flag, Inventory, Look as CensusLook, Values } from "./census"
+import type {
+  Flag,
+  Forced,
+  Inventory,
+  Look as CensusLook,
+  Values,
+} from "./census"
 import { compareMeasures, type Row } from "./compare"
 import type { Gap } from "./looks"
 import type { Count, Model, Swatch, TypeStyle } from "./model"
@@ -24,6 +30,7 @@ export type State =
   | "focus"
   | "selected"
   | "disabled"
+  | "invalid"
   | "open"
 
 /** Where a value comes from, strongest first. "inferred" means no capture
@@ -57,6 +64,9 @@ export interface Reading {
   copy?: string
   /** The probe's crop of the matched part, under .scratch-refs/<slug>/. */
   crop?: string
+  /** Read by setting the state on the look's sample (disabled, invalid,
+   *  selected): the product's CSS for it, where no element was found in it. */
+  forced?: boolean
 }
 
 export interface Look {
@@ -68,8 +78,8 @@ export interface Look {
   /** The probe part that reads this look on both sides: the specimen cell
    *  the page renders as ours. */
   part?: string
-  /** Found only disabled, selected or open, with no rest look of its shape:
-   *  its rest values are that state's. */
+  /** Found only disabled, invalid, selected or open, with no rest look of
+   *  its shape: its rest values are that state's. */
   is?: Flag
   states: Partial<Record<State, Partial<Record<Mode, Reading>>>>
   /** Where the preset misses this look, from the fit's residual rows. */
@@ -111,7 +121,15 @@ export interface SystemLooks {
       how: "headless" | "local" | "harness"
     }[]
     /** What the capture can't read yet: empty slots on the page. */
-    missing: ("disabled" | "motion" | "icons" | "shell")[]
+    missing: (
+      | "disabled"
+      | "pressed"
+      | "focus"
+      | "invalid"
+      | "motion"
+      | "icons"
+      | "shell"
+    )[]
   }
   color: {
     modes: Partial<
@@ -164,7 +182,9 @@ const COMPONENT: Record<string, string> = {
   menuitemradio: "menu",
   listbox: "list-box",
   option: "list-box",
-  textbox: "input",
+  textbox: "text-field",
+  select: "select",
+  popover: "popover",
   searchbox: "search-field",
   search: "search-field",
   combobox: "combobox",
@@ -217,7 +237,7 @@ const PART_GROUPS: Record<string, string[]> = {
   pagination: ["link", "button"],
   calendar: ["button", "cell@table", "gridcell"],
   input: ["textbox", "searchbox", "combobox"],
-  select: ["combobox", "button"],
+  select: ["select", "combobox", "button"],
   field: ["label"],
   checkbox: ["checkbox"],
   radio: ["radio"],
@@ -372,6 +392,7 @@ interface PoolLook {
   light?: Values
   dark?: Values
   states?: CensusLook["states"]
+  forced?: Forced[]
   vars?: Values
   is?: Flag
 }
@@ -441,6 +462,7 @@ export function systemLooks(input: SystemInput): SystemLooks {
           values: changes,
           source: "census",
           ...(copy ? { copy } : {}),
+          ...(look.forced?.includes(state as Forced) ? { forced: true } : {}),
         }
       }
     }
@@ -456,14 +478,15 @@ export function systemLooks(input: SystemInput): SystemLooks {
     }
   }
 
-  // Per group, the model's looks (the most used) and every look a probe
-  // part reads.
+  // Per group, the model's looks (the most used, and always the first, so
+  // a component read once isn't an empty slot) and every look a probe part
+  // reads.
   const matched = new Set(Object.values(parts))
   const components: Record<string, ComponentLooks> = {}
   for (const [group, list] of Object.entries(pool)) {
     const kept = new Set((model.inventory[group] ?? []).map((look) => look.id))
     const shown = list.filter(
-      (look) => kept.has(look.id) || matched.has(look.id),
+      (look, i) => i === 0 || kept.has(look.id) || matched.has(look.id),
     )
     if (!shown.length) continue
     const entry = (components[componentOf(group)] ??= {
@@ -522,6 +545,9 @@ export function systemLooks(input: SystemInput): SystemLooks {
       }),
       missing: [
         ...(census?.reads?.includes("flags") ? [] : (["disabled"] as const)),
+        ...(census?.reads?.includes("states")
+          ? []
+          : (["pressed", "focus", "invalid"] as const)),
         "motion",
         ...(census?.reads?.includes("icons") ? [] : (["icons"] as const)),
         "shell",

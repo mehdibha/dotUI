@@ -5,11 +5,12 @@
  *   pnpm -s presets:kit > <file>
  *     Prints the kit: one JavaScript expression to run in the tab after each
  *     full load. It defines `window.__dotui` with the capture probe and
- *     census, and keeps results in the tab's sessionStorage, so they survive
- *     reloads and leave the page as one download per page and mode (plus one
- *     per census pass). Where the page allows
- *     eval, `(0, eval)(sessionStorage.getItem("__dotui_kit"))` re-runs it
- *     after a load of the same site without resending it.
+ *     census (focus, and disabled, invalid and selected set on each look),
+ *     and keeps results in the tab's sessionStorage, so they survive reloads
+ *     and leave the page as one download per page and mode (plus one per
+ *     census pass). Where the page allows eval,
+ *     `(0, eval)(sessionStorage.getItem("__dotui_kit"))` re-runs it after a
+ *     load of the same site without resending it.
  *
  *   pnpm -s presets:kit --targets <file> --url <page key>
  *     Prints the calls that measure one page of a pack-format targets file:
@@ -47,6 +48,7 @@ import { minifySync } from "vite"
 import {
   type CensusPage,
   censusSource,
+  FORCED,
   probeSource,
   trim,
 } from "../../src/census"
@@ -226,18 +228,32 @@ const KIT = `(function kit() {
       const reps = [...looks.values()]
       const { vars, tokens } = run({ kind: "vars", ids: reps.slice(0, 400).map((e) => e.id) })
       const focused = run({ kind: "focus", ids: reps.filter((e) => e.focusable).slice(0, 40).map((e) => e.id) })
+      const changes = (e, values) => Object.fromEntries(Object.entries(values).filter(([k, v]) => k !== "width" && e.values[k] !== v))
+      // Disabled, invalid and selected set on one element per look through
+      // attributes only: no event fires, so nothing the account keeps changes.
+      const forced = {}
+      for (const e of reps.filter((e) => !e.is).slice(0, 40))
+        for (const state of ${JSON.stringify(FORCED)}) {
+          if (!run({ kind: "force", id: e.id, state })) continue
+          settle()
+          const values = run({ kind: "read", ids: [e.id], focus: false })[e.id]
+          run({ kind: "force", id: e.id, state: null })
+          const diff = values ? changes(e, values) : {}
+          if (Object.keys(diff).length) (forced[e.id] ??= {})[state] = diff
+        }
       for (const e of walked.elements) {
         if (vars[e.id]) e.vars = vars[e.id]
-        const focus = focused[e.id]
-        if (!focus) continue
-        const diff = Object.fromEntries(Object.entries(focus).filter(([k, v]) => k !== "width" && e.values[k] !== v))
-        if (Object.keys(diff).length) e.states = { focus: diff }
+        const states = { ...forced[e.id] }
+        if (forced[e.id]) e.forced = Object.keys(forced[e.id])
+        const focus = focused[e.id] && changes(e, focused[e.id])
+        if (focus && Object.keys(focus).length) states.focus = focus
+        if (Object.keys(states).length) e.states = states
       }
       run({ kind: "seen" })
       const page = { key: load()[name]?.key, mode, probe: ${JSON.stringify(PROBE)}, pass, viewport: walked.viewport, elements: walked.elements, tokens, ...(walked.truncated ? { truncated: walked.truncated } : {}), reads: walked.reads }
       const file = "dotui-census__" + name.replace(/\\//g, "__") + "__" + pass.replace(/[^a-zA-Z0-9]+/g, "-") + ".json"
       download(file, page)
-      return { file, elements: walked.elements.length, looks: reps.length, focus: Object.keys(focused).length, truncated: walked.truncated }
+      return { file, elements: walked.elements.length, looks: reps.length, focus: Object.keys(focused).length, set: Object.keys(forced).length, truncated: walked.truncated }
     },
     peek(part) { return load()[current()]?.probe?.[part] },
     vars() {

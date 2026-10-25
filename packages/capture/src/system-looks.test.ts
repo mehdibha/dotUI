@@ -87,6 +87,9 @@ describe("system looks", () => {
     expect(componentOf("cell@table")).toBe("table")
     expect(componentOf("heading.h2")).toBe("text")
     expect(componentOf("contentinfo")).toBe("other")
+    expect(componentOf("textbox")).toBe("text-field")
+    expect(componentOf("select")).toBe("select")
+    expect(componentOf("popover")).toBe("popover")
   })
 
   it("reads a part's state from its name", () => {
@@ -210,5 +213,57 @@ describe("system looks", () => {
       how: "headless",
       signedIn: false,
     })
+  })
+
+  it("marks states the capture set, shows a group read once, and says what it can't read", () => {
+    const looks = systemLooks({
+      slug: "example",
+      model,
+      census: {
+        ...census,
+        reads: ["flags", "icons", "states"],
+        looks: [
+          {
+            ...census.looks[0],
+            states: {
+              light: {
+                disabled: { opacity: "0.5" },
+                selected: { backgroundColor: "rgb(9, 105, 218)" },
+              },
+            },
+            forced: ["disabled"],
+          } as Inventory["looks"][number],
+          {
+            id: "slider.1",
+            group: "slider",
+            count: 1,
+            pages: ["https://example.com/"],
+            light: { height: "8px" },
+            sample: {
+              key: "https://example.com/",
+              pass: "rest",
+              mode: "light",
+              id: 9,
+            },
+          },
+        ],
+      },
+      date: "2026-10-24",
+    })
+    expect(looks.components.button?.looks[0]?.states).toMatchObject({
+      disabled: { light: { forced: true } },
+      selected: { light: { values: { backgroundColor: "rgb(9, 105, 218)" } } },
+    })
+    expect(
+      looks.components.button?.looks[0]?.states.selected?.light?.forced,
+    ).toBeUndefined()
+    expect(looks.components.slider?.looks.map((look) => look.id)).toEqual([
+      "slider.1",
+    ])
+    expect(looks.capture.missing).not.toContain("focus")
+    expect(
+      systemLooks({ slug: "example", model, census, date: "2026-10-24" })
+        .capture.missing,
+    ).toEqual(expect.arrayContaining(["pressed", "focus", "invalid"]))
   })
 })

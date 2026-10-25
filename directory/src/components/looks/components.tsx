@@ -177,6 +177,14 @@ function ModeRow({
                 {reading ? "no copy" : "not read"}
               </p>
             )}
+            {reading?.forced && (
+              <span
+                className="text-[11px] text-fg-muted"
+                title="Read by setting the state on the element: no element on the page showed it."
+              >
+                set by the capture
+              </span>
+            )}
             {state !== "rest" && reading && <Delta reading={reading} />}
           </div>
         )

@@ -44,7 +44,11 @@ export type Values = Partial<Record<Prop | Extra, string>>
 export type State = "hover" | "pressed" | "focus"
 export const STATES: readonly State[] = ["hover", "pressed", "focus"]
 /** States an element is in as found, read from its attributes. */
-export type Flag = "disabled" | "selected" | "open"
+export type Flag = "disabled" | "invalid" | "selected" | "open"
+/** The flags the census sets on an element to read it in that state, when
+ *  the page doesn't show one (`force`): the product's own CSS for them. */
+export type Forced = Exclude<Flag, "open">
+export const FORCED: readonly Forced[] = ["disabled", "invalid", "selected"]
 
 export interface CensusElement {
   id: number
@@ -62,11 +66,14 @@ export interface CensusElement {
   chars: number
   /** Whether it can take keyboard focus. */
   focusable?: boolean
-  /** Disabled, selected (checked, pressed, current) or open as found. */
+  /** Disabled, invalid, selected (checked, pressed, current) or open as
+   *  found. */
   is?: Flag
   values: Values
   /** Only the values a state changes. */
-  states?: Partial<Record<State, Values>>
+  states?: Partial<Record<State | Forced, Values>>
+  /** The states in `states` read by setting their flag. */
+  forced?: Forced[]
   /** The custom property each value comes from, where one does. */
   vars?: Values
 }
@@ -89,15 +96,21 @@ export interface CensusPage {
   reads?: Reads[]
 }
 
-/** Disabled, selected and open elements (`is`), and icon strokes. */
-export type Reads = "flags" | "icons"
+/** Disabled, selected and open elements (`is`), and icon strokes; "states":
+ *  pressed and focus forced, and disabled, invalid and selected set. */
+export type Reads = "flags" | "icons" | "states"
 
 type Command =
-  | { kind: "walk"; max: number; fresh: boolean; start: number }
+  /** `fresh`: only elements new or changed since `seen` ("new": new only,
+   *  for a hover, which restyles the hovered element and its ancestors). */
+  | { kind: "walk"; max: number; fresh: boolean | "new"; start: number }
   | { kind: "read"; ids: number[]; focus: boolean }
   | { kind: "seen" }
+  | { kind: "appeared" }
   | { kind: "vars"; ids: number[] }
   | { kind: "focus"; ids: number[] }
+  | { kind: "node"; id: number }
+  | { kind: "force"; id: number; state: Forced | null }
   | { kind: "clear" }
 
 /* Runs in the page and closes over nothing, so its source can be sent as a
@@ -114,7 +127,13 @@ function census(
 ) {
   const ID = "data-census"
   const HOST = "data-census-host"
-  const SEEN = "data-census-seen"
+  /* Each element's look when `seen` ran, so a later walk on the same load
+     keeps only what an interaction opened or changed. */
+  const scope = globalThis as unknown as {
+    __censusSeen?: WeakMap<Element, string>
+    __censusUndo?: (() => void)[]
+  }
+  const seen = (scope.__censusSeen ??= new WeakMap())
   const CONTROLS = new Set([
     "button",
     "link",
@@ -132,6 +151,7 @@ function census(
     "slider",
     "spinbutton",
     "treeitem",
+    "select",
   ])
   const LANDMARKS = new Set([
     "navigation",
@@ -165,6 +185,7 @@ function census(
     "listbox",
     "tooltip",
     "page",
+    "avatar",
   ])
   const alpha = (color: string) => {
     if (color === "transparent") return 0
@@ -263,7 +284,7 @@ function census(
     if (tag === "a" || tag === "area")
       return el.hasAttribute("href") ? "link" : undefined
     if (tag === "select")
-      return (el as HTMLSelectElement).multiple ? "listbox" : "combobox"
+      return (el as HTMLSelectElement).multiple ? "listbox" : "select"
     if (/^h[1-6]$/.test(tag)) return "heading"
     return (
       {
@@ -331,6 +352,18 @@ function census(
       el.hasAttribute("data-disabled")
     )
       return "disabled" as const
+    let userInvalid = false
+    try {
+      userInvalid = el.matches(":user-invalid")
+    } catch {
+      // Older engines don't know :user-invalid.
+    }
+    if (
+      attr("aria-invalid") === "true" ||
+      el.hasAttribute("data-invalid") ||
+      userInvalid
+    )
+      return "invalid" as const
     if (
       el.matches(":checked") ||
       attr("aria-checked") === "true" ||
@@ -366,7 +399,20 @@ function census(
     )
       return { role: aria, by: "aria" as const }
     const tag = implicit(el)
+    // A round, square image is an avatar.
+    if (
+      tag === "img" &&
+      Math.abs(rect.width - rect.height) <= 2 &&
+      rect.width >= 12 &&
+      rect.width <= 96 &&
+      (style.borderTopLeftRadius.endsWith("%")
+        ? Number.parseFloat(style.borderTopLeftRadius) >= 50
+        : Number.parseFloat(style.borderTopLeftRadius) >= rect.height / 2 - 1)
+    )
+      return { role: "avatar", by: "tag" as const }
     if (tag) return { role: tag, by: "tag" as const }
+    if (painted && el.matches(":popover-open"))
+      return { role: "popover", by: "shape" as const }
     return { role: shape(rect, style, chars, painted), by: "shape" as const }
   }
   const px = (n: number) => `${Math.round(n * 10) / 10}px`
@@ -508,15 +554,160 @@ function census(
     // An svg's own shapes belong to the icon.
     return !(el instanceof SVGElement && tag !== "svg")
   }
+  /* What `seen` keeps of an element's look: enough to tell an opened,
+     re-rendered or restyled element from the one already read. Width is
+     left out, since a scroll lock that hides the scrollbar widens rows. */
+  const lookOf = (el: Element) => {
+    const style = getComputedStyle(el)
+    return [
+      style.backgroundColor,
+      style.backgroundImage.length,
+      style.color,
+      style.borderTopColor,
+      style.borderTopWidth,
+      style.borderBottomColor,
+      style.borderBottomWidth,
+      style.borderTopLeftRadius,
+      style.boxShadow,
+      style.outlineStyle,
+      style.outlineColor,
+      style.fontSize,
+      style.fontWeight,
+      style.opacity,
+      style.transform,
+      style.filter,
+      Math.round(el.getBoundingClientRect().height),
+      flagOf(el) ?? "",
+    ].join("|")
+  }
 
   if (command.kind === "clear") {
     for (const el of all(document))
-      for (const name of [ID, HOST, SEEN]) el.removeAttribute(name)
+      for (const name of [ID, HOST]) el.removeAttribute(name)
+    scope.__censusSeen = new WeakMap()
     return null
   }
   if (command.kind === "seen") {
-    for (const el of all(document)) if (shown(el)) el.setAttribute(SEEN, "")
+    for (const el of all(document))
+      if (keep(el) && shown(el)) seen.set(el, lookOf(el))
     return null
+  }
+  if (command.kind === "appeared") {
+    /* How many shown elements that paint or hold text came after `seen`:
+       whether a click or hover opened anything. */
+    let count = 0
+    for (const el of all(document))
+      if (
+        keep(el) &&
+        !seen.has(el) &&
+        shown(el) &&
+        (ownText(el) || paints(getComputedStyle(el)))
+      )
+        count++
+    return count
+  }
+  if (command.kind === "node") return byId(command.id)
+  if (command.kind === "force") {
+    /* Sets one state on an element through the attributes and native
+       properties systems style it by (ARIA, React Aria's and Radix's data
+       attributes, :disabled, :checked, :invalid), so its look in that state
+       reads off the product's own CSS. No event fires, so nothing the page
+       keeps changes. `state: null` puts everything back. Returns whether the
+       state applies to the element's role. */
+    for (const undo of (scope.__censusUndo ?? []).reverse()) undo()
+    const undo: (() => void)[] = (scope.__censusUndo = [])
+    const el = byId(command.id)
+    if (!command.state || !el) return false
+    const role =
+      el.getAttribute("role")?.trim().split(/\s+/)[0] ?? implicit(el) ?? ""
+    const set = (name: string, value: string) => {
+      const was = el.getAttribute(name)
+      undo.push(() =>
+        was === null ? el.removeAttribute(name) : el.setAttribute(name, was),
+      )
+      el.setAttribute(name, value)
+    }
+    const flip = <T extends object, K extends keyof T>(
+      target: T,
+      key: K,
+      value: T[K],
+    ) => {
+      const was = target[key]
+      undo.push(() => {
+        target[key] = was
+      })
+      target[key] = value
+    }
+    const CHECKED = [
+      "checkbox",
+      "radio",
+      "switch",
+      "menuitemcheckbox",
+      "menuitemradio",
+    ]
+    if (command.state === "disabled") {
+      if (!CONTROLS.has(role)) return false
+      if ("disabled" in el) flip(el as HTMLButtonElement, "disabled", true)
+      set("aria-disabled", "true")
+      set("data-disabled", "true")
+      return true
+    }
+    if (command.state === "invalid") {
+      if (
+        ![
+          "textbox",
+          "searchbox",
+          "combobox",
+          "select",
+          "spinbutton",
+          "checkbox",
+        ].includes(role)
+      )
+        return false
+      set("aria-invalid", "true")
+      set("data-invalid", "true")
+      const field = el as HTMLInputElement
+      if (typeof field.setCustomValidity === "function") {
+        const was = field.validity?.customError ? field.validationMessage : ""
+        field.setCustomValidity("invalid")
+        undo.push(() => field.setCustomValidity(was))
+      }
+      return true
+    }
+    if (
+      el instanceof HTMLInputElement &&
+      (el.type === "checkbox" || el.type === "radio")
+    ) {
+      // Checking a radio unchecks its group: put the group back too.
+      if (el.type === "radio" && el.name)
+        for (const other of document.querySelectorAll<HTMLInputElement>(
+          `input[type=radio][name="${CSS.escape(el.name)}"]`,
+        ))
+          flip(other, "checked", other.checked)
+      flip(el, "checked", true)
+      set("data-state", "checked")
+      set("data-selected", "true")
+    } else if (CHECKED.includes(role)) {
+      set("aria-checked", "true")
+      set("data-state", "checked")
+      set("data-selected", "true")
+    } else if (
+      ["tab", "option", "treeitem", "row", "gridcell"].includes(role)
+    ) {
+      set("aria-selected", "true")
+      if (role === "tab") set("data-state", "active")
+      set("data-selected", "true")
+    } else if (el.hasAttribute("aria-pressed")) {
+      set("aria-pressed", "true")
+      set("data-state", "on")
+      set("data-selected", "true")
+    } else if (
+      role === "link" &&
+      el.closest("nav, [role=navigation], [role=tablist]")
+    )
+      set("aria-current", "page")
+    else return false
+    return true
   }
   if (command.kind === "read") {
     const els = command.ids.map(byId)
@@ -663,18 +854,56 @@ function census(
   // walk: every shown element that paints, holds text, or is a control.
   const elements: CensusElement[] = []
   const kept = new Map<Element, DOMRect>()
+  const roles = new Map<Element, string>()
+  const OVERLAYS = new Set([
+    "dialog",
+    "alertdialog",
+    "menu",
+    "listbox",
+    "tooltip",
+    "popover",
+  ])
+  const inOverlay = (el: Element) => {
+    for (let up = parent(el); up; up = parent(up))
+      if (
+        OVERLAYS.has(
+          roles.get(up) ??
+            up.getAttribute("role")?.trim().split(/\s+/)[0] ??
+            "",
+        )
+      )
+        return true
+    return false
+  }
   let next = command.start
   let truncated = 0
   for (const el of all(document)) {
     if (!keep(el) || !shown(el)) continue
-    if (command.fresh && el.hasAttribute(SEEN)) continue
+    if (
+      command.fresh &&
+      (command.fresh === "new" ? seen.has(el) : seen.get(el) === lookOf(el))
+    )
+      continue
     // Syntax highlighting is the code block's content, not its look.
     if (el.parentElement?.closest("pre, code")) continue
     const style = getComputedStyle(el)
     const rect = el.getBoundingClientRect()
     const chars = ownText(el)
     const painted = paints(style) || paintsPseudo(el)
-    const { role, by } = roleOf(el, rect, style, chars, painted)
+    let { role, by } = roleOf(el, rect, style, chars, painted)
+    // What an interaction opened: a floating, raised box no role names.
+    if (
+      command.fresh &&
+      by === "shape" &&
+      painted &&
+      (style.position === "absolute" || style.position === "fixed") &&
+      (style.boxShadow !== "none" || style.backdropFilter !== "none") &&
+      rect.width * rect.height >= 40 * 24 &&
+      !inOverlay(el)
+    ) {
+      role = "popover"
+      by = "shape"
+    }
     // Unpainted structure (lists, landmarks, rows) shows through its parts.
     if (!painted && !chars && !CONTROLS.has(role) && !ALWAYS.has(role)) continue
     if (by === "shape") {
@@ -698,6 +927,7 @@ function census(
       continue
     }
     kept.set(el, rect)
+    roles.set(el, role)
     el.setAttribute(ID, String(next))
     let around: string | undefined
     for (let up = parent(el); up && !around; up = parent(up)) {
@@ -742,7 +972,7 @@ function census(
     elements,
     truncated,
     viewport: { width: innerWidth, height: innerHeight },
-    reads: ["flags", "icons"],
+    reads: ["flags", "icons"] as Reads[],
   }
 }
 
@@ -857,6 +1087,7 @@ const SURFACE_ROLES = new Set([
   "region",
   "group",
   "article",
+  "popover",
 ])
 
 /** The keys that tell a role's looks apart. */
@@ -889,12 +1120,16 @@ export interface Look {
   light?: Values
   dark?: Values
   /** Per mode, what each state changes: the ones read by forcing it, and
-   *  the disabled, selected or open elements of the same shape. */
+   *  the disabled, invalid, selected or open elements of the same shape. */
   states?: {
     light?: Partial<Record<State | Flag, Values>>
     dark?: Partial<Record<State | Flag, Values>>
   }
-  /** A disabled, selected or open look with no rest look of its shape. */
+  /** The flag states read by setting them on the sample, where no element
+   *  of the look was found in them. */
+  forced?: Forced[]
+  /** A disabled, invalid, selected or open look with no rest look of its
+   *  shape. */
   is?: Flag
   /** The custom property behind each value, where one was found. */
   vars?: Values
@@ -1064,6 +1299,12 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
           found.flatMap((f) => (f.dark ? [[f.flag, f.dark]] : [])),
         ),
       }
+      const forced = FORCED.filter(
+        (state) =>
+          !found.some((f) => f.flag === state) &&
+          (sample.element.forced?.includes(state) ||
+            twin?.forced?.includes(state)),
+      )
       looks.push({
         id: `${group}.${rank + 1}`,
         group,
@@ -1081,6 +1322,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
               },
             }
           : {}),
+        ...(forced.length ? { forced } : {}),
         ...(first.element.is ? { is: first.element.is } : {}),
         ...(sample.element.vars ? { vars: sample.element.vars } : {}),
         sample: {
@@ -1108,7 +1350,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
     pageList.set(page.key, entry)
     tokens[page.mode] = { ...tokens[page.mode], ...page.tokens }
   }
-  const reads = (["flags", "icons"] as const).filter((read) =>
+  const reads = (["flags", "icons", "states"] as const).filter((read) =>
     pages.every((page) => page.reads?.includes(read)),
   )
   return { probe, pages: [...pageList.values()], reads, looks, tokens }
