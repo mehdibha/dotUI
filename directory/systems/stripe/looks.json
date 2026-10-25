@@ -1,0 +1,6168 @@
+{
+  "version": 1,
+  "slug": "stripe",
+  "preset": "stripe",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-23",
+    "pages": [
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/button",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/textfield",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/badge",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/menu",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/tooltip",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/banner",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 1256,
+            "uses": [
+              "link backgroundColor",
+              "button backgroundColor",
+              "columnheader@table backgroundColor",
+              "card backgroundColor",
+              "listitem backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(245, 251, 255)",
+            "l": 0.985,
+            "c": 0.008,
+            "h": 237,
+            "count": 36,
+            "uses": [
+              "panel color",
+              "card color"
+            ]
+          },
+          {
+            "color": "rgb(254, 244, 246)",
+            "l": 0.975,
+            "c": 0.011,
+            "h": 3,
+            "count": 46,
+            "uses": [
+              "badge backgroundColor",
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(244, 247, 250)",
+            "l": 0.975,
+            "c": 0.005,
+            "h": 248,
+            "count": 446,
+            "uses": [
+              "cell@table backgroundColor",
+              "badge backgroundColor",
+              "link backgroundColor",
+              "panel backgroundColor",
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(226, 251, 254)",
+            "l": 0.971,
+            "c": 0.026,
+            "h": 205,
+            "count": 1,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(236, 241, 246)",
+            "l": 0.956,
+            "c": 0.009,
+            "h": 248,
+            "count": 268,
+            "uses": [
+              "cell@table edge",
+              "box edge",
+              "kbd edge",
+              "panel edge"
+            ]
+          },
+          {
+            "color": "rgb(227, 232, 238)",
+            "l": 0.929,
+            "c": 0.01,
+            "h": 253,
+            "count": 6,
+            "uses": [
+              "toolbar edge"
+            ]
+          },
+          {
+            "color": "rgb(212, 222, 233)",
+            "l": 0.896,
+            "c": 0.019,
+            "h": 251,
+            "count": 626,
+            "uses": [
+              "code@table edge",
+              "badge edge",
+              "separator backgroundColor",
+              "button edge",
+              "card edge"
+            ]
+          },
+          {
+            "color": "rgb(163, 172, 185)",
+            "l": 0.741,
+            "c": 0.021,
+            "h": 257,
+            "count": 216,
+            "uses": [
+              "button color",
+              "icon@button color",
+              "card color"
+            ]
+          },
+          {
+            "color": "rgb(65, 69, 82)",
+            "l": 0.392,
+            "c": 0.023,
+            "h": 272,
+            "count": 578,
+            "uses": [
+              "cell@table color",
+              "separator color",
+              "text color",
+              "card color",
+              "text@contentinfo color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 258,
+            "count": 3463,
+            "steps": [
+              {
+                "color": "rgb(108, 142, 239)",
+                "l": 0.666,
+                "c": 0.149,
+                "h": 268,
+                "count": 36,
+                "uses": [
+                  "icon@button color"
+                ]
+              },
+              {
+                "color": "rgb(125, 139, 164)",
+                "l": 0.634,
+                "c": 0.041,
+                "h": 262,
+                "count": 1,
+                "uses": [
+                  "label color"
+                ]
+              },
+              {
+                "color": "rgb(84, 105, 212)",
+                "l": 0.56,
+                "c": 0.165,
+                "h": 272,
+                "count": 218,
+                "uses": [
+                  "link color",
+                  "text@link color",
+                  "button color",
+                  "icon@button color",
+                  "icon@link color"
+                ]
+              },
+              {
+                "color": "rgb(83, 58, 253)",
+                "l": 0.521,
+                "c": 0.268,
+                "h": 277,
+                "count": 12,
+                "uses": [
+                  "button backgroundColor",
+                  "separator backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(4, 90, 208)",
+                "l": 0.5,
+                "c": 0.196,
+                "h": 260,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(80, 97, 122)",
+                "l": 0.488,
+                "c": 0.045,
+                "h": 258,
+                "count": 1400,
+                "uses": [
+                  "link color",
+                  "text@link color",
+                  "columnheader@table color",
+                  "badge color",
+                  "img color"
+                ]
+              },
+              {
+                "color": "rgb(79, 86, 107)",
+                "l": 0.455,
+                "c": 0.035,
+                "h": 271,
+                "count": 30,
+                "uses": [
+                  "icon@button color"
+                ]
+              },
+              {
+                "color": "rgb(60, 66, 87)",
+                "l": 0.382,
+                "c": 0.037,
+                "h": 272,
+                "count": 484,
+                "uses": [
+                  "code@table color",
+                  "paragraph@table color",
+                  "paragraph color",
+                  "code color",
+                  "page color"
+                ]
+              },
+              {
+                "color": "rgb(39, 57, 81)",
+                "l": 0.341,
+                "c": 0.049,
+                "h": 256,
+                "count": 135,
+                "uses": [
+                  "button color",
+                  "icon@button color",
+                  "text@button color",
+                  "textbox color",
+                  "link color"
+                ]
+              },
+              {
+                "color": "rgb(33, 45, 99)",
+                "l": 0.319,
+                "c": 0.096,
+                "h": 271,
+                "count": 36,
+                "uses": [
+                  "panel backgroundColor",
+                  "card backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 17,
+            "count": 100,
+            "steps": [
+              {
+                "color": "rgb(251, 211, 220)",
+                "l": 0.903,
+                "c": 0.046,
+                "h": 3,
+                "count": 46,
+                "uses": [
+                  "badge edge",
+                  "card edge"
+                ]
+              },
+              {
+                "color": "rgb(230, 25, 71)",
+                "l": 0.593,
+                "c": 0.228,
+                "h": 18,
+                "count": 5,
+                "uses": [
+                  "button backgroundColor",
+                  "badge backgroundColor",
+                  "textbox edge"
+                ]
+              },
+              {
+                "color": "rgb(192, 18, 60)",
+                "l": 0.518,
+                "c": 0.199,
+                "h": 17,
+                "count": 49,
+                "uses": [
+                  "badge color",
+                  "text color",
+                  "card color",
+                  "icon color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 38,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(177, 54, 0)",
+                "l": 0.511,
+                "c": 0.167,
+                "h": 38,
+                "count": 5,
+                "uses": [
+                  "text color",
+                  "badge color",
+                  "card color",
+                  "icon color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 102,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(253, 248, 201)",
+                "l": 0.971,
+                "c": 0.061,
+                "h": 102,
+                "count": 3,
+                "uses": [
+                  "badge backgroundColor",
+                  "button backgroundColor",
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(251, 217, 146)",
+                "l": 0.898,
+                "c": 0.097,
+                "h": 85,
+                "count": 2,
+                "uses": [
+                  "badge edge",
+                  "card edge"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 132,
+            "count": 3,
+            "steps": [
+              {
+                "color": "rgb(234, 252, 221)",
+                "l": 0.97,
+                "c": 0.045,
+                "h": 132,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(168, 241, 112)",
+                "l": 0.883,
+                "c": 0.178,
+                "h": 133,
+                "count": 1,
+                "uses": [
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(33, 112, 5)",
+                "l": 0.478,
+                "c": 0.151,
+                "h": 140,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 220,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(167, 231, 252)",
+                "l": 0.892,
+                "c": 0.07,
+                "h": 220,
+                "count": 1,
+                "uses": [
+                  "badge edge"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 257,
+        "roles": {
+          "canvas": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(26, 44, 68)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(60, 79, 105)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(212, 222, 233)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(83, 58, 253)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(83, 58, 253)",
+            "source": "probe"
+          },
+          "focus": {
+            "color": "rgb(163, 217, 249)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--s--padding-top",
+        "count": 5624,
+        "feeds": [
+          "link paddingInline",
+          "link paddingTop",
+          "link paddingBottom",
+          "link paddingRight",
+          "code@table paddingInline",
+          "code@table paddingTop",
+          "code@table paddingBottom",
+          "code@table paddingRight"
+        ],
+        "light": "0px"
+      },
+      {
+        "name": "--s-1f29tr2",
+        "count": 1088,
+        "feeds": [
+          "cell@table paddingInline",
+          "cell@table paddingTop",
+          "cell@table paddingBottom",
+          "cell@table paddingRight",
+          "card paddingInline",
+          "card paddingTop",
+          "card paddingBottom",
+          "card paddingRight"
+        ],
+        "light": "16px"
+      },
+      {
+        "name": "--s-15f02i8",
+        "count": 899,
+        "feeds": [
+          "link gap",
+          "card gap",
+          "button gap"
+        ],
+        "light": "8px"
+      },
+      {
+        "name": "--x5dpqz",
+        "count": 736,
+        "feeds": [
+          "link fontWeight",
+          "text@button fontWeight",
+          "text fontWeight",
+          "tooltip fontWeight"
+        ],
+        "light": "400"
+      },
+      {
+        "name": "--iv638n",
+        "count": 736,
+        "feeds": [
+          "link fontFamily",
+          "text@button fontFamily",
+          "text fontFamily",
+          "tooltip fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--s-1vewu14",
+        "count": 736,
+        "feeds": [
+          "link letterSpacing",
+          "text@button letterSpacing",
+          "text letterSpacing",
+          "tooltip letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--s-7paqqe",
+        "count": 736,
+        "feeds": [
+          "link lineHeight",
+          "text@button lineHeight",
+          "text lineHeight",
+          "tooltip lineHeight"
+        ],
+        "light": "20px"
+      },
+      {
+        "name": "--eoafo5",
+        "count": 736,
+        "feeds": [
+          "link fontSize",
+          "text@button fontSize",
+          "text fontSize",
+          "tooltip fontSize"
+        ],
+        "light": "14px"
+      },
+      {
+        "name": "--s-1hknj82",
+        "count": 692,
+        "feeds": [
+          "link color",
+          "columnheader@table color",
+          "button color",
+          "kbd color",
+          "text@button color"
+        ],
+        "light": "#3C4F69"
+      },
+      {
+        "name": "--s--top-shadow",
+        "count": 456,
+        "feeds": [
+          "link boxShadow",
+          "button boxShadow",
+          "link edge",
+          "button edge",
+          "menuitem boxShadow",
+          "menuitem edge",
+          "textbox boxShadow",
+          "textbox edge"
+        ],
+        "light": "0 0 0 0 transparent"
+      },
+      {
+        "name": "--s-15xulsv",
+        "count": 451,
+        "feeds": [
+          "code@table edge",
+          "separator backgroundColor",
+          "card edge",
+          "code edge",
+          "tooltip edge"
+        ],
+        "light": "#D4DEE9"
+      },
+      {
+        "name": "--s-282tnx",
+        "count": 371,
+        "feeds": [
+          "code@table borderRadius",
+          "card borderRadius",
+          "code borderRadius"
+        ],
+        "light": "6px"
+      },
+      {
+        "name": "--s-22nfqw",
+        "count": 348,
+        "feeds": [
+          "link width",
+          "link height",
+          "button width",
+          "label width",
+          "kbd width"
+        ],
+        "light": "fit-content"
+      },
+      {
+        "name": "--s-1rfvf0n",
+        "count": 348,
+        "feeds": [
+          "code@table backgroundColor",
+          "code backgroundColor",
+          "card backgroundColor",
+          "kbd backgroundColor"
+        ],
+        "light": "#F4F7FA"
+      },
+      {
+        "name": "--sail-font-family-monospace",
+        "count": 336,
+        "feeds": [
+          "code@table fontFamily",
+          "code fontFamily"
+        ],
+        "light": "\"Menlo\", \"Consolas\", monospace"
+      },
+      {
+        "name": "--s-1l4o7cj",
+        "count": 268,
+        "feeds": [
+          "badge borderRadius",
+          "link borderRadius",
+          "kbd borderRadius"
+        ],
+        "light": "4px"
+      },
+      {
+        "name": "--s-12pesem",
+        "count": 266,
+        "feeds": [
+          "cell@table edge",
+          "panel edge"
+        ],
+        "light": "1px"
+      },
+      {
+        "name": "--s-13hmetb",
+        "count": 254,
+        "feeds": [
+          "link color",
+          "label color",
+          "menuitem color",
+          "heading.h3@menu color",
+          "card color",
+          "tooltip color"
+        ],
+        "light": "#1A2C44"
+      },
+      {
+        "name": "--ep1e0f",
+        "count": 189,
+        "feeds": [
+          "button fontWeight",
+          "link fontWeight",
+          "text fontWeight",
+          "label fontWeight",
+          "combobox fontWeight"
+        ],
+        "light": "600"
+      },
+      {
+        "name": "--s-6vkd26",
+        "count": 189,
+        "feeds": [
+          "button fontFamily",
+          "link fontFamily",
+          "text fontFamily",
+          "label fontFamily",
+          "combobox fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--s-14509aw",
+        "count": 189,
+        "feeds": [
+          "button letterSpacing",
+          "link letterSpacing",
+          "text letterSpacing",
+          "label letterSpacing",
+          "combobox letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--yfph9h",
+        "count": 189,
+        "feeds": [
+          "button lineHeight",
+          "link lineHeight",
+          "text lineHeight",
+          "label lineHeight",
+          "combobox lineHeight"
+        ],
+        "light": "20px"
+      },
+      {
+        "name": "--s-1g9cdsy",
+        "count": 189,
+        "feeds": [
+          "button fontSize",
+          "link fontSize",
+          "text fontSize",
+          "label fontSize",
+          "combobox fontSize"
+        ],
+        "light": "14px"
+      },
+      {
+        "name": "--s-3ab8ub",
+        "count": 164,
+        "feeds": [
+          "badge gap",
+          "button gap"
+        ],
+        "light": "4px"
+      },
+      {
+        "name": "--w22o9l",
+        "count": 136,
+        "feeds": [
+          "link edge",
+          "button edge"
+        ],
+        "light": "#533afd"
+      },
+      {
+        "name": "--s-10ubhie",
+        "count": 134,
+        "feeds": [
+          "badge fontWeight",
+          "textbox fontWeight"
+        ],
+        "light": "400"
+      },
+      {
+        "name": "--ft4em7",
+        "count": 134,
+        "feeds": [
+          "badge fontFamily",
+          "textbox fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--s-7i2pli",
+        "count": 134,
+        "feeds": [
+          "badge letterSpacing",
+          "textbox letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--s-1kc6i1b",
+        "count": 134,
+        "feeds": [
+          "badge lineHeight",
+          "textbox lineHeight"
+        ],
+        "light": "16px"
+      },
+      {
+        "name": "--mae4h0",
+        "count": 134,
+        "feeds": [
+          "badge fontSize",
+          "textbox fontSize"
+        ],
+        "light": "12px"
+      },
+      {
+        "name": "--li639m",
+        "count": 108,
+        "feeds": [
+          "separator width",
+          "textbox width",
+          "card width",
+          "panel height",
+          "text@button width",
+          "menu height",
+          "searchbox width",
+          "spinbutton width"
+        ],
+        "light": "100%"
+      },
+      {
+        "name": "--oiv4a4",
+        "count": 106,
+        "feeds": [
+          "link color"
+        ],
+        "light": "#533afd"
+      },
+      {
+        "name": "--s-18brxby",
+        "count": 84,
+        "feeds": [
+          "badge color"
+        ],
+        "light": "#50617A"
+      },
+      {
+        "name": "--s-175jw0u",
+        "count": 84,
+        "feeds": [
+          "badge backgroundColor"
+        ],
+        "light": "#F4F7FA"
+      },
+      {
+        "name": "--s-7st1q",
+        "count": 84,
+        "feeds": [
+          "badge edge"
+        ],
+        "light": "#D4DEE9"
+      },
+      {
+        "name": "--s-1eo1l6l",
+        "count": 71,
+        "feeds": [
+          "button gap",
+          "link gap",
+          "box gap",
+          "panel gap"
+        ],
+        "light": "6px"
+      },
+      {
+        "name": "--s-11p7nl",
+        "count": 63,
+        "feeds": [
+          "button height",
+          "link height"
+        ],
+        "light": "28px"
+      },
+      {
+        "name": "--s-1c4fwdw",
+        "count": 59,
+        "feeds": [
+          "button borderRadius",
+          "link borderRadius"
+        ],
+        "light": "6px"
+      },
+      {
+        "name": "--s-4lkz9i",
+        "count": 56,
+        "feeds": [
+          "button edge",
+          "link edge"
+        ],
+        "light": "#D4DEE9"
+      },
+      {
+        "name": "--s-1eg71kz",
+        "count": 56,
+        "feeds": [
+          "button backgroundColor",
+          "link backgroundColor"
+        ],
+        "light": "#ffffff"
+      },
+      {
+        "name": "--s-13dhk1f",
+        "count": 50,
+        "feeds": [
+          "button color",
+          "link color"
+        ],
+        "light": "#273951"
+      },
+      {
+        "name": "--xfgvhn",
+        "count": 46,
+        "feeds": [
+          "badge color",
+          "card color"
+        ],
+        "light": "#c0123c"
+      },
+      {
+        "name": "--d8waz0",
+        "count": 46,
+        "feeds": [
+          "badge edge",
+          "card edge"
+        ],
+        "light": "#fbd3dc"
+      },
+      {
+        "name": "--s-1k641wx",
+        "count": 46,
+        "feeds": [
+          "badge backgroundColor",
+          "card backgroundColor"
+        ],
+        "light": "#fef4f6"
+      },
+      {
+        "name": "--s-1htz8iq",
+        "count": 40,
+        "feeds": [
+          "menuitem fontWeight",
+          "textbox fontWeight",
+          "button fontWeight",
+          "text@button fontWeight",
+          "link fontWeight",
+          "searchbox fontWeight",
+          "spinbutton fontWeight"
+        ],
+        "light": "400"
+      },
+      {
+        "name": "--huplq6",
+        "count": 40,
+        "feeds": [
+          "menuitem fontFamily",
+          "textbox fontFamily",
+          "button fontFamily",
+          "text@button fontFamily",
+          "link fontFamily",
+          "searchbox fontFamily",
+          "spinbutton fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--wdt5sy",
+        "count": 40,
+        "feeds": [
+          "menuitem letterSpacing",
+          "textbox letterSpacing",
+          "button letterSpacing",
+          "text@button letterSpacing",
+          "link letterSpacing",
+          "searchbox letterSpacing",
+          "spinbutton letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--s-432ttp",
+        "count": 40,
+        "feeds": [
+          "menuitem lineHeight",
+          "textbox lineHeight",
+          "button lineHeight",
+          "text@button lineHeight",
+          "link lineHeight",
+          "searchbox lineHeight",
+          "spinbutton lineHeight"
+        ],
+        "light": "20px"
+      },
+      {
+        "name": "--tlxlq6",
+        "count": 40,
+        "feeds": [
+          "menuitem fontSize",
+          "textbox fontSize",
+          "button fontSize",
+          "text@button fontSize",
+          "link fontSize",
+          "searchbox fontSize",
+          "spinbutton fontSize"
+        ],
+        "light": "14px"
+      },
+      {
+        "name": "--s-9fb64w",
+        "count": 38,
+        "feeds": [
+          "menuitem borderRadius",
+          "button borderRadius",
+          "link borderRadius",
+          "card borderRadius",
+          "tooltip borderRadius"
+        ],
+        "light": "8px"
+      },
+      {
+        "name": "--s-72fzvy",
+        "count": 36,
+        "feeds": [
+          "combobox width",
+          "heading.h1 paddingInline",
+          "heading.h1 paddingTop",
+          "heading.h1 paddingBottom",
+          "heading.h1 paddingRight",
+          "panel width"
+        ],
+        "light": "0px"
+      },
+      {
+        "name": "--s-1nt3wam",
+        "count": 36,
+        "feeds": [
+          "link fontWeight"
+        ],
+        "light": "600"
+      },
+      {
+        "name": "--ereqaf",
+        "count": 26,
+        "feeds": [
+          "button fontWeight",
+          "label fontWeight"
+        ],
+        "light": "600"
+      },
+      {
+        "name": "--yiyhsh",
+        "count": 26,
+        "feeds": [
+          "button fontFamily",
+          "label fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--s-1wje8no",
+        "count": 26,
+        "feeds": [
+          "button letterSpacing",
+          "label letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--ki0zdj",
+        "count": 26,
+        "feeds": [
+          "button lineHeight",
+          "label lineHeight"
+        ],
+        "light": "16px"
+      },
+      {
+        "name": "--zzbsa1",
+        "count": 26,
+        "feeds": [
+          "button fontSize",
+          "label fontSize"
+        ],
+        "light": "12px"
+      },
+      {
+        "name": "--wukrzp",
+        "count": 18,
+        "feeds": [
+          "textbox color",
+          "combobox color",
+          "searchbox color",
+          "spinbutton color"
+        ],
+        "light": "#273951"
+      },
+      {
+        "name": "--jpxxql",
+        "count": 18,
+        "feeds": [
+          "textbox borderRadius",
+          "combobox borderRadius",
+          "searchbox borderRadius",
+          "spinbutton borderRadius"
+        ],
+        "light": "6px"
+      },
+      {
+        "name": "--s-14a2tiz",
+        "count": 18,
+        "feeds": [
+          "textbox backgroundColor",
+          "combobox backgroundColor",
+          "searchbox backgroundColor",
+          "spinbutton backgroundColor"
+        ],
+        "light": "#ffffff"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "-apple-system",
+        "count": 3266
+      },
+      {
+        "family": "Menlo",
+        "count": 336
+      },
+      {
+        "family": "Source Code Pro",
+        "count": 6
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 1899,
+        "groups": [
+          "link",
+          "text@link",
+          "cell@table",
+          "paragraph@table",
+          "text",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "12.6px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "Menlo",
+        "count": 302,
+        "groups": [
+          "code@table"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "-apple-system",
+        "count": 160,
+        "groups": [
+          "card",
+          "panel",
+          "text@contentinfo",
+          "button",
+          "link",
+          "box"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "-apple-system",
+        "count": 150,
+        "groups": [
+          "button",
+          "heading.h3",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "19px",
+        "fontFamily": "-apple-system",
+        "count": 144,
+        "groups": [
+          "button",
+          "card"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 141,
+        "groups": [
+          "button",
+          "link",
+          "label",
+          "combobox"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "16px",
+        "fontFamily": "-apple-system",
+        "count": 134,
+        "groups": [
+          "badge",
+          "textbox"
+        ]
+      },
+      {
+        "fontSize": "21px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "-apple-system",
+        "count": 96,
+        "groups": [
+          "button",
+          "heading.h2",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "26px",
+        "fontFamily": "-apple-system",
+        "count": 93,
+        "groups": [
+          "link",
+          "text@link",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "normal",
+        "fontFamily": "-apple-system",
+        "textTransform": "uppercase",
+        "count": 86,
+        "groups": [
+          "columnheader@table"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "fontFamily": "-apple-system",
+        "count": 63,
+        "groups": [
+          "paragraph",
+          "listitem"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 48,
+        "groups": [
+          "link",
+          "text@link",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "textTransform": "uppercase",
+        "count": 48,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "16px",
+        "fontFamily": "-apple-system",
+        "count": 38,
+        "groups": [
+          "button",
+          "text@button",
+          "label"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "19px",
+        "fontFamily": "-apple-system",
+        "count": 36,
+        "groups": [
+          "panel",
+          "card"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "normal",
+        "fontFamily": "-apple-system",
+        "count": 36,
+        "groups": [
+          "link"
+        ]
+      },
+      {
+        "fontSize": "12.6px",
+        "fontWeight": "500",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "textTransform": "uppercase",
+        "count": 36,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "14.4px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "fontFamily": "Menlo",
+        "count": 34,
+        "groups": [
+          "code"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "fontFamily": "-apple-system",
+        "count": 18,
+        "groups": [
+          "text",
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "24px",
+        "fontFamily": "-apple-system",
+        "count": 18,
+        "groups": [
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "fontFamily": "-apple-system",
+        "count": 10,
+        "groups": [
+          "card",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "lineHeight": "32px",
+        "fontFamily": "-apple-system",
+        "count": 6,
+        "groups": [
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "14px",
+        "fontFamily": "Source Code Pro",
+        "count": 6,
+        "groups": [
+          "kbd"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "textTransform": "uppercase",
+        "count": 6,
+        "groups": [
+          "text"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 4,
+        "count": 579,
+        "groups": [
+          "cell@table",
+          "badge",
+          "link",
+          "card",
+          "menuitem",
+          "kbd"
+        ]
+      },
+      {
+        "px": 6,
+        "count": 112,
+        "groups": [
+          "button",
+          "card",
+          "textbox",
+          "link",
+          "combobox",
+          "searchbox"
+        ]
+      },
+      {
+        "px": 8,
+        "count": 23,
+        "groups": [
+          "button",
+          "link",
+          "card",
+          "tooltip"
+        ]
+      }
+    ],
+    "pills": []
+  },
+  "spacing": {
+    "grid": 2,
+    "steps": [
+      {
+        "px": 1,
+        "count": 1018
+      },
+      {
+        "px": 2,
+        "count": 696
+      },
+      {
+        "px": 4,
+        "count": 422
+      },
+      {
+        "px": 6,
+        "count": 459
+      },
+      {
+        "px": 8,
+        "count": 1409
+      },
+      {
+        "px": 10,
+        "count": 38
+      },
+      {
+        "px": 12,
+        "count": 172
+      },
+      {
+        "px": 14,
+        "count": 97
+      },
+      {
+        "px": 16,
+        "count": 1961
+      },
+      {
+        "px": 20,
+        "count": 60
+      },
+      {
+        "px": 24,
+        "count": 6
+      },
+      {
+        "px": 26,
+        "count": 6
+      },
+      {
+        "px": 32,
+        "count": 110
+      }
+    ],
+    "heights": {
+      "badge": [
+        {
+          "px": 20,
+          "count": 133
+        }
+      ],
+      "button": [
+        {
+          "px": 14,
+          "count": 108
+        },
+        {
+          "px": 20,
+          "count": 82
+        },
+        {
+          "px": 28,
+          "count": 50
+        },
+        {
+          "px": 25,
+          "count": 33
+        },
+        {
+          "px": 16,
+          "count": 24
+        },
+        {
+          "px": 32,
+          "count": 12
+        }
+      ],
+      "combobox": [
+        {
+          "px": 28,
+          "count": 6
+        }
+      ],
+      "kbd": [
+        {
+          "px": 20,
+          "count": 6
+        }
+      ],
+      "link": [
+        {
+          "px": 20,
+          "count": 780
+        },
+        {
+          "px": 17,
+          "count": 53
+        },
+        {
+          "px": 36,
+          "count": 48
+        },
+        {
+          "px": 40,
+          "count": 14
+        },
+        {
+          "px": 28,
+          "count": 7
+        },
+        {
+          "px": 32,
+          "count": 6
+        }
+      ],
+      "menuitem": [
+        {
+          "px": 32,
+          "count": 15
+        }
+      ],
+      "searchbox": [
+        {
+          "px": 28,
+          "count": 2
+        }
+      ],
+      "spinbutton": [
+        {
+          "px": 28,
+          "count": 1
+        }
+      ],
+      "textbox": [
+        {
+          "px": 28,
+          "count": 7
+        },
+        {
+          "px": 24,
+          "count": 1
+        },
+        {
+          "px": 40,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 235,
+        "groups": [
+          "button",
+          "link",
+          "menu",
+          "menuitem"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 67,
+        "groups": [
+          "button",
+          "link",
+          "searchbox",
+          "spinbutton",
+          "textbox"
+        ]
+      },
+      {
+        "value": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 12,
+        "groups": [
+          "button",
+          "combobox"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 6,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(227, 232, 238) 0px -1px 0px 0px inset",
+        "count": 6,
+        "groups": [
+          "card"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 4,
+        "groups": [
+          "button",
+          "textbox"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 5px 15px 0px, rgba(48, 49, 61, 0.08) 0px 15px 35px 0px",
+        "count": 1,
+        "groups": [
+          "card"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
+        "count": 1,
+        "groups": [
+          "tooltip"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "badge": {
+      "groups": [
+        "badge"
+      ],
+      "found": 6,
+      "looks": [
+        {
+          "id": "badge.1",
+          "count": 84,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "badge",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "6px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "61.3px",
+                  "paddingTop": "1px",
+                  "paddingBottom": "1px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "16px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "fontWeight": "--s-10ubhie",
+                  "fontFamily": "--ft4em7",
+                  "letterSpacing": "--s-7i2pli",
+                  "lineHeight": "--s-1kc6i1b",
+                  "fontSize": "--mae4h0",
+                  "color": "--s-18brxby",
+                  "gap": "--s-3ab8ub",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-175jw0u",
+                  "borderRadius": "--s-1l4o7cj",
+                  "edge": "--s-7st1q"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.2",
+          "count": 45,
+          "pages": [
+            0,
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(254, 244, 246)",
+                  "color": "rgb(192, 18, 60)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "6px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(251, 211, 220)",
+                  "width": "64.6px",
+                  "paddingTop": "1px",
+                  "paddingBottom": "1px",
+                  "paddingRight": "6px",
+                  "gap": "4px",
+                  "lineHeight": "16px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "fontWeight": "--s-10ubhie",
+                  "fontFamily": "--ft4em7",
+                  "letterSpacing": "--s-7i2pli",
+                  "lineHeight": "--s-1kc6i1b",
+                  "fontSize": "--mae4h0",
+                  "color": "--xfgvhn",
+                  "gap": "--s-3ab8ub",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "edge": "--d8waz0",
+                  "backgroundColor": "--s-1k641wx",
+                  "borderRadius": "--s-1l4o7cj"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/badge.2-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "icon",
+        "icon@contentinfo",
+        "img",
+        "listitem",
+        "page",
+        "panel",
+        "toolbar"
+      ],
+      "found": 18,
+      "looks": [
+        {
+          "id": "img.1",
+          "count": 120,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, -0.932129)",
+                  "iconSize": "8x8",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.2",
+          "count": 54,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, -0.932129)",
+                  "iconSize": "8x8",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/img.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@contentinfo.1",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(33, 45, 99)",
+                  "color": "rgb(245, 251, 255)",
+                  "borderRadius": "0px",
+                  "height": "129px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "lineHeight": "19px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "corners": "0px 0px 4px 4px",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/panel.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.1",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "24px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2.36328)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "listitem.1",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "52px",
+                  "paddingInline": "32px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "lineHeight": "26px",
+                  "position": "relative",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.2",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 250, 252)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "112px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "normal",
+                  "display": "flex",
+                  "zIndex": "11"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 6,
+          "pages": [
+            0,
+            3,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(236, 241, 246) left",
+                  "width": "201px",
+                  "gap": "6px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "gap": "--s-1eo1l6l",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "edge": "--s-1bcqfda"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/box.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "vars": {
+                  "height": "--s-1cn5k4b",
+                  "width": "--s-1cn5k4b"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.3",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 66, 87)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.3",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "37px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233) bottom",
+                  "width": "1205px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--s-12pesem"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.4",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "788px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233) right",
+                  "width": "280px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--s-72fzvy",
+                  "height": "--li639m",
+                  "edge": "--s-12pesem"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "toolbar.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "31px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(227, 232, 238) bottom",
+                  "width": "799px",
+                  "paddingBottom": "12px",
+                  "gap": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "vars": {
+                  "gap": "--s-1f29tr2",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.3",
+          "count": 3,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "24px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0.363281)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.5",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(236, 241, 246) left",
+                  "width": "201px",
+                  "gap": "6px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "gap": "--s-1eo1l6l",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "edge": "--s-1bcqfda"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 26,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 108,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 38, 82)",
+                  "color": "rgb(163, 172, 185)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "19px",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.1",
+          "count": 72,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 38, 82)",
+                  "color": "rgb(163, 172, 185)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "19px",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 49,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 41,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "89.4px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "gap": "6px",
+                  "lineHeight": "20px",
+                  "transition": "0.15s cubic-bezier(0, 0.09, 0.4, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "0"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s-4lkz9i",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "height": "--s-11p7nl",
+                  "color": "--s-13dhk1f",
+                  "width": "--s-22nfqw",
+                  "gap": "--s-1eo1l6l",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-1eg71kz",
+                  "borderRadius": "--s-1c4fwdw"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.3-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(149, 164, 186)",
+                  "transition": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.3-hover-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(83, 58, 253)",
+                  "color": "rgb(83, 58, 253)",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "69px",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.2",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 38, 82)",
+                  "color": "rgb(108, 142, 239)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "19px",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "21px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.3",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.4",
+          "count": 25,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.5",
+          "count": 24,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "128.8px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--ereqaf",
+                  "fontFamily": "--yiyhsh",
+                  "letterSpacing": "--s-1wje8no",
+                  "lineHeight": "--ki0zdj",
+                  "fontSize": "--zzbsa1",
+                  "color": "--s-1hknj82"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.5-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.5",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(79, 86, 107)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/icon@button.5-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.6",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "99.9px",
+                  "gap": "4px",
+                  "lineHeight": "20px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "color": "--s-1hknj82",
+                  "gap": "--s-3ab8ub"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.7",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "248px",
+                  "gap": "4px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "color": "--s-1xyyyk2",
+                  "gap": "--s-3ab8ub"
+                },
+                "source": "census"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.6",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(79, 86, 107)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.8",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "8px",
+                  "height": "32px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "200px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "8px",
+                  "gap": "4px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "transition": "0.15s ease",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "gap": "--s-3ab8ub",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-9fypy8",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(39, 57, 81)",
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(149, 164, 186)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.11",
+          "count": 6,
+          "pages": [
+            0,
+            4
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(83, 58, 253)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "69px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "gap": "6px",
+                  "lineHeight": "20px",
+                  "transition": "0.15s cubic-bezier(0, 0.09, 0.4, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "0"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--w22o9l",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "height": "--s-11p7nl",
+                  "color": "--uvjldp",
+                  "width": "--s-22nfqw",
+                  "gap": "--s-1eo1l6l",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-1mkjmgu",
+                  "borderRadius": "--s-1c4fwdw"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.11-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(68, 19, 159) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(68, 19, 159)",
+                  "transition": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/button.11-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.7",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.8",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "card": {
+      "groups": [
+        "card"
+      ],
+      "found": 10,
+      "looks": [
+        {
+          "id": "card.1",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 38, 82)",
+                  "color": "rgb(163, 172, 185)",
+                  "borderRadius": "4px",
+                  "height": "40px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "16px",
+                  "lineHeight": "19px",
+                  "corners": "4px 4px 0px 0px",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.2",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "6px",
+                  "height": "93px",
+                  "paddingInline": "20px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233) top+right+left",
+                  "width": "799px",
+                  "paddingTop": "32px",
+                  "paddingBottom": "32px",
+                  "paddingRight": "20px",
+                  "lineHeight": "normal",
+                  "backgroundImage": "radial-gradient(rgb(216, 222, 228) 1px, rgba(0, 0, 0, 0) 0px)",
+                  "corners": "6px 6px 0px 0px",
+                  "display": "block"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "edge": "--s-15xulsv",
+                  "borderRadius": "--s-282tnx"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.3",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "24px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(227, 232, 238) 0px -1px 0px 0px inset",
+                  "edge": "none",
+                  "width": "1440px",
+                  "gap": "16px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--li639m",
+                  "gap": "--s-1f29tr2",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.4",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "81px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233) top",
+                  "width": "280px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--sidebar-width",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "gap": "--s-15f02i8",
+                  "edge": "--s-15xulsv"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.5",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(33, 45, 99)",
+                  "color": "rgb(245, 251, 255)",
+                  "borderRadius": "4px",
+                  "height": "91px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "lineHeight": "19px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.6",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "8px",
+                  "height": "136px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "200px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "backgroundColor": "--s-9fypy8",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.7",
+          "count": 3,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "6px",
+                  "height": "78px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "757px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "gap": "12px",
+                  "lineHeight": "24px",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--s-15lxxlk",
+                  "fontFamily": "--s-1tckhn5",
+                  "letterSpacing": "--s-18r6xqz",
+                  "lineHeight": "--s-1fjdblk",
+                  "fontSize": "--s-1vrlxop",
+                  "gap": "--s-1cn5k4b",
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "color": "--s-13hmetb",
+                  "backgroundColor": "--s-9fypy8",
+                  "edge": "--s-15xulsv",
+                  "borderRadius": "--s-282tnx"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/card.7-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "groups": [
+        "cell@table",
+        "columnheader@table"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "cell@table.1",
+          "count": 254,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 250, 252)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "4px",
+                  "height": "124px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(236, 241, 246) top+bottom+left",
+                  "width": "136.5px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20px",
+                  "corners": "4px 0px 0px 0px",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "edge": "--s-12pesem"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/cell@table.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "columnheader@table.1",
+          "count": 86,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "136.5px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "color": "--s-1hknj82"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/columnheader@table.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "code",
+        "code@table",
+        "heading.h1",
+        "heading.h2",
+        "heading.h3",
+        "heading.h3@menu",
+        "paragraph",
+        "paragraph@table",
+        "text",
+        "text@button",
+        "text@contentinfo",
+        "text@link"
+      ],
+      "found": 34,
+      "looks": [
+        {
+          "id": "text@link.1",
+          "count": 504,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "93px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "code@table.1",
+          "count": 302,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(60, 66, 87)",
+                  "borderRadius": "6px",
+                  "height": "18px",
+                  "paddingInline": "2px",
+                  "fontFamily": "Menlo",
+                  "fontSize": "12.6px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "66.5px",
+                  "paddingTop": "1px",
+                  "paddingBottom": "1px",
+                  "paddingRight": "2px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "fontFamily": "--sail-font-family-monospace",
+                  "edge": "--s-15xulsv",
+                  "borderRadius": "--s-282tnx",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/code@table.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.2",
+          "count": 213,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@table.1",
+          "count": 97,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 250, 252)",
+                  "color": "rgb(60, 66, 87)",
+                  "borderRadius": "0px",
+                  "height": "34px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "627.5px",
+                  "paddingTop": "14px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3.1",
+          "count": 49,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "36px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "124.2px",
+                  "paddingTop": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h3.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 49,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "100.2px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 48,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "87.2px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 45,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 66, 87)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "paddingTop": "12px",
+                  "lineHeight": "26px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 39,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "71.8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12.6px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "85.9px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "code.1",
+          "count": 34,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(60, 66, 87)",
+                  "borderRadius": "6px",
+                  "height": "22px",
+                  "paddingInline": "4px",
+                  "fontFamily": "Menlo",
+                  "fontSize": "14.4px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "61.8px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "4px",
+                  "lineHeight": "26px",
+                  "display": "inline"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "fontFamily": "--sail-font-family-monospace",
+                  "edge": "--s-15xulsv",
+                  "borderRadius": "--s-282tnx",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/code.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "57px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "21px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "217.7px",
+                  "paddingTop": "32px",
+                  "lineHeight": "normal",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h2.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.5",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "21px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "193.7px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.1",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "773px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.3",
+          "count": 28,
+          "pages": [
+            0,
+            1,
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "177.7px",
+                  "lineHeight": "26px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.6",
+          "count": 19,
+          "pages": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "131.9px",
+                  "lineHeight": "26px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.4",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28.4px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.5",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "190.4px",
+                  "lineHeight": "24px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.7",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "39px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "449.6px",
+                  "lineHeight": "40px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.1",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "88.7px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.2",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "15px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "77.6px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "39px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "539.7px",
+                  "lineHeight": "40px",
+                  "display": "inline"
+                },
+                "vars": {
+                  "fontWeight": "--nusmm3",
+                  "fontFamily": "--dx0zsf",
+                  "letterSpacing": "--s-1kj6w98",
+                  "lineHeight": "--s-1rvvcgm",
+                  "fontSize": "--s-1eryk2b",
+                  "paddingInline": "--s-72fzvy",
+                  "paddingTop": "--s-72fzvy",
+                  "paddingBottom": "--s-72fzvy",
+                  "paddingRight": "--s-72fzvy"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 31, 54)",
+                  "borderRadius": "0px",
+                  "height": "72px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "24px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "paddingTop": "8px",
+                  "lineHeight": "32px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--f4w18u",
+                  "fontFamily": "--s-1rpa4qr",
+                  "letterSpacing": "--s-7o0wpd",
+                  "lineHeight": "--s-1qj9g61",
+                  "fontSize": "--s-1uud5hl",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.8",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "43.5px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.3",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "4px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "141.6px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "lineHeight": "--s-432ttp",
+                  "fontSize": "--tlxlq6",
+                  "color": "--s-1hknj82",
+                  "width": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "221.5px",
+                  "lineHeight": "28px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--s-1vfd5li",
+                  "fontFamily": "--s-1bq9l67",
+                  "letterSpacing": "--s-19ns8xn",
+                  "lineHeight": "--syp0fc",
+                  "fontSize": "--s-1k0d4db"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.6",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "115.7px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3@menu.1",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "10px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "160px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--s-4yu78",
+                  "fontFamily": "--s-1fz1zwb",
+                  "letterSpacing": "--s-18p6u2g",
+                  "lineHeight": "--onmy4p",
+                  "fontSize": "--s-1rv6t4",
+                  "color": "--s-13hmetb",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/heading.h3@menu.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "combobox": {
+      "groups": [
+        "combobox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "combobox.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "select.trigger",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "82.8px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "26px",
+                  "lineHeight": "20px",
+                  "transition": "0.24s ease",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "color": "--wukrzp",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "width": "--s-72fzvy",
+                  "borderRadius": "--jpxxql",
+                  "backgroundColor": "--s-14a2tiz"
+                },
+                "source": "census"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(149, 164, 186)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "icon@link",
+        "link"
+      ],
+      "found": 17,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 450,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "109px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "color": "--s-1hknj82",
+                  "gap": "--s-15f02i8",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.1-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 115,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.9px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "iconSize": "8x8",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "gap": "--s-15f02i8",
+                  "color": "--s-13hmetb"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.2-rest-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "fontWeight": "700",
+                  "width": "236px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 96,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "78.6px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "gap": "--s-15f02i8",
+                  "color": "--s-13hmetb",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.4",
+          "count": 48,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "tab",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "36px",
+                  "paddingInline": "12px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "99.6px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "12px",
+                  "gap": "normal 8px",
+                  "lineHeight": "20px",
+                  "transition": "0.1s cubic-bezier(0, 0, 0.4, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "0"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "color": "--s-1hknj82",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "gap": "--s-15f02i8"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.4-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.4-hover-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "color": "rgb(84, 105, 212)",
+                  "width": "164.3px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.5",
+          "count": 46,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "177.7px",
+                  "gap": "8px",
+                  "lineHeight": "26px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--w22o9l",
+                  "color": "--oiv4a4",
+                  "height": "--s-22nfqw",
+                  "width": "--s-22nfqw",
+                  "gap": "--s-15f02i8",
+                  "borderRadius": "--s-1l4o7cj"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.5-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.5-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.6",
+          "count": 42,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "146.5px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "iconSize": "8x8",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "color": "--s-1hknj82",
+                  "gap": "--s-15f02i8"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.6-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.6-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.7",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "4px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "111.5px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--w22o9l",
+                  "color": "--oiv4a4",
+                  "height": "--s-22nfqw",
+                  "width": "--s-22nfqw",
+                  "gap": "--s-15f02i8",
+                  "fontWeight": "--s-1nt3wam",
+                  "borderRadius": "--s-1l4o7cj"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.7-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.7-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.8",
+          "count": 24,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "39.2px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--w22o9l",
+                  "height": "--s-22nfqw",
+                  "width": "--s-22nfqw",
+                  "gap": "--s-15f02i8",
+                  "borderRadius": "--s-1l4o7cj"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.8-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)",
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/link.8-hover-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "121px",
+                  "lineHeight": "normal",
+                  "iconSize": "121x25",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "kbd": {
+      "groups": [
+        "kbd"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "kbd.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "4px",
+                  "fontFamily": "\"Source Code Pro\"",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(236, 241, 246)",
+                  "width": "18.4px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "4px",
+                  "lineHeight": "14px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--s-1hknj82",
+                  "width": "--s-22nfqw",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--s-1l4o7cj",
+                  "fontFamily": "--s-1vpgvqc",
+                  "backgroundColor": "--s-1rfvf0n",
+                  "edge": "--s-1bcqfda"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "label.1",
+          "count": 17,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "field.label",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "82.8px",
+                  "lineHeight": "20px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "width": "--s-22nfqw",
+                  "color": "--s-13hmetb"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "menu": {
+      "groups": [
+        "menu",
+        "menuitem"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "menuitem.1",
+          "count": 15,
+          "pages": [
+            3
+          ],
+          "part": "menu.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "3px",
+                  "height": "32px",
+                  "paddingInline": "10px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "160px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontSize": "--tlxlq6",
+                  "lineHeight": "--s-432ttp",
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "color": "--s-13hmetb",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menuitem.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menuitem.1-hover-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(125, 139, 164)",
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "menu.1",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "104px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "168px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "height": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/menu.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "search-field": {
+      "groups": [
+        "searchbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "searchbox.1",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "234px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "transition": "0.24s ease",
+                  "cursor": "text",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "lineHeight": "--s-432ttp",
+                  "fontSize": "--tlxlq6",
+                  "color": "--wukrzp",
+                  "width": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--jpxxql",
+                  "backgroundColor": "--s-14a2tiz"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/searchbox.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "separator": {
+      "groups": [
+        "separator"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "separator.1",
+          "count": 74,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(212, 222, 233)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "1px",
+                  "paddingInline": "1px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "236px",
+                  "paddingTop": "1px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "vars": {
+                  "width": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-15xulsv"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/separator.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(83, 58, 253)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "140px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 798, 0)",
+                  "transition": "0.15s cubic-bezier(0, 0.09, 0.4, 1)",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "vars": {
+                  "width": "--tab-line-width",
+                  "opacity": "--tab-line-opacity",
+                  "height": "--l5cirb",
+                  "backgroundColor": "--s-1mkjmgu"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "input": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 5,
+          "pages": [
+            1
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "234px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "transition": "0.24s ease",
+                  "cursor": "text",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "lineHeight": "--s-432ttp",
+                  "fontSize": "--tlxlq6",
+                  "color": "--wukrzp",
+                  "width": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--jpxxql",
+                  "backgroundColor": "--s-14a2tiz"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/textbox.1-rest-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(236, 241, 246)",
+                  "color": "rgb(125, 139, 164)",
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tooltip": {
+      "groups": [
+        "tooltip"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "tooltip.1",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "part": "tooltip",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "8px",
+                  "height": "114px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "300px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20px",
+                  "transition": "0.1s cubic-bezier(0, 0.09, 0.4, 1)",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s-15xulsv",
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "color": "--s-13hmetb",
+                  "backgroundColor": "--s-9fypy8",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census",
+                "copy": "2026-10-23/census/crops/tooltip.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "look": "ink.keycap",
+      "title": "Keycap label ink as one choice of faint, muted or full",
+      "note": "Stripe between full and muted, #414552 (oklch ≈ 0.40)",
+      "standin": "ΔE 0.253 / 0.301 on Duolingo, 0.108 on Stripe)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.keycap",
+      "title": "Keycap labels in the mono face",
+      "note": "Stripe's Dashboard shortcuts drawer sets keys in Menlo, Consolas, monospace at 13/500 on a #EBEEF1 chip with 3px corners, 20px tall, 6px padding, no edge",
+      "standin": "keycaps in the body font at the UI size (14/500 with `uiTextSize: 14`); `kbdTreatment: chip` matches the fill and edge",
+      "source": "ledger"
+    },
+    {
+      "look": "type.caption",
+      "title": "Caption text one rung below control text",
+      "note": "Stripe 12/16 badges, chips, list secondary lines and descriptions under 14/20 controls at 28px",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "Focus ring in a color other than the brand",
+      "note": "Stripe sky blue rgba(1,150,237,.36), 3px past the edge and 1px out, on Dashboard buttons, links and fields (the opaque lavender field focus is only on the login page)",
+      "standin": "ΔE 0.095 on Material 3, 0.062 on Stripe's `button.focus` and `input.focus`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Stripe's Dashboard sidebar rows #1A2C44 at 14/400 (30px, 6px corners), the current row blurple #533AFD at 600 with no fill",
+      "standin": "Stripe's sidebar rows ΔE 0.210, the current row matched by `navMarker: ink` and `navItemWeight: regular-semibold`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Stripe's Dashboard tabs 36px (invoice settings, Payments' filter tabs) with 12px inline padding, square, 14/600, the selected one in blurple over a 2px bar (only Communication preferences' tabs are 52px)",
+      "standin": "39px from the density (`tabStyle: line` at 35px on Geist, 31px on Stripe, -5px, with 6px padding and 6px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.control-shadow",
+      "title": "A small drop under select triggers, checkboxes and switches while buttons and text fields stay flat",
+      "note": "select `0 1px 1px` rgba(16,17,26,.16); checkbox `0 1px 1px` black 12% + `0 2px 5px` rgba(48,49,61,.08)",
+      "standin": "the Flat style: no shadow on any control",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Stripe neutral badges, slate-600 #50617A on slate-25 #F4F7FA inside a #D4DEE9 edge",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.choice-label",
+      "title": "Checkbox, radio and switch labels at label weight",
+      "note": "14/600 in #1A2C44, like field labels",
+      "standin": "choice labels at body weight (14/400); `fieldLabel: semibold` only reaches field labels",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Heavier links",
+      "note": "Stripe semibold in the docs, 14/600, primary links in the brand ink and secondary links in slate-800 #273951, and 14/500 in blurple #533AFD in the signed-in Dashboard",
+      "source": "ledger"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "Smaller: Stripe's Dashboard copy at 14/20 in #1A2C44 under 28px controls",
+      "standin": "body size from the density, 16px at Duolingo's `touch` and Stripe's `compact`; `uiTextSize` reaches only controls and offers 13 and 14",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "Stripe's Dashboard fields keep their 1px slate-100 #D4DEE9 edge unchanged under the 3px sky blue ring",
+      "standin": "Stripe, to the blurple, 0.377)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Stripe 34×18",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Stripe slate-50 #ECF1F6 inside a 1px #D4DEE9 ring plus a `0 1px 1px` drop",
+      "standin": "ΔE 0.059 / 0.053 on Geist, 0.069 on Stripe, 0.080 / 0.142 on Supabase)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Stripe the link color, the others in slate-600 #50617A, all 14/600",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Stripe 12px on 52px in the signed-in Dashboard's settings tabs, square (none in its docs example)",
+      "standin": "6px with 6px corners at Stripe's compact",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Stripe's Dashboard search results 28px with 8px corners, the control height, under 32px menu rows",
+      "standin": "on Stripe 38.8px rows at 6px corners (`menuRows: step` keeps its 32px menu rows right)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Stripe a white bubble like the popover, 14/20 text in #1A2C44, 16px padding, 8px corners (the popover radius), 1px #D4DEE9 edge, a small drop, no arrow",
+      "standin": "12px text, 12px padding, square (Stripe and Wise: `tooltipStyle: surface`, 6px corners, 10.5px on Wise",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "Stripe's Create customer dialog has no hairline, only the menu shadow (`0 5px 15px` black 12% plus `0 15px 35px` rgba(48,49,61,.08)), white at 8px, while menus keep a 1px #D4DEE9 hairline and cards a 1px #EBEEF1 ring",
+      "standin": "Stripe's at oklab L 0.926",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-section",
+      "title": "Menu section headers in full ink and bold",
+      "note": "12/700 #1A2C44, inset like the rows",
+      "standin": "`sectionLabels: sentence`: small labels in muted ink at body weight",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.command-edge",
+      "title": "Command palette ringed in a wide pale rim",
+      "note": "Stripe's Dashboard search popover draws a 2px slate-25 #F4F7FA edge at 8px corners under the menu shadow, while menus keep the 1px slate-100 #D4DEE9 hairline",
+      "standin": "the palette takes the overlay hairline, 1px (ΔE 0.049)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Stripe's 20px badges (6px padding, 4px corners)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Status banners in status ink",
+      "note": "title (16/700) and description both in the status color (#B13600 warning, #C0123C critical) on a status tint inside a status edge; the neutral banner stays white with the border",
+      "standin": "`alertStyle: soft-outline` (ink text, a gray tint on the neutral one); `neutral` keeps the status text but drops the tint",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.alert",
+      "title": "Alert corners on their own rung, apart from overlays and cards",
+      "note": "Stripe banners at 6px, the button, field and card rung (Dashboard cards round at 6px too), under 8px menus, tooltips and dialogs",
+      "standin": "alerts follow the container radius from `roleSurface` (8px on Stripe, whose cards take 6px from `roleCard: md`, and Untitled UI",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Stripe text, labels and menu rows in slate-900 #1A2C44, button, field and select ink in slate-800 #273951",
+      "standin": "one `fg` for text and labels, `fg-muted` for the rest (Stripe ΔE 0.055 on text, 0.102 on control ink",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Stripe 0.080",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-chroma",
+      "title": "More strongly tinted neutrals",
+      "note": "Sail's slate inks at C ≈ 0.05 (#1A2C44 oklch 0.290 0.050 256, #273951 0.341 0.049, #50617A 0.488 0.046), its border #D4DEE9 at 0.019",
+      "standin": "`neutralTint: 2` (the maximum) gives C 0.025 in the ink; muted text lands at ΔE 0.022",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Stripe the brand #533AFD itself on Dashboard links and the current sidebar row",
+      "standin": "on Stripe at oklch 0.539 0.238 (ΔE 0.035)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.one-line",
+      "title": "One hairline for everything, on the control-edge step",
+      "note": "Sail's slate-100 #D4DEE9 (L 0.896) on buttons, fields, menus, tooltips, badges and banners",
+      "standin": "menus, tooltips, badges and cards sit on the lighter surface line (L 0.926, ΔE 0.030 on Stripe",
+      "source": "ledger"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Stronger status tints, on their own hue",
+      "note": "Stripe warning on yellow (#FDF8C9, edge #FBD992) behind orange ink #B13600, info on cyan (#E2FBFE, edge #A7E7FC) behind blue ink #045AD0",
+      "source": "ledger"
+    }
+  ]
+}

@@ -2,18 +2,30 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
-import type { PartFile, Snapshot, SnapshotFont } from "@dotui/capture/snapshot"
+import type { Snapshot, SnapshotFont } from "@dotui/capture/snapshot"
 
 /* A frozen copy of the real product's element: its DOM with every computed
-   style inlined, drawn in a shadow root. In dev the files come from
-   www/.scratch-refs through the dev server (vite.config.ts); a deployed site
-   shows a placeholder until the copies have a host. */
+   style inlined, drawn in a shadow root. A system's copies come one file per
+   census date (scripts/copies.ts): from www/.scratch-refs in dev, from the
+   public Blob store `copies:upload` fills once deployed. */
 
-const REFS = import.meta.env.DEV ? "/refs" : undefined
+const COPIES = import.meta.env.DEV
+  ? "/copies"
+  : "https://uyfqo5pt3egtamyn.public.blob.vercel-storage.com"
 
-export function refUrl(slug: string, path: string) {
-  if (!REFS) return undefined
-  return `${REFS}/${slug}/${path.split("/").map(encodeURIComponent).join("/")}`
+const files = new Map<string, Promise<Record<string, Snapshot> | null>>()
+
+/** A copy path starts with its census date, which names its file. */
+function copiesOf(slug: string, path: string) {
+  const url = `${COPIES}/${slug}/${path.split("/")[0]}.json`
+  let file = files.get(url)
+  if (!file) {
+    file = fetch(url)
+      .then((res) => (res.ok ? res.json() : null))
+      .catch(() => null)
+    files.set(url, file)
+  }
+  return file
 }
 
 export function Copy({
@@ -25,23 +37,20 @@ export function Copy({
   path: string
   className?: string
 }) {
-  const url = refUrl(slug, path)
   const [ref, seen] = useSeen<HTMLDivElement>()
-  const [file, setFile] = useState<PartFile | null | undefined>()
+  const [snapshot, setSnapshot] = useState<Snapshot | null | undefined>()
 
   useEffect(() => {
-    if (!url || !seen) return
+    if (!seen) return
     let live = true
-    fetch(url)
-      .then((res) => (res.ok ? (res.json() as Promise<PartFile>) : null))
-      .catch(() => null)
-      .then((json) => live && setFile(json))
+    void copiesOf(slug, path).then(
+      (copies) => live && setSnapshot(copies?.[path] ?? null),
+    )
     return () => {
       live = false
     }
-  }, [url, seen])
+  }, [slug, path, seen])
 
-  const snapshot = file?.snapshot
   return (
     <div
       ref={ref}
@@ -52,11 +61,7 @@ export function Copy({
         <Fit snapshot={snapshot} />
       ) : (
         <p className="p-3 text-xs text-fg-muted">
-          {!url
-            ? "Copy not hosted yet"
-            : file === null
-              ? "Copy missing"
-              : "Loading…"}
+          {snapshot === null ? "Copy missing" : "Loading…"}
         </p>
       )}
     </div>

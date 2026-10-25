@@ -4,7 +4,8 @@
 import fs from "node:fs"
 import path from "node:path"
 
-import { looksFileSchema } from "../src/data/looks"
+import { PRESET_CATALOG } from "../../www/src/modules/presets/__generated__/catalog"
+import { CORE_COMPONENTS, looksFileSchema } from "../src/data/looks"
 import {
   catalogSchema,
   colorsFileSchema,
@@ -12,7 +13,7 @@ import {
   componentsFileSchema,
   systemSchema,
 } from "../src/data/schema"
-import type { DataIndex, SystemEntry } from "../src/data/schema"
+import type { CapturedSystem, DataIndex, SystemEntry } from "../src/data/schema"
 
 const root = path.resolve(import.meta.dirname, "..")
 const dataDir = path.join(root, "data")
@@ -58,7 +59,7 @@ const systemDirs = fs.existsSync(systemsDir)
   : []
 
 const systems: SystemEntry[] = []
-const looks: string[] = []
+const looks: CapturedSystem[] = []
 
 for (const dir of systemDirs) {
   const rel = `systems/${dir}`
@@ -73,7 +74,20 @@ for (const dir of systemDirs) {
     } else if (looksResult.data.slug !== dir) {
       errors.push(`${rel}/looks.json: slug must match its directory name`)
     } else {
-      looks.push(dir)
+      const { preset, capture, components } = looksResult.data
+      const name = PRESET_CATALOG.find((p) => p.id === preset)?.name
+      if (!name) errors.push(`${rel}/looks.json: unknown preset "${preset}"`)
+      const all = Object.values(components).flatMap((c) => c.looks)
+      looks.push({
+        slug: dir,
+        name: name ?? dir,
+        date: capture.date,
+        pages: capture.pages.length,
+        signedIn: capture.pages.filter((p) => p.signedIn).length,
+        core: CORE_COMPONENTS.filter((c) => components[c]?.looks.length).length,
+        looks: all.length,
+        off: all.filter((l) => l.off?.length).length,
+      })
     }
   }
   if (!fs.existsSync(path.join(systemsDir, dir, "system.json"))) continue
@@ -162,6 +176,14 @@ for (const dir of systemDirs) {
   }
 
   systems.push({ ...entry, colors })
+}
+
+for (const entry of catalogResult.success ? catalogResult.data.systems : []) {
+  if (entry.preset && !looks.some((l) => l.slug === entry.preset)) {
+    errors.push(
+      `data/catalog.json: "${entry.slug}" opens preset "${entry.preset}", which has no looks.json`,
+    )
+  }
 }
 
 if (errors.length > 0) {

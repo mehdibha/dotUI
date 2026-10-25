@@ -24,30 +24,34 @@ import {
   TableRow,
 } from "@/registry/ui/table"
 import { dataIndex } from "~/data"
+import { CORE_COMPONENTS } from "~/data/looks"
 import type { CatalogEntry } from "~/data/schema"
 
 export const Route = createFileRoute("/design-systems")({
   component: DesignSystemsPage,
 })
 
-const systemsBySlug = new Map(
-  dataIndex.systems.map((system) => [system.slug, system]),
-)
+// A researched or captured system has a page.
+const withPage = new Set([
+  ...dataIndex.systems.map((system) => system.slug),
+  ...dataIndex.looks.map((looks) => looks.slug),
+])
+const pageOf = (entry: CatalogEntry) => entry.preset ?? entry.slug
 
 // Explorable systems first, then the rest alphabetically.
 const catalog = [...dataIndex.catalog].sort((a, b) => {
-  const aExplorable = systemsBySlug.has(a.slug) ? 1 : 0
-  const bExplorable = systemsBySlug.has(b.slug) ? 1 : 0
+  const aExplorable = withPage.has(pageOf(a)) ? 1 : 0
+  const bExplorable = withPage.has(pageOf(b)) ? 1 : 0
   if (aExplorable !== bExplorable) return bExplorable - aExplorable
   return a.name.localeCompare(b.name)
 })
 
-const explorable = catalog.filter((entry) => systemsBySlug.has(entry.slug))
+const explorable = catalog.filter((entry) => withPage.has(pageOf(entry)))
 
 // Systems without an exploration page yet — disabled in the table.
 const plannedKeys = catalog
-  .filter((entry) => !systemsBySlug.has(entry.slug))
-  .map((entry) => entry.slug)
+  .filter((entry) => !withPage.has(pageOf(entry)))
+  .map(pageOf)
 
 const categoryLabels: Record<CatalogEntry["category"], string> = {
   "big-tech": "Big tech",
@@ -79,12 +83,73 @@ function DesignSystemsPage() {
           and the conventions that hold them together.
         </p>
         <p className="mt-8 font-mono text-xs text-fg-muted">
-          {catalog.length} systems · {explorable.length} explorable
+          {catalog.length} systems · {explorable.length} explorable ·{" "}
+          {dataIndex.looks.length} captured
         </p>
       </section>
 
+      <Captured />
       <Directory />
     </div>
+  )
+}
+
+/* Products a capture read, one row each: how deep it went, at a glance. */
+function Captured() {
+  const navigate = useNavigate()
+  return (
+    <section className="pb-12">
+      <h2 className="text-lg font-semibold">Captured</h2>
+      <p className="mt-1 max-w-xl text-sm text-fg-muted">
+        Read off the real product, page by page, in light and dark. Each page
+        shows every look found and what the capture didn&apos;t reach.
+      </p>
+      <TableContainer className="mt-4 rounded-none border-0 bg-transparent">
+        <Table
+          aria-label="Captured systems"
+          className="[&_[data-slot=table-cell]]:h-12 [&_[data-slot=table-cell]]:px-0 [&_[data-slot=table-column]]:h-11 [&_[data-slot=table-column]]:px-0"
+          onRowAction={(key) =>
+            navigate({ to: "/systems/$slug", params: { slug: String(key) } })
+          }
+        >
+          <TableHeader>
+            <TableColumn isRowHeader>System</TableColumn>
+            <TableColumn className="text-right">Pages</TableColumn>
+            <TableColumn className="text-right">Core components</TableColumn>
+            <TableColumn className="text-right">Looks</TableColumn>
+            <TableColumn className="text-right">Off</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {dataIndex.looks.map((system) => (
+              <TableRow key={system.slug} id={system.slug}>
+                <TableCell>
+                  <Link
+                    to="/systems/$slug"
+                    params={{ slug: system.slug }}
+                    className="font-medium"
+                  >
+                    {system.name}
+                  </Link>
+                </TableCell>
+                <TableCell className="text-right text-xs text-fg-muted tabular-nums">
+                  {system.pages}
+                  {system.signedIn > 0 && ` · ${system.signedIn} signed in`}
+                </TableCell>
+                <TableCell className="text-right text-xs text-fg-muted tabular-nums">
+                  {system.core} / {CORE_COMPONENTS.length}
+                </TableCell>
+                <TableCell className="text-right text-xs text-fg-muted tabular-nums">
+                  {system.looks}
+                </TableCell>
+                <TableCell className="text-right text-xs text-fg-muted tabular-nums">
+                  {system.off || "—"}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </section>
   )
 }
 
@@ -170,11 +235,11 @@ function Directory() {
               renderEmptyState={() => "No systems match your filters."}
             >
               {filtered.map((entry, index) => {
-                const isExplorable = systemsBySlug.has(entry.slug)
+                const isExplorable = withPage.has(pageOf(entry))
                 return (
                   <TableRow
                     key={entry.slug}
-                    id={entry.slug}
+                    id={pageOf(entry)}
                     className={isExplorable ? undefined : "border-disabled"}
                   >
                     <TableCell
@@ -191,7 +256,7 @@ function Directory() {
                         {isExplorable ? (
                           <Link
                             to="/systems/$slug"
-                            params={{ slug: entry.slug }}
+                            params={{ slug: pageOf(entry) }}
                             className="font-medium"
                           >
                             {entry.name}
