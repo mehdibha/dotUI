@@ -45,10 +45,12 @@ export const useBoardFocus = () => useContext(BoardFocusContext)
 
 export function Board({
   id,
+  untitled,
   className,
   children,
 }: {
   id: BoardId
+  untitled?: boolean
   className?: string
   children: React.ReactNode
 }) {
@@ -61,7 +63,9 @@ export function Board({
         className,
       )}
     >
-      <h1 className="text-lg font-semibold">{BOARD_TITLES[id]}</h1>
+      {!untitled && (
+        <h1 className="text-lg font-semibold">{BOARD_TITLES[id]}</h1>
+      )}
       {children}
     </div>
   )

@@ -18,6 +18,7 @@
     "check:tailwind": "tsx scripts/tw-canonical.ts",
     "build:cover": "pnpm build:registry && tsx scripts/capture-cover.mts",
     "check:registry-comments": "tsx scripts/check-registry-comments.ts",
+    "presets:blocks": "tsx ../packages/capture/scripts/blocks.ts",
     "presets:catalog": "tsx scripts/presets-catalog.ts",
     "presets:capture": "tsx scripts/capture-specimens.mts",
     "presets:compare": "tsx scripts/compose-refs.mts",

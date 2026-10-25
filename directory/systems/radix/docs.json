@@ -1,0 +1,682 @@
+{
+  "version": 1,
+  "slug": "radix",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Radix Colors' 12-step scales: slate for the neutrals, indigo for the accent. The page is white (#111113 in dark), text slate-12 #1c2024 (#edeef0) and muted text #60646c. The accent solid, indigo-9 #3e63dd, is the same in both modes; links and soft text use indigo-11 (#3a5bc7, #9eb1ff in dark) and soft fills indigo-3 (#edf2fe). Edges are alpha steps: slate-a7 around fields (#cdced6 on white) and slate-a6 for separators (#d9d9e0). Menus and dialogs sit on the solid panel: white, or slate-2 #18191b in dark.",
+      "usage": [
+        "Every color prop swaps the whole scale: a red menu item, a green soft field and an orange soft badge use steps 3, 9 and 11 of their own hue."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "The components default to the system stack (-apple-system): 14/20 at size 2, 12/16 at size 1 and 16/24 at size 3, with 500 on buttons, badges and the active tab. The docs site sets Untitled Sans on its own chrome and Söhne Mono for code. Headings are 500 with tight tracking, such as 24/30 at -0.3px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "radius=\"medium\" by default: buttons, fields, selects and menu rows have 3px corners at size 1, 4px at size 2 and 6px at size 3. Cards have 8px, dialogs 12px. Switches and progress bars are pills. The radius prop (none to full) scales every corner together."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Three control sizes: 24px (size 1), 32px with 12px sides (size 2, the default) and 40px (size 3). Tabs are 40px, menu rows 32px with 12px sides. Dialogs pad 24px and cards 12px. The scaling prop resizes everything from 90% to 110%."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Edges are inset shadows, not borders: a 1px slate-a7 ring on fields and the surface and outline variants. Menus, selects and dialogs share one stack: a 1px ring plus 0 12px 60px at 15% and a tighter 12px drop. The classic variants add a small raised shadow and a soft gradient. The dialog scrim is black at 40% (60% in dark). Focus is a 2px indigo-8 ring, #8da4ef (#435db1 in dark)."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Six variants of one button, each in any color: solid, soft, surface, outline, classic and ghost, at sizes 1 to 4. The default is solid indigo at size 2. The docs' own controls (prop info, copy) are ghost buttons.",
+      "groups": {
+        "button": {
+          "variants": {
+            "solid": {
+              "note": "Bookmark: indigo-9 #3e63dd with white text, in both modes."
+            },
+            "soft": {
+              "note": "Edit profile: #edf2fe under #3658c7; #18244a under #9eb1ff in dark."
+            },
+            "surface": {
+              "note": "#f7f9ff with a 1px indigo-a7 ring and indigo text."
+            },
+            "outline": {
+              "note": "White with a 1px #8da4ef ring and #3a5bc7 text."
+            },
+            "classic": {
+              "note": "The solid fill with a raised shadow and a top highlight gradient."
+            },
+            "ghost": {
+              "note": "No fill, #60646c text: the docs' Prop description buttons, the copy buttons."
+            }
+          },
+          "sizes": {
+            "1": {
+              "note": "24px, 3px corners, 12px text."
+            },
+            "2": {
+              "note": "32px, 12px sides, 4px corners: the default."
+            },
+            "3": {
+              "note": "40px, 6px corners, 16px text."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Link is indigo-11 (#3a5bc7, #9eb1ff in dark) at 400, underlined on hover, across sizes 1 to 9. color, weight, underline and highContrast are props.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-vw7mfc": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "View source, Sign up: #3a5bc7, no underline at rest."
+            },
+            "v-h7f9bf": {
+              "note": "Sign up, always underlined."
+            },
+            "v-4k0v3f": {
+              "note": "Underlined in ink #1c2024: Documentation, a high-contrast Sign up."
+            },
+            "v-dbjp0v": {
+              "note": "Sign up at 500."
+            },
+            "v-5ceit9": {
+              "note": "Sign up at 700."
+            },
+            "v-4qf5ng": {
+              "note": "Sign up in crimson, #cb1d63."
+            },
+            "v-dmgjyx": {
+              "note": "Sign up in orange, #cc4e00."
+            },
+            "v-hc3mhv": {
+              "note": "Sign up in cyan, #107d98."
+            },
+            "v-ybntok": {
+              "note": "admin privileges inside the gray Callout: underlined ink on #f0f0f3."
+            },
+            "ghost": {
+              "note": "Playground and the docs header's links: ghost buttons drawn as links, #60646c."
+            },
+            "surface": {
+              "note": "Quick start: a surface Card drawn as a link."
+            },
+            "v-l316ox": {
+              "hide": "the Callout link again, in the indigo surface Callout"
+            },
+            "v-00zwhl": {
+              "hide": "the Callout link again, in red"
+            },
+            "v-a26nrq": {
+              "hide": "the Callout link again, in green"
+            },
+            "v-ppf21r": {
+              "hide": "the Callout link again, in blue"
+            },
+            "v-tbh2c6": {
+              "hide": "the Callout link again, in the indigo soft Callout"
+            },
+            "v-i30vd4": {
+              "hide": "the docs site's sidebar and logo"
+            },
+            "v-lmq1fz": {
+              "hide": "the docs sidebar's current page"
+            },
+            "v-zicxyn": {
+              "hide": "the docs' section headings, which are anchor links"
+            },
+            "v-mpwlva": {
+              "hide": "the docs site's header tabs"
+            }
+          },
+          "sizes": {
+            "s-sfdu69": {
+              "note": "16px in a props table."
+            },
+            "s-w1julr": {
+              "note": "16px inside a 44px Callout."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Badge has solid, soft, surface and outline, in any color, at sizes 1 to 3. Size 1 is 20px with 6px sides, 12px text at 500 and 3px corners.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "solid": {
+              "note": "Here in gray with highContrast: #1c2024 under #fcfcfd (Themes, New)."
+            },
+            "soft": {
+              "note": "In progress: orange #ffefd6 under #cc4e00."
+            },
+            "surface": {
+              "note": "New: white with a 1px #d9d9e0 ring."
+            },
+            "outline": {
+              "note": "New: a 1px ring in high-contrast gray."
+            }
+          },
+          "sizes": {
+            "1": {
+              "note": "20px, 6px sides, 12px."
+            },
+            "s-1ht055": {
+              "note": "24px, 10px sides, 14px: the docs header's Themes pill."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-5xoown": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Documents: #60646c at 400; the active tab turns ink at 500."
+            }
+          },
+          "sizes": {
+            "s-v9g0m5": {
+              "note": "40px, 8px sides, 14px: size 2."
+            },
+            "s-y1v650": {
+              "note": "32px, 12px text: size 1."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-g3h7gv": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px inset rule under the row, slate-a5."
+            }
+          }
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-i30vd4": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Drafts: ink at 400; the chosen one sits on a white indicator."
+            }
+          },
+          "sizes": {
+            "s-2wcn44": {
+              "note": "32px."
+            },
+            "s-09221v": {
+              "note": "40px."
+            },
+            "s-6w8xcl": {
+              "note": "24px."
+            }
+          }
+        },
+        "segmented": {
+          "variants": {
+            "surface": {
+              "note": "Inbox, Drafts, Sent: a gray-a3 track, #f0f0f3 on white."
+            },
+            "v-mhus3w": {
+              "name": {
+                "value": "indicator",
+                "from": "ai"
+              },
+              "note": "The chosen segment's white pill: a 1px ring under a faint shadow."
+            },
+            "v-tjpcpa": {
+              "note": "A second indicator look, with a 1px ring and a deeper shadow."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "32px."
+            },
+            "1": {
+              "note": "24px."
+            },
+            "3": {
+              "note": "40px."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "TextField has surface, classic and soft. Surface is the default: white at 85% with a 1px slate-a7 ring, 4px corners, 32px at size 2 with an 8px text inset. Focus adds the 2px indigo-8 ring.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "surface": {
+              "note": "Search the docs…: #cdced6 ring on white."
+            },
+            "classic": {
+              "note": "A lighter ring with a faint inner shadow."
+            },
+            "v-t3jw53": {
+              "name": {
+                "value": "soft",
+                "from": "docs"
+              },
+              "note": "Indigo-3 #edf2fe under indigo-12 text, no ring."
+            },
+            "v-n9h9vb": {
+              "note": "The soft field in green."
+            },
+            "v-x6mpw2": {
+              "note": "The soft field in red."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "32px."
+            },
+            "1": {
+              "note": "24px, 12px text."
+            },
+            "3": {
+              "note": "40px, 16px text."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "surface": {
+              "note": "Select's trigger, Apple: the field's ring and a chevron."
+            },
+            "soft": {
+              "note": "Indigo-3 #edf2fe under indigo-12 text."
+            },
+            "classic": {
+              "note": "A ring with a #f9f9fb to #fcfcfd gradient."
+            },
+            "ghost": {
+              "note": "No fill: 28px, indigo text."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "32px, 12px sides."
+            },
+            "1": {
+              "note": "24px, 8px sides."
+            },
+            "3": {
+              "note": "40px, 16px sides."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "groups": {
+        "menuitem": {
+          "variants": {
+            "v-i30vd4": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Edit ⌘ E: ink at 400; the highlighted row fills indigo-9 with white text."
+            },
+            "v-mrcmrr": {
+              "name": {
+                "value": "red",
+                "from": "docs"
+              },
+              "note": "Delete ⌘ ⌫: red-11 #ce2c31, highlighted in #e5484d."
+            }
+          },
+          "sizes": {
+            "s-7ilnvj": {
+              "note": "32px, 12px sides: size 2."
+            },
+            "s-p699g9": {
+              "note": "24px, 8px sides, 12px: size 1."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "option": {
+          "variants": {
+            "v-i30vd4": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Orange in the Select's list: highlighted like a menu row."
+            }
+          },
+          "sizes": {
+            "s-3d7wuc": {
+              "note": "32px, 24px sides for the check."
+            },
+            "s-k8z6bd": {
+              "note": "24px, 12px."
+            },
+            "s-u7xqqy": {
+              "note": "32px, 16px."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "surface": {
+              "note": "16px, 3px corners, a 1px slate-a7 ring; indigo-9 when checked."
+            },
+            "classic": {
+              "note": "A ring with extra inset shading."
+            },
+            "soft": {
+              "note": "#d2deff (indigo-a5), no ring."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "16px."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "surface": {
+              "note": "16px, a 1px slate-a7 ring."
+            },
+            "classic": {
+              "note": "A ring with extra inset shading."
+            },
+            "soft": {
+              "note": "#e1e9ff (indigo-a4), no ring."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "16px."
+            },
+            "1": {
+              "note": "20px box, 14px text."
+            },
+            "3": {
+              "note": "26px box, 18px text."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "surface": {
+              "note": "A #f0f0f3 pill with a 1px ring; on, it fills indigo-9."
+            },
+            "classic": {
+              "note": "A #e8e8ec track with a 1px ring."
+            },
+            "soft": {
+              "note": "A #f0f0f3 track, no ring."
+            }
+          },
+          "sizes": {
+            "1": {
+              "note": "16px tall."
+            },
+            "2": {
+              "note": "20px tall, 35px wide."
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "surface": {
+              "note": "A 6px #f0f0f3 pill with a 1px ring, filled in indigo-9."
+            }
+          },
+          "sizes": {
+            "2": {
+              "note": "6px."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Card has surface, classic and ghost. Surface is the default: the translucent panel with a 1px ring and 8px corners, 12px padding at size 1.",
+      "groups": {
+        "card": {
+          "variants": {
+            "surface": {
+              "note": "Example frames and cards: #f7f9ff here, with a 1px #d9dbe6 ring."
+            },
+            "classic": {
+              "note": "Quick start: white with a 1px #edeff3 ring; a drop shadow in dark."
+            },
+            "outline": {
+              "note": "The outline Callout (You will need admin privileges…): a 1px indigo ring."
+            },
+            "v-t93q83": {
+              "hide": "the Text trim demo's boxes"
+            },
+            "v-jduyr4": {
+              "hide": "the Text trim demo's boxes"
+            }
+          },
+          "sizes": {
+            "1": {
+              "note": "12px padding."
+            },
+            "2": {
+              "note": "16px padding."
+            },
+            "3": {
+              "note": "24px padding, 11px corners."
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "classic": {
+              "note": "Shift + Tab: #fcfcfd keycaps with a 0.6px ring and a soft inner shadow."
+            }
+          },
+          "sizes": {
+            "s-mbdaai": {
+              "note": "21px, 12px text: the default."
+            },
+            "1": {
+              "note": "17px."
+            },
+            "5": {
+              "note": "28px."
+            },
+            "9": {
+              "note": "84px."
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 40px photo avatar."
+            }
+          },
+          "sizes": {
+            "s-s6ssyi": {
+              "note": "40px."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-eh6ngz": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "This is a label element.: Text as a label, 16/24 in ink."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-o04fu4": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px slate-a6 rule, #d9d9e0; #35393f in dark."
+            },
+            "v-hz4x9p": {
+              "hide": "the docs header's divider"
+            },
+            "v-17wxjw": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-7pfjo2": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-9y09lw": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-xnxr7l": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-hwut5v": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-nn6cfh": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-ue4dzu": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-zs2c5v": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-5a0665": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-h7mwkg": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-mf0ufc": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-swjgji": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-2z0jdi": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-7e4r4f": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-g13xgx": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            },
+            "v-piv0in": {
+              "hide": "a blade of the loading Spinner, caught mid-fade"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "docs",
+        "url": "https://www.radix-ui.com/themes/docs",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@radix-ui/themes",
+        "ref": "3.3.0",
+        "retrievedAt": null,
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: the Radix Themes component docs pages, light and dark, at the docs' theme (indigo accent, slate gray, medium radius). Token values are from @radix-ui/themes 3.3.0 and @radix-ui/colors 3.0.0, read in the pack. Names without a from are Radix's variant and size props; names marked docs are prop values from the docs; names marked ai are ours."
+  }
+}

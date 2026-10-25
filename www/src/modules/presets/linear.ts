@@ -49,10 +49,10 @@ export const linear = definePreset({
 
     // States
     // outline: 1px solid accent at 0px offset, hugging the control.
+    // Stand-in: the halo is at half strength.
     focusStyle: "halo",
-    focusStrength: "solid",
     focusWidth: 1,
-    focusInputStyle: "border",
+    focusInputStyle: "edge",
     disabledTreatment: "fade",
     // The app's --pointer is default.
     cursorControls: "default",

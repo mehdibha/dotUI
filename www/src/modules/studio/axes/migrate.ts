@@ -270,15 +270,10 @@ function fromMain(main: Raw): Raw {
   const focus = main.focusStyle ?? "ring"
   if (focus === "ring" && main.focusOffset === "inset")
     state.focusStyle = "inset"
-  const halo = Number(main.focusHaloStrength)
-  if (focus === "halo" && halo < 40) state.focusStrength = "faint"
-  if (focus === "halo" && halo > 75) state.focusStrength = "solid"
-  const field = main.focusInputStyle ?? "halo"
-  if (
-    (field === "halo" && Number(main.focusInputWidth) >= 3) ||
-    (field === "border" && Number(main.focusInputBorderWidth) >= 2)
-  )
-    state.focusInputWeight = "thick"
+  if (focus === "halo") state.focusWidth ??= 3
+  if (main.focusInputStyle === "border")
+    state.focusInputStyle =
+      Number(main.focusInputBorderWidth) >= 2 ? "thick-edge" : "edge"
 
   motionFrom(main, state)
   return settle(state)
@@ -328,6 +323,22 @@ const fromTonal = toFlat("tonal", {
 const fromTactile = (state: Raw): Raw =>
   state.style === "tactile" ? { ...state, style: "polished" } : state
 
+/* Focus lost Strength and the field weight: a halo is half strength, 3px
+   when its width was Auto; a field's Border became Edge or Thick edge. */
+function fromFocus(state: Raw): Raw {
+  const next = { ...state }
+  delete next.focusStrength
+  delete next.focusInputWeight
+  if (next.focusWidth === undefined || next.focusWidth === "auto") {
+    delete next.focusWidth
+    if (next.focusStyle === "halo") next.focusWidth = 3
+  }
+  if (next.focusInputStyle === "border")
+    next.focusInputStyle =
+      state.focusInputWeight === "thick" ? "thick-edge" : "edge"
+  return next
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
@@ -335,4 +346,5 @@ const STEPS: Record<number, (state: Raw) => Raw> = {
   4: fromChartTransition,
   5: fromTonal,
   6: fromTactile,
+  7: fromFocus,
 }

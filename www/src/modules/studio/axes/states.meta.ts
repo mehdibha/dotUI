@@ -1,16 +1,14 @@
-import { SOURCE_VALUES } from "./color"
-import { SOURCE_OPTIONS } from "./color.meta"
+import { SOURCE_META } from "./color.meta"
 import { options } from "./core/meta"
 import {
   CONTROL_TEXT_VALUES,
   CURSOR_CONTROL_VALUES,
   CURSOR_DISABLED_VALUES,
   DISABLED_VALUES,
+  FOCUS_COLOR_VALUES,
   FOCUS_INPUT_STYLE_VALUES,
-  FOCUS_INPUT_WEIGHT_VALUES,
   FOCUS_STYLE_VALUES,
   INVALID_VALUES,
-  STRENGTH_VALUES,
 } from "./states"
 
 export const FOCUS_STYLE_OPTIONS = options(FOCUS_STYLE_VALUES, {
@@ -24,113 +22,48 @@ export const FOCUS_STYLE_OPTIONS = options(FOCUS_STYLE_VALUES, {
       "Polaris",
       "Untitled UI",
       "Supabase",
-      "Linear",
       "Notion",
       "Airbnb",
       "Spotify",
     ],
-  },
-  halo: {
-    label: "Halo",
-    description: "Soft ring hugging the edge, no gap",
-    credits: ["shadcn", "Bootstrap", "Stripe"],
   },
   inset: {
     label: "Inset",
     description: "Ring drawn inside the control's edge",
     credits: ["Primer", "Carbon", "Fluent 2", "Claude"],
   },
-})
-
-export const STRENGTH_OPTIONS = options(STRENGTH_VALUES, {
-  solid: {
-    label: "Solid",
-    description: "Ring in the full focus color",
-    credits: ["Spectrum 2", "Primer", "Carbon", "Geist", "Polaris"],
-  },
-  soft: {
-    label: "Soft",
-    description: "Ring at half strength",
-    credits: ["shadcn nova", "Supabase", "Radix Themes"],
-  },
-  faint: {
-    label: "Faint",
-    description: "Barely-there ring at 30% strength",
-    credits: ["Bootstrap", "Ant", "Stripe"],
+  halo: {
+    label: "Halo",
+    description: "Half-strength ring hugging the edge",
+    credits: ["shadcn", "Bootstrap", "Stripe", "Linear"],
   },
 })
 
-export const WIDTH_OPTIONS = [
-  {
-    value: 1,
-    label: "1px",
-    description: "Hairline focus ring",
-    credits: ["Linear", "Claude"],
-  },
-  {
-    value: 2,
-    label: "2px",
-    description: "Thin, crisp focus ring",
-    credits: ["Geist", "Primer", "Polaris", "Radix"],
-  },
-  {
-    value: 3,
-    label: "3px",
-    description: "Medium focus ring",
-    credits: ["shadcn nova", "Material 3"],
-  },
-  {
-    value: 4,
-    label: "4px",
-    description: "Thick, bold focus ring",
-    credits: ["Bootstrap", "Stripe"],
-  },
-]
+export const FOCUS_COLOR_OPTIONS = options(FOCUS_COLOR_VALUES, {
+  ...SOURCE_META,
+  custom: { label: "Custom", description: "A color of its own" },
+})
 
 export const FOCUS_INPUT_STYLE_OPTIONS = options(FOCUS_INPUT_STYLE_VALUES, {
-  ring: {
-    label: "Ring",
-    description: "Fields get the same ring as controls",
-    credits: [
-      "shadcn",
-      "Polaris",
-      "Supabase",
-      "Carbon",
-      "Spectrum 2",
-      "Stripe",
-    ],
+  edge: {
+    label: "Edge",
+    description: "Only the edge recolors",
+    credits: ["Linear", "Claude", "Duolingo", "ChatGPT"],
+  },
+  "thick-edge": {
+    label: "Thick edge",
+    description: "The edge recolors and thickens to 2px",
+    credits: ["Material 3", "Untitled UI", "Primer", "Radix Themes", "Notion"],
   },
   halo: {
     label: "Halo",
-    description: "Edge recolors with a soft halo around it",
+    description: "The edge recolors with a soft halo around it",
     credits: ["Geist", "Ant", "Clerk"],
   },
-  border: {
-    label: "Border",
-    description: "Only the edge recolors, no ring",
-    credits: [
-      "Material 3",
-      "Untitled UI",
-      "Primer",
-      "Radix Themes",
-      "Duolingo",
-      "Linear",
-      "Notion",
-      "Airbnb",
-    ],
-  },
-})
-
-export const FOCUS_INPUT_WEIGHT_OPTIONS = options(FOCUS_INPUT_WEIGHT_VALUES, {
-  thin: {
-    label: "Thin",
-    description: "2px halo, or the edge recolored",
-    credits: ["Ant", "Mantine", "Linear", "Claude"],
-  },
-  thick: {
-    label: "Thick",
-    description: "4px halo, or a 2px edge",
-    credits: ["Geist", "Untitled UI", "Material 3", "Radix Themes", "Primer"],
+  ring: {
+    label: "Ring",
+    description: "Inputs wear the controls' ring",
+    credits: ["shadcn", "Polaris", "Supabase", "Carbon", "Stripe"],
   },
 })
 
@@ -151,28 +84,6 @@ export const INVALID_OPTIONS = options(INVALID_VALUES, {
     credits: ["Polaris", "Supabase (approx.)"],
   },
 })
-
-const FIELD_INK_OPTIONS = options(SOURCE_VALUES, {
-  neutral: {
-    label: "Neutral",
-    description: "Focused fields use gray, not the ring color",
-    credits: ["Geist"],
-  },
-  accent: {
-    label: "Accent",
-    description: "Focused fields use the brand color",
-  },
-})
-
-/* The row: the follow, then the credited option. */
-export const FIELD_INK_ROW = [
-  {
-    value: "same",
-    label: "Same as ring",
-    description: "Follows the focus ring's color",
-  },
-  ...FIELD_INK_OPTIONS.filter((option) => option.value === "neutral"),
-]
 
 export const DISABLED_OPTIONS = options(DISABLED_VALUES, {
   solid: {
@@ -227,12 +138,9 @@ export const CONTROL_TEXT_OPTIONS = options(CONTROL_TEXT_VALUES, {
 })
 
 export const OPTIONS = {
-  focusColor: SOURCE_OPTIONS,
+  focusColor: FOCUS_COLOR_OPTIONS,
   focusStyle: FOCUS_STYLE_OPTIONS,
-  focusStrength: STRENGTH_OPTIONS,
   focusInputStyle: FOCUS_INPUT_STYLE_OPTIONS,
-  focusInputWeight: FOCUS_INPUT_WEIGHT_OPTIONS,
-  focusInputColor: FIELD_INK_OPTIONS,
   invalidStyle: INVALID_OPTIONS,
   disabledTreatment: DISABLED_OPTIONS,
   cursorControls: CURSOR_CONTROL_OPTIONS,

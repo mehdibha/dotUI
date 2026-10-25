@@ -58,8 +58,7 @@ export const notion = definePreset({
     density: "compact",
 
     // States
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     disabledTreatment: "fade",
     cursorDisabled: "default",
 

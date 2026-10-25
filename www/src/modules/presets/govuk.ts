@@ -56,10 +56,9 @@ export const govuk = definePreset({
     shellTone: "page",
 
     // States
-    // Stand-in: focus is #ffdd00 yellow (a fill on buttons and links, a 3px outline on fields) over a black bar; ours draws ink.
+    // Stand-in: focus is #ffdd00 yellow (a fill on buttons and links, a 3px outline on fields) over a black bar; ours draws ink at half strength.
     focusColor: "neutral",
     focusStyle: "halo",
-    focusStrength: "solid",
     focusWidth: 3,
     focusInputStyle: "ring",
     // Disabled buttons and fields at 50% opacity.

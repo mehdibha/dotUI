@@ -97,11 +97,11 @@ export function PanelChrome({
         className={cn(
           "no-scrollbar flex min-h-0 grow flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0",
           // Rows land below the pinned page header.
-          page ? "scroll-pt-14" : "scroll-pt-4",
+          page ? "scroll-pt-16" : "scroll-pt-4",
         )}
       >
         {page && (
-          <div className="sticky -top-4 z-10 -mx-2 -mt-4 flex h-11 shrink-0 items-center px-2 not-supports-[animation-timeline:scroll()]:bg-card max-lg:top-0 max-lg:mt-0">
+          <div className="sticky -top-4 z-10 -mx-2 -mt-4 mb-2 flex h-11 shrink-0 items-center px-2 not-supports-[animation-timeline:scroll()]:bg-card max-lg:top-0 max-lg:mt-0">
             <div
               aria-hidden
               className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] blur-reveal-nearest [--blur-reveal-range:3rem] [--blur-tint:var(--panel-surface)]"

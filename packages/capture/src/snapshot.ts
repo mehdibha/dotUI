@@ -157,11 +157,20 @@ async function snapshot(
     }
     return values
   }
+  // A width stays beside a style that isn't none: dropped as the default's
+  // 0px (which only says the default style is none), it would draw medium.
+  const styled = (values: Values, prop: string) =>
+    /-width$/.test(prop) &&
+    (values[prop.replace(/-width$/, "-style")] ?? "none") !== "none"
   const declarations = (values: Values, base?: Values, parent?: Values) =>
     Object.entries(values)
       .filter(
         ([prop, value]) =>
-          !base || !parent || value !== base[prop] || value !== parent[prop],
+          !base ||
+          !parent ||
+          value !== base[prop] ||
+          value !== parent[prop] ||
+          styled(values, prop),
       )
       .map(([prop, value]) => `${prop}:${value}`)
       .join(";")
@@ -199,7 +208,13 @@ async function snapshot(
   }
 
   let next = 0
-  let rules: string[] = []
+  // Bodies to selectors: elements that compute alike share one rule.
+  let rules = new Map<string, string[]>()
+  const rule = (selector: string, body: string) => {
+    const selectors = rules.get(body)
+    if (selectors) selectors.push(selector)
+    else rules.set(body, [selector])
+  }
 
   const visitAll = (nodes: Node[], parent: Values): string =>
     nodes.map((node) => visit(node, parent, false)).join("")
@@ -262,8 +277,13 @@ async function snapshot(
       if (values.display === "inline" || values.display === "contents")
         values.display = "inline-block"
     }
-    rules.push(
-      `[data-s="${n}"]{${declarations(values, root ? undefined : defaultsOf(el.namespaceURI, tag), parent)}}`,
+    rule(
+      `[data-s="${n}"]`,
+      declarations(
+        values,
+        root ? undefined : defaultsOf(el.namespaceURI, tag),
+        parent,
+      ),
     )
     for (const pseudo of ["::before", "::after"]) {
       const ps = getComputedStyle(el, pseudo)
@@ -278,14 +298,16 @@ async function snapshot(
           (_, text: string) => `"${hide(text)}"`,
         )
       }
-      rules.push(
-        `[data-s="${n}"]${pseudo}{${declarations(own, defaultsOf(null, "span"), values)}}`,
+      rule(
+        `[data-s="${n}"]${pseudo}`,
+        declarations(own, defaultsOf(null, "span"), values),
       )
     }
     if (el.hasAttribute("placeholder")) {
       const ps = getComputedStyle(el, "::placeholder")
-      rules.push(
-        `[data-s="${n}"]::placeholder{color:${ps.color};opacity:${ps.opacity};font-weight:${ps.fontWeight};letter-spacing:${ps.letterSpacing}}`,
+      rule(
+        `[data-s="${n}"]::placeholder`,
+        `color:${ps.color};opacity:${ps.opacity};font-weight:${ps.fontWeight};letter-spacing:${ps.letterSpacing}`,
       )
     }
 
@@ -495,11 +517,13 @@ async function snapshot(
     const box = sizeOf(el, getComputedStyle(el))
     families.clear()
     next = 0
-    rules = []
+    rules = new Map()
     const html = visit(el, defaultsOf(null, "div") ?? {}, true)
     copies[key] = {
       html,
-      css: rules.join("\n"),
+      css: [...rules]
+        .map(([body, selectors]) => `${selectors.join(",")}{${body}}`)
+        .join("\n"),
       width: Math.round(box.width * 100) / 100,
       height: Math.round(box.height * 100) / 100,
       backdrop: "",
@@ -559,6 +583,20 @@ export const snapshotSnippet = ({
 /** Parts larger than this (in CSS px²), such as `page`, get a crop but no
  *  frozen copy. */
 export const COPY_AREA = 640 * 480
+
+/** A copy as a page of its own, on the color it sat on, its fonts loaded
+ *  from where the product serves them. */
+export const documentOf = (copy: Snapshot) => {
+  const faces = copy.fonts
+    .map(
+      (font) =>
+        `@font-face{font-family:${JSON.stringify(font.family)};src:${font.src}${font.weight ? `;font-weight:${font.weight}` : ""}${font.style ? `;font-style:${font.style}` : ""}${font.unicodeRange ? `;unicode-range:${font.unicodeRange}` : ""}}`,
+    )
+    .join("\n")
+  const css = `${faces}\nbody{margin:0;padding:16px;background:${copy.backdrop}}\n${copy.css}`
+  // A "<" in the CSS would close the style element.
+  return `<!doctype html><html><head><meta charset="utf-8"><style>${css.replace(/</g, "\\3c ")}</style></head><body>${copy.html}</body></html>\n`
+}
 
 /** The snapshot's own source, for the kit to embed. */
 export const snapshotSource = () => snapshot.toString()

@@ -55,8 +55,7 @@ export const america = definePreset({
     // 0 0 0 2px #fff, 0 0 0 4px #0c0c0c on buttons; fields recolor their
     // edge to the ring and add a 1px inset ring.
     focusColor: "neutral",
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
 
     // Links
     // Prose links keep the text color, underlined.

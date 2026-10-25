@@ -1,0 +1,473 @@
+{
+  "version": 1,
+  "slug": "polaris",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neutral greys with no tint: a #f1f1f1 page, white cards, menus and modals, #303030 ink and #616161 for secondary text, #e3e3e3 for borders and tracks. The primary button is near-black (#303030), not a brand color; blue (#005bd3) is kept for links and focus. Status colors come as pale fills with dark ink (critical #fed1d7 on #8e0b21) and solid banner headers (warning #ffb800, info #91d0ff). Dark is Polaris's dark-experimental theme: a #1a1a1a page, #303030 surfaces and #e3e3e3 ink, with the primary button flipped to white.",
+      "missing": [
+        "dark-experimental leaves navigation, fields, badges and banners on their light values, so some dark copies read light-on-light."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter throughout at 13px on a 20px line, weight 450 for body, buttons and fields; 12px on a 16px line for small text. Emphasis uses 550 and 650 rather than 500 and 600. Headings are tight and bold: 20px/24 at 700 with -0.2px tracking, up to 36px/48 at 700 for display."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "8px corners on buttons, nav rows, tabs and menu rows; 12px on cards, banners, popovers and tooltips' surfaces; 16px on the modal; 4px on keyboard keys. Switches are full pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Compact, on a 2px grid: 8px is by far the most common gap, then 12px, 6px and 4px. Controls are 28px (buttons, tabs, nav rows) and 32px (fields, menu rows)."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Polaris bevels instead of shadowing: buttons carry an inset bottom shade, a 1px inner ring and a 0.5px top highlight, and pressing swaps it for an inset shade along the top. Cards and banners sit on a single 1px drop (#1a1a1a at 7%); popovers and the modal float on soft drops up to 20px."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Polaris's Button: 28px, 12px padding, 13px at 450, 8px corners and the bevel. Variants are primary (near-black with a gradient and dark bevel), secondary (white with a grey bevel, the default), tertiary (no frame until hover), plain (blue text) and a critical tone (red #c70a24 with a red bevel). Icon-only buttons are 28px squares.",
+      "groups": {
+        "button": {
+          "variants": {
+            "pressable": {
+              "note": "A class every Polaris button carries, not a variant: the capture grouped primary, secondary, tertiary, plain and critical under it. The tile is secondary, on the dark sheet."
+            },
+            "v-rhyi8n": {
+              "name": {
+                "value": "on toast",
+                "from": "ai"
+              },
+              "note": "The dismiss × on the dark #1a1a1a toast."
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "28px, 12px padding: Polaris's default size."
+            },
+            "s-wy2e1w": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "A bare 20px icon: the toast's ×."
+            }
+          }
+        }
+      },
+      "usage": [
+        "Pressed buttons swap the bevel for an inset shade and darken; focus adds a 2px #005bd3 ring 1px outside."
+      ],
+      "missing": [
+        "The variants aren't split: the shared class pressable names them all, so primary, tertiary, plain and critical have no tiles of their own yet.",
+        "The live Shopify Admin (signed in) awaits the local capture; these are Polaris React 13.9.5 in a harness."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "pressable": {
+              "hide": "the modal's close ×: an icon button, see button"
+            },
+            "v-bw4xfy": {
+              "hide": "the date picker's day cells"
+            }
+          }
+        }
+      },
+      "missing": ["Polaris React has no toggle button; nothing else read here."]
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "summary": "Polaris has no segmented control: a segmented ButtonGroup stands in. Its buttons are secondary buttons joined edge to edge; the chosen one is pressed into a grey (#cccccc) fill with an inset shade.",
+      "groups": {
+        "segment": {
+          "variants": {
+            "pressable": {
+              "note": "Day, Week, Month: white with the grey bevel."
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "28px, 12px padding."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The chosen segment reads only as selected, so it isn't in the grid."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Two kinds share this block. Inline links are underlined: blue #005bd3 by default, monochrome (the text's own ink) inside banners. Navigation rows are links too: 28px, 8px corners on the #ebebeb sidebar, the current one raised to #fafafa.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-mrtnko": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Underlined blue: shipping policy."
+            },
+            "monochrome": {
+              "note": "Underlined in the text's ink: contact us."
+            },
+            "v-vz934u": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              },
+              "note": "The same blue link on the dark sheet: dark-experimental doesn't theme link blue."
+            },
+            "v-f0p785": {
+              "name": {
+                "value": "nav item",
+                "from": "docs"
+              },
+              "note": "A Navigation row with an icon: Home."
+            },
+            "subnavigationactive": {
+              "note": "The current sub-navigation row: #fafafa on the sidebar."
+            },
+            "v-rwop42": {
+              "name": {
+                "value": "nav item, dark",
+                "from": "ai"
+              },
+              "note": "The same row on the dark sheet: the sidebar stays #ebebeb under light ink."
+            }
+          },
+          "sizes": {
+            "s-sh61l0": {
+              "name": {
+                "value": "nav row",
+                "from": "ai"
+              },
+              "note": "28px, 8px padding, a 20px icon."
+            },
+            "s-iupmza": {
+              "name": {
+                "value": "nav row, dark",
+                "from": "ai"
+              }
+            },
+            "s-3r5y3f": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "13px text."
+            },
+            "s-d788qp": {
+              "name": {
+                "value": "inline, dark",
+                "from": "ai"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Tabs are pill buttons at button size: 28px, 12px padding, #4a4a4a at rest; the selected one gets an 8% black fill.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-2hb87h": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Unfulfilled, unselected."
+            },
+            "v-y6vijr": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              },
+              "note": "The same tab on the dark sheet, still #4a4a4a ink."
+            }
+          },
+          "sizes": {
+            "s-61tdr9": {
+              "note": "28px, 12px padding."
+            },
+            "s-5zfby3": {
+              "note": "The dark sheet's tab, same size."
+            }
+          }
+        }
+      },
+      "missing": ["The selected tab wasn't read on its own."]
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-tvlqh9": {
+              "name": {
+                "value": "switch",
+                "from": "docs"
+              },
+              "note": "Polaris web components' switch, drawn on a checkbox input: a 32×16 pill, #fdfdfd with a 1px #8a8a8a edge when off."
+            }
+          },
+          "sizes": {
+            "s-vcwmu7": {
+              "note": "16px tall, 32px wide."
+            }
+          }
+        }
+      },
+      "missing": [
+        "Polaris React's 16px checkbox and radio weren't read; the Admin's (signed in) await the local capture."
+      ]
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-hhhazw": {
+              "name": {
+                "value": "inline label",
+                "from": "ai"
+              },
+              "note": "The switch's label (Off): 13px at 450 in the ink color."
+            }
+          }
+        }
+      }
+    },
+    "slider": {
+      "status": "reviewed",
+      "summary": "RangeSlider: a thin track with a blue (#005bd3) round thumb.",
+      "groups": {
+        "slider": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The thumb at 40."
+            },
+            "v-dahk5y": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              },
+              "note": "On the dark sheet the thumb turns light blue."
+            }
+          },
+          "sizes": {
+            "s-eigjn4": {
+              "note": "28px tall with its track."
+            },
+            "s-eqazmu": {
+              "note": "The dark sheet's slider."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are ActionLists in a popover: 32px rows with 6px padding and 8px row corners, a grey highlight on hover, destructive rows in red (#8e0b21).",
+      "groups": {
+        "menu": {
+          "variants": {
+            "listreset": {
+              "note": "The list itself (Profile, Billing, Settings, Delete): a Polaris reset class."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "default": {
+              "note": "Profile, Settings: 13px rows."
+            },
+            "destructive": {
+              "note": "Delete: red ink."
+            }
+          },
+          "sizes": {
+            "s-paufct": {
+              "note": "32px rows, 6px padding."
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "measured": {
+              "note": "A Popover's open state class: #303030 on the dark sheet, 12px corners, a soft drop."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "summary": "A small surface tooltip: 28px, 8px padding, 13px at 450, 8px corners and a tail. It takes the surface color, white in light and #303030 in dark, rather than an inverted one.",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "default": {
+              "note": "Save changes, on the dark sheet."
+            }
+          },
+          "sizes": {
+            "s-j47wc8": {
+              "note": "28px."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "Modal: a 16px-cornered panel on a 50% black backdrop, a header band split by a hairline, a 14px/650 title and the actions in a footer.",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-w7czii": {
+              "name": {
+                "value": "modal",
+                "from": "docs"
+              },
+              "note": "Delete product?: the capture read the full-width layer around the panel."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Card: white on the #f1f1f1 page with a 1px drop shadow at the bottom; in dark, #303030 on #1a1a1a.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "The harness's cards, each holding a row of specimens."
+            },
+            "v-dahk5y": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              },
+              "note": "#303030 on the dark page."
+            },
+            "v-m29wyo": {
+              "hide": "the modal's panel: see dialog"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The Admin's cards (12px corners, a 1px ring under soft drops) are signed in only."
+      ]
+    },
+    "kbd": {
+      "status": "reviewed",
+      "summary": "KeyboardKey: #f3f3f3 with #616161 text at 550, 4px corners, no border; in dark, an 8% white fill.",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-g2rnib": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "⌘ and K."
+            },
+            "v-o25a0i": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              }
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "20px, 4px padding, 12px."
+            },
+            "s-gbm9an": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "28px, 8px padding, 14px."
+            },
+            "s-g8nkwh": {
+              "name": {
+                "value": "default, dark",
+                "from": "ai"
+              }
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "status": "reviewed",
+      "summary": "Banner: on the page, a white body under a solid status header strip (warning #ffb800, info #91d0ff) with a 1px drop; inside a card, a compact tinted row with an icon. The class names say where it sits.",
+      "groups": {
+        "alert": {
+          "variants": {
+            "withinpage": {
+              "note": "Shipping rates changed: a yellow warning header over a white body."
+            },
+            "withincontentcontainer": {
+              "note": "Payment failed.: a pale red row with a red icon, inside a card."
+            }
+          },
+          "sizes": {
+            "s-5sp6fz": {
+              "note": "A title and a line of text."
+            },
+            "s-sqrv7v": {
+              "note": "One line with a 20px icon."
+            }
+          }
+        },
+        "status": {
+          "variants": {
+            "withinpage": {
+              "note": "Store is in test mode: the info banner, a blue header."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@shopify/polaris",
+        "ref": "13.9.5",
+        "retrievedAt": null,
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) of the pack's harness pages: Polaris React 13.9.5 in light and dark-experimental, and Polaris web components for the switch. Partial: the signed-in Shopify Admin pages await the local capture. Names marked docs are Polaris's own component and prop names; ai names are ours."
+  }
+}

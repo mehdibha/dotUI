@@ -400,17 +400,21 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { iconWeight: "bold" },
     { iconLibrary: "phosphor", iconWeight: "bold" },
   ],
-  "states/ring-hides-field-weight": [
-    { focusInputStyle: "ring", focusInputWeight: "thick" },
-    { focusInputStyle: "border", focusInputWeight: "thick" },
+  "states/gap-only-ring": [
+    { focusStyle: "halo", focusRingGap: 3 },
+    { focusRingGap: 3 },
   ],
-  "states/ring-hides-field-ink": [
-    { focusInputStyle: "ring", focusInputColor: "neutral" },
-    { focusInputStyle: "border", focusInputColor: "neutral" },
+  "states/field-width-needs-layer": [
+    { focusInputStyle: "edge", focusFieldWidth: 3 },
+    { focusFieldWidth: 3 },
   ],
-  "states/neutral-ring-owns-field-ink": [
-    { focusColor: "neutral", focusInputColor: "accent" },
-    { focusInputColor: "accent" },
+  "states/underline-owns-field-focus": [
+    { inputStyle: "underline", focusInputStyle: "edge" },
+    { focusInputStyle: "edge" },
+  ],
+  "states/indicator-rule-is-thick": [
+    { inputStyle: "indicator", focusInputStyle: "thick-edge" },
+    { focusInputStyle: "thick-edge" },
   ],
   "motion/popover-none-pins-entrance": [
     { popoverMotion: "none", popoverEntrance: "fade" },

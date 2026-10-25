@@ -1,0 +1,1022 @@
+{
+  "version": 1,
+  "slug": "untitled",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neutral greys (Tailwind neutral, no tint) on a white page, with one purple brand. Values and headings are #171717, control labels #404040, supporting text #525252. Hairlines are #e5e5e5; control rings #d4d4d4. Brand-600 #7f56d9 fills the primary button, brand-700 #6941c6 colors brand text and #f9f5ff washes selected tabs. Focus rings are #9e77ed. Dark keeps every surface on the #0a0a0a page tone and tells them apart by rings and shadows: #fafafa values, #d4d4d4 labels, #a1a1a1 supporting text.",
+      "usage": [
+        "Badges come in twelve colors (gray, brand, error, warning, success, slate, sky, blue, indigo, purple, pink, orange), each a pale fill, a darker ring and darker text.",
+        "Destructive actions use #e7000b."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter throughout. Body text is 16px on 24px; controls, tabs and links are 14px at 600; badges 12px (sm) or 14px (md, lg) at 500. Headings are 600: 18px on 28px, 20px on 30px, and display sizes from 36px carry -2% tracking. The docs set code in the system monospace."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "8px corners on buttons, fields, menus and tooltips; 6px on tabs and square badges; pill badges and avatars are round. Cards round to 12px and modals to 16px. Keyboard keys are 4px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 2px grid where 4, 8, 12 and 16px lead. Buttons run xs to xl, 32 to 48px, with 10 to 18px sides; sm (36px, 12px sides) is the default. Fields are 36, 40 or 44px with 12 or 14px sides."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Controls sit in a 1px inset ring with shadow-xs. Menus take a 10% black ring and shadow-lg; modals and the command palette shadow-xl. Focus is a 2px #9e77ed ring 2px outside (#b692f6 in dark); disabled controls drop to 50% opacity."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Buttons are 600 with 8px corners in five sizes, xs (32px) to xl (48px); sm (36px) is the default. Colors: primary (purple), secondary (white in a ring), tertiary (no fill), two link styles with no frame, and destructive versions of each.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-i4l3fg": {
+              "name": {
+                "value": "primary",
+                "from": "docs"
+              },
+              "note": "#7f56d9 under white, with a 1px darker inner ring (#6846b2)."
+            },
+            "v-7cjjtz": {
+              "name": {
+                "value": "secondary",
+                "from": "docs"
+              },
+              "note": "White in a 1px #d4d4d4 ring with a skeuomorphic shadow-xs, #404040 text."
+            },
+            "v-agpn3o": {
+              "name": {
+                "value": "tertiary",
+                "from": "docs"
+              },
+              "note": "No fill or ring, #525252 text; a fill appears on hover."
+            },
+            "v-n0bhet": {
+              "name": {
+                "value": "link-color",
+                "from": "docs"
+              },
+              "note": "Edit: brand text #6941c6 with no frame or padding."
+            },
+            "v-huaw3p": {
+              "name": {
+                "value": "primary-destructive",
+                "from": "docs"
+              },
+              "note": "#e7000b under white with a 1px #bd0009 inner ring; its focus ring is red."
+            },
+            "v-ds20b1": {
+              "name": {
+                "value": "secondary-destructive",
+                "from": "docs"
+              },
+              "note": "White in a 1px #ffa2a2 ring, #e7000b text."
+            },
+            "v-f8e0eo": {
+              "name": {
+                "value": "tertiary-destructive",
+                "from": "docs"
+              },
+              "note": "#e7000b text, no fill or ring."
+            },
+            "v-fd0bzc": {
+              "note": "Icon-only utility buttons in #a1a1a1, such as a search or dismiss icon."
+            },
+            "v-ycb711": {
+              "note": "Today in a date picker's preset list: #404040 at 500."
+            },
+            "v-w5u0y7": {
+              "note": "A field's help icon, the trigger for its tooltip."
+            },
+            "v-w4jpjl": {
+              "note": "A Select's trigger: white in a 1px #d4d4d4 ring, 40px."
+            },
+            "v-vg7p9m": {
+              "hide": "the docs' props table cells"
+            },
+            "v-wyj0ff": {
+              "hide": "the docs' props table names"
+            },
+            "v-qfzptm": {
+              "hide": "the docs' inline code chips"
+            },
+            "v-o9nsms": {
+              "hide": "the docs' inline code chips"
+            },
+            "v-qmusnm": {
+              "hide": "the docs' inline code chips"
+            },
+            "v-086734": {
+              "hide": "the docs' Props from React Aria disclosure"
+            },
+            "v-jaw0bk": {
+              "hide": "a calendar day"
+            },
+            "v-xngeuh": {
+              "hide": "a whole dashboard card used as a button"
+            },
+            "v-y7km7w": {
+              "hide": "half of a number input's stepper"
+            },
+            "v-2mb3h8": {
+              "hide": "a badge's remove button"
+            },
+            "v-6i2hzn": {
+              "hide": "a badge's remove button"
+            },
+            "v-7urg83": {
+              "hide": "a badge's remove button"
+            },
+            "v-jy0kr0": {
+              "hide": "a badge's remove button"
+            },
+            "v-ll1o0k": {
+              "hide": "a badge's remove button"
+            },
+            "v-lp72hx": {
+              "hide": "a badge's remove button"
+            },
+            "v-nvzsb3": {
+              "hide": "a badge's remove button"
+            },
+            "v-fn6inf": {
+              "hide": "a badge's remove button"
+            },
+            "v-okt1dr": {
+              "hide": "a badge's remove button"
+            },
+            "v-r0dniu": {
+              "hide": "a badge's remove button"
+            },
+            "v-sqwbe1": {
+              "hide": "a badge's remove button"
+            },
+            "v-f9w5k9": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-0d0ygh": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-8hd5x1": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-fj0izq": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-h29n2m": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-l0t6zz": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-p019sn": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-vxfw6h": {
+              "hide": "a badge that is itself a button, in another color"
+            },
+            "v-zgvwvn": {
+              "hide": "a badge that is itself a button, in another color"
+            }
+          },
+          "sizes": {
+            "s-vx547w": {
+              "name": {
+                "value": "xs",
+                "from": "docs"
+              },
+              "note": "32px, 10px sides."
+            },
+            "s-cajuyz": {
+              "name": {
+                "value": "sm",
+                "from": "docs"
+              },
+              "note": "36px, 12px sides: the default."
+            },
+            "s-sgp4vc": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "40px, 14px sides."
+            },
+            "s-ha4w90": {
+              "name": {
+                "value": "lg",
+                "from": "docs"
+              },
+              "note": "44px, 16px sides, 16px text."
+            },
+            "s-s89w2q": {
+              "name": {
+                "value": "xl",
+                "from": "docs"
+              },
+              "note": "48px, 18px sides, 16px text."
+            },
+            "s-tmwaly": {
+              "name": {
+                "value": "sm, icon only",
+                "from": "ai"
+              },
+              "note": "A 36px square with 8px padding."
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-ra06hc": {
+              "name": {
+                "value": "page",
+                "from": "ai"
+              },
+              "note": "A page number in the button group pagination: white in a 1px #d4d4d4 ring, 14px at 600."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links are buttons with no frame (link-color in #6941c6, link-gray in #525252, both 600) or prose links underlined at 500. The docs' sidebar rows are 32px with 8px sides and a 16px icon.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-n0bhet": {
+              "name": {
+                "value": "link-color",
+                "from": "docs"
+              },
+              "note": "Button xs as a link: #6941c6 at 600."
+            },
+            "v-agpn3o": {
+              "name": {
+                "value": "link-gray",
+                "from": "docs"
+              },
+              "note": "#525252 at 600."
+            },
+            "v-yuh3qp": {
+              "name": {
+                "value": "prose",
+                "from": "ai"
+              },
+              "note": "frequently asked questions: #171717 at 500, underlined."
+            },
+            "v-wvtpgh": {
+              "name": {
+                "value": "prose, gray",
+                "from": "ai"
+              },
+              "note": "get in touch: #525252 at 400, underlined."
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "nav",
+                "from": "ai"
+              },
+              "note": "The docs sidebar: 32px rows with 8px sides."
+            },
+            "v-i4l3fg": {
+              "note": "Get PRO: a primary button as a link."
+            },
+            "v-fz0n9b": {
+              "note": "GitHub, Badge groups: a secondary button as a link."
+            },
+            "v-fd0bzc": {
+              "note": "The header's icon links (X, GitHub) in #a1a1a1."
+            },
+            "v-v92edd": {
+              "note": "The previous and next arrows under each page, in a 1px #d4d4d4 ring."
+            },
+            "v-ycb711": {
+              "note": "A member's name on the dashboard: #404040 at 500."
+            },
+            "v-33n91d": {
+              "note": "A tag with a colored dot on the dashboard."
+            },
+            "v-wyj0ff": {
+              "hide": "a heading's anchor link"
+            }
+          },
+          "sizes": {
+            "s-ql3afe": {
+              "name": {
+                "value": "nav row",
+                "from": "ai"
+              },
+              "note": "32px with 8px sides and a 16px icon."
+            },
+            "s-sfdu69": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "20px: links in 16px text."
+            },
+            "s-krcd8v": {
+              "name": {
+                "value": "link button",
+                "from": "ai"
+              },
+              "note": "20px: a link-color or link-gray button at 14px."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Three types share twelve colors: pill-color (fully round), color (6px corners) and modern (white in a #d4d4d4 ring with shadow-xs, gray only). Each color is a pale fill with a 1px ring and darker text at 500. Sizes are sm (22px, 12px text), md (24px, 14px) and lg (28px, 14px).",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-q7eege": {
+              "name": {
+                "value": "modern",
+                "from": "docs"
+              },
+              "note": "White in a 1px #d4d4d4 ring, #404040 text, 6px corners."
+            },
+            "v-bc8un9": {
+              "name": {
+                "value": "gray",
+                "from": "docs"
+              },
+              "note": "#fafafa, a #e5e5e5 ring, #404040 text."
+            },
+            "v-cpr31n": {
+              "name": {
+                "value": "brand",
+                "from": "docs"
+              },
+              "note": "#f9f5ff, a #e9d7fe ring, #6941c6 text; #2c1c5f under #d6bbfb in dark."
+            },
+            "v-ceumaq": {
+              "name": {
+                "value": "error",
+                "from": "docs"
+              },
+              "note": "#fef2f2, #c10007 text."
+            },
+            "v-2e2t23": {
+              "name": {
+                "value": "warning",
+                "from": "docs"
+              },
+              "note": "#fefce8, #a65f00 text."
+            },
+            "v-w7aj98": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "#f0fdf4, #008235 text."
+            },
+            "v-8c02ic": {
+              "name": {
+                "value": "slate",
+                "from": "docs"
+              },
+              "note": "#f8fafc, #314158 text."
+            },
+            "v-e5tqio": {
+              "name": {
+                "value": "sky",
+                "from": "docs"
+              },
+              "note": "#f0f9ff, #0069a8 text."
+            },
+            "v-z4drsd": {
+              "name": {
+                "value": "blue",
+                "from": "docs"
+              },
+              "note": "#eff6ff, #1447e6 text."
+            },
+            "v-r7k9qx": {
+              "name": {
+                "value": "indigo",
+                "from": "docs"
+              },
+              "note": "#eef2ff, #432dd7 text."
+            },
+            "v-dxb47u": {
+              "name": {
+                "value": "purple",
+                "from": "docs"
+              },
+              "note": "#faf5ff, #8200db text."
+            },
+            "v-tgo6hs": {
+              "name": {
+                "value": "pink",
+                "from": "docs"
+              },
+              "note": "#fdf2f8, #c6005c text."
+            },
+            "v-p6wsby": {
+              "name": {
+                "value": "orange",
+                "from": "docs"
+              },
+              "note": "#fff7ed, #ca3500 text."
+            },
+            "v-ol9qih": {
+              "note": "paid in the table: the success pill."
+            },
+            "v-g98ftz": {
+              "note": "cancelled in the table: the error pill."
+            },
+            "v-e8czku": {
+              "note": "refunded in the table: the gray pill."
+            },
+            "v-fz0n9b": {
+              "note": "FREE: a white badge in a #d4d4d4 ring at 600."
+            },
+            "v-828wex": {
+              "note": "⌘/ in the command palette: a 24px key chip."
+            },
+            "v-9a0sfm": {
+              "note": "A calendar's selected date: a 24px #7f56d9 circle."
+            },
+            "v-qe04o3": {
+              "note": "A selected day: a 40px #7f56d9 circle."
+            },
+            "v-7ozt9i": {
+              "note": "Today in the date picker: a 40px #fafafa circle."
+            },
+            "v-cdh1un": {
+              "hide": "an avatar with an online dot, not a badge"
+            },
+            "v-aa9kzr": {
+              "hide": "an avatar with an online dot, not a badge"
+            },
+            "v-3iczqf": {
+              "hide": "a 48px featured icon circle"
+            },
+            "v-8qccuu": {
+              "hide": "a 48px featured icon circle"
+            }
+          },
+          "sizes": {
+            "s-c5ru9l": {
+              "name": {
+                "value": "sm",
+                "from": "docs"
+              },
+              "note": "22px, 12px text."
+            },
+            "s-z8jjvp": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "24px, 14px text."
+            },
+            "s-mzcdfm": {
+              "name": {
+                "value": "lg",
+                "from": "docs"
+              },
+              "note": "28px, 14px text."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Tabs come in five types: button-brand, button-gray, button-border, button-minimal and underline. The docs use button-border (Preview / Code: 36px chips at 14px and 600 in a #fafafa track) and underline (CLI / Manual).",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-o1q1ty": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "#737373 at 600 when not selected."
+            }
+          },
+          "sizes": {
+            "s-oft7vp": {
+              "note": "button-border: 36px, 10px sides."
+            },
+            "s-9n2hp0": {
+              "note": "underline: 32px with 2px sides."
+            },
+            "s-yyl7wm": {
+              "note": "24px."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-svlwy4": {
+              "name": {
+                "value": "button-border",
+                "from": "docs"
+              },
+              "note": "A #fafafa track in a 1px #e5e5e5 ring."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "underline",
+                "from": "docs"
+              },
+              "note": "No track; a 2px line under the current tab."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields draw their box on a wrapper: white, 8px corners, a 1px #d4d4d4 ring and shadow-xs, with the value in #171717 on the input. Sizes are sm (36px, 14px), md (40px, 16px) and lg (44px, 16px, 14px sides). Focus draws a 2px #9e77ed ring inside the wrapper.",
+      "missing": [
+        "The wrapper that draws the box landed under card, so the input reads here with no edge."
+      ],
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-hothue": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The input inside its wrapper."
+            },
+            "v-qnfrv9": {
+              "note": "The page number field in the pagination: 500."
+            },
+            "v-on7unk": {
+              "note": "A tags input: the box holds the tags and the text."
+            }
+          },
+          "sizes": {
+            "s-cajuyz": {
+              "name": {
+                "value": "sm",
+                "from": "docs"
+              },
+              "note": "36px, 12px sides, 14px."
+            },
+            "s-1incjg": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "40px, 12px sides, 16px."
+            },
+            "s-caaa9m": {
+              "name": {
+                "value": "lg",
+                "from": "docs"
+              },
+              "note": "44px, 14px sides."
+            },
+            "s-kfd0mp": {
+              "note": "sm with a leading icon: 36px on the left."
+            },
+            "s-6165xt": {
+              "note": "md with a leading icon: 40px on the left."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-vyjt9t": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "The country picker inside a phone field (US, CA, EU): no frame of its own."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-on7unk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Search: 40px in a 1px #d4d4d4 ring with a leading icon."
+            },
+            "v-u0qu61": {
+              "note": "The same with a ⌘K shortcut chip."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "missing": ["No radio demo is in this census."],
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-ra06hc": {
+              "hide": "an item of the calendar's prev / Today / next button group"
+            }
+          }
+        },
+        "radiogroup": {
+          "variants": {
+            "v-bxmybz": {
+              "hide": "the calendar's prev / Today / next button group"
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Dropdowns are white with 8px corners, a 10% black ring and shadow-lg. Rows are 38px with 6px sides and 14px labels at 600 in #404040 (an inner span carries the label, so the row reads 16px here).",
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "dropdown",
+                "from": "ai"
+              },
+              "note": "The docs' Copy menu: View as markdown, Open in v0."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A row with a 20px icon."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "radio",
+                "from": "ai"
+              },
+              "note": "Month view ⌘M: a radio dot and a shortcut."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "command",
+                "from": "ai"
+              },
+              "note": "The command palette's results."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              }
+            }
+          },
+          "sizes": {
+            "s-aaio5x": {
+              "note": "The command palette: 44px with 8px sides."
+            },
+            "s-hox0km": {
+              "note": "A select's list: 38px."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "command palette",
+                "from": "ai"
+              },
+              "note": "12px corners, no ring, shadow-xl, on the page tone."
+            },
+            "v-q0ksns": {
+              "hide": "the Copy menu's floating panel, not a dialog"
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-q0ksns": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A search select's list: white with a 1px #e5e5e5 ring; #262626 in dark."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-hvnsx0": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "#0a0a0a (#171717 in dark), 8px corners, 12px sides, white 12px text at 600, shadow-lg and an arrow."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-07s1tp": {
+              "name": {
+                "value": "alternating",
+                "from": "ai"
+              },
+              "note": "Alternating fills: every other 72px row on #fafafa; #171717 in dark."
+            },
+            "v-34hnbt": {
+              "hide": "a tags input's box"
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "No card demo is in this census. The calendar's events are the only cards: a pale fill with a 1px ring in the event's color.",
+      "missing": ["The app screens' 12px cards (pack notes) weren't read."],
+      "groups": {
+        "card": {
+          "variants": {
+            "v-6fnba9": {
+              "name": {
+                "value": "event",
+                "from": "ai"
+              },
+              "note": "Team lunch: #fdf2f8 with a 1px #fccee8 ring."
+            },
+            "v-gxr3wf": {
+              "note": "A yellow event: #fefce8, a #fff085 ring."
+            },
+            "v-ux3yj4": {
+              "note": "A blue event: #eff6ff, a #bedbff ring."
+            },
+            "v-rsehye": {
+              "hide": "the docs' props table"
+            },
+            "v-gcz0j6": {
+              "hide": "the docs' FAQ rows"
+            },
+            "v-z9y1e4": {
+              "hide": "the docs' FAQ rows"
+            },
+            "v-svlwy4": {
+              "hide": "the docs' install snippet"
+            },
+            "v-nrntvp": {
+              "hide": "an input's wrapper, which draws its box"
+            },
+            "v-l7d1ng": {
+              "hide": "an input's wrapper with a leading text addon"
+            },
+            "v-fxmaml": {
+              "hide": "the command palette, a dialog"
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-j54w11": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A photo on #f5f5f5 with a 1px #cdcdcd edge."
+            },
+            "v-ughcnz": {
+              "name": {
+                "value": "group",
+                "from": "ai"
+              },
+              "note": "A stacked avatar with a 1.5px white ring."
+            },
+            "v-f233t3": {
+              "name": {
+                "value": "contrast border",
+                "from": "docs"
+              },
+              "note": "contrastBorder: a 0.5px #e5e5e5 edge."
+            },
+            "v-siod2m": {
+              "note": "A photo with a 1px ring."
+            },
+            "v-nivcwl": {
+              "hide": "a 16px country flag inside a badge"
+            },
+            "v-7sdo26": {
+              "hide": "a 16px country flag inside a badge"
+            },
+            "v-d8ef9b": {
+              "hide": "a 16px country flag inside a badge"
+            }
+          },
+          "sizes": {
+            "s-agyqg4": {
+              "name": {
+                "value": "xs",
+                "from": "docs"
+              },
+              "note": "24px."
+            },
+            "s-pz9f8f": {
+              "name": {
+                "value": "sm",
+                "from": "docs"
+              },
+              "note": "32px."
+            },
+            "s-s6ssyi": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "40px."
+            },
+            "s-lq5njs": {
+              "note": "20px."
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-xi2ees": {
+              "name": {
+                "value": "bar",
+                "from": "ai"
+              },
+              "note": "An 8px #e5e5e5 track (#404040 in dark) with a brand fill."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "circle",
+                "from": "ai"
+              },
+              "note": "ProgressCircle: full and half circles from 64 to 200px with the value inside."
+            }
+          },
+          "sizes": {
+            "s-r72gxk": {
+              "note": "8px."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-xi2ees": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #e5e5e5 rule; #262626 in dark."
+            },
+            "v-7o6cmo": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              },
+              "note": "A 1px #d4d4d4 vertical rule."
+            },
+            "v-gcz0j6": {
+              "note": "The calendar's top rule."
+            },
+            "v-lrae9s": {
+              "note": "The pagination's rule."
+            },
+            "v-b4ixdg": {
+              "hide": "the calendar's current-time line"
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-kl416u": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "⌘K: 20px, 4px sides, 12px #525252 at 500 in a 1px #e5e5e5 ring."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-l925ei": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email *: 14px at 500 in #404040 (#d4d4d4 in dark), the asterisk in brand."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "repo",
+        "url": "https://github.com/untitleduico/react",
+        "ref": "1d410cb",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "docs",
+        "url": "https://www.untitledui.com/react/components",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: the public untitledui.com React docs pages and their preview frames, headless in light and dark. Names marked docs are the library's own prop values (button colors and sizes, badge types and colors, tab types, avatar sizes) as untitleduico/react at 1d410cb defines them; names marked ai are ours."
+  }
+}

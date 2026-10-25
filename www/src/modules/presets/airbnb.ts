@@ -68,9 +68,8 @@ export const airbnb = definePreset({
     // States
     // A 2px #222 ring after a 2px white gap.
     focusColor: "neutral",
-    focusInputStyle: "border",
     // Stand-in: focused fields draw a 1.5px #222 edge.
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     // 1px #c13515 edge on a #fff5f3 fill.
     invalidStyle: "tint",
 

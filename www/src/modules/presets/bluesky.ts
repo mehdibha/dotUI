@@ -42,7 +42,7 @@ export const bluesky = definePreset({
 
     // States
     // Fields: a 1px primary edge on a primary_25 fill, no ring.
-    focusInputStyle: "border",
+    focusInputStyle: "edge",
     invalidStyle: "tint",
     disabledTreatment: "fade",
     selectionHighlight: "browser",

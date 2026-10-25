@@ -41,12 +41,10 @@ export const radix = definePreset({
 
     // States
     // A 2px outline 2px out, on accent step 8 (#8da4ef / #435db1). Stand-in:
-    // Soft, the accent at half strength, is nearest in light (ΔE 0.04).
-    focusStrength: "soft",
-    // Fields: the same outline set 1px in, over the edge. Thick draws that
-    // 2px line in the accent.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    // the full accent.
+    // Fields: the same outline set 1px in, over the edge; a thick edge draws
+    // that 2px line in the accent.
+    focusInputStyle: "thick-edge",
     cursorControls: "default",
 
     // Motion

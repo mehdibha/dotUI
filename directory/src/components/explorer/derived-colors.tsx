@@ -238,7 +238,7 @@ function Row({ entry }: { entry: DerivedColor }) {
 function UsedByChip({ used }: { used: DerivedColor["usedBy"][number] }) {
   return (
     <Tooltip delay={300}>
-      <ButtonPrimitives.Button className="rounded border px-1.5 py-0.5 whitespace-nowrap focus-reset focus-visible:focus-ring">
+      <ButtonPrimitives.Button className="rounded border px-1.5 py-0.5 whitespace-nowrap outline-none focus-visible:focus-ring">
         {used.component}
       </ButtonPrimitives.Button>
       <TooltipContent className="max-w-sm text-left">

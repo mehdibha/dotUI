@@ -56,7 +56,7 @@ export const claude = definePreset({
     focusStyle: "inset",
     focusWidth: 1,
     // Fields: the 10% ring turns #2a78d6, under a faint 6px #cde2fb glow.
-    focusInputStyle: "border",
+    focusInputStyle: "edge",
     disabledTreatment: "fade",
     cursorDisabled: "default",
     // No ::selection rule.

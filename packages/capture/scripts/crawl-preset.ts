@@ -90,6 +90,7 @@ import {
 import type { Step } from "../src/probe"
 import {
   COPY_AREA,
+  documentOf,
   type PartFile,
   type Snapshot,
   snapshotSnippet,
@@ -1355,20 +1356,6 @@ async function saved(dir: string): Promise<CensusPage[]> {
       )
       .map((file) => readJson<CensusPage>(resolve(folder, file))),
   )
-}
-
-/** A copy as a page of its own, on the color it sat on, its fonts loaded
- *  from where the product serves them. */
-const documentOf = (copy: Snapshot) => {
-  const faces = copy.fonts
-    .map(
-      (font) =>
-        `@font-face{font-family:${JSON.stringify(font.family)};src:${font.src}${font.weight ? `;font-weight:${font.weight}` : ""}${font.style ? `;font-style:${font.style}` : ""}${font.unicodeRange ? `;unicode-range:${font.unicodeRange}` : ""}}`,
-    )
-    .join("\n")
-  const css = `${faces}\nbody{margin:0;padding:16px;background:${copy.backdrop}}\n${copy.css}`
-  // A "<" in the CSS would close the style element.
-  return `<!doctype html><html><head><meta charset="utf-8"><style>${css.replace(/</g, "\\3c ")}</style></head><body>${copy.html}</body></html>\n`
 }
 
 /** Each look's copies as part files:

@@ -58,8 +58,6 @@ const HELD: Partial<Record<string, string[][]>> = {
   iconLibrary: [["Stroke"], ["Weight"]],
   density: [["Text size"]],
   lightBg: [["Light page"], ["Dark page"]],
-  focusStyle: [["Strength"], ["Width"], ["Color"]],
-  focusInputStyle: [["Weight"], ["Ink"]],
   buttonStyle: [["Seam", "Group seam", "Button group"]],
   dialogBackdrop: [["Strength"], ["Frost"]],
 }

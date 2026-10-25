@@ -1,0 +1,624 @@
+{
+  "version": 1,
+  "slug": "higgsfield",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Dark only. Pages are #131416, raised panels #1e2124 and #23262a; text is white or #f7f7f8 with #898a8b for quiet labels. The one accent is a lime #d1fe17 under near-black #1a1a1a ink, on the main action, the current nav item and the Premium tag. Its soft form is a dark olive tint (#262b15) with lime text.",
+      "usage": [
+        "Glass surfaces (menus, the dialog, some buttons) are translucent fills blurred 40px with a 1px ring of white at 5%.",
+        "There is no light theme: the app's light rules only cover code blocks and a separate builder."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter: 14px at 500 with 0.1px tracking for menus, nav and buttons, 16/24 for body text, 12/16 at 500 for labels and tags. Marketing headlines use heavy uppercase display type; small eyebrow labels are monospace at 11px with wide tracking."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "8px corners on menu rows and small controls, 10 to 12px on buttons, cards and menus, 24px on the sign-up dialog. Tags and chips are pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Compact controls on a 4px step: buttons 40px (sm) and 48px (md) with 16px padding, menu rows 36px with 8px, header pills 36px with 12px. Tags are 16px tall with 4px padding."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Depth comes from fills and inner highlights more than shadows: a 0 1.5px 3px white-at-5% inset on dark pills, a 0 2px 3px black-at-15% inset on tiles, a 1px white-at-5% ring on menus. Marketing buttons add a 3px darker inset along the bottom edge."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Q's Button comes in primary (lime), secondary (white), tertiary (white at 10%, blurred), ghost, outline and brand soft, at sm 40px and md 48px. The home page and the image studio add header pills and icon buttons. Many entries here are media tiles and the cookie panel, which use buttons.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-zfmxv6": {
+              "name": { "value": "primary", "from": "docs" },
+              "note": "Lime #d1fe17, #1a1a1a text at 500: Generate, Sign up."
+            },
+            "v-gjma3n": {
+              "name": { "value": "primary", "from": "docs" },
+              "note": "The same at 600: Generate at md, the cookie panel's Save Changes."
+            },
+            "v-8a9tw1": {
+              "name": { "value": "secondary", "from": "docs" },
+              "note": "White with #1a1a1a text and a 0 2px 4px drop: Secondary."
+            },
+            "v-dadu9o": {
+              "name": { "value": "secondary", "from": "docs" },
+              "note": "The same at md, text at 600."
+            },
+            "v-f7299i": {
+              "name": { "value": "tertiary", "from": "docs" },
+              "note": "White at 10% over the page (#2b2b2d), blurred 40px: Tertiary."
+            },
+            "secondary": {
+              "name": { "value": "tertiary", "from": "docs" },
+              "note": "Q's tertiary at md, which carries a secondary class: #2e3031, blurred."
+            },
+            "v-wnkte9": {
+              "name": { "value": "tertiary", "from": "docs" },
+              "note": "Cancel in the dialog, a step lighter (#34373a) over the raised surface."
+            },
+            "v-fgn5qd": {
+              "name": { "value": "ghost", "from": "docs" },
+              "note": "No fill, white text: Ghost."
+            },
+            "v-bmnubw": {
+              "name": { "value": "outline", "from": "docs" },
+              "note": "#0f1113 with a 1px #27292b edge: Outline, View."
+            },
+            "v-np6y0l": {
+              "name": { "value": "outline, hover", "from": "ai" },
+              "note": "View under the pointer: #3f4042 with a #525355 edge."
+            },
+            "v-dtvjc9": {
+              "name": { "value": "brand-soft", "from": "docs" },
+              "note": "Olive #262b15 with lime text: Brand soft."
+            },
+            "v-oz7oi5": {
+              "name": { "value": "brand-soft", "from": "docs" },
+              "note": "The header's Login, a darker olive (#1d2313) with a faint inner highlight."
+            },
+            "v-7124ta": {
+              "name": { "value": "chip", "from": "ai" },
+              "note": "A 28px pill, #2b2b2d edge, #828282 text: Chip."
+            },
+            "v-6gf3q5": {
+              "name": { "value": "toggle, off", "from": "ai" },
+              "note": "Bold: grey #828282 text, no fill."
+            },
+            "v-010uje": {
+              "name": { "value": "select trigger", "from": "ai" },
+              "note": "The image studio's Auto aspect picker: a #3d3e41 pill."
+            },
+            "v-5l5j8s": {
+              "name": { "value": "select trigger", "from": "ai" },
+              "note": "16:9 in the harness: a #1f1f21 field-like trigger."
+            },
+            "v-vwjnfc": {
+              "name": { "value": "icon", "from": "ai" },
+              "note": "A #1b1d1f square with a faint inner highlight."
+            },
+            "v-nr7nu4": {
+              "name": { "value": "icon, filled", "from": "ai" },
+              "note": "A 38px #2e3134 icon button in the image studio."
+            },
+            "top-50": { "hide": "the home page's app shortcut tiles" },
+            "v-8wzfzl": {
+              "hide": "model and preset tiles, and the model picker's rows"
+            },
+            "v-3192z1": { "hide": "the cookie consent panel's buttons" },
+            "v-c3xxij": { "hide": "the cookie consent panel's Select All" },
+            "v-ozjjfe": { "hide": "the cookie consent panel's close" },
+            "v-21fovw": { "hide": "the sign-up promo card" }
+          },
+          "sizes": {
+            "s-2i554k": {
+              "name": { "value": "sm", "from": "docs" },
+              "note": "40px, 16px padding, 14px."
+            },
+            "s-wgpmvw": {
+              "name": { "value": "md", "from": "docs" },
+              "note": "48px, 16px padding, 18px."
+            },
+            "md": {
+              "note": "40px with a 36px icon: a home page hover button."
+            },
+            "s-5dcc09": {
+              "name": { "value": "header", "from": "ai" },
+              "note": "36px, 12px padding: Sign up and Login."
+            },
+            "s-8etfv0": {
+              "name": { "value": "xs", "from": "ai" },
+              "note": "24px, 10px padding: the studio header's Login."
+            },
+            "s-avbtr2": {
+              "name": { "value": "compact", "from": "ai" },
+              "note": "32px, 8px padding, a 16px icon."
+            },
+            "s-3k88xb": { "note": "32px, 12px padding." },
+            "s-eun14g": { "note": "40px, 12px padding." },
+            "s-y7nueg": { "note": "28px, 12px padding." },
+            "s-vp01q1": { "note": "40px square, a 20px icon." },
+            "s-uhfm0k": { "note": "38px, a 24px icon." },
+            "s-ywu7zw": { "note": "36px square, a 16px icon." },
+            "s-nkoibz": { "note": "24px square, a 16px icon." }
+          }
+        }
+      },
+      "usage": ["Focus draws a lime ring at 48%."]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-o4fkty": {
+              "name": { "value": "like", "from": "ai" },
+              "note": "A blurred 28px chip with a heart and a count (983) over a media tile."
+            },
+            "v-s41lcl": {
+              "name": { "value": "option", "from": "ai" },
+              "note": "Square in the layout menu: a row that toggles."
+            }
+          },
+          "sizes": {
+            "s-ukk61j": { "note": "28px, 8px padding, 12px." },
+            "s-4ll9w2": { "note": "36px, 8px padding." }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Header nav links are 14px at 500: dim #57585a or #a8a8a8, lime when current. Marketing calls to action are links drawn as raised pills, lime or white, with a darker inset along the bottom.",
+      "groups": {
+        "link": {
+          "variants": {
+            "brand-alpha": {
+              "note": "View all presets: lime text on #3d4914 with a 2px #374212 edge, 48px."
+            },
+            "v-8s0042": {
+              "name": { "value": "nav", "from": "ai" },
+              "note": "Image in the header: #a8a8a8, 28px with 8px padding."
+            },
+            "v-ipuk6r": {
+              "name": { "value": "nav, dim", "from": "ai" },
+              "note": "Explore: a darker #57585a."
+            },
+            "v-3cfzug": {
+              "name": { "value": "nav, current", "from": "ai" },
+              "note": "Image while on it: lime."
+            },
+            "v-6z9k87": {
+              "name": { "value": "nav pill", "from": "ai" },
+              "note": "Cinema Studio: #898a8b on a #1c1e20 pill, 32px."
+            },
+            "v-di1ef3": {
+              "name": { "value": "header pill", "from": "ai" },
+              "note": "Pricing: #1b1d1f with a faint inner highlight, 36px."
+            },
+            "v-1xwpul": {
+              "name": { "value": "cta, lime", "from": "ai" },
+              "note": "Start generating: lime, a 3px #829b19 inset at the bottom, a soft drop."
+            },
+            "v-umymaw": {
+              "name": { "value": "cta, lime", "from": "ai" },
+              "note": "Recreate for Free: the same at 40px, text at 500."
+            },
+            "v-euenyh": {
+              "name": { "value": "cta, white", "from": "ai" },
+              "note": "Learn more: white, a darker inset at the bottom."
+            },
+            "v-nvu6s7": {
+              "name": { "value": "cta, soft", "from": "ai" },
+              "note": "Explore community: lime text on #222913."
+            },
+            "v-svj499": {
+              "name": { "value": "headline", "from": "ai" },
+              "note": "SEEDANCE 2.5: lime uppercase at 700, 28px."
+            },
+            "v-mj10hp": {
+              "name": { "value": "footer", "from": "ai" },
+              "note": "Help center: #f7f7f8 at 14px."
+            },
+            "v-5bpj9j": {
+              "name": { "value": "inline", "from": "ai" },
+              "note": "credit policy: lime in running text."
+            },
+            "v-3bw39e": { "hide": "the lime marquee strip's links" },
+            "v-8wzfzl": { "hide": "model and preset tiles" },
+            "v-5vlkbi": { "hide": "feature tiles on the home page" },
+            "v-3h3jh7": { "hide": "feature cards on the home page" },
+            "v-l4ehs8": { "hide": "the cookie panel's Cookie Notice" },
+            "v-tc9pvu": { "hide": "an icon link in the image studio" },
+            "v-grxlpn": { "hide": "a home page banner image" },
+            "v-pv58md": { "hide": "a home page video tile" }
+          },
+          "sizes": {
+            "lg": { "note": "48px, 12px padding." },
+            "s-rrvxax": { "note": "28px, 8px padding, 14px." },
+            "s-rxdq05": { "note": "24px with a 16px icon." },
+            "s-eufz43": { "note": "32px, 12px padding, 16px." },
+            "s-h1nuu9": { "note": "36px, 12px padding, a 16px icon." },
+            "s-cqbfho": { "note": "24px, 10px padding." },
+            "s-wgpmvw": { "note": "48px, 16px padding, 18px." },
+            "s-2i554k": { "note": "40px, 16px padding, 14px." },
+            "s-aqvu0p": { "note": "38px, 12px padding, 12px." },
+            "s-4peaea": { "note": "28px uppercase." },
+            "s-e3i944": { "note": "28px uppercase." },
+            "s-e7ts0x": { "note": "14px." },
+            "s-hs9bnx": { "note": "16px." }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-vhgaqb": {
+              "name": { "value": "premium", "from": "ai" },
+              "note": "PREMIUM: lime with near-black uppercase at 700, 10px."
+            },
+            "v-k0oct2": {
+              "name": { "value": "new", "from": "ai" },
+              "note": "New: #898a8b on #23262a."
+            },
+            "v-bq51mr": {
+              "name": { "value": "promo", "from": "ai" },
+              "note": "30% OFF: white at 700 on a pink radial gradient."
+            },
+            "v-os3wz1": {
+              "name": { "value": "duration", "from": "ai" },
+              "note": "0:30 on a video: white on blurred near-black."
+            },
+            "v-5at98b": {
+              "name": { "value": "tooltip", "from": "ai" },
+              "note": "References on hover: #171717 with a 1px #222222 edge, 26px."
+            },
+            "v-0m5hd7": {
+              "name": { "value": "tooltip, white", "from": "ai" },
+              "note": "Upscale to 4K in the harness: white with #1a1a1a text."
+            },
+            "v-8s0042": { "hide": "a header nav label (ChatGPT Plugin)" },
+            "v-ipuk6r": { "hide": "a header nav label, dimmed" },
+            "v-f7llxh": {
+              "hide": "the header's Contests label in a gold gradient"
+            },
+            "v-v3bx06": { "hide": "an icon button in the image studio" }
+          },
+          "sizes": {
+            "s-d3bpd2": { "note": "16px, 4px padding, 10px." },
+            "s-bxsh22": { "note": "28px, 12px padding, 14px." },
+            "s-yqvkgh": { "note": "26px, 8px padding, 12px." },
+            "s-uwsug6": { "note": "About 24px, 8px padding, 13px." }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-hl7bpe": {
+              "name": { "value": "underline", "from": "ai" },
+              "note": "History: #626262 at 500, no fill; the current tab is white over a 2px bar."
+            },
+            "v-zw5wkb": {
+              "name": { "value": "segmented", "from": "ai" },
+              "note": "Liked: #828282 on a #1f1f21 chip, 32px."
+            }
+          },
+          "sizes": {
+            "s-4bmgow": { "note": "52px, 14px." },
+            "s-j7af53": { "note": "32px, 12px padding, 12px." }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-5thvdk": {
+              "name": { "value": "underline", "from": "ai" },
+              "note": "Overview, History over a 1px #1f1f21 rule."
+            }
+          }
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-2lytj4": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Video: #8f8f90 at 500."
+            }
+          },
+          "sizes": {
+            "s-2d54cy": { "note": "32px, 8px padding, 12px." }
+          }
+        },
+        "segmented": {
+          "variants": {
+            "v-194vjp": {
+              "name": { "value": "track", "from": "ai" },
+              "note": "Image, Video, Audio: #1f1f21 with a 1px #353537 edge, 4px inset."
+            },
+            "v-msbx78": {
+              "name": { "value": "indicator", "from": "ai" },
+              "note": "The chosen segment's chip: #2a2a2c with a 1px #343436 edge."
+            }
+          },
+          "sizes": {
+            "s-ohhndl": { "note": "40px." },
+            "s-lyr3za": { "note": "32px." }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-5l5j8s": {
+              "name": { "value": "prompt", "from": "ai" },
+              "note": "A neon city at dusk: white 14px text inside the #1f1f21 prompt box."
+            },
+            "v-y7bbuv": {
+              "name": { "value": "search", "from": "ai" },
+              "note": "The model picker's Search...: #1b1c1f over a 1px #222326 bottom rule."
+            }
+          },
+          "sizes": {
+            "s-vr6r9i": { "note": "The input line alone, 14px." },
+            "s-ytvf7l": { "note": "42px, a 24px icon." }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-z1zm7s": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A 24px box in the harness, a dim ring on the page color."
+            }
+          }
+        }
+      },
+      "missing": ["The checked box wasn't read."]
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-z1zm7s": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A 24px circle in the harness, the same dim ring."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-x5560l": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Off: a #5c626a track with a white thumb, 16px tall."
+            },
+            "v-s41lcl": {
+              "name": { "value": "menu row", "from": "ai" },
+              "note": "Split by date in the layout menu: a 36px row with a switch at its end."
+            }
+          },
+          "sizes": {
+            "s-tfv5og": { "note": "16px tall." },
+            "s-ax5p1m": { "note": "36px row, 8px padding." }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are glass: #1d2023 blurred 40px, a 1px ring of white at 5%, 12px corners. Rows are 36px with 8px padding and 14px text at 500; the current row fills #282b2e.",
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-oxytu4": {
+              "name": { "value": "glass", "from": "ai" },
+              "note": "The header's language menu: English, Español, 日本語…"
+            },
+            "v-olqws7": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The image studio's layout menu: #1c1e21, no blur."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-iuq9fd": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Español: white at 500 on the menu."
+            },
+            "v-tsds1m": {
+              "name": { "value": "current", "from": "ai" },
+              "note": "English: a #282b2e fill."
+            }
+          },
+          "sizes": {
+            "s-6lgb5m": { "note": "36px, 8px padding, 14px." }
+          }
+        },
+        "menuitemcheckbox": {
+          "variants": {
+            "v-iuq9fd": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The aspect ratio menu's 1:1 row, with a 20px icon."
+            }
+          },
+          "sizes": {
+            "s-onsaxu": { "note": "36px, 8px padding." }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-6xk655": { "hide": "the cookie consent panel" }
+          }
+        }
+      },
+      "missing": ["The harness dialog (Delete generation?) landed in card."]
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-lxbzgk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Higgsfield Pick, on hover: #171717 with a 1px #222222 edge, white text."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-xw3mf7": {
+              "name": { "value": "dialog", "from": "ai" },
+              "note": "Delete generation? in the harness: #1e2124 blurred 40px, an inner highlight, Cancel and a lime Delete."
+            },
+            "v-yzzvjg": {
+              "name": { "value": "menu", "from": "ai" },
+              "note": "The harness's aspect menu (Auto, 16:9, 9:16): #1e2124 with a 1px white-at-5% ring, blurred."
+            },
+            "primary-reverted": {
+              "note": "Try Photodump: a white pill with dark text over a feature tile."
+            },
+            "v-jqwn20": {
+              "name": { "value": "primary-reverted", "from": "ai" },
+              "note": "Try Supercomputer: the same white pill."
+            },
+            "v-6xk655": { "hide": "generated media tiles" },
+            "v-ptvy4n": { "hide": "empty media placeholders" },
+            "v-x8qp2n": { "hide": "home page section frames" },
+            "v-af8l7t": { "hide": "images in the studio feed" },
+            "v-3td1ti": { "hide": "a home page section background" },
+            "v-6gdxde": { "hide": "a home page section background" },
+            "v-hd35ss": { "hide": "a home page section background" },
+            "v-8n3oha": { "hide": "a feature card's image grid" },
+            "v-acxvsg": { "hide": "the FREE GENS promo" },
+            "v-b2qa1y": { "hide": "a dashed lime outline around a home tile" },
+            "v-bnfn3d": { "hide": "a media tile's hover shade" },
+            "v-rnqlp0": { "hide": "a lime call to action, see link" }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-n9dm56": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A 24px creator photo on #383e46."
+            },
+            "v-554u2x": {
+              "name": { "value": "ringed", "from": "ai" },
+              "note": "A 24px avatar under a white gradient ring."
+            },
+            "v-921bno": {
+              "name": { "value": "with name", "from": "ai" },
+              "note": "A 28px avatar on a blurred chip with the handle (joeysnoisygroup)."
+            },
+            "v-y2uuwv": {
+              "name": { "value": "brand", "from": "ai" },
+              "note": "A 24px lime circle with a #829b19 inset."
+            },
+            "v-sigpky": {
+              "name": { "value": "add", "from": "ai" },
+              "note": "A glass 37px circle with a +."
+            },
+            "v-by9qy6": { "hide": "flags in the language menu" }
+          },
+          "sizes": {
+            "s-y8os2i": { "note": "24px." },
+            "s-eqazmu": { "note": "28px." },
+            "s-egj3bs": { "note": "About 37px." }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-7vzzr0": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A #27292b rule between list items."
+            },
+            "v-2xg4cx": {
+              "name": { "value": "strong", "from": "ai" },
+              "note": "A lighter #323436 rule on the home page."
+            },
+            "v-hwfi7z": {
+              "name": { "value": "menu", "from": "ai" },
+              "note": "A #4e4f52 rule inside the layout menu."
+            },
+            "v-62rvj2": { "hide": "the underline tab's white selection bar" }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-9o6d0k": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Prompt: 12px at 500, white."
+            }
+          },
+          "sizes": {
+            "s-rm85bc": { "note": "12/16." }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://higgsfield.ai/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: the home page, the image studio, and a harness (q.html) that lays out Q's own components with the stylesheets higgsfield.ai ships. Dark only. Partial: the pricing page and the signed-in library aren't in this census. Names marked docs are Q's own class names; names marked ai are ours."
+  }
+}
