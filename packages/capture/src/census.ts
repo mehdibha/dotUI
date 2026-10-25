@@ -1630,7 +1630,9 @@ function argNames(pages: CensusPage[]) {
 /** Each key's values over the members, most used first. A component's
  *  element without one of its data attributes shows the default, so a
  *  data-* value names the look only when at least half the members a
- *  data-component names carry it (not one danger item among plain ones). */
+ *  data-component names carry it (not one danger item among plain ones),
+ *  or half of them all when none is named (not GitHub's repo tabs by the
+ *  counter two of them hold). */
 const tally = (names: Names[]) => {
   const counts = new Map<string, Map<string, number>>()
   for (const each of names)
@@ -1643,7 +1645,7 @@ const tally = (names: Names[]) => {
   const holds = (key: string, count: number) =>
     !key.startsWith("data-") ||
     ["data-component", "data-slot", "data-part"].includes(key) ||
-    count * 2 >= components
+    count * 2 >= (components || names.length)
   return Object.fromEntries(
     [...counts]
       .sort(([a], [b]) => a.localeCompare(b))

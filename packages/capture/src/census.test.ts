@@ -267,11 +267,12 @@ describe("census", () => {
       "test",
     )
     const [look, other] = looks.filter((one) => one.group === "button")
-    // size is drawn the same under every value it took: not a name.
+    // size is drawn the same under every value it took: not a name. Brand,
+    // on one of four, doesn't name the look.
     expect(look?.names).toEqual({
       "args.variant": ["primary"],
       "data-size": ["medium"],
-      "data-variant": ["primary", "brand"],
+      "data-variant": ["primary"],
     })
     expect(other?.names).toEqual({ "args.variant": ["secondary"] })
     expect(looks.find((one) => one.group === "text@button")?.names).toBe(
@@ -301,6 +302,17 @@ describe("census", () => {
       "data-component": ["ActionList.Item"],
       "data-variant": ["danger"],
     })
+    // No component named: half of all the members.
+    const tab = (id: number, x: number, variant?: string) => ({
+      ...button(id, x, blue),
+      names: variant ? { "data-variant": variant } : {},
+    })
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100), tab(3, 200)]),
+    ).toBeUndefined()
+    expect(
+      namesOf([tab(1, 0, "secondary"), tab(2, 100, "secondary"), tab(3, 200)]),
+    ).toEqual({ "data-variant": ["secondary"] })
   })
 
   it("names by a story's args only what their passes redrew", () => {
