@@ -21,7 +21,6 @@ import {
 } from "../axes/states.meta"
 import { DialSelect, DialSlider } from "../dial"
 import type { RowMap } from "../row-host"
-import { useStudio } from "../use-studio"
 import { ArrowCursor, HandCursor } from "./cursors"
 
 const INK = "var(--color-border-focus)"
@@ -82,86 +81,6 @@ function InvalidSpecimen({ invalid }: { invalid: string }) {
             : undefined,
       }}
     />
-  )
-}
-
-const mix = (color: string, pct: number) =>
-  `color-mix(in oklab, ${color} ${pct}%, transparent)`
-
-/** The ring on a part that covers its own box (a check, a thumb): outside
- *  the edge, except Halo, which hugs it. */
-function partRing({ focusStyle, focusWidth }: Effective, ink: string) {
-  return {
-    outline: `${focusWidth}px solid ${focusStyle === "halo" ? mix(ink, 50) : ink}`,
-    outlineOffset: focusStyle === "halo" ? 0 : 2,
-  }
-}
-
-/** The ring on a button: Inset draws it inside, over a page-colored line. */
-function buttonRing(state: Effective, ink: string) {
-  if (state.focusStyle !== "inset") return partRing(state, ink)
-  const width = state.focusWidth
-  return {
-    outline: `${width}px solid ${ink}`,
-    outlineOffset: -width,
-    boxShadow: `inset 0 0 0 ${width + 1}px var(--color-bg)`,
-  }
-}
-
-function fieldFocus(state: Effective, ink: string): React.CSSProperties {
-  if (state.inputStyle === "underline")
-    return {
-      borderWidth: "0 0 2px",
-      borderColor: ink,
-      borderRadius: 0,
-      background: "none",
-    }
-  switch (state.focusInputStyle) {
-    case "edge":
-      return { borderColor: ink }
-    case "thick-edge":
-      return {
-        borderColor: ink,
-        outline: `2px solid ${ink}`,
-        outlineOffset: -2,
-      }
-    case "ring":
-      return { borderColor: ink, ...buttonRing(state, ink), boxShadow: "none" }
-    default:
-      return { borderColor: ink, outline: `2px solid ${mix(ink, 35)}` }
-  }
-}
-
-/** What keyboard focus looks like on a button, a check, a switch and a
- *  field, in the panel's own inks. */
-export function FocusSpecimen() {
-  const { effective: state } = useStudio()
-  const ink = state.focusColor === "neutral" ? "var(--color-fg)" : INK
-  const part = partRing(state, ink)
-  return (
-    <div className="flex h-36 shrink-0 flex-col items-center justify-center gap-5 rounded-lg tint-5">
-      <div className="flex items-center gap-6">
-        <span
-          className="flex h-7 items-center rounded-md bg-fg px-3 text-[12px] font-medium text-bg"
-          style={buttonRing(state, ink)}
-        >
-          Save
-        </span>
-        <span className="size-4 rounded-[4px] bg-fg" style={part} />
-        <span
-          className="relative h-[18px] w-[30px] rounded-full bg-fg/25"
-          style={part}
-        >
-          <span className="absolute top-0.5 left-0.5 size-3.5 rounded-full bg-fg" />
-        </span>
-      </div>
-      <span
-        className="flex h-8 w-48 items-center rounded-md border border-fg/20 bg-bg px-2.5 text-[12px] text-fg/50"
-        style={fieldFocus(state, ink)}
-      >
-        name@company.com
-      </span>
-    </div>
   )
 }
 

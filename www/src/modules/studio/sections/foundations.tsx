@@ -18,7 +18,6 @@ import {
   CursorPreview,
   DisabledPreview,
   FocusPreview,
-  FocusSpecimen,
   TextSelectionPreview,
 } from "./states"
 import { SurfacesRow } from "./surfaces"
@@ -169,13 +168,7 @@ function Rows({ rows }: { rows: FoundationRow[] }) {
   })
 }
 
-/** `lead` sits above the page's rows: a specimen they edit together. */
-const page = ({
-  lead: Lead,
-  ...page
-}: Omit<ChapterPage, "Body" | "rows"> & {
-  lead?: React.ComponentType
-}): ChapterPage => {
+const page = (page: Omit<ChapterPage, "Body" | "rows">): ChapterPage => {
   const groups = PAGE_ROWS[page.id] ?? []
   return {
     ...page,
@@ -183,10 +176,9 @@ const page = ({
     Body: function FoundationPage() {
       return (
         <>
-          {Lead && <Lead />}
           {groups.map((group, i) => (
             <Fragment key={i}>
-              {(i > 0 || Lead) && <DialGap />}
+              {i > 0 && <DialGap />}
               {"title" in group && (
                 <DialGroupTitle>{group.title}</DialGroupTitle>
               )}
@@ -213,7 +205,6 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
     owners: ["focusStyle", "focusWidth", "focusColor", "focusInputStyle"],
     aliases: ["Focus ring", "Keyboard"],
     Preview: FocusPreview,
-    lead: FocusSpecimen,
   }),
   page({
     id: "disabled",

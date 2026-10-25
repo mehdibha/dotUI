@@ -178,9 +178,10 @@ export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 
 /* Under its row, a popover covers the rows below: the row's width, a row gap
    away, a step brighter than the row with a deeper shadow so it reads as on
-   top. Its hover tints step from that surface. */
+   top. Its hover tints step from that surface. Unlike other panel popovers it
+   keeps the registry popover's entrance. */
 const UNDER_ROW =
-  "w-(--trigger-width)! min-w-0! max-w-none! border-fg/10 bg-(--panel-surface) shadow-xl [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
+  "w-(--trigger-width)! min-w-0! max-w-none! border-fg/10 bg-(--panel-surface) shadow-xl transition-[transform,opacity,scale] will-change-[transform,opacity,scale] [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
 
 /** What a DialTrigger opens: a run of dial rows beside the row, shown whole;
  *  with a bottom `placement`, under it instead. */
