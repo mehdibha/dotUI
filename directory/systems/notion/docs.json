@@ -1,0 +1,492 @@
+{
+  "version": 1,
+  "slug": "notion",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Warm greys: #2c2c2b ink on a white page, #7d7a75 for muted text, a #f9f8f7 sidebar, and edges drawn as faint warm rings (rgba(42, 28, 0, 0.07), about #f0efed) rather than grey borders. Blue #2783de is the one strong color in the chrome (Start with this template, focus #2383e2). Content colors come from Notion's tag palette: pale fills under dark ink of the same hue. Dark mode is #191919 with #f0efed ink, #202020 cards and sidebar, #252525 menus.",
+      "usage": [
+        "Links take the text's own color and weight, underlined, instead of blue."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "The system UI font (ui-sans-serif) everywhere in the app: 16px on a 24px line for page content, 14px for controls (500 for labels and primary buttons, 400 for quiet ones), 12px for metadata and property labels. Inline code is SFMono in a smaller size. The login page is the marketing face and uses Inter."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Small, consistent radii: 6px on buttons, menu rows and options, 10px on cards and menus, 12px on dialogs, 20px on the search palette. Tags are 3.5px rectangles; Status properties are full pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Tight, on a 2px grid: 6 and 8px are the common gaps, then 12px. Controls are 28px, small ones 24px, view tabs 32px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Every edge is a 1px ring in box-shadow, so cards and menus have no real border. Cards add a faint 4px 12px drop; menus and popovers a softer 20px 24px one; the search palette and dialogs a deep 24px 48px shadow. In dark the ring is #383836."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Mostly quiet: 28px buttons with 6px corners and no fill until hover, icon buttons for almost every action, labels at 14px. The blue primary appears once a page (Start with this template). Pages also hold Button blocks, outlined with an emoji. The markup names none of the looks.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-82h5jn": {
+              "name": { "value": "quiet icon", "from": "ai" },
+              "note": "No fill until hover, ink-colored icons: the top bar's Notion logo, a page's actions."
+            },
+            "v-m5xyhg": {
+              "name": { "value": "quiet icon, muted", "from": "ai" },
+              "note": "A database toolbar's Filter and Sort in #7d7a75; the filter icon turns blue once a filter is on."
+            },
+            "v-yygmq4": {
+              "name": { "value": "icon", "from": "ai" },
+              "note": "24px icons at full ink with no frame: the sidebar toggle ☰."
+            },
+            "v-modnc6": {
+              "name": { "value": "primary", "from": "ai" },
+              "note": "Blue #2783de, white text at 500: Start with this template."
+            },
+            "v-puzqoi": {
+              "name": { "value": "button block", "from": "docs" },
+              "note": "A page's Button block: a 1px #e6e5e3 ring, an emoji, 500: Notion Basics for Beginners."
+            },
+            "v-wegtt0": {
+              "name": { "value": "filled", "from": "ai" },
+              "note": "A 5% black fill: the database's view picker, Gallery view ▾."
+            },
+            "v-3xemq8": {
+              "name": { "value": "filter chip", "from": "ai" },
+              "note": "An active filter: a pale blue pill with blue ink, To-Do Completion: Contains Tasks ▾."
+            },
+            "v-meqns8": {
+              "name": { "value": "quiet, muted", "from": "ai" },
+              "note": "Grey text with an icon: Language: English (US) ▾ on the login page."
+            },
+            "v-wz9g2p": {
+              "name": { "value": "breadcrumb", "from": "ai" },
+              "note": "The page's title in the top bar, at 600 with its icon: Templates."
+            },
+            "v-q9ledn": {
+              "name": { "value": "social tile", "from": "ai" },
+              "note": "Log in with Google: a 72px white tile, a 1px ring and a 2px drop."
+            },
+            "v-q45y7k": {
+              "name": { "value": "primary, marketing", "from": "ai" },
+              "note": "Continue on the login page: a 40px #2383e2 button with an inner ring and a faint gradient."
+            },
+            "v-do7b2i": {
+              "name": { "value": "icon, active", "from": "ai" },
+              "note": "A blue icon for an open panel: the side peek toggle."
+            },
+            "v-lidmgm": {
+              "hide": "the ⋯ of a hovered row: a quiet icon button caught on hover"
+            },
+            "v-5x7fcs": {
+              "hide": "the Filter icon caught on hover"
+            }
+          },
+          "sizes": {
+            "s-uzxfn9": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "28px, 6px padding, 14px, a 16px icon."
+            },
+            "s-wuwjfl": {
+              "name": { "value": "top bar", "from": "ai" },
+              "note": "28px, 8px padding, a 22px icon."
+            },
+            "s-0gqap5": {
+              "name": { "value": "icon 24", "from": "ai" },
+              "note": "A 24px square with a 20px icon."
+            },
+            "s-7ilnvj": {
+              "name": { "value": "32", "from": "ai" },
+              "note": "32px, 12px padding: button blocks."
+            },
+            "s-n9hfld": {
+              "name": { "value": "tile", "from": "ai" },
+              "note": "The login page's 72px social tiles."
+            },
+            "s-fque1j": {
+              "name": { "value": "icon 28", "from": "ai" },
+              "note": "A 28px square, 16px text."
+            },
+            "s-3kklgi": {
+              "name": { "value": "marketing", "from": "ai" },
+              "note": "40px, 12px padding: Continue."
+            }
+          }
+        }
+      },
+      "usage": [
+        "Hover fills a quiet button with 5% of the ink color; focus draws a 2px #2383e2 ring outside a 2px gap."
+      ],
+      "missing": [
+        "The signed-in app's buttons (dialogs, settings) await the local capture."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links in content keep the text's color and weight and get a grey underline; page mentions add the page's icon. Many link looks are whole cards and sidebar rows, left out here.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-r0uc4z": {
+              "name": { "value": "inline", "from": "ai" },
+              "note": "Learn more in a callout: grey text over a 1px underline drawn as a border."
+            },
+            "v-yygmq4": {
+              "name": { "value": "page mention", "from": "docs" },
+              "note": "Intro to Biology: the page's icon, its title at 500, underlined."
+            },
+            "v-fsx8la": {
+              "name": { "value": "muted", "from": "ai" },
+              "note": "Grey and underlined at 12px: a template's credit line, Power Of Habits."
+            },
+            "v-1edv4f": {
+              "name": { "value": "muted, login", "from": "ai" },
+              "note": "Sign up under the login form."
+            },
+            "v-m5xyhg": {
+              "name": { "value": "muted, inline", "from": "ai" },
+              "note": "A grey underlined word in a line of text."
+            },
+            "v-t10841": {
+              "name": { "value": "web bookmark", "from": "docs" },
+              "note": "A Web bookmark block: a 1px-ringed box with the site's title, description and address."
+            },
+            "v-82h5jn": {
+              "hide": "board cards and sidebar rows drawn as links: see card and tree"
+            },
+            "v-wz9g2p": {
+              "hide": "the top bar's page title: see button"
+            }
+          },
+          "sizes": {
+            "s-96usa6": {
+              "name": { "value": "14px", "from": "ai" }
+            },
+            "s-f4lyfp": {
+              "name": { "value": "12px", "from": "ai" }
+            },
+            "s-h8qgta": {
+              "name": { "value": "mention", "from": "ai" },
+              "note": "14px with a 3px inset for the icon."
+            },
+            "s-sfdu69": {
+              "name": { "value": "16px", "from": "ai" }
+            },
+            "s-gb2ose": {
+              "name": { "value": "bookmark", "from": "ai" }
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Database properties draw the badges. Status is a pill with a colored dot (grey Not started, blue In progress, green Done); Select tags are 3.5px rectangles in the same pale palette.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-3t57l8": {
+              "name": { "value": "status, done", "from": "docs" },
+              "note": "A Status property: green #cfe1d6 under #2a533c, a green dot."
+            },
+            "v-hxt9z2": {
+              "name": { "value": "status, in progress", "from": "docs" },
+              "note": "Blue #c1def5 under #264a72."
+            },
+            "v-94vooo": {
+              "name": { "value": "status, not started", "from": "docs" },
+              "note": "Grey #e0dedb under #494846."
+            },
+            "v-dyvd06": {
+              "hide": "a relation property's page link: see link"
+            },
+            "v-2qq7au": {
+              "hide": "inline code the template colored orange (Do it today!): a text style"
+            },
+            "v-ydetqh": {
+              "hide": "a page link in a table cell"
+            }
+          },
+          "sizes": {
+            "s-fkf4ag": { "note": "20px, 7px padding, 14px." }
+          }
+        }
+      },
+      "missing": [
+        "Select and multi-select tags (Today, Week on the gallery cards) weren't read on their own."
+      ]
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "A database's views are tabs: 32px, a 20px icon and a 14px label at 500 in the muted color; the current view is full ink with a 2px underline.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-6vopsr": {
+              "name": { "value": "view tab", "from": "ai" },
+              "note": "Calendar, Table: unselected views."
+            }
+          },
+          "sizes": {
+            "s-dq1hgd": { "note": "32px, 12px padding." }
+          }
+        }
+      },
+      "missing": ["The current view's tab reads only as selected."]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "The login field, Notion's marketing face: 40px, 8px corners, a 1px ring with a 2px drop, 15px text inset 16px. Focus swaps the ring for a 1px blue one inside and out.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-95ajoh": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Enter your email address."
+            },
+            "v-vxobch": {
+              "name": { "value": "focused", "from": "ai" },
+              "note": "The same field focused: #2383e2 rings."
+            }
+          },
+          "sizes": {
+            "s-yn8hw3": { "note": "40px, 16px padding." }
+          }
+        }
+      },
+      "missing": ["The app's own fields (search, invite) are signed in only."]
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-3cq6q2": {
+              "name": { "value": "login label", "from": "ai" },
+              "note": "Email: 12px at 500 in the muted color."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are white panels with 10px corners and a soft shadow, 28px rows with an icon and 6px corners. The first row opens focused: a 5% fill and a 2px blue ring.",
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A view's ⋯ menu: Copy link to view, Open as full page."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-82h5jn": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "An icon and a 14px label."
+            },
+            "v-2rfdht": {
+              "name": { "value": "focused", "from": "ai" },
+              "note": "The first row as the menu opens."
+            }
+          },
+          "sizes": {
+            "s-p1yi0b": { "note": "28px rows." }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The view picker's list: Gallery view."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-82h5jn": {
+              "name": { "value": "two-line", "from": "ai" },
+              "note": "The login page's language list: the language's own name over its English name."
+            },
+            "v-hafh4b": {
+              "name": { "value": "highlighted", "from": "ai" },
+              "note": "The highlighted row: a 5% fill. Habit tracker, Current Page in the search palette."
+            }
+          },
+          "sizes": {
+            "s-vz9rg2": {
+              "name": { "value": "two-line", "from": "ai" },
+              "note": "45px."
+            },
+            "s-kska9q": {
+              "name": { "value": "search result", "from": "ai" },
+              "note": "36px, 8px padding."
+            },
+            "s-p1yi0b": {
+              "name": { "value": "menu row", "from": "ai" },
+              "note": "28px."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "On public pages the only dialog is the search palette: centered, 20px corners, a 40px backdrop blur on the panel and a deep shadow, with no dimming behind it.",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-p7s9dk": {
+              "name": { "value": "search palette", "from": "ai" },
+              "note": "Search in the top bar: rows with 12px corners and a page preview."
+            },
+            "v-0rzf9x": {
+              "hide": "a tooltip (Lock sidebar open): dark #2c2c2b with its shortcut"
+            },
+            "v-yaf3on": {
+              "hide": "the view menu's panel: see menu"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The app's Settings dialog (12px corners over a 60% dark backdrop) is signed in only."
+      ]
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-8p1xmk": {
+              "name": { "value": "floating sidebar", "from": "ai" },
+              "note": "The sidebar that slides in on hover when it isn't locked open: white, a 1px ring, a 20px 24px soft shadow."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Board and gallery cards: white, 10px corners, a 1px warm ring and a faint 4px 12px drop; #202020 in dark. A card in a colored board group takes a tinted ring.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-htrij8": {
+              "name": { "value": "board card", "from": "docs" },
+              "note": "Go to the Gym: a title with its icon and a property under it."
+            },
+            "v-81r9rd": {
+              "name": { "value": "gallery card", "from": "docs" },
+              "note": "Tasks: tags and progress bars in a Gallery view."
+            },
+            "v-68m209": {
+              "name": { "value": "board card, colored", "from": "ai" },
+              "note": "Play Fortnite in a blue board group: a #dcedf9 ring."
+            },
+            "v-asioed": {
+              "hide": "a table view's header row"
+            },
+            "v-0za9l6": {
+              "hide": "a heading block the template colored blue: block color, not a card"
+            },
+            "v-98b2eb": {
+              "hide": "the search palette's page preview"
+            },
+            "v-gar8bg": {
+              "hide": "a heading block the template colored yellow (Danger zone)"
+            },
+            "v-segqxe": {
+              "hide": "a database preview in the search palette"
+            },
+            "v-wrvmbj": {
+              "hide": "the database's filter bar"
+            }
+          }
+        }
+      },
+      "missing": ["Callout blocks weren't read as their own look."]
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "number as bar", "from": "docs" },
+              "note": "A number property shown as a bar: a thin grey track with a green fill (33%)."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-ftc03d": {
+              "name": { "value": "divider", "from": "docs" },
+              "note": "A Divider block: 1px of the ink at 11% (#e6e5e3)."
+            },
+            "v-uh3irc": {
+              "name": { "value": "row rule", "from": "ai" },
+              "note": "1px under a table's rows, at 7%."
+            },
+            "v-26z2zv": {
+              "hide": "the sidebar's resize edge"
+            }
+          }
+        }
+      }
+    },
+    "tree": {
+      "status": "reviewed",
+      "groups": {
+        "treeitem": {
+          "variants": {
+            "v-7fiedq": {
+              "name": { "value": "sidebar page", "from": "ai" },
+              "note": "A page in the sidebar: 30px, an icon, #5f5e59 ink on the #f9f8f7 sidebar."
+            }
+          },
+          "sizes": {
+            "s-gykllm": { "note": "30px rows, 16px text, a 20px icon." }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.notion.so/login",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: three published template pages on notion.site (the app's own renderer, light and dark) and the login page. Partial: the signed-in app (Settings dialog, switches, date picker) awaits the local capture. Names marked docs are Notion's own block and property names; ai names are ours."
+  }
+}

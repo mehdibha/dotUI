@@ -1,0 +1,401 @@
+{
+  "version": 1,
+  "slug": "govuk",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Near-black #0b0c0c text on white, #484949 for secondary text, #cecece borders and #f3f3f3 for plates and inactive tabs. Links are blue #1a65a6, the header and brand blue #1d70b8, and the main button green #0f7a52. Focus is a yellow #ffdd00 fill, not a ring. Live gov.uk sets its footer and feedback band on a pale blue #f4f8fb.",
+      "missing": [
+        "Light only: GOV.UK has no dark theme (39 of 40 live pages shot in dark were identical)."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "GDS Transport (licensed to gov.uk, with Arial as its fallback) at 19px on a 25px line for body copy and form labels, 16px for small print and the header. Headings are 700: 48px page titles, 24px and 19px section heads. Big question labels step up to 36px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Square: no corner radius anywhere except a 1px on tags. Fields, radios and checkboxes draw a 2px black edge; radios are the one round shape."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "On a 5px scale: 10, 15, 20 and 30px are the common steps. Fields are 40px, buttons about 38px plus their 2px lip, the header 61px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "No soft shadows. Buttons stand on a solid 2px lip (#083d29 under green, #858686 under grey) that disappears when pressed; the feedback buttons use a 3px black one."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "govuk-button: 19px text, square corners, a solid 2px lip in a darker shade. The default is green (Save and continue); secondary is a #f3f3f3 plate (Find address). Focus turns any button yellow with black text and a black lip; disabled ones drop to 50% opacity.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-pjn0af": {
+              "name": { "value": "default", "from": "docs" },
+              "note": "Green #0f7a52, white text, a 2px #083d29 lip: Save and continue."
+            },
+            "secondary": {
+              "note": "A #f3f3f3 plate on a 2px #858686 lip: Find address."
+            },
+            "v-aqha0o": {
+              "name": { "value": "feedback", "from": "ai" },
+              "note": "Yes and No under Is this page useful?: no fill, a 1px black border and a 3px black lip, on the pale blue band."
+            },
+            "v-xzjfs6": {
+              "name": { "value": "search", "from": "ai" },
+              "note": "The header search's submit: a blue #1d70b8 square with a white magnifier."
+            },
+            "v-uvsc64": {
+              "name": { "value": "link", "from": "ai" },
+              "note": "A button drawn as an underlined link: Show 3 more topics."
+            }
+          },
+          "sizes": {
+            "s-chtoyu": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "38px, 10px padding, 19px text."
+            },
+            "s-mx94q8": {
+              "name": { "value": "small", "from": "ai" },
+              "note": "37px with 16px text: the feedback band."
+            },
+            "s-iwp8gl": {
+              "name": { "value": "icon", "from": "ai" },
+              "note": "A 50px square: the header search."
+            },
+            "s-fm366q": {
+              "name": { "value": "text", "from": "ai" },
+              "note": "Text-sized."
+            }
+          }
+        }
+      },
+      "usage": [
+        "One green button per question page, at the bottom of the form: Continue."
+      ],
+      "missing": [
+        "The start button (with an arrow), warning (red) and inverse (white) buttons weren't read."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-lxw81j": {
+              "name": { "value": "header toggle", "from": "ai" },
+              "note": "Menu and the search icon on the blue header: white text at 700, no frame, opening a panel below."
+            }
+          },
+          "sizes": {
+            "s-14l80i": {
+              "name": { "value": "icon", "from": "ai" },
+              "note": "The search toggle: 61px tall, 20px padding."
+            },
+            "s-7kwmc0": {
+              "name": { "value": "text", "from": "ai" },
+              "note": "Menu: 16px text."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "govuk-link: blue #1a65a6, underlined, 400, at the size of the text around it; navigation and next steps go bold. On the pale blue footer the same blue holds. The captured class names (sidebar, footer, calendar) come from gov.uk's publishing components.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-lnsc7k": {
+              "name": { "value": "default", "from": "docs" },
+              "note": "Blue and underlined, 19px: the footer's topic links (Benefits)."
+            },
+            "sidebar": {
+              "note": "The same link in related links and the summary card's Change."
+            },
+            "footer": {
+              "note": "Bold blue: next steps like Living in France."
+            },
+            "v-edxyjf": {
+              "name": { "value": "menu", "from": "ai" },
+              "note": "Bold blue topics in the opened header menu."
+            },
+            "calendar": {
+              "note": "A download link with a calendar icon: Add bank holidays to your calendar."
+            },
+            "v-lhe9l7": {
+              "name": { "value": "text colour", "from": "docs" },
+              "note": "Black and underlined: © Crown copyright in the footer."
+            },
+            "v-xzjfs6": {
+              "hide": "the GOV.UK logo on the header"
+            }
+          },
+          "sizes": {
+            "s-7a5i4t": {
+              "name": { "value": "body", "from": "ai" },
+              "note": "19px."
+            },
+            "s-f5wwx1": {
+              "name": { "value": "small", "from": "ai" },
+              "note": "16px."
+            },
+            "s-1ck858": {
+              "name": { "value": "body, two lines", "from": "ai" }
+            },
+            "s-1w0hjg": {
+              "name": { "value": "small, two lines", "from": "ai" }
+            },
+            "s-fh8hwl": { "hide": "the logo" },
+            "s-k7xfr4": { "hide": "the crown copyright block" },
+            "s-ohbhdm": {
+              "name": { "value": "body, tight", "from": "ai" },
+              "note": "19px on a 19px line."
+            },
+            "s-cbdwsi": {
+              "name": { "value": "heading", "from": "ai" },
+              "note": "24px."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "govuk-tag: 30px, 8px padding, 19px at 400, a 1px corner, no border, a pale fill under dark ink of the same hue. Blue is the default; the class names the others.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "blue": { "note": "The default: Pending." },
+            "green": { "note": "New." },
+            "grey": { "note": "Inactive." },
+            "magenta": { "note": "Sent." },
+            "orange": { "note": "Declined." },
+            "purple": { "note": "Received." },
+            "red": { "note": "Rejected." },
+            "teal": { "note": "Active." },
+            "yellow": { "note": "Delayed." },
+            "v-d9cgk8": {
+              "hide": "the header Menu toggle's label: see toggle-button"
+            },
+            "v-p6wl7a": {
+              "hide": "the header Menu toggle's label: see toggle-button"
+            }
+          },
+          "sizes": {
+            "s-3o2ac5": { "note": "30px, 8px padding, 19px." },
+            "s-3hhssu": { "hide": "the header Menu label" }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "govuk-tabs on Bank holidays: unselected tabs are #f3f3f3 plates with underlined black labels; the selected one is a white folder tab with a 1px #cecece edge that steps onto the panel.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-xefaja": {
+              "name": { "value": "unselected", "from": "ai" },
+              "note": "Scotland: a grey plate, an underlined label."
+            }
+          },
+          "sizes": {
+            "s-7xr6cf": {
+              "note": "19px labels, 20px inline padding on the plate."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-a9x3b8": {
+              "name": { "value": "default", "from": "docs" },
+              "note": "The row of tabs over a 1px #cecece rule."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "govuk-input: white, a 2px #0b0c0c edge, square, 40px, 19px text with 5px padding. Width classes size it to the expected answer (width-10 for a postcode). Focus thickens the edge to 4px and adds a 3px yellow outline.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "width-10": {
+              "note": "The postcode field in the address fieldset."
+            }
+          },
+          "sizes": {
+            "s-ottmhp": { "note": "40px, 5px padding, 19px." }
+          }
+        }
+      },
+      "missing": ["The error state (a red edge and message) wasn't read."]
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-t0h38u": {
+              "name": { "value": "default", "from": "docs" },
+              "note": "A native select styled like the input: 2px black edge, 40px. The country list on Check if you need a UK visa."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "default": {
+              "note": "The header's search field: 50px, a 2px black edge on three sides, the blue submit button closing the fourth."
+            }
+          },
+          "sizes": {
+            "s-679sch": { "note": "50px, 19px." }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-m56f67": {
+              "name": { "value": "option label", "from": "ai" },
+              "note": "A checkbox or radio label: 19px at 400."
+            },
+            "v-q2cxdq": {
+              "name": { "value": "question", "from": "ai" },
+              "note": "A label that is the page's question: bold."
+            }
+          },
+          "sizes": {
+            "l": { "note": "govuk-label--l: 36px on a 40px line." },
+            "s-7jtmlz": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "19px on a 25px line."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "GOV.UK draws few boxes. Panels are flat colored blocks (the green confirmation), related content hangs under a 2px blue top rule, and the summary card is a 1px #cecece box with a grey title band. No card has a shadow or radius.",
+      "groups": {
+        "card": {
+          "variants": {
+            "confirmation": {
+              "note": "govuk-panel: the green block with a big date, The next bank holiday is 25 December."
+            },
+            "v-xyxk0z": {
+              "name": { "value": "related content", "from": "ai" },
+              "note": "A 2px #1d70b8 rule over a heading and links."
+            },
+            "v-jitiyu": {
+              "name": { "value": "feedback", "from": "ai" },
+              "note": "Is this page useful?: the pale blue #f4f8fb band with a 1px #8eb8dc top rule."
+            },
+            "v-r7suc7": {
+              "name": { "value": "summary card", "from": "docs" },
+              "note": "A 1px #cecece box with a #f3f3f3 title band (Lead tenant)."
+            },
+            "v-dzjbai": {
+              "hide": "the next-page link block at the end of a guide: see pagination"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The notification banner (a 5px blue frame) wasn't placed in the grid."
+      ]
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-cpp840": {
+              "name": { "value": "footer rule", "from": "ai" },
+              "note": "1px #8eb8dc across the pale blue footer."
+            }
+          }
+        }
+      }
+    },
+    "breadcrumbs": {
+      "status": "reviewed",
+      "summary": "govuk-breadcrumbs: 16px black underlined links split by chevrons.",
+      "groups": {
+        "breadcrumb": {
+          "variants": {
+            "v-cysucv": {
+              "name": { "value": "default", "from": "docs" },
+              "note": "Home › Working, jobs and pensions."
+            }
+          }
+        }
+      }
+    },
+    "pagination": {
+      "status": "reviewed",
+      "summary": "govuk-pagination: numbered pages as 19px underlined blue links, Previous and Next in bold with an arrow. Long guides use the block form: Previous or Next over the page's title.",
+      "groups": {
+        "pagination-item": {
+          "variants": {
+            "v-oftqfr": {
+              "name": { "value": "previous", "from": "docs" },
+              "note": "Bold, an arrow: Previous page."
+            },
+            "v-uvsc64": {
+              "name": { "value": "page number", "from": "ai" },
+              "note": "1, 2, 3: underlined blue at 400."
+            },
+            "v-a5ru7g": {
+              "name": { "value": "block", "from": "docs" },
+              "note": "Previous over the page's title: Warnings and insurance."
+            }
+          },
+          "sizes": {
+            "s-4dl5fr": { "note": "19px with a 15px arrow." },
+            "s-gujce4": {
+              "name": { "value": "block", "from": "ai" },
+              "note": "Two lines, 30px padding."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The current page (a blue box with white numerals) reads only as selected."
+      ]
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "docs",
+        "url": "https://design-system.service.gov.uk/components/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: five live gov.uk pages and ten GOV.UK Design System examples, light only. Names marked docs come from the Design System; ai names are ours."
+  }
+}
