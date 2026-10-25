@@ -401,21 +401,37 @@ async function snapshot(
     })
   }
 
+  const opaque = (fill: string) => {
+    const alpha = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(fill)
+    return (
+      fill !== "transparent" &&
+      (!alpha ||
+        (fill.startsWith("rgb(") && !fill.includes("/")) ||
+        Number(alpha[1]) / (alpha[2] ? 100 : 1) >= 1)
+    )
+  }
   const backdropOf = (el: Element) => {
+    // What paints under its middle first: a layer drawn behind it need not
+    // be an ancestor (Airbnb's dark banner under its AI search switch).
+    const box = el.getBoundingClientRect()
+    const stack = (el.getRootNode() as Document | ShadowRoot).elementsFromPoint(
+      box.x + box.width / 2,
+      box.y + box.height / 2,
+    )
+    const at = stack.indexOf(el)
+    if (at >= 0)
+      for (const node of stack.slice(at + 1)) {
+        const style = getComputedStyle(node)
+        if (style.opacity !== "0" && opaque(style.backgroundColor))
+          return style.backgroundColor
+      }
     for (
       let node = el.parentElement ?? (el.getRootNode() as ShadowRoot).host;
       node;
       node = node.parentElement ?? (node.getRootNode() as ShadowRoot).host
     ) {
       const fill = getComputedStyle(node).backgroundColor
-      const alpha = /[,/]\s*([\d.]+)(%?)\s*\)$/.exec(fill)
-      if (
-        fill !== "transparent" &&
-        (!alpha ||
-          (fill.startsWith("rgb(") && !fill.includes("/")) ||
-          Number(alpha[1]) / (alpha[2] ? 100 : 1) >= 1)
-      )
-        return fill
+      if (opaque(fill)) return fill
     }
     // The canvas: Chrome's in a dark color scheme, else white. With both
     // schemes listed, the user's preference picks.
@@ -470,6 +486,7 @@ async function snapshot(
 
   const copies: Record<string, Omit<Snapshot, "fonts"> & { used: string[] }> =
     {}
+  const copied = new Map<string, Element>()
   for (const el of found) {
     const key = keyOf(el)
     if (keys && !keys.includes(key)) continue
@@ -485,12 +502,21 @@ async function snapshot(
       css: rules.join("\n"),
       width: Math.round(box.width * 100) / 100,
       height: Math.round(box.height * 100) / 100,
-      backdrop: backdropOf(el),
+      backdrop: "",
       redacted: redact,
       used: [...families],
     }
+    copied.set(key, el)
   }
   frame?.remove()
+
+  // After the copies, so they don't carry it: layers drawn behind a
+  // control often ignore the pointer.
+  const hit = document.createElement("style")
+  hit.textContent = "*{pointer-events:auto!important}"
+  document.documentElement.append(hit)
+  for (const [key, el] of copied) copies[key]!.backdrop = backdropOf(el)
+  hit.remove()
 
   // Read once, after every copy has named its families.
   families.clear()
