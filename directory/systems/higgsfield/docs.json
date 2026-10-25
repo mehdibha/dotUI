@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "higgsfield",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Dark only. Pages are #131416, raised panels #1e2124 and #23262a; text is white or #f7f7f8 with #898a8b for quiet labels. The one accent is a lime #d1fe17 under near-black #1a1a1a ink, on the main action, the current nav item and the Premium tag. Its soft form is a dark olive tint (#262b15) with lime text.",

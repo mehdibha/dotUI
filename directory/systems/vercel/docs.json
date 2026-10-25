@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "vercel",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Geist is near-greyscale. Light pages are #fafafa with #fff cards, fields and menus, #171717 ink and #4d4d4d for secondary text. Dark pages are #000 with #0a0a0a surfaces, #ededed ink and #a1a1a1 secondary. Every hairline is one alpha grey: black at 8% in light (#ebebeb on white), white at 14% in dark. The main action is the ink itself, not a color. Blue (#0072f5) is kept for focus rings, switches and sliders; red #da2f35 and amber #ff990a for the error and warning buttons.",

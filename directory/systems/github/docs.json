@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "github",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Cool greys on white, nearly neutral: #1f2328 ink, #59636e for secondary text, #d1d9e0 borders and #f6f8fa for bands and default buttons. Blue (#0969da) is links, focus and selection; green (#1f883d) is kept for the primary action and open states; purple marks merged. Dark mode is its own palette: #0d1117 page, #f0f6fc ink, #3d444d borders, a lighter blue (#4493f8) for links.",
@@ -1345,6 +1345,184 @@
       "called": []
     }
   },
+  "pages": {
+    "https://github.com/mehdibha/dotUI": {
+      "title": "Repository",
+      "summary": "A repository's front page, signed out: the black global header, the repository header on a grey band with its tab bar, then the files and README beside a sidebar.",
+      "layout": [
+        "Global header 72px, black in both modes; the repository header under it is 100px, a #f6f8fa band (#010409 in dark) closed by a 1px rule.",
+        "Content is 1216px wide at x112: a 904px column for the files and README, and a 272px sidebar 40px to its right.",
+        "Tabs, toolbar controls and file rows share 32px heights and 6px corners.",
+        "A 114px footer of small links closes the 3196px page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/issues": {
+      "title": "Issues",
+      "summary": "The issue list in its newer layout: a navigation sidebar on the page's left edge and one wide list beside it.",
+      "layout": [
+        "Sidebar 256px wide, flush to the left edge and 728px tall.",
+        "The list column starts at x280, 24px after the sidebar, and runs to 24px from the right edge (1136px).",
+        "A single 32px filter input heads the column; rows are 65px.",
+        "The footer is 59px here, against 114px on the repository page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/pulse": {
+      "title": "Pulse",
+      "summary": "Repository insights: a side menu and a column of reports, each report a bordered box.",
+      "layout": [
+        "The repository page's 1216px frame: a 296px menu at x112 and an 896px report column at x432, 24px to its right.",
+        "Reports are 6px boxes with a 1px #d1d9e0 border; the overview's header is a #f6f8fa band.",
+        "The merged pull requests list makes most of the 4468px page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/pulls": {
+      "title": "Pull requests",
+      "summary": "The pull request list: no sidebar, one wide column of rows under a filter input.",
+      "layout": [
+        "One 1232px column at x104, 104px from each edge.",
+        "A 32px filter input at the top; rows are 67px, split by 1px rules."
+      ]
+    },
+    "https://github.com/search?q=design+system&type=repositories": {
+      "title": "Search",
+      "summary": "Repository search results: a filter sidebar on the left edge and a column of result cards.",
+      "layout": [
+        "Filters 296px wide, flush to the left edge.",
+        "Results in a 731px column at x321, 25px after the filters, with pagination centred under them.",
+        "Each result is a 6px bordered card with 16px padding."
+      ]
+    }
+  },
+  "blocks": {
+    "global-header": {
+      "title": "Global header",
+      "note": "The signed-out header, black in both modes: the logo, five menus that open mega-menus, a search field with a / hint, and Sign in and Sign up.",
+      "uses": ["button", "kbd"]
+    },
+    "repo-header": {
+      "title": "Repository header",
+      "note": "Owner and name over the underline tab bar, on the #f6f8fa band. The current tab is underlined in coral (#fd8c73); counts sit in grey pills.",
+      "uses": ["breadcrumbs", "tabs", "badge"]
+    },
+    "repo-title": {
+      "title": "Repository title",
+      "note": "Avatar, name and a Public label on the left; 28px Notifications, Fork and Star buttons on the right, #f6f8fa with a 1px #d1d9e0 border. The copy wraps Star onto a second line; on the page it sits in the row.",
+      "uses": ["avatar", "badge", "button"]
+    },
+    "file-toolbar": {
+      "title": "File toolbar",
+      "note": "Branch select, branch and tag counts, a Go to file input and the Code button, all 32px with 6px corners. Green (#1f883d) is kept for this one primary action.",
+      "uses": ["select", "button", "text-field"]
+    },
+    "file-list": {
+      "title": "File list",
+      "note": "A bordered box: the latest commit on a #f6f8fa header row, then 41px rows of name, last commit message and age, split by 1px #d1d9e0 rules.",
+      "uses": ["table", "avatar", "link"]
+    },
+    "readme": {
+      "title": "README",
+      "note": "A bordered box that opens on its own tab bar (README, Contributing, license) with the same coral underline. The markdown sets h1 at 32px and h2 at 24px, both at 600 over a bottom rule.",
+      "uses": ["tabs", "link"]
+    },
+    "about-sidebar": {
+      "title": "About",
+      "hide": "the sidebar block holds all of it"
+    },
+    "sidebar-sections": {
+      "title": "Sidebar",
+      "note": "About, Releases and Contributors stacked with 16px above and below each and a rule between. Topics are pills of 12px text at 600, #0969da on #ddf4ff.",
+      "uses": ["badge", "link", "separator"]
+    },
+    "site-footer": {
+      "title": "Footer",
+      "note": "One centred row: the mark, the copyright and small grey links.",
+      "uses": ["link"]
+    },
+    "platform-menu": {
+      "title": "Platform menu",
+      "note": "The header's mega-menu: a black panel with 8px corners, a 1px #3d444d ring and a deep shadow; four columns of icon, title and one-line description over a #0f1511 footer row.",
+      "uses": ["menu", "link"]
+    },
+    "command-palette": {
+      "title": "Command palette",
+      "note": "Opens from the header's search field: a 480px overlay with 12px corners, the input on top and grouped Jump to rows of 33px below.",
+      "uses": ["combobox", "list-box"]
+    },
+    "branch-picker": {
+      "title": "Branch picker",
+      "note": "A 320px panel with 12px corners: a title and close button, a filter input, Branches and Tags tabs, then rows with a check on the current branch and a default label.",
+      "uses": ["popover", "text-field", "tabs", "list-box", "badge"]
+    },
+    "clone-panel": {
+      "title": "Clone panel",
+      "note": "The Code button's 400px overlay: an HTTPS and GitHub CLI segmented control, a read-only monospace URL field with a copy button, then action rows.",
+      "uses": ["popover", "segmented-control", "text-field", "button", "menu"]
+    },
+    "issues-sidebar": {
+      "title": "Issues sidebar",
+      "note": "32px rows with 6px corners; the current one sits on a grey fill with a blue bar at its left. Groups are split by a rule, and Feedback and Collapse sidebar sit at the bottom.",
+      "uses": ["list-box", "badge", "separator"]
+    },
+    "issues-filter": {
+      "title": "Issues filter",
+      "note": "The page title and a green New issue button over one 32px filter input that marks its qualifiers in blue.",
+      "uses": ["text-field", "button"]
+    },
+    "issue-list": {
+      "title": "Issue list",
+      "note": "A bordered box with 6px corners: Open and Closed counts and filter menus on its header row, then 65px rows of an open icon, the title, labels as colored pills and a muted meta line, with assignees on the right.",
+      "uses": ["badge", "avatar", "menu", "segmented-control"]
+    },
+    "issue-row": {
+      "title": "Issue row",
+      "note": "One row of the list at full size: icon, title, meta line, and the comment count on the right.",
+      "uses": ["link"]
+    },
+    "author-filter": {
+      "title": "Author filter",
+      "note": "A 320px filter menu from the list's header: a title, a search input, then rows of avatar, name and secondary text, the selected one marked by a blue bar. Redacted, as it lists people.",
+      "uses": ["popover", "text-field", "list-box", "avatar"]
+    },
+    "insights-nav": {
+      "title": "Insights menu",
+      "note": "A bordered box of 38px rows split by rules; the current row is marked by a coral (#fd8c73) bar on its left."
+    },
+    "pulse-overview": {
+      "title": "Pulse overview",
+      "note": "A bordered box with a #f6f8fa header: two 8px bars split pull requests (purple #8250df merged, green open) and issues, over four count tiles.",
+      "uses": ["progress-bar", "card"]
+    },
+    "pulse-summary": {
+      "title": "Pulse summary",
+      "note": "Two 440px boxes side by side: a written summary with green additions and red deletions, and a bar chart of top committers.",
+      "uses": ["card"]
+    },
+    "merged-list": {
+      "title": "Merged pull requests",
+      "note": "A heading centred on a rule, then a plain list of merge icons, bold titles and a small meta line, with no boxes or dividers.",
+      "uses": ["link"]
+    },
+    "pr-row": {
+      "title": "Pull request row",
+      "note": "Like an issue row, 67px: state icon, title, a blue label, then a meta line with an outlined Owner pill and the check status; comments and avatar on the right.",
+      "uses": ["badge", "avatar", "link"]
+    },
+    "search-filters": {
+      "title": "Search filters",
+      "note": "Result types with count pills, the current one on a grey fill with a blue bar, then Languages with colored dots.",
+      "uses": ["list-box", "badge"]
+    },
+    "repo-result": {
+      "title": "Repository result",
+      "note": "A bordered card with 6px corners and 16px padding: avatar and name with the matched words in bold, description, topic pills (#ddf4ff, 12px at 500) and a meta line, with a 28px Star button on the right.",
+      "uses": ["card", "avatar", "badge", "button", "link"]
+    },
+    "pagination": {
+      "title": "Pagination",
+      "note": "Previous and Next as text links, 32px page buttons with 6px corners, the current page filled blue.",
+      "uses": ["pagination"]
+    }
+  },
   "provenance": {
     "method": "manual",
     "extractor": null,
@@ -1364,6 +1542,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census eb3e7cf) and its page shots. Names marked ai are ours; docs names come from Primer's documentation."
+    "notes": "Written section by section from the census (spec.json, census eb3e7cf) and its page shots; pages and blocks from blocks.json's copies of 2026-10-25 and their computed styles. Names marked ai are ours; docs names come from Primer's documentation."
   }
 }

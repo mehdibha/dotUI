@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "pinterest",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "White pages, black #000000 text (older surfaces still use #211922) and #62625b for quiet text. Pinterest red #e60023 fills the main action; warm grey #e5e5e0 fills secondary buttons, chips and the search bar. Control edges are #91918c and focus is blue #435ee5. Trends and search guides tint their chips in soft pastels (#eef7de, #ebe2fd, #c7f0da, #fbdfff).",

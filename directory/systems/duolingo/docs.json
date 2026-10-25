@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "duolingo",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "White pages with grey ink (#3c3c3c, #4b4b4b on controls), #777777 and #afafaf for quieter text, #e5e5e5 for every border and #f7f7f7 for field fills. Brand colors carry meaning: green #58cc02 is the main action and the logo, blue #1cb0f6 links and selection, red #ff4b4b a wrong answer, purple #ce82ff the New word tag. Dark mode moves to a blue-black #131f24 with #37464f borders, lightens the green to #93d333 and puts dark ink on it.",

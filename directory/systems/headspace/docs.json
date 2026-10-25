@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "headspace",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Warm greys on white: ink #2d2c2b, quieter text #44423f and #63605d, borders #e2ded9, and #f9f4f2 under chips, secondary buttons and tinted cards. The marketing pages keep an older body ink, #4b4c4d. Blue #0061ef (hover #0040ea) is the primary and the link color. The logo's orange #ff7300 and sunny yellows (#ffce00, #ffb700) fill illustrations and promo sections. The app's dark theme is navy: #050726 page, #101340 surfaces, #2a2d55 borders, #e5e7ec ink.",

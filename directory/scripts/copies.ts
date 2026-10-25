@@ -7,6 +7,7 @@ import path from "node:path"
 
 import type { PartFile, Snapshot } from "@dotui/capture/snapshot"
 
+import { blocksFileSchema } from "../src/data/blocks"
 import { looksFileSchema } from "../src/data/looks"
 import { specFileSchema } from "../src/data/spec"
 
@@ -19,8 +20,8 @@ export function capturedSlugs() {
     .filter((slug) => fs.existsSync(path.join(systemsDir, slug, "looks.json")))
 }
 
-/** The copy paths a system's looks and spec grids reference, by census
- *  date: a path starts with the date of the census it came from. */
+/** The copy paths a system's looks, spec grids and blocks reference, by
+ *  census date: a path starts with the date of the census it came from. */
 export function copyPaths(slug: string) {
   const read = (name: string) =>
     JSON.parse(fs.readFileSync(path.join(systemsDir, slug, name), "utf8"))
@@ -43,6 +44,11 @@ export function copyPaths(slug: string) {
         for (const cell of grid.cells)
           for (const modes of Object.values(cell.copies ?? {}))
             for (const copy of Object.values(modes)) add(copy)
+  }
+  if (fs.existsSync(path.join(systemsDir, slug, "blocks.json"))) {
+    const blocks = blocksFileSchema.parse(read("blocks.json"))
+    for (const block of blocks.blocks)
+      for (const copy of Object.values(block.copies)) add(copy)
   }
   return byDate
 }

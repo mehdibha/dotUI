@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "chatgpt",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Greys with no hue. Ink is #0d0d0d, quiet text #5d5d5d, soft fills #ededed and edges #d8d8d8 to #e6e6e6. The app's page is #fcfcfc in light and pure #000 in dark (the component library sits on #fff and #212121). Primary actions are filled in the ink color, not a brand hue. Blue (#0169cc light, #0285ff dark) is kept for links and focus rings; green #00a240, orange #e25507, red #e02e2a and purple #8046d9 tint the status tones.",
