@@ -1,0 +1,716 @@
+{
+  "version": 1,
+  "slug": "america",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Navy on white. Ink is a navy-black, #000c1f, and most neutrals are that ink at an alpha: body copy at 65% (#59616d on white), quiet text at 45% (#8c919a), edges at 10% (#e5e6e8) and 45%. Tints are blue-700 at 5% (#f2f4f7) and 10%. The primary is navy #002664 and links are blue #0066c5. Dark is #0b0d12 with white ink at the same alphas; the primary lifts to #0066c5 and links to #66aef5.",
+      "usage": [
+        "Status colors are kept for the content: red #d80007, green #007f26 and yellow #8e5e00 in light, #ff5252, #0aa93a and #e99b00 in dark."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Helvetica Now Text for UI and body (16/24, prose tracked -0.48px), Helvetica Now Display for larger UI (the Menu sheet's 32px entries at 500, 24px section titles at 400), and the serif Rhymes Text for headlines: 64px with -3.2px tracking for section heads, 96px on the FAQ page. Buttons are 16px at 500. Both families are proprietary."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Round. Every button is a pill and icon buttons are circles. Dialogs and the Menu sheet have 40px corners, textareas 16px, small ghost links 8px. Bento tiles use a squircle (corner-shape: superellipse), so a 48px radius computes 57.3px. The radius scale runs 4 to 64px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 4px grid, with buttons in three steps: 44px with 20px padding (Menu, Show all), 56px with 24px (forms, section actions) and 64px with 36px at 18px for hero actions. Icon buttons are 36, 48 and 56px circles."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "One soft shadow, elevation-1: 0 10px 40px in navy (#010e24) at 8%, black at 15% in dark. Widgets (tooltips, the Submit feedback dialog, the report flow's cards) pair it with a 1px ring of ink at 5%; the Menu sheet uses three longer drops instead. Dialogs sit over a 20% black backdrop with a 12px blur, and the Menu button and media controls blur what's behind them by 25px. Focus is a 2px white band inside a 2px #0c0c0c ring, in both modes."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Pills at every size: navy for the main action, a 5% blue tint for the others, ghosts for icons in the chat composer. They press to 98%. Much of the home page is illustration drawn from scaled-down copies of these parts; those are left out.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-2wsv8g": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Navy #002664 under elevation-1: Download, the composer's Send; #0066c5 in dark."
+            },
+            "v-5r2c0q": {
+              "name": {
+                "value": "primary, flat",
+                "from": "ai"
+              },
+              "note": "The same navy with no shadow: Continue in the fraud report flow."
+            },
+            "v-bl31ke": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "Menu: the navy pill over a 25px backdrop blur."
+            },
+            "v-otemxa": {
+              "name": {
+                "value": "tinted",
+                "from": "ai"
+              },
+              "note": "Blue-700 at 5% (#f2f4f7) under ink: Show all, the carousel arrows, Close in dialogs; #17191e in dark."
+            },
+            "v-ay9fvu": {
+              "name": {
+                "value": "tinted, blurred",
+                "from": "ai"
+              },
+              "note": "The tint over a 25px backdrop blur: Close on the Menu sheet."
+            },
+            "v-kr0dsc": {
+              "name": {
+                "value": "ghost",
+                "from": "ai"
+              },
+              "note": "No fill: Upload PDF and Voice input in the composer, the Menu sheet's Submit feedback."
+            },
+            "v-tv0wlv": {
+              "name": {
+                "value": "disclosure",
+                "from": "ai"
+              },
+              "note": "Ink at 400, no frame: the FAQ's questions and the official-website banner."
+            },
+            "v-hn5l28": {
+              "name": {
+                "value": "banner",
+                "from": "ai"
+              },
+              "note": "The banner toggle (An official website of the United States government) read over its #f2f3f4 strip."
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "display",
+                "from": "ai"
+              },
+              "note": "Submit feedback set in 64px Rhymes in the footer, no frame."
+            },
+            "v-vpjuux": {
+              "name": {
+                "value": "tinted, disabled",
+                "from": "ai"
+              },
+              "note": "A carousel arrow at the end of its run: ink at 15% on the tint."
+            },
+            "v-8esau4": {
+              "note": "Pause on a photo: a translucent circle with a 1px edge over a 25px blur."
+            },
+            "v-nbf179": {
+              "note": "Pause over light artwork, with ink icons."
+            },
+            "v-wcrwu0": {
+              "note": "Pause over a black video."
+            },
+            "v-495h7f": {
+              "hide": "a carousel's page dot over a photo"
+            }
+          },
+          "sizes": {
+            "s-mz0jg3": {
+              "name": {
+                "value": "medium",
+                "from": "ai"
+              },
+              "note": "44px, 20px padding."
+            },
+            "s-4aenqm": {
+              "name": {
+                "value": "large",
+                "from": "ai"
+              },
+              "note": "56px, 24px padding."
+            },
+            "s-7iunmk": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "A 36px circle, 20px icon."
+            },
+            "s-6pdvfl": {
+              "name": {
+                "value": "icon, 48",
+                "from": "ai"
+              },
+              "note": "A 48px circle: the composer's Send."
+            },
+            "s-g2pcge": {
+              "name": {
+                "value": "icon, 56",
+                "from": "ai"
+              },
+              "note": "A 56px circle: the carousel arrows."
+            },
+            "s-8nline": {
+              "note": "A 48px circle, 24px icon."
+            },
+            "s-9ulhot": {
+              "note": "A 44px media control."
+            },
+            "s-4tm1gj": {
+              "note": "A 44px media control, 16px icons."
+            },
+            "s-md1v27": {
+              "note": "A 63.5px FAQ row, 21px text, 16px padding."
+            },
+            "s-mpv0l0": {
+              "note": "16px text, no box."
+            },
+            "s-5h1ehz": {
+              "note": "32px text on a 40px line."
+            },
+            "s-ipn77t": {
+              "note": "64px Rhymes on a 64px line."
+            },
+            "s-f91bnc": {
+              "note": "16px text, no box: Ask a question."
+            },
+            "s-qn98xz": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-xiz93j": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-d59vqu": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-9c999q": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-d840nu": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-roip2u": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-6o5imy": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-6m156p": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-tmjo64": {
+              "hide": "the demo artwork, drawn scaled down"
+            },
+            "s-h1re2q": {
+              "hide": "the composer illustration on How it works"
+            },
+            "s-2lbu54": {
+              "hide": "agency seals and an arrow set inside a headline"
+            },
+            "s-82sxvh": {
+              "hide": "a fingerprint set inside a headline"
+            },
+            "s-zk6q3e": {
+              "hide": "a whole 434px tile on the privacy page"
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-1fo9h8": {
+              "name": {
+                "value": "on media",
+                "from": "ai"
+              },
+              "note": "Pause animation on the fraud page: a pale 36px circle (#f4f5fa) over a 20px blur."
+            }
+          },
+          "sizes": {
+            "s-2lpzc8": {
+              "note": "36px."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Prose links are underlined in the paragraph's own grey; blue (#0066c5) is kept for source links. Navigation is plain ink: 32px entries in the Menu sheet, 64px Rhymes links in the footer. Action links are drawn as buttons.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "#000 at 400: the footer's 64px Rhymes links (How it works), its agency links and Privacy policy."
+            },
+            "v-kr0dsc": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "Ink at 500: the Menu sheet's 32px entries, See all releases."
+            },
+            "v-qd9sk8": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Underlined in the paragraph's color (#59616d, #a9aaac in dark): Executive Order 14338."
+            },
+            "v-ahk8xn": {
+              "name": {
+                "value": "source",
+                "from": "ai"
+              },
+              "note": "Underlined blue #0066c5 with an arrow-out icon: View source; #66aef5 in dark."
+            },
+            "v-2wsv8g": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Start your report: the navy pill under elevation-1."
+            },
+            "v-pyrkbt": {
+              "name": {
+                "value": "tinted",
+                "from": "ai"
+              },
+              "note": "See what's ahead: the 5% tint."
+            },
+            "v-oqlee5": {
+              "name": {
+                "value": "widget",
+                "from": "ai"
+              },
+              "note": "Report government fraud: a white pill with a 1px #e5e6e8 edge and elevation-1, a New badge inside."
+            },
+            "v-fmjd56": {
+              "name": {
+                "value": "press card",
+                "from": "ai"
+              },
+              "note": "The About page's press links (Politico): #f2f4f7 tiles, 32px padding."
+            },
+            "v-tv0wlv": {
+              "hide": "the America.gov wordmark"
+            }
+          },
+          "sizes": {
+            "s-ipn77t": {
+              "note": "64px Rhymes on a 64px line."
+            },
+            "s-5h1ehz": {
+              "note": "32px on a 40px line."
+            },
+            "s-860cal": {
+              "note": "16/24."
+            },
+            "s-i5iy5q": {
+              "note": "40px, 12px padding: Privacy policy, a ghost with 8px corners."
+            },
+            "s-t8sxzx": {
+              "note": "64px, 36px padding, 18px text."
+            },
+            "s-4aenqm": {
+              "note": "56px, 24px padding."
+            },
+            "s-la97w6": {
+              "note": "44px, 9px padding."
+            },
+            "s-vfrap2": {
+              "note": "44px, 16px padding: Skip to main content."
+            },
+            "s-adfs3l": {
+              "note": "24px text on a 36px line."
+            },
+            "s-ga0box": {
+              "note": "A 339px tile."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-e3l4eo": {
+              "name": {
+                "value": "new",
+                "from": "ai"
+              },
+              "note": "New: #000c1f with white 12px text at 500; inverted in dark."
+            },
+            "v-jaw0i6": {
+              "name": {
+                "value": "check",
+                "from": "ai"
+              },
+              "note": "A 48px circle with a 2px #0066c5 ring and a blue check: a finished step on the fraud page."
+            },
+            "v-e5t4za": {
+              "hide": "a map pin in the how-it-works artwork"
+            },
+            "v-i3esng": {
+              "hide": "a file chip in the home page's drag-and-drop artwork"
+            }
+          },
+          "sizes": {
+            "s-5c2lpy": {
+              "note": "26px, 8px padding."
+            },
+            "s-zl1hnp": {
+              "note": "48px, a 22px check."
+            }
+          }
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-4xx6al": {
+              "name": {
+                "value": "theme",
+                "from": "ai"
+              },
+              "note": "The Menu sheet's theme switcher: 28px circles on a tinted track, the chosen one on a white pill with the widget shadow."
+            }
+          },
+          "sizes": {
+            "s-tf8b6h": {
+              "note": "28px, a 16px icon."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Textareas have 16px corners, a 1px edge of ink at 45% (#8c919a) and 16px padding. Hover darkens the edge; focus turns it #0c0c0c and adds a 1px inset ring.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-4v0rbl": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Add details in the Submit feedback dialog."
+            },
+            "v-26gjzs": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "The same textarea focused: a #0c0c0c edge, white in dark."
+            },
+            "v-tv0wlv": {
+              "name": {
+                "value": "bare",
+                "from": "ai"
+              },
+              "note": "Ask anything else: the FAQ composer's input, with no frame of its own."
+            }
+          },
+          "sizes": {
+            "s-l73ixn": {
+              "note": "120px, 16px padding."
+            },
+            "s-4ko24w": {
+              "note": "48px, 21px text."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": {
+                "value": "native",
+                "from": "ai"
+              },
+              "note": "The footer's language picker (English, Français, Español): a native select with no frame."
+            }
+          },
+          "sizes": {
+            "s-d2pd4i": {
+              "note": "44px, 12px padding."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-tv0wlv": {
+              "name": {
+                "value": "composer",
+                "from": "ai"
+              },
+              "note": "Ask anything…: the chat composer's textarea; the composer draws the pill around it."
+            }
+          },
+          "sizes": {
+            "s-t1suwf": {
+              "note": "40px, 16px text."
+            },
+            "s-jhgue0": {
+              "note": "48px, 21px text: the hero composer."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-xq0cbu": {
+              "name": {
+                "value": "sheet",
+                "from": "ai"
+              },
+              "note": "The Menu sheet: white, 40px corners, a 1px ring and three long soft drops."
+            },
+            "v-v20d8u": {
+              "name": {
+                "value": "dialog",
+                "from": "ai"
+              },
+              "note": "Submit feedback: 432px wide, 40px corners, the widget shadow."
+            },
+            "v-l7d1ng": {
+              "hide": "the Menu sheet's outer box, read without its painted layer"
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-4d5627": {
+              "hide": "the dialog backdrop: 20% black with a 12px blur"
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-ngqwga": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Upload PDF: a 36px white pill with the widget shadow, 12px text at 500."
+            }
+          },
+          "sizes": {
+            "s-u7s41m": {
+              "note": "36px."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-ne3289": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The fraud page's agency table: 1px #e5e6e8 rules between rows."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Bento tiles are #f7f7f7 squircles with no edge. Floating cards are white with the widget ring and elevation-1. Most other boxes on the home page are illustration and are left out.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-gqamol": {
+              "name": {
+                "value": "bento",
+                "from": "ai"
+              },
+              "note": "#f7f7f7 tiles (#0f1217 in dark), squircle corners."
+            },
+            "v-v77jd0": {
+              "name": {
+                "value": "flow",
+                "from": "ai"
+              },
+              "note": "The fraud report flow's step card: white, a 1px ring and elevation-1."
+            },
+            "v-05pggx": {
+              "name": {
+                "value": "composer",
+                "from": "ai"
+              },
+              "note": "Ask America on the About page: a white pill with a 1px #8c919a edge and elevation-1."
+            },
+            "v-01e6o5": {
+              "hide": "agency seals in the home page's orbit artwork"
+            },
+            "v-zt3nm9": {
+              "hide": "browser icons in the home page's artwork"
+            },
+            "v-8xz0fc": {
+              "hide": "a list in the coming-soon page's demo artwork"
+            },
+            "v-l7d1ng": {
+              "hide": "suggestion chips in a phone illustration"
+            },
+            "v-ao7q0i": {
+              "hide": "option rows in the coming-soon page's demo artwork"
+            },
+            "v-id1f8g": {
+              "hide": "a pharmacy list in the home page's demo artwork"
+            },
+            "v-42x51u": {
+              "hide": "a dark photo tile"
+            },
+            "v-4gqwhz": {
+              "hide": "a drop zone in the home page's demo artwork"
+            },
+            "v-9wsg8n": {
+              "hide": "a button inside a phone illustration"
+            },
+            "v-bjtpyv": {
+              "hide": "a composer illustration on How it works"
+            },
+            "v-cnvs9f": {
+              "hide": "a gradient backdrop behind artwork"
+            },
+            "v-nsumro": {
+              "hide": "the animated sphere of government sites"
+            },
+            "v-oannfg": {
+              "hide": "a gradient backdrop behind artwork"
+            },
+            "v-pd3x92": {
+              "hide": "a tinted panel in the fraud page's artwork"
+            },
+            "v-r41bns": {
+              "hide": "the hero carousel's photo frame"
+            },
+            "v-v9q1z6": {
+              "hide": "a backdrop behind artwork"
+            },
+            "v-y4v4sh": {
+              "hide": "a tinted panel in the fraud page's artwork"
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-2iwp55": {
+              "name": {
+                "value": "agency",
+                "from": "ai"
+              },
+              "note": "An agency logo (CMS) in a 48px white circle with a 1px #e5e6e8 edge."
+            },
+            "v-mrecjx": {
+              "name": {
+                "value": "seal",
+                "from": "ai"
+              },
+              "note": "The White House seal in a 56px circle."
+            },
+            "v-m5f5pl": {
+              "hide": "map pins in the how-it-works artwork"
+            },
+            "v-l7d1ng": {
+              "hide": "agency seals set inside a headline"
+            }
+          },
+          "sizes": {
+            "s-czi5jm": {
+              "note": "48px."
+            },
+            "s-nk3xfl": {
+              "note": "56px."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-ne3289": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #e5e6e8 rule, ink at 10%; #23252a in dark."
+            },
+            "v-f2jo59": {
+              "name": {
+                "value": "on tint",
+                "from": "ai"
+              },
+              "note": "A 1px #d9dce0 rule inside a tinted panel."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: nine public pages, light and dark; the site has no accounts. Token names (elevation-1, blue-700) are from the deployed stylesheet, read in the pack. Names marked ai are ours; the markup names no component looks."
+  }
+}

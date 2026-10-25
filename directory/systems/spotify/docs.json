@@ -1,0 +1,744 @@
+{
+  "version": 1,
+  "slug": "spotify",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Dark everywhere a user looks: the web player and the login page are #121212 pages in a #000 frame, with white ink and #b3b3b3 for secondary text. Containers step up in grey: #1f1f1f for the search field and the sidebar's prompt cards, #282828 for menus, tooltips and dialogs, #2a2a2a on hover. The bright accent #1ed760 carries black labels. Control edges are #7c7c7c.",
+      "usage": [
+        "Encore's light theme ships with the design system but no page uses it: a white page in a #f5f5f5 frame, ink #000, muted #656565, edges #818181, and the darker #159542 for checks, radios and tab bars.",
+        "The Settings switch is on in #1db954, the older brand green."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Spotify Mix, proprietary, in two cuts: SpotifyMixUI for text and SpotifyMixUITitle for titles. Text is 16px and 14px at 400; buttons, labels and tags are 700. Shelf titles are 24px at 700 and the login title 48px at 800."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Buttons, filter chips and the search field are pills. Fields, menus, tags and banners have 4px corners, the language dialog 8px, home cards 6px, Library rows 6px and context menu rows 2px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Buttons are 32, 48 and 56px with 16 or 32px sides; fields 48px. Context menu rows are 40px with 12px padding, filter chips 32px with 12px padding, line tabs 48px. Library rows are 64px around a 48px cover."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Flat greys do the layering; shadows are only for floating parts. Context menus take 0 16px 24px at 30% plus 0 6px 8px at 20%, and cover images sit on 0 8px 24px at 50%. The language dialog has no shadow, over a 70% black scrim. Focus is a 2px outline 2px outside, in the body ink. Disabled controls are at 30% opacity."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Encore's buttons are 700-weight pills: primary in the bright green, secondary on a grey fill, tertiary with no fill, and a bordered secondary. The login page and the web player ship Encore's older legacy button (48px with 32px sides). Most of the player's own buttons are icon circles in #b3b3b3.",
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "#1ed760 under black labels: Primary."
+            },
+            "secondary": {
+              "note": "#ebebeb under black, in Encore's light theme."
+            },
+            "tertiary": {
+              "note": "No fill, black at 700."
+            },
+            "secondary-bordered": {
+              "note": "Bordered: a 1px #7c7c7c edge with no fill; #818181 in light."
+            },
+            "text-base": {
+              "note": "English: the sidebar's language button, a 32px pill with a 1px #7c7c7c edge and a globe."
+            },
+            "v-eqbabx": {
+              "name": {
+                "value": "legacy primary",
+                "from": "ai"
+              },
+              "note": "Continue on the login page: the older legacy button in #1ed760, 48px."
+            },
+            "v-lansw6": {
+              "name": {
+                "value": "inverted",
+                "from": "ai"
+              },
+              "note": "Log in, Create playlist: a white pill with black text at 700."
+            },
+            "v-xqporm": {
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
+              "note": "Premium, Support: #b3b3b3 at 700, no frame."
+            },
+            "v-uj7h5h": {
+              "name": {
+                "value": "play",
+                "from": "ai"
+              },
+              "note": "The album's play button: a 56px #1ed760 circle."
+            },
+            "v-5jtu3q": {
+              "name": {
+                "value": "icon, filled",
+                "from": "ai"
+              },
+              "note": "Home: a 48px #1f1f1f circle in the header."
+            },
+            "v-iv1gsm": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "Add to Your Library on a track row: a #b3b3b3 icon, no fill."
+            },
+            "v-hr8lnj": {
+              "name": {
+                "value": "tile",
+                "from": "ai"
+              },
+              "note": "Popular artists: a whole home card as the button, no fill at rest."
+            },
+            "v-ouc2h3": {
+              "note": "A language in the language dialog, its name over its native name."
+            },
+            "v-i4x8nn": {
+              "note": "The header's icons in #b3b3b3, no fill."
+            },
+            "v-wizngz": {
+              "note": "Create in the sidebar: a 32px #1f1f1f circle."
+            },
+            "v-1rkjh4": {
+              "note": "Home, hovered: a #2a2a2a circle."
+            },
+            "v-r5rfae": {
+              "note": "The search button while the search field has focus."
+            },
+            "v-byhg28": {
+              "note": "Add on a hovered track row."
+            },
+            "v-usz9ox": {
+              "note": "Play on a hovered track row."
+            },
+            "v-o7w5pi": {
+              "note": "The language dialog's close ×."
+            },
+            "v-esjzxw": {
+              "note": "Search: a 32px green pill."
+            },
+            "v-jfq7t9": {
+              "hide": "the artist page's header image"
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "32px."
+            },
+            "medium": {
+              "note": "48px."
+            },
+            "large": {
+              "note": "56px, 32px sides."
+            },
+            "s-a2l8bq": {
+              "note": "48px circles, 24px icons."
+            },
+            "s-mhi6da": {
+              "note": "56px, a 32px icon."
+            },
+            "s-e5y1jk": {
+              "note": "32px, 16px icons."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Encore's TextLink: standalone links are #b3b3b3 at 400; inline links take their paragraph's color, underlined. Shelf titles are 24px links at 700.",
+      "groups": {
+        "link": {
+          "variants": {
+            "standalone": {
+              "note": "Tate McRae under a card, About in the footer: #b3b3b3, 14px."
+            },
+            "colors": {
+              "note": "Terms of Service in the reCAPTCHA line: underlined in the paragraph's color."
+            },
+            "text-base": {
+              "note": "Continue with Google: a 48px pill with a 1px #7c7c7c edge and the logo."
+            },
+            "v-hr8lnj": {
+              "name": {
+                "value": "white",
+                "from": "ai"
+              },
+              "note": "Cookies, a track's title: white at 400."
+            },
+            "v-rzmcum": {
+              "name": {
+                "value": "shelf title",
+                "from": "ai"
+              },
+              "note": "Trending songs: 24px at 700."
+            },
+            "v-7eiudu": {
+              "note": "A link on #282828: the language dialog's choices."
+            },
+            "v-fe9z4f": {
+              "note": "Browse podcasts: a white 32px pill."
+            },
+            "v-xqporm": {
+              "note": "Install App: #b3b3b3 at 700 with an icon."
+            },
+            "v-usz9ox": {
+              "note": "Daft Punk on a hovered track row."
+            },
+            "v-tadtlh": {
+              "note": "Report in a context menu: #eaeaea at 400."
+            },
+            "v-r5rfae": {
+              "hide": "the Spotify logo"
+            },
+            "v-4grxw3": {
+              "hide": "the harness page's own caption"
+            },
+            "v-r30kha": {
+              "hide": "the harness page's own caption"
+            }
+          },
+          "sizes": {
+            "s-5g12xt": {
+              "note": "16px."
+            },
+            "s-e7ts0x": {
+              "note": "14px."
+            },
+            "s-77sy85": {
+              "note": "24px at 700."
+            },
+            "small": {
+              "note": "12px."
+            },
+            "medium": {
+              "note": "48px, 56px sides."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "color-set": {
+              "note": "New: an Encore tag in the bright accent, #1ed760 under black at 700."
+            },
+            "v-op6g8q": {
+              "name": {
+                "value": "chip, selected",
+                "from": "ai"
+              },
+              "note": "Popular releases: a selected filter chip, white under black ink."
+            },
+            "v-ean0nf": {
+              "hide": "the label inside the white Create playlist button"
+            }
+          },
+          "sizes": {
+            "large": {
+              "note": "24px, 6px sides."
+            },
+            "s-4ukmol": {
+              "note": "32px, 12px sides."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-iv1gsm": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "Albums: an unselected discography filter chip, a 32px pill whose white-10% fill the census doesn't read."
+            }
+          },
+          "sizes": {
+            "s-7cq2cg": {
+              "note": "32px, 14px text."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-x0xh3r": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Overview: #b3b3b3 at 700, 48px with 12px padding; the current tab gets a 2px accent bar."
+            },
+            "v-5muwzp": {
+              "note": "The same in Encore's light theme: #656565."
+            }
+          },
+          "sizes": {
+            "s-75ww26": {
+              "note": "48px."
+            },
+            "s-91iudw": {
+              "note": "48px."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are 48px with 4px corners and a 1px inset #7c7c7c edge (#818181 in light).",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-e177v8": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email or username on the login page."
+            },
+            "v-9clnlt": {
+              "note": "The same field in Encore's light theme."
+            },
+            "v-1rkjh4": {
+              "hide": "the search field's inner input; the field is under combobox"
+            },
+            "v-fnsaiy": {
+              "hide": "the search field's inner input; the field is under combobox"
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "48px, 12px sides."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-5jtu3q": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "What do you want to play?: a 48px #1f1f1f pill with no edge."
+            },
+            "v-gw6ugi": {
+              "note": "Hovered: #2a2a2a with a 1px #3f3f3f edge."
+            },
+            "v-4xk1ov": {
+              "note": "Focused: #2a2a2a with a 2px white ring."
+            },
+            "v-qhtnbq": {
+              "name": {
+                "value": "view",
+                "from": "ai"
+              },
+              "note": "List: the track list's view picker, 32px."
+            }
+          },
+          "sizes": {
+            "s-p1j6dj": {
+              "note": "48px, 48px sides for the icons."
+            },
+            "s-51yzs9": {
+              "note": "32px."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-yhbije": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email: 14px at 700 in white."
+            },
+            "v-gx9b4o": {
+              "note": "The same in Encore's light theme, black."
+            }
+          }
+        }
+      }
+    },
+    "slider": {
+      "status": "reviewed",
+      "groups": {
+        "slider": {
+          "variants": {
+            "v-6j272s": {
+              "name": {
+                "value": "volume",
+                "from": "ai"
+              },
+              "note": "The volume slider's input, 16px tall."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-avyaxg": {
+              "name": {
+                "value": "context",
+                "from": "ai"
+              },
+              "note": "A track's More options menu: #282828, 4px corners and padding, 0 16px 24px at 30% plus 0 6px 8px at 20%."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-tadtlh": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Add to Your Library: #eaeaea at 400."
+            },
+            "v-7eiudu": {
+              "note": "Go to artist, hovered: white."
+            }
+          },
+          "sizes": {
+            "s-3d17xt": {
+              "note": "40px, 12px padding, 16px icons."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-tadtlh": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Compact in the view menu."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-5k7y5q": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The language dialog: #282828, 8px corners, no shadow."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-7eiudu": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Home: #282828 with white 14px text."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-mni5yh": {
+              "name": {
+                "value": "header",
+                "from": "ai"
+              },
+              "note": "# Title: the track list's header row, a 1px #2a2a2a rule under it."
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-tu4z7q": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Ctrl in the search field: 26px, a 1px #7c7c7c outline with a 1px #121212 drop."
+            }
+          },
+          "sizes": {
+            "s-l2mj2n": {
+              "note": "26px, 6px sides, 16px."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Cards have no fill or shadow at rest; the cover image inside carries the shadow. The sidebar's prompt cards sit on #1f1f1f.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-pglzgq": {
+              "name": {
+                "value": "prompt",
+                "from": "ai"
+              },
+              "note": "Create your first playlist: #1f1f1f in the sidebar."
+            },
+            "v-93toqk": {
+              "name": {
+                "value": "cover",
+                "from": "ai"
+              },
+              "note": "A card's cover image on 0 8px 24px at 50%; its frame takes a color from the art."
+            },
+            "contextual": {
+              "note": "Your payment failed.: an Encore banner, #ffd2d7 in light."
+            },
+            "v-pw1i5p": {
+              "note": "A track row while hovered."
+            },
+            "v-p2y0m7": {
+              "hide": "the main view's panel"
+            },
+            "v-2vt07e": {
+              "hide": "the Your Library sidebar's panel"
+            },
+            "v-62rvj2": {
+              "hide": "the label inside the white Sign up free button"
+            },
+            "v-811vpk": {
+              "hide": "the label inside the green Continue button"
+            },
+            "v-2q629l": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-t9ff97": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-cc6lmk": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-ggl06l": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-mzx7aa": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-yxda9j": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-0r886a": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-1bzdgs": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-3quwi9": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-46q0uk": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-4py020": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-5vd8or": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-9cj51w": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-a1ixz2": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-buv1hf": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-bvti9b": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-d5qsra": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-dtodrx": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-eqgoer": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-fyuw0p": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-g8oy28": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-i9sta0": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-irag9r": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-lcl4zf": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-m58eft": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-nmzqlv": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-rewfeu": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-ry33co": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-sfd3fl": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-tav0he": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-ts3fts": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-uzasjx": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-vy020q": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-wvajsi": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-xerg5h": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-xz8pdq": {
+              "hide": "a cover image again, its frame tinted by other art"
+            },
+            "v-yhzv99": {
+              "hide": "a cover image again, its frame tinted by other art"
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-p2y0m7": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Daft Punk on the album page: a 24px round photo."
+            },
+            "v-62rvj2": {
+              "note": "The same on the artist page."
+            }
+          },
+          "sizes": {
+            "s-y8os2i": {
+              "note": "24px."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-weomsc": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #292929 rule."
+            },
+            "v-62rvj2": {
+              "hide": "a white bar between the panels, not a rule"
+            },
+            "v-p2y0m7": {
+              "hide": "a #121212 box, not a rule"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://accounts.spotify.com/en/login",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: the logged-out web player and the login page in dark, plus a harness that lays out Encore's components from the login page's shipped stylesheets in light and dark. Partial: the signed-in Library, Settings and account pages (Mehdi's 2026-10-22 local capture) aren't in this census; facts quoted from them come from the pack's notes. Names without a from are Encore's class names; names marked ai are ours."
+  }
+}
