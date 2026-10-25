@@ -11,7 +11,7 @@ const { useStyles } = createStyles(tableMeta, {
       // Blur lives on the cells, not the thead: a backdrop-filter escapes the scroll container's rounded clip in Chromium.
       header: "sticky top-0 z-10",
       column: [
-        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap outline-none data-allows-sorting:cursor-interactive",
+        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap outline-none allows-sorting:cursor-interactive",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
         "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring focus-visible:before:outline-offset-(--studio-focus-inside-offset) focus-visible:before:content-['']",
