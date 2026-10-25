@@ -50,9 +50,8 @@ export const headspace = definePreset({
     surfaceShadow: "low",
 
     // States
-    focusInputStyle: "border",
     // A 2px blue-200 edge, no ring.
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     // Disabled controls drop to 40% opacity.
     disabledTreatment: "fade",
 

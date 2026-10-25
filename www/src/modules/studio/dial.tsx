@@ -6,13 +6,21 @@
    that open a popover carry no chevron, rows that open a page do. Alpha
    surfaces keep both themes in one set of classes. */
 
-import { Children, useContext, useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
-import type { Color } from "react-aria-components"
+import {
+  Children,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
+import { CheckIcon, ChevronRightIcon, ChevronsUpDownIcon } from "lucide-react"
+import type { Color, KeyboardEvent } from "react-aria-components"
 import {
   Button as RacButton,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
+  OverlayTriggerStateContext,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -40,6 +48,7 @@ import {
   PanelNav,
   PanelPopover,
   PanelPopoverTitle,
+  useDocked,
   useDraft,
 } from "./rows"
 import { useCurrent } from "./selection"
@@ -49,7 +58,7 @@ import type { Axis, AxisKey } from "./use-axis"
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
-  "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
+  "cursor-interactive text-left outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 const DIAL_VALUE = "truncate font-mono text-[13px] font-medium text-fg/60"
 
@@ -96,6 +105,15 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
+/** A name over a group of rows, set like the panel's chapter titles. */
+export function DialGroupTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="truncate px-2.5 pt-1 text-xs/4 font-medium text-fg/50">
+      {children}
+    </h3>
+  )
+}
+
 /** A row that opens a popover: label, its value. Wraps the popover passed
  *  as `children` in a Dialog trigger. `swatch` for values that end in one:
  *  inset like DialColor's. `holds` names keys edited inside, so a reveal
@@ -108,6 +126,7 @@ export function DialTrigger({
   value,
   aside,
   swatch,
+  chevron,
   children,
 }: {
   axis?: string
@@ -116,6 +135,8 @@ export function DialTrigger({
   value: React.ReactNode
   aside?: React.ReactNode
   swatch?: boolean
+  /** Up-down chevrons after the value: the row opens a list under itself. */
+  chevron?: boolean
   children: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -128,6 +149,9 @@ export function DialTrigger({
       {aside && <span className="pointer-events-auto flex">{aside}</span>}
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
+        {chevron && (
+          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
+        )}
       </span>
     </span>
   )
@@ -166,18 +190,39 @@ export function DialTrigger({
 /** A pick list's popover: as wide as its longest option, not the row. */
 export const PICK_POPOVER = "w-max min-w-48 max-w-64"
 
-/** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
+/* Under its row, a popover covers the rows below: the row's width, a row gap
+   away, a step brighter than the row with a deeper shadow so it reads as on
+   top. Its hover tints step from that surface. Unlike other panel popovers it
+   keeps the registry popover's entrance, grown from the row's middle rather
+   than its end. */
+export const UNDER_ROW =
+  "w-(--trigger-width)! min-w-0! max-w-none! origin-top! border-fg/10 bg-(--panel-surface) shadow-xl transition-[transform,opacity,scale] will-change-[transform,opacity,scale] [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
+
+/** Under its row a popover covers the rows below: a pick closes it, and the
+ *  options go without descriptions, the preview showing each on hover. */
+const UnderRow = createContext(false)
+
+/** What a DialTrigger opens: a run of dial rows beside the row, shown whole;
+ *  with a bottom `placement`, under it instead. */
 export function DialPopover({
   className,
+  placement,
   children,
 }: {
   className?: string
+  placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children: React.ReactNode
 }) {
+  const docked = useDocked()
+  const under = !docked && !!placement?.startsWith("bottom")
   return (
-    <PanelPopover className={cn("w-64 min-w-0", className)}>
+    <PanelPopover
+      placement={placement}
+      {...(under && { offset: 6, showArrow: false })}
+      className={cn("w-64 min-w-0", className, under && UNDER_ROW)}
+    >
       <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
-        {children}
+        <UnderRow.Provider value={under}>{children}</UnderRow.Provider>
       </DialogContent>
     </PanelPopover>
   )
@@ -224,9 +269,10 @@ export interface DialSelectOption {
 }
 
 /** A pick from a short list: the row shows the choice (and its glyph), the
- *  popover lists every option in the dial's pick list. Picking keeps the popover up — the
- *  choice is a comparison against the preview behind it. `children` are dial
- *  rows under the list, past a separator. */
+ *  popover lists every option in the dial's pick list. Beside the panel,
+ *  picking keeps the popover up — the choice is a comparison against the
+ *  preview behind it; under the row, hovering previews and a pick closes it.
+ *  `children` are dial rows under the list, past a separator. */
 export function DialSelect({
   axis: key,
   holds,
@@ -234,6 +280,7 @@ export function DialSelect({
   value: valueProp,
   onChange: onChangeProp,
   options: listed,
+  placement,
   children,
 }: {
   /** The key the row edits: value, change, hide and exclusions follow it. */
@@ -244,6 +291,8 @@ export function DialSelect({
   value?: string
   onChange?: (value: string) => void
   options: DialSelectOption[]
+  /** Beside the panel by default; "bottom end" drops it under the row. */
+  placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children?: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -289,6 +338,7 @@ export function DialSelect({
       holds={holds}
       label={label}
       aside={held && <CauseChip cause={held} />}
+      chevron={placement?.startsWith("bottom")}
       value={
         <>
           <span className="truncate">
@@ -298,7 +348,7 @@ export function DialSelect({
         </>
       }
     >
-      <DialPopover className={PICK_POPOVER}>
+      <DialPopover className={PICK_POPOVER} placement={placement}>
         <SelectOptions
           axis={axis}
           label={label}
@@ -335,6 +385,8 @@ function SelectOptions({
   exclude: Axis["explain"]["exclude"]
 }) {
   const { state } = useCurrent()
+  const under = useContext(UnderRow)
+  const overlay = useContext(OverlayTriggerStateContext)
   const target = (option: DialSelectOption) => {
     if (!axis?.follows.includes(option.value)) return
     const resolved =
@@ -349,6 +401,7 @@ function SelectOptions({
       label={label}
       value={value}
       onChange={onChange}
+      onPicked={under ? () => overlay?.close() : undefined}
       disabledKeys={exclude?.options}
       options={options.map((option) => {
         const to = target(option)
@@ -357,6 +410,7 @@ function SelectOptions({
           : undefined
         return {
           ...option,
+          description: under ? undefined : option.description,
           label: to ? `${option.label} · ${to.label}` : option.label,
           aside: (option.aside || cause) && (
             <>
@@ -385,9 +439,11 @@ const PICK_ITEM =
 function PickItem({
   option,
   run,
+  onRepick,
 }: {
   option: DialPickOption
   run: () => void
+  onRepick?: () => void
 }) {
   const previewProps = useOptionPreview()
   return (
@@ -396,6 +452,13 @@ function PickItem({
       textValue={option.label}
       className={PICK_ITEM}
       {...previewProps(run)}
+      {...(onRepick && {
+        onPointerUp: (e: React.PointerEvent) => e.button === 0 && onRepick(),
+        onKeyDown: (e: KeyboardEvent) => {
+          if (e.key === "Enter" || e.key === " ") onRepick()
+          e.continuePropagation()
+        },
+      })}
     >
       {({ isSelected }) => (
         <>
@@ -426,24 +489,32 @@ export function DialPickList({
   onChange,
   options,
   disabledKeys,
+  onPicked,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialPickOption[]
   disabledKeys?: readonly string[]
+  /** After a press picks an option, the current one included. */
+  onPicked?: () => void
 }) {
   return (
     <RacListBox
       aria-label={label}
       selectionMode="single"
       disallowEmptySelection
+      // A pick that closes the list lands on release, so the release can't
+      // fall through to the row under it.
+      shouldSelectOnPressUp={!!onPicked}
       selectedKeys={[value]}
       disabledKeys={disabledKeys}
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const next = keys.values().next().value
-        if (next) onChange(next as string)
+        if (!next) return
+        onChange(next as string)
+        onPicked?.()
       }}
       className="flex flex-col gap-0.5 outline-hidden"
     >
@@ -452,6 +523,8 @@ export function DialPickList({
           key={option.value}
           option={option}
           run={() => onChange(option.value)}
+          // Pressing the current option selects nothing new.
+          onRepick={option.value === value ? onPicked : undefined}
         />
       ))}
     </RacListBox>
@@ -886,7 +959,7 @@ function SliderRow({
         aria-valuetext={format(draft)}
         data-active={active || undefined}
         data-dragging={dragging || undefined}
-        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-pan-y overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
+        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-pan-y overflow-hidden rounded-lg tint-5 outline-none select-none focus-visible:focus-ring"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -1077,7 +1150,7 @@ function SegmentedGroup({
           key={option.value}
           id={option.value}
           isDisabled={disabled?.includes(option.value)}
-          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 transition-colors outline-none hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center gap-1.5">

@@ -3,7 +3,7 @@ import { createStyles } from "@/lib/styles"
 import commandMeta from "./meta"
 
 const HAIRLINE_FIELD =
-  "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0 **:data-search-field:border-b"
+  "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:outline-none! **:data-search-field:border-b"
 
 const { useStyles } = createStyles(commandMeta, {
   base: {

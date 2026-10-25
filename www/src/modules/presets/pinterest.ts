@@ -53,8 +53,7 @@ export const pinterest = definePreset({
 
     // States
     // Fields swap their edge for a 2px blue line.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
 
     // Motion
     // Buttons and chips compress to .99 on press.

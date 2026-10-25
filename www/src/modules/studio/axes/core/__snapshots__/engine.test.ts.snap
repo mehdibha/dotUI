@@ -390,7 +390,11 @@ exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`]
       "cells": "separate",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--studio-field-focus-color": "var(--color-border-focus)",
+    "--studio-field-focus-offset": "-2px",
+    "--studio-field-invalid-color": "var(--color-fg-danger)",
+  },
 }
 `;
 
@@ -408,56 +412,74 @@ exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > states/neutral-ring-owns-field-ink: fires, then holds back 1`] = `
-{
-  "color": {
-    "background": {
-      "dark": 2,
-    },
-    "overrides": {
-      "color-border-focus": {
-        "job": "solid",
-        "palette": "neutral",
-      },
-      "color-border-focus-muted": {
-        "job": "ui-active",
-        "palette": "neutral",
-      },
-    },
-    "primary": "accent",
-    "seeds": {
-      "accent": "#0070f1",
-    },
-    "v": 2,
-  },
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > states/ring-hides-field-ink: fires, then holds back 1`] = `
+exports[`rules > states/field-width-needs-layer: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
   "params": {},
   "tokens": {
-    "--focus-input-color": "var(--focus-ring-color)",
-    "--focus-input-offset": "var(--focus-ring-offset)",
-    "--focus-input-width": "var(--focus-ring-width)",
+    "--studio-field-focus-width": "0px",
   },
 }
 `;
 
-exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
+exports[`rules > states/gap-only-ring: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
   "params": {},
   "tokens": {
-    "--focus-input-color": "var(--focus-ring-color)",
-    "--focus-input-offset": "var(--focus-ring-offset)",
-    "--focus-input-width": "var(--focus-ring-width)",
+    "--studio-focus-color": "color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
+    "--studio-focus-offset": "0px",
+    "--studio-focus-outside-offset": "0px",
+  },
+}
+`;
+
+exports[`rules > states/indicator-rule-is-thick: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "tint",
+      "style": "indicator",
+      "text": "same",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+  },
+  "tokens": {
+    "--indicator-edge": "var(--neutral-700)",
+    "--studio-field-focus-width": "0px",
+    "--studio-indicator-edge": "var(--indicator-edge)",
+  },
+}
+`;
+
+exports[`rules > states/underline-owns-field-focus: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "underline",
+      "text": "same",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+  },
+  "tokens": {
+    "--studio-field-focus-color": "var(--color-border-focus)",
+    "--studio-field-focus-offset": "-2px",
+    "--studio-field-invalid-color": "var(--color-fg-danger)",
   },
 }
 `;

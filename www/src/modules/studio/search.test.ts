@@ -5,7 +5,7 @@ import { registryUi } from "@/registry/ui/registry"
 import { CHAPTERS } from "./chapters"
 import { searchEntries } from "./search"
 import { COMPONENTS, isSingle } from "./sections/components"
-import { FOUNDATION_PAGES, MAIN_ROWS, PAGE_ROWS } from "./sections/foundations"
+import { FOUNDATION_PAGES, MAIN_ROWS } from "./sections/foundations"
 
 const contains = (text: string, needle: string) =>
   text.toLowerCase().includes(needle.toLowerCase())
@@ -77,9 +77,9 @@ describe("panel search", () => {
   it("reads every foundation row as Page › Row", () => {
     for (const [, row] of MAIN_ROWS)
       expect(search(row), row).toContain(`Foundations › ${row}`)
-    for (const { id, label } of FOUNDATION_PAGES)
-      for (const [, row] of PAGE_ROWS[id]?.flat() ?? [])
-        expect(search(row), row).toContain(`Foundations › ${label} › ${row}`)
+    for (const { label, rows = [] } of FOUNDATION_PAGES)
+      for (const { name } of rows)
+        expect(search(name), name).toContain(`Foundations › ${label} › ${name}`)
   })
 
   it("reaches rows a popover holds, through the row that opens it", () => {
@@ -88,9 +88,6 @@ describe("panel search", () => {
     expect(search("stroke")).toContain("Foundations › Icons › Stroke")
     expect(search("glass")).toContain("Foundations › Surfaces › Overlays")
     expect(search("Frost")).toContain("Components › Dialog › Backdrop › Frost")
-    expect(search("Strength")).toContain(
-      "Foundations › Focus › Focus ring › Strength",
-    )
   })
 
   it("finds a one-row component by its row's name", () => {

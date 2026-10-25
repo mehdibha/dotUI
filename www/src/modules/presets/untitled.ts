@@ -45,8 +45,7 @@ export const untitled = definePreset({
     shellTone: "page",
 
     // States: focus thickens the edge to 2px brand, no halo.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     disabledTreatment: "fade",
 
     // Motion: menus fade with a 2px nudge.

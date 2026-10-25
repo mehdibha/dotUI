@@ -50,8 +50,7 @@ export const zara = definePreset({
 
     // States
     // Focus is a 2px #0170e9 outline 2px off the edge; fields a 2px bottom line.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
 
     // Buttons
     // Secondary: white inside a 0.5px black line.
