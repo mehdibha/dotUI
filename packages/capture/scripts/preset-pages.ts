@@ -7,7 +7,12 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type KeyInput, type Page } from "puppeteer"
 
-import type { Page as ProbePage, ReferenceTokens, Step } from "../src/probe"
+import type {
+  Page as ProbePage,
+  ReferenceTokens,
+  Step,
+  Target,
+} from "../src/probe"
 import { executablePath } from "./chromium"
 
 /** A pack page as `openPage` loads it. Options that change only how the page
@@ -23,7 +28,15 @@ export interface PackPage extends ProbePage {
    *  census can't find a trigger for (a dialog behind a plain button, a
    *  date picker). The probe never reads them. */
   passes?: Step[][]
+  /** Composed pieces (a repository header, a booking card), found as parts
+   *  are, that `presets:blocks` freezes whole. Named in kebab-case, unique
+   *  across the pack. */
+  blocks?: Record<string, BlockTarget>
 }
+
+/** `redact`: copied with text as x and images grey on a public page too,
+ *  for a block that shows private people (a review, a host). */
+export type BlockTarget = Target & { redact?: boolean }
 
 export type Mode = "light" | "dark"
 
@@ -212,6 +225,9 @@ export async function openPage(
 ) {
   const context = await browser.createBrowserContext()
   let page: Page
+  // A harness loads a live app's hashed stylesheets, which its next deploy
+  // deletes; read without them, every part would be a browser default.
+  const missing = new Set<string>()
   try {
     page = await context.newPage()
     await shim(page)
@@ -220,6 +236,24 @@ export async function openPage(
       { name: "prefers-color-scheme", value: mode },
     ])
     await focusable(page)
+    if (url.startsWith("file:")) {
+      page.on("requestfailed", (request) => {
+        if (request.resourceType() === "stylesheet") missing.add(request.url())
+      })
+      page.on("response", (response) => {
+        const status = response.status()
+        // A redirect answers again from where it leads.
+        if (
+          response.request().resourceType() !== "stylesheet" ||
+          (status >= 300 && status < 400)
+        )
+          return
+        // Chrome ignores a stylesheet served as anything but text/css.
+        const type = response.headers()["content-type"]
+        if (!response.ok() || (type && !/^text\/css\b/i.test(type)))
+          missing.add(response.url())
+      })
+    }
     // Some sites turn away a "HeadlessChrome" user agent (Notion).
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
@@ -238,6 +272,7 @@ export async function openPage(
     // A goto that changes only the hash keeps the document, so a hash-routed
     // dialog would keep the last part's state.
     if (page.url() !== "about:blank") await page.goto("about:blank")
+    missing.clear()
     await page.goto(url, { waitUntil: "load", timeout: 60000 })
     // Docs sites keep connections open, so a short quiet spell is enough;
     // apps still hydrate after it.
@@ -245,6 +280,10 @@ export async function openPage(
       .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
       .catch(() => {})
     await pause(wait)
+    if (missing.size)
+      throw new Error(
+        `${url}: stylesheet did not load: ${[...missing].join(" ")}`,
+      )
     await runSteps(page, steps)
     for (const selector of hide)
       await page.$$eval(selector, (els) => els.forEach((el) => el.remove()))

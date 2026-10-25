@@ -1,0 +1,568 @@
+{
+  "version": 1,
+  "slug": "chatgpt",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Greys with no hue. Ink is #0d0d0d, quiet text #5d5d5d, soft fills #ededed and edges #d8d8d8 to #e6e6e6. The app's page is #fcfcfc in light and pure #000 in dark (the component library sits on #fff and #212121). Primary actions are filled in the ink color, not a brand hue. Blue (#0169cc light, #0285ff dark) is kept for links and focus rings; green #00a240, orange #e25507, red #e02e2a and purple #8046d9 tint the status tones.",
+      "usage": [
+        "Each tone has a soft form: a pale fill under a darker ink of the same hue (#daf4e4 under #008635 for success)."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "No web font: the system stack (Apple's system face on a Mac). 16/24 for body text, 14px at 500 on buttons and controls, 14/20 for secondary copy, 12/18 for small labels. Titles are 600: 24/36 for page headings, 16/24 for dialog titles."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Buttons, switches and the app's select triggers are pills. In the library, inputs, cards and code blocks have 8px corners and badges and checkboxes 4px. The signed-in app is rounder: 16px on cards, dialogs, menus and tooltips, 12px on menu rows, 24px on the banner alert; the composer is a 52px pill."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A long size scale from 3xs (22px) to 3xl (48px); the library defaults to md at 32px and the app's controls are 36px with 12px padding. Menu rows are 32px with 8px padding in the library, 36px with 10px padding in the app."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Edges are drawn as 1px inset rings in ink at 16% (white at 25% in dark). The app's menus add a 0.5px ring under 0 8px 16px -4px at 12%, and dialogs 0 4px 8px -2px at 10%. The library's surface tooltip floats on 0 10px 15px -3px plus 0 4px 6px -4px at 10%; the segmented control's indicator sits on a small 0 1px 4px -1px drop. Focus is a 2px blue outline 2px out."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "The Apps SDK UI Button: solid, soft, outline and ghost, each a pill, across nine sizes. Solid fills in the ink color and inverts in dark. Pressing scales a button to 97%.",
+      "groups": {
+        "button": {
+          "variants": {
+            "solid": {
+              "note": "#181818 with white text; #f3f3f3 under #0d0d0d in dark: Update password."
+            },
+            "soft": {
+              "note": "No edge: Submit beside a field; #3c3c3c in dark. The app's Manage buttons are this look, #f0f0f0."
+            },
+            "outline": {
+              "note": "A 1px #d8d8d8 edge: Submit, the date range trigger; #595959 in dark."
+            },
+            "ghost": {
+              "note": "No fill until hover, a #5d5d5d icon: the code block's copy button."
+            },
+            "v-v44zwn": {
+              "hide": "date picker day cells"
+            },
+            "v-vefjmc": {
+              "hide": "the date picker's selected day"
+            },
+            "v-16r2up": {
+              "hide": "the link inside an Alert story, see link"
+            },
+            "v-4dedht": {
+              "hide": "the link inside an Alert story, in purple"
+            },
+            "v-62k03u": {
+              "hide": "the link inside an Alert story, in yellow"
+            },
+            "v-fa1ywj": {
+              "hide": "the link inside an Alert story, in red"
+            },
+            "v-gikfpf": {
+              "hide": "the link inside an Alert story, in orange"
+            },
+            "v-rnqkgy": {
+              "hide": "the link inside an Alert story, in green"
+            },
+            "v-ycbe5g": {
+              "hide": "the link inside an Alert story, in blue"
+            }
+          },
+          "sizes": {
+            "3xs": {
+              "note": "22px, 12px."
+            },
+            "2xs": {
+              "note": "24px, about 11px padding, 12px."
+            },
+            "xs": {
+              "note": "26px, about 11px padding."
+            },
+            "sm": {
+              "note": "28px."
+            },
+            "md": {
+              "note": "32px: the library's default."
+            },
+            "lg": {
+              "note": "36px, 16px padding. The app's buttons are 36px with 12px padding."
+            },
+            "xl": {
+              "note": "40px, about 19px padding."
+            },
+            "2xl": {
+              "note": "44px, 16px text: the pricing page's Upgrade."
+            },
+            "3xl": {
+              "note": "48px, 16px text."
+            },
+            "s-tf5ukr": {
+              "note": "A 48px soft avatar button."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "ButtonLink draws a link as any button variant. TextLink is underlined in the text color by default; the primary form is blue without an underline.",
+      "groups": {
+        "link": {
+          "variants": {
+            "solid": {
+              "note": "View API Keys, Continue to dashboard: the solid button as a link."
+            },
+            "soft": {
+              "note": "The soft button as a link."
+            },
+            "ghost": {
+              "note": "The ghost button as a link."
+            },
+            "outline": {
+              "note": "The outline button as a link."
+            },
+            "v-16r2up": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "TextLink: underlined #0d0d0d, 400 (responses endpoint, Learn more)."
+            },
+            "v-81t2p5": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "Underlined #5d5d5d."
+            },
+            "v-483qop": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Blue #0169cc, no underline; #339cff in dark."
+            },
+            "v-ycbe5g": {
+              "name": {
+                "value": "external",
+                "from": "ai"
+              },
+              "note": "Underlined blue: the External story; #339cff in dark."
+            },
+            "v-9kfalg": {
+              "name": {
+                "value": "strong",
+                "from": "ai"
+              },
+              "note": "Contact support: 600 with no underline."
+            },
+            "v-bds9cy": {
+              "name": {
+                "value": "subtle",
+                "from": "ai"
+              },
+              "note": "#5d5d5d with no underline."
+            }
+          },
+          "sizes": {
+            "s-6w8xcl": {
+              "note": "16px on a 24px line."
+            },
+            "s-krcd8v": {
+              "note": "14px on a 20px line."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Badges come in solid, soft and outline, across the status colors, at sm 20px (12px text), md 22px and lg 24px (14px text). Corners are 4px; RECOMMENDED on the app's pricing page is a 27px pill.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "solid": {
+              "note": "Sample: #5d5d5d with white text in the secondary color."
+            },
+            "soft": {
+              "note": "Sample: #daf4e4 under #008635 in the success color."
+            },
+            "outline": {
+              "note": "Sample: a 1px #d8d8d8 edge, #5d5d5d text."
+            }
+          },
+          "sizes": {
+            "s-umj0t5": {
+              "note": "42px, with a 29px icon."
+            },
+            "s-wpbbiz": {
+              "note": "48px, with a 34px icon."
+            }
+          }
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-0dp511": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Failed: #5d5d5d at 600 on the track; #afafaf in dark."
+            }
+          }
+        },
+        "segmented": {
+          "variants": {
+            "v-3agi14": {
+              "name": {
+                "value": "track",
+                "from": "ai"
+              },
+              "note": "All, Failed, Successful: a #ededed pill with 2px inset; #0d0d0d in dark."
+            },
+            "v-6rwsq4": {
+              "name": {
+                "value": "indicator",
+                "from": "ai"
+              },
+              "note": "The white pill under the chosen segment, on a 0 1px 4px -1px drop at 20%; #303030 in dark."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The app's own segmented control (Reduce motion) is 24px pills with a #e3e3e3 chosen segment and no track; it isn't in this census."
+      ]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Input is outline by default: a 1px #d8d8d8 edge with 8px corners, 32px at md with 14px text. Focus darkens the edge to #868686, with no ring. The soft variant fills #ececec with no edge.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "outline": {
+              "note": "Sample input, jane.doe@gmail.com."
+            },
+            "soft": {
+              "note": "Enter text...: #ececec, #3c3c3c in dark."
+            },
+            "v-ydkg4a": {
+              "name": {
+                "value": "bare",
+                "from": "ai"
+              },
+              "note": "An input with no frame of its own: the Slider's value, the TagInput's text."
+            }
+          },
+          "sizes": {
+            "s-544sow": {
+              "note": "20px, 13px."
+            },
+            "s-sx3vba": {
+              "note": "An 80px textarea, 12px padding."
+            },
+            "s-6w8xcl": {
+              "note": "24px, 16px."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-cjqcae": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "18px, white with a 1px #cdcdcd edge and 4px corners."
+            }
+          },
+          "sizes": {
+            "s-vhh354": {
+              "note": "18px."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-bdy2u8": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 16px circle with a 1px #d8d8d8 edge."
+            }
+          },
+          "sizes": {
+            "s-64dl1g": {
+              "note": "16px."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-edfdpn": {
+              "name": {
+                "value": "off",
+                "from": "ai"
+              },
+              "note": "A #dfdfdf track with a white thumb; #414141 in dark. On, the app's switch is blue #3a83f7 in both modes."
+            }
+          },
+          "sizes": {
+            "s-yqbhzn": {
+              "note": "19px tall."
+            }
+          }
+        }
+      }
+    },
+    "slider": {
+      "status": "reviewed",
+      "groups": {
+        "slider": {
+          "variants": {
+            "v-04bq3z": {
+              "name": {
+                "value": "thumb",
+                "from": "ai"
+              },
+              "note": "A 14px white thumb with a 2px #ef4146 inset ring, in the Marks story."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "groups": {
+        "menuitem": {
+          "variants": {
+            "v-ydkg4a": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Your profile: 14px #0d0d0d on white."
+            }
+          },
+          "sizes": {
+            "s-i4hd36": {
+              "note": "32px, 8px padding."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-ydkg4a": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Today in the SelectControl menu."
+            }
+          },
+          "sizes": {
+            "s-i4hd36": {
+              "note": "32px, 8px padding."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "option": {
+          "variants": {
+            "v-ydkg4a": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Banana in the Select story."
+            }
+          },
+          "sizes": {
+            "s-i4hd36": {
+              "note": "32px, 8px padding."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "outline": {
+              "note": "The code block's surface: white with a 1px #e6e6e6 edge, 8px corners."
+            },
+            "soft": {
+              "note": "The soft Alert (Password expires in 3 days): #fff4ef with a #ffe9e0 edge, an orange tint."
+            },
+            "v-b1chp1": {
+              "name": {
+                "value": "tooltip",
+                "from": "ai"
+              },
+              "note": "The surface tooltip: white, a 1px #ebebeb edge, the popover shadow."
+            },
+            "v-qrjprh": {
+              "name": {
+                "value": "tag input",
+                "from": "ai"
+              },
+              "note": "The TagInput's frame: a 1px #868686 edge."
+            },
+            "v-cnv06u": {
+              "hide": "a story's frame around a form example"
+            },
+            "v-s3qf6o": {
+              "hide": "a transitions demo box"
+            },
+            "v-1iay2e": {
+              "hide": "a transitions demo box"
+            },
+            "v-q2qwip": {
+              "hide": "a transitions demo box"
+            }
+          }
+        }
+      },
+      "summary": "In the library, surfaces are white with a 1px #e6e6e6 edge and 8px corners. The app's cards (the settings groups) are the page color with a 1px #e2e2e2 edge and 16px corners."
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "soft": {
+              "note": "A round photo on #ededed; #303030 in dark."
+            }
+          },
+          "sizes": {
+            "s-0cxaro": {
+              "note": "42px, in an avatar group."
+            },
+            "s-czi5jm": {
+              "note": "48px."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-xjjjud": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #e6e6e6 rule in Markdown."
+            },
+            "v-k8yspv": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "A #e6e6e6 line between menu groups."
+            },
+            "v-bk6wvs": {
+              "hide": "a fraction bar in rendered math"
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "status": "reviewed",
+      "groups": {
+        "alert": {
+          "variants": {
+            "outline": {
+              "note": "Scheduled maintenance on Saturday: a 1px #e02e2a edge with red text and icon."
+            }
+          },
+          "sizes": {
+            "s-bfpe5z": {
+              "note": "16px padding, a 20px icon."
+            }
+          }
+        }
+      },
+      "summary": "The library's Alert defaults to outline. The app's banner (GPTs will be retired) is the page color with a 1px #d6d6d6 edge, 24px corners and a 0 1px 2px drop at 5%."
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-1i5lzx": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Field 1, Passing grade: 14px at 400 in the ink color."
+            }
+          },
+          "sizes": {
+            "s-1dg68b": {
+              "note": "14/20."
+            },
+            "s-0q8gbq": {
+              "note": "14/21."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "docs",
+        "url": "https://openai.github.io/apps-sdk-ui/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@openai/apps-sdk-ui",
+        "ref": "0.2.2",
+        "retrievedAt": null,
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: 197 stories of the Apps SDK UI Storybook, the component library ChatGPT apps render in, in light and dark. Partial: chatgpt.com itself blocks headless browsers, and the signed-in app pages aren't in this census; facts quoted from them come from the pack's 2026-10-22 notes. Names without a from are the library's data-variant and data-size values; names marked ai are ours."
+  }
+}

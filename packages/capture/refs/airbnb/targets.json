@@ -101,6 +101,59 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "ai-search-banner": {
+        "selector": "div:has(> div > span#unified-search-microphone-prompt)"
+      },
+      "site-header": {
+        "selector": "[data-testid^=shimmer-css-variable-index]:has(header)"
+      },
+      "search-bar": {
+        "selector": "[data-testid=big-search]"
+      },
+      "listing-row": {
+        "selector": "[data-testid=content-scroller]"
+      },
+      "listing-card": {
+        "selector": "[data-testid=card-container]"
+      },
+      "profile-menu": {
+        "selector": "#guest-header-dropdownmenu",
+        "before": [
+          {
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "login-dialog": {
+        "selector": "[role=dialog][aria-labelledby=auth-modal-title]",
+        "before": [
+          {
+            "focus": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "date-picker": {
+        "selector": "[data-testid=big-search] > div > div:has(#tabs)",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          },
+          {
+            "wait": "[data-testid=expanded-searchbar-dates-calendar-tab]"
+          }
+        ]
+      },
+      "footer": {
+        "selector": "footer"
+      }
     }
   },
   "https://www.airbnb.com/s/Paris/homes": {
@@ -169,6 +222,48 @@
       "badge": {
         "text": "Free cancellation"
       }
+    },
+    "blocks": {
+      "search-header": {
+        "selector": "header:has(#filter-menu-chip-group) > div[data-pageslot=true]:first-child"
+      },
+      "filter-bar": {
+        "selector": "#filter-menu-chip-group"
+      },
+      "result-card": {
+        "selector": "[data-testid=card-container]"
+      },
+      "featured-hotels": {
+        "selector": "div:has(> div > div > div > div > h2 + p)"
+      },
+      "price-details": {
+        "selector": "[role=dialog][aria-label='Price details']",
+        "before": [
+          {
+            "focus": "[data-testid=price-availability-row] button"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "map": {
+        "selector": "[data-testid=universal-map-controlled]"
+      },
+      "filters-dialog": {
+        "selector": "[role=dialog][aria-label=Filters]",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "pagination": {
+        "selector": "nav[aria-label='Search results pagination']"
+      }
     }
   },
   "https://www.airbnb.com/rooms/47803806": {
@@ -209,6 +304,46 @@
       "text.muted": {
         "text": "Add your travel dates for exact pricing"
       }
+    },
+    "blocks": {
+      "listing-title": {
+        "selector": "[data-section-id=TITLE_DEFAULT]"
+      },
+      "photo-grid": {
+        "selector": "[data-section-id=HERO_DEFAULT]"
+      },
+      "guest-favorite-strip": {
+        "selector": "[data-section-id=GUEST_FAVORITE_BANNER] button"
+      },
+      "highlights": {
+        "selector": "[data-section-id=HIGHLIGHTS_DEFAULT]"
+      },
+      "booking-card": {
+        "selector": "aside[aria-label='Booking Information']"
+      },
+      "sleep-cards": {
+        "selector": "[data-section-id=SLEEPING_ARRANGEMENT_DEFAULT]"
+      },
+      "amenities": {
+        "selector": "[data-section-id=AMENITIES_DEFAULT]"
+      },
+      "inline-calendar": {
+        "selector": "[data-testid=inline-availability-calendar]"
+      },
+      "rating-summary": {
+        "selector": "[data-section-id=REVIEWS_DEFAULT] section > div:first-child"
+      },
+      "review": {
+        "selector": "[data-section-id=REVIEWS_DEFAULT] [role=listitem]",
+        "redact": true
+      },
+      "host-profile": {
+        "selector": "[data-section-id=MEET_YOUR_HOST]",
+        "redact": true
+      },
+      "things-to-know": {
+        "selector": "[data-section-id=POLICIES_DEFAULT]"
+      }
     }
   },
   "https://www.airbnb.com/host/homes": {
@@ -223,6 +358,27 @@
       "link": {
         "selector": "a",
         "text": "Learn more"
+      }
+    },
+    "blocks": {
+      "earnings-hero": {
+        "selector": "[data-testid=wmpw-component]"
+      },
+      "hosting-banner": {
+        "selector": "[data-section-name=hero-banner] [data-element-name=section-content-container] > div"
+      },
+      "value-props": {
+        "selector": "[data-section-name=body-items]"
+      },
+      "cohost-cards": {
+        "selector": "div:has(> div > div > div > div > div > [aria-label$='star guest rating'])",
+        "redact": true
+      },
+      "aircover-list": {
+        "selector": "[data-section-name=table]"
+      },
+      "faq": {
+        "selector": "[data-section-name=accordion]"
       }
     }
   },

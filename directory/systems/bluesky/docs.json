@@ -1,0 +1,373 @@
+{
+  "version": 1,
+  "slug": "bluesky",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "ALF's light theme is white with black text, slate greys for secondary text (#405168 for handles, #667b99 for post actions) and #dce2ea for every hairline. Bluesky blue #006aff is the one accent: Follow, links and mentions. Dark mode defaults to dim, a navy theme: #151d28 pages, #1c2736 raised surfaces, #2c3a4e hairlines, #abb8c9 secondary text, links in #4d97ff and the primary at #0f73ff.",
+      "usage": [
+        "Bluesky also ships an OLED dark theme on #000; new users get dim."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "InterVariable throughout: 15px on a 20px line for post text, 15px at 600 for names, 13.1px for handles, timestamps and meta, 16px on controls. Small labels drop to 11.3px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Buttons are pills; cards, link previews and dialogs have 12px corners, menus and count chips 8px, menu rows 4px. Avatars are circles."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "ALF's space scale is small steps (2, 4, 8, 12, 16px). Small buttons are 33px with 14px padding, large 44px with 24px; post actions are 28px. Feeds pad posts 12 to 16px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Feeds are flat, split by 1px hairlines. Menus and the hover card float on 0 10px 15px -3px plus 0 4px 6px -4px in black at 10% (40% in dim); dialogs on a 0 0 30px glow."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Most buttons on the profile are pressable toggles (Follow, Sign in, the post actions) and are in toggle-button. This grid is mostly post media, which opens a viewer.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-ruf9wo": {
+              "name": { "value": "icon, outline", "from": "ai" },
+              "note": "Scroll to top: a 42px white circle with a 1px #dce2ea edge."
+            },
+            "v-fqdox8": { "hide": "post images and video that open a viewer" },
+            "v-glxg1k": { "hide": "a video player" }
+          },
+          "sizes": {
+            "s-ljwb4f": { "note": "42px, a 20px icon." }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "summary": "ALF's Button in its colors: primary is solid blue, secondary a light grey fill; both are pills at small (33px) and large (44px). Post actions are bare icons with a count.",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-19nusv": {
+              "name": { "value": "primary", "from": "docs" },
+              "note": "#006aff with white text: Follow, Copy code."
+            },
+            "v-cobrlm": {
+              "name": { "value": "secondary", "from": "docs" },
+              "note": "A #eff2f6 pill with black text: Sign in, the profile's icon buttons."
+            },
+            "v-jaw0bk": {
+              "name": { "value": "post action", "from": "ai" },
+              "note": "Reply, repost and like: an 18px icon and a count (8.6K) in #667b99, no fill."
+            },
+            "v-9vvzok": {
+              "name": { "value": "icon, over media", "from": "ai" },
+              "note": "The back arrow over the profile banner: a dark translucent circle."
+            },
+            "v-heysnp": { "hide": "the verified check beside a name" },
+            "v-glxg1k": { "hide": "a video player" }
+          },
+          "sizes": {
+            "s-2th01i": {
+              "name": { "value": "small", "from": "docs" },
+              "note": "33px, 14px padding, a 16px icon."
+            },
+            "s-izt277": {
+              "name": { "value": "large", "from": "docs" },
+              "note": "44px, 24px padding."
+            },
+            "s-a1xxht": {
+              "name": { "value": "small, icon", "from": "ai" },
+              "note": "33px circle, a 16px icon."
+            },
+            "s-819bmu": {
+              "name": { "value": "post action", "from": "ai" },
+              "note": "28px, 5px padding, an 18px icon."
+            },
+            "s-9ubl5h": { "note": "31px, a 24px icon." },
+            "s-ce4fwt": { "note": "33px, an 18px icon." },
+            "s-h6oup1": { "note": "20px, 4px padding, a 12px icon." },
+            "s-vwrfh4": { "note": "25px." },
+            "s-7ysxzb": { "note": "17px, inline in text." },
+            "s-g2pcge": { "note": "56px, a 20px icon." }
+          }
+        }
+      },
+      "usage": ["Focus draws a 1px near-black ring around the pill."]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Mentions and links in posts are blue #006aff at 400 with no underline; handles and meta are #405168. Names are black at 600.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-s2g9ov": {
+              "name": { "value": "inline", "from": "ai" },
+              "note": "A mention in a post: @alexbenzer.com; #4d97ff in dim."
+            },
+            "v-8gcimu": {
+              "name": { "value": "author", "from": "ai" },
+              "note": "The display name on a post: black at 600."
+            },
+            "v-80vj1g": {
+              "name": { "value": "muted", "from": "ai" },
+              "note": "The handle (@bsky.app) and footer links (Privacy): #405168."
+            },
+            "v-4pv93y": {
+              "name": { "value": "timestamp", "from": "ai" },
+              "note": "· Oct 17, 2024 after the handle, #405168."
+            },
+            "v-891ppu": {
+              "name": { "value": "hover card", "from": "ai" },
+              "note": "A profile's hover card (San Juan Journal): white, a 1px #dce2ea edge, 12px corners, the menu shadow."
+            },
+            "v-wl7lac": {
+              "name": { "value": "custom", "from": "ai" },
+              "note": "View publication: a pill in the publication's own color (#49357d)."
+            },
+            "v-fqdox8": { "hide": "avatars and the Reposted by line" },
+            "v-cobrlm": { "hide": "quoted posts and embeds" }
+          },
+          "sizes": {
+            "s-ag997w": { "note": "15px." },
+            "s-j59ud4": { "note": "15px, 4px padding." },
+            "s-ukg54q": { "note": "15px in post text." },
+            "s-4smmmo": { "note": "13.1px." },
+            "s-p1ocba": { "note": "A 184px card." },
+            "s-2th01i": { "note": "33px, 14px padding." }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-cobrlm": {
+              "name": { "value": "count", "from": "ai" },
+              "note": "1/3 over a post's image set: #eff2f6 with 8px corners."
+            },
+            "v-8b6ful": {
+              "name": { "value": "alt", "from": "ai" },
+              "note": "ALT on an image with a description: #f9fafb at 80%."
+            },
+            "v-4pv93y": { "hide": "post timestamps (· 2d)" },
+            "v-jaw0bk": { "hide": "a 12px icon" }
+          },
+          "sizes": {
+            "s-qb52z9": { "note": "17px, 5px padding." },
+            "s-1ppgr2": { "note": "17px, 5px padding." },
+            "s-q6tknw": { "note": "18px, 4px padding." }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The profile tabs (Posts, Media, Videos): no fill; the current one is black at 600."
+            },
+            "v-cobrlm": {
+              "name": { "value": "segmented", "from": "ai" },
+              "note": "Automatic in the hosting-provider dialog's switcher: on a #eff2f6 track."
+            }
+          },
+          "sizes": {
+            "s-gs439f": { "note": "47px, 14px padding." },
+            "s-cp1mtn": { "note": "40px, 8px padding." }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Posts, Media, Videos, Feeds, Starter Packs."
+            },
+            "v-nti1pa": {
+              "name": { "value": "segmented", "from": "ai" },
+              "note": "Automatic, Manual: a #eff2f6 track."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are a #eff2f6 box with 10px corners and no edge, 44px, with a bare 15px input inside. Focus lightens the box to #f5f9ff and adds a 1px blue #006aff edge. In dim the box is #222e3f.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The sign-in form's username and password inputs, inside their box."
+            }
+          },
+          "sizes": {
+            "s-wksp58": { "note": "40px, 4px padding, 15px." }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The footer's language picker (English) and the Search input."
+            }
+          },
+          "sizes": {
+            "s-1wjdr8": { "note": "30px, 8px padding, an 18px icon." },
+            "s-wksp58": { "note": "40px, 15px." }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "groups": {
+        "menuitem": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Copy link to profile: a row with its icon at the end, 4px corners."
+            }
+          },
+          "sizes": {
+            "s-2azhp5": { "note": "36px, 10px padding, a 20px icon." }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "option": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The language list: aragonés – Aragonese."
+            }
+          },
+          "sizes": {
+            "s-s6ydkv": { "note": "29px, 30px start padding, 13.1px." }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-5sfawr": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Embed post: white, a 1px #c0cad8 edge, 12px corners, a 0 0 30px glow at 10% (40% in dim)."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-exqytw": {
+              "name": { "value": "link preview", "from": "ai" },
+              "note": "Introducing Profile Links: an image over a title and description, a 1px #dce2ea edge, 12px corners."
+            },
+            "v-hemqtu": {
+              "name": { "value": "quote", "from": "ai" },
+              "note": "A quoted post inside a post: a 1px #dce2ea edge, 12px corners."
+            },
+            "v-b9ofgc": {
+              "name": { "value": "admonition", "from": "ai" },
+              "note": "Your hosting provider is detected automatically…: an info icon and text inside a 1px blue edge."
+            },
+            "v-dbashc": { "hide": "image frames inside posts" },
+            "v-q2j303": { "hide": "an empty avatar placeholder" },
+            "v-nti1pa": { "hide": "loading placeholders" },
+            "v-2ndydm": {
+              "hide": "the focused sign-in field's box, see text-field"
+            },
+            "v-4pee04": { "hide": "a hover shade over a post" },
+            "v-xxaco5": { "hide": "feed rows under their top hairline" }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-dbashc": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A round photo on #f9fafb."
+            }
+          },
+          "sizes": {
+            "s-bxyf0l": {
+              "note": "16px: the small avatars beside the Reposted by line."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The 42px post avatars and the 90px profile avatar were read as links."
+      ]
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-xxaco5": {
+              "name": { "value": "top", "from": "ai" },
+              "note": "A 1px #dce2ea rule on top of each feed row."
+            },
+            "v-2zk4u1": {
+              "name": { "value": "bottom", "from": "ai" },
+              "note": "A 1px #dce2ea rule under the tabs."
+            },
+            "v-i5mttj": {
+              "name": { "value": "vertical", "from": "ai" },
+              "note": "A 1px #dce2ea line beside the feed column."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://bsky.app/profile/bsky.app",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "repo",
+        "url": "https://github.com/bluesky-social/social-app",
+        "ref": "f0b2edb051d9855639a7ce3851032a6dd04b69c3",
+        "retrievedAt": null,
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: the logged-out Bluesky profile with its sign-in form and dialogs, in light and dim (the dark mode a new user gets). Names marked docs are ALF Button's own color and size values in the pinned social-app source; names marked ai are ours."
+  }
+}

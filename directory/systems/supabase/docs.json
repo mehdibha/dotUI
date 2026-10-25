@@ -1,0 +1,741 @@
+{
+  "version": 1,
+  "slug": "supabase",
+  "blocks": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neutral greys with one green. Light pages are #fdfdfd with near-black #030303 for strong text, #464646 for body copy and #696969 for quiet text; edges run from #e8e8e8 to #d8d8d8. The brand green #0e7e4e fills the primary button and rings the radios. Dark mode is a faintly green grey: #131413 pages, #edefee and #bcbdbc text, #232423 to #303130 edges, and the primary drops to a deep #006338 with green text links in #4acd8b.",
+      "usage": [
+        "The theme is generated at runtime in OKLCH on hue 157.5: each raised layer steps the surface lightness by about 0.024.",
+        "Danger #ab413e and warning #ac5800 fill their buttons with a darker edge of the same hue."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter at a 450 regular weight: 13px on an 18.5px line for most of the UI, 12px at 500 on small buttons, 15/22.5 for body copy. Headings switch to Manrope at 600 with tight tracking (22px at -0.55px). Code is Source Code Pro."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "6px corners on buttons, fields, cards and toggles in the design-system docs, 4px on menu rows, kbd and checkboxes. The signed-in dashboard rounds the same controls at 8px; the docs read three quarters of that.",
+      "usage": ["A few docs buttons (Expand code, Docs) are pills."]
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Compact, on a 4px step: the common button is 26px with 10px padding, fields and select triggers 34px with 12px, menu rows 28px with 8px. Page sections breathe at 24px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Mostly flat. Buttons carry a stack of faint inset rings and a 0 1px 3px drop at 4% black; menus, dialogs and list boxes float on a soft shadow at 10%. Focus is a 2px gap in the page color and a 2px mint ring at 55%.",
+      "usage": [
+        "The primary, danger and warning buttons add a barely visible top-to-bottom gradient over their fill."
+      ]
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Supabase's Button has a type and a size. The Button page shows default (white, a grey edge), primary (green), secondary (filled in the text color), danger, warning and link. Sizes go tiny 26px, small 34px, medium 38px, large 42px and xlarge 50px. Many other buttons in this grid are the docs site's own chrome or a calendar's day cells.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-sgkyuw": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "White, a 1px #e4e4e4 edge, #030303 text at 500: Expand code and the size examples."
+            },
+            "v-2ppmdj": {
+              "name": {
+                "value": "primary",
+                "from": "docs"
+              },
+              "note": "Green #0e7e4e with a #0c7045 edge and white text; #006338 in dark."
+            },
+            "v-bc4mgy": {
+              "name": {
+                "value": "secondary",
+                "from": "docs"
+              },
+              "note": "Filled in the text color: near-black in light, near-white in dark."
+            },
+            "v-1rud09": {
+              "name": {
+                "value": "danger",
+                "from": "docs"
+              },
+              "note": "Red #ab413e with a #983936 edge."
+            },
+            "v-do4k25": {
+              "name": {
+                "value": "warning",
+                "from": "docs"
+              },
+              "note": "Orange #ac5800 with a #994e00 edge; a lighter amber with dark text in dark mode."
+            },
+            "v-ririlf": {
+              "name": {
+                "value": "link",
+                "from": "docs"
+              },
+              "note": "Green text, no frame."
+            },
+            "v-vlcab3": {
+              "name": {
+                "value": "date trigger",
+                "from": "ai"
+              },
+              "note": "Pick a date: a white field-like button with a calendar icon and quiet text."
+            },
+            "v-pb5bmr": {
+              "name": {
+                "value": "sidebar toggle",
+                "from": "ai"
+              },
+              "note": "The Sidebar example's 28px icon-only toggle, no frame."
+            },
+            "v-orxyjv": {
+              "hide": "the docs code blocks' Copy icon"
+            },
+            "v-pqwa67": {
+              "hide": "View code, the docs' code expander"
+            },
+            "v-atqgi6": {
+              "hide": "Docs, the link out on the docs' shadcn/ui notice"
+            },
+            "v-htjl7n": {
+              "hide": "the docs header's theme toggle"
+            },
+            "v-dqht8f": {
+              "hide": "the docs Search Design System box"
+            },
+            "v-k90yte": {
+              "hide": "a calendar day cell, not a button"
+            },
+            "v-1hsi7p": {
+              "hide": "a calendar day from the next or last month"
+            },
+            "v-d93tva": {
+              "hide": "the calendar's disabled month arrows"
+            },
+            "v-vwarxt": {
+              "hide": "the calendar's selected day"
+            },
+            "v-w5yquj": {
+              "hide": "the calendar's hovered day"
+            }
+          },
+          "sizes": {
+            "tiny": {
+              "name": {
+                "value": "tiny",
+                "from": "docs"
+              },
+              "note": "26px, 10px padding, 12px at 500. The dashboard's everyday size."
+            },
+            "small": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "34px, 12px padding, 13px."
+            },
+            "medium": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "38px, 16px padding, 13px."
+            },
+            "large": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "42px, 16px padding, 15px."
+            },
+            "xlarge": {
+              "name": {
+                "value": "xlarge",
+                "from": "docs"
+              },
+              "note": "50px, 24px padding, 15px."
+            },
+            "s-ce0rny": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "28px square, a 16px icon."
+            }
+          }
+        }
+      },
+      "usage": [
+        "Focus adds a 2px page-colored gap and a 2px mint ring at 55% outside the edge.",
+        "Pressing a button shrinks it slightly (26px to 25.2px)."
+      ],
+      "missing": [
+        "The alternative, outline, dashed and text types weren't told apart from default on the Button page.",
+        "Signed-in dashboard buttons are 26px with 8px corners; that pass isn't in this census."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-d0ccej": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "No frame, #464646 icon: the bold B."
+            },
+            "v-5nq8c3": {
+              "name": {
+                "value": "outline",
+                "from": "docs"
+              },
+              "note": "A 1px #d8d8d8 edge: the italic I."
+            }
+          },
+          "sizes": {
+            "s-1apy99": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "40px, 12px padding."
+            },
+            "s-wbmbaa": {
+              "name": {
+                "value": "sm",
+                "from": "docs"
+              },
+              "note": "34px, 10px padding."
+            },
+            "s-twuwvk": {
+              "name": {
+                "value": "lg",
+                "from": "docs"
+              },
+              "note": "44px, 20px padding."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links in docs prose are underlined in the text color. Everything else in this grid is the docs site's navigation.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-t6847d": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Underlined, #030303 at 450: icon, select()."
+            },
+            "v-kxow8t": {
+              "hide": "the docs sidebar links"
+            },
+            "v-1hsi7p": {
+              "hide": "the docs header links and the Sidebar example's rows"
+            },
+            "v-7uf6qy": {
+              "hide": "the docs footer credit"
+            },
+            "v-nlio3b": {
+              "hide": "docs links on the shadcn/ui notice and the split-button menu"
+            },
+            "v-9ltdj5": {
+              "hide": "the docs sidebar's current page"
+            },
+            "v-k90yte": {
+              "hide": "the Supabase Design System logo"
+            },
+            "v-atqgi6": {
+              "hide": "Docs: a link drawn as the default button"
+            },
+            "v-2ppmdj": {
+              "hide": "Sign in: a link drawn as the primary button, see button"
+            },
+            "v-d53z9j": {
+              "hide": "the Sidebar example's active row"
+            }
+          },
+          "sizes": {
+            "s-itnexa": {
+              "note": "15px in body text."
+            },
+            "s-3r5y3f": {
+              "note": "13px."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-uku2wy": {
+              "hide": "View logs: the hover tooltip on a Button example, not a badge"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The dashboard's status badges are signed in only and not in this census."
+      ]
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-1hsi7p": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Password in the Tabs example: muted #696969, 13px, no fill."
+            },
+            "v-kz1zpf": {
+              "hide": "the docs install tabs (CLI, Manual)"
+            }
+          },
+          "sizes": {
+            "s-r8f1bz": {
+              "note": "About 31px, 13px."
+            }
+          }
+        }
+      },
+      "missing": ["The selected tab isn't in the grid."]
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "summary": "The toggle group's segmented example: a white track with a 1px #d8d8d8 edge, and a sliding #f3f3f3 indicator with a #cfcfcf edge under the chosen segment.",
+      "groups": {
+        "segment": {
+          "variants": {
+            "v-d0ccej": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A segment's label: #464646 at 500, no fill of its own."
+            }
+          },
+          "sizes": {
+            "s-5onizi": {
+              "name": {
+                "value": "tiny",
+                "from": "ai"
+              },
+              "note": "26px, 10px padding, 12px."
+            },
+            "s-gwngec": {
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
+              "note": "34px, 10px padding."
+            },
+            "s-3vczid": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "40px, 12px padding."
+            },
+            "s-tgsz3y": {
+              "name": {
+                "value": "large",
+                "from": "ai"
+              },
+              "note": "44px, 20px padding."
+            }
+          }
+        },
+        "segmented": {
+          "variants": {
+            "v-i8zrqi": {
+              "name": {
+                "value": "track",
+                "from": "ai"
+              },
+              "note": "Data, Definition: white, a 1px #d8d8d8 edge."
+            },
+            "v-lsd87y": {
+              "name": {
+                "value": "indicator",
+                "from": "ai"
+              },
+              "note": "The chosen segment's chip: #f3f3f3, a 1px #cfcfcf edge."
+            },
+            "v-ae0r8y": {
+              "name": {
+                "value": "indicator, brand",
+                "from": "ai"
+              },
+              "note": "A green chip, #72e3ad with a #2cc182 edge; #006239 in dark."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields sit in a faint well: #f9f9f9 with a 1px #d5d5d5 edge, 34px with 12px padding and 13px text. Dark mode sinks them below the page (#101110).",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-982uyu": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email in the Input example."
+            },
+            "v-pfr8en": {
+              "name": {
+                "value": "file",
+                "from": "ai"
+              },
+              "note": "The file input (Choose File), with a lighter #e4e4e4 edge."
+            }
+          },
+          "sizes": {
+            "s-3llnpu": {
+              "note": "34px, 12px padding, 13px."
+            }
+          }
+        }
+      },
+      "usage": ["On focus the edge darkens under the 2px mint ring."]
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-9ga3yp": {
+              "name": {
+                "value": "select trigger",
+                "from": "ai"
+              },
+              "note": "Select a fruit: white, a 1px #e4e4e4 edge, quiet placeholder and a chevron."
+            }
+          },
+          "sizes": {
+            "s-n2b2z0": {
+              "note": "34px, 12px padding."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-swmm3o": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "16px, #fafafa with a 1px #d5d5d5 edge."
+            }
+          },
+          "sizes": {
+            "s-yb335d": {
+              "note": "16px."
+            }
+          }
+        }
+      },
+      "missing": ["The checked box wasn't read."]
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-0e6hce": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 16px circle ringed in green #0e7e4e, a green dot when chosen."
+            },
+            "v-d0ccej": {
+              "name": {
+                "value": "toggle group item",
+                "from": "ai"
+              },
+              "note": "A single-choice toggle group's item (B): the frameless toggle."
+            }
+          },
+          "sizes": {
+            "s-yb335d": {
+              "note": "16px."
+            },
+            "s-1apy99": {
+              "note": "40px, 12px padding."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menu rows are 28px with 8px padding and 12px #464646 text on white; a destructive row is red. Radio rows indent 32px for the dot.",
+      "groups": {
+        "menuitem": {
+          "variants": {
+            "v-l850qn": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Secondary action in the split button's menu."
+            },
+            "v-xls8js": {
+              "name": {
+                "value": "destructive",
+                "from": "ai"
+              },
+              "note": "Destructive action: red #ab413e text."
+            }
+          },
+          "sizes": {
+            "s-reeem5": {
+              "note": "28px, 8px padding, 12px."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-l850qn": {
+              "name": {
+                "value": "radio",
+                "from": "ai"
+              },
+              "note": "The docs Theme menu's System, Light, Dark rows."
+            }
+          },
+          "sizes": {
+            "s-1efidg": {
+              "note": "28px, 32px start padding for the dot."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "option": {
+          "variants": {
+            "v-l850qn": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Banana in the Select example: #464646 on white."
+            },
+            "v-w5yquj": {
+              "name": {
+                "value": "highlighted",
+                "from": "ai"
+              },
+              "note": "Apple under the pointer: a #f5f5f5 fill and full ink."
+            }
+          },
+          "sizes": {
+            "s-mcwu24": {
+              "note": "About 31px, 32px start padding for the check, 13px."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-wzzad9": {
+              "hide": "the docs props tables (Prop, Default, Notes)"
+            }
+          }
+        }
+      },
+      "missing": [
+        "No data table example renders on these pages; the dashboard's grids are signed in."
+      ]
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-qsnn6e": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The Tabs example's Account card: white, a 1px #eaeaea edge, a 0 1px 2px drop at 5%."
+            },
+            "v-ztsdjd": {
+              "hide": "the docs preview frame around each example"
+            },
+            "v-9mrg9i": {
+              "hide": "the docs' This component uses shadcn/ui notice"
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-m261vz": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 4px bar with a near-black fill on a pale track."
+            }
+          },
+          "sizes": {
+            "s-h06tz0": {
+              "note": "4px."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-yk745t": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #dadada rule under the Theme menu's heading."
+            },
+            "v-ywzkq1": {
+              "hide": "the docs install tabs' selected underline"
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-6wfnwr": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "⌘ K in the search box: #f6f6f6, a 1px #e1e1e1 edge, 10px at 500."
+            }
+          },
+          "sizes": {
+            "s-9mwk49": {
+              "note": "20px, 6px padding."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-sz23op": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Picture: 13px at 450 in full ink."
+            },
+            "v-2nc2en": {
+              "name": {
+                "value": "checkbox label",
+                "from": "ai"
+              },
+              "note": "Accept terms and conditions: 13px at 500."
+            },
+            "v-xbbjbg": {
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
+              "note": "Date of birth: 13px in #464646."
+            }
+          },
+          "sizes": {
+            "s-2wnasf": {
+              "note": "13/19.5."
+            },
+            "s-67pvuq": {
+              "note": "13px on a tight 13px line."
+            },
+            "s-5w2xgv": {
+              "note": "15/22.5."
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "status": "reviewed",
+      "groups": {
+        "status": {
+          "variants": {
+            "v-mrigfw": {
+              "hide": "the calendar's month caption (October 2026), a live region, not an alert"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "docs",
+        "url": "https://supabase.com/design-system",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "repo",
+        "url": "https://github.com/supabase/supabase/tree/master/packages/ui",
+        "ref": null,
+        "retrievedAt": "2026-10-21",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: twelve pages of supabase.com/design-system, which render the open-source ui package, in light and dark. Partial: the signed-in dashboard (Studio) pages aren't in this census; facts quoted from them come from the pack's 2026-10-22 notes. Names marked docs are the ui package's own type and size values; names marked ai are ours."
+  }
+}
