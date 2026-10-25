@@ -22,22 +22,26 @@ const SELECTION = "#0D99FF"
 // Keyboard focus: inputs style `focus:`, everything else `focus-visible:`.
 const FOCUSED = { ...stateProps("focus"), "data-focused": "true" }
 const FOCUSED_ON = { ...FOCUSED, "data-selected": "true" }
+const ON = { "data-selected": "true" }
 
-function Buttons() {
+type Row = { focused: boolean }
+
+function Buttons({ focused }: Row) {
   const button = useButtonStyles()
+  const state = focused ? FOCUSED : {}
   return (
     <>
-      <span {...FOCUSED} className={button({ variant: "primary" })}>
+      <span {...state} className={button({ variant: "primary" })}>
         Publish
       </span>
-      <span {...FOCUSED} className={button({ variant: "secondary" })}>
+      <span {...state} className={button({ variant: "secondary" })}>
         Preview
       </span>
-      <span {...FOCUSED} className={button({ variant: "quiet" })}>
+      <span {...state} className={button({ variant: "quiet" })}>
         Cancel
       </span>
       <span
-        {...FOCUSED}
+        {...state}
         data-icon-only=""
         aria-label="Add"
         className={button({ variant: "secondary" })}
@@ -48,31 +52,32 @@ function Buttons() {
   )
 }
 
-function SelectionControls() {
+function SelectionControls({ focused }: Row) {
   const checkbox = useCheckboxStyles()()
   const radio = useRadioStyles()()
   const toggle = useSwitchStyles()()
+  const state = focused ? FOCUSED_ON : ON
   return (
     <>
       <span className={checkbox.root()}>
-        <span {...FOCUSED_ON} className={checkbox.control()}>
-          <span {...FOCUSED_ON} className={checkbox.indicator()}>
+        <span {...state} className={checkbox.control()}>
+          <span {...state} className={checkbox.indicator()}>
             <CheckIcon />
           </span>
         </span>
         <Label elementType="span">Remember me</Label>
       </span>
       <span data-radio="" className={radio.root()}>
-        <span {...FOCUSED_ON} className={radio.control()}>
-          <span {...FOCUSED_ON} className={radio.indicator()}>
+        <span {...state} className={radio.control()}>
+          <span {...state} className={radio.indicator()}>
             <span />
           </span>
         </span>
         <Label elementType="span">Monthly</Label>
       </span>
-      <span {...FOCUSED_ON} className={toggle.control()}>
-        <span {...FOCUSED_ON} className={toggle.indicator()}>
-          <span {...FOCUSED_ON} className={toggle.thumb()} />
+      <span {...state} className={toggle.control()}>
+        <span {...state} className={toggle.indicator()}>
+          <span {...state} className={toggle.thumb()} />
         </span>
       </span>
     </>
@@ -81,7 +86,7 @@ function SelectionControls() {
 
 const TABS = ["Overview", "Activity", "Settings"]
 
-function Navigation() {
+function Navigation({ focused }: Row) {
   const tabs = useTabsStyles()()
   const link = useLinkStyles()
   const horizontal = { "data-rac": "", "data-orientation": "horizontal" }
@@ -97,7 +102,7 @@ function Navigation() {
               key={name}
               {...horizontal}
               // Arrow keys move selection with focus, so the focused tab is the selected one.
-              {...(index === 0 && FOCUSED_ON)}
+              {...(index === 0 && (focused ? FOCUSED_ON : ON))}
               className={tabs.item({ orientation: "horizontal" })}
             >
               {index === 0 && (
@@ -113,21 +118,25 @@ function Navigation() {
           ))}
         </div>
       </div>
-      <span {...FOCUSED} className={link({})}>
+      <span {...(focused && FOCUSED)} className={link({})}>
         View invoice
       </span>
     </>
   )
 }
 
-const FIELD = { ...FOCUSED, "data-input": "", readOnly: true, tabIndex: -1 }
-
-function Inputs() {
-  const { input, inputGroup, inputGroupAddon, textArea } = useInputStyles()()
+function Inputs({ focused }: Row) {
+  const { input, inputGroup, inputGroupAddon } = useInputStyles()()
+  const field = {
+    ...(focused && FOCUSED),
+    "data-input": "",
+    readOnly: true,
+    tabIndex: -1,
+  }
   return (
     <>
       <input
-        {...FIELD}
+        {...field}
         data-input-control=""
         aria-label="Full name"
         defaultValue="Ada Lovelace"
@@ -138,34 +147,26 @@ function Inputs() {
           <SearchIcon />
         </span>
         <input
-          {...FIELD}
+          {...field}
           data-input-control=""
           aria-label="Search"
           placeholder="Search"
           className={input()}
         />
       </div>
-      <textarea
-        {...FIELD}
-        data-textarea=""
-        aria-label="Notes"
-        rows={2}
-        defaultValue="Ship on Friday"
-        className={textArea({ className: "w-44 resize-none" })}
-      />
     </>
   )
 }
 
-/** A component set, framed the way design tools frame one; selected while the panel edits it. */
+/** A component set at rest above and focused below, framed the way design tools frame one; selected while the panel edits it. */
 function Frame({
   name,
   selected,
-  children,
+  set: Set,
 }: {
   name: string
   selected: boolean
-  children: React.ReactNode
+  set: React.ComponentType<Row>
 }) {
   const color = selected ? SELECTION : undefined
   return (
@@ -181,12 +182,19 @@ function Frame({
       </span>
       <div
         className={cn(
-          "flex flex-wrap items-center gap-x-6 gap-y-4 rounded-md border border-dashed bg-bg p-6 transition-colors duration-150 max-sm:p-4",
+          "flex flex-col gap-6 rounded-md border border-dashed bg-bg p-6 transition-colors duration-150 max-sm:p-4",
           !selected && "border-fg-muted/40",
         )}
         style={{ borderColor: color }}
       >
-        {children}
+        {[false, true].map((focused) => (
+          <div
+            key={String(focused)}
+            className="flex flex-wrap items-center gap-x-6 gap-y-4"
+          >
+            <Set focused={focused} />
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -213,18 +221,14 @@ export default function FocusBoard() {
         inert
         className="grid w-full max-w-4xl grid-cols-2 gap-8 max-md:grid-cols-1"
       >
-        <Frame name="Buttons" selected={editing.controls}>
-          <Buttons />
-        </Frame>
-        <Frame name="Selection" selected={editing.controls}>
-          <SelectionControls />
-        </Frame>
-        <Frame name="Navigation" selected={editing.controls}>
-          <Navigation />
-        </Frame>
-        <Frame name="Inputs" selected={editing.inputs}>
-          <Inputs />
-        </Frame>
+        <Frame name="Buttons" selected={editing.controls} set={Buttons} />
+        <Frame
+          name="Selection"
+          selected={editing.controls}
+          set={SelectionControls}
+        />
+        <Frame name="Navigation" selected={editing.controls} set={Navigation} />
+        <Frame name="Inputs" selected={editing.inputs} set={Inputs} />
       </div>
     </Board>
   )

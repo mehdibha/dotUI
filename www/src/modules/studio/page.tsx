@@ -459,7 +459,7 @@ export function PanelPage({
                     <span
                       key={page.id}
                       className={cn(
-                        "ml-0.5 min-w-0 truncate text-sm font-medium",
+                        "ml-2 min-w-0 truncate text-sm font-medium",
                         drill && DRILL[drill],
                       )}
                     >
