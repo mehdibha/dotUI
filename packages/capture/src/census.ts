@@ -1770,7 +1770,8 @@ const area = (box: Box) => box[2] * box[3]
    as nothing and the part as itself; a pill with text in it is the badge
    the shape rule would have read had the text been its own. And pills
    drawn over a field (a filter's highlighted qualifiers) are its value,
-   not badges. */
+   not badges. A round box around a small icon is a badge too (Primer's
+   Timeline badges): an avatar's picture fills it. */
 const TYPED = new Set(["textbox", "searchbox", "combobox"])
 function unwrap(pages: CensusPage[]): CensusPage[] {
   const rests = new Map(
@@ -1838,7 +1839,12 @@ function unwrap(pages: CensusPage[]): CensusPage[] {
     elements: page.elements
       .filter((element) => !dropped.has(element))
       .map((element) =>
-        badges.has(element) ? { ...element, role: "badge" } : element,
+        badges.has(element) ||
+        (element.role === "avatar" &&
+          Number.parseFloat(element.values.iconSize ?? "") <
+            0.8 * element.box[2])
+          ? { ...element, role: "badge" }
+          : element,
       ),
   }))
 }
