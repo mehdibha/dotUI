@@ -157,11 +157,20 @@ async function snapshot(
     }
     return values
   }
+  // A width stays beside a style that isn't none: dropped as the default's
+  // 0px (which only says the default style is none), it would draw medium.
+  const styled = (values: Values, prop: string) =>
+    /-width$/.test(prop) &&
+    (values[prop.replace(/-width$/, "-style")] ?? "none") !== "none"
   const declarations = (values: Values, base?: Values, parent?: Values) =>
     Object.entries(values)
       .filter(
         ([prop, value]) =>
-          !base || !parent || value !== base[prop] || value !== parent[prop],
+          !base ||
+          !parent ||
+          value !== base[prop] ||
+          value !== parent[prop] ||
+          styled(values, prop),
       )
       .map(([prop, value]) => `${prop}:${value}`)
       .join(";")
