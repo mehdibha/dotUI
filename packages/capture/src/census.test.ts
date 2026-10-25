@@ -146,6 +146,23 @@ describe("census", () => {
     ])
   })
 
+  it("keeps a look plain when its first element is selected", () => {
+    const { looks } = cluster(
+      [
+        page("a", "light", [
+          { ...button(1, 0, blue), is: "selected" },
+          button(2, 100, blue),
+          button(3, 200, blue),
+        ]),
+      ],
+      "test",
+    )
+    expect(looks).toEqual([
+      expect.not.objectContaining({ is: expect.anything() }),
+    ])
+    expect(looks[0]?.count).toBe(3)
+  })
+
   it("keeps a state set on the sample unless one was found in it", () => {
     const sample = {
       ...button(1, 0, blue),

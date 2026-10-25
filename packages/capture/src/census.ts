@@ -1793,7 +1793,8 @@ export function cluster(read: CensusPage[], probe: string): Inventory {
       const group = groupOf(element)
       const keys = lookKeys(element.role)
       const bySignature = groups.get(group) ?? new Map<string, Member[]>()
-      const sig = `${page.mode}|${signature(keys, element.values)}`
+      // Flagged apart: a group takes its first member's flag.
+      const sig = `${page.mode}|${element.is ?? ""}|${signature(keys, element.values)}`
       bySignature.set(sig, [...(bySignature.get(sig) ?? []), { page, element }])
       groups.set(group, bySignature)
     }
