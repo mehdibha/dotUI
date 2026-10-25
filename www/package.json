@@ -28,7 +28,8 @@
     "presets:kit": "tsx ../packages/capture/scripts/local-capture/kit.mts",
     "presets:looks": "tsx ../packages/capture/scripts/system-looks.ts",
     "presets:measure": "tsx scripts/measure-preset.mts",
-    "presets:pixel": "tsx ../packages/capture/scripts/pixel-probe.ts"
+    "presets:pixel": "tsx ../packages/capture/scripts/pixel-probe.ts",
+    "presets:spec": "tsx ../packages/capture/scripts/spec.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

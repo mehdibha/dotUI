@@ -41,10 +41,12 @@
  *     with --from to keep the signed-in pages.
  *
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
- * model, and frozen copies of each look's sample at rest and in its states
+ * model, frozen copies of each look's sample at rest and in its states
  * (--copies per pass, 40 by default; redacted with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
- * (presets:looks). <out> is .scratch-refs/<id>/<date>/census by default.
+ * (presets:looks), and a full-page shot of each pass as
+ * <out>/shots/<page>-<pass>-<mode>.jpg (--no-shots skips them). <out> is
+ * .scratch-refs/<id>/<date>/census by default: never in git.
  */
 import { createHash } from "node:crypto"
 import { existsSync } from "node:fs"
@@ -120,7 +122,9 @@ const { values: args } = parseArgs({
     states: { type: "string", default: "80" },
     copies: { type: "string", default: "40" },
     concurrency: { type: "string", default: "2" },
+    shots: { type: "boolean", default: true },
   },
+  allowNegative: true,
 })
 
 if (!args.pack) {
@@ -165,6 +169,10 @@ const INTERACTIVE = new Set([
   "select",
   "row",
   "cell",
+  "toggle",
+  "segment",
+  "breadcrumb",
+  "pagination-item",
 ])
 
 /** One element per look of a pass, most-used looks first: the ones whose
@@ -267,9 +275,14 @@ async function readStates(
   }
   const force = (nodeId: number, classes: string[]) =>
     cdp.send("CSS.forcePseudoState", { nodeId, forcedPseudoClasses: classes })
-  const set = (id: number, state: Forced | null) =>
+  const set = (element: CensusElement, state: Forced | null) =>
     page.evaluate(
-      censusSnippet({ kind: "force", id, state }),
+      censusSnippet({
+        kind: "force",
+        id: element.id,
+        state,
+        role: element.role,
+      }),
     ) as Promise<boolean>
   for (const element of elements) {
     if (page.url() !== url) break
@@ -323,7 +336,7 @@ async function readStates(
       }
       if (!element.is)
         for (const state of FORCED) {
-          if (!(await set(element.id, state))) continue
+          if (!(await set(element, state))) continue
           await finish(page)
           const values = await read(page, element.id)
           const diff = values ? changed(element.values, values) : {}
@@ -333,12 +346,12 @@ async function readStates(
             forced.push(state)
             await copy(state)
           }
-          await set(element.id, null)
+          await set(element, null)
         }
     } catch {
       // Detached or covered: keep what was read.
     } finally {
-      await set(element.id, null).catch(() => {})
+      await set(element, null).catch(() => {})
       if (keys) await page.keyboard.press("Escape").catch(() => {})
       await handle.dispose()
     }
@@ -549,12 +562,20 @@ const storyOf = (url: string) => {
   }
 }
 
-/** A story's variants, one arg changed at a time: each option of its enum
- *  args (variant, size, tone…) and the other value of its boolean ones
- *  (disabled, loading, invalid…), from the argTypes Storybook keeps. Args
- *  that take components or functions (icons, slots) are left out. */
-async function variants(page: Page, story: string, max: number) {
-  const found = await page
+type StoryArgs = {
+  args: Record<string, unknown>
+  types: {
+    name: string
+    options?: unknown[]
+    control?: string | false
+    off: boolean
+    type?: string
+  }[]
+}
+
+/** A story's initial args and argTypes, from the store Storybook keeps. */
+const storyArgs = (page: Page, story: string): Promise<StoryArgs | null> =>
+  page
     .evaluate(async (story) => {
       const store = (
         window as unknown as {
@@ -596,16 +617,50 @@ async function variants(page: Page, story: string, max: number) {
       }
     }, story)
     .catch(() => null)
-  if (!found) return []
+
+/* An arg with options to pick from: a variant, a size, a tone. */
+const isEnum = (t: StoryArgs["types"][number]) =>
+  !t.off &&
+  t.type !== "object" &&
+  t.type !== "function" &&
+  !!t.options &&
+  t.options.length <= 12 &&
+  t.options.every((o) => typeof o === "string" || typeof o === "number")
+
+/** The enum args a story renders with, as names: only values from its
+ *  options, never free text (a label, children). */
+const enumArgs = (found: StoryArgs, args: Record<string, unknown>) =>
+  Object.fromEntries(
+    found.types.filter(isEnum).flatMap((t) => {
+      const value = args[t.name]
+      return (typeof value === "string" || typeof value === "number") &&
+        t.options?.includes(value) &&
+        String(value).length <= 40
+        ? [[t.name, String(value)]]
+        : []
+    }),
+  )
+
+/* Variant and size args first, so --args reaches them before responsive
+   copies (variantAtNarrow) and the rest. */
+const rankOf = (arg: string) =>
+  /^(variant|size|appearance|kind|tone|intent|emphasis|color|shape)$/i.test(arg)
+    ? 0
+    : /variant|size/i.test(arg)
+      ? 2
+      : 1
+
+/** A story's variants, one arg changed at a time: each option of its enum
+ *  args (variant, size, tone…) and the other value of its boolean ones
+ *  (disabled, loading, invalid…). Args that take components or functions
+ *  (icons, slots) are left out. */
+function variants(found: StoryArgs, max: number) {
   const options: Record<string, unknown>[] = []
   const toggles: Record<string, unknown>[] = []
-  for (const t of found.types) {
+  const types = [...found.types].sort((a, b) => rankOf(a.name) - rankOf(b.name))
+  for (const t of types) {
     if (t.off || t.type === "object" || t.type === "function") continue
-    if (
-      t.options &&
-      t.options.length <= 12 &&
-      t.options.every((o) => typeof o === "string" || typeof o === "number")
-    ) {
+    if (isEnum(t) && t.options) {
       for (const option of t.options)
         if (option !== found.args[t.name]) options.push({ [t.name]: option })
     } else if (t.type === "boolean" || t.control === "boolean")
@@ -664,6 +719,32 @@ interface Job {
   passes: Step[][]
 }
 
+/* Taller pages are cut: a shot is for finding a look, not reading the
+   page. */
+const SHOT_HEIGHT = 10000
+
+/** A full-page shot of the page as it stands, in <out>/shots/; its path
+ *  from <out>, or undefined when the page can't be shot. */
+async function shoot(page: Page, file: string) {
+  try {
+    const { width, height } = await page.evaluate(() => ({
+      width: document.documentElement.scrollWidth,
+      height: document.documentElement.scrollHeight,
+    }))
+    const shot = await page.screenshot({
+      type: "jpeg",
+      quality: 60,
+      clip: { x: 0, y: 0, width, height: Math.min(height, SHOT_HEIGHT) },
+      captureBeyondViewport: true,
+    })
+    await mkdir(resolve(OUT, "shots"), { recursive: true })
+    await writeFile(resolve(OUT, "shots", file), shot)
+    return `shots/${file}`
+  } catch {
+    return undefined
+  }
+}
+
 /** A file name for a page key: readable, with a hash of the whole key so
  *  long keys that share a start (Storybook story URLs) stay apart. */
 const slug = (key: string) =>
@@ -687,8 +768,18 @@ async function crawl(
   const { page, load, close } = await open(job)
   const pages: CensusPage[] = []
   let start = 0
-  const keep = (censusPage: CensusPage | null) => {
-    if (censusPage) pages.push(censusPage)
+  // A story's enum args as the pass renders them.
+  let rendered: Record<string, string> = {}
+  const keep = async (censusPage: CensusPage | null) => {
+    if (!censusPage) return
+    const shot = args.shots
+      ? await shoot(page, `${slug(job.key)}-${pages.length}-${job.mode}.jpg`)
+      : undefined
+    pages.push({
+      ...censusPage,
+      ...(Object.keys(rendered).length ? { args: rendered } : {}),
+      ...(shot ? { shot } : {}),
+    })
   }
   const warn = (name: string, error: unknown) =>
     console.warn(
@@ -703,7 +794,11 @@ async function crawl(
     page.on("dialog", (dialog) => void dialog.dismiss())
     await load()
     const home = where()
-    keep(await pass(page, job.key, job.mode, "rest", 0))
+    const story = storyOf(job.url)
+    const found = story ? await storyArgs(page, story) : null
+    const initial = found ? enumArgs(found, found.args) : {}
+    rendered = initial
+    await keep(await pass(page, job.key, job.mode, "rest", 0))
     const popups = OPEN ? await finders(page, "popups", OPEN) : []
     const tips = Number(args.tips)
       ? await finders(page, "tips", Number(args.tips))
@@ -728,7 +823,9 @@ async function crawl(
         await finish(page)
         // A trigger that navigates opened nothing.
         if (where() === home)
-          keep(await pass(page, job.key, job.mode, name, (start += 100000)))
+          await keep(
+            await pass(page, job.key, job.mode, name, (start += 100000)),
+          )
       } catch (error) {
         warn(name, error)
         dirty = true
@@ -759,7 +856,7 @@ async function crawl(
         }
         if (await appeared(page)) {
           await finish(page)
-          keep(
+          await keep(
             await pass(
               page,
               job.key,
@@ -785,9 +882,8 @@ async function crawl(
       }
       if (where() !== home) await load()
     }
-    const story = storyOf(job.url)
-    for (const updated of story && Number(args.args)
-      ? await variants(page, story, Number(args.args))
+    for (const updated of found && Number(args.args)
+      ? variants(found, Number(args.args))
       : []) {
       const name = `args ${Object.entries(updated)
         .map(([arg, value]) => `${arg}:${value}`)
@@ -798,12 +894,15 @@ async function crawl(
         if (await setArgs(page, story as string, updated)) {
           await pause(200)
           await finish(page)
-          keep(
+          rendered = found ? enumArgs(found, { ...found.args, ...updated }) : {}
+          await keep(
             await pass(page, job.key, job.mode, name, (start += 100000), false),
           )
         }
       } catch (error) {
         warn(name, error)
+      } finally {
+        rendered = initial
       }
       await page.mouse.move(0, 0).catch(() => {})
       // A story still re-rendering would read into the next variant.
@@ -821,7 +920,7 @@ async function crawl(
         if (!steps.some((step) => "hover" in step)) await page.mouse.move(0, 0)
         await pause(400)
         await finish(page)
-        keep(await pass(page, job.key, job.mode, name, (start += 100000)))
+        await keep(await pass(page, job.key, job.mode, name, (start += 100000)))
       } catch (error) {
         warn(name, error)
       }

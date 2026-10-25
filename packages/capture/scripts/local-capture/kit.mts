@@ -234,7 +234,7 @@ const KIT = `(function kit() {
       const forced = {}
       for (const e of reps.filter((e) => !e.is).slice(0, 40))
         for (const state of ${JSON.stringify(FORCED)}) {
-          if (!run({ kind: "force", id: e.id, state })) continue
+          if (!run({ kind: "force", id: e.id, state, role: e.role })) continue
           settle()
           const values = run({ kind: "read", ids: [e.id], focus: false })[e.id]
           run({ kind: "force", id: e.id, state: null })
