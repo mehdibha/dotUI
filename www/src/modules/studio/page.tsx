@@ -12,6 +12,7 @@ import {
   useRef,
   useState,
 } from "react"
+import type { CSSProperties } from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -25,6 +26,7 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { useTweak } from "@/dev/tweaker"
 
 import { linkTarget, placeOf } from "./chapters"
 import type { Chapter } from "./chapters"
@@ -45,11 +47,14 @@ function setHash(page: string | null) {
 }
 
 /* Drilling in slides the page in from the right; Back slides the chapters in
-   from the left. A link opening a page, or a chapter switch, doesn't move. */
+   from the left, and the header only fades. A link opening a page, or a
+   chapter switch, doesn't move. */
 const DRILL = {
   in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
   out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
 }
+const FADE =
+  "animate-in fade-in duration-200 ease-out motion-reduce:animate-none"
 
 /** Retries each frame: a page's rows mount a frame or more after it opens. */
 function untilMounted(attempt: () => boolean, frames = 30) {
@@ -235,6 +240,40 @@ export function PanelPage({
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
+
+  const blur = useTweak("Blur (px)", {
+    type: "number",
+    min: 0,
+    max: 16,
+    step: 1,
+    default: 0,
+    group: "Drill-in",
+  })
+  const blurHeader = useTweak("Blur header", {
+    type: "boolean",
+    default: false,
+    group: "Drill-in",
+  })
+  const duration = useTweak("Duration (ms)", {
+    type: "number",
+    min: 100,
+    max: 600,
+    step: 25,
+    default: 200,
+    group: "Drill-in",
+  })
+  const drillStyle = drill
+    ? ({
+        "--tw-enter-blur": `${blur}px`,
+        animationDuration: `${duration}ms`,
+      } as CSSProperties)
+    : undefined
+  const headerStyle = drill
+    ? ({
+        "--tw-enter-blur": blurHeader ? `${blur}px` : undefined,
+        animationDuration: `${duration}ms`,
+      } as CSSProperties)
+    : undefined
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -448,11 +487,12 @@ export function PanelPage({
                         setPageId(behind?.id ?? null)
                         setHash(behind?.id ?? null)
                       }}
-                      // Slides in with the first page, then stays put.
+                      // Fades in with the first page, then stays put.
                       className={cn(
                         "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
-                        drill && DRILL.in,
+                        drill && FADE,
                       )}
+                      style={headerStyle}
                     >
                       <ChevronLeftIcon />
                     </Button>
@@ -460,8 +500,9 @@ export function PanelPage({
                       key={page.id}
                       className={cn(
                         "ml-0.5 min-w-0 truncate text-sm font-medium",
-                        drill && DRILL[drill],
+                        drill && FADE,
                       )}
+                      style={headerStyle}
                     >
                       {page.label}
                     </span>
@@ -485,6 +526,7 @@ export function PanelPage({
                     !open && "max-lg:hidden",
                     drill && DRILL[drill],
                   )}
+                  style={drillStyle}
                 >
                   <page.Body studio={studio} />
                 </section>
@@ -494,6 +536,7 @@ export function PanelPage({
                     "flex w-full shrink-0 flex-col",
                     drill === "out" && DRILL.out,
                   )}
+                  style={drill === "out" ? drillStyle : undefined}
                 >
                   {chapters.map((chapter, i) => (
                     <ChapterBlock
