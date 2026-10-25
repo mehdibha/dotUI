@@ -788,26 +788,37 @@ async function shoot(
   try {
     // The body's height too: a body that scrolls on its own, or one a
     // notice holds fixed (Airbnb's), holds the page.
-    const { x, y, height } = await page.evaluate(() => ({
-      x: scrollX,
-      y: scrollY,
-      height: Math.max(
-        document.documentElement.scrollHeight,
-        document.body?.scrollHeight ?? 0,
-      ),
-    }))
+    const measure = () =>
+      page.evaluate(() => ({
+        x: scrollX,
+        y: scrollY,
+        height: Math.max(
+          document.documentElement.scrollHeight,
+          document.body?.scrollHeight ?? 0,
+        ),
+      }))
+    const { x, y, height: first } = await measure()
+    let height = first
     const at: [number, number] | null =
       x || y ? [Math.round(x), Math.round(y)] : null
     if (whole && !at && height > viewport.height) {
-      await page.setViewport({
-        ...viewport,
-        height: Math.min(height, SHOT_HEIGHT),
-      })
-      grown = true
-      await page
-        .waitForNetworkIdle({ idleTime: 500, timeout: 4000 })
-        .catch(() => {})
-      await settle(page)
+      // A page grown to its height can grow again (Airbnb's search page
+      // pushed its footer 600px down): a few rounds, until it holds.
+      let shown = viewport.height
+      for (
+        let round = 0;
+        round < 3 && height > shown && shown < SHOT_HEIGHT;
+        round++
+      ) {
+        shown = Math.min(height, SHOT_HEIGHT)
+        await page.setViewport({ ...viewport, height: shown })
+        grown = true
+        await page
+          .waitForNetworkIdle({ idleTime: 500, timeout: 4000 })
+          .catch(() => {})
+        await settle(page)
+        ;({ height } = await measure())
+      }
       // A framed field's box is its frame's, as the census read it.
       const boxes = (await page.evaluate(() => {
         const boxOf = (el: Element) => {
