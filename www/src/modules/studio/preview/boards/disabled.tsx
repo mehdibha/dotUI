@@ -122,7 +122,9 @@ const SETS = [
 export default function DisabledBoard() {
   const { axis, holds } = useBoardFocus()
   // One setting dresses every set.
-  const selected = [axis, ...(holds ?? [])].includes("disabledTreatment")
+  const selected = [axis, ...(holds ?? [])].some(
+    (key) => key === "disabledTreatment" || key === "disabledOpacity",
+  )
   return (
     <Board id="disabled" untitled className={CANVAS}>
       <SetGrid>
