@@ -77,6 +77,7 @@
     }
   },
   "https://dashboard.stripe.com/test/dashboard": {
+    "mode": "light",
     "signedIn": true,
     "parts": {
       "page": {
@@ -139,6 +140,7 @@
     }
   },
   "https://dashboard.stripe.com/test/settings/billing/invoices/general": {
+    "mode": "light",
     "signedIn": true,
     "settle": 6000,
     "parts": {
@@ -172,6 +174,7 @@
     }
   },
   "https://dashboard.stripe.com/test/settings/billing/invoices/general#payment-page": {
+    "mode": "light",
     "signedIn": true,
     "settle": 6000,
     "steps": [
@@ -195,6 +198,7 @@
     }
   },
   "https://dashboard.stripe.com/test/customers": {
+    "mode": "light",
     "signedIn": true,
     "settle": 4000,
     "parts": {

@@ -27,8 +27,9 @@
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
  *     in new tabs of your profile. <file> maps each page key, with account
  *     segments as placeholders, to its real URL; real URLs are never
- *     written. Modes are emulated (prefers-color-scheme): a product with an
- *     appearance setting needs it set by hand, one mode per run. Clicks only
+ *     written. Modes are emulated (prefers-color-scheme), and a page with a
+ *     `mode` is read only in it: a product with an appearance setting needs
+ *     it set to follow the system, or by hand, one mode per run. Clicks only
  *     with --passes (a pack page's `before` steps and `passes`) or --open:
  *     tooltips are hovered and states set, which changes nothing the
  *     account keeps.
@@ -1290,6 +1291,9 @@ async function connected(): Promise<CensusPage[]> {
     ])
     await focusable(page)
     const load = async () => {
+      // A goto that changes only the hash keeps the document (claude.ai's
+      // settings dialog is a hash route).
+      if (page.url() !== "about:blank") await page.goto("about:blank")
       await page.goto(job.url, { waitUntil: "load", timeout: 60000 })
       await page
         .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
@@ -1301,9 +1305,12 @@ async function connected(): Promise<CensusPage[]> {
   }
   try {
     const pages: CensusPage[] = []
-    for (const [key, url] of Object.entries(urls))
-      for (const mode of MODES) {
-        const known = targets[key]
+    for (const [key, url] of Object.entries(urls)) {
+      const known = targets[key]
+      // A page that shows one mode is read only in it (Stripe, Spotify).
+      for (const mode of MODES.filter(
+        (m) => !known?.mode || m === known.mode,
+      )) {
         const passes = args.passes
           ? [
               ...Object.values(known?.parts ?? {}).flatMap((target) =>
@@ -1329,6 +1336,7 @@ async function connected(): Promise<CensusPage[]> {
           )),
         )
       }
+    }
     return pages
   } finally {
     await browser.disconnect()
