@@ -1,0 +1,5076 @@
+{
+  "version": 1,
+  "slug": "govuk",
+  "preset": "govuk",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-25",
+    "pages": [
+      {
+        "key": "https://design-system.service.gov.uk/components/button/default/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/button/secondary/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/checkboxes/default/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/fieldset/address-group/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/notification-banner/default/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/pagination/default/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/summary-list/card-with-title/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/tag/all-colours/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/tag/default/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://design-system.service.gov.uk/components/text-input/input-hint-text/index.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.gov.uk/bank-holidays",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.gov.uk/check-uk-visa/y",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.gov.uk/foreign-travel-advice/france/entry-requirements",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.gov.uk/universal-credit",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 591,
+            "uses": [
+              "cell@table backgroundColor",
+              "columnheader@table backgroundColor",
+              "link backgroundColor",
+              "panel color",
+              "page backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(244, 248, 251)",
+            "l": 0.977,
+            "c": 0.006,
+            "h": 240,
+            "count": 332,
+            "uses": [
+              "link backgroundColor",
+              "button backgroundColor",
+              "badge edge",
+              "badge backgroundColor",
+              "card backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(243, 243, 243)",
+            "l": 0.964,
+            "c": 0,
+            "h": 0,
+            "count": 35,
+            "uses": [
+              "panel backgroundColor",
+              "listitem backgroundColor",
+              "tab backgroundColor",
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(208, 230, 231)",
+            "l": 0.909,
+            "c": 0.023,
+            "h": 200,
+            "count": 1,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(210, 226, 241)",
+            "l": 0.905,
+            "c": 0.027,
+            "h": 246,
+            "count": 2,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(207, 228, 220)",
+            "l": 0.901,
+            "c": 0.025,
+            "h": 171,
+            "count": 1,
+            "uses": [
+              "badge backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(206, 206, 206)",
+            "l": 0.851,
+            "c": 0,
+            "h": 0,
+            "count": 321,
+            "uses": [
+              "cell@table edge",
+              "columnheader@table edge",
+              "panel edge",
+              "card edge",
+              "note edge"
+            ]
+          },
+          {
+            "color": "rgb(128, 128, 128)",
+            "l": 0.6,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "separator color"
+            ]
+          },
+          {
+            "color": "rgb(72, 73, 73)",
+            "l": 0.404,
+            "c": 0.001,
+            "h": 197,
+            "count": 11,
+            "uses": [
+              "text color",
+              "icon@pagination-item color"
+            ]
+          },
+          {
+            "color": "rgb(11, 12, 12)",
+            "l": 0.153,
+            "c": 0.002,
+            "h": 197,
+            "count": 710,
+            "uses": [
+              "cell@table color",
+              "columnheader@table color",
+              "time@table color",
+              "paragraph color",
+              "heading.h2 color"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 126,
+            "uses": [
+              "panel color",
+              "paragraph@navigation color",
+              "page color",
+              "combobox color",
+              "textbox color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 250,
+            "count": 483,
+            "steps": [
+              {
+                "color": "rgb(142, 184, 220)",
+                "l": 0.765,
+                "c": 0.069,
+                "h": 245,
+                "count": 20,
+                "uses": [
+                  "heading.h2@contentinfo edge",
+                  "card edge",
+                  "separator edge"
+                ]
+              },
+              {
+                "color": "rgb(29, 112, 184)",
+                "l": 0.535,
+                "c": 0.136,
+                "h": 250,
+                "count": 73,
+                "uses": [
+                  "panel backgroundColor",
+                  "toggle backgroundColor",
+                  "card edge",
+                  "badge backgroundColor",
+                  "button backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(26, 101, 166)",
+                "l": 0.497,
+                "c": 0.125,
+                "h": 250,
+                "count": 388,
+                "uses": [
+                  "link color",
+                  "text@pagination-item color",
+                  "pagination-item color",
+                  "badge color",
+                  "button color"
+                ]
+              },
+              {
+                "color": "rgb(15, 56, 92)",
+                "l": 0.333,
+                "c": 0.078,
+                "h": 249,
+                "count": 2,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 161,
+            "count": 15,
+            "steps": [
+              {
+                "color": "rgb(15, 122, 82)",
+                "l": 0.514,
+                "c": 0.11,
+                "h": 161,
+                "count": 14,
+                "uses": [
+                  "button backgroundColor",
+                  "card backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(8, 61, 41)",
+                "l": 0.321,
+                "c": 0.064,
+                "h": 162,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 46,
+            "count": 3,
+            "steps": [
+              {
+                "color": "rgb(253, 228, 215)",
+                "l": 0.936,
+                "c": 0.033,
+                "h": 49,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(122, 60, 28)",
+                "l": 0.43,
+                "c": 0.097,
+                "h": 46,
+                "count": 2,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 300,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(221, 214, 236)",
+                "l": 0.888,
+                "c": 0.031,
+                "h": 300,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(42, 25, 80)",
+                "l": 0.27,
+                "c": 0.096,
+                "h": 293,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 347,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(244, 215, 229)",
+                "l": 0.907,
+                "c": 0.037,
+                "h": 347,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(101, 27, 62)",
+                "l": 0.354,
+                "c": 0.111,
+                "h": 355,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 18,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(244, 215, 215)",
+                "l": 0.903,
+                "c": 0.032,
+                "h": 18,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(101, 27, 27)",
+                "l": 0.344,
+                "c": 0.106,
+                "h": 25,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 201,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(11, 65, 68)",
+                "l": 0.344,
+                "c": 0.053,
+                "h": 201,
+                "count": 1,
+                "uses": [
+                  "badge color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 101,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(255, 238, 128)",
+                "l": 0.941,
+                "c": 0.132,
+                "h": 101,
+                "count": 1,
+                "uses": [
+                  "badge backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 240,
+        "roles": {
+          "canvas": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(11, 12, 12)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(72, 73, 73)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(206, 206, 206)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(15, 122, 82)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(26, 101, 166)",
+            "source": "probe"
+          },
+          "focus": {
+            "color": "rgb(255, 221, 0)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--govuk-link-colour",
+        "count": 379,
+        "feeds": [
+          "link color",
+          "pagination-item color",
+          "badge color",
+          "button color",
+          "listitem backgroundColor"
+        ],
+        "light": "#1a65a6"
+      },
+      {
+        "name": "--govuk-border-colour",
+        "count": 320,
+        "feeds": [
+          "cell@table edge",
+          "columnheader@table edge",
+          "panel edge",
+          "card edge",
+          "heading.h2@navigation edge",
+          "heading.h3@navigation edge",
+          "listitem edge",
+          "tablist edge"
+        ],
+        "light": "#cecece"
+      },
+      {
+        "name": "--govuk-text-colour",
+        "count": 164,
+        "feeds": [
+          "paragraph color",
+          "heading.h2 color",
+          "label color",
+          "text@table color",
+          "breadcrumb color",
+          "heading.h2@contentinfo color",
+          "heading.h3@navigation color",
+          "card color"
+        ],
+        "light": "#0b0c0c"
+      },
+      {
+        "name": "--_govuk-notification-banner-colour",
+        "count": 32,
+        "feeds": [
+          "panel backgroundColor",
+          "region edge"
+        ]
+      },
+      {
+        "name": "--_govuk-notification-banner-title-text-colour",
+        "count": 31,
+        "feeds": [
+          "panel color"
+        ]
+      },
+      {
+        "name": "--govuk-body-background-colour",
+        "count": 27,
+        "feeds": [
+          "page backgroundColor",
+          "listitem backgroundColor"
+        ],
+        "light": "#ffffff"
+      },
+      {
+        "name": "--govuk-template-background-colour",
+        "count": 21,
+        "feeds": [
+          "panel backgroundColor",
+          "contentinfo backgroundColor"
+        ],
+        "light": "#f4f8fb"
+      },
+      {
+        "name": "--govuk-surface-border-colour",
+        "count": 15,
+        "feeds": [
+          "heading.h2@contentinfo edge",
+          "separator edge"
+        ],
+        "light": "#8eb8dc"
+      },
+      {
+        "name": "--govuk-input-border-colour",
+        "count": 11,
+        "feeds": [
+          "combobox edge",
+          "textbox edge",
+          "select edge"
+        ],
+        "light": "#0b0c0c"
+      },
+      {
+        "name": "--govuk-secondary-text-colour",
+        "count": 11,
+        "feeds": [
+          "text color",
+          "icon@pagination-item color"
+        ],
+        "light": "#484949"
+      },
+      {
+        "name": "--govuk-brand-colour",
+        "count": 10,
+        "feeds": [
+          "contentinfo edge",
+          "link backgroundColor"
+        ],
+        "light": "#1d70b8"
+      },
+      {
+        "name": "--govuk-surface-text-colour",
+        "count": 10,
+        "feeds": [
+          "contentinfo color",
+          "region color"
+        ],
+        "light": "#0b0c0c"
+      },
+      {
+        "name": "--govuk-surface-background-colour",
+        "count": 5,
+        "feeds": [
+          "region backgroundColor"
+        ],
+        "light": "#f4f8fb"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "GDS Transport",
+        "count": 1178
+      },
+      {
+        "family": "Times New Roman",
+        "count": 50
+      },
+      {
+        "family": "monospace",
+        "count": 9
+      },
+      {
+        "family": "Arial",
+        "count": 5
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "25px",
+        "fontFamily": "GDS Transport",
+        "count": 394,
+        "groups": [
+          "link",
+          "paragraph",
+          "panel",
+          "cell@table",
+          "text",
+          "badge"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "GDS Transport",
+        "count": 211,
+        "groups": [
+          "cell@table",
+          "listitem",
+          "button",
+          "breadcrumb",
+          "note",
+          "heading.h3@navigation"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "GDS Transport",
+        "count": 204,
+        "groups": [
+          "columnheader@table",
+          "time@table",
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "GDS Transport",
+        "count": 125,
+        "groups": [
+          "link",
+          "badge",
+          "toggle"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "700",
+        "lineHeight": "25px",
+        "fontFamily": "GDS Transport",
+        "count": 52,
+        "groups": [
+          "text",
+          "text@table",
+          "heading.h2",
+          "heading.h3",
+          "pagination-item",
+          "text@pagination-item"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Times New Roman",
+        "count": 49,
+        "groups": [
+          "panel",
+          "card"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "GDS Transport",
+        "count": 48,
+        "groups": [
+          "paragraph@navigation",
+          "card",
+          "region",
+          "navigation"
+        ]
+      },
+      {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "30px",
+        "fontFamily": "GDS Transport",
+        "count": 45,
+        "groups": [
+          "heading.h2",
+          "heading.h2@contentinfo",
+          "heading.h3@navigation",
+          "label@search",
+          "text",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "20.48px",
+        "fontFamily": "GDS Transport",
+        "count": 27,
+        "groups": [
+          "link",
+          "button",
+          "region"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "19px",
+        "fontFamily": "GDS Transport",
+        "count": 19,
+        "groups": [
+          "button",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "20.48px",
+        "fontFamily": "GDS Transport",
+        "count": 14,
+        "groups": [
+          "link"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "25px",
+        "fontFamily": "monospace",
+        "count": 9,
+        "groups": [
+          "code@table"
+        ]
+      },
+      {
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "50px",
+        "fontFamily": "GDS Transport",
+        "count": 7,
+        "groups": [
+          "heading.h1",
+          "heading.h2",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Arial",
+        "count": 5,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "28px",
+        "fontFamily": "GDS Transport",
+        "count": 5,
+        "groups": [
+          "combobox"
+        ]
+      },
+      {
+        "fontSize": "36px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "fontFamily": "GDS Transport",
+        "count": 5,
+        "groups": [
+          "heading.h1",
+          "label"
+        ]
+      },
+      {
+        "fontSize": "30px",
+        "fontWeight": "400",
+        "lineHeight": "30px",
+        "fontFamily": "GDS Transport",
+        "count": 5,
+        "groups": [
+          "link"
+        ]
+      },
+      {
+        "fontSize": "36px",
+        "fontWeight": "400",
+        "lineHeight": "22px",
+        "fontFamily": "GDS Transport",
+        "count": 5,
+        "groups": [
+          "text@toggle"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "GDS Transport",
+        "count": 5,
+        "groups": [
+          "toggle"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "fontFamily": "GDS Transport",
+        "count": 2,
+        "groups": [
+          "heading.h2@navigation"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "22.4px",
+        "fontFamily": "GDS Transport",
+        "count": 2,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "lineHeight": "30px",
+        "fontFamily": "GDS Transport",
+        "count": 2,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "36px",
+        "fontWeight": "400",
+        "lineHeight": "40px",
+        "fontFamily": "GDS Transport",
+        "count": 1,
+        "groups": [
+          "card"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "Times New Roman",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 1,
+        "count": 10,
+        "groups": [
+          "badge"
+        ]
+      }
+    ],
+    "pills": []
+  },
+  "spacing": {
+    "grid": 5,
+    "steps": [
+      {
+        "px": 2,
+        "count": 41
+      },
+      {
+        "px": 3,
+        "count": 10
+      },
+      {
+        "px": 5,
+        "count": 75
+      },
+      {
+        "px": 6,
+        "count": 20
+      },
+      {
+        "px": 7,
+        "count": 47
+      },
+      {
+        "px": 8,
+        "count": 49
+      },
+      {
+        "px": 10,
+        "count": 718
+      },
+      {
+        "px": 15,
+        "count": 86
+      },
+      {
+        "px": 15.5,
+        "count": 17
+      },
+      {
+        "px": 19,
+        "count": 2
+      },
+      {
+        "px": 20,
+        "count": 515
+      },
+      {
+        "px": 25,
+        "count": 5
+      },
+      {
+        "px": 26,
+        "count": 1
+      },
+      {
+        "px": 30,
+        "count": 107
+      },
+      {
+        "px": 35,
+        "count": 4
+      },
+      {
+        "px": 40,
+        "count": 5
+      }
+    ],
+    "heights": {
+      "badge": [
+        {
+          "px": 29.5,
+          "count": 20
+        }
+      ],
+      "breadcrumb": [
+        {
+          "px": 19,
+          "count": 10
+        }
+      ],
+      "button": [
+        {
+          "px": 37.5,
+          "count": 29
+        },
+        {
+          "px": 50,
+          "count": 5
+        },
+        {
+          "px": 20.5,
+          "count": 1
+        }
+      ],
+      "combobox": [
+        {
+          "px": 50,
+          "count": 5
+        }
+      ],
+      "link": [
+        {
+          "px": 23,
+          "count": 199
+        },
+        {
+          "px": 19,
+          "count": 148
+        },
+        {
+          "px": 48,
+          "count": 9
+        },
+        {
+          "px": 39.5,
+          "count": 6
+        },
+        {
+          "px": 37,
+          "count": 5
+        },
+        {
+          "px": 136,
+          "count": 5
+        }
+      ],
+      "pagination-item": [
+        {
+          "px": 25,
+          "count": 4
+        },
+        {
+          "px": 50,
+          "count": 3
+        }
+      ],
+      "select": [
+        {
+          "px": 40,
+          "count": 1
+        }
+      ],
+      "tab": [
+        {
+          "px": 25,
+          "count": 2
+        }
+      ],
+      "textbox": [
+        {
+          "px": 40,
+          "count": 5
+        }
+      ],
+      "toggle": [
+        {
+          "px": 61,
+          "count": 10
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgb(11, 12, 12) 0px 3px 0px 0px",
+        "count": 15,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(8, 61, 41) 0px 2px 0px 0px",
+        "count": 13,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(255, 255, 255) 0px 20px 15px -10px",
+        "count": 2,
+        "groups": [
+          "navigation"
+        ]
+      },
+      {
+        "value": "rgb(133, 134, 134) 0px 2px 0px 0px",
+        "count": 1,
+        "groups": [
+          "button"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "badge": {
+      "groups": [
+        "badge"
+      ],
+      "found": 11,
+      "looks": [
+        {
+          "id": "badge.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "29px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(244, 248, 251) right",
+                  "width": "103.4px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "paddingRight": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.2",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "29px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "103.4px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "paddingRight": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.3",
+          "count": 2,
+          "pages": [
+            7,
+            8
+          ],
+          "part": "badge.accent",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(210, 226, 241)",
+                  "color": "rgb(15, 56, 92)",
+                  "borderRadius": "1px",
+                  "height": "30px",
+                  "paddingInline": "8px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "82.9px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "3px",
+                  "paddingRight": "8px",
+                  "lineHeight": "25px",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.3-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "blue"
+            ]
+          }
+        },
+        {
+          "id": "badge.4",
+          "count": 1,
+          "pages": [
+            7
+          ],
+          "part": "badge",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(206, 206, 206)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "1px",
+                  "height": "30px",
+                  "paddingInline": "8px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "80.9px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "3px",
+                  "paddingRight": "8px",
+                  "lineHeight": "25px",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.4-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "grey"
+            ]
+          }
+        }
+      ]
+    },
+    "breadcrumbs": {
+      "groups": [
+        "breadcrumb"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "breadcrumb.1",
+          "count": 10,
+          "pages": [
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "41.8px",
+                  "lineHeight": "20px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.5248px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/breadcrumb.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/breadcrumb.1-focus-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 6,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 15,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "37px",
+                  "paddingInline": "10px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(11, 12, 12) 0px 3px 0px 0px",
+                  "edge": "1px rgb(11, 12, 12)",
+                  "width": "100px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "7px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(206, 206, 206)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(206, 206, 206)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "boxShadow": "rgb(11, 12, 12) 0px 5px 0px 0px",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "opacity": "0.5"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 13,
+          "pages": [
+            0,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(15, 122, 82)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "10px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(8, 61, 41) 0px 2px 0px 0px",
+                  "edge": "none",
+                  "width": "174px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "7px",
+                  "paddingRight": "10px",
+                  "lineHeight": "19px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(11, 92, 62)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(11, 92, 62)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(11, 12, 12) 0px 2px 0px 0px",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "opacity": "0.5"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-disabled-light.json",
+                "forced": true
+              }
+            }
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "50px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Arial",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "50px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "2.2px",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(22, 84, 138)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(22, 84, 138)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgb(11, 12, 12) 0px 0px 0px 4px inset",
+                  "ring": "3px rgb(255, 221, 0) +0px",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Arial",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "transform": "matrix(0.4, 0, 0, 0.4, 0, 0)",
+                  "iconSize": "20x20",
+                  "iconStroke": "2.2px",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "10px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(133, 134, 134) 0px 2px 0px 0px",
+                  "edge": "none",
+                  "width": "128.5px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "7px",
+                  "paddingRight": "10px",
+                  "lineHeight": "19px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(206, 206, 206)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(206, 206, 206)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "boxShadow": "rgb(11, 12, 12) 0px 2px 0px 0px",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "opacity": "0.5"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "secondary"
+            ]
+          }
+        }
+      ]
+    },
+    "card": {
+      "groups": [
+        "card"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "card.1",
+          "count": 6,
+          "pages": [
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "112.9px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(29, 112, 184) top",
+                  "width": "300px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.2",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "78px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(142, 184, 220) top",
+                  "width": "960px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.3",
+          "count": 3,
+          "pages": [
+            6
+          ],
+          "part": "card",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "235px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206)",
+                  "width": "1380px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "groups": [
+        "cell@table",
+        "columnheader@table",
+        "time@table"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "cell@table.1",
+          "count": 166,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "41px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "157.5px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "20px",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/cell@table.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "columnheader@table.1",
+          "count": 116,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "40.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "157.5px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "20px",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/columnheader@table.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "time@table.1",
+          "count": 83,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "98.1px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "cell@table.2",
+          "count": 18,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "983.2px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/cell@table.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "columnheader@table.2",
+          "count": 2,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "45.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "983.2px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/columnheader@table.2-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "code@table",
+        "heading.h1",
+        "heading.h2",
+        "heading.h2@contentinfo",
+        "heading.h2@navigation",
+        "heading.h3",
+        "heading.h3@navigation",
+        "paragraph",
+        "paragraph@navigation",
+        "text",
+        "text@contentinfo",
+        "text@pagination-item",
+        "text@table",
+        "text@toggle"
+      ],
+      "found": 33,
+      "looks": [
+        {
+          "id": "paragraph.1",
+          "count": 62,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@navigation.1",
+          "count": 30,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "300px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 16,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "part": "heading.2",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "30px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 12,
+          "pages": [
+            6,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "45.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "649px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "display": "table-cell"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 11,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "45.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "421.4px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "display": "table-cell"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@table.1",
+          "count": 11,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "25px",
+                  "display": "table-caption"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2@contentinfo.1",
+          "count": 10,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "51px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(142, 184, 220) bottom",
+                  "width": "630px",
+                  "paddingBottom": "20px",
+                  "lineHeight": "30px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour",
+                  "edge": "--govuk-surface-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3@navigation.1",
+          "count": 10,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "30px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h3@navigation.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "code@table.1",
+          "count": 9,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "monospace",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "171px",
+                  "lineHeight": "25px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/code@table.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.2",
+          "count": 6,
+          "pages": [
+            6,
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "101.5px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.3",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "136.4px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3.1",
+          "count": 5,
+          "pages": [
+            13
+          ],
+          "part": "heading.3",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "45px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "paddingTop": "20px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h3.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "50px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "774.6px",
+                  "lineHeight": "25px",
+                  "display": "inline-block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@pagination-item.1",
+          "count": 5,
+          "pages": [
+            5,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "74.3px",
+                  "lineHeight": "25px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@toggle.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(29, 112, 184)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "36px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "21px",
+                  "lineHeight": "22px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 4,
+          "pages": [
+            13,
+            14
+          ],
+          "part": "heading.1",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "50px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "48px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "50px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.2",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            11
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "36px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "634.2px",
+                  "lineHeight": "40px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 3,
+          "pages": [
+            2,
+            9,
+            11
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(72, 73, 73)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1380px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-secondary-text-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@pagination-item.2",
+          "count": 3,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "194.8px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2@navigation.1",
+          "count": 2,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "24px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2@navigation.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2@navigation.2",
+          "count": 2,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2@navigation.2-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "footer"
+            ]
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(15, 122, 82)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "550px",
+                  "lineHeight": "30px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.5",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "22.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "104.4px",
+                  "paddingRight": "10px",
+                  "lineHeight": "22.4px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.6",
+          "count": 2,
+          "pages": [
+            11,
+            12
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(72, 73, 73)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "30px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-secondary-text-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "combobox": {
+      "groups": [
+        "combobox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "combobox.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "50px",
+                  "paddingInline": "6px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(11, 12, 12) top+bottom+left",
+                  "width": "910px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "6px",
+                  "lineHeight": "28px",
+                  "cursor": "text",
+                  "position": "relative",
+                  "display": "table-cell"
+                },
+                "vars": {
+                  "edge": "--govuk-input-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/combobox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgb(0, 0, 0) 0px 0px 0px 2px inset",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "ring": "3px rgb(255, 221, 0) +0px",
+                  "zIndex": "2"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/combobox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(84, 84, 84)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/combobox.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "default"
+            ]
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "contentinfo",
+        "icon@contentinfo",
+        "img",
+        "listitem",
+        "navigation",
+        "note",
+        "page",
+        "panel",
+        "region"
+      ],
+      "found": 20,
+      "looks": [
+        {
+          "id": "panel.1",
+          "count": 31,
+          "pages": [
+            4,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "33px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1370px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "5px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--_govuk-notification-banner-title-text-colour",
+                  "backgroundColor": "--_govuk-notification-banner-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.2",
+          "count": 30,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "66px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1378px",
+                  "paddingTop": "15px",
+                  "paddingBottom": "15px",
+                  "paddingRight": "20px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.1",
+          "count": 26,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "130px",
+                  "paddingInline": "30px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "30px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "backgroundColor": "--govuk-body-background-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "listitem.1",
+          "count": 17,
+          "pages": [
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "15.655px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "203.7px",
+                  "lineHeight": "20px",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "height": "28.3px",
+                  "paddingInline": "25px",
+                  "width": "630px",
+                  "paddingTop": "7.5px",
+                  "paddingRight": "25px",
+                  "lineHeight": "20.8px",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.3",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "130px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "backgroundColor": "--govuk-template-background-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.4",
+          "count": 8,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "45.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "1338px",
+                  "lineHeight": "25px",
+                  "display": "table-row"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "contentinfo.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "843px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "10px rgb(29, 112, 184) top",
+                  "width": "1440px",
+                  "paddingTop": "40px",
+                  "paddingBottom": "25px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--govuk-brand-colour",
+                  "color": "--govuk-surface-text-colour",
+                  "backgroundColor": "--govuk-template-background-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@contentinfo.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "25px",
+                  "iconSize": "32x30",
+                  "iconStroke": "fill",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@contentinfo.2",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "41px",
+                  "lineHeight": "25px",
+                  "iconSize": "41x17",
+                  "iconStroke": "fill",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@contentinfo.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "30px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "162px",
+                  "lineHeight": "30px",
+                  "iconSize": "162x30",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "region.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "325px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingTop": "20px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-surface-text-colour",
+                  "backgroundColor": "--govuk-surface-background-colour"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "listitem.2",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "45px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "113.9px",
+                  "paddingTop": "10px",
+                  "paddingBottom": "10px",
+                  "paddingRight": "20px",
+                  "lineHeight": "25px",
+                  "textAlign": "center",
+                  "position": "relative",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "navigation.1",
+          "count": 2,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "165.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(255, 255, 255) 0px 20px 15px -10px",
+                  "edge": "none",
+                  "width": "630px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "1"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "note.1",
+          "count": 1,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "65.1px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "10px rgb(206, 206, 206) left",
+                  "width": "630px",
+                  "paddingTop": "20px",
+                  "paddingBottom": "0.1234px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/note.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "icon@link",
+        "link"
+      ],
+      "found": 17,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 161,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "23px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68.8px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 110,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "61.4px",
+                  "lineHeight": "normal",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.5248px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 38,
+          "pages": [
+            6,
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "23px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "63.2px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "textAlign": "right",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.4",
+          "count": 23,
+          "pages": [
+            10,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "136.7px",
+                  "lineHeight": "20.48px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.5248px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "sidebar"
+            ]
+          }
+        },
+        {
+          "id": "link.5",
+          "count": 10,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "111px",
+                  "lineHeight": "20.48px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.5248px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "footer"
+            ]
+          }
+        },
+        {
+          "id": "link.6",
+          "count": 6,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "419px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.7",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "106.6px",
+                  "lineHeight": "19px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.8",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "37px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "30px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "162px",
+                  "lineHeight": "30px",
+                  "iconSize": "162x30",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "vars": {
+                  "backgroundColor": "--govuk-brand-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "height": "40px",
+                  "edge": "3px rgb(255, 255, 255) bottom",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "4.734px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "height": "40px",
+                  "edge": "3px rgb(255, 255, 255) bottom",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "4.734px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.1",
+          "count": 1,
+          "pages": [
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "15.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "21px",
+                  "lineHeight": "25px",
+                  "iconSize": "21x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@link.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "pagination": {
+      "groups": [
+        "icon@pagination-item",
+        "pagination-item"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "icon@pagination-item.1",
+          "count": 5,
+          "pages": [
+            5,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(72, 73, 73)",
+                  "borderRadius": "0px",
+                  "height": "13px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "15px",
+                  "lineHeight": "25px",
+                  "iconSize": "15x13",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-secondary-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@pagination-item.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "pagination-item.1",
+          "count": 3,
+          "pages": [
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "50px",
+                  "paddingInline": "30px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "224.8px",
+                  "lineHeight": "25px",
+                  "iconSize": "15x13",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.1-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "pagination-item.2",
+          "count": 2,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "104.3px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "iconSize": "15x13",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.2-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 101, 166)",
+                  "color": "rgb(255, 255, 255)",
+                  "width": "15px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "pagination-item.3",
+          "count": 2,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 101, 166)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "15px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-link-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.3-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(15, 56, 92)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.3-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.3-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "boxShadow": "rgb(255, 221, 0) 0px -2px 0px 0px, rgb(11, 12, 12) 0px 4px 0px 0px",
+                  "ring": "none",
+                  "textDecorationLine": "none",
+                  "textUnderlineOffset": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/pagination-item.3-focus-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toggle-button": {
+      "groups": [
+        "icon@toggle",
+        "toggle"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "icon@toggle.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "21px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "iconSize": "21x20",
+                  "iconStroke": "2.3px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "toggle.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "61px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "103.4px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-light.json"
+              }
+            },
+            "open": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "toggle.2",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "61px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "61px",
+                  "paddingTop": "20px",
+                  "paddingBottom": "20px",
+                  "paddingRight": "20px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "iconSize": "21x20",
+                  "iconStroke": "2.3px",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.2-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 221, 0)",
+                  "color": "rgb(11, 12, 12)",
+                  "ring": "none",
+                  "zIndex": "11"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.2-focus-light.json"
+              }
+            },
+            "open": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(29, 112, 184)",
+                  "edge": "1px rgb(244, 248, 251)",
+                  "zIndex": "11"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label",
+        "label@search"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "label.1",
+          "count": 9,
+          "pages": [
+            2,
+            3,
+            11
+          ],
+          "part": "field.label",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "39px",
+                  "paddingInline": "15px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "width": "266.1px",
+                  "paddingTop": "7px",
+                  "paddingBottom": "7px",
+                  "paddingRight": "15px",
+                  "lineHeight": "25px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/label.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "label@search.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "960px",
+                  "lineHeight": "30px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/label@search.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "m"
+            ]
+          }
+        },
+        {
+          "id": "label.2",
+          "count": 2,
+          "pages": [
+            9,
+            12
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "36px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1380px",
+                  "lineHeight": "40px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/label.2-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "l"
+            ]
+          }
+        }
+      ]
+    },
+    "select": {
+      "groups": [
+        "select"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "select.1",
+          "count": 1,
+          "pages": [
+            12
+          ],
+          "part": "select.trigger",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "5px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "width": "417px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "paddingRight": "5px",
+                  "lineHeight": "normal",
+                  "cursor": "default",
+                  "display": "inline-block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour",
+                  "edge": "--govuk-input-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgb(11, 12, 12) 0px 0px 0px 2px inset",
+                  "ring": "3px rgb(255, 221, 0) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "0.5",
+                  "cursor": "not-allowed"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "separator": {
+      "groups": [
+        "separator"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "separator.1",
+          "count": 5,
+          "pages": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "color": "rgb(128, 128, 128)",
+                  "borderRadius": "0px",
+                  "height": "1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(142, 184, 220) bottom",
+                  "width": "960px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--govuk-surface-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tabs": {
+      "groups": [
+        "tab",
+        "tablist"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "tab.1",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "part": "tab",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(11, 12, 12)",
+                  "borderRadius": "0px",
+                  "height": "25px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "73.9px",
+                  "lineHeight": "25px",
+                  "textDecorationLine": "underline",
+                  "textUnderlineOffset": "2.9982px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "vars": {
+                  "color": "--govuk-text-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.1-rest-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "width": "154.6px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "tablist.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "51px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "width": "630px",
+                  "lineHeight": "25px",
+                  "display": "block"
+                },
+                "vars": {
+                  "edge": "--govuk-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tablist.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text-field": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 5,
+          "pages": [
+            3,
+            9
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "5px",
+                  "fontFamily": "\"GDS Transport\"",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "width": "919.9px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "paddingRight": "5px",
+                  "lineHeight": "25px",
+                  "cursor": "text",
+                  "display": "inline-block"
+                },
+                "vars": {
+                  "edge": "--govuk-input-border-colour"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgb(11, 12, 12) 0px 0px 0px 2px inset",
+                  "ring": "3px rgb(255, 221, 0) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "opacity": "0.5",
+                  "cursor": "not-allowed"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "width-10"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "gaps": []
+}

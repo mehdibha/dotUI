@@ -4,26 +4,26 @@
   "preset": "stripe",
   "capture": {
     "probe": "ce94064",
-    "date": "2026-10-23",
+    "date": "2026-10-25",
     "pages": [
       {
-        "key": "https://docs.stripe.com/stripe-apps/components/button",
-        "modes": [
-          "light"
-        ],
-        "signedIn": false,
-        "how": "headless"
-      },
-      {
-        "key": "https://docs.stripe.com/stripe-apps/components/textfield",
-        "modes": [
-          "light"
-        ],
-        "signedIn": false,
-        "how": "headless"
-      },
-      {
         "key": "https://docs.stripe.com/stripe-apps/components/badge",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/banner",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://docs.stripe.com/stripe-apps/components/button",
         "modes": [
           "light"
         ],
@@ -39,7 +39,7 @@
         "how": "headless"
       },
       {
-        "key": "https://docs.stripe.com/stripe-apps/components/tooltip",
+        "key": "https://docs.stripe.com/stripe-apps/components/textfield",
         "modes": [
           "light"
         ],
@@ -47,7 +47,7 @@
         "how": "headless"
       },
       {
-        "key": "https://docs.stripe.com/stripe-apps/components/banner",
+        "key": "https://docs.stripe.com/stripe-apps/components/tooltip",
         "modes": [
           "light"
         ],
@@ -69,13 +69,13 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 1256,
+            "count": 1457,
             "uses": [
               "link backgroundColor",
               "button backgroundColor",
               "columnheader@table backgroundColor",
-              "card backgroundColor",
-              "listitem backgroundColor"
+              "menuitem backgroundColor",
+              "card backgroundColor"
             ]
           },
           {
@@ -105,7 +105,7 @@
             "l": 0.975,
             "c": 0.005,
             "h": 248,
-            "count": 446,
+            "count": 483,
             "uses": [
               "cell@table backgroundColor",
               "badge backgroundColor",
@@ -129,10 +129,11 @@
             "l": 0.956,
             "c": 0.009,
             "h": 248,
-            "count": 268,
+            "count": 276,
             "uses": [
               "cell@table edge",
               "box edge",
+              "button backgroundColor",
               "kbd edge",
               "panel edge"
             ]
@@ -142,8 +143,9 @@
             "l": 0.929,
             "c": 0.01,
             "h": 253,
-            "count": 6,
+            "count": 12,
             "uses": [
+              "banner edge",
               "toolbar edge"
             ]
           },
@@ -152,13 +154,23 @@
             "l": 0.896,
             "c": 0.019,
             "h": 251,
-            "count": 626,
+            "count": 682,
             "uses": [
               "code@table edge",
               "badge edge",
               "separator backgroundColor",
               "button edge",
               "card edge"
+            ]
+          },
+          {
+            "color": "rgb(207, 216, 229)",
+            "l": 0.879,
+            "c": 0.02,
+            "h": 257,
+            "count": 6,
+            "uses": [
+              "panel backgroundColor"
             ]
           },
           {
@@ -170,7 +182,17 @@
             "uses": [
               "button color",
               "icon@button color",
-              "card color"
+              "panel color"
+            ]
+          },
+          {
+            "color": "rgb(84, 89, 105)",
+            "l": 0.466,
+            "c": 0.027,
+            "h": 272,
+            "count": 18,
+            "uses": [
+              "text@button color"
             ]
           },
           {
@@ -178,20 +200,20 @@
             "l": 0.392,
             "c": 0.023,
             "h": 272,
-            "count": 578,
+            "count": 637,
             "uses": [
               "cell@table color",
               "separator color",
+              "panel color",
               "text color",
-              "card color",
-              "text@contentinfo color"
+              "card color"
             ]
           }
         ],
         "accents": [
           {
             "hue": 258,
-            "count": 3463,
+            "count": 3846,
             "steps": [
               {
                 "color": "rgb(108, 142, 239)",
@@ -208,8 +230,10 @@
                 "l": 0.634,
                 "c": 0.041,
                 "h": 262,
-                "count": 1,
+                "count": 13,
                 "uses": [
+                  "button color",
+                  "icon@button color",
                   "label color"
                 ]
               },
@@ -218,7 +242,7 @@
                 "l": 0.56,
                 "c": 0.165,
                 "h": 272,
-                "count": 218,
+                "count": 292,
                 "uses": [
                   "link color",
                   "text@link color",
@@ -228,14 +252,28 @@
                 ]
               },
               {
+                "color": "rgb(104, 115, 133)",
+                "l": 0.553,
+                "c": 0.031,
+                "h": 260,
+                "count": 24,
+                "uses": [
+                  "text@listbox color",
+                  "icon@button color",
+                  "text@button color"
+                ]
+              },
+              {
                 "color": "rgb(83, 58, 253)",
                 "l": 0.521,
                 "c": 0.268,
                 "h": 277,
-                "count": 12,
+                "count": 23,
                 "uses": [
-                  "button backgroundColor",
-                  "separator backgroundColor"
+                  "separator backgroundColor",
+                  "icon@link color",
+                  "link color",
+                  "button backgroundColor"
                 ]
               },
               {
@@ -253,13 +291,23 @@
                 "l": 0.488,
                 "c": 0.045,
                 "h": 258,
-                "count": 1400,
+                "count": 1484,
                 "uses": [
                   "link color",
                   "text@link color",
                   "columnheader@table color",
                   "badge color",
-                  "img color"
+                  "button color"
+                ]
+              },
+              {
+                "color": "rgb(0, 85, 188)",
+                "l": 0.473,
+                "c": 0.177,
+                "h": 258,
+                "count": 6,
+                "uses": [
+                  "icon@button color"
                 ]
               },
               {
@@ -273,49 +321,21 @@
                 ]
               },
               {
-                "color": "rgb(60, 66, 87)",
-                "l": 0.382,
-                "c": 0.037,
-                "h": 272,
-                "count": 484,
-                "uses": [
-                  "code@table color",
-                  "paragraph@table color",
-                  "paragraph color",
-                  "code color",
-                  "page color"
-                ]
-              },
-              {
-                "color": "rgb(39, 57, 81)",
-                "l": 0.341,
-                "c": 0.049,
+                "color": "rgb(60, 79, 105)",
+                "l": 0.423,
+                "c": 0.05,
                 "h": 256,
-                "count": 135,
+                "count": 24,
                 "uses": [
-                  "button color",
-                  "icon@button color",
-                  "text@button color",
-                  "textbox color",
-                  "link color"
-                ]
-              },
-              {
-                "color": "rgb(33, 45, 99)",
-                "l": 0.319,
-                "c": 0.096,
-                "h": 271,
-                "count": 36,
-                "uses": [
-                  "panel backgroundColor",
-                  "card backgroundColor"
+                  "tooltip backgroundColor",
+                  "card color"
                 ]
               }
             ]
           },
           {
             "hue": 17,
-            "count": 100,
+            "count": 98,
             "steps": [
               {
                 "color": "rgb(251, 211, 220)",
@@ -333,11 +353,10 @@
                 "l": 0.593,
                 "c": 0.228,
                 "h": 18,
-                "count": 5,
+                "count": 3,
                 "uses": [
                   "button backgroundColor",
-                  "badge backgroundColor",
-                  "textbox edge"
+                  "badge backgroundColor"
                 ]
               },
               {
@@ -351,6 +370,32 @@
                   "text color",
                   "card color",
                   "icon color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 280,
+            "count": 12,
+            "steps": [
+              {
+                "color": "rgb(103, 93, 255)",
+                "l": 0.584,
+                "c": 0.232,
+                "h": 279,
+                "count": 6,
+                "uses": [
+                  "textbox edge"
+                ]
+              },
+              {
+                "color": "rgb(81, 61, 217)",
+                "l": 0.488,
+                "c": 0.225,
+                "h": 280,
+                "count": 6,
+                "uses": [
+                  "icon@button color"
                 ]
               }
             ]
@@ -504,7 +549,7 @@
     "tokens": [
       {
         "name": "--s--padding-top",
-        "count": 5624,
+        "count": 6012,
         "feeds": [
           "link paddingInline",
           "link paddingTop",
@@ -519,7 +564,7 @@
       },
       {
         "name": "--s-1f29tr2",
-        "count": 1088,
+        "count": 1126,
         "feeds": [
           "cell@table paddingInline",
           "cell@table paddingTop",
@@ -534,72 +579,77 @@
       },
       {
         "name": "--s-15f02i8",
-        "count": 899,
+        "count": 1075,
         "feeds": [
           "link gap",
-          "card gap",
-          "button gap"
+          "button paddingInline",
+          "button paddingTop",
+          "button paddingBottom",
+          "button paddingRight",
+          "button gap",
+          "card paddingInline",
+          "card paddingTop"
         ],
         "light": "8px"
       },
       {
         "name": "--x5dpqz",
-        "count": 736,
+        "count": 755,
         "feeds": [
           "link fontWeight",
+          "tooltip fontWeight",
           "text@button fontWeight",
-          "text fontWeight",
-          "tooltip fontWeight"
+          "text fontWeight"
         ],
         "light": "400"
       },
       {
         "name": "--iv638n",
-        "count": 736,
+        "count": 755,
         "feeds": [
           "link fontFamily",
+          "tooltip fontFamily",
           "text@button fontFamily",
-          "text fontFamily",
-          "tooltip fontFamily"
+          "text fontFamily"
         ],
         "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
       },
       {
         "name": "--s-1vewu14",
-        "count": 736,
+        "count": 755,
         "feeds": [
           "link letterSpacing",
+          "tooltip letterSpacing",
           "text@button letterSpacing",
-          "text letterSpacing",
-          "tooltip letterSpacing"
+          "text letterSpacing"
         ],
         "light": "normal"
       },
       {
         "name": "--s-7paqqe",
-        "count": 736,
+        "count": 755,
         "feeds": [
           "link lineHeight",
+          "tooltip lineHeight",
           "text@button lineHeight",
-          "text lineHeight",
-          "tooltip lineHeight"
+          "text lineHeight"
         ],
         "light": "20px"
       },
       {
         "name": "--eoafo5",
-        "count": 736,
+        "count": 755,
         "feeds": [
           "link fontSize",
+          "tooltip fontSize",
           "text@button fontSize",
-          "text fontSize",
-          "tooltip fontSize"
+          "text fontSize"
         ],
         "light": "14px"
       },
       {
         "name": "--s-1hknj82",
-        "count": 692,
+        "count": 710,
         "feeds": [
           "link color",
           "columnheader@table color",
@@ -611,59 +661,67 @@
       },
       {
         "name": "--s--top-shadow",
-        "count": 456,
+        "count": 680,
         "feeds": [
           "link boxShadow",
           "button boxShadow",
-          "link edge",
           "button edge",
+          "link edge",
+          "tooltip boxShadow",
           "menuitem boxShadow",
           "menuitem edge",
-          "textbox boxShadow",
-          "textbox edge"
+          "tooltip edge"
         ],
         "light": "0 0 0 0 transparent"
       },
       {
         "name": "--s-15xulsv",
-        "count": 451,
+        "count": 488,
         "feeds": [
           "code@table edge",
           "separator backgroundColor",
           "card edge",
           "code edge",
+          "code@dialog edge",
+          "dialog edge",
+          "panel edge",
           "tooltip edge"
         ],
         "light": "#D4DEE9"
       },
       {
         "name": "--s-282tnx",
-        "count": 371,
+        "count": 409,
         "feeds": [
           "code@table borderRadius",
           "card borderRadius",
-          "code borderRadius"
+          "code borderRadius",
+          "tooltip borderRadius",
+          "code@dialog borderRadius"
         ],
         "light": "6px"
       },
       {
         "name": "--s-22nfqw",
-        "count": 348,
+        "count": 376,
         "feeds": [
           "link width",
           "link height",
           "button width",
           "label width",
+          "banner height",
           "kbd width"
         ],
         "light": "fit-content"
       },
       {
         "name": "--s-1rfvf0n",
-        "count": 348,
+        "count": 373,
         "feeds": [
           "code@table backgroundColor",
           "code backgroundColor",
+          "code@dialog backgroundColor",
+          "panel backgroundColor",
           "card backgroundColor",
           "kbd backgroundColor"
         ],
@@ -671,16 +729,32 @@
       },
       {
         "name": "--sail-font-family-monospace",
-        "count": 336,
+        "count": 349,
         "feeds": [
           "code@table fontFamily",
-          "code fontFamily"
+          "code fontFamily",
+          "code@dialog fontFamily"
         ],
         "light": "\"Menlo\", \"Consolas\", monospace"
       },
       {
+        "name": "--s-13hmetb",
+        "count": 276,
+        "feeds": [
+          "link color",
+          "label color",
+          "menuitem color",
+          "dialog color",
+          "alertdialog color",
+          "heading.h3@menu color",
+          "card color",
+          "tooltip color"
+        ],
+        "light": "#1A2C44"
+      },
+      {
         "name": "--s-1l4o7cj",
-        "count": 268,
+        "count": 269,
         "feeds": [
           "badge borderRadius",
           "link borderRadius",
@@ -690,7 +764,7 @@
       },
       {
         "name": "--s-12pesem",
-        "count": 266,
+        "count": 268,
         "feeds": [
           "cell@table edge",
           "panel edge"
@@ -698,81 +772,68 @@
         "light": "1px"
       },
       {
-        "name": "--s-13hmetb",
-        "count": 254,
-        "feeds": [
-          "link color",
-          "label color",
-          "menuitem color",
-          "heading.h3@menu color",
-          "card color",
-          "tooltip color"
-        ],
-        "light": "#1A2C44"
-      },
-      {
         "name": "--ep1e0f",
-        "count": 189,
+        "count": 203,
         "feeds": [
           "button fontWeight",
           "link fontWeight",
           "text fontWeight",
           "label fontWeight",
-          "combobox fontWeight"
+          "select fontWeight"
         ],
         "light": "600"
       },
       {
         "name": "--s-6vkd26",
-        "count": 189,
+        "count": 203,
         "feeds": [
           "button fontFamily",
           "link fontFamily",
           "text fontFamily",
           "label fontFamily",
-          "combobox fontFamily"
+          "select fontFamily"
         ],
         "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
       },
       {
         "name": "--s-14509aw",
-        "count": 189,
+        "count": 203,
         "feeds": [
           "button letterSpacing",
           "link letterSpacing",
           "text letterSpacing",
           "label letterSpacing",
-          "combobox letterSpacing"
+          "select letterSpacing"
         ],
         "light": "normal"
       },
       {
         "name": "--yfph9h",
-        "count": 189,
+        "count": 203,
         "feeds": [
           "button lineHeight",
           "link lineHeight",
           "text lineHeight",
           "label lineHeight",
-          "combobox lineHeight"
+          "select lineHeight"
         ],
         "light": "20px"
       },
       {
         "name": "--s-1g9cdsy",
-        "count": 189,
+        "count": 203,
         "feeds": [
           "button fontSize",
           "link fontSize",
           "text fontSize",
           "label fontSize",
-          "combobox fontSize"
+          "select fontSize"
         ],
         "light": "14px"
       },
       {
         "name": "--s-3ab8ub",
-        "count": 164,
+        "count": 182,
         "feeds": [
           "badge gap",
           "button gap"
@@ -781,9 +842,10 @@
       },
       {
         "name": "--w22o9l",
-        "count": 136,
+        "count": 141,
         "feeds": [
           "link edge",
+          "icon@link edge",
           "button edge"
         ],
         "light": "#533afd"
@@ -835,26 +897,52 @@
       },
       {
         "name": "--li639m",
-        "count": 108,
+        "count": 132,
         "feeds": [
           "separator width",
+          "menu height",
           "textbox width",
           "card width",
+          "icon@dialog width",
+          "panel width",
           "panel height",
-          "text@button width",
-          "menu height",
-          "searchbox width",
-          "spinbutton width"
+          "text@button width"
         ],
         "light": "100%"
       },
       {
-        "name": "--oiv4a4",
-        "count": 106,
+        "name": "--padding-top",
+        "count": 120,
         "feeds": [
-          "link color"
+          "button paddingInline",
+          "button paddingTop",
+          "button paddingBottom",
+          "button paddingRight",
+          "panel paddingInline",
+          "panel paddingTop",
+          "panel paddingBottom",
+          "panel paddingRight"
+        ]
+      },
+      {
+        "name": "--oiv4a4",
+        "count": 113,
+        "feeds": [
+          "link color",
+          "icon@link color"
         ],
         "light": "#533afd"
+      },
+      {
+        "name": "--s-1eo1l6l",
+        "count": 85,
+        "feeds": [
+          "button gap",
+          "link gap",
+          "box gap",
+          "panel gap"
+        ],
+        "light": "6px"
       },
       {
         "name": "--s-18brxby",
@@ -881,37 +969,18 @@
         "light": "#D4DEE9"
       },
       {
-        "name": "--s-1eo1l6l",
-        "count": 71,
-        "feeds": [
-          "button gap",
-          "link gap",
-          "box gap",
-          "panel gap"
-        ],
-        "light": "6px"
-      },
-      {
         "name": "--s-11p7nl",
-        "count": 63,
+        "count": 83,
         "feeds": [
           "button height",
-          "link height"
+          "link height",
+          "button width"
         ],
         "light": "28px"
       },
       {
-        "name": "--s-1c4fwdw",
-        "count": 59,
-        "feeds": [
-          "button borderRadius",
-          "link borderRadius"
-        ],
-        "light": "6px"
-      },
-      {
         "name": "--s-4lkz9i",
-        "count": 56,
+        "count": 73,
         "feeds": [
           "button edge",
           "link edge"
@@ -919,8 +988,17 @@
         "light": "#D4DEE9"
       },
       {
+        "name": "--s-1c4fwdw",
+        "count": 73,
+        "feeds": [
+          "button borderRadius",
+          "link borderRadius"
+        ],
+        "light": "6px"
+      },
+      {
         "name": "--s-1eg71kz",
-        "count": 56,
+        "count": 67,
         "feeds": [
           "button backgroundColor",
           "link backgroundColor"
@@ -929,12 +1007,105 @@
       },
       {
         "name": "--s-13dhk1f",
-        "count": 50,
+        "count": 61,
         "feeds": [
           "button color",
           "link color"
         ],
         "light": "#273951"
+      },
+      {
+        "name": "--s-9fb64w",
+        "count": 58,
+        "feeds": [
+          "button borderRadius",
+          "menuitem borderRadius",
+          "alertdialog borderRadius",
+          "link borderRadius",
+          "card borderRadius",
+          "tooltip borderRadius"
+        ],
+        "light": "8px"
+      },
+      {
+        "name": "--huplq6",
+        "count": 54,
+        "feeds": [
+          "menuitem fontFamily",
+          "button fontFamily",
+          "link fontFamily",
+          "text@button fontFamily",
+          "textbox fontFamily",
+          "searchbox fontFamily",
+          "spinbutton fontFamily"
+        ],
+        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+      },
+      {
+        "name": "--s-1htz8iq",
+        "count": 48,
+        "feeds": [
+          "menuitem fontWeight",
+          "button fontWeight",
+          "text@button fontWeight",
+          "textbox fontWeight",
+          "link fontWeight",
+          "searchbox fontWeight",
+          "spinbutton fontWeight"
+        ],
+        "light": "400"
+      },
+      {
+        "name": "--wdt5sy",
+        "count": 48,
+        "feeds": [
+          "menuitem letterSpacing",
+          "button letterSpacing",
+          "text@button letterSpacing",
+          "textbox letterSpacing",
+          "link letterSpacing",
+          "searchbox letterSpacing",
+          "spinbutton letterSpacing"
+        ],
+        "light": "normal"
+      },
+      {
+        "name": "--s-432ttp",
+        "count": 48,
+        "feeds": [
+          "menuitem lineHeight",
+          "button lineHeight",
+          "text@button lineHeight",
+          "textbox lineHeight",
+          "link lineHeight",
+          "searchbox lineHeight",
+          "spinbutton lineHeight"
+        ],
+        "light": "20px"
+      },
+      {
+        "name": "--tlxlq6",
+        "count": 48,
+        "feeds": [
+          "menuitem fontSize",
+          "button fontSize",
+          "text@button fontSize",
+          "textbox fontSize",
+          "link fontSize",
+          "searchbox fontSize",
+          "spinbutton fontSize"
+        ],
+        "light": "14px"
+      },
+      {
+        "name": "--icon-size",
+        "count": 48,
+        "feeds": [
+          "icon@button height",
+          "icon@button width",
+          "icon@banner height",
+          "icon@banner width"
+        ]
       },
       {
         "name": "--xfgvhn",
@@ -964,111 +1135,22 @@
         "light": "#fef4f6"
       },
       {
-        "name": "--s-1htz8iq",
-        "count": 40,
-        "feeds": [
-          "menuitem fontWeight",
-          "textbox fontWeight",
-          "button fontWeight",
-          "text@button fontWeight",
-          "link fontWeight",
-          "searchbox fontWeight",
-          "spinbutton fontWeight"
-        ],
-        "light": "400"
-      },
-      {
-        "name": "--huplq6",
-        "count": 40,
-        "feeds": [
-          "menuitem fontFamily",
-          "textbox fontFamily",
-          "button fontFamily",
-          "text@button fontFamily",
-          "link fontFamily",
-          "searchbox fontFamily",
-          "spinbutton fontFamily"
-        ],
-        "light": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-      },
-      {
-        "name": "--wdt5sy",
-        "count": 40,
-        "feeds": [
-          "menuitem letterSpacing",
-          "textbox letterSpacing",
-          "button letterSpacing",
-          "text@button letterSpacing",
-          "link letterSpacing",
-          "searchbox letterSpacing",
-          "spinbutton letterSpacing"
-        ],
-        "light": "normal"
-      },
-      {
-        "name": "--s-432ttp",
-        "count": 40,
-        "feeds": [
-          "menuitem lineHeight",
-          "textbox lineHeight",
-          "button lineHeight",
-          "text@button lineHeight",
-          "link lineHeight",
-          "searchbox lineHeight",
-          "spinbutton lineHeight"
-        ],
-        "light": "20px"
-      },
-      {
-        "name": "--tlxlq6",
-        "count": 40,
-        "feeds": [
-          "menuitem fontSize",
-          "textbox fontSize",
-          "button fontSize",
-          "text@button fontSize",
-          "link fontSize",
-          "searchbox fontSize",
-          "spinbutton fontSize"
-        ],
-        "light": "14px"
-      },
-      {
-        "name": "--s-9fb64w",
-        "count": 38,
-        "feeds": [
-          "menuitem borderRadius",
-          "button borderRadius",
-          "link borderRadius",
-          "card borderRadius",
-          "tooltip borderRadius"
-        ],
-        "light": "8px"
-      },
-      {
         "name": "--s-72fzvy",
-        "count": 36,
+        "count": 42,
         "feeds": [
-          "combobox width",
+          "dialog width",
           "heading.h1 paddingInline",
           "heading.h1 paddingTop",
           "heading.h1 paddingBottom",
           "heading.h1 paddingRight",
-          "panel width"
+          "panel width",
+          "select width"
         ],
         "light": "0px"
       },
       {
-        "name": "--s-1nt3wam",
-        "count": 36,
-        "feeds": [
-          "link fontWeight"
-        ],
-        "light": "600"
-      },
-      {
         "name": "--ereqaf",
-        "count": 26,
+        "count": 38,
         "feeds": [
           "button fontWeight",
           "label fontWeight"
@@ -1077,7 +1159,7 @@
       },
       {
         "name": "--yiyhsh",
-        "count": 26,
+        "count": 38,
         "feeds": [
           "button fontFamily",
           "label fontFamily"
@@ -1086,7 +1168,7 @@
       },
       {
         "name": "--s-1wje8no",
-        "count": 26,
+        "count": 38,
         "feeds": [
           "button letterSpacing",
           "label letterSpacing"
@@ -1095,7 +1177,7 @@
       },
       {
         "name": "--ki0zdj",
-        "count": 26,
+        "count": 38,
         "feeds": [
           "button lineHeight",
           "label lineHeight"
@@ -1104,7 +1186,7 @@
       },
       {
         "name": "--zzbsa1",
-        "count": 26,
+        "count": 38,
         "feeds": [
           "button fontSize",
           "label fontSize"
@@ -1112,37 +1194,29 @@
         "light": "12px"
       },
       {
-        "name": "--wukrzp",
-        "count": 18,
+        "name": "--s-9fypy8",
+        "count": 37,
         "feeds": [
-          "textbox color",
-          "combobox color",
-          "searchbox color",
-          "spinbutton color"
-        ],
-        "light": "#273951"
-      },
-      {
-        "name": "--jpxxql",
-        "count": 18,
-        "feeds": [
-          "textbox borderRadius",
-          "combobox borderRadius",
-          "searchbox borderRadius",
-          "spinbutton borderRadius"
-        ],
-        "light": "6px"
-      },
-      {
-        "name": "--s-14a2tiz",
-        "count": 18,
-        "feeds": [
-          "textbox backgroundColor",
-          "combobox backgroundColor",
-          "searchbox backgroundColor",
-          "spinbutton backgroundColor"
+          "button backgroundColor",
+          "alertdialog backgroundColor",
+          "card backgroundColor",
+          "dialog backgroundColor",
+          "panel backgroundColor",
+          "tooltip backgroundColor"
         ],
         "light": "#ffffff"
+      },
+      {
+        "name": "--top-shadow",
+        "count": 36,
+        "feeds": [
+          "button boxShadow",
+          "button edge",
+          "panel boxShadow",
+          "panel edge",
+          "textbox boxShadow",
+          "textbox edge"
+        ]
       }
     ]
   },
@@ -1150,15 +1224,11 @@
     "families": [
       {
         "family": "-apple-system",
-        "count": 3266
+        "count": 3567
       },
       {
         "family": "Menlo",
-        "count": 336
-      },
-      {
-        "family": "Source Code Pro",
-        "count": 6
+        "count": 349
       }
     ],
     "styles": [
@@ -1167,14 +1237,14 @@
         "fontWeight": "400",
         "lineHeight": "20px",
         "fontFamily": "-apple-system",
-        "count": 1899,
+        "count": 2055,
         "groups": [
           "link",
           "text@link",
           "cell@table",
           "paragraph@table",
-          "text",
-          "text@button"
+          "button",
+          "menuitem"
         ]
       },
       {
@@ -1182,9 +1252,10 @@
         "fontWeight": "400",
         "lineHeight": "20px",
         "fontFamily": "Menlo",
-        "count": 302,
+        "count": 315,
         "groups": [
-          "code@table"
+          "code@table",
+          "code@dialog"
         ]
       },
       {
@@ -1192,14 +1263,28 @@
         "fontWeight": "400",
         "lineHeight": "normal",
         "fontFamily": "-apple-system",
-        "count": 160,
+        "count": 216,
         "groups": [
-          "card",
           "panel",
+          "card",
+          "button",
           "text@contentinfo",
+          "link",
+          "menu"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 161,
+        "groups": [
           "button",
           "link",
-          "box"
+          "label",
+          "select",
+          "text@link"
         ]
       },
       {
@@ -1222,20 +1307,7 @@
         "count": 144,
         "groups": [
           "button",
-          "card"
-        ]
-      },
-      {
-        "fontSize": "14px",
-        "fontWeight": "600",
-        "lineHeight": "20px",
-        "fontFamily": "-apple-system",
-        "count": 141,
-        "groups": [
-          "button",
-          "link",
-          "label",
-          "combobox"
+          "panel"
         ]
       },
       {
@@ -1243,9 +1315,10 @@
         "fontWeight": "400",
         "lineHeight": "16px",
         "fontFamily": "-apple-system",
-        "count": 134,
+        "count": 140,
         "groups": [
           "badge",
+          "card",
           "textbox"
         ]
       },
@@ -1266,7 +1339,7 @@
         "fontWeight": "500",
         "lineHeight": "26px",
         "fontFamily": "-apple-system",
-        "count": 93,
+        "count": 95,
         "groups": [
           "link",
           "text@link",
@@ -1285,6 +1358,19 @@
         ]
       },
       {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 66,
+        "groups": [
+          "link",
+          "text@button",
+          "text@link",
+          "text"
+        ]
+      },
+      {
         "fontSize": "16px",
         "fontWeight": "400",
         "lineHeight": "26px",
@@ -1296,15 +1382,15 @@
         ]
       },
       {
-        "fontSize": "14px",
-        "fontWeight": "500",
-        "lineHeight": "20px",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "16px",
         "fontFamily": "-apple-system",
-        "count": 48,
+        "count": 56,
         "groups": [
-          "link",
-          "text@link",
-          "text"
+          "button",
+          "text@button",
+          "label"
         ]
       },
       {
@@ -1316,18 +1402,6 @@
         "count": 48,
         "groups": [
           "text"
-        ]
-      },
-      {
-        "fontSize": "12px",
-        "fontWeight": "600",
-        "lineHeight": "16px",
-        "fontFamily": "-apple-system",
-        "count": 38,
-        "groups": [
-          "button",
-          "text@button",
-          "label"
         ]
       },
       {
@@ -1373,6 +1447,19 @@
         ]
       },
       {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "fontFamily": "-apple-system",
+        "count": 22,
+        "groups": [
+          "heading.h1@banner",
+          "heading.h2@banner",
+          "card",
+          "text"
+        ]
+      },
+      {
         "fontSize": "32px",
         "fontWeight": "700",
         "lineHeight": "40px",
@@ -1394,14 +1481,23 @@
         ]
       },
       {
+        "fontSize": "13px",
+        "fontWeight": "600",
+        "lineHeight": "20px",
+        "fontFamily": "-apple-system",
+        "count": 12,
+        "groups": [
+          "text@listbox"
+        ]
+      },
+      {
         "fontSize": "16px",
-        "fontWeight": "700",
+        "fontWeight": "400",
         "lineHeight": "24px",
         "fontFamily": "-apple-system",
-        "count": 10,
+        "count": 7,
         "groups": [
-          "card",
-          "text"
+          "textbox"
         ]
       },
       {
@@ -1413,27 +1509,6 @@
         "groups": [
           "heading.h2"
         ]
-      },
-      {
-        "fontSize": "14px",
-        "fontWeight": "400",
-        "lineHeight": "14px",
-        "fontFamily": "Source Code Pro",
-        "count": 6,
-        "groups": [
-          "kbd"
-        ]
-      },
-      {
-        "fontSize": "13px",
-        "fontWeight": "500",
-        "lineHeight": "20px",
-        "fontFamily": "-apple-system",
-        "textTransform": "uppercase",
-        "count": 6,
-        "groups": [
-          "text"
-        ]
       }
     ]
   },
@@ -1441,71 +1516,75 @@
     "radius": [
       {
         "px": 4,
-        "count": 579,
+        "count": 657,
         "groups": [
           "cell@table",
           "badge",
           "link",
-          "card",
           "menuitem",
-          "kbd"
+          "panel",
+          "button"
         ]
       },
       {
         "px": 6,
-        "count": 112,
+        "count": 150,
         "groups": [
           "button",
           "card",
+          "tooltip",
           "textbox",
           "link",
-          "combobox",
-          "searchbox"
+          "select"
         ]
       },
       {
         "px": 8,
-        "count": 23,
+        "count": 48,
         "groups": [
           "button",
-          "link",
           "card",
+          "alertdialog",
+          "link",
           "tooltip"
         ]
       }
     ],
-    "pills": []
+    "pills": [
+      "button",
+      "textbox"
+    ]
   },
   "spacing": {
     "grid": 2,
     "steps": [
       {
         "px": 1,
-        "count": 1018
+        "count": 1032
       },
       {
         "px": 2,
-        "count": 696
+        "count": 734
       },
       {
         "px": 4,
-        "count": 422
+        "count": 600
       },
       {
         "px": 6,
-        "count": 459
+        "count": 569
       },
       {
         "px": 8,
-        "count": 1409
+        "count": 1761
       },
       {
         "px": 10,
-        "count": 38
+        "count": 116
       },
       {
         "px": 12,
-        "count": 172
+        "count": 196
       },
       {
         "px": 14,
@@ -1513,11 +1592,11 @@
       },
       {
         "px": 16,
-        "count": 1961
+        "count": 2017
       },
       {
         "px": 20,
-        "count": 60
+        "count": 62
       },
       {
         "px": 24,
@@ -1529,7 +1608,7 @@
       },
       {
         "px": 32,
-        "count": 110
+        "count": 112
       }
     ],
     "heights": {
@@ -1546,15 +1625,15 @@
         },
         {
           "px": 20,
-          "count": 82
+          "count": 88
         },
         {
           "px": 28,
-          "count": 50
+          "count": 82
         },
         {
-          "px": 25,
-          "count": 33
+          "px": 24.5,
+          "count": 45
         },
         {
           "px": 16,
@@ -1562,12 +1641,12 @@
         },
         {
           "px": 32,
-          "count": 12
+          "count": 24
         }
       ],
       "combobox": [
         {
-          "px": 28,
+          "px": 24,
           "count": 6
         }
       ],
@@ -1580,7 +1659,7 @@
       "link": [
         {
           "px": 20,
-          "count": 780
+          "count": 787
         },
         {
           "px": 17,
@@ -1606,13 +1685,19 @@
       "menuitem": [
         {
           "px": 32,
-          "count": 15
+          "count": 54
         }
       ],
       "searchbox": [
         {
           "px": 28,
           "count": 2
+        }
+      ],
+      "select": [
+        {
+          "px": 28,
+          "count": 6
         }
       ],
       "spinbutton": [
@@ -1623,16 +1708,16 @@
       ],
       "textbox": [
         {
-          "px": 28,
+          "px": 24,
           "count": 7
         },
         {
-          "px": 24,
-          "count": 1
+          "px": 40,
+          "count": 7
         },
         {
-          "px": 40,
-          "count": 1
+          "px": 28,
+          "count": 6
         }
       ]
     }
@@ -1641,9 +1726,10 @@
     "shadows": [
       {
         "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-        "count": 235,
+        "count": 342,
         "groups": [
           "button",
+          "dialog",
           "link",
           "menu",
           "menuitem"
@@ -1651,7 +1737,7 @@
       },
       {
         "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-        "count": 67,
+        "count": 78,
         "groups": [
           "button",
           "link",
@@ -1661,52 +1747,247 @@
         ]
       },
       {
-        "value": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-        "count": 12,
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
+        "count": 25,
         "groups": [
-          "button",
-          "combobox"
+          "card",
+          "tooltip"
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "value": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 18,
+        "groups": [
+          "button",
+          "select"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 5px 15px 0px, rgba(48, 49, 61, 0.08) 0px 15px 35px 0px",
+        "count": 14,
+        "groups": [
+          "alertdialog",
+          "card"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.5) 0px 0px 4px 4px",
         "count": 6,
         "groups": [
-          "button"
+          "card"
         ]
       },
       {
         "value": "rgb(227, 232, 238) 0px -1px 0px 0px inset",
         "count": 6,
         "groups": [
-          "card"
+          "panel"
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-        "count": 4,
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(103, 93, 255) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+        "count": 6,
         "groups": [
-          "button",
           "textbox"
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 5px 15px 0px, rgba(48, 49, 61, 0.08) 0px 15px 35px 0px",
-        "count": 1,
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 4,
         "groups": [
-          "card"
+          "button"
         ]
       },
       {
-        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
-        "count": 1,
+        "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "count": 2,
         "groups": [
-          "tooltip"
+          "button"
         ]
       }
     ]
   },
   "components": {
+    "dialog": {
+      "groups": [
+        "alertdialog",
+        "dialog",
+        "icon@dialog"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "alertdialog.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "8px",
+                  "height": "257px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 5px 15px 0px, rgba(48, 49, 61, 0.08) 0px 15px 35px 0px",
+                  "edge": "none",
+                  "width": "648px",
+                  "lineHeight": "normal",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "color": "--s-13hmetb",
+                  "width": "--dialog-width",
+                  "borderRadius": "--s-9fb64w",
+                  "backgroundColor": "--s-9fypy8"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/alertdialog.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "dialog.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "902px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233) top+bottom+left",
+                  "width": "345px",
+                  "lineHeight": "normal",
+                  "position": "fixed",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s-15xulsv",
+                  "color": "--s-13hmetb",
+                  "backgroundColor": "--s-9fypy8"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "dialog.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "344px",
+                  "lineHeight": "20px",
+                  "transition": "0.15s ease-in-out",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--s-72fzvy",
+                  "color": "--s-13hmetb",
+                  "edge": "--s-15xulsv"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@dialog.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "360px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "360px",
+                  "lineHeight": "20px",
+                  "iconSize": "360x360",
+                  "iconStroke": "0.7px",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "vars": {
+                  "width": "--li639m"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@dialog.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
     "badge": {
       "groups": [
         "badge"
@@ -1740,14 +2021,14 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "1px rgb(212, 222, 233)",
-                  "width": "61.3px",
+                  "width": "55.2px",
                   "paddingTop": "1px",
                   "paddingBottom": "1px",
                   "paddingRight": "6px",
                   "gap": "4px",
                   "lineHeight": "16px",
                   "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "display": "inline-flex"
+                  "display": "flex"
                 },
                 "vars": {
                   "fontWeight": "--s-10ubhie",
@@ -1766,7 +2047,7 @@
                   "edge": "--s-7st1q"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.1-rest-light.json"
               }
             }
           }
@@ -1778,7 +2059,7 @@
             0,
             2,
             3,
-            4
+            5
           ],
           "states": {
             "rest": {
@@ -1795,14 +2076,14 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "1px rgb(251, 211, 220)",
-                  "width": "64.6px",
+                  "width": "64.5px",
                   "paddingTop": "1px",
                   "paddingBottom": "1px",
                   "paddingRight": "6px",
                   "gap": "4px",
                   "lineHeight": "16px",
                   "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "display": "inline-flex"
+                  "display": "flex"
                 },
                 "vars": {
                   "fontWeight": "--s-10ubhie",
@@ -1821,7 +2102,7 @@
                   "borderRadius": "--s-1l4o7cj"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.2-rest-light.json"
               }
             }
           }
@@ -1830,16 +2111,19 @@
     },
     "other": {
       "groups": [
+        "banner",
         "box",
         "icon",
+        "icon@banner",
         "icon@contentinfo",
         "img",
         "listitem",
         "page",
         "panel",
+        "spinbutton",
         "toolbar"
       ],
-      "found": 18,
+      "found": 29,
       "looks": [
         {
           "id": "img.1",
@@ -1876,7 +2160,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/img.1-rest-light.json"
               }
             }
           }
@@ -1916,9 +2200,56 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/img.2-rest-light.json"
               }
             }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 38, 82)",
+                  "color": "rgb(163, 172, 185)",
+                  "borderRadius": "4px",
+                  "height": "40px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "799px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "16px",
+                  "lineHeight": "19px",
+                  "corners": "4px 4px 0px 0px",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "spaceBetween"
+            ]
           }
         },
         {
@@ -1955,13 +2286,13 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@contentinfo.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon@contentinfo.1-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "panel.1",
+          "id": "panel.2",
           "count": 30,
           "pages": [
             0,
@@ -1978,7 +2309,7 @@
                   "backgroundColor": "rgb(33, 45, 99)",
                   "color": "rgb(245, 251, 255)",
                   "borderRadius": "0px",
-                  "height": "129px",
+                  "height": "281px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
@@ -1994,9 +2325,14 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/panel.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/panel.2-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "blue800"
+            ]
           }
         },
         {
@@ -2033,7 +2369,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon.1-rest-light.json"
               }
             }
           }
@@ -2056,7 +2392,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(65, 69, 82)",
                   "borderRadius": "0px",
-                  "height": "52px",
+                  "height": "26px",
                   "paddingInline": "32px",
                   "fontFamily": "-apple-system",
                   "fontSize": "16px",
@@ -2075,8 +2411,8 @@
           }
         },
         {
-          "id": "panel.2",
-          "count": 18,
+          "id": "panel.3",
+          "count": 17,
           "pages": [
             0,
             1,
@@ -2105,6 +2441,56 @@
                   "display": "flex",
                   "zIndex": "11"
                 },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "banner.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "49px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(227, 232, 238) bottom",
+                  "width": "648px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "gap": "normal 16px",
+                  "lineHeight": "normal",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "display": "grid"
+                },
+                "vars": {
+                  "height": "--s-22nfqw",
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "gap": "--s-1f29tr2"
+                },
                 "source": "census"
               }
             }
@@ -2114,9 +2500,9 @@
           "id": "box.1",
           "count": 6,
           "pages": [
-            0,
-            3,
-            5
+            1,
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -2147,7 +2533,7 @@
                   "edge": "--s-1bcqfda"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/box.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/box.1-rest-light.json"
               }
             }
           }
@@ -2189,7 +2575,93 @@
                   "height": "--s-1cn5k4b",
                   "width": "--s-1cn5k4b"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@banner.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "vars": {
+                  "height": "--icon-size",
+                  "width": "--icon-size"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "xsmall"
+            ]
+          }
+        },
+        {
+          "id": "icon@banner.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "24px",
+                  "iconSize": "16x17",
+                  "iconStroke": "fill",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.2-rest-light.json"
               }
             }
           }
@@ -2228,7 +2700,8 @@
                   "cursor": "pointer",
                   "display": "inline"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.3-rest-light.json"
               }
             }
           }
@@ -2269,7 +2742,93 @@
           }
         },
         {
-          "id": "panel.3",
+          "id": "panel.4",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "64px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1436px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "height": "--fixed-header-height",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.5",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "24px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(227, 232, 238) 0px -1px 0px 0px inset",
+                  "edge": "none",
+                  "width": "1440px",
+                  "gap": "16px",
+                  "lineHeight": "normal",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--li639m",
+                  "gap": "--s-1f29tr2",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.5-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.6",
           "count": 6,
           "pages": [
             0,
@@ -2302,13 +2861,14 @@
                 "vars": {
                   "edge": "--s-12pesem"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.6-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "panel.4",
+          "id": "panel.7",
           "count": 6,
           "pages": [
             0,
@@ -2342,7 +2902,59 @@
                   "height": "--li639m",
                   "edge": "--s-12pesem"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.7-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.8",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "81px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233) top",
+                  "width": "280px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "gap": "8px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "vars": {
+                  "width": "--sidebar-width",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "gap": "--s-15f02i8",
+                  "edge": "--s-15xulsv"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.8-rest-light.json"
               }
             }
           }
@@ -2388,7 +3000,8 @@
                   "paddingBottom": "--s--padding-top",
                   "paddingRight": "--s--padding-top"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toolbar.1-rest-light.json"
               }
             }
           }
@@ -2397,7 +3010,7 @@
           "id": "icon.3",
           "count": 3,
           "pages": [
-            5
+            1
           ],
           "states": {
             "rest": {
@@ -2422,46 +3035,93 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon.3-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "panel.5",
-          "count": 2,
+          "id": "spinbutton.1",
+          "count": 1,
           "pages": [
-            0
+            4
           ],
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(65, 69, 82)",
-                  "borderRadius": "0px",
-                  "height": "40px",
-                  "paddingInline": "16px",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "1px rgb(236, 241, 246) left",
-                  "width": "201px",
-                  "gap": "6px",
-                  "lineHeight": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "234px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "transition": "0.24s ease",
+                  "cursor": "text",
                   "display": "flex"
                 },
                 "vars": {
-                  "gap": "--s-1eo1l6l",
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "lineHeight": "--s-432ttp",
+                  "fontSize": "--tlxlq6",
+                  "color": "--wukrzp",
+                  "width": "--li639m",
                   "paddingInline": "--s--padding-top",
                   "paddingTop": "--s--padding-top",
                   "paddingBottom": "--s--padding-top",
                   "paddingRight": "--s--padding-top",
-                  "edge": "--s-1bcqfda"
+                  "borderRadius": "--jpxxql",
+                  "backgroundColor": "--s-14a2tiz"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/spinbutton.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/spinbutton.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(236, 241, 246)",
+                  "color": "rgb(125, 139, 164)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/spinbutton.1-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(230, 25, 71)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/spinbutton.1-invalid-light.json",
+                "forced": true
               }
             }
           }
@@ -2473,7 +3133,7 @@
         "button",
         "icon@button"
       ],
-      "found": 26,
+      "found": 40,
       "looks": [
         {
           "id": "button.1",
@@ -2509,7 +3169,26 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-light.json",
+                "forced": true
               }
             }
           }
@@ -2548,9 +3227,14 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon@button.1-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "cleaned-svg"
+            ]
           }
         },
         {
@@ -2595,14 +3279,14 @@
                   "paddingRight": "--s--padding-top"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.2-rest-light.json"
               }
             }
           }
         },
         {
           "id": "button.3",
-          "count": 41,
+          "count": 46,
           "pages": [
             0,
             1,
@@ -2627,12 +3311,14 @@
                   "letterSpacing": "normal",
                   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
                   "edge": "1px rgb(212, 222, 233)",
-                  "width": "89.4px",
+                  "width": "58.6px",
                   "paddingTop": "4px",
                   "paddingBottom": "4px",
                   "paddingRight": "8px",
                   "gap": "6px",
                   "lineHeight": "20px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
                   "transition": "0.15s cubic-bezier(0, 0.09, 0.4, 1)",
                   "cursor": "pointer",
                   "position": "relative",
@@ -2659,7 +3345,7 @@
                   "borderRadius": "--s-1c4fwdw"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.3-rest-light.json"
               }
             },
             "hover": {
@@ -2670,19 +3356,47 @@
                   "transition": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.3-hover-light.json"
+                "copy": "2026-10-25/census/crops/button.3-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(60, 79, 105)",
+                  "transition": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-light.json"
               }
             },
             "disabled": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(83, 58, 253)",
-                  "color": "rgb(83, 58, 253)",
+                  "color": "rgb(255, 255, 255)",
                   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
                   "edge": "none",
-                  "width": "69px",
-                  "iconSize": "20x20",
-                  "iconStroke": "fill"
+                  "width": "55.1px",
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            },
+            "open": {
+              "light": {
+                "values": {
+                  "width": "54.3px"
                 },
                 "source": "census"
               }
@@ -2691,6 +3405,46 @@
         },
         {
           "id": "icon@button.2",
+          "count": 42,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.3",
           "count": 36,
           "pages": [
             0,
@@ -2723,9 +3477,14 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon@button.3-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "cleaned-svg"
+            ]
           }
         },
         {
@@ -2770,54 +3529,14 @@
                   "paddingRight": "--s--padding-top"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.4-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "icon@button.3",
-          "count": 30,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(80, 97, 122)",
-                  "borderRadius": "0px",
-                  "height": "12px",
-                  "paddingInline": "0px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "12px",
-                  "lineHeight": "20px",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "12x12",
-                  "iconStroke": "fill",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.4-rest-light.json"
               }
             }
           }
         },
         {
           "id": "icon@button.4",
-          "count": 25,
+          "count": 31,
           "pages": [
             0,
             1,
@@ -2849,7 +3568,48 @@
                   "cursor": "pointer",
                   "display": "block"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.5",
+          "count": 27,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.5-rest-light.json"
               }
             }
           }
@@ -2897,13 +3657,32 @@
                   "color": "--s-1hknj82"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.5-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.5-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-disabled-light.json",
+                "forced": true
               }
             }
           }
         },
         {
-          "id": "icon@button.5",
+          "id": "button.6",
           "count": 18,
           "pages": [
             0,
@@ -2918,33 +3697,73 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(79, 86, 107)",
-                  "borderRadius": "0px",
-                  "height": "12px",
-                  "paddingInline": "0px",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "139986px",
+                  "height": "28px",
+                  "paddingInline": "8px",
                   "fontFamily": "-apple-system",
-                  "fontSize": "12px",
-                  "fontWeight": "600",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
                   "letterSpacing": "normal",
-                  "boxShadow": "none",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
                   "edge": "none",
-                  "width": "12px",
-                  "lineHeight": "16px",
-                  "textAlign": "center",
+                  "width": "28px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
                   "iconSize": "12x12",
                   "iconStroke": "fill",
                   "cursor": "pointer",
-                  "display": "block"
+                  "display": "inline-flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "paddingInline": "--s-15f02i8",
+                  "paddingTop": "--s-15f02i8",
+                  "paddingBottom": "--s-15f02i8",
+                  "paddingRight": "--s-15f02i8",
+                  "borderRadius": "--s-1pfp217"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.5-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.6-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.6-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.6-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.6-focus-light.json"
               }
             }
           }
         },
         {
-          "id": "button.6",
-          "count": 12,
+          "id": "button.7",
+          "count": 18,
           "pages": [
             0,
             1,
@@ -2988,67 +3807,24 @@
                   "gap": "--s-3ab8ub"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.6-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "button.7",
-          "count": 12,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(39, 57, 81)",
-                  "borderRadius": "0px",
-                  "height": "20px",
-                  "paddingInline": "0px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-                  "edge": "none",
-                  "width": "248px",
-                  "gap": "4px",
-                  "lineHeight": "normal",
-                  "iconSize": "16x16",
-                  "iconStroke": "fill",
-                  "cursor": "pointer",
-                  "display": "flex"
-                },
-                "vars": {
-                  "boxShadow": "--s--top-shadow",
-                  "edge": "--s--top-shadow",
-                  "color": "--s-1xyyyk2",
-                  "gap": "--s-3ab8ub"
-                },
-                "source": "census"
+                "copy": "2026-10-25/census/crops/button.7-rest-light.json"
               }
             },
-            "hover": {
+            "focus": {
               "light": {
                 "values": {
-                  "color": "rgb(26, 44, 68)"
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "4px rgb(156, 212, 246) +0px"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.7-focus-light.json"
               }
             }
           }
         },
         {
           "id": "icon@button.6",
-          "count": 12,
+          "count": 18,
           "pages": [
             0,
             1,
@@ -3064,29 +3840,36 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(79, 86, 107)",
                   "borderRadius": "0px",
-                  "height": "16px",
+                  "height": "12px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
+                  "fontSize": "12px",
+                  "fontWeight": "600",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "16px",
-                  "lineHeight": "normal",
-                  "iconSize": "16x16",
+                  "width": "12px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "12x12",
                   "iconStroke": "fill",
                   "cursor": "pointer",
                   "display": "block"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.6-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "cleaned-svg"
+            ]
           }
         },
         {
           "id": "button.8",
-          "count": 6,
+          "count": 12,
           "pages": [
             0,
             1,
@@ -3133,7 +3916,8 @@
                   "backgroundColor": "--s-9fypy8",
                   "borderRadius": "--s-9fb64w"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.8-rest-light.json"
               }
             },
             "hover": {
@@ -3143,17 +3927,122 @@
                   "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
                   "edge": "1px rgb(149, 164, 186)"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.8-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(60, 79, 105)",
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px -1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.8-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(156, 212, 246) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.8-focus-light.json"
               }
             }
           }
         },
         {
-          "id": "button.11",
+          "id": "icon@button.7",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(79, 86, 107)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.7-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "cleaned-svg"
+            ]
+          }
+        },
+        {
+          "id": "icon@button.8",
           "count": 6,
           "pages": [
             0,
-            4
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "normal",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "16x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.8-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.19",
+          "count": 4,
+          "pages": [
+            2
           ],
           "part": "button.primary",
           "states": {
@@ -3203,7 +4092,7 @@
                   "borderRadius": "--s-1c4fwdw"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.11-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.19-rest-light.json"
               }
             },
             "hover": {
@@ -3214,84 +4103,30 @@
                   "transition": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.11-hover-light.json"
+                "copy": "2026-10-25/census/crops/button.19-hover-light.json"
               }
-            }
-          }
-        },
-        {
-          "id": "icon@button.7",
-          "count": 6,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
+            },
+            "pressed": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(84, 105, 212)",
-                  "borderRadius": "0px",
-                  "height": "16px",
-                  "paddingInline": "0px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "16px",
-                  "lineHeight": "normal",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "16x16",
-                  "iconStroke": "fill",
-                  "cursor": "pointer",
-                  "display": "block"
+                  "backgroundColor": "rgb(78, 17, 226)",
+                  "color": "rgb(224, 217, 251)",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(68, 19, 159) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(68, 19, 159)",
+                  "transition": "none"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.19-pressed-light.json"
               }
-            }
-          }
-        },
-        {
-          "id": "icon@button.8",
-          "count": 6,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
+            },
+            "focus": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(39, 57, 81)",
-                  "borderRadius": "0px",
-                  "height": "16px",
-                  "paddingInline": "0px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "16px",
-                  "lineHeight": "normal",
-                  "iconSize": "16x16",
-                  "iconStroke": "fill",
-                  "cursor": "pointer",
-                  "display": "block"
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(83, 58, 253) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.19-focus-light.json"
               }
             }
           }
@@ -3302,53 +4137,11 @@
       "groups": [
         "card"
       ],
-      "found": 10,
+      "found": 9,
       "looks": [
         {
           "id": "card.1",
-          "count": 36,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(26, 38, 82)",
-                  "color": "rgb(163, 172, 185)",
-                  "borderRadius": "4px",
-                  "height": "40px",
-                  "paddingInline": "16px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "13px",
-                  "fontWeight": "500",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "799px",
-                  "paddingTop": "6px",
-                  "paddingBottom": "6px",
-                  "paddingRight": "16px",
-                  "lineHeight": "19px",
-                  "corners": "4px 4px 0px 0px",
-                  "iconSize": "14x14",
-                  "iconStroke": "fill",
-                  "display": "flex"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/card.1-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "card.2",
-          "count": 30,
+          "count": 31,
           "pages": [
             0,
             1,
@@ -3364,7 +4157,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(65, 69, 82)",
                   "borderRadius": "6px",
-                  "height": "93px",
+                  "height": "85px",
                   "paddingInline": "20px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
@@ -3390,59 +4183,14 @@
                   "borderRadius": "--s-282tnx"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/card.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/card.1-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "card.3",
-          "count": 6,
-          "pages": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(244, 247, 250)",
-                  "color": "rgb(65, 69, 82)",
-                  "borderRadius": "0px",
-                  "height": "48px",
-                  "paddingInline": "24px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgb(227, 232, 238) 0px -1px 0px 0px inset",
-                  "edge": "none",
-                  "width": "1440px",
-                  "gap": "16px",
-                  "lineHeight": "normal",
-                  "display": "flex"
-                },
-                "vars": {
-                  "width": "--li639m",
-                  "gap": "--s-1f29tr2",
-                  "paddingInline": "--s--padding-top",
-                  "paddingTop": "--s--padding-top",
-                  "paddingBottom": "--s--padding-top",
-                  "paddingRight": "--s--padding-top",
-                  "backgroundColor": "--s-1rfvf0n"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "card.4",
-          "count": 6,
+          "id": "card.2",
+          "count": 8,
           "pages": [
             0,
             1,
@@ -3457,41 +4205,29 @@
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(65, 69, 82)",
-                  "borderRadius": "0px",
-                  "height": "81px",
-                  "paddingInline": "16px",
+                  "borderRadius": "8px",
+                  "height": "211px",
+                  "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "1px rgb(212, 222, 233) top",
-                  "width": "280px",
-                  "paddingTop": "16px",
-                  "paddingBottom": "16px",
-                  "paddingRight": "16px",
-                  "gap": "8px",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 5px 15px 0px, rgba(48, 49, 61, 0.08) 0px 15px 35px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "170px",
                   "lineHeight": "normal",
-                  "iconSize": "16x16",
+                  "iconSize": "8x8",
                   "iconStroke": "fill",
                   "display": "flex"
                 },
-                "vars": {
-                  "width": "--sidebar-width",
-                  "paddingInline": "--s--padding-top",
-                  "paddingTop": "--s--padding-top",
-                  "paddingBottom": "--s--padding-top",
-                  "paddingRight": "--s--padding-top",
-                  "gap": "--s-15f02i8",
-                  "edge": "--s-15xulsv"
-                },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.2-rest-light.json"
               }
             }
           }
         },
         {
-          "id": "card.5",
+          "id": "card.3",
           "count": 6,
           "pages": [
             0,
@@ -3522,7 +4258,109 @@
                   "position": "relative",
                   "display": "block"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.3-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "blue800"
+            ]
+          }
+        },
+        {
+          "id": "card.4",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 79, 105)",
+                  "borderRadius": "0px",
+                  "height": "31px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.5) 0px 0px 4px 4px",
+                  "edge": "none",
+                  "width": "245.6px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "display": "inline"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.5",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "6px",
+                  "height": "36px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
+                  "edge": "none",
+                  "width": "312px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "paddingInline": "--s-15f02i8",
+                  "paddingTop": "--s-15f02i8",
+                  "paddingBottom": "--s-15f02i8",
+                  "paddingRight": "--s-15f02i8",
+                  "width": "--li639m",
+                  "gap": "--s-15f02i8",
+                  "borderRadius": "--s-282tnx",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.5-rest-light.json"
               }
             }
           }
@@ -3531,49 +4369,7 @@
           "id": "card.6",
           "count": 3,
           "pages": [
-            3
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(65, 69, 82)",
-                  "borderRadius": "8px",
-                  "height": "136px",
-                  "paddingInline": "16px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "200px",
-                  "paddingTop": "16px",
-                  "paddingBottom": "16px",
-                  "paddingRight": "16px",
-                  "lineHeight": "normal",
-                  "display": "block"
-                },
-                "vars": {
-                  "paddingInline": "--s-1f29tr2",
-                  "paddingTop": "--s-1f29tr2",
-                  "paddingBottom": "--s-1f29tr2",
-                  "paddingRight": "--s-1f29tr2",
-                  "backgroundColor": "--s-9fypy8",
-                  "borderRadius": "--s-9fb64w"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/card.6-rest-light.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "card.7",
-          "count": 3,
-          "pages": [
-            5
+            1
           ],
           "states": {
             "rest": {
@@ -3615,7 +4411,49 @@
                   "borderRadius": "--s-282tnx"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/card.7-rest-light.json"
+                "copy": "2026-10-25/census/crops/card.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.7",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "8px",
+                  "height": "136px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "200px",
+                  "paddingTop": "16px",
+                  "paddingBottom": "16px",
+                  "paddingRight": "16px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "paddingInline": "--s-1f29tr2",
+                  "paddingTop": "--s-1f29tr2",
+                  "paddingBottom": "--s-1f29tr2",
+                  "paddingRight": "--s-1f29tr2",
+                  "backgroundColor": "--s-9fypy8",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.7-rest-light.json"
               }
             }
           }
@@ -3631,7 +4469,7 @@
       "looks": [
         {
           "id": "cell@table.1",
-          "count": 254,
+          "count": 256,
           "pages": [
             0,
             1,
@@ -3655,7 +4493,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "1px rgb(236, 241, 246) top+bottom+left",
-                  "width": "136.5px",
+                  "width": "107.9px",
                   "paddingTop": "16px",
                   "paddingBottom": "16px",
                   "paddingRight": "16px",
@@ -3671,7 +4509,7 @@
                   "edge": "--s-12pesem"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/cell@table.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/cell@table.1-rest-light.json"
               }
             }
           }
@@ -3702,7 +4540,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "136.5px",
+                  "width": "107.9px",
                   "paddingBottom": "8px",
                   "paddingRight": "16px",
                   "lineHeight": "normal",
@@ -3713,7 +4551,7 @@
                   "color": "--s-1hknj82"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/columnheader@table.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/columnheader@table.1-rest-light.json"
               }
             }
           }
@@ -3723,19 +4561,24 @@
     "text": {
       "groups": [
         "code",
+        "code@dialog",
         "code@table",
         "heading.h1",
+        "heading.h1@banner",
         "heading.h2",
+        "heading.h2@banner",
         "heading.h3",
         "heading.h3@menu",
         "paragraph",
+        "paragraph@dialog",
         "paragraph@table",
         "text",
         "text@button",
         "text@contentinfo",
-        "text@link"
+        "text@link",
+        "text@listbox"
       ],
-      "found": 34,
+      "found": 43,
       "looks": [
         {
           "id": "text@link.1",
@@ -3775,7 +4618,7 @@
         },
         {
           "id": "code@table.1",
-          "count": 302,
+          "count": 303,
           "pages": [
             0,
             1,
@@ -3817,14 +4660,14 @@
                   "backgroundColor": "--s-1rfvf0n"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/code@table.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/code@table.1-rest-light.json"
               }
             }
           }
         },
         {
           "id": "text@link.2",
-          "count": 213,
+          "count": 214,
           "pages": [
             0,
             1,
@@ -3863,10 +4706,10 @@
           "count": 97,
           "pages": [
             0,
-            1,
             2,
             3,
-            4
+            4,
+            5
           ],
           "states": {
             "rest": {
@@ -3883,7 +4726,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "627.5px",
+                  "width": "656.1px",
                   "paddingTop": "14px",
                   "lineHeight": "20px",
                   "display": "block"
@@ -3919,7 +4762,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "124.2px",
+                  "width": "122.5px",
                   "paddingTop": "16px",
                   "lineHeight": "normal",
                   "iconSize": "12x12",
@@ -3929,9 +4772,14 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h3.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/heading.h3.1-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "anchored"
+            ]
           }
         },
         {
@@ -3960,7 +4808,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "100.2px",
+                  "width": "98.5px",
                   "lineHeight": "normal",
                   "cursor": "pointer",
                   "display": "block"
@@ -4032,7 +4880,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 66, 87)",
                   "borderRadius": "0px",
-                  "height": "40px",
+                  "height": "66px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "16px",
@@ -4149,7 +4997,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "1px rgb(212, 222, 233)",
-                  "width": "61.8px",
+                  "width": "70.5px",
                   "paddingTop": "2px",
                   "paddingBottom": "2px",
                   "paddingRight": "4px",
@@ -4167,7 +5015,7 @@
                   "backgroundColor": "--s-1rfvf0n"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/code.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/code.1-rest-light.json"
               }
             }
           }
@@ -4198,7 +5046,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "217.7px",
+                  "width": "110.3px",
                   "paddingTop": "32px",
                   "lineHeight": "normal",
                   "iconSize": "12x12",
@@ -4208,9 +5056,14 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h2.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-light.json"
               }
             }
+          },
+          "names": {
+            "class.variant": [
+              "anchored"
+            ]
           }
         },
         {
@@ -4239,7 +5092,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "193.7px",
+                  "width": "86.3px",
                   "lineHeight": "normal",
                   "cursor": "pointer",
                   "display": "block"
@@ -4286,11 +5139,11 @@
         },
         {
           "id": "text@link.3",
-          "count": 28,
+          "count": 29,
           "pages": [
             0,
-            1,
-            2
+            2,
+            4
           ],
           "states": {
             "rest": {
@@ -4307,7 +5160,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "177.7px",
+                  "width": "57.7px",
                   "lineHeight": "26px",
                   "cursor": "pointer",
                   "display": "inline"
@@ -4322,8 +5175,8 @@
           "count": 19,
           "pages": [
             0,
+            1,
             2,
-            4,
             5
           ],
           "states": {
@@ -4341,7 +5194,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "131.9px",
+                  "width": "55.8px",
                   "lineHeight": "26px",
                   "display": "inline"
                 },
@@ -4351,11 +5204,14 @@
           }
         },
         {
-          "id": "text@link.4",
+          "id": "text@button.1",
           "count": 18,
           "pages": [
             0,
             1,
+            2,
+            3,
+            4,
             5
           ],
           "states": {
@@ -4363,9 +5219,9 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(84, 105, 212)",
+                  "color": "rgb(84, 89, 105)",
                   "borderRadius": "0px",
-                  "height": "17px",
+                  "height": "20px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
@@ -4373,10 +5229,13 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "28.4px",
+                  "width": "545.6px",
                   "lineHeight": "20px",
                   "cursor": "pointer",
-                  "display": "inline"
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--jybopzu-color-neutral600"
                 },
                 "source": "census"
               }
@@ -4384,7 +5243,7 @@
           }
         },
         {
-          "id": "text@link.5",
+          "id": "text@link.4",
           "count": 18,
           "pages": [
             0,
@@ -4420,6 +5279,123 @@
           }
         },
         {
+          "id": "text@link.5",
+          "count": 18,
+          "pages": [
+            1,
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "63.5px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "code@dialog.1",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "6px",
+                  "height": "20px",
+                  "paddingInline": "4px",
+                  "fontFamily": "Menlo",
+                  "fontSize": "12.6px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "22.6px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "4px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "vars": {
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "fontFamily": "--sail-font-family-monospace",
+                  "edge": "--s-15xulsv",
+                  "borderRadius": "--s-282tnx",
+                  "backgroundColor": "--s-1rfvf0n"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/code@dialog.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@dialog.1",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "312px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
           "id": "text.7",
           "count": 12,
           "pages": [
@@ -4445,7 +5421,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "449.6px",
+                  "width": "446.1px",
                   "lineHeight": "40px",
                   "display": "inline"
                 },
@@ -4455,7 +5431,7 @@
           }
         },
         {
-          "id": "text@button.1",
+          "id": "text@button.2",
           "count": 12,
           "pages": [
             0,
@@ -4498,7 +5474,7 @@
           }
         },
         {
-          "id": "text@button.2",
+          "id": "text@button.3",
           "count": 12,
           "pages": [
             0,
@@ -4535,6 +5511,45 @@
           }
         },
         {
+          "id": "text@listbox.1",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(104, 115, 133)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "13px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "624px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--jybopzu-textColor-secondary",
+                  "fontWeight": "--jybopzu-weight-semibold"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
           "id": "heading.h1.1",
           "count": 6,
           "pages": [
@@ -4560,7 +5575,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "539.7px",
+                  "width": "536.3px",
                   "lineHeight": "40px",
                   "display": "inline"
                 },
@@ -4575,7 +5590,55 @@
                   "paddingBottom": "--s-72fzvy",
                   "paddingRight": "--s-72fzvy"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1@banner.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "gap": "8px",
+                  "lineHeight": "24px",
+                  "iconSize": "16x17",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--s-15lxxlk",
+                  "fontFamily": "--s-1tckhn5",
+                  "letterSpacing": "--s-18r6xqz",
+                  "lineHeight": "--s-1fjdblk",
+                  "fontSize": "--s-1vrlxop",
+                  "gap": "--s-15f02i8"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1@banner.1-rest-light.json"
               }
             }
           }
@@ -4598,7 +5661,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(26, 31, 54)",
                   "borderRadius": "0px",
-                  "height": "72px",
+                  "height": "40px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "24px",
@@ -4606,7 +5669,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "799px",
+                  "width": "600px",
                   "paddingTop": "8px",
                   "lineHeight": "32px",
                   "display": "block"
@@ -4622,7 +5685,54 @@
                   "paddingBottom": "--s--padding-top",
                   "paddingRight": "--s--padding-top"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2@banner.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "588px",
+                  "lineHeight": "24px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontWeight": "--s-15lxxlk",
+                  "fontFamily": "--s-1tckhn5",
+                  "letterSpacing": "--s-18r6xqz",
+                  "lineHeight": "--s-1fjdblk",
+                  "fontSize": "--s-1vrlxop",
+                  "color": "--xd9t29"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2@banner.1-rest-light.json"
               }
             }
           }
@@ -4653,7 +5763,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "43.5px",
+                  "width": "42.7px",
                   "lineHeight": "20px",
                   "cursor": "pointer",
                   "display": "inline"
@@ -4664,7 +5774,7 @@
           }
         },
         {
-          "id": "text@button.3",
+          "id": "text@button.4",
           "count": 6,
           "pages": [
             0,
@@ -4708,6 +5818,81 @@
                   "paddingTop": "--s--padding-top",
                   "paddingBottom": "--s--padding-top",
                   "paddingRight": "--s--padding-top"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.5",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(104, 115, 133)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "545.6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--jybopzu-textColor-secondary"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.6",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "54.6px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "block"
                 },
                 "source": "census"
               }
@@ -4793,6 +5978,42 @@
           }
         },
         {
+          "id": "text@link.7",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(84, 105, 212)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "140.3px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
           "id": "heading.h3@menu.1",
           "count": 4,
           "pages": [
@@ -4833,7 +6054,7 @@
                   "paddingRight": "--s--padding-top"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h3@menu.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/heading.h3@menu.1-rest-light.json"
               }
             }
           }
@@ -4857,58 +6078,27 @@
             4,
             5
           ],
-          "part": "select.trigger",
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(39, 57, 81)",
-                  "borderRadius": "6px",
-                  "height": "28px",
-                  "paddingInline": "8px",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "4px",
+                  "height": "24px",
+                  "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
-                  "fontWeight": "600",
+                  "fontWeight": "400",
                   "letterSpacing": "normal",
-                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-                  "edge": "1px rgb(212, 222, 233)",
-                  "width": "82.8px",
-                  "paddingTop": "4px",
-                  "paddingBottom": "4px",
-                  "paddingRight": "26px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "552px",
                   "lineHeight": "20px",
-                  "transition": "0.24s ease",
-                  "cursor": "pointer",
                   "display": "flex"
                 },
-                "vars": {
-                  "boxShadow": "--s--top-shadow",
-                  "edge": "--s--top-shadow",
-                  "fontWeight": "--ep1e0f",
-                  "fontFamily": "--s-6vkd26",
-                  "letterSpacing": "--s-14509aw",
-                  "lineHeight": "--yfph9h",
-                  "fontSize": "--s-1g9cdsy",
-                  "color": "--wukrzp",
-                  "paddingInline": "--s--padding-top",
-                  "paddingTop": "--s--padding-top",
-                  "paddingBottom": "--s--padding-top",
-                  "paddingRight": "--s--padding-top",
-                  "width": "--s-72fzvy",
-                  "borderRadius": "--jpxxql",
-                  "backgroundColor": "--s-14a2tiz"
-                },
-                "source": "census"
-              }
-            },
-            "hover": {
-              "light": {
-                "values": {
-                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-                  "edge": "1px rgb(149, 164, 186)"
-                },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/combobox.1-rest-light.json"
               }
             }
           }
@@ -4920,7 +6110,7 @@
         "icon@link",
         "link"
       ],
-      "found": 17,
+      "found": 20,
       "looks": [
         {
           "id": "link.1",
@@ -4968,7 +6158,7 @@
                   "paddingRight": "--s--padding-top"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.1-rest-light.json"
               }
             },
             "hover": {
@@ -4977,14 +6167,32 @@
                   "color": "rgb(26, 44, 68)"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.1-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-light.json"
               }
             }
           }
         },
         {
           "id": "link.2",
-          "count": 115,
+          "count": 116,
           "pages": [
             0,
             1,
@@ -5026,7 +6234,16 @@
                   "color": "--s-13hmetb"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.2-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-light.json"
               }
             },
             "selected": {
@@ -5086,7 +6303,16 @@
                   "paddingRight": "--s--padding-top"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.3-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-light.json"
               }
             }
           }
@@ -5146,7 +6372,7 @@
                   "gap": "--s-15f02i8"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.4-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.4-rest-light.json"
               }
             },
             "hover": {
@@ -5155,7 +6381,25 @@
                   "color": "rgb(26, 44, 68)"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.4-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.4-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-focus-light.json"
               }
             },
             "selected": {
@@ -5195,7 +6439,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
                   "edge": "none",
-                  "width": "177.7px",
+                  "width": "57.7px",
                   "gap": "8px",
                   "lineHeight": "26px",
                   "cursor": "pointer",
@@ -5211,7 +6455,7 @@
                   "borderRadius": "--s-1l4o7cj"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.5-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.5-rest-light.json"
               }
             },
             "hover": {
@@ -5220,7 +6464,27 @@
                   "color": "rgb(26, 31, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.5-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.5-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "4px rgb(163, 217, 249) +0px",
+                  "zIndex": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-light.json"
               }
             }
           }
@@ -5269,7 +6533,7 @@
                   "gap": "--s-15f02i8"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.6-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.6-rest-light.json"
               }
             },
             "hover": {
@@ -5278,7 +6542,25 @@
                   "color": "rgb(26, 44, 68)"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.6-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.6-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-light.json"
               }
             }
           }
@@ -5326,7 +6608,7 @@
                   "borderRadius": "--s-1l4o7cj"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.7-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.7-rest-light.json"
               }
             },
             "hover": {
@@ -5335,7 +6617,26 @@
                   "color": "rgb(26, 31, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.7-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.7-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "4px rgb(163, 217, 249) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-light.json"
               }
             }
           }
@@ -5381,7 +6682,7 @@
                   "borderRadius": "--s-1l4o7cj"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.8-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.8-rest-light.json"
               }
             },
             "hover": {
@@ -5391,7 +6692,27 @@
                   "textDecorationLine": "underline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.8-hover-light.json"
+                "copy": "2026-10-25/census/crops/link.8-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(26, 31, 54)",
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "4px rgb(163, 217, 249) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.8-focus-light.json"
               }
             }
           }
@@ -5429,7 +6750,297 @@
                   "cursor": "pointer",
                   "display": "inline"
                 },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@link.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(83, 58, 253)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "12px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 1.77246)",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--oiv4a4",
+                  "edge": "--w22o9l"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@link.2-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "menu": {
+      "groups": [
+        "icon@menuitem",
+        "menu",
+        "menuitem"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "menuitem.1",
+          "count": 36,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "3px",
+                  "height": "32px",
+                  "paddingInline": "10px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "160px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "list-item"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)",
+                  "color": "rgb(26, 44, 68)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(125, 139, 164)",
+                  "cursor": "default",
+                  "display": "block"
+                },
                 "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@menuitem.1",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(80, 97, 122)",
+                  "borderRadius": "0px",
+                  "height": "8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "8x8",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@menuitem.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "menuitem.2",
+          "count": 18,
+          "pages": [
+            3
+          ],
+          "part": "menu.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "3px",
+                  "height": "32px",
+                  "paddingInline": "10px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "160px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "10px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontSize": "--tlxlq6",
+                  "lineHeight": "--s-432ttp",
+                  "fontWeight": "--s-1htz8iq",
+                  "fontFamily": "--huplq6",
+                  "letterSpacing": "--wdt5sy",
+                  "color": "--s-13hmetb",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--s-9fb64w"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(244, 247, 250)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.2-pressed-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "menu.1",
+          "count": 11,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "0px",
+                  "height": "104px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "none",
+                  "width": "168px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "lineHeight": "normal",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "height": "--li639m",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menu.1-rest-light.json"
               }
             }
           }
@@ -5488,7 +7099,8 @@
                   "backgroundColor": "--s-1rfvf0n",
                   "edge": "--s-1bcqfda"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/kbd.1-rest-light.json"
               }
             }
           }
@@ -5542,127 +7154,56 @@
                   "width": "--s-22nfqw",
                   "color": "--s-13hmetb"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/label.1-rest-light.json"
               }
             }
           }
         }
       ]
     },
-    "menu": {
+    "list-box": {
       "groups": [
-        "menu",
-        "menuitem"
+        "listbox"
       ],
-      "found": 2,
+      "found": 1,
       "looks": [
         {
-          "id": "menuitem.1",
-          "count": 15,
+          "id": "listbox.1",
+          "count": 6,
           "pages": [
-            3
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
           ],
-          "part": "menu.item",
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(26, 44, 68)",
-                  "borderRadius": "3px",
-                  "height": "32px",
-                  "paddingInline": "10px",
-                  "fontFamily": "-apple-system",
-                  "fontSize": "14px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
-                  "edge": "none",
-                  "width": "160px",
-                  "paddingTop": "6px",
-                  "paddingBottom": "6px",
-                  "paddingRight": "10px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "vars": {
-                  "boxShadow": "--s--top-shadow",
-                  "edge": "--s--top-shadow",
-                  "fontSize": "--tlxlq6",
-                  "lineHeight": "--s-432ttp",
-                  "fontWeight": "--s-1htz8iq",
-                  "fontFamily": "--huplq6",
-                  "letterSpacing": "--wdt5sy",
-                  "color": "--s-13hmetb",
-                  "paddingInline": "--s--padding-top",
-                  "paddingTop": "--s--padding-top",
-                  "paddingBottom": "--s--padding-top",
-                  "paddingRight": "--s--padding-top",
-                  "borderRadius": "--s-9fb64w"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/menuitem.1-rest-light.json"
-              }
-            },
-            "hover": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(244, 247, 250)"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/menuitem.1-hover-light.json"
-              }
-            },
-            "disabled": {
-              "light": {
-                "values": {
-                  "color": "rgb(125, 139, 164)",
-                  "cursor": "default"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "menu.1",
-          "count": 4,
-          "pages": [
-            3
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(65, 69, 82)",
                   "borderRadius": "0px",
-                  "height": "104px",
+                  "height": "184px",
                   "paddingInline": "0px",
                   "fontFamily": "-apple-system",
                   "fontSize": "14px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
-                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "boxShadow": "none",
                   "edge": "none",
-                  "width": "168px",
-                  "paddingTop": "4px",
-                  "paddingBottom": "4px",
-                  "lineHeight": "normal",
-                  "display": "block"
+                  "width": "624px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "display": "flex"
                 },
                 "vars": {
-                  "boxShadow": "--s--top-shadow",
-                  "edge": "--s--top-shadow",
-                  "height": "--li639m",
-                  "paddingInline": "--s--padding-top",
-                  "paddingTop": "--s--padding-top",
-                  "paddingBottom": "--s--padding-top",
-                  "paddingRight": "--s--padding-top"
+                  "gap": "--s-15f02i8"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/menu.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/listbox.1-rest-light.json"
               }
             }
           }
@@ -5679,7 +7220,7 @@
           "id": "searchbox.1",
           "count": 2,
           "pages": [
-            1
+            4
           ],
           "states": {
             "rest": {
@@ -5723,7 +7264,160 @@
                   "backgroundColor": "--s-14a2tiz"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/searchbox.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/searchbox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/searchbox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(236, 241, 246)",
+                  "color": "rgb(125, 139, 164)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/searchbox.1-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(230, 25, 71)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/searchbox.1-invalid-light.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "select": {
+      "groups": [
+        "select"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "select.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "part": "select.trigger",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(39, 57, 81)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "600",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "width": "82.8px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "26px",
+                  "lineHeight": "20px",
+                  "transition": "0.24s ease",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--ep1e0f",
+                  "fontFamily": "--s-6vkd26",
+                  "letterSpacing": "--s-14509aw",
+                  "lineHeight": "--yfph9h",
+                  "fontSize": "--s-1g9cdsy",
+                  "color": "--wukrzp",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "width": "--s-72fzvy",
+                  "borderRadius": "--jpxxql",
+                  "backgroundColor": "--s-14a2tiz"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(149, 164, 186) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(149, 164, 186)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px -1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(236, 241, 246)",
+                  "color": "rgb(125, 139, 164)",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(230, 25, 71)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/select.1-invalid-light.json",
+                "forced": true
               }
             }
           }
@@ -5738,7 +7432,7 @@
       "looks": [
         {
           "id": "separator.1",
-          "count": 74,
+          "count": 80,
           "pages": [
             0,
             1,
@@ -5776,14 +7470,14 @@
                   "backgroundColor": "--s-15xulsv"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/separator.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/separator.1-rest-light.json"
               }
             }
           }
         },
         {
           "id": "separator.2",
-          "count": 6,
+          "count": 7,
           "pages": [
             0,
             1,
@@ -5820,24 +7514,205 @@
                   "height": "--l5cirb",
                   "backgroundColor": "--s-1mkjmgu"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.2-rest-light.json"
               }
             }
           }
         }
       ]
     },
-    "input": {
+    "text-field": {
       "groups": [
         "textbox"
       ],
-      "found": 5,
+      "found": 6,
       "looks": [
         {
           "id": "textbox.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(65, 69, 82)",
+                  "borderRadius": "4px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "552px",
+                  "lineHeight": "24px",
+                  "transition": "0.24s ease",
+                  "cursor": "text",
+                  "display": "flex"
+                },
+                "vars": {
+                  "boxShadow": "--top-shadow",
+                  "edge": "--top-shadow",
+                  "paddingInline": "--padding-top",
+                  "paddingTop": "--padding-top",
+                  "paddingBottom": "--padding-top",
+                  "paddingRight": "--padding-top",
+                  "backgroundColor": "--jybopzu-backgroundColor-surface",
+                  "color": "--jybopzu-textColor-primary",
+                  "fontWeight": "--jybopzu-weight-regular",
+                  "fontFamily": "--jybopzu-typeface-ui",
+                  "width": "--jybopzu-size-fill",
+                  "borderRadius": "--jybopzu-radius-xsmall"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(246, 248, 250)",
+                  "color": "rgb(163, 172, 186)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "large"
+            ]
+          }
+        },
+        {
+          "id": "textbox.2",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(26, 44, 68)",
+                  "borderRadius": "24px",
+                  "height": "40px",
+                  "paddingInline": "16px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(103, 93, 255) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+                  "edge": "1px rgb(103, 93, 255)",
+                  "width": "312px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "6px",
+                  "lineHeight": "24px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "lineHeight": "--s-1a3m0xe",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "height": "--x3ux79"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+                  "edge": "1px rgb(212, 222, 233)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+                  "edge": "1px rgb(212, 222, 233)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "1px rgb(103, 93, 255) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+                  "edge": "1px rgb(212, 222, 233)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 0px 15px 0px, rgba(48, 49, 61, 0.08) 0px 0px 35px 0px",
+                  "edge": "1px rgb(212, 222, 233)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.2-invalid-light.json",
+                "forced": true
+              }
+            }
+          }
+        },
+        {
+          "id": "textbox.3",
           "count": 5,
           "pages": [
-            1
+            4
           ],
           "part": "input",
           "states": {
@@ -5882,7 +7757,17 @@
                   "backgroundColor": "--s-14a2tiz"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/textbox.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/textbox.3-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(212, 222, 233) 0px 0px 0px 1px, rgba(1, 150, 237, 0.36) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "ring": "3px rgb(163, 217, 249) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.3-focus-light.json"
               }
             },
             "disabled": {
@@ -5892,7 +7777,18 @@
                   "color": "rgb(125, 139, 164)",
                   "cursor": "default"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.3-disabled-light.json"
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(230, 25, 71) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+                  "edge": "1px rgb(230, 25, 71)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.3-invalid-light.json"
               }
             }
           }
@@ -5903,13 +7799,69 @@
       "groups": [
         "tooltip"
       ],
-      "found": 1,
+      "found": 2,
       "looks": [
         {
           "id": "tooltip.1",
+          "count": 18,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(60, 79, 105)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "-apple-system",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(48, 49, 61, 0.08) 0px 2px 5px 0px",
+                  "edge": "none",
+                  "width": "160.3px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "transition": "0.1s cubic-bezier(0, 0.09, 0.4, 1)",
+                  "display": "block"
+                },
+                "vars": {
+                  "boxShadow": "--s--top-shadow",
+                  "edge": "--s--top-shadow",
+                  "fontWeight": "--x5dpqz",
+                  "fontFamily": "--iv638n",
+                  "letterSpacing": "--s-1vewu14",
+                  "lineHeight": "--s-7paqqe",
+                  "fontSize": "--eoafo5",
+                  "color": "--s-13ypoy8",
+                  "paddingInline": "--s--padding-top",
+                  "paddingTop": "--s--padding-top",
+                  "paddingBottom": "--s--padding-top",
+                  "paddingRight": "--s--padding-top",
+                  "borderRadius": "--s-282tnx",
+                  "backgroundColor": "--s-1xkgkxo"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tooltip.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "tooltip.2",
           "count": 1,
           "pages": [
-            4
+            5
           ],
           "part": "tooltip",
           "states": {
@@ -5952,7 +7904,7 @@
                   "borderRadius": "--s-9fb64w"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/tooltip.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/tooltip.2-rest-light.json"
               }
             }
           }

@@ -1,0 +1,2214 @@
+{
+  "version": 1,
+  "slug": "govuk",
+  "capture": {
+    "probe": "ce94064",
+    "census": "4fcf712",
+    "date": "2026-10-25"
+  },
+  "components": {
+    "badge": {
+      "grids": [
+        {
+          "group": "badge",
+          "variants": [
+            {
+              "key": "v-d9cgk8",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700"
+                }
+              }
+            },
+            {
+              "key": "v-p6wl7a",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "edge": "1px rgb(244, 248, 251) right",
+                  "boxShadow": "none",
+                  "color": "rgb(255, 255, 255)",
+                  "fontWeight": "700"
+                }
+              }
+            },
+            {
+              "key": "blue",
+              "name": {
+                "value": "blue",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 2,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(210, 226, 241)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(15, 56, 92)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "green",
+              "name": {
+                "value": "green",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(207, 228, 220)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(8, 61, 41)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "grey",
+              "name": {
+                "value": "grey",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(206, 206, 206)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "magenta",
+              "name": {
+                "value": "magenta",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 215, 229)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(101, 27, 62)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "orange",
+              "name": {
+                "value": "orange",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(253, 228, 215)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(122, 60, 28)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "purple",
+              "name": {
+                "value": "purple",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(221, 214, 236)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(42, 25, 80)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "red",
+              "name": {
+                "value": "red",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 215, 215)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(101, 27, 27)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "teal",
+              "name": {
+                "value": "teal",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(208, 230, 231)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 65, 68)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "yellow",
+              "name": {
+                "value": "yellow",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 238, 128)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(122, 60, 28)",
+                  "fontWeight": "400"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-3hhssu",
+              "count": 10,
+              "values": {
+                "height": "29px",
+                "paddingInline": "20px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-3o2ac5",
+              "count": 10,
+              "values": {
+                "height": "30px",
+                "paddingInline": "8px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-d9cgk8",
+              "size": "s-3hhssu",
+              "look": "badge.2",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.2-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-p6wl7a",
+              "size": "s-3hhssu",
+              "look": "badge.1",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.1-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "blue",
+              "size": "s-3o2ac5",
+              "look": "badge.3",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.3-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "green",
+              "size": "s-3o2ac5",
+              "look": "badge.5",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.5-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "grey",
+              "size": "s-3o2ac5",
+              "look": "badge.4",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.4-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "magenta",
+              "size": "s-3o2ac5",
+              "look": "badge.8",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.8-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "orange",
+              "size": "s-3o2ac5",
+              "look": "badge.10",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.10-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "purple",
+              "size": "s-3o2ac5",
+              "look": "badge.7",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.7-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "red",
+              "size": "s-3o2ac5",
+              "look": "badge.9",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.9-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "teal",
+              "size": "s-3o2ac5",
+              "look": "badge.6",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.6-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "yellow",
+              "size": "s-3o2ac5",
+              "look": "badge.11",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/badge.11-rest-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "breadcrumbs": {
+      "grids": [
+        {
+          "group": "breadcrumb",
+          "variants": [
+            {
+              "key": "v-cysucv",
+              "count": 10,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-f5wwx1",
+              "count": 10,
+              "values": {
+                "height": "19px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-cysucv",
+              "size": "s-f5wwx1",
+              "look": "breadcrumb.1",
+              "count": 10,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/breadcrumb.1-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/breadcrumb.1-focus-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "button": {
+      "grids": [
+        {
+          "group": "button",
+          "variants": [
+            {
+              "key": "v-aqha0o",
+              "count": 15,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "1px rgb(11, 12, 12)",
+                  "boxShadow": "rgb(11, 12, 12) 0px 3px 0px 0px",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "v-pjn0af",
+              "count": 13,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(15, 122, 82)",
+                  "edge": "none",
+                  "boxShadow": "rgb(8, 61, 41) 0px 2px 0px 0px",
+                  "color": "rgb(255, 255, 255)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "v-xzjfs6",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(255, 255, 255)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "secondary",
+              "name": {
+                "value": "secondary",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "edge": "none",
+                  "boxShadow": "rgb(133, 134, 134) 0px 2px 0px 0px",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "v-uvsc64",
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-mx94q8",
+              "count": 15,
+              "values": {
+                "height": "37px",
+                "paddingInline": "10px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-chtoyu",
+              "count": 14,
+              "values": {
+                "height": "38px",
+                "paddingInline": "10px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-iwp8gl",
+              "count": 5,
+              "values": {
+                "height": "50px",
+                "paddingInline": "0px",
+                "fontSize": "13.3333px",
+                "letterSpacing": "normal",
+                "iconSize": "20x20"
+              }
+            },
+            {
+              "key": "s-fm366q",
+              "count": 1,
+              "values": {
+                "height": "20.5px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-aqha0o",
+              "size": "s-mx94q8",
+              "look": "button.1",
+              "count": 15,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.1-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.1-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.1-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.1-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.1-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-pjn0af",
+              "size": "s-chtoyu",
+              "look": "button.2",
+              "count": 13,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.2-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.2-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.2-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.2-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.2-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-xzjfs6",
+              "size": "s-iwp8gl",
+              "look": "button.3",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.3-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.3-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.3-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.3-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "secondary",
+              "size": "s-chtoyu",
+              "look": "button.4",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.4-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.4-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.4-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.4-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/button.4-disabled-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-uvsc64",
+              "size": "s-fm366q",
+              "look": "button.5",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "open"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/button.5-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/button.5-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/button.5-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/button.5-focus-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "card": {
+      "grids": [
+        {
+          "group": "card",
+          "variants": [
+            {
+              "key": "v-xyxk0z",
+              "count": 6,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "2px rgb(29, 112, 184) top",
+                  "boxShadow": "none"
+                }
+              }
+            },
+            {
+              "key": "v-jitiyu",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "1px rgb(142, 184, 220) top",
+                  "boxShadow": "none"
+                }
+              }
+            },
+            {
+              "key": "v-r7suc7",
+              "count": 3,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "1px rgb(206, 206, 206)",
+                  "boxShadow": "none"
+                }
+              }
+            },
+            {
+              "key": "confirmation",
+              "name": {
+                "value": "confirmation",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(15, 122, 82)",
+                  "edge": "none",
+                  "boxShadow": "none"
+                }
+              }
+            },
+            {
+              "key": "v-dzjbai",
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "1px rgb(206, 206, 206) top",
+                  "boxShadow": "none"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-15zhf5",
+              "count": 16,
+              "values": {}
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-xyxk0z",
+              "size": "s-15zhf5",
+              "look": "card.1",
+              "count": 6,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/card.1-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-jitiyu",
+              "size": "s-15zhf5",
+              "look": "card.2",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/card.2-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-r7suc7",
+              "size": "s-15zhf5",
+              "look": "card.3",
+              "count": 3,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              }
+            },
+            {
+              "variant": "confirmation",
+              "size": "s-15zhf5",
+              "look": "card.4",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/card.4-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-dzjbai",
+              "size": "s-15zhf5",
+              "look": "card.5",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/card.5-rest-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "combobox": {
+      "grids": [
+        {
+          "group": "combobox",
+          "variants": [
+            {
+              "key": "default",
+              "name": {
+                "value": "default",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "2px rgb(11, 12, 12) top+bottom+left",
+                  "boxShadow": "none",
+                  "color": "rgb(0, 0, 0)",
+                  "fontWeight": "400"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-679sch",
+              "count": 5,
+              "values": {
+                "height": "50px",
+                "paddingInline": "6px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "default",
+              "size": "s-679sch",
+              "look": "combobox.1",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/combobox.1-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/combobox.1-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/combobox.1-disabled-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "field": {
+      "grids": [
+        {
+          "group": "label",
+          "variants": [
+            {
+              "key": "v-m56f67",
+              "count": 9,
+              "values": {
+                "light": {
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "v-q2cxdq",
+              "count": 2,
+              "values": {
+                "light": {
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "700"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-7jtmlz",
+              "count": 9,
+              "values": {
+                "fontSize": "19px",
+                "lineHeight": "25px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "l",
+              "name": {
+                "value": "l",
+                "from": "class",
+                "key": "class.size"
+              },
+              "count": 2,
+              "values": {
+                "fontSize": "36px",
+                "lineHeight": "40px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-m56f67",
+              "size": "s-7jtmlz",
+              "look": "label.1",
+              "count": 9,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/label.1-rest-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-q2cxdq",
+              "size": "l",
+              "look": "label.2",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/label.2-rest-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "link": {
+      "grids": [
+        {
+          "group": "link",
+          "variants": [
+            {
+              "key": "v-lnsc7k",
+              "count": 172,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "v-edxyjf",
+              "count": 110,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "sidebar",
+              "name": {
+                "value": "sidebar",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 73,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "footer",
+              "name": {
+                "value": "footer",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 10,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "v-lhe9l7",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "v-xzjfs6",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(255, 255, 255)",
+                  "fontWeight": "400"
+                }
+              }
+            },
+            {
+              "key": "calendar",
+              "name": {
+                "value": "calendar",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "backgroundImage": "url()",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700",
+                  "textDecorationLine": "underline"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-7a5i4t",
+              "count": 200,
+              "values": {
+                "height": "23px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-f5wwx1",
+              "count": 143,
+              "values": {
+                "height": "19px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-1ck858",
+              "count": 9,
+              "values": {
+                "height": "48px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-1w0hjg",
+              "count": 6,
+              "values": {
+                "height": "39.5px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-fh8hwl",
+              "count": 5,
+              "values": {
+                "height": "37px",
+                "paddingInline": "0px",
+                "fontSize": "30px",
+                "letterSpacing": "normal",
+                "iconSize": "162x30"
+              }
+            },
+            {
+              "key": "s-k7xfr4",
+              "count": 5,
+              "values": {
+                "height": "136px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-ohbhdm",
+              "count": 5,
+              "values": {
+                "height": "19px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-7q8d9d",
+              "count": 1,
+              "values": {
+                "height": "42.2px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-cbdwsi",
+              "count": 1,
+              "values": {
+                "height": "59px",
+                "paddingInline": "0px",
+                "fontSize": "24px",
+                "letterSpacing": "normal"
+              }
+            },
+            {
+              "key": "s-dfw57z",
+              "count": 1,
+              "values": {
+                "height": "25px",
+                "paddingInline": "26px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-lnsc7k",
+              "size": "s-7a5i4t",
+              "look": "link.1",
+              "count": 161,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.1-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.1-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.1-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.1-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-lnsc7k",
+              "size": "s-1ck858",
+              "look": "link.6",
+              "count": 6,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.6-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.6-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.6-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.6-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-lnsc7k",
+              "size": "s-ohbhdm",
+              "look": "link.7",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.7-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.7-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.7-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.7-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-edxyjf",
+              "size": "s-f5wwx1",
+              "look": "link.2",
+              "count": 110,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.2-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.2-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.2-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.2-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-7a5i4t",
+              "look": "link.3",
+              "count": 39,
+              "also": [
+                "link.15"
+              ],
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.3-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.3-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.3-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.3-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-f5wwx1",
+              "look": "link.4",
+              "count": 23,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.4-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.4-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.4-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.4-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-1ck858",
+              "look": "link.11",
+              "count": 3,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.11-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.11-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.11-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.11-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-1w0hjg",
+              "look": "link.10",
+              "count": 6,
+              "also": [
+                "link.12"
+              ],
+              "values": {
+                "light": {
+                  "fontWeight": "700"
+                }
+              },
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.10-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.10-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.10-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.10-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-7q8d9d",
+              "look": "link.16",
+              "count": 1,
+              "values": {
+                "light": {
+                  "fontWeight": "700"
+                }
+              },
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.16-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.16-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.16-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.16-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "sidebar",
+              "size": "s-cbdwsi",
+              "look": "link.13",
+              "count": 1,
+              "values": {
+                "light": {
+                  "fontWeight": "700"
+                }
+              },
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.13-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.13-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.13-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.13-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "footer",
+              "size": "s-f5wwx1",
+              "look": "link.5",
+              "count": 10,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.5-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.5-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.5-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.5-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-lhe9l7",
+              "size": "s-k7xfr4",
+              "look": "link.9",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.9-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.9-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-xzjfs6",
+              "size": "s-fh8hwl",
+              "look": "link.8",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.8-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.8-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.8-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.8-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "calendar",
+              "size": "s-dfw57z",
+              "look": "link.14",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/link.14-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/link.14-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/link.14-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/link.14-focus-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "pagination": {
+      "grids": [
+        {
+          "group": "pagination-item",
+          "variants": [
+            {
+              "key": "v-a5ru7g",
+              "count": 3,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700"
+                }
+              }
+            },
+            {
+              "key": "v-oftqfr",
+              "count": 2,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "700",
+                  "textDecorationLine": "underline"
+                }
+              }
+            },
+            {
+              "key": "v-uvsc64",
+              "count": 2,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(26, 101, 166)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-4dl5fr",
+              "count": 4,
+              "values": {
+                "height": "25px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal",
+                "iconSize": "15x13"
+              }
+            },
+            {
+              "key": "s-gujce4",
+              "count": 3,
+              "values": {
+                "height": "50px",
+                "paddingInline": "30px",
+                "fontSize": "19px",
+                "letterSpacing": "normal",
+                "iconSize": "15x13"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-a5ru7g",
+              "size": "s-gujce4",
+              "look": "pagination-item.1",
+              "count": 3,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/pagination-item.1-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/pagination-item.1-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/pagination-item.1-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/pagination-item.1-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-oftqfr",
+              "size": "s-4dl5fr",
+              "look": "pagination-item.2",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus",
+                  "selected"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/pagination-item.2-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/pagination-item.2-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/pagination-item.2-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/pagination-item.2-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-uvsc64",
+              "size": "s-4dl5fr",
+              "look": "pagination-item.3",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest",
+                  "hover",
+                  "pressed",
+                  "focus"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/pagination-item.3-rest-light.json"
+                },
+                "hover": {
+                  "light": "2026-10-25/census/crops/pagination-item.3-hover-light.json"
+                },
+                "pressed": {
+                  "light": "2026-10-25/census/crops/pagination-item.3-pressed-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/pagination-item.3-focus-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "select": {
+      "grids": [
+        {
+          "group": "select",
+          "variants": [
+            {
+              "key": "v-t0h38u",
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-ottmhp",
+              "count": 1,
+              "values": {
+                "height": "40px",
+                "paddingInline": "5px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-t0h38u",
+              "size": "s-ottmhp",
+              "look": "select.1",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/select.1-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/select.1-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/select.1-disabled-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "separator": {
+      "grids": [
+        {
+          "group": "separator",
+          "variants": [
+            {
+              "key": "v-cpp840",
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(244, 248, 251)",
+                  "edge": "1px rgb(142, 184, 220) bottom",
+                  "boxShadow": "none"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-15zhf5",
+              "count": 5,
+              "values": {}
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-cpp840",
+              "size": "s-15zhf5",
+              "look": "separator.1",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/separator.1-rest-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "tabs": {
+      "grids": [
+        {
+          "group": "tab",
+          "variants": [
+            {
+              "key": "v-xefaja",
+              "count": 2,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(11, 12, 12)",
+                  "fontWeight": "400",
+                  "textDecorationLine": "underline"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-7xr6cf",
+              "count": 2,
+              "values": {
+                "height": "25px",
+                "paddingInline": "0px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-xefaja",
+              "size": "s-7xr6cf",
+              "look": "tab.1",
+              "count": 2,
+              "states": {
+                "light": [
+                  "rest",
+                  "selected"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/tab.1-rest-light.json"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group": "tablist",
+          "variants": [
+            {
+              "key": "v-a9x3b8",
+              "count": 1,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "1px rgb(206, 206, 206) bottom",
+                  "boxShadow": "none"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-15zhf5",
+              "count": 1,
+              "values": {}
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-a9x3b8",
+              "size": "s-15zhf5",
+              "look": "tablist.1",
+              "count": 1,
+              "states": {
+                "light": [
+                  "rest"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/tablist.1-rest-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "text-field": {
+      "grids": [
+        {
+          "group": "textbox",
+          "variants": [
+            {
+              "key": "width-10",
+              "name": {
+                "value": "width-10",
+                "from": "class",
+                "key": "class.variant"
+              },
+              "count": 5,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "edge": "2px rgb(11, 12, 12)",
+                  "boxShadow": "none",
+                  "color": "rgb(0, 0, 0)",
+                  "fontWeight": "400"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-ottmhp",
+              "count": 5,
+              "values": {
+                "height": "40px",
+                "paddingInline": "5px",
+                "fontSize": "19px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "width-10",
+              "size": "s-ottmhp",
+              "look": "textbox.1",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus",
+                  "disabled"
+                ]
+              },
+              "forced": [
+                "disabled"
+              ],
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/textbox.1-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/textbox.1-focus-light.json"
+                },
+                "disabled": {
+                  "light": "2026-10-25/census/crops/textbox.1-disabled-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "toggle-button": {
+      "grids": [
+        {
+          "group": "toggle",
+          "variants": [
+            {
+              "key": "v-lxw81j",
+              "count": 10,
+              "values": {
+                "light": {
+                  "backgroundColor": "rgb(29, 112, 184)",
+                  "edge": "none",
+                  "boxShadow": "none",
+                  "color": "rgb(255, 255, 255)",
+                  "fontWeight": "700"
+                }
+              }
+            }
+          ],
+          "sizes": [
+            {
+              "key": "s-14l80i",
+              "count": 5,
+              "values": {
+                "height": "61px",
+                "paddingInline": "20px",
+                "fontSize": "19px",
+                "letterSpacing": "normal",
+                "iconSize": "21x20"
+              }
+            },
+            {
+              "key": "s-7kwmc0",
+              "count": 5,
+              "values": {
+                "height": "61px",
+                "paddingInline": "0px",
+                "fontSize": "16px",
+                "letterSpacing": "normal"
+              }
+            }
+          ],
+          "cells": [
+            {
+              "variant": "v-lxw81j",
+              "size": "s-14l80i",
+              "look": "toggle.2",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus",
+                  "open"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/toggle.2-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/toggle.2-focus-light.json"
+                }
+              }
+            },
+            {
+              "variant": "v-lxw81j",
+              "size": "s-7kwmc0",
+              "look": "toggle.1",
+              "count": 5,
+              "states": {
+                "light": [
+                  "rest",
+                  "focus",
+                  "open"
+                ]
+              },
+              "copies": {
+                "rest": {
+                  "light": "2026-10-25/census/crops/toggle.1-rest-light.json"
+                },
+                "focus": {
+                  "light": "2026-10-25/census/crops/toggle.1-focus-light.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

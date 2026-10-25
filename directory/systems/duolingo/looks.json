@@ -4,31 +4,22 @@
   "preset": "duolingo",
   "capture": {
     "probe": "ce94064",
-    "date": "2026-10-23",
+    "date": "2026-10-25",
     "pages": [
-      {
-        "key": "https://www.duolingo.com/log-in",
-        "modes": [
-          "light",
-          "dark"
-        ],
-        "signedIn": false,
-        "how": "headless"
-      },
       {
         "key": "https://www.duolingo.com/efficacy",
         "modes": [
-          "light",
-          "dark"
+          "dark",
+          "light"
         ],
         "signedIn": false,
         "how": "headless"
       },
       {
-        "key": "https://www.duolingo.com/register#lesson",
+        "key": "https://www.duolingo.com/log-in",
         "modes": [
-          "light",
-          "dark"
+          "dark",
+          "light"
         ],
         "signedIn": false,
         "how": "headless"
@@ -36,8 +27,8 @@
       {
         "key": "https://www.duolingo.com/register#check",
         "modes": [
-          "light",
-          "dark"
+          "dark",
+          "light"
         ],
         "signedIn": false,
         "how": "headless"
@@ -45,8 +36,17 @@
       {
         "key": "https://www.duolingo.com/register#hearts",
         "modes": [
-          "light",
-          "dark"
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.duolingo.com/register#lesson",
+        "modes": [
+          "dark",
+          "light"
         ],
         "signedIn": false,
         "how": "headless"
@@ -66,13 +66,13 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 143,
+            "count": 103,
             "uses": [
               "link backgroundColor",
               "panel backgroundColor",
               "button backgroundColor",
               "badge backgroundColor",
-              "radio backgroundColor"
+              "separator backgroundColor"
             ]
           },
           {
@@ -80,9 +80,8 @@
             "l": 0.976,
             "c": 0,
             "h": 0,
-            "count": 5,
+            "count": 3,
             "uses": [
-              "card backgroundColor",
               "textbox backgroundColor",
               "link backgroundColor"
             ]
@@ -92,13 +91,13 @@
             "l": 0.922,
             "c": 0,
             "h": 0,
-            "count": 43,
+            "count": 38,
             "uses": [
               "badge edge",
               "button edge",
-              "radio edge",
               "separator edge",
-              "card edge"
+              "radio edge",
+              "panel edge"
             ]
           },
           {
@@ -106,13 +105,13 @@
             "l": 0.754,
             "c": 0,
             "h": 0,
-            "count": 41,
+            "count": 39,
             "uses": [
               "link color",
               "badge color",
-              "text color",
               "text@button color",
-              "button color"
+              "button color",
+              "text color"
             ]
           },
           {
@@ -120,7 +119,7 @@
             "l": 0.6,
             "c": 0,
             "h": 0,
-            "count": 8,
+            "count": 7,
             "uses": [
               "separator color"
             ]
@@ -130,12 +129,11 @@
             "l": 0.569,
             "c": 0,
             "h": 0,
-            "count": 131,
+            "count": 31,
             "uses": [
               "img color",
               "link color",
               "text@link color",
-              "paragraph color",
               "text color"
             ]
           },
@@ -144,13 +142,13 @@
             "l": 0.413,
             "c": 0,
             "h": 0,
-            "count": 48,
+            "count": 38,
             "uses": [
-              "panel color",
+              "icon@radio color",
               "text color",
-              "radio color",
               "text@radio color",
-              "text@link color"
+              "radio color",
+              "paragraph color"
             ]
           },
           {
@@ -158,13 +156,13 @@
             "l": 0.356,
             "c": 0,
             "h": 0,
-            "count": 60,
+            "count": 46,
             "uses": [
               "img color",
               "panel color",
               "text color",
-              "card color",
-              "icon color"
+              "page color",
+              "heading.h1 color"
             ]
           },
           {
@@ -181,49 +179,8 @@
         ],
         "accents": [
           {
-            "hue": 138,
-            "count": 159,
-            "steps": [
-              {
-                "color": "rgb(215, 255, 184)",
-                "l": 0.955,
-                "c": 0.101,
-                "h": 132,
-                "count": 7,
-                "uses": [
-                  "text@contentinfo color"
-                ]
-              },
-              {
-                "color": "rgb(165, 237, 110)",
-                "l": 0.872,
-                "c": 0.175,
-                "h": 133,
-                "count": 68,
-                "uses": [
-                  "link color",
-                  "separator edge"
-                ]
-              },
-              {
-                "color": "rgb(88, 204, 2)",
-                "l": 0.748,
-                "c": 0.229,
-                "h": 138,
-                "count": 84,
-                "uses": [
-                  "link backgroundColor",
-                  "heading.h2 color",
-                  "heading.h1 color",
-                  "box color",
-                  "button backgroundColor"
-                ]
-              }
-            ]
-          },
-          {
             "hue": 237,
-            "count": 21,
+            "count": 32,
             "steps": [
               {
                 "color": "rgb(132, 216, 255)",
@@ -240,13 +197,12 @@
                 "l": 0.718,
                 "c": 0.151,
                 "h": 237,
-                "count": 15,
+                "count": 13,
                 "uses": [
                   "link color",
-                  "button color",
-                  "text@button color",
                   "button backgroundColor",
-                  "text@link color"
+                  "button color",
+                  "text@button color"
                 ]
               },
               {
@@ -254,8 +210,10 @@
                 "l": 0.648,
                 "c": 0.136,
                 "h": 237,
-                "count": 4,
+                "count": 17,
                 "uses": [
+                  "panel color",
+                  "icon@radio color",
                   "badge color",
                   "text@radio color"
                 ]
@@ -273,8 +231,9 @@
                 "h": 16,
                 "count": 5,
                 "uses": [
-                  "button backgroundColor",
+                  "toggle backgroundColor",
                   "box backgroundColor",
+                  "button backgroundColor",
                   "panel backgroundColor"
                 ]
               },
@@ -296,18 +255,18 @@
                 "h": 27,
                 "count": 11,
                 "uses": [
-                  "button color",
-                  "text@button color",
-                  "icon@button color",
+                  "icon@toggle color",
+                  "text@toggle color",
+                  "toggle color",
                   "box color",
-                  "heading.h2 color"
+                  "button color"
                 ]
               }
             ]
           },
           {
             "hue": 264,
-            "count": 14,
+            "count": 10,
             "steps": [
               {
                 "color": "rgb(66, 133, 244)",
@@ -343,36 +302,25 @@
                   "img color",
                   "link color"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "hue": 138,
+            "count": 6,
+            "steps": [
               {
-                "color": "rgb(4, 44, 96)",
-                "l": 0.302,
-                "c": 0.102,
-                "h": 257,
-                "count": 1,
+                "color": "rgb(88, 204, 2)",
+                "l": 0.748,
+                "c": 0.229,
+                "h": 138,
+                "count": 6,
                 "uses": [
-                  "heading.h1 color"
-                ]
-              },
-              {
-                "color": "rgb(16, 15, 62)",
-                "l": 0.208,
-                "c": 0.087,
-                "h": 277,
-                "count": 1,
-                "uses": [
-                  "panel backgroundColor"
-                ]
-              },
-              {
-                "color": "rgb(0, 4, 55)",
-                "l": 0.163,
-                "c": 0.098,
-                "h": 264,
-                "count": 2,
-                "uses": [
-                  "button color",
-                  "text@button color"
+                  "heading.h2 color",
+                  "box color",
+                  "button backgroundColor",
+                  "heading.h1 color",
+                  "link backgroundColor"
                 ]
               }
             ]
@@ -445,13 +393,13 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 56,
+            "count": 18,
             "uses": [
               "link backgroundColor",
               "button backgroundColor",
-              "link color",
               "panel backgroundColor",
-              "text@link color"
+              "box backgroundColor",
+              "link color"
             ]
           },
           {
@@ -459,13 +407,13 @@
             "l": 0.973,
             "c": 0.008,
             "h": 237,
-            "count": 98,
+            "count": 80,
             "uses": [
-              "img color",
-              "panel color",
               "text color",
-              "radio color",
-              "text@radio color"
+              "img color",
+              "icon@radio color",
+              "text@radio color",
+              "panel color"
             ]
           },
           {
@@ -473,11 +421,20 @@
             "l": 0.922,
             "c": 0,
             "h": 0,
-            "count": 5,
+            "count": 2,
             "uses": [
-              "link edge",
               "button edge",
-              "card edge"
+              "panel edge"
+            ]
+          },
+          {
+            "color": "rgb(220, 230, 236)",
+            "l": 0.919,
+            "c": 0.014,
+            "h": 234,
+            "count": 1,
+            "uses": [
+              "text color"
             ]
           },
           {
@@ -498,7 +455,7 @@
             "l": 0.6,
             "c": 0,
             "h": 0,
-            "count": 8,
+            "count": 7,
             "uses": [
               "separator color"
             ]
@@ -508,13 +465,11 @@
             "l": 0.569,
             "c": 0,
             "h": 0,
-            "count": 131,
+            "count": 30,
             "uses": [
               "img color",
               "link color",
-              "text@link color",
-              "paragraph color",
-              "text color"
+              "text@link color"
             ]
           },
           {
@@ -522,7 +477,7 @@
             "l": 0.494,
             "c": 0.026,
             "h": 225,
-            "count": 38,
+            "count": 34,
             "uses": [
               "link color",
               "badge color",
@@ -536,11 +491,8 @@
             "l": 0.413,
             "c": 0,
             "h": 0,
-            "count": 9,
+            "count": 1,
             "uses": [
-              "text@link color",
-              "icon@link color",
-              "link color",
               "heading.h1@banner color"
             ]
           },
@@ -549,13 +501,13 @@
             "l": 0.385,
             "c": 0.025,
             "h": 235,
-            "count": 40,
+            "count": 36,
             "uses": [
               "badge edge",
-              "radio edge",
               "separator edge",
               "button edge",
-              "card edge"
+              "radio edge",
+              "panel edge"
             ]
           },
           {
@@ -563,12 +515,12 @@
             "l": 0.295,
             "c": 0.024,
             "h": 228,
-            "count": 10,
+            "count": 8,
             "uses": [
-              "button backgroundColor",
-              "card backgroundColor",
               "textbox backgroundColor",
+              "toggle backgroundColor",
               "box backgroundColor",
+              "button backgroundColor",
               "link backgroundColor"
             ]
           },
@@ -583,7 +535,7 @@
               "panel backgroundColor",
               "badge backgroundColor",
               "button backgroundColor",
-              "radio backgroundColor"
+              "separator backgroundColor"
             ]
           },
           {
@@ -600,60 +552,8 @@
         ],
         "accents": [
           {
-            "hue": 138,
-            "count": 158,
-            "steps": [
-              {
-                "color": "rgb(215, 255, 184)",
-                "l": 0.955,
-                "c": 0.101,
-                "h": 132,
-                "count": 7,
-                "uses": [
-                  "text@contentinfo color"
-                ]
-              },
-              {
-                "color": "rgb(165, 237, 110)",
-                "l": 0.872,
-                "c": 0.175,
-                "h": 133,
-                "count": 68,
-                "uses": [
-                  "link color",
-                  "separator edge"
-                ]
-              },
-              {
-                "color": "rgb(147, 211, 51)",
-                "l": 0.795,
-                "c": 0.194,
-                "h": 130,
-                "count": 3,
-                "uses": [
-                  "heading.h2 color",
-                  "button backgroundColor"
-                ]
-              },
-              {
-                "color": "rgb(88, 204, 2)",
-                "l": 0.748,
-                "c": 0.229,
-                "h": 138,
-                "count": 80,
-                "uses": [
-                  "link backgroundColor",
-                  "heading.h2 color",
-                  "heading.h1 color",
-                  "contentinfo backgroundColor",
-                  "panel backgroundColor"
-                ]
-              }
-            ]
-          },
-          {
-            "hue": 233,
-            "count": 17,
+            "hue": 237,
+            "count": 26,
             "steps": [
               {
                 "color": "rgb(73, 192, 248)",
@@ -663,8 +563,8 @@
                 "count": 11,
                 "uses": [
                   "link color",
-                  "button color",
                   "button backgroundColor",
+                  "button color",
                   "text@button color"
                 ]
               },
@@ -673,12 +573,10 @@
                 "l": 0.718,
                 "c": 0.151,
                 "h": 237,
-                "count": 4,
+                "count": 2,
                 "uses": [
                   "button color",
-                  "link color",
-                  "text@button color",
-                  "text@link color"
+                  "text@button color"
                 ]
               },
               {
@@ -686,9 +584,20 @@
                 "l": 0.648,
                 "c": 0.136,
                 "h": 237,
+                "count": 11,
+                "uses": [
+                  "panel color",
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(63, 133, 167)",
+                "l": 0.586,
+                "c": 0.087,
+                "h": 232,
                 "count": 2,
                 "uses": [
-                  "text@radio color"
+                  "badge edge"
                 ]
               }
             ]
@@ -715,18 +624,18 @@
                 "h": 24,
                 "count": 11,
                 "uses": [
-                  "button color",
-                  "text@button color",
-                  "icon@button color",
+                  "icon@toggle color",
+                  "text@toggle color",
+                  "toggle color",
                   "box color",
-                  "heading.h2 color"
+                  "button color"
                 ]
               }
             ]
           },
           {
             "hue": 264,
-            "count": 14,
+            "count": 10,
             "steps": [
               {
                 "color": "rgb(66, 133, 244)",
@@ -762,37 +671,6 @@
                   "img color",
                   "link color"
                 ]
-              },
-              {
-                "color": "rgb(4, 44, 96)",
-                "l": 0.302,
-                "c": 0.102,
-                "h": 257,
-                "count": 1,
-                "uses": [
-                  "heading.h1 color"
-                ]
-              },
-              {
-                "color": "rgb(16, 15, 62)",
-                "l": 0.208,
-                "c": 0.087,
-                "h": 277,
-                "count": 1,
-                "uses": [
-                  "panel backgroundColor"
-                ]
-              },
-              {
-                "color": "rgb(0, 4, 55)",
-                "l": 0.163,
-                "c": 0.098,
-                "h": 264,
-                "count": 2,
-                "uses": [
-                  "button color",
-                  "text@button color"
-                ]
               }
             ]
           },
@@ -809,6 +687,35 @@
                 "uses": [
                   "icon color",
                   "text color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 130,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(147, 211, 51)",
+                "l": 0.795,
+                "c": 0.194,
+                "h": 130,
+                "count": 5,
+                "uses": [
+                  "heading.h2 color",
+                  "box color",
+                  "button backgroundColor",
+                  "heading.h1 color"
+                ]
+              },
+              {
+                "color": "rgb(88, 204, 2)",
+                "l": 0.748,
+                "c": 0.229,
+                "h": 138,
+                "count": 1,
+                "uses": [
+                  "link backgroundColor"
                 ]
               }
             ]
@@ -876,11 +783,11 @@
     "families": [
       {
         "family": "duolingo-sans",
-        "count": 314
+        "count": 164
       },
       {
         "family": "feather",
-        "count": 9
+        "count": 3
       }
     ],
     "styles": [
@@ -889,48 +796,14 @@
         "fontWeight": "400",
         "lineHeight": "20px",
         "fontFamily": "duolingo-sans",
-        "count": 75,
+        "count": 40,
         "groups": [
           "link",
           "text@radio",
           "panel",
-          "card",
+          "text",
           "listitem",
           "progressbar"
-        ]
-      },
-      {
-        "fontSize": "15px",
-        "fontWeight": "700",
-        "lineHeight": "20px",
-        "letterSpacing": "0.8px",
-        "fontFamily": "duolingo-sans",
-        "textTransform": "uppercase",
-        "count": 43,
-        "groups": [
-          "text@link",
-          "text"
-        ]
-      },
-      {
-        "fontSize": "15px",
-        "fontWeight": "700",
-        "lineHeight": "22px",
-        "fontFamily": "duolingo-sans",
-        "count": 36,
-        "groups": [
-          "link",
-          "text@contentinfo"
-        ]
-      },
-      {
-        "fontSize": "13px",
-        "fontWeight": "700",
-        "lineHeight": "16px",
-        "fontFamily": "duolingo-sans",
-        "count": 32,
-        "groups": [
-          "link"
         ]
       },
       {
@@ -938,25 +811,10 @@
         "fontWeight": "400",
         "lineHeight": "20px",
         "fontFamily": "duolingo-sans",
-        "count": 16,
+        "count": 14,
         "groups": [
           "panel",
           "radio"
-        ]
-      },
-      {
-        "fontSize": "15px",
-        "fontWeight": "700",
-        "lineHeight": "normal",
-        "letterSpacing": "0.8px",
-        "fontFamily": "duolingo-sans",
-        "textTransform": "uppercase",
-        "count": 15,
-        "groups": [
-          "link",
-          "text@button",
-          "text@link",
-          "button"
         ]
       },
       {
@@ -966,10 +824,23 @@
         "letterSpacing": "0.8px",
         "fontFamily": "duolingo-sans",
         "textTransform": "uppercase",
-        "count": 10,
+        "count": 12,
         "groups": [
           "button",
           "text@button"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 11,
+        "groups": [
+          "text@link",
+          "text"
         ]
       },
       {
@@ -1019,6 +890,22 @@
         ]
       },
       {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 7,
+        "groups": [
+          "text@button",
+          "text@toggle",
+          "button",
+          "link",
+          "text@link"
+        ]
+      },
+      {
         "fontSize": "32px",
         "fontWeight": "700",
         "lineHeight": "40px",
@@ -1026,17 +913,6 @@
         "count": 6,
         "groups": [
           "heading.h1",
-          "text"
-        ]
-      },
-      {
-        "fontSize": "48px",
-        "fontWeight": "700",
-        "lineHeight": "normal",
-        "fontFamily": "feather",
-        "count": 6,
-        "groups": [
-          "heading.h2",
           "text"
         ]
       },
@@ -1058,29 +934,7 @@
         "fontFamily": "duolingo-sans",
         "count": 6,
         "groups": [
-          "text",
-          "text@link",
-          "link"
-        ]
-      },
-      {
-        "fontSize": "19px",
-        "fontWeight": "700",
-        "lineHeight": "26.6px",
-        "fontFamily": "duolingo-sans",
-        "count": 6,
-        "groups": [
-          "text@contentinfo"
-        ]
-      },
-      {
-        "fontSize": "17px",
-        "fontWeight": "400",
-        "lineHeight": "24px",
-        "fontFamily": "duolingo-sans",
-        "count": 5,
-        "groups": [
-          "paragraph",
+          "link",
           "text"
         ]
       },
@@ -1103,6 +957,7 @@
         "fontFamily": "duolingo-sans",
         "count": 4,
         "groups": [
+          "toggle",
           "button",
           "link"
         ]
@@ -1130,27 +985,6 @@
         ]
       },
       {
-        "fontSize": "64px",
-        "fontWeight": "700",
-        "lineHeight": "normal",
-        "letterSpacing": "-1.28px",
-        "fontFamily": "feather",
-        "count": 3,
-        "groups": [
-          "heading.h1"
-        ]
-      },
-      {
-        "fontSize": "17px",
-        "fontWeight": "700",
-        "lineHeight": "24px",
-        "fontFamily": "duolingo-sans",
-        "count": 3,
-        "groups": [
-          "link"
-        ]
-      },
-      {
         "fontSize": "16px",
         "fontWeight": "700",
         "lineHeight": "16px",
@@ -1161,17 +995,89 @@
         "groups": [
           "text"
         ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "17.25px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 2,
+        "groups": [
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "fontFamily": "feather",
+        "count": 2,
+        "groups": [
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 2,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "fontSize": "64px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "-1.28px",
+        "fontFamily": "feather",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "26px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "heading.h1@banner"
+        ]
       }
     ]
   },
   "shape": {
     "radius": [
       {
-        "px": 12,
-        "count": 16,
+        "px": 16,
+        "count": 11,
         "groups": [
-          "radio",
-          "link",
           "button",
           "card"
         ]
@@ -1184,10 +1090,13 @@
         ]
       },
       {
-        "px": 16,
+        "px": 12,
         "count": 9,
         "groups": [
-          "button"
+          "radio",
+          "textbox",
+          "button",
+          "link"
         ]
       }
     ],
@@ -1204,24 +1113,20 @@
         "count": 6
       },
       {
-        "px": 9.5,
-        "count": 4
-      },
-      {
         "px": 10,
-        "count": 10
-      },
-      {
-        "px": 14,
         "count": 8
       },
       {
+        "px": 14,
+        "count": 4
+      },
+      {
         "px": 16,
-        "count": 28
+        "count": 24
       },
       {
         "px": 24,
-        "count": 28
+        "count": 20
       },
       {
         "px": 25,
@@ -1229,7 +1134,7 @@
       },
       {
         "px": 30,
-        "count": 2
+        "count": 6
       },
       {
         "px": 40,
@@ -1262,44 +1167,50 @@
         },
         {
           "px": 21,
-          "count": 3
+          "count": 1
         }
       ],
       "link": [
         {
           "px": 28,
-          "count": 43
+          "count": 11
         },
         {
           "px": 15,
-          "count": 40
-        },
-        {
-          "px": 18,
-          "count": 37
+          "count": 8
         },
         {
           "px": 70,
           "count": 4
         },
         {
-          "px": 20,
+          "px": 17,
           "count": 3
         },
         {
-          "px": 46,
-          "count": 3
+          "px": 20,
+          "count": 2
+        },
+        {
+          "px": 24,
+          "count": 2
         }
       ],
       "radio": [
         {
           "px": 252,
-          "count": 7
+          "count": 5
         }
       ],
       "textbox": [
         {
-          "px": 44,
+          "px": 48,
+          "count": 2
+        }
+      ],
+      "toggle": [
+        {
+          "px": 21,
           "count": 2
         }
       ]
@@ -1309,15 +1220,6 @@
     "shadows": [
       {
         "value": "rgb(229, 229, 229) 0px 2px 0px 0px",
-        "count": 21,
-        "groups": [
-          "button",
-          "link",
-          "radio"
-        ]
-      },
-      {
-        "value": "rgb(55, 70, 79) 0px 2px 0px 0px",
         "count": 13,
         "groups": [
           "button",
@@ -1325,25 +1227,26 @@
         ]
       },
       {
-        "value": "rgb(88, 167, 0) 0px 4px 0px 0px",
-        "count": 5,
+        "value": "rgb(55, 70, 79) 0px 2px 0px 0px",
+        "count": 11,
         "groups": [
           "button",
-          "link"
-        ]
-      },
-      {
-        "value": "rgba(255, 255, 255, 0.5) 0px 4px 0px 0px",
-        "count": 2,
-        "groups": [
-          "button"
+          "radio"
         ]
       },
       {
         "value": "rgb(24, 153, 214) 0px 4px 0px 0px",
-        "count": 2,
+        "count": 4,
         "groups": [
           "button"
+        ]
+      },
+      {
+        "value": "rgb(88, 167, 0) 0px 4px 0px 0px",
+        "count": 3,
+        "groups": [
+          "button",
+          "link"
         ]
       },
       {
@@ -1405,7 +1308,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -1426,7 +1329,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/badge.1-rest-dark.json"
               }
             }
           }
@@ -1435,8 +1338,8 @@
           "id": "badge.2",
           "count": 2,
           "pages": [
-            3,
-            4
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -1459,12 +1362,12 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/badge.2-rest-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(82, 101, 109)",
+                  "color": "rgb(24, 153, 214)",
                   "borderRadius": "8px",
                   "height": "30px",
                   "paddingInline": "0px",
@@ -1473,14 +1376,14 @@
                   "fontWeight": "700",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "2px rgb(55, 70, 79)",
+                  "edge": "2px rgb(63, 133, 167)",
                   "width": "30px",
                   "lineHeight": "20px",
                   "cursor": "pointer",
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/badge.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/badge.2-rest-dark.json"
               }
             }
           }
@@ -1492,70 +1395,18 @@
         "box",
         "contentinfo",
         "icon",
+        "icon@banner",
         "icon@navigation",
         "img",
         "listitem",
         "page",
         "panel"
       ],
-      "found": 28,
+      "found": 24,
       "looks": [
         {
           "id": "img.1",
-          "count": 42,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(119, 119, 119)",
-                  "borderRadius": "0px",
-                  "height": "27.8px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "36px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/img.1-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(119, 119, 119)",
-                  "borderRadius": "0px",
-                  "height": "27.8px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "36px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/img.1-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "img.2",
-          "count": 16,
+          "count": 12,
           "pages": [
             0,
             1,
@@ -1570,7 +1421,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 60, 60)",
                   "borderRadius": "0px",
-                  "height": "530px",
+                  "height": "360px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
@@ -1578,20 +1429,71 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "530px",
-                  "lineHeight": "0px",
-                  "position": "absolute",
+                  "width": "441px",
+                  "lineHeight": "20px",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/img.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "360px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "441px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.2",
+          "count": 10,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "27.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.2-rest-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(241, 247, 251)",
+                  "color": "rgb(119, 119, 119)",
                   "borderRadius": "0px",
-                  "height": "530px",
+                  "height": "27.8px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
@@ -1599,13 +1501,13 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "530px",
-                  "lineHeight": "0px",
-                  "position": "absolute",
+                  "width": "36px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/img.2-rest-dark.json"
               }
             }
           }
@@ -1623,7 +1525,7 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
+                  "color": "rgb(24, 153, 214)",
                   "borderRadius": "0px",
                   "height": "160px",
                   "paddingInline": "0px",
@@ -1640,12 +1542,12 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/panel.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/panel.1-rest-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(241, 247, 251)",
+                  "color": "rgb(24, 153, 214)",
                   "borderRadius": "0px",
                   "height": "160px",
                   "paddingInline": "0px",
@@ -1662,7 +1564,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/panel.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/panel.1-rest-dark.json"
               }
             }
           }
@@ -1685,7 +1587,7 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 60, 60)",
                   "borderRadius": "0px",
-                  "height": "900px",
+                  "height": "3462.9px",
                   "paddingInline": "0px",
                   "fontFamily": "sans-serif",
                   "fontSize": "17px",
@@ -1757,7 +1659,7 @@
                   "color": "--color-beetle"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -1785,7 +1687,7 @@
                   "color": "--color-beetle"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/icon.1-rest-dark.json"
               }
             }
           }
@@ -1820,7 +1722,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/img.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -1842,7 +1744,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.3-rest-dark.json"
+                "copy": "2026-10-25/census/crops/img.3-rest-dark.json"
               }
             }
           }
@@ -1851,7 +1753,7 @@
           "id": "listitem.1",
           "count": 3,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -1894,66 +1796,6 @@
                   "display": "list-item"
                 },
                 "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "icon.2",
-          "count": 2,
-          "pages": [
-            2,
-            3
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(60, 60, 60)",
-                  "borderRadius": "0px",
-                  "height": "177px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "150px",
-                  "lineHeight": "20px",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "150x177",
-                  "iconStroke": "15.5px",
-                  "cursor": "default",
-                  "display": "inline"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/icon.2-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(241, 247, 251)",
-                  "borderRadius": "0px",
-                  "height": "177px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "150px",
-                  "lineHeight": "20px",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "150x177",
-                  "iconStroke": "15.5px",
-                  "cursor": "default",
-                  "display": "inline"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/icon.2-rest-dark.json"
               }
             }
           }
@@ -1962,7 +1804,7 @@
           "id": "icon@navigation.1",
           "count": 2,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -1987,7 +1829,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@navigation.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/icon@navigation.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2010,7 +1852,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@navigation.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/icon@navigation.1-rest-dark.json"
               }
             }
           }
@@ -2037,17 +1879,17 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "179px",
-                  "lineHeight": "20px",
+                  "width": "182px",
+                  "lineHeight": "0px",
                   "cursor": "pointer",
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.4-rest-light.json"
+                "copy": "2026-10-25/census/crops/img.4-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
+                  "backgroundColor": "rgb(19, 31, 36)",
                   "color": "rgb(0, 0, 238)",
                   "borderRadius": "0px",
                   "height": "42px",
@@ -2058,13 +1900,13 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "179px",
-                  "lineHeight": "20px",
+                  "width": "182px",
+                  "lineHeight": "0px",
                   "cursor": "pointer",
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/img.4-rest-dark.json"
+                "copy": "2026-10-25/census/crops/img.4-rest-dark.json"
               }
             }
           }
@@ -2073,8 +1915,8 @@
           "id": "panel.2",
           "count": 2,
           "pages": [
-            0,
-            2
+            2,
+            4
           ],
           "states": {
             "rest": {
@@ -2083,46 +1925,46 @@
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 60, 60)",
                   "borderRadius": "0px",
-                  "height": "72px",
+                  "height": "140px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "none",
+                  "edge": "2px rgb(229, 229, 229) top",
                   "width": "1440px",
                   "lineHeight": "20px",
-                  "transition": "0.3s ease",
-                  "position": "fixed",
-                  "display": "block",
-                  "zIndex": "2"
+                  "transition": "0.3s ease-in-out",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/panel.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/panel.2-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
+                  "backgroundColor": "rgb(19, 31, 36)",
                   "color": "rgb(241, 247, 251)",
                   "borderRadius": "0px",
-                  "height": "72px",
+                  "height": "140px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "none",
+                  "edge": "2px rgb(55, 70, 79) top",
                   "width": "1440px",
                   "lineHeight": "20px",
-                  "transition": "0.3s ease",
-                  "position": "fixed",
-                  "display": "block",
-                  "zIndex": "2"
+                  "transition": "0.3s ease-in-out",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/panel.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/panel.2-rest-dark.json"
               }
             }
           }
@@ -2131,7 +1973,7 @@
           "id": "box.1",
           "count": 1,
           "pages": [
-            4
+            3
           ],
           "states": {
             "rest": {
@@ -2148,7 +1990,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "22.1px",
+                  "width": "27.8px",
                   "lineHeight": "20px",
                   "opacity": "0.2",
                   "transition": "0.4s ease",
@@ -2157,7 +1999,31 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/box.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/box.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(147, 211, 51)",
+                  "borderRadius": "9999px",
+                  "height": "3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "27.8px",
+                  "lineHeight": "20px",
+                  "opacity": "0.2",
+                  "transition": "0.4s ease",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/box.1-rest-dark.json"
               }
             }
           }
@@ -2172,18 +2038,21 @@
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
+                  "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 60, 60)",
                   "borderRadius": "0px",
-                  "height": "827.2px",
-                  "paddingInline": "0px",
+                  "height": "77px",
+                  "paddingInline": "25px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "none",
+                  "edge": "2px rgb(229, 229, 229) top",
                   "width": "1440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "25px",
                   "lineHeight": "20px",
                   "display": "block"
                 },
@@ -2191,10 +2060,43 @@
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
+                  "backgroundColor": "rgb(19, 31, 36)",
                   "color": "rgb(241, 247, 251)",
                   "borderRadius": "0px",
-                  "height": "827.2px",
+                  "height": "77px",
+                  "paddingInline": "25px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79) top",
+                  "width": "1440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "25px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@banner.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "424px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
@@ -2202,11 +2104,36 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "1440px",
-                  "lineHeight": "20px",
-                  "display": "block"
+                  "width": "424px",
+                  "lineHeight": "0px",
+                  "iconSize": "424x424",
+                  "iconStroke": "5.1px",
+                  "display": "inline"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "424px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "424px",
+                  "lineHeight": "0px",
+                  "iconSize": "424x424",
+                  "iconStroke": "5.1px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.1-rest-dark.json"
               }
             }
           }
@@ -2215,10 +2142,9 @@
     },
     "button": {
       "groups": [
-        "button",
-        "icon@button"
+        "button"
       ],
-      "found": 14,
+      "found": 12,
       "looks": [
         {
           "id": "button.1",
@@ -2253,7 +2179,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2278,72 +2204,189 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/button.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(183, 183, 183)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "color": "rgb(18, 26, 30)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-dark.json",
+                "forced": true
               }
             }
           }
         },
         {
           "id": "button.2",
-          "count": 3,
+          "count": 2,
           "pages": [
-            4
+            1,
+            3
           ],
           "states": {
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(255, 223, 224)",
-                  "color": "rgb(234, 43, 43)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
+                  "backgroundColor": "rgb(28, 176, 246)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(24, 153, 214) 0px 4px 0px 0px",
                   "edge": "none",
-                  "width": "93px",
-                  "lineHeight": "0px",
+                  "width": "380px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
                   "textAlign": "center",
-                  "opacity": "0.7",
                   "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "20x20",
-                  "iconStroke": "1.7px",
-                  "transition": "0.2s ease",
                   "cursor": "pointer",
-                  "display": "block"
+                  "position": "relative",
+                  "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.2-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(32, 47, 54)",
-                  "color": "rgb(216, 72, 72)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
+                  "backgroundColor": "rgb(73, 192, 248)",
+                  "color": "rgb(19, 31, 36)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(24, 153, 214) 0px 4px 0px 0px",
                   "edge": "none",
-                  "width": "93px",
-                  "lineHeight": "0px",
+                  "width": "380px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
                   "textAlign": "center",
-                  "opacity": "0.7",
                   "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "iconSize": "20x20",
-                  "iconStroke": "1.7px",
-                  "transition": "0.2s ease",
                   "cursor": "pointer",
-                  "display": "block"
+                  "position": "relative",
+                  "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/button.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-dark.json"
               }
             }
           }
@@ -2353,7 +2396,7 @@
           "count": 2,
           "pages": [
             2,
-            3
+            4
           ],
           "states": {
             "rest": {
@@ -2381,7 +2424,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.3-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2407,7 +2450,59 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.3-rest-dark.json"
+                "copy": "2026-10-25/census/crops/button.3-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(0.9)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(0.9)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(0.9)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(0.9)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-dark.json"
               }
             },
             "disabled": {
@@ -2437,69 +2532,10 @@
           }
         },
         {
-          "id": "icon@button.1",
-          "count": 2,
-          "pages": [
-            4
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 223, 224)",
-                  "color": "rgb(234, 43, 43)",
-                  "borderRadius": "0px",
-                  "height": "20px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "20px",
-                  "lineHeight": "normal",
-                  "textAlign": "center",
-                  "iconSize": "20x20",
-                  "iconStroke": "1.7px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.1-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(32, 47, 54)",
-                  "color": "rgb(216, 72, 72)",
-                  "borderRadius": "0px",
-                  "height": "20px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "20px",
-                  "lineHeight": "normal",
-                  "textAlign": "center",
-                  "iconSize": "20x20",
-                  "iconStroke": "1.7px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/icon@button.1-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "button.11",
+          "id": "button.9",
           "count": 1,
           "pages": [
-            0
+            1
           ],
           "part": "button.secondary",
           "states": {
@@ -2528,7 +2564,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.11-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.9-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2554,16 +2590,16 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.11-rest-dark.json"
+                "copy": "2026-10-25/census/crops/button.9-rest-dark.json"
               }
             }
           }
         },
         {
-          "id": "button.12",
+          "id": "button.10",
           "count": 1,
           "pages": [
-            3
+            2
           ],
           "part": "button.primary",
           "states": {
@@ -2592,7 +2628,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.12-rest-light.json"
+                "copy": "2026-10-25/census/crops/button.10-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2618,7 +2654,59 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/button.12-rest-dark.json"
+                "copy": "2026-10-25/census/crops/button.10-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-focus-dark.json"
               }
             }
           }
@@ -2629,113 +2717,64 @@
       "groups": [
         "card"
       ],
-      "found": 3,
+      "found": 1,
       "looks": [
         {
           "id": "card.1",
-          "count": 2,
+          "count": 1,
           "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(247, 247, 247)",
-                  "color": "rgb(60, 60, 60)",
-                  "borderRadius": "12px",
-                  "height": "48px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "16px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "2px rgb(229, 229, 229)",
-                  "width": "375px",
-                  "lineHeight": "20px",
-                  "display": "flex"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/card.1-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(32, 47, 54)",
-                  "color": "rgb(241, 247, 251)",
-                  "borderRadius": "12px",
-                  "height": "48px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "16px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "2px rgb(55, 70, 79)",
-                  "width": "375px",
-                  "lineHeight": "20px",
-                  "display": "flex"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/card.1-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "card.2",
-          "count": 2,
-          "pages": [
-            2,
             3
           ],
+          "part": "card",
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(60, 60, 60)",
-                  "borderRadius": "0px",
-                  "height": "140px",
-                  "paddingInline": "0px",
+                  "borderRadius": "16px",
+                  "height": "290px",
+                  "paddingInline": "30px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "2px rgb(229, 229, 229) top",
-                  "width": "1440px",
+                  "edge": "none",
+                  "width": "440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "30px",
                   "lineHeight": "20px",
-                  "transition": "0.3s ease-in-out",
-                  "cursor": "default",
-                  "position": "absolute",
+                  "position": "relative",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/card.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/card.1-rest-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(19, 31, 36)",
                   "color": "rgb(241, 247, 251)",
-                  "borderRadius": "0px",
-                  "height": "140px",
-                  "paddingInline": "0px",
+                  "borderRadius": "16px",
+                  "height": "290px",
+                  "paddingInline": "30px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "2px rgb(55, 70, 79) top",
-                  "width": "1440px",
+                  "edge": "none",
+                  "width": "440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "30px",
                   "lineHeight": "20px",
-                  "transition": "0.3s ease-in-out",
-                  "cursor": "default",
-                  "position": "absolute",
+                  "position": "relative",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/card.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/card.1-rest-dark.json"
               }
             }
           }
@@ -2745,21 +2784,22 @@
     "text": {
       "groups": [
         "heading.h1",
+        "heading.h1@banner",
         "heading.h2",
         "paragraph",
         "text",
         "text@button",
-        "text@contentinfo",
         "text@link",
-        "text@radio"
+        "text@radio",
+        "text@toggle"
       ],
-      "found": 43,
+      "found": 34,
       "looks": [
         {
           "id": "text@link.1",
-          "count": 42,
+          "count": 10,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -2831,7 +2871,7 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "32.2px",
+                  "width": "35.3px",
                   "lineHeight": "20px",
                   "textAlign": "center",
                   "cursor": "pointer",
@@ -2855,10 +2895,11 @@
                   "width": "32.2px",
                   "lineHeight": "20px",
                   "textAlign": "center",
-                  "cursor": "pointer",
+                  "cursor": "default",
                   "display": "inline"
                 },
-                "source": "census"
+                "source": "census",
+                "copy": "2026-10-25/census/crops/text@radio.1-rest-dark.json"
               }
             }
           }
@@ -2867,7 +2908,7 @@
           "id": "text.1",
           "count": 6,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -2913,156 +2954,6 @@
           }
         },
         {
-          "id": "text@contentinfo.1",
-          "count": 6,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(215, 255, 184)",
-                  "borderRadius": "0px",
-                  "height": "26.6px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "19px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "178px",
-                  "lineHeight": "26.6px",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(215, 255, 184)",
-                  "borderRadius": "0px",
-                  "height": "26.6px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "19px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "178px",
-                  "lineHeight": "26.6px",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "heading.h2.1",
-          "count": 5,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(88, 204, 2)",
-                  "borderRadius": "0px",
-                  "height": "60px",
-                  "paddingInline": "0px",
-                  "fontFamily": "feather",
-                  "fontSize": "48px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "457.1px",
-                  "lineHeight": "normal",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h2.1-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(88, 204, 2)",
-                  "borderRadius": "0px",
-                  "height": "60px",
-                  "paddingInline": "0px",
-                  "fontFamily": "feather",
-                  "fontSize": "48px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "457.1px",
-                  "lineHeight": "normal",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h2.1-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "paragraph.1",
-          "count": 4,
-          "pages": [
-            0
-          ],
-          "part": "text.muted",
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(119, 119, 119)",
-                  "borderRadius": "0px",
-                  "height": "72px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "473px",
-                  "lineHeight": "24px",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(119, 119, 119)",
-                  "borderRadius": "0px",
-                  "height": "72px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "473px",
-                  "lineHeight": "24px",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
           "id": "heading.h1.1",
           "count": 3,
           "pages": [
@@ -3091,7 +2982,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h1.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3112,7 +3003,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h1.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-dark.json"
               }
             }
           }
@@ -3121,7 +3012,7 @@
           "id": "text.2",
           "count": 3,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -3344,7 +3235,7 @@
           "count": 3,
           "pages": [
             2,
-            3
+            4
           ],
           "states": {
             "rest": {
@@ -3396,119 +3287,10 @@
           }
         },
         {
-          "id": "text@button.2",
-          "count": 3,
-          "pages": [
-            4
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 223, 224)",
-                  "color": "rgb(234, 43, 43)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "68px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "textAlign": "center",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(32, 47, 54)",
-                  "color": "rgb(216, 72, 72)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "68px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "textAlign": "center",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "heading.h1.2",
+          "id": "heading.h2.1",
           "count": 2,
           "pages": [
-            0,
-            1
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(88, 204, 2)",
-                  "borderRadius": "0px",
-                  "height": "160px",
-                  "paddingInline": "0px",
-                  "fontFamily": "feather",
-                  "fontSize": "64px",
-                  "fontWeight": "700",
-                  "letterSpacing": "-1.28px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "583px",
-                  "lineHeight": "normal",
-                  "textAlign": "center",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h1.2-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(88, 204, 2)",
-                  "borderRadius": "0px",
-                  "height": "160px",
-                  "paddingInline": "0px",
-                  "fontFamily": "feather",
-                  "fontSize": "64px",
-                  "fontWeight": "700",
-                  "letterSpacing": "-1.28px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "583px",
-                  "lineHeight": "normal",
-                  "textAlign": "center",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h1.2-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "heading.h2.2",
-          "count": 2,
-          "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -3531,7 +3313,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h2.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3552,16 +3334,16 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/heading.h2.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-dark.json"
               }
             }
           }
         },
         {
-          "id": "paragraph.2",
+          "id": "paragraph.1",
           "count": 2,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -3612,7 +3394,7 @@
           "id": "text.6",
           "count": 2,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -3660,10 +3442,10 @@
           }
         },
         {
-          "id": "text.7",
+          "id": "text@button.2",
           "count": 2,
           "pages": [
-            2,
+            1,
             3
           ],
           "states": {
@@ -3671,20 +3453,21 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(175, 175, 175)",
+                  "color": "rgb(255, 255, 255)",
                   "borderRadius": "0px",
-                  "height": "25px",
+                  "height": "18px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
+                  "fontSize": "15px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.68px",
+                  "letterSpacing": "0.8px",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "82px",
-                  "lineHeight": "25px",
+                  "width": "46.4px",
+                  "lineHeight": "18px",
                   "textTransform": "uppercase",
-                  "cursor": "default",
+                  "textAlign": "center",
+                  "cursor": "pointer",
                   "display": "block"
                 },
                 "source": "census"
@@ -3692,74 +3475,21 @@
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(82, 101, 109)",
+                  "color": "rgb(19, 31, 36)",
                   "borderRadius": "0px",
-                  "height": "25px",
+                  "height": "18px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
+                  "fontSize": "15px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.68px",
+                  "letterSpacing": "0.8px",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "82px",
-                  "lineHeight": "25px",
+                  "width": "46.4px",
+                  "lineHeight": "18px",
                   "textTransform": "uppercase",
-                  "cursor": "default",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "text.8",
-          "count": 2,
-          "pages": [
-            2,
-            3
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "50px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "320px",
-                  "lineHeight": "25px",
                   "textAlign": "center",
-                  "cursor": "default",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(241, 247, 251)",
-                  "borderRadius": "0px",
-                  "height": "50px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "320px",
-                  "lineHeight": "25px",
-                  "textAlign": "center",
-                  "cursor": "default",
+                  "cursor": "pointer",
                   "display": "block"
                 },
                 "source": "census"
@@ -3771,8 +3501,8 @@
           "id": "text@button.3",
           "count": 2,
           "pages": [
-            3,
-            4
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -3827,162 +3557,7 @@
           "id": "text@link.2",
           "count": 2,
           "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "93px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "0px",
-                  "height": "21px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "93px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "text@link.3",
-          "count": 2,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "38px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "101.3px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "grid"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "38px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "101.3px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "grid"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "text@link.4",
-          "count": 2,
-          "pages": [
-            0
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "17px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "14px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "101.3px",
-                  "lineHeight": "17px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "17px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "14px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "101.3px",
-                  "lineHeight": "17px",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "text@link.5",
-          "count": 2,
-          "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -4035,8 +3610,8 @@
           "id": "text@radio.2",
           "count": 2,
           "pages": [
-            3,
-            4
+            2,
+            3
           ],
           "states": {
             "rest": {
@@ -4060,13 +3635,133 @@
                   "display": "inline"
                 },
                 "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(24, 153, 214)",
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
                   "borderRadius": "0px",
-                  "height": "20px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1@banner.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "88px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "480px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1@banner.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "88px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "480px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1@banner.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.11",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "40px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "17px",
@@ -4074,11 +3769,30 @@
                   "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "44.8px",
+                  "width": "380px",
                   "lineHeight": "20px",
                   "textAlign": "center",
-                  "cursor": "default",
-                  "display": "inline"
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(220, 230, 236)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "380px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
                 },
                 "source": "census"
               }
@@ -4087,18 +3801,535 @@
         }
       ]
     },
+    "radio-group": {
+      "groups": [
+        "icon@radio",
+        "radio"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "icon@radio.1",
+          "count": 7,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "radio.1",
+          "count": 5,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "12px",
+                  "height": "252px",
+                  "paddingInline": "24px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(229, 229, 229) 0px 2px 0px 0px",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "194.7px",
+                  "paddingTop": "24px",
+                  "paddingBottom": "24px",
+                  "paddingRight": "24px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "12px",
+                  "height": "252px",
+                  "paddingInline": "24px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(55, 70, 79) 0px 2px 0px 0px",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "194.7px",
+                  "paddingTop": "24px",
+                  "paddingBottom": "24px",
+                  "paddingRight": "24px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(221, 244, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(132, 216, 255)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(63, 133, 167)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-pressed-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(221, 244, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "rgb(132, 216, 255) 0px 2px 0px 0px",
+                  "edge": "2px rgb(132, 216, 255)"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "rgb(63, 133, 167) 0px 2px 0px 0px",
+                  "edge": "2px rgb(63, 133, 167)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.2",
+          "count": 3,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "30x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.3",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.4",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "30x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.4-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toggle-button": {
+      "groups": [
+        "icon@toggle",
+        "toggle"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "icon@toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "93px",
+                  "lineHeight": "0px",
+                  "textAlign": "center",
+                  "opacity": "0.7",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "93px",
+                  "lineHeight": "0px",
+                  "textAlign": "center",
+                  "opacity": "0.7",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "opacity": "1",
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "opacity": "1",
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-disabled-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "cursor": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-disabled-dark.json",
+                "forced": true
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "opacity": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-selected-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "opacity": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-selected-dark.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    },
     "link": {
       "groups": [
-        "icon@link",
         "link"
       ],
-      "found": 19,
+      "found": 13,
       "looks": [
         {
           "id": "link.1",
-          "count": 42,
+          "count": 10,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -4121,7 +4352,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4142,14 +4373,30 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.1-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-dark.json"
               }
             }
           }
         },
         {
           "id": "link.2",
-          "count": 34,
+          "count": 8,
           "pages": [
             0
           ],
@@ -4157,52 +4404,72 @@
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(165, 237, 110)",
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
                   "borderRadius": "0px",
-                  "height": "18px",
+                  "height": "15px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "15px",
                   "fontWeight": "700",
-                  "letterSpacing": "normal",
+                  "letterSpacing": "0.8px",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "51.4px",
-                  "lineHeight": "22px",
+                  "width": "72.8px",
+                  "lineHeight": "15px",
+                  "textTransform": "uppercase",
+                  "opacity": "0.8",
                   "cursor": "pointer",
-                  "display": "inline"
+                  "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.2-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(165, 237, 110)",
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
                   "borderRadius": "0px",
-                  "height": "18px",
+                  "height": "15px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "15px",
                   "fontWeight": "700",
-                  "letterSpacing": "normal",
+                  "letterSpacing": "0.8px",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "51.4px",
-                  "lineHeight": "22px",
+                  "width": "72.8px",
+                  "lineHeight": "15px",
+                  "textTransform": "uppercase",
+                  "opacity": "0.8",
                   "cursor": "pointer",
-                  "display": "inline"
+                  "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.2-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-dark.json"
               }
             }
           }
         },
         {
           "id": "link.3",
-          "count": 32,
+          "count": 4,
           "pages": [
             0
           ],
@@ -4210,116 +4477,6 @@
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(165, 237, 110)",
-                  "borderRadius": "0px",
-                  "height": "15px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "13px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "35.5px",
-                  "lineHeight": "16px",
-                  "cursor": "pointer",
-                  "display": "inline"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/link.3-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(165, 237, 110)",
-                  "borderRadius": "0px",
-                  "height": "15px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "13px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "35.5px",
-                  "lineHeight": "16px",
-                  "cursor": "pointer",
-                  "display": "inline"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/link.3-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "link.4",
-          "count": 8,
-          "pages": [
-            1
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(175, 175, 175)",
-                  "borderRadius": "0px",
-                  "height": "15px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "72.8px",
-                  "lineHeight": "15px",
-                  "textTransform": "uppercase",
-                  "opacity": "0.8",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/link.4-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(82, 101, 109)",
-                  "borderRadius": "0px",
-                  "height": "15px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
-                  "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "72.8px",
-                  "lineHeight": "15px",
-                  "textTransform": "uppercase",
-                  "opacity": "0.8",
-                  "cursor": "pointer",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/link.4-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "link.5",
-          "count": 4,
-          "pages": [
-            1
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
                   "color": "rgb(175, 175, 175)",
                   "borderRadius": "0px",
@@ -4340,7 +4497,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.5-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4364,7 +4521,23 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.5-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.3-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-dark.json"
               }
             },
             "selected": {
@@ -4386,64 +4559,10 @@
           }
         },
         {
-          "id": "link.6",
+          "id": "link.4",
           "count": 3,
           "pages": [
-            0,
             1
-          ],
-          "part": "link",
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(28, 176, 246)",
-                  "borderRadius": "0px",
-                  "height": "20px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "210.1px",
-                  "lineHeight": "24px",
-                  "cursor": "pointer",
-                  "display": "inline"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/link.6-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(73, 192, 248)",
-                  "borderRadius": "0px",
-                  "height": "20px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "700",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "168.4px",
-                  "lineHeight": "20px",
-                  "cursor": "pointer",
-                  "display": "inline"
-                },
-                "source": "census"
-              }
-            }
-          }
-        },
-        {
-          "id": "link.7",
-          "count": 3,
-          "pages": [
-            0
           ],
           "states": {
             "rest": {
@@ -4467,7 +4586,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.7-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4489,13 +4608,83 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.7-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.4-rest-dark.json"
               }
             }
           }
         },
         {
-          "id": "icon@link.1",
+          "id": "link.5",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "link",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(28, 176, 246)",
+                  "borderRadius": "0px",
+                  "height": "52px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "422.7px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
+                  "borderRadius": "0px",
+                  "height": "52px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "422.7px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.6",
           "count": 2,
           "pages": [
             0
@@ -4505,56 +4694,66 @@
               "light": {
                 "values": {
                   "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
+                  "color": "rgb(28, 176, 246)",
                   "borderRadius": "0px",
-                  "height": "34px",
+                  "height": "24px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
+                  "fontSize": "20px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.8px",
+                  "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "34px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "iconSize": "34x34",
-                  "iconStroke": "fill",
+                  "width": "150.1px",
+                  "lineHeight": "28px",
                   "cursor": "pointer",
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@link.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.6-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
                   "borderRadius": "0px",
-                  "height": "34px",
+                  "height": "24px",
                   "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
+                  "fontSize": "20px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.8px",
+                  "letterSpacing": "normal",
                   "boxShadow": "none",
                   "edge": "none",
-                  "width": "34px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "iconSize": "34x34",
-                  "iconStroke": "fill",
+                  "width": "150.1px",
+                  "lineHeight": "28px",
                   "cursor": "pointer",
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/icon@link.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.6-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-dark.json"
               }
             }
           }
         },
         {
-          "id": "link.8",
+          "id": "link.7",
           "count": 2,
           "pages": [
             0
@@ -4563,53 +4762,61 @@
             "rest": {
               "light": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "12px",
-                  "height": "46px",
-                  "paddingInline": "16px",
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(28, 176, 246)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
+                  "fontSize": "17px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "rgb(88, 167, 0) 0px 4px 0px 0px",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
                   "edge": "none",
-                  "width": "330px",
-                  "paddingRight": "16px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "width": "168.4px",
+                  "lineHeight": "20px",
                   "cursor": "pointer",
-                  "position": "relative",
-                  "display": "flex"
+                  "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.8-rest-light.json"
+                "copy": "2026-10-25/census/crops/link.7-rest-light.json"
               },
               "dark": {
                 "values": {
-                  "backgroundColor": "rgb(88, 204, 2)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "12px",
-                  "height": "46px",
-                  "paddingInline": "16px",
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
                   "fontFamily": "duolingo-sans",
-                  "fontSize": "15px",
+                  "fontSize": "17px",
                   "fontWeight": "700",
-                  "letterSpacing": "0.8px",
-                  "boxShadow": "rgb(88, 167, 0) 0px 4px 0px 0px",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
                   "edge": "none",
-                  "width": "330px",
-                  "paddingRight": "16px",
-                  "lineHeight": "normal",
-                  "textTransform": "uppercase",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "width": "168.4px",
+                  "lineHeight": "20px",
                   "cursor": "pointer",
-                  "position": "relative",
-                  "display": "flex"
+                  "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/link.8-rest-dark.json"
+                "copy": "2026-10-25/census/crops/link.7-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-dark.json"
               }
             }
           }
@@ -4648,12 +4855,14 @@
                   "edge": "none",
                   "width": "885.6px",
                   "lineHeight": "20px",
+                  "iconSize": "59x60",
+                  "iconStroke": "0.3px",
                   "cursor": "default",
                   "position": "relative",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/progressbar.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/progressbar.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4670,100 +4879,14 @@
                   "edge": "none",
                   "width": "885.6px",
                   "lineHeight": "20px",
+                  "iconSize": "59x60",
+                  "iconStroke": "0.3px",
                   "cursor": "default",
                   "position": "relative",
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/progressbar.1-rest-dark.json"
-              }
-            }
-          }
-        }
-      ]
-    },
-    "radio-group": {
-      "groups": [
-        "radio"
-      ],
-      "found": 1,
-      "looks": [
-        {
-          "id": "radio.1",
-          "count": 7,
-          "pages": [
-            2,
-            3,
-            4
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(255, 255, 255)",
-                  "color": "rgb(75, 75, 75)",
-                  "borderRadius": "12px",
-                  "height": "252px",
-                  "paddingInline": "24px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "19px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgb(229, 229, 229) 0px 2px 0px 0px",
-                  "edge": "2px rgb(229, 229, 229)",
-                  "width": "194.7px",
-                  "paddingTop": "24px",
-                  "paddingBottom": "24px",
-                  "paddingRight": "24px",
-                  "lineHeight": "20px",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "cursor": "pointer",
-                  "position": "relative",
-                  "display": "flex"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/radio.1-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(19, 31, 36)",
-                  "color": "rgb(241, 247, 251)",
-                  "borderRadius": "12px",
-                  "height": "252px",
-                  "paddingInline": "24px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "19px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "rgb(55, 70, 79) 0px 2px 0px 0px",
-                  "edge": "2px rgb(55, 70, 79)",
-                  "width": "194.7px",
-                  "paddingTop": "24px",
-                  "paddingBottom": "24px",
-                  "paddingRight": "24px",
-                  "lineHeight": "20px",
-                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
-                  "cursor": "pointer",
-                  "position": "relative",
-                  "display": "flex"
-                },
-                "source": "census",
-                "copy": "2026-10-23/census/crops/radio.1-rest-dark.json"
-              }
-            },
-            "selected": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(221, 244, 255)",
-                  "color": "rgb(24, 153, 214)",
-                  "boxShadow": "rgb(132, 216, 255) 0px 2px 0px 0px",
-                  "edge": "2px rgb(132, 216, 255)"
-                },
-                "source": "census"
-              },
-              "dark": {
-                "values": {},
-                "source": "census"
+                "copy": "2026-10-25/census/crops/progressbar.1-rest-dark.json"
               }
             }
           }
@@ -4774,13 +4897,13 @@
       "groups": [
         "separator"
       ],
-      "found": 3,
+      "found": 2,
       "looks": [
         {
           "id": "separator.1",
           "count": 7,
           "pages": [
-            1
+            0
           ],
           "states": {
             "rest": {
@@ -4802,7 +4925,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/separator.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/separator.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4822,7 +4945,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/separator.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/separator.1-rest-dark.json"
               }
             }
           }
@@ -4831,7 +4954,7 @@
           "id": "separator.2",
           "count": 2,
           "pages": [
-            0
+            1
           ],
           "states": {
             "rest": {
@@ -4854,7 +4977,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/separator.2-rest-light.json"
+                "copy": "2026-10-25/census/crops/separator.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4875,14 +4998,14 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/separator.2-rest-dark.json"
+                "copy": "2026-10-25/census/crops/separator.2-rest-dark.json"
               }
             }
           }
         }
       ]
     },
-    "input": {
+    "text-field": {
       "groups": [
         "textbox"
       ],
@@ -4892,24 +5015,25 @@
           "id": "textbox.1",
           "count": 2,
           "pages": [
-            0
+            1
           ],
+          "part": "input",
           "states": {
             "rest": {
               "light": {
                 "values": {
                   "backgroundColor": "rgb(247, 247, 247)",
                   "color": "rgb(75, 75, 75)",
-                  "borderRadius": "0px",
-                  "height": "44px",
+                  "borderRadius": "12px",
+                  "height": "48px",
                   "paddingInline": "14px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "20px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "none",
-                  "width": "371px",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "375px",
                   "paddingTop": "8px",
                   "paddingBottom": "8px",
                   "paddingRight": "14px",
@@ -4918,22 +5042,22 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/textbox.1-rest-light.json"
+                "copy": "2026-10-25/census/crops/textbox.1-rest-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)",
                   "color": "rgb(241, 247, 251)",
-                  "borderRadius": "0px",
-                  "height": "44px",
+                  "borderRadius": "12px",
+                  "height": "48px",
                   "paddingInline": "14px",
                   "fontFamily": "duolingo-sans",
                   "fontSize": "20px",
                   "fontWeight": "400",
                   "letterSpacing": "normal",
                   "boxShadow": "none",
-                  "edge": "none",
-                  "width": "371px",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "375px",
                   "paddingTop": "8px",
                   "paddingBottom": "8px",
                   "paddingRight": "14px",
@@ -4942,7 +5066,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-23/census/crops/textbox.1-rest-dark.json"
+                "copy": "2026-10-25/census/crops/textbox.1-rest-dark.json"
               }
             }
           }
