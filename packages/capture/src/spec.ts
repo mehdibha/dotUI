@@ -204,18 +204,22 @@ function place(
   }
   for (const look of unnamed) {
     const mode = leadOf(look)
+    const values = look[mode] ?? {}
     let entry = entries.find((one) =>
-      one.looks.some(
-        (member) =>
-          leadOf(member) === mode &&
-          sameLook(keys, member[mode] ?? {}, look[mode] ?? {}),
-      ),
+      one.looks.some((member) => {
+        const other = member[mode] ?? {}
+        // A size holds with or without an icon.
+        const compared = keys.filter(
+          (key) => key !== "iconSize" || (values[key] && other[key]),
+        )
+        return leadOf(member) === mode && sameLook(compared, other, values)
+      }),
     )
     if (!entry) {
-      const values = pick(look[mode], keys)
+      const own = pick(values, keys)
       entries.push(
         (entry = {
-          key: `${prefix}${hashOf(`${mode}|${JSON.stringify(values)}`)}`,
+          key: `${prefix}${hashOf(`${mode}|${JSON.stringify(own)}`)}`,
           looks: [],
         }),
       )

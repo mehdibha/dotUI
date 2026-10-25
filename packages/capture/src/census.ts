@@ -1127,6 +1127,29 @@ function census(
       (CONTROLS.has(role) || el.hasAttribute("tabindex"))
     const is = flagOf(el)
     const named = names((name) => el.getAttribute(name))
+    // A control's variant and size can sit on its label (Airbnb's
+    // data-size): what it lacks comes from its own parts, never from a
+    // control nested in it.
+    if (CONTROLS.has(role))
+      for (const inner of el.querySelectorAll(
+        "[data-variant], [data-size], [data-appearance], [data-kind], [data-tone], [data-intent], [data-emphasis], [data-priority], [data-shape]",
+      )) {
+        let nested = false
+        for (let up: Element | null = inner; up && up !== el; up = parent(up))
+          nested ||= CONTROLS.has(
+            up.getAttribute("role")?.trim().split(/\s+/)[0] ??
+              implicit(up) ??
+              "",
+          )
+        if (nested) continue
+        for (const [key, value] of Object.entries(
+          names((name) =>
+            name.startsWith("data-") ? inner.getAttribute(name) : null,
+          ),
+        ))
+          if (!["data-component", "data-slot", "data-part"].includes(key))
+            named[key] ??= value
+      }
     elements.push({
       id: next++,
       role,

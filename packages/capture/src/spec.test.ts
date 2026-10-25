@@ -132,6 +132,12 @@ describe("systemSpec", () => {
     expect(placed?.variant).toBe("primary")
     expect(placed?.size).toBe(grid?.sizes[1]?.key)
     expect(placed?.values).toEqual({ light: { borderRadius: "999px" } })
+    // An icon doesn't make another size.
+    const icons = specOf([
+      look("button.1", 2, { ...gray, ...small }),
+      look("button.2", 1, { ...gray, ...small, iconSize: "16x16" }),
+    ]).components.button?.grids[0]
+    expect(icons?.sizes).toHaveLength(1)
     // Keys hold across runs: a hash of the values, not a rank.
     expect(
       specOf([look("button.3", 3, { ...gray, ...small })]).components.button
