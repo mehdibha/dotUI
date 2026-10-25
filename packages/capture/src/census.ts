@@ -1386,9 +1386,10 @@ const UNNAMED_BY_ARGS = new Set([
 
 /* Which of a story's args name each element. The crawl reads an args pass
    with what it already read marked seen, so the pass holds what the change
-   redrew: those take the args it changed. On the story's other passes an
-   element takes an arg only when a pass changing it redrew an element of
-   its role in its place; the rest is the story's furniture. */
+   redrew: those that now look different from the rest pass in their place
+   take the args it changed. On the story's other passes an element takes
+   an arg only when a pass changing it redrew one of its role in its place;
+   the rest is the story's furniture. */
 function argNames(pages: CensusPage[]) {
   const named = new Map<CensusElement, Names>()
   const stories = new Map<string, CensusPage[]>()
@@ -1396,33 +1397,41 @@ function argNames(pages: CensusPage[]) {
     const story = `${page.key}|${page.mode}`
     stories.set(story, [...(stories.get(story) ?? []), page])
   }
-  const overlap = (a: CensusElement["box"], b: CensusElement["box"]) =>
-    a[0] < b[0] + b[2] &&
-    b[0] < a[0] + a[2] &&
-    a[1] < b[1] + b[3] &&
-    b[1] < a[1] + a[3]
+  const at = (a: CensusElement, b: CensusElement) =>
+    a.role === b.role &&
+    a.box[0] < b.box[0] + b.box[2] &&
+    b.box[0] < a.box[0] + a.box[2] &&
+    a.box[1] < b.box[1] + b.box[3] &&
+    b.box[1] < a.box[1] + a.box[3]
   for (const story of stories.values()) {
-    const initial = story.find((page) => page.pass === "rest")?.args ?? {}
+    const rest = story.find((page) => page.pass === "rest")
+    const initial = rest?.args ?? {}
     const changes = story.map((page) => ({
       page,
       changed: Object.keys(page.args ?? {}).filter(
         (arg) => page.args?.[arg] !== initial[arg],
       ),
+      redrawn: page.elements.filter(
+        (element) =>
+          !rest?.elements.some(
+            (one) =>
+              at(one, element) &&
+              sameLook(lookKeys(element.role), one.values, element.values),
+          ),
+      ),
     }))
-    for (const { page, changed } of changes)
+    for (const { page, changed, redrawn } of changes)
       for (const element of page.elements) {
         if (UNNAMED_BY_ARGS.has(element.role)) continue
         const args = changed.length
-          ? changed
+          ? redrawn.includes(element)
+            ? changed
+            : []
           : Object.keys(initial).filter((arg) =>
               changes.some(
                 (other) =>
                   other.changed.includes(arg) &&
-                  other.page.elements.some(
-                    (one) =>
-                      one.role === element.role &&
-                      overlap(one.box, element.box),
-                  ),
+                  other.redrawn.some((one) => at(one, element)),
               ),
             )
         const values = changed.length ? page.args : initial

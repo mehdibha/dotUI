@@ -283,8 +283,12 @@ describe("census", () => {
           ...page("/story", "light", [button(1, 0, blue), wrapper]),
           args: { variant: "primary" },
         },
+        // The pass redraws the wrapper too, unchanged: still furniture.
         {
-          ...page("/story", "light", [button(3, 0, navy)]),
+          ...page("/story", "light", [
+            button(3, 0, navy),
+            { ...wrapper, id: 4 },
+          ]),
           pass: "args variant:secondary",
           args: { variant: "secondary" },
         },
