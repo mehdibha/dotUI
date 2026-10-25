@@ -6,24 +6,23 @@ import { nitro } from "nitro/vite"
 import { defineConfig } from "vite"
 import type { Plugin } from "vite"
 
-import { bundleCopies, capturedSlugs, copyPaths } from "./scripts/copies"
+import { capturedSlugs, readCopy } from "./scripts/copies"
 
-// In dev, /copies/<slug>/<date>.json serves a system's frozen copies straight
-// from the census in www/.scratch-refs, as the Blob store does once uploaded.
+// In dev, /copies/<slug>/<copy path> serves a frozen copy straight from the
+// census in www/.scratch-refs, as the Blob store does once uploaded.
 function copies(): Plugin {
   return {
     name: "directory-copies",
     apply: "serve",
     configureServer(server) {
       server.middlewares.use("/copies", (req, res, next) => {
-        const [slug, file] =
+        const [slug, ...rest] =
           (req.url ?? "").split("?")[0]?.slice(1).split("/") ?? []
-        const date = file?.replace(/\.json$/, "")
-        if (!slug || !capturedSlugs().includes(slug) || !date) return next()
-        const paths = copyPaths(slug).get(date)
-        if (!paths) return next()
+        if (!slug || !capturedSlugs().includes(slug)) return next()
+        const snapshot = readCopy(slug, decodeURIComponent(rest.join("/")))
+        if (!snapshot) return next()
         res.setHeader("Content-Type", "application/json")
-        res.end(JSON.stringify(bundleCopies(slug, paths).copies))
+        res.end(JSON.stringify(snapshot))
       })
     },
   }
@@ -55,6 +54,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
+        // A link to a section renders the same page as its link without it.
+        filter: ({ path }) => !path.includes("#"),
       },
     }),
     viteReact(),

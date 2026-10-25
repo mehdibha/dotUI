@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { cn } from "~/lib/utils"
 
 import { getSectionList } from "./registry"
+import type { SystemTab } from "./registry"
 
 export type TocItem = { id: string; label: string }
 
@@ -56,12 +57,14 @@ export function scrollToSection(id: string) {
  */
 export function SystemDesktopToc({
   slug,
+  tab,
   className,
 }: {
   slug: string
+  tab: SystemTab
   className?: string
 }) {
-  const items = getSectionList(slug)
+  const items = getSectionList(slug, tab)
   const active = useActiveSection(items)
   if (items.length === 0) return null
 

@@ -67,20 +67,6 @@ function RootDocument() {
                   ds.
                 </span>
               </Link>
-              <nav className="flex items-center gap-1 text-sm text-fg-muted">
-                <Link
-                  to="/design-systems"
-                  className="px-2 py-1 hover:text-fg [&.active]:text-fg"
-                >
-                  Design systems
-                </Link>
-                <Link
-                  to="/components"
-                  className="px-2 py-1 hover:text-fg [&.active]:text-fg"
-                >
-                  Components
-                </Link>
-              </nav>
               {/* Small screens have no in-page lines TOC (that's lg+); surface
                   the sections here next to the logo instead. Null off system pages. */}
               <SystemTocSelect className="lg:hidden" />

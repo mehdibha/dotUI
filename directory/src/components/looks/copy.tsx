@@ -5,27 +5,31 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { Snapshot, SnapshotFont } from "@dotui/capture/snapshot"
 
 /* A frozen copy of the real product's element: its DOM with every computed
-   style inlined, drawn in a shadow root. A system's copies come one file per
-   census date (scripts/copies.ts): from www/.scratch-refs in dev, from the
-   public Blob store `copies:upload` fills once deployed. */
+   style inlined, drawn in a shadow root. Each copy is its own file at
+   <slug>/<copy path> (scripts/copies.ts): from www/.scratch-refs in dev, from
+   the public Blob store `copies:upload` fills once deployed. */
 
 const COPIES = import.meta.env.DEV
   ? "/copies"
   : "https://uyfqo5pt3egtamyn.public.blob.vercel-storage.com"
 
-const files = new Map<string, Promise<Record<string, Snapshot> | null>>()
+const json = (url: string) =>
+  fetch(url)
+    .then((res) => (res.ok ? res.json() : null))
+    .catch(() => null)
 
-/** A copy path starts with its census date, which names its file. */
-function copiesOf(slug: string, path: string) {
+// Systems uploaded before copies were split keep one file per census date
+// (a copy path starts with it). Drop once every system is re-uploaded.
+const dated = new Map<string, Promise<Record<string, Snapshot> | null>>()
+
+async function copyOf(slug: string, path: string): Promise<Snapshot | null> {
   const url = `${COPIES}/${slug}/${path.split("/")[0]}.json`
-  let file = files.get(url)
-  if (!file) {
-    file = fetch(url)
-      .then((res) => (res.ok ? res.json() : null))
-      .catch(() => null)
-    files.set(url, file)
-  }
-  return file
+  const bundle = await dated.get(url)
+  if (bundle) return bundle[path] ?? null
+  const copy = await json(`${COPIES}/${slug}/${path}`)
+  if (copy) return copy
+  if (!dated.has(url)) dated.set(url, json(url))
+  return (await dated.get(url))?.[path] ?? null
 }
 
 export function Copy({
@@ -43,9 +47,7 @@ export function Copy({
   useEffect(() => {
     if (!seen) return
     let live = true
-    void copiesOf(slug, path).then(
-      (copies) => live && setSnapshot(copies?.[path] ?? null),
-    )
+    void copyOf(slug, path).then((copy) => live && setSnapshot(copy))
     return () => {
       live = false
     }
