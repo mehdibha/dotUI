@@ -1784,8 +1784,16 @@ const area = (box: Box) => box[2] * box[3]
    not badges. A round box around a small icon is a badge too (Primer's
    Timeline badges): an avatar's picture fills it. */
 const TYPED = new Set(["textbox", "searchbox", "combobox"])
-const painted = (color = "") =>
-  !!color && color !== "transparent" && !/[,/]\s*0\)$/.test(color)
+const painted = (color = "") => {
+  if (!color || color === "transparent") return false
+  const alpha = /[,/]\s*([\d.]+)%?\s*\)$/.exec(color)
+  // `rgb(0, 0, 0)` ends in a zero that is not an alpha.
+  return (
+    !alpha ||
+    (/^(rgb|hsl)\(/.test(color) && !color.includes("/")) ||
+    Number(alpha[1]) > 0
+  )
+}
 export function unwrap<
   P extends Pick<CensusPage, "key" | "pass" | "mode" | "elements">,
 >(pages: P[]): P[] {
