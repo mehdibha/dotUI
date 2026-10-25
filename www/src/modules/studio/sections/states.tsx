@@ -324,6 +324,7 @@ const CursorControlsRow = () => (
     axis="cursorControls"
     label="Controls"
     options={CURSOR_CONTROL_OPTIONS}
+    placement={UNDER}
   />
 )
 
@@ -332,6 +333,7 @@ const CursorDisabledRow = () => (
     axis="cursorDisabled"
     label="Disabled"
     options={CURSOR_DISABLED_OPTIONS}
+    placement={UNDER}
   />
 )
 
