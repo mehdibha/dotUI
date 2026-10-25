@@ -373,8 +373,13 @@ function census(
       }
       return null
     }
+    const found = match(document)
+    if (found) return found
+    // Tagged again, so what selects and keys by the attribute finds it.
     const held = tagged.get(id)
-    return match(document) ?? (held?.isConnected ? held : null)
+    if (!held?.isConnected) return null
+    held.setAttribute(ID, String(id))
+    return held
   }
   // Opacity through the ancestors: Highcharts' accessibility proxies sit
   // over the chart at 0.001, which checkVisibility counts as shown.
