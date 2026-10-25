@@ -748,20 +748,17 @@ const SHOT_HEIGHT = 10000
  *  closes some tooltips. */
 async function shoot(page: Page, file: string, whole: boolean) {
   try {
-    const { x, y, width, height } = await page.evaluate(() => {
-      // A body that scrolls on its own holds the page (Airbnb's).
-      const body =
-        document.body &&
-        /auto|scroll/.test(getComputedStyle(document.body).overflowY)
-          ? document.body
-          : document.documentElement
-      return {
-        x: scrollX,
-        y: scrollY,
-        width: document.documentElement.scrollWidth,
-        height: body.scrollHeight,
-      }
-    })
+    // The body's height too: a body that scrolls on its own, or one a
+    // closing notice still holds fixed (Airbnb's), holds the page.
+    const { x, y, width, height } = await page.evaluate(() => ({
+      x: scrollX,
+      y: scrollY,
+      width: document.documentElement.scrollWidth,
+      height: Math.max(
+        document.documentElement.scrollHeight,
+        document.body?.scrollHeight ?? 0,
+      ),
+    }))
     const at: [number, number] | null =
       x || y ? [Math.round(x), Math.round(y)] : null
     const shot = await page.screenshot(
