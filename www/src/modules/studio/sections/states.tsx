@@ -4,7 +4,14 @@
    plus Invalid, hosted on the Field page. Specimens draw each recipe with
    the panel's own inks at its real geometry. */
 
+import type { Color } from "react-aria-components"
+import {
+  ToggleButton as RacToggleButton,
+  ToggleButtonGroup as RacToggleButtonGroup,
+} from "react-aria-components"
+
 import { cn } from "@/registry/lib/utils"
+import { ColorPicker } from "@/registry/ui/color-picker"
 
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
@@ -19,9 +26,14 @@ import {
   FOCUS_STYLE_OPTIONS,
   INVALID_OPTIONS,
 } from "../axes/states.meta"
-import { DialSelect, DialSlider } from "../dial"
+import { DIAL_LABEL, DIAL_ROW, DialSelect, DialSlider } from "../dial"
+import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
+import { ColorPickerPopover, PanelPopoverTitle, useDraft } from "../rows"
+import { useCurrent } from "../selection"
+import { useAxis } from "../use-axis"
 import { ArrowCursor, HandCursor } from "./cursors"
+import { inks } from "./primary"
 
 const INK = "var(--color-border-focus)"
 const DANGER = "var(--color-fg-danger)"
@@ -168,29 +180,74 @@ const FieldFocusWidthRow = () => (
   />
 )
 
-const SWATCH: Record<string, string> = {
-  accent: "var(--accent-700)",
-  neutral: "var(--color-fg)",
+const SWATCH =
+  "size-5 shrink-0 cursor-interactive rounded-full border border-fg/15 ring-offset-2 ring-offset-(--panel-surface,var(--color-card)) outline-none focus-visible:focus-ring selected:ring-2 selected:ring-fg/70"
+
+/* The custom swatch before a color is picked: any color. */
+const SPECTRUM =
+  "conic-gradient(#ef4444, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7, #ef4444)"
+
+/** Primary's two sources and a color of its own, as swatches; the custom
+ *  one opens a picker. */
+function FocusColorRow() {
+  const axis = useAxis("focusColor")
+  const customAxis = useAxis("focusCustomColor")
+  const { state } = useCurrent()
+  const ink = inks(usePanelMode().m)
+  const saved = String(customAxis?.saved ?? "")
+  const custom = saved || state.brand
+  const [draft, setDraft] = useDraft<string | Color>(custom)
+  if (!axis) return null
+  const commit = (color: Color | null) => {
+    if (!color) return
+    customAxis?.set(color.toString("hex"))
+    axis.set("custom")
+  }
+  const label = (value: string) =>
+    FOCUS_COLOR_OPTIONS.find((o) => o.value === value)?.label ?? value
+  return (
+    <div data-axis="focusColor" className={DIAL_ROW}>
+      <span className={DIAL_LABEL}>Color</span>
+      <span className="flex min-w-0 items-center gap-3">
+        <span className="truncate text-[13px] font-medium text-fg/60">
+          {label(String(axis.saved))}
+        </span>
+        <RacToggleButtonGroup
+          aria-label="Focus color"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[String(axis.saved)]}
+          onSelectionChange={(keys) => {
+            const next = keys.values().next().value
+            if (next) axis.set(next)
+          }}
+          className="flex items-center gap-2"
+        >
+          {(["accent", "neutral"] as const).map((source) => (
+            <RacToggleButton
+              key={source}
+              id={source}
+              aria-label={label(source)}
+              className={SWATCH}
+              style={{ background: ink[source].ring }}
+            />
+          ))}
+          <ColorPicker value={draft} onChange={setDraft}>
+            <RacToggleButton
+              id="custom"
+              aria-label={label("custom")}
+              className={SWATCH}
+              style={{ background: saved || SPECTRUM }}
+            />
+            <PanelPopoverTitle.Provider value="Focus color">
+              <ColorPickerPopover commit={commit} placement={UNDER} />
+            </PanelPopoverTitle.Provider>
+          </ColorPicker>
+        </RacToggleButtonGroup>
+      </span>
+    </div>
+  )
 }
-
-const FOCUS_COLOR_ROW_OPTIONS = FOCUS_COLOR_OPTIONS.map((option) => ({
-  ...option,
-  glyph: (
-    <span
-      className="size-2.5 shrink-0 rounded-full"
-      style={{ background: SWATCH[option.value] }}
-    />
-  ),
-}))
-
-const FocusColorRow = () => (
-  <DialSelect
-    axis="focusColor"
-    label="Color"
-    options={FOCUS_COLOR_ROW_OPTIONS}
-    placement={UNDER}
-  />
-)
 
 const FieldFocusRow = () => (
   <DialSelect

@@ -1,10 +1,11 @@
-import { SOURCE_OPTIONS } from "./color.meta"
+import { SOURCE_META } from "./color.meta"
 import { options } from "./core/meta"
 import {
   CONTROL_TEXT_VALUES,
   CURSOR_CONTROL_VALUES,
   CURSOR_DISABLED_VALUES,
   DISABLED_VALUES,
+  FOCUS_COLOR_VALUES,
   FOCUS_INPUT_STYLE_VALUES,
   FOCUS_STYLE_VALUES,
   INVALID_VALUES,
@@ -38,8 +39,10 @@ export const FOCUS_STYLE_OPTIONS = options(FOCUS_STYLE_VALUES, {
   },
 })
 
-/** Accent first. */
-export const FOCUS_COLOR_OPTIONS = [...SOURCE_OPTIONS].reverse()
+export const FOCUS_COLOR_OPTIONS = options(FOCUS_COLOR_VALUES, {
+  ...SOURCE_META,
+  custom: { label: "Custom", description: "A color of its own" },
+})
 
 export const FOCUS_INPUT_STYLE_OPTIONS = options(FOCUS_INPUT_STYLE_VALUES, {
   edge: {
@@ -135,7 +138,7 @@ export const CONTROL_TEXT_OPTIONS = options(CONTROL_TEXT_VALUES, {
 })
 
 export const OPTIONS = {
-  focusColor: SOURCE_OPTIONS,
+  focusColor: FOCUS_COLOR_OPTIONS,
   focusStyle: FOCUS_STYLE_OPTIONS,
   focusInputStyle: FOCUS_INPUT_STYLE_OPTIONS,
   invalidStyle: INVALID_OPTIONS,

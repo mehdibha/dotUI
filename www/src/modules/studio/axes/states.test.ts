@@ -99,6 +99,19 @@ describe("focus ring", () => {
     })
   })
 
+  test("a custom ring is its own color, starting on the brand", () => {
+    expect(
+      resolve({ focusColor: "custom", focusCustomColor: "#ff0000" }).tokens,
+    ).toEqual({
+      "--color-border-focus": "#ff0000",
+      "--color-border-focus-muted":
+        "color-mix(in oklab, #ff0000 40%, transparent)",
+    })
+    expect(
+      resolve({ focusColor: "custom", brand: "#00ff00" }).tokens,
+    ).toMatchObject({ "--color-border-focus": "#00ff00" })
+  })
+
   test("on a Strong edge a neutral ring takes the text ink", () => {
     // The 700 step is the Strong edge itself (Airbnb #222, Spotify).
     const system = resolve({ focusColor: "neutral", controlEdge: "strong" })

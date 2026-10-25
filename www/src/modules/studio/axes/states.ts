@@ -3,14 +3,14 @@
    `--studio-focus-*` vars (roles.css) that base.css's focus-ring and
    focus-input read, which the publisher bakes into plain outlines; the rest
    are the `--invalid-*`, `--disabled-*`, `--cursor-*` and `--user-select-ui`
-   tokens. The focus ink is a leaf of Color's Primary. */
+   tokens. The focus ink is a leaf of Color's Primary, or a color of its own. */
 
 import type { TokenOverrides } from "@/registry/theme"
 
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { oneOf, range } from "./schema"
+import { auto, COLOR, oneOf, range } from "./schema"
 
 /** Ring: a gap, then the ring. Inset: inside the edge, a filled control
  *  drawing an on-color line inside it (outside where the control's own part
@@ -47,6 +47,9 @@ export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
 /** Whether text on controls and their labels selects. Content always does. */
 export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
 
+/** Primary's two sources, or the custom color. */
+export const FOCUS_COLOR_VALUES = [...SOURCE_VALUES, "custom"] as const
+
 const px = (n: number) => `${n}px`
 
 const mix = (color: string, pct: number) =>
@@ -78,6 +81,7 @@ export const chapter = defineChapter({
   id: "states",
   defaults: {
     focusColor: "accent",
+    focusCustomColor: "",
     focusStyle: "ring",
     focusWidth: 2,
     focusRingGap: 2,
@@ -90,7 +94,8 @@ export const chapter = defineChapter({
     selectionUiText: "none",
   },
   schema: {
-    focusColor: oneOf(SOURCE_VALUES),
+    focusColor: oneOf(FOCUS_COLOR_VALUES),
+    focusCustomColor: auto(COLOR),
     focusStyle: oneOf(FOCUS_STYLE_VALUES),
     focusWidth: range({ min: 1, max: 4, step: 1 }),
     focusRingGap: range({ min: 0, max: 4, step: 1 }),
@@ -167,6 +172,14 @@ export const chapter = defineChapter({
       tokens["--cursor-disabled"] = state.cursorDisabled
     if (state.selectionUiText === "selectable")
       tokens["--user-select-ui"] = "auto"
+
+    // A custom ring is that color in both modes; its muted pair, the field
+    // halo, is the same color see-through. Unset, it starts on the brand.
+    if (state.focusColor === "custom") {
+      const color = state.focusCustomColor || state.brand
+      tokens["--color-border-focus"] = color
+      tokens["--color-border-focus-muted"] = mix(color, 40)
+    }
 
     if (state.focusColor !== "neutral") return { tokens }
     const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
