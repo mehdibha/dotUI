@@ -447,16 +447,24 @@ describe("cluster: wrappers", () => {
           // A real button, its label in a span.
           bare(7, [600, 0, 80, 32]),
           part(8, "text", [612, 8, 56, 16], 4),
+          // A filled one whose label the pass didn't read.
+          {
+            ...button(9, 0, { backgroundColor: "rgb(34, 34, 34)" }),
+            box: [800, 0, 168, 40],
+            chars: 0,
+          },
         ]),
       ],
       "test",
     )
     expect(looks.filter((one) => one.group === "button")).toEqual([
       expect.objectContaining({ count: 1 }),
+      expect.objectContaining({ count: 1 }),
     ])
     expect(looks.map((one) => one.group).sort()).toEqual([
       "avatar",
       "badge",
+      "button",
       "button",
       "text",
     ])
