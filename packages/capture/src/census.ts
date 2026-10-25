@@ -1773,7 +1773,9 @@ const area = (box: Box) => box[2] * box[3]
    not badges. A round box around a small icon is a badge too (Primer's
    Timeline badges): an avatar's picture fills it. */
 const TYPED = new Set(["textbox", "searchbox", "combobox"])
-function unwrap(pages: CensusPage[]): CensusPage[] {
+export function unwrap<
+  P extends Pick<CensusPage, "key" | "pass" | "mode" | "elements">,
+>(pages: P[]): P[] {
   const rests = new Map(
     pages
       .filter((page) => page.pass === "rest")
