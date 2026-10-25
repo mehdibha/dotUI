@@ -232,6 +232,32 @@ describe("census", () => {
     expect(dark?.light).toBeUndefined()
   })
 
+  it("folds a look read only in dark into the light look its dark matches", () => {
+    const green = { backgroundColor: "rgb(22, 163, 74)" }
+    const forest = { backgroundColor: "rgb(21, 128, 61)" }
+    const inventory = cluster(
+      [
+        page("/a", "light", [button(1, 0, blue), button(2, 100, green)]),
+        page("/a", "dark", [button(1, 0, navy), button(2, 100, forest)]),
+        // A story arg's pass, read in dark only.
+        { ...page("/a", "dark", [button(3, 200, navy)]), pass: "args.state" },
+      ],
+      "test",
+    )
+    expect(inventory.looks).toEqual([
+      expect.objectContaining({
+        count: 2,
+        light: expect.objectContaining(blue),
+        dark: expect.objectContaining(navy),
+        sample: expect.objectContaining({ mode: "light", id: 1 }),
+      }),
+      expect.objectContaining({
+        count: 1,
+        light: expect.objectContaining(green),
+      }),
+    ])
+  })
+
   it("tallies each look's names, a story's args only on what it renders", () => {
     const label: CensusElement = {
       id: 9,
