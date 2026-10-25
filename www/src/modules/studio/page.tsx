@@ -45,11 +45,14 @@ function setHash(page: string | null) {
 }
 
 /* Drilling in slides the page in from the right; Back slides the chapters in
-   from the left. A link opening a page, or a chapter switch, doesn't move. */
+   from the left. A link opening a page, or a chapter switch, doesn't move.
+   The header only fades: it stays where it is. */
 const DRILL = {
   in: "animate-in fade-in slide-in-from-right-6 duration-200 ease-out motion-reduce:animate-none",
   out: "animate-in fade-in slide-in-from-left-6 duration-200 ease-out motion-reduce:animate-none",
 }
+const HEADER_FADE =
+  "animate-in fade-in duration-200 ease-out motion-reduce:animate-none"
 
 /** Retries each frame: a page's rows mount a frame or more after it opens. */
 function untilMounted(attempt: () => boolean, frames = 30) {
@@ -448,10 +451,10 @@ export function PanelPage({
                         setPageId(behind?.id ?? null)
                         setHash(behind?.id ?? null)
                       }}
-                      // Slides in with the first page, then stays put.
+                      // Fades in with the first page, then stays put.
                       className={cn(
                         "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
-                        drill && DRILL.in,
+                        drill && HEADER_FADE,
                       )}
                     >
                       <ChevronLeftIcon />
@@ -460,7 +463,7 @@ export function PanelPage({
                       key={page.id}
                       className={cn(
                         "ml-2 min-w-0 truncate text-sm font-medium",
-                        drill && DRILL[drill],
+                        drill && HEADER_FADE,
                       )}
                     >
                       {page.label}
