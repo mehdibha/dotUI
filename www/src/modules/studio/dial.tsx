@@ -195,7 +195,7 @@ export const PICK_POPOVER = "w-max min-w-48 max-w-64"
    top. Its hover tints step from that surface. Unlike other panel popovers it
    keeps the registry popover's entrance, grown from the row's middle rather
    than its end. */
-const UNDER_ROW =
+export const UNDER_ROW =
   "w-(--trigger-width)! min-w-0! max-w-none! origin-top! border-fg/10 bg-(--panel-surface) shadow-xl transition-[transform,opacity,scale] will-change-[transform,opacity,scale] [--panel-surface:color-mix(in_oklab,var(--color-fg)_7%,var(--color-card))]!"
 
 /** Under its row a popover covers the rows below, so a pick closes it. */

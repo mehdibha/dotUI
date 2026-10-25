@@ -196,17 +196,22 @@ const COLOR_PRESETS = [
 export function ColorPickerPopover({
   commit,
   placement = ROW_OVERLAY_PLACEMENT,
+  className,
   children,
-}: {
+  ...props
+}: Omit<React.ComponentProps<typeof PanelPopover>, "children"> & {
   commit: (color: Color | null) => void
-  placement?: React.ComponentProps<typeof Popover>["placement"]
   /** Rows under the hex field — settings that belong to this one color. */
   children?: React.ReactNode
 }) {
   const area = useSliderPreview(commit)
   const hue = useSliderPreview(commit)
   return (
-    <PanelPopover placement={placement} className="w-64 min-w-0">
+    <PanelPopover
+      placement={placement}
+      className={cn("w-64 min-w-0", className)}
+      {...props}
+    >
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
         <ColorPresets commit={commit} />
         <ColorArea

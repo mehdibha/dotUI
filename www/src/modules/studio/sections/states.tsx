@@ -4,6 +4,7 @@
    plus Invalid, hosted on the Field page. Specimens draw each recipe with
    the panel's own inks at its real geometry. */
 
+import { useRef } from "react"
 import type { Color } from "react-aria-components"
 import {
   ToggleButton as RacToggleButton,
@@ -26,10 +27,21 @@ import {
   FOCUS_STYLE_OPTIONS,
   INVALID_OPTIONS,
 } from "../axes/states.meta"
-import { DIAL_LABEL, DIAL_ROW, DialSelect, DialSlider } from "../dial"
+import {
+  DIAL_LABEL,
+  DIAL_ROW,
+  DialSelect,
+  DialSlider,
+  UNDER_ROW,
+} from "../dial"
 import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
-import { ColorPickerPopover, PanelPopoverTitle, useDraft } from "../rows"
+import {
+  ColorPickerPopover,
+  PanelPopoverTitle,
+  useDocked,
+  useDraft,
+} from "../rows"
 import { useCurrent } from "../selection"
 import { useAxis } from "../use-axis"
 import { ArrowCursor, HandCursor } from "./cursors"
@@ -197,6 +209,9 @@ function FocusColorRow() {
   const saved = String(customAxis?.saved ?? "")
   const custom = saved || state.brand
   const [draft, setDraft] = useDraft<string | Color>(custom)
+  // The picker drops under the whole row, like the row pickers above it.
+  const row = useRef<HTMLDivElement>(null)
+  const under = !useDocked()
   if (!axis) return null
   const commit = (color: Color | null) => {
     if (!color) return
@@ -206,7 +221,7 @@ function FocusColorRow() {
   const label = (value: string) =>
     FOCUS_COLOR_OPTIONS.find((o) => o.value === value)?.label ?? value
   return (
-    <div data-axis="focusColor" className={DIAL_ROW}>
+    <div ref={row} data-axis="focusColor" className={DIAL_ROW}>
       <span className={DIAL_LABEL}>Color</span>
       <span className="flex min-w-0 items-center gap-3">
         <span className="truncate text-[13px] font-medium text-fg/60">
@@ -240,7 +255,16 @@ function FocusColorRow() {
               style={{ background: saved || SPECTRUM }}
             />
             <PanelPopoverTitle.Provider value="Focus color">
-              <ColorPickerPopover commit={commit} placement={UNDER} />
+              <ColorPickerPopover
+                commit={commit}
+                placement={UNDER}
+                {...(under && {
+                  triggerRef: row,
+                  offset: 6,
+                  showArrow: false,
+                  className: UNDER_ROW,
+                })}
+              />
             </PanelPopoverTitle.Provider>
           </ColorPicker>
         </RacToggleButtonGroup>
