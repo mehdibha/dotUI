@@ -373,8 +373,13 @@ function census(
       }
       return null
     }
+    const found = match(document)
+    if (found) return found
+    // Tagged again, so what selects and keys by the attribute finds it.
     const held = tagged.get(id)
-    return match(document) ?? (held?.isConnected ? held : null)
+    if (!held?.isConnected) return null
+    held.setAttribute(ID, String(id))
+    return held
   }
   // Opacity through the ancestors: Highcharts' accessibility proxies sit
   // over the chart at 0.001, which checkVisibility counts as shown.
@@ -1770,8 +1775,8 @@ const within = (outer: Box, inner: Box) =>
   inner[1] + inner[3] <= outer[1] + outer[3] + 1
 const area = (box: Box) => box[2] * box[3]
 
-/* Buttons and links that only wrap something else: no text or icon of
-   their own around one painted part that fills them (an avatar, an issue
+/* Buttons and links that only wrap something else: no text, icon or fill
+   of their own around one painted part that fills them (an avatar, an issue
    label's pill), or around nothing at all (a chart's hit area). They count
    as nothing and the part as itself; a pill with text in it is the badge
    the shape rule would have read had the text been its own. And pills
@@ -1779,6 +1784,8 @@ const area = (box: Box) => box[2] * box[3]
    not badges. A round box around a small icon is a badge too (Primer's
    Timeline badges): an avatar's picture fills it. */
 const TYPED = new Set(["textbox", "searchbox", "combobox"])
+const painted = (color = "") =>
+  !!color && color !== "transparent" && !/[,/]\s*0\)$/.test(color)
 export function unwrap<
   P extends Pick<CensusPage, "key" | "pass" | "mode" | "elements">,
 >(pages: P[]): P[] {
@@ -1811,6 +1818,7 @@ export function unwrap<
         element.chars ||
         values.iconSize ||
         values.backgroundImage ||
+        painted(values.backgroundColor) ||
         (values.edge ?? "none") !== "none" ||
         (values.boxShadow ?? "none") !== "none"
       )
