@@ -72,6 +72,67 @@
         ],
         "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
       }
+    },
+    "blocks": {
+      "global-header": {
+        "selector": "header[data-marketing-header]"
+      },
+      "repo-header": {
+        "selector": "header:has(nav[aria-label=Repository])"
+      },
+      "repo-title": {
+        "selector": "div:has(> div > #repo-title-component)"
+      },
+      "file-toolbar": {
+        "selector": "div:has(> div > div > #ref-picker-repos-header-ref-selector)"
+      },
+      "file-list": {
+        "selector": "div:has(> div > table[aria-labelledby=folders-and-files])"
+      },
+      "readme": {
+        "selector": "div:has(> div > div > article.markdown-body)"
+      },
+      "about-sidebar": {
+        "selector": "[class*=borderGrid] > [class*=sidebarSection]:first-child"
+      },
+      "sidebar-sections": {
+        "selector": "[class*=borderGrid]"
+      },
+      "site-footer": {
+        "selector": "footer[role=contentinfo]"
+      },
+      "platform-menu": {
+        "selector": "header[data-marketing-header] nav[aria-label=Global] > ul > li:first-child div[class*=dropdown]",
+        "before": [
+          {
+            "click": "header[data-marketing-header] nav[aria-label=Global] li:first-child button"
+          }
+        ]
+      },
+      "command-palette": {
+        "selector": "[role=dialog][data-component=Dialog]",
+        "before": [
+          {
+            "click": "button[aria-label^='Search or jump to']"
+          }
+        ]
+      },
+      "branch-picker": {
+        "selector": "[data-component=AnchoredOverlay][aria-label='Select a branch']",
+        "before": [
+          {
+            "click": "#ref-picker-repos-header-ref-selector"
+          }
+        ]
+      },
+      "clone-panel": {
+        "selector": "[data-component=AnchoredOverlay]",
+        "before": [
+          {
+            "click": "button[data-variant=primary]"
+          }
+        ]
+      }
     }
   },
   "https://github.com/mehdibha/dotUI/issues": {
@@ -98,6 +159,29 @@
         "selector": "body",
         "only": ["backgroundColor"]
       }
+    },
+    "blocks": {
+      "issues-sidebar": {
+        "selector": "aside[aria-label='Issues sidebar navigation']"
+      },
+      "issues-filter": {
+        "selector": "div:has(> [class*=FilterContainer] > [role=search][aria-label=Issues])"
+      },
+      "issue-list": {
+        "selector": "[data-testid=issues-list-surface]"
+      },
+      "issue-row": {
+        "selector": "ul[data-listview-component=items-list] > li"
+      },
+      "author-filter": {
+        "selector": "[role=dialog][data-component=AnchoredOverlay]",
+        "before": [
+          {
+            "click": "button[data-testid=authors-anchor-button]"
+          }
+        ],
+        "redact": true
+      }
     }
   },
   "https://github.com/mehdibha/dotUI/pulse": {
@@ -105,6 +189,20 @@
       "card": {
         "selector": ".Box",
         "only": ["backgroundColor", "borderRadius", "boxShadow", "edge"]
+      }
+    },
+    "blocks": {
+      "insights-nav": {
+        "selector": "nav[aria-label=Insights]"
+      },
+      "pulse-overview": {
+        "selector": "div.Box:has([aria-label='Merged pull requests'])"
+      },
+      "pulse-summary": {
+        "selector": "div[class*=container__]:has(div[data-highcharts-chart])"
+      },
+      "merged-list": {
+        "selector": "section:has(> div > h3#merged-pull-requests)"
       }
     }
   },
@@ -358,6 +456,11 @@
         ],
         "only": ["color", "borderRadius", "height", "fontSize", "fontWeight"]
       }
+    },
+    "blocks": {
+      "pr-row": {
+        "selector": "ul[data-listview-component=items-list] > li"
+      }
     }
   },
   "https://github.com/search?q=design+system&type=repositories": {
@@ -365,6 +468,17 @@
       "pagination.current": {
         "selector": "[data-component='Pagination.Page'][aria-current]",
         "skip": ["boxShadow", "letterSpacing", "paddingInline"]
+      }
+    },
+    "blocks": {
+      "search-filters": {
+        "selector": "[data-testid=facets-pane]"
+      },
+      "repo-result": {
+        "selector": "[data-testid=results-list] > div"
+      },
+      "pagination": {
+        "selector": "nav[aria-label=Pagination]"
       }
     }
   }
