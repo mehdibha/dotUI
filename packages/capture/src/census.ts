@@ -2,7 +2,9 @@
    computed values, read with no hand-written selectors. The 12 values the
    diff compares come from the probe itself (one call over every element), so
    a census reading and a probe reading mean the same thing; the rest are
-   plain computed styles. It never reads text, only its length. */
+   plain computed styles. It never reads text, only its length; names come
+   only from an allow-list of data attributes and from class tokens
+   (`namesOf`). */
 
 import { compareMeasures } from "./compare"
 import { type Measure, PROPS, type Prop, snippet } from "./probe"
@@ -53,8 +55,9 @@ export const FORCED: readonly Forced[] = ["disabled", "invalid", "selected"]
 export interface CensusElement {
   id: number
   role: string
-  /** How the role was found: its ARIA role, its tag, or its box's shape. */
-  by: "aria" | "tag" | "shape"
+  /** How the role was found: its ARIA role, its tag, the names it or its
+   *  container carry (a segmented control's button), or its box's shape. */
+  by: "aria" | "tag" | "name" | "shape"
   tag: string
   /** The nearest control or landmark around it: a label's button. */
   in?: string
@@ -76,6 +79,8 @@ export interface CensusElement {
   forced?: Forced[]
   /** The custom property each value comes from, where one does. */
   vars?: Values
+  /** Its variant, size and component names (`namesOf`). */
+  names?: Names
 }
 
 export interface CensusPage {
@@ -94,11 +99,113 @@ export interface CensusPage {
   truncated?: number
   /** What this census version reads beyond values and forced states. */
   reads?: Reads[]
+  /** A Storybook story's enum args as rendered (variant, size…). */
+  args?: Record<string, string>
+  /** The full-page shot of this pass, in the census folder's shots/. */
+  shot?: string
 }
 
 /** Disabled, selected and open elements (`is`), and icon strokes; "states":
- *  pressed and focus forced, and disabled, invalid and selected set. */
-export type Reads = "flags" | "icons" | "states"
+ *  pressed and focus forced, and disabled, invalid and selected set;
+ *  "names": the data attributes and class tokens of `namesOf`. */
+export type Reads = "flags" | "icons" | "states" | "names"
+
+/** Name keys ("data-variant", "class.size") to the value an element
+ *  carries. */
+export type Names = Record<string, string>
+
+/** The names an element carries, from the data attributes of
+ *  `NAME_ATTRIBUTES` (single tokens only) and its class tokens with module
+ *  hashes stripped: `Button--size-small___zQrEw` gives class.size "small",
+ *  `btn btn-primary` class.variant "primary". Never its text, aria-label,
+ *  title, alt or href. Closed over nothing, so the census runs it in the
+ *  page. */
+export function namesOf(attribute: (name: string) => string | null): Names {
+  const names: Names = {}
+  const TOKEN = /^[A-Za-z0-9][\w.-]{0,39}$/
+  // The data attributes systems name a part, a variant or a size with.
+  for (const name of [
+    "data-component",
+    "data-slot",
+    "data-part",
+    "data-variant",
+    "data-appearance",
+    "data-kind",
+    "data-tone",
+    "data-intent",
+    "data-emphasis",
+    "data-priority",
+    "data-size",
+    "data-shape",
+  ]) {
+    const value = attribute(name)?.trim()
+    if (value && TOKEN.test(value)) names[name] = value
+  }
+  const word = (s: string) =>
+    /^[A-Z]?[a-z]+$/.test(s) || /^[a-z]+(-[a-z]+)*$/.test(s)
+  const classes = (attribute("class") ?? "")
+    .split(/\s+/)
+    // Tailwind's variants and arbitrary values aren't names.
+    .filter(
+      (token) => token && token.length <= 80 && !/[:[\]/()!@#%]/.test(token),
+    )
+    .map((token) => {
+      // A module's file prefix and hash: Primer_Brand__Button-module__,
+      // ___zQrEw, __a1B2c.
+      const bare = token.replace(/^.*-module__/, "")
+      const hash = /^(.+?)_{2,}([\w-]{4,10})$/.exec(bare)
+      return hash?.[1] && hash[2] && !word(hash[2]) ? hash[1] : bare
+    })
+  const kebab = (s: string) =>
+    s.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
+  const SIZE =
+    /^(x{0,3}s|x{0,3}l|[2-6]x[sl]|sm|md|lg|small|medium|large|big|tiny|mini|micro|compact|dense|condensed|comfortable|icon-only|size-?[\w-]+)$/
+  const STOP =
+    /^(is-|has-|with-|no-)|^(hover|focus|focused|active|disabled|selected|open|opened|closed|expanded|collapsed|checked|current|loading|pressed|invalid|visible|hidden|show|hide|top|bottom|left|right|start|end|center|middle|inline|block|full|full-width|fluid|wide|stretch|grow|fixed|sticky|static|absolute|relative|first|last|only|truncate|nowrap|wrap|rtl|ltr|light|dark|sr-only|visually-hidden)$|^(top|bottom|left|right|start|end)-/
+  const put = (key: "class.size" | "class.variant", value: string) => {
+    if (!names[key] && TOKEN.test(value)) names[key] = value
+  }
+  const modifier = (value: string) => {
+    const kebabbed = kebab(value)
+    // A number is a scale step (Text--200), not a name.
+    if (STOP.test(kebabbed) || /^\d/.test(value)) return
+    const size = /^size-?([\w-]+)$/i.exec(value)?.[1]
+    if (size) put("class.size", size)
+    else put(SIZE.test(kebabbed) ? "class.size" : "class.variant", value)
+  }
+  const present = new Set(classes)
+  for (const token of classes) {
+    // size-small, rt-variant-solid, sizeM; Tailwind's own size-4 and
+    // appearance-none have no prefix.
+    const keyed =
+      /(^|[a-z0-9][-_]+)(size|variant|appearance|kind|tone|intent|emphasis|shape)[-_]?([A-Za-z0-9]+)$/i.exec(
+        token,
+      )
+    if (
+      keyed?.[2] &&
+      keyed[3] &&
+      (keyed[1] || !/^(size|appearance)$/i.test(keyed[2])) &&
+      !STOP.test(kebab(keyed[3]))
+    ) {
+      put(/^size$/i.test(keyed[2]) ? "class.size" : "class.variant", keyed[3])
+      continue
+    }
+    // BEM: Button--subtle, cds--btn--primary, with its block also there
+    // or capitalized.
+    const bem = /^(.+)--([A-Za-z][\w-]*)$/.exec(token)
+    if (bem?.[1] && bem[2]) {
+      if (present.has(bem[1]) || /^[A-Z]/.test(bem[1])) modifier(bem[2])
+      continue
+    }
+    // Bootstrap and Primer CSS: btn btn-sm btn-primary.
+    const base =
+      /^(btn|button|badge|label|tag|chip|pill|alert|avatar)-([a-z][\w-]*)$/i.exec(
+        token,
+      )
+    if (base?.[1] && base[2] && present.has(base[1])) modifier(base[2])
+  }
+  return names
+}
 
 type Command =
   /** `fresh`: only elements new or changed since `seen` ("new": new only,
@@ -110,7 +217,8 @@ type Command =
   | { kind: "vars"; ids: number[] }
   | { kind: "focus"; ids: number[] }
   | { kind: "node"; id: number }
-  | { kind: "force"; id: number; state: Forced | null }
+  /** `role`: the census role, where names gave one (a segment). */
+  | { kind: "force"; id: number; state: Forced | null; role?: string }
   | { kind: "clear" }
 
 /* Runs in the page and closes over nothing, so its source can be sent as a
@@ -123,6 +231,7 @@ function census(
     mark: boolean,
   ) => Record<string, Record<string, string> | null>,
   props: readonly string[],
+  names: typeof namesOf,
   command: Command,
 ) {
   const ID = "data-census"
@@ -152,6 +261,10 @@ function census(
     "spinbutton",
     "treeitem",
     "select",
+    "toggle",
+    "segment",
+    "breadcrumb",
+    "pagination-item",
   ])
   const LANDMARKS = new Set([
     "navigation",
@@ -170,6 +283,7 @@ function census(
     "toolbar",
     "search",
     "radiogroup",
+    "segmented",
   ])
   const ALWAYS = new Set([
     "heading",
@@ -346,10 +460,12 @@ function census(
      the data attributes React Aria and Radix set. */
   const flagOf = (el: Element) => {
     const attr = (name: string) => el.getAttribute(name)
+    // Set unless it says "false": Primer writes data-disabled="false".
+    const data = (name: string) => (attr(name) ?? "false") !== "false"
     if (
       el.matches(":disabled") ||
       attr("aria-disabled") === "true" ||
-      el.hasAttribute("data-disabled")
+      data("data-disabled")
     )
       return "disabled" as const
     let userInvalid = false
@@ -358,11 +474,7 @@ function census(
     } catch {
       // Older engines don't know :user-invalid.
     }
-    if (
-      attr("aria-invalid") === "true" ||
-      el.hasAttribute("data-invalid") ||
-      userInvalid
-    )
+    if (attr("aria-invalid") === "true" || data("data-invalid") || userInvalid)
       return "invalid" as const
     if (
       el.matches(":checked") ||
@@ -371,7 +483,7 @@ function census(
       attr("aria-selected") === "true" ||
       attr("aria-pressed") === "true" ||
       (attr("aria-current") ?? "false") !== "false" ||
-      el.hasAttribute("data-selected") ||
+      data("data-selected") ||
       ["checked", "on", "active"].includes(attr("data-state") ?? "")
     )
       return "selected" as const
@@ -383,7 +495,7 @@ function census(
       return "open" as const
     return undefined
   }
-  const roleOf = (
+  const baseRoleOf = (
     el: Element,
     rect: DOMRect,
     style: CSSStyleDeclaration,
@@ -414,6 +526,65 @@ function census(
     if (painted && el.matches(":popover-open"))
       return { role: "popover", by: "shape" as const }
     return { role: shape(rect, style, chars, painted), by: "shape" as const }
+  }
+  /* What an element is named, for the roles names give: its data-component,
+     data-slot and data-part, its classes and a custom element's tag. */
+  const kindOf = (el: Element) =>
+    [
+      el.getAttribute("data-component"),
+      el.getAttribute("data-slot"),
+      el.getAttribute("data-part"),
+      el.getAttribute("class"),
+      el.localName.includes("-") ? el.localName : "",
+    ].join(" ")
+  const near = (el: Element, pattern: RegExp) => {
+    let up: Element | null = el
+    for (let depth = 0; up && depth < 4; depth++, up = parent(up))
+      if (pattern.test(kindOf(up))) return true
+    return false
+  }
+  /* The roles no ARIA or tag names, from what an item or its three nearest
+     containers are named: a segmented control and its segments, a
+     breadcrumb, a pagination item, a switch drawn as a button; and a
+     toggle button, from aria-pressed. */
+  const roleOf = (
+    el: Element,
+    rect: DOMRect,
+    style: CSSStyleDeclaration,
+    chars: number,
+    painted: boolean,
+  ) => {
+    const found = baseRoleOf(el, rect, style, chars, painted)
+    const { role } = found
+    if (["button", "link", "radio", "tab"].includes(role)) {
+      if (near(el, /segmented/i))
+        return { role: "segment", by: "name" as const }
+      if (near(el, /breadcrumb/i))
+        return { role: "breadcrumb", by: "name" as const }
+      if (near(el, /paginat|\bpager\b/i))
+        return { role: "pagination-item", by: "name" as const }
+      if (role === "button" && near(el, /switch(?!er)/i))
+        return { role: "switch", by: "name" as const }
+      if (role === "button" && el.hasAttribute("aria-pressed"))
+        return { role: "toggle", by: "aria" as const }
+      if (role === "button" && /toggle-?button/i.test(kindOf(el)))
+        return { role: "toggle", by: "name" as const }
+    }
+    if (
+      [
+        "list",
+        "group",
+        "radiogroup",
+        "toolbar",
+        "tablist",
+        "box",
+        "panel",
+        "card",
+      ].includes(role) &&
+      /segmented/i.test(kindOf(el))
+    )
+      return { role: "segmented", by: "name" as const }
+    return found
   }
   const px = (n: number) => `${Math.round(n * 10) / 10}px`
   const extra = (el: Element) => {
@@ -618,8 +789,9 @@ function census(
     const undo: (() => void)[] = (scope.__censusUndo = [])
     const el = byId(command.id)
     if (!command.state || !el) return false
-    const role =
+    const base =
       el.getAttribute("role")?.trim().split(/\s+/)[0] ?? implicit(el) ?? ""
+    const role = command.role ?? base
     const set = (name: string, value: string) => {
       const was = el.getAttribute(name)
       undo.push(() =>
@@ -646,7 +818,7 @@ function census(
       "menuitemradio",
     ]
     if (command.state === "disabled") {
-      if (!CONTROLS.has(role)) return false
+      if (!CONTROLS.has(role) && !CONTROLS.has(base)) return false
       if ("disabled" in el) flip(el as HTMLButtonElement, "disabled", true)
       set("aria-disabled", "true")
       set("data-disabled", "true")
@@ -661,7 +833,7 @@ function census(
           "select",
           "spinbutton",
           "checkbox",
-        ].includes(role)
+        ].includes(base)
       )
         return false
       set("aria-invalid", "true")
@@ -687,23 +859,27 @@ function census(
       flip(el, "checked", true)
       set("data-state", "checked")
       set("data-selected", "true")
-    } else if (CHECKED.includes(role)) {
+    } else if (CHECKED.includes(base)) {
       set("aria-checked", "true")
       set("data-state", "checked")
       set("data-selected", "true")
     } else if (
-      ["tab", "option", "treeitem", "row", "gridcell"].includes(role)
+      ["tab", "option", "treeitem", "row", "gridcell"].includes(base)
     ) {
       set("aria-selected", "true")
-      if (role === "tab") set("data-state", "active")
+      if (base === "tab") set("data-state", "active")
       set("data-selected", "true")
     } else if (el.hasAttribute("aria-pressed")) {
       set("aria-pressed", "true")
       set("data-state", "on")
       set("data-selected", "true")
+    } else if (role === "segment") {
+      set("aria-current", "true")
+      set("data-selected", "true")
     } else if (
-      role === "link" &&
-      el.closest("nav, [role=navigation], [role=tablist]")
+      role === "breadcrumb" ||
+      role === "pagination-item" ||
+      (base === "link" && el.closest("nav, [role=navigation], [role=tablist]"))
     )
       set("aria-current", "page")
     else return false
@@ -932,7 +1108,9 @@ function census(
     let around: string | undefined
     for (let up = parent(el); up && !around; up = parent(up)) {
       const role =
-        up.getAttribute("role")?.trim().split(/\s+/)[0] ?? implicit(up)
+        roles.get(up) ??
+        up.getAttribute("role")?.trim().split(/\s+/)[0] ??
+        implicit(up)
       if (role && (CONTROLS.has(role) || LANDMARKS.has(role))) around = role
     }
     const level =
@@ -946,6 +1124,30 @@ function census(
       !(el as HTMLButtonElement).disabled &&
       (CONTROLS.has(role) || el.hasAttribute("tabindex"))
     const is = flagOf(el)
+    const named = names((name) => el.getAttribute(name))
+    // A control's variant and size can sit on its label (Airbnb's
+    // data-size): what it lacks comes from its own parts, never from a
+    // control nested in it.
+    if (CONTROLS.has(role))
+      for (const inner of el.querySelectorAll(
+        "[data-variant], [data-size], [data-appearance], [data-kind], [data-tone], [data-intent], [data-emphasis], [data-priority], [data-shape]",
+      )) {
+        let nested = false
+        for (let up: Element | null = inner; up && up !== el; up = parent(up))
+          nested ||= CONTROLS.has(
+            up.getAttribute("role")?.trim().split(/\s+/)[0] ??
+              implicit(up) ??
+              "",
+          )
+        if (nested) continue
+        for (const [key, value] of Object.entries(
+          names((name) =>
+            name.startsWith("data-") ? inner.getAttribute(name) : null,
+          ),
+        ))
+          if (!["data-component", "data-slot", "data-part"].includes(key))
+            named[key] ??= value
+      }
     elements.push({
       id: next++,
       role,
@@ -960,6 +1162,7 @@ function census(
       ...(focusable ? { focusable } : {}),
       ...(is ? { is } : {}),
       values: {},
+      ...(Object.keys(named).length ? { names: named } : {}),
     })
   }
   const values = read(
@@ -972,7 +1175,7 @@ function census(
     elements,
     truncated,
     viewport: { width: innerWidth, height: innerHeight },
-    reads: ["flags", "icons"] as Reads[],
+    reads: ["flags", "icons", "names"] as Reads[],
   }
 }
 
@@ -990,7 +1193,7 @@ export const probeSource = () => {
 /** The census source with the probe bound, as a function expression of one
  *  argument (the command): for the kit, which defines it once per page. */
 export const censusSource = () =>
-  `((command) => { const __name = (fn) => fn; return (${census.toString()})(${probeSource()}, ${JSON.stringify(PROPS)}, command) })`
+  `((command) => { const __name = (fn) => fn; return (${census.toString()})(${probeSource()}, ${JSON.stringify(PROPS)}, ${namesOf.toString()}, command) })`
 
 /** A JavaScript expression that runs one census command in the page. */
 export const censusSnippet = (command: Command) =>
@@ -1097,6 +1300,9 @@ export function lookKeys(role: string): (Prop | Extra)[] {
     return ["color", "iconSize", "iconStroke"]
   if (role === "tooltip")
     return [...BOX_KEYS, "color", "fontSize", "fontWeight", "height"]
+  // Drawn with no text: the font and ink they inherit say nothing.
+  if (role === "avatar" || role === "progressbar" || role === "slider")
+    return [...BOX_KEYS, "height"]
   if (SURFACE_ROLES.has(role)) return BOX_KEYS
   return CONTROL_KEYS
 }
@@ -1133,6 +1339,9 @@ export interface Look {
   is?: Flag
   /** The custom property behind each value, where one was found. */
   vars?: Values
+  /** Each name key its elements carry (`namesOf`, and "args.<arg>" from a
+   *  Storybook story), to its values, most used first. */
+  names?: Record<string, string[]>
   /** One element showing it: page key, pass, mode and census id. */
   sample: {
     key: string
@@ -1152,6 +1361,111 @@ export interface Inventory {
   reads?: Reads[]
   looks: Look[]
   tokens: { light?: Record<string, string>; dark?: Record<string, string> }
+}
+
+/* The roles a story's args name: what a story renders, not the text and
+   structure around it. */
+const UNNAMED_BY_ARGS = new Set([
+  ...TEXT_ROLES,
+  "icon",
+  "img",
+  "page",
+  "main",
+  "panel",
+  "list",
+  "listitem",
+  "row",
+  "group",
+  "region",
+  "article",
+  "navigation",
+  "banner",
+  "contentinfo",
+  "complementary",
+])
+
+/* Which of a story's args name each element. The crawl reads an args pass
+   with what it already read marked seen, so the pass holds what the change
+   redrew: those that now look different from the rest pass in their place
+   take the args it changed. On the story's other passes an element takes
+   an arg only when a pass changing it redrew one of its role in its place;
+   the rest is the story's furniture. */
+function argNames(pages: CensusPage[]) {
+  const named = new Map<CensusElement, Names>()
+  const stories = new Map<string, CensusPage[]>()
+  for (const page of pages) {
+    const story = `${page.key}|${page.mode}`
+    stories.set(story, [...(stories.get(story) ?? []), page])
+  }
+  const at = (a: CensusElement, b: CensusElement) =>
+    a.role === b.role &&
+    a.box[0] < b.box[0] + b.box[2] &&
+    b.box[0] < a.box[0] + a.box[2] &&
+    a.box[1] < b.box[1] + b.box[3] &&
+    b.box[1] < a.box[1] + a.box[3]
+  for (const story of stories.values()) {
+    const rest = story.find((page) => page.pass === "rest")
+    const initial = rest?.args ?? {}
+    const changes = story.map((page) => ({
+      page,
+      changed: Object.keys(page.args ?? {}).filter(
+        (arg) => page.args?.[arg] !== initial[arg],
+      ),
+      redrawn: page.elements.filter(
+        (element) =>
+          !rest?.elements.some(
+            (one) =>
+              at(one, element) &&
+              sameLook(lookKeys(element.role), one.values, element.values),
+          ),
+      ),
+    }))
+    for (const { page, changed, redrawn } of changes)
+      for (const element of page.elements) {
+        if (UNNAMED_BY_ARGS.has(element.role)) continue
+        const args = changed.length
+          ? redrawn.includes(element)
+            ? changed
+            : []
+          : Object.keys(initial).filter((arg) =>
+              changes.some(
+                (other) =>
+                  other.changed.includes(arg) &&
+                  other.redrawn.some((one) => at(one, element)),
+              ),
+            )
+        const values = changed.length ? page.args : initial
+        if (args.length)
+          named.set(
+            element,
+            Object.fromEntries(
+              args.map((arg) => [`args.${arg}`, values?.[arg] ?? ""]),
+            ),
+          )
+      }
+  }
+  return named
+}
+
+/** Each key's values over the members, most used first. */
+const tally = (names: Names[]) => {
+  const counts = new Map<string, Map<string, number>>()
+  for (const each of names)
+    for (const [key, value] of Object.entries(each)) {
+      const values = counts.get(key) ?? new Map<string, number>()
+      values.set(value, (values.get(value) ?? 0) + 1)
+      counts.set(key, values)
+    }
+  return Object.fromEntries(
+    [...counts]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, values]) => [
+        key,
+        [...values]
+          .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+          .map(([value]) => value),
+      ]),
+  )
 }
 
 const signature = (keys: (Prop | Extra)[], values: Values) =>
@@ -1194,6 +1508,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         twins.set(key(page, element), element)
 
   type Member = { page: CensusPage; element: CensusElement }
+  const byArgs = argNames(pages)
   const groups = new Map<string, Map<string, Member[]>>()
   for (const page of pages) {
     if (page.mode === "dark" && lit.has(where(page))) continue
@@ -1299,6 +1614,12 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
           found.flatMap((f) => (f.dark ? [[f.flag, f.dark]] : [])),
         ),
       }
+      const names = tally(
+        members.map(({ element }) => ({
+          ...element.names,
+          ...byArgs.get(element),
+        })),
+      )
       const forced = FORCED.filter(
         (state) =>
           !found.some((f) => f.flag === state) &&
@@ -1325,6 +1646,7 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
         ...(forced.length ? { forced } : {}),
         ...(first.element.is ? { is: first.element.is } : {}),
         ...(sample.element.vars ? { vars: sample.element.vars } : {}),
+        ...(Object.keys(names).length ? { names } : {}),
         sample: {
           key: sample.page.key,
           pass: sample.page.pass,
@@ -1350,8 +1672,8 @@ export function cluster(pages: CensusPage[], probe: string): Inventory {
     pageList.set(page.key, entry)
     tokens[page.mode] = { ...tokens[page.mode], ...page.tokens }
   }
-  const reads = (["flags", "icons", "states"] as const).filter((read) =>
-    pages.every((page) => page.reads?.includes(read)),
+  const reads = (["flags", "icons", "states", "names"] as const).filter(
+    (read) => pages.every((page) => page.reads?.includes(read)),
   )
   return { probe, pages: [...pageList.values()], reads, looks, tokens }
 }

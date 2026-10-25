@@ -19,7 +19,7 @@ import type { Inventory } from "../src/census"
 import type { GapsFile } from "../src/looks"
 import type { Model } from "../src/model"
 import { type SystemInput, systemLooks } from "../src/system-looks"
-import { readReference, REFS } from "./preset-pages"
+import { newest, readReference, REFS, walk } from "./preset-pages"
 
 const { values: args } = parseArgs({
   options: {
@@ -44,20 +44,6 @@ type Residuals = NonNullable<SystemInput["residuals"]>
 
 const readJson = async <T>(file: string): Promise<T> =>
   JSON.parse(await readFile(file, "utf8"))
-
-/** Files under `root` whose path matches `test`, up to six folders deep. */
-function walk(root: string, test: (path: string) => boolean, depth = 6) {
-  const out: string[] = []
-  if (!existsSync(root) || depth < 0) return out
-  for (const entry of readdirSync(root, { withFileTypes: true })) {
-    const path = resolve(root, entry.name)
-    if (entry.isDirectory()) out.push(...walk(path, test, depth - 1))
-    else if (test(path)) out.push(path)
-  }
-  return out
-}
-const newest = (files: string[]) =>
-  files.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0]
 
 for (const pack of args.pack) {
   const modelFile = resolve(REFS, pack, "model.json")

@@ -109,6 +109,9 @@ const look = z.object({
   /** The probe part that measures this look on both sides. */
   part: z.string().optional(),
   states: z.partialRecord(z.enum(STATES), byMode(reading)),
+  /** The names its elements carry ("data-variant", "class.size",
+   *  "args.variant"), each key's values most used first. */
+  names: z.record(z.string(), z.array(z.string())).optional(),
   /** Where the preset misses this look. */
   off: z
     .array(

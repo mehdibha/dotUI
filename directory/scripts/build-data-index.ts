@@ -14,6 +14,7 @@ import {
   systemSchema,
 } from "../src/data/schema"
 import type { CapturedSystem, DataIndex, SystemEntry } from "../src/data/schema"
+import { specFileSchema } from "../src/data/spec"
 
 const root = path.resolve(import.meta.dirname, "..")
 const dataDir = path.join(root, "data")
@@ -92,6 +93,15 @@ for (const dir of systemDirs) {
         off: all.filter((l) => l.off?.length).length,
       })
     }
+  }
+  // Its components as variants × sizes grids, from the same capture.
+  const specPath = path.join(systemsDir, dir, "spec.json")
+  if (fs.existsSync(specPath)) {
+    const specResult = specFileSchema.safeParse(readJson(specPath))
+    if (!specResult.success)
+      errors.push(`${rel}/spec.json: ${specResult.error.message}`)
+    else if (specResult.data.slug !== dir)
+      errors.push(`${rel}/spec.json: slug must match its directory name`)
   }
   if (!fs.existsSync(path.join(systemsDir, dir, "system.json"))) continue
   const systemResult = systemSchema.safeParse(

@@ -82,6 +82,9 @@ export interface Look {
    *  its shape: its rest values are that state's. */
   is?: Flag
   states: Partial<Record<State, Partial<Record<Mode, Reading>>>>
+  /** The names its elements carry (data attributes, class tokens, a
+   *  story's args), each key's values most used first. */
+  names?: Record<string, string[]>
   /** Where the preset misses this look, from the fit's residual rows. */
   off?: {
     prop: string
@@ -173,6 +176,11 @@ export interface SystemLooks {
    container (`text@button`, `cell@table`) falls back to its container's. */
 const COMPONENT: Record<string, string> = {
   button: "button",
+  toggle: "toggle-button",
+  segment: "segmented-control",
+  segmented: "segmented-control",
+  breadcrumb: "breadcrumbs",
+  "pagination-item": "pagination",
   link: "link",
   tab: "tabs",
   tablist: "tabs",
@@ -232,9 +240,9 @@ const PART_GROUPS: Record<string, string[]> = {
   shell: ["navigation", "banner", "complementary", "panel", "box"],
   panel: ["panel", "complementary", "navigation", "box"],
   button: ["button"],
-  toggle: ["button"],
-  segmented: ["button", "radio", "tab"],
-  pagination: ["link", "button"],
+  toggle: ["toggle", "button"],
+  segmented: ["segment", "button", "radio", "tab"],
+  pagination: ["pagination-item", "link", "button"],
   calendar: ["button", "cell@table", "gridcell"],
   input: ["textbox", "searchbox", "combobox"],
   select: ["select", "combobox", "button"],
@@ -395,6 +403,7 @@ interface PoolLook {
   forced?: Forced[]
   vars?: Values
   is?: Flag
+  names?: Record<string, string[]>
 }
 
 export function systemLooks(input: SystemInput): SystemLooks {
@@ -474,6 +483,7 @@ export function systemLooks(input: SystemInput): SystemLooks {
       ...(part ? { part } : {}),
       ...(look.is ? { is: look.is } : {}),
       states,
+      ...(look.names ? { names: look.names } : {}),
       ...(off ? { off } : {}),
     }
   }

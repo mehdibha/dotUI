@@ -7,6 +7,7 @@ import {
   changed,
   cluster,
   groupOf,
+  namesOf,
   trim,
 } from "./census"
 import { buildModel, diffModels } from "./model"
@@ -212,6 +213,163 @@ describe("census", () => {
     expect(light?.dark).toBeUndefined()
     expect(dark?.dark?.backgroundColor).toBe(navy.backgroundColor)
     expect(dark?.light).toBeUndefined()
+  })
+
+  it("tallies each look's names, a story's args only on what it renders", () => {
+    const label: CensusElement = {
+      id: 9,
+      role: "text",
+      by: "shape",
+      tag: "span",
+      in: "button",
+      box: [0, 0, 10, 10],
+      chars: 4,
+      values: { color: "white" },
+    }
+    const named = (id: number, x: number, variant: string) => ({
+      ...button(id, x, blue),
+      names: { "data-variant": variant, "data-size": "medium" },
+    })
+    const { looks } = cluster(
+      [
+        page("/a", "light", [
+          named(1, 0, "primary"),
+          named(2, 100, "primary"),
+          named(3, 200, "brand"),
+        ]),
+        {
+          ...page("/story", "light", [button(1, 0, blue), label]),
+          args: { variant: "primary", size: "medium" },
+        },
+        {
+          ...page("/story", "light", [button(1, 0, navy)]),
+          pass: "variant=secondary",
+          args: { variant: "secondary", size: "medium" },
+        },
+      ],
+      "test",
+    )
+    const [look, other] = looks.filter((one) => one.group === "button")
+    // size is drawn the same under every value it took: not a name.
+    expect(look?.names).toEqual({
+      "args.variant": ["primary"],
+      "data-size": ["medium"],
+      "data-variant": ["primary", "brand"],
+    })
+    expect(other?.names).toEqual({ "args.variant": ["secondary"] })
+    expect(looks.find((one) => one.group === "text@button")?.names).toBe(
+      undefined,
+    )
+  })
+
+  it("names by a story's args only what their passes redrew", () => {
+    const black = { backgroundColor: "rgb(0, 0, 0)" }
+    const wrapper: CensusElement = {
+      ...button(2, 0, {}),
+      role: "card",
+      by: "shape",
+      tag: "div",
+      box: [0, 100, 300, 200],
+    }
+    const { looks } = cluster(
+      [
+        // Rendered once: nothing to tell its args apart.
+        {
+          ...page("/once", "light", [button(1, 0, black)]),
+          args: { variant: "error" },
+        },
+        // The wrapper no variant redraws is furniture.
+        {
+          ...page("/story", "light", [button(1, 0, blue), wrapper]),
+          args: { variant: "primary" },
+        },
+        // The pass redraws the wrapper too, unchanged: still furniture.
+        {
+          ...page("/story", "light", [
+            button(3, 0, navy),
+            { ...wrapper, id: 4 },
+          ]),
+          pass: "args variant:secondary",
+          args: { variant: "secondary" },
+        },
+      ],
+      "test",
+    )
+    const of = (values: { backgroundColor: string }) =>
+      looks.find(
+        (one) =>
+          one.group === "button" &&
+          one.light?.backgroundColor === values.backgroundColor,
+      )?.names
+    expect(of(black)).toBeUndefined()
+    expect(of(blue)).toEqual({ "args.variant": ["primary"] })
+    expect(of(navy)).toEqual({ "args.variant": ["secondary"] })
+    expect(looks.find((one) => one.group === "card")?.names).toBeUndefined()
+  })
+})
+
+describe("namesOf", () => {
+  const of = (attributes: Record<string, string>) => {
+    const asked: string[] = []
+    const names = namesOf((name) => {
+      asked.push(name)
+      return attributes[name] ?? null
+    })
+    return { names, asked }
+  }
+
+  it("reads the allowed data attributes, never text, labels or links", () => {
+    const { names, asked } = of({
+      "data-variant": "primary",
+      "data-size": "medium",
+      "data-component": "SegmentedControl.Button",
+      "data-tone": "Click to save",
+      "aria-label": "Save",
+      title: "Save",
+      href: "/account",
+    })
+    expect(names).toEqual({
+      "data-variant": "primary",
+      "data-size": "medium",
+      "data-component": "SegmentedControl.Button",
+    })
+    for (const name of ["aria-label", "title", "alt", "href"])
+      expect(asked).not.toContain(name)
+  })
+
+  it.each([
+    [
+      "Primer_Brand__Button-module__Button___h1Yx2 Primer_Brand__Button-module__Button--size-small___zQrEw Primer_Brand__Button-module__Button--subtle___F7pEE",
+      { "class.size": "small", "class.variant": "subtle" },
+    ],
+    [
+      "btn btn-sm btn-primary",
+      { "class.size": "sm", "class.variant": "primary" },
+    ],
+    ["Link--secondary", { "class.variant": "secondary" }],
+    [
+      "cds--btn cds--btn--primary cds--btn--md",
+      { "class.variant": "primary", "class.size": "md" },
+    ],
+    [
+      "rt-Button rt-variant-soft rt-r-size-2",
+      { "class.variant": "soft", "class.size": "2" },
+    ],
+    ["spectrum-Button spectrum-Button--sizeM", { "class.size": "M" }],
+    ["Button_variant_ghost__1a2b3c4", { "class.variant": "ghost" }],
+  ])("reads names from %s", (classes, expected) => {
+    expect(of({ class: classes }).names).toEqual(expected)
+  })
+
+  it.each([
+    "size-4 flex rounded-lg shadow-sm appearance-none hover:bg-red-500",
+    "Popover-message Popover-message--bottom-left",
+    "Text--200____P1wy card__title",
+    "cds--btn",
+    "sc-a1b2c3 kJhGfD c1x2y3z",
+    "Button--fullWidth btn btn-block",
+  ])("finds no names in %s", (classes) => {
+    expect(of({ class: classes }).names).toEqual({})
   })
 })
 
