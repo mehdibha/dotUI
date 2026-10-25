@@ -1297,9 +1297,6 @@
                 "from": "ai"
               },
               "note": "An unstyled 13px browser checkbox in one story."
-            },
-            "v-1kyslt": {
-              "hide": "the default checkbox again, read in dark only from the indeterminate story's pass"
             }
           }
         }

@@ -282,16 +282,16 @@
     },
     "badge": {
       "status": "reviewed",
-      "summary": "Small pills: white Guest favorite and grey Superhost on listing photos, and a grey 1px border for terms like Free cancellation.",
+      "summary": "Small pills on listing photos: white Guest favorite (a gradient version on search results) and translucent grey Superhost. Terms like Free cancellation sit on a pale grey fill.",
       "groups": {
         "badge": {
           "variants": {
             "v-9gbo6p": {
               "name": {
-                "value": "outline",
+                "value": "subtle",
                 "from": "ai"
               },
-              "note": "A grey 1px border: Free cancellation."
+              "note": "A pale grey fill with grey text: Free cancellation."
             },
             "v-enqigg": {
               "hide": "the calendar's month title: a date picker's parts"
@@ -310,7 +310,7 @@
                 "value": "guest favorite",
                 "from": "ai"
               },
-              "note": "A white pill with a soft shadow on listing photos."
+              "note": "A white pill with a soft shadow on the home page's listing photos."
             },
             "v-9ytwtw": {
               "name": {
@@ -327,12 +327,22 @@
             },
             "v-1fhjvp": {
               "hide": "a row's arrow: see button"
+            },
+            "v-1mse9s": {
+              "name": {
+                "value": "guest favorite, search",
+                "from": "ai"
+              },
+              "note": "On search results: larger, a white-to-grey gradient and a deeper shadow."
+            },
+            "v-h8giha": {
+              "hide": "the selected map price pin: see button"
             }
           }
         }
       },
       "missing": [
-        "Airbnb credit, green text on a pale green fill, showed in an earlier capture but not in this one."
+        "Airbnb credit (green text on a pale green fill) is on the search page but wasn't read as a badge."
       ]
     },
     "card": {
@@ -452,6 +462,9 @@
             },
             "v-a887nw": {
               "hide": "a dark callout anchored to the AI note on search results: a popover, not a modal"
+            },
+            "v-zxb0r5": {
+              "hide": "the Price details callout anchored to a listing's price: a popover, not a modal"
             }
           },
           "sizes": {
