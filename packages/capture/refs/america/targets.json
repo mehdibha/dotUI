@@ -1,0 +1,216 @@
+{
+  "https://america.gov/": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "button.secondary": {
+        "selector": "main a[href='/coming-soon'][class*='bg-background-tertiary']"
+      },
+      "button.icon": {
+        "selector": "button[aria-label='Previous example']"
+      },
+      "select.trigger": {
+        "selector": "select[aria-label=Language]"
+      },
+      "badge.accent": {
+        "within": "a[href='/fraud']",
+        "selector": "span.rounded-full"
+      },
+      "checkbox.checked": {
+        "selector": "[role=checkbox][data-checked] > span:first-child",
+        "only": ["backgroundColor", "edge"]
+      }
+    }
+  },
+  "https://america.gov/how-it-works": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "text.muted": {
+        "selector": "span.type-body-m.text-tertiary"
+      }
+    }
+  },
+  "https://america.gov/about": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "segmented": {
+        "before": [
+          {
+            "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+          }
+        ],
+        "selector": "[data-slot=theme-segmented-control]"
+      },
+      "segmented.item": {
+        "before": [
+          {
+            "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+          }
+        ],
+        "within": "[data-slot=theme-segmented-control]",
+        "selector": "[role=radio][data-unchecked]",
+        "skip": [
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "segmented.selected": {
+        "before": [
+          {
+            "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+          }
+        ],
+        "selector": "[data-slot=theme-segmented-control]",
+        "box": "span[aria-hidden=true]",
+        "ink": "[role=radio][data-checked]",
+        "skip": [
+          "paddingInline",
+          "fontFamily",
+          "fontSize",
+          "fontWeight",
+          "letterSpacing"
+        ]
+      },
+      "menu": {
+        "before": [
+          {
+            "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+          }
+        ],
+        "selector": "[role=dialog] > div.absolute.inset-0",
+        "only": ["backgroundColor", "borderRadius", "boxShadow", "edge"]
+      }
+    }
+  },
+  "https://america.gov/faq": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "heading.1": {
+        "selector": "main h1"
+      },
+      "input": {
+        "before": [
+          {
+            "click": "::-p-text(Submit feedback)"
+          }
+        ],
+        "selector": "[role=dialog] textarea",
+        "skip": ["height"]
+      },
+      "input.focus": {
+        "before": [
+          {
+            "click": "::-p-text(Submit feedback)"
+          },
+          {
+            "click": "[role=dialog] textarea"
+          },
+          {
+            "press": "a"
+          }
+        ],
+        "selector": "[role=dialog] textarea",
+        "focus": true
+      },
+      "field.label": {
+        "before": [
+          {
+            "click": "::-p-text(Submit feedback)"
+          }
+        ],
+        "selector": "[role=dialog] label"
+      },
+      "dialog": {
+        "before": [
+          {
+            "click": "::-p-text(Submit feedback)"
+          }
+        ],
+        "selector": "[role=dialog]"
+      },
+      "tooltip": {
+        "before": [
+          {
+            "hover": "button[aria-label='Upload PDF']"
+          }
+        ],
+        "selector": "[role=tooltip]"
+      }
+    }
+  },
+  "https://america.gov/privacy": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {}
+  },
+  "https://america.gov/privacy-policy": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "heading.3": {
+        "selector": "main h2.type-heading-s"
+      },
+      "text": {
+        "selector": "main p"
+      },
+      "link": {
+        "selector": "main p a"
+      },
+      "button.quiet": {
+        "within": "[data-slot=site-footer]",
+        "selector": "a[href='/privacy-policy']"
+      }
+    }
+  },
+  "https://america.gov/terms": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {}
+  },
+  "https://america.gov/coming-soon": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {}
+  },
+  "https://america.gov/fraud": {
+    "storage": "america:theme",
+    "settle": 2500,
+    "parts": {
+      "button.primary": {
+        "selector": "button",
+        "text": "Continue"
+      },
+      "heading.2": {
+        "selector": "main h2.type-section-heading"
+      },
+      "heading.4": {
+        "selector": "main h3.type-card-title"
+      },
+      "card": {
+        "selector": "figure.squircle"
+      },
+      "progress": {
+        "within": "figure.squircle",
+        "selector": "[class*='bg-text-primary/5']",
+        "nth": 1
+      },
+      "progress.fill": {
+        "selector": ".fraud-bar-late"
+      },
+      "button.focus": {
+        "selector": "button",
+        "text": "Show all",
+        "focus": true
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 The dotUI launch film, made with [Remotion](https://remotion.dev). It renders the **real** product: registry components and the real /studio panel are imported straight from `www/src` (`@/…`), themed by the real engine, so the film always shows the current components.
 
-The scenes are placeholders for now, except `Studio`, which proves the rig. Creative direction lives in [STORYBOARD.md](STORYBOARD.md).
+The scenes are placeholders for now, except a first draft of `Looks`, which proves the rig. Creative direction lives in [STORYBOARD.md](STORYBOARD.md).
 
 ## Commands
 
@@ -15,7 +15,7 @@ pnpm --filter video studio
 Remotion Studio: scrub the timeline, hot reload. Every scene is also its own composition next to the full `Launch`.
 
 ```bash
-pnpm --filter video frames Studio 0-479:60 --sheet
+pnpm --filter video frames Looks 0-479:60 --sheet
 ```
 
 Renders stills of one composition into `out/frames/<Composition>/` plus a contact sheet `out/frames/<Composition>.sheet.jpg`. A scene id bundles only that scene. Frames: `0,45,90`, `0-600:30` (range:step), or `all:60`. `--scale=1` for full size (default 0.5).
@@ -24,7 +24,7 @@ Renders stills of one composition into `out/frames/<Composition>/` plus a contac
 pnpm --filter video render
 ```
 
-The full film to `out/launch.mp4`: each scene renders in chunks, each chunk in its own process on a fresh browser, kept under the bundle's hash so a rerun resumes; then a lossless concat. `--scenes=Studio,End` re-renders only those; `--skip=Open` leaves scenes out; `--scale=2` makes a 4K master; `--music=public/track.mp3` muxes the soundtrack; `--concurrency=3` (the default) is what a 24 GB machine holds.
+The full film to `out/launch.mp4`: each scene renders in chunks, each chunk in its own process on a fresh browser, kept under the bundle's hash so a rerun resumes; then a lossless concat. `--scenes=Looks,End` re-renders only those; `--skip=Rush` leaves scenes out; `--scale=2` makes a 4K master; `--music=public/track.mp3` muxes the soundtrack; `--concurrency=3` (the default) is what a 24 GB machine holds.
 
 ## How it's built
 

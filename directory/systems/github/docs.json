@@ -1,0 +1,1547 @@
+{
+  "version": 1,
+  "slug": "github",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Cool greys on white, nearly neutral: #1f2328 ink, #59636e for secondary text, #d1d9e0 borders and #f6f8fa for bands and default buttons. Blue (#0969da) is links, focus and selection; green (#1f883d) is kept for the primary action and open states; purple marks merged. Dark mode is its own palette: #0d1117 page, #f0f6fc ink, #3d444d borders, a lighter blue (#4493f8) for links.",
+      "usage": [
+        "The repository header and box headers sit on the #f6f8fa band; the page stays white."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "14px on a 21px line for most of the UI, 12px on 18px for metadata, 16px for list titles and headings (600 for headings, 500 for issue titles). Primer asks for Mona Sans, but no face loads on github.com, so the system font renders. Code and the clone URL are monospace."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "6px corners almost everywhere: buttons, inputs, boxes, menu rows. Dialogs and overlays round to 12px. Avatars, labels and counters are full pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 4px base used in 2px steps: 8px is the most common gap, then 6px and 12px, with 16px around boxes. Controls are 32px (medium) or 28px (small)."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Mostly flat: borders separate things, not shadows. Buttons carry a 1px drop at 4% black and inputs a faint inset at the top. Dialogs and overlays share one floating shadow: a 1px ring plus two soft layers (6px 12px and 6px 18px)."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Primer's Button, read off github.com and Primer's Storybook. The product names its looks with data-variant: default (the most used), invisible (toolbar actions), primary (green, the page's main action), danger, link and secondary. Sizes are named too: small 28px, medium 32px, large 40px. Icon-only buttons are squares at the same heights.",
+      "groups": {
+        "button": {
+          "variants": {
+            "invisible": {
+              "note": "No fill at rest, grey on hover: toolbar and overflow actions."
+            },
+            "default": {
+              "note": "Grey fill, 1px border: Notifications, Fork and Star, a dialog's Got it!"
+            },
+            "primary": {
+              "note": "The green main action, about one per page: Code, New issue."
+            },
+            "danger": {
+              "note": "Red ink on the default look (Storybook's dialog)."
+            },
+            "secondary": {
+              "note": "Sponsor on search results: github.com's own scheme, not in Primer React."
+            },
+            "link": {
+              "note": "Underlined text with no frame: the checks count (19/20) on pull requests."
+            },
+            "v-klgzcs": {
+              "hide": "the dotted author name in issue rows, a hovercard trigger: see link"
+            },
+            "v-jwoc11": {
+              "hide": "side navigation rows (NavList), like More on search"
+            },
+            "v-me01zg": {
+              "hide": "the × inside a token: see badge"
+            },
+            "v-seyxlf": {
+              "hide": "the signed-out header's menus (Platform ▾) on its black bar: marketing chrome outside Primer's Button"
+            },
+            "subtle": {
+              "hide": "the search and icon buttons on the signed-out header's black bar"
+            },
+            "v-ok6mv6": {
+              "name": {
+                "value": "inactive",
+                "from": "ai"
+              },
+              "note": "Muted ink on a grey fill, still focusable (Storybook's inactive buttons)."
+            },
+            "v-rl5s9y": {
+              "hide": "tokens drawn as buttons: see badge"
+            },
+            "v-j9mjt2": {
+              "hide": "sortable column headers: see table"
+            },
+            "gray": {
+              "hide": "an issue label drawn as a button: see badge"
+            },
+            "v-meol7j": {
+              "hide": "a sortable column header: see table"
+            },
+            "v-pvtaiz": {
+              "hide": "an issue label token drawn as a button (Storybook): see badge"
+            },
+            "v-026pg2": {
+              "hide": "a Details summary row (Custom see Details) in a story"
+            },
+            "v-hwo4bd": {
+              "hide": "the × on an issue label token: see badge"
+            },
+            "v-kdl13y": {
+              "hide": "a colored issue label token drawn as a button: see badge"
+            },
+            "v-6v376w": {
+              "hide": "browser-default buttons in the unstyled tablist story"
+            },
+            "v-tch71b": {
+              "hide": "a topic tag drawn as a button: see link"
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "Primer's default."
+            },
+            "small": {
+              "note": "Most toolbar actions."
+            },
+            "s-vz5457": {
+              "name": {
+                "value": "small icon",
+                "from": "ai"
+              },
+              "note": "IconButton: a 28px square."
+            },
+            "s-djtkox": {
+              "hide": "icons in a list's rows"
+            },
+            "s-13zdnl": {
+              "hide": "the unstyled tablist story's button"
+            }
+          }
+        }
+      },
+      "usage": [
+        "One primary per view: the repo's Code button, New issue on the issues list.",
+        "The repo header's Notifications, Fork and Star are small default buttons, Fork and Star with a counter."
+      ]
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Five components share this block, all full pills. Label is outlined in ten colors, named by data-variant: default, primary, secondary, accent, success, attention, severe, danger, done and sponsors. IssueLabel fills with a named color (gray, blue, green, pink and twenty more). CounterLabel is the count chip beside a tab or on a button. StateLabel is the filled open, closed or merged pill. Timeline badges, 32px circles with an icon, reuse the variant names and are left out here.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "default": {
+              "note": "Label: the outlined grey pill."
+            },
+            "secondary": {
+              "note": "CounterLabel: the grey count beside a tab, Issues 19."
+            },
+            "primary": {
+              "note": "A filled dark-grey pill: StateLabel's Dismissed and CounterLabel's dark count."
+            },
+            "accent": {
+              "note": "Label: blue outline and ink."
+            },
+            "success": {
+              "note": "Label: green outline and ink."
+            },
+            "small": {
+              "name": {
+                "value": "open",
+                "from": "docs"
+              },
+              "note": "StateLabel for an open issue: filled green with an icon. The capture took 'small' from a story's size arg."
+            },
+            "v-zlgy42": {
+              "name": {
+                "value": "issue label",
+                "from": "ai"
+              },
+              "note": "An issue label in the repository's own color: filled, ink picked for contrast."
+            },
+            "v-jb6i07": {
+              "hide": "another issue label color: the repository's data"
+            },
+            "v-tg0c9f": {
+              "hide": "another issue label color: the repository's data"
+            },
+            "v-7x73xo": {
+              "name": {
+                "value": "closed",
+                "from": "ai"
+              },
+              "note": "StateLabel: a red pill with an icon."
+            },
+            "v-e9dqlp": {
+              "hide": "inline code in a timeline line"
+            },
+            "v-0knbar": {
+              "hide": "a darker timeline badge"
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "Label and CounterLabel."
+            },
+            "medium": {
+              "note": "StateLabel at its default size."
+            },
+            "s-ogghbt": {
+              "hide": "Pulse's 'Unresolved conversations' line: not a badge"
+            },
+            "s-ookmoy": {
+              "hide": "timeline badges: 32px circles with an icon, colored with the same variant names"
+            }
+          }
+        }
+      },
+      "usage": [
+        "Counts sit beside tab names (Issues, Pull requests) and inside the Fork and Star buttons.",
+        "Issue labels take the repository's own colors, so each color reads as its own look; one stands for all."
+      ],
+      "missing": [
+        "Topic tags (blue fill, blue ink) are links, so they landed under link."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links take their color from where they sit: blue by default, grey (secondary, muted) in lists and metadata, full ink and semibold (primary) for a row's main link. In prose they're underlined. Primer's Link has no size: text size comes from the text around it.",
+      "groups": {
+        "link": {
+          "variants": {
+            "secondary": {
+              "note": "Grey links in lists: commit messages, timestamps."
+            },
+            "primary": {
+              "note": "Full ink, semibold: a row's main link (Pulse's pull requests)."
+            },
+            "v-8gifmo": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "The plain blue link."
+            },
+            "muted": {
+              "note": "Grey and underlined: milestones and metadata."
+            },
+            "v-3876vl": {
+              "name": {
+                "value": "title",
+                "from": "ai"
+              },
+              "note": "Issue and pull request titles in lists: full ink, 500."
+            },
+            "v-7yxkk3": {
+              "name": {
+                "value": "inline",
+                "from": "docs"
+              },
+              "note": "Underlined blue links in prose, like the README."
+            },
+            "v-hqomuf": {
+              "name": {
+                "value": "result title",
+                "from": "ai"
+              },
+              "note": "Repository names in search results."
+            },
+            "v-3kuy8e": {
+              "hide": "topic tags: pill links, closer to badge"
+            },
+            "v-tch71b": {
+              "hide": "topic tags in the About sidebar"
+            },
+            "default": {
+              "hide": "buttons rendered as links (Notifications): see button"
+            },
+            "v-wy2cp9": {
+              "hide": "Pulse's side navigation rows"
+            },
+            "subtle": {
+              "hide": "Sign in on the signed-out header's black bar"
+            },
+            "v-jwoc11": {
+              "hide": "side navigation rows (NavList): Assigned to me, Created by me"
+            },
+            "v-jmac1c": {
+              "name": {
+                "value": "in a banner",
+                "from": "ai"
+              },
+              "note": "Underlined, in the banner's ink."
+            },
+            "v-8chwc9": {
+              "name": {
+                "value": "timeline",
+                "from": "ai"
+              },
+              "note": "Underlined in the line's ink: Roadmap in a timeline item."
+            },
+            "gray": {
+              "hide": "an issue label drawn as a link: see badge"
+            }
+          },
+          "sizes": {
+            "s-sfdu69": {
+              "name": {
+                "value": "16px text",
+                "from": "ai"
+              }
+            },
+            "s-alefcp": {
+              "name": {
+                "value": "14px text",
+                "from": "ai"
+              }
+            },
+            "s-f4lyfp": {
+              "name": {
+                "value": "12px text",
+                "from": "ai"
+              },
+              "note": "The footer."
+            },
+            "medium": {
+              "hide": "outline menu rows: see menu"
+            },
+            "large": {
+              "hide": "Pulse's side navigation rows"
+            },
+            "small": {
+              "hide": "a button rendered as a link"
+            },
+            "s-md1iui": {
+              "hide": "topic tags"
+            },
+            "s-grstx8": {
+              "hide": "topic tags in the About sidebar"
+            },
+            "s-qk05q4": {
+              "name": {
+                "value": "12px text",
+                "from": "ai"
+              },
+              "note": "The Languages list."
+            }
+          }
+        }
+      },
+      "usage": [
+        "Signed out, github.com underlines links in text (data-a11y-link-underlines)."
+      ]
+    },
+    "avatar": {
+      "status": "reviewed",
+      "summary": "Round with a 1px inner ring, sized by number: 20px in lists, 24px beside the repository name, 32px under Contributors, 48px in hover cards.",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-stsopu": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Round, with a 1px ring."
+            },
+            "v-h7bgtg": {
+              "name": {
+                "value": "no ring",
+                "from": "ai"
+              },
+              "note": "Storybook only."
+            },
+            "v-x71jmd": {
+              "name": {
+                "value": "stacked",
+                "from": "docs"
+              },
+              "note": "Overlapping avatars on the latest commit (AvatarStack)."
+            },
+            "v-m7sn3r": {
+              "hide": "AvatarStack's back layers in Storybook"
+            },
+            "v-mifivo": {
+              "hide": "AvatarStack's back layers in Storybook"
+            },
+            "v-ha11bi": {
+              "hide": "an avatar on a hovered menu row: the fill is the row's"
+            },
+            "v-l47zi9": {
+              "name": {
+                "value": "card header",
+                "from": "ai"
+              },
+              "note": "Beside a name in a card header (Storybook)."
+            }
+          },
+          "sizes": {
+            "s-lq5njs": {
+              "name": {
+                "value": "20",
+                "from": "docs"
+              },
+              "note": "Primer's default: issue rows, commit authors."
+            },
+            "s-pz9f8f": {
+              "name": {
+                "value": "32",
+                "from": "docs"
+              },
+              "note": "Contributors."
+            },
+            "s-agyqg4": {
+              "name": {
+                "value": "24",
+                "from": "docs"
+              },
+              "note": "Beside the repository name."
+            },
+            "s-czi5jm": {
+              "name": {
+                "value": "48",
+                "from": "docs"
+              },
+              "note": "Hover cards."
+            }
+          }
+        }
+      },
+      "missing": ["Primer's square avatar (for organizations) wasn't read."]
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "GitHub's card is the Box: a white panel with a 1px border and 6px corners, often with a grey header band. The README, the file list and the issues list are boxes.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-mbyml4": {
+              "name": {
+                "value": "box",
+                "from": "docs"
+              },
+              "note": "The README, the file list."
+            },
+            "v-zbtk3h": {
+              "name": {
+                "value": "box header",
+                "from": "docs"
+              },
+              "note": "The grey band on top of a box: the latest commit row."
+            },
+            "v-5k1sp6": {
+              "name": {
+                "value": "box, list",
+                "from": "ai"
+              },
+              "note": "The issues list."
+            },
+            "v-l7d1ng": {
+              "hide": "dialog body rows: see dialog"
+            },
+            "v-42g5hf": {
+              "hide": "a Storybook placeholder"
+            },
+            "v-ttaazn": {
+              "hide": "the label picker's filter field in Storybook: a text field"
+            },
+            "v-wxuy4k": {
+              "name": {
+                "value": "expanded detail",
+                "from": "ai"
+              },
+              "note": "The latest commit's full message, opened under its row."
+            },
+            "v-ptsrp5": {
+              "hide": "sidebar sections: ruled, not boxed"
+            },
+            "info": {
+              "note": "Primer's Banner, not a card: a pale blue band with a blue border."
+            },
+            "warning": {
+              "note": "Banner: pale yellow, an icon, a title and an action."
+            },
+            "v-zq3b5f": {
+              "hide": "a filtered list in a box: see list-box"
+            },
+            "v-g0jucd": {
+              "hide": "a page layout's side pane"
+            },
+            "v-b0a470": {
+              "hide": "a Storybook placeholder"
+            },
+            "v-fommyh": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "A red-bordered box: Danger zone in settings."
+            },
+            "v-00sy5v": {
+              "hide": "a Storybook harness (Portal story)"
+            },
+            "v-2me92a": {
+              "hide": "a Storybook harness (Portal story)"
+            },
+            "v-40c500": {
+              "hide": "a Storybook harness (Portal story)"
+            },
+            "v-634nck": {
+              "hide": "a Storybook harness (Portal story)"
+            }
+          },
+          "sizes": {}
+        }
+      },
+      "missing": ["Storybook's yellow placeholders still read as boxes."]
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "One dialog look: white, 12px corners, a 1px ring and a two-layer floating shadow, over a backdrop that dims the page with no blur. Headers and footers are split by rules.",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-j2doht": {
+              "hide": "pickers anchored to a button, like the branch menu: see popover"
+            },
+            "v-6r0e4v": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Primer's Dialog: a header split by a rule, the close button top right."
+            },
+            "v-c2636e": {
+              "hide": "SelectPanel, anchored to its button: see popover"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      },
+      "missing": ["Its header and body rows landed under card."]
+    },
+    "popover": {
+      "status": "reviewed",
+      "summary": "Menus and pickers anchored to a button share the dialog's look: white, 12px corners, the floating shadow.",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-j2doht": {
+              "name": {
+                "value": "overlay",
+                "from": "docs"
+              },
+              "note": "The README outline, the branch picker."
+            },
+            "v-c2636e": {
+              "name": {
+                "value": "autocomplete",
+                "from": "ai"
+              },
+              "note": "Suggestions under a field (Storybook)."
+            },
+            "v-gaani7": {
+              "hide": "tooltips: see tooltip"
+            },
+            "v-908n2b": {
+              "hide": "tooltips on the signed-out header"
+            },
+            "v-cb7jmi": {
+              "hide": "the signed-out header's mega menu"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "summary": "A dark chip with 12px white text and 4px 8px padding. It has no sizes: the height follows its text.",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-k3w6db": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              }
+            }
+          },
+          "sizes": {
+            "s-llguqt": {
+              "name": {
+                "value": "one line",
+                "from": "ai"
+              }
+            },
+            "s-ky6k0e": {
+              "name": {
+                "value": "two lines",
+                "from": "ai"
+              }
+            }
+          }
+        }
+      },
+      "missing": [
+        "Hovering on github.com lost the tooltip before the shot was taken: only Storybook's shows."
+      ]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Primer's TextInput: a 1px #d1d9e0 border, 6px corners and a faint inset shadow at the top, text inset 12px. Three sizes: small 28px, medium 32px, large 40px. Focus turns the border blue and adds a 2px outline. Validation colors the border; contrast fills it grey. Textareas share the look.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "warning": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "The capture took 'warning' from a story's validation arg; the look is the plain field."
+            },
+            "v-hjv7ln": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "Validated: a green border."
+            },
+            "v-p3xq3w": {
+              "name": {
+                "value": "contrast",
+                "from": "docs"
+              },
+              "note": "Grey fill: Storybook's contrast story, the clone URL."
+            },
+            "v-umond2": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "The branch filter, focused as its panel opens: blue border."
+            }
+          },
+          "sizes": {
+            "s-7ilnvj": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              }
+            },
+            "s-houu6l": {
+              "name": {
+                "value": "medium, monospace",
+                "from": "ai"
+              },
+              "note": "The clone URL."
+            },
+            "s-tmfirw": {
+              "name": {
+                "value": "textarea",
+                "from": "docs"
+              }
+            },
+            "s-3lyr0b": {
+              "name": {
+                "value": "textarea, auto-size",
+                "from": "ai"
+              }
+            },
+            "medium": {
+              "name": {
+                "value": "token field",
+                "from": "ai"
+              },
+              "note": "TextInputWithTokens: grows with its tokens."
+            }
+          }
+        }
+      },
+      "missing": ["The error state wasn't read."]
+    },
+    "field": {
+      "status": "reviewed",
+      "summary": "Labels are 14px on a 21px line: semibold above an input, regular beside a checkbox or radio, grey when disabled.",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-px9bkb": {
+              "name": {
+                "value": "field",
+                "from": "ai"
+              },
+              "note": "Above an input."
+            },
+            "v-hy1xqx": {
+              "name": {
+                "value": "choice",
+                "from": "ai"
+              },
+              "note": "Beside a checkbox or radio."
+            },
+            "v-o7g23a": {
+              "name": {
+                "value": "choice, disabled",
+                "from": "ai"
+              }
+            },
+            "v-z1xc68": {
+              "name": {
+                "value": "field, disabled",
+                "from": "ai"
+              }
+            },
+            "v-99u5uc": {
+              "hide": "the Select all row in a list: see list-box"
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "Lists inside overlays: rows inset from the overlay's edges, 33px high, grey on hover or keyboard focus.",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "inset": {
+              "note": "Rows inset 8px from the list's edges (FilteredActionList)."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-jwoc11": {
+              "name": {
+                "value": "command item",
+                "from": "ai"
+              },
+              "note": "The command palette's rows."
+            },
+            "default": {
+              "note": "A select panel's row, grey when hovered or keyboard-active."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are ActionLists in an overlay: 32px rows inset from the edges, shortcuts right-aligned, a check for the current choice in single-select menus.",
+      "groups": {
+        "menu": {
+          "variants": {
+            "inset": {
+              "note": "Rows sit inside the overlay's padding."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Action rows: Copy link, Quote reply."
+            },
+            "secondary": {
+              "note": "Rows with a counter at the end: UnderlineNav's More menu."
+            },
+            "v-fpm7e0": {
+              "hide": "the first row, focused as the menu opens"
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "single select",
+                "from": "docs"
+              },
+              "note": "Pulse's period menu: a check marks the current one."
+            },
+            "v-fpm7e0": {
+              "name": {
+                "value": "with description",
+                "from": "ai"
+              },
+              "note": "A title with an icon over a muted due date."
+            }
+          }
+        },
+        "menuitemcheckbox": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "multi select",
+                "from": "ai"
+              },
+              "note": "An avatar, a name and a muted login."
+            }
+          }
+        }
+      },
+      "missing": ["A danger item (red ink) wasn't read."]
+    },
+    "pagination": {
+      "status": "reviewed",
+      "groups": {
+        "pagination-item": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "page",
+                "from": "docs"
+              }
+            },
+            "v-8gifmo": {
+              "name": {
+                "value": "previous, next",
+                "from": "docs"
+              },
+              "note": "Blue, with a chevron."
+            }
+          },
+          "sizes": {
+            "s-003hlc": {
+              "note": "github.com search: 32px, 14px text."
+            },
+            "s-lbholy": {
+              "note": "Storybook renders 16px text."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The current page (a 32px blue square) reads only as selected, so it isn't in the grid."
+      ]
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "summary": "Thin 8px bars with rounded ends, split into colored segments: green and purple on Pulse, each language's own color in Languages.",
+      "missing": [
+        "Only Pulse's green segment reads as a progress bar; the other segments now read as plain boxes."
+      ],
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-m5lryj": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "Green: open items on Pulse."
+            }
+          },
+          "sizes": {
+            "s-r72gxk": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              }
+            }
+          }
+        }
+      }
+    },
+    "breadcrumbs": {
+      "status": "reviewed",
+      "groups": {
+        "breadcrumb": {
+          "variants": {
+            "v-e9dqlp": {
+              "name": {
+                "value": "repo path",
+                "from": "ai"
+              },
+              "note": "owner / repo on the repository header."
+            },
+            "v-8gifmo": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Blue links, the current page in ink (Storybook)."
+            },
+            "v-026pg2": {
+              "name": {
+                "value": "plain",
+                "from": "ai"
+              },
+              "note": "Dark ink, no underline (the overflow story)."
+            },
+            "v-wn2zx2": {
+              "name": {
+                "value": "file path",
+                "from": "ai"
+              },
+              "note": "A file path's segments; the first one is bold: react / src / PageHead."
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-4nu66b": {
+              "name": {
+                "value": "on dark",
+                "from": "ai"
+              },
+              "note": "The / hint in the signed-out header's search."
+            },
+            "v-oplp6s": {
+              "name": {
+                "value": "normal",
+                "from": "ai"
+              },
+              "note": "KeybindingHint inside a button: ⌃S on Save."
+            },
+            "v-026pg2": {
+              "name": {
+                "value": "plain",
+                "from": "ai"
+              },
+              "note": "No frame: the keys in muted ink."
+            },
+            "v-fkv5rw": {
+              "name": {
+                "value": "on primary",
+                "from": "ai"
+              },
+              "note": "Inside the green button: light keys on a translucent fill."
+            },
+            "v-xfik47": {
+              "name": {
+                "value": "in a default button",
+                "from": "ai"
+              }
+            },
+            "v-lty063": {
+              "name": {
+                "value": "in a danger button",
+                "from": "ai"
+              },
+              "note": "Red ink."
+            },
+            "v-opkhya": {
+              "name": {
+                "value": "in an invisible button",
+                "from": "ai"
+              }
+            },
+            "v-ok6mv6": {
+              "name": {
+                "value": "in an inactive button",
+                "from": "ai"
+              },
+              "note": "Muted."
+            },
+            "v-y0kcdd": {
+              "name": {
+                "value": "in a menu row",
+                "from": "ai"
+              }
+            }
+          }
+        }
+      },
+      "summary": "KeybindingHint: small key chips that take the ink of what they sit in. On its own a hint has a 1px border; inside a button it follows the button's colors."
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-3vlbwa": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              }
+            },
+            "v-62qtzf": {
+              "name": {
+                "value": "pane divider",
+                "from": "ai"
+              },
+              "note": "Full height, between search filters and results."
+            },
+            "v-cg9odl": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              },
+              "note": "In the README's toolbar."
+            },
+            "v-d0ozdz": {
+              "name": {
+                "value": "horizontal",
+                "from": "ai"
+              }
+            },
+            "v-g6fqwu": {
+              "name": {
+                "value": "on dark",
+                "from": "ai"
+              },
+              "note": "The signed-out header's bottom rule."
+            },
+            "v-2xul0b": {
+              "name": {
+                "value": "drag handle",
+                "from": "docs"
+              },
+              "note": "PageLayout's pane resize handle, 5px wide."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "toolbar",
+                "from": "ai"
+              },
+              "note": "A 1px rule between toolbar groups."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-na77s4": {
+              "name": {
+                "value": "off",
+                "from": "ai"
+              },
+              "note": "ToggleSwitch: grey track, Off beside it."
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "In dialogs (Appearance settings)."
+            },
+            "medium": {
+              "note": "Primer's default."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "table": {
+          "variants": {
+            "v-ar6eiw": {
+              "name": {
+                "value": "file list",
+                "from": "ai"
+              },
+              "note": "Rows split by rules inside a box, no header row."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "DataTable (Storybook)."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      },
+      "summary": "DataTable: a 1px border, 6px corners, a grey header row and rows split by rules."
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "summary": "A grey track with 6px corners; the selected segment is raised in white with a border.",
+      "groups": {
+        "segmented": {
+          "variants": {
+            "default": {
+              "note": "HTTPS or GitHub CLI in the Code menu."
+            },
+            "v-meol7j": {
+              "hide": "one selected segment read as the whole control"
+            }
+          }
+        },
+        "segment": {
+          "variants": {
+            "v-i0d7ea": {
+              "name": {
+                "value": "unselected",
+                "from": "ai"
+              }
+            },
+            "secondary": {
+              "note": "Unselected, with a counter."
+            },
+            "invisible": {
+              "note": "An icon-only segment (+)."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-b0t6k7": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "A native select in TextInput's frame, with a chevron."
+            },
+            "v-hjv7ln": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "The message under it turns green; the border stays grey."
+            },
+            "v-ponlu2": {
+              "hide": "the same select with the browser's focus ring"
+            }
+          },
+          "sizes": {
+            "s-2d1bq4": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              }
+            }
+          }
+        }
+      },
+      "summary": "Primer's Select: TextInput's frame around a native select, with a double chevron. Sizes follow TextInput: 28, 32 and 40px."
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "Search fields with suggestions share TextInput's frame: Go to file, the issues filter, Autocomplete.",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-b0t6k7": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Go to file, with a search icon."
+            },
+            "v-108kso": {
+              "name": {
+                "value": "filter bar",
+                "from": "ai"
+              },
+              "note": "The issues search: full width, query terms highlighted, no inset shadow."
+            },
+            "v-umond2": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "Blue border (Storybook's Autocomplete)."
+            },
+            "v-p3xq3w": {
+              "name": {
+                "value": "contrast",
+                "from": "docs"
+              },
+              "note": "Grey fill."
+            },
+            "v-s89mby": {
+              "hide": "the anchored-overlay story: an input inside the story's own box"
+            }
+          },
+          "sizes": {
+            "s-7ilnvj": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "32px."
+            },
+            "s-vx547w": {
+              "name": {
+                "value": "medium, leading icon",
+                "from": "ai"
+              },
+              "note": "Go to file."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "called": [],
+      "summary": "UnderlineNav: 32px tabs with an icon, a label and sometimes a counter; the current one is 600 with a 2px coral underline.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-e9dqlp": {
+              "name": {
+                "value": "repository header",
+                "from": "ai"
+              },
+              "note": "The same tab on the repository header's grey band."
+            },
+            "v-026pg2": {
+              "name": {
+                "value": "unselected",
+                "from": "ai"
+              },
+              "note": "Label in the default ink, grey on hover."
+            },
+            "invisible": {
+              "hide": "the More overflow at the end: a button"
+            },
+            "v-6v376w": {
+              "hide": "an unstyled tablist story"
+            },
+            "v-l76cfh": {
+              "hide": "branch names: see badge"
+            },
+            "v-y0kcdd": {
+              "hide": "profile links (Followers): see link"
+            },
+            "default": {
+              "hide": "a button: Edit Profile"
+            },
+            "v-93s1ub": {
+              "hide": "an author link in a header"
+            }
+          },
+          "sizes": {
+            "s-i4hd36": {
+              "note": "8px padding around a 14px label."
+            },
+            "s-ay406o": {
+              "name": {
+                "value": "tab nav",
+                "from": "ai"
+              },
+              "note": "TabNav's bordered tabs (Storybook)."
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "invisible": {
+              "note": "An icon button that toggles."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "summary": "Primer's Checkbox: 16px, a 1px border, 4px corners; checked fills blue with a white tick.",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-y8t6kg": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "16px with a 1px border."
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "native",
+                "from": "ai"
+              },
+              "note": "An unstyled 13px browser checkbox in one story."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "summary": "Primer's Radio: a 16px circle with a 1px border; checked, a thick blue ring.",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-y8t6kg": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 16px circle with a 1px border."
+            }
+          }
+        }
+      }
+    },
+    "tree": {
+      "status": "reviewed",
+      "summary": "TreeView: 32px rows, an icon then the name, nested with a chevron; grey on hover, the current row marked.",
+      "groups": {
+        "treeitem": {
+          "variants": {
+            "v-026pg2": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A file or folder row."
+            },
+            "v-8le2ew": {
+              "name": {
+                "value": "link",
+                "from": "ai"
+              },
+              "note": "Rows rendered as anchors: the name underlined."
+            }
+          }
+        }
+      },
+      "called": []
+    }
+  },
+  "pages": {
+    "https://github.com/mehdibha/dotUI": {
+      "title": "Repository",
+      "summary": "A repository's front page, signed out: the black global header, the repository header on a grey band with its tab bar, then the files and README beside a sidebar.",
+      "layout": [
+        "Global header 72px, black in both modes; the repository header under it is 100px, a #f6f8fa band (#010409 in dark) closed by a 1px rule.",
+        "Content is 1216px wide at x112: a 904px column for the files and README, and a 272px sidebar 40px to its right.",
+        "Tabs, toolbar controls and file rows share 32px heights and 6px corners.",
+        "A 114px footer of small links closes the 3196px page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/issues": {
+      "title": "Issues",
+      "summary": "The issue list in its newer layout: a navigation sidebar on the page's left edge and one wide list beside it.",
+      "layout": [
+        "Sidebar 256px wide, flush to the left edge and 728px tall.",
+        "The list column starts at x280, 24px after the sidebar, and runs to 24px from the right edge (1136px).",
+        "A single 32px filter input heads the column; rows are 65px.",
+        "The footer is 59px here, against 114px on the repository page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/pulse": {
+      "title": "Pulse",
+      "summary": "Repository insights: a side menu and a column of reports, each report a bordered box.",
+      "layout": [
+        "The repository page's 1216px frame: a 296px menu at x112 and an 896px report column at x432, 24px to its right.",
+        "Reports are 6px boxes with a 1px #d1d9e0 border; the overview's header is a #f6f8fa band.",
+        "The merged pull requests list makes most of the 4468px page."
+      ]
+    },
+    "https://github.com/mehdibha/dotUI/pulls": {
+      "title": "Pull requests",
+      "summary": "The pull request list: no sidebar, one wide column of rows under a filter input.",
+      "layout": [
+        "One 1232px column at x104, 104px from each edge.",
+        "A 32px filter input at the top; rows are 67px, split by 1px rules."
+      ]
+    },
+    "https://github.com/search?q=design+system&type=repositories": {
+      "title": "Search",
+      "summary": "Repository search results: a filter sidebar on the left edge and a column of result cards.",
+      "layout": [
+        "Filters 296px wide, flush to the left edge.",
+        "Results in a 731px column at x321, 25px after the filters, with pagination centred under them.",
+        "Each result is a 6px bordered card with 16px padding."
+      ]
+    }
+  },
+  "blocks": {
+    "global-header": {
+      "title": "Global header",
+      "note": "The signed-out header, black in both modes: the logo, five menus that open mega-menus, a search field with a / hint, and Sign in and Sign up.",
+      "uses": ["button", "kbd"]
+    },
+    "repo-header": {
+      "title": "Repository header",
+      "note": "Owner and name over the underline tab bar, on the #f6f8fa band. The current tab is underlined in coral (#fd8c73); counts sit in grey pills.",
+      "uses": ["breadcrumbs", "tabs", "badge"]
+    },
+    "repo-title": {
+      "title": "Repository title",
+      "note": "Avatar, name and a Public label on the left; 28px Notifications, Fork and Star buttons on the right, #f6f8fa with a 1px #d1d9e0 border. The copy wraps Star onto a second line; on the page it sits in the row.",
+      "uses": ["avatar", "badge", "button"]
+    },
+    "file-toolbar": {
+      "title": "File toolbar",
+      "note": "Branch select, branch and tag counts, a Go to file input and the Code button, all 32px with 6px corners. Green (#1f883d) is kept for this one primary action.",
+      "uses": ["select", "button", "text-field"]
+    },
+    "file-list": {
+      "title": "File list",
+      "note": "A bordered box: the latest commit on a #f6f8fa header row, then 41px rows of name, last commit message and age, split by 1px #d1d9e0 rules.",
+      "uses": ["table", "avatar", "link"]
+    },
+    "readme": {
+      "title": "README",
+      "note": "A bordered box that opens on its own tab bar (README, Contributing, license) with the same coral underline. The markdown sets h1 at 32px and h2 at 24px, both at 600 over a bottom rule.",
+      "uses": ["tabs", "link"]
+    },
+    "about-sidebar": {
+      "title": "About",
+      "hide": "the sidebar block holds all of it"
+    },
+    "sidebar-sections": {
+      "title": "Sidebar",
+      "note": "About, Releases and Contributors stacked with 16px above and below each and a rule between. Topics are pills of 12px text at 600, #0969da on #ddf4ff.",
+      "uses": ["badge", "link", "separator"]
+    },
+    "site-footer": {
+      "title": "Footer",
+      "note": "One centred row: the mark, the copyright and small grey links.",
+      "uses": ["link"]
+    },
+    "platform-menu": {
+      "title": "Platform menu",
+      "note": "The header's mega-menu: a black panel with 8px corners, a 1px #3d444d ring and a deep shadow; four columns of icon, title and one-line description over a #0f1511 footer row.",
+      "uses": ["menu", "link"]
+    },
+    "command-palette": {
+      "title": "Command palette",
+      "note": "Opens from the header's search field: a 480px overlay with 12px corners, the input on top and grouped Jump to rows of 33px below.",
+      "uses": ["combobox", "list-box"]
+    },
+    "branch-picker": {
+      "title": "Branch picker",
+      "note": "A 320px panel with 12px corners: a title and close button, a filter input, Branches and Tags tabs, then rows with a check on the current branch and a default label.",
+      "uses": ["popover", "text-field", "tabs", "list-box", "badge"]
+    },
+    "clone-panel": {
+      "title": "Clone panel",
+      "note": "The Code button's 400px overlay: an HTTPS and GitHub CLI segmented control, a read-only monospace URL field with a copy button, then action rows.",
+      "uses": ["popover", "segmented-control", "text-field", "button", "menu"]
+    },
+    "issues-sidebar": {
+      "title": "Issues sidebar",
+      "note": "32px rows with 6px corners; the current one sits on a grey fill with a blue bar at its left. Groups are split by a rule, and Feedback and Collapse sidebar sit at the bottom.",
+      "uses": ["list-box", "badge", "separator"]
+    },
+    "issues-filter": {
+      "title": "Issues filter",
+      "note": "The page title and a green New issue button over one 32px filter input that marks its qualifiers in blue.",
+      "uses": ["text-field", "button"]
+    },
+    "issue-list": {
+      "title": "Issue list",
+      "note": "A bordered box with 6px corners: Open and Closed counts and filter menus on its header row, then 65px rows of an open icon, the title, labels as colored pills and a muted meta line, with assignees on the right.",
+      "uses": ["badge", "avatar", "menu", "segmented-control"]
+    },
+    "issue-row": {
+      "title": "Issue row",
+      "note": "One row of the list at full size: icon, title, meta line, and the comment count on the right.",
+      "uses": ["link"]
+    },
+    "author-filter": {
+      "title": "Author filter",
+      "note": "A 320px filter menu from the list's header: a title, a search input, then rows of avatar, name and secondary text, the selected one marked by a blue bar. Redacted, as it lists people.",
+      "uses": ["popover", "text-field", "list-box", "avatar"]
+    },
+    "insights-nav": {
+      "title": "Insights menu",
+      "note": "A bordered box of 38px rows split by rules; the current row is marked by a coral (#fd8c73) bar on its left."
+    },
+    "pulse-overview": {
+      "title": "Pulse overview",
+      "note": "A bordered box with a #f6f8fa header: two 8px bars split pull requests (purple #8250df merged, green open) and issues, over four count tiles.",
+      "uses": ["progress-bar", "card"]
+    },
+    "pulse-summary": {
+      "title": "Pulse summary",
+      "note": "Two 440px boxes side by side: a written summary with green additions and red deletions, and a bar chart of top committers.",
+      "uses": ["card"]
+    },
+    "merged-list": {
+      "title": "Merged pull requests",
+      "note": "A heading centred on a rule, then a plain list of merge icons, bold titles and a small meta line, with no boxes or dividers.",
+      "uses": ["link"]
+    },
+    "pr-row": {
+      "title": "Pull request row",
+      "note": "Like an issue row, 67px: state icon, title, a blue label, then a meta line with an outlined Owner pill and the check status; comments and avatar on the right.",
+      "uses": ["badge", "avatar", "link"]
+    },
+    "search-filters": {
+      "title": "Search filters",
+      "note": "Result types with count pills, the current one on a grey fill with a blue bar, then Languages with colored dots.",
+      "uses": ["list-box", "badge"]
+    },
+    "repo-result": {
+      "title": "Repository result",
+      "note": "A bordered card with 6px corners and 16px padding: avatar and name with the matched words in bold, description, topic pills (#ddf4ff, 12px at 500) and a meta line, with a 28px Star button on the right.",
+      "uses": ["card", "avatar", "badge", "button", "link"]
+    },
+    "pagination": {
+      "title": "Pagination",
+      "note": "Previous and Next as text links, 32px page buttons with 6px corners, the current page filled blue.",
+      "uses": ["pagination"]
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://github.com/mehdibha/dotUI",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://primer.style/react/storybook/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written section by section from the census (spec.json, census eb3e7cf) and its page shots; pages and blocks from blocks.json's copies of 2026-10-25 and their computed styles. Names marked ai are ours; docs names come from Primer's documentation."
+  }
+}

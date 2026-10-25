@@ -1,0 +1,215 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Material 3 56px pill rows at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size apart from the control text",
+      "note": "Material 3's populated filled-field label at 12/400 with 0.4px tracking in on-surface-variant (#49454f / #cac4d0)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in the link color",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-edge",
+      "title": "Checkbox and radio edges darker than the field line",
+      "note": "Material 3 a 2px on-surface-variant edge (#49454f / #cac4d0) on 18px checkboxes and 20px radios, 2px primary when selected",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "Focus ring in a color other than the brand",
+      "note": "Material 3 the secondary color (3px #625b71 / #ccc2dc, 2px outside) while the field's focus indicator stays in the brand",
+      "standin": "ΔE 0.095 on Material 3, 0.062 on Stripe's `button.focus` and `input.focus`)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Material 3 navigation drawer labels in on-surface-variant (#49454f / #cac4d0); Material 3 segmented buttons in on-surface",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.layers-tonal",
+      "title": "Deeper tonal layers",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Material 3 body-large 0.5px, body-medium 0.25px, body-small 0.4px, label-large 0.1px, display-large -0.25px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Taller line tabs: Material 3 48px primary tabs, 64px with icons",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.field-label-inside",
+      "title": "Labels inside the field",
+      "note": "Material 3 floats the label inside the 56px filled field and shrinks it to 12px above the value",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-icon-padding",
+      "title": "Buttons keep their side padding beside an icon",
+      "note": "Material 3 Expressive buttons use one leading and trailing space with or without an icon (16dp at small, 24dp at medium; the icon 8dp from the label)",
+      "standin": "the icon side is trimmed by 4px (`has-data-[icon=inline-start]:pl-*`): 12px against 16px on the Pin toggle in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet buttons with less inline padding than filled ones at the same height",
+      "note": "Material 3's text buttons pad 12px against 24px",
+      "standin": "quiet buttons share the filled padding (24px at touch)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "A neutral plate, filled when on: Material 3's Expressive filled toggle button rests on surface-container (#f3edf7 / #211f26) under on-surface-variant (#49454f / #cac4d0) and fills with primary (#6750a4 / #d0bcff) when on; The studio keeps ToggleButton in sync with Button, so this splits the group or needs a chip style",
+      "standin": "on Material 3 the tonal secondary: the light fill lands (ΔE 0.009), the label takes the secondary-container ink (ΔE 0.164 / 0.081) and the dark fill is a step brighter (ΔE 0.034)",
+      "source": "ledger"
+    },
+    {
+      "look": "flourish.toggle-morph",
+      "title": "Selected toggle buttons change shape",
+      "note": "Material 3 Expressive round toggle buttons morph to a rounded square when on (12dp at small, 16dp at medium, 28dp at large, `md.comp.button.selected.container.shape.round`) and back to a pill when off",
+      "standin": "the toggle keeps the pill when on (`toggle.on` borderRadius +8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Material 3 52×32, the knob growing from 16 to 24px when on",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Material 3 surface-container-highest (#e6e0e9 / #36343b) inside a 2px outline (#79747e / #938f99)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Material 3 #6750a4 / #d0bcff",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Material 3 segments filling a 40px pill",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track edged in a control line, not the surface line",
+      "note": "Material 3 the outline (#79747e / #938f99)",
+      "standin": "`segmentedTrack: outline` draws the light surface line (ΔE 0.35 on Material 3, 0.725 / 0.648 on Carbon, 0.064 / 0.077 on GitHub)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "40px and up: Material 3 (date picker)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Material 3 16/400",
+      "source": "ledger"
+    },
+    {
+      "look": "size.command-row",
+      "title": "Command palette row height apart from menu rows",
+      "note": "Material 3 docked search, 56px rows at 16/400 with 24px icons",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Material 3 24px tall, 8px padding, 12/400",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu rows at label weight",
+      "note": "Material 3 (Expressive vertical menu) 14/500 at 44px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Material 3 20px from the menu edge",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tooltip",
+      "title": "Tooltip corners apart from menu-row corners",
+      "note": "Equal to the rows: Material 3 tooltips and snackbars at 4px, like its menu rows",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Material 3 chips at 32px, 14/500, 8px corners",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "A different solid: Material 3 #6750a4 under white in light, #d0bcff under #381e72 in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "`fg-muted` at L 0.50 / 0.77 (Material 3 ΔE 0.105",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Inverse surfaces a step off the ink",
+      "note": "Material 3 inverse-surface #322f35 / #e6e0e9 under #f5eff7 / #322f35",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Material 3 on-surface-variant #49454f / #cac4d0 (the filled field's bottom line and the checkbox edge)",
+      "standin": "neutral-700 (L 0.60, #808080) in both modes (Material 3 ΔE 0.20 / 0.23",
+      "source": "ledger"
+    },
+    {
+      "look": "color.secondary-role",
+      "title": "A secondary role, a desaturated brand container under dark ink",
+      "note": "Material 3 secondary-container #e8def8 / #4a4458 under #4a4458 / #e8def8 ink for tonal buttons, selected chips and the current nav item",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Dimmer: Material 3 on-surface #e6e0e9 (L 0.91)",
+      "standin": "`fg` at L 0.96 in dark (Material 3 ΔE 0.044",
+      "source": "ledger"
+    },
+    {
+      "look": "color.surface-line",
+      "title": "Surface hairline strength, darker or fainter than the surface line",
+      "note": "Darker: Material 3 outline-variant #cac4d0 / #49454f for chip edges and dividers",
+      "standin": "the surface line, L 0.915 in light (Material 3 ΔE 0.086 on the outline badge)",
+      "source": "ledger"
+    }
+  ]
+}

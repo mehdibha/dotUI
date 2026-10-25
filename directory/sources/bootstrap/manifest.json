@@ -1,0 +1,20 @@
+{
+  "kind": "repo",
+  "repo": "https://github.com/twbs/bootstrap",
+  "ref": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "package.json",
+      "upstreamPath": "package.json",
+      "url": "https://raw.githubusercontent.com/twbs/bootstrap/25aa8cc0b32f0d1a54be575347e6d84b70b1acd7/package.json",
+      "sha256": "49eadf815d086016c72c42dc46bffb2c9afc0021e97edbef750ef1f21fd62d8d"
+    },
+    {
+      "path": "sidebar.yml",
+      "upstreamPath": "site/data/sidebar.yml",
+      "url": "https://raw.githubusercontent.com/twbs/bootstrap/25aa8cc0b32f0d1a54be575347e6d84b70b1acd7/site/data/sidebar.yml",
+      "sha256": "2ac2fe416e2d5dd18340ca014f0bbf7b9d64dbf2ca7680bfd9537c189adac0f9"
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Bluesky's left rail: 52px pill rows with 18.8/400 labels (bold when current) beside 33px buttons and 44px fields (`src/view/shell/desktop/LeftNav.tsx`)",
+      "standin": "32px rows at 13px (`nav.item` -20px, labels -5.8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.check",
+      "title": "Checkbox and radio size apart from density",
+      "note": "Bluesky 24px checkboxes at 6px corners and 25px radios with a 12px dot, beside 33px buttons (`src/components/forms/Toggle/index.tsx`)",
+      "standin": "16px at `density: default` (-8px / -9px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Bluesky a 48×28 track with a 22px knob (`Toggle/index.tsx`)",
+      "standin": "24px tall at `density: default` (-4px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Bluesky profile and search tabs 47px, 15/600 labels, a 3px brand bar under the label",
+      "standin": "31px with `tabStyle: line` (-16px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Bluesky 14px on its 47px line tabs",
+      "standin": "6px (-8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented items or track at the button height, flush or padded",
+      "note": "Bluesky's hosting-provider switcher: a 48px track around 40px items inset 4px, above its 33px buttons and 44px large buttons",
+      "standin": "a 36px track around a 28px chip (-12px)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners on their own rung",
+      "note": "Bluesky track 14px, chip 10px, while fields are 10px, menus 8px, cards and dialogs 12px",
+      "standin": "8.5px track, 5.5px chip from the 8.5 radius",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.segmented-chip",
+      "title": "Segmented selected chip raised by shadow alone, no edge",
+      "note": "Bluesky white / #151d28 (the page) under `0 2px 4px` black 5% on the #eff2f6 / #222e3f track",
+      "standin": "`segmentedSelected: raised` adds a 1px #dce2ea / #2c3a4e edge",
+      "source": "ledger"
+    },
+    {
+      "look": "type.segmented",
+      "title": "Segmented items at their own weight, apart from tabs",
+      "note": "Bluesky switcher items 15/500 while profile tabs are 15/600",
+      "standin": "600 for both from `navWeight: semibold`",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Bluesky idle profile tabs in muted ink (#405168 / #abb8c9) and idle switcher items fainter still (#8798b0 / #586c89), full ink when current",
+      "standin": "muted ink for both (segmented ΔE 0.177 / 0.259)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Bluesky 14px on its 33px buttons",
+      "standin": "10px at `density: default` (-4px)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "Bluesky post and body text 15px beside 13.1px button and label text, field values 15px",
+      "standin": "16px body at `density: default` (+1px)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.button-quiet",
+      "title": "Quiet buttons at regular weight (400) while solid and soft buttons stay 500",
+      "note": "Bluesky's hosting-provider ghost button 13.1/400 while Create account and Sign in are 13.1/500",
+      "standin": "500 from `labelWeight`",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Bluesky secondary buttons (Sign in) label in contrast_700 #405168 / #abb8c9 on contrast_50 #eff2f6 / #222e3f",
+      "standin": "`buttonSecondary: soft` labels in body ink (ΔE 0.190 / 0.179)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "Focus ring in a color other than the brand",
+      "note": "Bluesky buttons keep the browser's own focus ring (Chrome reads it as a 1px #101010 auto outline, no offset), while focused fields recolor their edge to #006aff / #0f73ff",
+      "standin": "`focusColor: accent`, a 2px brand ring 2px out (ΔE 0.461); `neutral` also moves the field focus edge off the brand (ΔE 0.207)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu rows at label weight",
+      "note": "Bluesky post menu rows 13.1/600 at 36px with 4px corners, in #232e3e / #e2e7ee",
+      "standin": "13/400 in body ink",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tooltip",
+      "title": "Tooltip corners apart from menu-row corners",
+      "note": "Bluesky 10px tooltips beside 4px menu rows and 8px menus",
+      "standin": "6.4px with `roleItem: sm`",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Bluesky's dim dialogs sit on the #151d28 page fill inside a 1px #394960 edge under `0 0 30px` black 40%; menus one step up (#1c2736) inside #2c3a4e",
+      "standin": "dialogs on the raised step (oklab L 0.267, ΔE 0.043)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.dialog-padding",
+      "title": "Roomier dialog padding",
+      "note": "Bluesky 24px (Embed and hosting-provider dialogs)",
+      "standin": "16px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.dialog-title",
+      "title": "Larger dialog titles",
+      "note": "Bluesky 20.6/700",
+      "standin": "18px bold with `titleStyle: bold`",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`",
+      "note": "Bluesky pure #000 for text, headings, field values, tabs and menus (`contrast_1000`)",
+      "standin": "`fg` oklch 0.241 0.025 257 (ΔE 0.242)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Bluesky pure #fff in dim and dark",
+      "standin": "`fg` oklch 0.956 (ΔE 0.045)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Bluesky field labels, secondary and quiet button labels and idle tabs in contrast_700 #405168 / #abb8c9, menu rows in #232e3e / #e2e7ee, text and values #000 / #fff",
+      "standin": "labels in `fg` (ΔE 0.190 / 0.179)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`",
+      "note": "Bluesky darker in light: #405168 (oklch 0.430 0.044 256); #abb8c9 in dim",
+      "standin": "`fg-muted` oklch 0.498 / 0.784 (ΔE 0.070)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-chroma",
+      "title": "More strongly tinted neutrals",
+      "note": "Bluesky contrast_500 #667b99 (oklch 0.58 0.053 257); the dim page #151d28 (oklch 0.228 0.025 257) and its #222e3f fills (C 0.035) read navy",
+      "standin": "`neutralTint: 2` (the maximum): the dark page lands at C 0.007 (ΔE 0.017 passes, but the navy reads as gray), fills at C 0.008 (ΔE 0.030)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink on its own step",
+      "note": "Bluesky links on the seed itself in light, #006aff; #4d97ff in dim",
+      "standin": "`fg-accent` oklch 0.528 0.210 (ΔE 0.050) / 0.783 0.110 (ΔE 0.122)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Bluesky primary #006aff in light, #0f73ff in dim (primary buttons, checks, switches, focused field edges)",
+      "standin": "one `brand` (ΔE 0.021 in dim)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.overlay-line",
+      "title": "Overlay hairlines apart from card edges",
+      "note": "Bluesky dialogs a step darker than cards and menus: contrast_200 #c0cad8 / #394960 against contrast_100 #dce2ea / #2c3a4e",
+      "standin": "one surface line (dialog ΔE 0.091 / 0.072)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.alert-line",
+      "title": "Alert edges on the control-edge step while cards keep the lighter line",
+      "note": "Bluesky info admonitions edged in contrast_300 #a5b2c5 / #485b75 while cards use contrast_100",
+      "standin": "the surface line (ΔE 0.168 / 0.134)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-chip",
+      "title": "Tooltips as a mid-gray chip, neither inverted nor the popover surface",
+      "note": "Bluesky contrast_100 #dce2ea / #2c3a4e under body ink, 10px corners, no edge or shadow (`a[data-tooltip]::after`, `src/style.css`)",
+      "standin": "`tooltipStyle: surface`, the white / raised popover with edge and drop (ΔE 0.089 / 0.084); `inverted` is a dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.nav-filled-icon",
+      "title": "Current sidebar item marked by weight and a filled icon alone, no fill or color change",
+      "note": "Bluesky's left rail sets the current item's 18.8px label bold and swaps its outline icon for the filled one, in the same ink (`LeftNav.tsx`, `*_Filled_*` icons)",
+      "standin": "`navMarker: ink` tints the label and icon with the accent (ΔE 0.243 / 0.568)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.menu-trailing-icon",
+      "title": "Trailing icons on menu rows",
+      "note": "Bluesky post menus put each row's icon after the label, at the end of the row (Translate, Copy post text)",
+      "standin": "icons lead the label",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Alerts with a status edge and icon over body-ink text",
+      "note": "Bluesky's Admonition: the page fill, 8px corners, a 1px edge in the status color (contrast_300 for info), the icon in that color, text in plain ink (`src/components/Admonition.tsx`)",
+      "standin": "`alertStyle: outline` colors the text too (ΔE 0.242 / 0.045 on the body)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.field-height",
+      "title": "Field height between one step and tall",
+      "note": "Bluesky 44px fields beside 33px buttons (+11px)",
+      "standin": "`inputHeight: tall` 48px (+4px); `step` 36px (-8px)",
+      "source": "ledger"
+    }
+  ]
+}

@@ -1,0 +1,993 @@
+{
+  "version": 1,
+  "slug": "airbnb",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Almost no color in the interface: #222222 ink on white, #6c6c6c for secondary text, #dddddd borders, #f7f7f7 and #f2f2f2 fills. The brand's pink-to-magenta gradient (#e61e4d to #d70466) is kept for the main action and the search button; photos carry the rest.",
+      "missing": ["Light only: the public pages have no dark theme."]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "One family, Airbnb Cereal, mostly at 14px (400 for text, 500 for emphasis) on an 18 to 20px line, 15 to 16px at 500 for listing titles and buttons, 12px for small print."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Soft and varied: 20px on listing photos, 12px on cards and chips, 8px on small buttons, 32px on dialogs. Search bars, chips and the wishlist heart are full pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Steps of 4: 8, 12 and 24px are the most common, with 24px between cards and 16px inside them."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Shadows mark what floats: a tight 2px 4px shadow on map pins and photo arrows, a soft 4px 10px to 8px 24px shadow on the search bar, menus and dialogs. Cards and listings stay flat."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Airbnb names five button looks in the markup: brand (the pink gradient, one per view), primary (near-black fill), secondary (grey fill), tertiary (no frame, grey on hover) and secondaryOutline (white with a 1px border). Around them sit many single-purpose buttons: the wishlist heart, photo arrows, map price pins, row arrows.",
+      "groups": {
+        "button": {
+          "variants": {
+            "brand": {
+              "note": "The pink-to-magenta gradient: Continue, Reserve. One per view."
+            },
+            "secondary": {
+              "note": "Grey fill: Show all amenities."
+            },
+            "tertiary": {
+              "note": "No frame, grey on hover: Become a host, Show all."
+            },
+            "secondaryoutline": {
+              "note": "White, 1px border: Search all filters in the Filters dialog."
+            },
+            "v-xlwqrd": {
+              "name": {
+                "value": "plain",
+                "from": "ai"
+              },
+              "note": "No frame and no hover fill: search bar segments, a dialog's close ×."
+            },
+            "v-b2cgul": {
+              "name": {
+                "value": "wishlist",
+                "from": "ai"
+              },
+              "note": "The heart on a listing photo: a white outline over a translucent fill."
+            },
+            "v-koo301": {
+              "name": {
+                "value": "photo arrow",
+                "from": "ai"
+              },
+              "note": "White round arrows on listing photos, shown on hover."
+            },
+            "v-2k34vl": {
+              "name": {
+                "value": "price",
+                "from": "ai"
+              },
+              "note": "The listing price, underlined: opens the price breakdown."
+            },
+            "v-couwyg": {
+              "name": {
+                "value": "map pin",
+                "from": "ai"
+              },
+              "note": "Price markers on the map: white pills with a tight shadow."
+            },
+            "v-1fhjvp": {
+              "name": {
+                "value": "row arrow",
+                "from": "ai"
+              },
+              "note": "Round 32px arrows that page a row of listings."
+            },
+            "v-42rs9z": {
+              "name": {
+                "value": "outline, icon",
+                "from": "ai"
+              },
+              "note": "Filters: white, 1px border, an icon before the label."
+            },
+            "v-ga7n8d": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "The round pink search button at the end of the search bar."
+            },
+            "v-xvovyt": {
+              "name": {
+                "value": "floating",
+                "from": "ai"
+              },
+              "note": "A white pill with a soft shadow over the map: Explore rates near you."
+            },
+            "v-g46kt0": {
+              "hide": "calendar day cells: a date picker's parts"
+            },
+            "v-uglul8": {
+              "hide": "an underlined grey text link: see link"
+            },
+            "v-253b9m": {
+              "hide": "map controls"
+            },
+            "v-jaw0bk": {
+              "hide": "a heading read as a button (Add dates for prices)"
+            },
+            "v-wp9ssp": {
+              "hide": "an underlined heading link (Guest favorite)"
+            },
+            "v-iq2u3o": {
+              "hide": "a disabled row arrow on a tinted section"
+            },
+            "v-jtg2h9": {
+              "hide": "a photo arrow with its focus ring: see photo arrow"
+            },
+            "primary": {
+              "note": "Near-black fill, white text: Ask about hosting on the host page."
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "48px, 24px padding, 16px text: brand and secondary. The footer's tertiary English (US) is 30px."
+            },
+            "s-hrs87s": {
+              "name": {
+                "value": "icon 32",
+                "from": "ai"
+              },
+              "note": "The wishlist heart: a 24px icon."
+            },
+            "s-3kklgi": {
+              "name": {
+                "value": "40",
+                "from": "ai"
+              },
+              "note": "Become a host: 40px, 12px padding."
+            },
+            "s-itnexa": {
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
+              "note": "Text-sized: the price."
+            },
+            "s-ns5lgu": {
+              "name": {
+                "value": "pin",
+                "from": "ai"
+              },
+              "note": "Map price pins."
+            }
+          }
+        }
+      },
+      "usage": [
+        "Listing cards carry three buttons over the photo: the wishlist heart and two arrows shown on hover."
+      ],
+      "missing": [
+        "Only medium and small are named in the markup; the other sizes are read off single uses."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Text links are underlined and dark (#222222), not blue; muted ones are grey. Most links are whole listing cards, so the capture's biggest link looks are cards.",
+      "groups": {
+        "link": {
+          "variants": {
+            "tertiary": {
+              "note": "Underlined, full ink: Is my place right for Airbnb?"
+            },
+            "primary": {
+              "note": "A link drawn as a dark filled button: Show 1,000+ places."
+            },
+            "v-950xu0": {
+              "name": {
+                "value": "inline, muted",
+                "from": "ai"
+              },
+              "note": "Underlined grey links inside text: Get more hosting tips."
+            },
+            "primary-pill": {
+              "note": "The small dark pill in the hosting banner: Let's talk."
+            },
+            "v-jcsqie": {
+              "name": {
+                "value": "see all tile",
+                "from": "ai"
+              },
+              "note": "A white tile with a soft shadow that ends a carousel: See all."
+            },
+            "v-5isi68": {
+              "name": {
+                "value": "legal",
+                "from": "ai"
+              },
+              "note": "Blue and underlined in the chat panel's consent line: Privacy Policy."
+            },
+            "v-caongm": {
+              "hide": "an invisible part over listing photos"
+            },
+            "v-7ddrm8": {
+              "hide": "listing cards: the whole card is a link, see card"
+            },
+            "v-xlwqrd": {
+              "hide": "listing cards: the whole card is a link, see card"
+            },
+            "v-yvirj4": {
+              "hide": "an invisible part over listing photos"
+            },
+            "v-ao6wcc": {
+              "hide": "the Airbnb logo"
+            },
+            "secondary": {
+              "note": "Grey fill, a link drawn as a button: Show more."
+            },
+            "v-qftbza": {
+              "name": {
+                "value": "legal, dark",
+                "from": "ai"
+              },
+              "note": "Dark, bold and underlined in the login dialog: Privacy Policy."
+            },
+            "v-xgjsr7": {
+              "name": {
+                "value": "inline, small",
+                "from": "ai"
+              },
+              "note": "Grey and underlined at the end of a paragraph: See details and exclusions."
+            }
+          },
+          "sizes": {
+            "s-3yrj2s": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Text links in a paragraph: Get more hosting tips."
+            },
+            "s-895l54": {
+              "name": {
+                "value": "title",
+                "from": "ai"
+              },
+              "note": "Article titles under a photo, 16px."
+            },
+            "s-0w0oph": {
+              "name": {
+                "value": "pill 40",
+                "from": "ai"
+              },
+              "note": "40px, 20px padding: Show 1,000+ places."
+            },
+            "s-fxxsu7": {
+              "name": {
+                "value": "pill 48",
+                "from": "ai"
+              },
+              "note": "48px, 24px padding: Find a co-host."
+            },
+            "s-r70pj3": {
+              "name": {
+                "value": "tile",
+                "from": "ai"
+              },
+              "note": "The See all tile."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Small pills: white Guest favorite (a gradient version on search results) and translucent grey Superhost on listing photos. Terms like Free cancellation sit on a pale grey fill, and savings like Airbnb credit on a pale green one.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-9gbo6p": {
+              "name": {
+                "value": "subtle",
+                "from": "ai"
+              },
+              "note": "A pale grey fill with grey text: Free cancellation."
+            },
+            "v-enqigg": {
+              "hide": "the calendar's month title: a date picker's parts"
+            },
+            "v-fznk62": {
+              "hide": "calendar day cells"
+            },
+            "v-vdb5du": {
+              "hide": "calendar day cells"
+            },
+            "v-xlwqrd": {
+              "hide": "the 'or' between login options"
+            },
+            "v-chg5y1": {
+              "name": {
+                "value": "guest favorite",
+                "from": "ai"
+              },
+              "note": "A white pill with a soft shadow on the home page's listing photos."
+            },
+            "v-9ytwtw": {
+              "name": {
+                "value": "superhost",
+                "from": "ai"
+              },
+              "note": "A translucent grey pill with white text on listing photos."
+            },
+            "v-couwyg": {
+              "hide": "map price pins: see button"
+            },
+            "v-6zywe0": {
+              "hide": "the round search button: see button"
+            },
+            "v-1fhjvp": {
+              "hide": "a row's arrow: see button"
+            },
+            "v-1mse9s": {
+              "name": {
+                "value": "guest favorite, search",
+                "from": "ai"
+              },
+              "note": "On search results: larger, a white-to-grey gradient and a deeper shadow."
+            },
+            "v-h8giha": {
+              "hide": "the selected map price pin: see button"
+            },
+            "v-9v7que": {
+              "name": {
+                "value": "savings",
+                "from": "ai"
+              },
+              "note": "Green ink on a pale green fill: Airbnb credit, Extended stay discount, Book early to save."
+            },
+            "v-pz4jox": {
+              "name": {
+                "value": "luxe",
+                "from": "ai"
+              },
+              "note": "A white pill with a deeper shadow on a Luxe listing's photo."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Listing cards have no frame: a 20px-rounded photo with a few lines of text under it. Framed cards are rare and grey: the co-host cards on the host page.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-muc8l9": {
+              "name": {
+                "value": "listing",
+                "from": "ai"
+              },
+              "note": "Photo with rounded corners, text below, no frame."
+            },
+            "v-ohlrr5": {
+              "name": {
+                "value": "host",
+                "from": "ai"
+              },
+              "note": "Co-host cards: grey fill, large corners, a centered photo."
+            },
+            "v-6zphxe": {
+              "name": {
+                "value": "bedroom",
+                "from": "ai"
+              },
+              "note": "Where you'll sleep: an outlined tile per bedroom."
+            },
+            "v-l7d1ng": {
+              "hide": "the stats strip inside a host card"
+            },
+            "v-uqdxth": {
+              "hide": "a whole row of listings"
+            },
+            "v-ouyadl": {
+              "hide": "the compact search bar: see search-field"
+            },
+            "v-tvptwj": {
+              "hide": "the hosting assistant's chat panel"
+            },
+            "v-4djxo4": {
+              "hide": "the booking card's date fields"
+            },
+            "v-btcqpq": {
+              "hide": "the booking card's date and guest fields"
+            },
+            "v-50w05q": {
+              "hide": "the Dates / Flexible switch: a segmented control"
+            },
+            "v-kqhlr0": {
+              "hide": "the main search bar: see search-field"
+            },
+            "v-pd3dgv": {
+              "hide": "a section of the listing page"
+            },
+            "v-vauoxz": {
+              "hide": "the host page's map"
+            },
+            "v-vfq8ve": {
+              "name": {
+                "value": "profile",
+                "from": "ai"
+              },
+              "note": "Meet your host on a listing: white, a soft shadow, the photo beside the stats."
+            },
+            "v-ojouej": {
+              "hide": "the site header with its search bar: page chrome"
+            },
+            "v-vmtkfk": {
+              "hide": "the grey track behind Nightly / Trip price in Filters: see radio-group"
+            },
+            "v-herk4m": {
+              "hide": "the page footer's grey band: page chrome"
+            }
+          },
+          "sizes": {
+            "s-heli4b": {
+              "note": "Cards have no size: they take their content's height."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The beige bands (Curious about hosting?, Featured hotels) share a spec variant with the grey Nightly / Trip price track, so they aren't shown on their own yet."
+      ]
+    },
+    "avatar": {
+      "status": "reviewed",
+      "groups": {
+        "avatar": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "host",
+                "from": "ai"
+              },
+              "note": "Meet your host: a large round photo with a verified badge."
+            },
+            "v-j94fhq": {
+              "hide": "a marker over a map that hadn't loaded"
+            }
+          }
+        }
+      },
+      "missing": ["Guest avatars in reviews weren't read."]
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-vfq8ve": {
+              "name": {
+                "value": "modal",
+                "from": "ai"
+              },
+              "note": "Log in or sign up: centered, large corners, the page dimmed behind."
+            },
+            "v-a887nw": {
+              "hide": "a dark callout anchored to the AI note on search results: a popover, not a modal"
+            },
+            "v-zxb0r5": {
+              "hide": "the Price details callout anchored to a listing's price: a popover, not a modal"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-9rb4ax": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "The account menu: white, rounded, a soft shadow, rules between groups."
+            },
+            "v-hkg6vl": {
+              "name": {
+                "value": "dropdown",
+                "from": "ai"
+              },
+              "note": "The guests picker under the booking card."
+            },
+            "v-ouyadl": {
+              "hide": "the compact search bar"
+            },
+            "v-qj65e1": {
+              "hide": "the booking card's guests field, open"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-xlwqrd": {
+              "name": {
+                "value": "category",
+                "from": "ai"
+              },
+              "note": "Homes, Experiences, Services: an illustrated icon over a label, the current one underlined."
+            },
+            "v-g46kt0": {
+              "name": {
+                "value": "segmented",
+                "from": "ai"
+              },
+              "note": "Dates or Flexible: a grey track, the current option raised in white."
+            },
+            "v-94n4dj": {
+              "hide": "the photo carousel's dots"
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-42rs9z": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "Amenity filters (TV, Wifi): white pills, 1px border; selected gets a 2px dark border."
+            },
+            "v-hqx07k": {
+              "name": {
+                "value": "mention",
+                "from": "ai"
+              },
+              "note": "Guests mention: a tag with an icon and a count."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-v9kvq4": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The login field: a label inside a bordered box; focus darkens the border."
+            },
+            "v-c07rd4": {
+              "name": {
+                "value": "price",
+                "from": "ai"
+              },
+              "note": "Minimum and maximum price in Filters: a pill with a 1px border."
+            }
+          }
+        }
+      }
+    },
+    "search-field": {
+      "status": "reviewed",
+      "summary": "The search bar is a white pill with a soft shadow split into Where, When and Who, ending in a round pink search button.",
+      "groups": {
+        "searchbox": {
+          "variants": {
+            "v-fznk62": {
+              "name": {
+                "value": "search bar",
+                "from": "ai"
+              },
+              "note": "Where: Search destinations."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-5w6vjd": {
+              "name": {
+                "value": "on dark",
+                "from": "ai"
+              },
+              "note": "The AI search switch on the dark banner: a white knob, Off inside the track."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-42rs9z": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "Quick filters (Hotel) are checkbox pills, not boxes."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-fznk62": {
+              "name": {
+                "value": "segment",
+                "from": "ai"
+              },
+              "note": "Type of place: the chosen option gets a dark border."
+            },
+            "v-bhx43i": {
+              "name": {
+                "value": "segment, on track",
+                "from": "ai"
+              },
+              "note": "Nightly or trip price in Filters: grey text on a grey track; the chosen one is a white pill."
+            }
+          }
+        },
+        "radiogroup": {
+          "variants": {
+            "v-42rs9z": {
+              "note": "A segmented row of radios: Any, Home, Room, Hotel."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "row": {
+          "variants": {
+            "v-15f7wn": {
+              "name": {
+                "value": "check row",
+                "from": "ai"
+              },
+              "note": "Host protections: a label and a check, a rule between rows."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "check row, last",
+                "from": "ai"
+              },
+              "note": "The last row, no rule."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-muc8l9": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              },
+              "note": "Between the search bar's parts."
+            },
+            "v-pd3dgv": {
+              "name": {
+                "value": "section rule",
+                "from": "ai"
+              },
+              "note": "Full-width rules between page sections."
+            },
+            "v-hlfuiu": {
+              "name": {
+                "value": "horizontal",
+                "from": "ai"
+              }
+            },
+            "v-78t5b5": {
+              "name": {
+                "value": "vertical, filters",
+                "from": "ai"
+              },
+              "note": "Between Filters and the quick filters."
+            },
+            "v-gqamol": {
+              "name": {
+                "value": "section rule",
+                "from": "ai"
+              }
+            },
+            "v-l7d1ng": {
+              "hide": "a dialog footer's top rule"
+            },
+            "v-78c02q": {
+              "hide": "a dialog footer's top rule"
+            },
+            "v-7mpsox": {
+              "hide": "map controls"
+            },
+            "v-u9xxij": {
+              "hide": "the earnings slider's track"
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "No fixed size: it takes its content's size."
+            }
+          }
+        }
+      }
+    }
+  },
+  "pages": {
+    "https://www.airbnb.com/": {
+      "title": "Home",
+      "summary": "The signed-out home page: the header with its category tabs, the floating search bar, full-width rows of small listing cards, and a tall grey footer.",
+      "layout": [
+        "Some loads open on a 76px AI search banner; the 96px header follows.",
+        "The search bar is 850x66, centred under the header.",
+        "Rows run the full width with 48px side margins; cards are 180px, seven to a row.",
+        "The footer is 705px on #f7f7f7."
+      ]
+    },
+    "https://www.airbnb.com/s/Paris/homes": {
+      "title": "Search results",
+      "summary": "Results and a map side by side, under a compact header and a row of filter chips.",
+      "layout": [
+        "Header 96px, the search collapsed to a 404x46 pill in its centre, then a 54px filter bar.",
+        "Results run from x48 to x710, two 307px cards to a row.",
+        "The map is 658px wide at x734 and fills the viewport's height under the bars (684px).",
+        "Pagination sits under the results; the footer is 625px."
+      ]
+    },
+    "https://www.airbnb.com/rooms/47803806": {
+      "title": "Listing",
+      "summary": "A listing: title and photos across the content width, then sections in a left column beside the booking card, then reviews, host and things to know across the width again.",
+      "layout": [
+        "Content is 1120px, centred at x153.",
+        "The photo grid is 1120x476 with 12px outer corners: one large photo and four small.",
+        "Below it the page splits: a 653px column and the 372px booking card at x899, which stays in view as the column scrolls.",
+        "Reviews, the host and things to know return to the full 1120px."
+      ]
+    },
+    "https://www.airbnb.com/host/homes": {
+      "title": "Become a host",
+      "summary": "The hosting landing page: an earnings hero with a map, then stacked full-width sections: a banner, value props, co-hosts, AirCover and questions.",
+      "layout": [
+        "Header 80px, with no search bar.",
+        "Hero 800px: the headline and an earnings slider on the left, a 624x592 map on the right.",
+        "Narrow content centres at 848px (the banner, the questions), wide rows at 1216px (the co-hosts).",
+        "The footer is 625px, as on search and listings."
+      ]
+    }
+  },
+  "blocks": {
+    "ai-search-banner": {
+      "title": "AI search banner",
+      "note": "A 76px dark strip above the header that offers the new AI search, with an Off switch. It is an experiment: some loads leave it out.",
+      "uses": ["switch"]
+    },
+    "site-header": {
+      "title": "Header",
+      "note": "Logo, the Homes, Experiences and Services tabs, and Become a host with two round icon buttons. The tab icons are short videos, which the copy keeps as grey boxes.",
+      "uses": ["tabs", "button"]
+    },
+    "search-bar": {
+      "title": "Search bar",
+      "note": "An 850x66 pill with a 1px #dddddd border and a soft 0 8px 24px shadow: Where, When and Who split by short rules, and the round gradient search button.",
+      "uses": ["search-field", "button"]
+    },
+    "listing-row": {
+      "title": "Listing row",
+      "note": "A titled row of seven 180px cards, with small round arrows to page it.",
+      "uses": ["card", "button"]
+    },
+    "listing-card": {
+      "title": "Listing card",
+      "note": "A photo with 20px corners, a Guest favorite pill in 80% white and a heart over it; title, price and rating under it, with no card surface.",
+      "uses": ["card", "badge", "toggle-button"]
+    },
+    "profile-menu": {
+      "title": "Profile menu",
+      "note": "A 265px menu with 12px corners and a 0 2px 16px shadow: groups of rows split by rules, one with a picture and a description. The first row shows a 2px focus ring because the capture opened the menu with the keyboard.",
+      "uses": ["popover", "separator"]
+    },
+    "login-dialog": {
+      "title": "Log in dialog",
+      "note": "A 480px dialog with 32px corners: a 60px field with a 1px inset ring and 12px corners, the full-width gradient Continue button (48px), and square Google and Apple buttons.",
+      "uses": ["dialog", "text-field", "button", "separator"]
+    },
+    "date-picker": {
+      "title": "Date picker",
+      "note": "Opens from When: a Dates and Flexible pill switch on #ebebeb, two months side by side, and pill chips for how flexible the dates are, the selected one outlined in #222222.",
+      "uses": ["toggle-button"]
+    },
+    "footer": {
+      "title": "Footer",
+      "note": "Three columns of links on #f7f7f7, then a bottom row with legal links, language and currency, and social icons. The copy leaves out the inspiration tabs above it.",
+      "uses": ["link", "button"]
+    },
+    "search-header": {
+      "title": "Search header",
+      "note": "On results the search bar collapses into a 404x46 pill inside the 96px header, with the same 1px #dddddd border and a lighter shadow.",
+      "uses": ["search-field", "button"]
+    },
+    "filter-bar": {
+      "title": "Filter bar",
+      "note": "A row of 34px chips: white, a 1px #dddddd border, 24px corners and 12px text; some carry a chevron for a menu.",
+      "uses": ["toggle-button", "button"]
+    },
+    "result-card": {
+      "title": "Result card",
+      "note": "The listing card at 307px with more lines: a 230px photo with 20px corners and dots, a Superhost pill, the title and rating, a description, beds, dates, and the old price struck through beside the new one.",
+      "uses": ["card", "badge", "toggle-button"]
+    },
+    "featured-hotels": {
+      "title": "Featured hotels",
+      "note": "A 686px panel on warm #f7f6f2 with 20px corners and 24px padding: a header with a 1/5 counter and round arrows, a carousel of 270px hotel cards, and a white Search hotels button.",
+      "uses": ["card", "badge", "button"]
+    },
+    "price-details": {
+      "title": "Price details",
+      "note": "Opens from a card's price: a popover in 92.5% white with about 28px corners, a round close button, the price lines and a #f7f7f7 credit callout.",
+      "uses": ["popover", "button"]
+    },
+    "map": {
+      "title": "Map",
+      "note": "Prices as white pills and neighborhood labels over the map, with round zoom and expand buttons. The tiles are drawn on a canvas, so the copy shows a grey base under them.",
+      "uses": ["button"]
+    },
+    "filters-dialog": {
+      "title": "Filters dialog",
+      "note": "A 568x820 dialog with 32px corners: a centred title and close button, sections split by rules (recommended tiles, a Type of place segmented control, price), and a footer bar with an upward shadow.",
+      "uses": ["dialog", "toggle-button", "separator", "button"]
+    },
+    "pagination": {
+      "title": "Pagination",
+      "note": "Round 32px page buttons, the current one filled #222222 with white text, and an arrow at each end.",
+      "uses": ["button"]
+    },
+    "listing-title": {
+      "title": "Listing title",
+      "note": "The listing's name on the left; Share and Save as underlined text buttons with icons on the right.",
+      "uses": ["button"]
+    },
+    "photo-grid": {
+      "title": "Photo grid",
+      "note": "One large photo and four small ones, with 12px corners on the grid's outside only, and a small Show all photos button over the last.",
+      "uses": ["button"]
+    },
+    "guest-favorite-strip": {
+      "title": "Guest favorite strip",
+      "note": "A 653px box with a 1px #dddddd border and 12px corners: laurels, a one-line claim, the rating and the review count split by a rule.",
+      "uses": ["card", "separator"]
+    },
+    "highlights": {
+      "title": "Highlights",
+      "note": "Three rows of an icon, a title and a muted line, with no surface."
+    },
+    "booking-card": {
+      "title": "Booking card",
+      "note": "A 372px card with 12px corners, a 1px #dddddd border and a 0 6px 16px shadow: check-in, checkout and guests as one field group outlined in #8c8c8c, and the gradient Check availability button.",
+      "uses": ["card", "text-field", "button"]
+    },
+    "sleep-cards": {
+      "title": "Where you'll sleep",
+      "note": "Bedroom cards 207px wide with a 1px #dddddd border, 12px corners and 24px padding, bed icons above the name.",
+      "uses": ["card"]
+    },
+    "amenities": {
+      "title": "Amenities",
+      "note": "Two columns of icon and label, and a #f2f2f2 Show all button, 48px with 12px corners.",
+      "uses": ["button"]
+    },
+    "inline-calendar": {
+      "title": "Calendar",
+      "note": "The date picker's two months, inline on the page: past and unavailable days struck through, and a Clear dates text button.",
+      "uses": ["button"]
+    },
+    "rating-summary": {
+      "title": "Rating summary",
+      "note": "The guest favorite rating set large between laurels, with a short line under it. The copy stops above the category scores that follow on the page."
+    },
+    "review": {
+      "title": "Review",
+      "note": "Avatar, name and meta lines, a row of stars, and the review's text. Redacted, as it shows a guest.",
+      "uses": ["avatar"]
+    },
+    "host-profile": {
+      "title": "Host profile",
+      "note": "A 395px host card with 24px corners and the dialog's 0 8px 24px shadow (avatar, name, three stats), host details beside it, and a grey message button. Redacted, as it shows the host.",
+      "uses": ["card", "avatar", "button", "separator"]
+    },
+    "things-to-know": {
+      "title": "Things to know",
+      "note": "Short sections in a three-column grid: an icon, a title, a muted line and an underlined Show more.",
+      "uses": ["button"]
+    },
+    "earnings-hero": {
+      "title": "Earnings hero",
+      "note": "A large centred headline with the estimate, a slider, a search pill, and a 624x592 map of nearby prices on the right.",
+      "uses": ["search-field"]
+    },
+    "hosting-banner": {
+      "title": "Hosting banner",
+      "note": "An 848px band on warm #f4f2ec with 24px corners: an illustration, a two-line pitch, and a #222222 pill button.",
+      "uses": ["button"]
+    },
+    "value-props": {
+      "title": "Value props",
+      "note": "Three centred columns of an icon on a soft square, a title and a muted paragraph. The copy leaves out the section's title."
+    },
+    "cohost-cards": {
+      "title": "Co-host cards",
+      "note": "Four 220x292 cards on #f7f7f7 with 30px corners and 30px padding: a 140px photo, a name, a short line and a strip of two stats. Redacted, as they show people.",
+      "uses": ["card", "avatar"]
+    },
+    "aircover-list": {
+      "title": "AirCover list",
+      "note": "Rows of what AirCover covers with green checks, split by 1px #dddddd rules, small print, and a 48px #222222 pill button. The copy leaves out the section's title and column headers.",
+      "uses": ["table", "button"]
+    },
+    "faq": {
+      "title": "Questions",
+      "note": "Accordion rows 848px wide on #f7f7f7, split by 1px #dddddd rules, each with a chevron. The copy holds the rows only, not the section's title."
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written section by section from the census (spec.json, census 7be1fff) and its page shots, public pages in light; pages and blocks from blocks.json's copies of 2026-10-25 and their computed styles. Names marked ai are ours; Airbnb publishes no component docs."
+  }
+}

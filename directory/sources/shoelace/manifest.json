@@ -1,0 +1,14 @@
+{
+  "kind": "live-site",
+  "repo": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/",
+  "ref": null,
+  "retrievedAt": "2026-08-29",
+  "files": [
+    {
+      "path": "custom-elements.json",
+      "upstreamPath": null,
+      "url": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/dist/custom-elements.json",
+      "sha256": "ec01e908669c64a8a2cec05c738496adda632f86a79d1edc730764a0ce7d728a"
+    }
+  ]
+}

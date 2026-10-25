@@ -50,8 +50,7 @@ export const github = definePreset({
     // States
     focusStyle: "inset",
     // A #0969da edge plus a 2px outline at -1px.
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     selectionHighlight: "browser",
 
     // Motion
@@ -66,7 +65,7 @@ export const github = definePreset({
     toggleSelected: "solid",
 
     // Selection
-    // 64×32 ToggleSwitch with a half-width knob.
+    // ToggleSwitch: a 64×32 slab with a half-width knob (ours keeps the density's 24px height).
     switchStyle: "slab",
     // Checks wear #818b98, a step past the field edge.
     checkEdge: "strong",
@@ -75,7 +74,7 @@ export const github = definePreset({
     // FormControl.Label is 14px 600.
     fieldLabel: "semibold",
     inputError: "icon-message",
-    // Primer's double triangle isn't in the catalog; Octicons' Unfold reads as a glitch.
+    // Stand-in: a chevron caret. Primer's Select draws a double triangle, and Octicons' Unfold (the double caret) reads as a glitch.
     selectTrigger: "field",
 
     // Menus & popovers
@@ -86,17 +85,19 @@ export const github = definePreset({
     mobilePickers: "anchored",
 
     // Dialogs
-    // #c8d1da66 lands near 10% black; Wash's page step is too faint to reach it.
+    // Stand-in: Primer's #c8d1da66 / #21283066 wash. Wash's page step is too faint to reach it; a light scrim lands near.
     dialogBackdrop: "scrim",
     dialogBackdropStrength: "light",
     dialogSections: "divided",
 
     // Navigation
+    // Stand-in: UnderlineNav underlines the current tab in coral (#fd8c73 / #f78166); ours draws ink.
     tabStyle: "line",
+    // NavList: a gray wash plus a 4px bar, the bar in #0969da / #1f6feb (ours draws ink).
     navMarker: "fill-bar",
     // UnderlineNav and NavList rest at 400, current 600.
     navWeight: "regular-semibold",
-    // Blue links aren't reachable under a green brand; underlined ink reads closer than green.
+    // Stand-in: links are #0969da / #4493f8 at 400. Blue isn't reachable under the green brand; underlined ink reads closer than green.
     linkUnderline: "always",
     linkColor: "neutral",
     breadcrumbSeparator: "slash",
@@ -109,7 +110,9 @@ export const github = definePreset({
     progressTrack: "thick",
 
     // Data display
+    // Label: body ink in a #d1d9e0 / #3d444d hairline. Stand-in: accent labels are blue, ours take the green brand.
     badgeStyle: "outline",
+    // Stand-in: KeybindingHint is a #eff2f5 chip in a hairline at 6px; markdown <kbd> adds an inset bottom edge.
     kbdTreatment: "keycap",
     tableHeader: "filled",
     // Box-header is a #f6f8fa band, Box-footer a top rule.

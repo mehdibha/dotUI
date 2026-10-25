@@ -30,6 +30,8 @@ export const supabase = definePreset({
     monoFont: "Source Code Pro",
     // Manrope 600 at -0.025em.
     titleStyle: "tight",
+    // Fields, labels and tabs set 13px; buttons, menu rows and tooltips set
+    // 12px (stand-in: one UI size).
     uiTextSize: "13",
     sectionLabels: "mono-caps",
 
@@ -38,7 +40,8 @@ export const supabase = definePreset({
     iconStroke: 1.5,
 
     // Shape
-    // Tailwind radii × 4/3: 8px controls, 10.67px cards and dialogs.
+    // The dashboard scales Tailwind's radii by 4/3: 8px controls and nav rows,
+    // 10.67px cards and dialogs.
     radiusPx: 10.5,
     roleSurface: "md",
     rolePanel: "lg",
@@ -56,7 +59,7 @@ export const supabase = definePreset({
 
     // States
     // A 2px ring at 55% of the mint behind a 2px page-colored offset.
-    focusStrength: "soft",
+    // Stand-in: the full mint.
     focusInputStyle: "ring",
     invalidStyle: "tint",
     disabledTreatment: "fade",
@@ -84,6 +87,7 @@ export const supabase = definePreset({
     menuArrows: "none",
     menuIndicator: "check-start",
     menuSearch: "bar",
+    // ⌘K: a 56px search over 43px rows. Rows set 13px text; large's 16px is a stand-in.
     menuScale: "large",
     dialogFrost: "subtle",
     dialogSections: "divided",

@@ -110,7 +110,7 @@ describe("POST /api/snapshots", () => {
     })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       parseState({
-        style: "tactile",
+        style: "polished",
         surfaceEdge: "line",
         surfaceShadow: "flat",
         segmentedSelected: "tone",
@@ -137,7 +137,7 @@ describe("POST /api/snapshots", () => {
     const store = memoryStore()
     const response = await post(store, {
       name: "Acme",
-      state: { style: "tactile", radiusPx: {} },
+      state: { style: "polished", radiusPx: {} },
     })
     expect(response.status).toBe(400)
   })
@@ -157,7 +157,7 @@ describe("POST /api/snapshots", () => {
 
   it("keeps a current state as it is", async () => {
     const store = memoryStore()
-    const state = parseState({ style: "tonal", surfaceShadow: "flat" })
+    const state = parseState({ style: "polished", surfaceShadow: "flat" })
     const id = await save(store, { name: "Acme", state: stamp(state) })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       state,

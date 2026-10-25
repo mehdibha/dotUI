@@ -1,11 +1,21 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
+import type { ComponentType, ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { InternalShell } from "@/modules/internal/shell"
-import { getPreset, PRESETS, resolvePreset } from "@/modules/presets"
+import { getPreset, PRESETS } from "@/modules/presets"
+import { parseState } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
+import {
+  useAnnouncePreviewReady,
+  useAppliedDesignSystem,
+} from "@/modules/studio/preset/iframe-sync"
+import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
+import { shareDesignSystem } from "@/modules/studio/preset/share-design-system"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 
 import { SHEETS, type SheetName } from "./sheets"
 
@@ -14,26 +24,118 @@ const route = getRouteApi("/internal/specimens")
 /* A preset rendered through the preview iframe's global-mode provider, one
    sheet per 1280×900 capture. `scripts/capture-specimens.mts` screenshots it. */
 export function SpecimenPage() {
-  const { preset = "origin", mode, sheet } = route.useSearch()
+  const { preset = "origin", mode, sheet, diff } = route.useSearch()
   if (!sheet) return <SpecimenIndex />
 
   const Sheet = Object.hasOwn(SHEETS, sheet)
     ? SHEETS[sheet as SheetName]
     : undefined
-  if (!getPreset(preset) || !Sheet) {
+  const base = getPreset(preset)
+  if (!base || !Sheet) {
     return (
-      <p data-specimen-error="" className="p-10 font-mono text-sm">
+      <SpecimenError>
         Unknown {Sheet ? `preset "${preset}"` : `sheet "${sheet}"`}. Presets:{" "}
         {PRESETS.map((p) => p.id).join(", ")}. Sheets:{" "}
         {Object.keys(SHEETS).join(", ")}.
-      </p>
+      </SpecimenError>
     )
   }
 
-  const designSystem = resolvePreset(preset)
+  let state = base.state
+  try {
+    if (diff) state = withDiff(state, JSON.parse(diff))
+  } catch (error) {
+    return <SpecimenError>{(error as Error).message}</SpecimenError>
+  }
+
+  return (
+    <SpecimenSheet
+      key={`${preset}|${diff}`}
+      state={state}
+      sheet={sheet}
+      Sheet={Sheet}
+      mode={mode}
+    />
+  )
+}
+
+function SpecimenError({ children }: { children: ReactNode }) {
+  return (
+    <p data-specimen-error="" className="p-10 font-mono text-sm">
+      {children}
+    </p>
+  )
+}
+
+const withDiff = (state: StudioState, diff: unknown) =>
+  parseState({ ...state, ...(diff as object) })
+
+const prepare: PrepareDesignSystem<undefined> = (_, ready) => ready(undefined)
+
+/* The sheet shows `state`, then follows the `design-system` messages its
+   own origin posts: a script calls `window.__specimen.setDiff(diff)` to
+   re-render in place, which resolves once the new design system has
+   committed. */
+function SpecimenSheet({
+  state,
+  sheet,
+  Sheet,
+  mode,
+}: {
+  state: StudioState
+  sheet: string
+  Sheet: ComponentType
+  mode?: "light" | "dark"
+}) {
+  const { designSystem } = useAppliedDesignSystem(
+    prepare,
+    () => ({ designSystem: designSystemOf(state), prepared: undefined }),
+    internDesignSystem,
+  )
+  useAnnouncePreviewReady()
+  const shown = useRef({ designSystem, commits: 0, wait: () => {} })
+  useLayoutEffect(() => {
+    shown.current.designSystem = designSystem
+    shown.current.commits++
+    shown.current.wait()
+  }, [designSystem])
+  useEffect(() => {
+    const apply = (diff: unknown) => {
+      const data = designSystemOf(withDiff(state, diff))
+      // What the applier counts as the same design system renders nothing,
+      // so nothing commits.
+      const now = shown.current.designSystem
+      if (shareDesignSystem(now, internDesignSystem(data)) === now)
+        return Promise.resolve()
+      const from = shown.current.commits
+      const committed = new Promise<void>((done) => {
+        shown.current.wait = () => {
+          if (shown.current.commits > from) done()
+        }
+      })
+      window.postMessage(
+        { type: "design-system", data, live: false, drag: false },
+        window.location.origin,
+      )
+      return committed
+    }
+    // One wait slot: calls queue, so each resolves on its own commit. A diff
+    // parseState rejects fails its own call, not the ones after it.
+    let queue = Promise.resolve()
+    const host = window as { __specimen?: unknown }
+    host.__specimen = {
+      setDiff: (diff: unknown) => {
+        const applied = queue.then(() => apply(diff))
+        queue = applied.catch(() => {})
+        return applied
+      },
+    }
+    return () => {
+      delete host.__specimen
+    }
+  }, [state])
   return (
     <DesignSystemProvider
-      key={preset}
       params={designSystem.componentParams}
       tokens={designSystem.tokens}
       density={designSystem.density}

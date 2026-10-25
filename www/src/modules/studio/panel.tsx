@@ -2,7 +2,8 @@
 
 /* The panel chrome, after DialKit: one 14px-radius card, its header fixed
    over a hairline — the design-system picker's trigger on the left, Reset,
-   Save and search on the right — and only the body below it scrolls. Docked
+   Save and search on the right — and only the body below it scrolls, an open
+   page's Back and title pinned at its top over a progressive blur. Docked
    under the preview, the header and strip sit at the bottom edge instead, so
    they stay put as the dock hugs each chapter. */
 
@@ -12,6 +13,7 @@ import { ChevronsUpDownIcon } from "lucide-react"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { ProgressiveBlur } from "@/components/progressive-blur"
 
 /** The current design system, as the chrome shows it. */
 export interface PanelSystem {
@@ -40,7 +42,7 @@ export function PanelChrome({
   actions: ReactNode
   /** Mobile chapter navigation, pinned with the header. */
   strip?: ReactNode
-  /** An open page's header (back, title), pinned over the body. */
+  /** An open page's Back and title, pinned at the top of the body. */
   page?: ReactNode
   scrollRef?: Ref<HTMLDivElement>
   className?: string
@@ -90,15 +92,25 @@ export function PanelChrome({
         </div>
         {strip}
       </div>
-      {page && (
-        <div className="flex h-11 shrink-0 items-center gap-1 border-b border-fg/6 px-2">
-          {page}
-        </div>
-      )}
       <div
         ref={scrollRef}
-        className="no-scrollbar flex min-h-0 grow scroll-pt-4 flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0"
+        className={cn(
+          "no-scrollbar flex min-h-0 grow flex-col overflow-y-auto overscroll-contain px-2 py-4 max-lg:py-0",
+          // Rows land below the pinned page header.
+          page ? "scroll-pt-16" : "scroll-pt-4",
+        )}
       >
+        {page && (
+          <div className="sticky -top-4 z-10 -mx-2 -mt-4 mb-2 flex h-11 shrink-0 items-center px-2 not-supports-[animation-timeline:scroll()]:bg-card max-lg:top-0 max-lg:mt-0">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] blur-reveal-nearest [--blur-reveal-range:3rem] [--blur-tint:var(--panel-surface)]"
+            >
+              <ProgressiveBlur />
+            </div>
+            {page}
+          </div>
+        )}
         {children}
       </div>
     </div>

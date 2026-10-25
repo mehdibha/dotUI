@@ -1,0 +1,351 @@
+{
+  "https://www.untitledui.com/react/components/buttons": {
+    "storage": "theme",
+    "parts": {
+      "button.primary": {
+        "selector": "main button",
+        "text": "Button sm"
+      },
+      "button.secondary": {
+        "selector": "main button",
+        "text": "Button sm",
+        "nth": 1
+      },
+      "button.quiet": {
+        "selector": "main button",
+        "text": "Button sm",
+        "nth": 2
+      },
+      "button.focus": {
+        "selector": "main button",
+        "text": "Button sm",
+        "focus": true
+      },
+      "link": {
+        "selector": "main a[class*='text-brand-secondary']",
+        "text": "Button sm"
+      },
+      "button.icon": {
+        "selector": "#icon-only-buttons-example button[data-icon-only][class*='ring-primary']",
+        "nth": 1
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/inputs": {
+    "storage": "theme",
+    "parts": {
+      "input": {
+        "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
+        "ink": "input",
+        "skip": ["paddingInline"]
+      },
+      "input.focus": {
+        "selector": "main div:has(> input[placeholder='olivia@untitledui.com'])",
+        "focus": true
+      },
+      "field.label": {
+        "selector": "main label[data-label]"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/select": {
+    "storage": "theme",
+    "parts": {
+      "select.trigger": {
+        "selector": "main button[aria-haspopup=listbox]",
+        "text": "Select team member",
+        "ink": "p",
+        "skip": ["color", "paddingInline"]
+      },
+      "select.item": {
+        "selector": "[role=listbox] [role=option] > div",
+        "nth": 1,
+        "ink": "[slot=label]",
+        "before": [
+          {
+            "click": "main button[aria-haspopup=listbox]"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/checkboxes": {
+    "storage": "theme",
+    "parts": {
+      "checkbox": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='size-4']",
+        "skip": ["backgroundColor"]
+      },
+      "checkbox.checked": {
+        "selector": "main label[data-rac][data-selected] div[class~='size-4']",
+        "before": [
+          {
+            "click": "main label[data-rac]"
+          },
+          {
+            "hover": "main h3"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/toggles": {
+    "storage": "theme",
+    "parts": {
+      "switch.off": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='bg-tertiary']"
+      },
+      "switch.on": {
+        "selector": "main label[data-rac][data-selected] div[class~='rounded-full'][class*='bg-brand-solid']",
+        "before": [
+          {
+            "click": "main label[data-rac]"
+          },
+          {
+            "hover": "main h3"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tabs": {
+    "storage": "theme",
+    "parts": {
+      "tab": {
+        "selector": "main [role=tab][class*='bg-brand-primary_alt'] ~ [role=tab]",
+        "skip": ["boxShadow"]
+      },
+      "tab.selected": {
+        "selector": "main [role=tab][class*='bg-brand-primary_alt']",
+        "skip": ["boxShadow"]
+      },
+      "segmented": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1']"
+      },
+      "segmented.item": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1'] [role=tab]:not([aria-selected=true])"
+      },
+      "segmented.selected": {
+        "selector": "#button-border-horizontal [role=tablist][class*='p-1'] [role=tab][aria-selected=true]"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/dropdowns": {
+    "storage": "theme",
+    "parts": {
+      "menu": {
+        "selector": "[role=menu]",
+        "surface": true,
+        "before": [
+          {
+            "click": "main button[aria-haspopup]::-p-text(Account)"
+          }
+        ],
+        "skip": ["color"]
+      },
+      "menu.item": {
+        "selector": "[role=menu] [role=menuitem] > div",
+        "nth": 1,
+        "ink": "span[class*='font-semibold']",
+        "before": [
+          {
+            "click": "main button[aria-haspopup]::-p-text(Account)"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tooltips": {
+    "storage": "theme",
+    "parts": {
+      "tooltip": {
+        "selector": "[role=tooltip] > div",
+        "ink": "span",
+        "before": [
+          {
+            "focus": "main button[class*=text-fg-quaternary]:not([aria-label])"
+          },
+          {
+            "wait": "[role=tooltip]"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/command-menus/command-menu-actions": {
+    "storage": "theme",
+    "parts": {
+      "command": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "skip": ["color"]
+      },
+      "command.item": {
+        "selector": "[role=option] > div",
+        "nth": 1,
+        "ink": "[slot=label]"
+      },
+      "kbd": {
+        "selector": "[role=option] div[class*='ring-1']",
+        "skip": ["boxShadow"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal": {
+    "storage": "theme",
+    "parts": {
+      "dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/tables": {
+    "storage": "theme",
+    "parts": {
+      "card": {
+        "selector": "main div[class*='rounded-xl'][class*='ring-secondary']",
+        "skip": ["color"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/badges": {
+    "storage": "theme",
+    "parts": {
+      "badge": {
+        "selector": "main span[class*='rounded-full'][class*='utility-neutral']",
+        "text": "Label",
+        "nth": 1,
+        "skip": ["boxShadow"]
+      },
+      "badge.accent": {
+        "selector": "main span[class*='rounded-full'][class*='utility-brand']",
+        "text": "Label",
+        "nth": 1,
+        "skip": ["boxShadow"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-navigation-simple-demo": {
+    "storage": "theme",
+    "parts": {
+      "shell": {
+        "selector": "aside"
+      },
+      "nav.item": {
+        "selector": "aside summary",
+        "nth": 1,
+        "ink": "span[class*='font-semibold']",
+        "skip": ["backgroundColor"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo": {
+    "storage": "theme",
+    "parts": {
+      "nav.item.active": {
+        "selector": "[aria-current=page]",
+        "ink": "span[class*='font-semibold']",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/dashboards/dashboard-01": {
+    "storage": "theme",
+    "parts": {
+      "page": {
+        "selector": "main",
+        "skip": ["color"]
+      },
+      "panel": {
+        "selector": "main",
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/page-headers/page-header-simple": {
+    "storage": "theme",
+    "parts": {
+      "heading.4": {
+        "selector": "h1"
+      },
+      "text": {
+        "selector": "h1 + p"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons": {
+    "storage": "theme",
+    "parts": {
+      "text.muted": {
+        "selector": "h2 + p"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/pagination": {
+    "storage": "theme",
+    "parts": {
+      "pagination.current": {
+        "selector": "main button[aria-current=page]",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/radio-buttons": {
+    "storage": "theme",
+    "parts": {
+      "radio": {
+        "selector": "main label[data-rac]:not([data-selected]) div[class~='size-4']"
+      },
+      "radio.checked": {
+        "selector": "main label[data-rac][data-selected] div[class~='size-4']"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/progress-indicators": {
+    "storage": "theme",
+    "parts": {
+      "progress": {
+        "selector": "main [role=progressbar]"
+      },
+      "progress.fill": {
+        "selector": "main [role=progressbar] > div"
+      }
+    }
+  },
+  "https://www.untitledui.com/react/components/calendars": {
+    "storage": "theme",
+    "parts": {
+      "calendar.day": {
+        "selector": "[role=gridcell] > [data-rac]:not([data-outside-month], [data-selected], [data-today]) > div",
+        "within": "#calendar-day-view"
+      },
+      "calendar.selected": {
+        "selector": "[role=gridcell] > [data-selected] > div",
+        "within": "#calendar-day-view"
+      },
+      "calendar.today": {
+        "selector": "[role=gridcell] > [data-today] > div",
+        "within": "#calendar-day-view",
+        "before": [
+          {
+            "click": "#calendar-day-view [role=gridcell] > [data-rac]:not([data-outside-month], [data-today])"
+          },
+          {
+            "hover": "main h3"
+          }
+        ]
+      }
+    }
+  },
+  "https://www.untitledui.com/react/iframe/alerts/alert-floating-default-demo": {
+    "storage": "theme",
+    "parts": {
+      "alert": {
+        "selector": "div[class*='rounded-xl'][class*='border-primary']",
+        "ink": "p"
+      }
+    }
+  }
+}

@@ -98,10 +98,13 @@ describe("catalog", () => {
             `${key} at ${combo}`,
           ).toBeUndefined()
         }
-        // A table that maps everything to one value is no pairing.
-        expect(new Set(Object.values(follow.table)).size, key).toBeGreaterThan(
-          1,
-        )
+        // A table that maps everything to one value is no pairing. Style's
+        // columns are exempt: a key may sit on Flat's value under every Style.
+        if (follow.id !== "style")
+          expect(
+            new Set(Object.values(follow.table)).size,
+            key,
+          ).toBeGreaterThan(1)
       }
     }
   })
@@ -387,7 +390,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "surfaces/flat-needs-separation": [
     { surfaceEdge: "none" },
-    { style: "tonal", surfaceEdge: "none" },
+    { surfaceLayers: "tonal", surfaceEdge: "none" },
   ],
   "icons/stroke-only-line-sets": [
     { iconLibrary: "phosphor", iconStroke: 2.5 },
@@ -397,17 +400,21 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { iconWeight: "bold" },
     { iconLibrary: "phosphor", iconWeight: "bold" },
   ],
-  "states/ring-hides-field-weight": [
-    { focusInputStyle: "ring", focusInputWeight: "thick" },
-    { focusInputStyle: "border", focusInputWeight: "thick" },
+  "states/gap-only-ring": [
+    { focusStyle: "halo", focusRingGap: 3 },
+    { focusRingGap: 3 },
   ],
-  "states/ring-hides-field-ink": [
-    { focusInputStyle: "ring", focusInputColor: "neutral" },
-    { focusInputStyle: "border", focusInputColor: "neutral" },
+  "states/field-width-needs-layer": [
+    { focusInputStyle: "edge", focusFieldWidth: 3 },
+    { focusFieldWidth: 3 },
   ],
-  "states/neutral-ring-owns-field-ink": [
-    { focusColor: "neutral", focusInputColor: "accent" },
-    { focusInputColor: "accent" },
+  "states/underline-owns-field-focus": [
+    { inputStyle: "underline", focusInputStyle: "edge" },
+    { focusInputStyle: "edge" },
+  ],
+  "states/indicator-rule-is-thick": [
+    { inputStyle: "indicator", focusInputStyle: "thick-edge" },
+    { focusInputStyle: "thick-edge" },
   ],
   "motion/popover-none-pins-entrance": [
     { popoverMotion: "none", popoverEntrance: "fade" },
@@ -434,7 +441,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonColor: "neutral", buttonSecondary: "solid" },
   ],
   "buttons/closed-style-owns-secondary": [
-    { style: "tactile", buttonSecondary: "outline" },
+    { style: "polished", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
@@ -475,39 +482,31 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "style/buttonStyle-flat": [
     { buttonStyle: "gloss" },
-    { style: "tactile", buttonStyle: "gloss" },
+    { style: "polished", buttonStyle: "gloss" },
   ],
-  "style/buttonStyle-tonal": [
-    { style: "tonal", buttonStyle: "hairline" },
-    { buttonStyle: "hairline" },
-  ],
-  "style/buttonStyle-tactile": [
-    { style: "tactile", buttonStyle: "hairline" },
-    { style: "tactile", buttonStyle: "rim-light" },
+  "style/buttonStyle-polished": [
+    { style: "polished", buttonStyle: "hairline" },
+    { style: "polished", buttonStyle: "rim-light" },
   ],
   "style/buttonStyle-chunky": [
     { style: "chunky", buttonStyle: "bevel" },
     { style: "chunky", buttonStyle: "ledge" },
   ],
-  "style/surfaceEdge-flat-tonal": [
+  "style/surfaceEdge-flat": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceEdge-tactile": [
-    { style: "tactile", surfaceEdge: "ledge" },
-    { style: "tactile", surfaceEdge: "bevel" },
+  "style/surfaceEdge-polished": [
+    { style: "polished", surfaceEdge: "ledge" },
+    { style: "polished", surfaceEdge: "bevel" },
   ],
   "style/surfaceEdge-chunky": [
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceLayers-flat-tactile-chunky": [
-    { surfaceLayers: "tonal" },
-    { style: "tonal", surfaceLayers: "tonal" },
-  ],
-  "style/inputStyle-flat-tonal": [
+  "style/inputStyle-flat": [
     { inputStyle: "well" },
-    { style: "tactile", inputStyle: "well" },
+    { style: "polished", inputStyle: "well" },
   ],
 }
 

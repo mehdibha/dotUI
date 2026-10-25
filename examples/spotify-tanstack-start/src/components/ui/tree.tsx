@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const treeVariants = tv({
   slots: {
     root: "flex max-h-[inherit] flex-col gap-px overflow-auto outline-hidden data-empty:items-center data-empty:justify-center text-base [--tree-indent:--spacing(6)]",
-    item: "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:focus-ring-inside selected:bg-selected/50 selected:text-fg-on-selected selected:hover:bg-selected/70 drop-target:bg-selected/30 drop-target:text-fg dragging:opacity-60 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-12 px-3 py-2 text-base **:[svg]:not-with-[size]:size-5",
+    item: "group/tree-item relative flex w-full items-center rounded-xs outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:focus-ring focus-visible:-outline-offset-2 selected:bg-selected/50 selected:text-fg-on-selected selected:hover:bg-selected/70 drop-target:bg-selected/30 drop-target:text-fg dragging:opacity-60 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-12 px-3 py-2 text-base **:[svg]:not-with-[size]:size-5",
     itemContent:
       "flex min-w-0 flex-1 items-center gap-1.5 ps-[calc((var(--tree-item-level)-1)*var(--tree-indent))]",
     chevron:

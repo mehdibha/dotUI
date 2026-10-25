@@ -1,0 +1,5332 @@
+{
+  "version": 1,
+  "slug": "polaris",
+  "preset": "polaris",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-25",
+    "pages": [
+      {
+        "key": "react.html?sheet=actions&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=dates&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=feedback&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=navigation&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=selection&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=type&theme=light",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "web.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=actions&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=dialog&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=display&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=menu&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=navigation&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=selection&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      },
+      {
+        "key": "react.html?sheet=type&theme=dark",
+        "modes": [
+          "dark"
+        ],
+        "signedIn": false,
+        "how": "harness"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 65,
+            "uses": [
+              "toggle backgroundColor",
+              "card backgroundColor",
+              "button backgroundColor",
+              "box backgroundColor",
+              "alert backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(250, 250, 250)",
+            "l": 0.985,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box backgroundColor",
+              "link backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(243, 243, 243)",
+            "l": 0.964,
+            "c": 0,
+            "h": 0,
+            "count": 12,
+            "uses": [
+              "page backgroundColor",
+              "kbd backgroundColor",
+              "main backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(235, 235, 235)",
+            "l": 0.94,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "link backgroundColor",
+              "navigation backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(227, 227, 227)",
+            "l": 0.916,
+            "c": 0,
+            "h": 0,
+            "count": 16,
+            "uses": [
+              "box backgroundColor",
+              "button edge",
+              "main edge",
+              "segment edge",
+              "box color"
+            ]
+          },
+          {
+            "color": "rgb(204, 204, 204)",
+            "l": 0.845,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "segment backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(157, 150, 142)",
+            "l": 0.677,
+            "c": 0.014,
+            "h": 71,
+            "count": 1,
+            "uses": [
+              "slider color"
+            ]
+          },
+          {
+            "color": "rgb(138, 138, 138)",
+            "l": 0.633,
+            "c": 0,
+            "h": 0,
+            "count": 3,
+            "uses": [
+              "box edge",
+              "checkbox edge"
+            ]
+          },
+          {
+            "color": "rgb(97, 97, 97)",
+            "l": 0.493,
+            "c": 0,
+            "h": 0,
+            "count": 11,
+            "uses": [
+              "text@grid color",
+              "kbd color",
+              "paragraph color",
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(74, 74, 74)",
+            "l": 0.409,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "tab color",
+              "text@tab color"
+            ]
+          },
+          {
+            "color": "rgb(48, 48, 48)",
+            "l": 0.309,
+            "c": 0,
+            "h": 0,
+            "count": 162,
+            "uses": [
+              "text@toggle color",
+              "toggle color",
+              "text color",
+              "box color",
+              "card color"
+            ]
+          },
+          {
+            "color": "rgb(26, 26, 26)",
+            "l": 0.218,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box backgroundColor",
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "checkbox color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 259,
+            "count": 8,
+            "steps": [
+              {
+                "color": "rgb(213, 235, 255)",
+                "l": 0.93,
+                "c": 0.036,
+                "h": 246,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(145, 208, 255)",
+                "l": 0.832,
+                "c": 0.092,
+                "h": 241,
+                "count": 2,
+                "uses": [
+                  "box backgroundColor",
+                  "panel backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(0, 91, 211)",
+                "l": 0.504,
+                "c": 0.199,
+                "h": 259,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "link color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(0, 58, 90)",
+                "l": 0.333,
+                "c": 0.078,
+                "h": 241,
+                "count": 2,
+                "uses": [
+                  "box color",
+                  "text color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 21,
+            "count": 7,
+            "steps": [
+              {
+                "color": "rgb(254, 209, 215)",
+                "l": 0.901,
+                "c": 0.051,
+                "h": 9,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(199, 10, 36)",
+                "l": 0.526,
+                "c": 0.209,
+                "h": 24,
+                "count": 1,
+                "uses": [
+                  "button backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(185, 32, 16)",
+                "l": 0.507,
+                "c": 0.189,
+                "h": 30,
+                "count": 1,
+                "uses": [
+                  "button edge"
+                ]
+              },
+              {
+                "color": "rgb(142, 11, 33)",
+                "l": 0.414,
+                "c": 0.16,
+                "h": 21,
+                "count": 4,
+                "uses": [
+                  "box color",
+                  "icon color",
+                  "paragraph color",
+                  "text color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 87,
+            "count": 7,
+            "steps": [
+              {
+                "color": "rgb(255, 235, 120)",
+                "l": 0.934,
+                "c": 0.137,
+                "h": 100,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(255, 184, 0)",
+                "l": 0.827,
+                "c": 0.171,
+                "h": 81,
+                "count": 1,
+                "uses": [
+                  "panel backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(79, 71, 0)",
+                "l": 0.394,
+                "c": 0.082,
+                "h": 102,
+                "count": 2,
+                "uses": [
+                  "box color",
+                  "text color"
+                ]
+              },
+              {
+                "color": "rgb(37, 26, 0)",
+                "l": 0.225,
+                "c": 0.046,
+                "h": 87,
+                "count": 3,
+                "uses": [
+                  "heading.h2 color",
+                  "icon color",
+                  "panel color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 237,
+            "count": 3,
+            "steps": [
+              {
+                "color": "rgb(0, 33, 51)",
+                "l": 0.235,
+                "c": 0.051,
+                "h": 237,
+                "count": 3,
+                "uses": [
+                  "heading.h2 color",
+                  "icon color",
+                  "panel color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 179,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(1, 75, 64)",
+                "l": 0.37,
+                "c": 0.067,
+                "h": 179,
+                "count": 2,
+                "uses": [
+                  "box color",
+                  "text color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 150,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(175, 254, 191)",
+                "l": 0.93,
+                "c": 0.115,
+                "h": 150,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 71,
+        "roles": {
+          "canvas": {
+            "color": "rgb(241, 241, 241)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(97, 97, 97)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(226, 226, 226)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(0, 91, 211)",
+            "source": "probe"
+          },
+          "focus": {
+            "color": "rgb(0, 91, 211)",
+            "source": "probe"
+          }
+        }
+      },
+      "dark": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 4,
+            "uses": [
+              "box color",
+              "box backgroundColor",
+              "button backgroundColor",
+              "icon color"
+            ]
+          },
+          {
+            "color": "rgb(250, 250, 250)",
+            "l": 0.985,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box backgroundColor",
+              "link backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(235, 235, 235)",
+            "l": 0.94,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "link backgroundColor",
+              "menuitem backgroundColor",
+              "navigation backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(227, 227, 227)",
+            "l": 0.916,
+            "c": 0,
+            "h": 0,
+            "count": 121,
+            "uses": [
+              "text color",
+              "heading.h1 color",
+              "card color",
+              "page color",
+              "box color"
+            ]
+          },
+          {
+            "color": "rgb(212, 212, 212)",
+            "l": 0.87,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(181, 181, 181)",
+            "l": 0.773,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "kbd color",
+              "box backgroundColor",
+              "paragraph color"
+            ]
+          },
+          {
+            "color": "rgb(157, 150, 142)",
+            "l": 0.677,
+            "c": 0.014,
+            "h": 71,
+            "count": 1,
+            "uses": [
+              "slider color"
+            ]
+          },
+          {
+            "color": "rgb(138, 138, 138)",
+            "l": 0.633,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "box edge"
+            ]
+          },
+          {
+            "color": "rgb(97, 97, 97)",
+            "l": 0.493,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "segment backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(74, 74, 74)",
+            "l": 0.409,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "tab color",
+              "text@tab color",
+              "listitem edge"
+            ]
+          },
+          {
+            "color": "rgb(64, 64, 64)",
+            "l": 0.371,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "kbd backgroundColor",
+              "panel backgroundColor",
+              "toggle backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(58, 58, 58)",
+            "l": 0.348,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "button backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(52, 52, 52)",
+            "l": 0.325,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "button edge"
+            ]
+          },
+          {
+            "color": "rgb(48, 48, 48)",
+            "l": 0.309,
+            "c": 0,
+            "h": 0,
+            "count": 45,
+            "uses": [
+              "card backgroundColor",
+              "button backgroundColor",
+              "columnheader@table backgroundColor",
+              "button color",
+              "menuitem backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(43, 43, 43)",
+            "l": 0.289,
+            "c": 0,
+            "h": 0,
+            "count": 6,
+            "uses": [
+              "button edge",
+              "segment edge"
+            ]
+          },
+          {
+            "color": "rgb(26, 26, 26)",
+            "l": 0.218,
+            "c": 0,
+            "h": 0,
+            "count": 10,
+            "uses": [
+              "page backgroundColor",
+              "main backgroundColor",
+              "dialog backgroundColor"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 24,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(199, 10, 36)",
+                "l": 0.526,
+                "c": 0.209,
+                "h": 24,
+                "count": 2,
+                "uses": [
+                  "button backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(185, 32, 16)",
+                "l": 0.507,
+                "c": 0.189,
+                "h": 30,
+                "count": 2,
+                "uses": [
+                  "button edge"
+                ]
+              },
+              {
+                "color": "rgb(142, 11, 33)",
+                "l": 0.414,
+                "c": 0.16,
+                "h": 21,
+                "count": 2,
+                "uses": [
+                  "menuitem color",
+                  "text@menuitem color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 259,
+            "count": 3,
+            "steps": [
+              {
+                "color": "rgb(0, 91, 211)",
+                "l": 0.504,
+                "c": 0.199,
+                "h": 259,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "link color",
+                  "text@button color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 179,
+            "count": 2,
+            "steps": [
+              {
+                "color": "rgb(1, 75, 64)",
+                "l": 0.37,
+                "c": 0.067,
+                "h": 179,
+                "count": 2,
+                "uses": [
+                  "icon color",
+                  "img color"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 71,
+        "roles": {
+          "canvas": {
+            "color": "rgb(26, 26, 26)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(227, 227, 227)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(181, 181, 181)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(48, 48, 48)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--p-color-bg",
+        "count": 14,
+        "feeds": [
+          "page backgroundColor"
+        ],
+        "light": "rgba(241, 241, 241, 1)",
+        "dark": "rgba(26, 26, 26, 1)"
+      },
+      {
+        "name": "--p-color-text",
+        "count": 14,
+        "feeds": [
+          "page color"
+        ],
+        "light": "rgba(48, 48, 48, 1)",
+        "dark": "rgba(227, 227, 227, 1)"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "Inter",
+        "count": 300
+      },
+      {
+        "family": "Arial",
+        "count": 3
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "13px",
+        "fontWeight": "450",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 122,
+        "groups": [
+          "box",
+          "button",
+          "card",
+          "link",
+          "paragraph",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "450",
+        "lineHeight": "16px",
+        "fontFamily": "Inter",
+        "count": 41,
+        "groups": [
+          "text@toggle",
+          "text@grid",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Inter",
+        "count": 35,
+        "groups": [
+          "toggle",
+          "tab",
+          "button"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "550",
+        "lineHeight": "16px",
+        "fontFamily": "Inter",
+        "count": 28,
+        "groups": [
+          "text@button",
+          "text@segment",
+          "text@tab",
+          "kbd"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "450",
+        "lineHeight": "normal",
+        "fontFamily": "Inter",
+        "count": 12,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "20px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.2px",
+        "fontFamily": "Inter",
+        "count": 12,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "550",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 11,
+        "groups": [
+          "text@link",
+          "box",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "650",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 9,
+        "groups": [
+          "heading.h2",
+          "heading.h5",
+          "text@link",
+          "menuitem",
+          "text@menuitem"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "450",
+        "lineHeight": "13px",
+        "fontFamily": "Inter",
+        "count": 6,
+        "groups": [
+          "segment"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "550",
+        "lineHeight": "28px",
+        "fontFamily": "Inter",
+        "count": 4,
+        "groups": [
+          "kbd"
+        ]
+      },
+      {
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "Arial",
+        "count": 3,
+        "groups": [
+          "slider",
+          "checkbox"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "650",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 3,
+        "groups": [
+          "heading.h4",
+          "heading.h2@dialog"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 3,
+        "groups": [
+          "menuitem"
+        ]
+      },
+      {
+        "fontSize": "36px",
+        "fontWeight": "700",
+        "lineHeight": "48px",
+        "letterSpacing": "-0.54px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "letterSpacing": "-0.3px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "32px",
+        "letterSpacing": "-0.2px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "20px",
+        "fontWeight": "650",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.2px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "heading.h3"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "450",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "paragraph"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "lineHeight": "16px",
+        "fontFamily": "Inter",
+        "count": 2,
+        "groups": [
+          "text@grid",
+          "text@toggle"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "450",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 1,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "Inter",
+        "count": 1,
+        "groups": [
+          "text@grid"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 8,
+        "count": 79,
+        "groups": [
+          "toggle",
+          "button",
+          "box",
+          "link",
+          "menuitem",
+          "tab"
+        ]
+      },
+      {
+        "px": 4,
+        "count": 13,
+        "groups": [
+          "box",
+          "kbd"
+        ]
+      },
+      {
+        "px": 12,
+        "count": 5,
+        "groups": [
+          "panel",
+          "alert",
+          "popover",
+          "status"
+        ]
+      },
+      {
+        "px": 6,
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "px": 16,
+        "count": 1,
+        "groups": [
+          "card"
+        ]
+      }
+    ],
+    "pills": [
+      "box",
+      "checkbox"
+    ]
+  },
+  "spacing": {
+    "grid": 2,
+    "steps": [
+      {
+        "px": 2,
+        "count": 40
+      },
+      {
+        "px": 4,
+        "count": 54
+      },
+      {
+        "px": 6,
+        "count": 59
+      },
+      {
+        "px": 8,
+        "count": 152
+      },
+      {
+        "px": 12,
+        "count": 80
+      },
+      {
+        "px": 16,
+        "count": 8
+      }
+    ],
+    "heights": {
+      "button": [
+        {
+          "px": 28,
+          "count": 17
+        },
+        {
+          "px": 32,
+          "count": 2
+        },
+        {
+          "px": 20,
+          "count": 1
+        }
+      ],
+      "checkbox": [
+        {
+          "px": 16,
+          "count": 1
+        }
+      ],
+      "kbd": [
+        {
+          "px": 28,
+          "count": 4
+        },
+        {
+          "px": 20,
+          "count": 2
+        }
+      ],
+      "link": [
+        {
+          "px": 28,
+          "count": 8
+        },
+        {
+          "px": 16,
+          "count": 4
+        }
+      ],
+      "menuitem": [
+        {
+          "px": 32,
+          "count": 4
+        }
+      ],
+      "segment": [
+        {
+          "px": 28,
+          "count": 6
+        }
+      ],
+      "tab": [
+        {
+          "px": 28,
+          "count": 4
+        }
+      ],
+      "toggle": [
+        {
+          "px": 32,
+          "count": 30
+        },
+        {
+          "px": 28,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset",
+        "count": 12,
+        "groups": [
+          "button",
+          "segment"
+        ]
+      },
+      {
+        "value": "rgba(142, 31, 11, 0.8) 0px -1px 0px 1px inset, rgba(181, 38, 11, 0.8) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.35) 0px 0.5px 0px 1.5px inset",
+        "count": 3,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgba(26, 26, 26, 0.07) 0px 3px 1px -1px",
+        "count": 2,
+        "groups": [
+          "alert",
+          "status"
+        ]
+      },
+      {
+        "value": "rgb(138, 138, 138) 0px 0px 0px 0.66px inset",
+        "count": 2,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.8) 0px -1px 0px 1px inset, rgb(48, 48, 48) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset",
+        "count": 2,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+        "count": 2,
+        "groups": [
+          "segment"
+        ]
+      },
+      {
+        "value": "rgba(26, 26, 26, 0.22) 0px 8px 16px -4px",
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "value": "rgb(48, 48, 48) 0px 0px 0px 32px inset",
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "value": "rgb(212, 212, 212) 0px 0px 0px 32px inset",
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "value": "rgba(26, 26, 26, 0.28) 0px 20px 20px -8px",
+        "count": 1,
+        "groups": [
+          "card"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "alert": {
+      "groups": [
+        "alert",
+        "status"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "alert.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "part": "alert",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "12px",
+                  "height": "92px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(26, 26, 26, 0.07) 0px 3px 1px -1px",
+                  "edge": "none",
+                  "width": "934px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/alert.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "withinPage"
+            ]
+          }
+        },
+        {
+          "id": "status.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "12px",
+                  "height": "92px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(26, 26, 26, 0.07) 0px 3px 1px -1px",
+                  "edge": "none",
+                  "width": "934px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/status.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "withinPage"
+            ]
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "icon",
+        "img",
+        "listitem",
+        "main",
+        "navigation",
+        "page",
+        "panel"
+      ],
+      "found": 42,
+      "looks": [
+        {
+          "id": "page.1",
+          "count": 7,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "part": "page",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "vars": {
+                  "backgroundColor": "--p-color-bg",
+                  "color": "--p-color-text"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.2",
+          "count": 7,
+          "pages": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "vars": {
+                  "backgroundColor": "--p-color-bg",
+                  "color": "--p-color-text"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 3,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(227, 227, 227)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "4px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "300px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/box.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "Highlight"
+            ]
+          }
+        },
+        {
+          "id": "main.1",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(227, 227, 227) right",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "main.2",
+          "count": 2,
+          "pages": [
+            8,
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(227, 227, 227) right",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "27.3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "27.3px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "transform": "matrix(-0.500787, -0.865571, 0.865571, -0.500787, 0, 0)",
+                  "iconSize": "27x27",
+                  "iconStroke": "fill",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.1",
+          "count": 1,
+          "pages": [
+            9
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(82, 244, 144)",
+                  "color": "rgb(1, 75, 64)",
+                  "borderRadius": "6px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "28x28",
+                  "iconStroke": "fill",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.1-rest-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Md"
+            ],
+            "class.variant": [
+              "styleTwo"
+            ]
+          }
+        },
+        {
+          "id": "listitem.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "45px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(74, 74, 74) top",
+                  "width": "74.5px",
+                  "paddingTop": "6px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "navigation.1",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "240px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 184, 0)",
+                  "color": "rgb(37, 26, 0)",
+                  "borderRadius": "12px",
+                  "height": "44px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "934px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "12px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "corners": "12px 12px 0px 0px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 18,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 3,
+          "pages": [
+            7,
+            8,
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset",
+                  "edge": "1px rgb(43, 43, 43)",
+                  "width": "86.5px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "edge": "1px rgb(52, 52, 52)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(97, 97, 97)",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "edge": "1px rgb(52, 52, 52)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "color": "rgb(74, 74, 74)",
+                  "boxShadow": "none",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-dark.json",
+                "forced": true
+              }
+            },
+            "open": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(97, 97, 97)",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none",
+                  "width": "83.8px",
+                  "paddingRight": "6px",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "icon@button.1",
+          "count": 3,
+          "pages": [
+            0,
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "part": "segmented",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "4px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "28px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "4px",
+                  "gap": "2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(181, 181, 181)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 2,
+          "pages": [
+            7,
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(199, 10, 36)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(142, 31, 11, 0.8) 0px -1px 0px 1px inset, rgba(181, 38, 11, 0.8) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.35) 0px 0.5px 0px 1.5px inset",
+                  "edge": "1px rgb(185, 32, 16)",
+                  "width": "61px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(163, 10, 36)",
+                  "edge": "1px rgb(178, 32, 16)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(142, 11, 33)",
+                  "boxShadow": "rgba(0, 0, 0, 0.2) -1px 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 1px 0px 1px 0px inset, rgba(0, 0, 0, 0.6) 0px 2px 0px 0px inset",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(163, 10, 36)",
+                  "edge": "1px rgb(178, 32, 16)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(93, 93, 93)",
+                  "color": "rgb(138, 138, 138)",
+                  "boxShadow": "none",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-disabled-dark.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset",
+                  "edge": "1px rgb(229, 229, 229)",
+                  "width": "86.5px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "edge": "1px rgb(224, 224, 224)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "edge": "1px rgb(224, 224, 224)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "color": "rgb(181, 181, 181)",
+                  "boxShadow": "none",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.4-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "icon@button.2",
+          "count": 2,
+          "pages": [
+            7,
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@button.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.5",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(0, 0, 0, 0.8) 0px -1px 0px 1px inset, rgb(48, 48, 48) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset",
+                  "edge": "none",
+                  "width": "69.1px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "backgroundImage": "linear-gradient(rgba(48, 48, 48, 0) 63.53%, rgba(255, 255, 255, 0.15) 100%), none",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "edge": "1px rgb(48, 48, 48)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "boxShadow": "rgb(0, 0, 0) 0px 3px 0px 0px inset"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "edge": "1px rgb(48, 48, 48)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(212, 212, 212)",
+                  "boxShadow": "none",
+                  "backgroundImage": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.5-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        }
+      ]
+    },
+    "card": {
+      "groups": [
+        "card"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "card.1",
+          "count": 8,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "82px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "950px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "card.2",
+          "count": 6,
+          "pages": [
+            7,
+            9,
+            11,
+            12,
+            13
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "82px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "950px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "groups": [
+        "cell@table",
+        "columnheader@table"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "columnheader@table.1",
+          "count": 4,
+          "pages": [
+            9
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "45px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(227, 227, 227) bottom",
+                  "width": "659px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "6px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "transition": "0.2s cubic-bezier(0.42, 0, 0.58, 1)",
+                  "display": "table-cell"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/columnheader@table.1-rest-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "verticalAlignTop"
+            ]
+          }
+        },
+        {
+          "id": "cell@table.1",
+          "count": 2,
+          "pages": [
+            9
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "36px",
+                  "paddingInline": "6px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "291px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "12px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "right",
+                  "transition": "0.2s cubic-bezier(0.42, 0, 0.58, 1)",
+                  "display": "table-cell"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/cell@table.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(74, 74, 74)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/cell@table.1-hover-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "verticalAlignTop"
+            ]
+          }
+        }
+      ]
+    },
+    "checkbox": {
+      "groups": [
+        "checkbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "checkbox.1",
+          "count": 1,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(253, 253, 253)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "9999px",
+                  "height": "16px",
+                  "paddingInline": "2px",
+                  "fontFamily": "Arial",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(138, 138, 138)",
+                  "width": "32px",
+                  "paddingRight": "2px",
+                  "lineHeight": "normal",
+                  "transition": "0.1s cubic-bezier(0.42, 0, 0.58, 1)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(251, 251, 251)",
+                  "edge": "1px rgb(107, 107, 107)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "edge": "1px rgb(97, 97, 97)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(252, 252, 252)",
+                  "edge": "1px rgb(118, 118, 118)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "color": "rgb(84, 84, 84)",
+                  "edge": "1px rgb(97, 97, 97)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(245, 245, 245)",
+                  "edge": "1px rgb(132, 132, 132)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-invalid-light.json",
+                "forced": true
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/checkbox.1-selected-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "dialog": {
+      "groups": [
+        "dialog"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "dialog.1",
+          "count": 1,
+          "pages": [
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "166px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/dialog.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "heading.h1",
+        "heading.h2",
+        "heading.h2@dialog",
+        "heading.h3",
+        "heading.h4",
+        "heading.h5",
+        "paragraph",
+        "paragraph@dialog",
+        "text",
+        "text@button",
+        "text@grid",
+        "text@link",
+        "text@menuitem",
+        "text@segment",
+        "text@tab",
+        "text@toggle",
+        "text@tooltip"
+      ],
+      "found": 63,
+      "looks": [
+        {
+          "id": "text@toggle.1",
+          "count": 29,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "115.1px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "73.5px",
+                  "lineHeight": "normal",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.2",
+          "count": 6,
+          "pages": [
+            7,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "73.5px",
+                  "lineHeight": "normal",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "-0.2px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "73.5px",
+                  "lineHeight": "24px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 6,
+          "pages": [
+            7,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "-0.2px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "73.5px",
+                  "lineHeight": "24px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@button.1",
+          "count": 6,
+          "pages": [
+            7,
+            8,
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.5px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@grid.1",
+          "count": 6,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(97, 97, 97)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "115.1px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 5,
+          "pages": [
+            2,
+            3,
+            5
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "902px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 5,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "19.2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 5,
+          "pages": [
+            12
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "19.2px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "paragraph.2",
+          "count": 4,
+          "pages": [
+            9,
+            11,
+            13
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "902px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@button.2",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.5px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@button.3",
+          "count": 3,
+          "pages": [
+            7,
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "45.1px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@link.1",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.9px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@link.2",
+          "count": 3,
+          "pages": [
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.9px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@segment.1",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(204, 204, 204)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "22.3px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@segment.2",
+          "count": 3,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(97, 97, 97)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "22.3px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@button.4",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "45.1px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@menuitem.1",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "39.8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@tab.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(74, 74, 74)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "59.5px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@tab.2",
+          "count": 2,
+          "pages": [
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(74, 74, 74)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "59.5px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "medium"
+            ],
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h1.3",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "part": "heading.1",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "48px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "36px",
+                  "fontWeight": "700",
+                  "letterSpacing": "-0.54px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "918px",
+                  "lineHeight": "48px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.3-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 184, 0)",
+                  "color": "rgb(37, 26, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "650",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "149.6px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h2.3",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "part": "heading.2",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "24px",
+                  "fontWeight": "700",
+                  "letterSpacing": "-0.2px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "918px",
+                  "lineHeight": "32px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.3-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h2@dialog.1",
+          "count": 1,
+          "pages": [
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(64, 64, 64)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "14px",
+                  "fontWeight": "650",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "108.1px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2@dialog.1-rest-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h3.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "20px",
+                  "fontWeight": "650",
+                  "letterSpacing": "-0.2px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "918px",
+                  "lineHeight": "24px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h3.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h4.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "part": "heading.4",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "14px",
+                  "fontWeight": "650",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "918px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h4.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "heading.h5.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "650",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "918px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h5.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "paragraph@dialog.1",
+          "count": 1,
+          "pages": [
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "588px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        },
+        {
+          "id": "text@tooltip.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "86.7px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "root"
+            ]
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "icon@link",
+        "link"
+      ],
+      "found": 10,
+      "looks": [
+        {
+          "id": "icon@link.1",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@link.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.2",
+          "count": 4,
+          "pages": [
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@link.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.1",
+          "count": 3,
+          "pages": [
+            3
+          ],
+          "part": "nav.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "206px",
+                  "paddingRight": "4px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "transition": "0.15s cubic-bezier(0.19, 0.91, 0.38, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(0, 91, 211) +1px",
+                  "zIndex": "100"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 3,
+          "pages": [
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "206px",
+                  "paddingRight": "4px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "transition": "0.15s cubic-bezier(0.19, 0.91, 0.38, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "dark": {
+                "values": {
+                  "ring": "2px rgb(0, 91, 211) +1px",
+                  "zIndex": "100"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "206px",
+                  "paddingRight": "4px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "transition": "0.15s cubic-bezier(0.19, 0.91, 0.38, 1)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-rest-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(74, 74, 74)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(0, 91, 211) +1px",
+                  "zIndex": "100"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "subNavigationActive"
+            ]
+          }
+        }
+      ]
+    },
+    "toggle-button": {
+      "groups": [
+        "icon@toggle",
+        "toggle"
+      ],
+      "found": 3,
+      "looks": [
+        {
+          "id": "toggle.1",
+          "count": 30,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "32px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "131.1px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(26, 26, 26)",
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(255, 255, 255)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@toggle.1",
+          "count": 1,
+          "pages": [
+            8
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(64, 64, 64)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "kbd": {
+      "groups": [
+        "kbd"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "kbd.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(97, 97, 97)",
+                  "borderRadius": "4px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "14px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "29.9px",
+                  "paddingRight": "8px",
+                  "lineHeight": "28px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/kbd.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "kbd.2",
+          "count": 2,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(64, 64, 64)",
+                  "color": "rgb(181, 181, 181)",
+                  "borderRadius": "4px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "14px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "29.9px",
+                  "paddingRight": "8px",
+                  "lineHeight": "28px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/kbd.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "kbd.3",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "part": "kbd",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "color": "rgb(97, 97, 97)",
+                  "borderRadius": "4px",
+                  "height": "20px",
+                  "paddingInline": "4px",
+                  "fontFamily": "Inter",
+                  "fontSize": "12px",
+                  "fontWeight": "550",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "4px",
+                  "lineHeight": "16px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/kbd.3-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "small"
+            ]
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "label.1",
+          "count": 2,
+          "pages": [
+            6
+          ],
+          "part": "field.label",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(241, 241, 241)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "59.2px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "gap": "8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/label.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "menu": {
+      "groups": [
+        "menu",
+        "menuitem"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "menuitem.1",
+          "count": 2,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "8px",
+                  "height": "32px",
+                  "paddingInline": "6px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "62.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(60, 60, 60)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(77, 77, 77)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "dark": {
+                "values": {
+                  "ring": "2px rgb(0, 91, 211) +0px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menuitem.1-focus-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "default"
+            ]
+          }
+        },
+        {
+          "id": "menu.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "157px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "74.5px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/menu.1-rest-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "listReset"
+            ]
+          }
+        }
+      ]
+    },
+    "popover": {
+      "groups": [
+        "popover"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "popover.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "12px",
+                  "height": "157px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "74.5px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/popover.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "segmented-control": {
+      "groups": [
+        "segment"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "segment.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "segmented.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset",
+                  "edge": "1px rgb(229, 229, 229)",
+                  "width": "56.5px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "13px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "edge": "1px rgb(224, 224, 224)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(250, 250, 250)",
+                  "edge": "1px rgb(224, 224, 224)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "color": "rgb(181, 181, 181)",
+                  "boxShadow": "none",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "segment.2",
+          "count": 2,
+          "pages": [
+            7
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset",
+                  "edge": "1px rgb(43, 43, 43)",
+                  "width": "56.5px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "13px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "edge": "1px rgb(52, 52, 52)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.2-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(97, 97, 97)",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.2-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "edge": "1px rgb(52, 52, 52)",
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.2-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(58, 58, 58)",
+                  "color": "rgb(74, 74, 74)",
+                  "boxShadow": "none",
+                  "edge": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.2-disabled-dark.json",
+                "forced": true
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        },
+        {
+          "id": "segment.3",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "is": "selected",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(204, 204, 204)",
+                  "color": "rgb(48, 48, 48)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset",
+                  "edge": "none",
+                  "width": "46.3px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "12px",
+                  "gap": "2px",
+                  "lineHeight": "13px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "textAlign": "center",
+                  "corners": "8px 0px 0px 8px",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex",
+                  "zIndex": "10"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.3-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(0, 91, 211) +1px"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/segment.3-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "Medium"
+            ],
+            "class.variant": [
+              "pressable"
+            ]
+          }
+        }
+      ]
+    },
+    "slider": {
+      "groups": [
+        "slider"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "slider.1",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(157, 150, 142)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Arial",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "240px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "lineHeight": "normal",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "10"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/slider.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/slider.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(197, 197, 197)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/slider.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tabs": {
+      "groups": [
+        "tab"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "tab.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(74, 74, 74)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "83.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "12px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.1-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(242, 242, 242)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.1-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(243, 243, 243)",
+                  "zIndex": "100"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.1-pressed-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(181, 181, 181)",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.1-disabled-light.json",
+                "forced": true
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(235, 235, 235)",
+                  "color": "rgb(48, 48, 48)",
+                  "width": "38.8px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "tab.2",
+          "count": 2,
+          "pages": [
+            11
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(74, 74, 74)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "12px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13.3333px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "83.5px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "12px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(77, 77, 77)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.2-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(64, 64, 64)",
+                  "zIndex": "100"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.2-pressed-dark.json"
+              }
+            },
+            "disabled": {
+              "dark": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tab.2-disabled-dark.json",
+                "forced": true
+              }
+            },
+            "selected": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(93, 93, 93)",
+                  "color": "rgb(227, 227, 227)",
+                  "width": "38.8px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tooltip": {
+      "groups": [
+        "tooltip"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "tooltip.1",
+          "count": 1,
+          "pages": [
+            10
+          ],
+          "states": {
+            "rest": {
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(48, 48, 48)",
+                  "color": "rgb(227, 227, 227)",
+                  "borderRadius": "8px",
+                  "height": "28px",
+                  "paddingInline": "8px",
+                  "fontFamily": "Inter",
+                  "fontSize": "13px",
+                  "fontWeight": "450",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "102.7px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "4px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "fontFeatureSettings": "\"calt\" 0",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/tooltip.1-rest-dark.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "default"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "Polaris 0.66px (`border-width-0165`) #8a8a8a on fields, selects and checkboxes (Chrome rounds the field borders to 1px at DPR 1)",
+      "standin": "Polaris `controlEdge: strong`",
+      "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Polaris 28px at 13px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.panel-edge",
+      "title": "Inset page panel with no edge while cards and overlays keep a 1px line",
+      "note": "the Shopify Admin's #f1f1f1 page panel sits beside the #ebebeb sidebar and under the black top bar with no edge, while its cards, menus, tooltips and the modal draw a 1px ring (`rgba(0, 0, 0, 0.06)`, #e2e2e2 over the page) under soft shadows (signed in)",
+      "standin": "`surfaceEdge: line` also rims the sidebar inset (`panel` edge 1px, oklab L 0.90); `bevel` leaves the panel clear but drops the card, menu and dialog lines (3 rows off)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "Weights between the standard steps",
+      "note": "Polaris's live Admin (now on Polaris web components, signed in) body, field values, field labels and menu rows at 450, buttons, tabs and nav rows at 550, the current nav row and page and card titles at 600 (Polaris React set 650 and 700)",
+      "standin": "400 / 500 / 600 (neutral links at 500), so Polaris's 450 and 550 measure 50 light (its 600 steps match with `navItemWeight: medium-semibold`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Fields filled with the raised surface, hairline edge, no shadow",
+      "note": "Polaris #fdfdfd fields and selects behind a 0.66px #8a8a8a edge, on white cards and the #f1f1f1 page alike",
+      "standin": "on Polaris it reads as #f0f1f1, ΔE 0.037)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Polaris heavier, page headings at 700 (3xl 36px, 2xl 30px, xl 24px) and 650 (lg 20px) while card titles stay 13/650 and modal titles 14/650",
+      "standin": "Polaris takes `compact` for its small card titles, 100 light on 3xl to xl",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.keycap",
+      "title": "Keycap corners apart from the small control rung",
+      "note": "Polaris 4px on a 20px key (`KeyboardKey size=\"small\"`, #f3f3f3 fill, 12/550 #616161 label)",
+      "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "state.invalid-field",
+      "title": "Invalid fields keep the label's ink",
+      "note": "Polaris a #fee8eb fill behind a 1px #8e0b21 edge with a 13px #8e0b21 message and icon, the label staying #303030",
+      "standin": "`invalidStyle: edge` and `tint` turn the label red too (Polaris's `tint` matches the fill and edge by eye, not probed)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Polaris sidebar rows #303030 at 550, the current at 650 on a #fafafa chip over the #ebebeb sidebar, and its segmented buttons",
+      "standin": "Polaris 0.192 on segmented and on idle rows with `navItemWeight: medium-semibold`, 500 / 600, the chip on the page tone, ΔE 0.029",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Polaris headings -0.54px at 36px, -0.3px at 30px, -0.2px at 24px and 20px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Pill tabs at button size: Polaris 28px with 12px padding at 12/550",
+      "standin": "a 32px list with 6px padding on Polaris",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Wider: Polaris 12px on 28px buttons and pill tabs",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Polaris neutral badges, #616161 on 6% black (#f0f0f0 on white)",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude); the neutral badge fill is #f8f9fa / #19191b (Polaris fill ΔE 0.012",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-fill",
+      "title": "Checkboxes filled with the field surface",
+      "note": "Polaris #fff checkboxes and radios, 16px, 4px corners",
+      "standin": "Polaris reads as #f0f1f1, ΔE 0.043)",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "Polaris's turns ink #1a1a1a over a #f7f7f7 fill under the 2px brand ring (#005bd3) 1px out",
+      "standin": "Polaris 0.349",
+      "source": "ledger"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "Polaris actions at 12px (buttons, tabs, badges, keycaps) while field and select values, menu rows and tooltips set 13px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Polaris 32×16",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "Polaris the field fill #fdfdfd inside 1px #8a8a8a, on #303030 with no edge",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-pill",
+      "title": "Pill tab tones",
+      "note": "Polaris idle labels in #4a4a4a (between body and muted ink); The selected chip a fainter wash than the toggles' selected fill: Polaris 8% black (#ebebeb on a white card)",
+      "standin": "`tabStyle: pill`: idle labels in muted ink (Polaris ΔE 0.092); the chip takes the toggles' selected fill (Polaris ΔE 0.050",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-fill",
+      "title": "Progress fill in the info color",
+      "note": "#91d0ff (`bg-fill-info`) on #e3e3e3, while the brand stays #005bd3",
+      "standin": "`progressColor: accent` (the #005bd3 brand)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.progress",
+      "title": "Progress corners apart from the other tracks",
+      "note": "Polaris rounds its 16px bar at 4px",
+      "standin": "`tracks: round` rounds switch, slider and progress together (a pill: +4px on Polaris); `follow` squares or rounds the switch with them",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.segmented-joined",
+      "title": "Segmented control as joined buttons",
+      "note": "each item a full secondary button (white fill, the bevel, 28px, 12px padding, 12/550 in full ink) butted against the next, square inner corners and 8px outer ones, no track; the pressed item on #cccccc under an inset shadow (`ButtonGroup variant=\"segmented\"`)",
+      "standin": "`segmentedTrack: outline` with `segmentedSelected: tone`: a 32px bordered track around clear 24–26px items, 9px item corners, a lighter chip (ΔE 0.045)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Polaris 12/450 (`bodySm`), today 700",
+      "source": "ledger"
+    },
+    {
+      "look": "size.overlay-width",
+      "title": "Wide overlays",
+      "note": "Polaris's Modal at 620px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Polaris 8px padding, 28px tall, 13/450 text (tighter than ours but a text size up, so padding and text size have to move apart)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Polaris's `dark-experimental` goes the other way, a bigger lift: cards, menus, dialogs and tooltips on #303030 over the #1a1a1a page (low priority, Shopify ships no production dark mode)",
+      "standin": "Polaris surfaces at 0.24–0.26 over the 0.21 page, ΔE 0.049–0.068",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Badge corners at the control radius",
+      "note": "8px on a 20px badge (`border-radius-200`), between a small rung and a pill",
+      "standin": "`badgeShape: pill` (10px); `rounded` gives 4px",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Categorical label colors (tags, labels, avatars)",
+      "note": "Polaris puts initials avatars on a palette color picked from the name (#52f490 with #014b40 initials for \"MB\"), 28px with 6px corners",
+      "standin": "hardcoded in demos; Polaris: neutral avatars (`avatarShape: rounded`)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.alert-header",
+      "title": "Banners with a solid status header",
+      "note": "a filled strip with the icon and a 13/650 title (warning #ffb800, info #91d0ff) over a white body; inside a card, a compact tinted row with an icon",
+      "standin": "`alertStyle: soft`: one tint over the whole alert, the in-card look",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Polaris 0.068, the same step for `buttonColor: neutral` fills",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "Polaris #e3e3e3",
+      "standin": "Polaris 0.041",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Field edges between the firm and strong lines",
+      "note": "Polaris #8a8a8a (L 0.63), with a cooler #898f94 top edge on fields",
+      "standin": "`strong` on Polaris (neutral-700, L 0.60; ΔE 0.033 on selects, 0.048 on fields)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Labels on brand solids in a set color",
+      "note": "Polaris #fff labels on its #303030 charcoal primaries (`dark-experimental` flips it, #303030 on #fff)",
+      "standin": "on Polaris the on-fill ink lands on the page tone, L 0.957 (ΔE 0.043)",
+      "source": "ledger"
+    }
+  ]
+}

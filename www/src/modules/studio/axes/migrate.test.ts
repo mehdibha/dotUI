@@ -64,8 +64,8 @@ const RULED: Record<string, string> = {
   // Flat cards with no edge get a tone or a shadow apart from the page.
   "color/grouped-page": "lightBg",
   "surfaces/flat-needs-separation": "surfaceShadow",
-  // Main's tonal layers win over a button style Tonal excludes.
-  "style/buttonStyle-tonal": "buttonStyle",
+  // An underline shows focus in its own rule, whatever the field focus.
+  "states/underline-owns-field-focus": "focusInputStyle",
 }
 
 /** Every key main drew that still draws a value of its own: today's
@@ -111,7 +111,9 @@ const DROPPED_KEYS = [
   "cursorPending",
   "drawerMotion",
   "focusGap",
+  "focusHaloStrength",
   "focusInputStrength",
+  "focusInputWidth",
   "loaderMotion",
   "messageScrollerMotion",
   "popoverHeader",
@@ -147,7 +149,6 @@ const DROPPED_VALUES = [
 ]
 
 const CONTEXT: Record<string, Raw> = {
-  focusHaloStrength: { focusStyle: "halo" },
   focusInputBorderWidth: { focusInputStyle: "border" },
 }
 
@@ -249,8 +250,8 @@ describe("migrate", () => {
   })
 
   it("reads an object only on main's motion keys as main's", () => {
-    expect(migrate({ style: "tactile", radiusPx: {} })).toEqual({
-      style: "tactile",
+    expect(migrate({ style: "polished", radiusPx: {} })).toEqual({
+      style: "polished",
       radiusPx: {},
     })
   })
@@ -262,6 +263,19 @@ describe("migrate", () => {
       surfaceShadow: "low",
       buttonSecondary: "outline",
       segmentedSelected: "raised",
+    })
+  })
+
+  it("reads Tonal as Flat with Tonal's columns, keeping explicit picks", () => {
+    const tonal = { ...DEFAULT_STATE, style: "tonal", inputStyle: "inset" }
+    expect(migrate({ version: 5, ...tonal })).toEqual({
+      ...DEFAULT_STATE,
+      surfaceLayers: "tonal",
+      surfaceEdge: "none",
+      surfaceShadow: "low",
+      buttonSecondary: "tonal",
+      segmentedSelected: "inverse",
+      inputStyle: "inset",
     })
   })
 
@@ -281,6 +295,14 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       motion: "smooth",
       chartMotion: "standard",
+    })
+  })
+
+  it("reads Tactile as Polished", () => {
+    const tactile = { ...DEFAULT_STATE, style: "tactile", buttonStyle: "gloss" }
+    expect(migrate({ version: 6, ...tactile })).toEqual({
+      ...tactile,
+      style: "polished",
     })
   })
 
@@ -336,7 +358,7 @@ describe("main → v3", () => {
     expect(github.inputStyle).toBe("outline")
     expect(github.segmentedSelected).toBe("raised")
     expect(github.focusStyle).toBe("inset")
-    expect(github.focusInputWeight).toBe("thick")
+    expect(github.focusInputStyle).toBe("thick-edge")
     expect(github.popoverEntrance).toBe("fade")
     const airbnb = preset("airbnb")
     expect(airbnb.sliderThumb).toBe("ring")
@@ -410,35 +432,35 @@ describe("main → v3", () => {
     ).toBe("attached")
   })
 
-  it("keeps main's tonal layers over a button style Tonal excludes", () => {
+  it("keeps main's tonal layers beside any button style", () => {
     for (const buttonStyle of ["hairline", "gloss", "rim-light", "bevel"]) {
-      const state = load(mainState({ buttonStyle, surfaceLayers: "tonal" }))
-      expect(state.style, buttonStyle).toBe("tonal")
-      expect(effective(state).values.surfaceLayers).toBe("tonal")
-      // Saved, so a Style that allows it draws it again.
-      expect(state.buttonStyle).toBe(buttonStyle)
+      const { values } = effective(
+        load(mainState({ buttonStyle, surfaceLayers: "tonal" })),
+      )
+      expect(values.surfaceLayers, buttonStyle).toBe("tonal")
+      expect(values.buttonStyle).toBe(buttonStyle)
     }
   })
 
   it("picks Flat unless a pick is another Style's", () => {
+    // Main's Spotify had tonal layers, which every Style allows now.
     const spotify = preset("spotify")
-    expect(spotify.style).toBe("tonal")
-    expect(spotify.surfaceLayers).toBe("style")
-    expect(spotify.surfaceEdge).toBe("style")
+    expect(spotify.style).toBe("flat")
+    expect(spotify.surfaceLayers).toBe("tonal")
+    expect(spotify.surfaceEdge).toBe("none")
     expect(spotify.toggleSelected).toBe("inverse")
     expect(spotify.inputStyle).toBe("filled")
-    expect(spotify.surfaceShadow).toBe("flat")
+    expect(spotify.surfaceShadow).toBe("style")
     expect(spotify.menuInset).toBe("inset")
 
     const bevel = load(mainState({ buttonStyle: "bevel" }))
-    expect(bevel.style).toBe("tactile")
+    expect(bevel.style).toBe("polished")
     expect(bevel.buttonStyle).toBe("style")
     expect(bevel.surfaceEdge).toBe("line")
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
-    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("tactile")
-    const { spotify: _, ...flat } = main.presets
-    for (const diff of Object.values(flat))
+    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("polished")
+    for (const diff of Object.values(main.presets))
       expect(load(mainState(diff)).style).toBe("flat")
   })
 

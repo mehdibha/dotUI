@@ -181,11 +181,10 @@ const largeFields = {
 // control, a trigger (a button) to keyboard focus only. Unfocused, an
 // invalid field wears the invalid halo instead.
 const shellFocus = {
-  self: "focus:focus-input focus:not-invalid:border-(--focus-input-border) invalid:not-focus:invalid-ring",
+  self: "focus:focus-input invalid:not-focus:invalid-ring",
   group:
-    "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-(--focus-input-border) has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring",
-  trigger:
-    "focus-visible:focus-input focus-visible:not-invalid:border-(--focus-input-border) invalid:not-focus-visible:invalid-ring",
+    "group-focus/combobox:focus-input has-[[data-input-control][data-focused]]:focus-input invalid:not-focus-within:invalid-ring",
+  trigger: "focus-visible:focus-input invalid:not-focus-visible:invalid-ring",
 }
 
 const shellRadius = {
@@ -196,7 +195,7 @@ const shellRadius = {
 }
 
 const boxed =
-  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
+  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
 
 // shadcn nova: a clear box on the control edge, tinted in dark.
 const outlineShell = tv({
@@ -208,19 +207,19 @@ const outlineShell = tv({
   defaultVariants: { radius: "single" },
 })
 
-// Untitled UI: a page-white box on the control edge with an xs drop.
 const raisedShell = tv({
-  base: [boxed, "border-border-control bg-bg shadow-xs"],
+  base: [
+    boxed,
+    "border-border-control bg-(--surface-bg,var(--color-bg)) shadow-xs",
+  ],
   variants: { focus: shellFocus, radius: shellRadius },
   defaultVariants: { radius: "single" },
 })
 
-// GitHub Primer: a page-white box on the control edge, recessed by a 1px
-// inner top shadow.
 const insetShell = tv({
   base: [
     boxed,
-    "border-border-control bg-bg shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)]",
+    "border-border-control bg-(--surface-bg,var(--color-bg)) shadow-[inset_0_1px_0_0_rgb(31_35_40/0.04)] dark:shadow-[inset_0_1px_0_0_rgb(1_4_9/0.24)]",
   ],
   variants: { focus: shellFocus, radius: shellRadius },
   defaultVariants: { radius: "single" },
@@ -245,29 +244,28 @@ const filledShell = tv({
 // goes around the box (Carbon); a border focus thickens the rule (M3). The
 // rule is the field's only edge, so it never draws weaker than Strong.
 const indicatorShell = tv({
-  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-(--studio-indicator-edge) bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-(--studio-indicator-edge) bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
-      self: "invalid:not-focus:invalid-ring focus:focus-input-indicator focus:not-invalid:border-(--focus-input-border)",
+      self: "invalid:not-focus:invalid-ring focus:focus-input focus:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:focus:shadow-[inset_0_-1px_var(--color-fg-danger)]",
       group:
-        "group-focus/combobox:focus-input-indicator group-focus/combobox:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring has-[[data-input-control][data-focused]]:focus-input-indicator has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border)",
+        "group-focus/combobox:focus-input group-focus/combobox:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:not-focus-within:invalid-ring invalid:group-focus/combobox:shadow-[inset_0_-1px_var(--color-fg-danger)] has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:has-[[data-input-control][data-focused]]:shadow-[inset_0_-1px_var(--color-fg-danger)]",
       trigger:
-        "invalid:not-focus-visible:invalid-ring focus-visible:focus-input-indicator focus-visible:not-invalid:border-(--focus-input-border)",
+        "invalid:not-focus-visible:invalid-ring focus-visible:focus-input focus-visible:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:focus-visible:shadow-[inset_0_-1px_var(--color-fg-danger)]",
     },
   },
 })
 
 // shadcn sera: a bottom rule only, no fill, no inline padding, no corners.
-// Every focus and invalid layer draws under the rule.
 const underlineShell = tv({
-  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control))",
+  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
-      self: "invalid:not-focus:invalid-ring-underline focus:focus-input-underline focus:not-invalid:border-(--focus-input-border)",
+      self: "invalid:not-focus:invalid-ring-underline focus:border-border-focus focus:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:focus:border-fg-danger invalid:focus:shadow-[inset_0_-1px_var(--color-fg-danger)]",
       group:
-        "group-focus/combobox:focus-input-underline group-focus/combobox:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring-underline invalid:group-focus/combobox:border-fg-danger has-[[data-input-control][data-focused]]:focus-input-underline has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
+        "group-focus/combobox:border-border-focus group-focus/combobox:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:not-focus-within:invalid-ring-underline invalid:group-focus/combobox:border-fg-danger invalid:group-focus/combobox:shadow-[inset_0_-1px_var(--color-fg-danger)] has-[[data-input-control][data-focused]]:border-border-focus has-[[data-input-control][data-focused]]:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:has-[[data-input-control][data-focused]]:border-fg-danger invalid:has-[[data-input-control][data-focused]]:shadow-[inset_0_-1px_var(--color-fg-danger)]",
       trigger:
-        "invalid:not-focus-visible:invalid-ring-underline focus-visible:focus-input-underline focus-visible:not-invalid:border-(--focus-input-border) invalid:focus-visible:border-fg-danger",
+        "invalid:not-focus-visible:invalid-ring-underline focus-visible:border-border-focus focus-visible:shadow-[inset_0_-1px_var(--color-border-focus)] invalid:focus-visible:border-fg-danger invalid:focus-visible:shadow-[inset_0_-1px_var(--color-fg-danger)]",
     },
   },
 })
@@ -419,7 +417,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
         // The inner control sheds its shell; `!` outranks the shell's state
         // and dark fills, which out-specify a plain descendant reset.
-        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0!",
+        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0! **:data-input-control:outline-none!",
         // Range compositions (start input, separator, end input): only the last
         // control keeps flex-1, so the slack sits before the trailing addon
         // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).

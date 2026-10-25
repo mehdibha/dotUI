@@ -1,0 +1,5316 @@
+{
+  "version": 1,
+  "slug": "duolingo",
+  "preset": "duolingo",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-25",
+    "pages": [
+      {
+        "key": "https://www.duolingo.com/efficacy",
+        "modes": [
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.duolingo.com/log-in",
+        "modes": [
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.duolingo.com/register#check",
+        "modes": [
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.duolingo.com/register#hearts",
+        "modes": [
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      },
+      {
+        "key": "https://www.duolingo.com/register#lesson",
+        "modes": [
+          "dark",
+          "light"
+        ],
+        "signedIn": false,
+        "how": "headless"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 103,
+            "uses": [
+              "link backgroundColor",
+              "panel backgroundColor",
+              "button backgroundColor",
+              "badge backgroundColor",
+              "separator backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(247, 247, 247)",
+            "l": 0.976,
+            "c": 0,
+            "h": 0,
+            "count": 3,
+            "uses": [
+              "textbox backgroundColor",
+              "link backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "l": 0.922,
+            "c": 0,
+            "h": 0,
+            "count": 38,
+            "uses": [
+              "badge edge",
+              "button edge",
+              "separator edge",
+              "radio edge",
+              "panel edge"
+            ]
+          },
+          {
+            "color": "rgb(175, 175, 175)",
+            "l": 0.754,
+            "c": 0,
+            "h": 0,
+            "count": 39,
+            "uses": [
+              "link color",
+              "badge color",
+              "text@button color",
+              "button color",
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(128, 128, 128)",
+            "l": 0.6,
+            "c": 0,
+            "h": 0,
+            "count": 7,
+            "uses": [
+              "separator color"
+            ]
+          },
+          {
+            "color": "rgb(119, 119, 119)",
+            "l": 0.569,
+            "c": 0,
+            "h": 0,
+            "count": 31,
+            "uses": [
+              "img color",
+              "link color",
+              "text@link color",
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(75, 75, 75)",
+            "l": 0.413,
+            "c": 0,
+            "h": 0,
+            "count": 38,
+            "uses": [
+              "icon@radio color",
+              "text color",
+              "text@radio color",
+              "radio color",
+              "paragraph color"
+            ]
+          },
+          {
+            "color": "rgb(60, 60, 60)",
+            "l": 0.356,
+            "c": 0,
+            "h": 0,
+            "count": 46,
+            "uses": [
+              "img color",
+              "panel color",
+              "text color",
+              "page color",
+              "heading.h1 color"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 6,
+            "uses": [
+              "button color",
+              "img color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 237,
+            "count": 32,
+            "steps": [
+              {
+                "color": "rgb(132, 216, 255)",
+                "l": 0.843,
+                "c": 0.098,
+                "h": 229,
+                "count": 2,
+                "uses": [
+                  "badge edge"
+                ]
+              },
+              {
+                "color": "rgb(28, 176, 246)",
+                "l": 0.718,
+                "c": 0.151,
+                "h": 237,
+                "count": 13,
+                "uses": [
+                  "link color",
+                  "button backgroundColor",
+                  "button color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(24, 153, 214)",
+                "l": 0.648,
+                "c": 0.136,
+                "h": 237,
+                "count": 17,
+                "uses": [
+                  "panel color",
+                  "icon@radio color",
+                  "badge color",
+                  "text@radio color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 27,
+            "count": 20,
+            "steps": [
+              {
+                "color": "rgb(255, 223, 224)",
+                "l": 0.93,
+                "c": 0.035,
+                "h": 16,
+                "count": 5,
+                "uses": [
+                  "toggle backgroundColor",
+                  "box backgroundColor",
+                  "button backgroundColor",
+                  "panel backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(255, 75, 75)",
+                "l": 0.671,
+                "c": 0.217,
+                "h": 25,
+                "count": 4,
+                "uses": [
+                  "text color",
+                  "button backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(234, 43, 43)",
+                "l": 0.606,
+                "c": 0.224,
+                "h": 27,
+                "count": 11,
+                "uses": [
+                  "icon@toggle color",
+                  "text@toggle color",
+                  "toggle color",
+                  "box color",
+                  "button color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 264,
+            "count": 10,
+            "steps": [
+              {
+                "color": "rgb(66, 133, 244)",
+                "l": 0.63,
+                "c": 0.18,
+                "h": 260,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "img color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(59, 89, 152)",
+                "l": 0.472,
+                "c": 0.108,
+                "h": 264,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "img color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(0, 0, 238)",
+                "l": 0.429,
+                "c": 0.297,
+                "h": 264,
+                "count": 4,
+                "uses": [
+                  "img color",
+                  "link color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 138,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(88, 204, 2)",
+                "l": 0.748,
+                "c": 0.229,
+                "h": 138,
+                "count": 6,
+                "uses": [
+                  "heading.h2 color",
+                  "box color",
+                  "button backgroundColor",
+                  "heading.h1 color",
+                  "link backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 311,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(206, 130, 255)",
+                "l": 0.735,
+                "c": 0.188,
+                "h": 311,
+                "count": 6,
+                "uses": [
+                  "icon color",
+                  "text color"
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": {
+          "canvas": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(60, 60, 60)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(119, 119, 119)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(229, 229, 229)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(88, 204, 2)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(28, 176, 246)",
+            "source": "probe"
+          }
+        }
+      },
+      "dark": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 18,
+            "uses": [
+              "link backgroundColor",
+              "button backgroundColor",
+              "panel backgroundColor",
+              "box backgroundColor",
+              "link color"
+            ]
+          },
+          {
+            "color": "rgb(241, 247, 251)",
+            "l": 0.973,
+            "c": 0.008,
+            "h": 237,
+            "count": 80,
+            "uses": [
+              "text color",
+              "img color",
+              "icon@radio color",
+              "text@radio color",
+              "panel color"
+            ]
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "l": 0.922,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "button edge",
+              "panel edge"
+            ]
+          },
+          {
+            "color": "rgb(220, 230, 236)",
+            "l": 0.919,
+            "c": 0.014,
+            "h": 234,
+            "count": 1,
+            "uses": [
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(175, 175, 175)",
+            "l": 0.754,
+            "c": 0,
+            "h": 0,
+            "count": 5,
+            "uses": [
+              "icon@navigation color",
+              "button color",
+              "img color",
+              "text@button color"
+            ]
+          },
+          {
+            "color": "rgb(128, 128, 128)",
+            "l": 0.6,
+            "c": 0,
+            "h": 0,
+            "count": 7,
+            "uses": [
+              "separator color"
+            ]
+          },
+          {
+            "color": "rgb(119, 119, 119)",
+            "l": 0.569,
+            "c": 0,
+            "h": 0,
+            "count": 30,
+            "uses": [
+              "img color",
+              "link color",
+              "text@link color"
+            ]
+          },
+          {
+            "color": "rgb(82, 101, 109)",
+            "l": 0.494,
+            "c": 0.026,
+            "h": 225,
+            "count": 34,
+            "uses": [
+              "link color",
+              "badge color",
+              "text color",
+              "text@button color",
+              "button color"
+            ]
+          },
+          {
+            "color": "rgb(75, 75, 75)",
+            "l": 0.413,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "heading.h1@banner color"
+            ]
+          },
+          {
+            "color": "rgb(55, 70, 79)",
+            "l": 0.385,
+            "c": 0.025,
+            "h": 235,
+            "count": 36,
+            "uses": [
+              "badge edge",
+              "separator edge",
+              "button edge",
+              "radio edge",
+              "panel edge"
+            ]
+          },
+          {
+            "color": "rgb(32, 47, 54)",
+            "l": 0.295,
+            "c": 0.024,
+            "h": 228,
+            "count": 8,
+            "uses": [
+              "textbox backgroundColor",
+              "toggle backgroundColor",
+              "box backgroundColor",
+              "button backgroundColor",
+              "link backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(19, 31, 36)",
+            "l": 0.23,
+            "c": 0.019,
+            "h": 226,
+            "count": 85,
+            "uses": [
+              "link backgroundColor",
+              "panel backgroundColor",
+              "badge backgroundColor",
+              "button backgroundColor",
+              "separator backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 6,
+            "uses": [
+              "button color",
+              "img color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 237,
+            "count": 26,
+            "steps": [
+              {
+                "color": "rgb(73, 192, 248)",
+                "l": 0.764,
+                "c": 0.131,
+                "h": 233,
+                "count": 11,
+                "uses": [
+                  "link color",
+                  "button backgroundColor",
+                  "button color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(28, 176, 246)",
+                "l": 0.718,
+                "c": 0.151,
+                "h": 237,
+                "count": 2,
+                "uses": [
+                  "button color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(24, 153, 214)",
+                "l": 0.648,
+                "c": 0.136,
+                "h": 237,
+                "count": 11,
+                "uses": [
+                  "panel color",
+                  "badge color"
+                ]
+              },
+              {
+                "color": "rgb(63, 133, 167)",
+                "l": 0.586,
+                "c": 0.087,
+                "h": 232,
+                "count": 2,
+                "uses": [
+                  "badge edge"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 24,
+            "count": 15,
+            "steps": [
+              {
+                "color": "rgb(238, 85, 85)",
+                "l": 0.655,
+                "c": 0.189,
+                "h": 24,
+                "count": 4,
+                "uses": [
+                  "text color",
+                  "button backgroundColor"
+                ]
+              },
+              {
+                "color": "rgb(216, 72, 72)",
+                "l": 0.604,
+                "c": 0.181,
+                "h": 24,
+                "count": 11,
+                "uses": [
+                  "icon@toggle color",
+                  "text@toggle color",
+                  "toggle color",
+                  "box color",
+                  "button color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 264,
+            "count": 10,
+            "steps": [
+              {
+                "color": "rgb(66, 133, 244)",
+                "l": 0.63,
+                "c": 0.18,
+                "h": 260,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "img color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(59, 89, 152)",
+                "l": 0.472,
+                "c": 0.108,
+                "h": 264,
+                "count": 3,
+                "uses": [
+                  "button color",
+                  "img color",
+                  "text@button color"
+                ]
+              },
+              {
+                "color": "rgb(0, 0, 238)",
+                "l": 0.429,
+                "c": 0.297,
+                "h": 264,
+                "count": 4,
+                "uses": [
+                  "img color",
+                  "link color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 311,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(206, 130, 255)",
+                "l": 0.735,
+                "c": 0.188,
+                "h": 311,
+                "count": 6,
+                "uses": [
+                  "icon color",
+                  "text color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 130,
+            "count": 6,
+            "steps": [
+              {
+                "color": "rgb(147, 211, 51)",
+                "l": 0.795,
+                "c": 0.194,
+                "h": 130,
+                "count": 5,
+                "uses": [
+                  "heading.h2 color",
+                  "box color",
+                  "button backgroundColor",
+                  "heading.h1 color"
+                ]
+              },
+              {
+                "color": "rgb(88, 204, 2)",
+                "l": 0.748,
+                "c": 0.229,
+                "h": 138,
+                "count": 1,
+                "uses": [
+                  "link backgroundColor"
+                ]
+              }
+            ]
+          }
+        ],
+        "neutralHue": 231,
+        "roles": {
+          "canvas": {
+            "color": "rgb(19, 31, 36)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(241, 247, 251)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(220, 230, 236)",
+            "source": "probe"
+          },
+          "surface": {
+            "color": "rgb(19, 31, 36)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(19, 31, 36)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(19, 31, 36)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(55, 70, 79)",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(147, 211, 51)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(19, 31, 36)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(73, 192, 248)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--color-beetle",
+        "count": 6,
+        "feeds": [
+          "icon color",
+          "text color"
+        ],
+        "light": "206, 130, 255",
+        "dark": "206, 130, 255"
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "duolingo-sans",
+        "count": 164
+      },
+      {
+        "family": "feather",
+        "count": 3
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 40,
+        "groups": [
+          "link",
+          "text@radio",
+          "panel",
+          "text",
+          "listitem",
+          "progressbar"
+        ]
+      },
+      {
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 14,
+        "groups": [
+          "panel",
+          "radio"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "18px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 12,
+        "groups": [
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 11,
+        "groups": [
+          "text@link",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "20px",
+        "fontWeight": "700",
+        "lineHeight": "28px",
+        "fontFamily": "duolingo-sans",
+        "count": 10,
+        "groups": [
+          "text",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 9,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "700",
+        "lineHeight": "20.4px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 9,
+        "groups": [
+          "text@button",
+          "button"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "15px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 8,
+        "groups": [
+          "link"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 7,
+        "groups": [
+          "text@button",
+          "text@toggle",
+          "button",
+          "link",
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "fontFamily": "duolingo-sans",
+        "count": 6,
+        "groups": [
+          "heading.h1",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 6,
+        "groups": [
+          "link",
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 6,
+        "groups": [
+          "link",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "28px",
+        "fontFamily": "duolingo-sans",
+        "count": 5,
+        "groups": [
+          "paragraph",
+          "textbox",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "0px",
+        "fontFamily": "duolingo-sans",
+        "count": 4,
+        "groups": [
+          "toggle",
+          "button",
+          "link"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "1px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 4,
+        "groups": [
+          "link"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "19.55px",
+        "fontFamily": "duolingo-sans",
+        "count": 3,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "16px",
+        "letterSpacing": "0.64px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 3,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "17.25px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "duolingo-sans",
+        "textTransform": "uppercase",
+        "count": 2,
+        "groups": [
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "fontFamily": "feather",
+        "count": 2,
+        "groups": [
+          "heading.h2"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "fontFamily": "duolingo-sans",
+        "count": 2,
+        "groups": [
+          "text"
+        ]
+      },
+      {
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      },
+      {
+        "fontSize": "64px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "-1.28px",
+        "fontFamily": "feather",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "26px",
+        "fontWeight": "700",
+        "lineHeight": "40px",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "heading.h1"
+        ]
+      },
+      {
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "fontFamily": "duolingo-sans",
+        "count": 1,
+        "groups": [
+          "heading.h1@banner"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 16,
+        "count": 11,
+        "groups": [
+          "button",
+          "card"
+        ]
+      },
+      {
+        "px": 8,
+        "count": 9,
+        "groups": [
+          "badge"
+        ]
+      },
+      {
+        "px": 12,
+        "count": 9,
+        "groups": [
+          "radio",
+          "textbox",
+          "button",
+          "link"
+        ]
+      }
+    ],
+    "pills": [
+      "progressbar",
+      "box"
+    ]
+  },
+  "spacing": {
+    "grid": 2,
+    "steps": [
+      {
+        "px": 8,
+        "count": 6
+      },
+      {
+        "px": 10,
+        "count": 8
+      },
+      {
+        "px": 14,
+        "count": 4
+      },
+      {
+        "px": 16,
+        "count": 24
+      },
+      {
+        "px": 24,
+        "count": 20
+      },
+      {
+        "px": 25,
+        "count": 2
+      },
+      {
+        "px": 30,
+        "count": 6
+      },
+      {
+        "px": 40,
+        "count": 2
+      },
+      {
+        "px": 44,
+        "count": 3
+      }
+    ],
+    "heights": {
+      "badge": [
+        {
+          "px": 30,
+          "count": 9
+        }
+      ],
+      "button": [
+        {
+          "px": 48,
+          "count": 7
+        },
+        {
+          "px": 18,
+          "count": 4
+        },
+        {
+          "px": 46,
+          "count": 4
+        },
+        {
+          "px": 21,
+          "count": 1
+        }
+      ],
+      "link": [
+        {
+          "px": 28,
+          "count": 11
+        },
+        {
+          "px": 15,
+          "count": 8
+        },
+        {
+          "px": 70,
+          "count": 4
+        },
+        {
+          "px": 17,
+          "count": 3
+        },
+        {
+          "px": 20,
+          "count": 2
+        },
+        {
+          "px": 24,
+          "count": 2
+        }
+      ],
+      "radio": [
+        {
+          "px": 252,
+          "count": 5
+        }
+      ],
+      "textbox": [
+        {
+          "px": 48,
+          "count": 2
+        }
+      ],
+      "toggle": [
+        {
+          "px": 21,
+          "count": 2
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgb(229, 229, 229) 0px 2px 0px 0px",
+        "count": 13,
+        "groups": [
+          "button",
+          "radio"
+        ]
+      },
+      {
+        "value": "rgb(55, 70, 79) 0px 2px 0px 0px",
+        "count": 11,
+        "groups": [
+          "button",
+          "radio"
+        ]
+      },
+      {
+        "value": "rgb(24, 153, 214) 0px 4px 0px 0px",
+        "count": 4,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(88, 167, 0) 0px 4px 0px 0px",
+        "count": 3,
+        "groups": [
+          "button",
+          "link"
+        ]
+      },
+      {
+        "value": "rgb(121, 185, 51) 0px 4px 0px 0px",
+        "count": 1,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(234, 43, 43) 0px 4px 0px 0px",
+        "count": 1,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(216, 72, 72) 0px 4px 0px 0px",
+        "count": 1,
+        "groups": [
+          "button"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "badge": {
+      "groups": [
+        "badge"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "badge.1",
+          "count": 7,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "8px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "8px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "badge.2",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "8px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(132, 216, 255)",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "8px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(63, 133, 167)",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/badge.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "contentinfo",
+        "icon",
+        "icon@banner",
+        "icon@navigation",
+        "img",
+        "listitem",
+        "page",
+        "panel"
+      ],
+      "found": 24,
+      "looks": [
+        {
+          "id": "img.1",
+          "count": 12,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "360px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "441px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "360px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "441px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.2",
+          "count": 10,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "27.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "27.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 9,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "160px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "142.7px",
+                  "lineHeight": "20px",
+                  "backgroundImage": "url()",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "160px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "142.7px",
+                  "lineHeight": "20px",
+                  "backgroundImage": "url()",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.1",
+          "count": 5,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "part": "page",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "3462.9px",
+                  "paddingInline": "0px",
+                  "fontFamily": "sans-serif",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "3462.9px",
+                  "paddingInline": "0px",
+                  "fontFamily": "sans-serif",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.1",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(206, 130, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.64px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--color-beetle"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(206, 130, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.64px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--color-beetle"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.3",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "18px",
+                  "lineHeight": "19.55px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.3-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "18px",
+                  "lineHeight": "19.55px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.3-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "listitem.1",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "44px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "482px",
+                  "lineHeight": "20px",
+                  "backgroundImage": "url()",
+                  "display": "list-item"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "44px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "482px",
+                  "lineHeight": "20px",
+                  "backgroundImage": "url()",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@navigation.1",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "20px",
+                  "iconSize": "14x14",
+                  "iconStroke": "1.8px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@navigation.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "20px",
+                  "iconSize": "14x14",
+                  "iconStroke": "1.8px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@navigation.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.4",
+          "count": 2,
+          "pages": [
+            0,
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 238)",
+                  "borderRadius": "0px",
+                  "height": "42px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "182px",
+                  "lineHeight": "0px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.4-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(0, 0, 238)",
+                  "borderRadius": "0px",
+                  "height": "42px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "182px",
+                  "lineHeight": "0px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/img.4-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.2",
+          "count": 2,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "140px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(229, 229, 229) top",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "transition": "0.3s ease-in-out",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "140px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79) top",
+                  "width": "1440px",
+                  "lineHeight": "20px",
+                  "transition": "0.3s ease-in-out",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/panel.2-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(88, 204, 2)",
+                  "borderRadius": "9999px",
+                  "height": "3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "27.8px",
+                  "lineHeight": "20px",
+                  "opacity": "0.2",
+                  "transition": "0.4s ease",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/box.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(147, 211, 51)",
+                  "borderRadius": "9999px",
+                  "height": "3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "27.8px",
+                  "lineHeight": "20px",
+                  "opacity": "0.2",
+                  "transition": "0.4s ease",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/box.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "contentinfo.1",
+          "count": 1,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "77px",
+                  "paddingInline": "25px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(229, 229, 229) top",
+                  "width": "1440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "25px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "77px",
+                  "paddingInline": "25px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79) top",
+                  "width": "1440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "25px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@banner.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "424px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "424px",
+                  "lineHeight": "0px",
+                  "iconSize": "424x424",
+                  "iconStroke": "5.1px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "424px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "424px",
+                  "lineHeight": "0px",
+                  "iconSize": "424x424",
+                  "iconStroke": "5.1px",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@banner.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button"
+      ],
+      "found": 12,
+      "looks": [
+        {
+          "id": "button.1",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "18px",
+                  "lineHeight": "19.55px",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "18px",
+                  "lineHeight": "19.55px",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(183, 183, 183)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "color": "rgb(18, 26, 30)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.1-disabled-dark.json",
+                "forced": true
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 2,
+          "pages": [
+            1,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(28, 176, 246)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(24, 153, 214) 0px 4px 0px 0px",
+                  "edge": "none",
+                  "width": "380px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(73, 192, 248)",
+                  "color": "rgb(19, 31, 36)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(24, 153, 214) 0px 4px 0px 0px",
+                  "edge": "none",
+                  "width": "380px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.2-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 2,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "16px",
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(229, 229, 229) 0px 2px 0px 0px",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "150px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "16px",
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(55, 70, 79) 0px 2px 0px 0px",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "150px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(0.9)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(0.9)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(0.9)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(0.9)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.3-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(229, 229, 229)",
+                  "height": "46px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)",
+                  "cursor": "default"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(55, 70, 79)",
+                  "height": "46px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)",
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.9",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "16px",
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(229, 229, 229) 0px 2px 0px 0px",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "375px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.9-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "16px",
+                  "height": "48px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(55, 70, 79) 0px 2px 0px 0px",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "375px",
+                  "paddingRight": "16px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.9-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.10",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(88, 204, 2)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(88, 167, 0) 0px 4px 0px 0px",
+                  "edge": "none",
+                  "width": "150px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(147, 211, 51)",
+                  "color": "rgb(19, 31, 36)",
+                  "borderRadius": "16px",
+                  "height": "46px",
+                  "paddingInline": "16px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "rgb(121, 185, 51) 0px 4px 0px 0px",
+                  "edge": "none",
+                  "width": "150px",
+                  "paddingRight": "16px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline-flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "boxShadow": "none",
+                  "filter": "brightness(1.1)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 4)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/button.10-focus-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "card": {
+      "groups": [
+        "card"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "card.1",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "part": "card",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "16px",
+                  "height": "290px",
+                  "paddingInline": "30px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "30px",
+                  "lineHeight": "20px",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "16px",
+                  "height": "290px",
+                  "paddingInline": "30px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "440px",
+                  "paddingTop": "30px",
+                  "paddingBottom": "30px",
+                  "paddingRight": "30px",
+                  "lineHeight": "20px",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/card.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "heading.h1",
+        "heading.h1@banner",
+        "heading.h2",
+        "paragraph",
+        "text",
+        "text@button",
+        "text@link",
+        "text@radio",
+        "text@toggle"
+      ],
+      "found": 34,
+      "looks": [
+        {
+          "id": "text@link.1",
+          "count": 10,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "60.8px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "60.8px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@radio.1",
+          "count": 7,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "35.3px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32.2px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/text@radio.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 6,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "98.8px",
+                  "lineHeight": "28px",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "98.8px",
+                  "lineHeight": "28px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "600px",
+                  "lineHeight": "40px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "600px",
+                  "lineHeight": "40px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 3,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "399.8px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "399.8px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(255, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8.4px",
+                  "lineHeight": "20px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(238, 85, 85)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8.4px",
+                  "lineHeight": "20px",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(206, 130, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.64px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "600px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--color-beetle"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(206, 130, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "16px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.64px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "600px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "flex"
+                },
+                "vars": {
+                  "color": "--color-beetle"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.5",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "383.3px",
+                  "lineHeight": "40px",
+                  "cursor": "default",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "38px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "383.3px",
+                  "lineHeight": "40px",
+                  "cursor": "default",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.1",
+          "count": 3,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "20.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.2px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "20.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.2px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(88, 204, 2)",
+                  "borderRadius": "0px",
+                  "height": "52.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "feather",
+                  "fontSize": "48px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "519.4px",
+                  "lineHeight": "52.8px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(147, 211, 51)",
+                  "borderRadius": "0px",
+                  "height": "52.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "feather",
+                  "fontSize": "48px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "519.4px",
+                  "lineHeight": "52.8px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h2.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "56px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "988px",
+                  "lineHeight": "28px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "56px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "988px",
+                  "lineHeight": "28px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.6",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "37px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "353.6px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "37px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "353.6px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.2",
+          "count": 2,
+          "pages": [
+            1,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "46.4px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(19, 31, 36)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "46.4px",
+                  "lineHeight": "18px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.3",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "20.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.5px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(19, 31, 36)",
+                  "borderRadius": "0px",
+                  "height": "20.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.5px",
+                  "lineHeight": "20.4px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.2",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.8px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.8px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@radio.2",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "44.8px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1@banner.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "88px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "480px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1@banner.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "88px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "32px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "480px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/heading.h1@banner.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.11",
+          "count": 1,
+          "pages": [
+            3
+          ],
+          "part": "text.muted",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "380px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(220, 230, 236)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "380px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "radio-group": {
+      "groups": [
+        "icon@radio",
+        "radio"
+      ],
+      "found": 5,
+      "looks": [
+        {
+          "id": "icon@radio.1",
+          "count": 7,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "radio.1",
+          "count": 5,
+          "pages": [
+            2,
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "12px",
+                  "height": "252px",
+                  "paddingInline": "24px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(229, 229, 229) 0px 2px 0px 0px",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "194.7px",
+                  "paddingTop": "24px",
+                  "paddingBottom": "24px",
+                  "paddingRight": "24px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "12px",
+                  "height": "252px",
+                  "paddingInline": "24px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "rgb(55, 70, 79) 0px 2px 0px 0px",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "194.7px",
+                  "paddingTop": "24px",
+                  "paddingBottom": "24px",
+                  "paddingRight": "24px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-rest-dark.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-hover-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-hover-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(221, 244, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(132, 216, 255)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(63, 133, 167)",
+                  "transform": "matrix(1, 0, 0, 1, 0, 2)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/radio.1-pressed-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "cursor": "default"
+                },
+                "source": "census"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(221, 244, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "rgb(132, 216, 255) 0px 2px 0px 0px",
+                  "edge": "2px rgb(132, 216, 255)"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(24, 153, 214)",
+                  "boxShadow": "rgb(63, 133, 167) 0px 2px 0px 0px",
+                  "edge": "2px rgb(63, 133, 167)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.2",
+          "count": 3,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "30x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.3",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "24.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "40px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "40x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@radio.4",
+          "count": 2,
+          "pages": [
+            2,
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(24, 153, 214)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "19px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "30px",
+                  "lineHeight": "20px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "30x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@radio.4-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toggle-button": {
+      "groups": [
+        "icon@toggle",
+        "toggle"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "icon@toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "normal",
+                  "textAlign": "center",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/icon@toggle.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "toggle.1",
+          "count": 2,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 223, 224)",
+                  "color": "rgb(234, 43, 43)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "93px",
+                  "lineHeight": "0px",
+                  "textAlign": "center",
+                  "opacity": "0.7",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(216, 72, 72)",
+                  "borderRadius": "0px",
+                  "height": "21px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "93px",
+                  "lineHeight": "0px",
+                  "textAlign": "center",
+                  "opacity": "0.7",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "iconSize": "20x20",
+                  "iconStroke": "1.7px",
+                  "transition": "0.2s ease",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-rest-dark.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "opacity": "1",
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-pressed-light.json"
+              },
+              "dark": {
+                "values": {
+                  "opacity": "1",
+                  "filter": "brightness(1.1)"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-pressed-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-focus-dark.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-disabled-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "cursor": "auto"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-disabled-dark.json",
+                "forced": true
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "opacity": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-selected-light.json",
+                "forced": true
+              },
+              "dark": {
+                "values": {
+                  "opacity": "1"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/toggle.1-selected-dark.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "link"
+      ],
+      "found": 13,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 10,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "27.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "106.8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(119, 119, 119)",
+                  "borderRadius": "0px",
+                  "height": "27.8px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "106.8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.1-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 8,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "15px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "72.8px",
+                  "lineHeight": "15px",
+                  "textTransform": "uppercase",
+                  "opacity": "0.8",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "15px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "72.8px",
+                  "lineHeight": "15px",
+                  "textTransform": "uppercase",
+                  "opacity": "0.8",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.2-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 4,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "70px",
+                  "paddingInline": "10px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "1px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "80.9px",
+                  "paddingRight": "10px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "70px",
+                  "paddingInline": "10px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "15px",
+                  "fontWeight": "700",
+                  "letterSpacing": "1px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "80.9px",
+                  "paddingRight": "10px",
+                  "lineHeight": "normal",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.3-focus-dark.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "color": "rgb(28, 176, 246)",
+                  "width": "88.4px"
+                },
+                "source": "census"
+              },
+              "dark": {
+                "values": {
+                  "color": "rgb(73, 192, 248)",
+                  "width": "88.4px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.4",
+          "count": 3,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(175, 175, 175)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.8px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(82, 101, 109)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "14px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "36.8px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.4-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.5",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "part": "link",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(28, 176, 246)",
+                  "borderRadius": "0px",
+                  "height": "52px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "422.7px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
+                  "borderRadius": "0px",
+                  "height": "52px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "422.7px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.5-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.6",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(28, 176, 246)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "150.1px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "150.1px",
+                  "lineHeight": "28px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.6-focus-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.7",
+          "count": 2,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(28, 176, 246)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "168.4px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(73, 192, 248)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "168.4px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-rest-dark.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-light.json"
+              },
+              "dark": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/link.7-focus-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "progress-bar": {
+      "groups": [
+        "progressbar"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "progressbar.1",
+          "count": 3,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "part": "progress",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(229, 229, 229)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "8px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "885.6px",
+                  "lineHeight": "20px",
+                  "iconSize": "59x60",
+                  "iconStroke": "0.3px",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/progressbar.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(55, 70, 79)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "8px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "885.6px",
+                  "lineHeight": "20px",
+                  "iconSize": "59x60",
+                  "iconStroke": "0.3px",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/progressbar.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "separator": {
+      "groups": [
+        "separator"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "separator.1",
+          "count": 7,
+          "pages": [
+            0
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(128, 128, 128)",
+                  "borderRadius": "0px",
+                  "height": "2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(229, 229, 229) top",
+                  "width": "988px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(19, 31, 36)",
+                  "color": "rgb(128, 128, 128)",
+                  "borderRadius": "0px",
+                  "height": "2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79) top",
+                  "width": "988px",
+                  "lineHeight": "20px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.1-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.2",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(229, 229, 229)",
+                  "color": "rgb(60, 60, 60)",
+                  "borderRadius": "0px",
+                  "height": "2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "169.7px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.2-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(55, 70, 79)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "0px",
+                  "height": "2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "169.7px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/separator.2-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text-field": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 2,
+          "pages": [
+            1
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(75, 75, 75)",
+                  "borderRadius": "12px",
+                  "height": "48px",
+                  "paddingInline": "14px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(229, 229, 229)",
+                  "width": "375px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "14px",
+                  "lineHeight": "28px",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(32, 47, 54)",
+                  "color": "rgb(241, 247, 251)",
+                  "borderRadius": "12px",
+                  "height": "48px",
+                  "paddingInline": "14px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "20px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "2px rgb(55, 70, 79)",
+                  "width": "375px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "14px",
+                  "lineHeight": "28px",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-25/census/crops/textbox.1-rest-dark.json"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar nav row height apart from the control height",
+      "note": "Duolingo's signed-in sidebar 52px at 15/700 uppercase with 0.8px tracking, 8px padding and 12px corners, beside 46–50px buttons and 48px fields",
+      "standin": "Duolingo's -20px at `density: touch`; row ink: see the row and tab ink row)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.select-value",
+      "title": "Select values in the button label style",
+      "note": "Duolingo's settings select (Dark mode: System default) shows its value at 15/700, uppercase with 0.8px tracking like its buttons, in wolf #777777 / #dce6ec",
+      "standin": "`selectTrigger: button` draws the button box but sets the value in sentence case at 400 with no tracking (the probe reads the trigger at 700 on both sides; on the probe-round list)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.keycap",
+      "title": "Keycap label ink as one choice of faint, muted or full",
+      "note": "Duolingo faint, hare #afafaf (L 0.75) in light, #52656d in dark",
+      "standin": "ΔE 0.253 / 0.301 on Duolingo, 0.108 on Stripe)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.keycap",
+      "title": "Keycap size apart from the density",
+      "note": "Larger: Duolingo 30px tall with 15/700 labels, a 2px edge and 8px corners (the answer-number keys on lesson tiles)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size apart from the control text",
+      "note": "Larger and bold: Duolingo's settings labels at 20/700 in eel #4b4b4b / #f1f7fb (Dark mode over its select), over 15px values",
+      "standin": "Duolingo's at 14px with `fieldLabel: semibold`, 600, the top rung: -6px, -100)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Duolingo (signed in) its More menu rows, sidebar rows and the settings select's value in wolf #777777 / #dce6ec (a step under the #f1f7fb ink), its profile tabs #999999 / #dce6ec, the current row and tab in macaw; Fainter than muted at rest: Duolingo's idle line tabs in hare #afafaf (L 0.75) / #52656d at 15/700 uppercase, the step that labels its keycaps",
+      "standin": "Duolingo's idle tabs ΔE 0.253 / 0.301; Duolingo's menu rows and select value in body ink, ΔE 0.328 / 0.040, its sidebar rows (0.068 / 0.126) and profile tabs (0.181 / 0.126) in muted ink)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Shorter: Duolingo's profile tabs (Following / Followers) 34px at 16/700 uppercase with 0.8px tracking, beside 48px fields",
+      "standin": "47px on Duolingo at `density: touch`, +13px)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-value",
+      "title": "Field values a step above touch-density text",
+      "note": "20/400 values in 48px fields",
+      "standin": "16px: the `type/field-text-native` rule pins `fieldTextSize` to `same` at touch density, so `large` isn't available there",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.button",
+      "title": "Button radius apart from the field radius",
+      "note": "Above: Duolingo 16px buttons, 12px fields",
+      "standin": "one control radius for both: Duolingo `roleControl: md` (12px; `lg` rounds fields to 16px too, since fields take the smaller of the control and surface radius)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Narrower: Duolingo 16px on 46–48px buttons and 12px on its 48px button-style settings select trigger (2px edge and lip, 15/700 caps value)",
+      "standin": "`density: touch` pads 24px at Duolingo's, Wise's and Spotify's 48px (Duolingo's trigger with `selectTrigger: button`, +12px; `field` pads 14px but drops the weight and the lip)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral soft fills labelled in secondary ink",
+      "note": "Fainter still: Duolingo's shop chip labels its swan fill in hare #afafaf / #52656d, the step that labels its keycaps",
+      "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Heavier links",
+      "note": "Duolingo bold, inline links at 700",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "Links and selection in a second accent, apart from the button brand",
+      "note": "Duolingo links in macaw #1cb0f6 while buttons and progress are owl green #58cc02, and signed in its current sidebar row (#1cb0f6 on #ddf4ff inside a 2px #84d8ff edge; dark #49c0f8 on #202f36 inside #3f85a7) and current profile tab (a macaw label over a 2px macaw rule) too",
+      "standin": "`linkColor: accent`, a darkened brand green (oklch 0.51 on Duolingo, ΔE 0.316), and `tabsColor: accent` with `navMarker: outline` mark its current row and tab in green (row fill ΔE 0.049 / 0.082, label 0.316 / 0.274; tab label 0.500 / 0.233)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Duolingo bold 32px (lesson prompt) and 26px (log-in title)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "Larger: Duolingo 17px, with lesson button labels at the same size (web-UI button labels 15px)",
+      "standin": "body size from the density, 16px at Duolingo's `touch` and Stripe's `compact`; `uiTextSize` reaches only controls and offers 13 and 14",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tabs-rule",
+      "title": "Line tabs that rule the whole list in 2px, the current tab's indicator over it",
+      "note": "Duolingo swan #e5e5e5 / #37464f, its controls' edge gray, under a 4px macaw bar that overlaps the rule (bottom: -2px)",
+      "standin": "`tabStyle: line`: a 1px neutral rule under the whole list and a 2px indicator on the current tab (with `tabIndicator: label` on Duolingo)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label in the brand or selection color, not only the indicator",
+      "note": "Duolingo label and indicator in its selection color, not the brand: macaw #1cb0f6 / #49c0f8 at 15/700 uppercase with 1px tracking, over a 4px label-wide bar (owl green stays on buttons)",
+      "standin": "Duolingo an ink label, ΔE 0.500 / 0.233, over an owl-green bar)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Duolingo 10px at 15px text in a 70px top bar, beside 16px-padded 46–50px buttons",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress track on the line color",
+      "note": "Duolingo swan #e5e5e5 / #37464f, the gray of every 2px edge, on its 16px pill (lesson header)",
+      "standin": "Duolingo oklch 0.96 / 0.29, ΔE 0.041 / 0.097)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Large tooltips",
+      "note": "Duolingo's learn-path callouts (Jump here?, Start), its only tooltips signed in, 45px with 17/700 uppercase text and 12px padding, page-colored inside a 2px swan edge (#e5e5e5 / #37464f) at 10px corners, no shadow; With the small-tooltip row, one tooltip size axis covers both",
+      "standin": "Duolingo's matches fill and edge at 32px and 12px, -13px and -5px)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays kept on the card or page tone, set apart only by hairline and shadow",
+      "note": "Duolingo's modal, More menu and learn-path callouts on the page tone #131f24, which cards share, set apart only by a 2px #37464f edge with no shadow",
+      "standin": "L 0.273 on Duolingo's menus and tooltips, ΔE 0.046",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged cards with edgeless overlays",
+      "note": "Duolingo's cards and tiles stand on a 2px edge with a lip while the modal has neither edge nor shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu rows at label weight",
+      "note": "Duolingo's More menu rows (Settings, Help…) at 15/700 uppercase like its buttons, 40px (signed in)",
+      "standin": "16/400 on Duolingo)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Duolingo's More menu rows span the menu, square, labels 20px from its edge (signed in)",
+      "standin": "Duolingo 16px at touch, -4px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.dialog-centered",
+      "title": "Centered dialog content",
+      "note": "illustration, title, body and stacked actions all centered",
+      "standin": "title and body aligned to the start",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tooltip",
+      "title": "Tooltip text at label weight",
+      "note": "Duolingo's learn-path callouts at 17/700 uppercase",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Duolingo's shop chip (0 / 2 equipped) a 25px pill at 15px with 8px padding",
+      "standin": "Duolingo 20px at 11px, -5px and -4px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Duolingo's shop chip at 15/700 uppercase, untracked",
+      "standin": "Higgsfield and Duolingo 11/500, where `badgeCase: uppercase` adds the caps and tracking, not the weight)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "An accent that changes per mode",
+      "note": "Duolingo owl #58cc02 / #93d333 and macaw #1cb0f6 / #49c0f8",
+      "standin": "Duolingo primary ΔE 0.066, focused field 0.106",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Duolingo 0.115",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-steps",
+      "title": "Text ink in more than one step",
+      "note": "Duolingo body #3c3c3c, button labels and field values #4b4b4b",
+      "standin": "Duolingo 0.171 on controls",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Duolingo 0.068 / 0.126",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-tint-per-mode",
+      "title": "A neutral tint per mode",
+      "note": "Duolingo pure grays in light (swan #e5e5e5, polar #f7f7f7) and slate in dark (page #131f24, fields #202f36, edges #37464f, chroma ~0.025 at hue ~230)",
+      "standin": "`neutralTint: 0`, pure grays in both modes (Duolingo dark edges ΔE 0.051, fields 0.024); a slate tint blues the light ink",
+      "source": "ledger"
+    },
+    {
+      "look": "color.selection-seed",
+      "title": "The selection color on its exact seed",
+      "note": "Duolingo's focused field border on macaw #1cb0f6 (oklch 0.72 0.15)",
+      "standin": "`selectionSeed: #1cb0f6` lands at oklch 0.66 0.14 (ΔE 0.059); `preserveSeed` keeps only the brand exact",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Duolingo's neutral badge chip on swan, its 2px edge color (#e5e5e5 / #37464f), like its progress track",
+      "standin": "Duolingo's chip on the soft badge's neutral fill #f9f9f9 / #252525 (ΔE 0.060 / 0.123)",
+      "source": "ledger"
+    }
+  ]
+}

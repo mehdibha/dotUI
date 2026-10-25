@@ -158,7 +158,7 @@ describe("publish + codeOptions", () => {
     })
     // base groups are joined inline (no array element boundary between them).
     expect(rawContent).toContain(
-      "select-none focus-reset focus-visible:focus-ring",
+      "select-none outline-none focus-visible:focus-ring",
     )
   })
 
@@ -171,7 +171,7 @@ describe("publish + codeOptions", () => {
         codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: true },
       },
     })
-    expect(rawContent).toContain('"focus-reset focus-visible:focus-ring",')
+    expect(rawContent).toContain('"outline-none focus-visible:focus-ring",')
   })
 
   test("drops the internal Styles marker; section separators follow the flag", () => {

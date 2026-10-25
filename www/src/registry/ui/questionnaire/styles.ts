@@ -8,7 +8,7 @@ const { useStyles } = createStyles(questionnaireMeta, {
       root: "flex w-full min-w-0 flex-col",
       progress:
         "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums",
-      item: "flex min-w-0 flex-col border-0 p-0 focus-reset",
+      item: "flex min-w-0 flex-col border-0 p-0 outline-none",
       title:
         "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
       description: "text-pretty text-fg-muted",
@@ -41,7 +41,7 @@ const { useStyles } = createStyles(questionnaireMeta, {
       // The shell is input's; this adds the questionnaire's own invalid
       // state, which it marks with aria-invalid.
       input:
-        "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:ring-(--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
+        "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:outline-(--studio-field-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
       error: "mt-2 text-fg-danger",
       actions:
         "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center",

@@ -22,7 +22,8 @@ export const stripe = definePreset({
     warningSeed: "#cc4b00",
     dangerSeed: "#e61947",
     lightBg: 100,
-    // Dark page #14171d.
+    // The Dashboard has no dark mode. Derived from Sail's dark palette in the
+    // login bundle: page #14171d.
     darkBg: 7.5,
 
     // Surfaces
@@ -33,8 +34,9 @@ export const stripe = definePreset({
     // Sail's base stack is the OS face.
     bodyFont: "System",
     monoFont: "Source Code Pro",
-    // Visual Refresh 13px; 14 would also lift the 12px badge/caption tier.
-    uiTextSize: "13",
+    // Sail's control text is 14/20. Stand-in: compact's caption rung moves
+    // with it, so 12px badges and helper text render at 14.
+    uiTextSize: "14",
     labelWeight: "semibold",
     titleStyle: "bold",
 
@@ -43,11 +45,11 @@ export const stripe = definePreset({
     iconStroke: 2.25,
 
     // Shape
-    // Ladder at 8: badges 4, controls 6, popovers and dialogs 8.
+    // Ladder at 8: badges 4, controls and cards 6, popovers and dialogs 8.
     radiusPx: 8,
     roleItem: "sm",
     rolePanel: "lg",
-    roleCard: "lg",
+    roleCard: "md",
 
     // Space
     // 28px controls.
@@ -58,10 +60,11 @@ export const stripe = definePreset({
     cursorDisabled: "default",
 
     // States
-    // 0 0 0 4px at 36%.
+    // 3px past the 1px edge, at 36%. Stand-in: the halo is the brand at 50%,
+    // Sail's is sky blue (rgba(1,150,237,.36)) on buttons and fields, and
+    // focused fields keep their slate edge.
     focusStyle: "halo",
-    focusStrength: "faint",
-    focusWidth: 4,
+    focusWidth: 3,
     focusInputStyle: "ring",
     disabledTreatment: "fade",
 
@@ -89,6 +92,9 @@ export const stripe = definePreset({
     dialogSections: "on-scroll",
     mobileDialogs: "sheet",
     tooltipStyle: "surface",
+    // Banners: a status tint inside a status edge. Stand-in: Sail sets the
+    // text in the status ink and keeps the neutral banner white.
+    alertStyle: "soft-outline",
     // Slate-800 toasts; only errors go solid red (Bold would paint every status).
     toastStyle: "inverse",
     tabStyle: "line",
@@ -101,7 +107,6 @@ export const stripe = definePreset({
     breadcrumbTone: "link",
     badgeStyle: "soft-outline",
     badgeShape: "rounded",
-    kbdTreatment: "outline",
     avatarShape: "rounded",
     tableHeaderLabel: "strong",
     // Sail's categorical series: #9966FF, #0055BC, #00A1C2, #ED6804…

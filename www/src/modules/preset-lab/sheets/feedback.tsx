@@ -81,6 +81,10 @@ export function FeedbackSheet() {
     <Sheet className="grid-cols-[1fr_1fr_340px]">
       <ToastProvider toastManager={toastManager} timeout={0} />
       <div className="flex flex-col gap-6">
+        <Cell label="badge · preset default">
+          <Badge>neutral</Badge>
+          <Badge variant="accent">accent</Badge>
+        </Cell>
         {APPEARANCES.map((appearance) => (
           <Cell key={appearance} label={`badge · ${appearance}`}>
             {TONES.map((tone) => (

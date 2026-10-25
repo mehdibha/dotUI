@@ -37,7 +37,7 @@ import { useStudio } from "../use-studio"
 
 /** What a source paints, from the engine's mode: the solid fill and its
  *  label, the text ink, the focus ring, the tinted wash. */
-interface Ink {
+export interface Ink {
   fill: string
   on: string
   text: string
@@ -45,7 +45,7 @@ interface Ink {
   wash: string
 }
 
-function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
+export function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
   const step = (palette: string, step: string) =>
     m.scales[palette]?.[step as keyof (typeof m.scales)[string]] ?? m.background
   return {
@@ -178,13 +178,26 @@ function LeafList({
   return (
     <dl className="flex flex-col px-3 py-1 text-[13px] font-medium">
       {PRIMARY_LEAVES.map((leaf) => {
-        const source = state[leaf] as PrimaryColorSource
+        const source = state[leaf] as PrimaryColorSource | "custom"
         return (
           <div key={leaf} className="flex h-7 items-center justify-between">
             <dt className="text-fg/85">{LEAF_LABELS[leaf]}</dt>
             <dd className="flex items-center gap-2 text-fg/60">
-              {source === "accent" ? "Accent" : "Neutral"}
-              <SourceSwatch value={source} ink={ink} />
+              {source === "custom"
+                ? "Custom"
+                : source === "accent"
+                  ? "Accent"
+                  : "Neutral"}
+              {source === "custom" ? (
+                <span
+                  className="size-4 rounded-full border border-fg/15"
+                  style={{
+                    background: state.focusCustomColor || state.brand,
+                  }}
+                />
+              ) : (
+                <SourceSwatch value={source} ink={ink} />
+              )}
             </dd>
           </div>
         )
@@ -306,9 +319,12 @@ const leafRow = (leaf: PrimaryLeaf) =>
     )
   }
 
-/* Selected fill has no page of its own: Primary sets it. */
+/* Selected fill has no page of its own: Primary sets it. Focus draws its
+   own row. */
+const OWN_ROW = new Set<PrimaryLeaf>(["selectionColor", "focusColor"])
+
 export const ROWS: RowMap = Object.fromEntries(
-  PRIMARY_LEAVES.filter((leaf) => leaf !== "selectionColor").map((leaf) => [
+  PRIMARY_LEAVES.filter((leaf) => !OWN_ROW.has(leaf)).map((leaf) => [
     leaf,
     leafRow(leaf),
   ]),

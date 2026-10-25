@@ -1,0 +1,1222 @@
+{
+  "version": 1,
+  "slug": "carbon",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Two themes from @carbon/themes: White for light and G100 for dark. White pages are #fff with layer-01 (#f4f4f4) for fields, menus, tiles and modals, #161616 ink, #525252 secondary and #6f6f6f helper text. G100 is #161616 with #262626 layers, #f4f4f4 ink and #c6c6c6 secondary. IBM blue #0f62fe is the primary button, the links and the focus outline; in G100 links turn #78a9ff and focus turns white. Fields draw a 1px #8d8d8d line under them (#6f6f6f in G100). Secondary buttons are #393939, errors #da1e28 (#fa4d56 in G100).",
+      "usage": [
+        "Controls on a layer step up one token: inside a modal or on a tile, fields use field-02 (#fff in White, #393939 in G100).",
+        "Tags come in color types, each a 20-grade tint under 70-grade text (#d0e2ff under #0043ce for blue), swapped in G100.",
+        "Tooltips and notifications use background-inverse: #393939 in White, #f4f4f4 in G100.",
+        "AI-labelled parts add a blue gradient glow and a #4589ff edge or line."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "IBM Plex Sans for all UI and IBM Plex Mono for code, theme tokens and date fields. Most UI is body-compact-01: 14px on an 18px line with 0.16px tracking. Labels, helper text and Tags are 12px on 16px with 0.32px. Buttons and menu rows stay at 400; 600 marks table headers, the selected tab and notification titles. Productive headings are 400 too."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Square: buttons, fields, menus, modals, tiles and tables have no rounding. Tooltips, popovers and toggletips round 2px, the ContentSwitcher 4px and the AI label's popover 8px. Tags are pills, as are the count badge and the slider thumb."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Carbon's spacing tokens step 2, 4, 8, 12, 16, 24, 32, 40 and 48px, and 16px is by far the most common: field and menu row sides, tile padding. One height ladder runs through buttons, fields, menus and tabs: 24, 32, 40 and 48px, with 64px for fluid fields and modal footer buttons."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Flat and layered: depth comes from layer tokens (#f4f4f4 on #fff, #262626 on #161616), not shadows. Menus, dropdown lists and the date picker add 0 2px 6px at 30% (80% in G100), toasts the same at 20%. Modals have no shadow, only a 1px edge over a 60% black overlay. Focus is drawn inside the box: a 2px #0f62fe edge (white in G100), with a 1px white ring inside it on buttons."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Seven kinds share one square shape: primary (#0f62fe), secondary (#393939), tertiary (a 1px #0f62fe outline that fills on hover), ghost (no fill, #0f62fe text), and danger, danger tertiary and danger ghost in #da1e28. Labels sit at the start at 14px/400, with 15px leading and 63px trailing padding for the icon slot. Sizes run xs 24px, sm 32px, md 40px, lg 48px (the default), xl 64px and 2xl 80px. Disabled filled buttons turn #c6c6c6 under #8d8d8d text.",
+      "usage": [
+        "Modal footers use xl (64px) buttons that run full bleed, secondary beside primary or danger.",
+        "Icon-only buttons are squares at the button's height."
+      ],
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "#0f62fe under white; #0050e6 on hover, #002d9c pressed."
+            },
+            "secondary": {
+              "note": "#393939 under white (#6f6f6f in G100); #474747 on hover, #6f6f6f pressed."
+            },
+            "tertiary": {
+              "note": "A 1px #0f62fe outline with #0f62fe text (white in G100); it fills #0050e6 under white text on hover."
+            },
+            "ghost": {
+              "note": "No fill, #0f62fe text (#78a9ff in G100); #f1f1f1 on hover. Disabled text is #c5c5c5."
+            },
+            "danger": {
+              "note": "#da1e28 under white; #b81921 on hover, #750e13 pressed."
+            },
+            "danger-ghost": {
+              "note": "No fill, #da1e28 text (#fa4d56 in G100); it fills #b81921 under white text on hover."
+            },
+            "danger-tertiary": {
+              "note": "A 1px #da1e28 outline with #da1e28 text; it fills #b81921 on hover."
+            },
+            "v-b1nfav": {
+              "name": {
+                "value": "copy",
+                "from": "ai"
+              },
+              "note": "CopyButton: an icon-only button on the #f4f4f4 field fill; #e8e8e8 on hover, #c6c6c6 pressed."
+            },
+            "interactive": {
+              "hide": "the icon buttons inside fields, tiles and table rows (expand, clear, reveal password): mechanics, not a button kind"
+            },
+            "default": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "inline": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "inline-with-content": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "v-584suz": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "v-88m8fr": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "v-jwppe5": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "v-t97d9e": {
+              "hide": "the AI label, a badge-like button with its own look"
+            },
+            "unclickable": {
+              "hide": "triggers with no fill of their own: an overflow menu's dots, tooltip and toggletip triggers, progress steps, a tab's close button"
+            },
+            "operational": {
+              "hide": "an operational Tag, a Tag look"
+            },
+            "expandable": {
+              "hide": "an expandable Tile, a card look"
+            },
+            "clickable": {
+              "hide": "a clickable PreviewCard, a card look"
+            },
+            "v-qddy69": {
+              "hide": "a date picker day"
+            },
+            "v-sric44": {
+              "hide": "a sortable table header"
+            },
+            "v-fspfna": {
+              "hide": "a sortable table header with an AI label"
+            },
+            "v-y5ubxa": {
+              "hide": "a side nav section toggle"
+            },
+            "v-i43r7v": {
+              "hide": "a side nav section toggle, open"
+            },
+            "v-8gcimu": {
+              "hide": "a side nav row"
+            },
+            "v-6rpt4o": {
+              "hide": "a table row's expand chevron"
+            },
+            "v-6v376w": {
+              "hide": "a browser-default button in the NumberInput story's demo controls"
+            },
+            "v-nvsj0q": {
+              "hide": "a Tag's close button"
+            },
+            "v-pywfmx": {
+              "hide": "a Tag's close button"
+            },
+            "v-tf3m79": {
+              "hide": "a Tag's close button"
+            },
+            "v-4jeebw": {
+              "hide": "a Tag's close button"
+            },
+            "v-eqng5i": {
+              "hide": "a Tag's close button"
+            },
+            "v-pt34a8": {
+              "hide": "a Tag's close button"
+            },
+            "v-tthr09": {
+              "hide": "a Tag's close button"
+            },
+            "v-y724lb": {
+              "hide": "a Tag's close button"
+            },
+            "v-cfk208": {
+              "hide": "a notification's close button"
+            },
+            "v-07ss5d": {
+              "hide": "FileUploader's drop zone"
+            },
+            "v-ovelu2": {
+              "hide": "a DefinitionTooltip term"
+            },
+            "v-nk6a84": {
+              "hide": "a DefinitionTooltip term, focused"
+            },
+            "v-ciwd9f": {
+              "hide": "a NumberInput stepper"
+            },
+            "v-a45vt0": {
+              "hide": "a truncated Tag's text, a tooltip trigger"
+            },
+            "v-i3eawf": {
+              "hide": "a truncated Tag's text, a tooltip trigger"
+            }
+          },
+          "sizes": {
+            "lg": {
+              "note": "48px: the default."
+            },
+            "md": {
+              "note": "40px, the field height. Its most used look here is a date picker day, so the row reads no padding; md buttons keep the 15px leading padding."
+            },
+            "sm": {
+              "note": "32px."
+            },
+            "xs": {
+              "note": "24px."
+            },
+            "xl": {
+              "note": "64px: modal footer buttons."
+            },
+            "icon-only": {
+              "note": "A square at the button's height, 48px here."
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "selectable": {
+              "note": "SelectableTag: a 24px pill with a 1px #161616 edge; #e8e8e8 on hover."
+            },
+            "ghost": {
+              "note": "An IconButton with a count badge: ghost, #f1f1f1 on hover, #c6c6c6 pressed."
+            }
+          },
+          "sizes": {
+            "s-hykw7t": {
+              "note": "24px with 4px sides."
+            },
+            "lg": {
+              "note": "48px."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links are #0f62fe at 400 with no underline until hover, when they turn #0043ce and underline; #78a9ff in G100. Sizes are sm (12px), md (14px, the default) and lg (16px). Focus is a 1px #0f62fe ring 1px outside. Inline links in running text stay underlined.",
+      "groups": {
+        "link": {
+          "variants": {
+            "icon": {
+              "name": {
+                "value": "standalone",
+                "from": "ai"
+              },
+              "note": "A Link on its own, with or without an icon after it."
+            },
+            "v-wb0cl8": {
+              "note": "The same link on a layer (#f4f4f4)."
+            },
+            "v-2ss6rk": {
+              "name": {
+                "value": "inline",
+                "from": "docs"
+              },
+              "note": "Underlined at rest, inside a Callout's text."
+            },
+            "v-zke9zz": {
+              "note": "On background-inverse in a Toggletip: #78a9ff, #a6c8ff on hover."
+            },
+            "clickable": {
+              "hide": "a clickable Tile or PreviewCard, a card look"
+            },
+            "v-cuptet": {
+              "hide": "the Storybook feature-flag banner's link"
+            },
+            "v-y6rss7": {
+              "hide": "the Storybook feature-flag notice's link"
+            },
+            "v-s1046t": {
+              "hide": "underlined links in story prose; their #101010 focus ring is not Carbon's"
+            },
+            "v-la0mgw": {
+              "hide": "a side nav link"
+            },
+            "v-7aurrc": {
+              "hide": "a side nav link"
+            },
+            "v-0qwu4x": {
+              "hide": "the current side nav link"
+            },
+            "v-j6k2b0": {
+              "hide": "the UI Shell header's product name"
+            },
+            "v-jrgsii": {
+              "hide": "a header menu's sub-link"
+            }
+          },
+          "sizes": {
+            "s-ztphlo": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "14px on an 18px line: the default."
+            },
+            "s-wk8vib": {
+              "hide": "a header side nav row"
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "called": ["Tag"],
+      "summary": "Tags are pills at 12px/400 with 0.32px tracking: sm 18px, md 24px (the default) and lg 32px, with 8px sides (12px at lg). Each color type is a 20-grade tint under 70-grade text (#d0e2ff under #0043ce for blue), swapped in G100. High contrast is #393939 under white; outline is white inside a 1px #393939 ring.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "count": {
+              "note": "The count badge on an IconButton: a 16px #da1e28 pill with white text."
+            },
+            "order-1-cyan": {
+              "hide": "a PreviewCard's avatar"
+            },
+            "inline": {
+              "hide": "the AI label, a badge-like button with its own look"
+            }
+          },
+          "sizes": {
+            "2xl": {
+              "note": "32px with 8px sides, from the Preview Layout story."
+            },
+            "s-j6hjw2": {
+              "note": "16px: the count badge."
+            },
+            "s-hykw7t": {
+              "hide": "the Theme and Layer stories' token labels ($layer-01, $background), not Tags"
+            },
+            "s-nwhh3s": {
+              "hide": "a tooltip over icon-only tabs"
+            },
+            "s-6h80jx": {
+              "hide": "the AI label inside a Tag"
+            },
+            "s-f4lyfp": {
+              "hide": "a truncated Tag's inner text"
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Line tabs, the default, are 40px with 16px sides, #525252 text and a 2px #e0e0e0 line under every tab; hover darkens the line to #8d8d8d and the text to #161616, and the selected tab takes 600 over a 2px #0f62fe line. Contained tabs are #e0e0e0 blocks split by 1px #8d8d8d dividers, #d1d1d1 on hover. Sizes are sm 32px, md 40px and lg 48px.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "icon-only-20": {
+              "name": {
+                "value": "line",
+                "from": "docs"
+              },
+              "note": "The default Tabs: no fill, a 2px #e0e0e0 line under each tab (#393939 in G100)."
+            },
+            "v-1riaj4": {
+              "name": {
+                "value": "contained",
+                "from": "docs"
+              },
+              "note": "#e0e0e0 (#393939 in G100) with a 1px #8d8d8d divider at the start."
+            },
+            "v-zqbk6r": {
+              "note": "A contained tab with its divider cleared."
+            },
+            "v-twfgx5": {
+              "name": {
+                "value": "vertical",
+                "from": "docs"
+              },
+              "note": "TabsVertical: #f4f4f4 rows with a 3px #e0e0e0 bar at the start, #8d8d8d on hover."
+            },
+            "primary": {
+              "name": {
+                "value": "ContentSwitcher",
+                "from": "docs"
+              },
+              "note": "Segments in a 1px #161616 frame with 4px corners, #525252 text; #e8e8e8 under #161616 on hover."
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "note": "64px: tabs with a secondary label, and vertical tabs."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "low-contrast": {
+              "note": "The low-contrast ContentSwitcher: #e0e0e0 inside a 1px #8d8d8d frame, 4px corners."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "TextInput is #f4f4f4 (field-01) with a 1px #8d8d8d line under it, square, 14px text with 16px sides; #262626 and #6f6f6f in G100. Focus draws a 2px #0f62fe outline inside the box, invalid a 2px #da1e28 one. Sizes are xs 24px, sm 32px, md 40px (the default) and lg 48px; fluid inputs are 64px with the label inside. Disabled text is #bdbdbd and the line goes.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-x0anpk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "field-01 with the 1px #8d8d8d line."
+            },
+            "v-ovelu2": {
+              "note": "On a layer, as in a modal: field-02 (#fff, #393939 in G100)."
+            },
+            "v-f97vho": {
+              "name": {
+                "value": "ai",
+                "from": "ai"
+              },
+              "note": "With an AI label: a #4589ff line and a blue gradient."
+            },
+            "v-hce53q": {
+              "name": {
+                "value": "read-only",
+                "from": "ai"
+              },
+              "note": "No fill, a 1px #e0e0e0 line."
+            },
+            "v-k31age": {
+              "note": "The end field of a fluid date range: a 1px #8d8d8d divider at its start."
+            },
+            "v-z4cpv4": {
+              "hide": "CodeSnippet, a code block"
+            },
+            "v-b0fkhu": {
+              "hide": "CodeSnippet on a layer"
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "name": {
+                "value": "fluid",
+                "from": "docs"
+              },
+              "note": "64px, the label inside the box."
+            },
+            "s-ir08eb": {
+              "note": "TextArea, about 100px."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "summary": "Select is a native select in the field look: #f4f4f4 with a 1px #8d8d8d line under it, #e8e8e8 on hover, a 2px #0f62fe outline on focus. Inline selects drop the fill and the line.",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-x0anpk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "field-01 with the 1px #8d8d8d line."
+            },
+            "v-ovelu2": {
+              "note": "On a layer, as in a modal: #fff."
+            },
+            "select": {
+              "name": {
+                "value": "inline",
+                "from": "docs"
+              },
+              "note": "No fill and no line, 8px sides."
+            },
+            "v-mnxsnr": {
+              "note": "Pagination's items-per-page select: no line, a 1px #e0e0e0 divider on its right."
+            },
+            "v-z4cpv4": {
+              "note": "Pagination's page select: no line."
+            },
+            "v-f97vho": {
+              "name": {
+                "value": "ai",
+                "from": "ai"
+              },
+              "note": "With an AI label: a #4589ff line and a blue gradient."
+            },
+            "v-hce53q": {
+              "name": {
+                "value": "read-only",
+                "from": "ai"
+              },
+              "note": "No fill, a 1px #e0e0e0 line."
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "name": {
+                "value": "fluid",
+                "from": "docs"
+              },
+              "note": "64px, the label inside the box."
+            },
+            "s-gh2yvz": {
+              "note": "48px: PaginationNav's overflow select."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "ComboBox, Dropdown and MultiSelect share the field look: #f4f4f4 with a 1px #8d8d8d line under it, 16px sides and a chevron at the end; Dropdown triggers turn #e8e8e8 on hover. Sizes are xs 24px, sm 32px, md 40px (the default) and lg 48px; fluid ones are 64px with the label inside.",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "empty": {
+              "name": {
+                "value": "ComboBox",
+                "from": "docs"
+              },
+              "note": "A text input with the list's chevron; a 2px #0f62fe outline on focus."
+            },
+            "selectall": {
+              "name": {
+                "value": "Dropdown",
+                "from": "docs"
+              },
+              "note": "The Dropdown and MultiSelect trigger: #e8e8e8 on hover."
+            },
+            "filterable": {
+              "note": "The fluid ComboBox, condensed."
+            },
+            "v-8jfh66": {
+              "name": {
+                "value": "ai",
+                "from": "ai"
+              },
+              "note": "With an AI label: a #4589ff line and a blue gradient."
+            },
+            "v-6ts5x4": {
+              "note": "Inside a modal: #fff."
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "inline",
+                "from": "docs"
+              },
+              "note": "An inline Dropdown: no fill, no line."
+            },
+            "v-mwlbp6": {
+              "note": "An inline Dropdown on a layer."
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "name": {
+                "value": "fluid",
+                "from": "docs"
+              },
+              "note": "64px, the label inside the box."
+            },
+            "s-kxu5v4": {
+              "note": "The fluid MultiSelect, 64px."
+            }
+          }
+        }
+      }
+    },
+    "search-field": {
+      "status": "reviewed",
+      "summary": "Search is the field look with the magnifier in a square slot at the start, so its leading padding equals its height: 48px at lg, 40px at md, 32px at sm and 24px at xs.",
+      "groups": {
+        "searchbox": {
+          "variants": {
+            "v-x0anpk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "field-01 with the 1px #8d8d8d line."
+            },
+            "v-z4cpv4": {
+              "note": "The DataTable toolbar's search: no line, #e8e8e8 on hover."
+            },
+            "v-hce53q": {
+              "note": "ContainedList's persistent search: a 1px #e0e0e0 line."
+            },
+            "v-ovelu2": {
+              "note": "On a layer: #fff."
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "name": {
+                "value": "fluid",
+                "from": "docs"
+              },
+              "note": "64px."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "summary": "Labels are 12px/400 with 0.32px tracking in #525252 (#c6c6c6 in G100) above the field; helper text is #6f6f6f. Labels beside checkboxes and radios are 14px #161616. Disabled labels are #c5c5c5.",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-czyqrz": {
+              "name": {
+                "value": "label",
+                "from": "ai"
+              },
+              "note": "12px #525252 above a field."
+            },
+            "selectable": {
+              "name": {
+                "value": "control label",
+                "from": "ai"
+              },
+              "note": "14px #161616: beside checkboxes and inline fields, and Pagination's Items per page."
+            },
+            "v-iepbfo": {
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
+              "note": "#c5c5c5 (#4d4d4d in G100)."
+            }
+          },
+          "sizes": {
+            "md": {
+              "note": "12px on a 16px line."
+            },
+            "s-m5uhch": {
+              "note": "14px on an 18px line."
+            },
+            "s-67sqb2": {
+              "note": "16px: a Toggle's external label demo."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "summary": "Carbon draws the checkbox's box on its label's ::before, which this census doesn't read. What it holds is SelectableTile, a #f4f4f4 tile that works as a checkbox.",
+      "missing": [
+        "The checkbox box (the label's ::before) needs a pass that reads pseudo-elements."
+      ],
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "selectable": {
+              "note": "SelectableTile: 16px sides, #e8e8e8 on hover, a 2px #0f62fe outline on focus."
+            }
+          },
+          "sizes": {
+            "s-zain8i": {
+              "note": "64px."
+            },
+            "s-3dp2w8": {
+              "hide": "an AI-labelled SelectableTile"
+            }
+          }
+        }
+      }
+    },
+    "slider": {
+      "status": "reviewed",
+      "summary": "A 2px track (#e0e0e0, filled #161616 up to the thumb) under a 14px #161616 thumb that grows to 20px on hover and turns #0f62fe on focus. Disabled thumbs are #c6c6c6.",
+      "groups": {
+        "slider": {
+          "variants": {
+            "v-iag1xr": {
+              "name": {
+                "value": "thumb",
+                "from": "ai"
+              },
+              "note": "14px #161616 circle (#f4f4f4 in G100)."
+            },
+            "v-xs8bkt": {
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
+              "note": "#c6c6c6."
+            },
+            "lower": {
+              "note": "The lower handle of a two-handle slider: a 16×24px shape."
+            }
+          },
+          "sizes": {
+            "s-k3bh87": {
+              "note": "The 14px thumb."
+            },
+            "s-rwx1vb": {
+              "note": "The two-handle slider's 24px handle."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are layer-01 (#f4f4f4) and square with a 0 2px 6px shadow (30% in White, 80% in G100). Rows are #525252 at 14px/400 with 16px sides, #e8e8e8 under #161616 text on hover: xs 24px, sm 32px, md 40px and lg 48px. Checks sit at the start, shortcuts at the end.",
+      "groups": {
+        "menu": {
+          "variants": {
+            "shown": {
+              "note": "The open Menu."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "danger": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "#525252 text; #e8e8e8 under #161616 on hover."
+            },
+            "v-4tabam": {
+              "note": "The focused row as the menu opens: a 2px #0f62fe outline (white in G100)."
+            },
+            "v-7aurrc": {
+              "note": "An OverflowMenu row on #fff."
+            },
+            "v-fczprw": {
+              "note": "An OverflowMenu row, focused."
+            }
+          }
+        },
+        "menuitemcheckbox": {
+          "variants": {
+            "v-jrgsii": {
+              "name": {
+                "value": "MenuItemSelectable",
+                "from": "docs"
+              },
+              "note": "A check at the start."
+            }
+          },
+          "sizes": {
+            "s-avgvhm": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "40px."
+            }
+          }
+        },
+        "menuitemradio": {
+          "variants": {
+            "v-jrgsii": {
+              "name": {
+                "value": "MenuItemRadioGroup",
+                "from": "docs"
+              },
+              "note": "A check at the start of the chosen row."
+            }
+          },
+          "sizes": {
+            "s-vy6ri4": {
+              "name": {
+                "value": "md",
+                "from": "docs"
+              },
+              "note": "40px."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "Dropdown lists are layer-01 (#f4f4f4) with the menus' 0 2px 6px shadow. Options are 40px in #525252 with 1px #c6c6c6 hairlines between them and #e8e8e8 on hover; the selected one sits on #e0e0e0 with its check at the end.",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-3r2ot8": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A Dropdown's open list."
+            },
+            "v-bwvmfe": {
+              "note": "Inside a modal: #fff."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-jrgsii": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "#525252; #e8e8e8 on hover, #e0e0e0 pressed."
+            },
+            "v-nu7q3e": {
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
+              "note": "#bdbdbd text."
+            },
+            "v-7aurrc": {
+              "note": "In a modal's list, on #fff."
+            }
+          },
+          "sizes": {
+            "s-aklrsj": {
+              "note": "40px."
+            },
+            "s-nzmfwp": {
+              "note": "64px: a fluid ComboBox's options."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "Modals are layer-01 (#f4f4f4, #262626 in G100) inside a 1px #c6c6c6 edge, square and without a shadow, over a 60% black overlay. Titles are 20px/400, footer buttons are 64px and run full bleed, and fields inside move to field-02 (#fff).",
+      "groups": {
+        "alertdialog": {
+          "variants": {
+            "toast": {
+              "note": "An actionable notification as a toast: #393939 with a 3px #fa4d56 stripe at the start and a 0 2px 6px shadow at 20%."
+            },
+            "error": {
+              "note": "The same notification inline, without the shadow."
+            },
+            "low-contrast": {
+              "note": "Low contrast: #edf5ff with a 3px #0043ce stripe."
+            }
+          }
+        },
+        "dialog": {
+          "variants": {
+            "v-le38sv": {
+              "note": "ComposedModal: #f4f4f4 inside a 1px #c6c6c6 edge (#262626 and #525252 in G100)."
+            },
+            "modal": {
+              "note": "The same box drawn on a native dialog element (a feature flag), without the edge."
+            },
+            "v-68ltrk": {
+              "note": "A modal with an AI label: a blue gradient glow inside the box."
+            },
+            "v-qov6n3": {
+              "hide": "the Loading overlay, a 60% black scrim behind a spinner"
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "summary": "Popovers are layer-01 (#f4f4f4) with 2px corners and a caret (the pack's notes). The census caught only the AI label's popover.",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-1d29gp": {
+              "name": {
+                "value": "ai",
+                "from": "ai"
+              },
+              "note": "The AI label's popover: white with 8px corners and a blue gradient glow."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "summary": "Tooltips are background-inverse (#393939 in White, #f4f4f4 in G100) at 14px/400 with 16px padding, 2px corners and a 12×6 caret (the pack's notes).",
+      "missing": [
+        "The census caught only closed tooltips' wrappers; the open bubble needs a pass with the tooltip shown."
+      ],
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-b0fkhu": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-z4cpv4": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-jrgsii": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-nvsj0q": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-nu7q3e": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-j6k2b0": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-509ssj": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-pywfmx": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-tf3m79": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-4jeebw": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-66ar24": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-eqng5i": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-pt34a8": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-tthr09": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            },
+            "v-y724lb": {
+              "hide": "a closed tooltip's wrapper around its trigger; the open bubble is not in this census"
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "summary": "DataTable has no frame: a #e0e0e0 header band (#393939 in G100) with 14px/600 labels, then 48px rows under 1px #e0e0e0 hairlines (the pack's notes). StructuredList rows are taller, with a 1px rule on top and #e8e8e8 on hover when selectable.",
+      "missing": [
+        "Plain DataTable body rows are left out of this census's row grid; only zebra and AI rows made it."
+      ],
+      "groups": {
+        "row": {
+          "variants": {
+            "v-oydekk": {
+              "name": {
+                "value": "zebra",
+                "from": "ai"
+              },
+              "note": "useZebraStyles: alternate rows on #e0e0e0, #e8e8e8 on hover."
+            },
+            "v-ww7l40": {
+              "note": "A DataTable row with an AI label: a 1px #4589ff line at the start and a blue gradient."
+            },
+            "v-q3ysba": {
+              "name": {
+                "value": "structured list",
+                "from": "ai"
+              },
+              "note": "StructuredList rows: a 1px #e0e0e0 rule on top, #e8e8e8 on hover."
+            },
+            "v-logb9c": {
+              "note": "The last StructuredList row: rules above and below."
+            },
+            "v-hey1n6": {
+              "note": "A StructuredList row on a layer: #f4f4f4 with a #c6c6c6 rule."
+            },
+            "v-sjkodo": {
+              "note": "The last row on a layer."
+            },
+            "v-pim6gg": {
+              "hide": "an expanded row's 1px wrapper"
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "called": ["Tile"],
+      "summary": "Tiles are layer-01 (#f4f4f4), square, with 16px padding and no edge or shadow (the pack's notes). Clickable and selectable tiles turn #e8e8e8 on hover; this census files them under button, link and checkbox.",
+      "groups": {
+        "card": {
+          "variants": {
+            "productive": {
+              "note": "An AI-labelled PreviewCard: white with a blue gradient glow."
+            },
+            "v-iya398": {
+              "hide": "the Grid story's column boxes"
+            },
+            "v-aqqwy2": {
+              "hide": "the Grid story's column boxes"
+            },
+            "v-os6s7u": {
+              "hide": "the Grid story's column boxes"
+            },
+            "feature-flags": {
+              "hide": "the Storybook feature-flag banner"
+            },
+            "deprecation-notice": {
+              "hide": "the Storybook deprecation banner"
+            },
+            "background": {
+              "hide": "the Layer story's outline"
+            },
+            "v-hey1n6": {
+              "hide": "a Dropdown option's wrapper"
+            },
+            "v-r5qwwk": {
+              "hide": "the Pagination bar"
+            },
+            "v-q3ysba": {
+              "hide": "a StructuredList skeleton row"
+            },
+            "v-logb9c": {
+              "hide": "a StructuredList skeleton row"
+            },
+            "v-gg4kda": {
+              "hide": "a Popover's content"
+            },
+            "v-a3y2xj": {
+              "hide": "the Popover story's boundary box"
+            },
+            "v-43q2ac": {
+              "hide": "a Toggletip's bubble"
+            },
+            "ai": {
+              "hide": "an AI skeleton"
+            },
+            "v-krq3r1": {
+              "hide": "a ChatButton skeleton"
+            },
+            "vertical": {
+              "hide": "the vertical Tabs list"
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "summary": "ProgressBar is an 8px #e0e0e0 track (#393939 in G100) with a #0f62fe fill, square; small is 4px.",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-oydekk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The #e0e0e0 track."
+            },
+            "v-d1hi5e": {
+              "note": "On a layer: a #c6c6c6 track."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "summary": "The census found no separator of its own: these are the Slider's track, the ProgressIndicator's step line and a fluid field's divider.",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-oydekk": {
+              "hide": "the Slider's track"
+            },
+            "v-9fs2dw": {
+              "hide": "the Slider's filled track"
+            },
+            "v-d1hi5e": {
+              "hide": "a disabled Slider's track"
+            },
+            "v-oe3y0e": {
+              "hide": "the ProgressIndicator's step line"
+            },
+            "v-q1mkbe": {
+              "hide": "the divider inside a fluid field"
+            }
+          }
+        }
+      }
+    },
+    "breadcrumbs": {
+      "status": "reviewed",
+      "groups": {
+        "breadcrumb": {
+          "variants": {
+            "v-a35rzq": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "#0f62fe links at 400 (#78a9ff in G100); #0043ce with an underline on hover; the current page is #161616."
+            }
+          },
+          "sizes": {
+            "md": {
+              "note": "14px."
+            },
+            "sm": {
+              "note": "12px."
+            }
+          }
+        }
+      }
+    },
+    "pagination": {
+      "status": "reviewed",
+      "summary": "Pagination is a #f4f4f4 bar with a 1px #e0e0e0 rule on top, holding Items per page, a page select and the arrow buttons, split by 1px dividers. PaginationNav is a row of 48px page buttons; the current page stays unfilled at 600 over a 16×4px #0f62fe bar.",
+      "groups": {
+        "pagination-item": {
+          "variants": {
+            "v-b0fkhu": {
+              "name": {
+                "value": "page",
+                "from": "ai"
+              },
+              "note": "PaginationNav's page buttons: #161616 on white, #f1f1f1 on hover."
+            },
+            "forward": {
+              "note": "Pagination's previous and next: #0f62fe arrows behind a 1px #e0e0e0 divider; #e8e8e8 on hover."
+            },
+            "ghost": {
+              "note": "PaginationNav's arrows: ghost buttons, #f1f1f1 on hover."
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "status": "reviewed",
+      "called": ["InlineNotification", "ToastNotification"],
+      "summary": "Notifications are background-inverse (#393939, #f4f4f4 in G100) with a 3px status stripe at the start, a filled status icon and a 14px/600 title. Low-contrast versions use a light tint (#fff1f1 for error). Toasts are 288px wide and add a 0 2px 6px shadow at 20%.",
+      "groups": {
+        "alert": {
+          "variants": {
+            "v-gj3iic": {
+              "name": {
+                "value": "error text",
+                "from": "ai"
+              },
+              "note": "A field's error message: 12px #da1e28 (#ff8389 in G100)."
+            },
+            "v-b0fkhu": {
+              "name": {
+                "value": "warning text",
+                "from": "ai"
+              },
+              "note": "A field's warning message: 12px #161616."
+            }
+          }
+        },
+        "status": {
+          "variants": {
+            "error": {
+              "note": "#393939 with a 3px #fa4d56 stripe; #f4f4f4 with #da1e28 in G100."
+            },
+            "low-contrast": {
+              "note": "#fff1f1 with a 3px #da1e28 stripe; #262626 with #fa4d56 in G100."
+            },
+            "v-nvsj0q": {
+              "hide": "a count Tag beside a ContainedList title"
+            }
+          },
+          "sizes": {
+            "s-6pdvfl": {
+              "note": "Inline: 48px."
+            },
+            "s-3n0qlv": {
+              "note": "Toast: 110px with a timestamp."
+            }
+          }
+        }
+      }
+    },
+    "tree": {
+      "status": "reviewed",
+      "groups": {
+        "treeitem": {
+          "variants": {
+            "v-jrgsii": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "TreeView nodes in #525252 (#c6c6c6 in G100)."
+            }
+          },
+          "sizes": {
+            "sm": {
+              "note": "32px."
+            },
+            "xs": {
+              "note": "24px."
+            },
+            "s-c1p6db": {
+              "note": "32px, in the feature-flag TreeView."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@carbon/themes",
+        "ref": "11.83.0",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@carbon/styles",
+        "ref": "1.117.0",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "docs",
+        "url": "https://react.carbondesignsystem.com",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: 499 Carbon React Storybook stories, headless in White (light) and G100 (dark). Facts the census can't see (tooltip bubbles, the checkbox box, DataTable rows, modal and tile defaults) come from the Carbon pack's hand-read notes and are marked as such. Names without a from are Storybook args and component classes; names marked docs come from Carbon's component, story and prop names; names marked ai are ours."
+  }
+}

@@ -3,8 +3,8 @@
  *
  * Manifest-driven: each entry names a live design-system doc page + a selector for its
  * primary component showcase. Every entry is captured in light AND dark and written to
- *   src/modules/preset-lab/refs/<system>/<component>-<light|dark>.png
- * `scripts/compose-refs.mts` pairs these with specimen captures (see preset-lab/README.md).
+ *   .scratch-refs/<system>/<component>-<light|dark>.png (gitignored: images stay out of git)
+ * `scripts/compose-refs.mts` pairs these with specimen captures (see packages/capture/README.md).
  *
  * Usage:  tsx scripts/capture-refs.mts [system] [component]   (run from www/; args filter)
  */
@@ -12,6 +12,8 @@ import { mkdir } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import puppeteer, { type Browser, type Page } from "puppeteer"
+
+import { executablePath } from "@dotui/capture/chromium"
 
 type Theme = "light" | "dark"
 type RefEntry = {
@@ -29,7 +31,7 @@ type RefEntry = {
 
 const REFS_DIR = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../src/modules/preset-lab/refs",
+  "../.scratch-refs",
 )
 const VIEWPORT = { width: 1280, height: 900, deviceScaleFactor: 2 }
 
@@ -150,11 +152,14 @@ const entries = manifest.filter(
 // vercel.com's continuously-animated background (Page.captureScreenshot never returns).
 const browser = await puppeteer.launch({
   headless: "shell",
+  executablePath,
   protocolTimeout: 60000,
   args: [
     "--disable-gpu",
     "--hide-scrollbars",
     "--run-all-compositor-stages-before-draw",
+    // Cloud containers run as root, where Chrome's sandbox refuses to start.
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),
   ],
 })
 const failures: string[] = []

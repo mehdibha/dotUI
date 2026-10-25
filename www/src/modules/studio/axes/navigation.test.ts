@@ -84,7 +84,7 @@ describe("navigation axes", () => {
       params({ segmentedSelected: "ring", segmentedTrack: "outline" }).tabs,
     ).toMatchObject({ chip: "ring", track: "outline" })
     // Auto follows the button style there too.
-    expect(params({ style: "tactile", buttonStyle: "bevel" }).tabs?.chip).toBe(
+    expect(params({ style: "polished", buttonStyle: "bevel" }).tabs?.chip).toBe(
       "raised",
     )
   })
@@ -347,10 +347,13 @@ describe("navigation case, pill marker and line indicator", () => {
         expect(cn(value)?.split(" ").sort(), indicator).toEqual(
           value.split(" ").sort(),
         )
-        if (indicator === "label")
+        if (indicator === "label") {
+          const inset = LABEL_INSET[density]
+          expect(value).toContain(`orientation-horizontal:left-${inset}`)
           expect(value).toContain(
-            `orientation-horizontal:inset-x-${LABEL_INSET[density]}`,
+            `orientation-horizontal:w-[calc(100%-var(--spacing)*${Number(inset) * 2})]`,
           )
+        }
       }
     },
   )

@@ -1,0 +1,651 @@
+{
+  "probe": "ce94064",
+  "pages": [
+    {
+      "key": "encore.html",
+      "modes": ["light"]
+    },
+    {
+      "key": "https://accounts.spotify.com/en/login",
+      "modes": ["dark"]
+    },
+    {
+      "key": "encore.html#dark",
+      "modes": ["dark"]
+    },
+    {
+      "key": "https://open.spotify.com/",
+      "modes": ["dark"]
+    },
+    {
+      "key": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+      "modes": ["dark"]
+    },
+    {
+      "key": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+      "modes": ["dark"]
+    }
+  ],
+  "radius": [
+    {
+      "px": 3,
+      "count": 85,
+      "groups": ["menuitem","box","card","textbox","menu","kbd"]
+    },
+    {
+      "px": 6,
+      "count": 72,
+      "groups": ["card","box"]
+    },
+    {
+      "px": 8,
+      "count": 22,
+      "groups": ["card","box","button","dialog"]
+    },
+    {
+      "px": 10,
+      "count": 6,
+      "groups": ["box"]
+    }
+  ],
+  "pills": ["button","box","card","link","badge","combobox","checkbox","avatar"],
+  "type": [
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 772,
+      "groups": ["link","button","text@link","card","text@button","box"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 293,
+      "groups": ["link","text@grid","text","text@menuitem","box","tooltip"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 108,
+      "groups": ["button","text@button","heading.h4@navigation","box","text@navigation","link"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 77,
+      "groups": ["button","text@link","badge","text@button","label","link"]
+    },
+    {
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 72,
+      "groups": ["button","menuitem","slider","combobox","textbox","box"]
+    },
+    {
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 38,
+      "groups": ["link","text@complementary","text@button","text@link","paragraph"]
+    },
+    {
+      "fontSize": "24px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUITitle",
+      "count": 34,
+      "groups": ["heading.h2","link","text@complementary","heading.h2@dialog","text@button"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "Times New Roman",
+      "count": 15,
+      "groups": ["panel"]
+    },
+    {
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "lineHeight": "13.2px",
+      "letterSpacing": "0.66px",
+      "fontFamily": "ui-monospace",
+      "textTransform": "uppercase",
+      "count": 14,
+      "groups": ["heading.h6"]
+    },
+    {
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "14px",
+      "fontFamily": "SpotifyMixUI",
+      "count": 7,
+      "groups": ["checkbox","text@checkbox","badge"]
+    },
+    {
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 3,
+      "groups": ["button"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "fontFamily": "SpotifyMixUI",
+      "count": 3,
+      "groups": ["kbd"]
+    },
+    {
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUI",
+      "count": 3,
+      "groups": ["text","text@menu"]
+    },
+    {
+      "fontSize": "48px",
+      "fontWeight": "800",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUITitle",
+      "count": 2,
+      "groups": ["heading.h1"]
+    },
+    {
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUITitle",
+      "count": 2,
+      "groups": ["heading.h1"]
+    },
+    {
+      "fontSize": "32px",
+      "fontWeight": "700",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUITitle",
+      "count": 2,
+      "groups": ["heading.h3"]
+    },
+    {
+      "fontSize": "96px",
+      "fontWeight": "800",
+      "lineHeight": "normal",
+      "fontFamily": "SpotifyMixUITitle",
+      "count": 1,
+      "groups": ["heading.h1"]
+    },
+    {
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "32px",
+      "fontFamily": "SpotifyMixUI",
+      "count": 1,
+      "groups": ["text"]
+    }
+  ],
+  "heights": {
+    "avatar": [
+      {"px":24,"count":2}
+    ],
+    "badge": [
+      {"px":32,"count":10},
+      {"px":24,"count":2},
+      {"px":28,"count":1}
+    ],
+    "button": [
+      {"px":48,"count":56},
+      {"px":249.5,"count":44},
+      {"px":32,"count":33},
+      {"px":56,"count":15},
+      {"px":280,"count":15},
+      {"px":81,"count":14}
+    ],
+    "checkbox": [
+      {"px":32,"count":6}
+    ],
+    "combobox": [
+      {"px":48,"count":7},
+      {"px":32,"count":2}
+    ],
+    "kbd": [
+      {"px":26,"count":3}
+    ],
+    "link": [
+      {"px":22,"count":194},
+      {"px":20,"count":80},
+      {"px":17,"count":22},
+      {"px":44,"count":18},
+      {"px":48,"count":16},
+      {"px":29,"count":13}
+    ],
+    "menuitem": [
+      {"px":40,"count":31}
+    ],
+    "menuitemradio": [
+      {"px":40,"count":1}
+    ],
+    "row": [
+      {"px":37,"count":2}
+    ],
+    "tab": [
+      {"px":48,"count":4}
+    ],
+    "textbox": [
+      {"px":48,"count":5},
+      {"px":18,"count":2},
+      {"px":84,"count":2}
+    ]
+  },
+  "spacing": {
+    "grid": 4,
+    "steps": [
+      {"px":2,"count":21},
+      {"px":4,"count":148},
+      {"px":6,"count":20},
+      {"px":8,"count":458},
+      {"px":11,"count":3},
+      {"px":12,"count":246},
+      {"px":15,"count":3},
+      {"px":16,"count":309},
+      {"px":20,"count":18},
+      {"px":24,"count":41},
+      {"px":32,"count":53},
+      {"px":36,"count":6},
+      {"px":40,"count":6},
+      {"px":48,"count":7},
+      {"px":56,"count":3},
+      {"px":96,"count":7}
+    ]
+  },
+  "colors": {
+    "light": {
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":23,"uses":["box backgroundColor","button backgroundColor","textbox backgroundColor","link backgroundColor","tab backgroundColor"]},{"color":"rgb(235, 235, 235)","l":0.94,"c":0,"h":0,"count":4,"uses":["button backgroundColor","textbox backgroundColor"]},{"color":"rgb(129, 129, 129)","l":0.603,"c":0,"h":0,"count":10,"uses":["box edge","button edge","textbox edge","box backgroundColor"]},{"color":"rgb(101, 101, 101)","l":0.507,"c":0,"h":0,"count":12,"uses":["heading.h6 color","tab color","icon color","paragraph color","text color"]},{"color":"rgb(0, 0, 0)","l":0,"c":0,"h":0,"count":74,"uses":["box color","button color","text@button color","text color","label color"]}],
+      "accents": [{"hue":149,"count":15,"steps":[{"color":"rgb(150, 240, 182)","l":0.883,"c":0.119,"h":155,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(30, 215, 96)","l":0.77,"c":0.212,"h":149,"count":8,"uses":["button backgroundColor","box backgroundColor","badge backgroundColor"]},{"color":"rgb(21, 149, 66)","l":0.587,"c":0.16,"h":149,"count":5,"uses":["box backgroundColor"]},{"color":"rgb(7, 49, 22)","l":0.277,"c":0.067,"h":151,"count":1,"uses":["card color"]}]},{"hue":11,"count":4,"steps":[{"color":"rgb(255, 210, 215)","l":0.904,"c":0.051,"h":11,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(233, 20, 41)","l":0.593,"c":0.234,"h":25,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(201, 17, 35)","l":0.531,"c":0.209,"h":25,"count":1,"uses":["text color"]},{"color":"rgb(89, 8, 16)","l":0.3,"c":0.112,"h":23,"count":1,"uses":["card color"]}]}]
+    },
+    "dark": {
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":847,"uses":["link color","button color","text@link color","card color","img color"]},{"color":"rgb(234, 234, 234)","l":0.937,"c":0,"h":0,"count":100,"uses":["img color","menuitem color","text@menuitem color","link color","menuitemradio color"]},{"color":"rgb(191, 191, 191)","l":0.805,"c":0,"h":0,"count":1,"uses":["text@menu color"]},{"color":"rgb(184, 184, 184)","l":0.783,"c":0,"h":0,"count":10,"uses":["button color","combobox color","avatar color","text@button color","text@combobox color"]},{"color":"rgb(179, 179, 179)","l":0.767,"c":0,"h":0,"count":587,"uses":["link color","text@grid color","button color","img color","text color"]},{"color":"rgb(157, 150, 142)","l":0.677,"c":0.014,"h":71,"count":3,"uses":["slider color"]},{"color":"rgb(128, 128, 128)","l":0.6,"c":0,"h":0,"count":6,"uses":["separator color"]},{"color":"rgb(124, 124, 124)","l":0.586,"c":0,"h":0,"count":24,"uses":["button edge","box edge","textbox edge","kbd edge","link edge"]},{"color":"rgb(122, 117, 126)","l":0.57,"c":0.015,"h":310,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(111, 122, 116)","l":0.568,"c":0.016,"h":162,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(106, 122, 122)","l":0.566,"c":0.019,"h":197,"count":2,"uses":["card backgroundColor"]},{"color":"rgb(89, 89, 89)","l":0.464,"c":0,"h":0,"count":16,"uses":["box backgroundColor","button backgroundColor","card backgroundColor","link backgroundColor"]},{"color":"rgb(83, 83, 83)","l":0.442,"c":0,"h":0,"count":1,"uses":["panel backgroundColor"]},{"color":"rgb(64, 80, 88)","l":0.421,"c":0.024,"h":230,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(77, 77, 77)","l":0.42,"c":0,"h":0,"count":6,"uses":["box backgroundColor"]},{"color":"rgb(72, 72, 72)","l":0.402,"c":0,"h":0,"count":1,"uses":["card backgroundColor"]}],
+      "accents": [{"hue":149,"count":29,"steps":[{"color":"rgb(150, 240, 182)","l":0.883,"c":0.119,"h":155,"count":1,"uses":["card color"]},{"color":"rgb(30, 215, 96)","l":0.77,"c":0.212,"h":149,"count":26,"uses":["button backgroundColor","box backgroundColor","badge backgroundColor","img color","card backgroundColor"]},{"color":"rgb(64, 88, 32)","l":0.427,"c":0.087,"h":129,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(7, 49, 22)","l":0.277,"c":0.067,"h":151,"count":1,"uses":["card backgroundColor"]}]},{"hue":45,"count":9,"steps":[{"color":"rgb(233, 20, 41)","l":0.593,"c":0.234,"h":25,"count":2,"uses":["card backgroundColor"]},{"color":"rgb(192, 87, 74)","l":0.586,"c":0.138,"h":29,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(163, 105, 79)","l":0.577,"c":0.084,"h":45,"count":2,"uses":["card backgroundColor"]},{"color":"rgb(216, 24, 8)","l":0.561,"c":0.221,"h":30,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(160, 80, 72)","l":0.528,"c":0.108,"h":27,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(112, 24, 24)","l":0.361,"c":0.122,"h":26,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(64, 0, 0)","l":0.233,"c":0.096,"h":29,"count":1,"uses":["card backgroundColor"]}]},{"hue":257,"count":8,"steps":[{"color":"rgb(13, 114, 234)","l":0.571,"c":0.2,"h":257,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(98, 121, 144)","l":0.566,"c":0.045,"h":249,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(88, 120, 161)","l":0.565,"c":0.074,"h":255,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(64, 96, 152)","l":0.491,"c":0.098,"h":261,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(48, 72, 96)","l":0.393,"c":0.051,"h":249,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(24, 56, 96)","l":0.339,"c":0.08,"h":255,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(8, 32, 64)","l":0.245,"c":0.068,"h":257,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(0, 32, 56)","l":0.235,"c":0.059,"h":245,"count":1,"uses":["card backgroundColor"]}]},{"hue":23,"count":8,"steps":[{"color":"rgb(255, 210, 215)","l":0.904,"c":0.051,"h":11,"count":1,"uses":["card color"]},{"color":"rgb(243, 114, 127)","l":0.708,"c":0.159,"h":16,"count":1,"uses":["text color"]},{"color":"rgb(227, 31, 94)","l":0.595,"c":0.224,"h":11,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(200, 24, 80)","l":0.539,"c":0.204,"h":11,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(152, 24, 32)","l":0.44,"c":0.162,"h":25,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(120, 48, 56)","l":0.412,"c":0.101,"h":16,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(96, 0, 24)","l":0.31,"c":0.124,"h":17,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(89, 8, 16)","l":0.3,"c":0.112,"h":23,"count":1,"uses":["card backgroundColor"]}]},{"hue":282,"count":7,"steps":[{"color":"rgb(158, 158, 255)","l":0.739,"c":0.139,"h":282,"count":3,"uses":["link color"]},{"color":"rgb(111, 116, 164)","l":0.574,"c":0.074,"h":279,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(32, 64, 144)","l":0.398,"c":0.138,"h":264,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(40, 53, 79)","l":0.33,"c":0.05,"h":264,"count":1,"uses":["panel backgroundColor"]},{"color":"rgb(0, 8, 72)","l":0.196,"c":0.116,"h":264,"count":1,"uses":["card backgroundColor"]}]},{"hue":183,"count":4,"steps":[{"color":"rgb(79, 127, 119)","l":0.56,"c":0.054,"h":183,"count":2,"uses":["card backgroundColor"]},{"color":"rgb(56, 88, 88)","l":0.436,"c":0.038,"h":196,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(40, 64, 56)","l":0.349,"c":0.033,"h":171,"count":1,"uses":["card backgroundColor"]}]},{"hue":83,"count":4,"steps":[{"color":"rgb(155, 111, 33)","l":0.573,"c":0.107,"h":77,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(138, 116, 77)","l":0.57,"c":0.061,"h":81,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(130, 117, 96)","l":0.568,"c":0.035,"h":80,"count":1,"uses":["card backgroundColor"]},{"color":"rgb(128, 104, 56)","l":0.53,"c":0.072,"h":83,"count":1,"uses":["card backgroundColor"]}]},{"hue":345,"count":2,"steps":[{"color":"rgb(161, 99, 135)","l":0.579,"c":0.093,"h":345,"count":2,"uses":["card backgroundColor"]}]}],
+      "neutralHue": 65
+    }
+  },
+  "tokens": [
+    {
+      "name": "--text-subdued",
+      "count": 51,
+      "feeds": ["button color","heading.h6 color","link color","paragraph color","menuitemradio color"],
+      "light": "#656565",
+      "dark": "#b3b3b3"
+    },
+    {
+      "name": "--encore-body-font-stack",
+      "count": 48,
+      "feeds": ["button fontFamily","text@grid fontFamily","kbd fontFamily","text@menuitem fontFamily","text@menuitemradio fontFamily","combobox fontFamily","menuitemradio fontFamily","page fontFamily"],
+      "light": "SpotifyMixUI,CircularSp-Arab,CircularSp-Hebr,CircularSp-Cyrl,CircularSp-Grek,CircularSp-Deva,sans-serif",
+      "dark": "SpotifyMixUI, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Sans, Hiragino Kaku Gothic ProN, Meiryo, MS Gothic, Apple "
+    },
+    {
+      "name": "--text-base",
+      "count": 39,
+      "feeds": ["button color","card color","badge color","combobox color","heading.h2@dialog color","page color","paragraph@dialog color"],
+      "light": "#000000",
+      "dark": "#fff"
+    },
+    {
+      "name": "--encore-text-weight",
+      "count": 37,
+      "feeds": ["text@button fontWeight","text@grid fontWeight","kbd fontWeight","text@menuitem fontWeight","text@menuitemradio fontWeight","heading.h2@dialog fontWeight","paragraph@dialog fontWeight","text@menu fontWeight"]
+    },
+    {
+      "name": "--encore-text-size",
+      "count": 21,
+      "feeds": ["text@button fontSize"]
+    },
+    {
+      "name": "--encore-text-font-family",
+      "count": 21,
+      "feeds": ["text@button fontFamily"]
+    },
+    {
+      "name": "--encore-spacing-tighter-5",
+      "count": 12,
+      "feeds": ["kbd paddingInline","kbd paddingTop","kbd paddingBottom","kbd paddingRight"],
+      "dark": "2px"
+    },
+    {
+      "name": "--encore-spacing-tighter-2",
+      "count": 9,
+      "feeds": ["button gap","button paddingInline","button paddingTop"],
+      "dark": "8px"
+    },
+    {
+      "name": "--encore-text-size-base",
+      "count": 9,
+      "feeds": ["text@grid fontSize","kbd fontSize","combobox fontSize","paragraph@dialog fontSize"],
+      "dark": "1rem"
+    },
+    {
+      "name": "--background-base",
+      "count": 8,
+      "feeds": ["kbd boxShadow","kbd edge","combobox backgroundColor","page backgroundColor"],
+      "light": "#ffffff",
+      "dark": "#121212"
+    },
+    {
+      "name": "--encore-text-size-smaller",
+      "count": 6,
+      "feeds": ["text@menuitem fontSize","text@menuitemradio fontSize","text@grid fontSize"],
+      "dark": ".875rem"
+    },
+    {
+      "name": "--menu-item-height",
+      "count": 5,
+      "feeds": ["menuitem height","menuitemradio height","text@menu height"]
+    },
+    {
+      "name": "--encore-spacing-tighter",
+      "count": 4,
+      "feeds": ["box paddingInline","button paddingInline","button paddingTop","combobox paddingTop"],
+      "dark": "12px"
+    },
+    {
+      "name": "--encore-button-corner-radius",
+      "count": 4,
+      "feeds": ["button borderRadius"]
+    },
+    {
+      "name": "--encore-corner-radius-base",
+      "count": 4,
+      "feeds": ["kbd borderRadius","combobox borderRadius"],
+      "dark": "4px"
+    },
+    {
+      "name": "--encore-icon-height",
+      "count": 4,
+      "feeds": ["img height"]
+    },
+    {
+      "name": "--encore-icon-width",
+      "count": 4,
+      "feeds": ["img width"]
+    },
+    {
+      "name": "--row-height",
+      "count": 3,
+      "feeds": ["card height"]
+    },
+    {
+      "name": "--context-menu-artwork-border-radius",
+      "count": 3,
+      "feeds": ["img borderRadius"]
+    },
+    {
+      "name": "--encore-border-width-hairline",
+      "count": 2,
+      "feeds": ["combobox boxShadow","combobox edge"],
+      "dark": "1px"
+    },
+    {
+      "name": "--background-elevated-highlight",
+      "count": 1,
+      "feeds": ["box backgroundColor"],
+      "dark": "#2a2a2a"
+    },
+    {
+      "name": "--background-elevated-base",
+      "count": 1,
+      "feeds": ["button backgroundColor"],
+      "dark": "#1f1f1f"
+    },
+    {
+      "name": "--encore-form-input-icon-padding-leading",
+      "count": 1,
+      "feeds": ["combobox paddingInline"]
+    },
+    {
+      "name": "--encore-form-input-icon-padding-trailing",
+      "count": 1,
+      "feeds": ["combobox paddingRight"]
+    },
+    {
+      "name": "--encore-text-size-larger",
+      "count": 1,
+      "feeds": ["heading.h2@dialog fontSize"],
+      "dark": "1.5rem"
+    },
+    {
+      "name": "--encore-title-font-stack",
+      "count": 1,
+      "feeds": ["heading.h2@dialog fontFamily"],
+      "dark": "SpotifyMixUITitle, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Sans, Hiragino Kaku Gothic ProN, Meiryo, MS Gothic, A"
+    },
+    {
+      "name": "--encore-text-size-smaller-2",
+      "count": 1,
+      "feeds": ["text@menu fontSize"],
+      "dark": ".75rem"
+    }
+  ],
+  "inventory": {
+    "avatar": [
+      {"id":"avatar.1","count":1,"pages":[4],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"50%","edge":"none","boxShadow":"none","height":"24px","paddingInline":"0px"}}
+    ],
+    "badge": [
+      {"id":"badge.1","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","paddingRight":"16px","paddingTop":"4px","paddingBottom":"4px"}},
+      {"id":"badge.2","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(30, 215, 96)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"16px","color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","paddingRight":"16px","paddingTop":"4px","paddingBottom":"4px"}}
+    ],
+    "box": [
+      {"id":"box.1","count":16,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"4px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.3) 0px 16px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 8px 0px","paddingInline":"8px","paddingRight":"8px","paddingTop":"4px","paddingBottom":"4px"}},
+      {"id":"box.2","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(77, 77, 77)","borderRadius":"2px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"box.3","count":6,"pages":[4,5],"dark":{"backgroundColor":"rgb(89, 89, 89)","borderRadius":"10px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"box.4","count":4,"pages":[2],"dark":{"backgroundColor":"rgb(30, 215, 96)","borderRadius":"9999px","edge":"none","boxShadow":"none","paddingInline":"32px","paddingRight":"32px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"box.5","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"0px","edge":"1px rgb(124, 124, 124) left","boxShadow":"none","paddingInline":"12px","paddingRight":"4px"}},
+      {"id":"box.6","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","paddingInline":"32px","paddingRight":"32px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"box.7","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"2px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"box.8","count":2,"pages":[0],"light":{"backgroundColor":"rgb(30, 215, 96)","borderRadius":"9999px","edge":"none","boxShadow":"none","paddingInline":"32px","paddingRight":"32px","paddingTop":"8px","paddingBottom":"8px"}}
+    ],
+    "button": [
+      {"id":"button.1","count":44,"pages":[3],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"249.5px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"focus":{"ring":"none"},"disabled":{"opacity":"0.3","transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"button.2","count":16,"pages":[5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"height":"300.2px"},"pressed":{"height":"300.2px"},"focus":{"height":"300.2px","ring":"none"},"disabled":{"height":"300.2px","opacity":"0.3","transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"button.3","count":15,"pages":[4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"280.2px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"focus":{"ring":"none"},"disabled":{"opacity":"0.3","transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"button.4","count":14,"pages":[3],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"81px","paddingInline":"16px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px","paddingTop":"16px","paddingBottom":"16px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(61, 61, 61)"},"pressed":{"backgroundColor":"rgb(61, 61, 61)"},"focus":{"ring":"none"}}}},
+      {"id":"button.5","count":10,"pages":[3],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"76px","paddingInline":"16px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px","paddingTop":"16px","paddingBottom":"16px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(61, 61, 61)"},"pressed":{"backgroundColor":"rgb(61, 61, 61)"},"focus":{"ring":"none"}}}},
+      {"id":"button.6","count":9,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","paddingTop":"8px","paddingBottom":"8px","gap":"8px"},"states":{"dark":{"hover":{"color":"rgb(255, 255, 255)","height":"49.9px","transform":"matrix(1.04, 0, 0, 1.04, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"color":"rgb(255, 255, 255)","opacity":"0.7","transform":"matrix(1, 0, 0, 1, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"ring":"1px rgb(238, 238, 238) +0px"},"disabled":{"opacity":"0.3","transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"button.7","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal"},"states":{"dark":{"hover":{"backgroundColor":"rgb(240, 240, 240)","height":"49.9px","transform":"matrix(1.04, 0, 0, 1.04, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"backgroundColor":"rgb(199, 199, 199)","transform":"matrix(1, 0, 0, 1, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"ring":"1px rgb(238, 238, 238) +0px"},"disabled":{"transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"button.8","count":6,"pages":[3],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"272.6px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"focus":{"ring":"none"},"disabled":{"opacity":"0.3","transform":"matrix(1, 0, 0, 1, 0, 0)","cursor":"not-allowed"}}},"forced":["disabled"]}
+    ],
+    "card": [
+      {"id":"card.1","count":29,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(51, 51, 51)","borderRadius":"6px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.5) 0px 8px 24px 0px","paddingInline":"0px","paddingBottom":"171.5px"}},
+      {"id":"card.2","count":11,"pages":[3,5],"dark":{"backgroundColor":"rgb(51, 51, 51)","borderRadius":"50%","edge":"none","boxShadow":"rgba(0, 0, 0, 0.5) 0px 8px 24px 0px","paddingInline":"0px","paddingBottom":"171.5px"}},
+      {"id":"card.3","count":9,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"card.4","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(31, 31, 31)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"20px","paddingRight":"20px","paddingTop":"16px","paddingBottom":"16px","gap":"20px"}},
+      {"id":"card.5","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"card.6","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","paddingInline":"32px","paddingRight":"32px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"card.7","count":3,"pages":[4,5],"dark":{"backgroundColor":"rgb(89, 89, 89)","borderRadius":"4px","edge":"none","boxShadow":"none","paddingInline":"16px","paddingRight":"16px","gap":"16px"}},
+      {"id":"card.8","count":3,"pages":[3],"dark":{"backgroundColor":"rgb(72, 56, 56)","borderRadius":"6px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.5) 0px 8px 24px 0px","paddingInline":"0px","paddingBottom":"171.5px"}}
+    ],
+    "checkbox": [
+      {"id":"checkbox.1","count":3,"pages":[5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"backgroundColor":"rgb(51, 51, 51)"},"pressed":{"backgroundColor":"rgb(68, 68, 68)"},"focus":{"ring":"1px rgb(238, 238, 238) +0px"},"selected":{"backgroundColor":"rgb(255, 255, 255)","width":"128.4px","zIndex":"1"}}}},
+      {"id":"checkbox.2","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"9999px","edge":"none","boxShadow":"none","opacity":"0.3","height":"32px","paddingInline":"8px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"},"states":{"dark":{"pressed":{"transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"}}}}
+    ],
+    "combobox": [
+      {"id":"combobox.1","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(31, 31, 31)","borderRadius":"500px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"48px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"96px","paddingTop":"12px","paddingBottom":"12px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(42, 42, 42)","boxShadow":"rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset","edge":"1px rgb(63, 63, 63)"},"focus":{"backgroundColor":"rgb(42, 42, 42)","boxShadow":"rgb(255, 255, 255) 0px 0px 0px 2px inset","ring":"1px rgb(238, 238, 238) +0px","cursor":"auto"},"disabled":{"opacity":"0.3"}}},"forced":["disabled"]},
+      {"id":"combobox.2","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(42, 42, 42)","borderRadius":"500px","edge":"none","boxShadow":"rgb(255, 255, 255) 0px 0px 0px 2px inset","height":"48px","paddingInline":"48px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"96px","paddingTop":"12px","paddingBottom":"12px"},"states":{"dark":{"focus":{"edge":"2px rgb(255, 255, 255)","ring":"none"},"disabled":{"backgroundColor":"rgb(31, 31, 31)","boxShadow":"none","opacity":"0.3","cursor":"text"},"invalid":{"backgroundColor":"rgb(31, 31, 31)","boxShadow":"none","cursor":"text"}}},"forced":["disabled","invalid"]},
+      {"id":"combobox.3","count":2,"pages":[4],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"4px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"8px","color":"rgb(184, 184, 184)","fontFamily":"SpotifyMixUI","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","gap":"8px"},"states":{"dark":{"hover":{"color":"rgb(255, 255, 255)","cursor":"pointer"},"pressed":{"color":"rgb(255, 255, 255)","cursor":"pointer"},"focus":{"color":"rgb(255, 255, 255)","ring":"1px rgb(238, 238, 238) +0px","cursor":"pointer"}}}}
+    ],
+    "complementary": [
+      {"id":"complementary.1","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "heading.h1": [
+      {"id":"heading.h1.1","count":2,"pages":[1,4],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUITitle","fontSize":"48px","fontWeight":"800","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "heading.h1@banner": [
+      {"id":"heading.h1@banner.1","count":3,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "heading.h2": [
+      {"id":"heading.h2.1","count":16,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUITitle","fontSize":"24px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "heading.h3": [
+      {"id":"heading.h3.1","count":1,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUITitle","fontSize":"32px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "heading.h4@navigation": [
+      {"id":"heading.h4@navigation.1","count":12,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","paddingBottom":"8px"}}
+    ],
+    "heading.h6": [
+      {"id":"heading.h6.1","count":7,"pages":[0],"light":{"color":"rgb(101, 101, 101)","fontFamily":"ui-monospace","fontSize":"11px","fontWeight":"400","letterSpacing":"0.66px","lineHeight":"13.2px","textTransform":"uppercase","paddingInline":"0px"}},
+      {"id":"heading.h6.2","count":7,"pages":[2],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"ui-monospace","fontSize":"11px","fontWeight":"400","letterSpacing":"0.66px","lineHeight":"13.2px","textTransform":"uppercase","paddingInline":"0px"}}
+    ],
+    "icon": [
+      {"id":"icon.1","count":1,"pages":[0],"light":{"color":"rgb(101, 101, 101)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@button": [
+      {"id":"icon@button.1","count":3,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@link": [
+      {"id":"icon@link.1","count":2,"pages":[1],"dark":{"color":"rgb(255, 255, 255)","iconSize":"25x24","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "icon@navigation": [
+      {"id":"icon@navigation.1","count":3,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","iconSize":"25x10","iconStroke":"fill","paddingInline":"4px"}}
+    ],
+    "img": [
+      {"id":"img.1","count":55,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","paddingInline":"0px"}},
+      {"id":"img.2","count":37,"pages":[4,5],"dark":{"color":"rgb(234, 234, 234)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.3","count":30,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.4","count":16,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.5","count":8,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.6","count":7,"pages":[4,5],"dark":{"color":"rgb(179, 179, 179)","paddingInline":"0px"}},
+      {"id":"img.7","count":5,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.8","count":5,"pages":[4,5],"dark":{"color":"rgb(179, 179, 179)","iconSize":"32x32","iconStroke":"fill","paddingInline":"0px"}}
+    ],
+    "kbd": [
+      {"id":"kbd.1","count":3,"pages":[3],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"4px","edge":"1px rgb(124, 124, 124)","boxShadow":"rgb(18, 18, 18) 0px 1px 0px 0px, rgb(124, 124, 124) 0px 0px 0px 1px inset","height":"26px","paddingInline":"6px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"6px","paddingTop":"2px","paddingBottom":"2px"}}
+    ],
+    "label": [
+      {"id":"label.1","count":4,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","paddingBottom":"8px"}},
+      {"id":"label.2","count":4,"pages":[2],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","paddingBottom":"8px"}}
+    ],
+    "link": [
+      {"id":"link.1","count":79,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"22px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px"},"states":{"dark":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"1px rgb(238, 238, 238) +1px","textDecorationLine":"underline"}}}},
+      {"id":"link.2","count":76,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"1px rgb(238, 238, 238) +1px","textDecorationLine":"underline"}}}},
+      {"id":"link.3","count":63,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"22px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"color":"rgb(255, 255, 255)"},"pressed":{"color":"rgb(255, 255, 255)"},"focus":{"borderRadius":"4px","ring":"2px rgb(255, 255, 255) +2px","transition":"0.25s cubic-bezier(0, 0, 0.2, 1)"},"disabled":{"opacity":"0.3","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"link.4","count":49,"pages":[5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"22px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"height":"22.2px","textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"1px rgb(238, 238, 238) +1px","textDecorationLine":"underline"}}}},
+      {"id":"link.5","count":21,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"17px","paddingInline":"0px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"12px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"color":"rgb(255, 255, 255)"},"pressed":{"color":"rgb(255, 255, 255)"},"focus":{"borderRadius":"4px","ring":"2px rgb(255, 255, 255) +2px","transition":"0.25s cubic-bezier(0, 0, 0.2, 1)"},"disabled":{"opacity":"0.3","cursor":"not-allowed"}}},"forced":["disabled"]},
+      {"id":"link.6","count":13,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"29px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUITitle","fontSize":"24px","fontWeight":"700","letterSpacing":"normal"},"states":{"dark":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"}}}},
+      {"id":"link.7","count":13,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"44px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal"},"states":{"dark":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"}}}},
+      {"id":"link.8","count":12,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"0px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingBottom":"2px"},"states":{"dark":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"1px rgb(238, 238, 238) +1px","textDecorationLine":"underline"}}}}
+    ],
+    "menu": [
+      {"id":"menu.1","count":6,"pages":[4,5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"4px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.3) 0px 16px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 8px 0px","paddingInline":"4px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px"}}
+    ],
+    "menuitem": [
+      {"id":"menuitem.1","count":28,"pages":[4,5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"2px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"12px","color":"rgb(234, 234, 234)","fontFamily":"SpotifyMixUI","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px","gap":"12px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(61, 61, 61)","color":"rgb(255, 255, 255)"},"pressed":{"backgroundColor":"rgb(61, 61, 61)","color":"rgb(255, 255, 255)"}}}},
+      {"id":"menuitem.2","count":3,"pages":[4,5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"2px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"12px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px","gap":"12px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(61, 61, 61)"},"pressed":{"backgroundColor":"rgb(61, 61, 61)"}}}}
+    ],
+    "navigation": [
+      {"id":"navigation.1","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"24px","paddingRight":"24px","paddingTop":"8px","paddingBottom":"40px"}}
+    ],
+    "page": [
+      {"id":"page.1","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"page.2","count":2,"pages":[1,2],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "panel": [
+      {"id":"panel.1","count":15,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"panel.2","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"panel.3","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(0, 0, 0)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(90deg, rgb(175, 40, 150), rgb(80, 155, 245))","paddingInline":"15px","paddingRight":"24px","paddingTop":"11px","paddingBottom":"7px","gap":"24px"}},
+      {"id":"panel.4","count":2,"pages":[5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"url()","paddingInline":"0px"}}
+    ],
+    "paragraph": [
+      {"id":"paragraph.1","count":3,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"paragraph.2","count":3,"pages":[2],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"paragraph.3","count":2,"pages":[1,4],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"12px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"paragraph.4","count":2,"pages":[2,4],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "paragraph@complementary": [
+      {"id":"paragraph@complementary.1","count":3,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"paragraph@complementary.2","count":3,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "row": [
+      {"id":"row.1","count":2,"pages":[4],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"1px rgb(42, 42, 42) bottom","boxShadow":"none","paddingInline":"16px","paddingRight":"16px","gap":"16px"}}
+    ],
+    "separator": [
+      {"id":"separator.1","count":6,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"1px rgb(41, 41, 41) top","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"separator.2","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+    ],
+    "slider": [
+      {"id":"slider.1","count":3,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(59, 59, 59)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"16px","paddingInline":"0px"},"states":{"dark":{"focus":{"ring":"1px rgb(238, 238, 238) +0px"},"disabled":{"backgroundColor":"rgb(0, 0, 0)","color":"rgb(197, 197, 197)"}}}}
+    ],
+    "tab": [
+      {"id":"tab.1","count":2,"pages":[0],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"12px","color":"rgb(101, 101, 101)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","paddingRight":"12px","paddingTop":"6px","paddingBottom":"6px","gap":"8px"},"states":{"light":{"hover":{"color":"rgb(0, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"color":"rgb(0, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"borderRadius":"4px","ring":"1px rgb(16, 16, 16) +0px"},"disabled":{"color":"rgb(0, 0, 0)","opacity":"0.3"},"selected":{"color":"rgb(0, 0, 0)","width":"70.5px"}}},"forced":["disabled"]},
+      {"id":"tab.2","count":2,"pages":[2],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"12px","color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","paddingRight":"12px","paddingTop":"6px","paddingBottom":"6px","gap":"8px"},"states":{"dark":{"hover":{"color":"rgb(255, 255, 255)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"color":"rgb(255, 255, 255)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"borderRadius":"4px","ring":"1px rgb(238, 238, 238) +0px"},"disabled":{"color":"rgb(255, 255, 255)","opacity":"0.3"},"selected":{"color":"rgb(255, 255, 255)","width":"70.5px"}}},"forced":["disabled"]}
+    ],
+    "text": [
+      {"id":"text.1","count":35,"pages":[2,5,4],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text.2","count":13,"pages":[1,2,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text.3","count":7,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"12px","paddingRight":"24px"}},
+      {"id":"text.4","count":2,"pages":[1,2],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text.5","count":2,"pages":[2,4],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"12px","paddingRight":"12px","paddingTop":"12px","paddingBottom":"12px","gap":"12px"}}
+    ],
+    "text@button": [
+      {"id":"text@button.1","count":22,"pages":[3,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@button.2","count":21,"pages":[3],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@button.3","count":11,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","gap":"8px"}},
+      {"id":"text@button.4","count":9,"pages":[2,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","gap":"8px"}},
+      {"id":"text@button.5","count":4,"pages":[0],"light":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","gap":"8px"}},
+      {"id":"text@button.6","count":3,"pages":[2],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","gap":"8px"}},
+      {"id":"text@button.7","count":3,"pages":[2],"dark":{"color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px","gap":"8px"}},
+      {"id":"text@button.8","count":3,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"12px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@checkbox": [
+      {"id":"text@checkbox.1","count":3,"pages":[5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"14px","paddingInline":"12px","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px"}}
+    ],
+    "text@complementary": [
+      {"id":"text@complementary.1","count":6,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"12px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@complementary.2","count":3,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUITitle","fontSize":"24px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@grid": [
+      {"id":"text@grid.1","count":65,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@grid.2","count":19,"pages":[4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@grid.3","count":4,"pages":[4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@link": [
+      {"id":"text@link.1","count":111,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@link.2","count":15,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@link.3","count":3,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"12px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@menuitem": [
+      {"id":"text@menuitem.1","count":28,"pages":[4,5],"dark":{"color":"rgb(234, 234, 234)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@menuitem.2","count":3,"pages":[4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@menuitemradio": [
+      {"id":"text@menuitemradio.1","count":1,"pages":[4],"dark":{"color":"rgb(234, 234, 234)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "text@navigation": [
+      {"id":"text@navigation.1","count":6,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"700","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@navigation.2","count":6,"pages":[3,4,5],"dark":{"color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
+      {"id":"text@navigation.3","count":3,"pages":[3,4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "textbox": [
+      {"id":"textbox.1","count":3,"pages":[1,2],"dark":{"backgroundColor":"rgb(18, 18, 18)","borderRadius":"4px","edge":"1px rgb(124, 124, 124)","boxShadow":"rgb(124, 124, 124) 0px 0px 0px 1px inset","height":"48px","paddingInline":"12px","color":"rgb(255, 255, 255)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"12px","paddingBottom":"12px"},"states":{"dark":{"hover":{"boxShadow":"rgb(255, 255, 255) 0px 0px 0px 1px inset","edge":"1px rgb(255, 255, 255)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"boxShadow":"rgb(255, 255, 255) 0px 0px 0px 1px inset","edge":"1px rgb(255, 255, 255)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"boxShadow":"rgb(237, 44, 63) 0px 0px 0px 1px inset","edge":"2px rgb(237, 44, 63)","ring":"none","transition":"none"},"disabled":{"backgroundColor":"rgb(41, 41, 41)","width":"434.7px","opacity":"0.3","cursor":"not-allowed"},"invalid":{"boxShadow":"rgb(243, 114, 127) 0px 0px 0px 1px inset","edge":"1px rgb(243, 114, 127)","width":"434.7px"}}}},
+      {"id":"textbox.2","count":2,"pages":[0],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"4px","edge":"1px rgb(129, 129, 129)","boxShadow":"rgb(129, 129, 129) 0px 0px 0px 1px inset","height":"48px","paddingInline":"12px","color":"rgb(0, 0, 0)","fontFamily":"SpotifyMixUI","fontSize":"16px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"12px","paddingBottom":"12px"},"states":{"light":{"hover":{"boxShadow":"rgb(0, 0, 0) 0px 0px 0px 1px inset","edge":"1px rgb(0, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"pressed":{"boxShadow":"rgb(0, 0, 0) 0px 0px 0px 1px inset","edge":"1px rgb(0, 0, 0)","transition":"0.05s cubic-bezier(0.3, 0, 0, 1)"},"focus":{"edge":"2px rgb(0, 0, 0)","ring":"none","transition":"none"},"disabled":{"backgroundColor":"rgb(222, 222, 222)","opacity":"0.3","cursor":"not-allowed"},"invalid":{"boxShadow":"rgb(201, 17, 35) 0px 0px 0px 1px inset","edge":"1px rgb(201, 17, 35)"}}}}
+    ],
+    "time": [
+      {"id":"time.1","count":15,"pages":[4,5],"dark":{"color":"rgb(179, 179, 179)","fontFamily":"SpotifyMixUI","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
+    ],
+    "tooltip": [
+      {"id":"tooltip.1","count":16,"pages":[3,4,5],"dark":{"backgroundColor":"rgb(40, 40, 40)","borderRadius":"0px","edge":"none","boxShadow":"none","color":"rgb(255, 255, 255)","fontSize":"14px","fontWeight":"400","height":"20px","paddingInline":"0px"}}
+    ]
+  }
+}

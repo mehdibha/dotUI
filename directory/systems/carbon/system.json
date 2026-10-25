@@ -1,0 +1,17 @@
+{
+  "slug": "carbon",
+  "name": "IBM Carbon",
+  "org": "IBM",
+  "type": "corporate-design-system",
+  "upstream": [],
+  "sources": {
+    "docs": "https://carbondesignsystem.com",
+    "repo": "https://github.com/carbon-design-system/carbon",
+    "site": "https://react.carbondesignsystem.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-08-29",
+  "updatedAt": "2026-08-29",
+  "reviewedAt": "2026-08-29"
+}

@@ -167,7 +167,7 @@ const ChapterStrip = memo(function ChapterStrip({
             id={chapter.id}
             onPress={() => onChange(chapter.id)}
             className={cn(
-              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 focus-reset hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
+              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 outline-none hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
               open ? "selected:tint-10" : "selected:tint-5",
             )}
           >
@@ -433,8 +433,7 @@ export function PanelPage({
                 />
               }
               page={
-                open &&
-                page && (
+                open && page ? (
                   <>
                     <Button
                       ref={back}
@@ -449,21 +448,25 @@ export function PanelPage({
                         setPageId(behind?.id ?? null)
                         setHash(behind?.id ?? null)
                       }}
-                      className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
+                      // Slides in with the first page, then stays put.
+                      className={cn(
+                        "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
+                        drill && DRILL.in,
+                      )}
                     >
                       <ChevronLeftIcon />
                     </Button>
                     <span
                       key={page.id}
                       className={cn(
-                        "min-w-0 flex-1 truncate text-[13px] font-medium",
+                        "ml-2 min-w-0 truncate text-sm font-medium",
                         drill && DRILL[drill],
                       )}
                     >
                       {page.label}
                     </span>
                   </>
-                )
+                ) : undefined
               }
               scrollRef={scroller}
               className={

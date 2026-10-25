@@ -9,6 +9,10 @@ export default defineConfig({
         replacement: `${path.resolve(import.meta.dirname, "www/.source")}/`,
       },
       {
+        find: /^~\//,
+        replacement: `${path.resolve(import.meta.dirname, "directory/src")}/`,
+      },
+      {
         find: /^@\//,
         replacement: `${path.resolve(import.meta.dirname, "www/src")}/`,
       },

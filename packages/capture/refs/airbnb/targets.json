@@ -1,0 +1,471 @@
+{
+  "https://www.airbnb.com/": {
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "page": {
+        "selector": "body"
+      },
+      "tab": {
+        "selector": "a[role=tab][aria-selected=false] span[data-tab-label]",
+        "skip": ["borderRadius", "height", "paddingInline"]
+      },
+      "tab.selected": {
+        "selector": "a[role=tab][aria-selected=true] span[data-tab-label]",
+        "skip": ["borderRadius", "height", "paddingInline"]
+      },
+      "button.quiet": {
+        "text": "Become a host",
+        "skip": ["borderRadius"]
+      },
+      "button.icon": {
+        "selector": "button[data-testid=cypress-headernav-profile]"
+      },
+      "menu": {
+        "selector": "[data-testid=guest-header-dropdownmenu]",
+        "surface": true,
+        "before": [
+          {
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "menu.item": {
+        "within": "[data-testid=guest-header-dropdownmenu]",
+        "text": "Help Center",
+        "before": [
+          {
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "input": {
+        "selector": "[role=dialog] div:has(> label input)",
+        "ink": "input",
+        "before": [
+          {
+            "focus": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "press": "Enter"
+          }
+        ],
+        "skip": ["paddingInline", "boxShadow"]
+      },
+      "input.focus": {
+        "selector": "[role=dialog] div:has(> label input)",
+        "before": [
+          {
+            "focus": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "press": "Enter"
+          },
+          {
+            "focus": "[role=dialog] input"
+          }
+        ]
+      },
+      "segmented": {
+        "selector": "div:has(> [role=tablist] > [data-testid=expanded-searchbar-dates-calendar-tab])",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
+      },
+      "segmented.item": {
+        "selector": "[data-testid=expanded-searchbar-dates-flexible-tab]",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
+      },
+      "segmented.selected": {
+        "selector": "[data-testid=expanded-searchbar-dates-calendar-tab]",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          }
+        ]
+      }
+    },
+    "blocks": {
+      "ai-search-banner": {
+        "selector": "div:has(> div > span#unified-search-microphone-prompt)"
+      },
+      "site-header": {
+        "selector": "[data-testid^=shimmer-css-variable-index]:has(header)"
+      },
+      "search-bar": {
+        "selector": "[data-testid=big-search]"
+      },
+      "listing-row": {
+        "selector": "[data-testid=content-scroller]"
+      },
+      "listing-card": {
+        "selector": "[data-testid=card-container]"
+      },
+      "profile-menu": {
+        "selector": "#guest-header-dropdownmenu",
+        "before": [
+          {
+            "focus": "button[data-testid=cypress-headernav-profile]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "login-dialog": {
+        "selector": "[role=dialog][aria-labelledby=auth-modal-title]",
+        "before": [
+          {
+            "focus": "button[aria-label='Log in or sign up']"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "date-picker": {
+        "selector": "[data-testid=big-search] > div > div:has(#tabs)",
+        "before": [
+          {
+            "click": "[role=search] [role=button]"
+          },
+          {
+            "wait": "[data-testid=expanded-searchbar-dates-calendar-tab]"
+          }
+        ]
+      },
+      "footer": {
+        "selector": "footer"
+      }
+    }
+  },
+  "https://www.airbnb.com/s/Paris/homes": {
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "pagination.current": {
+        "selector": "nav[aria-label='Search results pagination'] [aria-current=page]"
+      },
+      "button.primary": {
+        "within": "[role=dialog][aria-label=Filters]",
+        "selector": "a",
+        "text": "Show 1,000+ places",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "dialog": {
+        "selector": "[role=dialog][aria-label=Filters]",
+        "surface": true,
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ],
+        "skip": ["edge"]
+      },
+      "toggle": {
+        "selector": "[role=dialog][aria-label=Filters] #filter-item-amenities-4",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "toggle.on": {
+        "selector": "[role=dialog][aria-label=Filters] #filter-item-amenities-4[aria-pressed=true]",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          },
+          {
+            "click": "#filter-item-amenities-4"
+          }
+        ]
+      },
+      "badge": {
+        "text": "Free cancellation"
+      }
+    },
+    "blocks": {
+      "search-header": {
+        "selector": "header:has(#filter-menu-chip-group) > div[data-pageslot=true]:first-child"
+      },
+      "filter-bar": {
+        "selector": "#filter-menu-chip-group"
+      },
+      "result-card": {
+        "selector": "[data-testid=card-container]"
+      },
+      "featured-hotels": {
+        "selector": "div:has(> div > div > div > div > h2 + p)"
+      },
+      "price-details": {
+        "selector": "[role=dialog][aria-label='Price details']",
+        "before": [
+          {
+            "focus": "[data-testid=price-availability-row] button"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "map": {
+        "selector": "[data-testid=universal-map-controlled]"
+      },
+      "filters-dialog": {
+        "selector": "[role=dialog][aria-label=Filters]",
+        "before": [
+          {
+            "focus": "button[aria-label=Filters]"
+          },
+          {
+            "press": "Enter"
+          }
+        ]
+      },
+      "pagination": {
+        "selector": "nav[aria-label='Search results pagination']"
+      }
+    }
+  },
+  "https://www.airbnb.com/rooms/47803806": {
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "button.secondary": {
+        "text": "Show all 50 amenities",
+        "skip": ["height", "paddingInline", "fontSize"]
+      },
+      "button.focus": {
+        "text": "Show all 50 amenities",
+        "focus": true
+      },
+      "card": {
+        "selector": "aside:has([data-testid=book-it-default])",
+        "skip": ["backgroundColor"]
+      },
+      "calendar.day": {
+        "selector": "[data-testid^=calendar-day-][data-is-day-blocked=false]"
+      },
+      "heading.3": {
+        "selector": "main h1",
+        "skip": ["fontSize"]
+      },
+      "heading.4": {
+        "text": "What this place offers",
+        "skip": ["fontSize"]
+      },
+      "text": {
+        "selector": "[data-section-id=DESCRIPTION_DEFAULT] span > span"
+      },
+      "text.muted": {
+        "text": "Add your travel dates for exact pricing"
+      }
+    },
+    "blocks": {
+      "listing-title": {
+        "selector": "[data-section-id=TITLE_DEFAULT]"
+      },
+      "photo-grid": {
+        "selector": "[data-section-id=HERO_DEFAULT]"
+      },
+      "guest-favorite-strip": {
+        "selector": "[data-section-id=GUEST_FAVORITE_BANNER] button"
+      },
+      "highlights": {
+        "selector": "[data-section-id=HIGHLIGHTS_DEFAULT]"
+      },
+      "booking-card": {
+        "selector": "aside[aria-label='Booking Information']"
+      },
+      "sleep-cards": {
+        "selector": "[data-section-id=SLEEPING_ARRANGEMENT_DEFAULT]"
+      },
+      "amenities": {
+        "selector": "[data-section-id=AMENITIES_DEFAULT]"
+      },
+      "inline-calendar": {
+        "selector": "[data-testid=inline-availability-calendar]"
+      },
+      "rating-summary": {
+        "selector": "[data-section-id=REVIEWS_DEFAULT] section > div:first-child"
+      },
+      "review": {
+        "selector": "[data-section-id=REVIEWS_DEFAULT] [role=listitem]",
+        "redact": true
+      },
+      "host-profile": {
+        "selector": "[data-section-id=MEET_YOUR_HOST]",
+        "redact": true
+      },
+      "things-to-know": {
+        "selector": "[data-section-id=POLICIES_DEFAULT]"
+      }
+    }
+  },
+  "https://www.airbnb.com/host/homes": {
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "link": {
+        "selector": "a",
+        "text": "Learn more"
+      }
+    },
+    "blocks": {
+      "earnings-hero": {
+        "selector": "[data-testid=wmpw-component]"
+      },
+      "hosting-banner": {
+        "selector": "[data-section-name=hero-banner] [data-element-name=section-content-container] > div"
+      },
+      "value-props": {
+        "selector": "[data-section-name=body-items]"
+      },
+      "cohost-cards": {
+        "selector": "div:has(> div > div > div > div > div > [aria-label$='star guest rating'])",
+        "redact": true
+      },
+      "aircover-list": {
+        "selector": "[data-section-name=table]"
+      },
+      "faq": {
+        "selector": "[data-section-name=accordion]"
+      }
+    }
+  },
+  "https://www.airbnb.com/account-settings": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "heading.1": {
+        "selector": "h1 > span",
+        "skip": ["fontSize"]
+      },
+      "badge.accent": {
+        "selector": "a[href='/account-settings/preferences'] span > div"
+      },
+      "nav.item": {
+        "selector": "a[href='/account-settings/login-and-security'] > div > div",
+        "skip": ["borderRadius"]
+      },
+      "nav.item.active": {
+        "selector": "div:has(> a[aria-current=page][href^='/account-settings'])",
+        "ink": "a > div > div",
+        "skip": ["paddingInline"]
+      }
+    }
+  },
+  "https://www.airbnb.com/account-settings/privacy-and-sharing": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "steps": [
+      {
+        "press": "Escape"
+      }
+    ],
+    "parts": {
+      "heading.2": {
+        "selector": "h3",
+        "skip": ["fontSize"]
+      },
+      "switch.on": {
+        "selector": "[role=switch][aria-checked=true]"
+      },
+      "radio": {
+        "selector": "[role=dialog] input[type=radio]:not(:checked)",
+        "before": [
+          {
+            "click": "button::-p-text(Choose who can see your profile)"
+          },
+          {
+            "wait": "[role=dialog] input[type=radio]"
+          }
+        ]
+      },
+      "radio.checked": {
+        "selector": "[role=dialog] input[type=radio]:checked",
+        "before": [
+          {
+            "click": "button::-p-text(Choose who can see your profile)"
+          },
+          {
+            "wait": "[role=dialog] input[type=radio]"
+          }
+        ],
+        "skip": ["edge"]
+      }
+    }
+  },
+  "https://www.airbnb.com/account-settings/notifications": {
+    "signedIn": true,
+    "mode": "light",
+    "settle": 4000,
+    "parts": {
+      "switch.off": {
+        "selector": "[role=dialog] [role=switch][aria-checked=false]",
+        "before": [
+          {
+            "click": "button[aria-label='Edit Recognition and achievements']"
+          },
+          {
+            "wait": "[role=dialog] [role=switch]"
+          }
+        ]
+      },
+      "checkbox": {
+        "selector": "span:has(> input[type=checkbox]) > span"
+      }
+    }
+  }
+}

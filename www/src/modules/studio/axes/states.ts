@@ -1,37 +1,32 @@
 /* States — how every control shows keyboard focus, field focus, disabled and
-   invalid, the cursor over it, and whether its text selects: the
-   `--focus-*`, `--invalid-*`, `--disabled-*`, `--cursor-*` and
-   `--user-select-ui` tokens in base.css that the focus-ring, focus-input,
-   invalid-ring, invalid-fill, cursor-* and select-ui utilities read. The focus ink is a
-   leaf of Color's Primary. */
+   invalid, the cursor over it, and whether its text selects. Focus writes the
+   `--studio-focus-*` vars (roles.css) that base.css's focus-ring and
+   focus-input read, which the publisher bakes into plain outlines; the rest
+   are the `--invalid-*`, `--disabled-*`, `--cursor-*` and `--user-select-ui`
+   tokens. The focus ink is a leaf of Color's Primary, or a color of its own. */
 
 import type { TokenOverrides } from "@/registry/theme"
 
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { oneOf, range } from "./schema"
-import { strokePx } from "./shape"
+import { auto, COLOR, oneOf, range } from "./schema"
 
-/** Ring: a gap, then the ring. Halo: flush and translucent. Inset: inside
- *  the edge over a 1px bg line (outside where the control's own part would
- *  cover it: checks, thumbs, tabs, links). */
-export const FOCUS_STYLE_VALUES = ["ring", "halo", "inset"] as const
+/** Ring: a gap, then the ring. Inset: inside the edge, a filled control
+ *  drawing an on-color line inside it (outside where the control's own part
+ *  would cover it: checks, thumbs, tabs, links). Halo: flush, at half
+ *  strength. */
+export const FOCUS_STYLE_VALUES = ["ring", "inset", "halo"] as const
 
-export const STRENGTH_VALUES = ["solid", "soft", "faint"] as const
-
-const STRENGTH_PCT: Record<string, number> = { soft: 50, faint: 30 }
-
-/** How a field shows focus: Ring reuses every ring token; Halo swaps the
- *  edge and adds a muted halo; Border swaps the edge alone. Underline and
- *  Indicator draw each in their own shape. */
-export const FOCUS_INPUT_STYLE_VALUES = ["ring", "halo", "border"] as const
-
-/** Thin: a 2px halo or the edge recolored. Thick: a 4px halo or a 2px edge. */
-export const FOCUS_INPUT_WEIGHT_VALUES = ["thin", "thick"] as const
-
-const HALO_PX: Record<string, number> = { thin: 2, thick: 4 }
-const BORDER_PX: Record<string, number> = { thin: 1, thick: 2 }
+/** How a field shows focus: Edge recolors it, Thick edge thickens it, Halo
+ *  adds a muted halo around it, Ring wears the control ring. Underline
+ *  and Indicator draw in their own shape. */
+export const FOCUS_INPUT_STYLE_VALUES = [
+  "edge",
+  "thick-edge",
+  "halo",
+  "ring",
+] as const
 
 /** Edge: the edge turns danger. Halo: a danger halo at rest too. Tint: a
  *  danger wash over the fill too. */
@@ -40,15 +35,6 @@ export const INVALID_VALUES = ["edge", "halo", "tint"] as const
 /* Light 6% (Airbnb ~5, Polaris ~9), dark 10% (Supabase). */
 export const INVALID_FILL =
   "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
-
-/* Neutral field ink (Geist): the neutral ring pair's steps. On a Strong edge,
-   which is that same 700 step, focus takes the text ink (Airbnb #222,
-   Spotify black / white). */
-export const NEUTRAL_FIELD_INK = {
-  edge: "var(--neutral-700)",
-  halo: "var(--neutral-300)",
-  strong: "var(--neutral-950)",
-}
 
 /** Solid: one grey for every variant. Fade: the control at 50%. */
 export const DISABLED_VALUES = ["solid", "fade"] as const
@@ -61,14 +47,8 @@ export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
 /** Whether text on controls and their labels selects. Content always does. */
 export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
 
-/** Auto pairs strength and width with the ring recipe (shadcn nova: a 3px
- *  halo at 50%). */
-export const AUTO_STRENGTH: Record<string, string> = {
-  ring: "solid",
-  halo: "soft",
-  inset: "solid",
-}
-export const AUTO_WIDTH: Record<string, number> = { ring: 2, halo: 3, inset: 2 }
+/** Primary's two sources, or the custom color. */
+export const FOCUS_COLOR_VALUES = [...SOURCE_VALUES, "custom"] as const
 
 const px = (n: number) => `${n}px`
 
@@ -101,12 +81,12 @@ export const chapter = defineChapter({
   id: "states",
   defaults: {
     focusColor: "accent",
+    focusCustomColor: "",
     focusStyle: "ring",
-    focusStrength: "auto",
-    focusWidth: "auto" as number | "auto",
+    focusWidth: 2,
+    focusRingGap: 2,
     focusInputStyle: "halo",
-    focusInputWeight: "thin",
-    focusInputColor: "same" as "same" | "neutral" | "accent",
+    focusFieldWidth: 2,
     invalidStyle: "edge",
     disabledTreatment: "solid",
     cursorControls: "pointer",
@@ -114,13 +94,13 @@ export const chapter = defineChapter({
     selectionUiText: "none",
   },
   schema: {
-    focusColor: oneOf(SOURCE_VALUES),
+    focusColor: oneOf(FOCUS_COLOR_VALUES),
+    focusCustomColor: auto(COLOR),
     focusStyle: oneOf(FOCUS_STYLE_VALUES),
-    focusStrength: oneOf(STRENGTH_VALUES),
     focusWidth: range({ min: 1, max: 4, step: 1 }),
+    focusRingGap: range({ min: 0, max: 4, step: 1 }),
     focusInputStyle: oneOf(FOCUS_INPUT_STYLE_VALUES),
-    focusInputWeight: oneOf(FOCUS_INPUT_WEIGHT_VALUES),
-    focusInputColor: oneOf(SOURCE_VALUES),
+    focusFieldWidth: range({ min: 1, max: 4, step: 1 }),
     invalidStyle: oneOf(INVALID_VALUES),
     disabledTreatment: oneOf(DISABLED_VALUES),
     cursorControls: oneOf(CURSOR_CONTROL_VALUES),
@@ -131,61 +111,54 @@ export const chapter = defineChapter({
   resolve(state: Effective): Resolved {
     const tokens: Record<string, string> = {}
     const width = state.focusWidth
+    const fieldWidth = state.focusFieldWidth
 
-    // The control ring.
-    if (width !== 2) tokens["--focus-ring-width"] = px(width)
-    const pct = STRENGTH_PCT[state.focusStrength]
-    if (pct)
-      tokens["--focus-ring-color"] = mix("var(--color-border-focus)", pct)
+    // The control ring. Inset draws it inside the edge, where a filled
+    // control adds an on-color line so it doesn't sink into the fill.
+    if (width !== 2) tokens["--studio-focus-width"] = px(width)
+    if (state.focusStyle === "ring" && state.focusRingGap !== 2) {
+      tokens["--studio-focus-offset"] = px(state.focusRingGap)
+      tokens["--studio-focus-outside-offset"] = px(state.focusRingGap)
+    }
     if (state.focusStyle === "halo") {
-      tokens["--focus-ring-offset"] = "0px"
-      tokens["--focus-ring-outside-offset"] = "0px"
+      tokens["--studio-focus-color"] = mix("var(--color-border-focus)", 50)
+      tokens["--studio-focus-offset"] = "0px"
+      tokens["--studio-focus-outside-offset"] = "0px"
     }
     if (state.focusStyle === "inset") {
-      tokens["--focus-ring-inset"] = "inset"
-      tokens["--focus-ring-offset"] = "0px"
-      tokens["--focus-ring-inner"] = "calc(var(--focus-ring-width) + 1px)"
+      tokens["--studio-focus-offset"] = px(-width)
+      tokens["--studio-focus-inner"] = px(width + 1)
     }
+    // Rows and cells keep it inside, where an outside ring would clip.
+    if (width !== 2) tokens["--studio-focus-inside-offset"] = px(-width)
 
-    // The field layer.
-    const weight = state.focusInputWeight
+    // The field layer around its recolored edge (a 2px halo by default).
     switch (state.focusInputStyle) {
+      case "edge":
+        tokens["--studio-field-focus-width"] = "0px"
+        break
       case "halo":
-        if (weight !== "thin")
-          tokens["--focus-input-width"] = px(HALO_PX[weight]!)
+        if (fieldWidth !== 2)
+          tokens["--studio-field-focus-width"] = px(fieldWidth)
+        break
+      case "thick-edge":
+        if (fieldWidth !== 2)
+          tokens["--studio-field-focus-width"] = px(fieldWidth)
+        tokens["--studio-field-focus-offset"] = px(-fieldWidth)
+        tokens["--studio-field-focus-color"] = "var(--color-border-focus)"
+        tokens["--studio-field-invalid-color"] = "var(--color-fg-danger)"
         break
       case "ring":
-        tokens["--focus-input-width"] = "var(--focus-ring-width)"
-        tokens["--focus-input-offset"] = "var(--focus-ring-offset)"
-        tokens["--focus-input-color"] = "var(--focus-ring-color)"
-        if (state.focusStyle === "inset")
-          tokens["--focus-input-inset"] = "inset"
-        break
-      case "border":
-        // The edge recolors; Thick adds what the stroke doesn't draw, inside.
-        tokens["--focus-input-width"] = "0px"
-        tokens["--focus-input-color"] = "var(--focus-input-border)"
-        tokens["--focus-invalid-color"] = "var(--color-fg-danger)"
-        tokens["--focus-input-edge"] = px(
-          Math.max(0, BORDER_PX[weight]! - strokePx(state.controlStroke)),
-        )
+        tokens["--studio-field-focus-width"] = "var(--studio-focus-width)"
+        tokens["--studio-field-focus-offset"] = "var(--studio-focus-offset)"
+        tokens["--studio-field-focus-color"] = "var(--studio-focus-color)"
         break
     }
-
-    // A neutral field ink under an accent ring (Geist), on the steps the
-    // neutral ring pair uses.
-    if (state.focusInputColor === "neutral" && state.focusColor !== "neutral") {
-      tokens["--focus-input-border"] = NEUTRAL_FIELD_INK.edge
-      if (state.focusInputStyle === "halo")
-        tokens["--focus-input-color"] = NEUTRAL_FIELD_INK.halo
-    }
-    if (state.focusInputColor === "neutral" && state.controlEdge === "strong")
-      tokens["--focus-input-border"] = NEUTRAL_FIELD_INK.strong
 
     // Invalid: the halo is as wide as the field's own focus halo.
     if (state.invalidStyle === "halo")
       tokens["--invalid-ring-width"] =
-        state.focusInputStyle === "halo" ? px(HALO_PX[weight]!) : px(width)
+        state.focusInputStyle === "halo" ? px(fieldWidth) : px(width)
     if (state.invalidStyle === "tint") tokens["--invalid-fill"] = INVALID_FILL
 
     if (state.disabledTreatment === "fade") {
@@ -200,48 +173,56 @@ export const chapter = defineChapter({
     if (state.selectionUiText === "selectable")
       tokens["--user-select-ui"] = "auto"
 
+    // A custom ring is that color in both modes; its muted pair, the field
+    // halo, is the same color see-through. Unset, it starts on the brand.
+    if (state.focusColor === "custom") {
+      const color = state.focusCustomColor || state.brand
+      tokens["--color-border-focus"] = color
+      tokens["--color-border-focus-muted"] = mix(color, 40)
+    }
+
     if (state.focusColor !== "neutral") return { tokens }
     const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
     return { tokens, color: { overrides } }
   },
-  follows: {
-    focusStrength: [
-      { kind: "auto", id: "auto", from: "focusStyle", table: AUTO_STRENGTH },
-    ],
-    focusWidth: [
-      { kind: "auto", id: "auto", from: "focusStyle", table: AUTO_WIDTH },
-    ],
-    focusInputColor: [{ kind: "same", id: "same", from: "focusColor" }],
-  },
   rules: [
-    // A field on the ring reuses the ring's width.
+    // Only a ring stands off its control.
     {
-      id: "states/ring-hides-field-weight",
-      target: "focusInputWeight",
-      when: { key: "focusInputStyle", in: ["ring"] },
-      effect: { kind: "hide", value: "thin" },
-      cause: "focusInputStyle",
+      id: "states/gap-only-ring",
+      target: "focusRingGap",
+      when: { key: "focusStyle", in: ["inset", "halo"] },
+      effect: { kind: "hide" },
+      cause: "focusStyle",
     },
-    // ...and its ink.
+    // Edge draws no layer, Ring wears the controls' width, an underline
+    // draws its own rule.
     {
-      id: "states/ring-hides-field-ink",
-      target: "focusInputColor",
+      id: "states/field-width-needs-layer",
+      target: "focusFieldWidth",
       when: {
-        all: [
-          { key: "focusInputStyle", in: ["ring"] },
-          { key: "focusColor", notIn: ["neutral"] },
+        any: [
+          { key: "focusInputStyle", in: ["edge", "ring"] },
+          { key: "inputStyle", in: ["underline"] },
         ],
       },
       effect: { kind: "hide" },
       cause: "focusInputStyle",
     },
-    // A neutral ring already paints fields neutral.
+    // An underline shows focus one way: its rule recolors and doubles.
     {
-      id: "states/neutral-ring-owns-field-ink",
-      target: "focusInputColor",
-      when: { key: "focusColor", in: ["neutral"] },
-      effect: { kind: "pin", value: "neutral" },
-      cause: "focusColor",
+      id: "states/underline-owns-field-focus",
+      target: "focusInputStyle",
+      when: { key: "inputStyle", in: ["underline"] },
+      effect: { kind: "pin", value: "thick-edge" },
+      cause: "inputStyle",
+    },
+    // An indicator's rule doubles under any edge focus.
+    {
+      id: "states/indicator-rule-is-thick",
+      target: "focusInputStyle",
+      when: { key: "inputStyle", in: ["indicator"] },
+      effect: { kind: "exclude", options: ["thick-edge"], fallback: "edge" },
+      cause: "inputStyle",
     },
   ],
 })

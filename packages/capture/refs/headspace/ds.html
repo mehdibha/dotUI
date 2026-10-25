@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Headspace harness</title>
+    <!-- The Headspace web app's design system as my.headspace.com ships it:
+         Panda semantic tokens (:root and .dark) and component recipes
+         (.button--*, .textField, .select, .tabGroup, …); see sources.md.
+         ds.html#light and ds.html#dark pick the theme. -->
+    <link
+      rel="stylesheet"
+      href="https://my.headspace.com/static/js/index-D4zDi3h-.css"
+    />
+    <script>
+      document.documentElement.classList.toggle(
+        "dark",
+        location.hash === "#dark",
+      )
+    </script>
+    <style>
+      body {
+        margin: 0;
+        padding: 32px 40px;
+        background: var(--colors-background);
+        color: var(--colors-foreground);
+        font-family: var(--fonts-headspace-apercu);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px 40px;
+        align-content: start;
+      }
+      h6 {
+        all: unset;
+        display: block;
+        font:
+          11px/1.2 ui-monospace,
+          monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--colors-foreground-weaker);
+        margin-bottom: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      /* The hover plates behind checkbox and radio sit at opacity 0 until
+         hover; hidden here so the probe reads the box itself. */
+      .checkbox [data-part="box"]::before,
+      .radio [data-part="button"]::before {
+        display: none;
+      }
+      /* Overlays sit in the flow here instead of their portal. */
+      .static {
+        position: relative !important;
+        inset: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h6>button · mLarge</h6>
+      <div class="row">
+        <button
+          class="button button--variant_primary button--size_mLarge"
+          data-ref="button.primary"
+        >
+          Get started
+        </button>
+        <button
+          class="button button--variant_secondary button--size_mLarge"
+          data-ref="button.secondary"
+        >
+          Play sample
+        </button>
+        <button
+          class="button button--variant_ghost button--size_mLarge"
+          data-ref="button.quiet"
+        >
+          Skip
+        </button>
+        <button
+          class="button button--variant_secondary button--size_mLarge button--iconOnly_true"
+          data-icon-only
+          aria-label="More"
+          data-ref="button.icon"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <circle cx="5" cy="12" r="2" />
+            <circle cx="12" cy="12" r="2" />
+            <circle cx="19" cy="12" r="2" />
+          </svg>
+        </button>
+        <button
+          class="button button--variant_primary button--size_mLarge"
+          data-ref="button.focus"
+        >
+          Focused
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h6>selection chip · enabled / selected</h6>
+      <div class="row">
+        <button
+          class="selectionChip selectionChip--state_enabled"
+          data-ref="toggle"
+        >
+          Sleep
+        </button>
+        <button
+          class="selectionChip selectionChip--state_selected"
+          data-selected
+          data-ref="toggle.on"
+        >
+          Meditate
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h6>segmented control · high, large</h6>
+      <div
+        class="segmentedControl segmentedControl--contrast_high segmentedControl--size_large"
+        data-ref="segmented"
+      >
+        <button data-part="segment" data-pressed data-ref="segmented.selected">
+          Day
+        </button>
+        <button data-part="segment" data-ref="segmented.item">Week</button>
+        <button data-part="segment">Month</button>
+      </div>
+    </section>
+
+    <section>
+      <h6>text field · rest / focus</h6>
+      <div class="col">
+        <div class="textField">
+          <div data-part="field" data-ref="input">
+            <div data-part="inner">
+              <input id="email" placeholder=" " />
+              <label for="email">Email address</label>
+            </div>
+          </div>
+        </div>
+        <div class="textField">
+          <div data-part="field" data-ref="input.focus">
+            <div data-part="inner">
+              <input id="name" placeholder=" " />
+              <label for="name">First name</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>select · trigger</h6>
+      <div class="select">
+        <button data-part="field" data-placeholder data-ref="select.trigger">
+          <span data-part="inner">
+            <span data-part="label">Reminder time</span>
+          </span>
+          <span data-part="icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 11 3 6h10z" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h6>menu · select popup</h6>
+      <div class="select">
+        <div data-part="popup" class="static" data-ref="menu">
+          <div data-part="option" data-ref="menu.item">Morning</div>
+          <div data-part="option" data-highlighted>Afternoon</div>
+          <div data-part="option">Evening</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>checkbox · radio · toggle</h6>
+      <div class="col">
+        <label class="checkbox">
+          <span data-part="box" data-ref="checkbox"></span>
+          <span data-part="label">Daily reminder</span>
+        </label>
+        <label class="checkbox">
+          <span data-part="box" data-checked data-ref="checkbox.checked">
+            <span data-part="indicator">✓</span>
+          </span>
+          <span data-part="label">Weekly recap</span>
+        </label>
+        <label class="radio">
+          <span data-part="button" data-ref="radio"></span>
+          <span data-part="label">Light</span>
+        </label>
+        <label class="radio">
+          <span data-part="button" data-checked data-ref="radio.checked"></span>
+          <span data-part="label">Dark</span>
+        </label>
+        <div class="row">
+          <span class="toggle" data-ref="switch.off">
+            <span data-part="thumb"></span>
+          </span>
+          <span class="toggle" data-checked data-ref="switch.on">
+            <span data-part="thumb" data-checked></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>tabs · large</h6>
+      <div class="tabGroup tabGroup--size_large">
+        <div data-part="list">
+          <button
+            class="tab tab--size_large"
+            data-active
+            data-ref="tab.selected"
+          >
+            Explore
+          </button>
+          <button class="tab tab--size_large" data-ref="tab">Saved</button>
+          <button class="tab tab--size_large">Downloads</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>link · badge</h6>
+      <div class="col">
+        <p class="text text--variant_bodyMedium text--color_foreground">
+          Read our
+          <a class="link link--size_medium" data-ref="link">privacy policy</a>.
+        </p>
+        <div class="row">
+          <span
+            class="badge badge--size_large badge--variant_default"
+            data-ref="badge"
+          >
+            New
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h6>text</h6>
+      <div class="col">
+        <span
+          class="text text--variant_headingLarge3X text--color_foreground"
+          data-ref="heading.1"
+        >
+          Be kind to your mind
+        </span>
+        <span
+          class="text text--variant_headingLarge2X text--color_foreground"
+          data-ref="heading.2"
+        >
+          Sleep better
+        </span>
+        <span
+          class="text text--variant_headingLarge text--color_foreground"
+          data-ref="heading.3"
+        >
+          Today's meditation
+        </span>
+        <span
+          class="text text--variant_headingMedium text--color_foreground"
+          data-ref="heading.4"
+        >
+          Your progress
+        </span>
+        <span
+          class="text text--variant_bodyMedium text--color_foreground"
+          data-ref="text"
+        >
+          Take a breath and settle in.
+        </span>
+        <span
+          class="text text--variant_bodyMedium text--color_foregroundWeak"
+          data-ref="text.muted"
+        >
+          10 minutes · Guided
+        </span>
+      </div>
+    </section>
+
+    <section>
+      <h6>dialog · small</h6>
+      <div class="dialog dialog--size_small static" data-ref="dialog">
+        <div data-part="content">
+          <span class="text text--variant_headingSmall text--color_foreground">
+            Turn on reminders?
+          </span>
+          <span
+            class="text text--variant_bodyMedium text--color_foregroundWeak"
+          >
+            We'll nudge you at the time you pick.
+          </span>
+          <button class="button button--variant_primary button--size_mLarge">
+            Turn on
+          </button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

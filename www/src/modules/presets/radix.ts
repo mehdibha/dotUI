@@ -25,7 +25,8 @@ export const radix = definePreset({
     // Themes ships the platform stacks (Menlo/Consolas for code).
     bodyFont: "System",
     monoFont: "System Mono",
-    // Headings 700 in the body family.
+    // Headings 700 in the body family. Stand-in: Radix sets 35/28/24/20px with
+    // -1% to -0.5% tracking; Bold gives 36/30/24/20px, untracked.
     titleStyle: "bold",
 
     // Icons
@@ -39,10 +40,11 @@ export const radix = definePreset({
     roleItem: "sm",
 
     // States
-    // Buttons: a 2px indigo-8 #8da4ef outline; fields: a 2px edge in place.
-    focusStrength: "soft",
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    // A 2px outline 2px out, on accent step 8 (#8da4ef / #435db1). Stand-in:
+    // the full accent.
+    // Fields: the same outline set 1px in, over the edge; a thick edge draws
+    // that 2px line in the accent.
+    focusInputStyle: "thick-edge",
     cursorControls: "default",
 
     // Motion
@@ -50,7 +52,8 @@ export const radix = definePreset({
     motion: "smooth",
 
     // Buttons
-    // The docs dialogs pair a gray-a3 soft Cancel with the solid primary.
+    // The docs dialogs pair a gray-a3 soft Cancel with the solid primary. Its
+    // label is gray-a11 (#5a5f68 / #b7bcc1); Soft keeps body ink.
     buttonSecondary: "soft",
     // A page-colored chip on a gray-a3 track, with a gray-a4 ring.
     segmentedSelected: "ring",
@@ -62,7 +65,8 @@ export const radix = definePreset({
     sliderTrack: "medium",
 
     // Inputs
-    // Surface fields: white in light, recessed in dark (#121314 in #18191b).
+    // Surface fields: white in light, black 25% in dark (#0d0d0e on the page).
+    // Stand-in: Inset matches both and adds a faint inner shadow Radix lacks.
     inputStyle: "inset",
     // Labels are bold 700; Semibold is the heaviest field label.
     fieldLabel: "semibold",
@@ -72,19 +76,21 @@ export const radix = definePreset({
     // A solid indigo row with white text, checks in a leading column.
     menuHighlight: "accent",
     menuIndicator: "check-start",
-    // 32px rows, the control height.
+    // 32px rows, the control height. Radix insets labels 12px, ours 6px.
     menuRows: "match",
     mobilePickers: "anchored",
 
     // Dialogs
-    // A plain 40% black scrim, no blur; a 5px rise with a .97 scale.
+    // A plain black scrim, no blur: 40% in light, 60% in dark (Medium is 40%
+    // in both). Entrance: a 5px rise with a .97 scale.
     dialogBackdrop: "scrim",
     dialogEntrance: "rise",
     // No built-in X; Faint is the quietest close.
     dialogClose: "faint",
 
     // Navigation
-    // A full-width 2px indigo line; labels 400 → 500 when active.
+    // A full-width 2px indigo line; labels 400 → 500 when active. Radix tabs
+    // stand 40px tall, ours 31px.
     tabStyle: "line",
     tabsColor: "accent",
     navWeight: "regular-medium",
@@ -107,6 +113,9 @@ export const radix = definePreset({
     // 6px rounded squares in soft accent.
     avatarShape: "rounded",
     avatarFallback: "accent",
+    // Keycaps at 0.35em corners (4px at 12px) in full ink, raised by inset
+    // shadows on a 0.6px ring. Stand-in: Keycap draws a 2px bottom edge in
+    // muted ink, at the small control rung (2px here).
     kbdTreatment: "keycap",
   },
 })

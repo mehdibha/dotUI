@@ -1,0 +1,239 @@
+{
+  "gaps": [
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "Per level: Notion's page title at 40/700 over heading blocks at 30/600 and 24/600",
+      "standin": "Notion's h1 shares the headings' 600 with `compact`",
+      "source": "ledger"
+    },
+    {
+      "look": "type.caption",
+      "title": "Caption text one rung below control text",
+      "note": "Notion select tags and tooltips at 12/400 under 14px controls at 28px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.button-quiet",
+      "title": "Quiet buttons at regular weight (400) while solid and soft buttons stay 500",
+      "note": "Notion's top-bar quiet buttons (Search) at 28px, 14/400, beside the 14/500 primary",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Notion the page title at 40px (its 30px and 24px heading blocks already match)",
+      "standin": "Notion's `compact` sets h1 at 36px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "Notion's take the text's weight (400 in its Habit tracker template) and its ink at 70% opacity, underlined",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "Notion 30×18, 14px knob, no knob shadow",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.calendar-today",
+      "title": "Today marker in a color of its own",
+      "note": "Notion a filled 24px circle in its red #e56458 behind white text (database calendar view), while selection and checks use the blue",
+      "standin": "the today marker is a neutral tint (Notion oklch 0.96 / 0.28; ΔE 0.34 / 0.42)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "Pill tabs: Notion 12px on 32px view tabs",
+      "standin": "6px at Notion's compact and on Claude",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tab-pill",
+      "title": "Pill tab corners apart from the control radius",
+      "note": "Above: Notion's database view tabs fully round (20px on 32px tabs) beside 6px buttons",
+      "standin": "`tabStyle: pill` rounds tabs at the control radius (8px on Untitled UI, 6.5px on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.tab-pill",
+      "title": "Pill tab tones",
+      "note": "Notion's view tabs on #f4f3f3 / #252525 (L 0.965 / 0.264), fainter than its current sidebar row (#eeeceb / #2c2c2c)",
+      "standin": "Notion oklch 0.915 / 0.347, ΔE 0.050 / 0.082, while its sidebar row already matches",
+      "source": "ledger"
+    },
+    {
+      "look": "size.calendar-day",
+      "title": "Calendar day cell size apart from the density",
+      "note": "At the control height: Notion's date picker days and the selected day 28px, as tall as its 28px buttons, fields and select triggers (today's circle 24px)",
+      "standin": "+4px on Notion's days at `density: compact`, +8px on today",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.calendar-today",
+      "title": "A round today marker in square day cells",
+      "note": "Notion's date picker draws days, their hover and the selected day as 28px squares at 6px corners (the button radius), while today is a 24px circle",
+      "standin": "`calendarDayShape` shapes today with the other days: `same` squares today at 6.5px; `circle` rounds the selected day too",
+      "source": "ledger"
+    },
+    {
+      "look": "type.calendar-day",
+      "title": "Calendar day numerals at their own size and weight",
+      "note": "Notion 14/400 for days, the selected day and today",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Small tooltips",
+      "note": "Notion 8px inline padding, 12/400 text, 27px tall (the Filter tooltip)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "Dialog scrim stronger in dark than light",
+      "note": "Notion rgb(15, 15, 15) at 60% / 80% behind the center peek",
+      "standin": "`heavy` on Notion, black 80% in both",
+      "source": "ledger"
+    },
+    {
+      "look": "type.command-input",
+      "title": "Command search text larger than its rows",
+      "note": "Notion a 16px prompt in a 48px band over 36px rows at 14/400",
+      "standin": "`menuScale: large` raises the search to 16px (a 44px band) but also grows the rows (40px at 16px on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.drawer",
+      "title": "Docked drawers with square corners while dialogs are round",
+      "note": "Notion's side peek sits flush on the right edge, full height and square, while the center peek rounds to 12px",
+      "standin": "`drawerEdge: docked` rounds the drawer's inner corners at the panel rung (31.5px on Wise, 13px on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "Notion #2c2c2b under #f0efed in both modes (the Filter tooltip)",
+      "standin": "`tooltipStyle: inverted` flips to a light chip in dark (ΔE 0.57 on GitHub, 0.66 on Notion, 0.647 on ChatGPT, 0.713 on Claude, with no ring); `surface` stays dark but loses the dark chip in light",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Inverted tooltips with a drop shadow",
+      "note": "Notion `0 4px 12px -2px` black 8% plus a 1px white 5% inset ring, which reads as a #363635 edge on the chip",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.command",
+      "title": "Command palette radius apart from dialogs",
+      "note": "Notion's search palette at 20px over 12px dialogs (Settings & members), 10px menus and 6px controls",
+      "standin": "the palette takes the panel rung with dialogs (`rolePanel: 2xl`: 16px on Untitled UI, 13px on Notion",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.command-row",
+      "title": "Command palette rows rounder than menu rows",
+      "note": "12px row corners inside the 20px search palette, against 6px menu rows",
+      "standin": "palette rows at the item radius (6.5px)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.command-translucent",
+      "title": "A translucent command palette while menus stay opaque",
+      "note": "Notion's search palette on white 90% over a 40px backdrop blur, its menus solid (#fff / #252525)",
+      "standin": "`translucentOverlays` turns menus and popovers translucent together (70%) while the palette stays solid with dialogs. `surfaces.meta.ts` credits Notion on the Translucent option, but its menus measure opaque",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.scrim",
+      "title": "A backdrop chosen per overlay kind",
+      "note": "Notion dims the center peek at rgb(15, 15, 15) 60% / 80% but leaves the page undimmed and live behind its side peek and its search palette, which floats on its shadow (`0 24px 48px` black 24% plus `0 4px 12px` black 14%)",
+      "standin": "every overlay takes the dialog backdrop (`dialogBackdrop: scrim`, heavy)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Notion's 18px select tags (6px padding, 4px corners)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.badge-soft",
+      "title": "Soft badges at a strong tint, flipping to a mid-tone fill under light text in dark",
+      "note": "Notion's select tags on #e6e5e3 behind #494846 (gray) and #cbe3f7 behind #264a72 (blue) in light, #676661 / #f0efed and #3a6490 / #e5f2fc in dark",
+      "standin": "`badgeStyle: soft` with a faint tint: neutral #f9f9f9 / #1e1e1e in ink, accent oklch 0.97 behind `fg-accent` text (Notion in light: neutral fill and text ΔE 0.060 / 0.160, accent 0.068 / 0.132; dark fills 0.26 / 0.22 off",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.table-frame",
+      "title": "Tables with no outer frame",
+      "note": "Notion's database table view draws a hairline under the header and under each row (rgba(42, 28, 0, 0.07) / rgba(255, 255, 243, 0.082)) with no box around it",
+      "standin": "6.5px corners on Notion)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.table-columns",
+      "title": "Table column rules",
+      "note": "Notion's table view draws a 1px hairline between columns as well as under each row (rgba(42, 28, 0, 0.07) / rgba(255, 255, 243, 0.082))",
+      "standin": "rows ruled only, no line between columns",
+      "source": "ledger"
+    },
+    {
+      "look": "type.table-header",
+      "title": "Table header label weight apart from 500",
+      "note": "Regular: Notion's table view headers 14/400 in muted ink (#7d7a75 / #ada9a3), with no band",
+      "standin": "`tableHeaderLabel` sets only the ink (`strong` on Carbon, `muted` on Untitled UI and Notion); header labels render at 14/500",
+      "source": "ledger"
+    },
+    {
+      "look": "size.table-row",
+      "title": "Table row height apart from the control height",
+      "note": "Taller: Notion's table view 36px header and rows (plus the 1px rule) at 14px beside 28px buttons and fields",
+      "standin": "table rows and header follow the density with the controls (32px on Notion",
+      "source": "ledger"
+    },
+    {
+      "look": "type.accordion-title",
+      "title": "Accordion titles at body weight",
+      "note": "Notion's toggle block titles are body text, 16/400, beside a filled caret",
+      "standin": "accordion triggers at 14/500 (`accordionMarker: leading-caret` already places Notion's caret)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
+      "standin": "Notion 0.051, its most common off row, about 20 parts in light",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness, darker or lighter than `fg-muted`. Darker: Material 3 on-surface-variant #49454f / #cac4d0 for inactive tabs, drawer labels and supporting text; Geist gray-900 #4d4d4d / #a1a1a1 for inactive tabs, keycaps, modal subtitles and descriptions; GitHub in dark only, `fgColor-muted` #9198a1 (L 0.68) for supporting text and keycap labels (light #59636e matches); Higgsfield, dark only, text-secondary #828282 (L 0.61) and muted text #898a8b (L 0.63), text-tertiary #626262 (L 0.50) on idle underline tabs, #8f8f90 segmented items; Stripe's Dashboard secondary text and resting settings tabs in slate-700 #3C4F69 (oklch ≈ 0.43). Lighter: Duolingo wolf #777777 (L 0.57) in light, and in dark #dce6ec, a step under the #f1f7fb headings, where it doesn't dim body copy (shop descriptions, idle nav and menu rows). Nearer mid-gray in both modes: Airbnb #6c6c6c / #a6a6a6; Notion #7d7a75 (L 0.58) / #ada9a3 (L 0.74) for inactive view tabs and section labels; Claude one muted #898781 (oklch 0.623) in both modes for idle pill tabs, section labels and the sidebar search placeholder. Further from mid-gray in both modes: Wise #454745 (L 0.395) / #e8ebe6 (L 0.936) for idle tabs and secondary text; ChatGPT's signed-in app #5d5d5d / #cdcdcd for secondary text (the Apps SDK library's dark step is #afafaf)",
+      "standin": "Notion 0.082 / 0.049",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "Notion unchecked boxes #d4d3cf (L 0.87) / #676661 (L 0.51) and the off switch track #dbdad6 / #4e4f4f (the app's Settings switches)",
+      "standin": "Notion on the firm floor, neutral-400 at L 0.887 / 0.389: checkbox ΔE 0.021 / 0.121, track 0.002 / 0.038 (darker than Notion's), while `checkEdge: strong` gets dark to 0.090 but takes light to 0.267",
+      "source": "ledger"
+    },
+    {
+      "look": "color.surface-line",
+      "title": "Surface hairline strength, darker or fainter than the surface line",
+      "note": "Fainter: Notion's menus, search palette, fields and Settings dialog ring at rgba(42,28,0,.07), #f0efed on white (L 0.95); in dark, outline buttons and select triggers at #30302e on #191919",
+      "standin": "Notion's `--color-border` at L 0.925 / 0.33 (ΔE 0.027 in light, 0.021 on dark outline buttons and select triggers)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
+      "note": "Notion's sidebar ⌘K chip a 7% warm black, rgba(42,28,0,.07) (#eae8e5 on the #f9f8f7 sidebar), while callouts sit on the #f9f8f7 wash itself, and in dark both brighter than the muted step, callout #383836 and chip #363634 (L ≈ 0.33 over #191919)",
+      "standin": "Notion's on one muted step, oklch 0.964 / 0.277: light callout ΔE 0.016, light chip 0.032, dark callout 0.063, dark chip 0.055",
+      "source": "ledger"
+    }
+  ]
+}

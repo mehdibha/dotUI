@@ -4,109 +4,71 @@
    plus Invalid, hosted on the Field page. Specimens draw each recipe with
    the panel's own inks at its real geometry. */
 
+import { useRef } from "react"
+import type { Color } from "react-aria-components"
+import {
+  ToggleButton as RacToggleButton,
+  ToggleButtonGroup as RacToggleButtonGroup,
+} from "react-aria-components"
+
 import { cn } from "@/registry/lib/utils"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
-import {
-  AUTO_STRENGTH,
-  AUTO_WIDTH,
-  INVALID_FILL,
-  NEUTRAL_FIELD_INK,
-} from "../axes/states"
+import { INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   DISABLED_OPTIONS,
-  FIELD_INK_ROW,
+  FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
-  FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
   INVALID_OPTIONS,
-  STRENGTH_OPTIONS,
-  WIDTH_OPTIONS,
 } from "../axes/states.meta"
-import { DialSegmented, DialSelect } from "../dial"
-import { Row } from "../row-host"
+import {
+  DIAL_LABEL,
+  DIAL_ROW,
+  DialSelect,
+  DialSlider,
+  UNDER_ROW,
+} from "../dial"
+import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
-import { useStudio } from "../use-studio"
+import {
+  ColorPickerPopover,
+  PanelPopoverTitle,
+  useDocked,
+  useDraft,
+} from "../rows"
+import { useCurrent } from "../selection"
+import { useAxis } from "../use-axis"
 import { ArrowCursor, HandCursor } from "./cursors"
+import { inks } from "./primary"
 
 const INK = "var(--color-border-focus)"
-const MUTED = "var(--color-border-focus-muted)"
-const BG = "var(--color-bg)"
 const DANGER = "var(--color-fg-danger)"
 const DANGER_MUTED = "var(--color-danger-muted)"
-const PCT: Record<string, number> = { solid: 100, soft: 50, faint: 30 }
-
-const ink = (strength: string) =>
-  `color-mix(in oklab, ${INK} ${PCT[strength] ?? 100}%, transparent)`
-
-interface Ring {
-  style: string
-  strength: string
-  width: number
-}
-
-/** The ring each recipe draws, as a box-shadow. */
-function ringShadow({ style, strength, width }: Ring) {
-  const color = ink(strength)
-  if (style === "halo") return `0 0 0 ${width}px ${color}`
-  if (style === "inset")
-    return `inset 0 0 0 ${width}px ${color}, inset 0 0 0 ${width + 1}px ${BG}`
-  return `0 0 0 2px ${BG}, 0 0 0 ${2 + width}px ${color}`
-}
 
 const SIZE = "h-3.5 w-6 rounded-[4px]"
 
-function ControlSpecimen({ ring }: { ring: Ring }) {
+/** The control ring as Focus draws it: Inset sits inside the edge, Halo
+ *  hugs it at half strength. */
+function ControlSpecimen({ state }: { state: Effective }) {
+  const { focusStyle: style, focusWidth: width } = state
   return (
     <span
       className={cn("mx-1 block shrink-0 bg-fg/25", SIZE)}
-      style={{ boxShadow: ringShadow(ring) }}
-    />
-  )
-}
-
-/** The field's pair: the focus pair, or the neutral steps under Neutral. */
-const fieldInks = (neutral?: boolean) =>
-  neutral ? [NEUTRAL_FIELD_INK.edge, NEUTRAL_FIELD_INK.halo] : [INK, MUTED]
-
-function fieldFocus(
-  focus: string,
-  weight: string,
-  ring: Ring,
-  neutral?: boolean,
-) {
-  if (focus === "ring") return { boxShadow: ringShadow(ring) }
-  const [ink, muted] = fieldInks(neutral)
-  if (focus === "border")
-    return {
-      borderColor: ink,
-      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${ink}` : undefined,
-    }
-  return {
-    borderColor: ink,
-    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${muted}`,
-  }
-}
-
-function FieldSpecimen({
-  focus,
-  weight,
-  ring,
-  neutral,
-}: {
-  focus: string
-  weight: string
-  ring: Ring
-  neutral?: boolean
-}) {
-  return (
-    <span
-      className={cn("mx-1 block shrink-0 border border-fg/30 bg-bg", SIZE)}
-      style={fieldFocus(focus, weight, ring, neutral)}
+      style={{
+        outline: `${width}px solid ${INK}`,
+        outlineColor:
+          style === "halo"
+            ? `color-mix(in oklab, ${INK} 50%, transparent)`
+            : INK,
+        outlineOffset: style === "inset" ? -width : style === "halo" ? 0 : 2,
+      }}
     />
   )
 }
@@ -147,12 +109,6 @@ function InvalidSpecimen({ invalid }: { invalid: string }) {
   )
 }
 
-const ringOf = (state: Effective): Ring => ({
-  style: state.focusStyle,
-  strength: state.focusStrength,
-  width: state.focusWidth,
-})
-
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default. */
 const HIGHLIGHT_CHIPS: Record<string, string> = {
@@ -169,7 +125,7 @@ function HighlightChip({ value }: { value: string }) {
 }
 
 export function FocusPreview({ state }: { state: Effective }) {
-  return <ControlSpecimen ring={ringOf(state)} />
+  return <ControlSpecimen state={state} />
 }
 
 export function DisabledPreview({ state }: { state: Effective }) {
@@ -190,114 +146,152 @@ export function TextSelectionPreview({ state }: { state: Effective }) {
   return <HighlightChip value={state.selectionHighlight} />
 }
 
-const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
-  const ring = {
-    style: option.value,
-    strength: AUTO_STRENGTH[option.value]!,
-    width: AUTO_WIDTH[option.value]!,
-  }
-  return { ...option, glyph: <ControlSpecimen ring={ring} /> }
-})
+/* The Focus page's pickers open under their row, clear of the preview. */
+const UNDER = "bottom end"
 
 const FocusStyleRow = () => (
   <DialSelect
     axis="focusStyle"
-    holds={["focusStrength", "focusWidth", "focusColor"]}
-    label="Focus ring"
-    options={FOCUS_STYLE_ROW_OPTIONS}
-  >
-    <Row axis="focusStrength" />
-    <Row axis="focusWidth" />
-    <Row axis="focusColor" />
-  </DialSelect>
-)
-
-const FOCUS_STRENGTH_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  ...STRENGTH_OPTIONS,
-]
-
-const FocusStrengthRow = () => (
-  <DialSelect
-    axis="focusStrength"
-    label="Strength"
-    options={FOCUS_STRENGTH_OPTIONS}
+    label="Style"
+    options={FOCUS_STYLE_OPTIONS}
+    placement={UNDER}
   />
 )
 
-function FocusWidthRow() {
-  const { set } = useStudio()
-  return (
-    <DialSelect
-      axis="focusWidth"
-      label="Width"
-      onChange={(value) =>
-        set("focusWidth")(value === "auto" ? "auto" : Number(value))
+const px = (value: number) => `${value}px`
+
+const FocusWidthRow = () => (
+  <DialSlider
+    axis="focusWidth"
+    label="Width"
+    minValue={1}
+    maxValue={4}
+    step={1}
+    format={px}
+  />
+)
+
+const FocusGapRow = () => (
+  <DialSlider
+    axis="focusRingGap"
+    label="Gap"
+    minValue={0}
+    maxValue={4}
+    step={1}
+    format={px}
+  />
+)
+
+const FieldFocusWidthRow = () => (
+  <DialSlider
+    axis="focusFieldWidth"
+    label="Width"
+    minValue={1}
+    maxValue={4}
+    step={1}
+    format={px}
+  />
+)
+
+const SWATCH =
+  "size-5 shrink-0 cursor-interactive rounded-full border border-fg/15 ring-offset-2 ring-offset-(--panel-surface,var(--color-card)) outline-none focus-visible:focus-ring selected:ring-2 selected:ring-fg/70"
+
+/* The custom swatch: any color before one is picked, then that color in a
+   spectrum rim, so it still reads as a picker. */
+const SPECTRUM =
+  "conic-gradient(#ef4444, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7, #ef4444)"
+const customSwatch = (color: string) =>
+  color
+    ? {
+        background: `linear-gradient(${color} 0 0) padding-box, ${SPECTRUM} border-box`,
+        border: "2px solid transparent",
       }
-      options={[
-        { value: "auto", label: "Auto" },
-        ...WIDTH_OPTIONS.map((option) => ({
-          ...option,
-          value: String(option.value),
-        })),
-      ]}
-    />
-  )
-}
+    : { background: SPECTRUM }
 
-function FieldFocusRow() {
-  const { effective } = useStudio()
+/** Primary's two sources and a color of its own, as swatches; the custom
+ *  one opens a picker. */
+function FocusColorRow() {
+  const axis = useAxis("focusColor")
+  const customAxis = useAxis("focusCustomColor")
+  const { state } = useCurrent()
+  const ink = inks(usePanelMode().m)
+  const saved = String(customAxis?.saved ?? "")
+  const custom = saved || state.brand
+  const [draft, setDraft] = useDraft<string | Color>(custom)
+  // The picker drops under the whole row, like the row pickers above it.
+  const row = useRef<HTMLDivElement>(null)
+  const under = !useDocked()
+  if (!axis) return null
+  const commit = (color: Color | null) => {
+    if (!color) return
+    customAxis?.set(color.toString("hex"))
+    axis.set("custom")
+  }
+  const label = (value: string) =>
+    FOCUS_COLOR_OPTIONS.find((o) => o.value === value)?.label ?? value
   return (
-    <DialSelect
-      axis="focusInputStyle"
-      holds={["focusInputWeight", "focusInputColor"]}
-      label="Field focus"
-      options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
-        ...option,
-        glyph: (
-          <FieldSpecimen
-            focus={option.value}
-            weight={effective.focusInputWeight}
-            ring={ringOf(effective)}
-            neutral={effective.focusInputColor === "neutral"}
-          />
-        ),
-      }))}
-    >
-      <Row axis="focusInputWeight" />
-      <Row axis="focusInputColor" />
-    </DialSelect>
+    <div ref={row} data-axis="focusColor" className={DIAL_ROW}>
+      <span className={DIAL_LABEL}>Color</span>
+      <RacToggleButtonGroup
+        aria-label="Focus color"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[String(axis.saved)]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) axis.set(next)
+        }}
+        className="flex items-center gap-2"
+      >
+        {(["accent", "neutral"] as const).map((source) => (
+          <Tooltip key={source} delay={0}>
+            <RacToggleButton
+              id={source}
+              aria-label={label(source)}
+              className={SWATCH}
+              style={{ background: ink[source].ring }}
+            />
+            <TooltipContent>{label(source)}</TooltipContent>
+          </Tooltip>
+        ))}
+        <ColorPicker value={draft} onChange={setDraft}>
+          <Tooltip delay={0}>
+            <RacToggleButton
+              id="custom"
+              aria-label={label("custom")}
+              className={SWATCH}
+              style={customSwatch(saved)}
+            />
+            <TooltipContent>
+              {saved ? `Custom · ${saved.toUpperCase()}` : "Custom"}
+            </TooltipContent>
+          </Tooltip>
+          <PanelPopoverTitle.Provider value="Focus color">
+            <ColorPickerPopover
+              commit={commit}
+              placement={UNDER}
+              {...(under && {
+                triggerRef: row,
+                offset: 6,
+                showArrow: false,
+                className: UNDER_ROW,
+              })}
+            />
+          </PanelPopoverTitle.Provider>
+        </ColorPicker>
+      </RacToggleButtonGroup>
+    </div>
   )
 }
 
-const FieldFocusWeightRow = () => (
-  <DialSegmented
-    axis="focusInputWeight"
-    label="Weight"
-    options={FOCUS_INPUT_WEIGHT_OPTIONS}
+const FieldFocusRow = () => (
+  <DialSelect
+    axis="focusInputStyle"
+    label="Style"
+    options={FOCUS_INPUT_STYLE_OPTIONS}
+    placement={UNDER}
   />
 )
-
-function FieldInkRow() {
-  const { effective } = useStudio()
-  return (
-    <DialSelect
-      axis="focusInputColor"
-      label="Ink"
-      options={FIELD_INK_ROW.map((option) => ({
-        ...option,
-        glyph: (
-          <FieldSpecimen
-            focus={effective.focusInputStyle}
-            weight={effective.focusInputWeight}
-            ring={ringOf(effective)}
-            neutral={option.value === "neutral"}
-          />
-        ),
-      }))}
-    />
-  )
-}
 
 const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
   ...option,
@@ -364,11 +358,11 @@ const HighlightRow = () => (
 
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,
-  focusStrength: FocusStrengthRow,
   focusWidth: FocusWidthRow,
+  focusRingGap: FocusGapRow,
+  focusColor: FocusColorRow,
   focusInputStyle: FieldFocusRow,
-  focusInputWeight: FieldFocusWeightRow,
-  focusInputColor: FieldInkRow,
+  focusFieldWidth: FieldFocusWidthRow,
   disabledTreatment: DisabledRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,

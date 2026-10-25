@@ -149,8 +149,8 @@ describe("shipped data display", () => {
       expect(
         await shipped("accordion", { accordionContainer }),
         accordionContainer,
-      ).toContain("[--focus-ring-inset:inset]")
-    expect(await shipped("accordion")).not.toContain("--focus-ring-inset")
+      ).toContain("focus-visible:-outline-offset-2")
+    expect(await shipped("accordion")).not.toContain("outline-offset")
   })
 
   test("only the contained accordion fills the open item", async () => {

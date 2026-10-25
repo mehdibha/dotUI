@@ -2,16 +2,47 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { FIELD_SHELLS } from "@/registry/ui/input/styles"
 import { mergePresetCssFields } from "@/publisher/emit-theme"
+import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
-import { DEFAULTS, parseState } from "./index"
+import { DEFAULTS, effective, parseState } from "./index"
 
-const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  designSystemOf(parseState({ ...overrides }))
+type State = Partial<typeof DEFAULTS>
+
+const resolve = (overrides: State) => designSystemOf(parseState(overrides))
+
+const presetOf = (state: State): PublishPreset => {
+  const { density, componentParams, tokens, color, icons } = resolve(state)
+  return { density, componentParams, tokens, color, icons }
+}
+
+/** The focus helpers as a consumer's globals.css gets them. */
+const helpers = (state: State) => {
+  const { css } = mergePresetCssFields(
+    baseRegistryCss as Parameters<typeof mergePresetCssFields>[0],
+    presetOf(state),
+  )
+  return {
+    ring: css?.["@utility focus-ring"],
+    input: css?.["@utility focus-input"],
+  }
+}
+
+/** A component's shipped file. */
+const shipped = async (name: string, state: State = {}) => {
+  const preset = presetOf(state)
+  const { item } = publish({
+    publishable: selectPublishable(await publishables[name]!(), preset),
+    preset,
+  })
+  return item.files?.map((file) => file.content).join("\n") ?? ""
+}
 
 describe("focus ring", () => {
   test("Origin emits no tokens", () => {
@@ -20,36 +51,43 @@ describe("focus ring", () => {
     expect(system.color).toEqual(DEFAULT_COLOR_CONFIG)
   })
 
-  test("Halo sits flush, Auto gives it 3px at Soft", () => {
+  test("Halo sits flush at half strength", () => {
     expect(resolve({ focusStyle: "halo" }).tokens).toEqual({
-      "--focus-ring-width": "3px",
-      "--focus-ring-color":
+      "--studio-focus-color":
         "color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
-      "--focus-ring-offset": "0px",
-      "--focus-ring-outside-offset": "0px",
+      "--studio-focus-offset": "0px",
+      "--studio-focus-outside-offset": "0px",
     })
   })
 
-  test("Inset draws inside the edge over a bg line", () => {
+  test("Inset draws inside the edge over an on-color line", () => {
     expect(resolve({ focusStyle: "inset" }).tokens).toEqual({
-      "--focus-ring-inset": "inset",
-      "--focus-ring-offset": "0px",
-      "--focus-ring-inner": "calc(var(--focus-ring-width) + 1px)",
+      "--studio-focus-offset": "-2px",
+      "--studio-focus-inner": "3px",
     })
   })
 
-  test("strength and width override Auto", () => {
-    expect(
-      resolve({ focusStyle: "halo", focusStrength: "faint", focusWidth: 4 })
-        .tokens,
-    ).toMatchObject({
-      "--focus-ring-width": "4px",
-      "--focus-ring-color":
-        "color-mix(in oklab, var(--color-border-focus) 30%, transparent)",
+  test("width sets the ring and the inside offset", () => {
+    expect(resolve({ focusStyle: "inset", focusWidth: 3 }).tokens).toEqual({
+      "--studio-focus-width": "3px",
+      "--studio-focus-offset": "-3px",
+      "--studio-focus-inner": "4px",
+      "--studio-focus-inside-offset": "-3px",
     })
     expect(resolve({ focusWidth: 1 }).tokens).toEqual({
-      "--focus-ring-width": "1px",
+      "--studio-focus-width": "1px",
+      "--studio-focus-inside-offset": "-1px",
     })
+  })
+
+  test("gap sets a ring's offset, only a ring's", () => {
+    expect(resolve({ focusRingGap: 0 }).tokens).toEqual({
+      "--studio-focus-offset": "0px",
+      "--studio-focus-outside-offset": "0px",
+    })
+    expect(resolve({ focusStyle: "halo", focusRingGap: 4 }).tokens).toEqual(
+      resolve({ focusStyle: "halo" }).tokens,
+    )
   })
 
   test("neutral ink re-points the focus pair", () => {
@@ -59,6 +97,19 @@ describe("focus ring", () => {
       "color-border-focus": { palette: "neutral", job: "solid" },
       "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
     })
+  })
+
+  test("a custom ring is its own color, starting on the brand", () => {
+    expect(
+      resolve({ focusColor: "custom", focusCustomColor: "#ff0000" }).tokens,
+    ).toEqual({
+      "--color-border-focus": "#ff0000",
+      "--color-border-focus-muted":
+        "color-mix(in oklab, #ff0000 40%, transparent)",
+    })
+    expect(
+      resolve({ focusColor: "custom", brand: "#00ff00" }).tokens,
+    ).toMatchObject({ "--color-border-focus": "#00ff00" })
   })
 
   test("on a Strong edge a neutral ring takes the text ink", () => {
@@ -73,95 +124,114 @@ describe("focus ring", () => {
 })
 
 describe("field focus", () => {
-  test("Halo: Thin is Origin, Thick a 4px halo", () => {
-    expect(resolve({ focusInputWeight: "thick" }).tokens).toEqual({
-      "--focus-input-width": "4px",
-    })
-  })
-
-  test("Ring reuses the ring tokens, inside under Inset", () => {
+  test("Ring wears the control ring", () => {
     expect(resolve({ focusInputStyle: "ring" }).tokens).toEqual({
-      "--focus-input-width": "var(--focus-ring-width)",
-      "--focus-input-offset": "var(--focus-ring-offset)",
-      "--focus-input-color": "var(--focus-ring-color)",
+      "--studio-field-focus-width": "var(--studio-focus-width)",
+      "--studio-field-focus-offset": "var(--studio-focus-offset)",
+      "--studio-field-focus-color": "var(--studio-focus-color)",
     })
-    expect(
-      resolve({ focusInputStyle: "ring", focusStyle: "inset" }).tokens,
-    ).toMatchObject({ "--focus-input-inset": "inset" })
   })
 
-  test("Border recolors the edge; Thick adds 1px inside", () => {
-    const thin = resolve({ focusInputStyle: "border" }).tokens
-    expect(thin).toMatchObject({
-      "--focus-input-width": "0px",
-      "--focus-input-edge": "0px",
-      "--focus-invalid-color": "var(--color-fg-danger)",
+  test("Edge recolors the edge; Thick edge draws 2px over it", () => {
+    expect(resolve({ focusInputStyle: "edge" }).tokens).toEqual({
+      "--studio-field-focus-width": "0px",
+    })
+    expect(resolve({ focusInputStyle: "thick-edge" }).tokens).toEqual({
+      "--studio-field-focus-offset": "-2px",
+      "--studio-field-focus-color": "var(--color-border-focus)",
+      "--studio-field-invalid-color": "var(--color-fg-danger)",
+    })
+  })
+
+  test("width sizes the halo and the thick edge, and the invalid halo", () => {
+    expect(resolve({ focusFieldWidth: 3 }).tokens).toEqual({
+      "--studio-field-focus-width": "3px",
     })
     expect(
-      resolve({ focusInputStyle: "border", focusInputWeight: "thick" }).tokens[
-        "--focus-input-edge"
-      ],
-    ).toBe("1px")
+      resolve({ focusInputStyle: "thick-edge", focusFieldWidth: 1 }).tokens,
+    ).toMatchObject({
+      "--studio-field-focus-width": "1px",
+      "--studio-field-focus-offset": "-1px",
+    })
+    expect(
+      resolve({ focusFieldWidth: 3, invalidStyle: "halo" }).tokens,
+    ).toMatchObject({ "--invalid-ring-width": "3px" })
+    expect(
+      resolve({ focusInputStyle: "ring", focusFieldWidth: 3 }).tokens,
+    ).toEqual(resolve({ focusInputStyle: "ring" }).tokens)
   })
 })
 
-describe("field focus ink", () => {
-  test("Same as focus ink writes nothing; Neutral re-points the field pair", () => {
-    expect(resolve({ focusInputColor: "same" }).tokens).toEqual({})
-    expect(resolve({ focusInputColor: "neutral" }).tokens).toEqual({
-      "--focus-input-border": "var(--neutral-700)",
-      "--focus-input-color": "var(--neutral-300)",
+/* Consumers get two helpers written from the choice, in plain values. */
+describe("shipped focus", () => {
+  test("Origin: a 2px ring with a gap, a muted halo around a recolored edge", () => {
+    expect(helpers({})).toEqual({
+      ring: {
+        outline: "2px solid var(--color-border-focus)",
+        "outline-offset": "2px",
+      },
+      input: {
+        "border-color": "var(--color-border-focus)",
+        outline: "2px solid var(--color-border-focus-muted)",
+        "@variant invalid": {
+          "border-color": "var(--color-fg-danger)",
+          "outline-color": "var(--color-danger-muted)",
+        },
+      },
     })
   })
 
-  test("Border paints its layer with the field's edge", () => {
-    expect(
-      resolve({ focusInputColor: "neutral", focusInputStyle: "border" }).tokens,
-    ).toMatchObject({
-      "--focus-input-border": "var(--neutral-700)",
-      "--focus-input-color": "var(--focus-input-border)",
+  test("an outline that draws nothing ships no outline", () => {
+    expect(helpers({ focusInputStyle: "edge" }).input).toEqual({
+      "border-color": "var(--color-border-focus)",
+      "@variant invalid": { "border-color": "var(--color-fg-danger)" },
+    })
+    expect(helpers({ focusStyle: "halo" }).ring).toEqual({
+      outline:
+        "2px solid color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
     })
   })
 
-  test("a neutral ring already paints fields neutral", () => {
-    expect(
-      resolve({ focusColor: "neutral", focusInputColor: "neutral" }).tokens,
-    ).toEqual({})
+  test.each([
+    {},
+    { focusStyle: "inset", focusInputStyle: "ring" },
+    { focusStyle: "halo", focusInputStyle: "thick-edge" },
+  ] as State[])("%o ships no studio var", (state) => {
+    expect(JSON.stringify(helpers(state))).not.toContain("--studio-")
   })
 
-  test("on a Strong edge a neutral field focuses in the text ink", () => {
-    const edge = (state: Partial<typeof DEFAULTS>) =>
-      resolve(state).tokens["--focus-input-border"]
-    // The neutral ink is the Strong edge's own step (Airbnb, Spotify).
-    expect(
-      edge({
-        focusColor: "neutral",
-        controlEdge: "strong",
-        focusInputStyle: "border",
-      }),
-    ).toBe("var(--neutral-950)")
-    expect(edge({ focusInputColor: "neutral", controlEdge: "strong" })).toBe(
-      "var(--neutral-950)",
+  /* A site whose own part covers its box sits outside; one that would clip
+     sits inside. Each ships an offset only where it differs from the
+     ring's. */
+  test("a check sits outside the ring only under Inset", async () => {
+    expect(await shipped("checkbox")).not.toContain("outline-offset")
+    expect(await shipped("checkbox", { focusStyle: "inset" })).toContain(
+      "focus-visible:not-has-data-label:outline-offset-2",
     )
-    // An accent ink already differs from the edge.
-    expect(edge({ controlEdge: "strong" })).toBeUndefined()
   })
 
-  test("under Ring the field wears the ring's ink", () => {
-    expect(
-      resolve({ focusInputStyle: "ring", focusInputColor: "neutral" }).tokens,
-    ).not.toHaveProperty("--focus-input-border")
+  test("a cell keeps the ring inside unless it already is", async () => {
+    expect(await shipped("table")).toContain(
+      "focus-visible:before:-outline-offset-2",
+    )
+    expect(await shipped("table", { focusStyle: "inset" })).not.toContain(
+      "outline-offset",
+    )
+  })
+
+  test("a filled button draws its on-color line only under Inset", async () => {
+    expect(await shipped("button")).not.toContain("inset-ring-")
+    expect(await shipped("button", { focusStyle: "inset" })).toContain(
+      "focus-visible:inset-ring-3",
+    )
   })
 })
 
 describe("per-mode inks ship as literals", () => {
-  test.each([
-    ["--focus-input-border", { focusInputColor: "neutral" }],
-    ["--invalid-fill", { invalidStyle: "tint" }],
-  ] as const)("%s", (name, state) => {
-    const { css } = mergePresetCssFields({}, resolve(state))
-    const light = css?.[":root"]?.[name]
-    const dark = css?.[".dark"]?.[name]
+  test("--invalid-fill", () => {
+    const { css } = mergePresetCssFields({}, resolve({ invalidStyle: "tint" }))
+    const light = css?.[":root"]?.["--invalid-fill"]
+    const dark = css?.[".dark"]?.["--invalid-fill"]
     expect(light).toMatch(/oklch\(/)
     // The dark literal ships only where it differs.
     if (dark !== undefined) expect(dark).toMatch(/oklch\(/)
@@ -195,12 +265,11 @@ describe("invalid", () => {
       "--invalid-ring-width": "2px",
     })
     expect(
-      resolve({ invalidStyle: "halo", focusInputWeight: "thick" }).tokens[
-        "--invalid-ring-width"
-      ],
-    ).toBe("4px")
+      resolve({ invalidStyle: "halo", focusInputStyle: "edge", focusWidth: 3 })
+        .tokens["--invalid-ring-width"],
+    ).toBe("3px")
     expect(
-      resolve({ invalidStyle: "halo", focusInputStyle: "border" }).tokens[
+      resolve({ invalidStyle: "halo", focusInputStyle: "edge" }).tokens[
         "--invalid-ring-width"
       ],
     ).toBe("2px")
@@ -249,56 +318,17 @@ describe("disabled, cursors, control text", () => {
   })
 })
 
-/* Every Field focus value must show under every Inputs style: evaluate each
-   shell's focus layer from base.css with the tokens the value writes. */
+/* Each shell shows focus in its own shape: a box wears the field layer, an
+   indicator the layer and its doubled rule, an underline its rule alone. */
 describe("field focus under every shell", () => {
-  const css = readFileSync(
-    path.join(__dirname, "../../../registry/base/base.css"),
-    "utf8",
-  )
-  const theme: Record<string, string> = {}
-  for (const block of css.matchAll(/(?:@theme|^:root) \{([^}]*)\}/gm))
-    for (const [, name, value] of block[1]!.matchAll(/(--[\w-]+):\s*([^;]+);/g))
-      theme[name!] = value!.trim()
-
-  const layer = (utility: string) => {
-    const match = new RegExp(
-      `@utility ${utility} \\{\\s*--tw-ring-shadow:([^;]+);`,
-    ).exec(css)
-    if (!match) throw new Error(`no @utility ${utility}`)
-    return match[1]!.replace(/\s+/g, " ").trim()
-  }
-
-  /** Innermost `var()` first, until none is left. */
-  const substitute = (value: string, vars: Record<string, string>) => {
-    const inner = /var\((--[\w-]+)(?:,([^()]*))?\)/
-    let out = value
-    for (let match = inner.exec(out); match; match = inner.exec(out))
-      out = out.replace(match[0], vars[match[1]!] ?? match[2] ?? "")
-    return out
-  }
-
-  const VALUES = [
-    { focusInputStyle: "ring" },
-    { focusInputStyle: "halo" },
-    { focusInputStyle: "halo", focusInputWeight: "thick" },
-    { focusInputStyle: "border" },
-    { focusInputStyle: "border", focusInputWeight: "thick" },
-  ]
-
-  /* Each shell draws in its own shape: a box around itself, Indicator its
-     bottom rule (and a box halo), Underline everything under its rule. */
-  const SHAPES: Record<string, { focus: string; invalid: string }> = {
-    outline: { focus: "focus-input", invalid: "invalid-ring" },
-    raised: { focus: "focus-input", invalid: "invalid-ring" },
-    inset: { focus: "focus-input", invalid: "invalid-ring" },
-    well: { focus: "focus-input", invalid: "invalid-ring" },
-    filled: { focus: "focus-input", invalid: "invalid-ring" },
-    indicator: { focus: "focus-input-indicator", invalid: "invalid-ring" },
-    underline: {
-      focus: "focus-input-underline",
-      invalid: "invalid-ring-underline",
-    },
+  const SHAPES: Record<string, { helper: boolean; rule: boolean }> = {
+    outline: { helper: true, rule: false },
+    raised: { helper: true, rule: false },
+    inset: { helper: true, rule: false },
+    well: { helper: true, rule: false },
+    filled: { helper: true, rule: false },
+    indicator: { helper: true, rule: true },
+    underline: { helper: false, rule: true },
   }
 
   test("every shell has a shape", () => {
@@ -307,58 +337,35 @@ describe("field focus under every shell", () => {
 
   for (const [style, shell] of Object.entries(FIELD_SHELLS))
     test(style, () => {
-      const { focus, invalid } = SHAPES[style]!
+      const { helper, rule } = SHAPES[style]!
       for (const slot of ["input", "inputGroup", "textArea", "trigger"]) {
         const classes = [shell.slots[slot as keyof typeof shell.slots]]
           .flat(Infinity)
           .join(" ")
-        const used = (pattern: RegExp) =>
-          new Set([...classes.matchAll(pattern)].map((match) => match[1]))
+        expect(/:focus-input(\s|$)/.test(classes), `${style} ${slot}`).toBe(
+          helper,
+        )
         expect(
-          used(/:(focus-input[\w-]*)(?=\s|$)/g),
+          classes.includes(":shadow-[inset_0_-1px_var(--color-border-focus)]"),
           `${style} ${slot}`,
-        ).toEqual(new Set([focus]))
-        expect(
-          used(/:(invalid-ring[\w-]*)(?=\s|$)/g),
-          `${style} ${slot}`,
-        ).toEqual(new Set([invalid]))
+        ).toBe(rule)
       }
-
-      const classes = [shell.slots.input].flat(Infinity).join(" ")
-      expect(classes).toContain(
-        "focus:not-invalid:border-(--focus-input-border)",
+      expect([shell.slots.input].flat(Infinity).join(" ")).toContain(
+        "invalid:invalid-fill",
       )
-      expect(classes).toContain("invalid:invalid-fill")
-      const drawn = VALUES.map((value) =>
-        substitute(layer(focus), { ...theme, ...resolve(value).tokens }),
-      )
-      expect(new Set(drawn).size, style).toBe(VALUES.length)
     })
 })
 
 /* Where a control's own part covers its box (a check, a thumb, a selected
    pill, link text), the ring goes outside; rows and cells keep it inside. */
 describe("ring placement parity", () => {
-  const ringsOf = async (name: string) => {
-    const { stylesConfig } = (await publishables[name]!()).publishable
-    return new Set(
-      JSON.stringify(stylesConfig).match(/[\w:-]*focus-ring[\w-]*/g),
-    )
-  }
-
-  test.each(["checkbox", "radio-group", "switch"])(
-    "%s: bare outside, labelled card ring",
-    async (name) => {
-      expect(await ringsOf(name)).toEqual(
-        new Set([
-          "focus-visible:not-has-data-label:focus-ring-outside",
-          "focus-visible:has-data-label:focus-ring",
-        ]),
-      )
-    },
-  )
+  const configOf = async (name: string) =>
+    JSON.stringify((await publishables[name]!()).publishable.stylesConfig)
 
   test.each([
+    "checkbox",
+    "radio-group",
+    "switch",
     "tabs",
     "segmented-control",
     "slider",
@@ -367,12 +374,25 @@ describe("ring placement parity", () => {
     "link",
     "breadcrumbs",
   ])("%s: outside", async (name) => {
-    for (const ring of await ringsOf(name))
-      expect(ring, name).toMatch(/:focus-ring-outside$/)
+    expect(await configOf(name)).toContain(
+      "outline-offset-(--studio-focus-outside-offset)",
+    )
   })
 
   test.each(["tree", "table"])("%s: inside on rows and cells", async (name) => {
-    const rings = [...(await ringsOf(name))]
-    expect(rings.some((ring) => ring.endsWith(":focus-ring-inside"))).toBe(true)
+    expect(await configOf(name)).toContain(
+      "outline-offset-(--studio-focus-inside-offset)",
+    )
+  })
+})
+
+describe("field focus by input look", () => {
+  test("an underline is a thick edge; an indicator can't take one", () => {
+    const { values } = effective(parseState({ inputStyle: "underline" }))
+    expect(values.focusInputStyle).toBe("thick-edge")
+    const indicator = effective(
+      parseState({ inputStyle: "indicator", focusInputStyle: "thick-edge" }),
+    )
+    expect(indicator.values.focusInputStyle).toBe("edge")
   })
 })

@@ -18,7 +18,7 @@ export const notion = definePreset({
     // The app's --c-bluBacAccPri; #0075de is the marketing blue.
     brand: "#2783de",
     preserveSeed: true,
-    // White on #2783de (3.9:1), as the login Continue button.
+    // Stand-in: labels on #2783de are #f3f9fd, a white tinted with the blue.
     solidInk: "white",
     // Warm grays at OKLCH ~82°, about half the engine's lean.
     neutralHue: 82,
@@ -29,7 +29,8 @@ export const notion = definePreset({
     lightBg: 100,
     // #191919.
     darkBg: 9,
-    // Fields and outline buttons share the rgba(28,19,1,.11) hairline.
+    // Outline buttons draw rgba(28,19,1,.11) (#e6e5e3). Unchecked boxes
+    // (#d4d3cf) land on the Firm floor that a soft edge gives checks.
     controlEdge: "soft",
 
     // Typography
@@ -57,8 +58,7 @@ export const notion = definePreset({
     density: "compact",
 
     // States
-    focusInputStyle: "border",
-    focusInputWeight: "thick",
+    focusInputStyle: "thick-edge",
     disabledTreatment: "fade",
     cursorDisabled: "default",
 
@@ -66,8 +66,6 @@ export const notion = definePreset({
     buttonSecondary: "outline",
 
     // Selection
-    // Unchecked box: a 1px rgba(27,21,0,.19) edge.
-    checkEdge: "strong",
     cardSelected: "outline",
 
     // Menus and overlays
@@ -75,6 +73,8 @@ export const notion = definePreset({
     // Rows are the control height (28px).
     menuRows: "match",
     menuSearch: "bar",
+    // Stand-in: the search palette's 16px prompt in a 48px band. Its rows
+    // stay 36px at 14px; large sets them 40px at 16px.
     menuScale: "large",
     dialogBackdrop: "scrim",
     dialogBackdropStrength: "heavy",
@@ -82,7 +82,10 @@ export const notion = definePreset({
     mobileDialogs: "sheet",
 
     // Navigation
+    // Stand-in: view tabs are fully round pills with 12px padding.
     tabStyle: "pill",
+    // Sidebar rows stay 14/400 when selected.
+    navItemWeight: "regular",
     linkUnderline: "always",
     linkColor: "neutral",
     breadcrumbSeparator: "slash",
@@ -97,7 +100,6 @@ export const notion = definePreset({
     // Display
     accordionContainer: "plain",
     accordionMarker: "leading-caret",
-    calendarDayShape: "circle",
     calendarWeekdays: "triple",
   },
 })

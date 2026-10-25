@@ -13,7 +13,7 @@ import buttonMeta from "./meta"
 
 export const BUTTON_BASE = [
   "relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
-  "focus-reset focus-visible:focus-ring",
+  "outline-none focus-visible:focus-ring",
   "**:[svg]:pointer-events-none **:[svg]:shrink-0",
 ]
 
@@ -28,16 +28,16 @@ export const BUTTON_ICON_ONLY = { true: "p-0" }
 
 export const BUTTON_VARIANTS = {
   primary:
-    "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
+    "text-fg-on-primary focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
   secondary:
     "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
   quiet:
     "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
   link: "disabled:text-(--disabled-fg,var(--color-fg))",
   warning:
-    "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
+    "text-fg-on-warning focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
   danger:
-    "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
+    "text-fg-on-danger focus-visible:inset-ring-(length:--studio-focus-inner) disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
 }
 
 /* Each style is a real system's recipe, copied whole: its fills, edges,
@@ -171,7 +171,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
       },
     },
   },
@@ -179,7 +179,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border border-[color-mix(in_oklab,var(--color-fg)_11%,transparent)] bg-bg text-fg-on-neutral shadow-[0_2px_3px_-1px_rgb(0_0_0/0.08),0_1px_0_0_rgb(0_0_0/0.02)] hover:bg-[color-mix(in_oklab,var(--color-fg)_3%,var(--color-bg))] disabled:shadow-none",
+          "border border-[color-mix(in_oklab,var(--color-fg)_11%,transparent)] bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[0_2px_3px_-1px_rgb(0_0_0/0.08),0_1px_0_0_rgb(0_0_0/0.02)] hover:bg-[color-mix(in_oklab,var(--color-fg)_3%,var(--surface-bg,var(--color-bg)))] disabled:shadow-none",
       },
     },
   },
@@ -199,7 +199,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
       },
     },
   },
