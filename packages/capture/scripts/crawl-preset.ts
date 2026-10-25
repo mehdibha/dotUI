@@ -659,8 +659,10 @@ const enumArgs = (found: StoryArgs, args: Record<string, unknown>) =>
     }),
   )
 
-/* Variant and size args first, so --args reaches them before responsive
-   copies (variantAtNarrow) and the rest. */
+/* Variant and size args first, so --args reaches them first. Names that
+   only contain variant or size go last: responsive copies (variantAtNarrow)
+   and a part's size (leadingVisualSize) redraw what the plain ones do, or
+   a part, not the component. */
 const rankOf = (arg: string) =>
   /^(variant|size|appearance|kind|tone|intent|emphasis|color|shape)$/i.test(arg)
     ? 0
