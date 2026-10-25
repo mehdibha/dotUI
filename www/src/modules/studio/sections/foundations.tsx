@@ -88,13 +88,14 @@ const rowsOf = (group: RowGroup) => ("rows" in group ? group.rows : group)
 export const PAGE_ROWS: Record<string, RowGroup[]> = {
   typography: [[["headingFont", "Heading"]]],
   focus: [
+    // One ink for controls and inputs alike.
+    [["focusColor", "Color"]],
     {
       title: "Controls",
       rows: [
         ["focusStyle", "Style", ["Focus ring"]],
         ["focusWidth", "Width"],
         ["focusRingGap", "Gap"],
-        ["focusColor", "Color"],
       ],
     },
     {
@@ -207,10 +208,10 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
     id: "focus",
     label: "Focus",
     owners: [
+      "focusColor",
       "focusStyle",
       "focusWidth",
       "focusRingGap",
-      "focusColor",
       "focusInputStyle",
       "focusFieldWidth",
     ],
