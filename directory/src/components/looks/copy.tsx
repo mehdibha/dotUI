@@ -7,15 +7,16 @@ import type { Snapshot, SnapshotFont } from "@dotui/capture/snapshot"
 /* A frozen copy of the real product's element: its DOM with every computed
    style inlined, drawn in a shadow root. A system's copies come one file per
    census date (scripts/copies.ts): from www/.scratch-refs in dev, from the
-   Blob store `copies:upload` fills once deployed. */
+   public Blob store `copies:upload` fills once deployed. */
 
-const COPIES = import.meta.env.DEV ? "/copies" : undefined
+const COPIES = import.meta.env.DEV
+  ? "/copies"
+  : "https://uyfqo5pt3egtamyn.public.blob.vercel-storage.com"
 
 const files = new Map<string, Promise<Record<string, Snapshot> | null>>()
 
 /** A copy path starts with its census date, which names its file. */
 function copiesOf(slug: string, path: string) {
-  if (!COPIES) return undefined
   const url = `${COPIES}/${slug}/${path.split("/")[0]}.json`
   let file = files.get(url)
   if (!file) {
@@ -42,7 +43,7 @@ export function Copy({
   useEffect(() => {
     if (!seen) return
     let live = true
-    void copiesOf(slug, path)?.then(
+    void copiesOf(slug, path).then(
       (copies) => live && setSnapshot(copies?.[path] ?? null),
     )
     return () => {
@@ -60,11 +61,7 @@ export function Copy({
         <Fit snapshot={snapshot} />
       ) : (
         <p className="p-3 text-xs text-fg-muted">
-          {!COPIES
-            ? "Copy not hosted yet"
-            : snapshot === null
-              ? "Copy missing"
-              : "Loading…"}
+          {snapshot === null ? "Copy missing" : "Loading…"}
         </p>
       )}
     </div>
