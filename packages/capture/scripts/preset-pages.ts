@@ -225,6 +225,9 @@ export async function openPage(
 ) {
   const context = await browser.createBrowserContext()
   let page: Page
+  // A harness loads a live app's hashed stylesheets, which its next deploy
+  // deletes; read without them, every part would be a browser default.
+  const missing = new Set<string>()
   try {
     page = await context.newPage()
     await shim(page)
@@ -233,6 +236,18 @@ export async function openPage(
       { name: "prefers-color-scheme", value: mode },
     ])
     await focusable(page)
+    if (url.startsWith("file:")) {
+      page.on("requestfailed", (request) => {
+        if (request.resourceType() === "stylesheet") missing.add(request.url())
+      })
+      page.on("response", (response) => {
+        if (
+          response.request().resourceType() === "stylesheet" &&
+          !response.ok()
+        )
+          missing.add(response.url())
+      })
+    }
     // Some sites turn away a "HeadlessChrome" user agent (Notion).
     await page.setUserAgent(
       (await browser.userAgent()).replace("HeadlessChrome", "Chrome"),
@@ -251,6 +266,7 @@ export async function openPage(
     // A goto that changes only the hash keeps the document, so a hash-routed
     // dialog would keep the last part's state.
     if (page.url() !== "about:blank") await page.goto("about:blank")
+    missing.clear()
     await page.goto(url, { waitUntil: "load", timeout: 60000 })
     // Docs sites keep connections open, so a short quiet spell is enough;
     // apps still hydrate after it.
@@ -258,6 +274,10 @@ export async function openPage(
       .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
       .catch(() => {})
     await pause(wait)
+    if (missing.size)
+      throw new Error(
+        `${url}: stylesheet did not load: ${[...missing].join(" ")}`,
+      )
     await runSteps(page, steps)
     for (const selector of hide)
       await page.$$eval(selector, (els) => els.forEach((el) => el.remove()))
