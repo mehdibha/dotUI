@@ -19,6 +19,10 @@ export interface PackPage extends ProbePage {
   /** Elements removed after load and the page's steps: a consent banner
    *  fixed over the page that crops would show instead of the part. */
   hide?: string[]
+  /** More census passes, each on a fresh load: steps that open what the
+   *  census can't find a trigger for (a dialog behind a plain button, a
+   *  date picker). The probe never reads them. */
+  passes?: Step[][]
 }
 
 export type Mode = "light" | "dark"
@@ -83,8 +87,15 @@ export const launch = () =>
   puppeteer.launch({
     headless: "shell",
     executablePath,
-    // Cloud containers run as root, where Chrome's sandbox refuses to start.
-    args: process.getuid?.() === 0 ? ["--no-sandbox"] : [],
+    args: [
+      // Headless reports no mouse, so `@media (hover: hover)` rules (every
+      // Tailwind v4 hover) and `(pointer: fine)` ones never apply: report a
+      // desktop's.
+      "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
+      // Cloud containers run as root, where Chrome's sandbox refuses to
+      // start.
+      ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),
+    ],
   })
 
 /** Runs jobs a few at a time; docs pages can take seconds each. */

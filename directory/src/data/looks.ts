@@ -13,6 +13,7 @@ export const STATES = [
   "focus",
   "selected",
   "disabled",
+  "invalid",
   "open",
 ] as const
 export const COLOR_ROLES = [
@@ -91,6 +92,9 @@ const reading = z.object({
   /** The frozen copy and the crop, as paths under the system's refs folder. */
   copy: z.string().optional(),
   crop: z.string().optional(),
+  /** Read by setting the state on the element (disabled, invalid,
+   *  selected): the product's CSS for it, where no element showed it. */
+  forced: z.boolean().optional(),
 })
 
 const look = z.object({
@@ -101,7 +105,7 @@ const look = z.object({
   pages: z.array(z.number()),
   /** A look found only in this state, with no rest look of its shape: its
    *  rest values are that state's. */
-  is: z.enum(["disabled", "selected", "open"]).optional(),
+  is: z.enum(["disabled", "invalid", "selected", "open"]).optional(),
   /** The probe part that measures this look on both sides. */
   part: z.string().optional(),
   states: z.partialRecord(z.enum(STATES), byMode(reading)),
