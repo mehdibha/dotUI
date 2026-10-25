@@ -87,13 +87,13 @@ export const INVALID_OPTIONS = options(INVALID_VALUES, {
 
 export const DISABLED_OPTIONS = options(DISABLED_VALUES, {
   solid: {
-    label: "Solid",
-    description: "One flat gray for every variant",
+    label: "Gray",
+    description: "Every control turns the same quiet gray",
     credits: ["Spectrum 2", "Geist", "Carbon", "Material 3", "Polaris"],
   },
   fade: {
     label: "Fade",
-    description: "The control as is, at half opacity",
+    description: "Controls keep their colors, at half strength",
     credits: ["shadcn", "Untitled UI", "Supabase", "Linear", "Notion"],
   },
 })

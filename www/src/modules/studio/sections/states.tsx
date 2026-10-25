@@ -293,16 +293,12 @@ const FieldFocusRow = () => (
   />
 )
 
-const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
-  ...option,
-  glyph: <DisabledSpecimen treatment={option.value} />,
-}))
-
 const DisabledRow = () => (
   <DialSelect
     axis="disabledTreatment"
-    label="Disabled"
-    options={DISABLED_ROW_OPTIONS}
+    label="Style"
+    options={DISABLED_OPTIONS}
+    placement={UNDER}
   />
 )
 

@@ -36,7 +36,8 @@ export const INVALID_VALUES = ["edge", "halo", "tint"] as const
 export const INVALID_FILL =
   "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
 
-/** Solid: one grey for every variant. Fade: the control at 50%. */
+/** Solid (shown as Gray): one gray for every control. Fade: the control
+ *  at 50%. */
 export const DISABLED_VALUES = ["solid", "fade"] as const
 
 /* Keyword values only: a cursor token is written straight into CSS. */
