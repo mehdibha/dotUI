@@ -98,6 +98,8 @@ export function DialTiles({
             key={option.value}
             id={option.value}
             textValue={option.label}
+            // The inert specimen is hidden from assistive tech: name the tile.
+            aria-label={option.label}
             className={TILE}
           >
             {/* Specimens are pictures: presses land on the tile. */}
