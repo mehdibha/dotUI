@@ -24,11 +24,11 @@ const dated = new Map<string, Promise<Record<string, Snapshot> | null>>()
 
 async function copyOf(slug: string, path: string): Promise<Snapshot | null> {
   const url = `${COPIES}/${slug}/${path.split("/")[0]}.json`
-  if (!dated.has(url)) {
-    const copy = await json(`${COPIES}/${slug}/${path}`)
-    if (copy) return copy
-    if (!dated.has(url)) dated.set(url, json(url))
-  }
+  const bundle = await dated.get(url)
+  if (bundle) return bundle[path] ?? null
+  const copy = await json(`${COPIES}/${slug}/${path}`)
+  if (copy) return copy
+  if (!dated.has(url)) dated.set(url, json(url))
   return (await dated.get(url))?.[path] ?? null
 }
 
