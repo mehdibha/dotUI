@@ -465,6 +465,10 @@ const CANVAS: Record<Canvas, string> = {
   plain: "bg-muted",
 }
 
+// The canvas is the whole preview; the bottom clears the toolbar.
+const FULL_BLEED =
+  "min-h-dvh max-w-none cursor-default items-center justify-center px-6 pt-10 pb-20 sm:px-10"
+
 export default function FocusBoard() {
   const layout = useTweak("Layout", {
     type: "select",
@@ -491,15 +495,7 @@ export default function FocusBoard() {
   })
   const chrome = { frame, names }
   return (
-    <Board
-      id="focus"
-      untitled
-      // Full bleed: the canvas is the whole preview; the bottom clears the toolbar.
-      className={cn(
-        "min-h-dvh max-w-none cursor-default items-center justify-center px-6 pt-10 pb-20 sm:px-10",
-        CANVAS[canvas],
-      )}
-    >
+    <Board id="focus" untitled className={cn(FULL_BLEED, CANVAS[canvas])}>
       <div inert className="flex w-full justify-center">
         {layout === "sets" && <Sets chrome={chrome} />}
         {layout === "matrix" && <Matrices chrome={chrome} />}
