@@ -61,6 +61,7 @@ import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
 import puppeteer, {
   type Browser,
+  type Dialog,
   type ElementHandle,
   type Page,
 } from "puppeteer"
@@ -905,8 +906,10 @@ async function crawl(
     const url = new URL(page.url())
     return url.origin + url.pathname + url.search
   }
+  // A signed-in census reuses its tab: the handler goes with the job.
+  const dismiss = (dialog: Dialog) => void dialog.dismiss().catch(() => {})
   try {
-    page.on("dialog", (dialog) => void dialog.dismiss())
+    page.on("dialog", dismiss)
     await load()
     const home = where()
     const story = storyOf(job.url)
@@ -1043,6 +1046,7 @@ async function crawl(
   } catch (error) {
     console.warn(`${job.key} (${job.mode}): ${(error as Error).message}`)
   } finally {
+    page.off("dialog", dismiss)
     await close()
   }
   for (const [i, censusPage] of pages.entries()) {
@@ -1318,10 +1322,14 @@ async function connected(): Promise<CensusPage[]> {
       )) {
         const passes = args.passes
           ? [
-              ...Object.values(known?.parts ?? {}).flatMap((target) =>
-                target.before?.length ? [target.before] : [],
-              ),
-              ...(known?.passes ?? []),
+              ...new Map(
+                [
+                  ...Object.values(known?.parts ?? {}).flatMap((target) =>
+                    target.before?.length ? [target.before] : [],
+                  ),
+                  ...(known?.passes ?? []),
+                ].map((steps) => [JSON.stringify(steps), steps]),
+              ).values(),
             ]
           : []
         pages.push(
