@@ -68,6 +68,35 @@ async function snapshot(
   const VOID = new Set(["input", "img", "br", "hr", "wbr", "col", "source"])
   // Elements whose pixels don't copy: a box of their size stands in.
   const OPAQUE = new Set(["canvas", "video", "iframe", "object", "embed"])
+  // The SVG attributes that draw. Redacted, any other is hidden: charts name
+  // their paths after the account's projects.
+  const DRAW = new Set(
+    (
+      "id href xlink:href xmlns xmlns:xlink version role focusable tabindex " +
+      "d points x y x1 y1 x2 y2 cx cy r rx ry fx fy fr z width height viewBox " +
+      "preserveAspectRatio transform gradientTransform patternTransform " +
+      "transform-origin pathLength dx dy rotate textLength lengthAdjust " +
+      "startOffset refX refY markerWidth markerHeight markerUnits orient " +
+      "offset gradientUnits patternUnits patternContentUnits clipPathUnits " +
+      "maskUnits maskContentUnits filterUnits primitiveUnits spreadMethod " +
+      "fill fill-opacity fill-rule stroke stroke-width stroke-linecap " +
+      "stroke-linejoin stroke-miterlimit stroke-dasharray stroke-dashoffset " +
+      "stroke-opacity opacity color stop-color stop-opacity clip-path " +
+      "clip-rule mask filter marker-start marker-mid marker-end paint-order " +
+      "vector-effect shape-rendering text-rendering image-rendering " +
+      "color-interpolation color-interpolation-filters flood-color " +
+      "flood-opacity lighting-color display visibility overflow " +
+      "mix-blend-mode isolation font-family font-size font-weight font-style " +
+      "letter-spacing word-spacing text-anchor dominant-baseline " +
+      "alignment-baseline baseline-shift writing-mode text-decoration " +
+      "xml:space in in2 result stdDeviation operator mode type values k1 k2 " +
+      "k3 k4 radius scale xChannelSelector yChannelSelector edgeMode order " +
+      "kernelMatrix divisor bias targetX targetY tableValues slope intercept " +
+      "amplitude exponent baseFrequency numOctaves seed stitchTiles " +
+      "surfaceScale specularConstant specularExponent diffuseConstant " +
+      "azimuth elevation limitingConeAngle pointsAtX pointsAtY pointsAtZ"
+    ).split(" "),
+  )
   const KEEP = new Set([
     "type",
     "placeholder",
@@ -321,7 +350,12 @@ async function snapshot(
           if (key.startsWith("data-") || key.startsWith("aria-")) continue
           // Redacted, only links inside the copy stay (see `unlink`).
           if (redact && key.endsWith("href") && !value.startsWith("#")) continue
-          attrs.push(`${key}="${attr(redact ? unlink(value) : value)}"`)
+          const kept = !redact
+            ? value
+            : DRAW.has(key)
+              ? unlink(value)
+              : hide(value)
+          attrs.push(`${key}="${attr(kept)}"`)
         } else if (KEEP.has(key))
           attrs.push(
             `${key}="${attr(key === "placeholder" && redact ? hide(value) : value)}"`,
