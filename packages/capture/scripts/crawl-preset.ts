@@ -25,7 +25,8 @@
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
- *     in one new tab of your profile. <file> maps each page key, with account
+ *     in one new tab of your profile (with --window <n>, in a window of its
+ *     own, the nth of runs side by side). <file> maps each page key, with account
  *     segments as placeholders, to its real URL; real URLs are never
  *     written. Modes are emulated (prefers-color-scheme), and a page with a
  *     `mode` is read only in it: a product with an appearance setting needs
@@ -136,6 +137,7 @@ const { values: args } = parseArgs({
     copies: { type: "string", default: "120" },
     concurrency: { type: "string", default: "2" },
     shots: { type: "boolean" },
+    window: { type: "string" },
   },
   allowNegative: true,
 })
@@ -1290,7 +1292,21 @@ async function connected(): Promise<CensusPage[]> {
   let tab: Page | undefined
   const open = async (job: Job) => {
     if (!tab) {
-      tab = await browser.newPage()
+      // Chrome draws only the front tab of a window that shows: runs side by
+      // side each take a window, --window <n> the nth from the left.
+      tab = await browser.newPage(
+        args.window === undefined
+          ? undefined
+          : {
+              type: "window",
+              windowBounds: {
+                left: Number(args.window) * 490,
+                top: 40,
+                width: 480,
+                height: 860,
+              },
+            },
+      )
       await shim(tab)
       await focusable(tab)
     }
