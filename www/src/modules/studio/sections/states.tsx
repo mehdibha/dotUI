@@ -5,6 +5,7 @@
    the panel's own inks at its real geometry. */
 
 import { useRef } from "react"
+import { AppWindowIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   ToggleButton as RacToggleButton,
@@ -156,7 +157,10 @@ const textOn = (value: string, background: string) =>
 /** Painted words: the row shows the highlight itself. */
 export function TextSelectionPreview({ state }: { state: Effective }) {
   const value = state.selectionHighlight
-  const background = useHighlightFill()(value, state.selectionCustomColor)
+  const fill = useHighlightFill()
+  if (value === "browser")
+    return <AppWindowIcon className="size-4 shrink-0 text-fg/70" />
+  const background = fill(value, state.selectionCustomColor)
   const color = textOn(value, background)
   return (
     <span className="rounded-xs px-1 text-[11px]" style={{ background, color }}>
@@ -518,7 +522,7 @@ function HighlightRow() {
         }}
         className="flex items-center gap-2"
       >
-        {(["accent", "neutral", "browser"] as const).map((value) => (
+        {(["accent", "neutral"] as const).map((value) => (
           <Tooltip key={value} delay={0}>
             <RacToggleButton
               id={value}
@@ -529,6 +533,20 @@ function HighlightRow() {
             <TooltipContent>{label(value)}</TooltipContent>
           </Tooltip>
         ))}
+        {/* Not a color: each viewer's system decides it. */}
+        <Tooltip delay={0}>
+          <RacToggleButton
+            id="browser"
+            aria-label="Browser default"
+            className={cn(
+              SWATCH,
+              "flex items-center justify-center bg-(--panel-surface,var(--color-card))",
+            )}
+          >
+            <AppWindowIcon className="size-3 text-fg/70" />
+          </RacToggleButton>
+          <TooltipContent>Browser default</TooltipContent>
+        </Tooltip>
         <ColorPicker value={draft} onChange={setDraft}>
           <Tooltip delay={0}>
             <RacToggleButton
