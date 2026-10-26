@@ -10,6 +10,7 @@ import type { Mode, StepName, Theme } from "@dotui/colors"
 import { effective } from "../axes"
 import type { Effective } from "../axes"
 import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
+import { STYLE_OPTIONS } from "../axes/style.meta"
 import {
   cardRung,
   pickSurfaceLook,
@@ -103,31 +104,40 @@ const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
 /** The main page's Surfaces: a look sets layers, edge and shadow; Custom
- *  opens the page. Style reads as the look its column draws. */
+ *  opens the page. The look the Style draws stands for the Style, so picking
+ *  it keeps following; a Style that draws none of them gets its own entry. */
 export function SurfacesRow() {
   const { state, setState } = useStudio()
   const { theme } = usePanelMode()
-  const options = LOOK_OPTIONS.map((option) => {
-    const look = effective(
-      pickSurfaceLook(state, option.value as SurfaceLookId),
-    ).values
-    const drawn = option.value === "style" ? surfaceLookOf(look) : undefined
-    const label =
-      drawn && drawn !== "style"
-        ? `Style · ${LOOK_OPTIONS.find((o) => o.value === drawn)?.label}`
-        : option.label
-    return {
-      ...option,
-      label,
-      glyph: <SurfaceGlyph state={look} theme={theme} />,
-    }
-  })
+  const lookOf = (id: SurfaceLookId) =>
+    effective(pickSurfaceLook(state, id)).values
+  const drawn = surfaceLookOf(lookOf("style"))
+  const pick = (id: SurfaceLookId) => (id === drawn ? "style" : id)
+  const saved = surfaceLookOf(state)
+  const options = LOOK_OPTIONS.filter(
+    (option) => option.value !== "style" || !drawn,
+  ).map((option) => ({
+    ...option,
+    label:
+      option.value === "style"
+        ? (STYLE_OPTIONS.find((o) => o.value === state.style)?.label ??
+          option.label)
+        : option.label,
+    glyph: (
+      <SurfaceGlyph
+        state={lookOf(pick(option.value as SurfaceLookId))}
+        theme={theme}
+      />
+    ),
+  }))
   return (
     <DialSelect
       label="Surfaces"
-      value={surfaceLookOf(state) ?? "Custom"}
+      value={saved === "style" ? (drawn ?? "style") : (saved ?? "Custom")}
       options={options}
-      onChange={(id) => setState(pickSurfaceLook(state, id as SurfaceLookId))}
+      onChange={(id) =>
+        setState(pickSurfaceLook(state, pick(id as SurfaceLookId)))
+      }
     >
       <DialLink page="surfaces" label="Custom" value={null} />
     </DialSelect>
