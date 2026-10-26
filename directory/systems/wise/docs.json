@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "wise",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Neptune pairs a forest green with a bright green. Light pages are white with #0e0f0c titles and #454745 body text; forest #163300 is the ink for links, labels on green, checks and focus; bright green #9fe870 fills the primary button. Control edges are #868685. Dark mode moves to #121511 pages and #1e211d raised surfaces, and swaps the roles: bright green becomes the link, check and focus color, still with forest labels on the primary button.",

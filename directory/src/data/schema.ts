@@ -375,4 +375,10 @@ export interface CapturedSystem {
   looks: number
   /** Looks the preset misses. */
   off: number
+  /** Its Blocks tab's pages, by title, once a capture froze blocks. */
+  blockPages?: string[]
 }
+
+/** A page key without its scheme and trailing slash. */
+export const pageLabel = (key: string) =>
+  key.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "untitled",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Neutral greys (Tailwind neutral, no tint) on a white page, with one purple brand. Values and headings are #171717, control labels #404040, supporting text #525252. Hairlines are #e5e5e5; control rings #d4d4d4. Brand-600 #7f56d9 fills the primary button, brand-700 #6941c6 colors brand text and #f9f5ff washes selected tabs. Focus rings are #9e77ed. Dark keeps every surface on the #0a0a0a page tone and tells them apart by rings and shadows: #fafafa values, #d4d4d4 labels, #a1a1a1 supporting text.",

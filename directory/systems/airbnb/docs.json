@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "airbnb",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Almost no color in the interface: #222222 ink on white, #6c6c6c for secondary text, #dddddd borders, #f7f7f7 and #f2f2f2 fills. The brand's pink-to-magenta gradient (#e61e4d to #d70466) is kept for the main action and the search button; photos carry the rest.",
@@ -761,6 +761,221 @@
       }
     }
   },
+  "pages": {
+    "https://www.airbnb.com/": {
+      "title": "Home",
+      "summary": "The signed-out home page: the header with its category tabs, the floating search bar, full-width rows of small listing cards, and a tall grey footer.",
+      "layout": [
+        "Some loads open on a 76px AI search banner; the 96px header follows.",
+        "The search bar is 850x66, centred under the header.",
+        "Rows run the full width with 48px side margins; cards are 180px, seven to a row.",
+        "The footer is 705px on #f7f7f7."
+      ]
+    },
+    "https://www.airbnb.com/s/Paris/homes": {
+      "title": "Search results",
+      "summary": "Results and a map side by side, under a compact header and a row of filter chips.",
+      "layout": [
+        "Header 96px, the search collapsed to a 404x46 pill in its centre, then a 54px filter bar.",
+        "Results run from x48 to x710, two 307px cards to a row.",
+        "The map is 658px wide at x734 and fills the viewport's height under the bars (684px).",
+        "Pagination sits under the results; the footer is 625px."
+      ]
+    },
+    "https://www.airbnb.com/rooms/47803806": {
+      "title": "Listing",
+      "summary": "A listing: title and photos across the content width, then sections in a left column beside the booking card, then reviews, host and things to know across the width again.",
+      "layout": [
+        "Content is 1120px, centred at x153.",
+        "The photo grid is 1120x476 with 12px outer corners: one large photo and four small.",
+        "Below it the page splits: a 653px column and the 372px booking card at x899, which stays in view as the column scrolls.",
+        "Reviews, the host and things to know return to the full 1120px."
+      ]
+    },
+    "https://www.airbnb.com/host/homes": {
+      "title": "Become a host",
+      "summary": "The hosting landing page: an earnings hero with a map, then stacked full-width sections: a banner, value props, co-hosts, AirCover and questions.",
+      "layout": [
+        "Header 80px, with no search bar.",
+        "Hero 800px: the headline and an earnings slider on the left, a 624x592 map on the right.",
+        "Narrow content centres at 848px (the banner, the questions), wide rows at 1216px (the co-hosts).",
+        "The footer is 625px, as on search and listings."
+      ]
+    }
+  },
+  "blocks": {
+    "ai-search-banner": {
+      "title": "AI search banner",
+      "note": "A 76px dark strip above the header that offers the new AI search, with an Off switch. It is an experiment: some loads leave it out.",
+      "uses": ["switch"]
+    },
+    "site-header": {
+      "title": "Header",
+      "note": "Logo, the Homes, Experiences and Services tabs, and Become a host with two round icon buttons. The tab icons are short videos, which the copy keeps as grey boxes.",
+      "uses": ["tabs", "button"]
+    },
+    "search-bar": {
+      "title": "Search bar",
+      "note": "An 850x66 pill with a 1px #dddddd border and a soft 0 8px 24px shadow: Where, When and Who split by short rules, and the round gradient search button.",
+      "uses": ["search-field", "button"]
+    },
+    "listing-row": {
+      "title": "Listing row",
+      "note": "A titled row of seven 180px cards, with small round arrows to page it.",
+      "uses": ["card", "button"]
+    },
+    "listing-card": {
+      "title": "Listing card",
+      "note": "A photo with 20px corners, a Guest favorite pill in 80% white and a heart over it; title, price and rating under it, with no card surface.",
+      "uses": ["card", "badge", "toggle-button"]
+    },
+    "profile-menu": {
+      "title": "Profile menu",
+      "note": "A 265px menu with 12px corners and a 0 2px 16px shadow: groups of rows split by rules, one with a picture and a description. The first row shows a 2px focus ring because the capture opened the menu with the keyboard.",
+      "uses": ["popover", "separator"]
+    },
+    "login-dialog": {
+      "title": "Log in dialog",
+      "note": "A 480px dialog with 32px corners: a 60px field with a 1px inset ring and 12px corners, the full-width gradient Continue button (48px), and square Google and Apple buttons.",
+      "uses": ["dialog", "text-field", "button", "separator"]
+    },
+    "date-picker": {
+      "title": "Date picker",
+      "note": "Opens from When: a Dates and Flexible pill switch on #ebebeb, two months side by side, and pill chips for how flexible the dates are, the selected one outlined in #222222.",
+      "uses": ["toggle-button"]
+    },
+    "footer": {
+      "title": "Footer",
+      "note": "Three columns of links on #f7f7f7, then a bottom row with legal links, language and currency, and social icons. The copy leaves out the inspiration tabs above it.",
+      "uses": ["link", "button"]
+    },
+    "search-header": {
+      "title": "Search header",
+      "note": "On results the search bar collapses into a 404x46 pill inside the 96px header, with the same 1px #dddddd border and a lighter shadow.",
+      "uses": ["search-field", "button"]
+    },
+    "filter-bar": {
+      "title": "Filter bar",
+      "note": "A row of 34px chips: white, a 1px #dddddd border, 24px corners and 12px text; some carry a chevron for a menu.",
+      "uses": ["toggle-button", "button"]
+    },
+    "result-card": {
+      "title": "Result card",
+      "note": "The listing card at 307px with more lines: a 230px photo with 20px corners and dots, a Superhost pill, the title and rating, a description, beds, dates, and the old price struck through beside the new one.",
+      "uses": ["card", "badge", "toggle-button"]
+    },
+    "featured-hotels": {
+      "title": "Featured hotels",
+      "note": "A 686px panel on warm #f7f6f2 with 20px corners and 24px padding: a header with a 1/5 counter and round arrows, a carousel of 270px hotel cards, and a white Search hotels button.",
+      "uses": ["card", "badge", "button"]
+    },
+    "price-details": {
+      "title": "Price details",
+      "note": "Opens from a card's price: a popover in 92.5% white with about 28px corners, a round close button, the price lines and a #f7f7f7 credit callout.",
+      "uses": ["popover", "button"]
+    },
+    "map": {
+      "title": "Map",
+      "note": "Prices as white pills and neighborhood labels over the map, with round zoom and expand buttons. The tiles are drawn on a canvas, so the copy shows a grey base under them.",
+      "uses": ["button"]
+    },
+    "filters-dialog": {
+      "title": "Filters dialog",
+      "note": "A 568x820 dialog with 32px corners: a centred title and close button, sections split by rules (recommended tiles, a Type of place segmented control, price), and a footer bar with an upward shadow.",
+      "uses": ["dialog", "toggle-button", "separator", "button"]
+    },
+    "pagination": {
+      "title": "Pagination",
+      "note": "Round 32px page buttons, the current one filled #222222 with white text, and an arrow at each end.",
+      "uses": ["button"]
+    },
+    "listing-title": {
+      "title": "Listing title",
+      "note": "The listing's name on the left; Share and Save as underlined text buttons with icons on the right.",
+      "uses": ["button"]
+    },
+    "photo-grid": {
+      "title": "Photo grid",
+      "note": "One large photo and four small ones, with 12px corners on the grid's outside only, and a small Show all photos button over the last.",
+      "uses": ["button"]
+    },
+    "guest-favorite-strip": {
+      "title": "Guest favorite strip",
+      "note": "A 653px box with a 1px #dddddd border and 12px corners: laurels, a one-line claim, the rating and the review count split by a rule.",
+      "uses": ["card", "separator"]
+    },
+    "highlights": {
+      "title": "Highlights",
+      "note": "Three rows of an icon, a title and a muted line, with no surface."
+    },
+    "booking-card": {
+      "title": "Booking card",
+      "note": "A 372px card with 12px corners, a 1px #dddddd border and a 0 6px 16px shadow: check-in, checkout and guests as one field group outlined in #8c8c8c, and the gradient Check availability button.",
+      "uses": ["card", "text-field", "button"]
+    },
+    "sleep-cards": {
+      "title": "Where you'll sleep",
+      "note": "Bedroom cards 207px wide with a 1px #dddddd border, 12px corners and 24px padding, bed icons above the name.",
+      "uses": ["card"]
+    },
+    "amenities": {
+      "title": "Amenities",
+      "note": "Two columns of icon and label, and a #f2f2f2 Show all button, 48px with 12px corners.",
+      "uses": ["button"]
+    },
+    "inline-calendar": {
+      "title": "Calendar",
+      "note": "The date picker's two months, inline on the page: past and unavailable days struck through, and a Clear dates text button.",
+      "uses": ["button"]
+    },
+    "rating-summary": {
+      "title": "Rating summary",
+      "note": "The guest favorite rating set large between laurels, with a short line under it. The copy stops above the category scores that follow on the page."
+    },
+    "review": {
+      "title": "Review",
+      "note": "Avatar, name and meta lines, a row of stars, and the review's text. Redacted, as it shows a guest.",
+      "uses": ["avatar"]
+    },
+    "host-profile": {
+      "title": "Host profile",
+      "note": "A 395px host card with 24px corners and the dialog's 0 8px 24px shadow (avatar, name, three stats), host details beside it, and a grey message button. Redacted, as it shows the host.",
+      "uses": ["card", "avatar", "button", "separator"]
+    },
+    "things-to-know": {
+      "title": "Things to know",
+      "note": "Short sections in a three-column grid: an icon, a title, a muted line and an underlined Show more.",
+      "uses": ["button"]
+    },
+    "earnings-hero": {
+      "title": "Earnings hero",
+      "note": "A large centred headline with the estimate, a slider, a search pill, and a 624x592 map of nearby prices on the right.",
+      "uses": ["search-field"]
+    },
+    "hosting-banner": {
+      "title": "Hosting banner",
+      "note": "An 848px band on warm #f4f2ec with 24px corners: an illustration, a two-line pitch, and a #222222 pill button.",
+      "uses": ["button"]
+    },
+    "value-props": {
+      "title": "Value props",
+      "note": "Three centred columns of an icon on a soft square, a title and a muted paragraph. The copy leaves out the section's title."
+    },
+    "cohost-cards": {
+      "title": "Co-host cards",
+      "note": "Four 220x292 cards on #f7f7f7 with 30px corners and 30px padding: a 140px photo, a name, a short line and a strip of two stats. Redacted, as they show people.",
+      "uses": ["card", "avatar"]
+    },
+    "aircover-list": {
+      "title": "AirCover list",
+      "note": "Rows of what AirCover covers with green checks, split by 1px #dddddd rules, small print, and a 48px #222222 pill button. The copy leaves out the section's title and column headers.",
+      "uses": ["table", "button"]
+    },
+    "faq": {
+      "title": "Questions",
+      "note": "Accordion rows 848px wide on #f7f7f7, split by 1px #dddddd rules, each with a chevron. The copy holds the rows only, not the section's title."
+    }
+  },
   "provenance": {
     "method": "manual",
     "extractor": null,
@@ -773,6 +988,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 7be1fff) and its page shots, public pages in light. Names marked ai are ours; Airbnb publishes no component docs."
+    "notes": "Written section by section from the census (spec.json, census 7be1fff) and its page shots, public pages in light; pages and blocks from blocks.json's copies of 2026-10-25 and their computed styles. Names marked ai are ours; Airbnb publishes no component docs."
   }
 }

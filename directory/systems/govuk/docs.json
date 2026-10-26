@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "govuk",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Near-black #0b0c0c text on white, #484949 for secondary text, #cecece borders and #f3f3f3 for plates and inactive tabs. Links are blue #1a65a6, the header and brand blue #1d70b8, and the main button green #0f7a52. Focus is a yellow #ffdd00 fill, not a ring. Live gov.uk sets its footer and feedback band on a pale blue #f4f8fb.",

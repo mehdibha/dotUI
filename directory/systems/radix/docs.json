@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "radix",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Radix Colors' 12-step scales: slate for the neutrals, indigo for the accent. The page is white (#111113 in dark), text slate-12 #1c2024 (#edeef0) and muted text #60646c. The accent solid, indigo-9 #3e63dd, is the same in both modes; links and soft text use indigo-11 (#3a5bc7, #9eb1ff in dark) and soft fills indigo-3 (#edf2fe). Edges are alpha steps: slate-a7 around fields (#cdced6 on white) and slate-a6 for separators (#d9d9e0). Menus and dialogs sit on the solid panel: white, or slate-2 #18191b in dark.",

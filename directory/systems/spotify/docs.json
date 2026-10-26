@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "spotify",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "Dark everywhere a user looks: the web player and the login page are #121212 pages in a #000 frame, with white ink and #b3b3b3 for secondary text. Containers step up in grey: #1f1f1f for the search field and the sidebar's prompt cards, #282828 for menus, tooltips and dialogs, #2a2a2a on hover. The bright accent #1ed760 carries black labels. Control edges are #7c7c7c.",

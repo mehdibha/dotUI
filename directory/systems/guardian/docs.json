@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "guardian",
-  "blocks": {
+  "sections": {
     "color": {
       "status": "reviewed",
       "summary": "White pages with #121212 ink, #707070 for secondary text and field edges, #dcdcdc rules. Navy #052962 is the brand: the masthead, the footer and the primary button. Source's blue #0077b6 is for focus, checks, radios and help links; #c1d8fc fills the secondary button; yellow #ffe500 is kept for reader revenue (Support us). Errors are #c70000 and success #22874d. Dark (an opt-in on theguardian.com) turns the article #1a1a1a with #dcdcdc ink and #333333 rules; the sign-in gateway goes black with #999999 field edges.",

@@ -35,10 +35,17 @@ async function copyOf(slug: string, path: string): Promise<Snapshot | null> {
 export function Copy({
   slug,
   path,
+  clip,
+  size,
   className,
 }: {
   slug: string
   path: string
+  /** Cut what hangs past its box, keeping a margin for shadows. */
+  clip?: boolean
+  /** Its width and height when known, held while it loads so the page
+   *  doesn't jump under a link to what follows. */
+  size?: [number, number]
   className?: string
 }) {
   const [ref, seen] = useSeen<HTMLDivElement>()
@@ -60,9 +67,16 @@ export function Copy({
       style={{ backgroundColor: snapshot?.backdrop }}
     >
       {snapshot ? (
-        <Fit snapshot={snapshot} />
+        <Fit snapshot={snapshot} clip={clip} />
       ) : (
-        <p className="p-3 text-xs text-fg-muted">
+        <p
+          className="p-3 text-xs text-fg-muted"
+          style={
+            size && snapshot === undefined
+              ? { aspectRatio: `${size[0]} / ${size[1]}`, maxWidth: size[0] }
+              : undefined
+          }
+        >
           {snapshot === null ? "Copy missing" : "Loading…"}
         </p>
       )}
@@ -71,7 +85,7 @@ export function Copy({
 }
 
 /** The copy at its own size, scaled down when its tile is narrower. */
-function Fit({ snapshot }: { snapshot: Snapshot }) {
+function Fit({ snapshot, clip }: { snapshot: Snapshot; clip?: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   useLayoutEffect(() => {
@@ -91,7 +105,11 @@ function Fit({ snapshot }: { snapshot: Snapshot }) {
       <div ref={ref} style={{ height: snapshot.height * scale }}>
         <ShadowCopy
           snapshot={snapshot}
-          style={{ transform: `scale(${scale})`, transformOrigin: "0 0" }}
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: "0 0",
+            clipPath: clip ? "inset(-16px)" : undefined,
+          }}
         />
       </div>
     </div>
