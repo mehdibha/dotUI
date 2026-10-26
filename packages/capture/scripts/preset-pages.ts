@@ -168,9 +168,18 @@ export async function runSteps(page: Page, steps: Step[]) {
       // Puppeteer presses one key: "Meta+k" holds Meta while it presses k.
       const keys = step.press.split(/\+(?=.)/) as KeyInput[]
       const key = keys.pop() as KeyInput
-      for (const modifier of keys) await page.keyboard.down(modifier)
-      await page.keyboard.press(key)
-      for (const modifier of keys.reverse()) await page.keyboard.up(modifier)
+      const held: KeyInput[] = []
+      try {
+        for (const modifier of keys) {
+          await page.keyboard.down(modifier)
+          held.push(modifier)
+        }
+        await page.keyboard.press(key)
+      } finally {
+        // A modifier left down would ride along on the tab's next steps.
+        for (const modifier of held.reverse())
+          await page.keyboard.up(modifier).catch(() => {})
+      }
       continue
     }
     const selector =
