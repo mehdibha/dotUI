@@ -227,6 +227,7 @@ export const LOOKS = {
   "surface.overlay-dark": look("Dark overlays on the card or page tone"),
   "surface.tooltip-dark": look("Tooltips that stay dark in dark mode"),
   "surface.tooltip-chip": look("Tooltips as a mid-gray chip"),
+  "surface.menu-highlight": look("Option highlight as a brand tint"),
   "surface.scrim": look("Dialog scrim per mode and kind"),
   "surface.hairline-width": look("Half-pixel hairlines"),
   "surface.field-layer": look("Layer-aware fields"),

@@ -193,7 +193,16 @@
   },
   "https://bsky.app/": {
     "signedIn": true,
-    "parts": {}
+    "parts": {
+      "nav.item": {
+        "selector": "[role=navigation] a[href='/search']",
+        "ink": "div[dir=auto]"
+      },
+      "nav.item.active": {
+        "selector": "[role=navigation] a[href='/']",
+        "ink": "div[dir=auto]"
+      }
+    }
   },
   "https://bsky.app/feeds": {
     "signedIn": true,
@@ -265,7 +274,12 @@
   },
   "https://bsky.app/settings/language": {
     "signedIn": true,
-    "parts": {}
+    "parts": {
+      "select.trigger": {
+        "selector": "button[role=combobox]",
+        "ink": "div[dir=auto]"
+      }
+    }
   },
   "https://bsky.app/settings/notifications": {
     "signedIn": true,
