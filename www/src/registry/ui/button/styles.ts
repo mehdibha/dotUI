@@ -278,16 +278,21 @@ export const BUTTON_CASE = {
 /* A quiet toggle's selected fill and ink per look, apart: pill tabs put the
    ink on the tab and the fill on their gliding indicator. */
 export const SELECTED_TONE_FILL =
-  "selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active"
-export const SELECTED_TONE_INK = "selected:text-fg-on-selected"
+  "selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active disabled:selected:bg-(--disabled-selected-bg,var(--color-selected))"
+export const SELECTED_TONE_INK =
+  "selected:text-fg-on-selected disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))"
 export const SELECTED_SOLID_FILL =
-  "selected:bg-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover"
-export const SELECTED_SOLID_INK = "selected:text-fg-on-selection"
-export const SELECTED_TINT_FILL = "selected:bg-selection-muted"
-export const SELECTED_TINT_INK = "selected:text-fg"
+  "selected:bg-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))"
+export const SELECTED_SOLID_INK =
+  "selected:text-fg-on-selection disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection))"
+export const SELECTED_TINT_FILL =
+  "selected:bg-selection-muted disabled:selected:bg-(--disabled-selected-bg,var(--color-selection-muted))"
+export const SELECTED_TINT_INK =
+  "selected:text-fg disabled:selected:text-(--disabled-selected-fg,var(--color-fg))"
 export const SELECTED_INVERSE_FILL =
-  "selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80"
-export const SELECTED_INVERSE_INK = "selected:text-fg-inverse"
+  "selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80 disabled:selected:bg-(--disabled-selected-bg,var(--color-inverse))"
+export const SELECTED_INVERSE_INK =
+  "selected:text-fg-inverse disabled:selected:text-(--disabled-selected-fg,var(--color-fg-inverse))"
 
 /* A selected toggle's look; a current pagination page can wear it too. */
 export const SELECTED_LOOKS = {
@@ -299,8 +304,11 @@ export const SELECTED_LOOKS = {
     variants: {
       variant: {
         primary: [SELECTED_TONE_FILL, SELECTED_TONE_INK],
-        secondary:
-          "selected:border-selection selected:bg-selection selected:text-fg-on-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover",
+        secondary: [
+          "selected:border-selection disabled:selected:border-(--disabled-border,var(--color-selection))",
+          SELECTED_SOLID_FILL,
+          SELECTED_SOLID_INK,
+        ],
         quiet: [SELECTED_SOLID_FILL, SELECTED_SOLID_INK],
       },
     },
@@ -311,8 +319,11 @@ export const SELECTED_LOOKS = {
     variants: {
       variant: {
         primary: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
-        secondary:
-          "selected:border-selection/25 selected:bg-selection-muted selected:text-fg",
+        secondary: [
+          "selected:border-selection/25 disabled:selected:border-(--disabled-border,color-mix(in_oklab,var(--color-selection)_25%,transparent))",
+          SELECTED_TINT_FILL,
+          SELECTED_TINT_INK,
+        ],
         quiet: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
       },
     },
@@ -323,10 +334,15 @@ export const SELECTED_LOOKS = {
   inverse: {
     variants: {
       variant: {
-        primary:
-          "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
-        secondary:
-          "selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        primary: [
+          "selected:bg-(--surface-bg,var(--color-bg)) selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight disabled:selected:bg-(--disabled-selected-bg,var(--surface-bg,var(--color-bg)))",
+          SELECTED_TINT_INK,
+        ],
+        secondary: [
+          "selected:border-inverse disabled:selected:border-(--disabled-border,var(--color-inverse))",
+          SELECTED_INVERSE_FILL,
+          SELECTED_INVERSE_INK,
+        ],
         quiet: [SELECTED_INVERSE_FILL, SELECTED_INVERSE_INK],
       },
     },

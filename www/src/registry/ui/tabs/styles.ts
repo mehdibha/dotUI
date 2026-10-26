@@ -63,7 +63,10 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         },
         line: {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
-          item: "rounded-(--studio-tabs-tab-radius) orientation-horizontal:h-full selected:text-fg",
+          item: [
+            "rounded-(--studio-tabs-tab-radius) orientation-horizontal:h-full",
+            SELECTED_TINT_INK,
+          ],
           indicator:
             "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full",
         },
@@ -77,7 +80,10 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
           // The selected tab steps one pixel onto the list's edge and paints
           // over it, so tab and content read as one surface.
-          item: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+          item: [
+            "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+            SELECTED_TINT_INK,
+          ],
           indicator: "hidden",
         },
       },
@@ -207,10 +213,24 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     },
     color: {
       neutral: {
-        variants: { variant: { line: { indicator: "bg-fg" } } },
+        variants: {
+          variant: {
+            line: {
+              indicator:
+                "bg-fg in-disabled:bg-(--disabled-selected-fg,var(--color-fg))",
+            },
+          },
+        },
       },
       accent: {
-        variants: { variant: { line: { indicator: "bg-accent" } } },
+        variants: {
+          variant: {
+            line: {
+              indicator:
+                "bg-accent in-disabled:bg-(--disabled-selected-fg,var(--color-accent))",
+            },
+          },
+        },
       },
     },
     chip: {
@@ -234,7 +254,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
             pill: {
               item: SELECTED_TONE_INK,
               indicator:
-                "bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active",
+                "bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active in-disabled:bg-(--disabled-selected-bg,var(--color-selected))",
             },
           },
         },
@@ -245,7 +265,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
             pill: {
               item: SELECTED_SOLID_INK,
               indicator:
-                "bg-selection group-hover/tab:bg-selection-hover group-pressed/tab:bg-selection-hover",
+                "bg-selection group-hover/tab:bg-selection-hover group-pressed/tab:bg-selection-hover in-disabled:bg-(--disabled-selected-bg,var(--color-selection))",
             },
           },
         },
@@ -253,7 +273,11 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       tint: {
         variants: {
           variant: {
-            pill: { item: SELECTED_TINT_INK, indicator: "bg-selection-muted" },
+            pill: {
+              item: SELECTED_TINT_INK,
+              indicator:
+                "bg-selection-muted in-disabled:bg-(--disabled-selected-bg,var(--color-selection-muted))",
+            },
           },
         },
       },
@@ -263,7 +287,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
             pill: {
               item: SELECTED_INVERSE_INK,
               indicator:
-                "bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
+                "bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80 in-disabled:bg-(--disabled-selected-bg,var(--color-inverse))",
             },
           },
         },
