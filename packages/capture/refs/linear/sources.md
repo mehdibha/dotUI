@@ -4,7 +4,7 @@ Linear publishes no design tokens as code. Values come from computed styles in t
 
 ## 2026-10-26
 
-A tuning pass, no new capture. The probe at ce94064 is byte-identical to 8eb9b12 (the squash of #1043), so `tokens.json` was re-merged from the 2026-10-21 and 2026-10-22 raw readings with `--merge` and only its probe stamp changed. The signed-in census of 2026-10-25 (35 Linear pages, both themes) was the cross-check: it agrees with the pack on every part except edges.
+A tuning pass, no new capture. The probe at ce94064 is byte-identical to 8eb9b12 (the squash of #1043), so `tokens.json` was re-merged from the 2026-10-21 and 2026-10-22 raw readings with `--merge`: the readings came back identical and only the probe stamp changed. The skips below then drop three `backgroundColor` values in both themes. The signed-in census of 2026-10-25 (35 Linear pages, both themes) was the cross-check: it agrees with the pack on every part except edges.
 
 - **Hairlines are device pixels.** The census ran at DPR 1, where Linear's `--sx-1ele6il` and `--editor-hairline` compute 1px instead of 0.5px and the edge colors step up to hold the same weight (control edges `#e5e5e5` / `#38383a`). The pack's 0.5px readings come from DPR 2. Both are the same design: one device pixel.
 - **Skips**: `button.quiet`, `calendar.day` and `segmented` leave out `backgroundColor`. Each reads the fill of whatever sits behind it (the settings panel, the date popover, the Display options popover), which the specimen's placement decides, not the part.
