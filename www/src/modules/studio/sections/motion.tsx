@@ -32,15 +32,7 @@ import {
   presetOptions,
 } from "../axes/motion.meta"
 import type { ChapterPage } from "../chapters"
-import { DialChoices } from "../choices"
-import {
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DialGap,
-  DialLink,
-  DialSelect,
-  DialSlider,
-} from "../dial"
+import { DIAL_LABEL, DialGap, DialLink, DialSelect, DialSlider } from "../dial"
 import { CurveGraph, useFlip } from "../preview/boards/motion-parts"
 import { Row, useRowLabel } from "../row-host"
 import type { RowMap } from "../row-host"
@@ -131,10 +123,7 @@ export function ComponentMotionRow() {
             key={key}
             data-page-link={`${id}-motion`}
             onPress={() => open(`${id}-motion`)}
-            className={cn(
-              DIAL_PRESS,
-              "flex h-8 items-center justify-between gap-3 rounded-md pr-1 pl-1.5",
-            )}
+            className="flex cursor-interactive items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-none hover:tint-10 focus-visible:focus-ring pressed:tint-10"
           >
             <span className={DIAL_LABEL}>{label}</span>
             <span
@@ -162,7 +151,12 @@ export function ComponentMotionRow() {
 }
 
 const MotionStyleRow = () => (
-  <DialChoices axis="motion" label="Style" options={MOTION_OPTIONS} />
+  <DialSelect
+    axis="motion"
+    label="Style"
+    options={MOTION_OPTIONS}
+    placement="bottom end"
+  />
 )
 
 const factor = (value: number) => `${Number(value.toFixed(2))}×`
@@ -199,9 +193,11 @@ function PresetsRow({ motionKey: key }: { motionKey: ComponentMotionKey }) {
   const { state, effective, setState } = useStudio()
   const style = effective.motion
   return (
-    <DialChoices
+    <DialSelect
       axis={key}
       label="Preset"
+      value={String(effective[key])}
+      placement="bottom end"
       onChange={(value) =>
         setState({
           ...state,
@@ -277,6 +273,7 @@ const customEaseRow = (key: ComponentMotionKey) =>
             axis={ease}
             label="Easing"
             options={EASE_OPTIONS}
+            placement="bottom end"
             {...(!custom && { value: String(shown[ease]) })}
           />
         )}
@@ -319,7 +316,12 @@ export const MOTION_PAGES: ChapterPage[] = COMPONENTS.map(
           <>
             {entrance && (
               <>
-                <Row axis={entrance} label="Entrance" />
+                <DialSelect
+                  axis={entrance}
+                  label="Entrance"
+                  options={ENTRANCE_OPTIONS}
+                  placement="bottom end"
+                />
                 <DialGap />
               </>
             )}
