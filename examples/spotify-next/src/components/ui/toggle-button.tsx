@@ -8,15 +8,15 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { createVariantsContext } from "@/lib/context";
 
 const toggleButtonStyles = tv({
-  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui outline-none focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-base *:[svg]:not-with-[size]:size-5",
+  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui outline-none focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled text-base *:[svg]:not-with-[size]:size-5",
   variants: {
     variant: {
       primary:
-        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
+        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active selected:bg-(--surface-bg,var(--color-bg)) selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight disabled:selected:bg-(--disabled-selected-bg,var(--surface-bg,var(--color-bg))) selected:text-fg disabled:selected:text-(--disabled-selected-fg,var(--color-fg))",
       secondary:
-        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-transparent text-fg-on-neutral hover:bg-neutral pressed:not-aria-expanded:bg-neutral-hover selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-transparent text-fg-on-neutral hover:bg-neutral pressed:not-aria-expanded:bg-neutral-hover selected:border-inverse disabled:selected:border-(--disabled-border,var(--color-inverse)) selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80 disabled:selected:bg-(--disabled-selected-bg,var(--color-inverse)) selected:text-fg-inverse disabled:selected:text-(--disabled-selected-fg,var(--color-fg-inverse))",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20 selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80 selected:text-fg-inverse",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20 selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80 disabled:selected:bg-(--disabled-selected-bg,var(--color-inverse)) selected:text-fg-inverse disabled:selected:text-(--disabled-selected-fg,var(--color-fg-inverse))",
       link: "disabled:text-(--disabled-fg,var(--color-fg)) underline underline-offset-2 text-fg",
       warning:
         "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
@@ -41,7 +41,7 @@ const toggleButtonStyles = tv({
     {
       variant: "primary",
       class:
-        "disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
+        "disabled:selected:[--disabled-selected-bg:var(--color-primary-disabled)]",
     },
   ],
 });

@@ -24,7 +24,7 @@ const tableVariants = tv({
     header:
       "sticky top-0 z-10 bg-(--surface-bg,var(--color-bg))/95 supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
     column:
-      "box-border cursor-default text-left align-middle font-medium whitespace-nowrap outline-none first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring focus-visible:before:-outline-offset-2 focus-visible:before:content-[''] h-10 px-2.5 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg)) text-fg-muted",
+      "box-border cursor-default text-left align-middle font-medium whitespace-nowrap outline-none allows-sorting:cursor-interactive first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring focus-visible:before:-outline-offset-2 focus-visible:before:content-[''] h-10 px-2.5 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg)) text-fg-muted",
     columnContent: "flex h-full min-w-0 items-center gap-1.5",
     columnLabel: "min-w-0 flex-1 truncate",
     chromeColumn:

@@ -36,13 +36,21 @@ export const INVALID_VALUES = ["edge", "halo", "tint"] as const
 export const INVALID_FILL =
   "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
 
-/** Solid: one grey for every variant. Fade: the control at 50%. */
+/** Solid (shown as Gray): one gray for every control. Fade: the control
+ *  at 50%. */
 export const DISABLED_VALUES = ["solid", "fade"] as const
 
 /* Keyword values only: a cursor token is written straight into CSS. */
 export const CURSOR_CONTROL_VALUES = ["pointer", "default"] as const
 
 export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
+
+/** Over a pending button. */
+export const CURSOR_BUSY_VALUES = ["default", "progress", "wait"] as const
+
+/** Over sliders, color areas and drag handles: the controls' cursor, or an
+ *  open hand that closes while dragging. */
+export const CURSOR_DRAG_VALUES = ["controls", "grab"] as const
 
 /** Whether text on controls and their labels selects. Content always does. */
 export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
@@ -89,8 +97,11 @@ export const chapter = defineChapter({
     focusFieldWidth: 2,
     invalidStyle: "edge",
     disabledTreatment: "solid",
+    disabledOpacity: 50,
     cursorControls: "pointer",
     cursorDisabled: "not-allowed",
+    cursorBusy: "default",
+    cursorDrag: "controls",
     selectionUiText: "none",
   },
   schema: {
@@ -103,8 +114,11 @@ export const chapter = defineChapter({
     focusFieldWidth: range({ min: 1, max: 4, step: 1 }),
     invalidStyle: oneOf(INVALID_VALUES),
     disabledTreatment: oneOf(DISABLED_VALUES),
+    disabledOpacity: range({ min: 30, max: 70, step: 5 }),
     cursorControls: oneOf(CURSOR_CONTROL_VALUES),
     cursorDisabled: oneOf(CURSOR_DISABLED_VALUES),
+    cursorBusy: oneOf(CURSOR_BUSY_VALUES),
+    cursorDrag: oneOf(CURSOR_DRAG_VALUES),
     selectionUiText: oneOf(CONTROL_TEXT_VALUES),
   },
   /** Every token, emitted only where it differs from base.css (Origin). */
@@ -163,13 +177,19 @@ export const chapter = defineChapter({
 
     if (state.disabledTreatment === "fade") {
       for (const name of DISABLED_TOKENS) tokens[name] = "initial"
-      tokens["--disabled-opacity"] = "0.5"
+      tokens["--disabled-opacity"] = String(state.disabledOpacity / 100)
     }
 
     if (state.cursorControls !== "pointer")
       tokens["--cursor-interactive"] = state.cursorControls
     if (state.cursorDisabled !== "not-allowed")
       tokens["--cursor-disabled"] = state.cursorDisabled
+    if (state.cursorBusy !== "default")
+      tokens["--cursor-pending"] = state.cursorBusy
+    if (state.cursorDrag === "grab") {
+      tokens["--cursor-drag"] = "grab"
+      tokens["--cursor-dragging"] = "grabbing"
+    }
     if (state.selectionUiText === "selectable")
       tokens["--user-select-ui"] = "auto"
 
@@ -186,6 +206,14 @@ export const chapter = defineChapter({
     return { tokens, color: { overrides } }
   },
   rules: [
+    // Gray recolors, so only Fade has a strength.
+    {
+      id: "states/opacity-only-fade",
+      target: "disabledOpacity",
+      when: { key: "disabledTreatment", in: ["solid"] },
+      effect: { kind: "hide" },
+      cause: "disabledTreatment",
+    },
     // Only a ring stands off its control.
     {
       id: "states/gap-only-ring",

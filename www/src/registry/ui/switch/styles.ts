@@ -12,13 +12,13 @@ const { useStyles, styles } = createStyles(switchMeta, {
     slots: {
       root: "flex items-center has-data-description:items-start",
       control: [
-        "relative flex items-center gap-2 outline-none not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring focus-visible:not-has-data-label:outline-offset-(--studio-focus-outside-offset) disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius) focus-visible:has-data-label:focus-ring",
+        "relative flex cursor-interactive items-center gap-2 outline-none not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring focus-visible:not-has-data-label:outline-offset-(--studio-focus-outside-offset) disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius) focus-visible:has-data-label:focus-ring",
         "transition-colors duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease) has-data-label:justify-between",
         CHOICE_CARD_SHELL,
       ],
       indicator: [
-        "inline-flex shrink-0 cursor-interactive items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
-        "invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
+        "inline-flex shrink-0 items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
+        "invalid:border-fg-danger invalid:invalid-ring",
       ],
       thumb:
         "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) motion-reduce:transition-none",

@@ -1491,6 +1491,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--color-primary-disabled": "initial",
 				"--disabled-opacity": "0.5",
 				"--cursor-disabled": "default",
+				"--cursor-drag": "grab",
+				"--cursor-dragging": "grabbing",
 				"--switch-track": "var(--neutral-400)",
 				"--studio-switch-track": "var(--switch-track)",
 				"--check-edge": "var(--neutral-400)",
