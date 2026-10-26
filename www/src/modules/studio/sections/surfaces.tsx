@@ -1,7 +1,7 @@
 "use client"
 
 /* Surfaces — on the main page, a link to the Surfaces page showing the look.
-   On the page: the look and its shadow as preview tiles, then overlays, dark
+   On the page: the look as preview tiles, its shadow, then overlays, dark
    mode, the page and the control edges. */
 
 import type { Mode, StepName, Theme } from "@dotui/colors"
@@ -199,26 +199,6 @@ function LookRow() {
   )
 }
 
-function ShadowRow() {
-  const { state } = useStudio()
-  const { theme } = usePanelMode()
-  return (
-    <DialTiles
-      axis="surfaceShadow"
-      label="Shadow"
-      options={SHADOW_OPTIONS.map((option) => ({
-        ...option,
-        tile: (
-          <SurfaceScene
-            state={effective({ ...state, surfaceShadow: option.value }).values}
-            theme={theme}
-          />
-        ),
-      }))}
-    />
-  )
-}
-
 const ShadowColorRow = () => (
   <DialSegmented
     axis="shadowColor"
@@ -229,6 +209,15 @@ const ShadowColorRow = () => (
 
 /* Pickers open under their row, clear of the preview. */
 const UNDER = "bottom end"
+
+const ShadowRow = () => (
+  <DialSelect
+    axis="surfaceShadow"
+    label="Shadow"
+    options={SHADOW_OPTIONS}
+    placement={UNDER}
+  />
+)
 
 const OverlayEdgeRow = () => (
   <DialSelect
