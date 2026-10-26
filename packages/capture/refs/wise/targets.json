@@ -679,7 +679,7 @@
     "parts": {},
     "blocks": {
       "transactions": {
-        "selector": "main"
+        "selector": "#main"
       }
     }
   },
@@ -699,10 +699,13 @@
     "parts": {},
     "blocks": {
       "app-nav": {
+        "selector": ".nav-sidebar"
+      },
+      "top-bar": {
         "selector": "nav"
       },
       "home-page": {
-        "selector": "main"
+        "selector": "#main"
       }
     }
   },
@@ -752,7 +755,7 @@
     "parts": {},
     "blocks": {
       "recipients": {
-        "selector": "main"
+        "selector": "#main"
       }
     }
   },
@@ -772,7 +775,7 @@
     "parts": {},
     "blocks": {
       "account-page": {
-        "selector": "main"
+        "selector": "#main"
       }
     }
   },
