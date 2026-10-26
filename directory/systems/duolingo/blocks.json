@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "slug": "duolingo",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/log-in",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/register#lesson",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/register#check",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/register#hearts",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "login-form",
+      "page": "https://www.duolingo.com/log-in",
+      "box": [
+        533,
+        128,
+        375,
+        645
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-form-light.json",
+        "dark": "2026-10-26/blocks/login-form-dark.json"
+      }
+    },
+    {
+      "name": "lesson-header",
+      "page": "https://www.duolingo.com/register#lesson",
+      "box": [
+        220,
+        50,
+        1000,
+        32
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/lesson-header-light.json",
+        "dark": "2026-10-26/blocks/lesson-header-dark.json"
+      }
+    },
+    {
+      "name": "challenge",
+      "page": "https://www.duolingo.com/register#lesson",
+      "box": [
+        420,
+        205,
+        600,
+        450
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/challenge-light.json",
+        "dark": "2026-10-26/blocks/challenge-dark.json"
+      }
+    },
+    {
+      "name": "lesson-footer",
+      "page": "https://www.duolingo.com/register#lesson",
+      "box": [
+        0,
+        760,
+        1440,
+        140
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/lesson-footer-light.json",
+        "dark": "2026-10-26/blocks/lesson-footer-dark.json"
+      }
+    },
+    {
+      "name": "challenge-selected",
+      "page": "https://www.duolingo.com/register#check",
+      "box": [
+        420,
+        205,
+        600,
+        450
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/challenge-selected-light.json",
+        "dark": "2026-10-26/blocks/challenge-selected-dark.json"
+      }
+    },
+    {
+      "name": "footer-ready",
+      "page": "https://www.duolingo.com/register#check",
+      "box": [
+        0,
+        760,
+        1440,
+        140
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/footer-ready-light.json",
+        "dark": "2026-10-26/blocks/footer-ready-dark.json"
+      }
+    },
+    {
+      "name": "hearts-dialog",
+      "page": "https://www.duolingo.com/register#hearts",
+      "box": [
+        500,
+        305,
+        440,
+        290
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/hearts-dialog-light.json",
+        "dark": "2026-10-26/blocks/hearts-dialog-dark.json"
+      }
+    },
+    {
+      "name": "footer-wrong",
+      "page": "https://www.duolingo.com/register#hearts",
+      "box": [
+        0,
+        760,
+        1440,
+        140
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/footer-wrong-light.json",
+        "dark": "2026-10-26/blocks/footer-wrong-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.duolingo.com/log-in",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            226,
+            0,
+            988,
+            70
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            175,
+            823,
+            1090,
+            74
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            900,
+            1440,
+            6076
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6976,
+            1440,
+            827
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.duolingo.com/register#lesson",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.duolingo.com/register#check",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.duolingo.com/register#hearts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "slug": "notion",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.notion.so/login",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "login-form",
+      "page": "https://www.notion.so/login",
+      "box": [
+        540,
+        236,
+        360,
+        501
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-form-light.json"
+      }
+    },
+    {
+      "name": "site-topbar",
+      "page": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "box": [
+        0,
+        0,
+        1440,
+        104
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-topbar-light.json",
+        "dark": "2026-10-26/blocks/site-topbar-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.notion.so/login",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            104
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            796
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            104
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            796
+          ]
+        }
+      ]
+    }
+  ]
+}

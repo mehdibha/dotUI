@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "slug": "headspace",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/login",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/app",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/sleep",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.headspace.com/subscriptions",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "login-card",
+      "page": "https://www.headspace.com/login",
+      "box": [
+        520,
+        112,
+        400,
+        718
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-card-light.json"
+      }
+    },
+    {
+      "name": "promo-banner",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        0,
+        1440,
+        58
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/promo-banner-light.json"
+      }
+    },
+    {
+      "name": "site-header",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        58,
+        1440,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-header-light.json"
+      }
+    },
+    {
+      "name": "hero",
+      "page": "https://www.headspace.com/",
+      "box": [
+        30,
+        138,
+        1380,
+        749
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/hero-light.json"
+      }
+    },
+    {
+      "name": "need-states",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        887,
+        1440,
+        473
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/need-states-light.json"
+      }
+    },
+    {
+      "name": "feature-tabs",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        1360,
+        1440,
+        956
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/feature-tabs-light.json"
+      }
+    },
+    {
+      "name": "quotes",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        2316,
+        1440,
+        1035
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/quotes-light.json"
+      }
+    },
+    {
+      "name": "content-library",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        4464,
+        1440,
+        790
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/content-library-light.json"
+      }
+    },
+    {
+      "name": "faq",
+      "page": "https://www.headspace.com/",
+      "box": [
+        140,
+        6084,
+        1160,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/faq-light.json"
+      }
+    },
+    {
+      "name": "closing-hero",
+      "page": "https://www.headspace.com/",
+      "box": [
+        0,
+        6976,
+        1440,
+        784
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/closing-hero-light.json"
+      }
+    },
+    {
+      "name": "app-hero",
+      "page": "https://www.headspace.com/app",
+      "box": [
+        0,
+        138,
+        1440,
+        668
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-hero-light.json"
+      }
+    },
+    {
+      "name": "phone-carousel",
+      "page": "https://www.headspace.com/app",
+      "box": [
+        0,
+        806,
+        1440,
+        753
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/phone-carousel-light.json"
+      }
+    },
+    {
+      "name": "sleep-hero",
+      "page": "https://www.headspace.com/sleep",
+      "box": [
+        0,
+        138,
+        1440,
+        836
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sleep-hero-light.json"
+      }
+    },
+    {
+      "name": "article-grid",
+      "page": "https://www.headspace.com/sleep",
+      "box": [
+        80,
+        1581,
+        1280,
+        515
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/article-grid-light.json"
+      }
+    },
+    {
+      "name": "tabbed-section",
+      "page": "https://www.headspace.com/sleep",
+      "box": [
+        140,
+        2096,
+        1160,
+        1304
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/tabbed-section-light.json"
+      }
+    },
+    {
+      "name": "plans-hero",
+      "page": "https://www.headspace.com/sleep",
+      "box": [
+        0,
+        5112,
+        1440,
+        961
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/plans-hero-light.json"
+      }
+    },
+    {
+      "name": "plan-picker",
+      "page": "https://www.headspace.com/subscriptions",
+      "box": [
+        0,
+        64,
+        1440,
+        790
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/plan-picker-light.json"
+      }
+    },
+    {
+      "name": "trial-subscription",
+      "page": "https://www.headspace.com/subscriptions",
+      "box": [
+        140,
+        5059,
+        1160,
+        1190
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/trial-subscription-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.headspace.com/login",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            64,
+            1440,
+            836
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.headspace.com/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 8755,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            8755
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            58,
+            519,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.headspace.com/app",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7755,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            7755
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            58,
+            519,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.headspace.com/sleep",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7648,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            7648
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            58,
+            519,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.headspace.com/subscriptions",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7261,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            7245
+          ]
+        }
+      ]
+    }
+  ]
+}

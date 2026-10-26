@@ -1,0 +1,1132 @@
+{
+  "version": 1,
+  "slug": "higgsfield",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://higgsfield.ai/ai/image",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://higgsfield.ai/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://higgsfield.ai/pricing",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "prompt-composer",
+      "page": "https://higgsfield.ai/ai/image",
+      "box": [
+        280,
+        760,
+        880,
+        124
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/prompt-composer-dark.json"
+      }
+    },
+    {
+      "name": "site-header",
+      "page": "https://higgsfield.ai/",
+      "box": [
+        0,
+        0,
+        1440,
+        52
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/site-header-dark.json"
+      }
+    },
+    {
+      "name": "promo-carousel",
+      "page": "https://higgsfield.ai/",
+      "box": [
+        0,
+        52,
+        1440,
+        360
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/promo-carousel-dark.json"
+      }
+    },
+    {
+      "name": "feature-grid",
+      "page": "https://higgsfield.ai/",
+      "box": [
+        16,
+        452,
+        1408,
+        272
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/feature-grid-dark.json"
+      }
+    },
+    {
+      "name": "plan-cards",
+      "page": "https://higgsfield.ai/pricing",
+      "box": [
+        16,
+        316,
+        1408,
+        1363
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/plan-cards-dark.json"
+      }
+    },
+    {
+      "name": "plan-finder",
+      "page": "https://higgsfield.ai/pricing",
+      "box": [
+        16,
+        1727,
+        1408,
+        900
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/plan-finder-dark.json"
+      }
+    },
+    {
+      "name": "feature-comparison",
+      "page": "https://higgsfield.ai/pricing",
+      "box": [
+        16,
+        2707,
+        1408,
+        716
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/feature-comparison-dark.json"
+      }
+    },
+    {
+      "name": "pricing-faq",
+      "page": "https://higgsfield.ai/pricing",
+      "box": [
+        16,
+        3423,
+        1408,
+        740
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/pricing-faq-dark.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://higgsfield.ai/pricing",
+      "box": [
+        0,
+        4235,
+        1440,
+        68
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/site-footer-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://higgsfield.ai/ai/image",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            1024,
+            605,
+            400,
+            279
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            45
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            0,
+            45,
+            1440,
+            36
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            48,
+            49,
+            978,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            89,
+            1440,
+            811
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            491,
+            131,
+            458,
+            58
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1024,
+            788,
+            120,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://higgsfield.ai/",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 11682,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            1024,
+            605,
+            400,
+            279
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            52
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            60,
+            12,
+            930,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            52,
+            1440,
+            11562
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            3129,
+            344,
+            612
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            3748,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            3129,
+            344,
+            258
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            3395,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            3596,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            3798,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            3129,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            3330,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            3532,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            3733,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            3935,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            3129,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            3330,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            3532,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            3733,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            3935,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            4582,
+            344,
+            608
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            5198,
+            344,
+            608
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            4582,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            4783,
+            344,
+            461
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            5252,
+            344,
+            195
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            5455,
+            344,
+            228
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            4582,
+            344,
+            461
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            5051,
+            344,
+            195
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            5253,
+            344,
+            461
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            4582,
+            344,
+            195
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            4784,
+            344,
+            195
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            4987,
+            344,
+            461
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            5946,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            6147,
+            344,
+            612
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            6767,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            5946,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            6413,
+            344,
+            612
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            7032,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            5946,
+            344,
+            612
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            6565,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            5946,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            6413,
+            344,
+            258
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            6679,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            6880,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            6986,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            7187,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            7389,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            7590,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            6986,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            7187,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            7389,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            7590,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            6986,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            7187,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            7389,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            7590,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            6986,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            7187,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            7389,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            7590,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            8370,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            8571,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            8773,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            8974,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            8370,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            8571,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            8773,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            8974,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            8370,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            8571,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            8773,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            8974,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            8370,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            8571,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            8773,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            8974,
+            344,
+            194
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            9410,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            9877,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            16,
+            10343,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            9410,
+            344,
+            258
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            9676,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            368,
+            10143,
+            344,
+            258
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            9410,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            9877,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            720,
+            10343,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            9410,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            9877,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1072,
+            10343,
+            344,
+            459
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            11614,
+            1440,
+            68
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            11614,
+            1440,
+            68
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://higgsfield.ai/pricing",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 4303,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            1024,
+            605,
+            400,
+            279
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            52
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            60,
+            12,
+            930,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            52,
+            1440,
+            4183
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            1377,
+            1408,
+            18
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            4235,
+            1440,
+            68
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            4235,
+            1440,
+            68
+          ]
+        }
+      ]
+    }
+  ]
+}

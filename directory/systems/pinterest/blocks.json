@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "slug": "pinterest",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/pinterest/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/ideas/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/business/create/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/search/pins/?q=latte%20nails",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://trends.pinterest.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "signed-out-header",
+      "page": "https://www.pinterest.com/pinterest/",
+      "box": [
+        72,
+        0,
+        1368,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/signed-out-header-light.json"
+      }
+    },
+    {
+      "name": "profile-header",
+      "page": "https://www.pinterest.com/pinterest/",
+      "box": [
+        72,
+        80,
+        1368,
+        360
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/profile-header-light.json"
+      }
+    },
+    {
+      "name": "board-card",
+      "page": "https://www.pinterest.com/pinterest/",
+      "box": [
+        89,
+        472,
+        252,
+        278
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/board-card-light.json"
+      }
+    },
+    {
+      "name": "sign-up-upsell",
+      "page": "https://www.pinterest.com/pinterest/",
+      "box": [
+        1066,
+        962,
+        350,
+        284
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sign-up-upsell-light.json"
+      }
+    },
+    {
+      "name": "login-modal",
+      "page": "https://www.pinterest.com/ideas/",
+      "box": [
+        495,
+        124,
+        450,
+        653
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-modal-light.json"
+      }
+    },
+    {
+      "name": "business-signup",
+      "page": "https://www.pinterest.com/business/create/",
+      "box": [
+        0,
+        111,
+        1440,
+        677
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/business-signup-light.json"
+      }
+    },
+    {
+      "name": "search-filters",
+      "page": "https://www.pinterest.com/search/pins/?q=latte%20nails",
+      "box": [
+        80,
+        162,
+        1352,
+        98
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/search-filters-light.json"
+      }
+    },
+    {
+      "name": "trends-header",
+      "page": "https://trends.pinterest.com/",
+      "box": [
+        0,
+        0,
+        1440,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/trends-header-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.pinterest.com/pinterest/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3178,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            3658
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/ideas/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3787,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            3707
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            519,
+            305,
+            402,
+            233
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/business/create/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/search/pins/?q=latte%20nails",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2058,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            1978
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            519,
+            305,
+            402,
+            233
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://trends.pinterest.com/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 4423,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            4423
+          ]
+        }
+      ]
+    }
+  ]
+}

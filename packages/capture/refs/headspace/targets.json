@@ -26,6 +26,11 @@
         "selector": "button[type=submit][data-testid=button]",
         "focus": true
       }
+    },
+    "blocks": {
+      "login-card": {
+        "selector": "div[data-slot=card]"
+      }
     }
   },
   "https://www.headspace.com/": {
@@ -59,6 +64,35 @@
         "selector": "[data-testid=need-state-container-title]",
         "skip": ["fontSize"]
       }
+    },
+    "blocks": {
+      "promo-banner": {
+        "selector": "[data-testid=banner-background-container]"
+      },
+      "site-header": {
+        "selector": "#navbar-header"
+      },
+      "hero": {
+        "selector": "[data-testid=hero-v3]"
+      },
+      "need-states": {
+        "selector": "[data-testid=need-state-container-container]"
+      },
+      "feature-tabs": {
+        "selector": "[data-testid=container]"
+      },
+      "quotes": {
+        "selector": "[data-testid=quotes-container]"
+      },
+      "content-library": {
+        "selector": "[data-testid=content-library-container]"
+      },
+      "faq": {
+        "selector": "#frequently-asked-questions"
+      },
+      "closing-hero": {
+        "selector": "section[data-testid=hero-simple]"
+      }
     }
   },
   "https://www.headspace.com/app": {
@@ -72,6 +106,14 @@
     "parts": {
       "card": {
         "selector": ".threeCard"
+      }
+    },
+    "blocks": {
+      "app-hero": {
+        "selector": "[data-testid=hero-v2-background]"
+      },
+      "phone-carousel": {
+        "selector": "[data-testid=vertical-carousel-outer-container]"
       }
     }
   },
@@ -89,6 +131,20 @@
         "selector": "button[disabled]",
         "text": "1"
       }
+    },
+    "blocks": {
+      "sleep-hero": {
+        "selector": "[data-testid=hero-background]"
+      },
+      "article-grid": {
+        "selector": "[data-testid=article-grid-container]"
+      },
+      "tabbed-section": {
+        "selector": "[data-testid=section-with-tabs-container]"
+      },
+      "plans-hero": {
+        "selector": "[data-testid=hero-plans-background]"
+      }
     }
   },
   "https://www.headspace.com/subscriptions": {
@@ -102,6 +158,14 @@
     "parts": {
       "badge.accent": {
         "selector": "[data-testid=subscription-plan-tag-text]"
+      }
+    },
+    "blocks": {
+      "plan-picker": {
+        "selector": "main[data-testid=root-layout] [data-testid=module-renderer] [data-testid=module-renderer]"
+      },
+      "trial-subscription": {
+        "selector": "[data-testid=trial-subscription]"
       }
     }
   },
@@ -314,12 +378,26 @@
   "https://my.headspace.com/modes/meditate": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "app-header": {
+        "selector": "header[data-testid=header]"
+      },
+      "featured-card": {
+        "selector": "[data-testid=hero-title]",
+        "surface": true
+      }
+    }
   },
   "https://my.headspace.com/modes/meditate/content/<id>": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "course-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://my.headspace.com/modes/meditate/topic/<id>": {
     "signedIn": true,
@@ -339,7 +417,15 @@
   "https://my.headspace.com/profile/account": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "account-header": {
+        "selector": "[data-testid=account-page-header]"
+      },
+      "account-page": {
+        "selector": "[data-testid=account-page]"
+      }
+    }
   },
   "https://www.headspace.com/manage-identities": {
     "signedIn": true,

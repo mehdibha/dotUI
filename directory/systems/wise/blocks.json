@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "slug": "wise",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/login",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "flow-header",
+      "page": "https://wise.com/login",
+      "box": [
+        0,
+        0,
+        1440,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/flow-header-light.json"
+      }
+    },
+    {
+      "name": "login-form",
+      "page": "https://wise.com/login",
+      "box": [
+        477,
+        429,
+        486,
+        491
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-form-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://wise.com/login",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 990,
+      "regions": [
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            953,
+            1440,
+            38
+          ]
+        }
+      ]
+    }
+  ]
+}

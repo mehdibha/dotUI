@@ -1,0 +1,830 @@
+{
+  "version": 1,
+  "slug": "guardian",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft#menu",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/podcasts",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://profile.theguardian.com/signin",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/football/tables",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://support.theguardian.com/uk/contribute",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "masthead",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        0,
+        0,
+        1440,
+        235
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/masthead-light.json",
+        "dark": "2026-10-26/blocks/masthead-dark.json"
+      }
+    },
+    {
+      "name": "article-headline",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        330,
+        235,
+        620,
+        157
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/article-headline-light.json",
+        "dark": "2026-10-26/blocks/article-headline-dark.json"
+      }
+    },
+    {
+      "name": "article-media",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        330,
+        452,
+        620,
+        546
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/article-media-light.json",
+        "dark": "2026-10-26/blocks/article-media-dark.json"
+      }
+    },
+    {
+      "name": "most-viewed",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        1050,
+        241,
+        300,
+        1600
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/most-viewed-light.json",
+        "dark": "2026-10-26/blocks/most-viewed-dark.json"
+      }
+    },
+    {
+      "name": "related-stories",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        91,
+        4894,
+        1258,
+        330
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/related-stories-light.json",
+        "dark": "2026-10-26/blocks/related-stories-dark.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "box": [
+        70,
+        6032,
+        1300,
+        516
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-footer-light.json",
+        "dark": "2026-10-26/blocks/site-footer-dark.json"
+      }
+    },
+    {
+      "name": "edition-menu",
+      "page": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft#menu",
+      "pass": [
+        {
+          "click": "[data-testid=dropdown-button]"
+        },
+        {
+          "wait": "[data-testid=dropdown-options] a"
+        }
+      ],
+      "box": [
+        1070,
+        104,
+        200,
+        224
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/edition-menu-light.json"
+      }
+    },
+    {
+      "name": "showcase-media",
+      "page": "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases",
+      "box": [
+        330,
+        392,
+        1020,
+        711
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/showcase-media-light.json",
+        "dark": "2026-10-26/blocks/showcase-media-dark.json"
+      }
+    },
+    {
+      "name": "more-on-this-story",
+      "page": "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases",
+      "box": [
+        320,
+        9935,
+        999,
+        323
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/more-on-this-story-light.json",
+        "dark": "2026-10-26/blocks/more-on-this-story-dark.json"
+      }
+    },
+    {
+      "name": "today-in-focus",
+      "page": "https://www.theguardian.com/podcasts",
+      "box": [
+        0,
+        235,
+        1440,
+        224
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/today-in-focus-light.json",
+        "dark": "2026-10-26/blocks/today-in-focus-dark.json"
+      }
+    },
+    {
+      "name": "latest-episodes",
+      "page": "https://www.theguardian.com/podcasts",
+      "box": [
+        0,
+        836,
+        1440,
+        382
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/latest-episodes-light.json",
+        "dark": "2026-10-26/blocks/latest-episodes-dark.json"
+      }
+    },
+    {
+      "name": "current-series",
+      "page": "https://www.theguardian.com/podcasts",
+      "box": [
+        0,
+        1516,
+        1440,
+        387
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/current-series-light.json",
+        "dark": "2026-10-26/blocks/current-series-dark.json"
+      }
+    },
+    {
+      "name": "podcast-most-viewed",
+      "page": "https://www.theguardian.com/podcasts",
+      "box": [
+        0,
+        2490,
+        1440,
+        491
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/podcast-most-viewed-light.json",
+        "dark": "2026-10-26/blocks/podcast-most-viewed-dark.json"
+      }
+    },
+    {
+      "name": "sign-in",
+      "page": "https://profile.theguardian.com/signin",
+      "box": [
+        490,
+        113,
+        460,
+        629
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sign-in-light.json",
+        "dark": "2026-10-26/blocks/sign-in-dark.json"
+      }
+    },
+    {
+      "name": "league-table",
+      "page": "https://www.theguardian.com/football/tables",
+      "box": [
+        90,
+        386,
+        860,
+        213
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/league-table-light.json",
+        "dark": "2026-10-26/blocks/league-table-dark.json"
+      }
+    },
+    {
+      "name": "support-tiers",
+      "page": "https://support.theguardian.com/uk/contribute",
+      "box": [
+        250,
+        164,
+        940,
+        732
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/support-tiers-light.json"
+      }
+    },
+    {
+      "name": "support-once",
+      "page": "https://support.theguardian.com/uk/contribute",
+      "box": [
+        0,
+        968,
+        1440,
+        464
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/support-once-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5240,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            235
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            64,
+            1440,
+            171
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            235,
+            1440,
+            5753
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            235,
+            220,
+            157
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            452,
+            220,
+            4441
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            5988,
+            1440,
+            43
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6031,
+            1440,
+            517
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft#menu",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5240,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            235
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            64,
+            1440,
+            171
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            235,
+            1440,
+            5678
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            235,
+            220,
+            157
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            452,
+            220,
+            4366
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            5913,
+            1440,
+            43
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            5956,
+            1440,
+            517
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 10088,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            235
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            64,
+            1440,
+            171
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            235,
+            1440,
+            11370
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            235,
+            220,
+            157
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            90,
+            392,
+            220,
+            831
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            330,
+            5219,
+            620,
+            239
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            9634,
+            1440,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            235,
+            9634,
+            970,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1054,
+            10687,
+            300,
+            624
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            11311,
+            1440,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            235,
+            11311,
+            970,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            11605,
+            1440,
+            43
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            11648,
+            1440,
+            517
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.theguardian.com/podcasts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3945,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            235
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            64,
+            1440,
+            171
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            235,
+            1440,
+            2746
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            70,
+            1218,
+            1300,
+            298
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1053,
+            2534,
+            300,
+            274
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            3093,
+            1440,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            235,
+            3093,
+            970,
+            294
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            3387,
+            1440,
+            42
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            3429,
+            1440,
+            516
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://profile.theguardian.com/signin",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            113
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            490,
+            113,
+            460,
+            629
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.theguardian.com/football/tables",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5708,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            235
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            64,
+            1440,
+            171
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            70,
+            235,
+            1300,
+            4914
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            5149,
+            1440,
+            43
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            5192,
+            1440,
+            516
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://support.theguardian.com/uk/contribute",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1605,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            123
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            123,
+            1440,
+            1309
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1501,
+            1440,
+            104
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            0,
+            608,
+            1440,
+            292
+          ]
+        }
+      ]
+    }
+  ]
+}

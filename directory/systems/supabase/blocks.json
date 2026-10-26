@@ -1,0 +1,350 @@
+{
+  "version": 1,
+  "slug": "supabase",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/button",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/sidebar",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/calendar",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "docs-header",
+      "page": "https://supabase.com/design-system/docs/components/button",
+      "box": [
+        0,
+        357,
+        1440,
+        57
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-header-light.json",
+        "dark": "2026-10-26/blocks/docs-header-dark.json"
+      }
+    },
+    {
+      "name": "docs-sidebar",
+      "page": "https://supabase.com/design-system/docs/components/button",
+      "box": [
+        1,
+        397,
+        240,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-sidebar-light.json",
+        "dark": "2026-10-26/blocks/docs-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "sidebar-shell",
+      "page": "https://supabase.com/design-system/docs/components/sidebar",
+      "box": [
+        305,
+        316,
+        894,
+        480
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-shell-light.json",
+        "dark": "2026-10-26/blocks/sidebar-shell-dark.json"
+      }
+    },
+    {
+      "name": "calendar",
+      "page": "https://supabase.com/design-system/docs/components/calendar",
+      "box": [
+        613,
+        356,
+        278,
+        304
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/calendar-light.json",
+        "dark": "2026-10-26/blocks/calendar-dark.json"
+      }
+    },
+    {
+      "name": "date-field-form",
+      "page": "https://supabase.com/design-system/docs/components/calendar",
+      "box": [
+        606,
+        1977,
+        292,
+        130
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/date-field-form-light.json",
+        "dark": "2026-10-26/blocks/date-field-form-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://supabase.com/design-system/docs/components/button",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 10424,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            357,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            357,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            397,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            397,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            10291
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            10349,
+            1440,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/design-system/docs/components/sidebar",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7122,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            540,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            540,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            580,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            580,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            6989
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            513,
+            316,
+            686,
+            480
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            7047,
+            1440,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/design-system/docs/components/calendar",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3040,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            32,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            32,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            72,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            72,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            2907
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2965,
+            1440,
+            75
+          ]
+        }
+      ]
+    }
+  ]
+}
