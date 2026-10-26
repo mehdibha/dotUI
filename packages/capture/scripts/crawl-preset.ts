@@ -1317,8 +1317,10 @@ async function connected(): Promise<CensusPage[]> {
     ])
     const load = async () => {
       // A goto that changes only the hash keeps the document (claude.ai's
-      // settings dialog is a hash route).
-      if (page.url() !== "about:blank") await page.goto("about:blank")
+      // settings dialog is a hash route). An app that navigates as it
+      // unloads aborts the blank one (Notion's peeks): the next goto holds.
+      if (page.url() !== "about:blank")
+        await page.goto("about:blank").catch(() => {})
       await page.goto(job.url, { waitUntil: "load", timeout: 60000 })
       await page
         .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
