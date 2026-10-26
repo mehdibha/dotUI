@@ -122,9 +122,7 @@ export function SheetView({
   )
 }
 
-/** The one sheet: open while a page or a picker is. It opens to a snap
- *  point that leaves the preview's top in view; dragged up, it shows the
- *  rest. */
+/** The one sheet: open while a page or a picker is. */
 export function PanelSheet({
   isOpen,
   onDismiss,
@@ -154,12 +152,16 @@ export function PanelSheet({
       <Sheet
         isOpen={isOpen}
         onOpenChange={(open) => !open && onDismiss()}
-        // One height for every view, so the snap point sits at the same place
-        // whatever's open.
-        className="h-[calc(100dvh-3rem)]"
-        snapPoints={["60%"]}
+        // One height for every view, short of the screen: the preview's top
+        // stays in view and the detached card shows whole, its rows scrolling.
+        className="h-[62dvh]"
       >
-        <RacDialog aria-label={label} className="flex flex-col outline-none">
+        <RacDialog
+          aria-label={label}
+          // styles.css keeps the backdrop clear: the preview is the point.
+          data-panel-sheet=""
+          className="flex flex-col outline-none"
+        >
           <SheetHandle />
           <div
             ref={stack.setHost}

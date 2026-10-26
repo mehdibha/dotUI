@@ -95,6 +95,13 @@
   );
 }
 
+/* The studio's phone sheet: the preview behind it stays clear to watch. */
+:has(+ [data-sheet-scroll] [data-panel-sheet]) {
+  background: none;
+  backdrop-filter: none;
+  animation: none;
+}
+
 /* /studio on a phone held upright: the main page's rows as cards in one
    strip, the label over the value. Unlayered, so it wins over the row's own
    utilities; the strip's chapter wrappers step aside so every row is a card. */
