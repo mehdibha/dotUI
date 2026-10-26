@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
       "rounded-(--studio-radius-detail) outline-none focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
-      "inline-flex items-center gap-1 transition-colors duration-(--studio-link-state-duration) ease-(--studio-link-state-ease)",
+      "inline-flex cursor-pointer items-center gap-1 transition-colors duration-(--studio-link-state-duration) ease-(--studio-link-state-ease) disabled:cursor-disabled",
     ],
     variants: {
       variant: {

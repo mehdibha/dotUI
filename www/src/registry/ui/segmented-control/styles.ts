@@ -1,6 +1,11 @@
 import { createStyles } from "@/lib/styles"
 
-import { UPPERCASE } from "../button/styles"
+import {
+  SELECTED_INVERSE_INK,
+  SELECTED_TINT_INK,
+  SELECTED_TONE_INK,
+  UPPERCASE,
+} from "../button/styles"
 import segmentedControlMeta from "./meta"
 
 /* The selection bar, shared with tabs' segmented variant (tabs imports
@@ -9,22 +14,24 @@ import segmentedControlMeta from "./meta"
    iOS), ring draws the page chip on an edge alone (Radix surface, Primer,
    Stripe), inverse snaps to full contrast (Carbon). */
 export const CHIP_TONE = {
-  item: "selected:text-fg-on-selected",
-  indicator: "bg-selected shadow-sm",
+  item: SELECTED_TONE_INK,
+  indicator:
+    "bg-selected shadow-sm in-disabled:bg-(--disabled-selected-bg,var(--color-selected))",
 }
 export const CHIP_RAISED = {
-  item: "selected:text-fg",
+  item: SELECTED_TINT_INK,
   indicator:
     "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-(length:--studio-control-stroke) ring-border-control",
 }
 export const CHIP_RING = {
-  item: "selected:text-fg",
+  item: SELECTED_TINT_INK,
   indicator:
     "bg-(--surface-bg,var(--color-bg)) ring-(length:--studio-control-stroke) ring-border-control",
 }
 export const CHIP_INVERSE = {
-  item: "selected:text-fg-inverse",
-  indicator: "bg-inverse",
+  item: SELECTED_INVERSE_INK,
+  indicator:
+    "bg-inverse in-disabled:bg-(--disabled-selected-bg,var(--color-inverse))",
 }
 
 export const TRACK_FILLED = "bg-muted p-[3px]"
@@ -52,7 +59,7 @@ const { useStyles } = createStyles(segmentedControlMeta, {
     slots: {
       root: "inline-flex w-fit items-center justify-center rounded-(--studio-segmented-control-radius) text-fg-muted orientation-vertical:flex-col orientation-vertical:items-stretch",
       item: [
-        "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--studio-segmented-control-radius)-3px)] border border-transparent whitespace-nowrap transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) outline-none select-ui focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
+        "relative isolate inline-flex cursor-interactive items-center justify-center rounded-[calc(var(--studio-segmented-control-radius)-3px)] border border-transparent whitespace-nowrap transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) outline-none select-ui focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
         "text-fg-muted hover:text-fg",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",

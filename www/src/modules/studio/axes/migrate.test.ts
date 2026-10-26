@@ -107,8 +107,6 @@ const DROPPED_KEYS = [
   "breadcrumbsMotion",
   "cardControl",
   "colorSwatchPickerMotion",
-  "cursorDragging",
-  "cursorPending",
   "drawerMotion",
   "focusGap",
   "focusHaloStrength",
@@ -354,6 +352,16 @@ describe("main → v3", () => {
 
   it("brings main's Origin to today's", () => {
     expect(load(mainState())).toEqual(DEFAULT_STATE)
+  })
+
+  it("keeps main's busy and drag cursors", () => {
+    for (const cursorPending of ["progress", "wait"])
+      expect(load(mainState({ cursorPending }))).toMatchObject({
+        cursorBusy: cursorPending,
+      })
+    expect(load(mainState({ cursorDragging: "grab" }))).toMatchObject({
+      cursorDrag: "grab",
+    })
   })
 
   it("draws every main state as main did, once", () => {

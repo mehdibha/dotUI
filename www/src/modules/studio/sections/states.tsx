@@ -5,11 +5,14 @@
    the panel's own inks at its real geometry. */
 
 import { useRef } from "react"
+import { AppWindowIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
+
+import { toHex, toOklch } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
@@ -22,8 +25,10 @@ import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import { INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
+  CURSOR_BUSY_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
+  CURSOR_DRAG_OPTIONS,
   DISABLED_OPTIONS,
   FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
@@ -34,6 +39,7 @@ import {
   DIAL_LABEL,
   DIAL_ROW,
   DialSelect,
+  type DialSelectOption,
   DialSlider,
   UNDER_ROW,
 } from "../dial"
@@ -47,8 +53,16 @@ import {
 } from "../rows"
 import { useCurrent } from "../selection"
 import { DialTiles } from "../tiles"
+import type { DialTile } from "../tiles"
 import { useAxis } from "../use-axis"
-import { ArrowCursor, HandCursor } from "./cursors"
+import {
+  ArrowCursor,
+  GrabCursor,
+  HandCursor,
+  NotAllowedCursor,
+  ProgressCursor,
+  WaitCursor,
+} from "./cursors"
 import { inks } from "./primary"
 
 const INK = "var(--color-border-focus)"
@@ -112,19 +126,16 @@ function InvalidSpecimen({ invalid }: { invalid: string }) {
   )
 }
 
-/* Painted words: the option is the highlight itself. The blue depicts the OS
-   default. */
-const HIGHLIGHT_CHIPS: Record<string, string> = {
-  accent: "bg-text-selection text-fg-on-text-selection",
-  browser: "bg-[#B3D7FF] text-[#1B1B1F]",
-}
-
-function HighlightChip({ value }: { value: string }) {
-  return (
-    <span className={cn("rounded-xs px-1 text-[11px]", HIGHLIGHT_CHIPS[value])}>
-      Aa
-    </span>
-  )
+/** Each highlight as the panel's mode paints it. */
+function useHighlightFill() {
+  const { m, mode } = usePanelMode()
+  return (value: string, custom: string) => {
+    if (value === "browser") return "Highlight"
+    if (value === "custom" && custom) return custom
+    const step = value === "neutral" && mode === "dark" ? "500" : "300"
+    const palette = value === "neutral" ? "neutral" : "accent"
+    return m.scales[palette]?.[step] ?? m.background
+  }
 }
 
 export function FocusPreview({ state }: { state: Effective }) {
@@ -145,8 +156,28 @@ export function CursorPreview({ state }: { state: Effective }) {
   )
 }
 
+/** The text on a highlight: the system's pair for Browser, else whichever
+ *  ink reads. */
+const textOn = (value: string, background: string) =>
+  value === "browser"
+    ? "HighlightText"
+    : toOklch(background).l > 0.6
+      ? "#1B1B1F"
+      : "#FAFAFA"
+
+/** Painted words: the row shows the highlight itself. */
 export function TextSelectionPreview({ state }: { state: Effective }) {
-  return <HighlightChip value={state.selectionHighlight} />
+  const value = state.selectionHighlight
+  const fill = useHighlightFill()
+  if (value === "browser")
+    return <AppWindowIcon className="size-4 shrink-0 text-fg/70" />
+  const background = fill(value, state.selectionCustomColor)
+  const color = textOn(value, background)
+  return (
+    <span className="rounded-xs px-1 text-[11px]" style={{ background, color }}>
+      Aa
+    </span>
+  )
 }
 
 /* The Focus page's pickers open under their row, clear of the preview. */
@@ -296,6 +327,45 @@ const FieldFocusRow = () => (
   />
 )
 
+/** A tile's scene on the design system's own page: colors read as they
+ *  will in the app. */
+function ScenePage({ children }: { children: React.ReactNode }) {
+  const { m } = usePanelMode()
+  return (
+    <span
+      className="absolute inset-0 flex items-center justify-center rounded-[inherit] border border-fg/10"
+      style={{ background: m.background }}
+    >
+      {children}
+    </span>
+  )
+}
+
+const SCENE_BUTTON =
+  "flex h-5 items-center justify-center rounded-[5px] px-2.5 text-[10px] font-medium"
+
+/** The inks a primary button, a checked box and a switch on take, disabled
+ *  the way `treatment` draws them. */
+function useDisabledInks(treatment: string, state: Effective) {
+  const { m } = usePanelMode()
+  const ink = (source: string) =>
+    inks(m)[source as PrimaryColorSource] ?? inks(m).accent
+  const gray = (step: string) =>
+    m.scales.neutral?.[step as keyof (typeof m.scales)[string]] ?? m.background
+  const fade = treatment === "fade"
+  return {
+    button: fade
+      ? ink(state.buttonColor)
+      : { fill: gray("300"), on: gray("600") },
+    checkbox: fade
+      ? ink(state.checkboxColor)
+      : { fill: gray("100"), on: gray("600") },
+    track: fade ? ink(state.switchColor).fill : gray("100"),
+    thumb: fade ? ink(state.switchColor).on : gray("400"),
+    opacity: fade ? state.disabledOpacity / 100 : 1,
+  }
+}
+
 /** A primary button, a checked box and a switch on, disabled the way
  *  `treatment` draws them, in the design system's own colors. */
 function DisabledScene({
@@ -305,32 +375,15 @@ function DisabledScene({
   treatment: string
   state: Effective
 }) {
-  const { m } = usePanelMode()
-  const ink = (source: string) =>
-    inks(m)[source as PrimaryColorSource] ?? inks(m).accent
-  const gray = (step: string) =>
-    m.scales.neutral?.[step as keyof (typeof m.scales)[string]] ?? m.background
-  const fade = treatment === "fade"
-  const button = fade
-    ? ink(state.buttonColor)
-    : { fill: gray("300"), on: gray("600") }
-  const checkbox = fade
-    ? ink(state.checkboxColor)
-    : { fill: gray("100"), on: gray("600") }
-  const track = fade ? ink(state.switchColor).fill : gray("100")
-  const thumb = fade ? ink(state.switchColor).on : gray("400")
-  // On the design system's own page: grays read as they will in the app.
+  const { button, checkbox, track, thumb, opacity } = useDisabledInks(
+    treatment,
+    state,
+  )
   return (
-    <span
-      className="absolute inset-0 flex items-center justify-center rounded-[inherit] border border-fg/10"
-      style={{ background: m.background }}
-    >
-      <span
-        className="flex flex-col items-center gap-2"
-        style={{ opacity: fade ? state.disabledOpacity / 100 : 1 }}
-      >
+    <ScenePage>
+      <span className="flex flex-col items-center gap-2" style={{ opacity }}>
         <span
-          className="rounded-[5px] px-2.5 text-[10px]/5 font-medium"
+          className={SCENE_BUTTON}
           style={{ background: button.fill, color: button.on }}
         >
           Button
@@ -363,7 +416,7 @@ function DisabledScene({
           </span>
         </span>
       </span>
-    </span>
+    </ScenePage>
   )
 }
 
@@ -408,42 +461,269 @@ const InvalidRow = () => (
   />
 )
 
-const CursorControlsRow = () => (
-  <DialSelect
-    axis="cursorControls"
-    label="Controls"
-    options={CURSOR_CONTROL_OPTIONS}
-  />
-)
+const CURSORS: Record<string, () => React.ReactNode> = {
+  pointer: HandCursor,
+  default: ArrowCursor,
+  "not-allowed": NotAllowedCursor,
+  progress: ProgressCursor,
+  wait: WaitCursor,
+  grab: GrabCursor,
+}
 
-const CursorDisabledRow = () => (
-  <DialSelect
-    axis="cursorDisabled"
-    label="Disabled"
-    options={CURSOR_DISABLED_OPTIONS}
-  />
-)
+/** A specimen on the design system's page with the cursor `cursor` names
+ *  resting on it. */
+function CursorScene({
+  cursor,
+  at = "left-[70%]",
+  children,
+}: {
+  cursor: string
+  at?: string
+  children: React.ReactNode
+}) {
+  const Glyph = CURSORS[cursor] ?? ArrowCursor
+  return (
+    <ScenePage>
+      <span className="relative inline-flex">
+        {children}
+        <span className={cn("absolute top-1/2 z-10 size-5 *:size-full", at)}>
+          <Glyph />
+        </span>
+      </span>
+    </ScenePage>
+  )
+}
 
+/** Each option as its cursor over `specimen`; `as` names the cursor where
+ *  the value isn't a cursor keyword (Drag's "Same as controls"). */
+function cursorTiles(
+  options: readonly DialSelectOption[],
+  specimen: React.ReactNode,
+  { as = {}, at }: { as?: Record<string, string>; at?: string } = {},
+): DialTile[] {
+  return options.map((option) => ({
+    ...option,
+    tile: (
+      <CursorScene cursor={as[option.value] ?? option.value} at={at}>
+        {specimen}
+      </CursorScene>
+    ),
+  }))
+}
+
+function usePrimaryInk(source: string) {
+  const ink = inks(usePanelMode().m)
+  return ink[source as PrimaryColorSource] ?? ink.accent
+}
+
+function CursorControlsRow() {
+  const { fill, on } = usePrimaryInk(useCurrent().state.buttonColor)
+  const options = cursorTiles(
+    CURSOR_CONTROL_OPTIONS,
+    <span className={SCENE_BUTTON} style={{ background: fill, color: on }}>
+      Button
+    </span>,
+  )
+  return <DialTiles axis="cursorControls" label="Controls" options={options} />
+}
+
+function CursorDisabledRow() {
+  const values = effective(useCurrent().state).values
+  const { button, opacity } = useDisabledInks(values.disabledTreatment, values)
+  const options = cursorTiles(
+    CURSOR_DISABLED_OPTIONS,
+    <span
+      className={SCENE_BUTTON}
+      style={{ background: button.fill, color: button.on, opacity }}
+    >
+      Button
+    </span>,
+  )
+  return <DialTiles axis="cursorDisabled" label="Disabled" options={options} />
+}
+
+function CursorBusyRow() {
+  const { fill, on } = usePrimaryInk(useCurrent().state.buttonColor)
+  const options = cursorTiles(
+    CURSOR_BUSY_OPTIONS,
+    <span
+      className={cn(SCENE_BUTTON, "w-12")}
+      style={{ background: fill, color: on }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        className="size-3"
+      >
+        <path d="M21 12a9 9 0 1 1-6.2-8.6" />
+      </svg>
+    </span>,
+  )
+  return (
+    <DialTiles axis="cursorBusy" label="Busy" options={options} columns={3} />
+  )
+}
+
+function CursorDragRow() {
+  const { state } = useCurrent()
+  const { m } = usePanelMode()
+  const { fill } = usePrimaryInk(state.sliderColor)
+  const track = m.scales.neutral?.["200"] ?? m.background
+  const options = cursorTiles(
+    CURSOR_DRAG_OPTIONS,
+    <span
+      className="relative flex h-1 w-16 items-center rounded-full"
+      style={{ background: track }}
+    >
+      <span
+        className="h-full w-3/5 rounded-full"
+        style={{ background: fill }}
+      />
+      <span
+        className="absolute left-3/5 size-3 -translate-x-1/2 rounded-full border-2 bg-white"
+        style={{ borderColor: fill }}
+      />
+    </span>,
+    { as: { controls: state.cursorControls }, at: "left-[60%]" },
+  )
+  return <DialTiles axis="cursorDrag" label="Drag" options={options} />
+}
+
+/** A drag across a word and a button: the button's label lights up
+ *  only when control text selects. */
+function ControlTextScene({ selectable }: { selectable: boolean }) {
+  const { state } = useCurrent()
+  const { m } = usePanelMode()
+  const values = effective(state).values
+  const button =
+    inks(m)[values.buttonColor as PrimaryColorSource] ?? inks(m).accent
+  const background = useHighlightFill()(
+    values.selectionHighlight,
+    values.selectionCustomColor,
+  )
+  const color = textOn(values.selectionHighlight, background)
+  const marked = { background, color }
+  return (
+    <span
+      className="absolute inset-0 flex items-center justify-center gap-1.5 rounded-[inherit] border border-fg/10 text-[10px]/4 font-medium"
+      style={{ background: m.background, color: m.scales.neutral?.["950"] }}
+    >
+      <span style={marked}>Saved</span>
+      <span
+        className="rounded-[5px] px-2 py-0.5"
+        style={{ background: button.fill, color: button.on }}
+      >
+        <span style={selectable ? marked : undefined}>Undo</span>
+      </span>
+    </span>
+  )
+}
+
+/** Whether labels select, laid out in place: each option a drag over a
+ *  button. */
 const ControlTextRow = () => (
-  <DialSelect
+  <DialTiles
     axis="selectionUiText"
-    label="Control text"
-    options={CONTROL_TEXT_OPTIONS}
+    label="Labels"
+    options={CONTROL_TEXT_OPTIONS.map((option) => ({
+      ...option,
+      tile: <ControlTextScene selectable={option.value === "selectable"} />,
+    }))}
   />
 )
 
-const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
-  ...option,
-  glyph: <HighlightChip value={option.value} />,
-}))
-
-const HighlightRow = () => (
-  <DialSelect
-    axis="selectionHighlight"
-    label="Highlight"
-    options={HIGHLIGHT_ROW_OPTIONS}
-  />
-)
+/** The highlight's sources as swatches, each painted as the panel's mode
+ *  draws it; the custom one opens a picker. */
+function HighlightRow() {
+  const axis = useAxis("selectionHighlight")
+  const customAxis = useAxis("selectionCustomColor")
+  const fill = useHighlightFill()
+  const saved = String(customAxis?.saved ?? "")
+  // Unpicked, the picker starts on the accent highlight.
+  const [draft, setDraft] = useDraft<string | Color>(
+    saved || toHex(toOklch(fill("accent", ""))),
+  )
+  const row = useRef<HTMLDivElement>(null)
+  const under = !useDocked()
+  if (!axis) return null
+  const commit = (color: Color | null) => {
+    if (!color) return
+    customAxis?.set(color.toString("hex"))
+    axis.set("custom")
+  }
+  const label = (value: string) =>
+    HIGHLIGHT_OPTIONS.find((o) => o.value === value)?.label ?? value
+  return (
+    <div ref={row} data-axis="selectionHighlight" className={DIAL_ROW}>
+      <span className={DIAL_LABEL}>Highlight</span>
+      <RacToggleButtonGroup
+        aria-label="Highlight"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[String(axis.saved)]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) axis.set(next)
+        }}
+        className="flex items-center gap-2"
+      >
+        {(["accent", "neutral"] as const).map((value) => (
+          <Tooltip key={value} delay={0}>
+            <RacToggleButton
+              id={value}
+              aria-label={label(value)}
+              className={SWATCH}
+              style={{ background: fill(value, "") }}
+            />
+            <TooltipContent>{label(value)}</TooltipContent>
+          </Tooltip>
+        ))}
+        {/* Not a color: each viewer's system decides it. */}
+        <Tooltip delay={0}>
+          <RacToggleButton
+            id="browser"
+            aria-label="Browser default"
+            className={cn(
+              SWATCH,
+              "flex items-center justify-center bg-(--panel-surface,var(--color-card))",
+            )}
+          >
+            <AppWindowIcon className="size-3 text-fg/70" />
+          </RacToggleButton>
+          <TooltipContent>Browser default</TooltipContent>
+        </Tooltip>
+        <ColorPicker value={draft} onChange={setDraft}>
+          <Tooltip delay={0}>
+            <RacToggleButton
+              id="custom"
+              aria-label={label("custom")}
+              className={SWATCH}
+              style={customSwatch(saved)}
+            />
+            <TooltipContent>
+              {saved ? `Custom · ${saved.toUpperCase()}` : "Custom"}
+            </TooltipContent>
+          </Tooltip>
+          <PanelPopoverTitle.Provider value="Highlight color">
+            <ColorPickerPopover
+              commit={commit}
+              placement={UNDER}
+              {...(under && {
+                triggerRef: row,
+                offset: 6,
+                showArrow: false,
+                className: UNDER_ROW,
+              })}
+            />
+          </PanelPopoverTitle.Provider>
+        </ColorPicker>
+      </RacToggleButtonGroup>
+    </div>
+  )
+}
 
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,
@@ -457,6 +737,8 @@ export const ROWS: RowMap = {
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
   cursorDisabled: CursorDisabledRow,
+  cursorBusy: CursorBusyRow,
+  cursorDrag: CursorDragRow,
   selectionUiText: ControlTextRow,
   selectionHighlight: HighlightRow,
 }
