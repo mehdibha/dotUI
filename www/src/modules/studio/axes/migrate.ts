@@ -264,6 +264,8 @@ function fromMain(main: Raw): Raw {
   if (main.popoverTip === "tip") state.menuArrows = "both"
   if (main.progressGap === true) state.progressTrackStyle = "gap"
   if (main.surfaceGlass === true) state.translucentOverlays = true
+  if (main.cursorPending !== undefined) state.cursorBusy = main.cursorPending
+  if (main.cursorDragging === "grab") state.cursorDrag = "grab"
   // Main's Blur: a 20% scrim under a heavier blur than Dim's 40%.
   if (main.dialogBackdrop === "blur") state.dialogBackdropStrength = "light"
 

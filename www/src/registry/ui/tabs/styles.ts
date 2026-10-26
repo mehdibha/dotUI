@@ -34,7 +34,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       root: "flex gap-2",
       list: "inline-flex w-fit items-center justify-center text-fg-muted",
       item: [
-        "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,box-shadow] duration-(--studio-tabs-color-duration) ease-(--studio-tabs-color-ease) outline-none select-ui focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
+        "relative isolate inline-flex flex-1 cursor-interactive items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,box-shadow] duration-(--studio-tabs-color-duration) ease-(--studio-tabs-color-ease) outline-none select-ui focus-visible:focus-ring focus-visible:outline-offset-(--studio-focus-outside-offset)",
         "text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],

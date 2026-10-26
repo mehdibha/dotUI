@@ -16,7 +16,7 @@ const colorSliderVariants = tv({
     root: "flex flex-col gap-2",
     output: "text-sm text-fg-muted tabular-nums",
     track:
-      "relative rounded-md disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-color-thumb:top-1/2 orientation-vertical:**:data-color-thumb:left-1/2",
+      "relative cursor-drag rounded-md disabled:cursor-disabled disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-color-thumb:top-1/2 orientation-vertical:**:data-color-thumb:left-1/2",
   },
   variants: {
     orientation: {

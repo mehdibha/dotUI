@@ -92,7 +92,7 @@ function PresetContainer({
           paddingBottom: pad("bottom"),
           paddingLeft: pad("left"),
         }}
-        className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg [&_*]:[content-visibility:visible]!"
+        className="absolute overflow-hidden rounded-2xl border border-white/15 bg-bg **:[content-visibility:visible]!"
       >
         <div
           style={{ zoom: ZOOM, marginLeft: -scroll[0], marginTop: -scroll[1] }}

@@ -22,8 +22,10 @@ import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import { INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
+  CURSOR_BUSY_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
+  CURSOR_DRAG_OPTIONS,
   DISABLED_OPTIONS,
   FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
@@ -34,6 +36,7 @@ import {
   DIAL_LABEL,
   DIAL_ROW,
   DialSelect,
+  type DialSelectOption,
   DialSlider,
   UNDER_ROW,
 } from "../dial"
@@ -47,8 +50,16 @@ import {
 } from "../rows"
 import { useCurrent } from "../selection"
 import { DialTiles } from "../tiles"
+import type { DialTile } from "../tiles"
 import { useAxis } from "../use-axis"
-import { ArrowCursor, HandCursor } from "./cursors"
+import {
+  ArrowCursor,
+  GrabCursor,
+  HandCursor,
+  NotAllowedCursor,
+  ProgressCursor,
+  WaitCursor,
+} from "./cursors"
 import { inks } from "./primary"
 
 const INK = "var(--color-border-focus)"
@@ -296,6 +307,45 @@ const FieldFocusRow = () => (
   />
 )
 
+/** A tile's scene on the design system's own page: colors read as they
+ *  will in the app. */
+function ScenePage({ children }: { children: React.ReactNode }) {
+  const { m } = usePanelMode()
+  return (
+    <span
+      className="absolute inset-0 flex items-center justify-center rounded-[inherit] border border-fg/10"
+      style={{ background: m.background }}
+    >
+      {children}
+    </span>
+  )
+}
+
+const SCENE_BUTTON =
+  "flex h-5 items-center justify-center rounded-[5px] px-2.5 text-[10px] font-medium"
+
+/** The inks a primary button, a checked box and a switch on take, disabled
+ *  the way `treatment` draws them. */
+function useDisabledInks(treatment: string, state: Effective) {
+  const { m } = usePanelMode()
+  const ink = (source: string) =>
+    inks(m)[source as PrimaryColorSource] ?? inks(m).accent
+  const gray = (step: string) =>
+    m.scales.neutral?.[step as keyof (typeof m.scales)[string]] ?? m.background
+  const fade = treatment === "fade"
+  return {
+    button: fade
+      ? ink(state.buttonColor)
+      : { fill: gray("300"), on: gray("600") },
+    checkbox: fade
+      ? ink(state.checkboxColor)
+      : { fill: gray("100"), on: gray("600") },
+    track: fade ? ink(state.switchColor).fill : gray("100"),
+    thumb: fade ? ink(state.switchColor).on : gray("400"),
+    opacity: fade ? state.disabledOpacity / 100 : 1,
+  }
+}
+
 /** A primary button, a checked box and a switch on, disabled the way
  *  `treatment` draws them, in the design system's own colors. */
 function DisabledScene({
@@ -305,32 +355,15 @@ function DisabledScene({
   treatment: string
   state: Effective
 }) {
-  const { m } = usePanelMode()
-  const ink = (source: string) =>
-    inks(m)[source as PrimaryColorSource] ?? inks(m).accent
-  const gray = (step: string) =>
-    m.scales.neutral?.[step as keyof (typeof m.scales)[string]] ?? m.background
-  const fade = treatment === "fade"
-  const button = fade
-    ? ink(state.buttonColor)
-    : { fill: gray("300"), on: gray("600") }
-  const checkbox = fade
-    ? ink(state.checkboxColor)
-    : { fill: gray("100"), on: gray("600") }
-  const track = fade ? ink(state.switchColor).fill : gray("100")
-  const thumb = fade ? ink(state.switchColor).on : gray("400")
-  // On the design system's own page: grays read as they will in the app.
+  const { button, checkbox, track, thumb, opacity } = useDisabledInks(
+    treatment,
+    state,
+  )
   return (
-    <span
-      className="absolute inset-0 flex items-center justify-center rounded-[inherit] border border-fg/10"
-      style={{ background: m.background }}
-    >
-      <span
-        className="flex flex-col items-center gap-2"
-        style={{ opacity: fade ? state.disabledOpacity / 100 : 1 }}
-      >
+    <ScenePage>
+      <span className="flex flex-col items-center gap-2" style={{ opacity }}>
         <span
-          className="rounded-[5px] px-2.5 text-[10px]/5 font-medium"
+          className={SCENE_BUTTON}
           style={{ background: button.fill, color: button.on }}
         >
           Button
@@ -363,7 +396,7 @@ function DisabledScene({
           </span>
         </span>
       </span>
-    </span>
+    </ScenePage>
   )
 }
 
@@ -408,21 +441,136 @@ const InvalidRow = () => (
   />
 )
 
-const CursorControlsRow = () => (
-  <DialSelect
-    axis="cursorControls"
-    label="Controls"
-    options={CURSOR_CONTROL_OPTIONS}
-  />
-)
+const CURSORS: Record<string, () => React.ReactNode> = {
+  pointer: HandCursor,
+  default: ArrowCursor,
+  "not-allowed": NotAllowedCursor,
+  progress: ProgressCursor,
+  wait: WaitCursor,
+  grab: GrabCursor,
+}
 
-const CursorDisabledRow = () => (
-  <DialSelect
-    axis="cursorDisabled"
-    label="Disabled"
-    options={CURSOR_DISABLED_OPTIONS}
-  />
-)
+/** A specimen on the design system's page with the cursor `cursor` names
+ *  resting on it. */
+function CursorScene({
+  cursor,
+  at = "left-[70%]",
+  children,
+}: {
+  cursor: string
+  at?: string
+  children: React.ReactNode
+}) {
+  const Glyph = CURSORS[cursor] ?? ArrowCursor
+  return (
+    <ScenePage>
+      <span className="relative inline-flex">
+        {children}
+        <span className={cn("absolute top-1/2 z-10 size-5 *:size-full", at)}>
+          <Glyph />
+        </span>
+      </span>
+    </ScenePage>
+  )
+}
+
+/** Each option as its cursor over `specimen`; `as` names the cursor where
+ *  the value isn't a cursor keyword (Drag's "Same as controls"). */
+function cursorTiles(
+  options: readonly DialSelectOption[],
+  specimen: React.ReactNode,
+  { as = {}, at }: { as?: Record<string, string>; at?: string } = {},
+): DialTile[] {
+  return options.map((option) => ({
+    ...option,
+    tile: (
+      <CursorScene cursor={as[option.value] ?? option.value} at={at}>
+        {specimen}
+      </CursorScene>
+    ),
+  }))
+}
+
+function usePrimaryInk(source: string) {
+  const ink = inks(usePanelMode().m)
+  return ink[source as PrimaryColorSource] ?? ink.accent
+}
+
+function CursorControlsRow() {
+  const { fill, on } = usePrimaryInk(useCurrent().state.buttonColor)
+  const options = cursorTiles(
+    CURSOR_CONTROL_OPTIONS,
+    <span className={SCENE_BUTTON} style={{ background: fill, color: on }}>
+      Button
+    </span>,
+  )
+  return <DialTiles axis="cursorControls" label="Controls" options={options} />
+}
+
+function CursorDisabledRow() {
+  const values = effective(useCurrent().state).values
+  const { button, opacity } = useDisabledInks(values.disabledTreatment, values)
+  const options = cursorTiles(
+    CURSOR_DISABLED_OPTIONS,
+    <span
+      className={SCENE_BUTTON}
+      style={{ background: button.fill, color: button.on, opacity }}
+    >
+      Button
+    </span>,
+  )
+  return <DialTiles axis="cursorDisabled" label="Disabled" options={options} />
+}
+
+function CursorBusyRow() {
+  const { fill, on } = usePrimaryInk(useCurrent().state.buttonColor)
+  const options = cursorTiles(
+    CURSOR_BUSY_OPTIONS,
+    <span
+      className={cn(SCENE_BUTTON, "w-12")}
+      style={{ background: fill, color: on }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        className="size-3"
+      >
+        <path d="M21 12a9 9 0 1 1-6.2-8.6" />
+      </svg>
+    </span>,
+  )
+  return (
+    <DialTiles axis="cursorBusy" label="Busy" options={options} columns={3} />
+  )
+}
+
+function CursorDragRow() {
+  const { state } = useCurrent()
+  const { m } = usePanelMode()
+  const { fill } = usePrimaryInk(state.sliderColor)
+  const track = m.scales.neutral?.["200"] ?? m.background
+  const options = cursorTiles(
+    CURSOR_DRAG_OPTIONS,
+    <span
+      className="relative flex h-1 w-16 items-center rounded-full"
+      style={{ background: track }}
+    >
+      <span
+        className="h-full w-3/5 rounded-full"
+        style={{ background: fill }}
+      />
+      <span
+        className="absolute left-3/5 size-3 -translate-x-1/2 rounded-full border-2 bg-white"
+        style={{ borderColor: fill }}
+      />
+    </span>,
+    { as: { controls: state.cursorControls }, at: "left-[60%]" },
+  )
+  return <DialTiles axis="cursorDrag" label="Drag" options={options} />
+}
 
 const ControlTextRow = () => (
   <DialSelect
@@ -457,6 +605,8 @@ export const ROWS: RowMap = {
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
   cursorDisabled: CursorDisabledRow,
+  cursorBusy: CursorBusyRow,
+  cursorDrag: CursorDragRow,
   selectionUiText: ControlTextRow,
   selectionHighlight: HighlightRow,
 }
