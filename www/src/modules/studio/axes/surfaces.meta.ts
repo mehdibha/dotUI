@@ -116,14 +116,14 @@ export const OVERLAY_EDGE_OPTIONS = options(OVERLAY_EDGE_VALUES, {
 })
 
 const OVERLAY_SHADOWS = options(OVERLAY_SHADOW_VALUES, {
-  small: { label: "Small", description: "A close shadow", credits: ["shadcn"] },
+  small: { label: "Low", description: "A close shadow", credits: ["shadcn"] },
   medium: {
     label: "Medium",
     description: "Menus float clear of the page",
     credits: ["Bluesky"],
   },
   large: {
-    label: "Large",
+    label: "High",
     description: "A deep, soft shadow",
     credits: ["Radix Themes", "Geist"],
   },
@@ -132,7 +132,7 @@ const OVERLAY_SHADOWS = options(OVERLAY_SHADOW_VALUES, {
 export const OVERLAY_SHADOW_OPTIONS = [
   {
     value: "auto",
-    label: "Auto",
+    label: "Match cards",
     description: "Deepens with the cards' shadow",
   },
   ...OVERLAY_SHADOWS,
@@ -140,12 +140,12 @@ export const OVERLAY_SHADOW_OPTIONS = [
 
 export const DARK_LAYERS_OPTIONS = options(DARK_LAYERS_VALUES, {
   lifted: {
-    label: "Lifted",
+    label: "Lighter",
     description: "Cards and menus step up from the page",
     credits: ["Material 3", "Polaris"],
   },
   flat: {
-    label: "Flat",
+    label: "Same",
     description: "Edged cards, menus and dialogs stay on the page tone",
     credits: ["Geist", "Untitled UI"],
   },

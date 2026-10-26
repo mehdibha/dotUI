@@ -1,8 +1,8 @@
 "use client"
 
 /* Surfaces — on the main page, a link to the Surfaces page showing the look.
-   On the page: the look as preview tiles, its shadow, then overlays, dark
-   mode, the page and the control edges. */
+   On the page, by object: cards, menus and dialogs, the page, then buttons
+   and inputs. */
 
 import type { Mode, StepName, Theme } from "@dotui/colors"
 
@@ -104,6 +104,12 @@ function SurfaceGlyph({ state, theme }: { state: Effective; theme: Theme }) {
  *  ship: a look's tile. */
 function SurfaceScene({ state, theme }: { state: Effective; theme: Theme }) {
   const { card, popover, stroke } = surfaceRecipe(state)
+  // The theme's page is the current system's; a look can move the light one
+  // (Grouped's gray), so relight it to the look's own.
+  const page = (mode: Mode, step: (s: string) => string) =>
+    mode === "light" && typeof state.lightBg === "number"
+      ? `lab(from ${step("25")} ${state.lightBg} a b)`
+      : step("25")
   return (
     <span className="absolute inset-0 grid grid-cols-2">
       {MODES.map((mode) => {
@@ -121,7 +127,7 @@ function SurfaceScene({ state, theme }: { state: Effective; theme: Theme }) {
           <span
             key={mode}
             className="relative block"
-            style={{ background: step("25") }}
+            style={{ background: page(mode, step) }}
           >
             <span
               className="absolute top-2.5 left-3 h-9 w-14 rounded-[5px] border-solid"
@@ -222,7 +228,7 @@ const ShadowRow = () => (
 const OverlayEdgeRow = () => (
   <DialSelect
     axis="overlayEdge"
-    label="Edge"
+    label="Border"
     options={OVERLAY_EDGE_OPTIONS}
     placement={UNDER}
   />
@@ -280,7 +286,7 @@ function DarkPageRow() {
 const DarkLayersRow = () => (
   <DialSegmented
     axis="darkLayers"
-    label="Layers"
+    label="Dark layers"
     options={DARK_LAYERS_OPTIONS}
   />
 )
@@ -288,7 +294,7 @@ const DarkLayersRow = () => (
 const ShellRow = () => (
   <DialSelect
     axis="shellTone"
-    label="App shell"
+    label="Sidebar"
     options={SHELL_OPTIONS}
     placement={UNDER}
   />

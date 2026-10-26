@@ -140,38 +140,36 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
   ],
   motion: [[["motionSpeed", "Speed"]], [[ComponentMotionRow, "Components"]]],
   surfaces: [
-    [
-      ["surfaceLayers", "Look", ["Layers", "Edge", "Elevation"]],
-      ["surfaceShadow", "Shadow"],
-      ["shadowColor", "Shadow color", ["Tinted shadows"]],
-    ],
     {
-      title: "Overlays",
+      title: "Cards",
       rows: [
-        ["overlayEdge", "Edge", ["Menu border", "Dialog border"]],
+        ["surfaceLayers", "Look", ["Layers", "Edge", "Elevation"]],
+        ["surfaceShadow", "Shadow"],
+        ["shadowColor", "Shadow color", ["Tinted shadows"]],
+      ],
+    },
+    {
+      title: "Menus & dialogs",
+      rows: [
+        ["overlayEdge", "Border", ["Menu border", "Dialog border"]],
         ["overlayShadow", "Shadow", ["Menu shadow", "Dialog shadow"]],
         ["translucentOverlays", "Background", ["Glass", "Translucent"]],
       ],
     },
     {
-      title: "Dark mode",
-      rows: [
-        ["darkLayers", "Layers", ["Dark elevation"]],
-        ["darkBg", "Page", ["Page tone"]],
-      ],
-    },
-    {
       title: "Page",
       rows: [
-        ["lightBg", "Light", ["Page tone"]],
-        ["shellTone", "App shell", ["Sidebar"]],
+        ["lightBg", "Light", ["Page tone", "Background"]],
+        ["darkBg", "Dark", ["Page tone", "Background"]],
+        ["darkLayers", "Dark layers", ["Dark elevation"]],
+        ["shellTone", "Sidebar", ["App shell"]],
       ],
     },
     {
-      title: "Controls",
+      title: "Buttons & inputs",
       rows: [
-        ["controlEdge", "Edge", ["Control edge"]],
-        ["controlStroke", "Stroke", ["Control stroke"]],
+        ["controlEdge", "Border color", ["Control edge"]],
+        ["controlStroke", "Border width", ["Control stroke"]],
       ],
     },
   ],
