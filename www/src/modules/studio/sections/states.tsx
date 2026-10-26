@@ -12,9 +12,11 @@ import {
 } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
+import type { PrimaryColorSource } from "@/registry/theme"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
+import { effective } from "../axes"
 import type { Effective } from "../axes"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
 import { INVALID_FILL } from "../axes/states"
@@ -44,6 +46,7 @@ import {
   useDraft,
 } from "../rows"
 import { useCurrent } from "../selection"
+import { DialTiles } from "../tiles"
 import { useAxis } from "../use-axis"
 import { ArrowCursor, HandCursor } from "./cursors"
 import { inks } from "./primary"
@@ -293,16 +296,102 @@ const FieldFocusRow = () => (
   />
 )
 
-const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
-  ...option,
-  glyph: <DisabledSpecimen treatment={option.value} />,
-}))
+/** A primary button, a checked box and a switch on, disabled the way
+ *  `treatment` draws them, in the design system's own colors. */
+function DisabledScene({
+  treatment,
+  state,
+}: {
+  treatment: string
+  state: Effective
+}) {
+  const { m } = usePanelMode()
+  const ink = (source: string) =>
+    inks(m)[source as PrimaryColorSource] ?? inks(m).accent
+  const gray = (step: string) =>
+    m.scales.neutral?.[step as keyof (typeof m.scales)[string]] ?? m.background
+  const fade = treatment === "fade"
+  const button = fade
+    ? ink(state.buttonColor)
+    : { fill: gray("300"), on: gray("600") }
+  const checkbox = fade
+    ? ink(state.checkboxColor)
+    : { fill: gray("100"), on: gray("600") }
+  const track = fade ? ink(state.switchColor).fill : gray("100")
+  const thumb = fade ? ink(state.switchColor).on : gray("400")
+  // On the design system's own page: grays read as they will in the app.
+  return (
+    <span
+      className="absolute inset-0 flex items-center justify-center rounded-[inherit] border border-fg/10"
+      style={{ background: m.background }}
+    >
+      <span
+        className="flex flex-col items-center gap-2"
+        style={{ opacity: fade ? state.disabledOpacity / 100 : 1 }}
+      >
+        <span
+          className="rounded-[5px] px-2.5 text-[10px]/5 font-medium"
+          style={{ background: button.fill, color: button.on }}
+        >
+          Button
+        </span>
+        <span className="flex items-center gap-2">
+          <span
+            className="flex size-3.5 items-center justify-center rounded-[3px]"
+            style={{ background: checkbox.fill }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={checkbox.on}
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-2.5"
+            >
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+          </span>
+          <span
+            className="flex h-3.5 w-6 items-center justify-end rounded-full p-0.5"
+            style={{ background: track }}
+          >
+            <span
+              className="size-2.5 rounded-full"
+              style={{ background: thumb }}
+            />
+          </span>
+        </span>
+      </span>
+    </span>
+  )
+}
 
-const DisabledRow = () => (
-  <DialSelect
-    axis="disabledTreatment"
-    label="Disabled"
-    options={DISABLED_ROW_OPTIONS}
+/** The Style laid out in place: each option a scene of the look. */
+function DisabledRow() {
+  const values = effective(useCurrent().state).values
+  return (
+    <DialTiles
+      axis="disabledTreatment"
+      label="Style"
+      options={DISABLED_OPTIONS.map((option) => ({
+        ...option,
+        tile: <DisabledScene treatment={option.value} state={values} />,
+      }))}
+    />
+  )
+}
+
+const percent = (value: number) => `${value}%`
+
+const DisabledOpacityRow = () => (
+  <DialSlider
+    axis="disabledOpacity"
+    label="Opacity"
+    minValue={30}
+    maxValue={70}
+    step={5}
+    format={percent}
   />
 )
 
@@ -364,6 +453,7 @@ export const ROWS: RowMap = {
   focusInputStyle: FieldFocusRow,
   focusFieldWidth: FieldFocusWidthRow,
   disabledTreatment: DisabledRow,
+  disabledOpacity: DisabledOpacityRow,
   invalidStyle: InvalidRow,
   cursorControls: CursorControlsRow,
   cursorDisabled: CursorDisabledRow,

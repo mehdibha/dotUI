@@ -460,6 +460,15 @@ exports[`rules > states/indicator-rule-is-thick: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > states/opacity-only-fade: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
 exports[`rules > states/underline-owns-field-focus: fires, then holds back 1`] = `
 {
   "color": undefined,
