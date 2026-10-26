@@ -309,5 +309,95 @@
         "skip": ["boxShadow"]
       }
     }
+  },
+  "https://open.spotify.com/album/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/artist/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/collection/tracks": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/episode/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/playlist/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/queue": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/recents": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/search": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/section/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://open.spotify.com/show/<id>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/ad-preferences": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/apps": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/notifications": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/privacy": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/recover-playlists": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/redeem": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/set-device-password": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://www.spotify.com/account/subscription/manage": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
   }
 }

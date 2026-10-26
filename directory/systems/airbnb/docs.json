@@ -64,10 +64,10 @@
             },
             "v-2k34vl": {
               "name": {
-                "value": "price",
+                "value": "underlined",
                 "from": "ai"
               },
-              "note": "The listing price, underlined: opens the price breakdown."
+              "note": "Underlined text buttons: the listing price, which opens the price breakdown, and the short actions in account settings."
             },
             "v-couwyg": {
               "name": {
@@ -140,13 +140,6 @@
               },
               "note": "The wishlist heart: a 24px icon."
             },
-            "s-3kklgi": {
-              "name": {
-                "value": "40",
-                "from": "ai"
-              },
-              "note": "Become a host: 40px, 12px padding."
-            },
             "s-itnexa": {
               "name": {
                 "value": "text",
@@ -160,6 +153,9 @@
                 "from": "ai"
               },
               "note": "Map price pins."
+            },
+            "s-muiwe5": {
+              "hide": "the host calendar's day cells: a date picker's parts"
             }
           }
         }
@@ -178,7 +174,7 @@
         "link": {
           "variants": {
             "tertiary": {
-              "note": "Underlined, full ink: Is my place right for Airbnb?"
+              "note": "Full ink at 500: underlined in articles (Is my place right for Airbnb?), plain beside an icon on the signed-in pages."
             },
             "primary": {
               "note": "A link drawn as a dark filled button: Show 1,000+ places."
@@ -208,13 +204,17 @@
               "note": "Blue and underlined in the chat panel's consent line: Privacy Policy."
             },
             "v-caongm": {
-              "hide": "an invisible part over listing photos"
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "Plain dark text on the footer's grey: Help Center."
             },
             "v-7ddrm8": {
               "hide": "listing cards: the whole card is a link, see card"
             },
             "v-xlwqrd": {
-              "hide": "listing cards: the whole card is a link, see card"
+              "hide": "rows and cards that are whole links: account settings rows, listing cards (see card)"
             },
             "v-yvirj4": {
               "hide": "an invisible part over listing photos"
@@ -232,7 +232,7 @@
               },
               "note": "Dark, bold and underlined in the login dialog: Privacy Policy."
             },
-            "v-xgjsr7": {
+            "v-wp9ssp": {
               "name": {
                 "value": "inline, small",
                 "from": "ai"
@@ -241,7 +241,7 @@
             }
           },
           "sizes": {
-            "s-3yrj2s": {
+            "s-fm366q": {
               "name": {
                 "value": "inline",
                 "from": "ai"
@@ -255,11 +255,7 @@
               },
               "note": "Article titles under a photo, 16px."
             },
-            "s-0w0oph": {
-              "name": {
-                "value": "pill 40",
-                "from": "ai"
-              },
+            "medium": {
               "note": "40px, 20px padding: Show 1,000+ places."
             },
             "s-fxxsu7": {
@@ -275,6 +271,15 @@
                 "from": "ai"
               },
               "note": "The See all tile."
+            },
+            "s-47xecb": {
+              "hide": "an invisible part over listing photos"
+            },
+            "s-y5wgoh": {
+              "hide": "an invisible part over listing photos"
+            },
+            "s-kwm1px": {
+              "hide": "an invisible part over listing photos"
             }
           }
         }
@@ -286,7 +291,7 @@
       "groups": {
         "badge": {
           "variants": {
-            "v-9gbo6p": {
+            "v-94n4dj": {
               "name": {
                 "value": "subtle",
                 "from": "ai"
@@ -325,7 +330,7 @@
             "v-6zywe0": {
               "hide": "the round search button: see button"
             },
-            "v-1fhjvp": {
+            "v-caongm": {
               "hide": "a row's arrow: see button"
             },
             "v-1mse9s": {
@@ -351,6 +356,14 @@
                 "from": "ai"
               },
               "note": "A white pill with a deeper shadow on a Luxe listing's photo."
+            },
+            "v-e07ful": {
+              "hide": "a selected photo's check: see checkbox"
+            }
+          },
+          "sizes": {
+            "s-cyhzcu": {
+              "hide": "the host calendar's day cells: a date picker's parts"
             }
           }
         }

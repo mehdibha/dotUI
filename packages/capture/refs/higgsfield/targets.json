@@ -184,5 +184,125 @@
         "text": "For teams"
       }
     }
+  },
+  "https://higgsfield.ai/academy": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/ads-studio": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/ai-influencer-studio": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/ai/video": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/apps": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/asset/all": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/audio": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/community": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/content-factory": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/contests": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/creator-hub/help-center": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/effects/use": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/enterprise": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/katana": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/marketing-studio": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/mcp": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings/gift": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings/promo": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings/sessions": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings/subscription": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/me/settings/usage": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/original-series": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://higgsfield.ai/supercomputer": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
   }
 }

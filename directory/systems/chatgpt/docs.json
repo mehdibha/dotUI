@@ -131,19 +131,19 @@
               },
               "note": "TextLink: underlined #0d0d0d, 400 (responses endpoint, Learn more)."
             },
-            "v-81t2p5": {
+            "v-li7oz2": {
               "name": {
                 "value": "secondary",
                 "from": "ai"
               },
               "note": "Underlined #5d5d5d."
             },
-            "v-483qop": {
+            "v-e217uy": {
               "name": {
                 "value": "primary",
                 "from": "ai"
               },
-              "note": "Blue #0169cc, no underline; #339cff in dark."
+              "note": "Blue with no underline: #2c67c5 in the app, in both themes. The Apps SDK story's primary link is #0169cc, #339cff in dark."
             },
             "v-ycbe5g": {
               "name": {
@@ -165,6 +165,13 @@
                 "from": "ai"
               },
               "note": "#5d5d5d with no underline."
+            },
+            "v-7kyih0": {
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
+              "note": "#313131 one-line links on the app's home page, #cacaca in dark."
             }
           },
           "sizes": {
@@ -173,6 +180,9 @@
             },
             "s-krcd8v": {
               "note": "14px on a 20px line."
+            },
+            "s-umro0z": {
+              "hide": "empty tile links on the plugins page: see card"
             }
           }
         }
@@ -268,9 +278,6 @@
             },
             "s-sx3vba": {
               "note": "An 80px textarea, 12px padding."
-            },
-            "s-6w8xcl": {
-              "note": "24px, 16px."
             }
           }
         }

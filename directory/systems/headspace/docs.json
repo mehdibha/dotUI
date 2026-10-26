@@ -196,9 +196,6 @@
             },
             "v-pxlwlr": {
               "hide": "the OneTrust cookie banner's close button"
-            },
-            "v-fvv00x": {
-              "hide": "a 652px video poster that plays on click"
             }
           },
           "sizes": {
@@ -208,8 +205,8 @@
             "large": {
               "note": "Text-only at 20px: the app's top tabs."
             },
-            "s-fxxsu7": {
-              "note": "48px, 24px sides: the sign-in page."
+            "s-dbecer": {
+              "note": "48px, 24px sides, a 16px icon: Play Sample."
             },
             "s-rervkw": {
               "note": "48px, 16px sides: the app's filter chip."
@@ -226,8 +223,8 @@
             "s-vnzwkq": {
               "note": "58px, 32px sides, 18px text."
             },
-            "s-2qffu7": {
-              "note": "A 48px circle, 24px icon."
+            "s-e98v3e": {
+              "note": "A 48px circle, a 24px icon."
             },
             "s-gw3kw8": {
               "note": "34px, 12px sides, 14px text."
@@ -300,7 +297,7 @@
               },
               "note": "Underlined #0061ef, 14px: Terms & Conditions and Sign up for free on the sign-in page."
             },
-            "v-i0nw81": {
+            "fullwidth-false": {
               "name": {
                 "value": "primary",
                 "from": "ai"

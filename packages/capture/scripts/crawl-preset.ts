@@ -25,10 +25,12 @@
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
  *     The same in a Chrome you are signed in to, started with
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
- *     in new tabs of your profile. <file> maps each page key, with account
+ *     in one new tab of your profile (with --window <n>, in a window of its
+ *     own, the nth of runs side by side). <file> maps each page key, with account
  *     segments as placeholders, to its real URL; real URLs are never
- *     written. Modes are emulated (prefers-color-scheme): a product with an
- *     appearance setting needs it set by hand, one mode per run. Clicks only
+ *     written. Modes are emulated (prefers-color-scheme), and a page with a
+ *     `mode` is read only in it: a product with an appearance setting needs
+ *     it set to follow the system, or by hand, one mode per run. Clicks only
  *     with --passes (a pack page's `before` steps and `passes`) or --open:
  *     tooltips are hovered and states set, which changes nothing the
  *     account keeps.
@@ -60,6 +62,7 @@ import { pathToFileURL } from "node:url"
 import { parseArgs } from "node:util"
 import puppeteer, {
   type Browser,
+  type Dialog,
   type ElementHandle,
   type Page,
 } from "puppeteer"
@@ -134,6 +137,7 @@ const { values: args } = parseArgs({
     copies: { type: "string", default: "120" },
     concurrency: { type: "string", default: "2" },
     shots: { type: "boolean" },
+    window: { type: "string" },
   },
   allowNegative: true,
 })
@@ -904,8 +908,15 @@ async function crawl(
     const url = new URL(page.url())
     return url.origin + url.pathname + url.search
   }
+  // A signed-in census reuses its tab: the handler goes with the job. Leaving
+  // an unsaved form (Shopify's new product) is allowed, or every later goto in
+  // the tab is cancelled.
+  const answer = (dialog: Dialog) =>
+    void (
+      dialog.type() === "beforeunload" ? dialog.accept() : dialog.dismiss()
+    ).catch(() => {})
   try {
-    page.on("dialog", (dialog) => void dialog.dismiss())
+    page.on("dialog", answer)
     await load()
     const home = where()
     const story = storyOf(job.url)
@@ -1042,6 +1053,7 @@ async function crawl(
   } catch (error) {
     console.warn(`${job.key} (${job.mode}): ${(error as Error).message}`)
   } finally {
+    page.off("dialog", answer)
     await close()
   }
   for (const [i, censusPage] of pages.entries()) {
@@ -1261,8 +1273,8 @@ async function headless(): Promise<CensusPage[]> {
   }
 }
 
-/* Signed in: new tabs in the person's own Chrome (their cookies), one at a
-   time, closed after; nothing in the profile is changed. */
+/* Signed in: one tab in the person's own Chrome (their cookies), reused for
+   every page and closed after; nothing in the profile is changed. */
 async function connected(): Promise<CensusPage[]> {
   if (!args.pages) {
     console.error(
@@ -1281,15 +1293,39 @@ async function connected(): Promise<CensusPage[]> {
     browserURL: /^\d+$/.test(port) ? `http://127.0.0.1:${port}` : port,
     defaultViewport: null,
   })
+  // One tab for every page, so the person's Chrome keeps one window.
+  let tab: Page | undefined
   const open = async (job: Job) => {
-    const page = await browser.newPage()
-    await shim(page)
+    if (!tab || tab.isClosed()) {
+      // Chrome draws only the front tab of a window that shows: runs side by
+      // side each take a window, --window <n> the nth from the left.
+      tab = await browser.newPage(
+        args.window === undefined
+          ? undefined
+          : {
+              type: "window",
+              windowBounds: {
+                left: Number(args.window) * 490,
+                top: 40,
+                width: 480,
+                height: 860,
+              },
+            },
+      )
+      await shim(tab)
+      await focusable(tab)
+    }
+    const page = tab
     await page.setViewport({ width: job.settings.width ?? 1440, height: 900 })
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: job.mode },
     ])
-    await focusable(page)
     const load = async () => {
+      // A goto that changes only the hash keeps the document (claude.ai's
+      // settings dialog is a hash route). An app that navigates as it
+      // unloads aborts the blank one (Notion's peeks): the next goto holds.
+      if (page.url() !== "about:blank")
+        await page.goto("about:blank").catch(() => {})
       await page.goto(job.url, { waitUntil: "load", timeout: 60000 })
       await page
         .waitForNetworkIdle({ idleTime: 500, timeout: 10000 })
@@ -1297,40 +1333,58 @@ async function connected(): Promise<CensusPage[]> {
       await pause(job.settings.settle ?? 2500)
       await runSteps(page, job.settings.steps ?? [])
     }
-    return { page, load, close: () => page.close() }
+    return { page, load, close: async () => {} }
   }
   try {
     const pages: CensusPage[] = []
-    for (const [key, url] of Object.entries(urls))
-      for (const mode of MODES) {
-        const known = targets[key]
+    for (const [key, url] of Object.entries(urls)) {
+      const known = targets[key]
+      // A page that shows one mode is read only in it (Stripe, Spotify).
+      for (const mode of MODES.filter(
+        (m) => !known?.mode || m === known.mode,
+      )) {
         const passes = args.passes
           ? [
-              ...Object.values(known?.parts ?? {}).flatMap((target) =>
-                target.before?.length ? [target.before] : [],
-              ),
-              ...(known?.passes ?? []),
+              ...new Map(
+                [
+                  ...Object.values(known?.parts ?? {}).flatMap((target) =>
+                    target.before?.length ? [target.before] : [],
+                  ),
+                  ...(known?.passes ?? []),
+                ].map((steps) => [JSON.stringify(steps), steps]),
+              ).values(),
             ]
           : []
-        pages.push(
-          ...(await crawl(
-            {
-              key,
-              url,
-              mode,
-              settings: {
-                settle: known?.settle,
-                steps: args.passes ? known?.steps : [],
-                width: known?.width,
-              },
-              passes,
-            },
-            open,
-          )),
-        )
+        const job: Job = {
+          key,
+          url,
+          mode,
+          settings: {
+            settle: known?.settle,
+            steps: args.passes ? known?.steps : [],
+            width: known?.width,
+          },
+          passes,
+        }
+        // A page can close or replace the tab (ChatGPT's billing): the job
+        // runs again in a new one, once.
+        for (let tries = 2; tries--; )
+          try {
+            const read = await crawl(job, open)
+            if (tab?.isClosed() && tries) continue
+            pages.push(...read)
+            break
+          } catch (error) {
+            if (!tries) throw error
+            console.warn(`${key} (${mode}): ${(error as Error).message}`)
+            await tab?.close().catch(() => {})
+            tab = undefined
+          }
       }
+    }
     return pages
   } finally {
+    await tab?.close().catch(() => {})
     await browser.disconnect()
   }
 }

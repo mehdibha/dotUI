@@ -481,5 +481,153 @@
         "selector": "nav[aria-label=Pagination]"
       }
     }
+  },
+  "https://github.com/codespaces": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/copilot": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/issues": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/new": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/pulls": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/accessibility": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/appearance": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/apps": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/billing": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/codespaces": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/copilot/features": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/emails": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/installations": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/keys": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/organizations": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/profile": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/repositories": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/security": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/settings/sessions": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/actions": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/blob/main/README.md": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/commits": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/issues/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/issues/new": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/pull/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/pull/<id>/files": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/releases": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/security": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/settings/branches": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>/<project>/settings": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>?tab=repositories": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://github.com/<user>?tab=stars": {
+    "signedIn": true,
+    "parts": {}
   }
 }

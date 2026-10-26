@@ -179,9 +179,6 @@
               },
               "note": "Trending songs: 24px at 700."
             },
-            "v-7eiudu": {
-              "note": "A link on #282828: the language dialog's choices."
-            },
             "v-fe9z4f": {
               "note": "Browse podcasts: a white 32px pill."
             },
@@ -195,12 +192,13 @@
               "note": "Report in a context menu: #eaeaea at 400."
             },
             "v-r5rfae": {
-              "hide": "the Spotify logo"
+              "name": {
+                "value": "account",
+                "from": "ai"
+              },
+              "note": "White text links on black: the account pages."
             },
             "v-4grxw3": {
-              "hide": "the harness page's own caption"
-            },
-            "v-r30kha": {
               "hide": "the harness page's own caption"
             }
           },
@@ -208,8 +206,8 @@
             "s-5g12xt": {
               "note": "16px."
             },
-            "s-e7ts0x": {
-              "note": "14px."
+            "s-uhwwyp": {
+              "note": "14px on a 19px line."
             },
             "s-77sy85": {
               "note": "24px at 700."
@@ -219,6 +217,9 @@
             },
             "medium": {
               "note": "48px, 56px sides."
+            },
+            "s-bxjklo": {
+              "hide": "the Spotify logo"
             }
           }
         }
@@ -308,7 +309,7 @@
       "groups": {
         "textbox": {
           "variants": {
-            "v-e177v8": {
+            "v-52h2er": {
               "name": {
                 "value": "default",
                 "from": "ai"
@@ -488,7 +489,7 @@
       "groups": {
         "row": {
           "variants": {
-            "v-mni5yh": {
+            "align-center": {
               "name": {
                 "value": "header",
                 "from": "ai"
@@ -561,10 +562,7 @@
             "v-2q629l": {
               "hide": "a cover image again, its frame tinted by other art"
             },
-            "v-t9ff97": {
-              "hide": "a cover image again, its frame tinted by other art"
-            },
-            "v-cc6lmk": {
+            "v-r2r0hn": {
               "hide": "a cover image again, its frame tinted by other art"
             },
             "v-ggl06l": {
@@ -594,9 +592,6 @@
             "v-5vd8or": {
               "hide": "a cover image again, its frame tinted by other art"
             },
-            "v-9cj51w": {
-              "hide": "a cover image again, its frame tinted by other art"
-            },
             "v-a1ixz2": {
               "hide": "a cover image again, its frame tinted by other art"
             },
@@ -615,9 +610,6 @@
             "v-eqgoer": {
               "hide": "a cover image again, its frame tinted by other art"
             },
-            "v-fyuw0p": {
-              "hide": "a cover image again, its frame tinted by other art"
-            },
             "v-g8oy28": {
               "hide": "a cover image again, its frame tinted by other art"
             },
@@ -628,9 +620,6 @@
               "hide": "a cover image again, its frame tinted by other art"
             },
             "v-lcl4zf": {
-              "hide": "a cover image again, its frame tinted by other art"
-            },
-            "v-m58eft": {
               "hide": "a cover image again, its frame tinted by other art"
             },
             "v-nmzqlv": {
@@ -649,9 +638,6 @@
               "hide": "a cover image again, its frame tinted by other art"
             },
             "v-ts3fts": {
-              "hide": "a cover image again, its frame tinted by other art"
-            },
-            "v-uzasjx": {
               "hide": "a cover image again, its frame tinted by other art"
             },
             "v-vy020q": {

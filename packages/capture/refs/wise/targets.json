@@ -659,5 +659,125 @@
         "selector": "p"
       }
     }
+  },
+  "https://wise.com/account-summary": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/all-transactions": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/cards": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/draft-payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/home": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/insights": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/partner-integration/apps": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments/bill-splits": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments/direct-debits": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments/recurring/cards": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments/requested-payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/payments/scheduled-transfers": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/recipients": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/referral-hub": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/send": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/inbox": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/language-and-appearance": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/limits": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/notification-preferences": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/personal-details": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/pricing": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://wise.com/your-account/security-and-privacy": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

@@ -190,5 +190,89 @@
         ]
       }
     }
+  },
+  "https://bsky.app/": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/feeds": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/hashtag/<item>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/lists": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/messages": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/profile/<item>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/profile/<item>/post/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/profile/<user>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/saved": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/search": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/about": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/accessibility": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/account": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/appearance": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/beta-features": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/content-and-media": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/language": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://bsky.app/settings/privacy-and-security": {
+    "signedIn": true,
+    "parts": {}
   }
 }

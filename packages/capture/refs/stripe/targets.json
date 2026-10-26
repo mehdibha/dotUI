@@ -77,6 +77,7 @@
     }
   },
   "https://dashboard.stripe.com/test/dashboard": {
+    "mode": "light",
     "signedIn": true,
     "parts": {
       "page": {
@@ -139,6 +140,7 @@
     }
   },
   "https://dashboard.stripe.com/test/settings/billing/invoices/general": {
+    "mode": "light",
     "signedIn": true,
     "settle": 6000,
     "parts": {
@@ -172,6 +174,7 @@
     }
   },
   "https://dashboard.stripe.com/test/settings/billing/invoices/general#payment-page": {
+    "mode": "light",
     "signedIn": true,
     "settle": 6000,
     "steps": [
@@ -195,6 +198,7 @@
     }
   },
   "https://dashboard.stripe.com/test/customers": {
+    "mode": "light",
     "signedIn": true,
     "settle": 4000,
     "parts": {
@@ -224,5 +228,115 @@
         ]
       }
     }
+  },
+  "https://dashboard.stripe.com/test/balance/overview": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/billing": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/billing/subscriptions": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/checkout": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/connect/accounts/overview": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/coupons": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/invoices": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/payment-links": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/products": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/radar": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/reports/hub": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/account": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/branding": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/emails": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/payment_methods": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/team": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/settings/user": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/tax": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/webhooks": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://dashboard.stripe.com/test/workbench": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

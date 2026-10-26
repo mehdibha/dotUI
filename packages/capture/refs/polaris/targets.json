@@ -359,7 +359,7 @@
             "hover": "button[aria-label=Bold]"
           },
           {
-            "wait": "s-internal-tooltip .tooltip:visible"
+            "wait": "s-internal-tooltip >>> .tooltip:popover-open"
           }
         ]
       }
@@ -374,10 +374,10 @@
         "selector": "s-internal-modal >>> dialog[open]",
         "before": [
           {
-            "click": "s-internal-button:has-text(\"Export\")"
+            "click": "s-internal-button::-p-text(Export)"
           },
           {
-            "wait": "s-internal-modal dialog[open]"
+            "wait": "s-internal-modal >>> dialog[open]"
           }
         ]
       },
@@ -385,10 +385,10 @@
         "selector": "s-choice-list[label='File format'] >>> input[value=PLAIN_CSV]",
         "before": [
           {
-            "click": "s-internal-button:has-text(\"Export\")"
+            "click": "s-internal-button::-p-text(Export)"
           },
           {
-            "wait": "s-internal-modal dialog[open]"
+            "wait": "s-internal-modal >>> dialog[open]"
           }
         ]
       },
@@ -396,10 +396,10 @@
         "selector": "s-choice-list[label='File format'] >>> input[value=EXCEL_CSV]",
         "before": [
           {
-            "click": "s-internal-button:has-text(\"Export\")"
+            "click": "s-internal-button::-p-text(Export)"
           },
           {
-            "wait": "s-internal-modal dialog[open]"
+            "wait": "s-internal-modal >>> dialog[open]"
           }
         ]
       },
@@ -407,10 +407,10 @@
         "selector": "s-checkbox[label='Customer tags'] >>> .checkbox",
         "before": [
           {
-            "click": "s-internal-button:has-text(\"Export\")"
+            "click": "s-internal-button::-p-text(Export)"
           },
           {
-            "wait": "s-internal-modal dialog[open]"
+            "wait": "s-internal-modal >>> dialog[open]"
           }
         ]
       }
@@ -425,10 +425,10 @@
         "selector": "s-internal-page >>> s-menu >>> .popover:popover-open",
         "before": [
           {
-            "click": "s-internal-page .actions button[aria-label='More actions']"
+            "click": "s-internal-page >>> .actions >>> button[aria-label='More actions']"
           },
           {
-            "wait": "s-menu [role=menuitem]"
+            "wait": "s-internal-page >>> s-menu >>> [role=menuitem]"
           }
         ]
       },
@@ -436,10 +436,10 @@
         "selector": "s-internal-page >>> s-menu >>> .popover:popover-open .menu-item",
         "before": [
           {
-            "click": "s-internal-page .actions button[aria-label='More actions']"
+            "click": "s-internal-page >>> .actions >>> button[aria-label='More actions']"
           },
           {
-            "wait": "s-menu [role=menuitem]"
+            "wait": "s-internal-page >>> s-menu >>> [role=menuitem]"
           }
         ],
         "ink": "s-text >>> .text"
@@ -470,5 +470,115 @@
         "skip": ["fontFamily", "letterSpacing", "boxShadow"]
       }
     }
+  },
+  "https://admin.shopify.com/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/content/metaobjects": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/discounts": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/growth": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/markets": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/orders": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/apps": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/billing": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/checkout": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/custom_data": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/customer_accounts": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/domains": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/general": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/languages": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/legal": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/notifications": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/plan": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/shipping": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/taxes": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/themes": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

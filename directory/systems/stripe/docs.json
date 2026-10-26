@@ -71,9 +71,6 @@
             "v-kze2id": {
               "hide": "Ask about this page: the docs AI entry point"
             },
-            "v-puyt14": {
-              "hide": "rows in the docs search palette (View test cards)"
-            },
             "v-4g9r8c": {
               "hide": "the docs Search box drawn as a button"
             },
@@ -82,9 +79,6 @@
             },
             "v-y7kgbw": {
               "hide": "Ask AI in the docs header"
-            },
-            "v-q4avf0": {
-              "hide": "New chat in the docs AI panel"
             },
             "v-xr5noo": {
               "hide": "the docs AI panel's close ×"
@@ -97,14 +91,10 @@
             }
           },
           "sizes": {
-            "s-pq9p63": {
-              "name": {
-                "value": "medium",
-                "from": "ai"
-              },
+            "medium": {
               "note": "28px, 8px padding, 14px at 600: the Sail default."
             },
-            "s-ypbbqn": {
+            "s-nmfxe9": {
               "name": {
                 "value": "small",
                 "from": "docs"
@@ -117,6 +107,12 @@
                 "from": "docs"
               },
               "note": "40px, 16px padding, 16px text."
+            },
+            "s-upyf1m": {
+              "hide": "the Dashboard date picker's day cells"
+            },
+            "s-87379p": {
+              "hide": "the payment methods list's icons"
             }
           }
         }
@@ -270,11 +266,7 @@
             }
           },
           "sizes": {
-            "s-gbm9an": {
-              "name": {
-                "value": "medium",
-                "from": "docs"
-              },
+            "medium": {
               "note": "28px, 8px padding, 14px."
             },
             "s-790e0h": {
@@ -533,14 +525,8 @@
             "v-2sp5a2": {
               "hide": "the docs header's APIs & SDKs dropdown"
             },
-            "v-2gqv0m": {
-              "hide": "the docs AI panel's disclaimer"
-            },
             "v-nhnk7w": {
               "hide": "a recently viewed card in the docs AI panel"
-            },
-            "v-l7d1ng": {
-              "hide": "the Menu example's panel, see menu"
             }
           }
         }

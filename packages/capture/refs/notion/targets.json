@@ -292,5 +292,45 @@
         "nth": 1
       }
     }
+  },
+  "https://app.notion.com/ai": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<id>#grouped": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<item>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<page>#code": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<page>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<page>#headings": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<id>?p=<item>&pm=c": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/library/recents": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://app.notion.com/p/<ws>/<id>?p=<item>&pm=s": {
+    "signedIn": true,
+    "parts": {}
   }
 }

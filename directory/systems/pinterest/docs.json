@@ -73,10 +73,6 @@
               "name": { "value": "icon, lg", "from": "ai" },
               "note": "48px, a 24px icon."
             },
-            "s-rpcoay": {
-              "name": { "value": "icon, md", "from": "ai" },
-              "note": "36px, a 16px icon."
-            },
             "s-nbbtvw": {
               "name": { "value": "icon, sm", "from": "ai" },
               "note": "32px, a 24px icon."
@@ -158,9 +154,8 @@
             "s-f5wwx1": { "note": "16px." },
             "s-5ptcm0": { "note": "12px." },
             "s-64dl1g": { "note": "14px." },
-            "s-0rxgj4": { "note": "32px: chips and creator rows." },
+            "s-vokte3": { "note": "32px: chips and creator rows." },
             "s-s382ib": { "note": "14px." },
-            "s-wzzuu1": { "note": "12px beside a 16px icon." },
             "s-05iqfv": { "note": "24px beside a 20px icon." },
             "s-svi83l": { "hide": "a 4px progress line inside a Trends link" }
           }

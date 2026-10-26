@@ -49,10 +49,7 @@
             "link": {
               "note": "Underlined text with no frame: the checks count (19/20) on pull requests."
             },
-            "v-klgzcs": {
-              "hide": "the dotted author name in issue rows, a hovercard trigger: see link"
-            },
-            "v-jwoc11": {
+            "visual16": {
               "hide": "side navigation rows (NavList), like More on search"
             },
             "v-me01zg": {
@@ -86,9 +83,6 @@
             "v-pvtaiz": {
               "hide": "an issue label token drawn as a button (Storybook): see badge"
             },
-            "v-026pg2": {
-              "hide": "a Details summary row (Custom see Details) in a story"
-            },
             "v-hwo4bd": {
               "hide": "the × on an issue label token: see badge"
             },
@@ -108,13 +102,6 @@
             },
             "small": {
               "note": "Most toolbar actions."
-            },
-            "s-vz5457": {
-              "name": {
-                "value": "small icon",
-                "from": "ai"
-              },
-              "note": "IconButton: a 28px square."
             },
             "s-djtkox": {
               "hide": "icons in a list's rows"
@@ -231,14 +218,7 @@
             "muted": {
               "note": "Grey and underlined: milestones and metadata."
             },
-            "v-3876vl": {
-              "name": {
-                "value": "title",
-                "from": "ai"
-              },
-              "note": "Issue and pull request titles in lists: full ink, 500."
-            },
-            "v-7yxkk3": {
+            "intextblock": {
               "name": {
                 "value": "inline",
                 "from": "docs"
@@ -267,7 +247,7 @@
             "subtle": {
               "hide": "Sign in on the signed-out header's black bar"
             },
-            "v-jwoc11": {
+            "visual16": {
               "hide": "side navigation rows (NavList): Assigned to me, Created by me"
             },
             "v-jmac1c": {
@@ -277,19 +257,12 @@
               },
               "note": "Underlined, in the banner's ink."
             },
-            "v-8chwc9": {
-              "name": {
-                "value": "timeline",
-                "from": "ai"
-              },
-              "note": "Underlined in the line's ink: Roadmap in a timeline item."
-            },
             "gray": {
               "hide": "an issue label drawn as a link: see badge"
             }
           },
           "sizes": {
-            "s-sfdu69": {
+            "s-f5wwx1": {
               "name": {
                 "value": "16px text",
                 "from": "ai"
@@ -301,15 +274,14 @@
                 "from": "ai"
               }
             },
-            "s-f4lyfp": {
+            "s-5ptcm0": {
               "name": {
                 "value": "12px text",
                 "from": "ai"
-              },
-              "note": "The footer."
+              }
             },
             "medium": {
-              "hide": "outline menu rows: see menu"
+              "hide": "buttons rendered as links (Primer data-size medium): see button"
             },
             "large": {
               "hide": "Pulse's side navigation rows"
@@ -343,7 +315,7 @@
       "groups": {
         "avatar": {
           "variants": {
-            "v-stsopu": {
+            "user": {
               "name": {
                 "value": "default",
                 "from": "docs"
@@ -421,14 +393,14 @@
       "groups": {
         "card": {
           "variants": {
-            "v-mbyml4": {
+            "caret": {
               "name": {
                 "value": "box",
                 "from": "docs"
               },
               "note": "The README, the file list."
             },
-            "v-zbtk3h": {
+            "gray": {
               "name": {
                 "value": "box header",
                 "from": "docs"
@@ -495,8 +467,7 @@
             "v-634nck": {
               "hide": "a Storybook harness (Portal story)"
             }
-          },
-          "sizes": {}
+          }
         }
       },
       "missing": ["Storybook's yellow placeholders still read as boxes."]
@@ -510,15 +481,12 @@
             "v-j2doht": {
               "hide": "pickers anchored to a button, like the branch menu: see popover"
             },
-            "v-6r0e4v": {
+            "v-0gcxkx": {
               "name": {
                 "value": "default",
                 "from": "docs"
               },
               "note": "Primer's Dialog: a header split by a rule, the close button top right."
-            },
-            "v-c2636e": {
-              "hide": "SelectPanel, anchored to its button: see popover"
             }
           },
           "sizes": {
@@ -536,7 +504,7 @@
       "groups": {
         "popover": {
           "variants": {
-            "v-j2doht": {
+            "height-auto": {
               "name": {
                 "value": "overlay",
                 "from": "docs"
@@ -1225,7 +1193,7 @@
               },
               "note": "The same tab on the repository header's grey band."
             },
-            "v-026pg2": {
+            "secondary": {
               "name": {
                 "value": "unselected",
                 "from": "ai"
@@ -1252,7 +1220,7 @@
             }
           },
           "sizes": {
-            "s-i4hd36": {
+            "s-vx547w": {
               "note": "8px padding around a 14px label."
             },
             "s-ay406o": {

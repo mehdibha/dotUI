@@ -176,5 +176,100 @@
         "selector": "h3"
       }
     }
+  },
+  "https://www.pinterest.com/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/edit/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/pin/<id>/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/search/pins/?q=design": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/account-settings/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/branded-content/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/claim/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/edit-profile/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/labs/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/notifications/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/permissions/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/privacy/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/profile-visibility/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/settings/security/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/<user>/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/<user>/<item>/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/<user>/_pins/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.pinterest.com/<user>/_profile/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

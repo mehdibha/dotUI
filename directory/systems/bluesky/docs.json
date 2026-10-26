@@ -74,24 +74,21 @@
               "name": { "value": "small", "from": "docs" },
               "note": "33px, 14px padding, a 16px icon."
             },
-            "s-izt277": {
+            "s-ooq6rz": {
               "name": { "value": "large", "from": "docs" },
-              "note": "44px, 24px padding."
+              "note": "44px, 24px padding, a 16px icon."
             },
-            "s-a1xxht": {
+            "s-t1f7ur": {
               "name": { "value": "small, icon", "from": "ai" },
-              "note": "33px circle, a 16px icon."
+              "note": "33px circle, a 24px icon."
             },
             "s-819bmu": {
               "name": { "value": "post action", "from": "ai" },
               "note": "28px, 5px padding, an 18px icon."
             },
-            "s-9ubl5h": { "note": "31px, a 24px icon." },
-            "s-ce4fwt": { "note": "33px, an 18px icon." },
             "s-h6oup1": { "note": "20px, 4px padding, a 12px icon." },
-            "s-vwrfh4": { "note": "25px." },
-            "s-7ysxzb": { "note": "17px, inline in text." },
-            "s-g2pcge": { "note": "56px, a 20px icon." }
+            "s-8qzndi": { "note": "25px, a 12px icon." },
+            "s-7ysxzb": { "note": "17px, inline in text." }
           }
         }
       },
@@ -133,8 +130,7 @@
           "sizes": {
             "s-ag997w": { "note": "15px." },
             "s-j59ud4": { "note": "15px, 4px padding." },
-            "s-ukg54q": { "note": "15px in post text." },
-            "s-4smmmo": { "note": "13.1px." },
+            "s-lgjl0g": { "note": "13.1px." },
             "s-p1ocba": { "note": "A 184px card." },
             "s-2th01i": { "note": "33px, 14px padding." }
           }

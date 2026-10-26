@@ -310,5 +310,93 @@
         "selector": "main [role=switch][aria-checked=false] > span"
       }
     }
+  },
+  "https://chatgpt.com/c/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/g/<project>/c/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/g/<project>/project": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/images": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/library": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/plugins": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/scheduled": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/account": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/archived-chats": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/billing": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/keyboard-shortcuts": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/parental-controls": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/personalization": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/pets": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/security": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/storage": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/trusted-contact": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/usage": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/voice": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/code-review": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://chatgpt.com/settings/plugins-settings": {
+    "signedIn": true,
+    "parts": {}
   }
 }

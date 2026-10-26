@@ -288,5 +288,125 @@
         "selector": "main p.text-copy-14 > a[href^='/docs/']"
       }
     }
+  },
+  "https://vercel.com/account": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/new": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/activity": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/agent": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/ai-gateway": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/cdn": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/deployments": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/domains": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/integrations": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/observability": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/analytics": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/deployments": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/firewall": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/logs": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/observability": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/settings": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/settings/domains": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/settings/functions": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/settings/git": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/<project>/speed-insights": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/sandboxes": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/settings": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/settings/billing": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/settings/environment-variables": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/settings/members": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/stores": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/support": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://vercel.com/<team>/~/usage": {
+    "signedIn": true,
+    "parts": {}
   }
 }

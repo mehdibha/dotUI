@@ -66,13 +66,6 @@
               },
               "note": "A page's Button block: a 1px #e6e5e3 ring, an emoji, 500: Notion Basics for Beginners."
             },
-            "v-wegtt0": {
-              "name": {
-                "value": "filled",
-                "from": "ai"
-              },
-              "note": "A 5% black fill: the database's view picker, Gallery view ▾."
-            },
             "v-3xemq8": {
               "name": {
                 "value": "filter chip",
@@ -137,7 +130,7 @@
               },
               "note": "28px, 8px padding, a 22px icon."
             },
-            "s-0gqap5": {
+            "s-thq7lt": {
               "name": {
                 "value": "icon 24",
                 "from": "ai"
@@ -157,13 +150,6 @@
                 "from": "ai"
               },
               "note": "The login page's 72px social tiles."
-            },
-            "s-fque1j": {
-              "name": {
-                "value": "icon 28",
-                "from": "ai"
-              },
-              "note": "A 28px square, 16px text."
             },
             "s-3kklgi": {
               "name": {
@@ -257,7 +243,7 @@
               },
               "note": "14px with a 3px inset for the icon."
             },
-            "s-sfdu69": {
+            "s-f5wwx1": {
               "name": {
                 "value": "16px",
                 "from": "ai"
@@ -279,12 +265,12 @@
       "groups": {
         "badge": {
           "variants": {
-            "v-3t57l8": {
+            "v-t5v2t7": {
               "name": {
                 "value": "status, done",
                 "from": "docs"
               },
-              "note": "A Status property: green #cfe1d6 under #2a533c, a green dot."
+              "note": "A Status property: green #d7e6dd under #2a533c, a green dot."
             },
             "v-hxt9z2": {
               "name": {
@@ -614,7 +600,7 @@
               },
               "note": "1px under a table's rows, at 7%."
             },
-            "v-26z2zv": {
+            "v-4gm52k": {
               "hide": "the sidebar's resize edge"
             }
           }

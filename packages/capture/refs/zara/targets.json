@@ -224,5 +224,50 @@
         "selector": "button[data-qa-id=add-sections-to-newsletter]"
       }
     }
+  },
+  "https://www.zara.com/us/en/help-center": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/account/settings": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/in-store/order": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/order": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/profile": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/return-requests": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/user/wishlist": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/z-giftcard-mkt1394.html": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.zara.com/us/en/z-stores-st1404.html": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

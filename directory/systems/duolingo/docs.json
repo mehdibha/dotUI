@@ -102,7 +102,7 @@
             }
           },
           "sizes": {
-            "s-dmez1q": {
+            "s-ca7hxc": {
               "name": {
                 "value": "large",
                 "from": "ai"
@@ -130,12 +130,8 @@
               },
               "note": "Text-sized caps in the header."
             },
-            "s-fzsf41": {
-              "name": {
-                "value": "text, icon",
-                "from": "ai"
-              },
-              "note": "Report: 17px with a 20px icon."
+            "s-75pxmx": {
+              "hide": "the Characters page's letter tiles"
             }
           }
         }
@@ -218,7 +214,7 @@
               "note": "Forgot? inside the password field: grey caps on the field's fill."
             },
             "v-ooz339": {
-              "hide": "the duolingo logo"
+              "hide": "unstyled links: the duolingo logo, and the Characters page's loading placeholders"
             },
             "v-ve9ebe": {
               "hide": "Get started: a link drawn as the green button, see button"
@@ -296,8 +292,8 @@
             }
           },
           "sizes": {
-            "s-wazze1": {
-              "note": "30px square, 15px at 700."
+            "s-sj8frl": {
+              "note": "32px square, 14.72px at 700."
             }
           }
         }
@@ -376,11 +372,6 @@
                 "from": "ai"
               },
               "note": "The track at the top of a lesson, beside the hearts count."
-            }
-          },
-          "sizes": {
-            "s-eebbqv": {
-              "note": "16px tall."
             }
           }
         }

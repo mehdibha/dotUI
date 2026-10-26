@@ -467,5 +467,120 @@
         "selector": "span:has(> input[type=checkbox]) > span"
       }
     }
+  },
+  "https://www.airbnb.com/account-settings/airbnb-for-work": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/booking-permissions": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/listing-visibility": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/login-and-security": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/personal-info": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/personalized-recommendation": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/preferences": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/professional-hosting": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/account-settings/taxes": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/airbnb-friendly-tools": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/co-hosting/overview/people": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/guest/messages": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/hosting": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/hosting/listings": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/hosting/messages": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/hosting/team": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/multicalendar/<id>": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/progress/reviews": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/refer/leads": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/trips": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/users/profile": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.airbnb.com/wishlists": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }
