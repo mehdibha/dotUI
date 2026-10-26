@@ -1367,7 +1367,7 @@ async function connected(): Promise<CensusPage[]> {
           passes,
         }
         // A page can close or replace the tab (ChatGPT's billing): the job
-        // runs again in a new one.
+        // runs again in a new one, once.
         for (let tries = 2; tries--; )
           try {
             const read = await crawl(job, open)
@@ -1375,6 +1375,7 @@ async function connected(): Promise<CensusPage[]> {
             pages.push(...read)
             break
           } catch (error) {
+            if (!tries) throw error
             console.warn(`${key} (${mode}): ${(error as Error).message}`)
             await tab?.close().catch(() => {})
             tab = undefined
