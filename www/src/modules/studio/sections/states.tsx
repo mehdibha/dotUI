@@ -144,16 +144,20 @@ export function CursorPreview({ state }: { state: Effective }) {
   )
 }
 
+/** The text on a highlight: the system's pair for Browser, else whichever
+ *  ink reads. */
+const textOn = (value: string, background: string) =>
+  value === "browser"
+    ? "HighlightText"
+    : toOklch(background).l > 0.6
+      ? "#1B1B1F"
+      : "#FAFAFA"
+
 /** Painted words: the row shows the highlight itself. */
 export function TextSelectionPreview({ state }: { state: Effective }) {
   const value = state.selectionHighlight
   const background = useHighlightFill()(value, state.selectionCustomColor)
-  const color =
-    value === "browser"
-      ? "HighlightText"
-      : toOklch(background).l > 0.6
-        ? "#1B1B1F"
-        : "#FAFAFA"
+  const color = textOn(value, background)
   return (
     <span className="rounded-xs px-1 text-[11px]" style={{ background, color }}>
       Aa
@@ -436,12 +440,46 @@ const CursorDisabledRow = () => (
   />
 )
 
+/** A drag across a word and a button: the button's label lights up
+ *  only when control text selects. */
+function ControlTextScene({ selectable }: { selectable: boolean }) {
+  const { state } = useCurrent()
+  const { m } = usePanelMode()
+  const values = effective(state).values
+  const button =
+    inks(m)[values.buttonColor as PrimaryColorSource] ?? inks(m).accent
+  const background = useHighlightFill()(
+    values.selectionHighlight,
+    values.selectionCustomColor,
+  )
+  const color = textOn(values.selectionHighlight, background)
+  const marked = { background, color }
+  return (
+    <span
+      className="absolute inset-0 flex items-center justify-center gap-1.5 rounded-[inherit] border border-fg/10 text-[10px]/4 font-medium"
+      style={{ background: m.background, color: m.scales.neutral?.["950"] }}
+    >
+      <span style={marked}>Saved</span>
+      <span
+        className="rounded-[5px] px-2 py-0.5"
+        style={{ background: button.fill, color: button.on }}
+      >
+        <span style={selectable ? marked : undefined}>Undo</span>
+      </span>
+    </span>
+  )
+}
+
+/** Whether labels select, laid out in place: each option a drag over a
+ *  button. */
 const ControlTextRow = () => (
-  <DialSelect
+  <DialTiles
     axis="selectionUiText"
     label="Labels"
-    options={CONTROL_TEXT_OPTIONS}
-    placement={UNDER}
+    options={CONTROL_TEXT_OPTIONS.map((option) => ({
+      ...option,
+      tile: <ControlTextScene selectable={option.value === "selectable"} />,
+    }))}
   />
 )
 
