@@ -9,15 +9,22 @@ export const MARK = { open: "\uFDD0", close: "\uFDD1" }
 const RUN = /\uFDD0([^\uFDD1]*)\uFDD1/g
 
 /** The string literals of a script, and the pieces between their slots:
- *  the words a product ships to every visitor, whitespace collapsed. */
-export function literals(js: string): string[] {
+ *  the words a product ships to every visitor, whitespace collapsed. A
+ *  long literal is read once more for the strings inside it: a message
+ *  catalog shipped as `JSON.parse("…")`. */
+export function literals(js: string, nested = false): string[] {
   const out: string[] = []
   const LITERAL =
-    /"((?:[^"\\\n]|\\.){1,160})"|'((?:[^'\\\n]|\\.){1,160})'|`((?:[^`\\$]|\\.|\$(?!\{)){1,160})`/g
+    /"((?:[^"\\\n]|\\.)*)"|'((?:[^'\\\n]|\\.)*)'|`((?:[^`\\$]|\\.|\$(?!\{))*)`/g
   for (const [, double, single, template] of js.matchAll(LITERAL)) {
     const text = unescapeJs(double ?? single ?? template ?? "")
-    // A message with slots shows its pieces apart: "{n} issues", "issues".
-    const pieces = text.split(/\{[^{}]*\}|%\d*\$?[sd@]/)
+    if (text.length > 160) {
+      if (!nested) out.push(...literals(text, true))
+      continue
+    }
+    // A message with slots shows its pieces apart: "{n} issues", "issues";
+    // "<0/> liked your post", "liked your post".
+    const pieces = text.split(/\{[^{}]*\}|%\d*\$?[sd@]|<\/?\d+\/?>/)
     for (const piece of pieces.length > 1 ? [text, ...pieces] : [text]) {
       const words = normal(piece)
       if (/\p{L}/u.test(words)) out.push(words)

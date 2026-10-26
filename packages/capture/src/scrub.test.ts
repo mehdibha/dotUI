@@ -27,6 +27,19 @@ describe("literals", () => {
     ])
   })
 
+  it("reads a message catalog shipped as one long string", () => {
+    const catalog = JSON.stringify({
+      a: ["<0/> and <1>", ["others"], "</1> liked your post"],
+      b: ["Bluesky adapts to your screen in any orientation or window size."],
+      c: ["x".repeat(160)],
+    })
+    const words = literals(`m=JSON.parse(${JSON.stringify(catalog)})`)
+    expect(words).toContain("liked your post")
+    expect(words).toContain(
+      "Bluesky adapts to your screen in any orientation or window size.",
+    )
+  })
+
   it("skips strings without a letter", () => {
     expect(literals(`a="12";b=" / "`)).toEqual([])
   })
