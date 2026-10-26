@@ -117,7 +117,6 @@
   height: 3.75rem;
   padding-inline: 14px;
   border-radius: 10px;
-  scroll-snap-align: start;
 
   & > span:first-of-type {
     font-size: 12px;

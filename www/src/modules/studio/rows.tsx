@@ -643,9 +643,13 @@ export function FontListPopover({
         </>
       )}
       {/* Docked, the list fills the sheet over the field, which sits on the
-          keyboard. */}
-      <Command className="gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
-        <SearchField autoFocus={finePointer} aria-label="Search fonts">
+          keyboard; in the phone's sheet, the field stays on top. */}
+      <Command className="gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:flex-1 max-lg:not-in-data-panel-sheet:flex-col-reverse">
+        <SearchField
+          autoFocus={finePointer}
+          aria-label="Search fonts"
+          className="in-data-panel-sheet:sticky in-data-panel-sheet:top-10 in-data-panel-sheet:z-10 in-data-panel-sheet:bg-(--panel-surface)"
+        >
           <InputGroup>
             <InputGroupAddon>
               <SearchIcon />

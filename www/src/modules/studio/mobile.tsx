@@ -33,7 +33,7 @@ export function CardStrip({ children }: { children: ReactNode }) {
     <div className="overflow-clip rounded-[14px] border border-fg/6 bg-card">
       <div
         data-cards=""
-        className="no-scrollbar flex snap-x scroll-px-2 gap-1.5 overflow-x-auto overscroll-x-contain p-2"
+        className="no-scrollbar flex gap-1.5 overflow-x-auto overscroll-x-contain p-2"
       >
         {children}
       </div>
@@ -154,8 +154,12 @@ export function PanelSheet({
         onOpenChange={(open) => !open && onDismiss()}
         // Fits its view. A long one opens partway, leaving the preview's top
         // in view, and grows as it's scrolled; a short one shows whole.
-        className="max-h-[calc(100dvh-3rem)]"
-        snapPoints={[Math.round(window.innerHeight * 0.62)]}
+        // Set off from the page: a firmer edge and shadow, and in dark mode a
+        // lighter fill.
+        className="max-h-[calc(100dvh-3rem)] [--overlay-border:color-mix(in_oklab,var(--color-fg)_14%,transparent)] [--shadow-modal:0_16px_48px_-12px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.08)] dark:[--color-popover:var(--color-muted)]"
+        // Any CSS length, its percentages of the sheet: a short sheet rests
+        // whole, at the bottom.
+        snapPoints={["min(100%, 62dvh)"]}
       >
         <RacDialog
           aria-label={label}
