@@ -103,6 +103,19 @@ describe("scrub", () => {
     expect(scrub(copy, words, ["jane@acme.com"])).toBeNull()
   })
 
+  it("drops a copy whose font URL holds a private string", () => {
+    const copy = {
+      ...copyOf(run("Inbox")),
+      fonts: [
+        {
+          family: "Inter",
+          src: 'url("https://cdn.test/Acme%20Inc/inter.woff2")',
+        },
+      ],
+    }
+    expect(scrub(copy, words, ["acme inc"])).toBeNull()
+  })
+
   it("drops a copy that shows a private string across elements", () => {
     const known = new Set(["Jane", "Doe"])
     for (const html of [

@@ -59,8 +59,10 @@ export function scrub(
     html: copy.html.replace(RUN, swap(unescapeHtml, escapeHtml)),
     css: copy.css.replace(RUN, swap(unescapeCss, escapeCss)),
   }
+  // The copy keeps its fonts' URLs, which a private path could sit in.
+  const fonts = copy.fonts.flatMap((font) => Object.values(font)).join("\n")
   const plain = fold(
-    `${unescapeHtml(scrubbed.html)}\n${unescapeCss(scrubbed.css)}`,
+    `${unescapeHtml(scrubbed.html)}\n${unescapeCss(scrubbed.css)}\n${decoded(fonts)}`,
   )
   // A name split across elements (`Jane <b>Doe</b>`) still shows whole: the
   // text is checked again with the markup and spacing gone.
@@ -145,6 +147,13 @@ function hash(text: string): number {
   return h >>> 0
 }
 
+const decoded = (text: string) => {
+  try {
+    return decodeURIComponent(text)
+  } catch {
+    return text
+  }
+}
 const normal = (text: string) => text.replace(/\s+/g, " ").trim()
 const fold = (text: string) =>
   text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase()
