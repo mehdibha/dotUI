@@ -12,12 +12,6 @@ import {
   TrashIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import {
-  Accordion,
-  AccordionItem,
-  AccordionPanel,
-  AccordionTrigger,
-} from "@/registry/ui/accordion"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
@@ -47,14 +41,17 @@ import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
 import {
   Board,
-  BoardSection,
   RAC_STATE,
   stateProps,
+  useBoardFocus,
   usePresence,
   useReplay,
+  useRootToken,
   useSteps,
 } from "./board"
 import { Tip } from "./menus-parts"
+import { EaseCurve } from "./motion-parts"
+import { CANVAS, ComponentSet, SetGrid } from "./set-parts"
 
 const STEP_MS = 800
 
@@ -73,10 +70,8 @@ function useInView(ref: React.RefObject<HTMLElement | null>) {
   return inView
 }
 
-const STAGE = "relative min-h-60 overflow-hidden p-0 max-sm:p-0"
-
-/** The stage's window, inset alike on every stage; fixed layers resolve against it. */
-const FRAME = "absolute inset-0 overflow-hidden p-5 text-left contain-paint"
+/** A set's window: fixed layers resolve against it. */
+const FRAME = "absolute inset-0 overflow-hidden text-left contain-paint"
 
 /** The page an overlay opens over. */
 function List({ title, children }: { title: string; children: ReactNode }) {
@@ -295,44 +290,6 @@ function Popovers({ replay }: { replay: number }) {
   )
 }
 
-const FAQ = [
-  {
-    id: "plan",
-    question: "What's in Pro?",
-    answer: "Unlimited projects and priority support.",
-  },
-  {
-    id: "change",
-    question: "Can I switch plans?",
-    answer: "Upgrades apply at once, downgrades at renewal.",
-  },
-  {
-    id: "refund",
-    question: "Do you offer refunds?",
-    answer: "Within 14 days, no questions asked.",
-  },
-]
-
-function Disclosure({ replay }: { replay: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const step = useSteps({ replay, running: useInView(ref) }, 2200)
-  return (
-    <div ref={ref} inert className={cn(FRAME, "py-2")}>
-      <Accordion
-        className="w-full"
-        expandedKeys={new Set([FAQ[step % FAQ.length]?.id ?? "plan"])}
-      >
-        {FAQ.map((entry) => (
-          <AccordionItem key={entry.id} id={entry.id}>
-            <AccordionTrigger>{entry.question}</AccordionTrigger>
-            <AccordionPanel>{entry.answer}</AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  )
-}
-
 const OVERLAY = { open: 2000, closed: 1200 }
 
 function Modal({ replay }: { replay: number }) {
@@ -432,27 +389,77 @@ function Toasts({ replay }: { replay: number }) {
   )
 }
 
-export default function MotionBoard() {
-  const { replay } = useReplay()
+/** A member's shipped timing, as the preview resolves its vars. */
+function Timing({ name, member }: { name: string; member: string }) {
+  const ms = parseFloat(useRootToken(`--studio-${member}-duration`)) || 0
+  const ease = useRootToken(`--studio-${member.replace(/-enter$/, "")}-ease`)
   return (
-    <Board id="motion">
-      <div className="grid gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-3 [&>section>div]:flex-1">
-        <BoardSection title="Controls" className={STAGE}>
-          <Controls replay={replay} />
-        </BoardSection>
-        <BoardSection title="Popover" className={STAGE}>
-          <Popovers replay={replay} />
-        </BoardSection>
-        <BoardSection title="Accordion" className={STAGE}>
-          <Disclosure replay={replay} />
-        </BoardSection>
-        <BoardSection title="Dialog" className={STAGE}>
-          <Modal replay={replay} />
-        </BoardSection>
-        <BoardSection title="Toast" className={STAGE}>
-          <Toasts replay={replay} />
-        </BoardSection>
-      </div>
+    <span className="flex items-center gap-2 text-[11px] leading-none text-fg-muted">
+      <EaseCurve
+        timing={{ ms, ease: ease || "linear" }}
+        span={Math.max(ms, 450)}
+        className="h-5 w-10"
+      />
+      {name}
+      <span className="font-mono tabular-nums">{ms}ms</span>
+    </span>
+  )
+}
+
+/* Each set: what moves, and the timings it moves by. */
+const SETS: {
+  name: string
+  Stage: (props: { replay: number }) => React.ReactNode
+  timings: [name: string, member: string][]
+}[] = [
+  {
+    name: "Controls",
+    Stage: Controls,
+    timings: [
+      ["Button", "button-state"],
+      ["Switch", "switch-state"],
+    ],
+  },
+  {
+    name: "Overlays",
+    Stage: Popovers,
+    timings: [
+      ["Menu", "popover-enter"],
+      ["Tooltip", "tooltip-enter"],
+    ],
+  },
+  { name: "Dialog", Stage: Modal, timings: [["Dialog", "modal-enter"]] },
+  { name: "Toast", Stage: Toasts, timings: [["Toast", "toast-enter"]] },
+]
+
+export default function MotionBoard() {
+  const { axis, holds } = useBoardFocus()
+  const { replay } = useReplay()
+  // The tempo and Speed time every set.
+  const selected = [axis, ...(holds ?? [])].some(
+    (key) => key === "motion" || key === "motionSpeed",
+  )
+  return (
+    <Board id="motion" untitled className={CANVAS}>
+      <SetGrid>
+        {SETS.map(({ name, Stage, timings }) => (
+          <ComponentSet
+            key={name}
+            name={name}
+            selected={selected}
+            rows={[
+              <div key="stage" className="relative h-52 w-full">
+                <Stage replay={replay} />
+              </div>,
+              <div key="timings" className="flex flex-wrap gap-x-5 gap-y-2">
+                {timings.map(([label, member]) => (
+                  <Timing key={member} name={label} member={member} />
+                ))}
+              </div>,
+            ]}
+          />
+        ))}
+      </SetGrid>
     </Board>
   )
 }

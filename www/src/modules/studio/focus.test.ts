@@ -81,12 +81,12 @@ describe("focusOf", () => {
     }
   })
 
-  it("leaves the user's preview for the foundation rows but Motion and Icons", () => {
+  it("leaves the user's preview for the foundation rows but Icons", () => {
     const takeovers = FOUNDATION_KEYS.filter(
       (key) => row(key, { "data-chapter": "foundations" }) !== null,
     )
-    expect(takeovers.sort()).toEqual(["iconLibrary", "motion"])
-    expect(row("motion", { "data-chapter": "foundations" })).toEqual({
+    expect(takeovers).toEqual(["iconLibrary"])
+    expect(row("motion", { "data-page": "motion" })).toEqual({
       board: "motion",
       axis: "motion",
       popover: true,

@@ -82,6 +82,50 @@ export function bezierCss([x1, y1, x2, y2]: Bezier): string {
     : `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`
 }
 
+const KEYWORDS: Record<string, Bezier> = {
+  ease: [0.25, 0.1, 0.25, 1],
+  "ease-in": [0.42, 0, 1, 1],
+  "ease-out": [0, 0, 0.58, 1],
+  "ease-in-out": [0.42, 0, 0.58, 1],
+}
+
+/** Progress at time `u` (0–1) of a CSS easing: a keyword, `cubic-bezier()`
+ *  or `linear()`, the ones `motionVars` writes. */
+export function easeCurve(css: string): (u: number) => number {
+  const [, fn = css, args = ""] = /^([\w-]+)\((.*)\)$/.exec(css.trim()) ?? []
+  if (fn === "linear" && args) {
+    const stops = args.split(",").map((stop, i, all) => {
+      const [y = "0", at] = stop.trim().split(/\s+/)
+      return [at ? parseFloat(at) / 100 : i / (all.length - 1), Number(y)]
+    })
+    return (u) => {
+      const next = stops.findIndex(([x = 0]) => x >= u)
+      if (next <= 0) return stops[Math.max(next, 0)]?.[1] ?? 1
+      const [x0 = 0, y0 = 0] = stops[next - 1] ?? []
+      const [x1 = 1, y1 = 1] = stops[next] ?? []
+      return x1 === x0 ? y1 : y0 + ((y1 - y0) * (u - x0)) / (x1 - x0)
+    }
+  }
+  const bezier =
+    fn === "cubic-bezier"
+      ? (args.split(",").map(Number) as Bezier)
+      : KEYWORDS[fn]
+  if (!bezier) return (u) => u
+  const [x1, y1, x2, y2] = bezier
+  const at = (t: number, p1: number, p2: number) =>
+    3 * (1 - t) ** 2 * t * p1 + 3 * (1 - t) * t ** 2 * p2 + t ** 3
+  return (u) => {
+    // x(t) only grows: bisect for the t that lands on u.
+    let [lo, hi] = [0, 1]
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2
+      if (at(mid, x1, x2) < u) lo = mid
+      else hi = mid
+    }
+    return at((lo + hi) / 2, y1, y2)
+  }
+}
+
 /** A leg in CSS terms; a spring runs for its settle time. */
 export function legTiming({ ms, curve }: Leg) {
   if (curve.type === "easing") return { ease: bezierCss(curve.ease), ms }
@@ -274,7 +318,11 @@ export const MOTION_VALUES = [
 export const SPEED_VALUES = ["faster", "default", "slower"] as const
 
 /** What Speed multiplies every duration by. */
-const SPEED: Record<string, number> = { faster: 0.75, default: 1, slower: 1.5 }
+export const SPEED: Record<string, number> = {
+  faster: 0.75,
+  default: 1,
+  slower: 1.5,
+}
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 

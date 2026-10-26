@@ -13,6 +13,7 @@ import { designSystemOf } from "../resolve"
 import {
   bezierCss,
   COMPONENT_MOTION_KEYS,
+  easeCurve,
   legTiming,
   motionVars,
   springProgress,
@@ -44,6 +45,26 @@ describe("timing", () => {
     if (micro.type !== "physics") throw new Error("expected a spring")
     for (let t = 0; t < 0.5; t += 0.01)
       expect(springProgress(t, micro)).toBeLessThanOrEqual(1)
+  })
+})
+
+describe("easeCurve", () => {
+  test("reads back every easing motionVars writes", () => {
+    for (const tempo of ["standard", "smooth", "expressive"])
+      for (const leg of Object.values(tableOf(tempo))) {
+        const curve = easeCurve(legTiming(leg.enter).ease)
+        expect(curve(0)).toBeCloseTo(0, 2)
+        expect(curve(1)).toBeCloseTo(1, 2)
+      }
+  })
+
+  test("follows the curve between its ends", () => {
+    expect(easeCurve("linear")(0.3)).toBeCloseTo(0.3)
+    // ease-out is ahead of linear; ease-in behind.
+    expect(easeCurve("cubic-bezier(0, 0, 0.58, 1)")(0.5)).toBeGreaterThan(0.6)
+    expect(easeCurve("ease-in")(0.5)).toBeLessThan(0.4)
+    expect(easeCurve("linear(0, 0.5 25%, 1.1 50%, 1)")(0.5)).toBe(1.1)
+    expect(easeCurve("linear(0, 0.5 25%, 1.1 50%, 1)")(0.375)).toBeCloseTo(0.8)
   })
 })
 
