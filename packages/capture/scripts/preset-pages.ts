@@ -333,7 +333,11 @@ export function productWords() {
     !/private|no-store/.test(cache) && /immutable|max-age=\d{5,}/.test(cache)
   const read = async (url: string) => {
     try {
-      const response = await fetch(url, { credentials: "omit" })
+      const response = await fetch(url, {
+        credentials: "omit",
+        // Covers the body too: a stalled file would hold every scrub.
+        signal: AbortSignal.timeout(30000),
+      })
       const type = response.headers.get("content-type") ?? ""
       if (!response.ok || !/javascript|ecmascript|json/.test(type)) return
       if (/private|no-store/.test(response.headers.get("cache-control") ?? ""))

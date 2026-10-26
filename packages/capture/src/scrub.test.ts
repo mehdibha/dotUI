@@ -85,6 +85,15 @@ describe("scrub", () => {
     expect(scrub(copy, words, ["jane@acme.com"])).toBeNull()
   })
 
+  it("drops a copy that shows a private string across elements", () => {
+    const known = new Set(["Jane", "Doe"])
+    for (const html of [
+      `${run("Jane")} <b>${run("Doe")}</b>`,
+      `<span>${run("Jane")}</span><span>${run("Doe")}</span>`,
+    ])
+      expect(scrub(copyOf(html), known, ["jane doe"])).toBeNull()
+  })
+
   it("swaps escaped runs and keeps their escaping", () => {
     const copy = copyOf(
       `<p>${run("Tom &amp; Jerry &lt;3")}</p>`,

@@ -57,7 +57,18 @@ export function scrub(
   const plain = fold(
     `${unescapeHtml(scrubbed.html)}\n${unescapeCss(scrubbed.css)}`,
   )
-  return privates.some((line) => plain.includes(line)) ? null : scrubbed
+  // A name split across elements (`Jane <b>Doe</b>`) still shows whole: the
+  // text is checked again with the markup and spacing gone.
+  const squash = (text: string) => text.replace(/\s+/g, "")
+  const shown = squash(
+    fold(unescapeHtml(scrubbed.html.replace(/<[^>]*>/g, ""))),
+  )
+  const leaks = privates.some(
+    (line) =>
+      plain.includes(line) ||
+      (squash(line).length >= 3 && shown.includes(squash(line))),
+  )
+  return leaks ? null : scrubbed
 }
 
 const keeps = (
