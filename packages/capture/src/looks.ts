@@ -361,6 +361,7 @@ export const LOOKS = {
   "flourish.button-gradient": look("Gradient CTA fill"),
   "flourish.button-hero": look("Hero CTA finish"),
   "flourish.toggle-morph": look("Selected toggles change shape"),
+  "flourish.press-morph": look("Pressed buttons change shape"),
   "flourish.badge-skew": look("Skewed promo badges"),
 
   "font.ibm-plex-mono": look("IBM Plex Mono in the catalog"),
