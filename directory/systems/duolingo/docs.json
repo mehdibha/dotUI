@@ -1,0 +1,433 @@
+{
+  "version": 1,
+  "slug": "duolingo",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "White pages with grey ink (#3c3c3c, #4b4b4b on controls), #777777 and #afafaf for quieter text, #e5e5e5 for every border and #f7f7f7 for field fills. Brand colors carry meaning: green #58cc02 is the main action and the logo, blue #1cb0f6 links and selection, red #ff4b4b a wrong answer, purple #ce82ff the New word tag. Dark mode moves to a blue-black #131f24 with #37464f borders, lightens the green to #93d333 and puts dark ink on it.",
+      "usage": [
+        "Each colored button sits on a darker band of its own hue (#58a700 under green, #1899d6 under blue), not on a grey shadow."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "One rounded family, duolingo-sans: 17px on a 20px line for body text, 19px in answer choices, 32px at 700 for lesson titles. Buttons and small links are 15 to 17px caps at 700 with 0.8px tracking. The marketing headings (duolingo works) switch to the logo's Feather face at 48 to 64px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Round and soft: 16px corners on the main buttons and dialogs, 12px on fields, outlined buttons and answer tiles, 8px on the small key boxes. The lesson progress bar is a full pill."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Loose: 16 and 24px are the common gaps, with 30px inside dialogs and 24px inside answer tiles. Buttons and fields are 46 to 48px tall."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "No blurred shadows. Depth is a solid edge under the element: 2px of #e5e5e5 under white buttons and answer tiles, 4px of a darker shade under colored buttons. Pressing a button drops it onto that edge."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Chunky caps buttons, 46 to 48px tall, with a solid edge underneath. Green is the main action (Check), blue the next step (Keep going), red the step after a wrong answer (Continue); white outlined ones are the alternatives (Skip, I already have an account, the social sign-ins). The markup names none of them.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-ve9ebe": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "Green fill, white caps, a 4px #58a700 edge: Check in a lesson."
+            },
+            "v-r1xcsq": {
+              "name": {
+                "value": "blue",
+                "from": "ai"
+              },
+              "note": "Blue fill, a 4px #1899d6 edge: Keep going in the hearts dialog."
+            },
+            "v-cpmbkp": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "Red fill, a 4px #ea2b2b edge: Continue after a wrong answer."
+            },
+            "v-y8kmid": {
+              "name": {
+                "value": "outline",
+                "from": "ai"
+              },
+              "note": "White, a 2px #e5e5e5 border and edge, grey caps: Skip."
+            },
+            "v-xfqf6q": {
+              "name": {
+                "value": "outline, blue",
+                "from": "ai"
+              },
+              "note": "The same outline with blue caps: I already have an account."
+            },
+            "v-ctwjje": {
+              "name": {
+                "value": "social",
+                "from": "ai"
+              },
+              "note": "The outline with dark caps and a logo: Sign in with Apple."
+            },
+            "v-k4axdb": {
+              "hide": "Sign in with Facebook: the social button in Facebook's blue"
+            },
+            "v-kqllnv": {
+              "hide": "Sign in with Google: the social button in Google's blue"
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "The lesson's close ×: grey, no frame."
+            },
+            "v-u25sfz": {
+              "name": {
+                "value": "plain",
+                "from": "ai"
+              },
+              "note": "Grey caps, no frame: Site language in the header."
+            },
+            "v-476dv2": {
+              "name": {
+                "value": "on banner",
+                "from": "ai"
+              },
+              "note": "Report on the wrong-answer banner: red ink and an icon, no frame."
+            }
+          },
+          "sizes": {
+            "s-dmez1q": {
+              "name": {
+                "value": "large",
+                "from": "ai"
+              },
+              "note": "48px, 15px caps: the login form and the hearts dialog."
+            },
+            "s-35bf0e": {
+              "name": {
+                "value": "lesson",
+                "from": "ai"
+              },
+              "note": "46px, 17px caps: the lesson footer's Skip, Check and Continue."
+            },
+            "s-xjj7ut": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "An 18px glyph: the close ×."
+            },
+            "s-4z2kjq": {
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
+              "note": "Text-sized caps in the header."
+            },
+            "s-fzsf41": {
+              "name": {
+                "value": "text, icon",
+                "from": "ai"
+              },
+              "note": "Report: 17px with a 20px icon."
+            }
+          }
+        }
+      },
+      "usage": [
+        "A lesson's footer pairs one outlined Skip with one colored action that turns red after a wrong answer.",
+        "Hover brightens a colored button; pressing removes its edge and moves it down 4px."
+      ],
+      "missing": [
+        "Signed-in pages (the learning path, settings, shop) are waiting for the local capture, so the app's own buttons aren't read yet."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-476dv2": {
+              "name": {
+                "value": "on banner",
+                "from": "ai"
+              },
+              "note": "Too easy on the wrong-answer banner: red ink and an icon at 70% opacity, full when pressed."
+            }
+          },
+          "sizes": {
+            "s-l0t1mb": {
+              "note": "17px text with a 20px icon."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links in text are blue (#1cb0f6) at 700 with no underline. Navigation and footer links are grey caps at 700 with 0.8px tracking. The logo is a link.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-wd6lqv": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Blue and bold in a paragraph: efficacy evidence, 5 university semesters."
+            },
+            "v-u25sfz": {
+              "name": {
+                "value": "nav",
+                "from": "ai"
+              },
+              "note": "The efficacy page's header links (Method, Studies): grey caps; the current one is blue and underlined."
+            },
+            "v-on8gsq": {
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "Grey caps at 80% opacity in the footer row: About, Careers, Help."
+            },
+            "v-v4qt3c": {
+              "name": {
+                "value": "legal",
+                "from": "ai"
+              },
+              "note": "Grey, bold, 14px under the login form: Terms, Privacy Policy."
+            },
+            "v-i093dz": {
+              "name": {
+                "value": "language",
+                "from": "ai"
+              },
+              "note": "The language row under the login page: a flag and the language name in grey."
+            },
+            "v-79bp22": {
+              "name": {
+                "value": "in field",
+                "from": "ai"
+              },
+              "note": "Forgot? inside the password field: grey caps on the field's fill."
+            },
+            "v-ooz339": {
+              "hide": "the duolingo logo"
+            },
+            "v-ve9ebe": {
+              "hide": "Get started: a link drawn as the green button, see button"
+            }
+          },
+          "sizes": {
+            "s-cehqed": {
+              "name": {
+                "value": "language",
+                "from": "ai"
+              },
+              "note": "17px beside a 28px flag."
+            },
+            "s-w3nl37": {
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "15px caps."
+            },
+            "s-8gekja": {
+              "name": {
+                "value": "nav",
+                "from": "ai"
+              },
+              "note": "15px caps in a 70px header cell, 10px padding."
+            },
+            "s-alefcp": {
+              "name": {
+                "value": "legal",
+                "from": "ai"
+              },
+              "note": "14px."
+            },
+            "s-bacu8o": {
+              "hide": "the logo"
+            },
+            "s-gecy50": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "17px in body text."
+            },
+            "s-wa21iy": {
+              "name": {
+                "value": "inline, large",
+                "from": "ai"
+              },
+              "note": "20px in the efficacy intro."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "The only badges on public pages are the key hints in a lesson's answer tiles: a 30px square with a 2px border and 8px corners. They work as keyboard hints more than labels.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-b2jt0z": {
+              "name": {
+                "value": "key hint",
+                "from": "ai"
+              },
+              "note": "The answer's number key: grey, a 2px #e5e5e5 border."
+            },
+            "v-r0npke": {
+              "name": {
+                "value": "key hint, selected",
+                "from": "ai"
+              },
+              "note": "In the chosen tile: blue ink, a 2px #84d8ff border."
+            }
+          },
+          "sizes": {
+            "s-wazze1": {
+              "note": "30px square, 15px at 700."
+            }
+          }
+        }
+      },
+      "missing": ["The app's streak, gem and league badges are signed in only."]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are filled: #f7f7f7 with a 2px #e5e5e5 border and 12px corners, 48px tall, the text inset 14px. Forgot? sits inside the password field.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-vekoqw": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Email or username on the login form."
+            }
+          },
+          "sizes": {
+            "s-pcwlvx": {
+              "note": "48px."
+            }
+          }
+        }
+      },
+      "missing": ["Focus and error states weren't read."]
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "summary": "A lesson's answers are radio tiles: a picture over a word, a 2px border with a 2px edge underneath, 12px corners. The chosen one turns pale blue (#ddf4ff) with a #84d8ff border and blue ink.",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-dndyzw": {
+              "name": {
+                "value": "answer tile",
+                "from": "ai"
+              },
+              "note": "Which one of these is cat?: four picture tiles with a key hint."
+            }
+          },
+          "sizes": {
+            "s-la7vfr": {
+              "note": "A 252px tile, 24px padding, 19px text."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-l7d1ng": {
+              "hide": "the hearts dialog's panel (Each mistake costs 1 heart!): a modal, not a card"
+            }
+          }
+        }
+      },
+      "missing": [
+        "No cards on the public pages; the shop and profile cards are signed in only."
+      ]
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "summary": "The lesson's progress: a 16px pill track in #e5e5e5 across the top of the lesson, filled in green.",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-0z1q6t": {
+              "name": {
+                "value": "lesson",
+                "from": "ai"
+              },
+              "note": "The track at the top of a lesson, beside the hearts count."
+            }
+          },
+          "sizes": {
+            "s-eebbqv": {
+              "note": "16px tall."
+            }
+          }
+        }
+      },
+      "missing": ["The green fill wasn't read on its own."]
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-vkx1qi": {
+              "name": {
+                "value": "section rule",
+                "from": "ai"
+              },
+              "note": "2px #e5e5e5 lines between the efficacy page's sections."
+            },
+            "v-0z1q6t": {
+              "name": {
+                "value": "or",
+                "from": "ai"
+              },
+              "note": "The 2px lines either side of OR on the login form."
+            }
+          },
+          "sizes": {
+            "s-15zhf5": {
+              "note": "2px thick, the width of its section."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: public pages only (log in, efficacy, a guest lesson), light and dark. Partial: the signed-in app (learning path, settings, profile, shop) awaits the local capture. Names marked ai are ours; Duolingo's markup names no component looks."
+  }
+}

@@ -1,5 +1,5 @@
 import { Badge } from "@/registry/ui/badge"
-import type { DocsBlock, DocsEntry } from "~/data/docs"
+import type { DocsSection, DocsEntry } from "~/data/docs"
 import { STATES } from "~/data/looks"
 import type { State } from "~/data/looks"
 import type { SpecFile, SpecGrid } from "~/data/spec"
@@ -14,7 +14,7 @@ import { Copy } from "./copy"
 
 type Cell = SpecGrid["cells"][number]
 type Axis = SpecGrid["variants"][number] | SpecGrid["sizes"][number]
-type Written = NonNullable<DocsBlock["groups"]>[string]
+type Written = NonNullable<DocsSection["groups"]>[string]
 type Name = NonNullable<Axis["name"] | DocsEntry["name"]>
 
 /** Variant tiles and size rows shown per axis. */
@@ -34,7 +34,7 @@ const copyOf = (cell: Cell | undefined, state: State = "rest") =>
 
 const px = (value: string | undefined) => Number.parseFloat(value ?? "") || 0
 
-export function DocStatus({ doc }: { doc?: DocsBlock }) {
+export function DocStatus({ doc }: { doc?: DocsSection }) {
   if (doc?.status === "checked")
     return (
       <Badge size="sm" appearance="soft" variant="success">
@@ -54,9 +54,9 @@ export function DocStatus({ doc }: { doc?: DocsBlock }) {
   )
 }
 
-/** A written block: its title and status, what the product calls it, its
+/** A written section: its title and status, what the product calls it, its
  *  summary, then its body and notes. */
-export function WrittenBlock({
+export function WrittenSection({
   id,
   title,
   doc,
@@ -65,7 +65,7 @@ export function WrittenBlock({
 }: {
   id: string
   title: string
-  doc?: DocsBlock
+  doc?: DocsSection
   called?: string[]
   children?: React.ReactNode
 }) {
@@ -116,11 +116,11 @@ export function ComponentDoc({
   slug: string
   id: string
   spec: SpecFile["components"][string]
-  doc?: DocsBlock
+  doc?: DocsSection
 }) {
   const grids = spec.grids.filter((grid) => grid.cells.length)
   return (
-    <WrittenBlock
+    <WrittenSection
       id={id}
       title={id}
       doc={doc}
@@ -137,7 +137,7 @@ export function ComponentDoc({
           titled={grids.length > 1}
         />
       ))}
-    </WrittenBlock>
+    </WrittenSection>
   )
 }
 

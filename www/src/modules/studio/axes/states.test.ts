@@ -292,6 +292,17 @@ describe("disabled, cursors, control text", () => {
       expect(tokens[name]).toBe("initial")
   })
 
+  test("Fade dims to its opacity; Gray ignores it", () => {
+    expect(
+      resolve({ disabledTreatment: "fade", disabledOpacity: 35 }).tokens[
+        "--disabled-opacity"
+      ],
+    ).toBe("0.35")
+    expect(
+      resolve({ disabledOpacity: 35 }).tokens["--disabled-opacity"],
+    ).toBeUndefined()
+  })
+
   test("Fade skips a current crumb, which is disabled only to stop navigation", () => {
     const css = readFileSync(
       path.join(__dirname, "../../../registry/base/base.css"),

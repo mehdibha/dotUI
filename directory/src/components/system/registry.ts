@@ -1,6 +1,7 @@
 import type { ComponentType } from "react"
 
 import { LOOKS_TABS } from "~/components/looks"
+import { pageId } from "~/components/looks/blocks"
 import { dataIndex } from "~/data"
 import type { CatalogEntry, SystemEntry } from "~/data/schema"
 
@@ -53,6 +54,7 @@ export function getSectionGroups(slug: string): SectionGroup[] {
 
 export const TABS = {
   docs: "Docs",
+  blocks: "Blocks",
   computed: "Computed",
   capture: "Capture",
   live: "Live",
@@ -63,8 +65,14 @@ export type SystemTab = keyof typeof TABS
 /** A captured system opens on its docs; a live one only has its live tab. */
 export function getTabs(slug: string): SystemTab[] {
   const tabs: SystemTab[] = []
-  if (dataIndex.looks.some((looks) => looks.slug === slug))
-    tabs.push("docs", "computed", "capture")
+  const captured = dataIndex.looks.find((looks) => looks.slug === slug)
+  if (captured)
+    tabs.push(
+      "docs",
+      ...(captured.blockPages ? (["blocks"] as const) : []),
+      "computed",
+      "capture",
+    )
   if (dataIndex.systems.some((system) => system.slug === slug))
     tabs.push("live")
   return tabs
@@ -75,6 +83,12 @@ export function getSectionList(
   slug: string,
   tab: SystemTab,
 ): { id: string; label: string }[] {
+  if (tab === "blocks")
+    return (
+      dataIndex.looks
+        .find((looks) => looks.slug === slug)
+        ?.blockPages?.map((label, i) => ({ id: pageId(i), label })) ?? []
+    )
   if (tab !== "live")
     return LOOKS_TABS[tab].map(({ id, label }) => ({ id, label }))
   const system = dataIndex.systems.find((s) => s.slug === slug)

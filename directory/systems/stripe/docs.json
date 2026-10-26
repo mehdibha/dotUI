@@ -1,0 +1,610 @@
+{
+  "version": 1,
+  "slug": "stripe",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Sail's light slate on white: #1a2c44 for labels and menu rows, #273951 on buttons and fields, #50617a for quiet text, #d4dee9 for every edge and #f4f7fa for the offset surfaces. The one brand color is blurple: #533afd fills the primary button and marks the active nav row, #675dff the form accents. Badges and banners each pair a pale fill with a matching edge and a dark ink of the same hue.",
+      "usage": [
+        "The docs pages color links #5469d4; that is a docs-only override, and the Dashboard links in blurple.",
+        "Urgent is the only solid tone: #e61947 with white ink, shared with the destructive button."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "The system font stack at small sizes: 14px on a 20px line for almost everything, 600 on buttons and labels, 400 in fields and menus. Badges and small labels drop to 12/16. Code is Menlo at 12.6px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Small corners: 6px on buttons, fields, tooltips and banners, 8px on menus and dialogs, 4px on badges and menu rows."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Dense, on a 4px step: controls are 28px tall with 8px inline padding, menu rows 32px with 10px padding, badges 20px with 6px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Edges are box-shadow rings, not borders: 0 0 0 1px #d4dee9 on secondary buttons and fields. Select triggers add a 0 1px 1px drop; menus and dialogs float on 0 5px 15px black at 12% plus 0 15px 35px. Focus is a 3px sky ring, rgba(1,150,237,.36), outside the edge.",
+      "usage": [
+        "There is no dark mode: the Dashboard ignores the OS setting and has no theme option."
+      ]
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Sail buttons are 28px with 8px padding, 6px corners and 14px text at 600. Secondary is white with a #d4dee9 ring and #273951 ink; primary fills blurple #533afd; destructive fills #e61947. Every other button on these pages belongs to the docs site around the examples.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-wwcali": {
+              "name": {
+                "value": "secondary",
+                "from": "docs"
+              },
+              "note": "White, a 1px #d4dee9 ring, #273951 ink: Yes in the feedback row, Small button in the examples."
+            },
+            "v-yzkzvc": {
+              "name": {
+                "value": "primary",
+                "from": "docs"
+              },
+              "note": "Blurple #533afd fill, white ink."
+            },
+            "v-0gqd14": {
+              "name": {
+                "value": "destructive",
+                "from": "docs"
+              },
+              "note": "#e61947 fill, white ink."
+            },
+            "v-w0myz8": {
+              "hide": "the code block's toolbar icons on the dark #1a2652 header: docs site chrome"
+            },
+            "v-kx6ali": {
+              "hide": "heading anchor links: docs site chrome"
+            },
+            "v-2k2v2g": {
+              "hide": "the docs header's plain icon buttons"
+            },
+            "v-2bsht4": {
+              "hide": "the docs top navigation (APIs & SDKs, More)"
+            },
+            "v-kze2id": {
+              "hide": "Ask about this page: the docs AI entry point"
+            },
+            "v-puyt14": {
+              "hide": "rows in the docs search palette (View test cards)"
+            },
+            "v-4g9r8c": {
+              "hide": "the docs Search box drawn as a button"
+            },
+            "v-eu3uci": {
+              "hide": "the docs footer's country picker (United States)"
+            },
+            "v-y7kgbw": {
+              "hide": "Ask AI in the docs header"
+            },
+            "v-q4avf0": {
+              "hide": "New chat in the docs AI panel"
+            },
+            "v-xr5noo": {
+              "hide": "the docs AI panel's close ×"
+            },
+            "v-c09rgd": {
+              "hide": "a banner example's close ×, a bare icon on white"
+            },
+            "v-cjcfki": {
+              "hide": "the caution banner example's close ×, on yellow"
+            }
+          },
+          "sizes": {
+            "s-pq9p63": {
+              "name": {
+                "value": "medium",
+                "from": "ai"
+              },
+              "note": "28px, 8px padding, 14px at 600: the Sail default."
+            },
+            "s-ypbbqn": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "24px, 12px text."
+            },
+            "s-czrvk8": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "40px, 16px padding, 16px text."
+            }
+          }
+        }
+      },
+      "usage": [
+        "A focused button keeps its edge and gains the 3px sky ring outside it.",
+        "The Dashboard's sandbox banner uses the same primary; the header's icon buttons are 32px clear circles."
+      ],
+      "missing": [
+        "Hover and pressed fills weren't captured on the Sail buttons themselves."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Every link on these pages is docs chrome. The inline links in the docs text are #5469d4 at 500, a docs override; the Dashboard's links are blurple #533afd at 500.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-jzexnz": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "In running text: #5469d4 at 500, no underline (buttons, CSS)."
+            },
+            "v-udyd9a": {
+              "name": {
+                "value": "inline, strong",
+                "from": "ai"
+              },
+              "note": "Contact Support: the same blue at 600."
+            },
+            "blue": {
+              "hide": "the stripe DOCS logo"
+            },
+            "v-po6rlz": {
+              "hide": "the docs sidebar's page links"
+            },
+            "v-puyt14": {
+              "hide": "the docs sidebar's section links"
+            },
+            "v-2bsht4": {
+              "hide": "the docs top navigation"
+            },
+            "v-wwcali": {
+              "hide": "Sign in: a link drawn as the secondary button, see button"
+            },
+            "v-4tawfs": {
+              "hide": "a recently viewed page in the docs search"
+            },
+            "v-ca0cgu": {
+              "hide": "Skip to content"
+            },
+            "v-fivaof": {
+              "hide": "Create account in the docs header"
+            }
+          },
+          "sizes": {
+            "s-sfdu69": {
+              "note": "16px in the docs body."
+            },
+            "s-alefcp": {
+              "note": "14px."
+            },
+            "s-tf5ukr": {
+              "note": "16px on a 48px line."
+            },
+            "s-sy470x": {
+              "hide": "sidebar links"
+            }
+          }
+        }
+      },
+      "missing": ["Sail's own Link component has no example on these pages."]
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Six Sail tones, all 20px with 6px padding, 12px text and 4px corners. Each is a pale fill with a 1px edge of the same hue, except Urgent, which is solid.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-8swqrv": {
+              "name": {
+                "value": "neutral",
+                "from": "docs"
+              },
+              "note": "#f4f7fa fill, #d4dee9 edge, #50617a ink."
+            },
+            "v-iqszid": {
+              "name": {
+                "value": "negative",
+                "from": "docs"
+              },
+              "note": "#fef4f6 fill, #fbd3dc edge, #c0123c ink."
+            },
+            "v-9b3ka3": {
+              "name": {
+                "value": "positive",
+                "from": "docs"
+              },
+              "note": "#eafcdd fill, #a8f170 edge, #217005 ink."
+            },
+            "v-f4087w": {
+              "name": {
+                "value": "info",
+                "from": "docs"
+              },
+              "note": "#e2fbfe fill, #a7e7fc edge, #045ad0 ink."
+            },
+            "v-h8jp1t": {
+              "name": {
+                "value": "warning",
+                "from": "docs"
+              },
+              "note": "#fdf8c9 fill, #fbd992 edge, #b13600 ink."
+            },
+            "v-k62t6g": {
+              "name": {
+                "value": "urgent",
+                "from": "docs"
+              },
+              "note": "Solid #e61947, white ink."
+            }
+          },
+          "sizes": {
+            "s-ull5wn": {
+              "note": "20px, 6px padding, 12px at 400."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Sail's TextField matches the secondary button: white, a 1px #d4dee9 ring, 6px corners, 28px with 8px padding and 14px #273951 text. It comes in three sizes.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-bwu8fk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Acme Inc… in the TextField example."
+            },
+            "v-4nrwnc": {
+              "hide": "the docs search palette's input"
+            },
+            "v-f5ft1n": {
+              "hide": "the docs AI panel's question box"
+            }
+          },
+          "sizes": {
+            "s-gbm9an": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "28px, 8px padding, 14px."
+            },
+            "s-790e0h": {
+              "name": {
+                "value": "medium",
+                "from": "docs"
+              },
+              "note": "28px, a second example of the default."
+            },
+            "s-1incjg": {
+              "name": {
+                "value": "large",
+                "from": "docs"
+              },
+              "note": "40px, 12px padding, 16px."
+            },
+            "s-c042wh": {
+              "name": {
+                "value": "small",
+                "from": "docs"
+              },
+              "note": "24px, 12px text."
+            }
+          }
+        }
+      },
+      "usage": [
+        "A focused field keeps its #d4dee9 edge and adds the 3px sky ring, as buttons do."
+      ]
+    },
+    "search-field": {
+      "status": "reviewed",
+      "groups": {
+        "searchbox": {
+          "variants": {
+            "v-bwu8fk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The TextField example's search input: the same 28px ringed field."
+            }
+          },
+          "sizes": {
+            "s-gbm9an": {
+              "note": "28px, 8px padding."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "summary": "The select trigger is the secondary button with a 0 1px 1px drop under its ring, 28px, text at 600.",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-0m6bzk": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The SDK version picker (8.x, 9.x) above each example."
+            }
+          },
+          "sizes": {
+            "s-gbm9an": {
+              "note": "28px, 8px padding."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-483y8t": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "14px at 600 in #1a2c44: SDK version, the TextField labels."
+            },
+            "v-70f43t": {
+              "name": {
+                "value": "disabled",
+                "from": "ai"
+              },
+              "note": "The same label in #7d8ba4."
+            }
+          },
+          "sizes": {
+            "s-1dg68b": {
+              "note": "14/20."
+            },
+            "s-mx6che": {
+              "name": {
+                "value": "small",
+                "from": "ai"
+              },
+              "note": "12/16, beside the small field."
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "A white panel with 8px corners, padded 4px. Rows are 32px with 10px padding and 14px #1a2c44 text; a disabled row (Copy) fades.",
+      "missing": [
+        "The census reads the panel as plain white; the pack's earlier measures put a 1px #d4dee9 hairline and the floating shadow on an outer layer."
+      ],
+      "groups": {
+        "menu": {
+          "variants": {
+            "v-k5j5gp": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The Menu example: Edit, Copy, Paste."
+            }
+          }
+        },
+        "menuitem": {
+          "variants": {
+            "v-2y9g2n": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A Sail row: Edit."
+            },
+            "v-davrj2": {
+              "hide": "the docs header's APIs & SDKs dropdown rows"
+            }
+          },
+          "sizes": {
+            "s-v52xop": {
+              "note": "32px, 10px padding, 14px."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "hide": "the docs search palette's results"
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-4nrwnc": {
+              "hide": "the docs search palette's input"
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "No Sail dialog opens on these pages. The Dashboard's dialogs are white with 8px corners, no hairline and the menu shadow, over a rgba(186,200,218,.7) backdrop.",
+      "groups": {
+        "alertdialog": {
+          "variants": {
+            "v-1ak3xq": {
+              "hide": "the docs search palette"
+            }
+          }
+        },
+        "dialog": {
+          "variants": {
+            "v-2y8n6a": {
+              "hide": "the docs AI side panel"
+            },
+            "v-l7d1ng": {
+              "hide": "the docs search palette's body"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The Dashboard dialog was read from the signed-in pass and isn't in this census."
+      ]
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "summary": "Sail's tooltip is light: white, a 1px #d4dee9 edge, 14px #1a2c44 text, on a small drop (0 1px 1px black at 12% plus 0 2px 5px).",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-cxd2es": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The Tooltip example: You have no available balance to pay out."
+            },
+            "v-tepsia": {
+              "hide": "the docs site's dark tooltip on code blocks (Report incorrect code)"
+            }
+          },
+          "sizes": {
+            "s-ytx6a9": {
+              "note": "Three lines of 14px text, 114px tall."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "The only Sail surfaces here are banners: 6px corners and a 1px edge, tinted by tone. Neutral is white with #d4dee9, critical #fef4f6 with #fbd3dc, caution #fdf8c9 with #fbd992. A title, a description and actions sit in a row.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-ezoqkg": {
+              "name": {
+                "value": "banner, default",
+                "from": "docs"
+              },
+              "note": "Neutral title, A short description, a Button and a close ×."
+            },
+            "v-2mzteu": {
+              "name": {
+                "value": "banner, critical",
+                "from": "docs"
+              },
+              "note": "Check your bank details, with a red title and Update bank account."
+            },
+            "v-a77sux": {
+              "name": {
+                "value": "banner, caution",
+                "from": "docs"
+              },
+              "note": "The same message on yellow, with Learn more."
+            },
+            "blue800": {
+              "hide": "the docs code block"
+            },
+            "v-yv1gm3": {
+              "hide": "the docs preview frame around each example (a dotted grid)"
+            },
+            "v-2sp5a2": {
+              "hide": "the docs header's APIs & SDKs dropdown"
+            },
+            "v-2gqv0m": {
+              "hide": "the docs AI panel's disclaimer"
+            },
+            "v-nhnk7w": {
+              "hide": "a recently viewed card in the docs AI panel"
+            },
+            "v-l7d1ng": {
+              "hide": "the Menu example's panel, see menu"
+            }
+          }
+        }
+      },
+      "missing": [
+        "The Dashboard's content cards (6px corners, a 1px #ebeef1 ring) aren't in this census."
+      ]
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-u8vspz": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A 1px #d4dee9 rule: between menu groups and docs sections."
+            },
+            "v-7x7skm": {
+              "hide": "the docs sidebar's active-page bar in blurple"
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-cl66e0": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The / shortcut in the docs Search box: #f4f7fa with a 1px #ecf1f6 edge and #50617a ink."
+            }
+          },
+          "sizes": {
+            "s-7dxfnf": {
+              "note": "20px, 4px padding."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The Dashboard's own kbd is a legacy grey #ebeef1 chip with 3px corners in Menlo 13/500."
+      ]
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "docs",
+        "url": "https://docs.stripe.com/stripe-apps/components",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: six Stripe Apps component pages, which render Sail's real components inside the docs site, light only. Partial: the signed-in Dashboard pages await the local capture; facts quoted from it come from the pack's 2026-10-21 and 2026-10-22 notes. Names marked docs are Sail's own (prop values on the docs pages); names marked ai are ours."
+  }
+}

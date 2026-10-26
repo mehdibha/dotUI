@@ -1,0 +1,448 @@
+{
+  "version": 1,
+  "slug": "pinterest",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "White pages, black #000000 text (older surfaces still use #211922) and #62625b for quiet text. Pinterest red #e60023 fills the main action; warm grey #e5e5e0 fills secondary buttons, chips and the search bar. Control edges are #91918c and focus is blue #435ee5. Trends and search guides tint their chips in soft pastels (#eef7de, #ebe2fd, #c7f0da, #fbdfff).",
+      "usage": [
+        "The dark theme exists in the web app's token bundle but signed-out pages never show it."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Pin Sans everywhere: 16px at 500 on buttons, chips and tabs, 16/22.4 for body text, 14px for secondary copy and 12px for legal links. Headings are 700: 20px on cards, 28px with -0.5px tracking on page titles."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Soft and large: 16px corners on buttons, chips, fields and the flyout, 8px on tooltips and pin images, 20 to 32px on pins and modals. The search bar is a pill."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Touch-sized: the main buttons and the search bar are 48px with 14px padding; form buttons drop to 36px with 10px. Chips and tiles gap at 8 to 12px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "One shadow, 0 3px 12px black at 20%, under the login modal and the flyout. Buttons and chips are flat fills; focus is a 2px #435ee5 outline with a 2px white inner border."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Gestalt-style buttons: red for the main action, gray for the rest, both 48px at lg with 16px corners and 16px labels at 500. Outlined white buttons carry the social sign-ins. Most of this grid is pins and trend tiles, which the markup marks as buttons.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-eghi8z": {
+              "name": { "value": "red", "from": "docs" },
+              "note": "#e60023 with white text: View moments, Create account."
+            },
+            "v-g44mcy": {
+              "name": { "value": "gray", "from": "docs" },
+              "note": "#e5e5e0 with black text: Log in."
+            },
+            "v-j38fq8": {
+              "name": { "value": "outline", "from": "ai" },
+              "note": "White, a 1px #91918c edge: Continue with Google."
+            },
+            "v-miibf6": {
+              "name": { "value": "outline", "from": "ai" },
+              "note": "The same with a QR icon: Continue with QR code."
+            },
+            "v-jaw0bk": {
+              "name": { "value": "icon", "from": "ai" },
+              "note": "A black icon on no fill: the settings gear, share and more."
+            },
+            "v-wcen9u": {
+              "hide": "pins and trend rows that open a page, not buttons"
+            },
+            "v-brglfo": { "hide": "pin images" },
+            "v-wp22ki": { "hide": "the pin page's close-up image" },
+            "v-9q1hgc": { "hide": "the +4 count on a Trends chip" },
+            "v-p2ha8g": { "hide": "the +4 count on a Trends chip" }
+          },
+          "sizes": {
+            "s-qf8nkq": {
+              "name": { "value": "lg", "from": "docs" },
+              "note": "48px, 14px padding."
+            },
+            "s-8gluk7": {
+              "name": { "value": "md", "from": "docs" },
+              "note": "36px, 10px padding: forms and upsells."
+            },
+            "s-rpcc25": { "note": "48px, the padding on an inner element." },
+            "s-zijcmd": {
+              "name": { "value": "icon, lg", "from": "ai" },
+              "note": "48px, a 24px icon."
+            },
+            "s-rpcoay": {
+              "name": { "value": "icon, md", "from": "ai" },
+              "note": "36px, a 16px icon."
+            },
+            "s-nbbtvw": {
+              "name": { "value": "icon, sm", "from": "ai" },
+              "note": "32px, a 24px icon."
+            },
+            "s-kglrhi": { "note": "32px, a 16px icon on gray." },
+            "s-xrd7l9": { "note": "28px, a 16px icon on Trends." }
+          }
+        }
+      },
+      "usage": [
+        "The census reads 12px on the button element; the label inside is 16px at 500."
+      ],
+      "missing": ["Hover and pressed fills weren't captured."]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-jaw0bk": {
+              "name": { "value": "chip", "from": "ai" },
+              "note": "A search filter chip (Less AI): a #e5e5e0 pill on its inner element, 16px at 500. Selected chips turn #33332e with white text."
+            },
+            "v-g44mcy": {
+              "name": { "value": "chip, icon", "from": "ai" },
+              "note": "The filters chip: an icon on #e5e5e0."
+            }
+          },
+          "sizes": {
+            "s-wxnp0m": { "note": "52px row, the chip inside about 44px." },
+            "s-c5ojjj": { "note": "48px." }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Text links are underlined: black at 16px in copy, #62625b at 12px under forms, #494943 at 14px in footers. Trends shows its search terms as tinted pill links.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-4grxw3": {
+              "name": { "value": "inline", "from": "ai" },
+              "note": "Underlined black at 16px: Learn more, official guide."
+            },
+            "v-tq8ah7": {
+              "name": { "value": "legal", "from": "ai" },
+              "note": "Underlined #62625b at 12px: Privacy Policy."
+            },
+            "v-p70mrs": {
+              "name": { "value": "footer", "from": "ai" },
+              "note": "Underlined #494943 at 14px: Pinterest Newsroom."
+            },
+            "v-heysnp": {
+              "name": { "value": "strong", "from": "ai" },
+              "note": "A product title at 700, no underline: Starlune Pajamas."
+            },
+            "v-fsq8ki": {
+              "name": { "value": "creator", "from": "ai" },
+              "note": "A creator's avatar and name on Trends, at 500."
+            },
+            "v-lru99w": {
+              "name": { "value": "trend chip", "from": "ai" },
+              "note": "brown suede jacket outfit +100%: a #eef7de pill with a chevron."
+            },
+            "v-ypqqcg": {
+              "name": { "value": "trend chip", "from": "ai" },
+              "note": "The same on #ebe2fd: vampire costume women +300%."
+            },
+            "v-wcen9u": { "hide": "search suggestions and pin tiles" },
+            "v-l98hdk": { "hide": "pin images" },
+            "v-8le2ew": { "hide": "a merchant's avatar on the pin page" },
+            "v-xh1o0v": {
+              "hide": "links drawn as the red button (View business toolkit, Sign up)"
+            }
+          },
+          "sizes": {
+            "s-jpby0h": { "note": "16px on a 22.4px line." },
+            "s-f5wwx1": { "note": "16px." },
+            "s-5ptcm0": { "note": "12px." },
+            "s-64dl1g": { "note": "14px." },
+            "s-0rxgj4": { "note": "32px: chips and creator rows." },
+            "s-s382ib": { "note": "14px." },
+            "s-wzzuu1": { "note": "12px beside a 16px icon." },
+            "s-05iqfv": { "note": "24px beside a 20px icon." },
+            "s-svi83l": { "hide": "a 4px progress line inside a Trends link" }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-bdf2yj": {
+              "name": { "value": "icon chip", "from": "ai" },
+              "note": "A Trends category icon on a pale pink #fee9e9 circle."
+            },
+            "v-htgeqd": {
+              "name": { "value": "icon chip", "from": "ai" },
+              "note": "The same on pale green #e6fcdd."
+            },
+            "v-k0fvfk": {
+              "name": { "value": "seasonal", "from": "ai" },
+              "note": "Halloween on the ideas page: 16px at 500 in a purple gradient."
+            },
+            "v-wcen9u": { "hide": "the Pinterest logo in the login modal" }
+          },
+          "sizes": {
+            "s-20nuzy": { "note": "32px, a 16px icon." },
+            "s-5ywjxt": { "note": "16px text." }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-wcen9u": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "The ideas page's category tabs (Halloween), 16px at 500, no fill."
+            }
+          },
+          "sizes": {
+            "s-c5ojjj": { "note": "48px." }
+          }
+        }
+      },
+      "missing": ["The underlined current tab is signed in only."]
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are white with a 1px #91918c edge and 16px corners, 16px text. Focus swaps the edge for a 2px #435ee5 outline.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-j38fq8": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Password in the login modal, Enter your Email on the business page."
+            },
+            "v-s4nuzz": {
+              "name": { "value": "focused", "from": "ai" },
+              "note": "Email with focus: a 2px #435ee5 edge."
+            }
+          },
+          "sizes": {
+            "s-die77v": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "48px, 15px padding."
+            },
+            "s-242vhl": {
+              "name": { "value": "login", "from": "ai" },
+              "note": "About 63px in the login modal, 11px padding."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-j38fq8": {
+              "name": { "value": "native", "from": "ai" },
+              "note": "Trends' Region picker: an older native select, white with a 1px #91918c edge and 8px corners."
+            }
+          },
+          "sizes": {
+            "s-w22ko1": { "note": "40px, 8px padding, 14px." }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-g44mcy": {
+              "name": { "value": "search", "from": "ai" },
+              "note": "Search for easy dinners, fashion, etc.: a #e5e5e0 pill, 48px."
+            },
+            "v-jaw0bk": {
+              "name": { "value": "plain", "from": "ai" },
+              "note": "A frameless 16px input on the pin page."
+            }
+          },
+          "sizes": {
+            "s-tf5ukr": { "note": "48px, 16px text." },
+            "s-f5wwx1": { "note": "19px, 16px text." }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-wcen9u": {
+              "hide": "the password field's show-password eye, not a switch"
+            }
+          }
+        }
+      },
+      "missing": [
+        "Switches are signed in only; the tokens give #91918c off and #435ee5 on."
+      ]
+    },
+    "list-box": {
+      "status": "reviewed",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "search suggestions", "from": "ai" },
+              "note": "The list under the search bar."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-wcen9u": {
+              "name": { "value": "suggestion", "from": "ai" },
+              "note": "Quick easy halloween costumes: a thumbnail and text, a light grey fill under the pointer."
+            }
+          },
+          "sizes": {
+            "s-u7m8b8": { "note": "72px rows." },
+            "s-rdoy6y": { "note": "A board preview, about 251px." },
+            "s-sdvo2o": { "note": "A board preview, about 229px." }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-l7d1ng": { "hide": "the More options flyout, see popover" },
+            "v-nhaqiu": { "hide": "the login modal's grey scrim" },
+            "v-qov6n3": { "hide": "the login modal's dark scrim" }
+          }
+        }
+      },
+      "missing": [
+        "The login modal's own panel landed in card (Welcome to Pinterest)."
+      ]
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": { "value": "flyout", "from": "ai" },
+              "note": "More options: a 220px white panel, 16px corners, 8px padding, a Terms of service row at 14/500."
+            },
+            "v-nsumro": { "hide": "Trends' chart tooltip, see tooltip" }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-m2yshm": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "Black with white 12px text, 8px corners: Trend predictions available."
+            }
+          },
+          "sizes": {
+            "s-zeaah0": { "note": "One line, 34px." },
+            "s-xgiqz4": { "note": "Two lines, 52px." }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-qzcllb": {
+              "name": { "value": "elevated", "from": "ai" },
+              "note": "Welcome to Pinterest: the login modal's white panel on 0 3px 12px black at 20%."
+            },
+            "v-2pe2ss": {
+              "name": { "value": "guide chip", "from": "ai" },
+              "note": "Pumpkin spice: a search guide with a thumbnail on mint #c7f0da, 16px corners."
+            },
+            "v-cbl2lb": {
+              "name": { "value": "guide chip", "from": "ai" },
+              "note": "Strawberry: the same on pink #fbdfff."
+            },
+            "v-l7d1ng": { "hide": "the Trends Region filter's frame" },
+            "v-ejqf46": { "hide": "the search bar's fill, see combobox" },
+            "v-typiou": { "hide": "a Trends chip's fill, see link" },
+            "v-vwuxve": { "hide": "a Trends chip's fill, see link" },
+            "v-ir5048": { "hide": "a frame on the pin page" },
+            "v-tnn697": { "hide": "the pin page's image fade" },
+            "v-ywt3jd": { "hide": "the pin page's image fade" }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "meter": {
+          "variants": {
+            "v-6t3utn": {
+              "name": { "value": "strength", "from": "ai" },
+              "note": "The business sign-up's password strength meter: an empty #f6f6f3 track."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-qr67lq": {
+              "name": { "value": "default", "from": "ai" },
+              "note": "A 1px #c8c8c1 rule on Trends."
+            },
+            "v-c63vkq": {
+              "name": { "value": "short", "from": "ai" },
+              "note": "A short #33332e dash on the ideas page."
+            },
+            "v-6n6gaf": {
+              "hide": "red marks inside the business page's Skip to content link"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://trends.pinterest.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: six public, signed-out pages (a profile, ideas, a pin, search, business sign-up, Trends), light only. Partial: dark mode, menus, settings and the other selection controls are signed in only. Names marked docs are Gestalt's public prop values (color, size); names marked ai are ours."
+  }
+}

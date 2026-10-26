@@ -1,0 +1,909 @@
+{
+  "version": 1,
+  "slug": "guardian",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "White pages with #121212 ink, #707070 for secondary text and field edges, #dcdcdc rules. Navy #052962 is the brand: the masthead, the footer and the primary button. Source's blue #0077b6 is for focus, checks, radios and help links; #c1d8fc fills the secondary button; yellow #ffe500 is kept for reader revenue (Support us). Errors are #c70000 and success #22874d. Dark (an opt-in on theguardian.com) turns the article #1a1a1a with #dcdcdc ink and #333333 rules; the sign-in gateway goes black with #999999 field edges.",
+      "usage": [
+        "Articles and fronts take a pillar accent for kickers, bylines and body links: news #c70000, opinion #e05e00, sport #0077b6, culture #866d50, lifestyle #bb3b80.",
+        "In dark the masthead and its edition menu stay navy and white."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Three proprietary faces. GH Guardian Headline for headlines (500 at 34px on an article, 24px at 700 for container titles), Guardian Text Egyptian for body copy (17px at 400) and Guardian Text Sans for the interface: 17px for buttons and fields, 14px for small controls and table text, 12px for metadata. Buttons are 700.",
+      "usage": [
+        "Times New Roman in the census is unstyled wrapper elements in the Storybooks, not text the reader sees."
+      ]
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Buttons are pills at every size. Fields, selects, checkboxes and summary boxes have 4px corners. Cards on fronts are square, set off by a top rule; the support site's tier cards round to 12px and popovers to 8px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 4px base where 8px and 16px dominate. Buttons are 44px (default), 36px (small) and 24px (xsmall) with 20, 16 and 12px sides. Fields are 44px or 36px with 8px sides."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Flat: rules and fills do the work and almost nothing casts a shadow. Focus is Source's blue: a 3px #0077b6 halo on links, fields and checks, and a 5px ring on buttons."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Source buttons are 700-weight pills in four priorities: primary (navy), secondary (pale blue), tertiary (outlined) and subdued (an underlined text button). Each priority is restyled by theme: brand (on navy), brand alt (on yellow) and reader revenue (yellow). Sizes are default (44px), small (36px) and xsmall (24px, 14px text).",
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "#052962 under white; #03183a on hover. In dark, #dcdcdc under navy."
+            },
+            "secondary": {
+              "note": "#c1d8fc under #052962; #9ec1fa on hover."
+            },
+            "tertiary": {
+              "note": "White with a 1px #052962 edge and navy text; #e6e9ef on hover."
+            },
+            "subdued": {
+              "note": "No fill: navy text at 700, underlined."
+            },
+            "v-jdt0pd": {
+              "name": {
+                "value": "reader revenue",
+                "from": "docs"
+              },
+              "note": "Subscribe now, Support us: #ffe500 under navy."
+            },
+            "v-m69e34": {
+              "name": {
+                "value": "brand, primary",
+                "from": "ai"
+              },
+              "note": "White under navy: the primary on the brand theme, for buttons on the masthead."
+            },
+            "v-71g94b": {
+              "name": {
+                "value": "share",
+                "from": "ai"
+              },
+              "note": "Share on an article: a white pill with a 1px #dcdcdc edge and the pillar color, 36px."
+            },
+            "v-z7o7ud": {
+              "name": {
+                "value": "edition",
+                "from": "ai"
+              },
+              "note": "US: the masthead's edition picker, white text on navy at 400."
+            },
+            "v-1yzcep": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "The masthead's menu button: a 40px #ffe500 circle."
+            },
+            "v-in4wvl": {
+              "note": "The secondary on the brand theme: #506991 under white."
+            },
+            "v-rhvvyn": {
+              "note": "The tertiary on the brand theme: navy with a 1px white edge."
+            },
+            "v-xndhf7": {
+              "note": "The subdued on the brand theme: white text, underlined."
+            },
+            "v-jkdbtg": {
+              "note": "The primary on the brand alt theme: #121212 under white."
+            },
+            "v-dusy4g": {
+              "note": "The secondary on the brand alt theme: #f3c100 under #121212."
+            },
+            "v-blxp4s": {
+              "note": "The tertiary on the brand alt theme: yellow with a 1px #121212 edge."
+            },
+            "v-wj61ao": {
+              "note": "The subdued on the brand alt theme."
+            },
+            "v-7sfy4j": {
+              "note": "The reader revenue tertiary on navy: a 1px #ffe500 edge and yellow text."
+            },
+            "v-yaeahx": {
+              "note": "The reader revenue tertiary on yellow: a 1px #121212 edge."
+            },
+            "v-glxg1k": {
+              "note": "A gallery's next arrow: a 34px black circle."
+            },
+            "v-q4d8xc": {
+              "note": "The previous arrow: a 34px #707070 circle."
+            },
+            "v-iw6q0d": {
+              "note": "The support site's info button on the Recommended card's #f1fbff fill."
+            },
+            "v-wi3apt": {
+              "note": "A popover's close button: #dcdcdc, xsmall."
+            },
+            "v-mfj0at": {
+              "note": "The close button in the light popover: #f6f6f6."
+            },
+            "v-clj1j3": {
+              "note": "The close button in the dark popover: #333333."
+            },
+            "v-m6z176": {
+              "note": "Source's custom transparent theme story: #1a1a1a with a 1px white edge."
+            },
+            "v-rpyb87": {
+              "note": "Source's custom theme story: a dark palette with #1a1a1a and #333333 fills, #999999 edges and #dcdcdc text."
+            },
+            "v-mblain": {
+              "hide": "an Accordion row's header"
+            },
+            "v-l1m7zg": {
+              "hide": "an Accordion row's header in the custom theme"
+            },
+            "v-6v376w": {
+              "hide": "a browser-default button inside the ExpandingWrapper story's demo content"
+            },
+            "v-pfd1wm": {
+              "hide": "the article's dateline, a disclosure with no button look"
+            }
+          },
+          "sizes": {
+            "default": {
+              "note": "44px, 17px: icon-only and subdued buttons, which carry no side padding."
+            },
+            "small": {
+              "note": "36px, 17px."
+            },
+            "xsmall": {
+              "note": "24px, 14px."
+            },
+            "s-kilujc": {
+              "name": {
+                "value": "default, labelled",
+                "from": "ai"
+              },
+              "note": "44px with 20px sides."
+            },
+            "s-gpk9eo": {
+              "name": {
+                "value": "small, labelled",
+                "from": "ai"
+              },
+              "note": "36px with 16px sides."
+            },
+            "s-5rsebo": {
+              "name": {
+                "value": "xsmall, labelled",
+                "from": "ai"
+              },
+              "note": "24px with 12px sides."
+            },
+            "s-x8zp45": {
+              "note": "ButtonLink: a button styled as a link, 17px."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Source's Link is #0077b6 at 400, underlined, and comes as primary and secondary (#121212). On the product, body links take the pillar color at 400 with a 1px #dcdcdc rule under them that turns the pillar color on hover; navigation on the navy masthead and footer is white, turning #ffe500 and underlined on hover. LinkButton gives links the button priorities.",
+      "groups": {
+        "link": {
+          "variants": {
+            "primary": {
+              "note": "Link: #0077b6 at 400, underlined. As a LinkButton, the navy pill; on the masthead, the pillar links at 24px."
+            },
+            "secondary": {
+              "note": "Link: #121212 at 400, underlined. As a LinkButton, the pale blue pill."
+            },
+            "tertiary": {
+              "note": "LinkButton: the outlined pill. In dark, black with a #999999 edge and white text."
+            },
+            "subdued": {
+              "note": "LinkButton: navy text at 700, underlined."
+            },
+            "v-3s5iyp": {
+              "name": {
+                "value": "article",
+                "from": "ai"
+              },
+              "note": "A body link: the pillar color (#c70000 for news) at 400 in Guardian Text Egyptian, a 1px #dcdcdc rule under it."
+            },
+            "v-fhau62": {
+              "name": {
+                "value": "gateway",
+                "from": "ai"
+              },
+              "note": "terms and conditions on the sign-in page: #0077b6 at 700, underlined; #dcdcdc in dark."
+            },
+            "v-z7o7ud": {
+              "name": {
+                "value": "navy",
+                "from": "ai"
+              },
+              "note": "About us, Soccer: white on the navy footer and masthead at 400; #ffe500 and underlined on hover."
+            },
+            "v-freymp": {
+              "name": {
+                "value": "kicker",
+                "from": "ai"
+              },
+              "note": "Florida: a section kicker in the pillar color at 400; it fills with the color on hover."
+            },
+            "v-4q1bx4": {
+              "name": {
+                "value": "headline",
+                "from": "ai"
+              },
+              "note": "A card's headline in GH Guardian Headline at 500; #f6f6f6 behind it on hover in some slots."
+            },
+            "v-krl6m4": {
+              "note": "Bylines and headline kickers in the pillar color at 700."
+            },
+            "v-on0mh0": {
+              "note": "A table's competition name: #005689 at 700."
+            },
+            "v-27hwlp": {
+              "note": "View full Premier League table: #005689 at 400 on the table's grey."
+            },
+            "v-4vc75v": {
+              "note": "A team in a football table row on #ededed."
+            },
+            "v-8rq9m7": {
+              "note": "A team in a striped row on #f6f6f6."
+            },
+            "v-q0uqa9": {
+              "note": "The edition menu's rows: 44px with a 1px #dcdcdc rule above."
+            },
+            "v-wjwu3y": {
+              "note": "A podcast's title at 700, and the current edition in the edition menu."
+            },
+            "v-iin6pu": {
+              "note": "Print subscriptions: white on #041f4a."
+            },
+            "v-it0fu0": {
+              "note": "Source's headline help link: #0077b6 at 500 in GH Guardian Headline, underlined."
+            },
+            "v-ejyqtn": {
+              "note": "A podcast's tag: a 12px-round pill with a 1px #333333 edge."
+            },
+            "v-jdt0pd": {
+              "note": "Support us: the reader revenue LinkButton, #ffe500 under navy."
+            },
+            "v-m69e34": {
+              "note": "Sign up for our email: the small LinkButton on white."
+            },
+            "v-71g94b": {
+              "note": "Share: the outlined pill in the pillar color."
+            },
+            "v-biaocf": {
+              "note": "Prefer the Guardian on Google: a 36px pill with a 1px #dcdcdc edge."
+            },
+            "v-snzief": {
+              "note": "Reuse this content: an xsmall pill in #707070."
+            },
+            "v-8le2ew": {
+              "hide": "a card's whole-area link with no text of its own, read as browser-default blue"
+            },
+            "v-eaydmv": {
+              "hide": "the Guardian logo"
+            },
+            "v-jaw0bk": {
+              "hide": "the skip link, hidden until focused"
+            }
+          },
+          "sizes": {
+            "default": {
+              "note": "LinkButton default: 44px with 20px sides."
+            },
+            "small": {
+              "note": "LinkButton small: 36px with 16px sides."
+            },
+            "xsmall": {
+              "note": "LinkButton xsmall: 24px with 12px sides."
+            },
+            "s-qzis8b": {
+              "name": {
+                "value": "17px",
+                "from": "ai"
+              },
+              "note": "Links in 17px text."
+            },
+            "s-alefcp": {
+              "name": {
+                "value": "14px",
+                "from": "ai"
+              },
+              "note": "Links in 14px text: tables, kickers, the footer."
+            },
+            "s-l1efsj": {
+              "name": {
+                "value": "pillar",
+                "from": "ai"
+              },
+              "note": "The masthead's pillar links: 24px GH Guardian Headline at 700, 52px tall."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "missing": [
+        "Keyword tags at an article's foot are links, so they landed under link."
+      ],
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-6t6pd3": {
+              "name": {
+                "value": "media",
+                "from": "ai"
+              },
+              "note": "Podcast 47:28: a #565656 pill under white at 700, 24px."
+            },
+            "v-i7pk97": {
+              "note": "The Podcast half of the same pill, set off by a 1px #ababab rule."
+            },
+            "v-7khj3n": {
+              "name": {
+                "value": "recommended",
+                "from": "ai"
+              },
+              "note": "Recommended on the support site: #0077b6 under white, 4px corners."
+            },
+            "v-iti7ng": {
+              "name": {
+                "value": "new",
+                "from": "ai"
+              },
+              "note": "New: #c70000 under white at 700, 4px corners."
+            },
+            "v-dw06rz": {
+              "hide": "a football table's form guide: 4px bars, not badges"
+            },
+            "v-pyt209": {
+              "hide": "the Back to top button's arrow circle"
+            },
+            "v-3z4v6t": {
+              "hide": "an icon chip with no label"
+            },
+            "v-dblbc7": {
+              "hide": "highlighted demo text in the ExpandingWrapper story"
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-20an3e": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "Source's Tabs: #dcdcdc with 1px #999999 edges on three sides and 8px corners; the current tab turns #f6f6f6."
+            },
+            "v-xveuie": {
+              "name": {
+                "value": "most viewed",
+                "from": "ai"
+              },
+              "note": "Most viewed: GH Guardian Headline at 600 with no fill; a 4px bar marks the current tab."
+            },
+            "v-f40ajs": {
+              "name": {
+                "value": "dark",
+                "from": "docs"
+              },
+              "note": "#121212 under #f6f6f6; the current tab turns #333333."
+            },
+            "v-8unmq0": {
+              "note": "The custom theme: #506991, the current tab #041f4a."
+            },
+            "v-doaxoo": {
+              "hide": "the support site's Monthly / Annual picker, a segmented control"
+            }
+          },
+          "sizes": {
+            "s-l2jqf5": {
+              "note": "48px, 12px sides, 17px at 700."
+            },
+            "s-o78u3t": {
+              "note": "28px, 10px sides."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-0fb3sv": {
+              "name": {
+                "value": "most viewed",
+                "from": "ai"
+              },
+              "note": "The Most viewed box, ruled in #dcdcdc on both sides."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "TextInput is white with a 1px #707070 edge and 4px corners, 17px text and 8px sides. Focus adds a 3px #0077b6 halo; success turns the edge 2px #22874d and errors 2px #c70000. On the dark gateway the field is black on a #999999 edge.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-e7j8pq": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "TextInput and TextArea."
+            },
+            "v-gdqnse": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "A 2px #22874d edge with green text."
+            },
+            "v-1di3ba": {
+              "name": {
+                "value": "gateway",
+                "from": "ai"
+              },
+              "note": "The sign-in email field: navy text; black with a #999999 edge in dark."
+            },
+            "v-pjymzb": {
+              "note": "NumericInput with a suffix: the edge opens on the suffix side."
+            },
+            "v-zg0128": {
+              "note": "NumericInput with a prefix."
+            },
+            "v-7d0xnr": {
+              "note": "NumericInput with a prefix and a suffix."
+            },
+            "v-5orrgd": {
+              "note": "NumericInput with a suffix, success."
+            },
+            "v-if2fxg": {
+              "note": "Source's custom theme story: a dark palette with #1a1a1a and #333333 fills, #999999 edges and #dcdcdc text."
+            },
+            "v-77k1ac": {
+              "hide": "a browser-default input in the Label story"
+            },
+            "v-4k702t": {
+              "hide": "a color picker in the Hover colours foundation story"
+            }
+          },
+          "sizes": {
+            "medium": {
+              "note": "44px, 17px."
+            },
+            "small": {
+              "note": "36px, 14px."
+            },
+            "s-cu47jg": {
+              "note": "TextArea with rows."
+            },
+            "s-t1rg5v": {
+              "note": "TextArea with rows, small."
+            }
+          }
+        }
+      }
+    },
+    "select": {
+      "status": "reviewed",
+      "groups": {
+        "select": {
+          "variants": {
+            "v-e7j8pq": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "44px, 1px #707070 edge, 4px corners; a 2px #c70000 edge when invalid, 70% opacity when disabled."
+            },
+            "v-gdqnse": {
+              "name": {
+                "value": "success",
+                "from": "docs"
+              },
+              "note": "A 2px #22874d edge with green text."
+            },
+            "v-if2fxg": {
+              "note": "Source's custom theme story: a dark palette with #1a1a1a and #333333 fills, #999999 edges and #dcdcdc text."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "groups": {
+        "checkbox": {
+          "variants": {
+            "v-dsngdr": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "24px, 1px #707070 edge, 4px corners; 2px #0077b6 on hover."
+            },
+            "v-6ub3qu": {
+              "name": {
+                "value": "brand",
+                "from": "docs"
+              },
+              "note": "On navy: a 1px #c1d8fc edge, white on hover."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "summary": "22px circles with a 1px #707070 edge; checked, they turn #0077b6 with a 2px edge. The fill sits on a pseudo-element, so the resting fill reads as the edge color.",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-r3w02n": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              }
+            },
+            "v-aqtg92": {
+              "name": {
+                "value": "brand",
+                "from": "docs"
+              },
+              "note": "On navy: #c1d8fc edges, white when checked."
+            },
+            "v-gmzjxn": {
+              "name": {
+                "value": "error",
+                "from": "docs"
+              },
+              "note": "A 2px #c70000 edge."
+            },
+            "v-9uw1k1": {
+              "note": "Error on the brand theme: a 2px #ff9081 edge."
+            },
+            "v-i5tbqx": {
+              "note": "Source's custom theme story: a dark palette with #1a1a1a and #333333 fills, #999999 edges and #dcdcdc text."
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-q4d8xc": {
+              "name": {
+                "value": "default",
+                "from": "docs"
+              },
+              "note": "ToggleSwitch: a 24px #707070 track, #22874d when on."
+            },
+            "v-0wgj3q": {
+              "name": {
+                "value": "ios",
+                "from": "docs"
+              },
+              "note": "The apps' iOS switch: 31px, #cccccc, #58d08b when on."
+            },
+            "v-21ve1m": {
+              "name": {
+                "value": "android",
+                "from": "docs"
+              },
+              "note": "The apps' Android switch: a 12px #b7b7b7 track, #92e0b3 when on."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "No modal is in this census; Source's Popover reads here.",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-obxonk": {
+              "name": {
+                "value": "popover",
+                "from": "docs"
+              },
+              "note": "#ededed, 8px corners, 16px padding, a title over 15px text and a pointer."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "light",
+                "from": "docs"
+              },
+              "note": "The light popover: white."
+            },
+            "v-xrhpm8": {
+              "name": {
+                "value": "dark",
+                "from": "docs"
+              },
+              "note": "The dark popover: #1a1a1a under #f6f6f6."
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "status": "reviewed",
+      "groups": {
+        "table": {
+          "variants": {
+            "v-i5fn0e": {
+              "name": {
+                "value": "football",
+                "from": "ai"
+              },
+              "note": "A league table: #f6f6f6 under a 1px #00b2ff top rule, teams in striped rows."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "Cards on fronts have no fill, edge or corners: a 1px #bababa top rule over the headline. Source's summaries are white boxes with a 2px colored edge and 4px corners; the support site's tier cards are 12px-round.",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-q16gll": {
+              "name": {
+                "value": "front",
+                "from": "ai"
+              },
+              "note": "A card on a front: a 1px #bababa top rule, no fill or corners."
+            },
+            "v-to98gy": {
+              "name": {
+                "value": "container",
+                "from": "docs"
+              },
+              "note": "Container with a top border: a 1px #dcdcdc rule, 20px sides."
+            },
+            "v-3b6t3f": {
+              "name": {
+                "value": "error summary",
+                "from": "docs"
+              },
+              "note": "ErrorSummary: a 2px #c70000 edge, 4px corners."
+            },
+            "v-30zla2": {
+              "name": {
+                "value": "success summary",
+                "from": "docs"
+              },
+              "note": "SuccessSummary: a 2px #22874d edge."
+            },
+            "v-r25rzs": {
+              "name": {
+                "value": "info summary",
+                "from": "docs"
+              },
+              "note": "InfoSummary: a 2px #0077b6 edge."
+            },
+            "v-jmb9d2": {
+              "name": {
+                "value": "expanding wrapper",
+                "from": "docs"
+              },
+              "note": "ExpandingWrapper: #f6f6f6 under a 13px #121212 top bar."
+            },
+            "v-l7d1ng": {
+              "name": {
+                "value": "tier",
+                "from": "ai"
+              },
+              "note": "A support tier: white, 12px corners, 12px padding."
+            },
+            "v-8gcpxt": {
+              "name": {
+                "value": "recommended tier",
+                "from": "ai"
+              },
+              "note": "The Recommended tier: #f1fbff."
+            },
+            "v-o1th1j": {
+              "note": "Container with a custom border color."
+            },
+            "v-k9ysai": {
+              "note": "ExpandingWrapper on the dark theme: #333333 under a 13px #999999 bar."
+            },
+            "v-i83bcp": {
+              "note": "ExpandingWrapper on the custom theme: navy."
+            },
+            "v-j6wi1f": {
+              "hide": "a swatch in the Hover colours foundation story"
+            },
+            "v-mzss3z": {
+              "hide": "the football section's sub-navigation"
+            },
+            "v-xh8w5w": {
+              "hide": "a browser-default fieldset in the Legend story"
+            },
+            "v-yj7ukt": {
+              "hide": "a browser-default fieldset in the Legend story, brand theme"
+            },
+            "v-bfwakg": {
+              "hide": "a browser-default fieldset in the Legend story, custom theme"
+            },
+            "v-5o1pb5": {
+              "hide": "the footer"
+            },
+            "v-krq3r1": {
+              "hide": "the Ticker's progress track"
+            },
+            "v-d4vfh8": {
+              "hide": "the support page's navy header band"
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-fx8k6o": {
+              "name": {
+                "value": "divider",
+                "from": "docs"
+              },
+              "note": "Divider: a 1px #dcdcdc rule."
+            },
+            "v-q16gll": {
+              "name": {
+                "value": "article",
+                "from": "ai"
+              },
+              "note": "A 1px #bababa rule in an article."
+            },
+            "v-6p8juj": {
+              "name": {
+                "value": "section",
+                "from": "ai"
+              },
+              "note": "A 2px #333333 rule over a section."
+            },
+            "v-4z8x05": {
+              "note": "The footer's rule: 1px #506991 on navy."
+            },
+            "v-gfk6tz": {
+              "note": "The same 1px #bababa rule on a #f3f7ff band."
+            },
+            "v-yfa9xq": {
+              "note": "A vertical 1px #dcdcdc rule on the support site."
+            }
+          }
+        }
+      }
+    },
+    "alert": {
+      "status": "reviewed",
+      "summary": "Source's user feedback is inline text with an icon, no box: InlineError in #c70000 and InlineSuccess in #22874d, at 17px or 14px. On navy they lighten to #ff9081 and #58d08b. The boxed summaries landed under card.",
+      "groups": {
+        "alert": {
+          "variants": {
+            "v-freymp": {
+              "name": {
+                "value": "inline error",
+                "from": "docs"
+              },
+              "note": "#c70000 text with an icon."
+            },
+            "v-sq1wyg": {
+              "name": {
+                "value": "inline success",
+                "from": "docs"
+              },
+              "note": "#22874d text with an icon."
+            },
+            "v-xsy15q": {
+              "note": "InlineError on the brand theme: #ff9081 on navy."
+            },
+            "v-g8dpn0": {
+              "note": "InlineSuccess on the brand theme: #58d08b on navy."
+            },
+            "v-1vx78n": {
+              "note": "InlineError in the custom theme: #ff9081 on #1a1a1a."
+            },
+            "v-1mjmwj": {
+              "note": "InlineSuccess in the custom theme: #58d08b on #1a1a1a."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-4a2450": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "A ToggleSwitch's label: #121212 at 400, 15px or 17px."
+            },
+            "v-b1u0nd": {
+              "name": {
+                "value": "bold",
+                "from": "ai"
+              },
+              "note": "The same label at 700."
+            },
+            "v-qb5mgl": {
+              "hide": "a ChoiceCard, whose label element is the whole card"
+            },
+            "v-6t1osp": {
+              "hide": "a ChoiceCard in the custom theme"
+            },
+            "v-rv36io": {
+              "hide": "the ExpandingWrapper's Show more pill, a button"
+            },
+            "v-xilsao": {
+              "hide": "the ExpandingWrapper's Show more pill on the custom theme"
+            },
+            "v-k8guj1": {
+              "hide": "a label in the Hover colours foundation story"
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@guardian/source",
+        "ref": "14.0.0",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@guardian/source-development-kitchen",
+        "ref": "30.0.0",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.theguardian.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      },
+      {
+        "kind": "docs",
+        "url": "https://main--5e933197d94d9c002275a15e.chromatic.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 154a8a6) and its page shots: theguardian.com articles, fronts and football tables in light and dark (dark through the site's opt-in cookie), the sign-in gateway in both modes, the support site in light, and the Source and Source development kitchen Storybooks in light. Names without a from are Storybook args; names marked docs come from Source's component and story names; names marked ai are ours."
+  }
+}

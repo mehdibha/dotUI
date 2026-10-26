@@ -1,0 +1,838 @@
+{
+  "version": 1,
+  "slug": "wise",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neptune pairs a forest green with a bright green. Light pages are white with #0e0f0c titles and #454745 body text; forest #163300 is the ink for links, labels on green, checks and focus; bright green #9fe870 fills the primary button. Control edges are #868685. Dark mode moves to #121511 pages and #1e211d raised surfaces, and swaps the roles: bright green becomes the link, check and focus color, still with forest labels on the primary button.",
+      "usage": [
+        "Status colors come in pairs, a strong ink over a pale fill: negative #cb272f on #fbeaea, positive #054d28 on #e2f6d5, warning #ffd11a with a #fff7d7 prompt.",
+        "Neutral fills are forest at 8% (#16330014), which reads as a faint green-grey."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter for all UI with a slight negative tracking: 16/24 for fields, options and button labels (600 on buttons), 14/21.7 for body text and labels. Tags are 12px at 600. Display headlines on wise.com use Wise Sans, a heavy condensed face."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Pills for buttons, chips and the segmented control; 10px corners on fields and menus, 16px on tooltips, prompts and cards, 32px on modals. Tags are 6px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "Roomy, on a 4px step: buttons, fields and list rows are 48px with 16px inline padding; chips and medium buttons 32 to 40px. Gaps are mostly 12 and 16px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Almost no shadows. Menus, the command popover and tooltips float on one soft halo, 0 0 40px of #454745 at 20%; modals have none. Field edges are 1px inset shadows that thicken to 3px forest on focus, with no outer ring."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Neptune's Button is a pill: primary bright green, secondary pale green, tertiary a bare forest label, secondary-neutral a grey pill. Large is the default at 48px with 16px labels at 600. Icon buttons are circles in the same fills.",
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "#9fe870 with a forest #163300 label."
+            },
+            "secondary": {
+              "note": "Pale #e2f6d5 with a forest label; #163300 under bright green in dark."
+            },
+            "tertiary": {
+              "note": "No fill, a forest label: Hover me, Tertiary."
+            },
+            "secondary-neutral": {
+              "note": "A grey pill (#2a2c29 in dark) with full ink: Neutral. On wise.com it is the currency picker."
+            },
+            "x-large": {
+              "note": "The login page's close ×, 48px, no fill."
+            },
+            "x-small": {
+              "note": "A 24px close × on a #edefeb circle."
+            },
+            "v-sepqc8": {
+              "name": {
+                "value": "icon, quiet",
+                "from": "ai"
+              },
+              "note": "A forest chevron or icon, no fill: the date picker's month arrows."
+            },
+            "v-o4y4wc": {
+              "name": {
+                "value": "icon, quiet",
+                "from": "ai"
+              },
+              "note": "The same in dark: a bright green icon, no fill."
+            },
+            "v-nmseu0": {
+              "name": {
+                "value": "icon, neutral",
+                "from": "ai"
+              },
+              "note": "A #edefeb circle with a forest icon: the modal's close."
+            },
+            "v-tlu6ah": {
+              "name": {
+                "value": "icon, neutral",
+                "from": "ai"
+              },
+              "note": "The same in dark: a #2a2c29 circle, bright green icon."
+            },
+            "v-dj7x1e": {
+              "name": {
+                "value": "icon, neutral",
+                "from": "ai"
+              },
+              "note": "The dark modal's close, a step lighter (#343734) on the raised surface."
+            },
+            "v-43j1vw": {
+              "name": {
+                "value": "icon, secondary",
+                "from": "ai"
+              },
+              "note": "A pale green #e2f6d5 circle: the … button."
+            },
+            "v-dv01ei": {
+              "name": {
+                "value": "icon, secondary",
+                "from": "ai"
+              },
+              "note": "The same in dark: a #163300 circle, bright green icon."
+            },
+            "v-4vurgn": {
+              "name": {
+                "value": "social",
+                "from": "ai"
+              },
+              "note": "Login with Apple: a white pill with a 1px #e2e2e1 edge and the logo alone."
+            },
+            "v-utmao6": {
+              "name": {
+                "value": "passkey",
+                "from": "ai"
+              },
+              "note": "Log in with a passkey: the white outlined pill with an icon and text."
+            },
+            "v-8uh8v8": {
+              "hide": "Login with Facebook: the social pill with another logo"
+            },
+            "v-khzbzm": {
+              "hide": "Login with Google: the social pill with another logo"
+            }
+          },
+          "sizes": {
+            "large": {
+              "note": "48px, 16px padding, 16px labels at 600: the default."
+            },
+            "medium": {
+              "note": "40px, 12px padding."
+            },
+            "small": {
+              "note": "About 32px, 12px padding."
+            },
+            "s-bigyoz": {
+              "name": {
+                "value": "icon, medium",
+                "from": "ai"
+              },
+              "note": "A 40px circle, 20px icon."
+            },
+            "s-7dtki5": {
+              "name": {
+                "value": "icon, medium",
+                "from": "ai"
+              },
+              "note": "The same in dark."
+            },
+            "s-z078ja": {
+              "name": {
+                "value": "icon, large",
+                "from": "ai"
+              },
+              "note": "A 48px circle, 24px icon."
+            },
+            "s-ugmyvk": {
+              "name": {
+                "value": "icon, large",
+                "from": "ai"
+              },
+              "note": "The same in dark."
+            },
+            "s-pj4tuz": {
+              "name": {
+                "value": "social",
+                "from": "ai"
+              },
+              "note": "40px, 44px padding."
+            },
+            "s-9o6ikn": {
+              "note": "48px, a 24px glyph."
+            },
+            "s-sn44dr": {
+              "note": "24px, a 16px glyph."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The harness renders light and dark on separate pages, so several looks appear twice, once per mode, instead of as one look with two readings.",
+        "Negative (#cb272f) and disabled buttons weren't captured."
+      ]
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "accent": {
+              "note": "The login field's show-password eye: a forest icon."
+            },
+            "v-qxea4g": {
+              "hide": "a date picker day (1), not a toggle button"
+            },
+            "v-pqahhl": {
+              "hide": "a date picker day in dark"
+            },
+            "v-afdhv8": {
+              "hide": "a date picker day outside the month"
+            },
+            "v-7vja3c": {
+              "hide": "a date picker day outside the month, dark"
+            },
+            "v-j2ktrj": {
+              "hide": "the date picker's today (25), underlined"
+            },
+            "v-pcrwgr": {
+              "hide": "the date picker's today, dark"
+            }
+          },
+          "sizes": {
+            "md": {
+              "note": "An 18px hit area, 16px icon."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The filter Chips (32px outlined pills, forest when selected) weren't read as toggles."
+      ]
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Links are forest #163300 at 600 and underlined in text; bright green #9fe870 in dark. Standalone links drop the underline.",
+      "groups": {
+        "link": {
+          "variants": {
+            "tertiary": {
+              "note": "Forest at 600, no underline: Trouble logging in?, Home."
+            },
+            "v-o4y4wc": {
+              "name": {
+                "value": "tertiary",
+                "from": "ai"
+              },
+              "note": "The same in dark: bright green."
+            },
+            "v-b4nxln": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "Underlined forest at 600: pricing page."
+            },
+            "v-3ckfxz": {
+              "name": {
+                "value": "inline",
+                "from": "ai"
+              },
+              "note": "The same in dark: underlined bright green."
+            },
+            "v-34847v": {
+              "name": {
+                "value": "inline, on neutral",
+                "from": "ai"
+              },
+              "note": "The same link inside a #edefeb prompt: FAQ page."
+            }
+          },
+          "sizes": {
+            "large": {
+              "note": "48px, 16px padding: a link sized as a button."
+            },
+            "s-ffis4b": {
+              "note": "14px in body text."
+            },
+            "s-soh9c5": {
+              "note": "14px, dark."
+            },
+            "s-q96e3b": {
+              "note": "14px beside a 16px icon."
+            },
+            "s-cdolzx": {
+              "note": "14px beside a 16px icon, dark."
+            },
+            "s-06frtc": {
+              "hide": "the Wise logo"
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Tags are small: 6px corners, 4px padding, 12px at 600, a pale fill under a dark ink. The round status icons on prompts and alerts carry the sentiment colors.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "proposition": {
+              "note": "New: #e0f7f7 fill, #054d4d ink."
+            },
+            "success": {
+              "note": "Complete: #e2f6d5 fill, #054d28 ink."
+            },
+            "v-22c6b6": {
+              "name": {
+                "value": "status, negative",
+                "from": "ai"
+              },
+              "note": "A red #cb272f circle with a white ×."
+            },
+            "v-jmh6l0": {
+              "name": {
+                "value": "status, negative",
+                "from": "ai"
+              },
+              "note": "The same in dark: #ffa8ad."
+            },
+            "v-2bzuya": {
+              "name": {
+                "value": "status, negative",
+                "from": "ai"
+              },
+              "note": "The login page's 32px error icon."
+            },
+            "v-vdlfk6": {
+              "name": {
+                "value": "status, positive",
+                "from": "ai"
+              },
+              "note": "A #054d28 circle with a check."
+            },
+            "v-l62w10": {
+              "name": {
+                "value": "status, positive",
+                "from": "ai"
+              },
+              "note": "The same in dark: #cef1b8."
+            },
+            "v-bvomps": {
+              "name": {
+                "value": "status, warning",
+                "from": "ai"
+              },
+              "note": "A #ffd11a circle with a dark !."
+            },
+            "v-7wygv4": {
+              "name": {
+                "value": "status, warning",
+                "from": "ai"
+              },
+              "note": "The same in dark: #fadc65."
+            },
+            "v-a1al5c": {
+              "name": {
+                "value": "status, neutral",
+                "from": "ai"
+              },
+              "note": "A #454745 circle with an i."
+            },
+            "v-b5ogyc": {
+              "name": {
+                "value": "status, neutral",
+                "from": "ai"
+              },
+              "note": "The same in dark: near-white."
+            },
+            "v-0o81sg": {
+              "hide": "an avatar (MB), not a badge"
+            },
+            "v-fbp2se": {
+              "hide": "an avatar (MB) in dark"
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "About 21px, 4px padding, 12px at 600."
+            },
+            "s-2cruqp": {
+              "note": "A 24px status icon."
+            },
+            "s-jtxijv": {
+              "note": "A 24px status icon, dark."
+            },
+            "s-f8f8lz": {
+              "note": "A 16px status icon."
+            },
+            "s-1st7qx": {
+              "note": "A 16px status icon, dark."
+            },
+            "s-f2ada8": {
+              "note": "A 32px status icon."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Line tabs: 40px with 24px padding and 16px text in #454745 at 400; the current tab is forest at 600 over a 2px forest line. The list sits on a 1px #e2e2e1 rule.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-vevk16": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Cards, not selected."
+            },
+            "v-yqiu9a": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark: #e8ebe6."
+            }
+          },
+          "sizes": {
+            "s-sd9gbp": {
+              "note": "40px, 24px padding, 16px."
+            },
+            "s-8tyff3": {
+              "note": "The same in dark."
+            }
+          }
+        },
+        "tablist": {
+          "variants": {
+            "v-2qx9gx": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Balances, Cards, Recipients over a 1px #e2e2e1 rule."
+            },
+            "v-tjcyae": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark: a #414340 rule."
+            }
+          }
+        }
+      },
+      "missing": ["The selected tab isn't in the grid."]
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "groups": {
+        "segmented": {
+          "variants": {
+            "v-6te0fe": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Day, Week, Month: a #edefeb pill track, the chosen item a white pill with no edge or shadow."
+            },
+            "v-3jbuxv": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark: a #2a2c29 track."
+            }
+          },
+          "sizes": {
+            "s-lv8029": {
+              "note": "About 46px, 4px padding, 14px."
+            },
+            "s-x2mvk7": {
+              "note": "The same in dark."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are white boxes with 10px corners and a 1px #868685 edge drawn as an inset shadow, 48px tall with 16px values. Focus thickens the edge to 3px forest; an invalid field turns the edge red over a #fbeaea message band.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "rectangle": {
+              "note": "Your email address with a value."
+            }
+          },
+          "sizes": {
+            "auto": {
+              "note": "48px, 16px padding, 16px."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-wix5qf": {
+              "name": {
+                "value": "select trigger",
+                "from": "ai"
+              },
+              "note": "The SelectInput trigger (GBP): the field's white box and #868685 edge."
+            },
+            "v-qkatts": {
+              "name": {
+                "value": "select trigger",
+                "from": "ai"
+              },
+              "note": "The same in dark: a #b9bab7 edge."
+            }
+          },
+          "sizes": {
+            "md": {
+              "note": "48px, 16px padding."
+            }
+          }
+        }
+      }
+    },
+    "radio-group": {
+      "status": "reviewed",
+      "groups": {
+        "radio": {
+          "variants": {
+            "v-0347sm": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "A single-choice chip (GBP): a 32px pill, a 1px #868685 edge, forest at 600."
+            },
+            "v-8qdib6": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "The same in dark: bright green text, a #b9bab7 edge."
+            }
+          },
+          "sizes": {
+            "s-sioixv": {
+              "note": "32px, 16px padding, 14px."
+            },
+            "s-32ed8h": {
+              "note": "The same in dark."
+            }
+          }
+        }
+      },
+      "missing": [
+        "The 24px radio circle wasn't in the census; it is a forest ring around a dot."
+      ]
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "unchecked": {
+              "note": "A #868685 track with a white thumb; forest when on (bright green in dark)."
+            }
+          },
+          "sizes": {
+            "s-73ur8p": {
+              "note": "28px tall, 2px inset."
+            },
+            "s-w0ni73": {
+              "note": "The same in dark."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "The SelectInput list: 48px rows padded 16px at 16/400 in forest ink (bright green in dark), the current row ringed in #868685 with a check.",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "GBP, EUR, USD, JPY on white."
+            },
+            "v-4fgaqq": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark on #1e211d."
+            },
+            "v-4d3olo": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "The list while it holds focus: a 2px forest edge."
+            },
+            "v-hetbd8": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "The same in dark: a 2px bright green edge."
+            }
+          }
+        },
+        "option": {
+          "variants": {
+            "v-k8l8j2": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "EUR: forest at 400."
+            },
+            "v-qjj1fy": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark: bright green."
+            }
+          },
+          "sizes": {
+            "s-dc7g10": {
+              "note": "48px, 16px padding, 16px."
+            },
+            "s-g9yu3u": {
+              "note": "The same in dark."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "Two kinds. The modal is a flat panel with 32px corners and a grey circular close, no shadow: Cancel this transfer? with Keep it and Cancel transfer. The command popover is white with 10px corners on the soft 40px halo.",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "modal",
+                "from": "ai"
+              },
+              "note": "Cancel this transfer? on white."
+            },
+            "v-4fgaqq": {
+              "name": {
+                "value": "modal",
+                "from": "ai"
+              },
+              "note": "The same in dark on #1e211d."
+            },
+            "v-sypykl": {
+              "name": {
+                "value": "popover",
+                "from": "ai"
+              },
+              "note": "Type a currency: a search field over the currency list, 0 0 40px of #454745 at 20%."
+            },
+            "v-i86w7j": {
+              "name": {
+                "value": "popover",
+                "from": "ai"
+              },
+              "note": "The same in dark on #1e211d."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "groups": {
+        "tooltip": {
+          "variants": {
+            "v-cycnal": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Fees are shown before you pay: white, 16px corners and padding, a tail, the 40px halo."
+            },
+            "v-cp4asz": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark on #1e211d."
+            }
+          },
+          "sizes": {
+            "s-s5zjqr": {
+              "note": "Two lines of 14px text."
+            },
+            "s-msc5np": {
+              "note": "The same in dark."
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "status": "reviewed",
+      "summary": "InfoPrompts: 16px corners, 12px padding, a status icon and text on the sentiment's pale fill. Neutral cards sit on the raised surface.",
+      "groups": {
+        "card": {
+          "variants": {
+            "negative": {
+              "note": "Something went wrong: #fbeaea; #410b0d in dark."
+            },
+            "success": {
+              "note": "Your transfer is complete.: #e2f6d5."
+            },
+            "warning": {
+              "note": "This rate is guaranteed for 24 hours.: #fff7d7."
+            },
+            "v-4fgaqq": {
+              "name": {
+                "value": "neutral",
+                "from": "ai"
+              },
+              "note": "Get paid like a local, on #1e211d in dark."
+            }
+          }
+        }
+      }
+    },
+    "progress-bar": {
+      "status": "reviewed",
+      "groups": {
+        "progressbar": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "An 8px track with 10px corners in the neutral fill; the forest fill couldn't be read on the native progress element."
+            },
+            "v-f8vqc6": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark."
+            }
+          },
+          "sizes": {
+            "s-r72gxk": {
+              "note": "8px."
+            },
+            "s-vxxj06": {
+              "note": "8px, dark."
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-oryja3": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Your email address: 14px at 600 in #0e0f0c."
+            },
+            "v-xvdyf0": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The same in dark: #f3f5f1."
+            },
+            "v-ahm42x": {
+              "name": {
+                "value": "checkbox label",
+                "from": "ai"
+              },
+              "note": "Unchecked: 14px at 400, inside the checkbox's outlined row."
+            },
+            "v-pp9glu": {
+              "name": {
+                "value": "checkbox label",
+                "from": "ai"
+              },
+              "note": "The same in dark."
+            }
+          },
+          "sizes": {
+            "s-549x4z": {
+              "note": "14/21.7."
+            },
+            "s-9lbayl": {
+              "note": "14/21.7, dark."
+            },
+            "s-dvqokj": {
+              "note": "14/20."
+            },
+            "s-igig99": {
+              "note": "14/20, dark."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@transferwise/components",
+        "ref": "46.165.5",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@transferwise/neptune-tokens",
+        "ref": "8.26.0",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/login",
+        "ref": null,
+        "retrievedAt": "2026-10-25",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its page shots: a harness that renders Neptune's published React components in light and dark, plus the public wise.com login page. Partial: the signed-in web app (shell, sidebar, account pages) isn't captured. Names without a from are Neptune's own class names; names marked ai are ours."
+  }
+}
