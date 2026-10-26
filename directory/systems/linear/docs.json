@@ -1,0 +1,762 @@
+{
+  "version": 1,
+  "slug": "linear",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neutrals in LCH with a faint blue cast, in three layers: the shell behind the sidebar (#efeff0 light, #09090a dark), the content panel (#f9f9fa, #121213) and raised cards, menus and fields (#fff, #1a1a1b to #212122). Ink is #1b1b1b with #303032 for secondary text and #5e5e60 for muted (#fff, #e4e5e7 and #98999c in dark); edges #e4e4e4 (#303132). The one accent is indigo, #6d78d5 in light and #5e6ad2 in dark, for primary buttons, focus and the selected key. Red #e2253b (#ff8683) marks destructive actions and green #27a644 (#41ba56) what is turned on."
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Inter Variable at 400, 450, 500 and 600, with Berkeley Mono for code and identifiers (12px on 20px). Navigation and labels are 13px at 500, menu rows 13px at 400 on 19.5px, buttons and chips 12px at 500. Settings titles are 24px at 500 on 30px, section headings 15px at 500. An issue's title is 24px at 600 with -0.1px tracking, 18px in the Create issue dialog."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Buttons, chips and tabs are pills and icon buttons circles. Sidebar rows, fields, selects and search boxes have 8px corners, as do integration cards; the composer 10px, menus 12px, keyboard keys 4px."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 2px grid. Most controls are 28px: sidebar rows (10px sides), icon buttons, pill buttons and chips; small ones are 24px. Settings buttons and fields are 32px with 12px sides, selects 30px with 10px. Menu rows are 32px with 14px sides; ⌘K rows 46px with 12px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Flat layers set apart by tone, with light drops on what is raised: 0 3px 6px -2px at 2% and 0 1px 1px at 4% under cards, the composer, search boxes and primary buttons; cards add a 1px ring at 3%. In dark these become one 0 0.5px 1px 1px drop at 30%. Menus float on 0 6px 18px at 2%, 0 3px 9px at 4% and 0 1px 1px at 4% (three layers at 12.5% in dark)."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Pills at 12px and 500 (13px at the 32px size), ghost unless they carry an action of weight: primary fills indigo, secondary is white in a 1px #e4e4e4 edge. Ghost buttons take the color of the layer they sit on, so the census splits them by layer: the shell behind the sidebar and the content panel.",
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "Indigo #6d78d5 (#5e6ad2 in dark) with white text and a light drop: Settings' main actions."
+            },
+            "v-7s0o2q": {
+              "name": {
+                "value": "ghost, sidebar",
+                "from": "ai"
+              },
+              "note": "The sidebar's circular icon buttons on the #efeff0 shell, #2e2e30 icons."
+            },
+            "v-k54xfn": {
+              "hide": "sidebar rows drawn as buttons: see link"
+            },
+            "v-iodrdl": {
+              "name": {
+                "value": "ghost",
+                "from": "ai"
+              },
+              "note": "On the content panel, #2f2f31 at 500: + Add sub-issues, toolbar icons."
+            },
+            "v-b64x3n": {
+              "hide": "the due-date picker's days"
+            },
+            "v-odisdl": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "White in a 1px #e4e4e4 edge (#1b1c1d in #303132 in dark): the filter button, Settings' secondary actions."
+            },
+            "v-9vmmsv": {
+              "name": {
+                "value": "ghost, muted",
+                "from": "ai"
+              },
+              "note": "Muted #59595b on the shell, 10px sides and 8px corners, in the sidebar."
+            },
+            "v-h30iht": {
+              "hide": "the workspace switcher"
+            },
+            "v-h2hul2": {
+              "hide": "the due-date picker's weekend days"
+            },
+            "v-jaw0bk": {
+              "hide": "integration tiles that are whole buttons: see card"
+            },
+            "v-r2eumx": {
+              "name": {
+                "value": "secondary, sidebar",
+                "from": "ai"
+              },
+              "note": "The sidebar's Create issue button: a circle in a 1px #ddddde edge."
+            },
+            "v-4v5eyx": {
+              "hide": "a ghost button caught hovered"
+            },
+            "v-wppfh0": {
+              "name": {
+                "value": "ghost, muted on panel",
+                "from": "ai"
+              },
+              "note": "#5c5c5e on the content panel, with a leading +."
+            },
+            "v-6ykvxa": {
+              "hide": "the current sidebar row: see link"
+            },
+            "v-4nuol5": {
+              "name": {
+                "value": "property",
+                "from": "ai"
+              },
+              "note": "Create issue's property pills: white in a 1px #e5e5e5 edge, #5e5e60, 24px: status, priority, assignee."
+            },
+            "v-o7z4vd": {
+              "hide": "a settings value with a chevron: see combobox"
+            },
+            "v-r9yg9y": {
+              "hide": "the date picker's month arrows"
+            },
+            "v-uxofy2": {
+              "hide": "the activity graph's days"
+            },
+            "v-4md5dg": {
+              "hide": "a secondary button while its menu is open"
+            },
+            "v-5xh8go": {
+              "hide": "a sidebar button caught hovered"
+            },
+            "v-7r1cat": {
+              "hide": "a sidebar button caught hovered"
+            },
+            "v-f6ikri": {
+              "hide": "the profile picture: see avatar"
+            },
+            "v-nshuh1": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "Red #e2253b text on no fill (#ff8683 in dark): Delete workspace."
+            },
+            "v-r5z15b": {
+              "hide": "the date picker's today"
+            }
+          },
+          "sizes": {
+            "s-e52ixf": {
+              "note": "28px circle, a 14px icon."
+            },
+            "s-yn8en3": {
+              "note": "24px circle, a 14px icon."
+            },
+            "s-meg3mu": {
+              "note": "28px, 10px sides."
+            },
+            "s-y134dp": {
+              "note": "28px, 5px sides."
+            },
+            "s-gt15ja": {
+              "note": "32px, 12px sides at 13px, a 16px icon: Settings' buttons."
+            },
+            "s-o2mtmb": {
+              "note": "24px, 6px sides."
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "summary": "Display options' property chips: 24px pills with 8px sides, 12px at 500. On is #f0f0f0 in a 1px #d7d7d7 edge with full ink; off is white in a 1px #e5e5e5 edge with muted ink.",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-04r0dw": {
+              "name": {
+                "value": "on",
+                "from": "ai"
+              },
+              "note": "#f0f0f0 in a 1px #d7d7d7 edge, #1b1b1b."
+            },
+            "v-4nuol5": {
+              "name": {
+                "value": "off",
+                "from": "ai"
+              },
+              "note": "White in a 1px #e5e5e5 edge, #5e5e60."
+            },
+            "v-iodrdl": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "A 28px ghost icon toggle on the content panel."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Most links are navigation: sidebar rows of 28px with 8px corners and a label at 13px and 500, filled #e1e1e2 when current. Text links carry no underline; external ones end in an arrow.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-k54xfn": {
+              "name": {
+                "value": "sidebar",
+                "from": "ai"
+              },
+              "note": "Sidebar rows on the #efeff0 shell (#080809 in dark): Inbox, My issues, the Settings sections."
+            },
+            "v-ge28xt": {
+              "hide": "rows and tiles that are whole links: issue rows, integration tiles"
+            },
+            "v-54ytxu": {
+              "name": {
+                "value": "sidebar, current",
+                "from": "ai"
+              },
+              "note": "The current sidebar row, filled #e1e1e2 (#232325 in dark)."
+            },
+            "v-ipbvnd": {
+              "name": {
+                "value": "dimmed",
+                "from": "ai"
+              },
+              "note": "A pill link at 500 under 60% opacity, 32px with 12px sides, in Settings."
+            },
+            "v-9vmmsv": {
+              "name": {
+                "value": "back",
+                "from": "ai"
+              },
+              "note": "Settings' Back to app: #59595b at 500 on the shell, with a chevron."
+            },
+            "v-oigquc": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "A 28px pill in a 1px #e4e4e4 edge, #5c5c5e at 500, on Initiatives."
+            },
+            "v-p9xt9p": {
+              "name": {
+                "value": "external",
+                "from": "ai"
+              },
+              "note": "#1b1b1b at 450 with an arrow: Docs links in Settings."
+            },
+            "v-odisdl": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "The secondary button as a link."
+            },
+            "v-xbgy62": {
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
+              "note": "#5c5c5e at 450 on an issue: timestamps."
+            }
+          },
+          "sizes": {
+            "s-wm651m": {
+              "note": "28px, 10px sides, a 16px icon: sidebar rows."
+            },
+            "s-hlzii5": {
+              "note": "28px, the icon box set in: the main sidebar."
+            },
+            "s-7700eo": {
+              "note": "32px, 12px sides, 13px."
+            },
+            "s-wyj4d8": {
+              "note": "28px, 6px sides."
+            },
+            "s-xhlkqw": {
+              "note": "28px, 10px sides, 12px: chips."
+            },
+            "s-txnc2h": {
+              "note": "Inline, 13px with 4px sides."
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-d4oo49": {
+              "hide": "the help button's ring: see button"
+            },
+            "v-caq4ao": {
+              "name": {
+                "value": "count",
+                "from": "ai"
+              },
+              "note": "A muted #a0a0a2 count, 20px with 10px sides, in Preferences."
+            },
+            "v-hejuwo": {
+              "name": {
+                "value": "team",
+                "from": "ai"
+              },
+              "note": "A team's icon: white initials on its color (#00c6a9), 20px with 8px corners."
+            },
+            "v-65trjn": {
+              "name": {
+                "value": "count, on",
+                "from": "ai"
+              },
+              "note": "The same count in green #27a644 with a 1px rule on its left."
+            },
+            "v-luqzl3": {
+              "name": {
+                "value": "green",
+                "from": "ai"
+              },
+              "note": "A green #e2f5e5 wash with 4px corners, 12px, in Preferences."
+            },
+            "v-3icy8v": {
+              "hide": "a status dot on Reviews"
+            },
+            "v-tm40lb": {
+              "name": {
+                "value": "outline",
+                "from": "ai"
+              },
+              "note": "#5c5c5e at 450 in a 1px #d3d3d3 edge, 6px corners, 20.5px."
+            },
+            "v-w7t4f5": {
+              "name": {
+                "value": "label",
+                "from": "ai"
+              },
+              "note": "Uppercase #1b1b1b at 500 on white with a light drop: Settings' integration labels."
+            }
+          },
+          "sizes": {
+            "s-jaoocw": {
+              "note": "20px, 10px sides, 12px."
+            },
+            "s-8tsx8m": {
+              "note": "20px square, 11px."
+            },
+            "s-pqx1ur": {
+              "note": "18.5px, 12px."
+            },
+            "s-zhllks": {
+              "note": "20.5px, 6px sides, 12px."
+            },
+            "s-oaoe8r": {
+              "note": "32px square: Settings' workspace icon."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Tabs are pills: 28px with 12px sides at 12px and 500, white in a 1px #e5e5e5 edge, the selected one filled grey with full ink. Settings' integration tabs are plain text at 60% opacity.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "v-0k2sai": {
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
+              "note": "Integrations' tabs: no fill, 27px with 16px sides, at 60% opacity."
+            },
+            "v-4nuol5": {
+              "name": {
+                "value": "pill",
+                "from": "ai"
+              },
+              "note": "28px pills in a 1px #e5e5e5 edge, #5e5e60 at 500."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Settings' inputs are white with 8px corners in a 1px #d8d8d8 edge, 32px with 12px sides at 13px. The issue editor's fields have no frame: the title at 24px and 600, the description at 15px and 450.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-dti2lg": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "White in a 1px #d8d8d8 edge (#1a1a1b in #2f3033 in dark)."
+            },
+            "v-yela8i": {
+              "name": {
+                "value": "editor",
+                "from": "ai"
+              },
+              "note": "The description and comment editors: #303032 at 450, no frame."
+            },
+            "v-0bruap": {
+              "name": {
+                "value": "title",
+                "from": "ai"
+              },
+              "note": "An issue's title: 600 with -0.1px tracking, no frame."
+            },
+            "v-qvmgwu": {
+              "name": {
+                "value": "lowercase",
+                "from": "ai"
+              },
+              "note": "The default input with lowercase text: the username field."
+            }
+          },
+          "sizes": {
+            "s-7700eo": {
+              "note": "32px, 12px sides, 13px."
+            },
+            "s-7namek": {
+              "note": "18px on 28.8px: Create issue's title."
+            },
+            "s-d5v0ds": {
+              "note": "50px, 14px sides, 15px: the comment box."
+            },
+            "s-dd7itz": {
+              "note": "A 76px editor, 15px: Create issue's description."
+            },
+            "s-ehiwhq": {
+              "note": "One 24px line at 15px."
+            },
+            "s-fu6dzn": {
+              "note": "44px, 16px sides, 15px, a leading icon: the integrations search."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "Select triggers: white in a 1px #e5e5e5 edge with 8px corners, 30px with 10px sides at 13px, a 10px chevron on the right.",
+      "groups": {
+        "combobox": {
+          "sizes": {
+            "s-notilo": {
+              "note": "30px, 10px sides, 13px."
+            },
+            "s-q3o7nc": {
+              "note": "24px, 12px, in Preferences."
+            },
+            "s-uolgqf": {
+              "note": "30px with a leading chip."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "summary": "Notification preferences draw their checkboxes as switches: a 30 by 20px pill, off #cdcdcd (#707172 in dark); 22 by 14px in Create issue."
+    },
+    "switch": {
+      "status": "reviewed",
+      "groups": {
+        "switch": {
+          "variants": {
+            "v-iodrdl": {
+              "hide": "the favorite star: a ghost icon toggle"
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "Menus list their rows as options: 32px with 14px sides at 13px, a 4px-inset highlight with 8px corners, a shortcut on the right. ⌘K's rows are 46px at 15px, the active one #f1f1f1 at 42px.",
+      "groups": {
+        "option": {
+          "variants": {
+            "default": {
+              "note": "⌘K's active row: #f1f1f1 (#313234 in dark), 8px corners."
+            },
+            "v-b64x3n": {
+              "name": {
+                "value": "row",
+                "from": "ai"
+              },
+              "note": "#303032 at 400 (#e5e6e8 in dark)."
+            },
+            "v-vsxkrs": {
+              "name": {
+                "value": "row, dark",
+                "from": "ai"
+              },
+              "note": "A row read in dark only: the team menu."
+            },
+            "v-ag3lqr": {
+              "name": {
+                "value": "row, full ink",
+                "from": "ai"
+              },
+              "note": "A row in #1b1b1b, in an issue page's menu."
+            }
+          },
+          "sizes": {
+            "s-96f1tu": {
+              "note": "32px, 14px sides, 13px."
+            },
+            "s-mnewsa": {
+              "note": "24px, 12px sides, 12px: Preferences' select."
+            },
+            "s-iw80xt": {
+              "note": "46px, 12px sides, 15px, a 16px icon: ⌘K."
+            },
+            "s-wdex5i": {
+              "note": "32px with a 16px icon."
+            },
+            "s-4eu7x1": {
+              "note": "42px: ⌘K's highlight."
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-rhj47d": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "Menus are dialogs (aria-label Menu): white, 12px corners, a 1px #e4e4e4 edge, 230px wide."
+            },
+            "v-pqz3a6": {
+              "hide": "the Create issue overlay's backdrop"
+            }
+          }
+        }
+      }
+    },
+    "popover": {
+      "status": "reviewed",
+      "groups": {
+        "popover": {
+          "variants": {
+            "v-l14khy": {
+              "hide": "a select's scroll arrow"
+            }
+          }
+        }
+      }
+    },
+    "avatar": {
+      "status": "reviewed",
+      "summary": "Circles: 18px in issue rows, 14px in compact lists, 24px and 32px in Settings."
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-wfrshs": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "Integration cards: white with 8px corners and 16px padding, a 1px ring at 3% over the light drops."
+            },
+            "v-yzs3l1": {
+              "name": {
+                "value": "hover card",
+                "from": "ai"
+              },
+              "note": "The peek over a sidebar team: white in a 1px #e4e4e4 edge, 8px corners, the light drops."
+            },
+            "v-si1zyx": {
+              "hide": "a select's popup: see list-box"
+            },
+            "v-s15op8": {
+              "hide": "a table's header row"
+            },
+            "v-vj072f": {
+              "name": {
+                "value": "inset",
+                "from": "ai"
+              },
+              "note": "#f9f9fa in a 1px #dedede edge with 5px corners: My issues' empty state."
+            },
+            "v-006bcv": {
+              "name": {
+                "value": "panel",
+                "from": "ai"
+              },
+              "note": "A review's diff panel on the content panel's tone."
+            },
+            "v-5xfbxy": {
+              "name": {
+                "value": "composer",
+                "from": "ai"
+              },
+              "note": "The agent composer: white, 10px corners, 12px padding, the light drops."
+            },
+            "v-97zppp": {
+              "hide": "a list group's header row"
+            },
+            "v-g076gy": {
+              "hide": "a list group's header row"
+            },
+            "v-k674ph": {
+              "hide": "a settings section inside a popover"
+            },
+            "v-yl5472": {
+              "note": "The review panel raised on the light drops."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-l7d1ng": {
+              "hide": "the 12px space around a menu's rule"
+            },
+            "v-w7cxhp": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "A 1px #f7f7f7 rule between menu groups (#292a2d in dark)."
+            },
+            "v-nhm0pm": {
+              "name": {
+                "value": "panel",
+                "from": "ai"
+              },
+              "note": "A 1px #dedede rule on the content panel."
+            },
+            "v-q8c672": {
+              "name": {
+                "value": "vertical",
+                "from": "ai"
+              },
+              "note": "A vertical #d3d3d3 rule in an issue's toolbar."
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "summary": "In menus shortcuts are bare glyphs, 12px at 500 in #5e5e60. In tooltips and ⌘K each key is a cap: 19px with 4px corners in a 1px #f7f7f7 edge, indigo inside a primary button.",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-cwuznu": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "Bare 12px glyphs at 500, #5e5e60."
+            },
+            "v-mrqlal": {
+              "name": {
+                "value": "key",
+                "from": "ai"
+              },
+              "note": "A 19px cap, 4px corners, a 1px #f7f7f7 edge: tooltips."
+            },
+            "v-0fuj4k": {
+              "name": {
+                "value": "key, large",
+                "from": "ai"
+              },
+              "note": "⌘K's footer keys: 23px with 3px corners, 450."
+            },
+            "v-uaon70": {
+              "name": {
+                "value": "key, accent",
+                "from": "ai"
+              },
+              "note": "A key inside a primary button: indigo #6d78d5 with white text in a 1px #a7aeea edge."
+            }
+          }
+        }
+      }
+    },
+    "breadcrumbs": {
+      "status": "reviewed",
+      "summary": "An issue's breadcrumb: 24px items with 4px sides and 8px corners, an icon and the team, then the issue id."
+    },
+    "field": {
+      "status": "reviewed",
+      "groups": {
+        "label": {
+          "variants": {
+            "v-oua3q7": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "13px at 500 in full ink over a setting."
+            },
+            "v-5zcgtt": {
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
+              "note": "12px at 500 in #5e5e60: Display options."
+            }
+          }
+        }
+      }
+    },
+    "search-field": {
+      "status": "reviewed",
+      "summary": "Search boxes have 8px corners and 32px on the left for the icon, 13px at 500.",
+      "groups": {
+        "search": {
+          "variants": {
+            "v-1kqks7": {
+              "name": {
+                "value": "raised",
+                "from": "ai"
+              },
+              "note": "White on the shell in a 1px #f1f1f1 edge with the light drops, 28px: Settings' sidebar search."
+            },
+            "v-lxdf11": {
+              "name": {
+                "value": "outline",
+                "from": "ai"
+              },
+              "note": "White in a 1px #d3d3d3 edge, 32px: Settings' list search."
+            },
+            "v-cvl22c": {
+              "name": {
+                "value": "bare",
+                "from": "ai"
+              },
+              "note": "No edge on the content panel."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 35 signed-in pages of the Linear app in light and dark (inbox, my issues, an issue, projects, initiatives, views, the agent, Settings), read in Mehdi's research Chrome on a near-empty workspace, with menus, ⌘K and Create issue opened. Signed-in text is redacted in the copies, so parts were named from their layout, icons and values; focus and sizes in the pack's sources.md agree. Names marked ai are ours; primary and default are Linear's data-variant values."
+  }
+}

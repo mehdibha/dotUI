@@ -1,0 +1,695 @@
+{
+  "version": 1,
+  "slug": "claude",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Neutral greys with no tint, set as alpha on the surface (CDS variables). Light: pages and menus are #fff, the sidebar #fafafa, text is black at 90% (#191919), 60% (#666) and 47% (#888), edges black at 8% (#ebebeb) and 12% (#e0e0e0). Dark: the page is #191919, menus and dialogs #1f1f1f to #303030, text white at 93%, 57% and 40%. Primary buttons are filled in the ink color and invert in dark. Clay #c6613f is kept for the send button. Blue #1757ac (#6aabf1 in dark) colors accent text and badges, #257de0 focus rings and the checked checkbox; red #a42528 (#f17778) marks delete.",
+      "usage": [
+        "Artifact types each get a hue: blue for documents, orange #90370f for slides, purple #5437b8 for designs, as an icon in menus and a pale tile behind it (#cce3fd, #f7d9ca, #e4deff)."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "anthropic-sans, a variable face, for all UI text, in steps finer than the usual weights: 400 for body text, 435 for buttons, menu rows and links, 520 for dialog titles (15px), 540 for badges (11px). Controls are 14px on a 20px line, secondary rows 13px on 17px, tooltips 13px on 18px, the composer 15px on 21px. Icons are glyphs of the Anthropicons icon font, mostly 20px and 16px."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "8px corners (--cds-radius) on buttons, menu rows, links and fields; 10px on large buttons; 14px on menus and the composer; 11px on connector cards; 12px on the settings dialog and 20px on the search palette. Tooltips round to 6px and checkboxes to 4px. Badges, switches, the day toggles and the memory field are pills."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 4px base (--spacing .25rem). Most controls are 28px: icon buttons are 28px square, text buttons pad 9px, menu rows 10px. Sidebar rows and the settings buttons are 32px; small buttons 24px with 8px sides; the large button 40px with 16px sides at 15px. Two-line menu rows (the model picker) are 46px."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Edges are 1px rings drawn as shadows: black at 8% (white at 4% in dark). Menus add 0 8px 24px at 12% and 0 2px 6px at 8%; the composer 0 4px 20px at 3.5% over a 12% ring; dialogs and tooltips 0 1px 2px at 6% and 0 2px 8px at 8%. The search palette floats higher, on 0 25px 50px -12px at 25% with a 0.5px edge. Focus is a 1px #257de0 ring with a 6px glow at 12%, inside a 1px ring in the page color."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Most buttons are ghost: no fill until hover (#f2f2f2) and pressed (#e5e5e5), 8px corners, 14px at 435. The census reads the fill of the button itself, and CDS paints filled buttons on an inner layer, so secondary buttons (black at 5% on that layer) fall in the ghost column; primary (the ink) and clay are read in full. Disabled keeps the fill and greys the text to #969696.",
+      "groups": {
+        "button": {
+          "variants": {
+            "v-vnthzb": {
+              "name": {
+                "value": "ghost",
+                "from": "ai"
+              },
+              "note": "The sidebar's icon buttons and most toolbar buttons; with text and 9px sides, the secondary buttons, whose fill sits on an inner layer."
+            },
+            "v-b8r5yo": {
+              "name": {
+                "value": "text",
+                "from": "ai"
+              },
+              "note": "Plain text at 500 with no box, on the plugins and skills pages."
+            },
+            "v-yjozhc": {
+              "name": {
+                "value": "sidebar",
+                "from": "ai"
+              },
+              "note": "Ghost on the #fafafa sidebar in the secondary ink #646464 (#9e9e9e in dark)."
+            },
+            "v-zhr7nh": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "#191919 with white text, #efefef under #191919 in dark: New project, Get started."
+            },
+            "v-m3rmq9": {
+              "name": {
+                "value": "send",
+                "from": "ai"
+              },
+              "note": "The composer's send button: clay #c6613f with a white arrow in both themes, 28px."
+            },
+            "v-k6jss7": {
+              "hide": "tiles, rows and the account avatar that are whole buttons: see card"
+            },
+            "v-laiqph": {
+              "name": {
+                "value": "outline",
+                "from": "ai"
+              },
+              "note": "White in a 1px #ebebeb ring: the connectors page's search trigger."
+            },
+            "v-9nq7ro": {
+              "hide": "carousel dots"
+            },
+            "v-t5h82n": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "A ghost icon button in red #a42528 (#f17778 in dark): delete."
+            },
+            "v-y88vt3": {
+              "note": "A 22px close button on a #f6f6f6 chip."
+            }
+          },
+          "sizes": {
+            "lg": {
+              "note": "40px, 16px sides, 15px on a 22px line, 10px corners."
+            },
+            "sm": {
+              "note": "22px square: close buttons."
+            },
+            "s-14wgev": {
+              "note": "28px square, a 20px icon: the icon button."
+            },
+            "s-6rba0i": {
+              "note": "28px, 9px sides: text buttons in headers and dialogs."
+            },
+            "s-i4hd36": {
+              "note": "32px, 8px sides, an icon and a label: Settings and Customize."
+            },
+            "s-9n2hp0": {
+              "note": "32px, 2px sides: sidebar rows (Search), where the icon box sets the label in."
+            },
+            "s-g8hhua": {
+              "note": "Text only, 17.5px tall."
+            },
+            "s-m0pjbg": {
+              "note": "24px square, a 16px icon."
+            },
+            "s-iuimro": {
+              "note": "24px, 8px sides, 13px."
+            }
+          }
+        }
+      }
+    },
+    "toggle-button": {
+      "status": "reviewed",
+      "groups": {
+        "toggle": {
+          "variants": {
+            "v-ev9oar": {
+              "name": {
+                "value": "day",
+                "from": "ai"
+              },
+              "note": "Time limits' weekday toggles: 32px circles in #e6e6e6, 12px at 580."
+            },
+            "v-vnthzb": {
+              "name": {
+                "value": "ghost",
+                "from": "ai"
+              },
+              "note": "A 28px icon toggle: the artifacts page's filter."
+            },
+            "v-vfdedc": {
+              "name": {
+                "value": "billing",
+                "from": "ai"
+              },
+              "note": "The upgrade page's monthly or yearly switch: a 24px #f6f6f6 pill, 12px at 500, the saving in blue."
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Navigation links look like ghost buttons: 8px corners, 14px at 435, a fill on hover. Text links are underlined, in blue #1757ac or the secondary grey.",
+      "groups": {
+        "link": {
+          "variants": {
+            "v-d5u2uo": {
+              "name": {
+                "value": "sidebar",
+                "from": "ai"
+              },
+              "note": "Sidebar links on #fafafa (#1f1f1f in dark): New chat, Projects, Artifacts, 32px with the icon box."
+            },
+            "v-b8r5yo": {
+              "name": {
+                "value": "title",
+                "from": "ai"
+              },
+              "note": "Card titles at 500 that are links: connector and plugin names."
+            },
+            "v-uv1i6w": {
+              "name": {
+                "value": "recent",
+                "from": "ai"
+              },
+              "note": "Recent chats in the sidebar at 400."
+            },
+            "v-6b7gkf": {
+              "name": {
+                "value": "accent",
+                "from": "ai"
+              },
+              "note": "Underlined blue #1757ac (#6aabf1 in dark), in the account menu and chats."
+            },
+            "v-dpkjjm": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "Underlined #666 at 400, in account and privacy settings."
+            },
+            "v-njo1cf": {
+              "name": {
+                "value": "accent, on white",
+                "from": "ai"
+              },
+              "note": "Underlined blue on the upgrade page."
+            },
+            "v-zhr7nh": {
+              "name": {
+                "value": "primary",
+                "from": "ai"
+              },
+              "note": "The primary button as a link, 28px with 9px sides."
+            },
+            "v-xh98a2": {
+              "hide": "the upgrade page's plan cards: see card"
+            },
+            "v-2e2i2u": {
+              "name": {
+                "value": "muted",
+                "from": "ai"
+              },
+              "note": "#888 at 13px with no underline: a note line in a chat."
+            }
+          },
+          "sizes": {
+            "sm": {
+              "note": "28px, 9px sides: a button as a link."
+            },
+            "s-9n2hp0": {
+              "note": "32px rows, 2px sides."
+            },
+            "s-g8hhua": {
+              "note": "Inline, 14px."
+            },
+            "s-krcd8v": {
+              "hide": "the Claude wordmark"
+            },
+            "s-14wgev": {
+              "note": "28px square icon links."
+            },
+            "s-5zsp73": {
+              "hide": "artifact tiles: see card"
+            },
+            "s-sdc7b8": {
+              "note": "Inline, 13px."
+            },
+            "s-ik5vck": {
+              "hide": "52px list rows that are whole links"
+            }
+          }
+        }
+      }
+    },
+    "badge": {
+      "status": "reviewed",
+      "summary": "Small pills at 540: 18px with 11px text, 16px with 10px text, both in a 1.5px edge.",
+      "groups": {
+        "badge": {
+          "variants": {
+            "v-trup14": {
+              "name": {
+                "value": "accent",
+                "from": "ai"
+              },
+              "note": "Blue #1757ac text in a 1.5px #cadef4 edge (#6aabf1 in #2b4e76 in dark): the tags beside artifact types in the + menu."
+            },
+            "v-vw753q": {
+              "name": {
+                "value": "neutral",
+                "from": "ai"
+              },
+              "note": "#666 in a 1.5px #e0e0e0 edge: connector tags."
+            },
+            "v-y88vt3": {
+              "name": {
+                "value": "chip",
+                "from": "ai"
+              },
+              "note": "A 28px #f6f6f6 chip at 400 with a close button, in the composer."
+            }
+          },
+          "sizes": {
+            "xs": {
+              "note": "18px, 5px sides, 11px, 9px corners."
+            },
+            "s-a85437": {
+              "note": "16px, 3px sides, 10px."
+            },
+            "s-gbm9an": {
+              "note": "28px, 8px sides, 14px."
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "Tabs on the artifacts, recents and Customize pages: 28px, 12px sides, 14px at 435."
+    },
+    "segmented-control": {
+      "status": "reviewed",
+      "summary": "A #f6f6f6 track with 1px insets and a white sliding thumb in a 1px #e7e7e7 edge under a ring at 5%. Segments are 26px with 12px sides, 14px at 435; the theme picker's are icons.",
+      "groups": {
+        "segment": {
+          "sizes": {
+            "s-j0tfya": {
+              "note": "26px, 12px sides."
+            },
+            "s-yeeidx": {
+              "note": "26px icon segments: the theme picker."
+            },
+            "s-o06oao": {
+              "note": "38px, 16px sides, two lines: the upgrade page's plan picker."
+            }
+          }
+        },
+        "segmented": {
+          "variants": {
+            "v-20kj38": {
+              "name": {
+                "value": "thumb",
+                "from": "ai"
+              },
+              "note": "The white sliding thumb, 7px corners."
+            },
+            "v-751gbg": {
+              "name": {
+                "value": "track",
+                "from": "ai"
+              },
+              "note": "The #f6f6f6 track, 28px with 8px corners and 1px insets."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Inputs are white with 8px corners in a 1px inset ring at 8% (#ebebeb), 28px tall with 12px sides at 14px; 40px on the left when a search icon leads. Focus adds the blue ring and glow. The composer's text area has no frame of its own: the composer card draws it.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-k6jss7": {
+              "name": {
+                "value": "composer",
+                "from": "ai"
+              },
+              "note": "The composer's text area: 15px on 21px, no edge, no padding."
+            },
+            "v-laiqph": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "White in a 1px #ebebeb inset ring: names, URLs, project descriptions."
+            },
+            "v-km6nza": {
+              "name": {
+                "value": "focused",
+                "from": "ai"
+              },
+              "note": "An input that opens focused: the 1px #257de0 ring and its 6px glow."
+            },
+            "v-280won": {
+              "name": {
+                "value": "pill",
+                "from": "ai"
+              },
+              "note": "Memory's input: a 49px pill (24px corners) in a 0.5px edge with a soft drop and a send arrow."
+            }
+          },
+          "sizes": {
+            "s-s5o6t3": {
+              "note": "50px, 15px: the composer on a new chat."
+            },
+            "s-m4vylo": {
+              "note": "28px, 12px sides."
+            },
+            "s-ueie31": {
+              "note": "28px with 40px on the left for a search icon."
+            },
+            "s-sx3vba": {
+              "note": "An 80px text area."
+            },
+            "s-8bqy6n": {
+              "note": "One 21px line: the composer inside a chat."
+            },
+            "s-0v9vvi": {
+              "note": "An 88px text area."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "Settings' selects are 28px with 8px sides at 435: the value and a chevron.",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-vnthzb": {
+              "name": {
+                "value": "ghost",
+                "from": "ai"
+              },
+              "note": "No fill or edge: Account and General settings."
+            },
+            "v-xnzlax": {
+              "name": {
+                "value": "outline",
+                "from": "ai"
+              },
+              "note": "In the 1px #ebebeb inset ring of the inputs: Claude Code settings."
+            }
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "status": "reviewed",
+      "summary": "16px with 4px corners; checked fills #257de0. Recents' select mode."
+    },
+    "switch": {
+      "status": "reviewed",
+      "summary": "A 36 by 20px pill with 2px insets; off is #cecece."
+    },
+    "menu": {
+      "status": "reviewed",
+      "summary": "Menus are white (#1f1f1f to #303030 in dark) with 14px corners, a 1px ring at 8% and a two-layer drop. Rows are 28px with 10px sides and 8px corners, 14px at 435, an icon and the shortcut on the right in #666. Two-line rows with a description are 46px.",
+      "groups": {
+        "menuitem": {
+          "variants": {
+            "text": {
+              "name": {
+                "value": "danger",
+                "from": "ai"
+              },
+              "note": "Delete, in red #a42528."
+            },
+            "v-vnthzb": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              }
+            },
+            "v-7bz0df": {
+              "name": {
+                "value": "secondary",
+                "from": "ai"
+              },
+              "note": "#666 at 13px: a menu's footnote, its link underlined."
+            }
+          },
+          "sizes": {
+            "s-mzcdfm": {
+              "note": "28px, 10px sides."
+            },
+            "s-vyuj3e": {
+              "note": "46px, two lines: the model picker and connector rows."
+            },
+            "s-hhorkx": {
+              "note": "42px, 13px: a footnote."
+            }
+          }
+        },
+        "menuitemradio": {
+          "sizes": {
+            "s-mzcdfm": {
+              "note": "28px."
+            },
+            "s-vyuj3e": {
+              "note": "46px, two lines: the model picker."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "The search palette's list: muted group labels over 36px rows with 12px sides and 8px corners, the active row filled grey with its actions on the right."
+    },
+    "dialog": {
+      "status": "reviewed",
+      "groups": {
+        "dialog": {
+          "variants": {
+            "v-5f6x5g": {
+              "name": {
+                "value": "settings",
+                "from": "ai"
+              },
+              "note": "Settings and Customize: 1024 by 800px, 12px corners, a 1px ring at 8%."
+            },
+            "v-n694fd": {
+              "name": {
+                "value": "palette",
+                "from": "ai"
+              },
+              "note": "The search palette: 672px wide, 20px corners, a 0.5px #cecece edge on 0 25px 50px -12px at 25%."
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "status": "reviewed",
+      "summary": "Near-black #0b0b0b with white 13px text on an 18px line, 6px corners, 24px with 8px sides; a shortcut follows in #959595. In dark, #303030 in a 1px #383838 ring."
+    },
+    "card": {
+      "status": "reviewed",
+      "groups": {
+        "card": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "connector",
+                "from": "ai"
+              },
+              "note": "Connector and plugin tiles: a logo, a name and two lines of description beside a + button, 11px corners."
+            },
+            "v-0fsxf0": {
+              "name": {
+                "value": "composer",
+                "from": "ai"
+              },
+              "note": "The composer: 14px corners in a 1px #e0e0e0 ring, 0 4px 20px at 3.5%, with the + and the send button inside."
+            },
+            "v-cs0zxg": {
+              "name": {
+                "value": "notice",
+                "from": "ai"
+              },
+              "note": "A small card in a 1px #e6e6e6 edge with an image, a title, an action and a close: the Claude Code page."
+            },
+            "v-7abjgz": {
+              "hide": "settings rows: a row under a hairline"
+            },
+            "v-yvy62a": {
+              "hide": "a plan's feature list: part of the plan card"
+            },
+            "v-i06wkf": {
+              "hide": "an artifact type's tinted tile: an illustration"
+            },
+            "v-x0nogx": {
+              "hide": "an artifact type's tinted tile: an illustration"
+            },
+            "v-y7pl2y": {
+              "hide": "an artifact type's tinted tile: an illustration"
+            },
+            "v-c0w2c7": {
+              "name": {
+                "value": "banner",
+                "from": "ai"
+              },
+              "note": "A full-width tinted banner with a title, a line of text and a dark action: a plugin's header."
+            },
+            "v-dealks": {
+              "name": {
+                "value": "feature",
+                "from": "ai"
+              },
+              "note": "Claude Code's feature cards: 0.5px #ebebeb edge, a soft drop, an illustration on the right."
+            },
+            "v-gwo01o": {
+              "hide": "a code sample: an illustration inside a feature card"
+            },
+            "v-h1xvwz": {
+              "hide": "a search field: see search-field"
+            },
+            "v-rqpiun": {
+              "note": "A feature card without the drop."
+            },
+            "v-t9599c": {
+              "note": "The banner in green."
+            },
+            "v-xdlodi": {
+              "hide": "the connectors page's hero: a gradient band with logos"
+            }
+          },
+          "sizes": {
+            "sm": {
+              "note": "Cards at the default size."
+            },
+            "xs": {
+              "note": "The small notice card, a 28px icon."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-50w05q": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "1px #ebebeb (#383838 in dark): between menu groups and settings sections."
+            },
+            "v-nivcwl": {
+              "hide": "the sidebar's 12px resize rail"
+            },
+            "v-laxg3k": {
+              "name": {
+                "value": "row",
+                "from": "ai"
+              },
+              "note": "A 1px #e0e0e0 rule under a list row."
+            },
+            "v-jb18gj": {
+              "name": {
+                "value": "footer",
+                "from": "ai"
+              },
+              "note": "The rule over the search palette's footer."
+            }
+          }
+        }
+      }
+    },
+    "kbd": {
+      "status": "reviewed",
+      "summary": "Shortcuts are bare glyphs, no box: 13px at 435 in #666 in menus, 12px in #959595 in tooltips. Only the search palette's footer draws keys: 18px with 4px corners in a 1px #e4e4e4 edge.",
+      "groups": {
+        "kbd": {
+          "variants": {
+            "v-7bz0df": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "13px #666 glyphs at the end of a menu row."
+            },
+            "v-03gzx2": {
+              "name": {
+                "value": "tooltip",
+                "from": "ai"
+              },
+              "note": "12px #959595 glyphs inside a tooltip."
+            },
+            "v-e82p3p": {
+              "name": {
+                "value": "key",
+                "from": "ai"
+              },
+              "note": "The search palette's footer keys: 18px, 4px corners, a 1px #e4e4e4 edge."
+            },
+            "v-yz8ozu": {
+              "note": "Menu glyphs on a #e5e5e5 fill, in the account menu."
+            },
+            "v-pmnlo9": {
+              "note": "A footer key at 435."
+            }
+          }
+        }
+      }
+    },
+    "search-field": {
+      "status": "reviewed",
+      "groups": {
+        "searchbox": {
+          "variants": {
+            "v-laiqph": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "28px with 36px on the left for the icon, in the inputs' 1px ring: the Customize pages."
+            },
+            "v-k57c3y": {
+              "name": {
+                "value": "palette",
+                "from": "ai"
+              },
+              "note": "The search palette's field: no edge, no padding of its own."
+            }
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 32 signed-in pages of claude.ai in light and dark (chats, projects, artifacts, Customize, every Settings tab, the upgrade page), read in Mehdi's research Chrome on a new account, so lists are mostly empty states and only the first onboarding screen was seen. Signed-in text is redacted in the copies, so parts were named from their layout, icons and values. Names marked ai are ours; the size names without a from are CDS's data-size values."
+  }
+}
