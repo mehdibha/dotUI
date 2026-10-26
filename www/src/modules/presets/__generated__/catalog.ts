@@ -1790,6 +1790,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--color-sidebar": "var(--color-bg)",
 				"--studio-field-focus-width": "0px",
 				"--cursor-disabled": "default",
+				"--color-border-focus": "#1cb0f6",
+				"--color-border-focus-muted": "color-mix(in oklab, #1cb0f6 40%, transparent)",
 				"--color-text-selection": "Highlight",
 				"--color-fg-on-text-selection": "HighlightText",
 				"--switch-track": "var(--neutral-400)",

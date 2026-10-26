@@ -2,6 +2,8 @@
 
 Measured 2026-10-21 from the public web app, headless Chromium at 1440×900, and 2026-10-22 from the signed-in app in a local Chrome (1440×900, DPR 2), probe `8eb9b12`. Where the app and a public page show the same part, the pack measures the app.
 
+Re-measured 2026-10-26 on probe `ce94064`: every public reading came back the same (the dark `#check` walk stalled that day, so its `button.primary` is the 2026-10-21 reading). `probe.ts` and `compare.ts` are byte-identical between `8eb9b12` and `ce94064` (the squash that landed them gave them a new commit), so the signed-in readings stand as merged. `model.json` holds the 2026-10-26 signed-in census of 16 app pages.
+
 ## Pages
 
 - `/log-in`: buttons, the email field and its focus state. Follows `prefers-color-scheme`.
