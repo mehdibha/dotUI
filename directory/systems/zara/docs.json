@@ -4,7 +4,7 @@
   "sections": {
     "color": {
       "status": "reviewed",
-      "summary": "Black and white: #000000 ink on a #ffffff page, #757575 for secondary text, #cccccc for faint lines and #f7f7f7 (ZDS's background-low) behind product images. Primary buttons are black with white text, #363636 on hover. The one accent is pink #df1995, on the rows the menu drawer highlights. Focus is blue #0170e9: a 2px ring 2px off buttons and links, a 2px bottom line on fields. ZDS also ships danger #e90d01, success #0a882a and warning #b66009; the census saw the red and the orange only as text in the navigation.",
+      "summary": "Black and white: #000000 ink on a #ffffff page, #757575 for secondary text, #cccccc for faint lines and #f7f7f7 (ZDS's background-low) behind product images. Primary buttons are black with white text, #363636 on hover. The one accent is a pink, #d75d8e, on a discounted category in the menu drawer. Focus is blue #0170e9: a 2px ring 2px off buttons and links, a 2px bottom line on fields. ZDS also ships danger #e90d01, success #0a882a and warning #b66009; the census saw the red and the orange only as text in the navigation.",
       "missing": [
         "Light only: the web store has no dark theme. ZDS ships a .zds-theme--dark set that only the native apps' webviews use."
       ]
@@ -52,7 +52,7 @@
                 "value": "menu",
                 "from": "ai"
               },
-              "note": "The menu drawer's category rows, links with a button role: 14px at 300, pink #df1995 while open."
+              "note": "The menu drawer's category rows, links with a button role: 14px at 300."
             },
             "v-9monld": {
               "name": {
@@ -139,9 +139,6 @@
             },
             "s-yd5njg": {
               "hide": "the stores page's map, a third-party embed"
-            },
-            "s-5g1y59": {
-              "hide": "the home carousel's arrow, read while hovered"
             }
           }
         }
@@ -191,13 +188,6 @@
               },
               "note": "Product names on #f7f7f7, in a carousel of product cards."
             },
-            "v-g67hab": {
-              "name": {
-                "value": "menu, pink",
-                "from": "ai"
-              },
-              "note": "Pink #df1995: a row the menu drawer highlights."
-            },
             "v-rskcmo": {
               "name": {
                 "value": "nav, current",
@@ -211,6 +201,20 @@
                 "from": "ai"
               },
               "note": "The menu drawer's current row, at 500."
+            },
+            "v-eppbfy": {
+              "name": {
+                "value": "menu, pink",
+                "from": "ai"
+              },
+              "note": "Pink #d75d8e with a discount: a category the menu drawer highlights."
+            },
+            "v-95z8wm": {
+              "name": {
+                "value": "capitals, on image",
+                "from": "ai"
+              },
+              "note": "White capitals where the header sits on a photo: its links and Search."
             },
             "v-4dyfk3": {
               "hide": "product images on #f7f7f7"
@@ -437,9 +441,6 @@
             "v-nsumro": {
               "hide": "1px spans that draw glyphs: the menu button's lines, the bars around counts"
             },
-            "v-nzupz0": {
-              "hide": "the same glyph bars in pink, in the menu drawer"
-            },
             "v-l7d1ng": {
               "hide": "a full-width white rule, invisible on the white page"
             },
@@ -485,6 +486,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 17 pages of the US store in English, light only (home with the region dialog and the menu drawer, two listings, a product page, search, the bag, the login, the account pages, help center, stores, gift card, newsletter), read signed in in Mehdi's research Chrome. Signed-in text is redacted in the copies, so parts were named from their layout, icons and values; the pack's sources.md agrees. Names marked ai are ours; primary, secondary, tertiary-marginless, small, large, m and level-1 are ZDS's class names."
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 17 pages of the US store in English, light only (home with the region dialog and the menu drawer, two listings, a product page, search, the bag, the login, the account pages, help center, stores, gift card, newsletter), read signed in in Mehdi's research Chrome. Signed-in text was hidden as x in the copies these docs were written from, so parts were named from their layout, icons and values; the pack's sources.md agrees. Names marked ai are ours; primary, secondary, tertiary-marginless, small, large, m and level-1 are ZDS's class names."
   }
 }

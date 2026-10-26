@@ -690,6 +690,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 32 signed-in pages of claude.ai in light and dark (chats, projects, artifacts, Customize, every Settings tab, the upgrade page), read in Mehdi's research Chrome on a new account, so lists are mostly empty states and only the first onboarding screen was seen. Signed-in text is redacted in the copies, so parts were named from their layout, icons and values. Names marked ai are ours; the size names without a from are CDS's data-size values."
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 32 signed-in pages of claude.ai in light and dark (chats, projects, artifacts, Customize, every Settings tab, the upgrade page), read in Mehdi's research Chrome on a new account, so lists are mostly empty states and only the first onboarding screen was seen. Signed-in text was hidden as x in the copies these docs were written from, so parts were named from their layout, icons and values. Names marked ai are ours; the size names without a from are CDS's data-size values."
   }
 }

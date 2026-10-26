@@ -113,9 +113,6 @@
             "v-4md5dg": {
               "hide": "a secondary button while its menu is open"
             },
-            "v-5xh8go": {
-              "hide": "a sidebar button caught hovered"
-            },
             "v-7r1cat": {
               "hide": "a sidebar button caught hovered"
             },
@@ -483,13 +480,6 @@
               },
               "note": "#303032 at 400 (#e5e6e8 in dark)."
             },
-            "v-vsxkrs": {
-              "name": {
-                "value": "row, dark",
-                "from": "ai"
-              },
-              "note": "A row read in dark only: the team menu."
-            },
             "v-ag3lqr": {
               "name": {
                 "value": "row, full ink",
@@ -507,9 +497,6 @@
             },
             "s-iw80xt": {
               "note": "46px, 12px sides, 15px, a 16px icon: ⌘K."
-            },
-            "s-wdex5i": {
-              "note": "32px with a 16px icon."
             },
             "s-4eu7x1": {
               "note": "42px: ⌘K's highlight."
@@ -757,6 +744,6 @@
         "snapshot": null
       }
     ],
-    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 35 signed-in pages of the Linear app in light and dark (inbox, my issues, an issue, projects, initiatives, views, the agent, Settings), read in Mehdi's research Chrome on a near-empty workspace, with menus, ⌘K and Create issue opened. Signed-in text is redacted in the copies, so parts were named from their layout, icons and values; focus and sizes in the pack's sources.md agree. Names marked ai are ours; primary and default are Linear's data-variant values."
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 35 signed-in pages of the Linear app in light and dark (inbox, my issues, an issue, projects, initiatives, views, the agent, Settings), read in Mehdi's research Chrome on a near-empty workspace, with menus, ⌘K and Create issue opened. Signed-in text was hidden as x in the copies these docs were written from, so parts were named from their layout, icons and values; focus and sizes in the pack's sources.md agree. Names marked ai are ours; primary and default are Linear's data-variant values."
   }
 }
