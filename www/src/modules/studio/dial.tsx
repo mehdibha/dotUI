@@ -56,7 +56,7 @@ import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
 import type { Axis, AxisKey } from "./use-axis"
 
 export const DIAL_ROW =
-  "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
+  "dial-row flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"

@@ -68,7 +68,7 @@ import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
 import type { BoardId } from "@/modules/studio/preview/boards/titles"
 import { designSystemOf } from "@/modules/studio/resolve"
-import { useDocked } from "@/modules/studio/rows"
+import { useDocked, useDockStacked } from "@/modules/studio/rows"
 import { useCurrent } from "@/modules/studio/selection"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -303,6 +303,8 @@ export function PreviewPanel({ className }: { className?: string }) {
   // Docked, the tools sit in the site header: a pill would cover the small
   // preview, and stacked its bottom edge moves with every chapter.
   const docked = useDocked()
+  // A phone held upright has no preview tools: the preview follows the panel.
+  const stacked = useDockStacked()
   // Sized by a glide, not a `0fr` grid track: the shrink-to-fit pill gives
   // the grid no definite width, so the track resolves to content size.
   const toolsRef = useSizeGlide<HTMLDivElement>(toolbarHidden, "both")
@@ -310,7 +312,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // While following, the panel's focus takes the preview over with its board.
   const focus = usePreviewFocus()
-  const following = followStore.useValue() === "on"
+  const following = stacked || followStore.useValue() === "on"
   const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
@@ -738,7 +740,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
       {/* Over a page of any color: a solid surface, full border and deep
           shadow set it apart. Above the spinner, so it works while loading. */}
-      {docked ? (
+      {stacked ? null : docked ? (
         <HeaderActions>
           <div className="order-first mr-1 flex items-center gap-0.5">
             {previewPicker}

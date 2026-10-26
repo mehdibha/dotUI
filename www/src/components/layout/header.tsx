@@ -21,6 +21,9 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const { pathname } = useLocation()
+  // A phone held upright on /studio keeps only the studio's own actions: the
+  // design-system picker and Export.
+  const studio = pathname === "/studio"
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
   const activeMatch = [...navItems]
@@ -50,7 +53,12 @@ export function Header({ className, items = [] }: HeaderProps) {
       >
         <ProgressiveBlur />
       </div>
-      <div className="flex items-center gap-3 md:gap-6">
+      <div
+        className={cn(
+          "flex items-center gap-3 md:gap-6",
+          studio && "dock-stacked:hidden",
+        )}
+      >
         <Logo />
         {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
             here next to the logo instead. Renders null off docs pages. */}
@@ -83,7 +91,12 @@ export function Header({ className, items = [] }: HeaderProps) {
           })}
         </nav>
       </div>
-      <div className="flex items-center gap-0.5">
+      <div
+        className={cn(
+          "flex items-center gap-0.5",
+          studio && "dock-stacked:min-w-0 dock-stacked:flex-1",
+        )}
+      >
         {/* One dialog, two triggers: RAC's DialogTrigger reaches pressables via
             context, so the desktop search icon and the mobile menu button share
             the same search surface — its empty state already lists the full
@@ -106,7 +119,10 @@ export function Header({ className, items = [] }: HeaderProps) {
             variant="quiet"
             isIconOnly
             aria-label="Menu"
-            className="order-last hover:bg-transparent lg:hidden pressed:bg-transparent"
+            className={cn(
+              "order-last hover:bg-transparent lg:hidden pressed:bg-transparent",
+              studio && "dock-stacked:hidden",
+            )}
           >
             <svg
               width="16"
@@ -160,7 +176,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
             to logo + menu — Studio stays reachable from the menu sheet. */}
-        {pathname !== "/studio" && (
+        {!studio && (
           <LinkButton
             href="/studio"
             variant="primary"

@@ -3,9 +3,7 @@
 /* The panel chrome, after DialKit: one 14px-radius card, its header fixed
    over a hairline — the design-system picker's trigger on the left, Reset,
    Save and search on the right — and only the body below it scrolls, an open
-   page's Back and title pinned at its top over a progressive blur. Docked
-   under the preview, the header and strip sit at the bottom edge instead, so
-   they stay put as the dock hugs each chapter. */
+   page's Back and title pinned at its top over a progressive blur. */
 
 import type { ReactNode, Ref } from "react"
 import { ChevronsUpDownIcon } from "lucide-react"
@@ -55,7 +53,7 @@ export function PanelChrome({
         className,
       )}
     >
-      <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
+      <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5">
         <div className="flex items-center justify-between gap-1">
           {system.renderSwitcher(
             <Tooltip>

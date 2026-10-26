@@ -76,9 +76,17 @@ const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
    screens) and its popovers open over the dock, never the preview. */
 const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
-/** Docked beside the preview (a phone on its side): the `dock-side` variant. */
-export const useDockSide = () =>
-  useMedia("(max-width: 1023px) and (max-height: 500px)")
+/** Under the preview (a phone held upright): the `dock-stacked` variant. The
+ *  main page's rows are cards in one strip, and everything they open is an
+ *  inset sheet. */
+export const useDockStacked = () =>
+  useMedia("(max-width: 1023px) and (min-height: 501px)")
+
+/** The inset sheet a row or a page opens on phones, clear of the screen's
+ *  edges and its home indicator. Placed with `!`, over react-aria's inline
+ *  popover position. */
+export const INSET_SHEET =
+  "fixed! inset-x-2! top-auto! bottom-[max(--spacing(2),env(safe-area-inset-bottom))]! max-h-[62svh]! rounded-[20px] border border-fg/8 bg-card shadow-[0_-4px_32px_rgb(0_0_0/0.16)]"
 
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
@@ -96,7 +104,7 @@ export const PanelNav = createContext<(page: string) => void>(() => {})
 function DockedTitle({ title }: { title: string }) {
   const state = useContext(OverlayTriggerStateContext)
   return (
-    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3">
+    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3 dock-stacked:h-13 dock-stacked:pr-1.5 dock-stacked:pl-4">
       <span className="truncate text-sm font-medium text-fg">{title}</span>
       <Button
         size="sm"
@@ -104,7 +112,7 @@ function DockedTitle({ title }: { title: string }) {
         isIconOnly
         aria-label="Close"
         onPress={() => state?.close()}
-        className="pointer-coarse:data-icon-only:size-9"
+        className="pointer-coarse:data-icon-only:size-9 dock-stacked:data-icon-only:size-10"
       >
         <XIcon />
       </Button>
@@ -134,6 +142,7 @@ export function PanelPopover({
   const layer = useContext(DockLayer)
   const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
+  const stacked = useDockStacked()
   usePopoverFocus()
   return (
     <Popover
@@ -151,7 +160,8 @@ export function PanelPopover({
         "flex flex-col rounded-[14px] border-fg/6 bg-card shadow-lg [backdrop-filter:none] transition-none will-change-auto [--panel-surface:var(--color-card)]",
         className,
         docked &&
-          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
+          "w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-side:absolute! dock-side:inset-x-0! dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
+        docked && stacked && INSET_SHEET,
       )}
       {...props}
       {...popoverPreviewProps}

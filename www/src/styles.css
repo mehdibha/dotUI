@@ -95,6 +95,56 @@
   );
 }
 
+/* /studio on a phone held upright: the main page's rows as cards in one
+   strip, the label over the value. Unlayered, so it wins over the row's own
+   utilities; the strip's chapter wrappers step aside so every row is a card. */
+@media (width < 64rem) and (height > 500px) {
+  /* Touch-sized rows in the sheets the cards open. */
+  :is([data-page], [data-panel-popover]) .dial-row {
+    height: 2.75rem;
+
+    & > span:first-of-type,
+    & > :last-child {
+      font-size: 14px;
+    }
+  }
+}
+[data-cards] :is([data-chapter], [data-chapter] > div, [data-page]) {
+  display: contents;
+}
+[data-cards] .dial-row {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  width: 9.5rem;
+  height: 3.75rem;
+  padding-inline: 14px;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--color-fg) 6%, transparent);
+  scroll-snap-align: start;
+
+  & > span:first-of-type {
+    font-size: 12px;
+    line-height: 16px;
+    color: color-mix(in oklab, var(--color-fg) 55%, transparent);
+  }
+  & > :last-child {
+    max-width: 100%;
+    padding-right: 0;
+  }
+  & > :last-child,
+  & > :last-child * {
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--color-fg);
+  }
+  & :is(.lucide-chevron-right, .lucide-chevrons-up-down) {
+    display: none;
+  }
+}
+
 @utility step {
   counter-increment: step;
 
