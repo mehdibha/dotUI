@@ -203,11 +203,13 @@ describe("navigation recipes", () => {
       )
     for (const value of toggleButtonMeta.params.selected.values) {
       const pill = tabs.params.pill[value].variants.variant.pill
-      const ink = quiet(value).filter((c) => c.startsWith("selected:text-"))
+      const isInk = (c: string) => /^(disabled:)?selected:text-/.test(c)
+      const ink = quiet(value).filter(isInk)
       const fill = quiet(value)
-        .filter((c) => !c.startsWith("selected:text-"))
+        .filter((c) => !isInk(c))
         .map((c) =>
           c
+            .replace("disabled:selected:", "in-disabled:")
             .replace("selected:hover:", "group-hover/tab:")
             .replace("selected:pressed:", "group-pressed/tab:")
             .replace("selected:", ""),

@@ -11,7 +11,7 @@ const { useStyles } = createStyles(sliderMeta, {
         "relative flex grow cursor-drag touch-none items-center select-none disabled:cursor-disabled",
       track:
         "pointer-events-none relative grow overflow-hidden rounded-(--studio-slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) dark:not-disabled:bg-neutral-active",
-      fill: "pointer-events-none bg-selection disabled:bg-(--disabled-selected-bg,var(--color-selection))",
+      fill: "pointer-events-none bg-selection disabled:bg-(--disabled-selected-fg,var(--color-selection))",
       thumb:
         "top-1/2 left-1/2 grid cursor-drag place-items-center duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) outline-none disabled:cursor-disabled dragging:cursor-dragging",
       output:

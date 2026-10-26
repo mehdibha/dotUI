@@ -45,6 +45,13 @@ export const CURSOR_CONTROL_VALUES = ["pointer", "default"] as const
 
 export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
 
+/** Over a pending button. */
+export const CURSOR_BUSY_VALUES = ["default", "progress", "wait"] as const
+
+/** Over sliders, color areas and drag handles: the controls' cursor, or an
+ *  open hand that closes while dragging. */
+export const CURSOR_DRAG_VALUES = ["controls", "grab"] as const
+
 /** Whether text on controls and their labels selects. Content always does. */
 export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
 
@@ -93,6 +100,8 @@ export const chapter = defineChapter({
     disabledOpacity: 50,
     cursorControls: "pointer",
     cursorDisabled: "not-allowed",
+    cursorBusy: "default",
+    cursorDrag: "controls",
     selectionUiText: "none",
   },
   schema: {
@@ -108,6 +117,8 @@ export const chapter = defineChapter({
     disabledOpacity: range({ min: 30, max: 70, step: 5 }),
     cursorControls: oneOf(CURSOR_CONTROL_VALUES),
     cursorDisabled: oneOf(CURSOR_DISABLED_VALUES),
+    cursorBusy: oneOf(CURSOR_BUSY_VALUES),
+    cursorDrag: oneOf(CURSOR_DRAG_VALUES),
     selectionUiText: oneOf(CONTROL_TEXT_VALUES),
   },
   /** Every token, emitted only where it differs from base.css (Origin). */
@@ -173,6 +184,12 @@ export const chapter = defineChapter({
       tokens["--cursor-interactive"] = state.cursorControls
     if (state.cursorDisabled !== "not-allowed")
       tokens["--cursor-disabled"] = state.cursorDisabled
+    if (state.cursorBusy !== "default")
+      tokens["--cursor-pending"] = state.cursorBusy
+    if (state.cursorDrag === "grab") {
+      tokens["--cursor-drag"] = "grab"
+      tokens["--cursor-dragging"] = "grabbing"
+    }
     if (state.selectionUiText === "selectable")
       tokens["--user-select-ui"] = "auto"
 

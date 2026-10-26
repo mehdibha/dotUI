@@ -5,7 +5,7 @@ import * as LinkPrimitives from "react-aria-components/Link";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const linkVariants = tv({
-  base: "rounded-xs outline-none focus-visible:focus-ring inline-flex items-center gap-1 transition-colors",
+  base: "rounded-xs outline-none focus-visible:focus-ring inline-flex cursor-pointer items-center gap-1 transition-colors disabled:cursor-disabled",
   variants: {
     variant: {
       default:
