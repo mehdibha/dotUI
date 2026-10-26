@@ -400,6 +400,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { iconWeight: "bold" },
     { iconLibrary: "phosphor", iconWeight: "bold" },
   ],
+  "states/opacity-only-fade": [
+    { disabledOpacity: 40 },
+    { disabledTreatment: "fade", disabledOpacity: 40 },
+  ],
   "states/gap-only-ring": [
     { focusStyle: "halo", focusRingGap: 3 },
     { focusRingGap: 3 },

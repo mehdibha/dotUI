@@ -106,7 +106,12 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
       ],
     },
   ],
-  disabled: [[["disabledTreatment", "Style"]]],
+  disabled: [
+    [
+      ["disabledTreatment", "Style"],
+      ["disabledOpacity", "Opacity"],
+    ],
+  ],
   cursor: [
     [
       ["cursorControls", "Controls"],
@@ -230,7 +235,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "disabled",
     label: "Disabled",
-    owners: ["disabledTreatment"],
+    owners: ["disabledTreatment", "disabledOpacity"],
     Preview: DisabledPreview,
   }),
   page({
