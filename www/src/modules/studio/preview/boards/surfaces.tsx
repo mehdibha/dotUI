@@ -9,6 +9,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import {
   Card,
@@ -42,7 +43,7 @@ import {
 
 import { Board, InMode, useBoardFocus } from "./board"
 import { POINTED, ROW } from "./menus-parts"
-import { CANVAS, ComponentSet, SetGrid } from "./set-parts"
+import { CANVAS, ComponentSet } from "./set-parts"
 
 const CARD_KEYS = [
   "surfaceLayers",
@@ -59,9 +60,12 @@ const OVERLAY_KEYS = [
 ]
 const SHELL_KEYS = ["lightBg", "darkBg", "shellTone"]
 
-/* Each set in light above and dark below: surfaces part by small steps of
-   tone, edge and shadow, and dark is where those steps vanish. */
+/* The board split in half, light beside dark, each on its own page:
+   surfaces part by small steps of tone, edge and shadow, and dark is where
+   those steps vanish. */
 const MODES = ["light", "dark"] as const
+
+const HALVES = "grid max-w-none grid-cols-2 gap-0 p-0 max-md:grid-cols-1 sm:p-0"
 
 function Cards() {
   return (
@@ -199,38 +203,36 @@ function useEditing() {
 
 export default function SurfacesBoard() {
   const editing = useEditing()
-  const rows = (Set: React.ComponentType) =>
-    MODES.map((mode) => (
-      <InMode key={mode} mode={mode}>
-        <div className="flex w-full flex-wrap items-start gap-4 rounded-md border bg-bg p-5">
-          <Set />
-        </div>
-      </InMode>
-    ))
   return (
-    <Board id="surfaces" untitled className={CANVAS}>
-      <SetGrid>
-        <ComponentSet
-          name="Cards"
-          selected={editing.cards}
-          rows={rows(Cards)}
-        />
-        <ComponentSet
-          name="Menus"
-          selected={editing.overlays}
-          rows={rows(Menus)}
-        />
-        <ComponentSet
-          name="Dialogs"
-          selected={editing.overlays}
-          rows={rows(Dialogs)}
-        />
-        <ComponentSet
-          name="App shell"
-          selected={editing.shell}
-          rows={rows(Shell)}
-        />
-      </SetGrid>
+    <Board id="surfaces" untitled className={HALVES}>
+      {MODES.map((mode) => (
+        <InMode key={mode} mode={mode}>
+          <div className={cn(CANVAS, "flex flex-col bg-bg text-fg")}>
+            <div inert className="flex w-full max-w-md flex-col gap-8">
+              <ComponentSet
+                name="Cards"
+                selected={editing.cards}
+                rows={[<Cards key="cards" />]}
+              />
+              <ComponentSet
+                name="Menus"
+                selected={editing.overlays}
+                rows={[<Menus key="menus" />]}
+              />
+              <ComponentSet
+                name="Dialogs"
+                selected={editing.overlays}
+                rows={[<Dialogs key="dialogs" />]}
+              />
+              <ComponentSet
+                name="App shell"
+                selected={editing.shell}
+                rows={[<Shell key="shell" />]}
+              />
+            </div>
+          </div>
+        </InMode>
+      ))}
     </Board>
   )
 }
