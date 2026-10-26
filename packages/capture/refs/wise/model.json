@@ -272,7 +272,7 @@
       "lineHeight": "21.7px",
       "letterSpacing": "-0.084px",
       "fontFamily": "Inter",
-      "count": 286,
+      "count": 281,
       "groups": ["link","text@button","text@link","label","box","text@radio"]
     },
     {
@@ -329,21 +329,21 @@
     },
     {
       "fontSize": "14px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "-0.25px",
+      "fontFamily": "Inter",
+      "count": 33,
+      "groups": ["link","text@link"]
+    },
+    {
+      "fontSize": "14px",
       "fontWeight": "400",
       "lineHeight": "20px",
       "letterSpacing": "-0.084px",
       "fontFamily": "Inter",
       "count": 31,
       "groups": ["box","text","label","text@button"]
-    },
-    {
-      "fontSize": "14px",
-      "fontWeight": "600",
-      "lineHeight": "24px",
-      "letterSpacing": "-0.25px",
-      "fontFamily": "Inter",
-      "count": 28,
-      "groups": ["text@link","link"]
     },
     {
       "fontSize": "22px",
@@ -529,7 +529,7 @@
       {"px":6,"count":5},
       {"px":8,"count":232},
       {"px":11,"count":14},
-      {"px":12,"count":855},
+      {"px":12,"count":860},
       {"px":16,"count":1280},
       {"px":24,"count":157},
       {"px":32,"count":21},
@@ -554,13 +554,13 @@
   "tokens": [
     {
       "name": "--dropdown-link-padding",
-      "count": 1040,
+      "count": 1060,
       "feeds": ["link paddingInline","link paddingTop","link paddingBottom","link paddingRight"],
       "light": "12px 16px"
     },
     {
       "name": "--size-24",
-      "count": 675,
+      "count": 685,
       "feeds": ["link lineHeight","link borderRadius","menu paddingInline","menu paddingRight","heading.h5 gap","text paddingRight","listitem paddingTop","listitem paddingInline"],
       "light": "24px"
     },
@@ -572,27 +572,27 @@
     },
     {
       "name": "--font-size-14",
-      "count": 499,
-      "feeds": ["link fontSize","text@link fontSize","heading.h5 fontSize","paragraph@link fontSize","navigation fontSize","text@option fontSize","text fontSize","button fontSize"],
+      "count": 491,
+      "feeds": ["link fontSize","text@link fontSize","heading.h5 fontSize","paragraph@link fontSize","navigation fontSize","text@option fontSize","button fontSize","text fontSize"],
       "light": "0.875rem"
     },
     {
       "name": "--font-weight-regular",
-      "count": 455,
-      "feeds": ["link fontWeight","text@link fontWeight","option fontWeight","paragraph@link fontWeight","text fontWeight","text@option fontWeight","heading.h2 fontWeight","paragraph@button fontWeight"],
+      "count": 441,
+      "feeds": ["link fontWeight","text@link fontWeight","option fontWeight","paragraph@link fontWeight","text@option fontWeight","text fontWeight","paragraph@button fontWeight","textbox fontWeight"],
       "light": "400"
-    },
-    {
-      "name": "--font-weight-semi-bold",
-      "count": 428,
-      "feeds": ["link fontWeight","heading.h2@link fontWeight","heading.h6@link fontWeight","badge fontWeight","button fontWeight","text@link fontWeight","heading.h4@link fontWeight","heading.h6 fontWeight"],
-      "light": "600"
     },
     {
       "name": "--color-content-secondary",
       "count": 406,
       "feeds": ["link color","text@link color","heading.h5 color","paragraph@link color","text@option color","text color","paragraph@button color","text@button color"],
       "light": "#454745"
+    },
+    {
+      "name": "--font-weight-semi-bold",
+      "count": 396,
+      "feeds": ["link fontWeight","heading.h2@link fontWeight","heading.h6@link fontWeight","text@link fontWeight","button fontWeight","badge fontWeight","heading.h4@link fontWeight","heading.h4@button fontWeight"],
+      "light": "600"
     },
     {
       "name": "--color-content-primary",
@@ -602,19 +602,19 @@
     },
     {
       "name": "--font-size-16",
-      "count": 180,
-      "feeds": ["heading.h2@link fontSize","heading.h6@link fontSize","option fontSize","text fontSize","heading.h6 fontSize","link fontSize","heading.h4@button fontSize","button fontSize"],
+      "count": 169,
+      "feeds": ["heading.h2@link fontSize","heading.h6@link fontSize","option fontSize","text fontSize","heading.h4@button fontSize","link fontSize","button fontSize","combobox fontSize"],
       "light": "1rem"
     },
     {
       "name": "--color-sentiment-content-primary",
-      "count": 162,
+      "count": 157,
       "feeds": ["link color","badge color","avatar color","box color","button color"]
     },
     {
       "name": "--line-height-title",
-      "count": 116,
-      "feeds": ["heading.h6@link lineHeight","heading.h5 lineHeight","text@link lineHeight","heading.h4@link lineHeight","heading.h2 lineHeight","heading.h1 lineHeight","heading.h3@link lineHeight","heading.h2@button lineHeight"],
+      "count": 112,
+      "feeds": ["heading.h6@link lineHeight","heading.h5 lineHeight","text@link lineHeight","heading.h4@link lineHeight","heading.h1 lineHeight","heading.h3@link lineHeight","heading.h2@button lineHeight"],
       "light": "1.2"
     },
     {
@@ -630,16 +630,16 @@
       "light": "#ffffff"
     },
     {
+      "name": "--color-interactive-primary",
+      "count": 98,
+      "feeds": ["option color","img color","link color","button color","button edge","segment color","text@segment color","badge backgroundColor"],
+      "light": "#163300"
+    },
+    {
       "name": "--radius-small",
       "count": 95,
       "feeds": ["link borderRadius","option borderRadius","button borderRadius","box borderRadius","toggle borderRadius"],
       "light": "10px"
-    },
-    {
-      "name": "--color-interactive-primary",
-      "count": 93,
-      "feeds": ["option color","img color","button color","link color","button edge","segment color","text@segment color","badge backgroundColor"],
-      "light": "#163300"
     },
     {
       "name": "--size-8",
@@ -649,7 +649,7 @@
     },
     {
       "name": "--size-12",
-      "count": 67,
+      "count": 72,
       "feeds": ["option paddingTop","link gap","textbox paddingTop","textbox paddingBottom","button paddingInline","card borderRadius"],
       "light": "12px"
     },
@@ -717,25 +717,16 @@
       "light": "#cb272f"
     },
     {
-      "name": "--Button-large-padding",
-      "count": 24,
-      "feeds": ["link paddingInline","link paddingTop","link paddingBottom","link paddingRight"]
-    },
-    {
       "name": "--ring-outline-color",
       "count": 24,
       "feeds": ["text@link edge"],
       "light": "#163300"
     },
     {
-      "name": "--Button-background",
+      "name": "--wds-font-family-regular",
       "count": 23,
-      "feeds": ["link backgroundColor","button backgroundColor"]
-    },
-    {
-      "name": "--Button-border-radius",
-      "count": 23,
-      "feeds": ["link borderRadius","button borderRadius"]
+      "feeds": ["heading.h6 fontFamily","text fontFamily","button fontFamily","text@segment fontFamily","box fontFamily"],
+      "light": "Inter,Vazirmatn,\"Noto Sans SC\",\"Zen Kaku Gothic Antique\",\"Noto Sans KR\",\"Noto Sans Thai\",\"Noto Sans Hebrew\",Helvetica,Arial,sans-serif"
     },
     {
       "name": "--color-sentiment-positive",
@@ -744,15 +735,37 @@
       "light": "#054d28"
     },
     {
+      "name": "--Button-background",
+      "count": 18,
+      "feeds": ["link backgroundColor","button backgroundColor"]
+    },
+    {
+      "name": "--Button-border-radius",
+      "count": 18,
+      "feeds": ["link borderRadius","button borderRadius"]
+    },
+    {
       "name": "--size-32",
       "count": 15,
       "feeds": ["card paddingInline","card paddingTop","card paddingBottom","card paddingRight","button borderRadius","button width","button height"],
       "light": "32px"
     },
     {
+      "name": "--wds-font-weight-body-bold",
+      "count": 14,
+      "feeds": ["badge fontWeight","avatar fontWeight","text@segment fontWeight"],
+      "light": "600"
+    },
+    {
       "name": "--ring-width",
       "count": 14,
       "feeds": ["textbox edge","textbox boxShadow","combobox boxShadow","combobox edge"]
+    },
+    {
+      "name": "--wds-font-size-body",
+      "count": 13,
+      "feeds": ["text fontSize","button fontSize","text@segment fontSize"],
+      "light": "0.875rem"
     },
     {
       "name": "--radius-medium",
@@ -773,10 +786,58 @@
       "light": "#121511"
     },
     {
+      "name": "--wds-letter-spacing-body-large",
+      "count": 11,
+      "feeds": ["heading.h6 letterSpacing","button letterSpacing"],
+      "light": "-0.011em"
+    },
+    {
+      "name": "--wds-font-size-body-large",
+      "count": 11,
+      "feeds": ["heading.h6 fontSize","link fontSize"],
+      "light": "1rem"
+    },
+    {
       "name": "--color-background-screen-hover",
       "count": 11,
       "feeds": ["link backgroundColor"],
       "light": "rgba(22,51,0,0.07843)"
+    },
+    {
+      "name": "--wds-line-height-body",
+      "count": 11,
+      "feeds": ["text lineHeight","text@segment lineHeight"],
+      "light": "1.55"
+    },
+    {
+      "name": "--wds-letter-spacing-body",
+      "count": 11,
+      "feeds": ["text letterSpacing","text@segment letterSpacing"],
+      "light": "-0.006em"
+    },
+    {
+      "name": "--wds-font-weight-title-body",
+      "count": 10,
+      "feeds": ["link fontWeight","button fontWeight"],
+      "light": "600"
+    },
+    {
+      "name": "--wds-font-weight-body-regular",
+      "count": 10,
+      "feeds": ["text fontWeight","text@segment fontWeight"],
+      "light": "400"
+    },
+    {
+      "name": "--wds-font-weight-body-large-bold",
+      "count": 9,
+      "feeds": ["heading.h6 fontWeight"],
+      "light": "600"
+    },
+    {
+      "name": "--wds-line-height-body-large",
+      "count": 9,
+      "feeds": ["heading.h6 lineHeight"],
+      "light": "1.5"
     },
     {
       "name": "--size-56",
@@ -808,12 +869,6 @@
       "light": "1.375rem"
     },
     {
-      "name": "--size-40",
-      "count": 7,
-      "feeds": ["combobox paddingRight","button width","heading.h2 fontSize","heading.h2@button fontSize"],
-      "light": "40px"
-    },
-    {
       "name": "--btn-radius-base",
       "count": 7,
       "feeds": ["link borderRadius","button borderRadius"],
@@ -832,74 +887,21 @@
       "light": "4px"
     },
     {
+      "name": "--size-40",
+      "count": 6,
+      "feeds": ["combobox paddingRight","button width","heading.h2@button fontSize"],
+      "light": "40px"
+    },
+    {
       "name": "--color-background-elevated",
       "count": 5,
       "feeds": ["banner backgroundColor"],
       "light": "#ffffff"
     },
     {
-      "name": "--font-family-display",
-      "count": 5,
-      "feeds": ["heading.h2 fontFamily","heading.h2@button fontFamily"],
-      "light": "\"Wise Sans\",\"Inter\",sans-serif"
-    },
-    {
       "name": "--color-sentiment-interactive-primary",
       "count": 4,
       "feeds": ["badge backgroundColor"]
-    },
-    {
-      "name": "--btn-xs-padding",
-      "count": 4,
-      "feeds": ["button paddingInline","button paddingTop","button paddingBottom","button paddingRight"],
-      "light": "calc(2px - 1px) 8px"
-    },
-    {
-      "name": "--input-padding-small",
-      "count": 4,
-      "feeds": ["textbox paddingInline","textbox paddingTop","textbox paddingBottom","textbox paddingRight"],
-      "light": "4px 12px"
-    },
-    {
-      "name": "--color-interactive-secondary",
-      "count": 3,
-      "feeds": ["box backgroundColor","textbox edge","textbox boxShadow"],
-      "light": "#868685"
-    },
-    {
-      "name": "--line-height-control",
-      "count": 3,
-      "feeds": ["button lineHeight"],
-      "light": "1.2"
-    },
-    {
-      "name": "--radius-large",
-      "count": 3,
-      "feeds": ["button borderRadius"],
-      "light": "24px"
-    },
-    {
-      "name": "--size-120",
-      "count": 3,
-      "feeds": ["combobox width"],
-      "light": "120px"
-    },
-    {
-      "name": "--size-52",
-      "count": 3,
-      "feeds": ["heading.h2 fontSize"],
-      "light": "52px"
-    },
-    {
-      "name": "--color-text-link",
-      "count": 3,
-      "feeds": ["link color"]
-    },
-    {
-      "name": "--color-contrast-overlay",
-      "count": 2,
-      "feeds": ["badge backgroundColor"],
-      "light": "#ffffff"
     }
   ],
   "inventory": {
@@ -962,7 +964,7 @@
       {"id":"heading.h1.2","count":3,"pages":[10,27,28],"light":{"color":"rgb(14, 15, 12)","fontFamily":"\"Wise Sans\"","fontSize":"40px","fontWeight":"400","letterSpacing":"normal","lineHeight":"34px","paddingInline":"0px"}}
     ],
     "heading.h2": [
-      {"id":"heading.h2.1","count":3,"pages":[20,23,24],"light":{"color":"rgb(14, 15, 12)","fontFamily":"\"Wise Sans\"","fontSize":"52px","fontWeight":"400","letterSpacing":"normal","lineHeight":"44.2px","paddingInline":"16px","paddingRight":"16px"}},
+      {"id":"heading.h2.1","count":3,"pages":[20,23,24],"light":{"color":"rgb(14, 15, 12)","fontFamily":"\"Wise Sans\"","fontSize":"52px","fontWeight":"800","letterSpacing":"normal","lineHeight":"42.198px","paddingInline":"16px","paddingRight":"16px"}},
       {"id":"heading.h2.2","count":2,"pages":[10,26],"light":{"color":"rgb(14, 15, 12)","fontFamily":"Inter","fontSize":"26px","fontWeight":"600","letterSpacing":"-0.52px","lineHeight":"31.72px","paddingInline":"0px"}}
     ],
     "heading.h2@link": [
@@ -990,7 +992,7 @@
       {"id":"heading.h4@link.1","count":10,"pages":[29],"light":{"color":"rgb(14, 15, 12)","fontFamily":"Inter","fontSize":"18px","fontWeight":"600","letterSpacing":"-0.252px","lineHeight":"24.3px","paddingInline":"0px"}}
     ],
     "heading.h5": [
-      {"id":"heading.h5.1","count":32,"pages":[13,21,29,14],"light":{"color":"rgb(69, 71, 69)","fontFamily":"Inter","fontSize":"14px","fontWeight":"500","letterSpacing":"-0.084px","lineHeight":"19.6px","paddingInline":"0px","paddingTop":"8px","paddingBottom":"8px","gap":"normal 24px"}},
+      {"id":"heading.h5.1","count":32,"pages":[13,29,14,21],"light":{"color":"rgb(69, 71, 69)","fontFamily":"Inter","fontSize":"14px","fontWeight":"500","letterSpacing":"-0.084px","lineHeight":"19.6px","paddingInline":"0px","paddingTop":"8px","paddingBottom":"8px","gap":"normal 24px"}},
       {"id":"heading.h5.2","count":7,"pages":[10,18,25,27,28],"light":{"color":"rgb(14, 15, 12)","fontFamily":"Inter","fontSize":"14px","fontWeight":"500","letterSpacing":"-0.084px","lineHeight":"19.6px","paddingInline":"0px"}}
     ],
     "heading.h6": [
