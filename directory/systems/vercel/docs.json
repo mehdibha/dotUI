@@ -46,12 +46,12 @@
               },
               "note": "#fff inside a 1px #ebebeb ring, #171717 text; #f2f2f2 on hover."
             },
-            "v-vhauv2": {
+            "v-4trcp1": {
               "name": {
                 "value": "tertiary",
                 "from": "docs"
               },
-              "note": "No fill and no ring; #ebebeb on hover."
+              "note": "No fill and no ring, so it shows the page's color (#fafafa in the dashboard); #ebebeb on hover."
             },
             "v-3popcy": {
               "name": {
@@ -88,17 +88,11 @@
               },
               "note": "Upgrade in a disabled Note: #f2f2f2 under #8f8f8f with a 1px #dfdfdf edge."
             },
-            "v-9ogkxj": {
-              "note": "Esc in the command menu's field: a 20px key-like button."
-            },
             "v-tkxhqj": {
               "hide": "the docs' Show code toggle under each example"
             },
             "v-en6i74": {
               "hide": "the docs' Search Geist button in the header"
-            },
-            "v-h3f0t9": {
-              "hide": "an avatar used as the menu demo's trigger, no button look of its own"
             }
           },
           "sizes": {
@@ -109,7 +103,7 @@
               },
               "note": "32px, 6px sides."
             },
-            "s-oft7vp": {
+            "s-o9b9sd": {
               "name": {
                 "value": "medium",
                 "from": "docs"
@@ -126,7 +120,7 @@
             "s-mupp0d": {
               "note": "Icon only, 24px, 4px corners."
             },
-            "s-0j17g4": {
+            "s-jh2ofz": {
               "note": "Icon only, 32px."
             },
             "s-wg5bfk": {
@@ -135,7 +129,7 @@
             "s-fn0ocv": {
               "note": "Icon only, 40px, 8px corners."
             },
-            "s-7ilnvj": {
+            "s-a48inn": {
               "note": "The small rounded button: 32px with 12px sides."
             }
           }
@@ -164,13 +158,6 @@
                 "from": "ai"
               },
               "note": "The Button component link in the Menu page's prose: #4d4d4d at 400."
-            },
-            "v-vhauv2": {
-              "name": {
-                "value": "note",
-                "from": "ai"
-              },
-              "note": "the documentation inside a default Note: the Note's ink at 500."
             },
             "v-rdzx1g": {
               "note": "A badge used as a link: a white pill in the hairline ring, 500."
@@ -288,7 +275,7 @@
               },
               "note": "#ffb224 under black."
             },
-            "v-ab4zj3": {
+            "v-gk62i4": {
               "name": {
                 "value": "amber-subtle",
                 "from": "docs"
@@ -426,9 +413,6 @@
           "variants": {
             "primary": {
               "note": "Underlined tabs."
-            },
-            "secondary": {
-              "note": "Pill tabs."
             }
           }
         }
@@ -596,7 +580,7 @@
             }
           },
           "sizes": {
-            "s-1nbl9y": {
+            "s-wkfkbc": {
               "note": "36px with 8px sides and 6px corners."
             }
           }
@@ -696,9 +680,6 @@
               },
               "note": "The docs' example frame: #fff in a 1px #ebebeb edge, 8px corners."
             },
-            "v-51jsxn": {
-              "hide": "the docs' Give feedback widget"
-            },
             "v-ja4dc7": {
               "hide": "an input's wrapper in its error state"
             },
@@ -762,7 +743,7 @@
       "groups": {
         "kbd": {
           "variants": {
-            "v-atrcko": {
+            "v-0iy9o1": {
               "name": {
                 "value": "default",
                 "from": "ai"

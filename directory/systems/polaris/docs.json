@@ -46,7 +46,7 @@
             "medium": {
               "note": "28px, 12px padding: Polaris's default size."
             },
-            "s-wy2e1w": {
+            "s-wuch5z": {
               "name": {
                 "value": "icon",
                 "from": "ai"
@@ -143,20 +143,13 @@
             }
           },
           "sizes": {
-            "s-sh61l0": {
-              "name": {
-                "value": "nav row",
-                "from": "ai"
-              },
-              "note": "28px, 8px padding, a 20px icon."
-            },
             "s-iupmza": {
               "name": {
                 "value": "nav row, dark",
                 "from": "ai"
               }
             },
-            "s-3r5y3f": {
+            "s-wgcmy7": {
               "name": {
                 "value": "inline",
                 "from": "ai"

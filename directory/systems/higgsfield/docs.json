@@ -68,17 +68,9 @@
               "name": { "value": "outline", "from": "docs" },
               "note": "#0f1113 with a 1px #27292b edge: Outline, View."
             },
-            "v-np6y0l": {
-              "name": { "value": "outline, hover", "from": "ai" },
-              "note": "View under the pointer: #3f4042 with a #525355 edge."
-            },
-            "v-dtvjc9": {
+            "v-046zen": {
               "name": { "value": "brand-soft", "from": "docs" },
-              "note": "Olive #262b15 with lime text: Brand soft."
-            },
-            "v-oz7oi5": {
-              "name": { "value": "brand-soft", "from": "docs" },
-              "note": "The header's Login, a darker olive (#1d2313) with a faint inner highlight."
+              "note": "Olive #2a301b with lime text: Brand soft."
             },
             "v-7124ta": {
               "name": { "value": "chip", "from": "ai" },
@@ -92,26 +84,14 @@
               "name": { "value": "select trigger", "from": "ai" },
               "note": "The image studio's Auto aspect picker: a #3d3e41 pill."
             },
-            "v-5l5j8s": {
-              "name": { "value": "select trigger", "from": "ai" },
-              "note": "16:9 in the harness: a #1f1f21 field-like trigger."
-            },
-            "v-vwjnfc": {
+            "v-di1ef3": {
               "name": { "value": "icon", "from": "ai" },
               "note": "A #1b1d1f square with a faint inner highlight."
-            },
-            "v-nr7nu4": {
-              "name": { "value": "icon, filled", "from": "ai" },
-              "note": "A 38px #2e3134 icon button in the image studio."
             },
             "top-50": { "hide": "the home page's app shortcut tiles" },
             "v-8wzfzl": {
               "hide": "model and preset tiles, and the model picker's rows"
-            },
-            "v-3192z1": { "hide": "the cookie consent panel's buttons" },
-            "v-c3xxij": { "hide": "the cookie consent panel's Select All" },
-            "v-ozjjfe": { "hide": "the cookie consent panel's close" },
-            "v-21fovw": { "hide": "the sign-up promo card" }
+            }
           },
           "sizes": {
             "s-2i554k": {
@@ -125,25 +105,11 @@
             "md": {
               "note": "40px with a 36px icon: a home page hover button."
             },
-            "s-5dcc09": {
-              "name": { "value": "header", "from": "ai" },
-              "note": "36px, 12px padding: Sign up and Login."
-            },
-            "s-8etfv0": {
-              "name": { "value": "xs", "from": "ai" },
-              "note": "24px, 10px padding: the studio header's Login."
-            },
-            "s-avbtr2": {
-              "name": { "value": "compact", "from": "ai" },
-              "note": "32px, 8px padding, a 16px icon."
-            },
             "s-3k88xb": { "note": "32px, 12px padding." },
-            "s-eun14g": { "note": "40px, 12px padding." },
             "s-y7nueg": { "note": "28px, 12px padding." },
-            "s-vp01q1": { "note": "40px square, a 20px icon." },
-            "s-uhfm0k": { "note": "38px, a 24px icon." },
+            "l": { "note": "40px square, a 20px icon." },
             "s-ywu7zw": { "note": "36px square, a 16px icon." },
-            "s-nkoibz": { "note": "24px square, a 16px icon." }
+            "s-xc4dsh": { "note": "24px square, a 24px icon." }
           }
         }
       },
@@ -157,15 +123,10 @@
             "v-o4fkty": {
               "name": { "value": "like", "from": "ai" },
               "note": "A blurred 28px chip with a heart and a count (983) over a media tile."
-            },
-            "v-s41lcl": {
-              "name": { "value": "option", "from": "ai" },
-              "note": "Square in the layout menu: a row that toggles."
             }
           },
           "sizes": {
-            "s-ukk61j": { "note": "28px, 8px padding, 12px." },
-            "s-4ll9w2": { "note": "36px, 8px padding." }
+            "s-ukk61j": { "note": "28px, 8px padding, 12px." }
           }
         }
       }
@@ -203,13 +164,9 @@
               "name": { "value": "cta, lime", "from": "ai" },
               "note": "Start generating: lime, a 3px #829b19 inset at the bottom, a soft drop."
             },
-            "v-umymaw": {
-              "name": { "value": "cta, lime", "from": "ai" },
-              "note": "Recreate for Free: the same at 40px, text at 500."
-            },
-            "v-euenyh": {
+            "v-dadu9o": {
               "name": { "value": "cta, white", "from": "ai" },
-              "note": "Learn more: white, a darker inset at the bottom."
+              "note": "White with #1a1a1a text and a soft shadow, an arrow after the label."
             },
             "v-nvu6s7": {
               "name": { "value": "cta, soft", "from": "ai" },
@@ -228,10 +185,9 @@
               "note": "credit policy: lime in running text."
             },
             "v-3bw39e": { "hide": "the lime marquee strip's links" },
-            "v-8wzfzl": { "hide": "model and preset tiles" },
+            "v-2sjc56": { "hide": "model and preset tiles" },
             "v-5vlkbi": { "hide": "feature tiles on the home page" },
             "v-3h3jh7": { "hide": "feature cards on the home page" },
-            "v-l4ehs8": { "hide": "the cookie panel's Cookie Notice" },
             "v-tc9pvu": { "hide": "an icon link in the image studio" },
             "v-grxlpn": { "hide": "a home page banner image" },
             "v-pv58md": { "hide": "a home page video tile" }
@@ -247,7 +203,6 @@
             "s-2i554k": { "note": "40px, 16px padding, 14px." },
             "s-aqvu0p": { "note": "38px, 12px padding, 12px." },
             "s-4peaea": { "note": "28px uppercase." },
-            "s-e3i944": { "note": "28px uppercase." },
             "s-e7ts0x": { "note": "14px." },
             "s-hs9bnx": { "note": "16px." }
           }
@@ -288,12 +243,15 @@
             "v-f7llxh": {
               "hide": "the header's Contests label in a gold gradient"
             },
-            "v-v3bx06": { "hide": "an icon button in the image studio" }
+            "v-v3bx06": { "hide": "an icon button in the image studio" },
+            "v-52nii7": { "hide": "keyboard shortcuts (⌘ X): see kbd" },
+            "v-jch11x": {
+              "hide": "a keyboard shortcut highlighted in yellow: see kbd"
+            }
           },
           "sizes": {
-            "s-d3bpd2": { "note": "16px, 4px padding, 10px." },
             "s-bxsh22": { "note": "28px, 12px padding, 14px." },
-            "s-yqvkgh": { "note": "26px, 8px padding, 12px." },
+            "s-3upxa3": { "note": "26px, 8px padding, 12px." },
             "s-uwsug6": { "note": "About 24px, 8px padding, 13px." }
           }
         }
@@ -332,14 +290,8 @@
       "status": "reviewed",
       "groups": {
         "segment": {
-          "variants": {
-            "v-2lytj4": {
-              "name": { "value": "default", "from": "ai" },
-              "note": "Video: #8f8f90 at 500."
-            }
-          },
           "sizes": {
-            "s-2d54cy": { "note": "32px, 8px padding, 12px." }
+            "s-fzwdl8": { "note": "32px, 8px padding, 12px." }
           }
         },
         "segmented": {
@@ -416,15 +368,10 @@
             "v-x5560l": {
               "name": { "value": "default", "from": "ai" },
               "note": "Off: a #5c626a track with a white thumb, 16px tall."
-            },
-            "v-s41lcl": {
-              "name": { "value": "menu row", "from": "ai" },
-              "note": "Split by date in the layout menu: a 36px row with a switch at its end."
             }
           },
           "sizes": {
-            "s-tfv5og": { "note": "16px tall." },
-            "s-ax5p1m": { "note": "36px row, 8px padding." }
+            "s-tfv5og": { "note": "16px tall." }
           }
         }
       }
@@ -439,9 +386,9 @@
               "name": { "value": "glass", "from": "ai" },
               "note": "The header's language menu: English, Español, 日本語…"
             },
-            "v-olqws7": {
+            "v-tl4glf": {
               "name": { "value": "default", "from": "ai" },
-              "note": "The image studio's layout menu: #1c1e21, no blur."
+              "note": "The image studio's layout menu: #1c1e21 with a 1px #1f1f21 edge, no blur."
             }
           }
         },
@@ -450,10 +397,6 @@
             "v-iuq9fd": {
               "name": { "value": "default", "from": "ai" },
               "note": "Español: white at 500 on the menu."
-            },
-            "v-tsds1m": {
-              "name": { "value": "current", "from": "ai" },
-              "note": "English: a #282b2e fill."
             }
           },
           "sizes": {
@@ -475,13 +418,6 @@
     },
     "dialog": {
       "status": "reviewed",
-      "groups": {
-        "dialog": {
-          "variants": {
-            "v-6xk655": { "hide": "the cookie consent panel" }
-          }
-        }
-      },
       "missing": ["The harness dialog (Delete generation?) landed in card."]
     },
     "popover": {
@@ -517,18 +453,19 @@
               "name": { "value": "primary-reverted", "from": "ai" },
               "note": "Try Supercomputer: the same white pill."
             },
-            "v-6xk655": { "hide": "generated media tiles" },
+            "v-by9qy6": {
+              "hide": "generated media tiles and their empty placeholders"
+            },
             "v-ptvy4n": { "hide": "empty media placeholders" },
-            "v-x8qp2n": { "hide": "home page section frames" },
+            "v-ahb7bq": { "hide": "home page section frames" },
             "v-af8l7t": { "hide": "images in the studio feed" },
-            "v-3td1ti": { "hide": "a home page section background" },
             "v-6gdxde": { "hide": "a home page section background" },
             "v-hd35ss": { "hide": "a home page section background" },
-            "v-8n3oha": { "hide": "a feature card's image grid" },
-            "v-acxvsg": { "hide": "the FREE GENS promo" },
             "v-b2qa1y": { "hide": "a dashed lime outline around a home tile" },
             "v-bnfn3d": { "hide": "a media tile's hover shade" },
-            "v-rnqlp0": { "hide": "a lime call to action, see link" }
+            "v-rnqlp0": { "hide": "a lime call to action, see link" },
+            "v-eora8w": { "hide": "the account menu: see menu" },
+            "v-bu52u3": { "hide": "FAQ rows: see disclosure" }
           }
         }
       }
@@ -580,10 +517,6 @@
             "v-2xg4cx": {
               "name": { "value": "strong", "from": "ai" },
               "note": "A lighter #323436 rule on the home page."
-            },
-            "v-hwfi7z": {
-              "name": { "value": "menu", "from": "ai" },
-              "note": "A #4e4f52 rule inside the layout menu."
             },
             "v-62rvj2": { "hide": "the underline tab's white selection bar" }
           }
