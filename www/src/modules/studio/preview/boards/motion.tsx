@@ -411,6 +411,8 @@ const SETS: {
   name: string
   Stage: (props: { replay: number }) => React.ReactNode
   timings: [name: string, member: string][]
+  /** Component keys that time it. */
+  keys: string[]
 }[] = [
   {
     name: "Controls",
@@ -419,6 +421,7 @@ const SETS: {
       ["Button", "button-state"],
       ["Switch", "switch-state"],
     ],
+    keys: ["buttonMotion", "switchMotion", "segmentedMotion", "progressMotion"],
   },
   {
     name: "Overlays",
@@ -427,26 +430,41 @@ const SETS: {
       ["Menu", "popover-enter"],
       ["Tooltip", "tooltip-enter"],
     ],
+    keys: [
+      "popoverMotion",
+      "popoverEntrance",
+      "tooltipMotion",
+      "tooltipEntrance",
+    ],
   },
-  { name: "Dialog", Stage: Modal, timings: [["Dialog", "modal-enter"]] },
-  { name: "Toast", Stage: Toasts, timings: [["Toast", "toast-enter"]] },
+  {
+    name: "Dialog",
+    Stage: Modal,
+    timings: [["Dialog", "modal-enter"]],
+    keys: ["dialogMotion", "dialogEntrance"],
+  },
+  {
+    name: "Toast",
+    Stage: Toasts,
+    timings: [["Toast", "toast-enter"]],
+    keys: ["toastMotion"],
+  },
 ]
 
 export default function MotionBoard() {
   const { axis, holds } = useBoardFocus()
   const { replay } = useReplay()
-  // The tempo and Speed time every set.
-  const selected = [axis, ...(holds ?? [])].some(
-    (key) => key === "motion" || key === "motionSpeed",
-  )
+  const edited = [axis, ...(holds ?? [])]
+  // The tempo and Duration time every set; a component's own, its set.
+  const all = edited.some((key) => key === "motion" || key === "motionDuration")
   return (
     <Board id="motion" untitled className={CANVAS}>
       <SetGrid>
-        {SETS.map(({ name, Stage, timings }) => (
+        {SETS.map(({ name, Stage, timings, keys }) => (
           <ComponentSet
             key={name}
             name={name}
-            selected={selected}
+            selected={all || edited.some((key) => !!key && keys.includes(key))}
             rows={[
               <div key="stage" className="relative h-52 w-full">
                 <Stage replay={replay} />

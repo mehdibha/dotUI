@@ -3,7 +3,7 @@
 import { defineChapter } from "./core/types"
 import type { Follow } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { oneOf } from "./schema"
+import { oneOf, range } from "./schema"
 import type { AxisSchema } from "./schema"
 
 type Bezier = [number, number, number, number]
@@ -315,14 +315,8 @@ export const MOTION_VALUES = [
   "expressive",
 ] as const
 
-export const SPEED_VALUES = ["faster", "default", "slower"] as const
-
-/** What Speed multiplies every duration by. */
-export const SPEED: Record<string, number> = {
-  faster: 0.75,
-  default: 1,
-  slower: 1.5,
-}
+/** What Duration multiplies every duration by. */
+export const DURATION_RANGE = { min: 0.5, max: 2, step: 0.05 }
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
@@ -378,7 +372,7 @@ export const chapter = defineChapter({
   id: "motion",
   defaults: {
     motion: "standard",
-    motionSpeed: "default",
+    motionDuration: 1,
     popoverEntrance: "zoom",
     tooltipEntrance: "zoom",
     ...(Object.fromEntries(
@@ -387,7 +381,7 @@ export const chapter = defineChapter({
   },
   schema: {
     motion: oneOf(MOTION_VALUES),
-    motionSpeed: oneOf(SPEED_VALUES),
+    motionDuration: range(DURATION_RANGE),
     popoverEntrance: oneOf(ENTRANCE_VALUES),
     tooltipEntrance: oneOf(ENTRANCE_VALUES),
     ...(Object.fromEntries(
@@ -398,7 +392,7 @@ export const chapter = defineChapter({
     const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
     const vars = motionVars(
       (member) => tableOf(motionOf(member)),
-      SPEED[state.motionSpeed],
+      state.motionDuration,
     )
     const off = (member: string) => motionOf(member) === "none"
     const entrance = (member: string, value: string) =>

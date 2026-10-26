@@ -306,6 +306,20 @@ describe("migrate", () => {
     })
   })
 
+  it("reads Speed as a Duration factor", () => {
+    for (const [speed, duration] of [
+      ["faster", 0.75],
+      ["slower", 1.5],
+    ] as const)
+      expect(
+        migrate({ version: 8, ...DEFAULT_STATE, motionSpeed: speed }),
+      ).toEqual({ ...DEFAULT_STATE, motionDuration: duration })
+    const { motionDuration: _, ...rest } = DEFAULT_STATE
+    expect(migrate({ version: 8, ...rest, motionSpeed: "default" })).toEqual(
+      rest,
+    )
+  })
+
   it("returns anything but an object as is", () => {
     for (const raw of [null, 3, "state", [1]]) expect(migrate(raw)).toBe(raw)
   })

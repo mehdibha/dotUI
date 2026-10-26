@@ -1,36 +1,31 @@
 "use client"
 
 /* Motion: on the main page, a link showing the tempo. On the Motion page,
-   the tempos and Speed as tiles that move by their own timing, then the way
-   to each component's own Motion, which edits on that component's page. */
+   the tempos as tiles that move by their own timing, Duration, then every
+   component's own motion in folders, their rows hosted from the
+   component's page. */
 
-import { followersOf } from "../axes"
+import { DEFAULT_STATE, followersOf } from "../axes"
 import type { Effective } from "../axes"
 import {
-  COMPONENT_MOTION_KEYS,
+  DURATION_RANGE,
   legTiming,
   MOTION_VALUES,
-  SPEED,
   tableOf,
 } from "../axes/motion"
 import {
   ENTRANCE_OPTIONS,
   MOTION_OPTIONS,
   SAME_AS_MOTION,
-  SPEED_OPTIONS,
 } from "../axes/motion.meta"
-import {
-  DialAction,
-  DialLink,
-  DialPopover,
-  DialSelect,
-  DialSeparator,
-  DialTrigger,
-} from "../dial"
+import { DialAction, DialSelect, DialSlider } from "../dial"
+import { DialFolder } from "../folder"
 import { EaseTrace, useFlip } from "../preview/boards/motion-parts"
 import type { Timing } from "../preview/boards/motion-parts"
+import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
 import { DialTiles } from "../tiles"
+import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import { useStudio } from "../use-studio"
 import { COMPONENTS } from "./components"
@@ -40,21 +35,16 @@ const COMPONENT_ROW_OPTIONS = [SAME_AS_MOTION, ...MOTION_OPTIONS]
 const tempoLabel = (value: string) =>
   MOTION_OPTIONS.find((option) => option.value === value)?.label ?? value
 
-/** Every component's own Motion, in the panel's order, with the page it
- *  sits on. */
-const COMPONENT_MOTION = COMPONENTS.flatMap(({ id, label, rows, hosts }) =>
-  rows
-    .map(([key]) => key)
-    .filter(
-      (key) =>
-        (key === "chartMotion" ||
-          COMPONENT_MOTION_KEYS.includes(key as never)) &&
-        !hosts?.includes(key),
-    )
-    .map((key) => ({ key, page: id, label })),
-)
+const isMotionKey = (key: string) => /(Motion|Entrance)$/.test(key)
 
-const COMPONENT_KEYS = COMPONENT_MOTION.map(({ key }) => key)
+/** Each component's own motion rows, in the panel's order: those whose
+ *  home is its page. */
+const FOLDERS = COMPONENTS.flatMap(({ id, label, rows, hosts }) => {
+  const own = rows.filter(([key]) => isMotionKey(key) && !hosts?.includes(key))
+  return own.length > 0 ? [{ id, label, rows: own }] : []
+})
+
+const COMPONENT_KEYS = FOLDERS.flatMap(({ rows }) => rows.map(([key]) => key))
 
 /** The main page's link: the tempo, and Custom once anything on the page
  *  leaves it. */
@@ -62,7 +52,7 @@ export function MotionPreview({ state }: { state: Effective }) {
   // Following is saved state: effective values read through it.
   const saved = useStudio().state
   const custom =
-    state.motionSpeed !== "default" || followersOf(saved, "motion").length > 0
+    state.motionDuration !== 1 || followersOf(saved, "motion").length > 0
   return (
     <span className="truncate">
       {tempoLabel(state.motion)}
@@ -71,80 +61,72 @@ export function MotionPreview({ state }: { state: Effective }) {
   )
 }
 
-/** The Motion page's way to each component's own Motion, and back to the
- *  global tempo for all of them. */
+/** Every component's own motion, a folder each, and back to the global
+ *  tempo for all of them. */
 export function ComponentMotionRow() {
   const { state, setState } = useStudio()
-  const custom = followersOf(state, "motion").filter((key) =>
-    COMPONENT_KEYS.includes(key as AxisKey),
+  const changed = COMPONENT_KEYS.filter(
+    (key) => state[key] !== DEFAULT_STATE[key],
   )
   return (
-    <DialTrigger
-      label="Components"
-      value={
-        custom.length > 0 ? `${custom.length} custom` : SAME_AS_MOTION.label
-      }
-    >
-      <DialPopover>
-        {COMPONENT_MOTION.map(({ key, page, label }) => (
-          <DialLink
-            key={key}
-            page={page}
+    <>
+      {FOLDERS.map(({ id, label, rows }) => {
+        const own = rows.filter(([key]) => changed.includes(key))
+        return (
+          <DialFolder
+            key={id}
             label={label}
-            // Only a component on its own names its tempo.
-            value={
-              state[key] === SAME_AS_MOTION.value
-                ? null
-                : tempoLabel(String(state[key]))
-            }
-          />
-        ))}
-        {custom.length > 0 && (
-          <>
-            <DialSeparator />
-            <DialAction
-              onPress={() =>
-                setState({
-                  ...state,
-                  ...Object.fromEntries(
-                    custom.map((key) => [key, SAME_AS_MOTION.value]),
-                  ),
-                })
-              }
-            >
-              Reset all to Motion
-            </DialAction>
-          </>
-        )}
-      </DialPopover>
-    </DialTrigger>
+            // Only a component on its own says what it sets.
+            value={own.map(([key]) => valueLabel(key, state[key])).join(" · ")}
+          >
+            {rows.map(([key, name]) => (
+              <Row key={key} axis={key} label={name} />
+            ))}
+          </DialFolder>
+        )
+      })}
+      {changed.length > 0 && (
+        <DialAction
+          onPress={() =>
+            setState({
+              ...state,
+              ...Object.fromEntries(
+                changed.map((key) => [key, DEFAULT_STATE[key]]),
+              ),
+            })
+          }
+        >
+          Reset all to Motion
+        </DialAction>
+      )}
+    </>
   )
 }
 
-/** How a tempo glides (a thumb, an indicator) at a speed, rounded like
- *  the shipped vars. */
-function glideOf(motion: string, speed: string): Timing {
+/** How a tempo glides (a thumb, an indicator) at a duration factor,
+ *  rounded like the shipped vars. */
+function glideOf(motion: string, factor: number): Timing {
   const { ms, ease } = legTiming(tableOf(motion).travel.enter)
-  return { ms: Math.round((ms * (SPEED[speed] ?? 1)) / 10) * 10, ease }
+  return { ms: Math.round((ms * factor) / 10) * 10, ease }
 }
 
 /* One window for every curve, so lengths compare; a spring's tail is long
    but flat. */
 const SPAN_MS = 500
 
-/** One tempo at one speed: its glide as a curve, a dot running it. */
+/** One tempo: its glide as a curve, a dot running it. */
 function Tempo({
   motion,
-  speed,
+  factor,
   on,
 }: {
   motion: string
-  speed: string
+  factor: number
   on: boolean
 }) {
   return (
     <EaseTrace
-      timing={glideOf(motion, speed)}
+      timing={glideOf(motion, factor)}
       span={SPAN_MS}
       on={on}
       className="h-11 w-[calc(100%-2rem)] text-fg/70"
@@ -167,32 +149,24 @@ function MotionTilesRow() {
         label: tempoLabel(value),
         // Curves don't name themselves.
         caption: tempoLabel(value),
-        tile: (
-          <Tempo motion={value} speed={String(state.motionSpeed)} on={on} />
-        ),
+        tile: <Tempo motion={value} factor={state.motionDuration} on={on} />,
       }))}
     />
   )
 }
 
-/** Speed side by side, on the current tempo. */
-function SpeedRow() {
-  const { state } = useStudio()
-  const on = useFlip(FLIP_MS)
-  return (
-    <DialTiles
-      axis="motionSpeed"
-      label="Speed"
-      columns={3}
-      options={SPEED_OPTIONS.map(({ value, label }) => ({
-        value,
-        label,
-        caption: label,
-        tile: <Tempo motion={String(state.motion)} speed={value} on={on} />,
-      }))}
-    />
-  )
-}
+const factor = (value: number) => `${Number(value.toFixed(2))}×`
+
+const DurationRow = () => (
+  <DialSlider
+    axis="motionDuration"
+    label="Duration"
+    minValue={DURATION_RANGE.min}
+    maxValue={DURATION_RANGE.max}
+    step={DURATION_RANGE.step}
+    format={factor}
+  />
+)
 
 const ownRow = (key: AxisKey) =>
   function OwnMotionRow() {
@@ -208,8 +182,13 @@ const entranceRow = (key: "popoverEntrance" | "tooltipEntrance") =>
 
 export const ROWS: RowMap = {
   motion: MotionTilesRow,
-  motionSpeed: SpeedRow,
+  motionDuration: DurationRow,
   popoverEntrance: entranceRow("popoverEntrance"),
   tooltipEntrance: entranceRow("tooltipEntrance"),
-  ...Object.fromEntries(COMPONENT_KEYS.map((key) => [key, ownRow(key)])),
+  ...Object.fromEntries(
+    COMPONENT_KEYS.filter((key) => key.endsWith("Motion")).map((key) => [
+      key,
+      ownRow(key),
+    ]),
+  ),
 }

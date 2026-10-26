@@ -339,6 +339,13 @@ function fromFocus(state: Raw): Raw {
   return next
 }
 
+/* Speed's three steps became Duration, a factor on every duration. */
+function fromSpeed(state: Raw): Raw {
+  const { motionSpeed, ...next } = state
+  const factor = { faster: 0.75, slower: 1.5 }[String(motionSpeed)]
+  return factor ? { ...next, motionDuration: factor } : next
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
@@ -347,4 +354,5 @@ const STEPS: Record<number, (state: Raw) => Raw> = {
   5: fromTonal,
   6: fromTactile,
   7: fromFocus,
+  8: fromSpeed,
 }

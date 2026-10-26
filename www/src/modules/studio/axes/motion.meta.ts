@@ -1,10 +1,5 @@
 import { options } from "./core/meta"
-import {
-  COMPONENT_MOTION_KEYS,
-  ENTRANCE_VALUES,
-  MOTION_VALUES,
-  SPEED_VALUES,
-} from "./motion"
+import { COMPONENT_MOTION_KEYS, ENTRANCE_VALUES, MOTION_VALUES } from "./motion"
 
 export const MOTION_OPTIONS = options(MOTION_VALUES, {
   none: {
@@ -27,12 +22,6 @@ export const MOTION_OPTIONS = options(MOTION_VALUES, {
     description: "Springy, with a little bounce",
     credits: ["Material 3"],
   },
-})
-
-export const SPEED_OPTIONS = options(SPEED_VALUES, {
-  faster: { label: "Faster", description: "Every animation runs shorter" },
-  default: { label: "Default", description: "Each tempo's own timing" },
-  slower: { label: "Slower", description: "Every animation runs longer" },
 })
 
 /** What a component's own Motion row offers first: following the global. */
@@ -62,7 +51,6 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
 
 export const OPTIONS = {
   motion: MOTION_OPTIONS,
-  motionSpeed: SPEED_OPTIONS,
   popoverEntrance: ENTRANCE_OPTIONS,
   tooltipEntrance: ENTRANCE_OPTIONS,
   ...Object.fromEntries(

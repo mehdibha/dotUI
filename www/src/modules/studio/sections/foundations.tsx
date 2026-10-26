@@ -138,9 +138,9 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
   motion: [
     [
       ["motion", "Style", ["Tempo", "Animation"]],
-      ["motionSpeed", "Speed"],
+      ["motionDuration", "Duration", ["Speed"]],
     ],
-    [[ComponentMotionRow, "Components"]],
+    { title: "Components", rows: [[ComponentMotionRow, "Components"]] },
   ],
   surfaces: [
     [
@@ -257,7 +257,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "motion",
     label: "Motion",
-    owners: ["motion", "motionSpeed"],
+    owners: ["motion", "motionDuration"],
     aliases: ["Animation", "Transitions"],
     Preview: MotionPreview,
   }),

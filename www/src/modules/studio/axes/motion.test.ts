@@ -149,12 +149,10 @@ describe("resolve", () => {
       )
       expect(motionVars(() => tableOf("smooth"), factor)).toEqual(scaled)
     }
-    const faster = designSystemOf(parseState({ motionSpeed: "faster" })).tokens
+    const faster = designSystemOf(parseState({ motionDuration: 0.75 })).tokens
     expect(Object.keys(faster).length).toBeGreaterThan(0)
     for (const name of Object.keys(faster)) expect(name).toMatch(MOTION_VAR)
-    expect(
-      designSystemOf(parseState({ motionSpeed: "default" })).tokens,
-    ).toEqual({})
+    expect(designSystemOf(parseState({ motionDuration: 1 })).tokens).toEqual({})
   })
 
   test("each entrance moves its own pattern", () => {
