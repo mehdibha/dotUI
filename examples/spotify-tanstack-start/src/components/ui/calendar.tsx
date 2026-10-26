@@ -20,7 +20,7 @@ const calendarVariants = tv({
     gridBody: "contents *:[tr]:contents",
     cell: "relative flex aspect-square size-full min-w-(--cell-size) items-center justify-center text-center text-sm font-medium no-highlight cursor-interactive transition-shadow outline-none disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:pointer-events-none outside-month:text-fg-disabled in-data-calendar:rounded-(--cell-radius) selection-start:rounded-l-(--cell-radius) selection-end:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius) in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius) in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius) in-data-calendar:data-today:not-selected:not-hover:bg-muted",
     cellInner:
-      "rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit] in-data-range-calendar:in-data-today:not-in-selected:not-hover:bg-muted",
+      "rounded-(--cell-radius) group-selected/calendar-cell:not-group-selection-start/calendar-cell:not-group-selection-end/calendar-cell:rounded-[inherit] in-data-range-calendar:group-data-today/calendar-cell:not-group-selected/calendar-cell:not-hover:bg-muted",
   },
   variants: {
     range: {
@@ -31,7 +31,7 @@ const calendarVariants = tv({
       true: {
         cell: "group/calendar-cell selected:bg-selection-muted",
         cellInner:
-          "relative flex size-full items-center justify-center transition-shadow outline-none group-focus-visible/calendar-cell:focus-ring not-in-selection-start:not-in-selection-end:hover:bg-selection-muted in-selection-start:not-in-outside-month:bg-selection in-selection-start:not-in-outside-month:text-fg-on-selection in-selection-end:not-in-outside-month:bg-selection in-selection-end:not-in-outside-month:text-fg-on-selection",
+          "relative flex size-full items-center justify-center transition-shadow outline-none group-focus-visible/calendar-cell:focus-ring group-selection-start/calendar-cell:not-group-outside-month/calendar-cell:bg-selection group-selection-start/calendar-cell:not-group-outside-month/calendar-cell:text-fg-on-selection group-selection-end/calendar-cell:not-group-outside-month/calendar-cell:bg-selection group-selection-end/calendar-cell:not-group-outside-month/calendar-cell:text-fg-on-selection not-group-selection-start/calendar-cell:not-group-selection-end/calendar-cell:hover:bg-selection-muted",
       },
     },
   },
