@@ -181,26 +181,83 @@ export function PanelSheet({
 }
 
 /** Marks a view pushed over another as drilling in, and the view a pop
- *  reveals as drilling back; a new view opens at its top. */
+ *  reveals as drilling back; a new view opens at its top. The sheet eases to
+ *  the new view's height and settles where it would open with it. */
 function useDrill(host: HTMLElement | null) {
   useEffect(() => {
     if (!host) return
-    const scroller = host.closest<HTMLElement>("[data-sheet-content]")
+    const sheet = host.closest<HTMLElement>("[data-sheet]")
+    const content = host.closest<HTMLElement>("[data-sheet-content]")
+    const scroller = host.closest<HTMLElement>("[data-sheet-scroll]")
+    if (!sheet || !content || !scroller) return
     const scrolled = new WeakMap<Element, number>()
     let top = host.lastElementChild
+    // Its content box: the sheet pads itself a screen down to overscroll.
+    const measure = () => parseFloat(getComputedStyle(sheet).height)
+    let height = measure()
+    let resize: Animation | undefined
+    const resized = new ResizeObserver(() => {
+      if (!resize) height = measure()
+    })
+    resized.observe(sheet)
     const observer = new MutationObserver((records) => {
       const added = records.some((record) => record.addedNodes.length > 0)
       const next = host.lastElementChild
       if (!(next instanceof HTMLElement) || next === top) return
-      if (top) scrolled.set(top, scroller?.scrollTop ?? 0)
+      if (top) scrolled.set(top, content.scrollTop)
       // A page swaps itself, and says which way.
       if (!next.dataset.drill && host.childElementCount > 1)
         next.dataset.drill = added ? "in" : "out"
       else if (!added) next.dataset.drill = "out"
-      if (scroller) scroller.scrollTop = added ? 0 : (scrolled.get(next) ?? 0)
+      content.scrollTop = added ? 0 : (scrolled.get(next) ?? 0)
+      // The sheet opening on its first view rests and sizes itself.
+      const first = !top
       top = next
+      if (first) return
+
+      const from = resize ? measure() : height
+      resize?.cancel()
+      resize = undefined
+      const to = measure()
+      height = to
+      // Where a sheet opening on this view rests: Safari doesn't re-snap
+      // when the view swaps, nor after a picker's focus scrolls it.
+      const rest = sheet.hasAttribute("data-expanded") ? null : restingTop()
+      const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches
+      if (smooth && Math.abs(to - from) > 1) {
+        resize = sheet.animate(
+          [{ height: `${from}px` }, { height: `${to}px` }],
+          { duration: 250, easing: "cubic-bezier(0.32, 0.72, 0, 1)" },
+        )
+        // Held at its start through the view's first render, so the frames
+        // that render takes don't eat the ease.
+        resize.pause()
+        resize.onfinish = () => (resize = undefined)
+      }
+      const started = resize
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => started?.play())
+        if (rest != null && Math.abs(scroller.scrollTop - rest) > 1)
+          scroller.scrollTo({ top: rest, behavior: smooth ? "smooth" : "auto" })
+      })
     })
+    // The scroll that rests the sheet's first snap point at the screen's
+    // bottom edge, as React Aria opens it.
+    function restingTop() {
+      const marker = sheet!.querySelector("[data-sheet-initial]")
+      if (!marker) return null
+      const margin = parseFloat(getComputedStyle(marker).scrollMarginTop) || 0
+      return (
+        marker.getBoundingClientRect().top -
+        scroller!.getBoundingClientRect().top +
+        scroller!.scrollTop -
+        margin
+      )
+    }
     observer.observe(host, { childList: true })
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      resized.disconnect()
+    }
   }, [host])
 }
