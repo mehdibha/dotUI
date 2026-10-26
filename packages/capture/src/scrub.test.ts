@@ -40,6 +40,11 @@ describe("literals", () => {
     )
   })
 
+  it("keeps a long string that holds no others", () => {
+    const help = "Choose who can see your posts. ".repeat(8).trim()
+    expect(literals(`t(${JSON.stringify(help)})`)).toContain(help)
+  })
+
   it("skips strings without a letter", () => {
     expect(literals(`a="12";b=" / "`)).toEqual([])
   })

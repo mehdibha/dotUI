@@ -10,18 +10,16 @@ const RUN = /\uFDD0([^\uFDD1]*)\uFDD1/g
 
 /** The string literals of a script, and the pieces between their slots:
  *  the words a product ships to every visitor, whitespace collapsed. A
- *  long literal is read once more for the strings inside it: a message
- *  catalog shipped as `JSON.parse("…")`. */
+ *  long literal is also read for the strings inside it: a message catalog
+ *  shipped as `JSON.parse("…")`. */
 export function literals(js: string, nested = false): string[] {
   const out: string[] = []
   const LITERAL =
     /"((?:[^"\\\n]|\\.)*)"|'((?:[^'\\\n]|\\.)*)'|`((?:[^`\\$]|\\.|\$(?!\{))*)`/g
   for (const [, double, single, template] of js.matchAll(LITERAL)) {
     const text = unescapeJs(double ?? single ?? template ?? "")
-    if (text.length > 160) {
-      if (!nested) out.push(...literals(text, true))
-      continue
-    }
+    if (text.length > 160 && !nested) out.push(...literals(text, true))
+    if (text.length > 1000) continue
     // A message with slots shows its pieces apart: "{n} issues", "issues";
     // "<0/> liked your post", "liked your post".
     const pieces = text.split(/\{[^{}]*\}|%\d*\$?[sd@]|<\/?\d+\/?>/)
