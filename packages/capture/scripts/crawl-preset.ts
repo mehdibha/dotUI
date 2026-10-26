@@ -1291,7 +1291,7 @@ async function connected(): Promise<CensusPage[]> {
   // One tab for every page, so the person's Chrome keeps one window.
   let tab: Page | undefined
   const open = async (job: Job) => {
-    if (!tab) {
+    if (!tab || tab.isClosed()) {
       // Chrome draws only the front tab of a window that shows: runs side by
       // side each take a window, --window <n> the nth from the left.
       tab = await browser.newPage(
@@ -1348,22 +1348,30 @@ async function connected(): Promise<CensusPage[]> {
               ).values(),
             ]
           : []
-        pages.push(
-          ...(await crawl(
-            {
-              key,
-              url,
-              mode,
-              settings: {
-                settle: known?.settle,
-                steps: args.passes ? known?.steps : [],
-                width: known?.width,
-              },
-              passes,
-            },
-            open,
-          )),
-        )
+        const job: Job = {
+          key,
+          url,
+          mode,
+          settings: {
+            settle: known?.settle,
+            steps: args.passes ? known?.steps : [],
+            width: known?.width,
+          },
+          passes,
+        }
+        // A page can close or replace the tab (ChatGPT's billing): the job
+        // runs again in a new one.
+        for (let tries = 2; tries--; )
+          try {
+            const read = await crawl(job, open)
+            if (tab?.isClosed() && tries) continue
+            pages.push(...read)
+            break
+          } catch (error) {
+            console.warn(`${key} (${mode}): ${(error as Error).message}`)
+            await tab?.close().catch(() => {})
+            tab = undefined
+          }
       }
     }
     return pages
